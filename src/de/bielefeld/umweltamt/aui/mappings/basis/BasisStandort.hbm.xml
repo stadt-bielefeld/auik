@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Fri Jan 28 12:16:18 CET 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
+
+    <class name="BasisStandort" table="basis_standort">
+        <id name="standortid" column="id" type="java.lang.Integer">
+            <generator class="native">
+                <param name="sequence">basis_standort_id_seq</param>
+        	</generator>
+        </id>
+
+        <property name="strasse" column="strasse" type="java.lang.String" />
+        <property name="hausnr" column="hausnr" type="java.lang.Integer" />
+        <property name="hausnrzus" column="hausnrzus" type="java.lang.String" />
+        <property name="plz" column="plz" type="java.lang.String" />
+        <property name="rechtswert" column="rechtswert" type="java.lang.Float" />
+        <property name="hochwert" column="hochwert" type="java.lang.Float" />
+        <property name="flur" column="flur" type="java.lang.String" />
+        <property name="flurstueck" column="flurstueck" type="java.lang.String" />
+        <property name="entgebid" column="entgebid" type="java.lang.String" />
+        <property name="vornameeigent" column="vornameeigent" type="java.lang.String" />
+        <property name="nameeigent" column="nameeigent" type="java.lang.String" />
+        <property name="strasseeigent" column="strasseeigent" type="java.lang.String" />
+        <property name="hausnreigent" column="hausnreigent" type="java.lang.Integer" />
+        <property name="hausnrzuseigent" column="hausnrzuseigent" type="java.lang.String" />
+        <property name="revidatum" column="revidatum" type="java.util.Date" />
+        <property name="revihandz" column="revihandz" type="java.lang.String" />
+
+        <many-to-one name="basisGemarkung" column="gemarkungid" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung" />
+
+        <many-to-one name="vawsStandortgghwsg" column="standortgegebid" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg" />
+
+        <many-to-one name="vawsWassereinzugsgebiete" column="wassereinzgebid" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete" />
+
+    </class>
+
+</hibernate-mapping>

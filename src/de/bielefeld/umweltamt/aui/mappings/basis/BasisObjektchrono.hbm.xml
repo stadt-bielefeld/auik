@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09.04.2008 14:16:11 by Hibernate Tools 3.1.0.beta5 -->
+
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
+
+    <class name="BasisObjektchrono" table="basis_objektchrono">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native">
+            	<param name="sequence">basis_objektchrono_id_seq</param>
+        	</generator>
+        </id>
+
+        <property name="datum" column="datum" type="java.util.Date" />
+        <property name="sachverhalt" column="sachverhalt" type="java.lang.String" />
+        <property name="wv" column="wv" type="java.util.Date" />
+
+        <many-to-one name="basisObjekt" column="objektid" class="BasisObjekt" />
+    </class>
+
+</hibernate-mapping>

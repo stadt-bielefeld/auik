@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
+
+    <class name="VawsAbscheider" table="vaws_abscheider">
+        <id name="behaelterid" column="behaelterid" type="java.lang.Integer">
+            <generator class="foreign">
+            	<param name="property">vawsFachdaten</param>
+            </generator>
+        </id>
+
+        <one-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" />
+
+        <property name="sfhersteller" column="sfhersteller" type="java.lang.String" />
+        <property name="sftyp" column="sftyp" type="java.lang.String" />
+        <property name="sfvolumen" column="sfvolumen" type="java.lang.String" />
+        <property name="sfmaterial" column="sfmaterial" type="java.lang.String" />
+        <property name="sfbeschichtung" column="sfbeschichtung" type="java.lang.String" />
+        <property name="abhersteller" column="abhersteller" type="java.lang.String" />
+        <property name="abtyp" column="abtyp" type="java.lang.String" />
+        <property name="abpruefz" column="abpruefz" type="java.lang.String" />
+        <property name="abmaterial" column="abmaterial" type="java.lang.String" />
+        <property name="abbeschichtung" column="abbeschichtung" type="java.lang.String" />
+        <property name="abnenngr" column="abnenngr" type="java.lang.String" />
+        <property name="zuldn" column="zuldn" type="java.lang.String" />
+        <property name="zulmaterial" column="zulmaterial" type="java.lang.String" />
+        <property name="zullaenge" column="zullaenge" type="java.lang.String" />
+        <property name="verbdn" column="verbdn" type="java.lang.String" />
+        <property name="verbmaterial" column="verbmaterial" type="java.lang.String" />
+        <property name="verblaenge" column="verblaenge" type="java.lang.String" />
+        <property name="sondn" column="sondn" type="java.lang.String" />
+        <property name="sonmaterial" column="sonmaterial" type="java.lang.String" />
+        <property name="sonlaenge" column="sonlaenge" type="java.lang.String" />
+        <property name="oelspeichervol" column="oelspeichervol" type="java.lang.String" />
+        <property name="kompaktanlage" column="kompaktanlage" type="java.lang.Integer" />
+        <property name="sf" column="sf" type="java.lang.Integer" />
+        <property name="kkl1" column="kkl1" type="java.lang.Integer" />
+        <property name="lfkl2" column="lfkl2" type="java.lang.Integer" />
+        <property name="ps" column="ps" type="java.lang.Integer" />
+        <property name="ueberhausr" column="ueberhausr" type="java.lang.Integer" />
+        <property name="waschanlvorh" column="waschanlvorh" type="java.lang.Integer" />
+        <property name="abgabe" column="abgabe" type="java.lang.Integer" />
+        <property name="hlzapfanl" column="hlzapfanl" type="java.lang.Integer" />
+        <property name="belvonlagerbh" column="belvonlagerbh" type="java.lang.Integer" />
+        <property name="rueckhalteausr" column="rueckhalteausr" type="java.lang.Integer" />        
+    </class>
+</hibernate-mapping>

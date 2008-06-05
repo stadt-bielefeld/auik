@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed Feb 16 15:12:00 CET 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
+
+    <class name="AtlEinheiten" table="atl_einheiten" mutable="false">
+        <id name="id" column="id" type="java.lang.Integer">
+
+            <generator class="assigned"/>
+        </id>
+
+        <property name="bezeichnung" column="bezeichnung" type="java.lang.String" />
+    </class>
+
+</hibernate-mapping>

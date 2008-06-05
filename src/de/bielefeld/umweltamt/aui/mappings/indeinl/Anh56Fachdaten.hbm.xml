@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed Aug 10 15:11:08 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="Anh56Fachdaten" table="anh_56_fachdaten">
+        <id name="objektid" column="objektid" type="java.lang.Integer">
+            <generator class="foreign">
+            	<param name="property">basisObjekt</param>
+            </generator>
+        </id>
+
+        <property name="druckverfahren" column="druckverfahren" type="java.lang.String" />
+        <property name="verbrauch" column="verbrauch" type="java.lang.String" />
+        <property name="entsorgung" column="entsorgung" type="java.lang.String" />
+        <property name="abwasseranfall" column="abwasseranfall" type="java.lang.Boolean" />
+        <property name="genpflicht" column="genpflicht" type="java.lang.Boolean" />
+        <property name="aba" column="aba" type="java.lang.Boolean" />
+        <property name="gen58" column="gen_58" type="java.util.Date" />
+        <property name="gen59" column="gen_59" type="java.util.Date" />
+        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"/>
+
+    </class>
+
+</hibernate-mapping>

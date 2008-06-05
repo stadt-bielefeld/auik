@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed Feb 16 15:12:03 CET 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
+
+    <class name="AtlSielhaut" table="atl_sielhaut">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native">
+                <param name="sequence">atl_sielhaut_id_seq</param>
+        	</generator>
+        </id>
+
+        <property name="bezeichnung" column="bezeichnung" type="java.lang.String" />
+        <property name="haltungsnr" column="haltungsnr" type="java.lang.String" />
+        <property name="alarmplannr" column="alarmplannr" type="java.lang.String" />
+        <property name="entgeb" column="entgeb" type="java.lang.String" />
+        <property name="rechtswert" column="rechtswert" type="java.lang.Double" />
+        <property name="hochwert" column="hochwert" type="java.lang.Double" />
+        <property name="lage" column="lage" type="java.lang.String" />
+        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+        <property name="twabfluss" column="twabfluss" type="java.lang.String" />
+        <property name="bsb" column="bsb" type="java.lang.String" />
+        <property name="ew" column="ew" type="java.lang.String" />
+        <property name="gebiet" column="gebiet" type="java.lang.String" />
+        <property name="psielhaut" column="p_sielhaut" type="java.lang.Boolean" />
+        <property name="palarmplan" column="p_alarmplan" type="java.lang.Boolean" />
+        <property name="pnachprobe" column="p_nachprobe" type="java.lang.Boolean" />
+        <property name="schlammprobe" column="schlammprobe" type="java.lang.Boolean" />
+    </class>
+
+</hibernate-mapping>

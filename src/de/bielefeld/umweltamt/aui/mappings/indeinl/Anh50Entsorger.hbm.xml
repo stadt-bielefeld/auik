@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed Apr 27 15:30:29 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="Anh50Entsorger" table="anh_50_entsorger">
+        <id name="entsorgerid" column="id" type="java.lang.Integer">
+            <generator class="assigned"/>
+        </id>
+
+        <property name="entsorger" column="entsorger" type="java.lang.String" />
+        <property name="strasse" column="strasse" type="java.lang.String" />
+        <property name="hausnr" column="hausnr" type="java.lang.Integer" />
+        <property name="plz" column="plz" type="java.lang.String" />
+        <property name="ort" column="ort" type="java.lang.String" />
+        <property name="ansprechpartner" column="ansprechpartner" type="java.lang.String" />
+        <property name="telefon" column="telefon" type="java.lang.String" />
+    </class>
+
+</hibernate-mapping>

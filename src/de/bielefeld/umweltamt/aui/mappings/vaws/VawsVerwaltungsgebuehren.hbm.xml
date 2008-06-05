@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Tue Sep 06 14:48:18 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
+
+    <class name="VawsVerwaltungsgebuehren" table="vaws_verwaltungsgebuehren">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native">
+            	<param name="sequence">vaws_verwaltungsgebuehren_id_seq</param>
+            </generator>
+        </id>
+
+		<many-to-one name="vawsFachdaten" column="behaelterid" class="VawsFachdaten" />
+        <many-to-one name="vawsGebuehrenart" column="gebuehrenart" class="VawsGebuehrenarten" />
+
+        <property name="datum" column="datum" type="java.util.Date" />
+        <property name="betrag" column="betrag" type="java.lang.Float" />
+        <property name="abschnitt" column="abschnitt" type="java.lang.String" />
+        <property name="kassenzeichen" column="kassenzeichen" type="java.lang.String" />
+    </class>
+
+</hibernate-mapping>

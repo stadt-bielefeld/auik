@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        
+        <!-- Informix: -->
+		     
+        <property name="hibernate.connection.driver_class">com.informix.jdbc.IfxDriver</property>
+        <property name="hibernate.connection.url">jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.InformixDialect</property>
+			
+        <!-- PostgreSQL: -->
+        <!--  
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://umweltamt.bielefeld.int/auik</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        --> 
+           
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlAnalyseposition.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlEinheiten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlKlaeranlagen.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlParameter.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlProbeart.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlProbepkt.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlSielhaut.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisStandort.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisStrassen.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisGemarkung.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjekt.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektarten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektchrono.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisBetreiber.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh40Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Abscheiderdetails.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Analysen.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Ortstermine.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh50Entsorger.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh50Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh52Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh55Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh56Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/AnhBwkFachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/AnhSuevFachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/ViewBwk.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsAbfuellflaeche.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsAbscheider.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsAnlagenarten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsAnlagenchrono.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsBehaelterart.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsFachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsFluessigkeit.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsGebuehrenarten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsGefaehrdungsstufen.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsKontrollen.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsMaterial.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsPruefer.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsPruefergebnisse.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsStandortgghwsg.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsVbfeinstufung.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsVerwaltungsgebuehren.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsVerwaltungsverf.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsVerwmassnahmen.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWassereinzugsgebiete.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWgk.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWirtschaftszweige.hbm.xml" />
+    </session-factory>
+</hibernate-configuration>

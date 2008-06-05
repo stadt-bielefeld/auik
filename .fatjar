@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Thu Jun 05 12:53:07 CEST 2008
+onejar.license.required=false
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=true
+jarname=U\:\\Gruppen\\Verfahren\\Anlagenkataster\\AUIK\\auik_neu.jar
+manifest.mergeall=true
+manifest.mainclass=de.bielefeld.umweltamt.aui.AUIKSplash
+manifest.file=<createnew>
+jarname.isextern=true
+onejar.expand=
+excludes=
+includes=

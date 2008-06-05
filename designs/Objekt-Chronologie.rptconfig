@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Written by Eclipse BIRT 2.0 -->
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.2" id="1">
+    <list-property name="configVars">
+        <structure>
+            <property name="name">ObjektId_149</property>
+            <property name="value">450</property>
+        </structure>
+        <structure>
+            <property name="name">Betreiber_232</property>
+            <property name="value"></property>
+        </structure>
+        <structure>
+            <property name="name">Standort_233</property>
+            <property name="value"></property>
+        </structure>
+        <structure>
+            <property name="name">Art_234</property>
+            <property name="value"></property>
+        </structure>
+    </list-property>
+</report>

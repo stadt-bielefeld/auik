@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed Feb 16 15:12:00 CET 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
+
+
+    <class name="AtlAnalyseposition" table="atl_analyseposition">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native">
+                <param name="sequence">atl_analyseposition_id_seq</param>
+        	</generator>
+        </id>
+
+        <property name="grkl" column="grkl" type="java.lang.String" />
+        <property name="wert" column="wert" type="java.lang.Double" not-null="true" />
+        <property name="analyseVon" column="analyse_von" type="java.lang.String" />
+        <property name="bericht" column="bericht" type="java.lang.String" />
+        <property name="normwert" column="normwert" type="java.lang.Double" />
+
+        <many-to-one name="atlEinheiten" column="einheiten_id" class="AtlEinheiten" />
+
+        <many-to-one name="atlParameter" column="parameter_id" class="AtlParameter" not-null="true" />
+
+        <many-to-one name="atlProbenahmen" column="probenahme_id" class="AtlProbenahmen" not-null="true" />
+    </class>
+
+</hibernate-mapping>

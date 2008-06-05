@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Thu Apr 21 11:48:02 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="AnhBwkFachdaten" table="anh_bwk_fachdaten">
+        <id name="bwkId" column="objektid" type="java.lang.Integer">
+            <generator class="foreign">
+            	<param name="property">basisObjekt</param>
+            </generator>
+        </id>
+
+        <property name="branche" column="branche" type="java.lang.String" />
+        <property name="KHersteller" column="k_hersteller" type="java.lang.String" />
+        <property name="KTyp" column="k_typ" type="java.lang.String" />
+        <property name="KBrennmittel" column="k_brennmittel" type="java.lang.String" />
+        <property name="KLeistung" column="k_leistung" type="java.lang.Integer" />
+        <property name="datumG" column="datum_g" type="java.util.Date" />
+        <property name="aba" column="aba" type="java.lang.Boolean" />
+        <property name="WBrenner" column="w_brenner" type="java.lang.String" />
+        <property name="WWaermetauscher" column="w_waermetauscher" type="java.lang.String" />
+        <property name="WAbgasleitung" column="w_abgasleitung" type="java.lang.String" />
+        <property name="WKondensableitung" column="w_kondensableitung" type="java.lang.String" />
+        <property name="abnahme" column="abnahme" type="java.lang.String" />
+        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+        <property name="anschreiben" column="anschreiben" type="java.util.Date" />
+        <property name="erfassung" column="erfassung" type="java.lang.Integer" />
+        <property name="genehmigung" column="genehmigung" type="java.lang.Boolean" />
+
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
+    </class>
+
+</hibernate-mapping>

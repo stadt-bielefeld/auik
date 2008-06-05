@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed May 11 12:07:17 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
+
+    <class name="VawsFachdaten" table="vaws_fachdaten">
+        <id name="behaelterId" column="behaelterid" type="java.lang.Integer">
+            <generator class="native">
+                <param name="sequence">vaws_fachdaten_behaelterid_seq</param>
+        	</generator>
+        </id>
+
+        <many-to-one name="basisObjekt" column="objektid" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" not-null="true"/>
+
+        <property name="herstellnr" column="herstellnr" type="java.lang.String" />
+        <property name="hersteller" column="hersteller" type="java.lang.String" />
+        <property name="datumInbetriebnahme" column="datuminbetriebnahme" type="java.util.Date" />
+        <property name="datumErfassung" column="datumerfassung" type="java.util.Date" />
+        <property name="datumAenderung" column="datumaenderung" type="java.util.Date" />
+        <property name="datumGenehmigung" column="datumgenehmigung" type="java.util.Date" />
+        <property name="anlagenart" column="anlagenart" type="java.lang.String" />
+        <property name="behaelterart" column="behaelterart" type="java.lang.String" />
+        <property name="material" column="material" type="java.lang.String" />
+        <property name="fluessigkeit" column="fluessigkeit" type="java.lang.String" />
+        <property name="vbfeinstufung" column="vbfeinstufung" type="java.lang.String" />
+        <property name="menge" column="menge" type="java.lang.Double" />
+        <property name="wgk" column="wgk" type="java.lang.Integer" />
+        <property name="gefaehrdungsstufe" column="gefaehrdungsstufe" type="java.lang.String" />
+        <property name="baujahr" column="baujahr" type="java.lang.Integer" />
+        <property name="doppelwandig" column="doppelwandig" type="java.lang.Boolean" />
+        <property name="leckanzeige" column="leckanzeige" type="java.lang.Boolean" />
+        <property name="auffangraum" column="auffangraum" type="java.lang.Boolean" />
+        <property name="grenzwertgeber" column="grenzwertgeber" type="java.lang.Boolean" />
+        <property name="leckschutzauskleidung" column="leckschutzauskleidung" type="java.lang.Boolean" />
+        <property name="kellerlagerung" column="kellerlagerung" type="java.lang.Boolean" />
+        <property name="innenbeschichtung" column="innenbeschichtung" type="java.lang.Boolean" />
+        <property name="beschreibung_a" column="beschreibung_a" type="java.lang.String" />
+        <property name="beschreibung_s" column="beschreibung_s" type="java.lang.String" />
+        <property name="oberirdisch" column="oberirdisch" type="java.lang.Boolean" />
+        <property name="unterirdisch" column="unterirdisch" type="java.lang.Boolean" />
+        <property name="saugleitung" column="saugleitung" type="java.lang.Boolean" />
+        <property name="rohrKathodenschutz" column="rohr_kathodenschutz" type="java.lang.Boolean" />
+        <property name="ausKupfer" column="aus_kupfer" type="java.lang.Boolean" />
+        <property name="ausStahl" column="aus_stahl" type="java.lang.Boolean" />
+        <property name="mitSchutzrohr" column="mit_schutzrohr" type="java.lang.Boolean" />
+        <property name="beschreibung_r" column="beschreibung_r" type="java.lang.String" />
+        <property name="pruefturnus" column="pruefturnus" type="java.lang.Double" />
+        <property name="angemahntkz" column="angemahntkz" type="java.lang.Boolean" />
+        <property name="mahnfrist" column="mahnfrist" type="java.util.Date" />
+        <property name="wiedervorlage" column="wiedervorlage" type="java.util.Date" />
+        <property name="stillegungsdatum" column="stillegungsdatum" type="java.util.Date" />
+        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+        <property name="ausfuehrung" column="ausfuehrung" type="java.lang.String" />
+        <property name="pruefumfang" column="pruefumfang" type="java.lang.String" />
+        <property name="verwendung" column="verwendung" type="java.lang.String" />
+    </class>
+
+</hibernate-mapping>

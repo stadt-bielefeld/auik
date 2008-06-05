@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Written by Eclipse BIRT 2.0 -->
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.2" id="1">
+    <list-property name="configVars">
+        <structure>
+            <property name="name">foto_146</property>
+            <property name="value">Kein Foto verfügbar!</property>
+        </structure>
+        <structure>
+            <property name="name">karte_148</property>
+            <property name="value">Keine Karte verfügbar!</property>
+        </structure>
+        <structure>
+            <property name="name">id_149</property>
+            <property name="value">10</property>
+        </structure>
+    </list-property>
+</report>

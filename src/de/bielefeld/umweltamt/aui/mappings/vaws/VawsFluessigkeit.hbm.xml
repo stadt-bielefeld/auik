@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Tue Sep 06 14:46:23 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
+
+    <class name="VawsFluessigkeit" table="vaws_fluessigkeit" mutable="false">
+        <id name="fluessigkeit" column="fluessigkeit" type="java.lang.String">
+            <generator class="assigned"/>
+        </id>
+
+		<!--<property name="fluessigkeit" column="fluessigkeit" type="java.lang.String" />-->
+        <property name="idland" column="idland" type="java.lang.Integer" />
+    </class>
+
+</hibernate-mapping>

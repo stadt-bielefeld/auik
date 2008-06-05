@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Tue Sep 06 14:44:16 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
+
+    <class name="VawsAbfuellflaeche" table="vaws_abfuellflaeche">
+        <id name="behaelterid" column="behaelterid" type="java.lang.Integer">
+            <generator class="foreign">
+            	<param name="property">vawsFachdaten</param>
+            </generator>
+        </id>
+
+        <one-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" />
+
+        <property name="eoh" column="eoh" type="java.lang.Boolean" />
+        <property name="ef" column="ef" type="java.lang.Boolean" />
+        <property name="abfsaniert" column="abfsaniert" type="java.lang.Boolean" />
+        <property name="abfneuerstellt" column="abfneuerstellt" type="java.lang.Boolean" />
+        <property name="bodenflaechenausf" column="bodenflaechenausf" type="java.lang.String" />
+        <property name="beschbodenfl" column="beschbodenfl" type="java.lang.String" />
+        <property name="dicke" column="dicke" type="java.lang.Float" />
+        <property name="guete" column="guete" type="java.lang.String" />
+        <property name="fugenmaterial" column="fugenmaterial" type="java.lang.String" />
+        <property name="beschfugenmat" column="beschfugenmat" type="java.lang.String" />
+        <property name="niederschlagschutz" column="niederschlagschutz" type="java.lang.String" />
+        <property name="abscheidervorh" column="abscheidervorh" type="java.lang.Boolean" />
+        <property name="beschableitung" column="beschableitung" type="java.lang.String" />
+    </class>
+
+</hibernate-mapping>

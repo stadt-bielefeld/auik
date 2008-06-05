@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Thu May 19 12:41:47 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="Anh49Abscheiderdetails" table="anh_49_abscheiderdetails">
+        <id name="abscheiderid" column="id" type="java.lang.Integer">
+            <generator class="native">
+                <param name="sequence">anh_49_abscheiderdetails_id_seq</param>
+        	</generator>
+        </id>
+
+        <property name="abscheidernr" column="abscheidernr" type="java.lang.Integer" />
+        <property name="von" column="von" type="java.lang.Integer" />
+        <property name="lage" column="lage" type="java.lang.String" />
+        <property name="nenngroesse" column="nenngroesse" type="java.lang.Integer" />
+        <property name="tankstelle" column="tankstelle" type="java.lang.Boolean" />
+        <property name="waschplatzHalle" column="waschplatz_halle" type="java.lang.Boolean" />
+        <property name="kfzBetrieb" column="kfz_betrieb" type="java.lang.Boolean" />
+        <property name="lebensmittelbetrieb" column="lebensmittelbetrieb" type="java.lang.Boolean" />
+        <property name="wohnhaus" column="wohnhaus" type="java.lang.Boolean" />
+        <property name="oberflaechenentwaesserung" column="oberflaechenentwaesserung" type="java.lang.Boolean" />
+        <property name="produktionsabwasser" column="produktionsabwasser" type="java.lang.Boolean" />
+        <property name="schlammfang" column="schlammfang" type="java.lang.Boolean" />
+        <property name="benzinOelabscheider" column="benzin_oelabscheider" type="java.lang.Boolean" />
+        <property name="koaleszenzfilter" column="koaleszenzfilter" type="java.lang.Boolean" />
+        <property name="integriert" column="integriert" type="java.lang.Boolean" />
+        <property name="emulsionsspaltanlage" column="emulsionsspaltanlage" type="java.lang.Boolean" />
+        <property name="fettabscheider" column="fettabscheider" type="java.lang.Boolean" />
+        <property name="baujahr" column="baujahr" type="java.lang.String" />
+        <property name="din1999" column="din1999" type="java.lang.Boolean" />
+        <property name="bauartzulassungsnummer" column="bauartzulassungsnummer" type="java.lang.String" />
+        <property name="ngSf" column="ng_sf" type="java.lang.Integer" />
+        <property name="ngBa" column="ng_ba" type="java.lang.Integer" />
+        <property name="ngKa" column="ng_ka" type="java.lang.Integer" />
+        <property name="schwimmer" column="schwimmer" type="java.lang.Boolean" />
+        <property name="warnsignal" column="warnsignal" type="java.lang.Boolean" />
+        <property name="wartungsvertrag" column="wartungsvertrag" type="java.lang.Boolean" />
+        <property name="vertragspartner" column="vertragspartner" type="java.lang.String" />
+        <property name="letzteWartung" column="letzte_wartung" type="java.lang.String" />
+        <property name="letzteLeerung" column="letzte_leerung" type="java.lang.String" />
+        <property name="hersteller" column="hersteller" type="java.lang.String" />
+        <property name="schmutzwasserkanal" column="schmutzwasserkanal" type="java.lang.Boolean" />
+        <property name="regenwasserkanal" column="regenwasserkanal" type="java.lang.Boolean" />
+        <property name="mischwasserkanal" column="mischwasserkanal" type="java.lang.Boolean" />
+        <property name="direkteinleiter" column="direkteinleiter" type="java.lang.Boolean" />
+        <property name="entsorgungnachweis" column="entsorgungnachweis" type="java.lang.String" />
+        <property name="entsorgungsvertrag" column="entsorgungsvertrag" type="java.lang.String" />
+        <property name="entsorgungsintervalle" column="entsorgungsintervalle" type="java.lang.String" />
+        <property name="flaeche" column="flaeche" type="java.lang.Integer" />
+        <property name="bemerkung" column="bemerkung" type="java.lang.String" />
+        <property name="entsorgungsnachweis" column="entsorgungsnachweis" type="java.util.Date" />
+        <property name="entsorgungsnachweisDurch" column="entsorgungsnachweis_durch" type="java.lang.String" />
+
+        <many-to-one name="Anh49Fachdaten" column="anh49id" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" />
+
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Tue Jun 28 08:35:52 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="AnhSuevFachdaten" table="anh_suev_fachdaten">
+        <id name="objektid" column="objektid" type="java.lang.Integer">
+            <generator class="foreign">
+            	<param name="property">basisObjekt</param>
+            </generator>
+        </id>
+
+        <property name="groesser3ha" column="groesser_3ha" type="java.lang.Boolean" />
+        <property name="versFlaeche" column="vers_flaeche" type="java.lang.Integer" />
+        <property name="suevkanPflicht" column="suevkan_pflicht" type="java.lang.Boolean" />
+        <property name="indirektsw" column="indirektsw" type="java.lang.Boolean" />
+        <property name="indirektrw" column="indirektrw" type="java.lang.Boolean" />
+        <property name="direktsw" column="direktsw" type="java.lang.Boolean" />
+        <property name="direktrw" column="direktrw" type="java.lang.Boolean" />
+        <property name="anzeige58" column="anzeige58" type="java.lang.Integer" />
+        <property name="sanierungErfolgt" column="sanierung_erfolgt" type="java.lang.Boolean" />
+        <property name="sanierungskonzept" column="sanierungskonzept" type="java.lang.Boolean" />
+        <property name="keineAngaben" column="keine_angaben" type="java.lang.Boolean" />
+        <property name="datAnzeige58" column="dat_anzeige58" type="java.util.Date" />
+        <property name="datAnschreiben" column="dat_anschreiben" type="java.util.Date" />
+
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
+    </class>
+
+</hibernate-mapping>

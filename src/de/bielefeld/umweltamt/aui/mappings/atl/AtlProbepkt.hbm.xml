@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed Feb 16 15:12:02 CET 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
+
+    <class name="AtlProbepkt" table="atl_probepkt">
+        <id name="pktId" column="objektid" type="java.lang.Integer">
+            <generator class="native">
+                <param name="sequence">atl_probepkt_objektid_seq</param>
+        	</generator>
+        </id>
+
+        <property name="beschreibung" column="beschreibung" type="java.lang.String" />
+
+        <property name="nummer" column="nr_probepkt" type="java.lang.Integer" />
+
+        <property name="atlFirmen" column="firmen_id" type="java.lang.Integer" />
+
+        <many-to-one name="atlKlaeranlagen" column="ka_id" class="AtlKlaeranlagen" />
+
+        <many-to-one name="atlProbeart" column="art_id" class="AtlProbeart" />
+
+        <many-to-one name="atlSielhaut" column="sielhaut_id" class="AtlSielhaut" />
+
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
+    </class>
+
+</hibernate-mapping>

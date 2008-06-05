@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed Jun 29 15:12:26 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="Anh40Fachdaten" table="anh_40_fachdaten">
+        <id name="objektid" column="objektid" type="java.lang.Integer">
+            <generator class="foreign">
+            	<param name="property">basisObjekt</param>
+            </generator>
+        </id>
+
+        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+        <property name="ansprechpartner" column="ansprechpartner" type="java.lang.String" />
+        <property name="sachbearbeiterrav" column="sachbearbeiterrav" type="java.lang.String" />
+        <property name="sachbearbeiterheepen" column="sachbearbeiterheepen" type="java.lang.String" />
+        <property name="klaeranlage" column="klaeranlage" type="java.lang.String" />
+        <property name="herkunftsbereich" column="herkunftsbereich" type="java.lang.String" />
+        <property name="wsg" column="wsg" type="java.lang.Boolean" />
+        <property name="prioritaet" column="prioritaet" type="java.lang.Boolean" />
+        <property name="genehmigungspflicht" column="genehmigungspflicht" type="java.lang.Boolean" />
+        <property name="nachtrag" column="nachtrag" type="java.lang.Boolean" />
+        <property name="bimsch" column="bimsch" type="java.lang.Boolean" />
+        <property name="abwmengegenehmigt" column="abwmengegenehmigt" type="java.lang.Integer" />
+        <property name="abwmengeprodspez" column="abwmengeprodspez" type="java.lang.Integer" />
+        <property name="abwmengegesamt" column="abwmengegesamt" type="java.lang.Integer" />
+        <property name="gen58" column="gen58" type="java.util.Date" />
+        <property name="gen59" column="gen59" type="java.util.Date" />
+
+
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"/>
+
+    </class>
+    
+</hibernate-mapping>

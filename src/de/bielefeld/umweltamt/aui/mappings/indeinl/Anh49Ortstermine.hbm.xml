@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Thu May 19 12:41:48 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="Anh49Ortstermine" table="anh_49_ortstermine">
+        <id name="ortsterminid" column="id" type="java.lang.Integer">
+            <generator class="native">
+                <param name="sequence">anh_49_ortstermine_id_seq</param>
+        	</generator>
+        </id>
+
+        <property name="datum" column="datum" type="java.util.Date" />
+        <property name="sachbearbeiterIn" column="sachbearbeiter_in" type="java.lang.String" />
+        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+
+        <many-to-one name="anh49Fachdaten" column="anh49id" class="Anh49Fachdaten" />
+
+    </class>
+
+</hibernate-mapping>

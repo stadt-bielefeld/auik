@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Thu Mar 31 16:02:08 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
+
+    <class name="BasisObjekt" table="basis_objekt">
+        <id name="objektid" column="objektid" type="java.lang.Integer">
+            <generator class="native">
+                <param name="sequence">basis_objekt_objektid_seq</param>
+        	</generator>
+        </id>
+
+        <property name="uschistdid" column="uschistdid" type="java.lang.Integer" />
+
+        <property name="beschreibung" column="beschreibung" type="java.lang.String" />
+
+        <many-to-one name="basisBetreiber" column="betreiberid" class="BasisBetreiber" />
+
+        <many-to-one name="basisObjektarten" column="objektartid" class="BasisObjektarten" />
+
+        <many-to-one name="basisStandort" column="standortid" class="BasisStandort" />
+
+    </class>
+
+</hibernate-mapping>

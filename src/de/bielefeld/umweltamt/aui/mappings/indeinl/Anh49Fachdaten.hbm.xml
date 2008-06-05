@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed May 11 12:07:17 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="Anh49Fachdaten" table="anh_49_fachdaten">
+        <id name="objektid" column="objektid" type="java.lang.Integer">
+            <generator class="foreign">
+            	<param name="property">basisObjekt</param>
+            </generator>
+        </id>
+
+        <property name="klaeranlage" column="klaeranlage" type="java.lang.String" />
+        <property name="name" column="name" type="java.lang.String" />
+        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+        <property name="planquadrat" column="planquadrat" type="java.lang.String" />
+        <property name="abgemeldet" column="abgemeldet" type="java.lang.Boolean" />
+        <property name="technikAnh49" column="technik_anh49" type="java.lang.String" />
+        <property name="technikAnh49Nr" column="technik_anh49_nr" type="java.lang.String" />
+        <property name="sachkundelfa" column="sachkundelfa" type="java.lang.String" />
+        <property name="werkstatt" column="werkstatt" type="java.lang.Boolean" />
+        <property name="bodeneinlaeufe" column="bodeneinlaeufe" type="java.lang.Boolean" />
+        <property name="waschanlagen" column="waschanlagen" type="java.lang.Boolean" />
+        <property name="sonstiges" column="sonstiges" type="java.lang.String" />
+        <property name="analysemonat" column="analysemonat" type="java.lang.String" />
+        <property name="abwasserfrei" column="abwasserfrei" type="java.lang.Boolean" />
+        <property name="dekraTuevTermin" column="dekra_tuev_termin" type="java.lang.Integer" />
+        <property name="anredeantragst" column="anredeantragst" type="java.lang.String" />
+        <property name="nameantragst" column="nameantragst" type="java.lang.String" />
+        <property name="zusantragst" column="zusantragst" type="java.lang.String" />
+        <property name="strasseantragst" column="strasseantragst" type="java.lang.String" />
+        <property name="hausnrantragst" column="hausnrantragst" type="java.lang.Integer" />
+        <property name="hausnrzusantragst" column="hausnrzusantragst" type="java.lang.String" />
+        <property name="plzantragst" column="plzantragst" type="java.lang.String" />
+        <property name="ortantragst" column="ortantragst" type="java.lang.String" />
+        <property name="sachbearbeiterIn" column="sachbearbeiter_in" type="java.lang.String" />
+        <property name="ansprechpartnerIn" column="ansprechpartner_in" type="java.lang.String" />
+        <property name="antragvom" column="antragvom" type="java.util.Date" />
+        <property name="genehmigung" column="genehmigung" type="java.util.Date" />
+        <property name="wiedervorlage" column="wiedervorlage" type="java.util.Date" />
+        <property name="aenderungsgenehmigung" column="aenderungsgenehmigung" type="java.util.Date" />
+        <property name="letztesAnschreiben" column="letztes_anschreiben" type="java.util.Date" />
+        <property name="anschreiben" column="anschreiben" type="java.lang.String" />
+        <property name="waschanlage" column="waschanlage" type="java.lang.Boolean" />
+        <property name="ESatzung" column="e_satzung" type="java.lang.Boolean" />
+        <property name="seitwann" column="seitwann" type="java.util.Date" />
+        <property name="sonstigestechnik" column="sonstigestechnik" type="java.lang.String" />
+        <property name="maengel" column="maengel" type="java.lang.Boolean" />
+        <property name="behoben" column="behoben" type="java.lang.Boolean" />
+        <property name="frist" column="frist" type="java.util.Date" />
+        <property name="durchgefuehrt" column="durchgefuehrt" type="java.lang.Integer" />
+        
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" />
+        
+    </class>
+
+</hibernate-mapping>

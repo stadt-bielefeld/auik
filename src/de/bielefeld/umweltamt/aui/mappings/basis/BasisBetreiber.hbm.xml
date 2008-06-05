@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Mon Feb 07 10:38:13 CET 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
+
+    <class name="BasisBetreiber" table="basis_betreiber">
+        <id name="betreiberid" column="id" type="java.lang.Integer">
+            <!-- <generator class="increment"/> -->
+            <generator class="native">
+                <param name="sequence">basis_betreiber_id_seq</param>
+        	</generator>
+        </id>
+
+        <property name="betranrede" column="betranrede" type="java.lang.String" />
+        <property name="betrname" column="betrname" type="java.lang.String" />
+        <property name="betrnamezus" column="betrnamezus" type="java.lang.String" />
+        <property name="namebetrbeauf" column="namebetrbeauf" type="java.lang.String" />
+        <property name="vornamebetrbeauf" column="vornamebetrbeauf" type="java.lang.String" />
+        <property name="strasse" column="strasse" type="java.lang.String" />
+        <property name="hausnr" column="hausnr" type="java.lang.Integer" />
+        <property name="hausnrzus" column="hausnrzus" type="java.lang.String" />
+        <property name="plzzs" column="plzzs" type="java.lang.String" />
+        <property name="plz" column="plz" type="java.lang.String" />
+        <property name="ort" column="ort" type="java.lang.String" />
+        <property name="telefon" column="telefon" type="java.lang.String" />
+        <property name="telefax" column="telefax" type="java.lang.String" />
+        <property name="email" column="email" type="java.lang.String" />
+        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+        <property name="revidatum" column="revidatum" type="java.util.Date" />
+        <property name="revihandz" column="revihandz" type="java.lang.String" />
+
+        <many-to-one name="vawsWirtschaftszweige" column="wirtschaftszweigid" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige" />
+    </class>
+
+</hibernate-mapping>

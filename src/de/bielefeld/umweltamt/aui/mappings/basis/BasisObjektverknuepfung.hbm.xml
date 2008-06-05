@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09.04.2008 14:16:11 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.BasisObjektverknuepfung" table="basis_objektverknuepfung" schema="public">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.BasisObjektverknuepfungId">
+            <key-property name="id" type="int">
+                <column name="id" />
+            </key-property>
+            <key-property name="objekt" type="java.lang.Integer">
+                <column name="objekt" />
+            </key-property>
+            <key-property name="istVerknuepftMit" type="java.lang.Integer">
+                <column name="ist_verknuepft_mit" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

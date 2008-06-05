@@ -1,0 +1,300 @@
+/*
+ * $Id: Charts.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/05/19 06:48:37  u633z
+ * Farben angepasst (weißer Hintergrund, hellgraue Linien, für besseren S/W-Ausdruch)
+ *
+ * Revision 1.3  2005/05/18 15:31:59  u633z
+ * Diagramm-Erzeugung verbessert, Funktionalität der Auswertung hinzugefügt
+ *
+ * Revision 1.2  2005/05/12 08:57:23  u633z
+ * JavaDoc / Kommentare verbessert
+ *
+ * Revision 1.1  2005/05/11 15:38:39  u633z
+ * Erster Test mit Diagrammen (aus echten Daten)
+ *
+ * 
+ * Erstellt am 09.05.2005 von u633z (David Klotz)
+ */
+package de.bielefeld.umweltamt.aui.utils;
+
+import java.awt.Color;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.block.BlockContainer;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.labels.XYToolTipGenerator;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.CompositeTitle;
+import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.ui.RectangleEdge;
+import org.jfree.ui.RectangleInsets;
+
+/**
+ * Eine Factory-Klasse um oft benutzte Diagramme zu erzeugen 
+ * @author David Klotz
+ */
+public class Charts {
+	
+	/*
+	 * Private, da nie eine Instanz dieser Klasse erzeugt werden soll.
+	 */
+	private Charts() {
+	}
+	
+	/**
+	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm. 
+	 * Das Diagramm hat keinen Untertitel und der Name der Y-Achse wird aus dem Dataset entnommen.
+	 * @param titel Die Überschrift
+	 * @param dataset Die Daten, die geplottet werden sollen.
+	 * @return Das neue Diagramm
+	 */
+	public static JFreeChart createDefaultTimeSeriesChart(String titel, TimeSeriesCollection dataset) {
+		String tmp = null;
+		return createDefaultTimeSeriesChart(titel, tmp, dataset);
+	}
+	
+	/**
+	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm. 
+	 * Der Name der Y-Achse wird aus dem Dataset entnommen.
+	 * @param titel Die Überschrift
+	 * @param unterTitel Ein Untertitel (kann auch <code>null</code> sein)
+	 * @param dataset Die Daten, die geplottet werden sollen.
+	 * @return Das neue Diagramm
+	 */
+	public static JFreeChart createDefaultTimeSeriesChart(String titel, String unterTitel, TimeSeriesCollection dataset) {
+		String tmp = null;
+		return createDefaultTimeSeriesChart(titel, unterTitel, tmp, dataset);
+	}
+	
+	/**
+	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm.
+	 * @param titel Die Überschrift
+	 * @param unterTitel Ein Untertitel (kann auch <code>null</code> sein)
+	 * @param yTitel Der Titel der Y-Achse (wenn er <code>null</code> ist, wird der Titel aus dem dataset genommen)
+	 * @param dataset Die Daten, die geplottet werden sollen.
+	 * @return Das neue Diagramm
+	 */
+	public static JFreeChart createDefaultTimeSeriesChart(String titel, String unterTitel, String yTitel, TimeSeriesCollection dataset) {
+		// Das Diagramm erzeugen
+		JFreeChart chart = ChartFactory.createTimeSeriesChart(
+				titel,		// Chart-Titel
+				"Datum", 	// X-Achsenbeschriftung
+				yTitel, 	// Y-Achsenbeschriftung
+				dataset, 	// Die Daten
+				true, 		// Legende zeigen
+				true, 		// Tooltips zeigen
+				false		// Urls? (vermutlich nur für Servlets...)
+		);
+		
+		// Die Hintergrundfarbe für das ganze Diagramm setzen
+		chart.setBackgroundPaint(Color.WHITE);
+		// Dem Diagramm einen sichtbaren Rand geben
+		chart.setBorderVisible(true);
+		
+		// Den Untertitel (falls vorhanden) setzen
+		if (unterTitel != null && !unterTitel.equals("")) {
+			TextTitle subTitle = new TextTitle(unterTitel);
+			subTitle.setPosition(RectangleEdge.TOP);
+			chart.addSubtitle(subTitle);
+		}
+		
+		// Den Plot anpassen...
+		XYPlot plot = chart.getXYPlot();
+		plot.setBackgroundPaint(Color.WHITE);		// Hintergrundfarbe
+		plot.setDomainGridlinePaint(Color.LIGHT_GRAY);		// Farbe der X-Gitterlinien
+		plot.setDomainGridlinesVisible(true);			// X-Gitterlinen sichtbar
+		plot.setRangeGridlinePaint(Color.LIGHT_GRAY);		// Farbe der Y-Gitterlinien
+		
+		// Eine Referenz auf die Werte-Achse holen
+		NumberAxis axis = (NumberAxis) plot.getRangeAxis();
+		
+		// Wenn kein Titel übergeben wird, benutzen wir den der ersten Datenreihe
+		if (yTitel == null) {
+			if (dataset.getSeriesCount() > 0) {
+				TimeSeries series = dataset.getSeries(0);
+				axis.setLabel(series.getRangeDescription());
+			}
+		}
+		
+		/*XYPointerAnnotation anno = new XYPointerAnnotation("14.08.03", new Day(14, 8, 2003).getFirstMillisecond(), 3.9, Math.PI / 2);
+		anno.setLabelOffset(8.0);
+		anno.setTipRadius(8.0);
+		anno.setBaseRadius(25.0);
+		anno.setPaint(Color.YELLOW);
+		anno.setArrowPaint(Color.YELLOW);
+		//anno.setRotationAnchor(TextAnchor.CENTER_LEFT);
+		//anno.setRotationAngle(Math.PI);
+		plot.addAnnotation(anno);*/
+		
+		// Tooltip-Generator, der den Namen der Messreihe, das Datum und den Wert anzeigt.
+		XYToolTipGenerator ttgen = new StandardXYToolTipGenerator(StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, new SimpleDateFormat("dd.MM.yy HH:mm"), NumberFormat.getInstance());
+		
+		// Den Renderer für die Messwerte/-linien anpassen
+		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+		renderer.setDefaultShapesVisible(true);
+		renderer.setDefaultShapesFilled(true);
+		renderer.setToolTipGenerator(ttgen);
+		
+		// Die Datumsachse anpassen
+		DateAxis datumsAchse = (DateAxis) plot.getDomainAxis();
+		datumsAchse.setVerticalTickLabels(true);
+		//datumsAchse.setTickLabelsVisible(false);
+		//datumsAchse.setTickMarksVisible(false);
+		//datumsAchse.setDateFormatOverride(new SimpleDateFormat("MM/yy"));	
+		return chart;
+	}
+	
+	/**
+	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm mit zwei Y-Achsen.
+	 * Das Diagramm hat keinen Untertitel und der Name der Y-Achsen wird aus den Datasets entnommen.
+	 * @param titel Die Überschrift
+	 * @param dataset1 Die Daten, die gegen die erste Achse geplottet werden sollen.
+	 * @param dataset2 Die Daten, die gegen die zweite Achse geplottet werden sollen.
+	 * @return Das neue Diagramm
+	 */
+	public static JFreeChart createDefaultTimeSeriesChart(String titel, TimeSeriesCollection dataset1, TimeSeriesCollection dataset2) {
+		return createDefaultTimeSeriesChart(titel, null, null, null, dataset1, dataset2);
+	}
+	
+	/**
+	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm mit zwei Y-Achsen. 
+	 * Der Name der Y-Achsen wird aus den Datasets entnommen.
+	 * @param titel Die Überschrift
+	 * @param unterTitel Ein Untertitel (kann auch <code>null</code> sein)
+	 * @param dataset1 Die Daten, die gegen die erste Achse geplottet werden sollen.
+	 * @param dataset2 Die Daten, die gegen die zweite Achse geplottet werden sollen.
+	 * @return Das neue Diagramm
+	 */
+	public static JFreeChart createDefaultTimeSeriesChart(String titel, String unterTitel, TimeSeriesCollection dataset1, TimeSeriesCollection dataset2) {
+		return createDefaultTimeSeriesChart(titel, unterTitel, null, null, dataset1, dataset2);
+	}
+	
+	/**
+	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm mit zwei Y-Achsen.
+	 * @param titel Die Überschrift
+	 * @param unterTitel Ein Untertitel (kann auch <code>null</code> sein)
+	 * @param yTitel1 Der Titel der ersten Y-Achse (wenn er <code>null</code> ist, wird der Titel aus dem dataset1 genommen)
+	 * @param yTitel2 Der Titel der zweiten Y-Achse (wenn er <code>null</code> ist, wird der Titel aus dem dataset2 genommen)
+	 * @param dataset1 Die Daten, die gegen die erste Achse geplottet werden sollen.
+	 * @param dataset2 Die Daten, die gegen die zweite Achse geplottet werden sollen.
+	 * @return Das neue Diagramm
+	 */
+	public static JFreeChart createDefaultTimeSeriesChart(String titel, String unterTitel, String yTitel1, String yTitel2, TimeSeriesCollection dataset1, TimeSeriesCollection dataset2) {
+		// Das Diagramm erzeugen
+		JFreeChart chart = ChartFactory.createTimeSeriesChart(
+				titel,		// Chart-Titel
+				"Datum", 	// X-Achsenbeschriftung
+				yTitel1, 	// Y-Achsenbeschriftung
+				dataset1, 	// Die Daten
+				false, 		// Legende zeigen
+				true, 		// Tooltips zeigen
+				false		// Urls? (vermutlich nur für Servlets...)
+		);
+		
+		// Die Hintergrundfarbe für das ganze Diagramm setzen
+		chart.setBackgroundPaint(Color.WHITE);
+		// Dem Diagramm einen sichtbaren Rand geben
+		chart.setBorderVisible(true);
+		
+		// Den Untertitel (falls vorhanden) setzen
+		if (unterTitel != null && !unterTitel.equals("")) {
+			TextTitle subTitle = new TextTitle(unterTitel);
+			subTitle.setPosition(RectangleEdge.TOP);
+			chart.addSubtitle(subTitle);
+		}
+		
+		// Den Plot anpassen...
+		XYPlot plot = chart.getXYPlot();
+		plot.setBackgroundPaint(Color.WHITE);		// Hintergrundfarbe
+		plot.setDomainGridlinePaint(Color.LIGHT_GRAY);		// Farbe der X-Gitterlinien
+		plot.setDomainGridlinesVisible(true);			// X-Gitterlinen sichtbar
+		plot.setRangeGridlinePaint(Color.LIGHT_GRAY);		// Farbe der Y-Gitterlinien
+		
+		// Eine Referenz auf die erste Werte-Achse holen
+		NumberAxis axis1 = (NumberAxis) plot.getRangeAxis();
+		
+		// Wenn kein Titel übergeben wird, benutzen wir den der ersten Datenreihe
+		if (yTitel1 == null) {
+			if (dataset1.getSeriesCount() > 0) {
+				TimeSeries series = dataset1.getSeries(0);
+				axis1.setLabel(series.getRangeDescription());
+			}
+		}
+		
+		// Die zweite Achse erzeugen
+		NumberAxis axis2 = new NumberAxis(yTitel2);
+		axis2.setAutoRangeIncludesZero(false);
+		
+		// Wenn kein Titel übergeben wird, benutzen wir den der zweiten Datenreihe
+		if (yTitel2 == null) {
+			if (dataset2.getSeriesCount() > 0) {
+				TimeSeries series = dataset2.getSeries(0);
+				axis2.setLabel(series.getRangeDescription());
+			}
+		}
+		
+		// Die zweite Achse dem Plot hinzufügen und mit dem zweiten Datensatz verknüpfen
+		plot.setRangeAxis(1, axis2);
+		plot.setDataset(1, dataset2);
+		plot.setRenderer(1, new XYLineAndShapeRenderer()); 
+		plot.mapDatasetToRangeAxis(1, 1);
+		
+		// Die Datumsachse anpassen
+		DateAxis datumsAchse = (DateAxis) plot.getDomainAxis();
+		datumsAchse.setVerticalTickLabels(true);
+		
+		// Tooltip-Generator, der den Namen der Messreihe, das Datum und den Wert anzeigt.
+		XYToolTipGenerator ttgen = new StandardXYToolTipGenerator(StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, new SimpleDateFormat("dd.MM.yy hh:mm"), NumberFormat.getInstance());
+		
+		// Den Renderer für die Messwerte/-linien der ersten Achse anpassen
+		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+		renderer.setDefaultShapesVisible(true);
+		renderer.setDefaultShapesFilled(true);
+		renderer.setToolTipGenerator(ttgen);
+		if (dataset1.getSeriesCount() == 1) {
+			axis1.setLabelPaint(renderer.getSeriesPaint(0));
+		}
+		
+		// Den Renderer für die Messwerte/-linien der zweiten Achse anpassen
+		XYLineAndShapeRenderer renderer2 = (XYLineAndShapeRenderer) plot.getRenderer(1);
+		renderer2.setDefaultShapesVisible(true);
+		renderer2.setDefaultShapesFilled(true);
+		renderer2.setToolTipGenerator(ttgen);
+		if (dataset2.getSeriesCount() == 1) {
+			axis2.setLabelPaint(renderer2.getSeriesPaint(0));
+		}
+		
+		// Die Legende anpassen
+		LegendTitle l1 = new LegendTitle(renderer);
+		l1.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 5.0));
+		l1.setBorder(new BlockBorder());
+		
+		LegendTitle l2 = new LegendTitle(renderer2);
+		l2.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 5.0));
+		l2.setBorder(new BlockBorder());
+		
+		BlockContainer cont = new BlockContainer();
+		cont.add(l1, RectangleEdge.LEFT);
+		cont.add(l2, RectangleEdge.RIGHT);
+		
+		CompositeTitle compLegend = new CompositeTitle(cont);
+		compLegend.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
+		compLegend.setPosition(RectangleEdge.BOTTOM);
+		
+		chart.addSubtitle(compLegend);
+		
+		// Das fertige Diagramm zurückliefern
+		return chart;
+	}
+}

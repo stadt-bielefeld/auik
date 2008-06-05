@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed Feb 16 15:12:01 CET 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
+
+    <class name="AtlKlaeranlagen" table="atl_klaeranlagen" mutable="false">
+        <id name="kaId" column="id" type="java.lang.Integer">
+            <generator class="assigned"/>
+        </id>
+
+        <property name="anlage" column="anlage" type="java.lang.String"  not-null="true" />
+    </class>
+
+</hibernate-mapping>

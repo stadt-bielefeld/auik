@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Wed Jan 19 10:44:46 CET 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
+
+    <class name="BasisObjektarten" table="basis_objektarten" mutable="false">
+        <id name="objektartid" column="id" type="java.lang.Integer">
+            <generator class="assigned"/>
+        </id>
+
+        <property name="objektart" column="objektart" type="java.lang.String" />
+        <property name="abteilung" column="abteilung" type="java.lang.String" />
+        <property name="kategorie" column="kategorie" type="java.lang.String" />
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="Anh55Fachdaten" table="anh_55_fachdaten">
+        <id name="id" column="objektid" type="java.lang.Integer">
+            <generator class="foreign">
+            	<param name="property">basisObjekt</param>
+            </generator>
+        </id>
+
+		<property name="abgemeldet" column="abgemeldet" type="java.lang.Boolean" />
+		<property name="putztuecher" column="putztuecher" type="java.lang.Boolean" />
+		<property name="teppich" column="teppich" type="java.lang.Boolean" />
+		<property name="matten" column="matten" type="java.lang.Boolean" />
+		<property name="haushaltstex" column="haushaltstex" type="java.lang.Boolean" />
+		<property name="berufskl" column="berufskl" type="java.lang.Boolean" />
+		<property name="gasthotel" column="gaststhotel" type="java.lang.Boolean" />
+		<property name="krankenhaus" column="krankenhaus" type="java.lang.Boolean" />
+		<property name="heimwaesche" column="heimwaesche" type="java.lang.Boolean" />
+		<property name="anteilwaschgut" column="anteilwaschgut" type="java.lang.Integer" />
+		<property name="vlies" column="vlies" type="java.lang.Boolean" />
+		<property name="fischfleisch" column="fischfleisch" type="java.lang.Boolean" />
+		<property name="anteilgesamtgut" column="anteilgesamtgut" type="java.lang.Integer" />
+		<property name="betrwasseraufber" column="betrwasseraufber" type="java.lang.Boolean" />
+		<property name="chlor" column="chlor" type="java.lang.Boolean" />
+		<property name="aktivchlor" column="aktivchlor" type="java.lang.Boolean" />
+		<property name="sachbearbeiter" column="sachbearbeiter" type="java.lang.String" />
+		<property name="entgebId" column="entgeb_id" type="java.lang.String" />
+		<property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+		<property name="mengewaesche" column="mengewaesche" type="java.lang.String" />		
+        <property name="sonsttex" column="sonsttex" type="java.lang.String" />
+        <property name="monatwasserverb" column="monatwasserverb" type="java.lang.String" />
+        <property name="waschsituation" column="waschsituation" type="java.lang.String" />
+        <property name="ansprechpartner" column="ansprechpartner" type="java.lang.String" />
+        <property name="branche" column="branche" type="java.lang.String" />
+        <property name="loesungsmittel" column="loesungsmittel" type="java.lang.Boolean" />
+
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
+    </class>
+
+</hibernate-mapping>

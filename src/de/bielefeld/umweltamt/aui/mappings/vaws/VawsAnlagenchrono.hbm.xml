@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- DO NOT EDIT: This is a generated file that is synchronized -->
+<!-- by MyEclipse Hibernate tool integration.                   -->
+<!-- Created Tue Sep 06 14:45:45 CEST 2005                         -->
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
+
+    <class name="VawsAnlagenchrono" table="vaws_anlagenchrono">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native">
+            	<param name="sequence">vaws_anlagenchrono_id_seq</param>
+            </generator>
+        </id>
+
+        <property name="datum" column="datum" type="java.util.Date" />
+        <property name="sachverhalt" column="sachverhalt" type="java.lang.String" />
+        <property name="wv" column="wv" type="java.util.Date" />
+
+        <many-to-one name="vawsFachdaten" column="behaelterid" class="VawsFachdaten" not-null="true" />
+    </class>
+
+</hibernate-mapping>
