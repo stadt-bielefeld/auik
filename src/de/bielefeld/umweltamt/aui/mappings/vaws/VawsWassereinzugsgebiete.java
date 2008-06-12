@@ -68,7 +68,7 @@ public class VawsWassereinzugsgebiete
 	public static VawsWassereinzugsgebiete[] getWEinzugsgebiete() throws HibernateException {
 		Session session = HibernateSessionFactory.currentSession();
 		VawsWassereinzugsgebiete[] tmp = getWEinzugsgebiete(session);
-		//HibernateSessionFactory.closeSession();
+		HibernateSessionFactory.closeSession();
 		return tmp;
 	}
 }

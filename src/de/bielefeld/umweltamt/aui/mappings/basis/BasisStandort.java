@@ -69,7 +69,7 @@ public class BasisStandort
 		try {
 			Session session = HibernateSessionFactory.currentSession();
 			standort = (BasisStandort) session.get(BasisStandort.class, id);
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		} catch (HibernateException e) {
 			standort = null;
 		}
@@ -116,7 +116,7 @@ public class BasisStandort
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
     	return standorte;
     }
@@ -201,7 +201,7 @@ public class BasisStandort
 		try {
 			Session session = HibernateSessionFactory.currentSession();
 			tmp = getEntwGebiete(session);
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (BasisStandort)", e);
 		}

@@ -67,7 +67,7 @@ public class VawsWirtschaftszweige
 	public static VawsWirtschaftszweige[] getWirtschaftszweige() throws HibernateException {
 		Session session = HibernateSessionFactory.currentSession();
 		VawsWirtschaftszweige[] tmp = getWirtschaftszweige(session);
-		//HibernateSessionFactory.closeSession();
+		HibernateSessionFactory.closeSession();
 		return tmp;
 	}
 }

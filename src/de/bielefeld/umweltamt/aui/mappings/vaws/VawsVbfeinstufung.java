@@ -55,7 +55,7 @@ public class VawsVbfeinstufung
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (VawsVbfeinstufung)", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return tmp;

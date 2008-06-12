@@ -8,7 +8,7 @@
 <!-- Created Mon Feb 07 10:38:13 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
 
-    <class name="BasisBetreiber" table="basis_betreiber">
+    <class name="BasisBetreiber" table="basis_betreiber" lazy="false">
         <id name="betreiberid" column="id" type="java.lang.Integer">
             <!-- <generator class="increment"/> -->
             <generator class="native">

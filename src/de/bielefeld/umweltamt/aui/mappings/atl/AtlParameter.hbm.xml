@@ -8,7 +8,7 @@
 <!-- Created Thu Feb 24 11:07:22 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
 
-    <class name="AtlParameter" table="atl_parameter" mutable="false">
+    <class name="AtlParameter" table="atl_parameter" mutable="false" lazy="false">
         <id name="ordnungsbegriff" column="ordnungsbegriff" type="java.lang.String">
             <generator class="assigned"/>
         </id>

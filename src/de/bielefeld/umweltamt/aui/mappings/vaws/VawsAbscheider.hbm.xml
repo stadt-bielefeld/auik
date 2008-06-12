@@ -34,16 +34,16 @@
         <property name="sonmaterial" column="sonmaterial" type="java.lang.String" />
         <property name="sonlaenge" column="sonlaenge" type="java.lang.String" />
         <property name="oelspeichervol" column="oelspeichervol" type="java.lang.String" />
-        <property name="kompaktanlage" column="kompaktanlage" type="java.lang.Integer" />
-        <property name="sf" column="sf" type="java.lang.Integer" />
-        <property name="kkl1" column="kkl1" type="java.lang.Integer" />
-        <property name="lfkl2" column="lfkl2" type="java.lang.Integer" />
-        <property name="ps" column="ps" type="java.lang.Integer" />
-        <property name="ueberhausr" column="ueberhausr" type="java.lang.Integer" />
-        <property name="waschanlvorh" column="waschanlvorh" type="java.lang.Integer" />
-        <property name="abgabe" column="abgabe" type="java.lang.Integer" />
-        <property name="hlzapfanl" column="hlzapfanl" type="java.lang.Integer" />
-        <property name="belvonlagerbh" column="belvonlagerbh" type="java.lang.Integer" />
-        <property name="rueckhalteausr" column="rueckhalteausr" type="java.lang.Integer" />        
+        <property name="kompaktanlage" column="kompaktanlage" type="java.lang.Boolean" />
+        <property name="sf" column="sf" type="java.lang.Boolean" />
+        <property name="kkl1" column="kkl1" type="java.lang.Boolean" />
+        <property name="lfkl2" column="lfkl2" type="java.lang.Boolean" />
+        <property name="ps" column="ps" type="java.lang.Boolean" />
+        <property name="ueberhausr" column="ueberhausr" type="java.lang.Boolean" />
+        <property name="waschanlvorh" column="waschanlvorh" type="java.lang.Boolean" />
+        <property name="abgabe" column="abgabe" type="java.lang.Boolean" />
+        <property name="hlzapfanl" column="hlzapfanl" type="java.lang.Boolean" />
+        <property name="belvonlagerbh" column="belvonlagerbh" type="java.lang.Boolean" />
+        <property name="rueckhalteausr" column="rueckhalteausr" type="java.lang.Boolean" />        
     </class>
 </hibernate-mapping>

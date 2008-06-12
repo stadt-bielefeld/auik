@@ -70,7 +70,7 @@ public class AnhBwkFachdaten
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		bwk = getAnhBwkByObjekt(objekt, session);
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	} catch (HibernateException e) {
     		bwk = null;
     		throw new RuntimeException("Datenbank-Fehler", e);
@@ -159,7 +159,7 @@ public class AnhBwkFachdaten
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);
     	} finally {
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	}
     	
     	return liste;

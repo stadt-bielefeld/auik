@@ -68,7 +68,7 @@ public class Anh49Ortstermine
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
     	return ot;

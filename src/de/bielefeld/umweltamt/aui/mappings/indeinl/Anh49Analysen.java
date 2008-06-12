@@ -68,7 +68,7 @@ public class Anh49Analysen
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
     	return analyse;
@@ -97,7 +97,7 @@ public class Anh49Analysen
 				}
 			}
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
     }
     
@@ -122,7 +122,7 @@ public class Anh49Analysen
 				}
 			}
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
     	
     	return removed;

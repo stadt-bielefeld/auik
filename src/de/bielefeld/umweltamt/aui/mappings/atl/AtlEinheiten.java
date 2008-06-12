@@ -120,7 +120,7 @@ public class AtlEinheiten
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
     	
     	return tmp;
@@ -142,7 +142,7 @@ public class AtlEinheiten
 				e.printStackTrace();
 				einheit = null;
 			} finally {
-//				HibernateSessionFactory.closeSession();
+				HibernateSessionFactory.closeSession();
 			}
 		} else {
 			einheit = null;

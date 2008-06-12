@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: VawsEditor.java,v 1.1 2008-06-05 11:38:41 u633d Exp $
+ * $Id: VawsEditor.java,v 1.2 2008-06-12 10:21:42 u633d Exp $
  * 
  * Erstellt am 03.09.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:41  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.5  2005/11/02 13:52:39  u633d
  * - Version vom 2.11.
  *
@@ -65,6 +68,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsBehaelterart;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
@@ -95,6 +99,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  */
 public class VawsEditor extends AbstractBaseEditor {
 	private VawsAbfuellflaeche abfuellflaeche;
+	private VawsAbscheider abscheider;
 	
 	private JPanel topPanel;
 	private JTabbedPane tabbedPane;
@@ -129,6 +134,56 @@ public class VawsEditor extends AbstractBaseEditor {
 	private JComboBox behaelterArtBox;
 	private JComboBox materialBox;
 	
+	// Beschreibung für die Felder bei VAwS-Abscheider ### START
+	private JPanel datenVAWSAbscheiderTab;
+	private JPanel ausführungVAWSAbscheiderTab;
+	private JPanel schutzvorkehrungenVAWSAbscheiderTab;
+
+	// Daten TAB ### START
+//	private LimitedTextField flüssigkField;
+	private JCheckBox kompSFCheck;
+	private JCheckBox kompLFCheck;
+	private JCheckBox kompKCheck;
+	private JCheckBox kompPSCheck;
+	private JCheckBox kompaktCheck;
+	// Daten TAB ### END
+
+	// Ausführung TAB ### START
+	private LimitedTextField schlammHerstField;
+	private LimitedTextField schlammTypField;
+	private DoubleField schlammSFVField;
+	private LimitedTextField schlammMatField;
+	private LimitedTextField schlammBeschField;
+
+	private LimitedTextField abscheiderHerstField;
+	private LimitedTextField abscheiderTypField;
+	private LimitedTextField abscheiderPrüfField;
+	private DoubleField abscheiderNSField;
+	private LimitedTextField abscheiderMatField;
+	private LimitedTextField abscheiderBeschField;
+	private DoubleField abscheiderÖlField;
+
+	private DoubleField zulDNField;
+	private LimitedTextField zulMatField;
+	private DoubleField zulLField;
+	private DoubleField verbDNField;
+	private LimitedTextField verbMatField;
+	private DoubleField verbLField;
+	private DoubleField sonsDNField;
+	private LimitedTextField sonsMatField;
+	private DoubleField sonsLField;
+	// Ausführung TAB ### END
+
+	// Schutzvorkehrungen TAB ### START
+	private JCheckBox überCheck;
+	private JCheckBox waschCheck;
+	private JCheckBox abgabeCheck;
+	private JCheckBox hochCheck;
+	private JCheckBox belüftCheck;
+	private JCheckBox rückCheck;
+	private LimitedTextArea bemerkArea;
+	// Schutzvorkehrungen TAB ### END
+	// Beschreibung für die Felder bei VAwS-Abscheider ### END	
 	// Daten (Lageranlagen)
 	private JPanel datenLageranlagenTab;
 	private DoubleField mengeFeld;
@@ -246,6 +301,12 @@ public class VawsEditor extends AbstractBaseEditor {
 		return (VawsFachdaten) getEditedObject();
 	}
 	
+	public VawsAbscheider getAbscheider() {
+		if (abscheider == null) {
+			abscheider = VawsAbscheider.getAbscheider(getFachdaten());
+		}
+		return abscheider;
+	}	
 	/**
 	 * Liefert die Abfüllflächen-Fachdaten zum bearbeiteten Objekt.
 	 * Achtung: Nur bei Abfüllflächen-Objekten aufrufen!
@@ -383,6 +444,47 @@ public class VawsEditor extends AbstractBaseEditor {
 		beschrBodenflaecheArea = new LimitedTextArea(255);
 		beschrFugenmaterialArea = new LimitedTextArea(255);
 		beschrAblNiederschlArea = new LimitedTextArea(255);
+
+		// Daten (VAwS-Abscheider)
+//		flüssigkField = new LimitedTextField(25);
+		kompKCheck = new JCheckBox("K (Kl.I)");
+		kompLFCheck = new JCheckBox("LF (Kl.II)");
+		kompPSCheck = new JCheckBox("PS");
+		kompSFCheck = new JCheckBox("SF");
+		kompaktCheck = new JCheckBox("Kompaktanlage?");
+
+		// Schutzvorkehrungen (VAwS-Abscheider)
+		überCheck = new JCheckBox("Überhöhung ausreichend?");
+		waschCheck = new JCheckBox("Warnanlage vorhanden?");
+		abgabeCheck = new JCheckBox("Abgabeeinrichtung?");
+		hochCheck = new JCheckBox("Hochleistungszapfanlage?");
+		belüftCheck = new JCheckBox("Befüllung von Lagerbehältern?");
+		rückCheck = new JCheckBox("Rückhaltevermögen ausreichend?");
+		bemerkArea = new LimitedTextArea(255);
+
+		// Ausführung (VAwS-Abscheider)
+		schlammBeschField = new LimitedTextField(25);
+		schlammHerstField = new LimitedTextField(25);
+		schlammMatField = new LimitedTextField(25);
+		schlammSFVField = new DoubleField(0);
+		schlammTypField = new LimitedTextField(25);
+		abscheiderBeschField = new LimitedTextField(25);
+		abscheiderHerstField = new LimitedTextField(25);
+		abscheiderMatField = new LimitedTextField(25);
+		abscheiderNSField = new DoubleField(0);
+		abscheiderPrüfField = new LimitedTextField(25);
+		abscheiderTypField = new LimitedTextField(25);
+		abscheiderÖlField = new DoubleField(0);
+		zulDNField = new DoubleField(0);
+		zulLField = new DoubleField(0);
+		zulMatField = new LimitedTextField(25);
+		verbDNField = new DoubleField(0);
+		verbLField = new DoubleField(0);
+		verbMatField = new LimitedTextField(25);
+		sonsDNField = new DoubleField(0);
+		sonsLField = new DoubleField(0);
+		sonsMatField = new LimitedTextField(25);
+
 		
 		// Sachverständigenprüfung
 		svPruefungModel = new VawsKontrollenModel();
@@ -440,7 +542,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		
 		// Für die ComboBox bei "Maßnahme"
 		massnahmenBox = new JComboBox(VawsVerwmassnahmen.getAllMassnahmen());
-		massnahmenBox.setEditable(false);
+		massnahmenBox.setEditable(true);
 		massnahmenBox.addFocusListener(new FocusAdapter() {
 			public void focusGained(FocusEvent e) {
 				massnahmenBox.showPopup();
@@ -548,8 +650,54 @@ public class VawsEditor extends AbstractBaseEditor {
 		bemerkungArea.setText(getFachdaten().getBemerkungen());
 		
 		anlagenChronoModel.setFachdaten(getFachdaten());
-		
-		if (getFachdaten().isLageranlage()) {
+
+		if (getFachdaten().isVAWSAbscheider()) {
+			tabbedPane.addTab("Daten", getDatenVAWSAbscheiderTab());
+			tabbedPane.addTab("Ausführung", getAusführungVAWSAbscheiderTab());
+			tabbedPane.addTab("Schutzvorkehrungen", getSchutzvorkehrungenVAWSAbscheiderTab());
+
+			mengeFeld.setValue(getFachdaten().getMenge());
+
+			// Daten Tab
+//			flüssigkField.setText(getAbscheider().getMedium());
+			kompaktCheck.setSelected(getAbscheider().getKompaktanlage());
+			kompKCheck.setSelected(getAbscheider().getKkl1());
+			kompLFCheck.setSelected(getAbscheider().getLfkl2());
+			kompPSCheck.setSelected(getAbscheider().getPs());
+			kompSFCheck.setSelected(getAbscheider().getSf());
+
+			// Ausführung Tab
+			schlammBeschField.setText(getAbscheider().getSfbeschichtung());
+			schlammHerstField.setText(getAbscheider().getSfhersteller());
+			schlammMatField.setText(getAbscheider().getSfmaterial());
+			schlammSFVField.setText(getAbscheider().getSfvolumen());
+			schlammTypField.setText(getAbscheider().getSftyp());
+			abscheiderBeschField.setText(getAbscheider().getAbbeschichtung());
+			abscheiderHerstField.setText(getAbscheider().getAbhersteller());
+			abscheiderMatField.setText(getAbscheider().getAbmaterial());
+			abscheiderNSField.setText(getAbscheider().getAbnenngr());
+			abscheiderPrüfField.setText(getAbscheider().getAbpruefz());
+			abscheiderTypField.setText(getAbscheider().getAbtyp());
+			abscheiderÖlField.setText(getAbscheider().getOelspeichervol());
+			zulDNField.setText(getAbscheider().getZuldn());
+			zulLField.setText(getAbscheider().getZullaenge());
+			zulMatField.setText(getAbscheider().getZulmaterial());
+			verbDNField.setText(getAbscheider().getVerbdn());
+			verbLField.setText(getAbscheider().getVerblaenge());
+			verbMatField.setText(getAbscheider().getVerbmaterial());
+			sonsDNField.setText(getAbscheider().getSondn());
+			sonsLField.setText(getAbscheider().getSonlaenge());
+			sonsMatField.setText(getAbscheider().getSonmaterial());
+			
+			//Schutzvorkehrungen Tab
+			überCheck.setSelected(getAbscheider().getUeberhausr());
+			waschCheck.setSelected(getAbscheider().getWaschanlvorh());
+			abgabeCheck.setSelected(getAbscheider().getAbgabe());
+			hochCheck.setSelected(getAbscheider().getHlzapfanl());
+			belüftCheck.setSelected(getAbscheider().getBelvonlagerbh());
+			rückCheck.setSelected(getAbscheider().getRueckhalteausr());
+		}
+		else if (getFachdaten().isLageranlage()) {
 			tabbedPane.addTab("Daten", getDatenLageranlagenTab());
 			tabbedPane.addTab("Schutzvorkehrungen", getSchutzLageranlagenTab());
 			tabbedPane.addTab("Leitungen", getLeitungenLageranlagenTab());
@@ -706,6 +854,20 @@ public class VawsEditor extends AbstractBaseEditor {
 	 * @see de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#doSave()
 	 */
 	protected boolean doSave() {
+		
+		if (svPruefungTabelle.getCellEditor() != null) {
+			svPruefungTabelle.getCellEditor().stopCellEditing();
+		}
+		if (verwVerfahrenTabelle.getCellEditor() != null) {
+			verwVerfahrenTabelle.getCellEditor().stopCellEditing();
+		}
+		if (anlagenChronoTabelle.getCellEditor() != null) {
+			anlagenChronoTabelle.getCellEditor().stopCellEditing();
+		}
+		if (verwGebuehrenTabelle.getCellEditor() != null) {
+			verwGebuehrenTabelle.getCellEditor().stopCellEditing();
+		}
+		
 		String tmp = hnrFeld.getText();
 		if (tmp != null) {
 			tmp = tmp.trim();
@@ -785,7 +947,44 @@ public class VawsEditor extends AbstractBaseEditor {
 			
 			success = success && VawsAbfuellflaeche.saveAbfuellflaeche(getAbfuellflaeche());
 		}
-		
+		if (getFachdaten().isVAWSAbscheider()) {
+			getAbscheider().setAbgabe(abgabeCheck.isSelected());
+			getAbscheider().setBelvonlagerbh(belüftCheck.isSelected());
+			getAbscheider().setHlzapfanl(hochCheck.isSelected());
+			getAbscheider().setKompaktanlage(kompaktCheck.isSelected());
+			getAbscheider().setKkl1(kompKCheck.isSelected());
+			getAbscheider().setLfkl2(kompLFCheck.isSelected());
+			getAbscheider().setPs(kompPSCheck.isSelected());
+			getAbscheider().setSf(kompSFCheck.isSelected());
+			getAbscheider().setRueckhalteausr(rückCheck.isSelected());
+			getAbscheider().setWaschanlvorh(waschCheck.isSelected());
+			getAbscheider().setUeberhausr(überCheck.isSelected());
+//			getAbscheider().setMedium(flüssigkField.getText());
+			getAbscheider().setAbbeschichtung(abscheiderBeschField.getText());
+			getAbscheider().setAbhersteller(abscheiderHerstField.getText());
+			getAbscheider().setAbmaterial(abscheiderMatField.getText());
+			getAbscheider().setAbnenngr(abscheiderNSField.getText());
+			getAbscheider().setAbpruefz(abscheiderPrüfField.getText());
+			getAbscheider().setAbtyp(abscheiderTypField.getText());
+			getAbscheider().setOelspeichervol(abscheiderÖlField.getText());
+			getAbscheider().setSfbeschichtung(schlammBeschField.getText());
+			getAbscheider().setSfhersteller(schlammHerstField.getText());
+			getAbscheider().setSfmaterial(schlammMatField.getText());
+			getAbscheider().setSftyp(schlammTypField.getText());
+			getAbscheider().setSfvolumen(schlammSFVField.getText());
+			getAbscheider().setZuldn(zulDNField.getText());
+			getAbscheider().setZullaenge(zulLField.getText());
+			getAbscheider().setZulmaterial(zulMatField.getText());
+			getAbscheider().setVerbdn(verbDNField.getText());
+			getAbscheider().setVerblaenge(verbLField.getText());
+			getAbscheider().setVerbmaterial(verbMatField.getText());
+			getAbscheider().setSondn(sonsDNField.getText());
+			getAbscheider().setSonlaenge(sonsLField.getText());
+			getAbscheider().setSonmaterial(sonsMatField.getText());
+			
+			success = success && VawsAbscheider.saveAbscheider(getAbscheider());
+			
+		}
 		// Anlagenchronologie speichern:
 		for (Iterator it = anlagenChronoModel.getList().iterator(); it.hasNext();) {
 			success = success && VawsAnlagenchrono.saveAnlagenChrono((VawsAnlagenchrono) it.next());
@@ -897,6 +1096,145 @@ public class VawsEditor extends AbstractBaseEditor {
 	}
 	
 	// Tabs:
+	
+	private JPanel getDatenVAWSAbscheiderTab() {
+		if (datenVAWSAbscheiderTab == null) {
+			FormLayout layout = new FormLayout(
+					"r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g"
+			);
+			layout.setColumnGroups(new int[][]{{1,5}, {3,7}});
+			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			builder.setDefaultDialogBorder();
+
+			builder.appendSeparator("Stammdaten");
+			builder.append("Baujahr:", baujahrFeld);
+			builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
+			builder.nextLine();
+
+			builder.append("Erfassung:", erfassungChooser);
+			builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
+			builder.nextLine();
+
+			builder.append("Stillegung:", stillegungChooser);
+			builder.nextLine();
+
+			/*builder.appendRow("fill:30dlu");
+			builder.append("Flüssigkeit/Medium", flüssigkField);
+			builder.nextLine();*/
+			builder.appendSeparator("Komponenten");
+//			builder.appendRow("3dlu");
+			//builder.appendColumn("r:p, 3dlu, f:p:g, 10dlu, r:p, r:p, r:p, r:p, 0:g");
+//			builder.append("Flüssigkeit/Medium", flüssigkField);
+			builder.append("", kompaktCheck);
+			builder.nextLine();
+			builder.append("", kompSFCheck);
+			builder.append("", kompPSCheck);
+			builder.nextLine();
+			builder.append("", kompKCheck);
+			builder.append("", kompLFCheck);
+			builder.nextLine();
+
+			builder.appendSeparator("Bemerkungen");
+			builder.appendRow("3dlu");
+			builder.appendRow("fill:30dlu:grow");
+			builder.nextLine(2);
+			builder.append(new JScrollPane(bemerkungArea),8);
+
+			builder.appendSeparator("Anlagen-Chronologie");
+			builder.appendRow("3dlu");
+			builder.appendRow("fill:40dlu:grow");
+			builder.nextLine(2);
+			builder.append(new JScrollPane(anlagenChronoTabelle),8);
+
+			datenVAWSAbscheiderTab = builder.getPanel();
+		}
+		return datenVAWSAbscheiderTab;
+	}
+
+	private JPanel getAusführungVAWSAbscheiderTab()
+	{
+		if (ausführungVAWSAbscheiderTab == null) {
+			FormLayout layout = new FormLayout(
+					"r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"
+			);
+			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			builder.setDefaultDialogBorder();
+
+
+			builder.appendSeparator("Schlammfang");
+			builder.append("Hersteller:", schlammHerstField);
+			builder.append("Typ:", schlammTypField);
+			builder.append("SF-Volumen [Liter]:", schlammSFVField);
+			builder.nextLine();
+			builder.append("Material:", schlammMatField);
+			builder.append("Beschichtung:", schlammBeschField);
+			builder.nextLine();
+
+			builder.appendSeparator("Abscheider");
+			builder.append("Hersteller:", abscheiderHerstField);
+			builder.append("Typ:", abscheiderTypField);
+			builder.append("Prüfzeichen:", abscheiderPrüfField);
+			builder.nextLine();
+			builder.append("Material:", abscheiderMatField);
+			builder.append("Beschichtung:", abscheiderBeschField);
+			builder.append("Nenngröße (NS):", abscheiderNSField);
+			builder.nextLine();
+			builder.append("Ölspeichervolumen [Liter]:", abscheiderÖlField);
+			builder.nextLine();
+
+			builder.appendSeparator("Rohrleitungen: Zuleitungen");
+			builder.append("DN:", zulDNField);
+			builder.append("Material:", zulMatField);
+			builder.append("Länge [m]:", zulLField);
+			builder.nextLine();
+
+			builder.appendSeparator("Rohrleitungen: Verbindungsleitungen");
+			builder.append("DN:", verbDNField);
+			builder.append("Material:", verbMatField);
+			builder.append("Länge [m]:", verbLField);
+			builder.nextLine();
+
+			builder.appendSeparator("Rohrleitungen: Sonstige");
+			builder.append("DN:", sonsDNField);
+			builder.append("Material:", sonsMatField);
+			builder.append("Länge [m]:", sonsLField);
+			builder.nextLine();
+
+			ausführungVAWSAbscheiderTab = builder.getPanel();
+		}
+		return ausführungVAWSAbscheiderTab;
+	}
+
+	private JPanel getSchutzvorkehrungenVAWSAbscheiderTab()
+	{
+		if (schutzvorkehrungenVAWSAbscheiderTab == null) {
+			FormLayout layout = new FormLayout("p:g");
+			//layout.setColumnGroups(new int[][]{{1}});
+			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			builder.setDefaultDialogBorder();
+
+			builder.appendSeparator("Stammdaten");
+			builder.append(überCheck);
+			builder.nextLine();
+
+			builder.append(waschCheck);
+			builder.nextLine();
+
+			builder.appendSeparator("Rückhaltevermögen");
+			builder.append(abgabeCheck);
+			builder.nextLine();
+			builder.append(hochCheck);
+			builder.nextLine();
+			builder.append(belüftCheck);
+			builder.nextLine();
+			builder.append(rückCheck);
+			builder.nextLine();
+
+			schutzvorkehrungenVAWSAbscheiderTab = builder.getPanel();
+		}
+		return schutzvorkehrungenVAWSAbscheiderTab;
+	}
+
 	private JPanel getDatenLageranlagenTab() {
 		if (datenLageranlagenTab == null) {
 			FormLayout layout = new FormLayout(

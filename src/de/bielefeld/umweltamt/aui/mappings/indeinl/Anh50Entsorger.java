@@ -79,7 +79,7 @@ public class Anh50Entsorger
 		} catch (HibernateException e) {
 			tmp = null;
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return tmp;

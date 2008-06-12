@@ -68,7 +68,7 @@ public class VawsAnlagenchrono
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler", e);
 			} finally {
-				//HibernateSessionFactory.closeSession();
+				HibernateSessionFactory.closeSession();
 			}
 		}
 		

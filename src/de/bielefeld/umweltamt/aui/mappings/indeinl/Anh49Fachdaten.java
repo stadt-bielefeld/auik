@@ -96,6 +96,7 @@ public class Anh49Fachdaten
 		    		.setInteger(3, dekratuev)
 		    		.setDate(4, today)
 		    		.list();
+		    		HibernateSessionFactory.closeSession();
 				}
 			else {
 					query += "and ah49.wiedervorlage <= ? " +
@@ -110,6 +111,7 @@ public class Anh49Fachdaten
 		    		.setBoolean(2, abwasserfrei)
 		    		.setDate(3, today)
 		    		.list();
+		    		HibernateSessionFactory.closeSession();
 			} 
     	} else {
 			if (dekratuev != null) {
@@ -124,6 +126,7 @@ public class Anh49Fachdaten
 		    		.setBoolean(2, abwasserfrei)
 		    		.setInteger(3, dekratuev)
 		    		.list();
+		    		HibernateSessionFactory.closeSession();
 		
 			} else {
 				query +=
@@ -136,6 +139,7 @@ public class Anh49Fachdaten
 	    		.setString(1, abgr)
 	    		.setBoolean(2, abwasserfrei)
 	    		.list();
+	    		HibernateSessionFactory.closeSession();
 			}
     	}
     	
@@ -174,6 +178,8 @@ public class Anh49Fachdaten
 				}
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler", e);
+			} finally {
+				HibernateSessionFactory.closeSession();
 			}
     	}
     	
@@ -185,10 +191,12 @@ public class Anh49Fachdaten
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		fachdaten = getAnh49ByObjekt(objekt, session);
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	} catch (HibernateException e) {
     		fachdaten = null;
-    	}
+    	} finally {
+			HibernateSessionFactory.closeSession();
+		}
     	
     	return fachdaten;
     }

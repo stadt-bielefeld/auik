@@ -55,7 +55,7 @@ public class VawsMaterial
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (VawsMaterial)", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return tmp;

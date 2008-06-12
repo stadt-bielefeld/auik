@@ -7,7 +7,7 @@
 <!-- Created Thu Jan 20 17:02:28 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
 
-    <class name="VawsStandortgghwsg" table="vaws_standortgghwsg" mutable="false">
+    <class name="VawsStandortgghwsg" table="vaws_standortgghwsg" lazy="false" mutable="false">
         <id name="standortggid" column="id" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>

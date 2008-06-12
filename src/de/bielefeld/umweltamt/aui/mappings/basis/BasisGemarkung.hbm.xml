@@ -7,7 +7,7 @@
 <!-- Created Thu Jan 20 17:02:27 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
 
-    <class name="BasisGemarkung" table="basis_gemarkung" mutable="false">
+    <class name="BasisGemarkung" table="basis_gemarkung" lazy="false" mutable="false">
         <id name="gemarkungid" column="id" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>

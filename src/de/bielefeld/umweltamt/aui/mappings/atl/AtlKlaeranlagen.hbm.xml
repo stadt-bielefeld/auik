@@ -8,7 +8,7 @@
 <!-- Created Wed Feb 16 15:12:01 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
 
-    <class name="AtlKlaeranlagen" table="atl_klaeranlagen" mutable="false">
+    <class name="AtlKlaeranlagen" table="atl_klaeranlagen" lazy="false" mutable="false">
         <id name="kaId" column="id" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>

@@ -55,7 +55,7 @@ public class VawsGefaehrdungsstufen
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (VawsGefaehrdungsstufen)", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return tmp;

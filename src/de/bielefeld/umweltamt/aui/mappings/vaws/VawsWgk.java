@@ -55,7 +55,7 @@ public class VawsWgk
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (VawsWgk)", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return tmp;

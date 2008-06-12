@@ -55,7 +55,7 @@ public class VawsKontrollen
 		String query = "from VawsKontrollen vk where " +
 				"vk.naechstepruefung < ? " +
 				"and vk.pruefungabgeschlossen = ? " +
-				"order by vk.naechstepruefung";
+				"order by vk.naechstepruefung, vk.vawsFachdaten";
 		
 		try {
 			Session session = HibernateSessionFactory.currentSession();
@@ -63,13 +63,13 @@ public class VawsKontrollen
 					query)
 					.setDate(0, new Date())
 					.setString(1, "f")
-					.setCacheable(true)
+//					.setCacheable(true)
 					.list();
 
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return kontrollen;
@@ -102,7 +102,7 @@ public class VawsKontrollen
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler", e);
 			} finally {
-				//HibernateSessionFactory.closeSession();
+				HibernateSessionFactory.closeSession();
 			}
 		}
 		

@@ -69,7 +69,7 @@ public class AtlProbenahmen
 				    .setEntity(1, ka)
 				    .list();
 
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		}
@@ -109,7 +109,7 @@ public class AtlProbenahmen
     		} catch (HibernateException e) {
     			throw new RuntimeException("Datenbank-Fehler", e);
     		} finally {
-    			//HibernateSessionFactory.closeSession();
+    			HibernateSessionFactory.closeSession();
     		}
     	} else {
     		proben = new ArrayList();
@@ -159,7 +159,7 @@ public class AtlProbenahmen
 				    "order by probenahme.datumDerEntnahme desc, probenahme.kennummer desc")
 				    .setString(0, suche2)
 				    .list();
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
@@ -186,7 +186,7 @@ public class AtlProbenahmen
 			count = ((Integer) session.createQuery("from AtlProbenahmen pn where pn.kennummer = ?")
 					.setString(0, kennnummer)
 					.list().size());
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 
 
 		} catch (HibernateException e) {
@@ -226,7 +226,7 @@ public class AtlProbenahmen
 				//probe.setAtlAnalysepositionen(new HashSet(sorted));
 				AUIKataster.debugOutput("APos geladen:\n " + probe.getAtlAnalysepositionen());
 			}
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (AtlProbenahmen)", e);
 		}
@@ -254,7 +254,7 @@ public class AtlProbenahmen
 				//probe.setAtlAnalysepositionen(new HashSet(sorted));
 				AUIKataster.debugOutput("APos geladen:\n " + probe.getAtlAnalysepositionen());
 			}
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (AtlProbenahmen)", e);
 		}
@@ -291,7 +291,7 @@ public class AtlProbenahmen
 				}
 			}
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return success;
@@ -326,7 +326,7 @@ public class AtlProbenahmen
 				}
 			}
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return success;
@@ -353,7 +353,7 @@ public class AtlProbenahmen
 				}
 			}
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return success;
@@ -373,7 +373,7 @@ public class AtlProbenahmen
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (AtlAnalysepos.)", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return sortedPositionen;

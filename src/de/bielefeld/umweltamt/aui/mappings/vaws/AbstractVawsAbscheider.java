@@ -46,17 +46,17 @@ public abstract class AbstractVawsAbscheider
     private java.lang.String sonmaterial;
     private java.lang.String sonlaenge;
     private java.lang.String oelspeichervol;
-    private java.lang.Integer kompaktanlage;
-    private java.lang.Integer sf;
-    private java.lang.Integer kkl1;
-    private java.lang.Integer lfkl2;
-    private java.lang.Integer ps;
-    private java.lang.Integer ueberhausr;
-    private java.lang.Integer waschanlvorh;
-    private java.lang.Integer abgabe;
-    private java.lang.Integer hlzapfanl;
-    private java.lang.Integer belvonlagerbh;
-    private java.lang.Integer rueckhalteausr;
+    private java.lang.Boolean kompaktanlage;
+    private java.lang.Boolean sf;
+    private java.lang.Boolean kkl1;
+    private java.lang.Boolean lfkl2;
+    private java.lang.Boolean ps;
+    private java.lang.Boolean ueberhausr;
+    private java.lang.Boolean waschanlvorh;
+    private java.lang.Boolean abgabe;
+    private java.lang.Boolean hlzapfanl;
+    private java.lang.Boolean belvonlagerbh;
+    private java.lang.Boolean rueckhalteausr;
     
     
 
@@ -79,14 +79,14 @@ public abstract class AbstractVawsAbscheider
 	/**
 	 * @return the abgabe
 	 */
-	public java.lang.Integer getAbgabe() {
+	public java.lang.Boolean getAbgabe() {
 		return abgabe;
 	}
 
 	/**
 	 * @param abgabe the abgabe to set
 	 */
-	public void setAbgabe(java.lang.Integer abgabe) {
+	public void setAbgabe(java.lang.Boolean abgabe) {
 		this.abgabe = abgabe;
 	}
 
@@ -163,98 +163,98 @@ public abstract class AbstractVawsAbscheider
 	/**
 	 * @return the belvonlagerbh
 	 */
-	public java.lang.Integer getBelvonlagerbh() {
+	public java.lang.Boolean getBelvonlagerbh() {
 		return belvonlagerbh;
 	}
 
 	/**
 	 * @param belvonlagerbh the belvonlagerbh to set
 	 */
-	public void setBelvonlagerbh(java.lang.Integer belvonlagerbh) {
+	public void setBelvonlagerbh(java.lang.Boolean belvonlagerbh) {
 		this.belvonlagerbh = belvonlagerbh;
 	}
 
 	/**
 	 * @return the hlzapfanl
 	 */
-	public java.lang.Integer getHlzapfanl() {
+	public java.lang.Boolean getHlzapfanl() {
 		return hlzapfanl;
 	}
 
 	/**
 	 * @param hlzapfanl the hlzapfanl to set
 	 */
-	public void setHlzapfanl(java.lang.Integer hlzapfanl) {
+	public void setHlzapfanl(java.lang.Boolean hlzapfanl) {
 		this.hlzapfanl = hlzapfanl;
 	}
 
 	/**
 	 * @return the kkl1
 	 */
-	public java.lang.Integer getKkl1() {
+	public java.lang.Boolean getKkl1() {
 		return kkl1;
 	}
 
 	/**
 	 * @param kkl1 the kkl1 to set
 	 */
-	public void setKkl1(java.lang.Integer kkl1) {
+	public void setKkl1(java.lang.Boolean kkl1) {
 		this.kkl1 = kkl1;
 	}
 
 	/**
 	 * @return the lfkl2
 	 */
-	public java.lang.Integer getLfkl2() {
+	public java.lang.Boolean getLfkl2() {
 		return lfkl2;
 	}
 
 	/**
 	 * @param lfkl2 the lfkl2 to set
 	 */
-	public void setLfkl2(java.lang.Integer lfkl2) {
+	public void setLfkl2(java.lang.Boolean lfkl2) {
 		this.lfkl2 = lfkl2;
 	}
 
 	/**
 	 * @return the ps
 	 */
-	public java.lang.Integer getPs() {
+	public java.lang.Boolean getPs() {
 		return ps;
 	}
 
 	/**
 	 * @param ps the ps to set
 	 */
-	public void setPs(java.lang.Integer ps) {
+	public void setPs(java.lang.Boolean ps) {
 		this.ps = ps;
 	}
 
 	/**
 	 * @return the rueckhalteausr
 	 */
-	public java.lang.Integer getRueckhalteausr() {
+	public java.lang.Boolean getRueckhalteausr() {
 		return rueckhalteausr;
 	}
 
 	/**
 	 * @param rueckhalteausr the rueckhalteausr to set
 	 */
-	public void setRueckhalteausr(java.lang.Integer rueckhalteausr) {
+	public void setRueckhalteausr(java.lang.Boolean rueckhalteausr) {
 		this.rueckhalteausr = rueckhalteausr;
 	}
 
 	/**
 	 * @return the sf
 	 */
-	public java.lang.Integer getSf() {
+	public java.lang.Boolean getSf() {
 		return sf;
 	}
 
 	/**
 	 * @param sf the sf to set
 	 */
-	public void setSf(java.lang.Integer sf) {
+	public void setSf(java.lang.Boolean sf) {
 		this.sf = sf;
 	}
 
@@ -373,14 +373,14 @@ public abstract class AbstractVawsAbscheider
 	/**
 	 * @return the ueberhausr
 	 */
-	public java.lang.Integer getUeberhausr() {
+	public java.lang.Boolean getUeberhausr() {
 		return ueberhausr;
 	}
 
 	/**
 	 * @param ueberhausr the ueberhausr to set
 	 */
-	public void setUeberhausr(java.lang.Integer ueberhausr) {
+	public void setUeberhausr(java.lang.Boolean ueberhausr) {
 		this.ueberhausr = ueberhausr;
 	}
 
@@ -429,14 +429,14 @@ public abstract class AbstractVawsAbscheider
 	/**
 	 * @return the waschanlvorh
 	 */
-	public java.lang.Integer getWaschanlvorh() {
+	public java.lang.Boolean getWaschanlvorh() {
 		return waschanlvorh;
 	}
 
 	/**
 	 * @param waschanlvorh the waschanlvorh to set
 	 */
-	public void setWaschanlvorh(java.lang.Integer waschanlvorh) {
+	public void setWaschanlvorh(java.lang.Boolean waschanlvorh) {
 		this.waschanlvorh = waschanlvorh;
 	}
 
@@ -577,14 +577,14 @@ public abstract class AbstractVawsAbscheider
 	/**
 	 * @return the kompaktanlage
 	 */
-	public java.lang.Integer getKompaktanlage() {
+	public java.lang.Boolean getKompaktanlage() {
 		return kompaktanlage;
 	}
 
 	/**
 	 * @param kompaktanlage the kompaktanlage to set
 	 */
-	public void setKompaktanlage(java.lang.Integer kompaktanlage) {
+	public void setKompaktanlage(java.lang.Boolean kompaktanlage) {
 		this.kompaktanlage = kompaktanlage;
 	}
 

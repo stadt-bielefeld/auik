@@ -7,7 +7,7 @@
 <!-- Created Mon Feb 07 10:40:29 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
 
-    <class name="VawsWirtschaftszweige" table="vaws_wirtschaftszweige" mutable="false">
+    <class name="VawsWirtschaftszweige" table="vaws_wirtschaftszweige" lazy="false" mutable="false">
         <id name="wirtschaftszweigid" column="id" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>

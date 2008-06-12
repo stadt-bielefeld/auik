@@ -8,7 +8,7 @@
 <!-- Created Wed Feb 16 15:12:02 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
 
-    <class name="AtlProbepkt" table="atl_probepkt">
+    <class name="AtlProbepkt" table="atl_probepkt" lazy="false">
         <id name="pktId" column="objektid" type="java.lang.Integer">
             <generator class="native">
                 <param name="sequence">atl_probepkt_objektid_seq</param>

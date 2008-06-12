@@ -71,7 +71,7 @@ public class AnhSuevFachdaten
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		fachdaten = getSuevByObjekt(objekt, session);
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	} catch (HibernateException e) {
     		fachdaten = null;
     	}
@@ -129,7 +129,7 @@ public class AnhSuevFachdaten
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);
     	} finally {
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	}
     	
     	return liste;

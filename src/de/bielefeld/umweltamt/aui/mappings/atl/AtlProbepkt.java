@@ -67,7 +67,7 @@ public class AtlProbepkt
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (AtlProbepkt)", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
     	
     	AtlProbepkt tmp;
@@ -139,7 +139,7 @@ public class AtlProbepkt
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
     	
     	return pkt;
@@ -176,7 +176,7 @@ public class AtlProbepkt
     		punkt = null;
     		e.printStackTrace();
     	} finally {
-//    		HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	}
     	
     	return punkt;
@@ -203,7 +203,7 @@ public class AtlProbepkt
     		//punkt = null;
     		throw new RuntimeException("Datenbank-Fehler", e);
     	} finally {
-//    		HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	}
     	
     	return punkt;

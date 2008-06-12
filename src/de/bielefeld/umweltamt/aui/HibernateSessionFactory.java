@@ -63,8 +63,8 @@ public class HibernateSessionFactory {
                 try {
                 	cfg.setProperty("hibernate.connection.username", DB_USER);
                 	cfg.setProperty("hibernate.connection.password", DB_PASS);
-                	cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://umweltamt.bielefeld.int/auik");
-                	//cfg.setProperty("hibernate.connection.url", DB_URL);
+//                	cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://umweltamt.bielefeld.int/auik");
+//                	cfg.setProperty("hibernate.connection.url", DB_URL);
                     cfg.configure(CONFIG_FILE_LOCATION);
                     sessionFactory = cfg.buildSessionFactory();
                 }

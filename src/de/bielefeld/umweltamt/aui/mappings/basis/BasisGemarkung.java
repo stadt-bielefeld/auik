@@ -73,7 +73,7 @@ public class BasisGemarkung
 	public static BasisGemarkung[] getGemarkungen() throws HibernateException {
 		Session session = HibernateSessionFactory.currentSession();
 		BasisGemarkung[] tmp = getGemarkungen(session);
-//		HibernateSessionFactory.closeSession();
+		HibernateSessionFactory.closeSession();
 		return tmp;
 	}
 }

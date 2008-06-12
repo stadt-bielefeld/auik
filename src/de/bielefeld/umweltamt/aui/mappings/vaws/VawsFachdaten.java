@@ -75,6 +75,17 @@ public class VawsFachdaten
 		}
 	}
 	
+	public boolean isVAWSAbscheider()
+	{
+	    if ("VAwS-Abscheider".equals(getAnlagenart()))
+	    {
+	        return true;
+	    }
+	    else
+	    {
+	        return false;
+	    }
+	}	
 
 	
 	public boolean isLageranlage() {
@@ -126,7 +137,7 @@ public class VawsFachdaten
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler", e);
 			} finally {
-				//HibernateSessionFactory.closeSession();
+				HibernateSessionFactory.closeSession();
 			}
     	} else {
     		throw new IllegalArgumentException("Zu diesem BasisObjekt existieren keine VAWS-Fachdaten-Objekte!");
@@ -226,7 +237,7 @@ public class VawsFachdaten
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return tmp;

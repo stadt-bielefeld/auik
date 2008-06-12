@@ -197,7 +197,7 @@ public class AtlParameter
 				e.printStackTrace();
 				parameter = null;
 			} finally {
-//				HibernateSessionFactory.closeSession();
+				HibernateSessionFactory.closeSession();
 			}
 		} else {
 			parameter = null;
@@ -268,7 +268,7 @@ public class AtlParameter
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
     	
 		return tmp;

@@ -321,7 +321,7 @@ public class AtlAnalyseposition
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
     	return proben;
@@ -349,7 +349,7 @@ public class AtlAnalyseposition
 				}
 			}
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return saved;

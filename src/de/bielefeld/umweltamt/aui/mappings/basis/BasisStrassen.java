@@ -85,7 +85,7 @@ public class BasisStrassen
 		try {
 			Session session = HibernateSessionFactory.currentSession();
 			tmp = getStrasseByName(name, session);
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		} catch (HibernateException e) {
 			tmp = null;
 		}
@@ -122,7 +122,7 @@ public class BasisStrassen
 	public static String[] getStrassen() throws HibernateException {
 		Session session = HibernateSessionFactory.currentSession();
 		String[] tmp = getStrassen(session);
-//		HibernateSessionFactory.closeSession();
+		HibernateSessionFactory.closeSession();
 		return tmp;
 	}
 }

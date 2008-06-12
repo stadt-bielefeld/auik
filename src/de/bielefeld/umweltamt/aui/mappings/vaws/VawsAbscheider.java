@@ -25,14 +25,6 @@ public class VawsAbscheider
     extends AbstractVawsAbscheider
     implements Serializable
 {
-	// Für die Umwandlung von Bool'schen Werten zu Shorts
-	private static int fW = 0;
-	private static int tW = -1;
-	
-	/** Für die Umwandlung von Bool'schen Werten zu Shorts */
-	public static Integer FALSE = new Integer(fW);
-	/** Für die Umwandlung von Bool'schen Werten zu Shorts */
-	public static Integer TRUE = new Integer(tW);
 	
     /**
      * Simple constructor of VawsAbscheider instances.
@@ -56,193 +48,7 @@ public class VawsAbscheider
     	return "[VawsAbscheider: " + getBehaelterid() + ", FD:"+getVawsFachdaten()+"]";
     }
     
-	// Boolean <-> Short:
-	
-	// TRUE und FALSE sind in dieser Klasse definierte 
-	// Short-Konstanten.
-	
-	// Der Grund, warum ich nicht einfach TRUE.equals(getXyz()) o.ä.
-	// zurück liefere ist, dass eigentlich nur festgelegt ist,
-	// dass 0 == false ist. Deshalb ist alles ausser 0 und NULL
-	// bei mir true.
-    
-	public boolean bIsKomp() {
-		Integer val = getKompaktanlage();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetKomp(boolean isKomp) {
-		if (isKomp) {
-			setKompaktanlage(TRUE);
-		} else {
-			setKompaktanlage(FALSE);
-		}
-	}
-    
-	public boolean bIsKompLF() {
-		Integer val = getLfkl2();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetKompLF(boolean isLf) {
-		if (isLf) {
-			setLfkl2(TRUE);
-		} else {
-			setLfkl2(FALSE);
-		}
-	}
-	
-	public boolean bIsKompPS() {
-		Integer val = getPs();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetKompPS(boolean isPs) {
-		if (isPs) {
-			setPs(TRUE);
-		} else {
-			setPs(FALSE);
-		}
-	}
-    
-	public boolean bIsKompSF() {
-		Integer val = getSf();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetKompSF(boolean isSf) {
-		if (isSf) {
-			setSf(TRUE);
-		} else {
-			setSf(FALSE);
-		}
-	}
-	
-	public boolean bIsKompK() {
-		Integer val = getKkl1();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetKompK(boolean isK) {
-		if (isK) {
-			setKkl1(TRUE);
-		} else {
-			setKkl1(FALSE);
-		}
-	}
-	
-	public boolean bIsRück() {
-		Integer val = getUeberhausr();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetRück(boolean isRück) {
-		if (isRück) {
-			setRueckhalteausr(TRUE);
-		} else {
-			setRueckhalteausr(FALSE);
-		}
-	}
-	
-	public boolean bIsHoch() {
-		Integer val = getHlzapfanl();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetHoch(boolean isHoch) {
-		if (isHoch) {
-			setHlzapfanl(TRUE);
-		} else {
-			setHlzapfanl(FALSE);
-		}
-	}
-	
-	public boolean bIsAbgabe() {
-		Integer val = getAbgabe();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetAbgabe(boolean isAbgabe) {
-		if (isAbgabe) {
-			setAbgabe(TRUE);
-		} else {
-			setAbgabe(FALSE);
-		}
-	}
-	
-	public boolean bIsBelüft() {
-		Integer val = getBelvonlagerbh();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetBelüft(boolean isBelüft) {
-		if (isBelüft) {
-			setBelvonlagerbh(TRUE);
-		} else {
-			setBelvonlagerbh(FALSE);
-		}
-	}
-	
-	public boolean bIsÜber() {
-		Integer val = getUeberhausr();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetÜber(boolean isUeber) {
-		if (isUeber) {
-			setUeberhausr(TRUE);
-		} else {
-			setUeberhausr(FALSE);
-		}
-	}
-	
-	public boolean bIsWasch() {
-		Integer val = getWaschanlvorh();
-		if (val == null) {
-			return false;
-		} else {
-			return !(FALSE.equals(val));
-		}
-	}
-	public void bSetWasch(boolean isWasch) {
-		if (isWasch) {
-			setWaschanlvorh(TRUE);
-		} else {
-			setWaschanlvorh(FALSE);
-		}
-	}
-    
-    // Statischer Teil:
+	// Statischer Teil:
 
     public static VawsAbscheider getAbscheider(VawsFachdaten fachdaten) {
     	VawsAbscheider abscheider;
@@ -267,7 +73,7 @@ public class VawsAbscheider
     		} catch (HibernateException e) {
     			throw new RuntimeException("Datenbank-Fehler", e);
     		} finally {
-    			//HibernateSessionFactory.closeSession();
+    			HibernateSessionFactory.closeSession();
     		}
     	}
 		

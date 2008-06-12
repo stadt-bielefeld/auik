@@ -54,7 +54,7 @@ public class Anh40Fachdaten
 		} catch (HibernateException e) {
 			throw new RuntimeException(e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return liste;
@@ -83,7 +83,7 @@ public class Anh40Fachdaten
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		fachdaten = getAnh40ByObjekt(objekt, session);
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	} catch (HibernateException e) {
     		fachdaten = null;
     		throw new RuntimeException("Datenbank-Fehler", e);

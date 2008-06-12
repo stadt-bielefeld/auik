@@ -55,7 +55,7 @@ public class VawsFluessigkeit
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (VawsStandortgghwsg)", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return tmp;

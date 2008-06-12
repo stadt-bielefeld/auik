@@ -88,7 +88,7 @@ public class AtlKlaeranlagen
 			//e.printStackTrace();
 			ka = null;
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		return ka;
 	}
@@ -128,7 +128,7 @@ public class AtlKlaeranlagen
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		return tmp;
 	}

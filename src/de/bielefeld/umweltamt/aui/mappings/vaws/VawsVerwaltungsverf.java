@@ -47,7 +47,7 @@ public class VawsVerwaltungsverf
 				"vf.wiedervorlage < ? " +
 				"and " +
 				"(vf.wvverwverf = ? or vf.wvverwverf is NULL) " +
-				"order by vf.wiedervorlage";
+				"order by vf.wiedervorlage, vf.vawsFachdaten";
 		
 		try {
 			Session session = HibernateSessionFactory.currentSession();
@@ -60,7 +60,7 @@ public class VawsVerwaltungsverf
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return kontrollen;
@@ -93,7 +93,7 @@ public class VawsVerwaltungsverf
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler", e);
 			} finally {
-				//HibernateSessionFactory.closeSession();
+				HibernateSessionFactory.closeSession();
 			}
 		}
 		

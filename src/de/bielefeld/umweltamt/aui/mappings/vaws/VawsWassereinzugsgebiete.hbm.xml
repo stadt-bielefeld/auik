@@ -7,7 +7,7 @@
 <!-- Created Thu Jan 20 17:02:28 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
 
-    <class name="VawsWassereinzugsgebiete" table="vaws_wassereinzugsgebiete" mutable="false">
+    <class name="VawsWassereinzugsgebiete" table="vaws_wassereinzugsgebiete" lazy="false" mutable="false">
         <id name="wasserezgbid" column="id" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>

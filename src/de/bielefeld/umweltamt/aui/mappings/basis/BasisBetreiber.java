@@ -72,7 +72,7 @@ public class BasisBetreiber
 		try {
 			Session session = HibernateSessionFactory.currentSession();
 			betreiber = (BasisBetreiber) session.get(BasisBetreiber.class, id);
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		} catch (HibernateException e) {
 			betreiber = null;
 		}
@@ -141,7 +141,7 @@ public class BasisBetreiber
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
     	return betreiber;
     }

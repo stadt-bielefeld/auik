@@ -7,7 +7,7 @@
 <!-- Created Wed May 11 12:07:17 CEST 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
 
-    <class name="VawsFachdaten" table="vaws_fachdaten">
+    <class name="VawsFachdaten" table="vaws_fachdaten" lazy="false">
         <id name="behaelterId" column="behaelterid" type="java.lang.Integer">
             <generator class="native">
                 <param name="sequence">vaws_fachdaten_behaelterid_seq</param>

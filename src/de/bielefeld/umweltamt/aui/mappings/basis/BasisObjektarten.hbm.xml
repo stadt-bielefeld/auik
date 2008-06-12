@@ -7,7 +7,7 @@
 <!-- Created Wed Jan 19 10:44:46 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
 
-    <class name="BasisObjektarten" table="basis_objektarten" mutable="false">
+    <class name="BasisObjektarten" table="basis_objektarten" lazy="false" mutable="false">
         <id name="objektartid" column="id" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>

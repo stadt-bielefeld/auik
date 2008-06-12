@@ -77,7 +77,7 @@ public class BasisObjekt
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return objekte;
@@ -100,7 +100,7 @@ public class BasisObjekt
     		query += "and bo.basisObjektarten.abteilung = '" + abteilung + "' ";
     	}
     	
-    	query += "order by bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
+//    	query += "order by bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
     	
     	try {
     	Session session = HibernateSessionFactory.currentSession();
@@ -112,7 +112,7 @@ public class BasisObjekt
     	} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return objekte;
@@ -129,7 +129,7 @@ public class BasisObjekt
 		try {
 			Session session = HibernateSessionFactory.currentSession();
 			objekt = (BasisObjekt) session.get(BasisObjekt.class, id);
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		} catch (HibernateException e) {
 			objekt = null;
 		}

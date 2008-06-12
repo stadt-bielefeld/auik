@@ -7,7 +7,7 @@
 <!-- Created Thu Mar 31 16:02:08 CEST 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
 
-    <class name="BasisObjekt" table="basis_objekt">
+    <class name="BasisObjekt" table="basis_objekt" lazy="false">
         <id name="objektid" column="objektid" type="java.lang.Integer">
             <generator class="native">
                 <param name="sequence">basis_objekt_objektid_seq</param>

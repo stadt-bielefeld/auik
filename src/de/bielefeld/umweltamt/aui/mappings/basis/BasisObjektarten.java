@@ -1,15 +1,18 @@
 /*
  * Datei:
 <<<<<<< BasisObjektarten.java
- * $Id: BasisObjektarten.java,v 1.1 2008-06-05 11:38:34 u633d Exp $
+ * $Id: BasisObjektarten.java,v 1.2 2008-06-12 10:21:41 u633d Exp $
 =======
- * $Id: BasisObjektarten.java,v 1.1 2008-06-05 11:38:34 u633d Exp $
+ * $Id: BasisObjektarten.java,v 1.2 2008-06-12 10:21:41 u633d Exp $
 >>>>>>> 1.20.6.1
  * 
  * Erstellt am 19.01.05 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:34  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
 <<<<<<< BasisObjektarten.java
  * Revision 1.24  2006/10/17 07:54:29  u633d
  * Anhang 52 (Chemische Wäschereien) haben nun einen eigenen Tab.
@@ -272,7 +275,7 @@ public class BasisObjektarten
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
-//			HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		BasisObjektarten[] tmp = new BasisObjektarten[list.size()];

@@ -70,7 +70,7 @@ public class ViewBwk
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		bwk = getAnhBwkByObjekt(objekt, session);
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	} catch (HibernateException e) {
     		bwk = null;
     		throw new RuntimeException("Datenbank-Fehler", e);
@@ -155,7 +155,7 @@ public class ViewBwk
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);
     	} finally {
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	}
     	
     	return liste;

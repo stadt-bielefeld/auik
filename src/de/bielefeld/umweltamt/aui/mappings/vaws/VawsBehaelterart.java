@@ -55,7 +55,7 @@ public class VawsBehaelterart
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (VawsBehaelterart)", e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return tmp;

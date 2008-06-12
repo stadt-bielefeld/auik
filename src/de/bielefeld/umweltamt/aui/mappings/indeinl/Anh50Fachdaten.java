@@ -81,7 +81,7 @@ public class Anh50Fachdaten
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);
     	} finally {
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	}
     	
     	return anhang50;
@@ -113,7 +113,7 @@ public class Anh50Fachdaten
     	} catch (HibernateException e) {
     		fachdaten = null;
     	} finally {
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	}
     	
     	return fachdaten;

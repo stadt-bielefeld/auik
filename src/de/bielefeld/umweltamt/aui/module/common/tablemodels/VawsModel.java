@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: VawsModel.java,v 1.1 2008-06-05 11:38:40 u633d Exp $
+ * $Id: VawsModel.java,v 1.2 2008-06-12 10:21:42 u633d Exp $
  * 
  * Erstellt am 03.09.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:40  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.3  2005/11/02 13:53:24  u633d
  * - Version vom 2.11.
  *
@@ -63,7 +66,7 @@ public class VawsModel extends ListTableModel {
 			break;
 		// Menge:
 		case 3:
-			tmp = fd.getMenge();
+			tmp = Math.round(fd.getMenge()*100.)/100.;
 			break;
 		// Stillgelegt:
 		case 4:

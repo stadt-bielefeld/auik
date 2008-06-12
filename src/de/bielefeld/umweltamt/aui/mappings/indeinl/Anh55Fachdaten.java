@@ -66,7 +66,7 @@ public class Anh55Fachdaten
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		fachdaten = getAnh55ByObjekt(objekt, session);
-    		//HibernateSessionFactory.closeSession();
+    		HibernateSessionFactory.closeSession();
     	} catch (HibernateException e) {
     		fachdaten = null;
     	}
@@ -117,7 +117,7 @@ public class Anh55Fachdaten
 		} catch (HibernateException e) {
 			throw new RuntimeException(e);
 		} finally {
-			//HibernateSessionFactory.closeSession();
+			HibernateSessionFactory.closeSession();
 		}
 		
 		return liste;
