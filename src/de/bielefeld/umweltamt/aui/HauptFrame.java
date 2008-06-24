@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: HauptFrame.java,v 1.1 2008-06-05 11:38:40 u633d Exp $
+ * $Id: HauptFrame.java,v 1.2 2008-06-24 11:24:07 u633d Exp $
  * 
  * Erstellt am 07.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:40  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.72.6.1  2006/07/26 06:46:03  u633d
  * Neuer Zweig
  *
@@ -909,7 +912,7 @@ public class HauptFrame extends JFrame {
 								tmp = HibernateSessionFactory.checkCredentials(user, pw);
 							} catch (HibernateException e) {
 								fatalError = true;
-								throw new RuntimeException(e);
+//								throw new RuntimeException(e);
 							}
 						}
 

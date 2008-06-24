@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SuevAuswertung.java,v 1.1 2008-06-05 11:38:32 u633d Exp $
+ * $Id: SuevAuswertung.java,v 1.2 2008-06-24 11:24:08 u633d Exp $
  * 
  * Erstellt am 24.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.1  2005/08/25 14:46:59  u633d
  * - zu viel ;)
  *
@@ -19,9 +22,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.eclipse.birt.report.engine.api.EngineException;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SuevModel;
@@ -38,6 +45,7 @@ public class SuevAuswertung extends AbstractQueryModul {
 	
 	// Widgets für die Abfrage
 	private JButton submitButton;
+	private JButton printButton;
 	
 	/** Das TableModel für die Ergebnis-Tabelle */
 	private SuevModel tmodel;
@@ -56,6 +64,7 @@ public class SuevAuswertung extends AbstractQueryModul {
 		if (queryPanel == null) {
 			// Die Widgets initialisieren
 			submitButton = new JButton("Alle Objekte anzeigen");
+			printButton = new JButton("Liste drucken");
 			
 			// Ein ActionListener für den Button, 
 			// der die eigentliche Suche auslöst: 
@@ -75,16 +84,34 @@ public class SuevAuswertung extends AbstractQueryModul {
 				}
 			});
 			
+			printButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					showReportListe();
+				}
+			});
+			
 			// Noch etwas Layout...
-			FormLayout layout = new FormLayout("pref");
+			FormLayout layout = new FormLayout("pref, 3dlu, pref");
 			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 			
-			builder.append(submitButton);
+			builder.append(submitButton, printButton);
 			
 			queryPanel = builder.getPanel();
 		}
 		
 		return queryPanel;
+	}
+	
+	
+	public void showReportListe() {
+
+			try {
+				ReportManager.getInstance().startReportWorker("Suev-Kan", printButton);
+			} catch (EngineException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 	}
 
 	/* (non-Javadoc)

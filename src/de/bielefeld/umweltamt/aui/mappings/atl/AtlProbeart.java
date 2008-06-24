@@ -36,6 +36,8 @@ public class AtlProbeart
 	final public static Integer SIELHAUT = new Integer(7);
 	/** Die ID von sonstigen Proben */
 	final public static Integer SONSTIGE = new Integer(8);
+	/** Die ID von Zulauf-Proben */
+	final public static Integer ZULAUF = new Integer(9);
 	
     /**
      * Simple constructor of AtlProbeart instances.
@@ -110,6 +112,13 @@ public class AtlProbeart
 	}
 	public boolean isSonstige() {
 		if (SONSTIGE.equals(this.getArtId())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public boolean isZulauf() {
+		if (ZULAUF.equals(this.getArtId())) {
 			return true;
 		} else {
 			return false;

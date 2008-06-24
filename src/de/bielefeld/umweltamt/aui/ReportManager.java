@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ReportManager.java,v 1.1 2008-06-05 11:38:40 u633d Exp $
+ * $Id: ReportManager.java,v 1.2 2008-06-24 11:24:07 u633d Exp $
  *
  * Erstellt am 18.10.2005 von David Klotz
  *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:40  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.3  2006/11/08 10:10:05  u633d
  * Die Bilder von Sielhaut PDFs werden nun über die Haltungsnummer aufgeloest
  *
@@ -86,7 +89,21 @@ public class ReportManager {
 		initBirt();
 	}
 	
-	public File runReport(String Name, Integer Id, String HaltungsNr) throws EngineException {
+	public File runReport(String Name) throws EngineException {
+		File pdfFile;
+		try {
+			pdfFile = File.createTempFile(Name, ".pdf");
+		} catch (IOException e) {
+			throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+		}
+		pdfFile.deleteOnExit();
+
+		runReport(pdfFile, Name);
+
+		return pdfFile;
+	}
+	
+	public File runReport(String Name, Integer Id, String Bezeichnung) throws EngineException {
 		File pdfFile;
 		try {
 			pdfFile = File.createTempFile(Name + Id, ".pdf");
@@ -95,7 +112,7 @@ public class ReportManager {
 		}
 		pdfFile.deleteOnExit();
 
-		runReport(pdfFile, Name, Id, HaltungsNr);
+		runReport(pdfFile, Name, Id, Bezeichnung);
 
 		return pdfFile;
 	}
@@ -137,7 +154,7 @@ public class ReportManager {
 			//Configure the Engine and start the Platform
 			config = new EngineConfig();
 			config.setEngineHome(engineHome);
-			config.setLogConfig(null, Level.FINE);
+			config.setLogConfig(null, Level.OFF);
 
 		} catch( Exception ex) {
 			ex.printStackTrace();
@@ -152,7 +169,28 @@ public class ReportManager {
 			IReportEngineFactory factory = (IReportEngineFactory) Platform
 			.createFactoryObject( IReportEngineFactory.EXTENSION_REPORT_ENGINE_FACTORY );
 		engine = factory.createReportEngine( config );
-		engine.changeLogLevel( Level.WARNING );
+		engine.changeLogLevel( Level.OFF );
+	}
+	
+	public void startReportWorker(final String Name, Component focusComp) throws EngineException {
+		SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
+			File pdfFile;
+			protected void doNonUILogic() throws RuntimeException {
+				//File report = new File(reportHome + reportname + ".rptdesign");
+				try {
+					pdfFile = runReport(Name);
+				} catch (EngineException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			protected void doUIUpdateLogic() throws RuntimeException {
+				AuikUtils.spawnFileProg(pdfFile);
+			}
+		};
+
+		worker.start();
 	}
 	
 	public void startReportWorker(final String Name, final Integer Id, final String HaltungsNr, Component focusComp) throws EngineException {
@@ -224,13 +262,56 @@ public class ReportManager {
 		worker.start();
 	}
 	
-	public void runReport(File pdffile, String Name, Integer Id, String HaltungsNr) throws EngineException {
-		if (Id == null || Name == null || HaltungsNr == null)
+	public void runReport(File pdffile, String Name) throws EngineException {
+		if (Name == null)
+		{
+			System.out.println("DEBUG::runReport Error: Id Name oder HaltungsNr nicht gesetzt!\n");
+			System.out.println("\nName: " + Name);
+		}
+		
+
+		if (config == null || engine == null || options == null)
+			initBirt();
+
+
+		IReportRunnable design = null;
+		design = engine.openReportDesign(reportHome + Name + ".rptdesign"); //reportHome + Name + ".rptdesign"
+		
+		//Create task to run and render the report,
+		IRunAndRenderTask task = engine.createRunAndRenderTask(design); 
+
+		task.validateParameters();
+		options = new HTMLRenderOption();
+	
+		//Remove HTML and Body tags
+		options.setEmbeddable(true);
+		
+		//Set ouptut location
+		options.setOutputFileName(pdffile.getAbsolutePath());
+		
+		//Set output format
+		options.setOutputFormat("pdf");
+		task.setRenderOption(options);
+		
+		//run the report and destroy the engine
+		//Note - If the program stays resident do not shutdown the Platform or the Engine
+		//Den Report endgültig erzeugen
+		try {
+			task.run();
+
+			shutdownBirt();
+		} catch (EngineException e1) {
+			throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+		}
+	}
+	
+	public void runReport(File pdffile, String Name, Integer Id, String Bezeichnung) throws EngineException {
+		if (Id == null || Name == null || Bezeichnung == null)
 		{
 			System.out.println("DEBUG::runReport Error: Id Name oder HaltungsNr nicht gesetzt!\n");
 			System.out.println("Id: " + Id);
 			System.out.println("\nName: " + Name);
-			System.out.println("\nHaltungsNr: " + HaltungsNr);
+			System.out.println("\nHaltungsNr: " + Bezeichnung);
 		}
 		
 
@@ -245,16 +326,16 @@ public class ReportManager {
 		IRunAndRenderTask task = engine.createRunAndRenderTask(design); 
 		
 		task.setParameterValue("id", Id);
-		if (HaltungsNr != null && new File(fotoPath + HaltungsNr + ".jpg").canRead()) {
-			task.setParameterValue("foto", new String(fotoPath + HaltungsNr + ".jpg"));
+		if (Bezeichnung != null && new File(fotoPath + Bezeichnung + ".jpg").canRead()) {
+			task.setParameterValue("foto", new String(fotoPath + Bezeichnung + ".jpg"));
 		}
 		else
 		{
 			task.setParameterValue("foto", new String(fotoPath + "kein_foto.jpg"));
 		}
 		
-		if (HaltungsNr != null && new File(mapPath + HaltungsNr + ".jpg").canRead()) {
-			task.setParameterValue("karte", new String(mapPath + HaltungsNr + ".jpg"));	
+		if (Bezeichnung != null && new File(mapPath + Bezeichnung + ".jpg").canRead()) {
+			task.setParameterValue("karte", new String(mapPath + Bezeichnung + ".jpg"));	
 		}
 		else
 		{

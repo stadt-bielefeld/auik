@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<!-- Written by Eclipse BIRT 2.0 -->
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.2" id="1">
     <property name="author">Colin Atkins</property>
     <property name="createdBy">Eclipse BIRT Designer Version 2.1.0.N20060628-1351 Build &lt;20060628-1537></property>
@@ -9,7 +8,7 @@
         <scalar-parameter name="ObjektId" id="149">
             <property name="valueType">static</property>
             <property name="dataType">string</property>
-            <property name="allowBlank">false</property>
+            <property name="isRequired">true</property>
             <property name="controlType">text-box</property>
             <property name="defaultValue">450</property>
             <structure name="format">
@@ -42,35 +41,17 @@
         </scalar-parameter>
     </parameters>
     <data-sources>
-        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="UISDB2" id="4">
-            <text-property name="displayName">UISDB2</text-property>
-            <property name="odaDriverClass">sun.jdbc.odbc.JdbcOdbcDriver</property>
-            <property name="odaURL">jdbc:odbc:UISDB2</property>
-            <property name="odaUser">vaws</property>
-            <encrypted-property name="odaPassword">VmF3czAw</encrypted-property>
-        </oda-data-source>
-        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="AUIK_INF" id="413">
-            <text-property name="displayName">AUIK_INF</text-property>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="auik" id="413">
+            <text-property name="displayName">auik</text-property>
             <property name="odaDriverClass">com.informix.jdbc.IfxDriver</property>
-            <property name="odaURL">jdbc:informix-sqli://recos14:1534/auik_test:INFORMIXSERVER=uschi</property>
+            <property name="odaURL">jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi</property>
             <property name="odaUser">vaws</property>
             <encrypted-property name="odaPassword">VmF3czAw</encrypted-property>
-            <property name="odaJndiName"></property>
         </oda-data-source>
     </data-sources>
     <data-sets>
-        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="BASIS_OBJEKTCHRONO" id="212">
-            <text-property name="displayName">BASIS_OBJEKTCHRONO</text-property>
-            <list-property name="parameters">
-                <structure>
-                    <property name="name">ObjektId</property>
-                    <property name="nativeDataType">0</property>
-                    <property name="position">1</property>
-                    <expression name="defaultValue">params["ObjektId"]</expression>
-                    <property name="isOptional">false</property>
-                    <property name="isInput">true</property>
-                </structure>
-            </list-property>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="basis_objektchrono" id="212">
+            <text-property name="displayName">basis_objektchrono</text-property>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
@@ -100,8 +81,50 @@
                     </structure>
                 </list-property>
             </structure>
-            <property name="dataSource">AUIK_INF</property>
-            <property name="queryText">select * from basis_objektchrono where OBJEKTID = ? order by DATUM ASC</property>
+            <property name="dataSource">auik</property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">ObjektId</property>
+                    <property name="nativeDataType">0</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue">params["ObjektId"]</expression>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                </structure>
+            </list-property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">objektid</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">datum</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">sachverhalt</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">wv</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+            </list-property>
+            <property name="queryText">select * from basis_objektchrono where objektid = ? order by datum ASC</property>
         </oda-data-set>
     </data-sets>
     <styles>
@@ -287,20 +310,20 @@
             <property name="borderTopWidth">medium</property>
             <property name="marginTop">15px</property>
             <property name="width">100%</property>
-            <property name="dataSet">BASIS_OBJEKTCHRONO</property>
+            <property name="dataSet">basis_objektchrono</property>
             <list-property name="boundDataColumns">
                 <structure>
-                    <property name="name">DATUM</property>
+                    <property name="name">datum</property>
                     <expression name="expression">dataSetRow["datum"]</expression>
                     <property name="dataType">date-time</property>
                 </structure>
                 <structure>
-                    <property name="name">WV</property>
-                    <expression name="expression">dataSetRow["WV"]</expression>
+                    <property name="name">wv</property>
+                    <expression name="expression">dataSetRow["wv"]</expression>
                     <property name="dataType">date-time</property>
                 </structure>
                 <structure>
-                    <property name="name">SACHVERHALT</property>
+                    <property name="name">sachverhalt</property>
                     <expression name="expression">dataSetRow["sachverhalt"]</expression>
                     <property name="dataType">string</property>
                 </structure>
@@ -364,7 +387,7 @@
                                 <property name="category">Short Date</property>
                                 <property name="pattern">Short Date</property>
                             </structure>
-                            <property name="resultSetColumn">DATUM</property>
+                            <property name="resultSetColumn">datum</property>
                         </data>
                     </cell>
                     <cell id="370">
@@ -379,7 +402,7 @@
                         <property name="paddingRight">3px</property>
                         <property name="textAlign">center</property>
                         <data id="411">
-                            <property name="resultSetColumn">SACHVERHALT</property>
+                            <property name="resultSetColumn">sachverhalt</property>
                         </data>
                     </cell>
                 </row>

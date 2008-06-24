@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Sielhaut.java,v 1.1 2008-06-05 11:38:32 u633d Exp $
+ * $Id: Sielhaut.java,v 1.2 2008-06-24 11:24:08 u633d Exp $
  * 
  * Erstellt am 14.06.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.9  2005/11/02 13:49:16  u633d
  * - Version vom 2.11.
  *
@@ -292,7 +295,7 @@ public class Sielhaut extends AbstractModul {
 	
 	public void showReport() throws EngineException {
 		if (spunkt.getId() != null || spunkt.getHaltungsnr() != null) {
-			ReportManager.getInstance().startReportWorker("Sielhaut", spunkt.getId(), spunkt.getHaltungsnr(), punktPrintButton);
+			ReportManager.getInstance().startReportWorker("Sielhaut", spunkt.getId(), spunkt.getBezeichnung(), punktPrintButton);
 		}
 		else
 		{
@@ -737,9 +740,8 @@ public class Sielhaut extends AbstractModul {
 	private JTable getPrTabelle() {
 		if (prTabelle == null) {
 			prTabelle = new JTable(probeModel);
-			prTabelle.getColumnModel().getColumn(0).setPreferredWidth(40);
-			prTabelle.getColumnModel().getColumn(1).setPreferredWidth(75);
-			//prTabelle.getColumnModel().getColumn(2).setPreferredWidth(200);
+			prTabelle.getColumnModel().getColumn(0).setWidth(40);
+			prTabelle.getColumnModel().getColumn(1).setWidth(75);
 			
 			prTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
@@ -870,7 +872,7 @@ public class Sielhaut extends AbstractModul {
 							getKartenLabel().setText(null);
 						} else {
 							getKartenLabel().setIcon(null);
-							getKartenLabel().setText("<html><b>-  Karte "+spunkt.getId()+".jpg nicht gefunden!  -</b></html>");
+							getKartenLabel().setText("<html><b>-  Karte "+spunkt.getBezeichnung()+".jpg nicht gefunden!  -</b></html>");
 						}
 					}
 				}
@@ -1010,7 +1012,13 @@ class SielhautChooser extends OkCancelDialog {
 		sielhautModel = new SielhautModel();
 		getErgebnisTabelle().setModel(sielhautModel);
 		
-		setResizable(false);
+		ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(40);
+		ergebnisTabelle.getColumnModel().getColumn(1).setPreferredWidth(270);
+		ergebnisTabelle.getColumnModel().getColumn(2).setPreferredWidth(10);
+		ergebnisTabelle.getColumnModel().getColumn(3).setPreferredWidth(10);
+		ergebnisTabelle.getColumnModel().getColumn(4).setPreferredWidth(10);
+		
+		setResizable(true);
 		
 		sielhautModel.filterList("");
 		sielhautModel.fireTableDataChanged();
@@ -1070,8 +1078,8 @@ class SielhautChooser extends OkCancelDialog {
 		submitToolBar.add(getSubmitButton());
 		
 		FormLayout layout = new FormLayout(
-				"180dlu, 3dlu, min(16dlu;p)",		// spalten 
-				"pref, 3dlu, 100dlu"); 	// zeilen
+				"180dlu:g, 3dlu, min(16dlu;p)",		// spalten 
+				"20dlu, 3dlu, 300dlu:g"); 	// zeilen
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
 		
@@ -1125,6 +1133,7 @@ class SielhautChooser extends OkCancelDialog {
 	private JTable getErgebnisTabelle() {
 		if (ergebnisTabelle == null) {
 			ergebnisTabelle = new JTable();
+
 			
 			Action submitAction = new AbstractAction("Auswählen") {
 				public void actionPerformed(ActionEvent e) {
@@ -1154,7 +1163,7 @@ class SielhautChooser extends OkCancelDialog {
 
 class SielhautModel extends ListTableModel {
 	public SielhautModel() {
-		super(new String[]{"Bezeichnung", "Lage"}, false);
+		super(new String[]{"Bezeichnung", "Lage", "S", "A", "N"}, false);
 	}
 	
 	/* (non-Javadoc)
@@ -1162,7 +1171,7 @@ class SielhautModel extends ListTableModel {
 	 */
 	public Object getColumnValue(Object objectAtRow, int columnIndex) {
 		AtlSielhaut spunkt = (AtlSielhaut) objectAtRow;
-		String tmp;
+		Object tmp;
 		
 		switch (columnIndex) {
 		case 0:
@@ -1171,6 +1180,15 @@ class SielhautModel extends ListTableModel {
 		case 1:
 			tmp = spunkt.getLage();
 			break;
+		case 2:
+			tmp = new Boolean(spunkt.getPsielhaut());
+			break;
+		case 3:
+			tmp = new Boolean(spunkt.getPalarmplan());
+			break;
+		case 4:
+			tmp = new Boolean(spunkt.getPnachprobe());
+			break;
 
 		default:
 			tmp = "FEHLER!";
@@ -1178,6 +1196,15 @@ class SielhautModel extends ListTableModel {
 		}
 		
 		return tmp;
+	}
+	
+	
+	public Class getColumnClass(int columnIndex) {
+		if (columnIndex > 1) {
+			return Boolean.class;
+		} else {
+			return super.getColumnClass(columnIndex);
+		}
 	}
 	/* (non-Javadoc)
 	 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#updateList()

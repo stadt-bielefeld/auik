@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.14" id="1">
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.2" id="1">
     <property name="author">Colin Atkins</property>
     <property name="createdBy">Eclipse BIRT Designer Version 2.1.0.N20060628-1351 Build &lt;20060628-1537></property>
     <property name="units">mm</property>
@@ -35,12 +35,12 @@
         </scalar-parameter>
     </parameters>
     <data-sources>
-        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="auik_pg" id="413">
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="auik" id="413">
             <text-property name="displayName">AUIK_INF</text-property>
-            <property name="odaDriverClass">org.postgresql.Driver</property>
-            <property name="odaURL">jdbc:postgresql://umweltamt.bielefeld.int:5432/auik</property>
-            <property name="odaUser">u633d</property>
-            <encrypted-property name="odaPassword">Z2VuaWFs</encrypted-property>
+            <property name="odaDriverClass">com.informix.jdbc.IfxDriver</property>
+            <property name="odaURL">jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi</property>
+            <property name="odaUser">vaws</property>
+            <encrypted-property name="odaPassword">VmF3czAw</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -136,37 +136,37 @@
                     <structure>
                         <property name="position">18</property>
                         <property name="name">doppelwandig</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">19</property>
                         <property name="name">leckanzeige</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">20</property>
                         <property name="name">auffangraum</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">21</property>
                         <property name="name">grenzwertgeber</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">22</property>
                         <property name="name">leckschutzauskleidung</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">23</property>
                         <property name="name">kellerlagerung</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">24</property>
                         <property name="name">innenbeschichtung</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">25</property>
@@ -181,37 +181,37 @@
                     <structure>
                         <property name="position">27</property>
                         <property name="name">oberirdisch</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">28</property>
                         <property name="name">unterirdisch</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">29</property>
                         <property name="name">saugleitung</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">30</property>
-                        <property name="name">rohr_kathosenschutz</property>
-                        <property name="dataType">integer</property>
+                        <property name="name">rohr_kathodenschutz</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">31</property>
                         <property name="name">aus_kupfer</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">32</property>
                         <property name="name">aus_stahl</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">33</property>
                         <property name="name">mit_schutzrohr</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">34</property>
@@ -226,7 +226,7 @@
                     <structure>
                         <property name="position">36</property>
                         <property name="name">angemahntkz</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">37</property>
@@ -265,7 +265,7 @@
                     </structure>
                 </list-property>
             </structure>
-            <property name="dataSource">auik_pg</property>
+            <property name="dataSource">auik</property>
             <list-property name="parameters">
                 <structure>
                     <property name="name">BehaelterId</property>
@@ -275,6 +275,309 @@
                     <expression name="defaultValue">params["BehaelterId"]</expression>
                     <property name="isOptional">false</property>
                     <property name="isInput">true</property>
+                </structure>
+            </list-property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">behaelterid</property>
+                    <property name="nativeName">behaelterid</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">objektid</property>
+                    <property name="nativeName">objektid</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">herstellnr</property>
+                    <property name="nativeName">herstellnr</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">hersteller</property>
+                    <property name="nativeName">hersteller</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">datuminbetriebnahme</property>
+                    <property name="nativeName">datuminbetriebnahme</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">datumerfassung</property>
+                    <property name="nativeName">datumerfassung</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">datumaenderung</property>
+                    <property name="nativeName">datumaenderung</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">datumgenehmigung</property>
+                    <property name="nativeName">datumgenehmigung</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">anlagenart</property>
+                    <property name="nativeName">anlagenart</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">behaelterart</property>
+                    <property name="nativeName">behaelterart</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">material</property>
+                    <property name="nativeName">material</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">fluessigkeit</property>
+                    <property name="nativeName">fluessigkeit</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">vbfeinstufung</property>
+                    <property name="nativeName">vbfeinstufung</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">menge</property>
+                    <property name="nativeName">menge</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">6</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">wgk</property>
+                    <property name="nativeName">wgk</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">gefaehrdungsstufe</property>
+                    <property name="nativeName">gefaehrdungsstufe</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">baujahr</property>
+                    <property name="nativeName">baujahr</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">doppelwandig</property>
+                    <property name="nativeName">doppelwandig</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">leckanzeige</property>
+                    <property name="nativeName">leckanzeige</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">auffangraum</property>
+                    <property name="nativeName">auffangraum</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">grenzwertgeber</property>
+                    <property name="nativeName">grenzwertgeber</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">leckschutzauskleidung</property>
+                    <property name="nativeName">leckschutzauskleidung</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">kellerlagerung</property>
+                    <property name="nativeName">kellerlagerung</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">24</property>
+                    <property name="name">innenbeschichtung</property>
+                    <property name="nativeName">innenbeschichtung</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">25</property>
+                    <property name="name">beschreibung_a</property>
+                    <property name="nativeName">beschreibung_a</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">26</property>
+                    <property name="name">beschreibung_s</property>
+                    <property name="nativeName">beschreibung_s</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">27</property>
+                    <property name="name">oberirdisch</property>
+                    <property name="nativeName">oberirdisch</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">28</property>
+                    <property name="name">unterirdisch</property>
+                    <property name="nativeName">unterirdisch</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">29</property>
+                    <property name="name">saugleitung</property>
+                    <property name="nativeName">saugleitung</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">30</property>
+                    <property name="name">rohr_kathodenschutz</property>
+                    <property name="nativeName">rohr_kathodenschutz</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">31</property>
+                    <property name="name">aus_kupfer</property>
+                    <property name="nativeName">aus_kupfer</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">32</property>
+                    <property name="name">aus_stahl</property>
+                    <property name="nativeName">aus_stahl</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">33</property>
+                    <property name="name">mit_schutzrohr</property>
+                    <property name="nativeName">mit_schutzrohr</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">34</property>
+                    <property name="name">beschreibung_r</property>
+                    <property name="nativeName">beschreibung_r</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">35</property>
+                    <property name="name">pruefturnus</property>
+                    <property name="nativeName">pruefturnus</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">6</property>
+                </structure>
+                <structure>
+                    <property name="position">36</property>
+                    <property name="name">angemahntkz</property>
+                    <property name="nativeName">angemahntkz</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1111</property>
+                </structure>
+                <structure>
+                    <property name="position">37</property>
+                    <property name="name">mahnfrist</property>
+                    <property name="nativeName">mahnfrist</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">38</property>
+                    <property name="name">wiedervorlage</property>
+                    <property name="nativeName">wiedervorlage</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">39</property>
+                    <property name="name">stillegungsdatum</property>
+                    <property name="nativeName">stillegungsdatum</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">40</property>
+                    <property name="name">bemerkungen</property>
+                    <property name="nativeName">bemerkungen</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">41</property>
+                    <property name="name">ausfuehrung</property>
+                    <property name="nativeName">ausfuehrung</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">42</property>
+                    <property name="name">pruefumfang</property>
+                    <property name="nativeName">pruefumfang</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">43</property>
+                    <property name="name">verwendung</property>
+                    <property name="nativeName">verwendung</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
                 </structure>
             </list-property>
             <property name="queryText">select *
@@ -347,7 +650,7 @@ where BEHAELTERID = ?</property>
                     </structure>
                 </list-property>
             </structure>
-            <property name="dataSource">auik_pg</property>
+            <property name="dataSource">auik</property>
             <list-property name="parameters">
                 <structure>
                     <property name="name">behaelterid</property>
@@ -387,7 +690,7 @@ where BEHAELTERID = ?</property>
                     <property name="position">5</property>
                     <property name="name">pruefdatum</property>
                     <property name="nativeName">pruefdatum</property>
-                    <property name="dataType">date</property>
+                    <property name="dataType">date-time</property>
                 </structure>
                 <structure>
                     <property name="position">6</property>
@@ -411,7 +714,7 @@ where BEHAELTERID = ?</property>
                     <property name="position">9</property>
                     <property name="name">nachpruefdatum</property>
                     <property name="nativeName">nachpruefdatum</property>
-                    <property name="dataType">date</property>
+                    <property name="dataType">date-time</property>
                 </structure>
                 <structure>
                     <property name="position">10</property>
@@ -423,7 +726,7 @@ where BEHAELTERID = ?</property>
                     <property name="position">11</property>
                     <property name="name">naechstepruefung</property>
                     <property name="nativeName">naechstepruefung</property>
-                    <property name="dataType">date</property>
+                    <property name="dataType">date-time</property>
                 </structure>
                 <structure>
                     <property name="position">12</property>
@@ -437,323 +740,6 @@ from vaws_kontrollen
 where behaelterid = ?
 order by pruefdatum ASC</property>
         </oda-data-set>
-        <joint-data-set name="Data Set" id="414">
-            <structure name="cachedMetaData">
-                <list-property name="resultSet">
-                    <structure>
-                        <property name="position">1</property>
-                        <property name="name">VAWS_FACHDATEN::behaelterid</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">2</property>
-                        <property name="name">VAWS_FACHDATEN::objektid</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">3</property>
-                        <property name="name">VAWS_FACHDATEN::herstellnr</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">4</property>
-                        <property name="name">VAWS_FACHDATEN::hersteller</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">5</property>
-                        <property name="name">VAWS_FACHDATEN::datuminbetriebnahme</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">6</property>
-                        <property name="name">VAWS_FACHDATEN::datumerfassung</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">7</property>
-                        <property name="name">VAWS_FACHDATEN::datumaenderung</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">8</property>
-                        <property name="name">VAWS_FACHDATEN::datumgenehmigung</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">9</property>
-                        <property name="name">VAWS_FACHDATEN::anlagenart</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">10</property>
-                        <property name="name">VAWS_FACHDATEN::behaelterart</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">11</property>
-                        <property name="name">VAWS_FACHDATEN::material</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">12</property>
-                        <property name="name">VAWS_FACHDATEN::fluessigkeit</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">13</property>
-                        <property name="name">VAWS_FACHDATEN::vbfeinstufung</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">14</property>
-                        <property name="name">VAWS_FACHDATEN::menge</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">15</property>
-                        <property name="name">VAWS_FACHDATEN::wgk</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">16</property>
-                        <property name="name">VAWS_FACHDATEN::gefaehrdungsstufe</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">17</property>
-                        <property name="name">VAWS_FACHDATEN::baujahr</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">18</property>
-                        <property name="name">VAWS_FACHDATEN::doppelwandig</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">19</property>
-                        <property name="name">VAWS_FACHDATEN::leckanzeige</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">20</property>
-                        <property name="name">VAWS_FACHDATEN::auffangraum</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">21</property>
-                        <property name="name">VAWS_FACHDATEN::grenzwertgeber</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">22</property>
-                        <property name="name">VAWS_FACHDATEN::leckschutzauskleidung</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">23</property>
-                        <property name="name">VAWS_FACHDATEN::kellerlagerung</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">24</property>
-                        <property name="name">VAWS_FACHDATEN::innenbeschichtung</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">25</property>
-                        <property name="name">VAWS_FACHDATEN::beschreibung_a</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">26</property>
-                        <property name="name">VAWS_FACHDATEN::beschreibung_s</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">27</property>
-                        <property name="name">VAWS_FACHDATEN::oberirdisch</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">28</property>
-                        <property name="name">VAWS_FACHDATEN::unterirdisch</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">29</property>
-                        <property name="name">VAWS_FACHDATEN::saugleitung</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">30</property>
-                        <property name="name">VAWS_FACHDATEN::rohr_kathodenschutz</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">31</property>
-                        <property name="name">VAWS_FACHDATEN::aus_kupfer</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">32</property>
-                        <property name="name">VAWS_FACHDATEN::aus_stahl</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">33</property>
-                        <property name="name">VAWS_FACHDATEN::mit_schutzrohr</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">34</property>
-                        <property name="name">VAWS_FACHDATEN::beschreibung_r</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">35</property>
-                        <property name="name">VAWS_FACHDATEN::pruefturnus</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">36</property>
-                        <property name="name">VAWS_FACHDATEN::angemahntkz</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">37</property>
-                        <property name="name">VAWS_FACHDATEN::mahnfrist</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">38</property>
-                        <property name="name">VAWS_FACHDATEN::wiedervorlage</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">39</property>
-                        <property name="name">VAWS_FACHDATEN::stillegungsdatum</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">40</property>
-                        <property name="name">VAWS_FACHDATEN::bemerkungen</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">41</property>
-                        <property name="name">VAWS_FACHDATEN::ausfuehrung</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">42</property>
-                        <property name="name">VAWS_FACHDATEN::pruefumfang</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">43</property>
-                        <property name="name">VAWS_FACHDATEN::verwendung</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">44</property>
-                        <property name="name">VAWS_KONTROLLEN::id</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">45</property>
-                        <property name="name">VAWS_KONTROLLEN::behaelterid</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">46</property>
-                        <property name="name">VAWS_KONTROLLEN::grundderpruefung</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">47</property>
-                        <property name="name">VAWS_KONTROLLEN::pruefturnus</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">48</property>
-                        <property name="name">VAWS_KONTROLLEN::pruefdatum</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">49</property>
-                        <property name="name">VAWS_KONTROLLEN::pruefer</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">50</property>
-                        <property name="name">VAWS_KONTROLLEN::pruefungabgeschlossen</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">51</property>
-                        <property name="name">VAWS_KONTROLLEN::nachpruefung</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">52</property>
-                        <property name="name">VAWS_KONTROLLEN::nachpruefdatum</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">53</property>
-                        <property name="name">VAWS_KONTROLLEN::nachpruefer</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">54</property>
-                        <property name="name">VAWS_KONTROLLEN::naechstepruefung</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">55</property>
-                        <property name="name">VAWS_KONTROLLEN::pruefergebnis</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                </list-property>
-            </structure>
-            <list-property name="parameters">
-                <structure>
-                    <property name="name">VAWS_FACHDATEN::BehaelterId</property>
-                    <property name="dataType">integer</property>
-                    <property name="position">1</property>
-                    <expression name="defaultValue">params["BehaelterId"]</expression>
-                    <property name="isOptional">false</property>
-                    <property name="allowNull">false</property>
-                    <property name="isInput">true</property>
-                    <property name="isOutput">false</property>
-                </structure>
-                <structure>
-                    <property name="name">VAWS_KONTROLLEN::behaelterid</property>
-                    <property name="dataType">any</property>
-                    <property name="position">2</property>
-                    <expression name="defaultValue">params["BehaelterId"]</expression>
-                    <property name="isOptional">false</property>
-                    <property name="allowNull">false</property>
-                    <property name="isInput">true</property>
-                    <property name="isOutput">false</property>
-                </structure>
-            </list-property>
-            <simple-property-list name="dataSets">
-                <value>VAWS_FACHDATEN</value>
-                <value>VAWS_KONTROLLEN</value>
-            </simple-property-list>
-            <list-property name="joinConditions">
-                <structure>
-                    <property name="joinType">inner</property>
-                    <property name="joinOperator">eq</property>
-                    <property name="leftDataSet">VAWS_FACHDATEN</property>
-                    <property name="rightDataSet">VAWS_KONTROLLEN</property>
-                    <expression name="leftExpression">dataSetRow["behaelterid"]</expression>
-                    <expression name="rightExpression">dataSetRow["behaelterid"]</expression>
-                </structure>
-            </list-property>
-        </joint-data-set>
     </data-sets>
     <styles>
         <style name="padding 10 px" id="180">

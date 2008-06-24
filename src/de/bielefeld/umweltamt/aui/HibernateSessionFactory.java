@@ -147,11 +147,11 @@ public class HibernateSessionFactory {
 			Session session = currentSession();
 			// TODO: Vielleicht etwas allgemeineren Test finden?
 			List test = session.createSQLQuery(
-					"select strasse from basis_strassen where id=0"
+					"select strasse from basis_strassen where id=5"
 			).list();
 			
 			tmp = true;
-			AUIKataster.debugOutput(test.toString());
+			AUIKataster.debugOutput(test.toString(), "checkCredentials");
 		} catch (HibernateException e) {
 			if (e.getClass().equals(org.hibernate.exception.JDBCConnectionException.class)) {
 				tmp = false;

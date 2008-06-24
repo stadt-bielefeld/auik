@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SettingsManager.java,v 1.1 2008-06-05 11:38:40 u633d Exp $
+ * $Id: SettingsManager.java,v 1.2 2008-06-24 11:24:07 u633d Exp $
  * 
  * Erstellt am 31.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:40  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.22  2006/05/23 05:29:42  u633d
  * Objektchronologie für alle Objekte verfügbar gemacht
  *
@@ -89,8 +92,8 @@ public class SettingsManager {
 		defaults.setProperty("auik.prefs.maximized", "false");
 		defaults.setProperty("auik.prefs.save_size", "true");
 		
-		defaults.setProperty("auik.system.spath_fotos","U:/Gruppen/360x33/Sielhaut/Stadtflächenüberwachung/Sielhautpunkte/Kontrollpunkte/Fotos/");
-		defaults.setProperty("auik.system.spath_karten", "U:/Gruppen/360x33/Sielhaut/Stadtflächenüberwachung/Sielhautpunkte/Kontrollpunkte/Stadtplanausschnitte/");
+		defaults.setProperty("auik.system.spath_fotos","U:/Gruppen/Verfahren/Anlagenkataster/Sielhaut/fotos/");
+		defaults.setProperty("auik.system.spath_karten", "U:/Gruppen/Verfahren/Anlagenkataster/Sielhaut/karten/");
 		
 		defaults.setProperty(
 				"auik.system.module",
@@ -108,8 +111,8 @@ public class SettingsManager {
 		defaults.setProperty("auik.prefs.sielhaut_labor", "HBICON");
 
 		// FIXME: Birt-Pfade anpassen.
-		defaults.setProperty("auik.birt.enginepath", "U:\\Gruppen\\Verfahren\\Anlagenkataster\\auik2\\birt-runtime-2_1_0\\ReportEngine\\");
-		defaults.setProperty("auik.birt.reportpath", "U:\\Gruppen\\Verfahren\\Anlagenkataster\\auik2\\birt2\\designs\\");
+		defaults.setProperty("auik.birt.enginepath", "U:\\Gruppen\\Verfahren\\Anlagenkataster\\auik\\birt_neu\\birt-runtime-2_1_0\\ReportEngine\\");
+		defaults.setProperty("auik.birt.reportpath", "U:\\Gruppen\\Verfahren\\Anlagenkataster\\auik\\birt\\designs\\");
 
 		
 		appSettings = new Properties(defaults);

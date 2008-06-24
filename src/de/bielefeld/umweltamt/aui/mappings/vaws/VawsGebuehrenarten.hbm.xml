@@ -7,7 +7,7 @@
 <!-- Created Tue Sep 06 14:46:36 CEST 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
 
-    <class name="VawsGebuehrenarten" table="vaws_gebuehrenarten">
+    <class name="VawsGebuehrenarten" table="vaws_gebuehrenarten" lazy="false">
         <id name="id" column="ID" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>

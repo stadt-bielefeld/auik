@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: KSAuswertung.java,v 1.2 2008-06-12 10:21:42 u633d Exp $
+ * $Id: KSAuswertung.java,v 1.3 2008-06-24 11:24:08 u633d Exp $
  * 
  * Erstellt am 12.05.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/06/12 10:21:42  u633d
+ * diverse Bugfixes
+ *
  * Revision 1.1  2008/06/05 11:38:33  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -747,7 +750,8 @@ public class KSAuswertung extends AbstractModul {
 			AtlProbeart[] arten = new AtlProbeart[]{
 					AtlProbeart.getProbeart(AtlProbeart.ROHSCHLAMM), 
 					AtlProbeart.getProbeart(AtlProbeart.FAULSCHLAMM), 
-					AtlProbeart.getProbeart(AtlProbeart.ANLIEFERUNG)
+					AtlProbeart.getProbeart(AtlProbeart.ANLIEFERUNG), 
+					AtlProbeart.getProbeart(AtlProbeart.ZULAUF)
 					};
 			artBox = new JComboBox(arten);
 			artBox.setPrototypeDisplayValue("Faulschlamm   abc");

@@ -66,7 +66,7 @@ public class AtlSielhaut
 			punkte = session.createQuery(
 					"from AtlSielhaut as sp where " +
 					"lower(sp.bezeichnung) like ? " +
-					"order by sp.bezeichnung")
+					"order by sp.psielhaut desc, sp.bezeichnung")
 					.setString(0, sucheF)
 					.list();
 			
