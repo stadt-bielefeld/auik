@@ -195,7 +195,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		namenLabel = builder.addLabel("Name:",	cc.xy( 1, 5));
 		builder.add(namenFeld,					cc.xyw(3, 5,8));
 		// Zusatz
-		builder.addLabel("Zusatz:", 	cc.xy( 1, 7));
+		builder.addLabel("Vorname/Zusatz:", 	cc.xy( 1, 7));
 		builder.add(nameZusFeld, 		cc.xyw(3, 7,8));
 		// Wirtschaftszweig
 		builder.addLabel("Wirtschaftszweig:",	cc.xy( 1,9));

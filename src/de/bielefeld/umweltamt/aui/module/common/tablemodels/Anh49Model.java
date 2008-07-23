@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh49Model.java,v 1.1 2008-06-05 11:38:40 u633d Exp $
+ * $Id: Anh49Model.java,v 1.2 2008-07-23 06:55:22 u633d Exp $
  * 
  * Erstellt am 15.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:40  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.1  2005/08/24 08:42:52  u633d
  * - Auswertungen und anderes
  *
@@ -27,7 +30,8 @@ public class Anh49Model extends ListTableModel {
 				"Betreiber", 
 				"Standort", 
 				"Wiedervorl.", 
-				"SONSTIGESTECHNIK"
+				"Sonstiges Technik",
+				"SachbearbeiterIn"
 		}, 
 		false);
 	}
@@ -51,6 +55,9 @@ public class Anh49Model extends ListTableModel {
 			break;
 		case 3:
 			tmp = fd.getSonstigestechnik();
+			break;
+		case 4:
+			tmp = fd.getSachbearbeiterIn();
 			break;
 
 		default:

@@ -7,13 +7,13 @@
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         
         <!-- Informix: -->
-		     
+		      
         <property name="hibernate.connection.driver_class">com.informix.jdbc.IfxDriver</property>
         <property name="hibernate.connection.url">jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi</property>
         <property name="hibernate.dialect">org.hibernate.dialect.InformixDialect</property>
 		
         <!-- PostgreSQL: -->
-        <!--  
+        <!-- 
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://umweltamt.bielefeld.int/auik</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>

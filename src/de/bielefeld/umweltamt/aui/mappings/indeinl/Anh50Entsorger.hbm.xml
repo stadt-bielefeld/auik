@@ -7,7 +7,7 @@
 <!-- Created Wed Apr 27 15:30:29 CEST 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
 
-    <class name="Anh50Entsorger" table="anh_50_entsorger">
+    <class name="Anh50Entsorger" table="anh_50_entsorger" lazy="false">
         <id name="entsorgerid" column="id" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SielImport.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Id: SielImport.java,v 1.2 2008-07-23 06:55:22 u633d Exp $
  * 
  * Erstellt am 04.07.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:33  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.3  2005/10/13 13:00:26  u633d
  * Version vom 13.10.
  *
@@ -82,7 +85,7 @@ public class SielImport extends AbstractModul {
 						tmp += "red";
 					}
 					String nr = kennummerAusZeile(tmpArr);
-					value = tmp + ">"+ nr + "</font> "+ tmpArr[0].replaceFirst(nr, "").trim() + "</html>";
+					value = tmp + ">"+ nr + "</font> ";
 					break;
 				case 1:
 					value = paramAusZeile(tmpArr);
@@ -115,10 +118,12 @@ public class SielImport extends AbstractModul {
 				}
 				//System.out.println(count + ": " + line);
 				
-				if (tmp[3].startsWith("Sielhautprobe"))
+
+				if (!tmp[0].startsWith("Probenahmedatum"))
 				{
 					getList().add(tmp);
 				}
+				
 				count++;
 			}
 			//System.out.println(getList().size() + " Zeilen gelesen!");
@@ -156,13 +161,13 @@ public class SielImport extends AbstractModul {
 		}
 		
 		private String kennummerAusZeile(String[] zeile) {
-			String tmp = zeile[3].replaceFirst("Sielhautprobe ", "");
+			String tmp = zeile[3].replaceFirst(" \\(.*\\)", "");
 			
 			// Für neueres Format, bei dem die Kennnummer in der
 			// Form "Sielhautprobe 5071 (Adenauer)" angegeben ist:
-			if (tmp.indexOf("(") != -1) {
-				tmp = tmp.replaceFirst(" \\(.*\\)", "");
-			}
+//			if (tmp.indexOf("(") != -1) {
+//				tmp = tmp.replaceFirst(" \\(.*\\)", "");
+//			}
 			
 			return tmp;
 		}

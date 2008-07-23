@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektAnh49Panel.java,v 1.1 2008-06-05 11:38:39 u633d Exp $
+ * $Id: ObjektAnh49Panel.java,v 1.2 2008-07-23 06:55:22 u633d Exp $
  * 
  * Erstellt am 27.04.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:39  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.5  2005/08/24 08:42:52  u633d
  * - Auswertungen und anderes
  *
@@ -137,8 +140,10 @@ public class ObjektAnh49Panel extends JPanel {
 				"pref, " +	//21
 				"3dlu, " +  //22
 				"pref, " +	//23
-				"5dlu, " +  //24
-				"pref"); 	//25
+				"3dlu, " +  //24
+				"pref, " +	//25
+				"5dlu, " +  //26
+				"pref"); 	//27
 		
 		PanelBuilder builder = new PanelBuilder(layout, this);
 		builder.setDefaultDialogBorder();
@@ -162,10 +167,11 @@ public class ObjektAnh49Panel extends JPanel {
 		builder.addSeparator("Kontrolle", cc.xyw( 1, 17, 3));
 		builder.addLabel("Dekra/TÜV-T.:", cc.xy( 1, 19));
 		builder.add(getDekraTuevFeld(), cc.xy( 3, 19));
-		//builder.addLabel("Mangel:", cc.xy( 1, 21));
-		builder.add(getMangelCheck(), cc.xy( 3, 21));
-		builder.addLabel("Frist:", cc.xy( 1, 23));
-		builder.add(getFristDatum(), cc.xy( 3, 23));
+		builder.addLabel("Wiedervorlage:", cc.xy( 1, 21));
+		builder.add(getWiedervorlageDatum(), cc.xy(3, 21));
+		builder.add(getMangelCheck(), cc.xy( 3, 23));
+		builder.addLabel("Frist:", cc.xy( 1, 25));
+		builder.add(getFristDatum(), cc.xy( 3, 25));
 		
 		//rechte Seite
 		builder.addSeparator("Erfassung", cc.xyw( 5, 1, 3));
@@ -187,11 +193,11 @@ public class ObjektAnh49Panel extends JPanel {
 		
 		builder.addSeparator("Bemerkungen", cc.xyw( 5, 17, 3));
 		JScrollPane bemerkungsScroller = new JScrollPane(getAnh49BemerkungArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		builder.add(bemerkungsScroller, cc.xywh( 5, 19, 3, 5));
+		builder.add(bemerkungsScroller, cc.xywh( 5, 19, 3, 7));
 		
 		// unten
 		JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveAnh49Button());
-		builder.add(buttonBar, cc.xyw( 1, 25, 7));
+		builder.add(buttonBar, cc.xyw( 1, 27, 7));
 		
 		
 	}

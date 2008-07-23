@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh49Auswertung.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Id: Anh49Auswertung.java,v 1.2 2008-07-23 06:55:22 u633d Exp $
  * 
  * Erstellt am 15.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:33  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.4  2005/09/14 11:25:38  u633d
  * - Version vom 14.9.
  *
@@ -35,6 +38,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49Model;
+import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -54,6 +58,9 @@ public class Anh49Auswertung extends AbstractQueryModul {
 	private JCheckBox abwasserfreiCheck;
 	private JCheckBox wiedervorlageCheck;
 	private JButton submitButton;
+	private JButton tuevButton;
+	private JButton sachbearbeiterButton;
+	private JButton alleButton;
 	
 	/** Das TableModel für die Ergebnis-Tabelle */
 	private Anh49Model tmodel;
@@ -80,9 +87,17 @@ public class Anh49Auswertung extends AbstractQueryModul {
 			
 			abwasserfreiCheck = new JCheckBox("Abwasserfrei");
 			
-			wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage", true);
+			wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage");
 			
 			submitButton = new JButton("Suchen");
+			
+			alleButton = new JButton("Alle anzeigen");
+			
+			tuevButton = new JButton("Suchen");
+			tuevButton.setToolTipText("Tuev/Dekra suchen");
+			
+			sachbearbeiterButton = new JButton("Suchen");
+			sachbearbeiterButton.setToolTipText("SachbearbeiterIn anzeigen");
 			
 			// Ein ActionListener für den Button, 
 			// der die eigentliche Suche auslöst: 
@@ -110,13 +125,45 @@ public class Anh49Auswertung extends AbstractQueryModul {
 					}
 					
 					((Anh49Model)getTableModel()).setList(
-							Anh49Fachdaten.findAuswertung(
-									sachbFeld.getText(), 
+							Anh49Fachdaten.findAuswertung( 
 									abgem, 
 									abgerissen, 
-									abwfrei, 
-									dekraTuevFeld.getIntValue(), 
+									abwfrei,  
 									wiedervorlageCheck.isSelected()));
+					((Anh49Model)getTableModel()).fireTableDataChanged();
+					frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+				}
+			});
+			
+			alleButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					((Anh49Model)getTableModel()).setList(
+							Anh49Fachdaten.findAlle());
+					((Anh49Model)getTableModel()).fireTableDataChanged();
+					frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+				}
+			});
+			
+			tuevButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					Integer tuev = dekraTuevFeld.getIntValue();
+					
+					((Anh49Model)getTableModel()).setList(
+							Anh49Fachdaten.findTuev(tuev));
+					((Anh49Model)getTableModel()).fireTableDataChanged();
+					frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+				}
+			});
+			
+			sachbearbeiterButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					String sachbearb = sachbFeld.getText();
+					
+					((Anh49Model)getTableModel()).setList(
+							Anh49Fachdaten.findSachbearbeiter(sachbearb));
 					((Anh49Model)getTableModel()).fireTableDataChanged();
 					frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
 				}
@@ -124,15 +171,18 @@ public class Anh49Auswertung extends AbstractQueryModul {
 			
 			// Noch etwas Layout...
 			FormLayout layout = new FormLayout(
-					"pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref"
+					"pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 20dlu, pref"
 					);
 			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 			
 			builder.append(abgemeldetCheck, abwasserfreiCheck);
-			builder.append(wiedervorlageCheck, abgerissenCheck);
+			builder.append(abgerissenCheck);
+			builder.append("SachbearbeiterIn:", sachbFeld, sachbearbeiterButton);
 			builder.nextLine();
-			builder.append("SachbearbeiterIn:", sachbFeld);
-			builder.append("Dekra-TÜV-T.:", dekraTuevFeld, submitButton);
+			builder.append(wiedervorlageCheck);
+			builder.append("");
+			builder.append(submitButton);
+			builder.append("Dekra-TÜV-T.:", dekraTuevFeld, tuevButton, alleButton);
 			
 			queryPanel = builder.getPanel();
 		}
