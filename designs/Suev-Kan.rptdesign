@@ -3,7 +3,7 @@
     <property name="author">Colin Atkins</property>
     <property name="createdBy">Eclipse BIRT Designer Version 2.1.0.N20060628-1351 Build &lt;20060628-1537></property>
     <property name="units">mm</property>
-    <property name="comments">Copyright (c) 2006 &lt;&lt;Your Company Name here>></property>
+    <property name="comments">Copyright (c) 2008 &lt;&lt;Your Company Name here>></property>
     <data-sources>
         <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="auik" id="413">
             <text-property name="displayName">auik</text-property>
@@ -14,83 +14,33 @@
         </oda-data-source>
     </data-sources>
     <data-sets>
-        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="suevkan" id="414">
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="joineddataset" id="417">
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
                         <property name="position">1</property>
-                        <property name="name">objektid</property>
-                        <property name="dataType">integer</property>
+                        <property name="name">betrname</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">groesser_3ha</property>
-                        <property name="dataType">any</property>
+                        <property name="name">strasse</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">3</property>
-                        <property name="name">vers_flaeche</property>
+                        <property name="name">hausnr</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">4</property>
-                        <property name="name">suevkan_pflicht</property>
-                        <property name="dataType">any</property>
+                        <property name="name">hausnrzus</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">5</property>
-                        <property name="name">indirektsw</property>
-                        <property name="dataType">any</property>
-                    </structure>
-                    <structure>
-                        <property name="position">6</property>
-                        <property name="name">indirektrw</property>
-                        <property name="dataType">any</property>
-                    </structure>
-                    <structure>
-                        <property name="position">7</property>
-                        <property name="name">direktsw</property>
-                        <property name="dataType">any</property>
-                    </structure>
-                    <structure>
-                        <property name="position">8</property>
-                        <property name="name">direktrw</property>
-                        <property name="dataType">any</property>
-                    </structure>
-                    <structure>
-                        <property name="position">9</property>
-                        <property name="name">anzeige58</property>
+                        <property name="name">vers_flaeche</property>
                         <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">10</property>
-                        <property name="name">datum_anzeige58</property>
-                        <property name="dataType">any</property>
-                    </structure>
-                    <structure>
-                        <property name="position">11</property>
-                        <property name="name">sanierung_erfolgt</property>
-                        <property name="dataType">any</property>
-                    </structure>
-                    <structure>
-                        <property name="position">12</property>
-                        <property name="name">sanierungskonzept</property>
-                        <property name="dataType">any</property>
-                    </structure>
-                    <structure>
-                        <property name="position">13</property>
-                        <property name="name">keine_angaben</property>
-                        <property name="dataType">any</property>
-                    </structure>
-                    <structure>
-                        <property name="position">14</property>
-                        <property name="name">dat_anzeige58</property>
-                        <property name="dataType">date-time</property>
-                    </structure>
-                    <structure>
-                        <property name="position">15</property>
-                        <property name="name">dat_anschreiben</property>
-                        <property name="dataType">date-time</property>
                     </structure>
                 </list-property>
             </structure>
@@ -98,597 +48,42 @@
             <list-property name="resultSet">
                 <structure>
                     <property name="position">1</property>
-                    <property name="name">objektid</property>
-                    <property name="nativeName">objektid</property>
+                    <property name="name">betrname</property>
+                    <property name="nativeName">betrname</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">strasse</property>
+                    <property name="nativeName">strasse</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">hausnr</property>
+                    <property name="nativeName">hausnr</property>
                     <property name="dataType">integer</property>
                     <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
-                    <property name="position">2</property>
-                    <property name="name">groesser_3ha</property>
-                    <property name="nativeName">groesser_3ha</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="position">4</property>
+                    <property name="name">hausnrzus</property>
+                    <property name="nativeName">hausnrzus</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">3</property>
+                    <property name="position">5</property>
                     <property name="name">vers_flaeche</property>
                     <property name="nativeName">vers_flaeche</property>
                     <property name="dataType">integer</property>
                     <property name="nativeDataType">4</property>
                 </structure>
-                <structure>
-                    <property name="position">4</property>
-                    <property name="name">suevkan_pflicht</property>
-                    <property name="nativeName">suevkan_pflicht</property>
-                    <property name="nativeDataType">1111</property>
-                </structure>
-                <structure>
-                    <property name="position">5</property>
-                    <property name="name">indirektsw</property>
-                    <property name="nativeName">indirektsw</property>
-                    <property name="nativeDataType">1111</property>
-                </structure>
-                <structure>
-                    <property name="position">6</property>
-                    <property name="name">indirektrw</property>
-                    <property name="nativeName">indirektrw</property>
-                    <property name="nativeDataType">1111</property>
-                </structure>
-                <structure>
-                    <property name="position">7</property>
-                    <property name="name">direktsw</property>
-                    <property name="nativeName">direktsw</property>
-                    <property name="nativeDataType">1111</property>
-                </structure>
-                <structure>
-                    <property name="position">8</property>
-                    <property name="name">direktrw</property>
-                    <property name="nativeName">direktrw</property>
-                    <property name="nativeDataType">1111</property>
-                </structure>
-                <structure>
-                    <property name="position">9</property>
-                    <property name="name">anzeige58</property>
-                    <property name="nativeName">anzeige58</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
-                </structure>
-                <structure>
-                    <property name="position">10</property>
-                    <property name="name">datum_anzeige58</property>
-                    <property name="nativeName">datum_anzeige58</property>
-                    <property name="nativeDataType">1111</property>
-                </structure>
-                <structure>
-                    <property name="position">11</property>
-                    <property name="name">sanierung_erfolgt</property>
-                    <property name="nativeName">sanierung_erfolgt</property>
-                    <property name="nativeDataType">1111</property>
-                </structure>
-                <structure>
-                    <property name="position">12</property>
-                    <property name="name">sanierungskonzept</property>
-                    <property name="nativeName">sanierungskonzept</property>
-                    <property name="nativeDataType">1111</property>
-                </structure>
-                <structure>
-                    <property name="position">13</property>
-                    <property name="name">keine_angaben</property>
-                    <property name="nativeName">keine_angaben</property>
-                    <property name="nativeDataType">1111</property>
-                </structure>
-                <structure>
-                    <property name="position">14</property>
-                    <property name="name">dat_anzeige58</property>
-                    <property name="nativeName">dat_anzeige58</property>
-                    <property name="dataType">date-time</property>
-                    <property name="nativeDataType">91</property>
-                </structure>
-                <structure>
-                    <property name="position">15</property>
-                    <property name="name">dat_anschreiben</property>
-                    <property name="nativeName">dat_anschreiben</property>
-                    <property name="dataType">date-time</property>
-                    <property name="nativeDataType">91</property>
-                </structure>
             </list-property>
-            <property name="queryText">select *
-from vaws.anh_suev_fachdaten</property>
-            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
-  <Version>1.0</Version>
-  <design:ResultSets derivedMetaData="true">
-    <design:resultSetDefinitions>
-      <design:resultSetColumns>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>objektid</design:name>
-            <design:position>1</design:position>
-            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>NotNullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>objektid</design:label>
-            <design:formattingHints>
-              <design:displaySize>11</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>groesser_3ha</design:name>
-            <design:position>2</design:position>
-            <design:nativeDataTypeCode>1111</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>groesser_3ha</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>vers_flaeche</design:name>
-            <design:position>3</design:position>
-            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>vers_flaeche</design:label>
-            <design:formattingHints>
-              <design:displaySize>11</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>suevkan_pflicht</design:name>
-            <design:position>4</design:position>
-            <design:nativeDataTypeCode>1111</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>suevkan_pflicht</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>indirektsw</design:name>
-            <design:position>5</design:position>
-            <design:nativeDataTypeCode>1111</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>indirektsw</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>indirektrw</design:name>
-            <design:position>6</design:position>
-            <design:nativeDataTypeCode>1111</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>indirektrw</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>direktsw</design:name>
-            <design:position>7</design:position>
-            <design:nativeDataTypeCode>1111</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>direktsw</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>direktrw</design:name>
-            <design:position>8</design:position>
-            <design:nativeDataTypeCode>1111</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>direktrw</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>anzeige58</design:name>
-            <design:position>9</design:position>
-            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>anzeige58</design:label>
-            <design:formattingHints>
-              <design:displaySize>11</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>datum_anzeige58</design:name>
-            <design:position>10</design:position>
-            <design:nativeDataTypeCode>1111</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>datum_anzeige58</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>sanierung_erfolgt</design:name>
-            <design:position>11</design:position>
-            <design:nativeDataTypeCode>1111</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>sanierung_erfolgt</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>sanierungskonzept</design:name>
-            <design:position>12</design:position>
-            <design:nativeDataTypeCode>1111</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>sanierungskonzept</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>keine_angaben</design:name>
-            <design:position>13</design:position>
-            <design:nativeDataTypeCode>1111</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>keine_angaben</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>dat_anzeige58</design:name>
-            <design:position>14</design:position>
-            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>dat_anzeige58</design:label>
-            <design:formattingHints>
-              <design:displaySize>23</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>dat_anschreiben</design:name>
-            <design:position>15</design:position>
-            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>dat_anschreiben</design:label>
-            <design:formattingHints>
-              <design:displaySize>23</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-      </design:resultSetColumns>
-    </design:resultSetDefinitions>
-  </design:ResultSets>
-</model:DesignValues>]]></xml-property>
-        </oda-data-set>
-        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="objekte" id="415">
-            <structure name="cachedMetaData">
-                <list-property name="resultSet">
-                    <structure>
-                        <property name="position">1</property>
-                        <property name="name">objektid</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">2</property>
-                        <property name="name">standortid</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">3</property>
-                        <property name="name">betreiberid</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">4</property>
-                        <property name="name">objektartid</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">5</property>
-                        <property name="name">uschistdid</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">6</property>
-                        <property name="name">beschreibung</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">7</property>
-                        <property name="name">sachbearbeiter</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">8</property>
-                        <property name="name">wiedervorlage</property>
-                        <property name="dataType">date-time</property>
-                    </structure>
-                </list-property>
-            </structure>
-            <property name="dataSource">auik</property>
-            <list-property name="resultSet">
-                <structure>
-                    <property name="position">1</property>
-                    <property name="name">objektid</property>
-                    <property name="nativeName">objektid</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
-                </structure>
-                <structure>
-                    <property name="position">2</property>
-                    <property name="name">standortid</property>
-                    <property name="nativeName">standortid</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
-                </structure>
-                <structure>
-                    <property name="position">3</property>
-                    <property name="name">betreiberid</property>
-                    <property name="nativeName">betreiberid</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
-                </structure>
-                <structure>
-                    <property name="position">4</property>
-                    <property name="name">objektartid</property>
-                    <property name="nativeName">objektartid</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
-                </structure>
-                <structure>
-                    <property name="position">5</property>
-                    <property name="name">uschistdid</property>
-                    <property name="nativeName">uschistdid</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
-                </structure>
-                <structure>
-                    <property name="position">6</property>
-                    <property name="name">beschreibung</property>
-                    <property name="nativeName">beschreibung</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">7</property>
-                    <property name="name">sachbearbeiter</property>
-                    <property name="nativeName">sachbearbeiter</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">8</property>
-                    <property name="name">wiedervorlage</property>
-                    <property name="nativeName">wiedervorlage</property>
-                    <property name="dataType">date-time</property>
-                    <property name="nativeDataType">91</property>
-                </structure>
-            </list-property>
-            <property name="queryText">select *
-from vaws.basis_objekt</property>
-            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
-  <Version>1.0</Version>
-  <design:ResultSets derivedMetaData="true">
-    <design:resultSetDefinitions>
-      <design:resultSetColumns>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>objektid</design:name>
-            <design:position>1</design:position>
-            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>NotNullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>objektid</design:label>
-            <design:formattingHints>
-              <design:displaySize>11</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>standortid</design:name>
-            <design:position>2</design:position>
-            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>NotNullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>standortid</design:label>
-            <design:formattingHints>
-              <design:displaySize>11</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>betreiberid</design:name>
-            <design:position>3</design:position>
-            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>NotNullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>betreiberid</design:label>
-            <design:formattingHints>
-              <design:displaySize>11</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>objektartid</design:name>
-            <design:position>4</design:position>
-            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>NotNullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>objektartid</design:label>
-            <design:formattingHints>
-              <design:displaySize>11</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>uschistdid</design:name>
-            <design:position>5</design:position>
-            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>uschistdid</design:label>
-            <design:formattingHints>
-              <design:displaySize>11</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>beschreibung</design:name>
-            <design:position>6</design:position>
-            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>beschreibung</design:label>
-            <design:formattingHints>
-              <design:displaySize>150</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>sachbearbeiter</design:name>
-            <design:position>7</design:position>
-            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>sachbearbeiter</design:label>
-            <design:formattingHints>
-              <design:displaySize>25</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:name>wiedervorlage</design:name>
-            <design:position>8</design:position>
-            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
-            <design:precision>0</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>wiedervorlage</design:label>
-            <design:formattingHints>
-              <design:displaySize>23</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-      </design:resultSetColumns>
-    </design:resultSetDefinitions>
-  </design:ResultSets>
-</model:DesignValues>]]></xml-property>
+            <property name="queryText">SELECT vaws.basis_betreiber.betrname, vaws.basis_standort.strasse, vaws.basis_standort.hausnr, vaws.basis_standort.hausnrzus, vaws.anh_suev_fachdaten.vers_flaeche
+FROM vaws.basis_standort INNER JOIN (vaws.basis_betreiber INNER JOIN (vaws.anh_suev_fachdaten INNER JOIN vaws.basis_objekt ON vaws.anh_suev_fachdaten.objektid = vaws.basis_objekt.objektid) ON vaws.basis_betreiber.id = vaws.basis_objekt.betreiberid) ON vaws.basis_standort.id = vaws.basis_objekt.standortid order by strasse, hausnr;</property>
         </oda-data-set>
     </data-sets>
     <styles>
@@ -725,7 +120,7 @@ from vaws.basis_objekt</property>
             <page-footer>
                 <text id="3">
                     <property name="contentType">html</property>
-                    <text-property name="content"><![CDATA[<span style="font-family: Arial;">&copy; Copyright 2006 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
+                    <text-property name="content"><![CDATA[<span style="font-family: Arial;">&copy; Copyright 2008 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
                 </text>
             </page-footer>
         </simple-master-page>
@@ -779,11 +174,11 @@ from vaws.basis_objekt</property>
             <property name="borderTopWidth">medium</property>
             <property name="marginTop">15px</property>
             <property name="width">100%</property>
-            <property name="dataSet">suevkan</property>
+            <property name="dataSet">joineddataset</property>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">objektid</property>
-                    <expression name="expression">dataSetRow["objektid"]</expression>
+                    <expression name="expression">dataSetRow["betrname"]</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -803,15 +198,44 @@ from vaws.basis_objekt</property>
                 </structure>
                 <structure>
                     <property name="name">Fläche</property>
-                    <expression name="expression">row["vers_flaeche"]</expression>
+                    <expression name="expression">dataSetRow["vers_flaeche"]</expression>
+                    <property name="dataType">any</property>
+                </structure>
+                <structure>
+                    <property name="name">betrname</property>
+                    <expression name="expression">dataSetRow["betrname"]</expression>
+                    <property name="dataType">any</property>
+                </structure>
+                <structure>
+                    <property name="name">strasse</property>
+                    <expression name="expression">dataSetRow["strasse"]</expression>
+                    <property name="dataType">any</property>
+                </structure>
+                <structure>
+                    <property name="name">hausnr</property>
+                    <expression name="expression">dataSetRow["hausnr"]</expression>
+                    <property name="dataType">any</property>
+                </structure>
+                <structure>
+                    <property name="name">zus</property>
+                    <expression name="expression">dataSetRow["hausnrzus"]</expression>
                     <property name="dataType">any</property>
                 </structure>
             </list-property>
             <column id="380">
-                <property name="width">1.187in</property>
+                <property name="width">7cm</property>
+            </column>
+            <column id="426">
+                <property name="width">5cm</property>
+            </column>
+            <column id="429">
+                <property name="width">1cm</property>
+            </column>
+            <column id="432">
+                <property name="width">1.5cm</property>
             </column>
             <column id="381">
-                <property name="width">5.531in</property>
+                <property name="width">2cm</property>
             </column>
             <header>
                 <row id="362">
@@ -820,6 +244,9 @@ from vaws.basis_objekt</property>
                     <property name="fontSize">10pt</property>
                     <property name="fontWeight">bold</property>
                     <property name="textAlign">center</property>
+                    <property name="textIndent">0em</property>
+                    <property name="orphans">2</property>
+                    <property name="widows">2</property>
                     <cell id="363">
                         <property name="backgroundColor">#D8D8D8</property>
                         <property name="borderBottomColor">#000000</property>
@@ -830,7 +257,46 @@ from vaws.basis_objekt</property>
                         <property name="paddingBottom">3px</property>
                         <property name="paddingRight">3px</property>
                         <label id="385">
-                            <text-property name="text">Datum</text-property>
+                            <text-property name="text">Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="424">
+                        <property name="backgroundColor">#D8D8D8</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="paddingTop">3px</property>
+                        <property name="paddingLeft">10px</property>
+                        <property name="paddingBottom">3px</property>
+                        <property name="paddingRight">3px</property>
+                        <label id="433">
+                            <text-property name="text">Straße</text-property>
+                        </label>
+                    </cell>
+                    <cell id="427">
+                        <property name="backgroundColor">#D8D8D8</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="paddingTop">3px</property>
+                        <property name="paddingLeft">10px</property>
+                        <property name="paddingBottom">3px</property>
+                        <property name="paddingRight">3px</property>
+                        <label id="435">
+                            <text-property name="text">Nr</text-property>
+                        </label>
+                    </cell>
+                    <cell id="430">
+                        <property name="backgroundColor">#D8D8D8</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="paddingTop">3px</property>
+                        <property name="paddingLeft">10px</property>
+                        <property name="paddingBottom">3px</property>
+                        <property name="paddingRight">3px</property>
+                        <label id="436">
+                            <text-property name="text">Zus</text-property>
                         </label>
                     </cell>
                     <cell id="364">
@@ -843,7 +309,7 @@ from vaws.basis_objekt</property>
                         <property name="paddingBottom">3px</property>
                         <property name="paddingRight">3px</property>
                         <label id="386">
-                            <text-property name="text">Sachverhalt</text-property>
+                            <text-property name="text">Fläche</text-property>
                         </label>
                     </cell>
                 </row>
@@ -866,7 +332,55 @@ from vaws.basis_objekt</property>
                                 <property name="category">Short Date</property>
                                 <property name="pattern">Short Date</property>
                             </structure>
-                            <property name="resultSetColumn">objektid</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">betrname</property>
+                        </data>
+                    </cell>
+                    <cell id="425">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="borderBottomColor">#999999</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="paddingTop">3px</property>
+                        <property name="paddingLeft">10px</property>
+                        <property name="paddingBottom">3px</property>
+                        <property name="paddingRight">3px</property>
+                        <property name="textAlign">center</property>
+                        <data id="434">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">strasse</property>
+                        </data>
+                    </cell>
+                    <cell id="428">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="borderBottomColor">#999999</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="paddingTop">3px</property>
+                        <property name="paddingLeft">10px</property>
+                        <property name="paddingBottom">3px</property>
+                        <property name="paddingRight">3px</property>
+                        <property name="textAlign">center</property>
+                        <data id="437">
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">hausnr</property>
+                        </data>
+                    </cell>
+                    <cell id="431">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="borderBottomColor">#999999</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="paddingTop">3px</property>
+                        <property name="paddingLeft">10px</property>
+                        <property name="paddingBottom">3px</property>
+                        <property name="paddingRight">3px</property>
+                        <property name="textAlign">left</property>
+                        <data id="438">
+                            <property name="resultSetColumn">zus</property>
                         </data>
                     </cell>
                     <cell id="370">
@@ -881,7 +395,7 @@ from vaws.basis_objekt</property>
                         <property name="paddingRight">3px</property>
                         <property name="textAlign">center</property>
                         <data id="411">
-                            <property name="resultSetColumn">Fläche</property>
+                            <property name="resultSetColumn">vers_flaeche</property>
                         </data>
                     </cell>
                 </row>

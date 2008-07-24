@@ -3,7 +3,7 @@
     <property name="author">Colin Atkins</property>
     <property name="createdBy">Eclipse BIRT Designer Version 2.1.0.N20060628-1351 Build &lt;20060628-1537></property>
     <property name="units">mm</property>
-    <property name="comments">Copyright (c) 2006 &lt;&lt;Your Company Name here>></property>
+    <property name="comments">Copyright (c) 2008 &lt;&lt;Your Company Name here>></property>
     <parameters>
         <scalar-parameter name="foto" id="146">
             <property name="valueType">static</property>
@@ -299,7 +299,7 @@ where vaws.atl_sielhaut.id = ?</property>
                             <property name="verticalAlign">bottom</property>
                             <text id="3">
                                 <property name="contentType">html</property>
-                                <text-property name="content"><![CDATA[<span style="font-family: Arial;">&copy; Copyright 2006 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
+                                <text-property name="content"><![CDATA[<span style="font-family: Arial;">&copy; Copyright 2008 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
                             </text>
                         </cell>
                         <cell id="244">
@@ -1119,7 +1119,7 @@ where vaws.atl_sielhaut.id = ?</property>
                         <property name="borderTopColor">#000000</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <property name="height">231px</property>
+                        <property name="height">235px</property>
                         <property name="width">314px</property>
                         <property name="source">file</property>
                         <expression name="uri">params["foto"]</expression>
@@ -1265,8 +1265,8 @@ where vaws.atl_sielhaut.id = ?</property>
             <property name="borderTopColor">#000000</property>
             <property name="borderTopStyle">solid</property>
             <property name="borderTopWidth">thin</property>
-            <property name="height">267px</property>
-            <property name="width">379px</property>
+            <property name="height">260px</property>
+            <property name="width">360px</property>
             <property name="source">file</property>
             <expression name="uri">params["karte"]</expression>
         </image>
