@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: KSAuswertung.java,v 1.3 2008-06-24 11:24:08 u633d Exp $
+ * $Id: KSAuswertung.java,v 1.4 2008-08-12 09:21:24 u633d Exp $
  * 
  * Erstellt am 12.05.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2008/06/24 11:24:08  u633d
+ * Version 0.3
+ *
  * Revision 1.2  2008/06/12 10:21:42  u633d
  * diverse Bugfixes
  *
@@ -687,14 +690,21 @@ public class KSAuswertung extends AbstractModul {
 		
 		AtlProbepkt pkt = AtlProbepkt.getKlaerschlammProbepunkt(art, ka);
 		
-		for (int i = 0; i < paramList.getModel().getSize(); i++) {
-			AtlParameter p = (AtlParameter) paramList.getModel().getElementAt(i);
-			
-			frame.changeStatus("Erzeuge Datenreihe für " + p + ", " + ka);
-			
-			List list = AtlAnalyseposition.getAnalysepositionen(p, einheit, pkt, vonDate, bisDate, analyseVon);
-			TimeSeries series = ChartDataSets.createAnalysePositionenSeries(list, p + ", " + ka, einheit.toString());
-			col.addSeries(series);
+		if (pkt != null) {
+
+			for (int i = 0; i < paramList.getModel().getSize(); i++) {
+				AtlParameter p = (AtlParameter) paramList.getModel()
+						.getElementAt(i);
+
+				frame.changeStatus("Erzeuge Datenreihe für " + p + ", " + ka);
+
+				List list = AtlAnalyseposition.getAnalysepositionen(p, einheit,
+						pkt, vonDate, bisDate, analyseVon);
+				TimeSeries series = ChartDataSets
+						.createAnalysePositionenSeries(list, p + ", " + ka,
+								einheit.toString());
+				col.addSeries(series);
+			}
 		}
 	}
 	

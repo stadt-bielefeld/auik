@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh56Auswertung.java,v 1.1 2008-06-05 11:38:32 u633d Exp $
+ * $Id: Anh56Auswertung.java,v 1.2 2008-08-12 09:21:24 u633d Exp $
  * 
  * Erstellt am 03.05.2006 von Gerd Genuit
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.2  2006/08/10 14:07:53  u633d
  * Anzahl der Datenaetze bei Auswertung anzeigen
  *
@@ -44,6 +47,8 @@ public class Anh56Auswertung extends AbstractQueryModul {
 	
 	// Widgets für die Abfrage
 	private JButton submitButton;
+	private JButton abwasserButton;
+	private JButton genehmigungButton;
 	
 	/** Das TableModel für die Ergebnis-Tabelle */
 	private Anh56Model tmodel;
@@ -70,6 +75,8 @@ public class Anh56Auswertung extends AbstractQueryModul {
 		if (queryPanel == null) {
 			// Die Widgets initialisieren
 			submitButton = new JButton("Alle Objekte anzeigen");
+			abwasserButton = new JButton("Abwasseranfall");
+			genehmigungButton = new JButton("Genehmigungspflicht");
 			
 			// Ein ActionListener für den Button, 
 			// der die eigentliche Suche auslöst: 
@@ -89,11 +96,47 @@ public class Anh56Auswertung extends AbstractQueryModul {
 				}
 			});
 			
+			// Ein ActionListener für den Button, 
+			// der die eigentliche Suche auslöst: 
+			abwasserButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+						protected void doNonUILogic() {
+							((Anh56Model)getTableModel()).setList(Anh56Fachdaten.getAbwasserListe());
+						}
+
+						protected void doUIUpdateLogic(){
+							((Anh56Model)getTableModel()).fireTableDataChanged();
+							frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
+						}
+					};
+					worker.start();
+				}
+			});
+			
+			// Ein ActionListener für den Button, 
+			// der die eigentliche Suche auslöst: 
+			genehmigungButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+						protected void doNonUILogic() {
+							((Anh56Model)getTableModel()).setList(Anh56Fachdaten.getGenehmigungListe());
+						}
+
+						protected void doUIUpdateLogic(){
+							((Anh56Model)getTableModel()).fireTableDataChanged();
+							frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
+						}
+					};
+					worker.start();
+				}
+			});
+			
 			// Noch etwas Layout...
-			FormLayout layout = new FormLayout("pref");
+			FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref");
 			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 			
-			builder.append(submitButton);
+			builder.append(submitButton, abwasserButton, genehmigungButton);
 			
 			queryPanel = builder.getPanel();
 		}

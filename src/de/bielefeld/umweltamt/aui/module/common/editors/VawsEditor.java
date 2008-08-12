@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: VawsEditor.java,v 1.2 2008-06-12 10:21:42 u633d Exp $
+ * $Id: VawsEditor.java,v 1.3 2008-08-12 09:21:24 u633d Exp $
  * 
  * Erstellt am 03.09.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/06/12 10:21:42  u633d
+ * diverse Bugfixes
+ *
  * Revision 1.1  2008/06/05 11:38:41  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -660,11 +663,31 @@ public class VawsEditor extends AbstractBaseEditor {
 
 			// Daten Tab
 //			flüssigkField.setText(getAbscheider().getMedium());
-			kompaktCheck.setSelected(getAbscheider().getKompaktanlage());
-			kompKCheck.setSelected(getAbscheider().getKkl1());
-			kompLFCheck.setSelected(getAbscheider().getLfkl2());
-			kompPSCheck.setSelected(getAbscheider().getPs());
-			kompSFCheck.setSelected(getAbscheider().getSf());
+
+			if(getAbscheider().getKompaktanlage()!=null)
+				kompaktCheck.setSelected(getAbscheider().getKompaktanlage());
+			else
+				kompaktCheck.setSelected(false);
+
+			if(getAbscheider().getKkl1()!=null)
+				kompKCheck.setSelected(getAbscheider().getKkl1());
+			else
+				kompKCheck.setSelected(false);
+
+			if(getAbscheider().getLfkl2()!=null)
+				kompLFCheck.setSelected(getAbscheider().getLfkl2());
+			else
+				kompLFCheck.setSelected(false);
+
+			if(getAbscheider().getPs()!=null)
+				kompPSCheck.setSelected(getAbscheider().getPs());
+			else
+				kompPSCheck.setSelected(false);
+
+			if(getAbscheider().getSf()!=null)
+				kompSFCheck.setSelected(getAbscheider().getSf());
+			else
+				kompSFCheck.setSelected(false);
 
 			// Ausführung Tab
 			schlammBeschField.setText(getAbscheider().getSfbeschichtung());
@@ -690,12 +713,36 @@ public class VawsEditor extends AbstractBaseEditor {
 			sonsMatField.setText(getAbscheider().getSonmaterial());
 			
 			//Schutzvorkehrungen Tab
-			überCheck.setSelected(getAbscheider().getUeberhausr());
-			waschCheck.setSelected(getAbscheider().getWaschanlvorh());
-			abgabeCheck.setSelected(getAbscheider().getAbgabe());
-			hochCheck.setSelected(getAbscheider().getHlzapfanl());
-			belüftCheck.setSelected(getAbscheider().getBelvonlagerbh());
-			rückCheck.setSelected(getAbscheider().getRueckhalteausr());
+
+			if(getAbscheider().getUeberhausr()!=null)
+				überCheck.setSelected(getAbscheider().getUeberhausr());
+			else
+				überCheck.setSelected(false);
+
+			if(getAbscheider().getWaschanlvorh()!=null)
+				waschCheck.setSelected(getAbscheider().getWaschanlvorh());
+			else
+				waschCheck.setSelected(false);
+
+			if(getAbscheider().getAbgabe()!=null)
+				abgabeCheck.setSelected(getAbscheider().getAbgabe());
+			else
+				abgabeCheck.setSelected(false);
+
+			if(getAbscheider().getHlzapfanl()!=null)
+				hochCheck.setSelected(getAbscheider().getHlzapfanl());
+			else
+				hochCheck.setSelected(false);
+
+			if(getAbscheider().getBelvonlagerbh()!=null)
+				belüftCheck.setSelected(getAbscheider().getBelvonlagerbh());
+			else
+				belüftCheck.setSelected(false);
+
+			if(getAbscheider().getRueckhalteausr()!=null)
+				rückCheck.setSelected(getAbscheider().getRueckhalteausr());
+			else
+				rückCheck.setSelected(false);
 		}
 		else if (getFachdaten().isLageranlage()) {
 			tabbedPane.addTab("Daten", getDatenLageranlagenTab());
@@ -778,10 +825,12 @@ public class VawsEditor extends AbstractBaseEditor {
 				schutzrohrCheck.setSelected(false);
 			
 			beschreibungRFeld.setText(getFachdaten().getBeschreibung_r());
+			
 		} else if (getFachdaten().isRohrleitung()) {
 			tabbedPane.addTab("Daten", getDatenRohrleitungenTab());
 			
 			ausfuehrungBox.setSelectedItem(getFachdaten().getAusfuehrung());
+			
 		} else if (getFachdaten().isAbfuellflaeche()) {
 			tabbedPane.addTab("Daten", getDatenAbfuellflaechenTab());
 			tabbedPane.addTab("Ausführung", getAusfuehrungAbfuellflaechenTab());
@@ -917,11 +966,13 @@ public class VawsEditor extends AbstractBaseEditor {
 			getFachdaten().setAusStahl(ausStahlCheck.isSelected());
 			getFachdaten().setMitSchutzrohr(schutzrohrCheck.isSelected());
 			getFachdaten().setBeschreibung_r(beschreibungRFeld.getText());
+			
 		} else if (getFachdaten().isRohrleitung()) {
 			getFachdaten().setAusfuehrung((String)ausfuehrungBox.getSelectedItem());
 		}
 		
 		success = success && VawsFachdaten.saveFachdaten(getFachdaten());
+		setEditedObject(VawsFachdaten.getVawsByBehaelterId(getFachdaten().getBehaelterId()));
 		
 		// Für Abfüllflächen (wg. dem VawsAbfuellflaechen-Objekt)
 		if (getFachdaten().isAbfuellflaeche()) {

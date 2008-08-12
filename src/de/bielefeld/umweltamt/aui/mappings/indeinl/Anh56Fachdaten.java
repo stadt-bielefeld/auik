@@ -52,7 +52,8 @@ public class Anh56Fachdaten
 		List liste;
 		
 		String query = "from Anh56Fachdaten as anh56 " +
-				"order by anh56.id";
+				"order by anh56.basisObjekt.basisStandort.strasse, " +
+				"anh56.basisObjekt.basisStandort.hausnr";
 		
 		try {
 			Session session = HibernateSessionFactory.currentSession();
@@ -66,6 +67,60 @@ public class Anh56Fachdaten
 		return liste;
 	}
 
+    /**
+	 * Liefert eine Liste mit allen abwasserrelevanten Objekten.
+	 * @return Eine Liste aus Anh56Fachdaten.
+	 */
+	public static List getAbwasserListe() {
+		List liste;
+		Boolean abwasser = true;
+		
+		String query = "from Anh56Fachdaten as anh56 " +
+				"where anh56.abwasseranfall = ? " +
+				"order by anh56.basisObjekt.basisStandort.strasse, " +
+				"anh56.basisObjekt.basisStandort.hausnr";
+		
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			liste = session.createQuery(query)
+				.setString(0, abwasser.booleanValue() ? "t" : "f")
+				.list();
+		} catch (HibernateException e) {
+			throw new RuntimeException(e);
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		
+		return liste;
+	}
+
+    /**
+	 * Liefert eine Liste mit allen genehmigungspflichtigen Objekten.
+	 * @return Eine Liste aus Anh56Fachdaten.
+	 */
+	public static List getGenehmigungListe() {
+		List liste;
+		Boolean genpflicht = true;
+		
+		String query = "from Anh56Fachdaten as anh56 " +
+				"where anh56.genpflicht = ? " +
+				"order by anh56.basisObjekt.basisStandort.strasse, " +
+				"anh56.basisObjekt.basisStandort.hausnr";
+		
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			liste = session.createQuery(query)
+				.setString(0, genpflicht.booleanValue() ? "t" : "f")
+				.list();
+		} catch (HibernateException e) {
+			throw new RuntimeException(e);
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		
+		return liste;
+	}
+	
 	public static Anh56Fachdaten getAnh56ByObjekt(BasisObjekt objekt, Session session) {
     	Anh56Fachdaten fachdaten = null;
     	Integer objID = objekt.getObjektid();

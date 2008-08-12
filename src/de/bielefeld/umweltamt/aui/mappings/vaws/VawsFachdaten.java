@@ -146,10 +146,31 @@ public class VawsFachdaten
     	return vaws;
     }
 	
+	
+	/**
+     * Liefert alle VAWS-Fachdatensätze zu einem bestimmten BasisObjekt.
+     * @param objekt Das BasisObjekt.
+     * @return Eine Liste mit VawsFachdaten.
+     */
+	public static VawsFachdaten getVawsByBehaelterId(Integer id) {
+		VawsFachdaten fachdaten;
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			fachdaten = (VawsFachdaten) session.get(VawsFachdaten.class, id);
+			HibernateSessionFactory.closeSession();
+		}catch (HibernateException e) {
+			fachdaten = null;
+		}
+		return fachdaten;
+	}
+	
 	/**
 	 * Speichert einen VAWS-Fachdatensatz in der Datenbank.
-	 * @param fachdaten Der zu speichernde Datensatz.
-	 * @return <code>true</code>, falls beim Speichern kein Fehler auftritt, sonst <code>false</code>.
+	 * 
+	 * @param fachdaten
+	 *            Der zu speichernde Datensatz.
+	 * @return <code>true</code>, falls beim Speichern kein Fehler auftritt,
+	 *         sonst <code>false</code>.
 	 */
     public static boolean saveFachdaten(VawsFachdaten fachdaten) {
     	boolean saved;
@@ -158,7 +179,7 @@ public class VawsFachdaten
 		try {
 			Session session = HibernateSessionFactory.currentSession();
 			tx = session.beginTransaction();
-			session.merge(fachdaten);
+			session.saveOrUpdate(fachdaten);
 			tx.commit();
 			saved = true;
 		} catch (HibernateException e) {

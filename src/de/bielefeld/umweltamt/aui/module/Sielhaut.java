@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Sielhaut.java,v 1.2 2008-06-24 11:24:08 u633d Exp $
+ * $Id: Sielhaut.java,v 1.3 2008-08-12 09:21:24 u633d Exp $
  * 
  * Erstellt am 14.06.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/06/24 11:24:08  u633d
+ * Version 0.3
+ *
  * Revision 1.1  2008/06/05 11:38:32  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -97,6 +100,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
+import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.RetractablePanel;
@@ -141,10 +145,12 @@ public class Sielhaut extends AbstractModul {
 	private JTextField prNummerFeld;
 	private JDateChooser prDateChooser;
 	private JButton prAnlegenButton;
+	private JButton tabelleExportButton;
 	
 	private JPopupMenu probePopup;
 	private Action probeEditAction;
 	private Action probeLoeschAction;
+	private Action probeSaveAction;
 	
 	// Widgets für Fotopanel
 	private JLabel fotoLabel;
@@ -163,11 +169,13 @@ public class Sielhaut extends AbstractModul {
 		if (spunkt.getId() != null) {
 			sprobePkt = AtlProbepkt.getSielhautProbepunkt(spunkt);
 			getPrAnlegenButton().setEnabled(true);
+			getTabelleExportButton().setEnabled(true);
 		} else {
 			sprobePkt = new AtlProbepkt();
 			sprobePkt.setAtlProbeart(AtlProbeart.getProbeart(AtlProbeart.SIELHAUT));
 			sprobePkt.setAtlSielhaut(spunkt);
 			getPrAnlegenButton().setEnabled(false);
+			getTabelleExportButton().setEnabled(false);
 			
 			getFotoLabel().setIcon(null);
 			getFotoLabel().setText("<html><b>- Kein Foto verfügbar! -</b></html>");
@@ -353,6 +361,50 @@ public class Sielhaut extends AbstractModul {
 		//probeModel.updateList();
 	}
 	
+	
+	/**
+	 * Speichert eine ProbenTabelle.
+	 */
+	public void saveTabelle() {
+		File exportDatei = getFrame().saveFile(new String[]{"csv"});
+		if (exportDatei != null) {
+			String ext = AuikUtils.getExtension(exportDatei);
+			
+			if (ext == null) {
+				String newExt;
+				if (exportDatei.getName().endsWith(".")) {
+					newExt = "csv";
+				} else {
+					newExt = ".csv";
+				}
+				exportDatei = new File(exportDatei.getParent(), exportDatei.getName()+newExt);
+			}
+			
+			boolean doIt = false;
+			if (exportDatei.exists()) {
+				boolean answer = getFrame().showQuestion( 
+						"Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?", 
+						"Datei bereits vorhanden!");
+				if (answer && exportDatei.canWrite()) {
+					doIt = true;
+				}
+			} else if (exportDatei.getParentFile().canWrite()) {
+				doIt = true;
+			}
+			
+			if (doIt) {
+				AUIKataster.debugOutput("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
+				if (AuikUtils.exportTableDataToCVS(getPrTabelle(), exportDatei)) {
+					AUIKataster.debugOutput("Speichern erfolgreich!");	
+				} else {
+					AUIKataster.debugOutput("Fehler beim Speichern!");
+					getFrame().showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+				}
+			}
+		}
+	}
+	
+	
 	private void updateProbeListe() {
 		SwingWorkerVariant worker = new SwingWorkerVariant(getPrTabelle()) {
 			protected void doNonUILogic() throws RuntimeException {
@@ -385,6 +437,20 @@ public class Sielhaut extends AbstractModul {
 		}
 		
 		return probeEditAction;
+	}
+	
+	private Action getProbeSaveAction() {
+		if (probeEditAction == null) {
+			probeEditAction = new AbstractAction("Speichern") {
+				public void actionPerformed(ActionEvent e) {
+					saveTabelle();
+				}
+			};
+			probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
+			probeEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+		}
+		
+		return probeSaveAction;
 	}
 	
 	private Action getProbeLoeschAction() {
@@ -451,6 +517,10 @@ public class Sielhaut extends AbstractModul {
 	 */
 	public String getCategory() {
 		return "Sielhaut";
+	}
+	
+	public HauptFrame getFrame() {
+		return frame;
 	}
 
 	/* (non-Javadoc)
@@ -701,17 +771,18 @@ public class Sielhaut extends AbstractModul {
 	private RetractablePanel getProbenRtPanel() {
 		if (probenRtPanel == null) {
 			FormLayout layout = new FormLayout(
-					"p, 4dlu, p:g, 7dlu, p, 4dlu, max(60dlu;p), 7dlu, max(60dlu;p)"
+					"p, 4dlu, p:g, 7dlu, p, 4dlu, max(60dlu;p), 7dlu, max(60dlu;p), 7dlu, max(60dlu;p)"
 			);
 			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 			builder.setDefaultDialogBorder();
 			
 			builder.appendRow("f:65dlu:g");
-			builder.append(new JScrollPane(getPrTabelle()), 9);
+			builder.append(new JScrollPane(getPrTabelle()), 11);
 			builder.appendSeparator("Neue Probenahme");
 			builder.append("Kennummer:", getPrNummerFeld());
 			builder.append("Datum:", getPrDateChooser());
 			builder.append(getPrAnlegenButton());
+			builder.append(getTabelleExportButton());
 			
 			JPanel probenPanel = builder.getPanel();
 			probenRtPanel = new RetractablePanel(
@@ -801,6 +872,21 @@ public class Sielhaut extends AbstractModul {
 		}
 		
 		return prAnlegenButton;
+	}
+	
+	private JButton getTabelleExportButton() {
+		if (tabelleExportButton == null) {
+			tabelleExportButton = new JButton("Tabelle speichern");
+			tabelleExportButton.setEnabled(false);
+			
+			tabelleExportButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					saveTabelle();
+				}
+			});
+		}
+		
+		return tabelleExportButton;
 	}
 	
 	// Foto
@@ -928,7 +1014,7 @@ class SielhautProbeModel extends ListTableModel {
 	
 	public void updateList() {
 		if (probepkt != null) {
-			setList(AtlProbenahmen.getProbenahmen(probepkt, true, 5));
+			setList(AtlProbenahmen.getProbenahmen(probepkt, true, -1));
 			
 			wertMap.clear();
 			for (int i = 0; i < getList().size(); i++) {
@@ -966,7 +1052,8 @@ class SielhautProbeModel extends ListTableModel {
 			List wertList = (List) wertMap.get(probe);
 			AtlAnalyseposition pos = (AtlAnalyseposition) wertList.get(columnIndex-2);
 			if (pos != null) {
-				value = pos.getWert() + " " + pos.getAtlEinheiten();
+				String tmp = pos.getWert().toString().replace(".", ",");
+				value = tmp;
 			} else {
 				value = "-";
 			}
