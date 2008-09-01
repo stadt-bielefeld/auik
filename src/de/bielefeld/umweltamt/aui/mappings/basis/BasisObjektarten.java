@@ -1,15 +1,18 @@
 /*
  * Datei:
 <<<<<<< BasisObjektarten.java
- * $Id: BasisObjektarten.java,v 1.2 2008-06-12 10:21:41 u633d Exp $
+ * $Id: BasisObjektarten.java,v 1.3 2008-09-01 07:00:29 u633d Exp $
 =======
- * $Id: BasisObjektarten.java,v 1.2 2008-06-12 10:21:41 u633d Exp $
+ * $Id: BasisObjektarten.java,v 1.3 2008-09-01 07:00:29 u633d Exp $
 >>>>>>> 1.20.6.1
  * 
  * Erstellt am 19.01.05 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/06/12 10:21:41  u633d
+ * diverse Bugfixes
+ *
  * Revision 1.1  2008/06/05 11:38:34  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -283,4 +286,23 @@ public class BasisObjektarten
 		
 		return tmp;
 	}
+    
+	/**
+	 * Liefert eine Objektart mit einer bestimmten ID.
+	 * @param id Die ID (der Primärschlüssel) des Standorts.
+	 * @return Den gesuchten Standort oder <code>null</code>, 
+	 * falls kein Standort mit dieser ID existiert.
+	 */
+    public static BasisObjektarten getObjektart(Integer id) {
+    	BasisObjektarten art;
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			art = (BasisObjektarten) session.get(BasisObjektarten.class, id);
+			HibernateSessionFactory.closeSession();
+		} catch (HibernateException e) {
+			art = null;
+		}
+    	
+    	return art;
+    }
 }

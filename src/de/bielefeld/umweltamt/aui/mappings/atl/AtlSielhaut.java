@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the 'ATL_SIELHAUT' table. 
@@ -66,7 +67,7 @@ public class AtlSielhaut
 			punkte = session.createQuery(
 					"from AtlSielhaut as sp where " +
 					"lower(sp.bezeichnung) like ? " +
-					"order by sp.psielhaut desc, sp.bezeichnung")
+					"order by sp.psielhaut desc, sp.pfirmenprobe desc, sp.bezeichnung")
 					.setString(0, sucheF)
 					.list();
 			
@@ -76,6 +77,25 @@ public class AtlSielhaut
 			HibernateSessionFactory.closeSession();
 		}
     	return punkte;
+    }
+    
+    /**
+     * Lädt ein Objekt aus der Datenbank.
+     * @param id Der Primärschlüssel des zu ladenden Objekts.
+     * @return  Das BasisObjekt mit dem Primärschlüssel oder <code>null</code>, 
+     * 			falls ein solches nicht gefunden wurde.
+     */
+    public static AtlSielhaut getSielhaut(Integer id) {
+    	AtlSielhaut sielhaut;
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			sielhaut = (AtlSielhaut) session.get(AtlSielhaut.class, id);
+			HibernateSessionFactory.closeSession();
+		} catch (HibernateException e) {
+			sielhaut = null;
+		}
+    	
+    	return sielhaut;
     }
     
     public static boolean saveSielhautPunkt(AtlSielhaut spunkt) {

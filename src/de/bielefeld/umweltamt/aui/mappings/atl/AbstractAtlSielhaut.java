@@ -70,6 +70,9 @@ public abstract class AbstractAtlSielhaut
     /** The value of the simple schlammprobe property. */
     private java.lang.Boolean schlammprobe;
 
+    /** The value of the simple pnachprobe property. */
+    private java.lang.Boolean pfirmenprobe;
+
     /**
      * Simple constructor of AbstractAtlSielhaut instances.
      */
@@ -391,6 +394,24 @@ public abstract class AbstractAtlSielhaut
     public void setSchlammprobe(java.lang.Boolean schlammprobe)
     {
         this.schlammprobe = schlammprobe;
+    }
+
+    /**
+     * Return the value of the P_FIRMENPROBE column.
+     * @return java.lang.Boolean
+     */
+    public java.lang.Boolean getPfirmenprobe()
+    {
+        return this.pfirmenprobe;
+    }
+
+    /**
+     * Set the value of the P_FIRMENPROBE column.
+     * @param pnachprobe
+     */
+    public void setPfirmenprobe(java.lang.Boolean pfirmenprobe)
+    {
+        this.pfirmenprobe = pfirmenprobe;
     }
 
     /**

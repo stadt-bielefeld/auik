@@ -10,9 +10,9 @@
 
     <class name="AtlProbepkt" table="atl_probepkt" lazy="false">
         <id name="pktId" column="objektid" type="java.lang.Integer">
-            <generator class="native">
-                <param name="sequence">atl_probepkt_objektid_seq</param>
-        	</generator>
+            <generator class="foreign">
+            	<param name="property">basisObjekt</param>
+            </generator>
         </id>
 
         <property name="beschreibung" column="beschreibung" type="java.lang.String" />
@@ -27,7 +27,7 @@
 
         <many-to-one name="atlSielhaut" column="sielhaut_id" class="AtlSielhaut" />
 
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"/>
     </class>
 
 </hibernate-mapping>
