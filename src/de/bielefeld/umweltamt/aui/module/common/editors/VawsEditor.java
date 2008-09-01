@@ -1,6 +1,6 @@
 /*
  * Datei:
- * $Id: VawsEditor.java,v 1.3 2008-08-12 09:21:24 u633d Exp $
+ * $Id: VawsEditor.java,v 1.4 2008-09-01 07:03:46 u633d Exp $
  * 
  * Erstellt am 03.09.2005 von David Klotz
  * 

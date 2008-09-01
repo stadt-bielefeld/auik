@@ -1,6 +1,6 @@
 /*
  * Datei:
- * $Id: Sielhaut.java,v 1.3 2008-08-12 09:21:24 u633d Exp $
+ * $Id: Sielhaut.java,v 1.4 2008-09-01 07:03:46 u633d Exp $
  * 
  * Erstellt am 14.06.2005 von David Klotz (u633z)
  * 
@@ -97,6 +97,10 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
@@ -139,6 +143,7 @@ public class Sielhaut extends AbstractModul {
 	private JCheckBox spSielhautCheck;
 	private JCheckBox spNachprobeCheck;
 	private JCheckBox spAlarmplanCheck;
+	private JCheckBox spFirmenprobeCheck;
 	
 	// Widgets für Probenpanel
 	private JTable prTabelle;
@@ -162,6 +167,10 @@ public class Sielhaut extends AbstractModul {
 	
 	private AtlSielhaut spunkt;
 	private AtlProbepkt sprobePkt;
+	private BasisObjekt objekt;
+	private BasisStandort standort;
+	private BasisBetreiber betreiber;
+	private BasisObjektarten art;
 	private SielhautProbeModel probeModel;
 	
 	public void setSielhautPunkt(AtlSielhaut sp) {
@@ -171,9 +180,15 @@ public class Sielhaut extends AbstractModul {
 			getPrAnlegenButton().setEnabled(true);
 			getTabelleExportButton().setEnabled(true);
 		} else {
+			objekt = new BasisObjekt();
+			standort = BasisStandort.getStandort(41);
+			betreiber = BasisBetreiber.getBetreiber(3);
+			art = BasisObjektarten.getObjektart(32);
+			objekt.setBasisStandort(standort);
+			objekt.setBasisBetreiber(betreiber);
+			objekt.setBasisObjektarten(art);
 			sprobePkt = new AtlProbepkt();
 			sprobePkt.setAtlProbeart(AtlProbeart.getProbeart(AtlProbeart.SIELHAUT));
-			sprobePkt.setAtlSielhaut(spunkt);
 			getPrAnlegenButton().setEnabled(false);
 			getTabelleExportButton().setEnabled(false);
 			
@@ -184,8 +199,8 @@ public class Sielhaut extends AbstractModul {
 		}
 		
 		String titel = spunkt.getBezeichnung();
-		if (spunkt.getEntgeb() != null) {
-			titel += " (" + spunkt.getEntgeb() + ")";
+		if (spunkt.getLage() != null) {
+			titel += " \"" + spunkt.getLage() + "\"";
 		}
 		getPunktFeld().setText(titel);
 		
@@ -201,9 +216,29 @@ public class Sielhaut extends AbstractModul {
 		getSpHaltungsnrFeld().setText(spunkt.getHaltungsnr());
 		getSpAlarmplannrFeld().setText(spunkt.getAlarmplannr());
 		
+		if (spunkt.getPsielhaut() == null){
+			getSpSielhautCheck().setSelected(false);
+		}
+		else
 		getSpSielhautCheck().setSelected(spunkt.getPsielhaut());
+		
+		if (spunkt.getPnachprobe() == null){
+			getSpNachprobeCheck().setSelected(false);
+		}
+		else
 		getSpNachprobeCheck().setSelected(spunkt.getPnachprobe());
+		
+		if (spunkt.getPalarmplan() == null){
+			getSpAlarmplanCheck().setSelected(false);
+		}
+		else		
 		getSpAlarmplanCheck().setSelected(spunkt.getPalarmplan());
+		
+		if (spunkt.getPfirmenprobe() == null){
+			getSpFirmenprobeCheck().setSelected(false);
+		}
+		else
+		getSpFirmenprobeCheck().setSelected(spunkt.getPfirmenprobe());
 		
 		probeModel.setProbepunkt(sprobePkt);
 		
@@ -234,6 +269,36 @@ public class Sielhaut extends AbstractModul {
 		AtlSielhaut neuerPunkt = new AtlSielhaut();
 		neuerPunkt.setBezeichnung("Neuer Sielhaut-Punkt");
 		setSielhautPunkt(neuerPunkt);
+	}
+	
+	/**
+	 * Speichert ein neu angelegtes Probenahmepunkt-Objekt.
+	 */
+	public boolean saveObjekt()  {
+		boolean saved = false;
+		
+		objekt = BasisObjekt.saveBasisObjekt(objekt);
+		
+		saved = true;
+		
+		return saved;
+	}
+	
+	/**
+	 * Speichert einen neu angelegten Probenahmepunkt.
+	 */
+	public boolean saveProbepunkt(BasisObjekt objekt)  {
+		boolean saved = false;
+
+		objekt = BasisObjekt.getObjekt(objekt.getObjektid());
+		sprobePkt.setBasisObjekt(objekt);
+		spunkt = AtlSielhaut.getSielhaut(spunkt.getId());
+		sprobePkt.setAtlSielhaut(spunkt);
+		AtlProbepkt.saveProbepunkt(sprobePkt);
+		
+		saved = true;
+		
+		return saved;
 	}
 	
 	/**
@@ -291,12 +356,21 @@ public class Sielhaut extends AbstractModul {
 			spunkt.setPsielhaut(getSpSielhautCheck().isSelected());
 			spunkt.setPnachprobe(getSpNachprobeCheck().isSelected());
 			spunkt.setPalarmplan(getSpAlarmplanCheck().isSelected());
+			spunkt.setPfirmenprobe(getSpFirmenprobeCheck().isSelected());
 			
-			if (AtlSielhaut.saveSielhautPunkt(spunkt) && AtlProbepkt.saveProbepunkt(sprobePkt)) {
-				frame.changeStatus("Sielhaut-Messpunkt erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
-				setSielhautPunkt(spunkt);
+			if (saveObjekt()) {
+				if (AtlSielhaut.saveSielhautPunkt(spunkt)) {
+					if (saveProbepunkt(objekt)) {
+						frame.changeStatus(
+								"Sielhaut-Messpunkt erfolgreich gespeichert.",
+								HauptFrame.SUCCESS_COLOR);
+						setSielhautPunkt(spunkt);
+					}
+				}
 			} else {
-				frame.changeStatus("Sielhaut-Messpunkt konnte nicht gespeichert werden!", HauptFrame.ERROR_COLOR);
+				frame.changeStatus(
+						"Sielhaut-Messpunkt konnte nicht gespeichert werden!",
+						HauptFrame.ERROR_COLOR);
 			}
 		}
 	}
@@ -680,9 +754,9 @@ public class Sielhaut extends AbstractModul {
 			builder.appendUnrelatedComponentsGapRow();
 			builder.nextLine(2);
 			
-			builder.append("Rechtswert:", getSpRechtsWertFeld());
+			builder.append("Rechtswert:", getSpRechtsWertFeld(), getSpSielhautCheck());
 			builder.nextLine();
-			builder.append("Hochwert:", getSpHochWertFeld(), getSpSielhautCheck());
+			builder.append("Hochwert:", getSpHochWertFeld(), getSpFirmenprobeCheck());
 			builder.nextLine();
 			
 			builder.append("Haltungs-Nr.:", getSpHaltungsnrFeld(), getSpNachprobeCheck());
@@ -748,6 +822,12 @@ public class Sielhaut extends AbstractModul {
 		}
 		return spNachprobeCheck;
 	}
+	private JCheckBox getSpFirmenprobeCheck() {
+		if (spFirmenprobeCheck == null) {
+			spFirmenprobeCheck = new JCheckBox("Firmenprobe");
+		}
+		return spFirmenprobeCheck;
+	}
 	private JTextField getSpNamenFeld() {
 		if (spNamenFeld == null) {
 			spNamenFeld = new LimitedTextField(50);
@@ -762,7 +842,7 @@ public class Sielhaut extends AbstractModul {
 	}
 	private JCheckBox getSpSielhautCheck() {
 		if (spSielhautCheck == null) {
-			spSielhautCheck = new JCheckBox("Sielhaut");
+			spSielhautCheck = new JCheckBox("Routinekontrolle");
 		}
 		return spSielhautCheck;
 	}
@@ -1099,11 +1179,12 @@ class SielhautChooser extends OkCancelDialog {
 		sielhautModel = new SielhautModel();
 		getErgebnisTabelle().setModel(sielhautModel);
 		
-		ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(40);
-		ergebnisTabelle.getColumnModel().getColumn(1).setPreferredWidth(270);
+		ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(80);
+		ergebnisTabelle.getColumnModel().getColumn(1).setPreferredWidth(230);
 		ergebnisTabelle.getColumnModel().getColumn(2).setPreferredWidth(10);
 		ergebnisTabelle.getColumnModel().getColumn(3).setPreferredWidth(10);
 		ergebnisTabelle.getColumnModel().getColumn(4).setPreferredWidth(10);
+		ergebnisTabelle.getColumnModel().getColumn(5).setPreferredWidth(10);
 		
 		setResizable(true);
 		
@@ -1250,7 +1331,7 @@ class SielhautChooser extends OkCancelDialog {
 
 class SielhautModel extends ListTableModel {
 	public SielhautModel() {
-		super(new String[]{"Bezeichnung", "Lage", "S", "A", "N"}, false);
+		super(new String[]{"Bezeichnung", "Lage", "R", "F", "A", "N"}, false);
 	}
 	
 	/* (non-Javadoc)
@@ -1268,12 +1349,34 @@ class SielhautModel extends ListTableModel {
 			tmp = spunkt.getLage();
 			break;
 		case 2:
+			if (spunkt.getPsielhaut() == null) {
+				tmp = new Boolean(false);
+			}
+			else
+			
 			tmp = new Boolean(spunkt.getPsielhaut());
 			break;
 		case 3:
-			tmp = new Boolean(spunkt.getPalarmplan());
+			if (spunkt.getPfirmenprobe() == null) {
+				tmp = new Boolean(false);
+			}
+			else
+			tmp = new Boolean(spunkt.getPfirmenprobe());
 			break;
 		case 4:
+			if (spunkt.getPalarmplan() == null) {
+				tmp = new Boolean(false);
+			}
+			else
+			
+			tmp = new Boolean(spunkt.getPalarmplan());
+			break;
+		case 5:
+			if (spunkt.getPnachprobe() == null) {
+				tmp = new Boolean(false);
+			}
+			else
+			
 			tmp = new Boolean(spunkt.getPnachprobe());
 			break;
 

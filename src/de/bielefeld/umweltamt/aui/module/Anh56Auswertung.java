@@ -1,6 +1,6 @@
 /*
  * Datei:
- * $Id: Anh56Auswertung.java,v 1.2 2008-08-12 09:21:24 u633d Exp $
+ * $Id: Anh56Auswertung.java,v 1.3 2008-09-01 07:03:46 u633d Exp $
  * 
  * Erstellt am 03.05.2006 von Gerd Genuit
  * 

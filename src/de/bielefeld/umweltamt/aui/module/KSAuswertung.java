@@ -1,6 +1,6 @@
 /*
  * Datei:
- * $Id: KSAuswertung.java,v 1.4 2008-08-12 09:21:24 u633d Exp $
+ * $Id: KSAuswertung.java,v 1.5 2008-09-01 07:03:46 u633d Exp $
  * 
  * Erstellt am 12.05.2005 von David Klotz (u633z)
  * 
