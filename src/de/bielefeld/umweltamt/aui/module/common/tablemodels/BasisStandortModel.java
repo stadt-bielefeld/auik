@@ -4,7 +4,7 @@ import org.hibernate.HibernateException;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 /**
- * Ein TableModel f¸r die Basis-Standortdaten.
+ * Ein TableModel f√ºr die Basis-Standortdaten.
  * @author David Klotz
  */
 public class BasisStandortModel extends ListTableModel {
@@ -14,15 +14,15 @@ public class BasisStandortModel extends ListTableModel {
 	public BasisStandortModel() {
 		super(new String[]{
 				/*"St.ID",*/
-				"Straﬂe",
+				"Stra√üe",
 				"Hausnr.",
 		"PLZ"}, true);
 	}
 	
 	/**
 	 * Aktualisiert die aktuell angezeigte Liste.
-	 * Falls noch keine Suche durchgef¸hrt wurde, werden die 
-	 * ersten 30 Eintr‰ge angezeigt.
+	 * Falls noch keine Suche durchgef√ºhrt wurde, werden die 
+	 * ersten 30 Eintr√§ge angezeigt.
 	 * @throws HibernateException
 	 */
 	public void updateList() {
@@ -41,9 +41,9 @@ public class BasisStandortModel extends ListTableModel {
 	}
 	
 	/** 
-	 * Filtert den Tabelleninhalt nach der Straﬂe und der Hausnr.
-	 * @param strasse Der Straﬂenname
-	 * @param hausnr Die Hausnr (oder -1 falls alle Standorte in dieser Straﬂen gesucht werden sollen)
+	 * Filtert den Tabelleninhalt nach der Stra√üe und der Hausnr.
+	 * @param strasse Der Stra√üenname
+	 * @param hausnr Die Hausnr (oder -1 falls alle Standorte in dieser Stra√üen gesucht werden sollen)
 	 */
 	public void filterList(String strasse, int hausnr) {
 		setList(BasisStandort.findStandorte(strasse, hausnr));

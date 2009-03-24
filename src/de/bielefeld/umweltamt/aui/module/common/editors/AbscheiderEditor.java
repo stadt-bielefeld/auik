@@ -1,13 +1,16 @@
 /*
  * Datei:
- * $Id: AbscheiderEditor.java,v 1.1 2008-06-05 11:38:41 u633d Exp $
+ * $Id: AbscheiderEditor.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 01.06.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:41  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.8  2005/07/06 09:38:56  u633z
- * - Kommentar verändert
+ * - Kommentar verÃ¤ndert
  *
  * Revision 1.7  2005/06/13 13:39:35  u633z
  * - Layout verbessert
@@ -19,7 +22,7 @@
  * - Border der Content-Area korrigiert
  *
  * Revision 1.4  2005/06/09 09:15:52  u633z
- * - Nur ein bisschen aufgeräumt
+ * - Nur ein bisschen aufgerÃ¤umt
  *
  * Revision 1.3  2005/06/08 12:03:47  u633d
  * Abscheidereditor fertig
@@ -73,7 +76,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 	
 	private JTextArea bemerkungsArea;
 	
-	// Funktionalität:
+	// FunktionalitÃ¤t:
 	
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten von Abscheiderdetails.
@@ -314,7 +317,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 		
 		boolean save = Anh49Abscheiderdetails.saveAbscheider(getDetails());
 		if (save = true) {
-			AUIKataster.debugOutput("Änderungen gespeichert!", "editStandort");
+			AUIKataster.debugOutput("Ã„nderungen gespeichert!", "editStandort");
 			return true;
 		} else {
 			return false;
@@ -322,7 +325,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 	}
 	
 	
-	// Getter für Widgets:
+	// Getter fÃ¼r Widgets:
 
 	private JTextField getBaujahrFeld() {
 		if (baujahrFeld == null) {			

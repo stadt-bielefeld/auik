@@ -81,7 +81,7 @@ public class ObjektAnh50Panel extends JPanel {
 		builder.nextLine();
 		builder.append("Wiedervorlagen:", getWiedervorlageDatum());
 		builder.nextLine();
-		builder.append("Gef‰hrdungsklasse:", getGefaehrdungsklasseFeld());
+		builder.append("Gef√§hrdungsklasse:", getGefaehrdungsklasseFeld());
 		builder.nextLine();
 		builder.append("", getErloschenCheck());
 		builder.nextLine();

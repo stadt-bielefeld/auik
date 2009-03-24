@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="Anh53Entsorgungsbetriebe" table="anh_53_entsorgungsbetriebe" lazy="false">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="assigned"/>
+        </id>
+
+        <property name="firmenname" column="firmenname" type="java.lang.String" />
+        <property name="strasse" column="strasse" type="java.lang.String" />
+        <property name="hausnr" column="hausnr" type="java.lang.String" />
+        <property name="plz" column="plz" type="java.lang.String" />
+        <property name="ort" column="ort" type="java.lang.String" />
+        <property name="telefon" column="telefon" type="java.lang.String" />
+        <property name="taetigkeitsfeld" column="taetigkeitsfeld" type="java.lang.String" />
+    </class>
+
+</hibernate-mapping>

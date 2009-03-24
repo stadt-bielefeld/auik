@@ -37,7 +37,7 @@ public class VawsVerwaltungsverf
     /* Add customized code below */
 
 	/**
-	 * Liefert alle Verfahrens-Einträge deren Wiedervorlage in der 
+	 * Liefert alle Verfahrens-EintrÃ¤ge deren Wiedervorlage in der 
 	 * Vergangenheit liegt und die nicht abgeschlossen sind.
 	 * @return Eine Liste mit VawsVerwaltungsverf-Objekten.
 	 */
@@ -67,7 +67,7 @@ public class VawsVerwaltungsverf
 	}
 	
     /**
-     * Liefert alle Verwaltungsverfahren-Einträge zu einem bestimmten 
+     * Liefert alle Verwaltungsverfahren-EintrÃ¤ge zu einem bestimmten 
      * VawsFachdatensatz.
      * @param fachdaten Der Fachdatensatz.
      * @return Eine Liste mit VawsVerwaltungsverf-Objekten.
@@ -89,7 +89,7 @@ public class VawsVerwaltungsverf
 						.setEntity(0, fachdaten)
 						.list();
 
-				AUIKataster.debugOutput(verfahren.size() + " Verfahrens-Einträge für FD " + fachdaten + " gefunden!", "VawsVerwaltungsverf");
+				AUIKataster.debugOutput(verfahren.size() + " Verfahrens-EintrÃ¤ge fÃ¼r FD " + fachdaten + " gefunden!", "VawsVerwaltungsverf");
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler", e);
 			} finally {
@@ -133,9 +133,9 @@ public class VawsVerwaltungsverf
     }
     
     /**
-     * Löscht einen vorhandenen Datensatz aus der Datenbank.
-     * @param verfahren Der Datensatz, der gelöscht werden soll.
-     * @return <code>true</code>, wenn der Datensatz gelöscht wurde oder 
+     * LÃ¶scht einen vorhandenen Datensatz aus der Datenbank.
+     * @param verfahren Der Datensatz, der gelÃ¶scht werden soll.
+     * @return <code>true</code>, wenn der Datensatz gelÃ¶scht wurde oder 
      * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Datensatz 
      * nicht in der Datenbank existiert).
      */

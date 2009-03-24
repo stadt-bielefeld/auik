@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AnhBwkModel.java,v 1.1 2008-06-05 11:38:40 u633d Exp $
+ * $Id: AnhBwkModel.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 24.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:40  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.1  2005/08/25 14:46:59  u633d
  * - zu viel ;)
  *
@@ -17,12 +20,12 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches TableModel für Brennwertkessel-Fachdaten.
+ * Ein einfaches TableModel fÃ¼r Brennwertkessel-Fachdaten.
  * @author David Klotz
  */
 public class AnhBwkModel extends ListTableModel {
 	/**
-	 * Erzeugt ein einfaches TableModel für 
+	 * Erzeugt ein einfaches TableModel fÃ¼r 
 	 * Brennwertkessel-Fachdaten.
 	 */
 	public AnhBwkModel() {
@@ -97,7 +100,7 @@ public class AnhBwkModel extends ListTableModel {
 	}
 	
 	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
+	 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
 	 */
 	public void updateList() {
 	}

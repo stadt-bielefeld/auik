@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AbstractQueryModul.java,v 1.1 2008-06-05 11:38:41 u633d Exp $
+ * $Id: AbstractQueryModul.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 28.07.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:41  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.5  2005/10/13 13:00:27  u633d
  * Version vom 13.10.
  *
@@ -51,7 +54,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Eine Grundlage für Module mit verschiedenen 
+ * Eine Grundlage fÃ¼r Module mit verschiedenen 
  * Auswertungs-Abfragen.
  * @author David Klotz
  */
@@ -66,9 +69,9 @@ public abstract class AbstractQueryModul extends AbstractModul {
 	
 	/**
 	 * Liefert die Kategorie des Moduls. 
-	 * Falls eine andere Kategorie als "Auswertung" gewünscht
+	 * Falls eine andere Kategorie als "Auswertung" gewÃ¼nscht
 	 * ist, muss diese Methode in implementierenden Klassen
-	 * überschrieben werden.
+	 * Ã¼berschrieben werden.
 	 * @return "Auswertung"
 	 */
 	public String getCategory() {
@@ -98,28 +101,28 @@ public abstract class AbstractQueryModul extends AbstractModul {
 	}
 
 	/**
-	 * @return Ein Panel, in dem Optionen für die Abfrage festgelegt werden können.
+	 * @return Ein Panel, in dem Optionen fÃ¼r die Abfrage festgelegt werden kÃ¶nnen.
 	 */
 	public abstract JPanel getQueryOptionsPanel();
 	
 	/**
-	 * @return Ein TableModel für die Ergebnis-Tabelle.
+	 * @return Ein TableModel fÃ¼r die Ergebnis-Tabelle.
 	 */
 	public abstract ListTableModel getTableModel();
 	
 	/**
 	 * Liefert das BasisObjekt zu einem Fachdaten-Objekt.
 	 * @param objectAtRow Das Fachdaten-Objekt.
-	 * @return Das zugehörige BasisObjekt (oder <code>null</code>, falls keins existiert).
+	 * @return Das zugehÃ¶rige BasisObjekt (oder <code>null</code>, falls keins existiert).
 	 */
 	protected BasisObjekt getBasisObjektFromFachdaten(Object fachdaten) {
 		BasisObjekt tmp;
 		
 		// Die "getBasisObjekt" Methode des jeweiligen
-		// Fachdaten-Objekts wird jetzt, unabhängig von
+		// Fachdaten-Objekts wird jetzt, unabhÃ¤ngig von
 		// seiner Klasse, mit Hilfe der Reflection-Methoden
 		// nach ihrem Namen gesucht. Sollte keine Methode
-		// diesen Namens existieren, wird null zurück geliefert.
+		// diesen Namens existieren, wird null zurÃ¼ck geliefert.
 		try {
 			Method getBO = fachdaten.getClass().getMethod("getBasisObjekt", null);
 			tmp = (BasisObjekt) getBO.invoke(fachdaten, null);
@@ -140,7 +143,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
 	}
 	
 	/**
-	 * @return Eine Tabelle für die Ergebnisse der Abfrage.
+	 * @return Eine Tabelle fÃ¼r die Ergebnisse der Abfrage.
 	 */
 	protected JTable getResultTable() {
 		if (resultTable == null) {
@@ -171,7 +174,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
 	}
 	
 	/**
-	 * @return Das ScrollPane für die Ergebnis-Tabelle.
+	 * @return Das ScrollPane fÃ¼r die Ergebnis-Tabelle.
 	 */
 	private JScrollPane getTableScroller() {
 		if (tableScroller == null) {
@@ -216,8 +219,8 @@ public abstract class AbstractQueryModul extends AbstractModul {
 	}
 	
 	/**
-	 * Zeigt das Kontextmenü an, wenn entsprechende Events auftreten.
-	 * @param e Das auslösende MouseEvent.
+	 * Zeigt das KontextmenÃ¼ an, wenn entsprechende Events auftreten.
+	 * @param e Das auslÃ¶sende MouseEvent.
 	 */
 	private void showResultPopup(MouseEvent e) {
 		if (resultPopup == null) {

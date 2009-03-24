@@ -8,7 +8,7 @@ import java.awt.event.FocusEvent;
 import javax.swing.JTextField;
 
 /**
- * Ein JTextField, dass seinen Inhalt ausw‰hlt, wenn es
+ * Ein JTextField, dass seinen Inhalt ausw√§hlt, wenn es
  * den Keyboard-Fokus bekommt.
  * @author David Klotz
  */

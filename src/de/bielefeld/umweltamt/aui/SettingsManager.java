@@ -1,19 +1,22 @@
 /*
  * Datei:
- * $Id: SettingsManager.java,v 1.2 2008-06-24 11:24:07 u633d Exp $
+ * $Id: SettingsManager.java,v 1.3 2009-03-24 12:35:19 u633d Exp $
  * 
  * Erstellt am 31.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/06/24 11:24:07  u633d
+ * Version 0.3
+ *
  * Revision 1.1  2008/06/05 11:38:40  u633d
  * Start AUIK auf Informix und Postgresql
  *
  * Revision 1.22  2006/05/23 05:29:42  u633d
- * Objektchronologie für alle Objekte verfügbar gemacht
+ * Objektchronologie fÃ¼r alle Objekte verfÃ¼gbar gemacht
  *
  * Revision 1.21  2006/05/03 09:01:54  u633d
- * Anhang 40 und 56 ergänzt
+ * Anhang 40 und 56 ergÃ¤nzt
  *
  * Revision 1.20  2005/11/02 13:45:44  u633d
  * - Version vom 2.11.
@@ -92,8 +95,8 @@ public class SettingsManager {
 		defaults.setProperty("auik.prefs.maximized", "false");
 		defaults.setProperty("auik.prefs.save_size", "true");
 		
-		defaults.setProperty("auik.system.spath_fotos","U:/Gruppen/Verfahren/Anlagenkataster/Sielhaut/fotos/");
-		defaults.setProperty("auik.system.spath_karten", "U:/Gruppen/Verfahren/Anlagenkataster/Sielhaut/karten/");
+		defaults.setProperty("auik.system.spath_fotos","X:/Applikationen/Anlagenkataster/Sielhaut/fotos/");
+		defaults.setProperty("auik.system.spath_karten", "X:/Applikationen/Anlagenkataster/Sielhaut/karten/");
 		
 		defaults.setProperty(
 				"auik.system.module",
@@ -111,8 +114,8 @@ public class SettingsManager {
 		defaults.setProperty("auik.prefs.sielhaut_labor", "HBICON");
 
 		// FIXME: Birt-Pfade anpassen.
-		defaults.setProperty("auik.birt.enginepath", "U:\\Gruppen\\Verfahren\\Anlagenkataster\\auik\\birt_neu\\birt-runtime-2_1_0\\ReportEngine\\");
-		defaults.setProperty("auik.birt.reportpath", "U:\\Gruppen\\Verfahren\\Anlagenkataster\\auik\\birt\\designs\\");
+		defaults.setProperty("auik.birt.enginepath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\birt-runtime-2_1_0\\ReportEngine\\");
+		defaults.setProperty("auik.birt.reportpath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\designs\\");
 
 		
 		appSettings = new Properties(defaults);
@@ -137,7 +140,7 @@ public class SettingsManager {
 	 */
 	public void saveSettings() {
 		try {
-			appSettings.store(new FileOutputStream("auik.properties"), "Allgemeine Einstellungen für " + AUIKataster.SHORT_NAME + " v" + AUIKataster.VERSION);
+			appSettings.store(new FileOutputStream("auik.properties"), "Allgemeine Einstellungen fÃ¼r " + AUIKataster.SHORT_NAME + " v" + AUIKataster.VERSION);
 		} catch (IOException e) {
 			// Tritt auf, wenn aus irgend einem Grund keine 
 			// Datei gespeichert werden kann.
@@ -161,7 +164,7 @@ public class SettingsManager {
 	}
 	
 	/**
-	 * Setzt eine Einstellung. Wrapper-Methode für setSetting(String, String, boolean).
+	 * Setzt eine Einstellung. Wrapper-Methode fÃ¼r setSetting(String, String, boolean).
 	 * @param setting Den Key der Einstellung.
 	 * @param value Den Wert der Einstellung.
 	 * @param persist Soll die Einstellung beim Programm-Ende gespeichert werden.
@@ -171,7 +174,7 @@ public class SettingsManager {
 	}
 	
 	/**
-	 * Setzt eine Einstellung. Wrapper-Methode für setSetting(String, String, boolean).
+	 * Setzt eine Einstellung. Wrapper-Methode fÃ¼r setSetting(String, String, boolean).
 	 * @param setting Den Key der Einstellung.
 	 * @param value Den Wert der Einstellung.
 	 * @param persist Soll die Einstellung beim Programm-Ende gespeichert werden.

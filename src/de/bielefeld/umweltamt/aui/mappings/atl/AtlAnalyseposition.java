@@ -31,14 +31,14 @@ public class AtlAnalyseposition
      */
     public AtlAnalyseposition()
     {
-    	this(new Double(0.0));
+    	this(new Float(0.0));
     }
     
     /**
      * Constructor of AtlAnalyseposition instances given a value.
      * @param wert
      */
-    public AtlAnalyseposition(Double wert)
+    public AtlAnalyseposition(Float wert)
     {
         setWert(wert);
     }
@@ -49,7 +49,7 @@ public class AtlAnalyseposition
      */
     public AtlAnalyseposition(AtlProbenahmen probe)
     {
-    	this(new Double(0.0));
+    	this(new Float(0.0));
         setAtlProbenahmen(probe);
     }
 
@@ -60,7 +60,7 @@ public class AtlAnalyseposition
     public AtlAnalyseposition(java.lang.Integer id)
     {
         super(id);
-        setWert(new Double(0.0));
+        setWert(new Float(0.0));
     }
     
     /* Add customized code below */
@@ -77,11 +77,11 @@ public class AtlAnalyseposition
         if (rhs == null) {
         	return false;
         }
-        // Wenn das andere Objekt auf uns verweist, sind wir natürlich gleich
+        // Wenn das andere Objekt auf uns verweist, sind wir natÃ¼rlich gleich
         if (this == rhs) {
         	return true;
         }
-        // Wenn das andere Objekt keine AtlAnalyseposition ist, können wir nicht gleich sein
+        // Wenn das andere Objekt keine AtlAnalyseposition ist, kÃ¶nnen wir nicht gleich sein
         if (! (rhs instanceof AtlAnalyseposition)) {
         	return false;
         }
@@ -103,12 +103,12 @@ public class AtlAnalyseposition
             }
         } else if (this.getId() != null || that.getId() != null) {
         	// Wenn NUR einer von beiden einen Key hat,
-        	// können beide auch nicht gleich sein.
+        	// kÃ¶nnen beide auch nicht gleich sein.
         	return false;
         }
         
         // Da mindestens eins der zu vergleichenden Objekte keinen Primary-Key 
-        // hat müssen wir an Hand von anderen Kriterien entscheiden, ob beide
+        // hat mÃ¼ssen wir an Hand von anderen Kriterien entscheiden, ob beide
         // Objekte gleich sind.
         
         // Vergleich von Wert
@@ -216,7 +216,7 @@ public class AtlAnalyseposition
      * @return Eine Liste mit <code>AtlAnalyseposition</code>en.
      */
     public static List getAnalysepositionen(AtlProbenahmen probe, AtlParameter param) {
-    	// TODO: Evtl. mit komplizierterem HQL gleich beim Laden der Proben lösen?
+    	// TODO: Evtl. mit komplizierterem HQL gleich beim Laden der Proben lÃ¶sen?
     	// select probe.name, probe.pos....
 //    	String query = 
 //    		"from AtlAnalyseposition pos " +

@@ -1,13 +1,16 @@
 /*
  * Datei:
- * $Id: ATLFaulschlamm.java,v 1.1 2008-06-05 11:38:32 u633d Exp $
+ * $Id: ATLFaulschlamm.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 17.02.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.6  2005/06/09 15:27:03  u633z
- * - (CVS-)Header hinzugefügt
+ * - (CVS-)Header hinzugefÃ¼gt
  *
  */
 package de.bielefeld.umweltamt.aui.module;

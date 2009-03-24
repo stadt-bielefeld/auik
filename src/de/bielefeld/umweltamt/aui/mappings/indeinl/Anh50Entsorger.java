@@ -66,7 +66,7 @@ public class Anh50Entsorger
 	
 	/**
 	 * Liefert alle vorhandenen Entsorger. 
-	 * Öffnet eine neue Hibernate-Session und schließt sie wieder. 
+	 * Ã¶ffnet eine neue Hibernate-Session und schlieÃŸt sie wieder. 
 	 * @return Alle vorhandenen Entsorger
 	 */
 
@@ -96,9 +96,9 @@ public class Anh50Entsorger
 			tx.commit();
 		} catch (HibernateException e) {
 			entsRet = null;
-			// Falls während der Änderungen ein Hibernate Fehler auftritt
+			// Falls wÃ¤hrend der Ã„nderungen ein Hibernate Fehler auftritt
 			if (tx != null) {
-				// Alle Änderungen rückgängig machen
+				// Alle Ã„nderungen rÃ¼ckgÃ¤ngig machen
 				try {
 					tx.rollback();
 				} catch (HibernateException e1) {
@@ -107,7 +107,7 @@ public class Anh50Entsorger
 				}
 			}
 		} finally {
-			// Am Ende (egal ob erfolgreich oder nicht) die Session schließen
+			// Am Ende (egal ob erfolgreich oder nicht) die Session schlieÃŸen
 			HibernateSessionFactory.closeSession();
 		}
 		

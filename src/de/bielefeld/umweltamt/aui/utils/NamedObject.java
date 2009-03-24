@@ -1,27 +1,30 @@
 /*
  * Datei:
- * $Id: NamedObject.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Id: NamedObject.java,v 1.2 2009-03-24 12:35:21 u633d Exp $
  * 
  * Erstellt am 03.02.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:33  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.2  2005/05/25 15:46:27  u633z
- * - Header hinzugefügt, Javadoc verbessert
+ * - Header hinzugefÃ¼gt, Javadoc verbessert
  *
  */
 package de.bielefeld.umweltamt.aui.utils;
 
 /**
  * Ein benanntes Objekt.
- * Ein dünner Wrapper um ein Object, der ihm zusätzlich einen 
+ * Ein dÃ¼nner Wrapper um ein Object, der ihm zusÃ¤tzlich einen 
  * Namen gibt. 
  * Objekte dieser Klasse besitzt einen Namen und ein zweites 
  * Objekt ('value') als Wert. Da die toString()-Methode von 
- * Objekten dieser Klasse nur den Namen zurückliefert, ist sie 
- * ideal dafür geeignet um z.B. eine Combobox mit Objekten von 
+ * Objekten dieser Klasse nur den Namen zurÃ¼ckliefert, ist sie 
+ * ideal dafÃ¼r geeignet um z.B. eine Combobox mit Objekten von 
  * beliebigem Typ (die selber keine geeignete toString-Methode 
- * haben)zu füllen.
+ * haben)zu fÃ¼llen.
  * @author David Klotz
  */
 public class NamedObject {

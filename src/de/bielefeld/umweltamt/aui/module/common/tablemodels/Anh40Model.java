@@ -1,16 +1,19 @@
 /*
  * Datei:
- * $Id: Anh40Model.java,v 1.1 2008-06-05 11:38:40 u633d Exp $
+ * $Id: Anh40Model.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 03.05.2006 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:40  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.2  2006/05/23 05:29:42  u633d
- * Objektchronologie für alle Objekte verfügbar gemacht
+ * Objektchronologie fÃ¼r alle Objekte verfÃ¼gbar gemacht
  *
  * Revision 1.1  2006/05/03 09:01:54  u633d
- * Anhang 40 und 56 ergänzt
+ * Anhang 40 und 56 ergÃ¤nzt
  *
  * Revision 1.1  2006/05/03 08:42:52  u633d
  * - Auswertungen und anderes
@@ -23,7 +26,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches TableModel für Anhang 40-Fachdaten.
+ * Ein einfaches TableModel fÃ¼r Anhang 40-Fachdaten.
  * @author Gerd Genuit
  */
 public class Anh40Model extends ListTableModel {
@@ -63,7 +66,7 @@ public class Anh40Model extends ListTableModel {
 	}
 	
 	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
+	 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
 	 */
 	public void updateList() {
 	}

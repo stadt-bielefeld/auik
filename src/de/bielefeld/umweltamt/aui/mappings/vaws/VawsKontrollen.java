@@ -46,7 +46,7 @@ public class VawsKontrollen
     // Statischer Teil:
 
 	/**
-	 * Liefert alle Kontroll-Einträge deren "Nächste Prüfung" in der Vergangenheit
+	 * Liefert alle Kontroll-EintrÃ¤ge deren "NÃ¤chste PrÃ¼fung" in der Vergangenheit
 	 * liegt und die nicht abgeschlossen sind.
 	 * @return Eine Liste mit VawsKontrollen-Objekten.
 	 */
@@ -76,7 +76,7 @@ public class VawsKontrollen
 	}
 	
     /**
-     * Liefert alle Kontroll-Einträge zu einem bestimmten 
+     * Liefert alle Kontroll-EintrÃ¤ge zu einem bestimmten 
      * VawsFachdatensatz.
      * @param fachdaten Der Fachdatensatz.
      * @return Eine Liste mit VawsKontrollen-Objekten.
@@ -98,7 +98,7 @@ public class VawsKontrollen
 						.setEntity(0, fachdaten)
 						.list();
 
-				AUIKataster.debugOutput(kontrollen.size() + " Kontrollen-Einträge für FD " + fachdaten + " gefunden!", "VawsKontrollen");
+				AUIKataster.debugOutput(kontrollen.size() + " Kontrollen-EintrÃ¤ge fÃ¼r FD " + fachdaten + " gefunden!", "VawsKontrollen");
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler", e);
 			} finally {
@@ -142,9 +142,9 @@ public class VawsKontrollen
     }
     
     /**
-     * Löscht einen vorhandenen Datensatz aus der Datenbank.
-     * @param kontrolle Der Datensatz, der gelöscht werden soll.
-     * @return <code>true</code>, wenn der Datensatz gelöscht wurde oder 
+     * LÃ¶scht einen vorhandenen Datensatz aus der Datenbank.
+     * @param kontrolle Der Datensatz, der gelÃ¶scht werden soll.
+     * @return <code>true</code>, wenn der Datensatz gelÃ¶scht wurde oder 
      * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Datensatz 
      * nicht in der Datenbank existiert).
      */

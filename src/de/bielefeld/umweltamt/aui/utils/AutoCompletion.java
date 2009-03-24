@@ -26,8 +26,8 @@ import javax.swing.text.JTextComponent;
 import javax.swing.text.PlainDocument;
 
 /**
- * Eine Klasse für eine durchsuchbare ComboBox mit automatischer
- * Vervollständigung / Suche.
+ * Eine Klasse fÃ¼r eine durchsuchbare ComboBox mit automatischer
+ * VervollstÃ¤ndigung / Suche.
  * Kann mit {@link #enable(JComboBox)} auf jede JComboBox angewendet
  * werden.
  */
@@ -139,7 +139,7 @@ public class AutoCompletion extends PlainDocument {
     }
     
     /**
-     * Schaltet die automatische Vervollständigung für eine Combobox an.
+     * Schaltet die automatische VervollstÃ¤ndigung fÃ¼r eine Combobox an.
      * @param comboBox Die Combobox
      */
     public static void enable(JComboBox comboBox) {

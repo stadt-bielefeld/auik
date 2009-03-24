@@ -9,7 +9,7 @@ import java.text.Format;
 import javax.swing.JFormattedTextField;
 
 /**
- * Ein JFormattedTextField, dass seinen Inhalt ausw‰hlt, wenn 
+ * Ein JFormattedTextField, dass seinen Inhalt ausw√§hlt, wenn 
  * es den Keyboard-Fokus bekommt.
  * @author David Klotz
  */

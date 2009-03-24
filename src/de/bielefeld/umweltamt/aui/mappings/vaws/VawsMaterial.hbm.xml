@@ -8,10 +8,12 @@
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
 
     <class name="VawsMaterial" table="vaws_material">
-        <id name="material" column="material" type="java.lang.String">
-            <generator class="assigned"/>
+         <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native"/>
         </id>
-
+        
+        <property name="material" column="material" type="java.lang.String"/>
+        
     </class>
 
 </hibernate-mapping>

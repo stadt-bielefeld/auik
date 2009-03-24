@@ -14,7 +14,7 @@ import javax.swing.KeyStroke;
 
 /**
  * Eine Action um mit Tab zwischen Komponenten hin- und her zu 
- * springen, auch wenn bei ihnen Tab standardmäßig eine andere
+ * springen, auch wenn bei ihnen Tab standardmÃ¤ÃŸig eine andere
  * Funktion hat. 
  * @author David Klotz
  */
@@ -25,9 +25,9 @@ public class TabAction extends AbstractAction {
 	
 	/**
 	 * Erzeugt eine Action um mit Tab zwischen Komponenten hin- und 
-	 * her zu springen, auch wenn bei ihnen Tab standardmäßig 
+	 * her zu springen, auch wenn bei ihnen Tab standardmÃ¤ÃŸig 
 	 * eine andere Funktion hat. 
-	 * Komponenten müssen mit addComp(c) hinzugefügt werden.
+	 * Komponenten mÃ¼ssen mit addComp(c) hinzugefÃ¼gt werden.
 	 */
 	public TabAction() {
 		super();
@@ -46,11 +46,11 @@ public class TabAction extends AbstractAction {
 	}
 	
 	/**
-	 * Springt zur nächsten Komponente in der Liste.
+	 * Springt zur nÃ¤chsten Komponente in der Liste.
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		// Natürlich können wir nur wechseln, wenn wir mindestens zwei Komponenten haben
+		// NatÃ¼rlich kÃ¶nnen wir nur wechseln, wenn wir mindestens zwei Komponenten haben
 		if (components.size() > 1) {
 			// Erstmal herausfinden, bei welcher Komponente wir gerade sind
 			JComponent src = (JComponent) e.getSource();
@@ -81,7 +81,7 @@ public class TabAction extends AbstractAction {
 	}
 
 	/**
-	 * Fügt eine neue Komponente in die Liste derer ein, zwischen
+	 * FÃ¼gt eine neue Komponente in die Liste derer ein, zwischen
 	 * denen mit Tab hin- und hergewechselt werden kann.
 	 * @param newComp Die neue Komponente
 	 */

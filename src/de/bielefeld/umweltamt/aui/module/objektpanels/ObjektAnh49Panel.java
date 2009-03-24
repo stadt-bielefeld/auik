@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektAnh49Panel.java,v 1.2 2008-07-23 06:55:22 u633d Exp $
+ * $Id: ObjektAnh49Panel.java,v 1.3 2009-03-24 12:35:22 u633d Exp $
  * 
  * Erstellt am 27.04.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/07/23 06:55:22  u633d
+ * Anh49 Auswertung und Sielhautimport neu
+ *
  * Revision 1.1  2008/06/05 11:38:39  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -17,16 +20,16 @@
  *
  * Revision 1.3  2005/06/10 11:06:52  u633z
  * - Datenbank-Zugriffe komplett in DB-Klassen ausgelagert
- * - Einige DB-Klassen vervollständigt
+ * - Einige DB-Klassen vervollstÃ¤ndigt
  *
  * Revision 1.2  2005/06/03 11:05:05  u633z
  * - Datenbank-Zugriffe (speziell Speichern-Methoden) in Mappings verlagert.
  *
  * Revision 1.1  2005/05/30 08:35:42  u633z
- * - Aufgeräumt, mehrere neue Packages, Klassen sortiert
+ * - AufgerÃ¤umt, mehrere neue Packages, Klassen sortiert
  *
  * Revision 1.6  2005/05/20 09:00:54  u633z
- * Anhang 49 und Anh49-Abscheidetail-Tabs verbessert und verschönert
+ * Anhang 49 und Anh49-Abscheidetail-Tabs verbessert und verschÃ¶nert
  *
  * Revision 1.5  2005/05/19 15:37:51  u633d
  * Abscheiderdetails-Zwischenstand
@@ -35,7 +38,7 @@
  * Anhang 49 neue Mapings
  *
  * Revision 1.3  2005/05/17 07:53:43  u633d
- * Anhang 49 Ergänzungen
+ * Anhang 49 ErgÃ¤nzungen
  *
  * Revision 1.2  2005/05/12 06:39:18  u633z
  * JavaDoc Kommentar verbessert, Header angepasst
@@ -165,7 +168,7 @@ public class ObjektAnh49Panel extends JPanel {
 		builder.addLabel("Analysemonat:", cc.xy( 1, 15));
 		builder.add(getAnalyseMonatFeld(), cc.xy( 3, 15));
 		builder.addSeparator("Kontrolle", cc.xyw( 1, 17, 3));
-		builder.addLabel("Dekra/TÜV-T.:", cc.xy( 1, 19));
+		builder.addLabel("Dekra/TÃœV-T.:", cc.xy( 1, 19));
 		builder.add(getDekraTuevFeld(), cc.xy( 3, 19));
 		builder.addLabel("Wiedervorlage:", cc.xy( 1, 21));
 		builder.add(getWiedervorlageDatum(), cc.xy(3, 21));
@@ -179,9 +182,9 @@ public class ObjektAnh49Panel extends JPanel {
 		builder.add(getAntragDatum(), cc.xy( 7, 3));
 		builder.addLabel("Genehmigung:", cc.xy( 5, 5));
 		builder.add(getGenehmigungDatum(), cc.xy( 7, 5));
-		builder.addLabel("Änderungsgen.:", cc.xy( 5, 7));
+		builder.addLabel("Ã„nderungsgen.:", cc.xy( 5, 7));
 		builder.add(getAenderungDatum(), cc.xy( 7, 7));
-		builder.addLabel("letzte Änder.:", cc.xy( 5, 9));
+		builder.addLabel("letzte Ã„nder.:", cc.xy( 5, 9));
 		builder.add(getLetzteAenderDatum(), cc.xy( 7, 9));
 		builder.addLabel("Anschreiben:", cc.xy( 5, 11));
 		builder.add(getAnschreibenFeld(), cc.xy( 7, 11));
@@ -335,7 +338,7 @@ public class ObjektAnh49Panel extends JPanel {
 	
 	public void enableAll(boolean enabled) {
 		// Wenn das Fachdaten-Objekt null ist, 
-		// können die Elemente nicht wieder aktiviert werden:
+		// kÃ¶nnen die Elemente nicht wieder aktiviert werden:
 		if (!(enabled && (fachdaten == null))) {
 			getAbgemeldetCheck().setEnabled(enabled);
 			getAbwasserfreiCheck().setEnabled(enabled);

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: VawsModel.java,v 1.3 2008-06-24 11:24:09 u633d Exp $
+ * $Id: VawsModel.java,v 1.4 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 03.09.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2008/06/24 11:24:09  u633d
+ * Version 0.3
+ *
  * Revision 1.2  2008/06/12 10:21:42  u633d
  * diverse Bugfixes
  *
@@ -29,18 +32,18 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches TableModel für Vaws-Fachdaten.
+ * Ein einfaches TableModel fÃ¼r Vaws-Fachdaten.
  * @author David Klotz
  */
 public class VawsModel extends ListTableModel {
 	/**
-	 * Erzeugt ein einfaches TableModel für Vaws-Fachdaten.
+	 * Erzeugt ein einfaches TableModel fÃ¼r Vaws-Fachdaten.
 	 */
 	public VawsModel() {
 		super(new String[]{
 				"Anlagenart", 
 				"Herstellnr.", 
-				"Flüssigkeit", 
+				"FlÃ¼ssigkeit", 
 				"Menge",
 				"Stillgelegt"
 		}, 
@@ -63,7 +66,7 @@ public class VawsModel extends ListTableModel {
 		case 1:
 			tmp = fd.getHerstellnr();
 			break;
-		// Flüssigkeit:
+		// FlÃ¼ssigkeit:
 		case 2:
 			tmp = fd.getFluessigkeit();
 			break;
@@ -102,8 +105,8 @@ public class VawsModel extends ListTableModel {
 	}
 	
 	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
-	 * Die Liste wird direkt mittels setList "befüllt".
+	 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
+	 * Die Liste wird direkt mittels setList "befÃ¼llt".
 	 */
 	public void updateList() {
 	}

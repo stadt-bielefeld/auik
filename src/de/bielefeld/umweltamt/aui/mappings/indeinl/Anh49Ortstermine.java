@@ -64,7 +64,7 @@ public class Anh49Ortstermine
 				    .setEntity(0, fd)
 				    .list();
 
-			AUIKataster.debugOutput("Ortstermine für " + fd + ", Anzahl: " + ot.size(), "Anh49Ortstermine");
+			AUIKataster.debugOutput("Ortstermine fÃ¼r " + fd + ", Anzahl: " + ot.size(), "Anh49Ortstermine");
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
@@ -87,10 +87,10 @@ public class Anh49Ortstermine
 			tx.commit();
 			
 		} catch (HibernateException e) {
-			// Falls während der Änderungen ein Hibernate Fehler auftritt
+			// Falls wÃ¤hrend der Ã„nderungen ein Hibernate Fehler auftritt
 			if (tx != null) {
 				try {
-					// Alle Änderungen rückgängig machen
+					// Alle Ã„nderungen rÃ¼ckgÃ¤ngig machen
 					tx.rollback();
 				} catch (HibernateException e1) {
 					throw new RuntimeException("Datenbank-Fehler (Anh49Ortstermine)", e);

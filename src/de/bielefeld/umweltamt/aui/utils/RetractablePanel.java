@@ -35,7 +35,7 @@ public class RetractablePanel extends JPanel {
 	
 	/**
 	 * Erzeugt ein neues Panel im zusammengeklappten Zustand.
-	 * @param name Die Überschrift
+	 * @param name Die Ãœberschrift
 	 * @param content Das Panel mit dem Inhalt
 	 */
 	public RetractablePanel(String name, JPanel content) {
@@ -45,9 +45,9 @@ public class RetractablePanel extends JPanel {
 	/**
 	 * Erzeugt ein neues Panel im zusammengeklappten Zustand 
 	 * mit einem Tooltip am Label.
-	 * @param name Die Überschrift
+	 * @param name Die Ãœberschrift
 	 * @param content Das Panel mit dem Inhalt
-	 * @param toolTip Der Tooltip für das Label
+	 * @param toolTip Der Tooltip fÃ¼r das Label
 	 */
 	public RetractablePanel(String name, JPanel content, String toolTip) {
 		this(name, content, false, toolTip);
@@ -56,10 +56,10 @@ public class RetractablePanel extends JPanel {
 	/**
 	 * Erzeugt ein neues zusammenklappbares Panel
 	 * mit einem Tooltip am Label.
-	 * @param name Die Überschrift
+	 * @param name Die Ãœberschrift
 	 * @param content Das Panel mit dem Inhalt
 	 * @param isOpen Soll das Panel anfangs aufgeklappt sein? 
-	 * @param toolTip Der Tooltip für das Label
+	 * @param toolTip Der Tooltip fÃ¼r das Label
 	 */
 	public RetractablePanel(String name, JPanel content, boolean isOpen, String toolTip) {
 		this(new JLabel(name, JLabel.LEADING), content, isOpen, toolTip);
@@ -68,10 +68,10 @@ public class RetractablePanel extends JPanel {
 	/**
 	 * Erzeugt ein neues zusammenklappbares Panel
 	 * mit einem Tooltip am Label.
-	 * @param top Die Überschrifts-Komponente
+	 * @param top Die Ãœberschrifts-Komponente
 	 * @param content Das Panel mit dem Inhalt
 	 * @param isOpen Soll das Panel anfangs aufgeklappt sein? 
-	 * @param toolTip Der Tooltip für das Label
+	 * @param toolTip Der Tooltip fÃ¼r das Label
 	 */
 	public RetractablePanel(JComponent top, JPanel content, boolean isOpen, String toolTip) {
 		super(new BorderLayout());

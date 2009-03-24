@@ -1,21 +1,24 @@
 /*
  * Datei:
- * $Id: Anh49DetailsPanel.java,v 1.1 2008-06-05 11:38:39 u633d Exp $
+ * $Id: Anh49DetailsPanel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
  * 
  * Erstellt am 18.05.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:39  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.16  2005/09/14 11:25:37  u633d
  * - Version vom 14.9.
  *
  * Revision 1.15  2005/06/13 14:03:20  u633z
  * - Nicht vorhandenes Fachdaten-Objekt wird besser behandelt
- * - Neue Abscheiderdetails können hinzugefügt werden
+ * - Neue Abscheiderdetails kÃ¶nnen hinzugefÃ¼gt werden
  *
  * Revision 1.14  2005/06/10 11:06:52  u633z
  * - Datenbank-Zugriffe komplett in DB-Klassen ausgelagert
- * - Einige DB-Klassen vervollständigt
+ * - Einige DB-Klassen vervollstÃ¤ndigt
  *
  * Revision 1.13  2005/06/09 14:38:00  u633d
  * - Anhang 49 Pflegearbeiten
@@ -24,7 +27,7 @@
  * - Ortstermin-Tabelle auf SelectTable umgestellt
  *
  * Revision 1.11  2005/06/09 09:16:37  u633z
- * - Lösch-Action für die Abscheider-Tabelle repariert
+ * - LÃ¶sch-Action fÃ¼r die Abscheider-Tabelle repariert
  *
  * Revision 1.10  2005/06/09 06:01:24  u633d
  * Delete von Tabellenzeilen fast fertig
@@ -39,30 +42,30 @@
  * - TableModel-Grundlagen in eigenes Package verschoben
  *
  * Revision 1.5  2005/06/01 12:36:55  u633d
- * Anhang 49 Analysentab ergänzt
+ * Anhang 49 Analysentab ergÃ¤nzt
  *
  * Revision 1.4  2005/05/31 10:22:48  u633z
- * - Ortstermin-Tablemodel: Verknüpfung zum BasisObjekt für neue Ortstermine richtig gesetzt
+ * - Ortstermin-Tablemodel: VerknÃ¼pfung zum BasisObjekt fÃ¼r neue Ortstermine richtig gesetzt
  *
  * Revision 1.3  2005/05/31 10:11:29  u633z
  * Ortstermin-Tabelle:
  * - Datum wird jetzt beim Bearbeiten korrekt geparset.
- * - Bearbeiter / Bemerkung wird auf maximale Anzahl Zeichen in der Tabelle gekürzt
+ * - Bearbeiter / Bemerkung wird auf maximale Anzahl Zeichen in der Tabelle gekÃ¼rzt
  *
  * Revision 1.2  2005/05/31 07:32:20  u633d
- * Anhang49 Ergänzungen
+ * Anhang49 ErgÃ¤nzungen
  *
  * Revision 1.1  2005/05/30 08:35:42  u633z
- * - Aufgeräumt, mehrere neue Packages, Klassen sortiert
+ * - AufgerÃ¤umt, mehrere neue Packages, Klassen sortiert
  *
  * Revision 1.6  2005/05/25 12:53:25  u633d
  * Anhang49 Ortstermin Tabel-Model
  *
  * Revision 1.5  2005/05/23 10:12:35  u633z
- * Überflüssige Exceptions gefangen
+ * Ã¼berflÃ¼ssige Exceptions gefangen
  *
  * Revision 1.4  2005/05/20 09:29:33  u633z
- * Anhang 49 und Anh49-Abscheidetail-Tabs verbessert und verschönert
+ * Anhang 49 und Anh49-Abscheidetail-Tabs verbessert und verschÃ¶nert
  *
  *
  * Revision 1.2  2005/05/19 15:37:51  u633d
@@ -125,7 +128,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class Anh49DetailsPanel extends JPanel{
 	/**
-	 * Ein TableModel für eine Tabelle mit Abscheider-Details.
+	 * Ein TableModel fÃ¼r eine Tabelle mit Abscheider-Details.
 	 * @author David Klotz, Gerhard Genuit 
 	 */
 	private class Anh49AbscheiderModel extends ListTableModel {
@@ -203,7 +206,7 @@ public class Anh49DetailsPanel extends JPanel{
 	}
 	
 	/**
-	 * Ein TableModel für eine Tabelle mit Abscheider-Ortsterminen.
+	 * Ein TableModel fÃ¼r eine Tabelle mit Abscheider-Ortsterminen.
 	 * @author David Klotz, Gerhard Genuit 
 	 */
 	private class Anh49OrtsterminModel extends EditableListTableModel {
@@ -288,14 +291,14 @@ public class Anh49DetailsPanel extends JPanel{
 				}
 				break;
 			case 1:
-				// Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+				// Auf 50 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
 				if (tmp.length() > 50) {
 					tmp = tmp.substring(0,50);
 				}
 				ot.setSachbearbeiterIn(tmp);
 				break;
 			case 2:
-				// Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+				// Auf 255 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
 				if (tmp.length() > 255) {
 					tmp = tmp.substring(0,255);
 				}
@@ -379,17 +382,17 @@ public class Anh49DetailsPanel extends JPanel{
 	
 	private Action getAbscheiderLoeschAction() {
 		if (abscheiderLoeschAction == null) {
-			abscheiderLoeschAction = new AbstractAction("Löschen") {
+			abscheiderLoeschAction = new AbstractAction("LÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getAbscheiderTabelle().getSelectedRow();
 					if (row != -1 && getAbscheiderTabelle().getEditingRow() == -1) {
 						Anh49Abscheiderdetails abscheider = abscheiderModel.getRow(row);
 						
-						if (hauptModul.getFrame().showQuestion("Soll der Abscheider "+ abscheider +" wirklich inkl. aller Detailinformationen gelöscht werden?", "Löschen bestätigen")) {
+						if (hauptModul.getFrame().showQuestion("Soll der Abscheider "+ abscheider +" wirklich inkl. aller Detailinformationen gelÃ¶scht werden?", "LÃ¶schen bestÃ¤tigen")) {
 							abscheiderModel.removeRow(row);
-							AUIKataster.debugOutput("Abscheider " + abscheider.getLage() + " wurde gelöscht!");
+							AUIKataster.debugOutput("Abscheider " + abscheider.getLage() + " wurde gelÃ¶scht!");
 						} else {
-							AUIKataster.debugOutput("Löschen von " + abscheider.getLage() + " wurde abgebrochen!");
+							AUIKataster.debugOutput("LÃ¶schen von " + abscheider.getLage() + " wurde abgebrochen!");
 						}
 					}
 				}
@@ -419,7 +422,7 @@ public class Anh49DetailsPanel extends JPanel{
 	
 	
 	/**
-	 * Öffnet einen Dialog um einen Abscheider-Datensatz zu bearbeiten.
+	 * Ã¶ffnet einen Dialog um einen Abscheider-Datensatz zu bearbeiten.
 	 * @param absch Der Abscheider
 	 */
 	public void editAbscheider(Anh49Abscheiderdetails absch) {
@@ -430,10 +433,10 @@ public class Anh49DetailsPanel extends JPanel{
 		editDialog.setVisible(true);
 		
 		if (editDialog.wasSaved() && (editDialog.getDetails() != null)) {
-			// Die Liste updaten, damit unsere Änderungen auch angezeigt werden
+			// Die Liste updaten, damit unsere Ã„nderungen auch angezeigt werden
 			abscheiderModel.updateList();
 			
-			// Den bearbeiteten Abscheider wieder in der Tabelle auswählen
+			// Den bearbeiteten Abscheider wieder in der Tabelle auswÃ¤hlen
 			Anh49Abscheiderdetails details = editDialog.getDetails();
 			int row = abscheiderModel.getList().indexOf(details);
 			if (row != -1) {
@@ -456,8 +459,8 @@ public class Anh49DetailsPanel extends JPanel{
 			Point origin = e.getPoint();
 			int row = abscheiderTabelle.rowAtPoint(origin);
 			
-			// Löschen ist natürlich nur möglich, 
-			// wenn wirklich eine Zeile ausgewählt ist:
+			// LÃ¶schen ist natÃ¼rlich nur mÃ¶glich, 
+			// wenn wirklich eine Zeile ausgewÃ¤hlt ist:
 			if (row != -1) {
 				getAbscheiderLoeschAction().setEnabled(true);
 				abscheiderTabelle.setRowSelectionInterval(row, row);
@@ -465,7 +468,7 @@ public class Anh49DetailsPanel extends JPanel{
 				getAbscheiderLoeschAction().setEnabled(false);
 			}
 			
-			// Das Menü zeigen wir aber immer an, zum neu Anlegen eines Abscheiders
+			// Das MenÃ¼ zeigen wir aber immer an, zum neu Anlegen eines Abscheiders
 			abscheiderPopup.show(e.getComponent(), e.getX(), e.getY());
 		}
 	}
@@ -473,18 +476,18 @@ public class Anh49DetailsPanel extends JPanel{
 	
 	private Action getOrtsterminLoeschAction() {
 		if (ortsterminLoeschenAction == null) {
-			ortsterminLoeschenAction = new AbstractAction("Löschen") {
+			ortsterminLoeschenAction = new AbstractAction("LÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getOrtsterminTabelle().getSelectedRow();
 					if (row != -1 && getOrtsterminTabelle().getEditingRow() == -1) {
 						Anh49Ortstermine ot = ortsterminModel.getRow(row);
 						
 						if (ot != null) {
-							if (hauptModul.getFrame().showQuestion("Soll der Ortstermin "+ ot +" gelöscht werden?", "Löschen bestätigen")) {
+							if (hauptModul.getFrame().showQuestion("Soll der Ortstermin "+ ot +" gelÃ¶scht werden?", "LÃ¶schen bestÃ¤tigen")) {
 								ortsterminModel.removeRow(row);
-								AUIKataster.debugOutput("Ortstermin " + ot.getOrtsterminid() + " wurde gelöscht!");
+								AUIKataster.debugOutput("Ortstermin " + ot.getOrtsterminid() + " wurde gelÃ¶scht!");
 							} else {
-								AUIKataster.debugOutput("Löschen von " + ot.getOrtsterminid() + " wurde abgebrochen!");
+								AUIKataster.debugOutput("LÃ¶schen von " + ot.getOrtsterminid() + " wurde abgebrochen!");
 							}
 						}
 					}
@@ -511,7 +514,7 @@ public class Anh49DetailsPanel extends JPanel{
 			
 			if (row != -1) {
 				ortsterminTabelle.setRowSelectionInterval(row, row);
-				// Die letzte (leere) Zeile kann natürlich nicht gelöscht werden:
+				// Die letzte (leere) Zeile kann natÃ¼rlich nicht gelÃ¶scht werden:
 				if (row < ortsterminModel.getList().size()) {
 					getOrtsterminLoeschAction().setEnabled(true);
 				} else {
@@ -526,10 +529,10 @@ public class Anh49DetailsPanel extends JPanel{
 		if (abscheiderTabelle == null) {
 			abscheiderTabelle = new JTable(abscheiderModel);
 			
-			// Wenn die Spaltengröße sich verändert, verändert sich nur die Nachbarspalte mit
+			// Wenn die SpaltengrÃ¶ÃŸe sich verÃ¤ndert, verÃ¤ndert sich nur die Nachbarspalte mit
 			abscheiderTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 			
-			// Es darf immer nur eine Zeile ausgewählt werden
+			// Es darf immer nur eine Zeile ausgewÃ¤hlt werden
 			abscheiderTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			abscheiderTabelle.setColumnSelectionAllowed(false);
 			
@@ -556,7 +559,7 @@ public class Anh49DetailsPanel extends JPanel{
 				}
 			}
 			
-			// MouseListener für Doppelklick und Rechtsklick
+			// MouseListener fÃ¼r Doppelklick und Rechtsklick
 			abscheiderTabelle.addMouseListener(new java.awt.event.MouseAdapter() { 
 				public void mouseClicked(java.awt.event.MouseEvent e) {
 					if((e.getClickCount() == 2) && (e.getButton() == 1)) {
@@ -592,10 +595,10 @@ public class Anh49DetailsPanel extends JPanel{
 		if (ortsterminTabelle == null) {
 			ortsterminTabelle = new SelectTable(ortsterminModel);
 			
-			// Wenn die Spaltengröße sich verändert, verändert sich nur die Nachbarspalte mit
+			// Wenn die SpaltengrÃ¶ÃŸe sich verÃ¤ndert, verÃ¤ndert sich nur die Nachbarspalte mit
 			ortsterminTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 			
-			// Die Größen der Spalten werden angepasst
+			// Die GrÃ¶ÃŸen der Spalten werden angepasst
 			TableColumn column = null;
 			for (int i = 0; i < ortsterminTabelle.getColumnCount(); i++) {
 				column = ortsterminTabelle.getColumnModel().getColumn(i);
@@ -644,7 +647,7 @@ public class Anh49DetailsPanel extends JPanel{
 	}
 	
 	public void clearForm() {
-		// Hier füllen wir das Abscheider-TableModel mit einer leeren Liste
+		// Hier fÃ¼llen wir das Abscheider-TableModel mit einer leeren Liste
 		abscheiderModel.setList(new ArrayList());
 		ortsterminModel.setList(new ArrayList());
 	}

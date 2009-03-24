@@ -1,16 +1,19 @@
 /*
  * Datei:
- * $Id: StandortNeu.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Id: StandortNeu.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:33  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.15  2005/09/14 11:25:37  u633d
  * - Version vom 14.9.
  *
  * Revision 1.14  2005/06/09 15:27:03  u633z
- * - (CVS-)Header hinzugef¸gt
+ * - (CVS-)Header hinzugef√ºgt
  *
  */
 package de.bielefeld.umweltamt.aui.module;
@@ -209,7 +212,7 @@ public class StandortNeu extends AbstractModul {
 			
 			// Adresse
 			builder.addSeparator("Stammdaten", 	cc.xyw( 1, 1, 9));
-			builder.addLabel("Straﬂe:",			cc.xy(  1, 3 ));
+			builder.addLabel("Stra√üe:",			cc.xy(  1, 3 ));
 			builder.add(strassenBox,			cc.xyw( 3, 3 , 3 ));
 			builder.add(hausnrEditFeld,			cc.xy(  7, 3 ));
 			builder.add(hausnrZusFeld,			cc.xy(  9, 3 ));
@@ -225,13 +228,13 @@ public class StandortNeu extends AbstractModul {
 			// 
 			builder.addLabel("Gemarkung:",		cc.xy(  1, 11 ));
 			builder.add(gemarkungBox,			cc.xyw( 3, 11, 3 ));
-			builder.addLabel("Entw‰sserungsgebiet:",	cc.xy(  1, 13 ));
+			builder.addLabel("Entw√§sserungsgebiet:",	cc.xy(  1, 13 ));
 			builder.add(entwGebBox,				cc.xyw( 3, 13, 3 ));
 			
 			// Flur
 			builder.addLabel("Flur:",			cc.xy(  1, 15 ));
 			builder.add(flurFeld,				cc.xy(  3, 15 ));
-			builder.addLabel("Flurst¸ck:",		cc.xy(  1, 17 ));
+			builder.addLabel("Flurst√ºck:",		cc.xy(  1, 17 ));
 			builder.add(flurStkFeld,			cc.xy(  3, 17 ));
 			
 			// VAWS
@@ -271,7 +274,7 @@ public class StandortNeu extends AbstractModul {
 	 * @throws HibernateException Wenn beim Speichern ein Fehler auftritt
 	 */
 	private void doSave() {
-		// Eingaben ¸berpr¸fen:
+		// Eingaben √ºberpr√ºfen:
 		// Das Handzeichen darf nicht leer sein
 		if (handzeichenNeuFeld.getText().equals("")) {
 			handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
@@ -285,7 +288,7 @@ public class StandortNeu extends AbstractModul {
 			// Neues Standortobjekt erzeugen
 			BasisStandort bsta = new BasisStandort();
 			
-			// Straﬂe:
+			// Stra√üe:
 			String stra = (String) strassenBox.getSelectedItem(); 
 			bsta.setStrasse(stra);
 			
@@ -319,11 +322,11 @@ public class StandortNeu extends AbstractModul {
 			
 			// Einzugsgebiet
 			String ezgb = (String) entwGebBox.getSelectedItem();
-			// Nˆtig, weil getSelectedItem bei editierbarer ComboBox auch NULL liefern kann
+			// N√∂tig, weil getSelectedItem bei editierbarer ComboBox auch NULL liefern kann
 			if (ezgb != null) {
 				// Weil ich bis jetzt noch keine LimitedComboBox oder so habe...
 				if (ezgb.length() > 10) {
-					// ... k¸rze ich hier den String auf 10 Zeichen
+					// ... k√ºrze ich hier den String auf 10 Zeichen
 					ezgb = ezgb.substring(0, 10);
 				}
 				ezgb = ezgb.trim();
@@ -370,10 +373,10 @@ public class StandortNeu extends AbstractModul {
 				if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt")) {
 					manager.getSettingsManager().setSetting("auik.imc.use_standort", bsta.getStandortid().intValue(), false);
 					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt");
-					// ... kehren wir direkt dorthin zur¸ck:
+					// ... kehren wir direkt dorthin zur√ºck:
 					manager.switchModul("m_objekt_bearbeiten");
 				} else {
-					// Sonst einfach das Formular zur¸cksetzen
+					// Sonst einfach das Formular zur√ºcksetzen
 					clearForm();
 				}
 			} else {
@@ -385,7 +388,7 @@ public class StandortNeu extends AbstractModul {
 	
 	private void clearForm() {
 		setAllEnabled(false);
-		//frame.changeStatus("Besch‰ftigt...");
+		//frame.changeStatus("Besch√§ftigt...");
 		
 		SwingWorkerVariant worker = new SwingWorkerVariant(strassenBox) {
 			
@@ -447,7 +450,7 @@ public class StandortNeu extends AbstractModul {
 		};
 		worker.start();
 		
-		AUIKataster.debugOutput("Formular zur¸ckgesetzt", this.getIdentifier()+".clearForm");
+		AUIKataster.debugOutput("Formular zur√ºckgesetzt", this.getIdentifier()+".clearForm");
 	}
 	
 	/**
@@ -473,25 +476,25 @@ public class StandortNeu extends AbstractModul {
 	}
 	
 	/**
-	 * Ein Listener f¸r die Events des "Neuer Standort"-Moduls.
+	 * Ein Listener f√ºr die Events des "Neuer Standort"-Moduls.
 	 * @author David Klotz
 	 */
 	private final class StandortNeuListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == speichernButton) {
-				AUIKataster.debugOutput("Speichern gedr¸ckt!", StandortNeu.this.getIdentifier());
+				AUIKataster.debugOutput("Speichern gedr√ºckt!", StandortNeu.this.getIdentifier());
 				doSave();
 			} else if (e.getSource() == strassenBox) {
-				// Wenn wir eine Straﬂe ausw‰hlen, wird die PLZ upgedatet
+				// Wenn wir eine Stra√üe ausw√§hlen, wird die PLZ upgedatet
 				BasisStrassen stra = BasisStrassen.getStrasseByName((String) strassenBox.getSelectedItem());
 				if (stra != null) {
-					// Nat¸rlich nur, wenn die Straﬂe eine eindeutige PLZ hat
+					// Nat√ºrlich nur, wenn die Stra√üe eine eindeutige PLZ hat
 					if (stra.getPlz() != null) {
 						frame.clearStatus();
 						plzFeld.setText(stra.getPlz().toString());
 					} else {
-						frame.changeStatus("Die Straﬂe '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
+						frame.changeStatus("Die Stra√üe '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
 						plzFeld.setText("");
 					}
 				}

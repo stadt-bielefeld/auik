@@ -1,19 +1,22 @@
 /*
  * Datei:
- * $Id: ObjektBasisPanel.java,v 1.1 2008-06-05 11:38:39 u633d Exp $
+ * $Id: ObjektBasisPanel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
  * 
  * Erstellt am 19.04.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:39  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.10  2005/06/09 13:39:42  u633z
- * - Objektart-Box verbreitert (dadurch entfällt auch eine Layout-Spalte)
+ * - Objektart-Box verbreitert (dadurch entfÃ¤llt auch eine Layout-Spalte)
  *
  * Revision 1.9  2005/06/08 08:35:47  u633z
- * - Überflüssigen ModulManager aus Betreiber- und Standort-Editor entfernt
+ * - Ã¼berflÃ¼ssigen ModulManager aus Betreiber- und Standort-Editor entfernt
  *
  * Revision 1.8  2005/06/08 06:47:11  u633z
- * - Tooltips für Betreiber und Standort-Felder verbessert
+ * - Tooltips fÃ¼r Betreiber und Standort-Felder verbessert
  *
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
@@ -89,14 +92,14 @@ public class ObjektBasisPanel extends JPanel {
 			initialList.add(initial);
 			
 			if (initial instanceof BasisBetreiber) {
-				setTitle("Betreiber auswählen");
+				setTitle("Betreiber auswÃ¤hlen");
 				betreiber = (BasisBetreiber) initial;
 				betreiberModel = new BasisBetreiberModel(false);
 				if (betreiber.getBetreiberid() != null) {
 					betreiberModel.setList(initialList);
 				}
 			} else if (initial instanceof BasisStandort) {
-				setTitle("Standort auswählen");
+				setTitle("Standort auswÃ¤hlen");
 				standort = (BasisStandort) initial;
 				standortModel = new BasisStandortModel();
 				if (standort.getStandortid() != null) {
@@ -449,7 +452,7 @@ public class ObjektBasisPanel extends JPanel {
 	private boolean saveObjektDaten() {
 		boolean success;
 		
-		// Eingegebene Daten für das Objekt übernehmen
+		// Eingegebene Daten fÃ¼r das Objekt ï¿½bernehmen
 		// Betreiber / Standort werden schon nach der Auswahl durch die chooseButtons gesetzt
 		hauptModul.getObjekt().setBasisObjektarten((BasisObjektarten)getArtBox().getSelectedItem());
 		hauptModul.getObjekt().setBeschreibung(getBeschreibungsArea().getText());
@@ -527,7 +530,7 @@ public class ObjektBasisPanel extends JPanel {
 		if (betreiberChooseButton == null) {
 			betreiberChooseButton = new JButton(AuikUtils.getIcon(16, "reload.png", ""));
 			betreiberChooseButton.setHorizontalAlignment(JButton.CENTER);
-			betreiberChooseButton.setToolTipText("Betreiber auswählen");
+			betreiberChooseButton.setToolTipText("Betreiber auswÃ¤hlen");
 			
 			betreiberChooseButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -612,7 +615,7 @@ public class ObjektBasisPanel extends JPanel {
 		if (standortChooseButton == null) {
 			standortChooseButton = new JButton(AuikUtils.getIcon(16, "reload.png", ""));
 			standortChooseButton.setHorizontalAlignment(JButton.CENTER);
-			standortChooseButton.setToolTipText("Standort auswählen");
+			standortChooseButton.setToolTipText("Standort auswÃ¤hlen");
 			
 			standortChooseButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -707,7 +710,7 @@ public class ObjektBasisPanel extends JPanel {
 						
 						hauptModul.fillForm();
 					} else {
-						hauptModul.getFrame().changeStatus("Kein Betreiber/Standort ausgewählt!", HauptFrame.ERROR_COLOR);
+						hauptModul.getFrame().changeStatus("Kein Betreiber/Standort ausgewÃ¤hlt!", HauptFrame.ERROR_COLOR);
 					}
 				}
 			});

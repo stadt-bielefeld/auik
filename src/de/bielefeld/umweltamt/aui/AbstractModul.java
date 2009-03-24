@@ -10,7 +10,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.MD5Password;
 
 /**
- * Eine abstrakte Basis-Klasse für alle Module. 
+ * Eine abstrakte Basis-Klasse fÃ¼r alle Module. 
  * Alle konkreten Module sollten von dieser Klasse erben.
  * @author David Klotz
  */
@@ -45,7 +45,7 @@ public abstract class AbstractModul implements Modul {
 	
 	/**
 	 * Erzeugt ein Icon aus einem gegebenen Dateinamen.
-	 * @param size Die Icon-Größe
+	 * @param size Die Icon-GrÃ¶ÃŸe
 	 * @param iconPath Der Name der Icon-Datei
 	 * @return Ein neues Icon
 	 */
@@ -57,12 +57,12 @@ public abstract class AbstractModul implements Modul {
 	}
 	
 	/*
-	 * Berechnet eine zufällige und (hoffentlich) eindeutige 
+	 * Berechnet eine zufÃ¤llige und (hoffentlich) eindeutige 
 	 * ID aus dem Modul-Namen, der Kategorie und der Zeit,
 	 * zu der es geladen wird.
 	 * Wenn zu einem Modul explizit aus einem anderen 
 	 * Modul gewechselt werden soll, MUSS diese Methode 
-	 * überschrieben werden!
+	 * Ã¼berschrieben werden!
 	 */
 	public String getIdentifier() {
 		if (id == null) {
@@ -78,7 +78,7 @@ public abstract class AbstractModul implements Modul {
 	
 	/**
 	 * Sagt diesem Modul, dass es aktiv ist (angezeigt wird).
-	 * Wenn diese Methode überschrieben wird, unbedingt super.show() aufrufen.
+	 * Wenn diese Methode Ã¼berschrieben wird, unbedingt super.show() aufrufen.
 	 */
 	public void show() {
 		AUIKataster.debugOutput("shown", this.getIdentifier());
@@ -87,14 +87,14 @@ public abstract class AbstractModul implements Modul {
 	
 	/**
 	 * Sagt diesem Modul, dass es inaktiv ist (nicht angezeigt wird).
-	 * Wenn diese Methode überschrieben wird, unbedingt super.hide() aufrufen.
+	 * Wenn diese Methode Ã¼berschrieben wird, unbedingt super.hide() aufrufen.
 	 */
 	public void hide() {
 		AUIKataster.debugOutput("hidden", this.getIdentifier());
 		shown = false;
 	}
 	
-	// Nicht überschreibbar
+	// Nicht Ã¼berschreibbar
 	public final boolean isShown() {
 		return shown;
 	}

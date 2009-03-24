@@ -1,13 +1,16 @@
 /*
  * Datei:
- * $Id: ObjektAnh55Panel.java,v 1.1 2008-06-05 11:38:39 u633d Exp $
+ * $Id: ObjektAnh55Panel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
  * 
  * Erstellt am 10.08.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:39  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.10  2006/10/17 07:54:29  u633d
- * Anhang 52 (Chemische W‰schereien) haben nun einen eigenen Tab.
+ * Anhang 52 (Chemische W√§schereien) haben nun einen eigenen Tab.
  *
  * Revision 1.9  2006/09/28 07:31:34  u633d
  * Bei dem Verwaltungsverfahren eine Bemerkungs-spalte hinzugefuegt
@@ -16,7 +19,7 @@
  * Anh 55 bereinigt; settings wieder auf UTEDB2 gesetzt
  *
  * Revision 1.7  2006/09/25 12:17:17  u633d
- * W‰scherei funzt
+ * W√§scherei funzt
  *
  * Revision 1.6  2006/09/25 09:36:59  u633d
  * Waescherei Panel
@@ -28,7 +31,7 @@
  * *** empty log message ***
  *
  * Revision 1.3  2006/09/21 07:47:30  u633d
- * Oberfl‰che erstellt
+ * Oberfl√§che erstellt
  *
  * Revision 1.2  2006/09/20 06:45:42  u633d
  * *** empty log message ***
@@ -116,7 +119,7 @@ public class ObjektAnh55Panel extends JPanel{
 	private ActionListener editButtonListener;
 
 	public ObjektAnh55Panel(ObjektBearbeiten hauptModul) {
-		name = "W‰scherei";
+		name = "W√§scherei";
 		this.hauptModul = hauptModul;
 	
 		FormLayout layout = new FormLayout (
@@ -128,7 +131,7 @@ public class ObjektAnh55Panel extends JPanel{
 		builder.setDefaultDialogBorder();
 		
 		builder.appendSeparator("Fachdaten");
-		builder.append("Entw‰sserungsgebiet:", getEntgebIdFeld());
+		builder.append("Entw√§sserungsgebiet:", getEntgebIdFeld());
 		builder.append("", getAbgemeldetCheck());
 		builder.nextLine();
 		builder.append("Branche:", getBrancheFeld());
@@ -688,7 +691,7 @@ public class ObjektAnh55Panel extends JPanel{
 	
 	private JCheckBox getPutztuecherCheck() {
 		if (putztuecherCheck == null) {
-			putztuecherCheck = new JCheckBox("Putzt¸cher?");
+			putztuecherCheck = new JCheckBox("Putzt√ºcher?");
 		}
 		return putztuecherCheck;
 	}
@@ -751,7 +754,7 @@ public class ObjektAnh55Panel extends JPanel{
 	
 	private JCheckBox getGasthotelCheck() {
 		if (gasthotelCheck == null) {
-			gasthotelCheck = new JCheckBox("Gastst‰tten-/Hoteltextilien?");
+			gasthotelCheck = new JCheckBox("Gastst√§tten-/Hoteltextilien?");
 		}
 		return gasthotelCheck;
 	}
@@ -765,7 +768,7 @@ public class ObjektAnh55Panel extends JPanel{
 	
 	private JCheckBox getHeimwaescheCheck() {
 		if (heimwaescheCheck == null) {
-			heimwaescheCheck = new JCheckBox("Heimw‰sche?");
+			heimwaescheCheck = new JCheckBox("Heimw√§sche?");
 		}
 		return heimwaescheCheck;
 	}
@@ -786,7 +789,7 @@ public class ObjektAnh55Panel extends JPanel{
 	
 	private JCheckBox getLoesungsmittelCheck() {
 		if (loesungsmittelCheck == null) {
-			loesungsmittelCheck = new JCheckBox("Lˆsungsmittel?");
+			loesungsmittelCheck = new JCheckBox("L√∂sungsmittel?");
 		}
 		return loesungsmittelCheck;
 	}

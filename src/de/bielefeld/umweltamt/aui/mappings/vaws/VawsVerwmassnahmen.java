@@ -30,8 +30,8 @@ public class VawsVerwmassnahmen
     /* Add customized code below */
 
     /**
-     * Liefert alle Massnahmen für die Verwaltungsverfahren.
-     * @return Ein Array mit den Namen aller möglichen Massnahmen.
+     * Liefert alle Massnahmen fÃ¼r die Verwaltungsverfahren.
+     * @return Ein Array mit den Namen aller mÃ¶glichen Massnahmen.
      */
     public static String[] getAllMassnahmen() {
 		List list;

@@ -17,7 +17,7 @@
         </id>
 
         <property name="grkl" column="grkl" type="java.lang.String" />
-        <property name="wert" column="wert" type="java.lang.Double" not-null="true" />
+        <property name="wert" column="wert" type="java.lang.Float" not-null="true" />
         <property name="analyseVon" column="analyse_von" type="java.lang.String" />
         <property name="bericht" column="bericht" type="java.lang.String" />
         <property name="normwert" column="normwert" type="java.lang.Double" />

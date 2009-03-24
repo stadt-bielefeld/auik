@@ -7,22 +7,33 @@
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         
         <!-- Informix: -->
-		      
+		       
         <property name="hibernate.connection.driver_class">com.informix.jdbc.IfxDriver</property>
         <property name="hibernate.connection.url">jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi</property>
         <property name="hibernate.dialect">org.hibernate.dialect.InformixDialect</property>
 		
         <!-- PostgreSQL: -->
-        <!-- 
+        <!--
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://umweltamt.bielefeld.int/auik</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-        -->	 
+        -->	
+        
+        <!-- MySQL: -->
+        <!--
+        <property name="hbm2ddl.auto">create</property>
+        -->
+        <!--
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/auik</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        -->
+        	 
         <!-- configuration pool via c3p0--> 
 		<!--
 		<property name="c3p0.acquire_increment">1</property> 
 		<property name="c3p0.idle_test_period">100</property> 
-		<property name="c3p0.max_size">20</property> 
+		<property name="c3p0.max_size">1</property> 
 		<property name="c3p0.max_statements">0</property> 
 		<property name="c3p0.min_size">1</property> 
 		<property name="c3p0.timeout">100</property> 
@@ -42,6 +53,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjekt.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektarten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektchrono.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektverknuepfung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisBetreiber.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh40Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Abscheiderdetails.hbm.xml" />
@@ -51,10 +63,14 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh50Entsorger.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh50Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh52Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh53Entsorgungsbetriebe.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh53Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh55Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh56Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/AnhBwkFachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/AnhSuevFachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/IndeinlUebergabestelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/IndeinlGenehmigung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/ViewBwk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsAbfuellflaeche.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsAbscheider.hbm.xml" />

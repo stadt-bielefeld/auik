@@ -53,7 +53,7 @@ public class AtlProbenahmen
     
     /**
      * Liefert alle Probenahmen einer bestimmten Art von einer 
-     * bestimmten Kläranlage. 
+     * bestimmten KlÃ¤ranlage. 
      */
     public static List getKSProbenahmen(AtlProbeart art, AtlKlaeranlagen ka) {
     	// Evtl. Version mit gegebener Session bauen?
@@ -168,7 +168,7 @@ public class AtlProbenahmen
     }
     
     /**
-     * Überprüft ob eine Probenahme mit einer bestimmten Kennnummer existiert.
+     * Ã¼berprÃ¼ft ob eine Probenahme mit einer bestimmten Kennnummer existiert.
      * @param kennnummer Die Kennnummer.
      * @return <code>true</code>, falls bereits eine Probenahme mit dieser Kennung existiert, sonst <code>false</code>.
      */
@@ -281,10 +281,10 @@ public class AtlProbenahmen
 		} catch (HibernateException e) {
 			success = false;
 			e.printStackTrace();
-			// Falls während der Änderungen ein Hibernate Fehler auftritt
+			// Falls wÃ¤hrend der Ã„nderungen ein Hibernate Fehler auftritt
 			if (tx != null) {
 				try {
-					// Alle Änderungen rückgängig machen
+					// Alle Ãœnderungen rÃ¼ckgÃ¤ngig machen
 					tx.rollback();
 				} catch (HibernateException e1) {
 					throw new RuntimeException("Datenbank-Fehler (Anh49Ortstermine)", e);
@@ -316,10 +316,10 @@ public class AtlProbenahmen
 		} catch (HibernateException e) {
 			success = false;
 			e.printStackTrace();
-			// Falls während der Änderungen ein Hibernate Fehler auftritt
+			// Falls wÃ¤hrend der Ã„nderungen ein Hibernate Fehler auftritt
 			if (tx != null) {
 				try {
-					// Alle Änderungen rückgängig machen
+					// Alle Ã„nderungen rÃ¼ckgÃ¤ngig machen
 					tx.rollback();
 				} catch (HibernateException e1) {
 					throw new RuntimeException("Datenbank-Fehler (Anh49Ortstermine)", e);
@@ -427,8 +427,8 @@ public class AtlProbenahmen
 	}
     
     /**
-     * Fügt dieser Probenahme eine Analyseposition hinzu (und sorgt 
-     * für die richtigen Fremdschlüssel in den Tabellen).
+     * FÃ¼gt dieser Probenahme eine Analyseposition hinzu (und sorgt 
+     * fÃ¼r die richtigen FremdschlÃ¼ssel in den Tabellen).
      * @param pos Die neue Analyseposition
      */
     public void addAnalyseposition(AtlAnalyseposition pos) {

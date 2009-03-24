@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh49Auswertung.java,v 1.2 2008-07-23 06:55:22 u633d Exp $
+ * $Id: Anh49Auswertung.java,v 1.3 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 15.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/07/23 06:55:22  u633d
+ * Anh49 Auswertung und Sielhautimport neu
+ *
  * Revision 1.1  2008/06/05 11:38:33  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -13,10 +16,10 @@
  * - Version vom 14.9.
  *
  * Revision 1.3  2005/09/07 05:56:14  u633d
- * - Anh 49 ergänzt und neue Mappings
+ * - Anh 49 ergÃ¤nzt und neue Mappings
  *
  * Revision 1.2  2005/08/31 06:25:12  u633d
- * - kleine Ergänzungen
+ * - kleine ErgÃ¤nzungen
  *
  * Revision 1.1  2005/08/24 08:42:51  u633d
  * - Auswertungen und anderes
@@ -43,14 +46,14 @@ import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches Auswertungs-Modul für Anhang 49-Datensätze.
+ * Ein einfaches Auswertungs-Modul fÃ¼r Anhang 49-DatensÃ¤tze.
  * @author David Klotz
  */
 public class Anh49Auswertung extends AbstractQueryModul {
 	/** Das obere Panel mit den Abfrage-Optionen */
 	private JPanel queryPanel;
 	
-	// Widgets für die Abfrage
+	// Widgets fÃ¼r die Abfrage
 	private JTextField sachbFeld;
 	private IntegerField dekraTuevFeld;
 	private JCheckBox abgemeldetCheck;
@@ -62,7 +65,7 @@ public class Anh49Auswertung extends AbstractQueryModul {
 	private JButton sachbearbeiterButton;
 	private JButton alleButton;
 	
-	/** Das TableModel für die Ergebnis-Tabelle */
+	/** Das TableModel fÃ¼r die Ergebnis-Tabelle */
 	private Anh49Model tmodel;
 
 	/* (non-Javadoc)
@@ -99,8 +102,8 @@ public class Anh49Auswertung extends AbstractQueryModul {
 			sachbearbeiterButton = new JButton("Suchen");
 			sachbearbeiterButton.setToolTipText("SachbearbeiterIn anzeigen");
 			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
+			// Ein ActionListener fÃ¼r den Button, 
+			// der die eigentliche Suche auslÃ¶st: 
 			submitButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					boolean abgem;
@@ -182,7 +185,7 @@ public class Anh49Auswertung extends AbstractQueryModul {
 			builder.append(wiedervorlageCheck);
 			builder.append("");
 			builder.append(submitButton);
-			builder.append("Dekra-TÜV-T.:", dekraTuevFeld, tuevButton, alleButton);
+			builder.append("Dekra-TÃœV-T.:", dekraTuevFeld, tuevButton, alleButton);
 			
 			queryPanel = builder.getPanel();
 		}

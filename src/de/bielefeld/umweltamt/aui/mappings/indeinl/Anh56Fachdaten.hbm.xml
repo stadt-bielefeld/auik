@@ -16,6 +16,8 @@
 
         <property name="druckverfahren" column="druckverfahren" type="java.lang.String" />
         <property name="verbrauch" column="verbrauch" type="java.lang.String" />
+        <property name="sachbearbeiterrav" column="sachbearbeiterrav" type="java.lang.String" />
+        <property name="sachbearbeiterheepen" column="sachbearbeiterheepen" type="java.lang.String" />
         <property name="entsorgung" column="entsorgung" type="java.lang.String" />
         <property name="abwasseranfall" column="abwasseranfall" type="java.lang.Boolean" />
         <property name="genpflicht" column="genpflicht" type="java.lang.Boolean" />
@@ -23,6 +25,10 @@
         <property name="gen58" column="gen_58" type="java.util.Date" />
         <property name="gen59" column="gen_59" type="java.util.Date" />
         <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+        <property name="abfallrechtlentsorg" column="abfallrechtlentsorg" type="java.lang.Boolean" />
+        <property name="spuelwasser" column="spuelwasser" type="java.lang.Boolean" />
+        <property name="leimabwasser" column="leimabwasser" type="java.lang.Boolean" />
+        <property name="erfasstam" column="erfasstam" type="java.util.Date" />
 
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"/>
 

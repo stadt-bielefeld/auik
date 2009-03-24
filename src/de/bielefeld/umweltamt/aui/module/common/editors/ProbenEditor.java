@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ProbenEditor.java,v 1.1 2008-06-05 11:38:41 u633d Exp $
+ * $Id: ProbenEditor.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 25.5.05 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:41  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.11  2005/09/14 11:25:36  u633d
  * - Version vom 14.9.
  *
@@ -13,7 +16,7 @@
  * - Version vom 7.9.05
  *
  * Revision 1.9  2005/07/06 09:40:13  u633z
- * - Grenzwerte auch f¸r Sielhaut-Proben
+ * - Grenzwerte auch f√ºr Sielhaut-Proben
  *
  * Revision 1.8  2005/06/30 11:46:33  u633z
  * *** empty log message ***
@@ -23,7 +26,7 @@
  *
  * Revision 1.6  2005/06/10 11:07:21  u633z
  * - Datenbank-Zugriffe komplett in DB-Klassen ausgelagert
- * - Einige DB-Klassen vervollst‰ndigt
+ * - Einige DB-Klassen vervollst√§ndigt
  *
  * Revision 1.5  2005/06/09 13:45:33  u633z
  * - ProbenEditor auf AbstractBaseEditor umgestellt
@@ -79,7 +82,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
  * Ein Dialog um eine Probenahme mit ihren Analysepositionen zu bearbeiten.
- * (Momentan ist vieles noch auf Kl‰rschlamm-Proben ausgerichtet)
+ * (Momentan ist vieles noch auf Kl√§rschlamm-Proben ausgerichtet)
  * @author David Klotz
  */
 public class ProbenEditor extends AbstractBaseEditor {
@@ -231,11 +234,11 @@ public class ProbenEditor extends AbstractBaseEditor {
 					break;
 					
 				case 2:
-					Double tmpWert = null;
-					if (newValue instanceof Double) {
-						tmpWert = (Double) newValue;
+					Float tmpWert = null;
+					if (newValue instanceof Float) {
+						tmpWert = (Float) newValue;
 					} else if (newValue instanceof KommaDouble) {
-						tmpWert = ((KommaDouble)newValue).getValue();
+						tmpWert = ((KommaDouble)newValue).getValue().floatValue();
 					}
 					tmp.setWert(tmpWert);
 					break;
@@ -361,7 +364,7 @@ public class ProbenEditor extends AbstractBaseEditor {
 		parameterTabelle = new SelectTable();
 		parameterTabelle.setRowHeight(20);
 		
-		Action aposRemoveAction = new AbstractAction("Analyseposition lˆschen") {
+		Action aposRemoveAction = new AbstractAction("Analyseposition l√∂schen") {
 			public void actionPerformed(ActionEvent e) {
 				int row = parameterTabelle.getSelectedRow();
 				if (row != -1 && parameterTabelle.getEditingRow() == -1) {
@@ -538,7 +541,7 @@ public class ProbenEditor extends AbstractBaseEditor {
 			getProbe().getAtlAnalysepositionen().clear();
 			getProbe().getAtlAnalysepositionen().addAll(newPositionen);
 			//getProbe().setAtlAnalysepositionen(newPositionen);
-			AUIKataster.debugOutput("Analysepositionen ge‰ndert: " + getProbe().getAtlAnalysepositionen(), "ProbenEditor.doSave");
+			AUIKataster.debugOutput("Analysepositionen ge√§ndert: " + getProbe().getAtlAnalysepositionen(), "ProbenEditor.doSave");
 		}
 		
 		boolean success;

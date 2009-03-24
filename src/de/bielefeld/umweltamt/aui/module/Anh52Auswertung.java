@@ -19,10 +19,10 @@ public class Anh52Auswertung extends AbstractQueryModul {
 	/** Das obere Panel mit den Abfrage-Optionen */
 	private JPanel queryPanel;
 	
-	// Widgets für die Abfrage
+	// Widgets fÃ¼r die Abfrage
 	private JButton submitButton;
 	
-	/** Das TableModel für die Ergebnis-Tabelle */
+	/** Das TableModel fÃ¼r die Ergebnis-Tabelle */
 	private Anh52Model tmodel;
 
 	/* (non-Javadoc)
@@ -48,8 +48,8 @@ public class Anh52Auswertung extends AbstractQueryModul {
 			// Die Widgets initialisieren
 			submitButton = new JButton("Alle Objekte anzeigen");
 			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
+			// Ein ActionListener fÃ¼r den Button, 
+			// der die eigentliche Suche auslÃ¶st: 
 			submitButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {

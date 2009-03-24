@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AuswertungVawsWV.java,v 1.1 2008-06-05 11:38:32 u633d Exp $
+ * $Id: AuswertungVawsWV.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 27.09.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.2  2005/10/13 13:00:26  u633d
  * Version vom 13.10.
  *
@@ -28,7 +31,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein Modul um noch ausstehende Prüfungen anzeigen zu lassen.
+ * Ein Modul um noch ausstehende PrÃ¼fungen anzeigen zu lassen.
  * @author David Klotz
  */
 public class AuswertungVawsWV extends AbstractQueryModul {
@@ -47,7 +50,7 @@ public class AuswertungVawsWV extends AbstractQueryModul {
 			
 			if (editor.wasSaved()) {
 				// Nach dem Bearbeiten die Liste updaten, 
-				// damit unsere Änderungen auch angezeigt werden.
+				// damit unsere Ã„nderungen auch angezeigt werden.
 				updateListe();
 			}
 		}
@@ -108,7 +111,7 @@ class WiedervorlageVVModel extends ListTableModel {
 	public WiedervorlageVVModel() {
 		super(
 				new String[]{
-						"Behälter", 
+						"BehÃ¤lter", 
 						"Betreiber", 
 						"Standort",
 						"Wiedervorlage",

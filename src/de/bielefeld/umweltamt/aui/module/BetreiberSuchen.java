@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: BetreiberSuchen.java,v 1.1 2008-06-05 11:38:32 u633d Exp $
+ * $Id: BetreiberSuchen.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.23  2005/11/02 13:49:16  u633d
  * - Version vom 2.11.
  *
@@ -13,7 +16,7 @@
  * Version vom 13.10.
  *
  * Revision 1.21  2005/06/09 15:27:03  u633z
- * - (CVS-)Header hinzugefügt
+ * - (CVS-)Header hinzugefÃ¼gt
  *
  */
 package de.bielefeld.umweltamt.aui.module;
@@ -94,7 +97,7 @@ public class BetreiberSuchen extends AbstractModul {
 	private BasisObjektModel objektModel;
 	
 	/** Wird benutzt, um nach dem Bearbeiten etc. wieder den 
-	selben Betreiber in der Liste auszuwählen. */
+	selben Betreiber in der Liste auszuwÃ¤hlen. */
 	private BasisBetreiber lastBetreiber;
 	
 	/*
@@ -149,7 +152,7 @@ public class BetreiberSuchen extends AbstractModul {
 			submitToolBar.add(getSubmitButton());
 			
 			// Die Tab-Action ist in eine neue Klasse ausgelagert, 
-			// weil man sie evtl. öfters brauchen wird. 
+			// weil man sie evtl. Ã¶fters brauchen wird. 
 			TabAction ta = new TabAction();
 			ta.addComp(getSuchFeld());
 			ta.addComp(getBetreiberTabelle());
@@ -222,7 +225,7 @@ public class BetreiberSuchen extends AbstractModul {
 				betreiberModel.fireTableDataChanged();
 				
 				if (lastBetreiber != null) {
-					// Wenn der Betreiber noch in der Liste ist, wird er ausgewählt.
+					// Wenn der Betreiber noch in der Liste ist, wird er ausgewÃ¤hlt.
 					int row = betreiberModel.getList().indexOf(lastBetreiber);
 					if (row != -1) {
 						getBetreiberTabelle().setRowSelectionInterval(row, row);
@@ -253,13 +256,13 @@ public class BetreiberSuchen extends AbstractModul {
 		if (!lsm.isSelectionEmpty()) {
 			int selectedRow = lsm.getMinSelectionIndex();
 			BasisBetreiber betr = betreiberModel.getRow(selectedRow);
-			AUIKataster.debugOutput("Betreiber " + betr.getBetrname() + " (ID" + betr.getBetreiberid() + ") angewählt.", "BetreiberSuchen.updateObjekte");
+			AUIKataster.debugOutput("Betreiber " + betr.getBetrname() + " (ID" + betr.getBetreiberid() + ") angewÃ¤hlt.", "BetreiberSuchen.updateObjekte");
 			searchObjekteByBetreiber(betr);
 		}
 	}
 	
 	/**
-	 * Öffnet einen Dialog um einen Betreiber-Datensatz zu bearbeiten.
+	 * Ã¶ffnet einen Dialog um einen Betreiber-Datensatz zu bearbeiten.
 	 * @param betr Der Betreiber
 	 */
 	public void editBetreiber(BasisBetreiber betr) {
@@ -270,7 +273,7 @@ public class BetreiberSuchen extends AbstractModul {
 		
 		lastBetreiber = betr;
 		
-		// Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen auch angezeigt werden.
+		// Nach dem Bearbeiten die Liste updaten, damit unsere Ã„nderungen auch angezeigt werden.
 		updateBetreiberListe();
 	}
 	
@@ -326,7 +329,7 @@ public class BetreiberSuchen extends AbstractModul {
 				public void actionPerformed(ActionEvent e) {
 					int row = getBetreiberTabelle().getSelectedRow();
 					
-					// Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
+					// NatÃ¼rlich nur editieren, wenn wirklich eine Zeile ausgewÃ¤hlt ist
 					if (row != -1) {
 						BasisBetreiber betr = betreiberModel.getRow(row);
 						editBetreiber(betr);
@@ -342,21 +345,21 @@ public class BetreiberSuchen extends AbstractModul {
 	
 	private Action getBetreiberLoeschAction() {
 		if (betreiberLoeschAction == null) {
-			betreiberLoeschAction = new AbstractAction("Löschen") {
+			betreiberLoeschAction = new AbstractAction("LÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getBetreiberTabelle().getSelectedRow();
 					if (row != -1 && getBetreiberTabelle().getEditingRow() == -1) {
 						if (objektModel.getRowCount() != 0) {
-							frame.changeStatus("Kann Betreiber nicht löschen: Zu erst alle zugehörigen Objekte löschen!", HauptFrame.ERROR_COLOR);
+							frame.changeStatus("Kann Betreiber nicht lÃ¶schen: Zu erst alle zugehÃ¶rigen Objekte lÃ¶schen!", HauptFrame.ERROR_COLOR);
 						} else {
 							BasisBetreiber betr = betreiberModel.getRow(row);
-							int answer = JOptionPane.showConfirmDialog(panel, "Soll der Betreiber '"+ betr +"' wirklich gelöscht werden?", "Löschen bestätigen", JOptionPane.YES_NO_OPTION);
+							int answer = JOptionPane.showConfirmDialog(panel, "Soll der Betreiber '"+ betr +"' wirklich gelÃ¶scht werden?", "LÃ¶schen bestÃ¤tigen", JOptionPane.YES_NO_OPTION);
 							if (answer == JOptionPane.YES_OPTION) {
 								if (betreiberModel.removeRow(row)) {
-									frame.changeStatus("Betreiber gelöscht.", HauptFrame.SUCCESS_COLOR);
-									AUIKataster.debugOutput("Betreiber " + betr.getBetreiberid() + " wurde gelöscht!", "BetreiberSuchen.removeAction");
+									frame.changeStatus("Betreiber gelÃ¶scht.", HauptFrame.SUCCESS_COLOR);
+									AUIKataster.debugOutput("Betreiber " + betr.getBetreiberid() + " wurde gelÃ¶scht!", "BetreiberSuchen.removeAction");
 								} else {
-									frame.changeStatus("Konnte den Betreiber nicht löschen!", HauptFrame.ERROR_COLOR);
+									frame.changeStatus("Konnte den Betreiber nicht lÃ¶schen!", HauptFrame.ERROR_COLOR);
 								}
 							}
 						}
@@ -410,22 +413,22 @@ public class BetreiberSuchen extends AbstractModul {
 	
 	private Action getObjektLoeschAction() {
 		if (objektLoeschAction == null) {
-			objektLoeschAction = new AbstractAction("Löschen") {
+			objektLoeschAction = new AbstractAction("LÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getObjektTabelle().getSelectedRow();
 					if (row != -1 && getObjektTabelle().getEditingRow() == -1) {
 						BasisObjekt objekt = objektModel.getRow(row);
 						int answer = JOptionPane.showConfirmDialog(panel, 
-								"Soll das Objekt "+ objekt.getObjektid() +" und alle seine Fachdaten wirklich gelöscht werden?\n" +
-								"Hinweis: Manche Objekte können auch erst gelöscht werden, wenn für sie\n" +
+								"Soll das Objekt "+ objekt.getObjektid() +" und alle seine Fachdaten wirklich gelÃ¶scht werden?\n" +
+								"Hinweis: Manche Objekte kÃ¶nnen auch erst gelÃ¶scht werden, wenn fÃ¼r sie\n" +
 								"keine Fachdaten mehr existieren.",
-								"Löschen bestätigen", JOptionPane.YES_NO_OPTION);
+								"LÃ¶schen bestÃ¤tigen", JOptionPane.YES_NO_OPTION);
 						if (answer == JOptionPane.YES_OPTION) {
 							if (objektModel.removeRow(row)) {
-								frame.changeStatus("Objekt gelöscht.", HauptFrame.SUCCESS_COLOR);
-								AUIKataster.debugOutput("Objekt " + objekt.getObjektid() + " wurde gelöscht!", "BetreiberSuchen.removeAction");
+								frame.changeStatus("Objekt gelÃ¶scht.", HauptFrame.SUCCESS_COLOR);
+								AUIKataster.debugOutput("Objekt " + objekt.getObjektid() + " wurde gelÃ¶scht!", "BetreiberSuchen.removeAction");
 							} else {
-								frame.changeStatus("Konnte das Objekt nicht löschen!", HauptFrame.ERROR_COLOR);
+								frame.changeStatus("Konnte das Objekt nicht lÃ¶schen!", HauptFrame.ERROR_COLOR);
 							}
 						}
 					}
@@ -484,11 +487,11 @@ public class BetreiberSuchen extends AbstractModul {
 		if (betreiberTabelle == null) {
 			betreiberTabelle = new JTable(betreiberModel);
 			
-			// Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
+			// Wir wollen wissen, wenn eine andere Zeile ausgewÃ¤hlt wurde
 			ListSelectionModel rowSM = betreiberTabelle.getSelectionModel();
 			rowSM.addListSelectionListener(new ListSelectionListener() {
 				public void valueChanged(ListSelectionEvent e) {
-					// Überzählige Events ignorieren
+					// Ã¼berzÃ¤hlige Events ignorieren
 					if (e.getValueIsAdjusting()) {
 						return;
 					}
@@ -527,12 +530,12 @@ public class BetreiberSuchen extends AbstractModul {
 			});
 			
 			// Bei Enter in der Tabelle wird der Betreiber auch bearbeitet
-			// und mit TAB soll man zwischen den Tabellen springen können.
-			// Dafür benutzen wir das (seit 1.3) neue Swing-Konzept
+			// und mit TAB soll man zwischen den Tabellen springen kÃ¶nnen.
+			// DafÃ¼r benutzen wir das (seit 1.3) neue Swing-Konzept
 			// der Action- und InputMaps mit dem bestimmte Aktionen ("Actions")
-			// bestimmten Tastendrücken ("Inputs")zugewiesen werden können.
+			// bestimmten TastendrÃ¼cken ("Inputs")zugewiesen werden kÃ¶nnen.
 			
-	        // Den "Enter"-KeyStroke in die InputMap der Tabelle einfügen
+	        // Den "Enter"-KeyStroke in die InputMap der Tabelle einfÃ¼gen
 	        betreiberTabelle.getInputMap().put((KeyStroke)getBetreiberEditAction().getValue(Action.ACCELERATOR_KEY), getBetreiberEditAction().getValue(Action.NAME));
 	        // Die Action dem "Enter"-KeyStroke zuweisen
 			betreiberTabelle.getActionMap().put(getBetreiberEditAction().getValue(Action.NAME), getBetreiberEditAction());

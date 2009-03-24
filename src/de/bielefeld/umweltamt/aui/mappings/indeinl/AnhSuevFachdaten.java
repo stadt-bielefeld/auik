@@ -46,25 +46,22 @@ public class AnhSuevFachdaten
 		return "[SuevKan Verfahren:" + getObjektid() + "]";
 	}
 	
-    public static AnhSuevFachdaten getSuevByObjekt(BasisObjekt objekt, Session session) {
-    	AnhSuevFachdaten fachdaten = null;
-    	if (objekt.getBasisObjektarten().isSuev()) {
-    		try {
-				List suev = session.createQuery(
-					    "from SuevFachdaten as suev where " +
-					    "suev.basisObjekt = ?")
-					    .setEntity(0, objekt)
-					    .list();
-				
-				if (suev.size() > 0) {
-					fachdaten = (AnhSuevFachdaten) suev.get(0);
-				}
-			} catch (HibernateException e) {
+	private static AnhSuevFachdaten getSuevByObjekt(BasisObjekt objekt,
+			Session session) throws HibernateException {
+		AnhSuevFachdaten fachdaten = null;
+		if (objekt.getBasisObjektarten().isSuev()) {
+			List suev = session.createQuery(
+					"from AnhSuevFachdaten as suev where "
+							+ "suev.basisObjekt = ?").setEntity(0, objekt)
+					.list();
+
+			if (suev.size() > 0) {
+				fachdaten = (AnhSuevFachdaten) suev.get(0);
 			}
-    	}
-    	
-    	return fachdaten;
-    }
+		}
+
+		return fachdaten;
+	}
 
     public static AnhSuevFachdaten getSuevByObjekt(BasisObjekt objekt) {
     	AnhSuevFachdaten fachdaten;

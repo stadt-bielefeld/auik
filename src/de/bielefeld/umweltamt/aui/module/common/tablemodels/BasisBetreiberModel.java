@@ -3,7 +3,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 /**
- * Ein TableModel für die Basis-Betreiberdaten.
+ * Ein TableModel fÃ¼r die Basis-Betreiberdaten.
  * @author David Klotz
  */
 public class BasisBetreiberModel extends ListTableModel {
@@ -29,7 +29,7 @@ public class BasisBetreiberModel extends ListTableModel {
 					"Name",
 					"Anrede",
 					"Zusatz",
-					"Straße",
+					"StraÃŸe",
 					"Nr."
 			};
 		}
@@ -98,7 +98,7 @@ public class BasisBetreiberModel extends ListTableModel {
 	
 	/** 
 	 * Filtert den Tabelleninhalt nach Anrede, Name oder Zusatz.
-	 * Zu den möglichen Werten von <code>property</code>, siehe {@link BasisBetreiber#findBetreiber(String, String)}.
+	 * Zu den mÃ¶glichen Werten von <code>property</code>, siehe {@link BasisBetreiber#findBetreiber(String, String)}.
 	 * @param suche Der Such-String
 	 * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
 	 */

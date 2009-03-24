@@ -1,13 +1,16 @@
 /*
  * Datei:
- * $Id: ObjektChronoPanel.java,v 1.1 2008-06-05 11:38:39 u633d Exp $
+ * $Id: ObjektChronoPanel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
  * 
  * Erstellt am 07.10.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:39  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.5  2006/09/25 12:27:50  u633d
- * Wäscherei funzt
+ * WÃ¤scherei funzt
  *
  * Revision 1.4  2006/09/11 06:40:51  u633d
  * Objektchronologie PDF ist erstellbar
@@ -16,7 +19,7 @@
  * kleine Ergaenzungen
  *
  * Revision 1.2  2006/05/23 05:29:42  u633d
- * Objektchronologie für alle Objekte verfügbar gemacht
+ * Objektchronologie fÃ¼r alle Objekte verfÃ¼gbar gemacht
  *
  * Revision 1.1  2005/10/13 13:00:27  u633d
  * Version vom 13.10.
@@ -84,7 +87,7 @@ public class ObjektChronoPanel extends JPanel {
 	private JButton reportListeButton;
 	
 	/**
-	 * Erzeugt das Vaws-Panel für das ObjektBearbeiten-Modul.
+	 * Erzeugt das Vaws-Panel fÃ¼r das ObjektBearbeiten-Modul.
 	 * @param hauptModul Das ObjektBearbeiten-Hauptmodul.
 	 */
 	public ObjektChronoPanel(ObjektBearbeiten hauptModul) {
@@ -118,7 +121,7 @@ public class ObjektChronoPanel extends JPanel {
 		private BasisObjekt obj;
 
 		/**
-		 * Erzeugt ein einfaches TableModel für die Chronologie.
+		 * Erzeugt ein einfaches TableModel fÃ¼r die Chronologie.
 		 * @param obj
 		 */
 		public ChronoModel() {
@@ -161,7 +164,7 @@ public class ObjektChronoPanel extends JPanel {
 				}
 				break;
 			case 1:
-				// Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+				// Auf 255 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
 				if (tmp.length() > 255) {
 					tmp = tmp.substring(0,255);
 				}
@@ -229,8 +232,8 @@ public class ObjektChronoPanel extends JPanel {
 		}
 
 		/* 
-		 * Leer, da kein Updaten der Liste nötig/möglich.
-		 * Die Liste wird direkt mittels setList "befüllt".
+		 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
+		 * Die Liste wird direkt mittels setList "befÃ¼llt".
 		 */
 		public void updateList() {
 		}
@@ -244,10 +247,10 @@ public class ObjektChronoPanel extends JPanel {
 		return name;
 	}
 	
-	// Funktionalität:
+	// FunktionalitÃ¤t:
 	
 	/**
-	 * Holt die Liste mit Fachdatensätzen aus der Datenbank.
+	 * Holt die Liste mit FachdatensÃ¤tzen aus der Datenbank.
 	 */
 	public void fetchFormData() {
 		chronoModel.setList(
@@ -262,7 +265,7 @@ public class ObjektChronoPanel extends JPanel {
 	}
 	
 	/**
-	 * Speichert die Objekt-Chronologie-Einträge und löscht gelöschte Datensätze
+	 * Speichert die Objekt-Chronologie-EintrÃ¤ge und lÃ¶scht gelÃ¶schte DatensÃ¤tze
 	 * aus der Datenbank. 
 	 */
 
@@ -288,7 +291,7 @@ public class ObjektChronoPanel extends JPanel {
 		
 		if (objektid != null && betreiber != null && standort != null && art != null)
 		{
-			AUIKataster.debugOutput("Starte Objekt-Chronologie Report für ObjektId = " + objektid);
+			AUIKataster.debugOutput("Starte Objekt-Chronologie Report fÃ¼r ObjektId = " + objektid);
 			ReportManager.getInstance().startReportWorker("Objekt-Chronologie", objektid, betreiber, standort, art, reportListeButton);
 		}
 		else
@@ -298,15 +301,15 @@ public class ObjektChronoPanel extends JPanel {
 	}
 	
 	/**
-	 * Liefert die Action um einen Datensatz zu löschen.
+	 * Liefert die Action um einen Datensatz zu lÃ¶schen.
 	 */
 	private Action getChronoItemLoeschAction() {
 		if (chronoItemLoeschAction == null) {
-			chronoItemLoeschAction = new AbstractAction("Eintrag löschen") {
+			chronoItemLoeschAction = new AbstractAction("Eintrag lÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getChronoTable().getSelectedRow();
 					
-					// Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
+					// NatÃ¼rlich nur, wenn wirklich eine Zeile ausgewÃ¤hlt ist
 					if (row != -1) {
 						chronoModel.removeRow(row);
 					}
@@ -337,7 +340,7 @@ public class ObjektChronoPanel extends JPanel {
 	}
 	
 	/**
-	 * Zeigt ein Kontextmenü an, wenn ein entsprechendes 
+	 * Zeigt ein KontextmenÃ¼ an, wenn ein entsprechendes 
 	 * MouseEvent vorliegt.
 	 * @param e Das MouseEvent.
 	 */

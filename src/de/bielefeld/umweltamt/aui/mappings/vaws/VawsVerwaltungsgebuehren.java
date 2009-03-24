@@ -44,7 +44,7 @@ public class VawsVerwaltungsgebuehren
     /* Add customized code below */
 
     /**
-     * Liefert alle Verwaltungsgebühren-Einträge zu einem bestimmten 
+     * Liefert alle VerwaltungsgebÃ¼hren-EintrÃ¤ge zu einem bestimmten 
      * VawsFachdatensatz.
      * @param fachdaten Der Fachdatensatz.
      * @return Eine Liste mit VawsVerwaltungsgebuehren-Objekten.
@@ -66,7 +66,7 @@ public class VawsVerwaltungsgebuehren
 						.setEntity(0, fachdaten)
 						.list();
 
-				AUIKataster.debugOutput(gebuehren.size() + " Gebühren-Einträge für FD " + fachdaten + " gefunden!", "VawsVerwaltungsgebuehren");
+				AUIKataster.debugOutput(gebuehren.size() + " GebÃ¼hren-EintrÃ¤ge fÃ¼r FD " + fachdaten + " gefunden!", "VawsVerwaltungsgebuehren");
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler", e);
 			} finally {
@@ -78,7 +78,7 @@ public class VawsVerwaltungsgebuehren
     }
 	
 	/**
-	 * Speichert einen VAWS-Verwaltungsgebühren-Eintrag in der Datenbank.
+	 * Speichert einen VAWS-VerwaltungsgebÃ¼hren-Eintrag in der Datenbank.
 	 * @param gebuehr Der zu speichernde Datensatz.
 	 * @return <code>true</code>, falls beim Speichern kein Fehler auftritt, sonst <code>false</code>.
 	 */
@@ -109,12 +109,12 @@ public class VawsVerwaltungsgebuehren
 		return saved;
     }
     
-    // TODO: Typische DB-Operationen (Löschen...) kapseln, evtl. Vererbung
+    // TODO: Typische DB-Operationen (LÃ¶schen...) kapseln, evtl. Vererbung
     
     /**
-     * Löscht einen vorhandenen Datensatz aus der Datenbank.
-     * @param gebuehr Der Datensatz, der gelöscht werden soll.
-     * @return <code>true</code>, wenn der Datensatz gelöscht wurde oder 
+     * LÃ¶scht einen vorhandenen Datensatz aus der Datenbank.
+     * @param gebuehr Der Datensatz, der gelÃ¶scht werden soll.
+     * @return <code>true</code>, wenn der Datensatz gelÃ¶scht wurde oder 
      * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Datensatz 
      * nicht in der Datenbank existiert).
      */

@@ -34,8 +34,8 @@ public class VawsGefaehrdungsstufen
     }
     
     /**
-     * Liefer alle VAWS-Gefährdungsstufen.
-     * @return Ein Array mit den Namen aller Gefährdungsstufen.
+     * Liefer alle VAWS-GefÃ¤hrdungsstufen.
+     * @return Ein Array mit den Namen aller GefÃ¤hrdungsstufen.
      */
     public static String[] getVbfeinstufungen() {
 		List list;

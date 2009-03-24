@@ -17,7 +17,7 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
  * Eine Klasse, die eine Zeile der 'BASIS_BETREIBER'-Tabelle 
- * repräsentiert.
+ * reprÃ¤sentiert.
  */
 public class BasisBetreiber
     extends AbstractBasisBetreiber
@@ -63,7 +63,7 @@ public class BasisBetreiber
 	
 	/**
 	 * Liefert einen Betreiber mit einer bestimmten ID.
-	 * @param id Die ID (der Primärschlüssel) des Betreibers.
+	 * @param id Die ID (der PrimÃ¤rschlÃ¼ssel) des Betreibers.
 	 * @return Den gesuchten Betreiber oder <code>null</code>, 
 	 * falls kein Betreiber mit dieser ID existiert.
 	 */
@@ -85,9 +85,9 @@ public class BasisBetreiber
 	 * festgelegt, welche Eigenschaft (im Endeffekt also welche 
 	 * Tabellen-Spalte) der Betreiber nach dem Suchwort durchsucht wird.
 	 * Wenn <code>property</code> <code>null</code> ist, werden alle drei
-	 * möglichen Spalten (Name, Anrede und Namens-Zusatz) durchsucht.
-	 * Beim Suchwort wird Groß-/Kleinschreibung ignoriert und automatisch ein
-	 * '%' angehängt.
+	 * mÃ¶glichen Spalten (Name, Anrede und Namens-Zusatz) durchsucht.
+	 * Beim Suchwort wird GroÃŸ-/Kleinschreibung ignoriert und automatisch ein
+	 * '%' angehÃ¤ngt.
 	 * @param suche Wonach soll gesucht werden?
 	 * @param property PROPERTY_NAME, PROPERTY_ANREDE, PROPERTY_ZUSATZ oder <code>null</code> um in allen dreien zu suchen.
 	 * @return Eine Liste mit allen gefundenen Betreibern.
@@ -160,10 +160,10 @@ public class BasisBetreiber
 			// Neue Session beginnen
 			Session session = HibernateSessionFactory.currentSession();
 			
-			// Alle Änderungen in einer Transaktion zusammenfassen
+			// Alle Ã„nderungen in einer Transaktion zusammenfassen
 			tx = session.beginTransaction();
 			
-			// Speichern / Transaktion durchführen
+			// Speichern / Transaktion durchfÃ¼hren
 			betrRet = (BasisBetreiber) session.merge(betr);
 			tx.commit();
 			
@@ -171,17 +171,17 @@ public class BasisBetreiber
 		} catch (HibernateException e) {
 			betrRet = null;
 			e.printStackTrace();
-			// Falls während der Änderungen ein Hibernate Fehler auftritt
+			// Falls wÃ¤hrend der Ã„nderungen ein Hibernate Fehler auftritt
 			if (tx != null) {
 				try {
-					// Alle Änderungen rückgängig machen
+					// Alle Ã„nderungen rÃ¼ckgÃ¤ngig machen
 					tx.rollback();
 				} catch (HibernateException e1) {
 					throw new RuntimeException("Datenbank-Fehler (BasisBetreiber)", e);
 				}
 			}
 		} finally {
-			// Am Ende (egal ob erfolgreich oder nicht) die Session schließen
+			// Am Ende (egal ob erfolgreich oder nicht) die Session schlieÃŸen
 			HibernateSessionFactory.closeSession();
 		}
 		
@@ -189,9 +189,9 @@ public class BasisBetreiber
     }
     
     /**
-     * Löscht einen vorhandenen Betreiber aus der Datenbank.
-     * @param betreiber Der Betreiber, der gelöscht werden soll.
-     * @return <code>true</code>, wenn der Betreiber gelöscht wurde oder 
+     * LÃ¶scht einen vorhandenen Betreiber aus der Datenbank.
+     * @param betreiber Der Betreiber, der gelÃ¶scht werden soll.
+     * @return <code>true</code>, wenn der Betreiber gelÃ¶scht wurde oder 
      * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Betreiber 
      * nicht in der Datenbank existiert).
      */

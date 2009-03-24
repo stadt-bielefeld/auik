@@ -1,16 +1,19 @@
 /*
  * Datei:
- * $Id: ReportManager.java,v 1.2 2008-06-24 11:24:07 u633d Exp $
+ * $Id: ReportManager.java,v 1.3 2009-03-24 12:35:19 u633d Exp $
  *
  * Erstellt am 18.10.2005 von David Klotz
  *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/06/24 11:24:07  u633d
+ * Version 0.3
+ *
  * Revision 1.1  2008/06/05 11:38:40  u633d
  * Start AUIK auf Informix und Postgresql
  *
  * Revision 1.3  2006/11/08 10:10:05  u633d
- * Die Bilder von Sielhaut PDFs werden nun über die Haltungsnummer aufgeloest
+ * Die Bilder von Sielhaut PDFs werden nun Ã¼ber die Haltungsnummer aufgeloest
  *
  * Revision 1.2  2006/09/11 06:40:50  u633d
  * Objektchronologie PDF ist erstellbar
@@ -24,11 +27,11 @@
  * Revision 1.1.4.3  2006/09/06 06:45:07  u633d
  * Sielhautpunkte funktionieren als PDF
  * VAwS-Listen auch
- * für VAwS-Anlagen muss ich nur noch das Java schreiben
+ * fÃ¼r VAwS-Anlagen muss ich nur noch das Java schreiben
  *
  * Revision 1.1.4.2  2006/08/29 08:27:54  u633d
- * Der Kataster unterstützt jetzt bei den Sielhaut Punkten den Aufruf eines Reports ohne HashMap,
- * allerdings muss noch die unterstützung für die VaWS Anlagen und Reports für die Objektchronologie erstellt werden!
+ * Der Kataster unterstÃ¼tzt jetzt bei den Sielhaut Punkten den Aufruf eines Reports ohne HashMap,
+ * allerdings muss noch die unterstÃ¼tzung fÃ¼r die VaWS Anlagen und Reports fÃ¼r die Objektchronologie erstellt werden!
  *
  * Revision 1.1.4.1  2006/08/16 10:06:48  u633d
  * neues sielhaut rptdesign
@@ -94,7 +97,7 @@ public class ReportManager {
 		try {
 			pdfFile = File.createTempFile(Name, ".pdf");
 		} catch (IOException e) {
-			throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+			throw new RuntimeException("Konnte temporÃ¤re PDF-Datei nicht speichern!", e);
 		}
 		pdfFile.deleteOnExit();
 
@@ -108,7 +111,7 @@ public class ReportManager {
 		try {
 			pdfFile = File.createTempFile(Name + Id, ".pdf");
 		} catch (IOException e) {
-			throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+			throw new RuntimeException("Konnte temporÃ¤re PDF-Datei nicht speichern!", e);
 		}
 		pdfFile.deleteOnExit();
 
@@ -122,7 +125,7 @@ public class ReportManager {
 		try {
 			pdfFile = File.createTempFile(Name + ObjektId, ".pdf");
 		} catch (IOException e) {
-			throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+			throw new RuntimeException("Konnte temporÃ¤re PDF-Datei nicht speichern!", e);
 		}
 		pdfFile.deleteOnExit();
 
@@ -136,7 +139,7 @@ public class ReportManager {
 		try {
 			pdfFile = File.createTempFile(Name + BehaelterId, ".pdf");
 		} catch (IOException e) {
-			throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+			throw new RuntimeException("Konnte temporÃ¤re PDF-Datei nicht speichern!", e);
 		}
 		pdfFile.deleteOnExit();
 
@@ -295,13 +298,13 @@ public class ReportManager {
 		
 		//run the report and destroy the engine
 		//Note - If the program stays resident do not shutdown the Platform or the Engine
-		//Den Report endgültig erzeugen
+		//Den Report endgÃ¼ltig erzeugen
 		try {
 			task.run();
 
 			shutdownBirt();
 		} catch (EngineException e1) {
-			throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+			throw new RuntimeException("Fehler beim DurchfÃ¼hren des BIRT-Reports!", e1);
 		}
 	}
 	
@@ -356,13 +359,13 @@ public class ReportManager {
 		
 		//run the report and destroy the engine
 		//Note - If the program stays resident do not shutdown the Platform or the Engine
-		//Den Report endgültig erzeugen
+		//Den Report endgÃ¼ltig erzeugen
 		try {
 			task.run();
 
 			shutdownBirt();
 		} catch (EngineException e1) {
-			throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+			throw new RuntimeException("Fehler beim DurchfÃ¼hren des BIRT-Reports!", e1);
 		}
 	}
 	
@@ -430,13 +433,13 @@ public class ReportManager {
 //		Runtime.getRuntime().gc();
 		//run the report and destroy the engine
 		//Note - If the program stays resident do not shutdown the Platform or the Engine
-		//Den Report endgültig erzeugen
+		//Den Report endgÃ¼ltig erzeugen
 		try {
 			task.run();
 
 			shutdownBirt();
 		} catch (EngineException e1) {
-			throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+			throw new RuntimeException("Fehler beim DurchfÃ¼hren des BIRT-Reports!", e1);
 		}
 	}
 	
@@ -503,13 +506,13 @@ public class ReportManager {
 //		Runtime.getRuntime().gc();
 		//run the report and destroy the engine
 		//Note - If the program stays resident do not shutdown the Platform or the Engine
-		//Den Report endgültig erzeugen
+		//Den Report endgÃ¼ltig erzeugen
 		try {
 			task.run();
 
 			shutdownBirt();
 		} catch (EngineException e1) {
-			throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+			throw new RuntimeException("Fehler beim DurchfÃ¼hren des BIRT-Reports!", e1);
 		}
 	}
 	
@@ -550,9 +553,9 @@ public class ReportManager {
 	public void shutdownBirt() {
 		// Wenn die Engine noch existiert, wird sie geschlossen.
 		if (engine != null) {
-//			AUIKataster.debugOutput("Engine zerstören:");
+//			AUIKataster.debugOutput("Engine zerstÃ¶ren:");
 			engine.destroy();
-			AUIKataster.debugOutput("Engine zerstört!");
+			AUIKataster.debugOutput("Engine zerstÃ¶rt!");
 		}
 
 		// Alle Referenzen auf null, damit der GC seine Arbeit machen kann.

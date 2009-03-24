@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AbstractBaseEditor.java,v 1.1 2008-06-05 11:38:41 u633d Exp $
+ * $Id: AbstractBaseEditor.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 07.06.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:41  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.7  2005/11/02 13:52:40  u633d
  * - Version vom 2.11.
  *
@@ -19,13 +22,13 @@
  * - Version vom 7.9.05
  *
  * Revision 1.3  2005/06/09 09:16:07  u633z
- * - setEditedObject hinzugefügt
+ * - setEditedObject hinzugefÃ¼gt
  *
  * Revision 1.2  2005/06/08 08:36:15  u633z
  * - Kommentare verbessert
  *
  * Revision 1.1  2005/06/08 06:46:15  u633z
- * - Neuer Basisklasse für Editoren
+ * - Neuer Basisklasse fÃ¼r Editoren
  *
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
@@ -36,7 +39,7 @@ import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
 
 /**
- * Die Grundlage für verschiedene Editoren.
+ * Die Grundlage fÃ¼r verschiedene Editoren.
  * @author David Klotz
  */
 public abstract class AbstractBaseEditor extends OkCancelDialog {
@@ -65,11 +68,11 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
 			int x = manager.getSettingsManager().getIntSetting("auik.prefs.size_x.dialog_" + getEditedClassName());
 			int y = manager.getSettingsManager().getIntSetting("auik.prefs.size_y.dialog_" + getEditedClassName());
 			
-			// Sicherheit einerseits für bisher ungespeicherte Dialoge,
+			// Sicherheit einerseits fÃ¼r bisher ungespeicherte Dialoge,
 			// andererseits damit man das Fenster nie zu klein macht.
 			if (x > 10 && y > 10) {
-				AUIKataster.debugOutput("Setze Größe auf " + x + "x" + y, "Editor");
-				// Ändere die Größe dieses Dialogs.
+				AUIKataster.debugOutput("Setze GrÃ¶ÃŸe auf " + x + "x" + y, "Editor");
+				// Ã„ndere die GrÃ¶ÃŸe dieses Dialogs.
 				this.setSize(x, y);
 			}
 		}
@@ -77,7 +80,7 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
 	
 	/**
 	 * Liefert eine Kurzform des Klassennamens der bearbeiteten Klasse. 
-	 * Ab Java 1.5 können wir das auch einfacher mit Class.getSimpleName() haben.
+	 * Ab Java 1.5 kÃ¶nnen wir das auch einfacher mit Class.getSimpleName() haben.
 	 * @return Der Klassenname der bearbeiteten Klasse, ohne Package.
 	 */
 	protected String getEditedClassName() {
@@ -92,7 +95,7 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
 	}
 	
 	/**
-	 * Speichert die Größe dieses Dialogs in den Properties.
+	 * Speichert die GrÃ¶ÃŸe dieses Dialogs in den Properties.
 	 */
 	private void saveDialogSize() {
 		if (manager.getSettingsManager().getBoolSetting("auik.prefs.save_size")) {
@@ -123,7 +126,7 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
 			
 			saveDialogSize();
 			
-			// Hier natürlich nicht die close() dieser Klasse aufrufen, da dort wieder saved=false gesetzt wird etc.
+			// Hier natÃ¼rlich nicht die close() dieser Klasse aufrufen, da dort wieder saved=false gesetzt wird etc.
 			super.close();
 		}
 	}
@@ -156,7 +159,7 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
 	}
 	
 	/**
-	 * Überprüft, ob das bearbeitete Objekt gespeichert wurde.
+	 * ÃœberprÃ¼ft, ob das bearbeitete Objekt gespeichert wurde.
 	 * @return <code>true</code>, wenn das Objekt erfolgreich gespeichert wurde, sonst <code>false</code>.
 	 */
 	public boolean wasSaved() {
@@ -166,13 +169,13 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
 	// Abstrakter Teil:
 	
 	/**
-	 * Füllt das Formular mit Daten aus dem bearbeiteten Objekt.
+	 * FÃ¼llt das Formular mit Daten aus dem bearbeiteten Objekt.
 	 */
 	protected abstract void fillForm();
 	
 	/**
-	 * Überprüft, ob gespeichert werden kann/darf.
-	 * @return <code>true</code>, wenn alle nötigen Eingaben da sind, also gespeichert werden kann. Sonst <code>false</code>.
+	 * ÃœberprÃ¼ft, ob gespeichert werden kann/darf.
+	 * @return <code>true</code>, wenn alle nÃ¶tigen Eingaben da sind, also gespeichert werden kann. Sonst <code>false</code>.
 	 */
 	protected abstract boolean canSave();
 	

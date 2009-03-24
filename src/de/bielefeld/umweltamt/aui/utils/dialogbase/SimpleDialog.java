@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SimpleDialog.java,v 1.1 2008-06-05 11:38:41 u633d Exp $
+ * $Id: SimpleDialog.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 06.06.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:41  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.5  2005/11/02 13:56:54  u633d
  * - Version vom 2.11.
  *
@@ -16,10 +19,10 @@
  * - Version vom 7.9.05
  *
  * Revision 1.2  2005/06/08 06:46:15  u633z
- * - Neuer Basisklasse für Editoren
+ * - Neuer Basisklasse fÃ¼r Editoren
  *
  * Revision 1.1  2005/06/06 15:30:13  u633z
- * - Neue Basis-Klassen für einfache Dialoge (werden mal die Grundlage für einfachere Editoren sein)
+ * - Neue Basis-Klassen fÃ¼r einfache Dialoge (werden mal die Grundlage fÃ¼r einfachere Editoren sein)
  *
  */
 package de.bielefeld.umweltamt.aui.utils.dialogbase;
@@ -40,7 +43,7 @@ import com.jgoodies.forms.factories.ButtonBarFactory;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 
 /**
- * Eine Grundlage für einen einfachen Dialog mit einem oder zwei Buttons.
+ * Eine Grundlage fÃ¼r einen einfachen Dialog mit einem oder zwei Buttons.
  * @author David Klotz
  */
 public abstract class SimpleDialog extends JDialog {
@@ -91,7 +94,7 @@ public abstract class SimpleDialog extends JDialog {
 		this.setLocationRelativeTo(frame);
 	}
 	
-	// super.close() aufrufen, falls diese Methode überschrieben wird!
+	// super.close() aufrufen, falls diese Methode Ã¼berschrieben wird!
 	public void close() {
 		dispose();
 	}

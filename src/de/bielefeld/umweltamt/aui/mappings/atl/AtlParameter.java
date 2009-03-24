@@ -77,11 +77,11 @@ public class AtlParameter
 	final public static String DEFAULT_ID = BLEI_ID;
 	
 	/**
-	 * Die Map für die beim Import unterstützten Parameter.
-	 * Sie enthält eine Zuordnung von Element- oder 
+	 * Die Map fÃ¼r die beim Import unterstÃ¼tzten Parameter.
+	 * Sie enthÃ¤lt eine Zuordnung von Element- oder 
 	 * Parameternamen zu den jeweiligen Ordnungsbegriffen der 
 	 * Parameter-Tabelle.
-	 * Sie wird in initMap() gefüllt.
+	 * Sie wird in initMap() gefÃ¼llt.
 	 */
 	private static Map sParams = null;
 	
@@ -115,9 +115,9 @@ public class AtlParameter
 	}
 	
 	/**
-	 * Liefert den Ordnungsbegriff für einen Parameter.
+	 * Liefert den Ordnungsbegriff fÃ¼r einen Parameter.
 	 * @param name Die chemische Kurzbezeichnung des Elements oder der Parameter-Name (bspw. "Cu" oder "Kupfer").
-	 * @return Den Ordnungsbegriff des Parameters oder <code>null</code>, falls der Parameter nicht unterstützt wird.
+	 * @return Den Ordnungsbegriff des Parameters oder <code>null</code>, falls der Parameter nicht unterstÃ¼tzt wird.
 	 */
 	public static String getOrdnungsbegriff(String name) {
 		initMap();
@@ -125,8 +125,8 @@ public class AtlParameter
 	}
 	
 	/**
-	 * Initialisiert die Map für die beim Import unterstützten 
-	 * Parameter. Sie enthält eine Zuordnung von Element- oder 
+	 * Initialisiert die Map fÃ¼r die beim Import unterstÃ¼tzten 
+	 * Parameter. Sie enthÃ¤lt eine Zuordnung von Element- oder 
 	 * Parameternamen zu den jeweiligen Ordnungsbegriffen der 
 	 * Parameter-Tabelle.
 	 */
@@ -173,7 +173,7 @@ public class AtlParameter
 	}
 	
 	/**
-	 * Überprüft ob ein entsprechender Parameter importierbar ist.
+	 * Ã¼berprÃ¼ft ob ein entsprechender Parameter importierbar ist.
 	 * @param name Die chemische Kurzbezeichnung des Elements oder der Parameter-Name
 	 * @return <code>true</code>, wenn ein entsprechender Parameter bekannt ist, sonst <code>false</code>.
 	 */
@@ -207,9 +207,9 @@ public class AtlParameter
 	}
 	
 	/*
-	 * Liefert alle Parameter, die für Klärschlamm-Probenahmen relevant sind.
-	 * D.h. alle, deren Klärschlamm-Grenzwert nicht <code>NULL</code> ist.
-	 * @return Ein Array mit allen für Klärschlamm-Probenahmen relevanten Parametern
+	 * Liefert alle Parameter, die fÃ¼r KlÃ¤rschlamm-Probenahmen relevant sind.
+	 * D.h. alle, deren KlÃ¤rschlamm-Grenzwert nicht <code>NULL</code> ist.
+	 * @return Ein Array mit allen fÃ¼r KlÃ¤rschlamm-Probenahmen relevanten Parametern
 	 * @throws HibernateException
 	 */
 	/*public static List getKlaerschlammParameter() throws HibernateException {
@@ -227,9 +227,9 @@ public class AtlParameter
 	}*/
 	
 	/*
-	 * Liefert alle Parameter, die für Sielhaut-Probenahmen relevant sind.
+	 * Liefert alle Parameter, die fÃ¼r Sielhaut-Probenahmen relevant sind.
 	 * D.h. alle, deren Sielhaut-Grenzwert nicht <code>NULL</code> ist.
-	 * @return Ein Array mit allen für Sielhaut-Probenahmen relevanten Parametern
+	 * @return Ein Array mit allen fÃ¼r Sielhaut-Probenahmen relevanten Parametern
 	 * @throws HibernateException
 	 */
 	/*public static List getSielhautParameter() throws HibernateException {
@@ -247,10 +247,10 @@ public class AtlParameter
 	}*/
 	
 	/**
-	 * Liefert alle Parameter, die für Probenahmen relevant sind.
-	 * D.h. alle, deren Sielhaut- oder Klärschlamm-Grenzwert nicht 
+	 * Liefert alle Parameter, die fÃ¼r Probenahmen relevant sind.
+	 * D.h. alle, deren Sielhaut- oder KlÃ¤rschlamm-Grenzwert nicht 
 	 * <code>NULL</code> ist.
-	 * @return Ein Array mit allen für Probenahmen relevanten Parametern
+	 * @return Ein Array mit allen fÃ¼r Probenahmen relevanten Parametern
 	 */
 	public static AtlParameter[] getRelevanteParameter() {
 		AtlParameter[] tmp = null;

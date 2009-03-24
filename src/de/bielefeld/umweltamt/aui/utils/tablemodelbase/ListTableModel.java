@@ -24,11 +24,11 @@ public abstract class ListTableModel extends BasicTableModel {
 		this(columns, updateAtInit, false);
 	}
 	/**
-	 * Erzeugt eine neue TableModel-Grundlage, bei der auch Zeilen gelöscht
-	 * werden können.
+	 * Erzeugt eine neue TableModel-Grundlage, bei der auch Zeilen gelÃ¶scht
+	 * werden kÃ¶nnen.
 	 * @param columns Ein String-Array mit den Namen der Spalten der Tabelle
 	 * @param updateAtInit Soll die Liste gleich geupdatet werden?
-	 * @param removeAllowed Dürfen Zeilen gelöscht werden?
+	 * @param removeAllowed DÃ¼rfen Zeilen gelÃ¶scht werden?
 	 */
 	public ListTableModel(String[] columns, boolean updateAtInit, boolean removeAllowed) {
 		super(columns);
@@ -48,7 +48,7 @@ public abstract class ListTableModel extends BasicTableModel {
 	/**
 	 * Erzeugt eine neue TableModel-Grundlage mit einer gegebenen Liste.
 	 * @param columns Ein String-Array mit den Namen der Spalten der Tabelle
-	 * @param liste Die anfängliche Liste
+	 * @param liste Die anfÃ¤ngliche Liste
 	 */
 	public ListTableModel(String[] columns, List liste, boolean removeAllowed) {
 		super(columns);
@@ -103,7 +103,7 @@ public abstract class ListTableModel extends BasicTableModel {
 	}
 	
 	/**
-	 * Überprüft, ob eine bestimmte Zeile noch innerhalb der bestehenden 
+	 * Ã¼berprÃ¼ft, ob eine bestimmte Zeile noch innerhalb der bestehenden 
 	 * Liste liegt.
 	 * @param rowIndex Die Zeile
 	 * @return <code>true</code>, wenn rowIndex > 0 und < Liste.size() ist, sonst <code>false</code>
@@ -117,11 +117,11 @@ public abstract class ListTableModel extends BasicTableModel {
 	}
 	
 	/**
-	 * Löscht eine Zeile der Tabelle, falls das erlaubt und implementiert ist. 
+	 * LÃ¶scht eine Zeile der Tabelle, falls das erlaubt und implementiert ist. 
 	 * @param rowIndex Die Zeile
-	 * @return <code>true</code>, wenn wirklich gelöscht wurde,
-	 * <code>false</code>, falls dabei ein Fehler auftrat oder es aus anderen Gründen
-	 * nicht möglich war
+	 * @return <code>true</code>, wenn wirklich gelÃ¶scht wurde,
+	 * <code>false</code>, falls dabei ein Fehler auftrat oder es aus anderen GrÃ¼nden
+	 * nicht mÃ¶glich war
 	 */
 	public boolean removeRow(int rowIndex) {
 		boolean wasRemoved = false;
@@ -153,24 +153,24 @@ public abstract class ListTableModel extends BasicTableModel {
 	}
 	
 	/**
-	 * Wird aufgerufen, wenn <code>objectAtRow</code> aus der Tabelle gelöscht wurde.
-	 * Wenn in einem abgeleiteten TableModel Zeilen gelöscht werden können sollen,
-	 * sollte diese Methode überschrieben werden und das entsprechende Objekt auch 
-	 * in der zu Grunde liegenden Datenbank o.ä. gelöscht werden.
+	 * Wird aufgerufen, wenn <code>objectAtRow</code> aus der Tabelle gelÃ¶scht wurde.
+	 * Wenn in einem abgeleiteten TableModel Zeilen gelÃ¶scht werden kÃ¶nnen sollen,
+	 * sollte diese Methode Ã¼berschrieben werden und das entsprechende Objekt auch 
+	 * in der zu Grunde liegenden Datenbank o.Ã„. gelÃ¶scht werden.
 	 * @param objectAtRow Das entfernte Objekt
-	 * @return <code>true</code>, wenn wirklich gelöscht wurde,
-	 * <code>false</code>, falls dabei ein Fehler auftrat oder es aus anderen Gründen
-	 * nicht möglich war.
+	 * @return <code>true</code>, wenn wirklich gelÃ¶scht wurde,
+	 * <code>false</code>, falls dabei ein Fehler auftrat oder es aus anderen GrÃ¼nden
+	 * nicht mÃ¶glich war.
 	 */
 	public boolean objectRemoved(Object objectAtRow) {
 		return false;
 	}
 	
 	/**
-	 * Füllt die Liste mit (neuem) Inhalt. 
-	 * Beim implementieren unbedingt überprüfen, ob die Liste 
+	 * FÃ¼llt die Liste mit (neuem) Inhalt. 
+	 * Beim implementieren unbedingt Ã¼berprÃ¼fen, ob die Liste 
 	 * <code>null</code> ist und entsprechende Events feuern,
-	 * wenn sich der Inhalt der Tabelle geändert hat. 
+	 * wenn sich der Inhalt der Tabelle geÃ¤ndert hat. 
 	 * Falls beim Updaten der Liste aus einer anderen Datenquelle
 	 * (bspw. einer Datenbank) ein Fehler auftritt, sollte eine
 	 * entsprechende Exception geworfen werden.

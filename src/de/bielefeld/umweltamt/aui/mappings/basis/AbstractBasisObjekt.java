@@ -37,6 +37,24 @@ public abstract class AbstractBasisObjekt
     
     /** The value of the simple beschreibung property. */
     private java.lang.String beschreibung;
+    
+    /** The value of the simple beschreibung property. */
+    private java.lang.String sachbearbeiter;
+
+    /** The value of the simple revidatum property. */
+    private java.util.Date wiedervorlage;
+
+    /** The value of the simple revidatum property. */
+    private java.util.Date erfassungsdatum;
+
+    /** The value of the simple revidatum property. */
+    private java.util.Date gueltig_von;
+
+    /** The value of the simple revidatum property. */
+    private java.util.Date aenderungsdatum;
+
+    /** The value of the simple revidatum property. */
+    private java.util.Date gueltig_bis;
 
     /**
      * Simple constructor of AbstractBasisObjekt instances.
@@ -148,6 +166,23 @@ public abstract class AbstractBasisObjekt
      * Return the value of the BESCHREIBUNG column.
      * @return java.lang.String
      */
+    public java.lang.String getSachbearbeiter()
+    {
+        return this.sachbearbeiter;
+    }
+
+    /**
+     * Set the value of the BESCHREIBUNG column.
+     * @param beschreibung
+     */
+    public void setSachbearbeiter(java.lang.String sachbearbeiter)
+    {
+        this.sachbearbeiter = sachbearbeiter;
+    }
+    /**
+     * Return the value of the BESCHREIBUNG column.
+     * @return java.lang.String
+     */
     public java.lang.String getBeschreibung()
     {
         return this.beschreibung;
@@ -160,6 +195,96 @@ public abstract class AbstractBasisObjekt
     public void setBeschreibung(java.lang.String beschreibung)
     {
         this.beschreibung = beschreibung;
+    }
+
+    /**
+     * Return the value of the wiedervorlage column.
+     * @return java.util.Date
+     */
+    public java.util.Date getWiedervorlage()
+    {
+        return this.wiedervorlage;
+    }
+
+    /**
+     * Set the value of the wiedervorlage column.
+     * @param revidatum
+     */
+    public void setWiedervorlage(java.util.Date wiedervorlage)
+    {
+        this.wiedervorlage = wiedervorlage;
+    }
+
+    /**
+     * Return the value of the erfassungsdatum column.
+     * @return java.util.Date
+     */
+    public java.util.Date getErfassungsdatum()
+    {
+        return this.erfassungsdatum;
+    }
+
+    /**
+     * Set the value of the erfassungsdatum column.
+     * @param revidatum
+     */
+    public void setErfassungsdatum(java.util.Date erfassungsdatum)
+    {
+        this.erfassungsdatum = erfassungsdatum;
+    }
+
+    /**
+     * Return the value of the gueltig_von column.
+     * @return java.util.Date
+     */
+    public java.util.Date getGueltigVon()
+    {
+        return this.gueltig_von;
+    }
+
+    /**
+     * Set the value of the gueltig_von column.
+     * @param revidatum
+     */
+    public void setGueltigVon(java.util.Date gueltig_von)
+    {
+        this.gueltig_von = gueltig_von;
+    }
+
+    /**
+     * Return the value of the aenderungsdatum column.
+     * @return java.util.Date
+     */
+    public java.util.Date getAenderungsdatum()
+    {
+        return this.aenderungsdatum;
+    }
+
+    /**
+     * Set the value of the aenderungsdatum column.
+     * @param revidatum
+     */
+    public void setAenderungsdatum(java.util.Date aenderungsdatum)
+    {
+        this.aenderungsdatum = aenderungsdatum;
+    }
+
+    /**
+     * Return the value of the gueltig_bis column.
+     * @return java.util.Date
+     */
+    public java.util.Date getGueltigBis()
+    {
+        return this.gueltig_bis;
+    }
+
+    /**
+     * Set the value of the gueltig_bis column.
+     * @param revidatum
+     */
+    public void setGueltigBis(java.util.Date gueltig_bis)
+    {
+        this.gueltig_bis = gueltig_bis;
     }
     /**
      * Implementation of the equals comparison on the basis of equality of the primary key values.

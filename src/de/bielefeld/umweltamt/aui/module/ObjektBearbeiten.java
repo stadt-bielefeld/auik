@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBearbeiten.java,v 1.1 2008-06-05 11:38:32 u633d Exp $
+ * $Id: ObjektBearbeiten.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 15.02.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.43  2006/10/17 09:00:36  u633d
  * Anhang 52
  *
@@ -13,7 +16,7 @@
  * Big Font
  *
  * Revision 1.41  2006/09/25 12:27:50  u633d
- * Wäscherei funzt
+ * WÃ¤scherei funzt
  *
  * Revision 1.40  2006/09/20 10:03:12  u633d
  * *** empty log message ***
@@ -22,7 +25,7 @@
  * *** empty log message ***
  *
  * Revision 1.38  2006/05/23 05:29:41  u633d
- * Objektchronologie für alle Objekte verfügbar gemacht
+ * Objektchronologie fÃ¼r alle Objekte verfÃ¼gbar gemacht
  *
  * Revision 1.37  2005/10/13 13:00:26  u633d
  * Version vom 13.10.
@@ -40,7 +43,7 @@
  * Suev und Anh 40 Panels
  *
  * Revision 1.32  2005/06/09 15:27:03  u633z
- * - (CVS-)Header hinzugefügt
+ * - (CVS-)Header hinzugefÃ¼gt
  *
  */
 package de.bielefeld.umweltamt.aui.module;
@@ -79,8 +82,10 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh56Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektBWKPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektBasisPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektChronoPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektGenehmigungPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektProbepunktPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektSuevPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektUebergabePanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.VawsPanel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
@@ -89,7 +94,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * @author David Klotz
  */
 public class ObjektBearbeiten extends AbstractModul {
-	// Widgets für Registerbereich
+	// Widgets fÃ¼r Registerbereich
 	private JPanel topPanel;
 	private JTabbedPane tabbedPane;
 	private JLabel headerLabel;
@@ -108,6 +113,8 @@ public class ObjektBearbeiten extends AbstractModul {
 	private ObjektAnh56Panel anhang56Tab;
 	private ObjektAnh52Panel anhang52Tab;
 	private ObjektChronoPanel chronoTab;
+	private ObjektUebergabePanel uebergabeTab;
+	private ObjektGenehmigungPanel genehmigungTab;
 	private VawsPanel vawsTab;
 	
 	// Daten
@@ -293,6 +300,20 @@ public class ObjektBearbeiten extends AbstractModul {
 		return chronoTab;
 	}
 	
+	public ObjektUebergabePanel getUebergabeTab() {
+		if (uebergabeTab == null) {
+			uebergabeTab = new ObjektUebergabePanel(this);
+		}
+		return uebergabeTab;
+	}
+	
+	public ObjektGenehmigungPanel getGenehmigungTab() {
+		if (genehmigungTab == null) {
+			genehmigungTab = new ObjektGenehmigungPanel(this);
+		}
+		return genehmigungTab;
+	}
+	
 	public VawsPanel getVawsTab() {
 		if (vawsTab == null) {
 			vawsTab = new VawsPanel(this);
@@ -348,7 +369,7 @@ public class ObjektBearbeiten extends AbstractModul {
 			protected void doNonUILogic() throws RuntimeException {
 				getBasisTab().fetchFormData();
 				
-				// Daten für verschiedene Objektarten holen
+				// Daten fÃ¼r verschiedene Objektarten holen
 				if (objekt.getBasisObjektarten() != null) {
 					if (objekt.getBasisObjektarten().isProbepunkt()) {
 						getChronoTab().fetchFormData();
@@ -379,6 +400,12 @@ public class ObjektBearbeiten extends AbstractModul {
 					} else if (objekt.getBasisObjektarten().isAnh52()) {
 						getChronoTab().fetchFormData();
 						getAnh52Tab().fetchFormData();
+					} else if (objekt.getBasisObjektarten().isUebergabestelle()) {
+						getChronoTab().fetchFormData();
+						getUebergabeTab().fetchFormData();
+					} else if (objekt.getBasisObjektarten().isGenehmigung()) {
+						getChronoTab().fetchFormData();
+						getGenehmigungTab().fetchFormData();
 					} else if (objekt.getBasisObjektarten().abteilungIs34()) {
 						getChronoTab().fetchFormData();
 						getVawsTab().fetchFormData();
@@ -467,6 +494,18 @@ public class ObjektBearbeiten extends AbstractModul {
 							getChronoTab().updateForm();
 							getAnh52Tab().updateForm();
 							getTabbedPane().setSelectedComponent(getAnh52Tab());
+						} else if (objekt.getBasisObjektarten().isUebergabestelle()) {
+							getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+							getTabbedPane().addTab(getUebergabeTab().getName(), getUebergabeTab());
+							getChronoTab().updateForm();
+							getUebergabeTab().updateForm();
+							getTabbedPane().setSelectedComponent(getUebergabeTab());
+						} else if (objekt.getBasisObjektarten().isGenehmigung()) {
+							getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+							getTabbedPane().addTab(getGenehmigungTab().getName(), getGenehmigungTab());
+							getChronoTab().updateForm();
+							getGenehmigungTab().updateForm();
+							getTabbedPane().setSelectedComponent(getGenehmigungTab());
 						} else if (objekt.getBasisObjektarten().abteilungIs34()) {
 							getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
 							getTabbedPane().addTab(getVawsTab().getName(), getVawsTab());
@@ -509,6 +548,10 @@ public class ObjektBearbeiten extends AbstractModul {
 				getAnh40Tab().clearForm();
 			} else if (objekt.getBasisObjektarten().isAnh55()) {
 				getAnh55Tab().clearForm();
+			} else if (objekt.getBasisObjektarten().isUebergabestelle()) {
+				getUebergabeTab().clearForm();
+			} else if (objekt.getBasisObjektarten().isGenehmigung()) {
+				getGenehmigungTab().clearForm();
 			} else if (objekt.getBasisObjektarten().isAnh56()) {
 				getAnh56Tab().clearForm();
 			} else if (objekt.getBasisObjektarten().isAnh52()) {
@@ -542,6 +585,10 @@ public class ObjektBearbeiten extends AbstractModul {
 				getAnh56Tab().enableAll(enabled);
 			} else if (objekt.getBasisObjektarten().isAnh52()) {
 				getAnh52Tab().enableAll(enabled);
+			} else if (objekt.getBasisObjektarten().isUebergabestelle()) {
+				getUebergabeTab().enableAll(enabled);
+			} else if (objekt.getBasisObjektarten().isGenehmigung()) {
+				getGenehmigungTab().enableAll(enabled);
 			}
 		}
 	}
@@ -554,7 +601,7 @@ public class ObjektBearbeiten extends AbstractModul {
 	 * der einen kompletten Rollback der Speicher-Transaktion erfordert.
 	 */
 	public void completeObjekt() {
-		// TODO: Fachdaten beim Objektart-Wechsel löschen?
+		// TODO: Fachdaten beim Objektart-Wechsel lÃ¶schen?
 		if (objekt.getBasisObjektarten() != null) {
 			// Verschiedene Fachdaten bei neuem Objekt neu anlegen
 			if (objekt.getBasisObjektarten().isProbepunkt()) {
@@ -575,6 +622,10 @@ public class ObjektBearbeiten extends AbstractModul {
 				getAnh56Tab().completeObjekt();
 			} else if (objekt.getBasisObjektarten().isAnh52()) {
 				getAnh52Tab().completeObjekt();
+			} else if (objekt.getBasisObjektarten().isUebergabestelle()) {
+				getUebergabeTab().completeObjekt();
+			} else if (objekt.getBasisObjektarten().isGenehmigung()) {
+				getGenehmigungTab().completeObjekt();
 			}
 		}
 	}

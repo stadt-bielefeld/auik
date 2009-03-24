@@ -34,8 +34,8 @@ public class VawsFluessigkeit
 	}
 
     /**
-     * Liefer alle VAWS-Flüssigkeiten.
-     * @return Ein Array mit allen Flüssigkeiten.
+     * Liefer alle VAWS-FlÃ¼ssigkeiten.
+     * @return Ein Array mit allen FlÃ¼ssigkeiten.
      */
     public static String[] getFluessigkeiten() {
 		List list;

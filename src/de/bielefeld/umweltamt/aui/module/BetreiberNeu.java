@@ -1,13 +1,16 @@
 /*
  * Datei:
- * $Id: BetreiberNeu.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Id: BetreiberNeu.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:33  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.11  2005/06/09 15:27:03  u633z
- * - (CVS-)Header hinzugefügt
+ * - (CVS-)Header hinzugefÃ¼gt
  *
  */
 package de.bielefeld.umweltamt.aui.module;
@@ -176,7 +179,7 @@ public class BetreiberNeu extends AbstractModul {
 				}
 			});
 			
-			// Ermögliche TAB aus dem Bemerkungs-Feld zu springen
+			// ErmÃ¶gliche TAB aus dem Bemerkungs-Feld zu springen
 			bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
 			bemerkungsScroller.getHorizontalScrollBar().setFocusable(false);
 			TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
@@ -231,8 +234,8 @@ public class BetreiberNeu extends AbstractModul {
 			
 			// Adresse --------------------------------------
 			builder.addSeparator("Adresse", cc.xyw(1,11,10));
-			// Straße
-			builder.addLabel("Straße:",	cc.xy( 1,13));
+			// StraÃŸe
+			builder.addLabel("StraÃŸe:",	cc.xy( 1,13));
 			builder.add(strassenBox, 	cc.xyw(3,13,4));
 			builder.add(hausnrFeld, 	cc.xy( 8,13));
 			builder.add(hausnrZusFeld, 	cc.xy(10,13));
@@ -297,7 +300,7 @@ public class BetreiberNeu extends AbstractModul {
 	 * @throws HibernateException Wenn beim Speichern ein Fehler auftritt
 	 */
 	private void doSave() {
-		// Eingaben überprüfen:
+		// Eingaben Ã¼berprÃ¼fen:
 		// Der Name darf nicht leer sein
 		if (namenFeld.getText().equals("")) {
 			namenLabel.setForeground(HauptFrame.ERROR_COLOR);
@@ -342,14 +345,14 @@ public class BetreiberNeu extends AbstractModul {
 			} else {
 				betrn.setBetrnamezus(nameZusatz);
 			}
-			// Straße
+			// StraÃŸe
 			String stra = (String) strassenBox.getSelectedItem();
 			if (stra != null) {
 				stra = stra.trim();
 				
 				// Weil ich bis jetzt noch keine LimitedComboBox oder so habe...
 				if (stra.length() > 50) {
-					// ... kürze ich hier den String auf 50 Zeichen
+					// ... kÃ¼rze ich hier den String auf 50 Zeichen
 					stra = stra.substring(0, 50);
 				}
 				
@@ -457,10 +460,10 @@ public class BetreiberNeu extends AbstractModul {
 				if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt")) {
 					manager.getSettingsManager().setSetting("auik.imc.use_betreiber", betrn.getBetreiberid().intValue(), false);
 					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt");
-					// ... kehren wir direkt dorthin zurück:
+					// ... kehren wir direkt dorthin zurÃ¼ck:
 					manager.switchModul("m_objekt_bearbeiten");
 				} else {
-					// Sonst einfach das Formular zurücksetzen
+					// Sonst einfach das Formular zurÃ¼cksetzen
 					clearForm();
 				}
 			} else {
@@ -472,7 +475,7 @@ public class BetreiberNeu extends AbstractModul {
 	
 	private void clearForm() {
 		setAllEnabled(false);
-		//frame.changeStatus("Beschäftigt...");
+		//frame.changeStatus("BeschÃ¤ftigt...");
 
 		SwingWorkerVariant worker = new SwingWorkerVariant(anredeFeld) {
 			
@@ -520,7 +523,7 @@ public class BetreiberNeu extends AbstractModul {
 				
 				setAllEnabled(true);
 				//frame.clearStatus();
-				AUIKataster.debugOutput("Formular zurückgesetzt", getIdentifier()+".clearForm");
+				AUIKataster.debugOutput("Formular zurÃ¼ckgesetzt", getIdentifier()+".clearForm");
 			}
 		};
 		worker.start();
@@ -558,22 +561,22 @@ public class BetreiberNeu extends AbstractModul {
 	}
 	
 	/**
-	 * Ein Listener für die Events des "Neuer Betreiber"-Moduls.
+	 * Ein Listener fÃ¼r die Events des "Neuer Betreiber"-Moduls.
 	 * @author David Klotz
 	 */
 	private final class BetreiberNeuListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == speichernButton) {
-				AUIKataster.debugOutput("Speichern gedrückt!", BetreiberNeu.this.getIdentifier());
+				AUIKataster.debugOutput("Speichern gedrÃ¼ckt!", BetreiberNeu.this.getIdentifier());
 				doSave();
 			} /*else if (e.getSource() == strassenBox) {
-				// Wenn wir eine Straße auswählen, wird die PLZ upgedatet
+				// Wenn wir eine StraÃŸe auswÃ¤hlen, wird die PLZ upgedatet
 				String straStr = (String) strassenBox.getSelectedItem();
 				
 				if (straStr != null) {
 					BasisStrassen stra = BasisStrassen.getStrasseByName(straStr);
-					// Natürlich nur, wenn die Straße eine eindeutige PLZ hat
+					// NatÃ¼rlich nur, wenn die StraÃŸe eine eindeutige PLZ hat
 					if (stra.getPlz() != null) {
 						plzFeld.setText(stra.getPlz().toString());
 					} else {

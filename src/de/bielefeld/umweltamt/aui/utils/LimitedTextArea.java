@@ -8,7 +8,7 @@ import javax.swing.text.AbstractDocument;
 
 /**
  * Eine JTextArea, in die nur eine begrenzte Anzahl von Zeichen
- * eingegeben werden können.
+ * eingegeben werden kÃ¶nnen.
  * @author David Klotz
  */
 public class LimitedTextArea extends JTextArea {

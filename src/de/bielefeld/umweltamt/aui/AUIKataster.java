@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AUIKataster.java,v 1.2 2008-06-24 11:24:07 u633d Exp $
+ * $Id: AUIKataster.java,v 1.3 2009-03-24 12:35:19 u633d Exp $
  * 
  * Erstellt am 07.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/06/24 11:24:07  u633d
+ * Version 0.3
+ *
  * Revision 1.1  2008/06/05 11:38:40  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -19,7 +22,7 @@
  * Version 0.2
  *
  * Revision 1.18  2005/05/25 15:41:49  u633z
- * - Header hinzugefügt
+ * - Header hinzugefÃ¼gt
  *
  */
 package de.bielefeld.umweltamt.aui;
@@ -77,11 +80,11 @@ public class AUIKataster {
 		if (runningFrame != null) {
 			runningFrame.changeStatus("Ein Datenbank-Fehler ist aufgetreten!", HauptFrame.ERROR_COLOR);
 			if (fatal) {
-				JOptionPane.showMessageDialog(runningFrame, "Es ist keine Verbindung mit der Datenbank möglich!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(runningFrame, "Es ist keine Verbindung mit der Datenbank mÃ¶glich!", "Fehler", JOptionPane.ERROR_MESSAGE);
 				runningFrame.close();
 			}
 		} else if (fatal) {
-			JOptionPane.showMessageDialog(null, "Es ist keine Verbindung mit der Datenbank möglich!", "Fehler", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Es ist keine Verbindung mit der Datenbank mÃ¶glich!", "Fehler", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		throw new RuntimeException(errMsg + " ("+src+")", e);

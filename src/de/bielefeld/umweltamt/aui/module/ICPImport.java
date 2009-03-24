@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ICPImport.java,v 1.1 2008-06-05 11:38:32 u633d Exp $
+ * $Id: ICPImport.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 01.03.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.16  2005/07/06 09:36:42  u633z
  * - Import verbessert
  *
@@ -13,7 +16,7 @@
  * - TableModel-Grundlagen in eigenes Package verschoben
  *
  * Revision 1.14  2005/05/30 15:41:50  u633z
- * - jsddevelop.jar entfernt, ¸berfl¸ssig, da StringFunc.explode() durch String.split() ersetzt.
+ * - jsddevelop.jar entfernt, √ºberfl√ºssig, da StringFunc.explode() durch String.split() ersetzt.
  *
  * Revision 1.13  2005/05/25 15:45:25  u633z
  * - Messagebox-Methoden des Hauptframes umbenannt
@@ -22,14 +25,14 @@
  * Datenbank-Zugriff in DB-Klassen ausgelagert
  *
  * Revision 1.11  2005/05/12 14:04:44  u633z
- * Datei-÷ffnen Dialog anzeigen generalisiert und
+ * Datei-√∂ffnen Dialog anzeigen generalisiert und
  * in das HauptFrame ausgelagert.
  *
  * Revision 1.10  2005/05/11 09:14:33  u633z
  * *** empty log message ***
  *
  * Revision 1.9  2005/05/11 09:13:09  u633z
- * Positionen mit Flags werden jetzt standardm‰ﬂig nicht ausgew‰hlt
+ * Positionen mit Flags werden jetzt standardm√§√üig nicht ausgew√§hlt
  * 
  */
 package de.bielefeld.umweltamt.aui.module;
@@ -134,7 +137,7 @@ public class ICPImport extends AbstractModul {
 				}
 				String[] tmp = line.split("	");
 				if (!(tmp.length == 18 || tmp.length == 15)) {
-					throw new IOException("Datei ist besch‰digt!");
+					throw new IOException("Datei ist besch√§digt!");
 				}
 				//System.out.println(count + ": " + line);
 				
@@ -282,7 +285,7 @@ public class ICPImport extends AbstractModul {
 				try {
 					updateList();
 				} catch (Exception e) {
-					frame.showErrorMessage("<html>Konnte Datei nicht ˆffnen: <br>"+e.getLocalizedMessage()+"</html>");
+					frame.showErrorMessage("<html>Konnte Datei nicht √∂ffnen: <br>"+e.getLocalizedMessage()+"</html>");
 					switchToStep(1);
 					return;
 				}
@@ -290,10 +293,10 @@ public class ICPImport extends AbstractModul {
 					switchToStep(2);
 					selectAllImportableRows();
 				} else {
-					frame.showInfoMessage("Die Datei enth‰lt keine importierbaren Analysepositionen!", "ICP-Import");
+					frame.showInfoMessage("Die Datei enth√§lt keine importierbaren Analysepositionen!", "ICP-Import");
 				}
 			} else {
-				frame.showErrorMessage("Konnte die angegebene Datei nicht ˆffnen!", "Fehler beim ÷ffnen");
+				frame.showErrorMessage("Konnte die angegebene Datei nicht √∂ffnen!", "Fehler beim √ñffnen");
 			}
 		}
 		
@@ -318,16 +321,16 @@ public class ICPImport extends AbstractModul {
 						// Probenahme
 						AtlProbenahmen probe = AtlProbenahmen.getProbenahme(kennumer, true);
 						if (probe == null) {
-							// Sollte eigentlich nicht vorkommen, nˆtig?
+							// Sollte eigentlich nicht vorkommen, n√∂tig?
 							throw new Exception("Probenahme nicht gefunden!");
 						}
 						probe.addAnalyseposition(pos);
 						
 						// Wert
-						Double wert = new Double(wertAusZeile(current));
+						Float wert = new Float(wertAusZeile(current));
 						  // Negative Werte auf 0 setzen:
-						if (wert.doubleValue() < 0.0) {
-							wert = new Double(0.0);
+						if (wert.floatValue() < 0.0) {
+							wert = new Float(0.0);
 							pos.setGrkl("<");
 						}
 						pos.setWert(wert);
@@ -353,8 +356,8 @@ public class ICPImport extends AbstractModul {
 								problemMessage += "Unbekannter Parameter: "+ sParam;
 							}
 						} else {
-							// Sollte eigentlich auch nicht vorkommen, nˆtig?
-							throw new Exception("Importdatei besch‰digt!");
+							// Sollte eigentlich auch nicht vorkommen, n√∂tig?
+							throw new Exception("Importdatei besc√§digt!");
 						}
 						
 						// Einheit
@@ -364,16 +367,16 @@ public class ICPImport extends AbstractModul {
 						if (sEinheit.equals("mg/L")) {
 							if (probe.isKlaerschlammProbe()) {
 								Float einwaage = probe.getEinwaage();
-								AUIKataster.debugOutput("Kl‰rschlamm-Umrechnung nˆtig, Einwaage: " + einwaage);
+								AUIKataster.debugOutput("Kl√§rschlamm-Umrechnung n√∂tig, Einwaage: " + einwaage);
 								if (einwaage != null) {
 									BigDecimal rundWert = new BigDecimal((wert.doubleValue() * 100) / einwaage.doubleValue());
 									rundWert = rundWert.setScale(1, BigDecimal.ROUND_UP);
-									pos.setWert(new Double(rundWert.doubleValue()));
+									pos.setWert(new Float(rundWert.floatValue()));
 									einheit = AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID);
-									AUIKataster.debugOutput("Kl‰rschlamm-Umrechnung: (" + wert + " mg/L * 100) / "+einwaage+" = " + pos.getWert() + " mg/KG");
+									AUIKataster.debugOutput("Kl√§rschlamm-Umrechnung: (" + wert + " mg/L * 100) / "+einwaage+" = " + pos.getWert() + " mg/KG");
 								}
 							} else {
-								AUIKataster.debugOutput("Keine Kl‰rschlamm-Umrechnung nˆtig.");
+								AUIKataster.debugOutput("Keine Kl√§rschlamm-Umrechnung n√∂tig.");
 								einheit = AtlEinheiten.getEinheit(AtlEinheiten.MG_L_ID);
 							}
 						}
@@ -417,7 +420,7 @@ public class ICPImport extends AbstractModul {
 					}
 				}
 				
-				frame.changeStatus(importCount + " Datens‰tze importiert!");
+				frame.changeStatus(importCount + " Datens√§tze importiert!");
 				switchToStep(1);
 				if (!problemMessage.equals("")) {
 					throw new Exception(problemMessage);
@@ -553,8 +556,8 @@ public class ICPImport extends AbstractModul {
 
 	private JButton getDateiButton() {
 		if (dateiButton == null) {
-			dateiButton = new JButton("Datei w‰hlen");
-			dateiButton.setToolTipText("W‰hlt eine Datei zum Importieren aus");
+			dateiButton = new JButton("Datei w√§hlen");
+			dateiButton.setToolTipText("W√§hlt eine Datei zum Importieren aus");
 			dateiButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					File file = frame.openFile(new String[]{"txt"});
@@ -578,7 +581,7 @@ public class ICPImport extends AbstractModul {
 	private JButton getImportButton() {
 		if (importButton == null) {
 			importButton = new JButton("Importieren");
-			importButton.setToolTipText("Importiert die gew‰hlten Analysepositionen");
+			importButton.setToolTipText("Importiert die gew√§hlten Analysepositionen");
 			importButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
@@ -596,8 +599,8 @@ public class ICPImport extends AbstractModul {
 	private JLabel getErklaerungsLabel() {
 		if (erklaerungsLabel == null) {
 			String sErklaerung = "<html>" +
-					"<font color=green>Gr¸n:</font> Position kann problemlos importiert werden.<br>" +
-					"<font color=#ff8200>Orange:</font> Wert auﬂerhalb des kalibrierten Bereichs oder KS-Einwaage nicht festgelegt.<br>" +	// Kl‰rschlamm-Probenahme existiert, aber die Einwaage ist nicht festgelegt
+					"<font color=green>Gr√ºn:</font> Position kann problemlos importiert werden.<br>" +
+					"<font color=#ff8200>Orange:</font> Wert a√üerhalb des kalibrierten Bereichs oder KS-Einwaage nicht festgelegt.<br>" +	// Kl√§rschlamm-Probenahme existiert, aber die Einwaage ist nicht festgelegt
 					"<font color=red>Rot:</font> Probenahme nicht gefunden oder Parameter unbekannt.</html>";
 			erklaerungsLabel = new JLabel(sErklaerung);
 		}
@@ -610,10 +613,10 @@ public class ICPImport extends AbstractModul {
 				fileImporter = new FileImporter();
 			}
 			importTabelle = new JTable(fileImporter);
-			// Wir wollen wissen, wenn eine andere Zeile ausgew‰hlt wurde
+			// Wir wollen wissen, wenn eine andere Zeile ausgew√§hlt wurde
 			importTabelle.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				public void valueChanged(ListSelectionEvent e) {
-					// ‹berz‰hlige Events ignorieren
+					// √ºberz√§hlige Events ignorieren
 					if (e.getValueIsAdjusting()) {
 						return;
 					}

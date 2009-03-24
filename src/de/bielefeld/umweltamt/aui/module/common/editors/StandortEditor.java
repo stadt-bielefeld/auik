@@ -38,7 +38,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * @author David Klotz
  */
 public class StandortEditor extends AbstractBaseEditor {
-	// F¸r die Comboboxen beim Bearbeiten
+	// F√ºr die Comboboxen beim Bearbeiten
 	private static String[] strassen = null;
 	private static BasisGemarkung[] gemarkungen = null;
 	private static VawsStandortgghwsg[] standortggs = null;
@@ -86,7 +86,7 @@ public class StandortEditor extends AbstractBaseEditor {
 		datumFeld = new JTextField();
 		datumFeld.setEditable(false);
 		datumFeld.setFocusable(false);
-		datumFeld.setToolTipText("Wird bei ƒnderungen automatisch aktualisiert.");
+		datumFeld.setToolTipText("Wird bei √Ñnderungen automatisch aktualisiert.");
 		
 		handzeichenLabel = new JLabel("Handzeichen:");
 		handzeichenAltFeld = new JTextField();
@@ -94,7 +94,7 @@ public class StandortEditor extends AbstractBaseEditor {
 		handzeichenAltFeld.setFocusable(false);
 		handzeichenAltFeld.setToolTipText("Handzeichen der letzten Revision");
 		handzeichenNeuFeld = new LimitedTextField(10);
-		handzeichenNeuFeld.setToolTipText("Neues Handzeichen bei ƒnderungen obligatorisch!");
+		handzeichenNeuFeld.setToolTipText("Neues Handzeichen bei √Ñnderungen obligatorisch!");
 		
 		gemarkungBox = new JComboBox();
 		standortGgBox = new JComboBox();
@@ -170,7 +170,7 @@ public class StandortEditor extends AbstractBaseEditor {
 		
 		// Adresse
 		builder.addSeparator("Stammdaten", 	cc.xyw( 1, 1, 9));
-		builder.addLabel("Straﬂe:",			cc.xy(  1, 3 ));
+		builder.addLabel("Stra√üe:",			cc.xy(  1, 3 ));
 		builder.add(strassenBox,			cc.xyw( 3, 3 , 3 ));
 		builder.add(hausnrEditFeld,			cc.xy(  7, 3 ));
 		builder.add(hausnrZusFeld,			cc.xy(  9, 3 ));
@@ -186,13 +186,13 @@ public class StandortEditor extends AbstractBaseEditor {
 		// 
 		builder.addLabel("Gemarkung:",		cc.xy(  1, 11 ));
 		builder.add(gemarkungBox,			cc.xyw( 3, 11, 3 ));
-		builder.addLabel("Entw‰sserungsgebiet:",	cc.xy(  1, 13 ));
+		builder.addLabel("Entw√§sserungsgebiet:",	cc.xy(  1, 13 ));
 		builder.add(entwGebBox,				cc.xyw( 3, 13, 3 ));
 		
 		// Flur
 		builder.addLabel("Flur:",			cc.xy(  1, 15 ));
 		builder.add(flurFeld,				cc.xy(  3, 15 ));
-		builder.addLabel("Flurst¸ck:",		cc.xy(  1, 17 ));
+		builder.addLabel("Flurst√ºck:",		cc.xy(  1, 17 ));
 		builder.add(flurStkFeld,			cc.xy(  3, 17 ));
 		
 		// VAWS
@@ -220,16 +220,16 @@ public class StandortEditor extends AbstractBaseEditor {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == strassenBox) {
 					if (plzFeld.getText().equals("") || strassenCounter > 0) {
-						// Wenn wir eine Straﬂe ausw‰hlen, wird die PLZ upgedatet.
+						// Wenn wir eine Stra√üe ausw√§hlen, wird die PLZ upgedatet.
 						BasisStrassen stra = BasisStrassen.getStrasseByName((String) strassenBox.getSelectedItem());
 						if (stra != null) {
 							if (stra.getPlz() != null) {
 								frame.clearStatus();
 								plzFeld.setText(stra.getPlz().toString());
-								//AUIKataster.debugOutput("Die Straﬂe '"+stra+"' hat die eindeutige PLZ: " + stra.getPlz(), "strassenBox.focusLost("+e.getActionCommand()+", Nr: "+strassenCounter+")");
+								//AUIKataster.debugOutput("Die Stra√üe '"+stra+"' hat die eindeutige PLZ: " + stra.getPlz(), "strassenBox.focusLost("+e.getActionCommand()+", Nr: "+strassenCounter+")");
 							} else {
-								frame.changeStatus("Die Straﬂe '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
-								//AUIKataster.debugOutput("Die Straﬂe '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!", "strassenBox.focusLost("+e.getActionCommand()+", Nr: "+strassenCounter+")");
+								frame.changeStatus("Die Stra√üe '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
+								//AUIKataster.debugOutput("Die Stra√üe '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!", "strassenBox.focusLost("+e.getActionCommand()+", Nr: "+strassenCounter+")");
 								plzFeld.setText("");
 							}
 						}
@@ -243,7 +243,7 @@ public class StandortEditor extends AbstractBaseEditor {
 	}
 	
 	protected void fillForm() {
-		frame.changeStatus("Besch‰ftigt...");
+		frame.changeStatus("Besch√§ftigt...");
 		
 		SwingWorkerVariant worker = new SwingWorkerVariant(this) {
 			
@@ -313,7 +313,7 @@ public class StandortEditor extends AbstractBaseEditor {
 	}
 	
 	protected boolean canSave() {
-		// Eingaben ¸berpr¸fen:
+		// Eingaben √ºberpr√ºfen:
 		// Das Handzeichen darf nicht leer sein
 		if (handzeichenNeuFeld.getText() == null || handzeichenNeuFeld.getText().equals("")) {
 			handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
@@ -330,7 +330,7 @@ public class StandortEditor extends AbstractBaseEditor {
 	 * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
 	 */
 	protected boolean doSave() {
-		// Straﬂe:
+		// Stra√üe:
 		String stra = (String) strassenBox.getSelectedItem(); 
 		getStandort().setStrasse(stra);
 		
@@ -360,10 +360,10 @@ public class StandortEditor extends AbstractBaseEditor {
 		VawsStandortgghwsg stgg = (VawsStandortgghwsg) standortGgBox.getSelectedItem(); 
 		getStandort().setVawsStandortgghwsg(stgg);
 		
-		// Entw‰sserungsgebiet
+		// Entw√§sserungsgebiet
 		String entgb = (String) entwGebBox.getSelectedItem();
 		
-		// Nˆtig, weil getSelectedItem bei editierbarer ComboBox auch NULL liefern kann
+		// N√∂tig, weil getSelectedItem bei editierbarer ComboBox auch NULL liefern kann
 		if (entgb != null) {
 			entgb = entgb.trim();
 		}
@@ -415,7 +415,7 @@ public class StandortEditor extends AbstractBaseEditor {
 		BasisStandort bsta = BasisStandort.saveStandort(getStandort());
 		if (bsta != null) {
 			setEditedObject(bsta);
-			AUIKataster.debugOutput("ƒnderungen gespeichert!", "editStandort");
+			AUIKataster.debugOutput("√Ñnderungen gespeichert!", "editStandort");
 			return true;
 		} else {
 			return false;

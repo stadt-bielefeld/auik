@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh49AnalysenPanel.java,v 1.1 2008-06-05 11:38:39 u633d Exp $
+ * $Id: Anh49AnalysenPanel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
  * 
  * Erstellt am 01.06.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:39  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.11  2005/09/07 10:48:23  u633d
  * - Version vom 7.9.05
  *
@@ -14,13 +17,13 @@
  *
  * Revision 1.9  2005/06/10 11:06:52  u633z
  * - Datenbank-Zugriffe komplett in DB-Klassen ausgelagert
- * - Einige DB-Klassen vervollständigt
+ * - Einige DB-Klassen vervollstÃ¤ndigt
  *
  * Revision 1.8  2005/06/09 14:38:00  u633d
  * - Anhang 49 Pflegearbeiten
  *
  * Revision 1.7  2005/06/09 13:40:19  u633z
- * - Ortstermin-Tabelle auf SelectTable umgestellt (bzw. für diese überflüssiges entfernt)
+ * - Ortstermin-Tabelle auf SelectTable umgestellt (bzw. fÃ¼r diese Ã¼berflÃ¼ssiges entfernt)
  *
  * Revision 1.6  2005/06/09 06:01:25  u633d
  * Delete von Tabellenzeilen fast fertig
@@ -32,13 +35,13 @@
  * Abscheider Editor angefangen
  *
  * Revision 1.3  2005/06/03 11:04:42  u633z
- * - Schönheitsfehler...
+ * - SchÃ¶nheitsfehler...
  *
  * Revision 1.2  2005/06/01 15:15:14  u633z
  * - TableModel-Grundlagen in eigenes Package verschoben
  *
  * Revision 1.1  2005/06/01 12:36:55  u633d
- * Anhang 49 Analysentab ergänzt
+ * Anhang 49 Analysentab ergÃ¤nzt
  *
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
@@ -81,7 +84,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  */
 public class Anh49AnalysenPanel extends JPanel{
 	/**
-	 * Ein TableModel für eine Tabelle mit Analysen.
+	 * Ein TableModel fÃ¼r eine Tabelle mit Analysen.
 	 * @author Gerhard Genuit 
 	 */
 	
@@ -193,7 +196,7 @@ public class Anh49AnalysenPanel extends JPanel{
 				break;
 			case 1:
 				String tmpInst = (String)newValue;
-				// Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+				// Auf 50 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
 				if (tmpInst.length() > 50) {
 					tmpInst = tmpInst.substring(0,50);
 				}
@@ -201,7 +204,7 @@ public class Anh49AnalysenPanel extends JPanel{
 				break;
 			case 2:
 				String tmpCsb = (String)newValue;
-				// Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+				// Auf 50 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
 				if (tmpCsb.length() > 50) {
 					tmpCsb = tmpCsb.substring(0,50);
 				}
@@ -209,7 +212,7 @@ public class Anh49AnalysenPanel extends JPanel{
 				break;
 			case 3:
 				String tmpPh = (String)newValue;
-				// Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+				// Auf 50 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
 				if (tmpPh.length() > 50) {
 					tmpPh = tmpPh.substring(0,50);
 				}
@@ -217,7 +220,7 @@ public class Anh49AnalysenPanel extends JPanel{
 				break;
 			case 4:
 				String tmpKw = (String)newValue;
-				// Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+				// Auf 50 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
 				if (tmpKw.length() > 50) {
 					tmpKw = tmpKw.substring(0,50);
 				}
@@ -225,7 +228,7 @@ public class Anh49AnalysenPanel extends JPanel{
 				break;
 			case 5:
 				String tmpZn = (String)newValue;
-				// Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+				// Auf 50 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
 				if (tmpZn.length() > 50) {
 					tmpZn = tmpZn.substring(0,50);
 				}
@@ -233,7 +236,7 @@ public class Anh49AnalysenPanel extends JPanel{
 				break;
 			case 6:
 				String tmpBSB = (String)newValue;
-				// Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+				// Auf 50 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
 				if (tmpBSB.length() > 50) {
 					tmpBSB = tmpBSB.substring(0,50);
 				}
@@ -241,7 +244,7 @@ public class Anh49AnalysenPanel extends JPanel{
 				break;
 			case 7:
 				String tmpBik = (String)newValue;
-				// Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+				// Auf 50 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
 				if (tmpBik.length() > 50) {
 					tmpBik = tmpBik.substring(0,50);
 				}
@@ -249,7 +252,7 @@ public class Anh49AnalysenPanel extends JPanel{
 				break;
 			case 8:
 				String tmpBem = (String) newValue;
-				// Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+				// Auf 255 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
 				if (tmpBem.length() > 255) {
 					tmpBem = tmpBem.substring(0,255);
 				}
@@ -314,7 +317,7 @@ public class Anh49AnalysenPanel extends JPanel{
 		if (analysenTabelle == null) {
 			analysenTabelle = new SelectTable(analysenModel);
 			
-			// Wenn die Spaltengröße sich verändert, verändert sich nur die Nachbarspalte mit
+			// Wenn die SpaltengrÃ¶ÃŸe sich verÃ¤ndert, verÃ¤ndert sich nur die Nachbarspalte mit
 			analysenTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 
 	        KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false);
@@ -325,12 +328,12 @@ public class Anh49AnalysenPanel extends JPanel{
 					if (row != -1 && analysenTabelle.getEditingRow() == -1) {
 						Anh49Analysen analyse = analysenModel.getRow(row);
 						
-						if (hauptModul.getFrame().showQuestion("Soll die Analyse "+ analyse.getAnalysenid() +" wirklich inkl. aller untersuchten Parameter gelöscht werden?", "Löschen bestätigen")) {
+						if (hauptModul.getFrame().showQuestion("Soll die Analyse "+ analyse.getAnalysenid() +" wirklich inkl. aller untersuchten Parameter gelÃ¶scht werden?", "LÃ¶schen bestÃ¤tigen")) {
 							analysenModel.removeRow(row);
-							AUIKataster.debugOutput("Analyse " + analyse.getAnalysenid() + " wurde gelöscht!");
+							AUIKataster.debugOutput("Analyse " + analyse.getAnalysenid() + " wurde gelÃ¶scht!");
 						}
 						else {
-							AUIKataster.debugOutput("Löschen von " + analyse.getAnalysenid() + " wurde abgebrochen!");
+							AUIKataster.debugOutput("LÃ¶schen von " + analyse.getAnalysenid() + " wurde abgebrochen!");
 						}
 					}
 				}
@@ -338,7 +341,7 @@ public class Anh49AnalysenPanel extends JPanel{
 			analysenTabelle.getActionMap().put("DEL", anaRemoveAction);
 			
 			
-			// Die Größen der Spalten werden angepasst
+			// Die GrÃ¶ÃŸen der Spalten werden angepasst
 			TableColumn column = null;
 			for (int i = 0; i < analysenTabelle.getColumnCount(); i++) {
 				column = analysenTabelle.getColumnModel().getColumn(i);
@@ -385,7 +388,7 @@ public class Anh49AnalysenPanel extends JPanel{
 	}
 	
 	public void clearForm() {
-		// Hier füllen wir das Analysen-TableModel mit einer leeren Liste
+		// Hier fÃ¼llen wir das Analysen-TableModel mit einer leeren Liste
 		analysenModel.setList(new ArrayList());
 	}
 	

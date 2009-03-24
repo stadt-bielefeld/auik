@@ -79,13 +79,13 @@ public class VawsAbscheider
 		
 		if (tmp.size() > 0) {
 			abscheider = (VawsAbscheider) tmp.get(0);
-			AUIKataster.debugOutput("Fläche '" + abscheider + "' geladen!", "VawsAbscheider.getAbscheider()");
+			AUIKataster.debugOutput("FlÃ¤che '" + abscheider + "' geladen!", "VawsAbscheider.getAbscheider()");
 		} else {
 			// Bei so ziemlich 95% aller Tankstellen gibts ein VawsFachdaten-
 			// Objekt, aber kein VawsAbscheidern-Objekt.
 			// Seems like it's not a bug, it's a feature...
 			
-			// Also legen wir in diesen Fällen einfach ein neues
+			// Also legen wir in diesen FÃ¼llen einfach ein neues
 			// VawsAbscheidern-Objekt an.
 			
 			// Das selbe tun wir bei einem noch ungespeicherten
@@ -93,14 +93,14 @@ public class VawsAbscheider
 			
 			abscheider = new VawsAbscheider();
 			abscheider.setVawsFachdaten(fachdaten);
-			AUIKataster.debugOutput("Neuer Abscheider für '" + fachdaten + "' erzeugt!", "VawsAbscheider.getAbscheider()");
+			AUIKataster.debugOutput("Neuer Abscheider fÃ¼r '" + fachdaten + "' erzeugt!", "VawsAbscheider.getAbscheider()");
 		}
     	
     	return abscheider;
     }
     
 	/**
-	 * Speichert einen VAWS-Abfüllflächen-Datensatz in der Datenbank.
+	 * Speichert einen VAWS-AbfÃ¼llflÃ¤chen-Datensatz in der Datenbank.
 	 * @param flaeche Der zu speichernde Datensatz.
 	 * @return <code>true</code>, falls beim Speichern kein Fehler auftritt, sonst <code>false</code>.
 	 */
@@ -136,13 +136,13 @@ public class VawsAbscheider
     }
     
 //    /**
-//     * Liefert alle Bodenflächen-Ausführungen. 
+//     * Liefert alle BodenflÃ¤chen-AusfÃ¼hrungen. 
 //     * <br><b>ACHTUNG:</b> Liefert nicht alle VawsAbscheidern, 
 //     * sondern alle in der Spalte "BODENFLAECHENAUSF" benutzten Werte!
-//     * @return Ein Array mit den Namen aller Ausführungen.
+//     * @return Ein Array mit den Namen aller AusfÃ¼hrungen.
 //     */
 //    public static String[] getBodenflaechenausfArray() {
-//    	//FIXME: select distinct nicht die beste Lösung
+//    	//FIXME: select distinct nicht die beste LÃ¶sung
 //		List list;
 //		String suchString = "select distinct vabf.bodenflaechenausf " +
 //				"from VawsAbscheider vabf " +
@@ -167,13 +167,13 @@ public class VawsAbscheider
 //	}
     
 //    /**
-//     * Liefert alle Bodenflächen-Ausführungen. 
+//     * Liefert alle BodenflÃ¤chen-AusfÃ¼hrungen. 
 //     * <br><b>ACHTUNG:</b> Liefert nicht alle VawsAbscheidern, 
 //     * sondern alle in der Spalte "BODENFLAECHENAUSF" benutzten Werte!
-//     * @return Ein Array mit den Namen aller Ausführungen.
+//     * @return Ein Array mit den Namen aller AusfÃ¼hrungen.
 //     */
 //    public static String[] getNiederschlagschutzArray() {
-//    	//FIXME: select distinct nicht die beste Lösung
+//    	//FIXME: select distinct nicht die beste LÃ¶sung
 //		List list;
 //		String suchString = "select distinct vabf.niederschlagschutz " +
 //				"from VawsAbscheider vabf " +

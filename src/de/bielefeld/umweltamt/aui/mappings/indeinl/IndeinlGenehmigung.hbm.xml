@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 01.09.2008 14:20:15 by Hibernate Tools 3.2.0.beta8 -->
+
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="IndeinlGenehmigung" table="indeinl_genehmigung">
+        <id name="objektid" type="int">
+            <column name="objektid" />
+            <generator class="foreign">
+            	<param name="property">basisObjekt</param>
+            </generator>
+        </id>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <property name="erstellungsDatum" type="date">
+            <column name="erstellungs_datum" length="4" />
+        </property>
+        <property name="aenderungsDatum" type="date">
+            <column name="aenderungs_datum" length="4" />
+        </property>
+        <property name="antragDatum" type="date">
+            <column name="antrag_datum" length="4" />
+        </property>        
+        <property name="befristet" type="java.lang.Boolean">
+        	<column name="befristet" />
+        </property>
+        <property name="befristetBis" type="date">
+            <column name="befristet_bis" length="4" />
+        </property>
+        <property name="anhang" type="java.lang.Integer">
+            <column name="anhang" />
+        </property>
+        <property name="genMenge" type="java.lang.Integer">
+            <column name="gen_menge" />
+        </property>        
+        <property name="gen58" type="java.lang.Boolean">
+        	<column name="gen58" />
+        </property>        
+        <property name="gen59" type="java.lang.Boolean">
+        	<column name="gen59" />
+        </property>        
+        <property name="selbstueberw" type="java.lang.Boolean">
+        	<column name="selbstueberw" />
+        </property>        
+        <property name="esatzung" type="java.lang.Boolean">
+        	<column name="e_satzung" />
+        </property>
+        
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" />
+        
+    </class>
+</hibernate-mapping>

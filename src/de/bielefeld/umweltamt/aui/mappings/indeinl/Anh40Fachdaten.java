@@ -62,7 +62,6 @@ public class Anh40Fachdaten
 
 	private static Anh40Fachdaten getAnh40ByObjekt(BasisObjekt objekt, Session session) throws HibernateException {
     	Anh40Fachdaten fachdaten = null;
-    	Integer objID = objekt.getObjektid();
     	if (objekt.getBasisObjektarten().isAnh40()) {
     		List anhang40 = session.createQuery(
     				"from Anh40Fachdaten as ah40 where " +

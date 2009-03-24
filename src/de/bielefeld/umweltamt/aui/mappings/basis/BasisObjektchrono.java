@@ -45,7 +45,7 @@ public class BasisObjektchrono
     // Statischer Teil:
     
     /**
-     * Liefert alle VAWS-Fachdatensätze zu einem bestimmten BasisObjekt.
+     * Liefert alle VAWS-FachdatensÃ¤tze zu einem bestimmten BasisObjekt.
      * @param objekt Das BasisObjekt.
      * @return Eine Liste mit VawsFachdaten.
      */
@@ -103,9 +103,9 @@ public class BasisObjektchrono
     }
     
     /**
-     * Löscht einen vorhandenen Datensatz aus der Datenbank.
-     * @param chrono Der Datensatz, der gelöscht werden soll.
-     * @return <code>true</code>, wenn der Datensatz gelöscht wurde oder 
+     * LÃ¶scht einen vorhandenen Datensatz aus der Datenbank.
+     * @param chrono Der Datensatz, der gelÃ¶scht werden soll.
+     * @return <code>true</code>, wenn der Datensatz gelÃ¶scht wurde oder 
      * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Datensatz 
      * nicht in der Datenbank existiert).
      */

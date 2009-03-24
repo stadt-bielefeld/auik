@@ -2,13 +2,10 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<!-- DO NOT EDIT: This is a generated file that is synchronized -->
-<!-- by MyEclipse Hibernate tool integration.                   -->
-<!-- Created Tue Sep 06 14:46:36 CEST 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
 
     <class name="VawsGebuehrenarten" table="vaws_gebuehrenarten" lazy="false">
-        <id name="id" column="ID" type="java.lang.Integer">
+        <id name="id" column="id" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>
 

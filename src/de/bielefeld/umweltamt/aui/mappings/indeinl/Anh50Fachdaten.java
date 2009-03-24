@@ -46,9 +46,9 @@ public class Anh50Fachdaten
 	}
     
     /**
-     * Sucht alle Anhang50-Fachdatens‰tze, bei denen Amalgam
+     * Sucht alle Anhang50-Fachdatens√§tze, bei denen Amalgam
      * selektiert ist und die nicht erloschen sind.
-     * @param nurWiedervorlageAbgelaufen Sollen nur Datens‰tze 
+     * @param nurWiedervorlageAbgelaufen Sollen nur Datens√§tze 
      * angezeigt werden, deren Wiedervorlage in der 
      * Vergangenheit liegt?
      * @return Eine Liste mit den entstprechenden Anh50Fachdaten.

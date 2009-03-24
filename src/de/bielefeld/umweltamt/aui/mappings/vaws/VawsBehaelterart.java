@@ -34,8 +34,8 @@ public class VawsBehaelterart
     }
     
     /**
-     * Liefer alle VAWS-Behälterarten.
-     * @return Ein Array mit den Namen aller Behälterarten.
+     * Liefer alle VAWS-BehÃ¤lterarten.
+     * @return Ein Array mit den Namen aller BehÃ¤lterarten.
      */
     public static String[] getBehaelterarten() {
 		List list;

@@ -19,28 +19,28 @@ public interface Modul {
 	public String getName();
 	
 	/**
-	 * Liefert einen eindeutigen Bezeichner für dieses Modul. 
+	 * Liefert einen eindeutigen Bezeichner fÃ¼r dieses Modul. 
 	 * <b>Er muss eindeutig sein!</b>
 	 * @return Der Bezeichner dieses Moduls
 	 */
 	public String getIdentifier();
 	
 	/**
-	 * Liefert die Kategorie, zu der dieses Modul gehört.
+	 * Liefert die Kategorie, zu der dieses Modul gehÃ¶rt.
 	 * @return Der Name der Kategorie
 	 */
 	public String getCategory();
 	
 	
 	/**
-	 * Liefert ein Icon für dieses Modul.
+	 * Liefert ein Icon fÃ¼r dieses Modul.
 	 * @return Das Icon dieses Moduls
 	 */
 	public Icon getIcon();
 	
 	/**
 	 * Liefert das Panel mit dem Inhalt dieses Moduls.
-	 * @return Ein JPanel gefüllt mit dem Inhalt dieses Moduls
+	 * @return Ein JPanel gefÃ¼llt mit dem Inhalt dieses Moduls
 	 */
 	public JPanel getPanel();
 	

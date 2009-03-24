@@ -31,9 +31,9 @@ public class TableFocusListener extends FocusAdapter {
 		if (e.getSource() instanceof JTable) {
 			JTable table = (JTable) e.getSource();
 			
-			// Nur wenn die Tabelle Zeilen hat und noch keine ausgew‰hlt ist
+			// Nur wenn die Tabelle Zeilen hat und noch keine ausgew√§hlt ist
 			if (table.getRowCount() > 0 && table.getSelectedRow() == -1) {
-				// Die erste Zeile anw‰hlen...
+				// Die erste Zeile anw√§hlen...
 				table.setRowSelectionInterval(0,0);
 				// ... und zu ihr hochscrollen
 				table.scrollRectToVisible(table.getCellRect(0, 0, true));	

@@ -40,7 +40,6 @@ public class ObjektSuevPanel extends JPanel {
 	private JCheckBox indirektrwCheck = null;
 	private JCheckBox direktswCheck = null;
 	private JCheckBox direktrwCheck = null;
-	private JFormattedTextField anzeige58Feld = null;
 	private JCheckBox datumAnzeige58Check = null;
 	private JCheckBox sanierungErfolgtCheck = null;
 	private JCheckBox sanierungskonzeptCheck = null;
@@ -77,7 +76,7 @@ public class ObjektSuevPanel extends JPanel {
 		builder.append("Datum Anzeige:", getDatAnzeige58Datum());
 		builder.append("", getSanierungErfolgtCheck());
 		builder.nextLine();
-		builder.append("versiegelte Fl‰che:", getVersFlaecheFeld());
+		builder.append("versiegelte Fl√§che:", getVersFlaecheFeld());
 		builder.append("", getDirektrwCheck());
 		builder.nextLine();
 		builder.append("", getGroesser3haCheck());
@@ -106,9 +105,6 @@ public class ObjektSuevPanel extends JPanel {
 	public void updateForm() throws RuntimeException {
 
 		if (fachdaten != null) {
-			if (fachdaten.getAnzeige58() != null) {
-				getAnzeige58Feld().setText(fachdaten.getAnzeige58().toString());
-			}
 			if (fachdaten.getVersFlaeche() != null) {
 				getVersFlaecheFeld().setText(fachdaten.getVersFlaeche().toString());
 			}
@@ -198,7 +194,6 @@ public class ObjektSuevPanel extends JPanel {
 	
 	public void clearForm() {
 		
-		getAnzeige58Feld().setText(null);
 		getVersFlaecheFeld().setText(null);
 		getDatAnschreibenDatum().setDate(null);
 		getDatAnzeige58Datum().setDate(null);
@@ -226,10 +221,7 @@ public class ObjektSuevPanel extends JPanel {
 	
 	private boolean saveSuevDaten() {
 		boolean success;
-		
-		Integer anzeige58 = ((IntegerField)anzeige58Feld).getIntValue();
-		fachdaten.setAnzeige58(anzeige58);	
-		
+
 		Integer versfl = ((IntegerField)versFlaecheFeld).getIntValue();
 		fachdaten.setVersFlaeche(versfl);			
 		
@@ -316,9 +308,9 @@ public class ObjektSuevPanel extends JPanel {
 			// Neues SuevKan Verfahren erzeugen
 			fachdaten = new AnhSuevFachdaten();
 			// Objekt_Id setzen
-			fachdaten.setObjektid(hauptModul.getObjekt().getObjektid());
+			fachdaten.setBasisObjekt(hauptModul.getObjekt());
 			
-			// Zahnarzt speichern
+			// SuevKan speichern
 			AnhSuevFachdaten.saveFachdaten(fachdaten);
 			AUIKataster.debugOutput("Neues SuevKan Verfahren "+fachdaten+" gespeichert.", "ObjektBearbeiten.completeObjekt");
 		}
@@ -326,12 +318,6 @@ public class ObjektSuevPanel extends JPanel {
 	
 
 
-	private JFormattedTextField getAnzeige58Feld() {
-		if (anzeige58Feld == null) {			
-			anzeige58Feld = new IntegerField();
-		}
-		return anzeige58Feld;
-	}
 	private TextFieldDateChooser getDatAnschreibenDatum() {
 		if (datAnschreibenDatum == null) {			
 			datAnschreibenDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
@@ -364,7 +350,7 @@ public class ObjektSuevPanel extends JPanel {
 	}
 	private JCheckBox getGroesser3haCheck() {
 		if (groesser3haCheck == null) {
-			groesser3haCheck = new JCheckBox("Grˆﬂer 3 ha");
+			groesser3haCheck = new JCheckBox("Gr√∂√üer 3 ha");
 		}
 		return groesser3haCheck;
 	}
@@ -420,7 +406,7 @@ public class ObjektSuevPanel extends JPanel {
 					if (saveSuevDaten()) {
 						hauptModul.getFrame().changeStatus("SuevKan Verfahren "+fachdaten.getObjektid()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
 					} else {
-						hauptModul.getFrame().changeStatus("Fehler beim Speichern des Zahnarztes!", HauptFrame.ERROR_COLOR);
+						hauptModul.getFrame().changeStatus("Fehler beim Speichern des SuevKan Verfahrens!", HauptFrame.ERROR_COLOR);
 					}
 					
 					hauptModul.fillForm();

@@ -1,15 +1,18 @@
 /*
  * Datei:
 <<<<<<< BasisObjektarten.java
- * $Id: BasisObjektarten.java,v 1.3 2008-09-01 07:00:29 u633d Exp $
+ * $Id: BasisObjektarten.java,v 1.4 2009-03-24 12:35:23 u633d Exp $
 =======
- * $Id: BasisObjektarten.java,v 1.3 2008-09-01 07:00:29 u633d Exp $
+ * $Id: BasisObjektarten.java,v 1.4 2009-03-24 12:35:23 u633d Exp $
 >>>>>>> 1.20.6.1
  * 
  * Erstellt am 19.01.05 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2008/09/01 07:00:29  u633d
+ * Anlegen von Sielhautproben ueberabeitet
+ *
  * Revision 1.2  2008/06/12 10:21:41  u633d
  * diverse Bugfixes
  *
@@ -18,7 +21,7 @@
  *
 <<<<<<< BasisObjektarten.java
  * Revision 1.24  2006/10/17 07:54:29  u633d
- * Anhang 52 (Chemische Wäschereien) haben nun einen eigenen Tab.
+ * Anhang 52 (Chemische WÃ¤schereien) haben nun einen eigenen Tab.
  *
  * Revision 1.23  2006/09/26 09:48:38  u633d
  * Anh 55 bereinigt; settings wieder auf UTEDB2 gesetzt
@@ -27,7 +30,7 @@
  * BHKW ergaenzt
  *
  * Revision 1.21  2006/09/13 09:18:17  u633d
- * Datenquellen für Anh55 hinzugefügt
+ * Datenquellen fÃ¼r Anh55 hinzugefÃ¼gt
  *
 =======
  * Revision 1.20.6.1  2006/07/26 06:46:01  u633d
@@ -38,7 +41,7 @@
  * - Version vom 7.9.05
  *
  * Revision 1.19  2005/08/31 06:22:56  u633d
- * - kleine Ergänzungen
+ * - kleine ErgÃ¤nzungen
  *
  * Revision 1.18  2005/08/25 14:47:00  u633d
  * - zu viel ;)
@@ -53,12 +56,12 @@
  * Datenbank-Umstellung
  *
  * Revision 1.14  2005/06/13 15:30:36  u633z
- * - Anhang 53 IDs und Methoden hinzugefügt
+ * - Anhang 53 IDs und Methoden hinzugefÃ¼gt
  *
  * Revision 1.13  2005/06/09 13:38:22  u633z
- * - Sortierung wieder auf Namen (alphabetisch) geändert
+ * - Sortierung wieder auf Namen (alphabetisch) geÃ¤ndert
  * - toString zeigt jetzt die Abteilung mit an
- * - Methoden zur Abfrage der Abteilung hinzugefügt
+ * - Methoden zur Abfrage der Abteilung hinzugefÃ¼gt
  *
  */
 package de.bielefeld.umweltamt.aui.mappings.basis;
@@ -96,7 +99,7 @@ public class BasisObjektarten
 	public static final int FETTABSCHEIDER = 15;
 	/** Die ID der Objektart "Zahnarzt" */
 	public static final int ANHANG_50 = 20;
-	/** Die ID der Objektart "Chemische Wäscherei" */
+	/** Die ID der Objektart "Chemische WÃ¤scherei" */
 	public static final int ANHANG_52 = 35;
 	/** Die ID der Objektart "Anhang 53 (< 3000)" */
 	public static final int ANHANG_53_KLEIN = 17;
@@ -104,10 +107,14 @@ public class BasisObjektarten
 	public static final int ANHANG_53_GROSS = 18;
 	/** Die ID der Objektart "Suev-Kan" */
 	public static final int SUEV = 13;
-	/** Die ID der Objektart "Wäscherei" */
+	/** Die ID der Objektart "WÃ¤scherei" */
 	public static final int ANHANG_55 = 29;
 	/** Die ID der Objektart "Duckerei" */
 	public static final int ANHANG_56 = 30;
+	/** Die ID der Objektart "Uebergabestelle" */
+	public static final int UEBERGABESTELLE = 41;
+	/** Die ID der Objektart "Genehmigung" */
+	public static final int GENEHMIGUNG = 42;
 	
     /**
      * Simple constructor of BasisObjektarten instances.
@@ -188,7 +195,7 @@ public class BasisObjektarten
 		}
 	}
 	
-	/** Liefert <code>true</code>, wenn diese Objektart "Chemische Wäscherei" ist */
+	/** Liefert <code>true</code>, wenn diese Objektart "Chemische WÃ¤scherei" ist */
 	public boolean isAnh52() {
 		if (ANHANG_52 == this.getObjektartid().intValue()) {
 			return true;
@@ -215,7 +222,7 @@ public class BasisObjektarten
 		}
 	}
 	
-	/** Liefert <code>true</code>, wenn diese Objektart "Wäscherei" ist */
+	/** Liefert <code>true</code>, wenn diese Objektart "WÃ¤scherei" ist */
 	public boolean isAnh55() {
 		if (ANHANG_55 == this.getObjektartid().intValue()) {
 			return true;
@@ -236,6 +243,24 @@ public class BasisObjektarten
 	/** Liefert <code>true</code>, wenn diese Objektart "Suev-Kan Verfahren" ist */
 	public boolean isSuev() {
 		if (SUEV == this.getObjektartid().intValue()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+		
+	/** Liefert <code>true</code>, wenn diese Objektart "Uebergabestelle" ist */
+	public boolean isUebergabestelle() {
+		if (UEBERGABESTELLE == this.getObjektartid().intValue()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+		
+	/** Liefert <code>true</code>, wenn diese Objektart "Suev-Kan Verfahren" ist */
+	public boolean isGenehmigung() {
+		if (GENEHMIGUNG == this.getObjektartid().intValue()) {
 			return true;
 		} else {
 			return false;
@@ -289,7 +314,7 @@ public class BasisObjektarten
     
 	/**
 	 * Liefert eine Objektart mit einer bestimmten ID.
-	 * @param id Die ID (der Primärschlüssel) des Standorts.
+	 * @param id Die ID (der PrimÃ¤rschlÃ¼ssel) des Standorts.
 	 * @return Den gesuchten Standort oder <code>null</code>, 
 	 * falls kein Standort mit dieser ID existiert.
 	 */

@@ -1,19 +1,22 @@
 /*
  * Datei:
- * $Id: ModulManager.java,v 1.1 2008-06-05 11:38:40 u633d Exp $
+ * $Id: ModulManager.java,v 1.2 2009-03-24 12:35:19 u633d Exp $
  * 
  * Erstellt am 13.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:40  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.16  2005/11/02 13:45:45  u633d
  * - Version vom 2.11.
  *
  * Revision 1.15  2005/06/06 15:27:52  u633z
- * - Beschriftung der Modul-Buttons verbessert (Zeilenumbruch wird jetzt automatisch unterstützt)
+ * - Beschriftung der Modul-Buttons verbessert (Zeilenumbruch wird jetzt automatisch unterstÃ¼tzt)
  *
  * Revision 1.14  2005/05/30 15:41:50  u633z
- * - jsddevelop.jar entfernt, überflüssig, da StringFunc.explode() durch String.split() ersetzt.
+ * - jsddevelop.jar entfernt, Ã¼berflÃ¼ssig, da StringFunc.explode() durch String.split() ersetzt.
  *
  * Revision 1.13  2005/05/30 08:17:15  u633z
  * - DBCache entfernt
@@ -84,7 +87,7 @@ public class ModulManager {
 			if (m.getCategory().equals(name)) {
 				module.add(m);
 			} else {
-				throw new IllegalArgumentException("Dieses Modul gehört nicht in diese Kategorie!");
+				throw new IllegalArgumentException("Dieses Modul gehÃ¶rt nicht in diese Kategorie!");
 			}
 		}
 	}
@@ -101,7 +104,7 @@ public class ModulManager {
 	private int currentIndex = 0;
 	
 	/**
-	 * Erzeugt einen neuen ModulManager für das HauptFrame.
+	 * Erzeugt einen neuen ModulManager fÃ¼r das HauptFrame.
 	 * @param frame Das HauptFrame
 	 */
 	public ModulManager(HauptFrame frame, SettingsManager settings) {
@@ -114,10 +117,9 @@ public class ModulManager {
 	}
 	
 	/**
-	 * Lädt alle Module.
+	 * LÃ¤dt alle Module.
 	 */
 	public void loadModule() {
-		//loadModul("TestModul");
 		
 		String tmp = settings.getSetting("auik.system.module");
 		if (tmp != null && tmp.length() != 0) {
@@ -130,7 +132,7 @@ public class ModulManager {
 	}
 	
 	/**
-	 * Lädt ein Modul anhand seines Klassennamens.
+	 * LÃ¤dt ein Modul anhand seines Klassennamens.
 	 * @param modulName Der Name der Klasse (bspw. "BetreiberNeu")
 	 */
 	private void loadModul(String modulName) {
@@ -150,11 +152,11 @@ public class ModulManager {
 	}
 
 	/**
-	 * Fügt ein neues Modul hinzu.
+	 * FÃ¼gt ein neues Modul hinzu.
 	 * @param m Das neue Modul
 	 */
 	private void addModul(Modul m) {
-		AUIKataster.debugOutput("Füge Modul '" + m.getName() + "' ("+m.getIdentifier()+") hinzu...", "ModulManager.addModul");
+		AUIKataster.debugOutput("FÃ¼ge Modul '" + m.getName() + "' ("+m.getIdentifier()+") hinzu...", "ModulManager.addModul");
 		boolean isFirst = false;
 		
 		m.setManager(this);
@@ -199,7 +201,7 @@ public class ModulManager {
 	}
 	
 	/**
-	 * Fügt eine neue Kategorie hinzu.
+	 * FÃ¼gt eine neue Kategorie hinzu.
 	 * @param title Der Name der Kategorie
 	 */
 	private void addCategory(String title) {
@@ -269,7 +271,7 @@ public class ModulManager {
 				JToggleButton button = (JToggleButton) modulButtons.get(identifier);
 				button.setSelected(true);
 				
-				// ... die rechte Überschrift auf den Titel dieses Moduls setzen
+				// ... die rechte Ãœberschrift auf den Titel dieses Moduls setzen
 				frame.getRightFrame().setTitle(m.getName());
 				// ... speichern, welches das aktuelle Modul ist
 				currentModul = identifier;

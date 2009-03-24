@@ -28,7 +28,7 @@ public class Anh49Abscheiderdetails
      */
     public Anh49Abscheiderdetails()
     {
-    	// Die Bool-Werte sind standardm‰ﬂig false
+    	// Die Bool-Werte sind standardm√§√üig false
     	short fW = 0;
     	Short f = new Short(fW);
     	
@@ -75,7 +75,7 @@ public class Anh49Abscheiderdetails
 				    .setEntity(0, fd)
 				    .list();
 
-			AUIKataster.debugOutput("Details f¸r " + fd + ", Anzahl: " + details.size(), "Anh49Abscheiderdetails");
+			AUIKataster.debugOutput("Details f√ºr " + fd + ", Anzahl: " + details.size(), "Anh49Abscheiderdetails");
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {

@@ -1,25 +1,28 @@
 /*
  * Datei:
- * $Id: ChartDataSets.java,v 1.1 2008-06-05 11:38:38 u633d Exp $
+ * $Id: ChartDataSets.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 11.05.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:38  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.2  2005/06/01 15:15:59  u633z
  * - Erste Version der Auswertungs-Tabelle
  *
  * Revision 1.1  2005/05/31 15:52:18  u633z
  * - Charts und ChartDataSets nach utils.charts verschoben
  * - Neue Klasse APosDataItem um eine Analyseposition als Punkt einer
- *   TimeSeries Datenreihe zu repräsentieren
+ *   TimeSeries Datenreihe zu reprÃ¤sentieren
  * - Bessere Tooltips im Auswertungs-Diagramm
  *
  * Revision 1.5  2005/05/19 11:28:35  u633z
  * Kommentare verbessert
  *
  * Revision 1.4  2005/05/18 15:31:59  u633z
- * Diagramm-Erzeugung verbessert, Funktionalität der Auswertung hinzugefügt
+ * Diagramm-Erzeugung verbessert, FunktionalitÃ¤t der Auswertung hinzugefÃ¼gt
  *
  * Revision 1.3  2005/05/17 11:18:50  u633z
  * Einen Parameter umbenannt
@@ -45,7 +48,7 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 
 /**
- * Eine Factory-Klasse um DataSets etc. für JFreeChart-Diagramme aus
+ * Eine Factory-Klasse um DataSets etc. fÃ¼r JFreeChart-Diagramme aus
  * verschiedenen Daten zu erzeugen.
  * @author David Klotz
  */
@@ -54,7 +57,7 @@ public class ChartDataSets {
 	 * Erzeugt eine TimeSeriesCollection (eine Sammlung von Zeit/Wert-Datenreihen)
 	 * mit einer Datenreihe. Die Zeitwerte werden als Zeitpunkte und nicht 
 	 * als Zeitabschnitte behandelt.
-	 * @param series Die erste Datenreihe (mehr können hinzugefügt werden)
+	 * @param series Die erste Datenreihe (mehr kÃ¶nnen hinzugefÃ¼gt werden)
 	 * @return Eine TimeSeriesCollection mit einer Datenreihe
 	 */
 	public static TimeSeriesCollection createDataset(TimeSeries series) {
@@ -66,11 +69,11 @@ public class ChartDataSets {
 	
 	/**
 	 * Erzeugt eine TimeSeries (eine Zeit/Wert-Datenreihe) aus einer Liste
-	 * mit AtlAnalysepositionen. Die Analysepositionen sollten natürlich 
+	 * mit AtlAnalysepositionen. Die Analysepositionen sollten natÃ¼rlich 
 	 * alle den selben Parameter und die selbe Einheit haben.
 	 * @param list Die Liste aus <code>AtlAnalyseposition</code>en
-	 * @param name Der Name des Parameters/der Datenreihe (für die Legende des Diagramms) 
-	 * @param einheit Der Name der Einheit (für die Achsenbeschriftung des Diagramms)
+	 * @param name Der Name des Parameters/der Datenreihe (fÃ¼r die Legende des Diagramms) 
+	 * @param einheit Der Name der Einheit (fÃ¼r die Achsenbeschriftung des Diagramms)
 	 * @return Eine Analysepositionen-Datenreihe
 	 */
 	public static TimeSeries createAnalysePositionenSeries(List list, String name, String einheit) {
@@ -93,17 +96,17 @@ public class ChartDataSets {
 	}
 	
 	/**
-	 * Fügt den Wert einer AtlAnalyseposition zu einer TimeSeries an 
+	 * FÃ¼gt den Wert einer AtlAnalyseposition zu einer TimeSeries an 
 	 * einer bestimmten Position (in Minuten) hinzu.
 	 * Wenn an dieser Position schon ein Wert existiert, ruft sich diese
-	 * Methode rekursiv mit einer Position eine Minute später wieder auf.
+	 * Methode rekursiv mit einer Position eine Minute spÃ¤ter wieder auf.
 	 * @param series Die Datenreihe
 	 * @param minute Die Position in der Datenreihe (in Minuten)
 	 * @param pos Die Analyseposition
 	 */
 	private static void addPosToMinuteSeries(TimeSeries series, APosDataItem item/*Minute minute, AtlAnalyseposition pos*/) {
 		if (series.getDataItem(item.getPeriod()) == null) {
-			//AUIKataster.debugOutput("  |- Füge " + pos + " bei " + minute + " hinzu.", "ChartDataSets.createAnalysepositionenSeries");
+			//AUIKataster.debugOutput("  |- FÃ¼ge " + pos + " bei " + minute + " hinzu.", "ChartDataSets.createAnalysepositionenSeries");
 			series.add(item);
 		} else {
 			//AUIKataster.debugOutput("  |- !Bei " + minute + " existiert schon ein Eintrag -> Rekursion!.", "ChartDataSets.createAnalysepositionenSeries");

@@ -13,7 +13,7 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
 /**
- * Eine ComboBox mit automatischer Suche und Vervollst‰ndigung.
+ * Eine ComboBox mit automatischer Suche und Vervollst√§ndigung.
  * @author David Klotz
  */
 public class SearchBox extends JComboBox {
@@ -35,7 +35,7 @@ public class SearchBox extends JComboBox {
 	}
 
 	/**
-	 * Erzeugt eine neue ComboBox mit automatischer Suche und Vervollst‰ndigung. 
+	 * Erzeugt eine neue ComboBox mit automatischer Suche und Vervollst√§ndigung. 
 	 * Das Popup dieser ComboBox kann dabei breiter sein, als die Box selbst.
 	 * @param items Ein Array mit Objekten, die in dieser ComboBox angezeigt werden sollen.
 	 */

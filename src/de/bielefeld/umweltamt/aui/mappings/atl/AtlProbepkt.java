@@ -48,8 +48,8 @@ public class AtlProbepkt
 	}
     
     /**
-     * Liefert den ersten Probepunkt einer bestimmten Art und Kl‰ranlage.
-     * @return Den Probepunkt oder <code>null</code>, falls kein Probepunkt dieser Art mit dieser Kl‰ranlage existiert.
+     * Liefert den ersten Probepunkt einer bestimmten Art und Kl√§ranlage.
+     * @return Den Probepunkt oder <code>null</code>, falls kein Probepunkt dieser Art mit dieser Kl√§ranlage existiert.
      */
     public static AtlProbepkt getKlaerschlammProbepunkt(AtlProbeart art, AtlKlaeranlagen ka) {
     	List pkte;
@@ -148,7 +148,7 @@ public class AtlProbepkt
     private static AtlProbepkt getProbepunktByObjekt(BasisObjekt objekt, Session session) {
     	AtlProbepkt punkt = null;
 
-    	if (objekt.getBasisObjektarten().isProbepunkt()) {
+//    	if (objekt.getBasisObjektarten().isProbepunkt()) {
     		try {
 				List pkte = session.createQuery(
 					    "from AtlProbepkt as probepkt where " +
@@ -162,7 +162,7 @@ public class AtlProbepkt
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler (AtlProbepkt)", e);
 			}
-    	}
+//    	}
     	
     	return punkt;
     }

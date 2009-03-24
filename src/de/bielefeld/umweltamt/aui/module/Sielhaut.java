@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Sielhaut.java,v 1.4 2008-09-01 07:03:46 u633d Exp $
+ * $Id: Sielhaut.java,v 1.5 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 14.06.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2008/09/01 07:03:46  u633d
+ * *** empty log message ***
+ *
  * Revision 1.2  2008/06/24 11:24:08  u633d
  * Version 0.3
  *
@@ -19,7 +22,7 @@
  * - Version vom 7.9.05
  *
  * Revision 1.7  2005/08/31 06:25:12  u633d
- * - kleine Ergänzungen
+ * - kleine ErgÃ¤nzungen
  *
  * Revision 1.6  2005/08/25 14:46:59  u633d
  * - zu viel ;)
@@ -34,7 +37,7 @@
  * - Liste mit Probenahmen
  *
  * Revision 1.2  2005/06/30 11:43:34  u633z
- * - Sielhautdaten können bearbeitet werden
+ * - Sielhautdaten kÃ¶nnen bearbeitet werden
  *
  * Revision 1.1  2005/06/14 13:33:58  u633z
  * - Neues Sielhaut-Modul angefangen
@@ -122,6 +125,7 @@ public class Sielhaut extends AbstractModul {
 	private JTextField punktFeld;
 	private JToolBar punktToolBar;
 	private JButton punktChooseButton;
+	private JButton punktEditButton;
 	private JButton punktPrintButton;
 	private JButton punktNeuButton;
 	private JButton punktSaveButton;
@@ -131,7 +135,7 @@ public class Sielhaut extends AbstractModul {
 	private RetractablePanel fotoRtPanel;
 	private RetractablePanel kartenRtPanel;
 	
-	// Widgets für Datenpanel
+	// Widgets fÃ¼r Datenpanel
 	private JTextField spNamenFeld;
 	private JTextField spEntgebFeld;
 	private JTextField spLageFeld;
@@ -145,7 +149,7 @@ public class Sielhaut extends AbstractModul {
 	private JCheckBox spAlarmplanCheck;
 	private JCheckBox spFirmenprobeCheck;
 	
-	// Widgets für Probenpanel
+	// Widgets fÃ¼r Probenpanel
 	private JTable prTabelle;
 	private JTextField prNummerFeld;
 	private JDateChooser prDateChooser;
@@ -157,11 +161,11 @@ public class Sielhaut extends AbstractModul {
 	private Action probeLoeschAction;
 	private Action probeSaveAction;
 	
-	// Widgets für Fotopanel
+	// Widgets fÃ¼r Fotopanel
 	private JLabel fotoLabel;
 	//private ImageIcon fotoBild;
 	
-	// Widgets für Kartenpanel
+	// Widgets fÃ¼r Kartenpanel
 	private JLabel kartenLabel; 
 	//private ImageIcon kartenBild;
 	
@@ -173,6 +177,26 @@ public class Sielhaut extends AbstractModul {
 	private BasisObjektarten art;
 	private SielhautProbeModel probeModel;
 	
+	public void show() {
+		super.show();
+		
+		
+		if (manager.getSettingsManager().getSetting("auik.imc.edit_object") != null) {
+			objekt = BasisObjekt.getObjekt(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.edit_object")));
+			manager.getSettingsManager().removeSetting("auik.imc.edit_object");
+			sprobePkt = AtlProbepkt.getProbepunktByObjekt(objekt);
+			spunkt = AtlSielhaut.getSielhaut(sprobePkt.getAtlSielhaut().getId());
+			setSielhautPunkt(spunkt);
+		} 
+		else {
+			objekt = BasisObjekt.getObjekt(24856);
+			sprobePkt = AtlProbepkt.getProbepunktByObjekt(objekt);
+			spunkt = AtlSielhaut.getSielhaut(sprobePkt.getAtlSielhaut().getId());
+			setSielhautPunkt(spunkt);
+		}
+
+	}
+
 	public void setSielhautPunkt(AtlSielhaut sp) {
 		spunkt = sp;
 		if (spunkt.getId() != null) {
@@ -193,9 +217,9 @@ public class Sielhaut extends AbstractModul {
 			getTabelleExportButton().setEnabled(false);
 			
 			getFotoLabel().setIcon(null);
-			getFotoLabel().setText("<html><b>- Kein Foto verfügbar! -</b></html>");
+			getFotoLabel().setText("<html><b>- Kein Foto verfÃ¼gbar! -</b></html>");
 			getKartenLabel().setIcon(null);
-			getKartenLabel().setText("<html><b>- Keine Karte verfügbar! -</b></html>");
+			getKartenLabel().setText("<html><b>- Keine Karte verfÃ¼gbar! -</b></html>");
 		}
 		
 		String titel = spunkt.getBezeichnung();
@@ -243,7 +267,7 @@ public class Sielhaut extends AbstractModul {
 		probeModel.setProbepunkt(sprobePkt);
 		
 		// Ist eins der einklappbaren Panels offen,
-		// wird es _noch einmal_ aufgeklappt, um 
+		// wird es (noch einmal) aufgeklappt, um 
 		// seinen Inhalt aufzufrischen:
 		if (getProbenRtPanel().isOpen()) {
 			getProbenRtPanel().setOpen(true);
@@ -258,6 +282,7 @@ public class Sielhaut extends AbstractModul {
 		}
 		
 		getPunktSaveButton().setEnabled(true);
+		getPunktEditButton().setEnabled(true);
 		punktPrintButton.setEnabled(true);
 	}
 	
@@ -313,7 +338,7 @@ public class Sielhaut extends AbstractModul {
 			// Bezeichnung
 			spunkt.setBezeichnung(getSpNamenFeld().getText());
 			
-			// Entwässerungsgebiet
+			// EntwÃ¤sserungsgebiet
 			if ("".equals(getSpEntgebFeld().getText())) {
 				spunkt.setEntgeb(null);
 			} else {
@@ -457,7 +482,7 @@ public class Sielhaut extends AbstractModul {
 			boolean doIt = false;
 			if (exportDatei.exists()) {
 				boolean answer = getFrame().showQuestion( 
-						"Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?", 
+						"Soll die vorhandene Datei "+exportDatei.getName()+" wirklich Ã¼berschrieben werden?", 
 						"Datei bereits vorhanden!");
 				if (answer && exportDatei.canWrite()) {
 					doIt = true;
@@ -499,7 +524,7 @@ public class Sielhaut extends AbstractModul {
 			probeEditAction = new AbstractAction("Bearbeiten") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getPrTabelle().getSelectedRow();
-					// Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
+					// NatÃ¼rlich nur editieren, wenn wirklich eine Zeile ausgewÃ¤hlt ist
 					if (row != -1) {
 						AtlProbenahmen probe = probeModel.getRow(row);
 						editProbenahme(probe);
@@ -529,17 +554,17 @@ public class Sielhaut extends AbstractModul {
 	
 	private Action getProbeLoeschAction() {
 		if (probeLoeschAction == null) {
-			probeLoeschAction = new AbstractAction("Löschen") {
+			probeLoeschAction = new AbstractAction("LÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getPrTabelle().getSelectedRow();
 					if (row != -1 && getPrTabelle().getEditingRow() == -1) {
 						AtlProbenahmen probe = probeModel.getRow(row);
-						if (frame.showQuestion("Soll die Probenahme '"+ probe.getKennummer() +"' wirklich inkl. aller Analysen gelöscht werden?", "Löschen bestätigen")) {
+						if (frame.showQuestion("Soll die Probenahme '"+ probe.getKennummer() +"' wirklich inkl. aller Analysen gelÃ¶scht werden?", "LÃ¶schen bestÃ¤tigen")) {
 							if (probeModel.removeRow(row)) {
-								frame.changeStatus("Probenahme gelöscht!", HauptFrame.SUCCESS_COLOR);
-								AUIKataster.debugOutput("Probe " + probe.getKennummer() + " wurde gelöscht!", "SchlammPanel.removeAction");
+								frame.changeStatus("Probenahme gelÃ¶scht!", HauptFrame.SUCCESS_COLOR);
+								AUIKataster.debugOutput("Probe " + probe.getKennummer() + " wurde gelÃ¶scht!", "SchlammPanel.removeAction");
 							} else {
-								frame.changeStatus("Konnte Probenahme nicht löschen!", HauptFrame.ERROR_COLOR);
+								frame.changeStatus("Konnte Probenahme nicht lÃ¶schen!", HauptFrame.ERROR_COLOR);
 							}
 						}
 					}
@@ -649,9 +674,10 @@ public class Sielhaut extends AbstractModul {
 			punktToolBar.setRollover(true);
 			
 			punktToolBar.add(getPunktChooseButton());
-			punktToolBar.add(getPunktPrintButton());
+			punktToolBar.add(getPunktEditButton());
 			punktToolBar.add(getPunktNeuButton());
 			punktToolBar.add(getPunktSaveButton());
+			punktToolBar.add(getPunktPrintButton());
 		}
 		return punktToolBar;
 	}
@@ -660,7 +686,7 @@ public class Sielhaut extends AbstractModul {
 		if (punktChooseButton == null) {
 			punktChooseButton = new JButton(AuikUtils.getIcon(16, "reload.png"));
 			//punktChooseButton.setHorizontalAlignment(JButton.CENTER);
-			punktChooseButton.setToolTipText("Messpunkt auswählen");
+			punktChooseButton.setToolTipText("Messpunkt auswÃ¤hlen");
 			
 			punktChooseButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -676,6 +702,24 @@ public class Sielhaut extends AbstractModul {
 			});
 		}
 		return punktChooseButton;
+	}
+	
+	private JButton getPunktEditButton() {
+		if (punktEditButton == null) {
+			punktEditButton = new JButton(AuikUtils.getIcon(16, "edit.png"));
+			punktEditButton.setToolTipText("Bearbeiten");
+			punktEditButton.setEnabled(false);
+			
+			punktEditButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					AtlProbepkt probepkt = new AtlProbepkt();
+					AtlProbepkt sielprobepkt  = probepkt.getSielhautProbepunkt(spunkt);
+					manager.getSettingsManager().setSetting("auik.imc.edit_object", sielprobepkt.getPktId().intValue(), false);
+					manager.switchModul("m_objekt_bearbeiten");
+				}
+			});
+		}
+		return punktEditButton;
 	}
 	
 	private JButton getPunktPrintButton() {
@@ -741,7 +785,7 @@ public class Sielhaut extends AbstractModul {
 			
 			builder.append("<html><b>Name:</b></html>", getSpNamenFeld());
 			builder.nextLine();
-			builder.append("Entwässerungsgebiet:", getSpEntgebFeld());
+			builder.append("EntwÃ¤sserungsgebiet:", getSpEntgebFeld());
 			builder.nextLine();
 			
 			builder.append("Lage:", getSpLageFeld(), 3);
@@ -1006,7 +1050,7 @@ public class Sielhaut extends AbstractModul {
 	
 	private JLabel getFotoLabel() {
 		if (fotoLabel == null) {
-			fotoLabel = new JLabel("<html><b>- Kein Foto verfügbar! -</b></html>");
+			fotoLabel = new JLabel("<html><b>- Kein Foto verfÃ¼gbar! -</b></html>");
 		}
 		
 		return fotoLabel;
@@ -1049,7 +1093,7 @@ public class Sielhaut extends AbstractModul {
 	
 	private JLabel getKartenLabel() {
 		if (kartenLabel == null) {
-			kartenLabel = new JLabel("<html><b>- Keine Karte verfügbar -</b></html>");
+			kartenLabel = new JLabel("<html><b>- Keine Karte verfÃ¼gbar -</b></html>");
 		}
 		
 		return kartenLabel;
@@ -1057,7 +1101,7 @@ public class Sielhaut extends AbstractModul {
 }
 
 /**
- * Ein TableModel für eine Tabelle mit Probenahmen zu einem Sielhautpunkt.
+ * Ein TableModel fÃ¼r eine Tabelle mit Probenahmen zu einem Sielhautpunkt.
  * @author David Klotz
  */
 class SielhautProbeModel extends ListTableModel {
@@ -1174,7 +1218,7 @@ class SielhautChooser extends OkCancelDialog {
 	private AtlSielhaut chosenSielhaut = null;
 	
 	public SielhautChooser(HauptFrame owner) {
-		super("Sielhautpunkt auswählen", owner);
+		super("Sielhautpunkt auswÃ¤hlen", owner);
 		
 		sielhautModel = new SielhautModel();
 		getErgebnisTabelle().setModel(sielhautModel);
@@ -1303,7 +1347,7 @@ class SielhautChooser extends OkCancelDialog {
 			ergebnisTabelle = new JTable();
 
 			
-			Action submitAction = new AbstractAction("Auswählen") {
+			Action submitAction = new AbstractAction("AuswÃ¤hlen") {
 				public void actionPerformed(ActionEvent e) {
 					doOk();
 				}

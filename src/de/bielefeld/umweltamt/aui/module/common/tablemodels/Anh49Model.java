@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh49Model.java,v 1.2 2008-07-23 06:55:22 u633d Exp $
+ * $Id: Anh49Model.java,v 1.3 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 15.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/07/23 06:55:22  u633d
+ * Anh49 Auswertung und Sielhautimport neu
+ *
  * Revision 1.1  2008/06/05 11:38:40  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -21,7 +24,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches TableModel für Anhang 49-Fachdaten.
+ * Ein einfaches TableModel fÃ¼r Anhang 49-Fachdaten.
  * @author David Klotz
  */
 public class Anh49Model extends ListTableModel {
@@ -69,7 +72,7 @@ public class Anh49Model extends ListTableModel {
 	}
 	
 	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
+	 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
 	 */
 	public void updateList() {
 	}

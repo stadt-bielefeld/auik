@@ -42,7 +42,7 @@ public class VawsAnlagenchrono
     /* Add customized code below */
 
     /**
-     * Liefert alle Anlagen-Chronologie-Einträge zu einem bestimmten 
+     * Liefert alle Anlagen-Chronologie-EintrÃ¤ge zu einem bestimmten 
      * VawsFachdaten-satz.
      * @param fachdaten Der Fachdatensatz.
      * @return Eine Liste mit VawsAnlagenchrono-Objekten.
@@ -64,7 +64,7 @@ public class VawsAnlagenchrono
 						.setEntity(0, fachdaten)
 						.list();
 				
-				AUIKataster.debugOutput(chrono.size() + " AChrono-Einträge für FD " + fachdaten + " gefunden!", "VawsAnlagenchrono");
+				AUIKataster.debugOutput(chrono.size() + " AChrono-EintrÃ¤ge fÃ¼r FD " + fachdaten + " gefunden!", "VawsAnlagenchrono");
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler", e);
 			} finally {
@@ -108,9 +108,9 @@ public class VawsAnlagenchrono
     }
     
     /**
-     * Löscht einen vorhandenen Datensatz aus der Datenbank.
-     * @param chrono Der Datensatz, der gelöscht werden soll.
-     * @return <code>true</code>, wenn der Datensatz gelöscht wurde oder 
+     * LÃ¶scht einen vorhandenen Datensatz aus der Datenbank.
+     * @param chrono Der Datensatz, der gelÃ¶scht werden soll.
+     * @return <code>true</code>, wenn der Datensatz gelÃ¶scht wurde oder 
      * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Datensatz 
      * nicht in der Datenbank existiert).
      */

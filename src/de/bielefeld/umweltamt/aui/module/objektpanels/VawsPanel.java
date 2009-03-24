@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: VawsPanel.java,v 1.1 2008-06-05 11:38:39 u633d Exp $
+ * $Id: VawsPanel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
  * 
  * Erstellt am 25.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:39  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.10  2006/09/19 12:23:07  u633d
  * VawsAbscheider nun moeglich
  *
@@ -21,7 +24,7 @@
  * Revision 1.5.4.1  2006/09/06 06:45:08  u633d
  * Sielhautpunkte funktionieren als PDF
  * VAwS-Listen auch
- * für VAwS-Anlagen muss ich nur noch das Java schreiben
+ * fÃ¼r VAwS-Anlagen muss ich nur noch das Java schreiben
  *
  * Revision 1.5  2005/11/02 13:56:03  u633d
  * - Version vom 2.11.
@@ -99,7 +102,7 @@ public class VawsPanel extends JPanel {
 	private JButton reportAnlageButton;
 	
 	/**
-	 * Erzeugt das Vaws-Panel für das ObjektBearbeiten-Modul.
+	 * Erzeugt das Vaws-Panel fÃ¼r das ObjektBearbeiten-Modul.
 	 * @param hauptModul Das ObjektBearbeiten-Hauptmodul.
 	 */
 	public VawsPanel(ObjektBearbeiten hauptModul) {
@@ -152,10 +155,10 @@ public class VawsPanel extends JPanel {
 		return name;
 	}
 	
-	// Funktionalität:
+	// FunktionalitÃ¤t:
 	
 	/**
-	 * Holt die Liste mit Fachdatensätzen aus der Datenbank.
+	 * Holt die Liste mit FachdatensÃ¤tzen aus der Datenbank.
 	 */
 	public void fetchFormData() {
 		vawsModel.setList(
@@ -184,7 +187,7 @@ public class VawsPanel extends JPanel {
 	}
 	
 	/**
-	 * Öffnet einen Dialog um einen Vaws-Datensatz zu bearbeiten.
+	 * Ã¶ffnet einen Dialog um einen Vaws-Datensatz zu bearbeiten.
 	 * @param probe Der Datensatz.
 	 */
 	public void editDatensatz(VawsFachdaten fd) {
@@ -195,14 +198,14 @@ public class VawsPanel extends JPanel {
 		
 		if (editor.wasSaved()) {
 			// Nach dem Bearbeiten die Liste updaten, 
-			// damit unsere Änderungen auch angezeigt werden.
+			// damit unsere Ã„nderungen auch angezeigt werden.
 			fetchFormData();
 			updateForm();
 		}
 	}
 	
 	/**
-	 * Löscht einen Vaws-Datensatz (mit Nachfrage).
+	 * LÃ¶scht einen Vaws-Datensatz (mit Nachfrage).
 	 * @param fd Der Datensatz.
 	 */
 	public void loescheDatensatz(VawsFachdaten fd) {
@@ -212,16 +215,16 @@ public class VawsPanel extends JPanel {
 		}
 		
 		if (hauptModul.getFrame().showQuestion(
-				"Soll die ausgewählte "+art+" wirklich gelöscht werden?", 
-				"Löschen bestätigen")) {
+				"Soll die ausgewÃ¤hlte "+art+" wirklich gelÃ¶scht werden?", 
+				"LÃ¶schen bestÃ¤tigen")) {
 			if (VawsFachdaten.removeFachdaten(fd)) {
-				hauptModul.getFrame().changeStatus("Fachdatensatz '" + fd + "' erfolgreich gelöscht!", HauptFrame.SUCCESS_COLOR);
+				hauptModul.getFrame().changeStatus("Fachdatensatz '" + fd + "' erfolgreich gelÃ¶scht!", HauptFrame.SUCCESS_COLOR);
 				
 				// Tabelle updaten:
 				fetchFormData();
 				updateForm();
 			} else {
-				hauptModul.getFrame().showErrorMessage("Konnte Fachdatensatz '" + fd + "' nicht löschen!");
+				hauptModul.getFrame().showErrorMessage("Konnte Fachdatensatz '" + fd + "' nicht lÃ¶schen!");
 			}
 		}
 	}
@@ -300,7 +303,7 @@ public class VawsPanel extends JPanel {
 ////			ReportManager.getInstance().startReportWorker("vawsanlage", params, scriptables, reportAnlageButton);
 			else
 			{
-				hauptModul.getFrame().changeStatus("Keine Anlage ausgewählt!", HauptFrame.ERROR_COLOR);
+				hauptModul.getFrame().changeStatus("Keine Anlage ausgewÃ¤hlt!", HauptFrame.ERROR_COLOR);
 			}
 		}
 	}
@@ -314,7 +317,7 @@ public class VawsPanel extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					int row = getVawsTable().getSelectedRow();
 					
-					// Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
+					// NatÃ¼rlich nur editieren, wenn wirklich eine Zeile ausgewÃ¤hlt ist
 					if (row != -1) {
 						VawsFachdaten fd = vawsModel.getDatenSatz(row);
 						editDatensatz(fd);
@@ -329,15 +332,15 @@ public class VawsPanel extends JPanel {
 	}
 	
 	/**
-	 * Liefert die Action um einen Datensatz zu löschen.
+	 * Liefert die Action um einen Datensatz zu lÃ¶schen.
 	 */
 	private Action getVawsLoeschAction() {
 		if (vawsLoeschAction == null) {
-			vawsLoeschAction = new AbstractAction("Löschen") {
+			vawsLoeschAction = new AbstractAction("LÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getVawsTable().getSelectedRow();
 					
-					// Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
+					// NatÃ¼rlich nur, wenn wirklich eine Zeile ausgewÃ¤hlt ist
 					if (row != -1) {
 						VawsFachdaten fd = vawsModel.getDatenSatz(row);
 						loescheDatensatz(fd);
@@ -352,7 +355,7 @@ public class VawsPanel extends JPanel {
 	}
 	
 	/**
-	 * Liefert die Action um einen Datensatz zu löschen.
+	 * Liefert die Action um einen Datensatz zu lÃ¶schen.
 	 */
 	private Action getReportAnlageAction() {
 		if (reportAnlageAction == null) {
@@ -369,7 +372,7 @@ public class VawsPanel extends JPanel {
 	}
 	
 	/**
-	 * Zeigt ein Kontextmenü an, wenn ein entsprechendes 
+	 * Zeigt ein KontextmenÃ¼ an, wenn ein entsprechendes 
 	 * MouseEvent vorliegt.
 	 * @param e Das MouseEvent.
 	 */

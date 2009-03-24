@@ -50,17 +50,17 @@ public class AtlKlaeranlagen
     /* Add customized code below */
     
 	/**
-	 * Liefert den Namen der Kl‰ranlage.
+	 * Liefert den Namen der Kl√§ranlage.
 	 */
 	public String toString() {
 		return getAnlage();
 	}
     
 	/** 
-	 * Liefert eine bestimmte Kl‰ranlage.
-	 * @param id Die Id der Kl‰ranlage
+	 * Liefert eine bestimmte Kl√§ranlage.
+	 * @param id Die Id der Kl√§ranlage
 	 * @param session Eine Hibernate-Session
-	 * @return Die Kl‰ranlage
+	 * @return Die Kl√§ranlage
 	 */
 	public static AtlKlaeranlagen getKlaeranlage(Integer id, Session session) {
 		AtlKlaeranlagen ka;
@@ -74,9 +74,9 @@ public class AtlKlaeranlagen
 	}
 	
 	/** 
-	 * Liefert eine bestimmte Kl‰ranlage.
-	 * @param id Die Id der Kl‰ranlage
-	 * @return Die Kl‰ranlage
+	 * Liefert eine bestimmte Kl√§ranlage.
+	 * @param id Die Id der Kl√§ranlage
+	 * @return Die Kl√§ranlage
 	 */
 	public static AtlKlaeranlagen getKlaeranlage(Integer id) {
 		AtlKlaeranlagen ka;
@@ -94,9 +94,9 @@ public class AtlKlaeranlagen
 	}
 	
     /**
-	 * Liefert alle vorhandenen Kl‰ranlagen.
+	 * Liefert alle vorhandenen Kl√§ranlagen.
 	 * @param session Die Hibernate-Session, die benutzt werden soll
-	 * @return Alle vorhandenen Kl‰ranlagen
+	 * @return Alle vorhandenen Kl√§ranlagen
 	 * @throws HibernateException Falls ein Datenbank-Fehler auftritt
 	 */
 	public static AtlKlaeranlagen[] getKlaeranlagen(Session session) throws HibernateException {
@@ -116,8 +116,8 @@ public class AtlKlaeranlagen
 	}
 	
     /**
-	 * Liefert alle vorhandenen Kl‰ranlagen.
-	 * @return Alle vorhandenen Kl‰ranlagen
+	 * Liefert alle vorhandenen Kl√§ranlagen.
+	 * @return Alle vorhandenen Kl√§ranlagen
 	 * @throws HibernateException Falls ein Datenbank-Fehler auftritt
 	 */
 	public static AtlKlaeranlagen[] getKlaeranlagen() {

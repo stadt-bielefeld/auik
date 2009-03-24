@@ -1,15 +1,18 @@
 /*
  * Datei:
- * $Id: APosDataItem.java,v 1.1 2008-06-05 11:38:38 u633d Exp $
+ * $Id: APosDataItem.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 31.05.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:38  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.1  2005/05/31 15:52:18  u633z
  * - Charts und ChartDataSets nach utils.charts verschoben
  * - Neue Klasse APosDataItem um eine Analyseposition als Punkt einer
- *   TimeSeries Datenreihe zu repräsentieren
+ *   TimeSeries Datenreihe zu reprÃ¤sentieren
  * - Bessere Tooltips im Auswertungs-Diagramm
  *
  */
@@ -26,7 +29,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 
 /**
  * Eine Klasse um eine Analysposition als Datenpunkt in einer TimeSeries-Datenreihe 
- * darstellen zu können.
+ * darstellen zu kÃ¶nnen.
  * @author David Klotz
  */
 public class APosDataItem extends TimeSeriesDataItem {

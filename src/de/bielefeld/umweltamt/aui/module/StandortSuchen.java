@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: StandortSuchen.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Id: StandortSuchen.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:33  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.27  2005/11/02 13:49:16  u633d
  * - Version vom 2.11.
  *
@@ -22,13 +25,15 @@
  * - Auswertungen und anderes
  *
  * Revision 1.22  2005/06/09 15:27:03  u633z
- * - (CVS-)Header hinzugefügt
+ * - (CVS-)Header hinzugefÃ¼gt
  *
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
+import java.awt.Label;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,6 +64,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.uif_lite.component.Factory;
@@ -87,6 +93,9 @@ public class StandortSuchen extends AbstractModul {
 	private JTextField strassenFeld;
 	private JTextField hausnrFeld;
 	private JButton submitButton;
+	private JButton dreiButton;
+	private JButton vierButton;
+	private JButton probepktButton;
 	private JTable standortTabelle;
 	private JTable objektTabelle;
 	private JSplitPane tabellenSplit;
@@ -103,7 +112,7 @@ public class StandortSuchen extends AbstractModul {
 	private BasisObjektModel objektModel;
 	
 	/** Wird benutzt, um nach dem Bearbeiten etc. wieder den 
-	selben Standort in der Liste auszuwählen. */
+	selben Standort in der Liste auszuwÃ¤hlen. */
 	private BasisStandort lastStandort;
 	
 	private Timer suchTimer;
@@ -157,9 +166,16 @@ public class StandortSuchen extends AbstractModul {
 			submitToolBar.setFloatable(false);
 			submitToolBar.setRollover(true);
 			submitToolBar.add(getSubmitButton());
+			
+			JPanel restrictPanel =new JPanel(new BorderLayout());
+			
+			JPanel restrictButtonBar = ButtonBarFactory.buildLeftAlignedBar(getDreiButton(), getVierButton(), getProbepktButton());
 	        
+			restrictPanel.add(new Label("Objekte einschrÃ¤nken:"), BorderLayout.WEST);
+			restrictPanel.add(restrictButtonBar, BorderLayout.CENTER);
+			
 			// Die Tab-Action ist in eine neue Klasse ausgelagert, 
-			// weil man sie evtl. öfters brauchen wird. 
+			// weil man sie evtl. Ã¶fters brauchen wird. 
 			TabAction ta = new TabAction();
 			ta.addComp(getStrassenFeld());
 			ta.addComp(getHausnrFeld());
@@ -171,24 +187,25 @@ public class StandortSuchen extends AbstractModul {
 						JSplitPane.VERTICAL_SPLIT, 
 						standortScroller, 
 						objektScroller, 
-						0.7
+						0.6
 				);
 			
 			FormLayout layout = new FormLayout(
 			"l:p, 4dlu, p:g, 10dlu, p, 4dlu, max(30dlu;p), 3dlu, min(16dlu;p)",	// spalten 
-			"pref, 3dlu, 150dlu:grow"); 	// zeilen
+			"pref, 3dlu, 150dlu:grow, 3dlu, 30"); 	// zeilen
 			layout.setColumnGroups(new int[][]{{1, 5}});
 			
 			PanelBuilder builder = new PanelBuilder(layout);
 			builder.setDefaultDialogBorder();
 			CellConstraints cc = new CellConstraints();
 			
-			builder.addLabel("Straße:",		cc.xy( 1, 1));
+			builder.addLabel("StraÃŸe:",		cc.xy( 1, 1));
 			builder.add(getStrassenFeld(),	cc.xy( 3, 1));
 			builder.addLabel("Haus-Nr.:",	cc.xy( 5, 1));
 			builder.add(getHausnrFeld(),	cc.xy( 7, 1));
 			builder.add(submitToolBar,		cc.xy( 9, 1));
 			builder.add(tabellenSplit,		cc.xyw(1, 3, 9));
+			builder.add(restrictPanel,	cc.xyw(1, 5, 9));
 			
 			panel = builder.getPanel();
 		}
@@ -241,7 +258,7 @@ public class StandortSuchen extends AbstractModul {
 				standortModel.fireTableDataChanged();
 				
 				if (lastStandort != null) {
-					// Wenn der Standort noch in der Liste ist, wird er ausgewählt.
+					// Wenn der Standort noch in der Liste ist, wird er ausgewÃ¤hlt.
 					int row = standortModel.getList().indexOf(lastStandort);
 					if (row != -1) {
 						getStandortTabelle().setRowSelectionInterval(row, row);
@@ -272,13 +289,13 @@ public class StandortSuchen extends AbstractModul {
 		if (!lsm.isSelectionEmpty()) {
 			int selectedRow = lsm.getMinSelectionIndex();
 			BasisStandort standort = standortModel.getRow(selectedRow);
-			AUIKataster.debugOutput("Standort " + standort + " angewählt.", "StandortSuchen.updateObjekte");
+			AUIKataster.debugOutput("Standort " + standort + " angewÃ¤hlt.", "StandortSuchen.updateObjekte");
 			searchObjekteByStandort(standort);
 		}
 	}
 	
 	/**
-	 * Öffnet einen Dialog um einen Standort-Datensatz zu bearbeiten.
+	 * Ã¶ffnet einen Dialog um einen Standort-Datensatz zu bearbeiten.
 	 * @param standort Der Standort
 	 */
 	public void editStandort(BasisStandort standort) {
@@ -292,9 +309,29 @@ public class StandortSuchen extends AbstractModul {
 		lastStandort = standort;
 		
 		if (editDialog.wasSaved()) {
-			// Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen auch angezeigt werden.
+			// Nach dem Bearbeiten die Liste updaten, damit unsere Ã„nderungen auch angezeigt werden.
 			updateStandortListe();
 		}
+	}
+	
+	/** 
+	 * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines Standorts.
+	 * @param standortid Die Standort-Id
+	 * @param abteilung 33 oder 34
+	 */
+	public void searchObjekteByStandort(final BasisStandort standort, final String abteilung, final Integer nichtartid) {
+
+		// ... siehe show()
+		SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle()) {
+			protected void doNonUILogic() {
+				objektModel.searchByStandort(standort,abteilung, nichtartid);
+			}
+			
+			protected void doUIUpdateLogic() {
+				objektModel.fireTableDataChanged();
+			}
+		};
+		worker.start();	
 	}
 	
 	/** 
@@ -316,8 +353,27 @@ public class StandortSuchen extends AbstractModul {
 		worker.start();	
 	}
 	
+	/** 
+	 * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines Standorts.
+	 * @param standortid Die Standort-Id
+	 */
+	public void searchObjekteByStandort(final BasisStandort standort, final Integer istartid) {
+		
+		// ... siehe show()
+		SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle()) {
+			protected void doNonUILogic() {
+				objektModel.searchByStandort(standort, istartid);
+			}
+			
+			protected void doUIUpdateLogic() {
+				objektModel.fireTableDataChanged();
+			}
+		};
+		worker.start();	
+	}
+	
 	/**
-	 * Filtert die Standort-Liste nach Straße und Hausnummer.
+	 * Filtert die Standort-Liste nach StraÃŸe und Hausnummer.
 	 * @param focusComp Welche Komponente soll nach der Suche den Fokus bekommen.
 	 */
 	public void filterStandortListe(Component focusComp) {
@@ -455,15 +511,90 @@ public class StandortSuchen extends AbstractModul {
 		return submitButton;
 	}
 	
+	private JButton getDreiButton() {
+		if (dreiButton == null) {
+			dreiButton = new JButton("360.33");
+			dreiButton.setToolTipText("nur 33er Objekt");
+			dreiButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ListSelectionModel lsm = getStandortTabelle()
+							.getSelectionModel();
+					if (!lsm.isSelectionEmpty()) {
+						int selectedRow = lsm.getMinSelectionIndex();
+						BasisStandort standort = standortModel
+								.getRow(selectedRow);
+						AUIKataster
+								.debugOutput("Standort " + standort
+										+ " angewÃ¤hlt.",
+										"StandortSuchen.updateObjekte");
+						searchObjekteByStandort(standort, "360.33", 32);
+					}
+				}
+			});
+		}
+		
+		return dreiButton;
+	}
+	
+	private JButton getVierButton() {
+		if (vierButton == null) {
+			vierButton = new JButton("360.34");
+			vierButton.setToolTipText("nur 34er Objekte");
+			vierButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ListSelectionModel lsm = getStandortTabelle()
+							.getSelectionModel();
+					if (!lsm.isSelectionEmpty()) {
+						int selectedRow = lsm.getMinSelectionIndex();
+						BasisStandort standort = standortModel
+								.getRow(selectedRow);
+						AUIKataster
+								.debugOutput("Standort " + standort
+										+ " angewÃ¤hlt.",
+										"StandortSuchen.updateObjekte");
+						searchObjekteByStandort(standort, "360.34", 32);
+					}
+				}
+			});
+		}
+		
+		return vierButton;
+	}
+	
+	private JButton getProbepktButton() {
+		if (probepktButton == null) {
+			probepktButton = new JButton("Probepunkte");
+			probepktButton.setToolTipText("nur die Probenahmepunkte anzeigen");
+			probepktButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ListSelectionModel lsm = getStandortTabelle()
+							.getSelectionModel();
+					if (!lsm.isSelectionEmpty()) {
+						int selectedRow = lsm.getMinSelectionIndex();
+						BasisStandort standort = standortModel
+								.getRow(selectedRow);
+						AUIKataster
+								.debugOutput("Standort " + standort
+										+ " angewÃ¤hlt.",
+										"StandortSuchen.updateObjekte");
+						searchObjekteByStandort(standort, 32);
+					}
+				}
+			});
+		}
+		
+		return probepktButton;
+	}
+	
 	private JTable getStandortTabelle() {
 		if (standortTabelle == null) {
 			standortTabelle = new JTable(standortModel);
 			
-			// Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
+			// Wir wollen wissen, wenn eine andere Zeile ausgewÃ¤hlt wurde
 			ListSelectionModel rowSM = standortTabelle.getSelectionModel();
 			rowSM.addListSelectionListener(new ListSelectionListener() {
 				public void valueChanged(ListSelectionEvent e) {
-					// Überzählige Events ignorieren
+					// Ã¼berzÃ¤hlige Events ignorieren
 					if (e.getValueIsAdjusting()) {
 						return;
 					}
@@ -533,7 +664,7 @@ public class StandortSuchen extends AbstractModul {
 				public void actionPerformed(ActionEvent e) {
 					int row = standortTabelle.getSelectedRow();
 					
-					// Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
+					// NatÃ¼rlich nur editieren, wenn wirklich eine Zeile ausgewÃ¤hlt ist
 					if (row != -1) {
 						BasisStandort bsta = standortModel.getRow(row);
 						editStandort(bsta);
@@ -591,10 +722,14 @@ public class StandortSuchen extends AbstractModul {
 			objektEditAction = new AbstractAction("Bearbeiten") {
 				public void actionPerformed(ActionEvent e) {
 					int row = objektTabelle.getSelectedRow();
-					if (row != -1) {
-						BasisObjekt obj = objektModel.getRow(row);
+					BasisObjekt obj = objektModel.getRow(row);
+					if (row != -1 || obj.getBasisObjektarten().getObjektartid() != 40) {
 						manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
 						manager.switchModul("m_objekt_bearbeiten");
+					}
+					else if (row != -1 || obj.getBasisObjektarten().getObjektartid() == 40) {
+						manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
+						manager.switchModul("m_sielhaut1");
 					}
 				}
 			};
@@ -607,22 +742,22 @@ public class StandortSuchen extends AbstractModul {
 	
 	private Action getObjektLoeschAction() {
 		if (objektLoeschAction == null) {
-			objektLoeschAction = new AbstractAction("Löschen") {
+			objektLoeschAction = new AbstractAction("LÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getObjektTabelle().getSelectedRow();
 					if (row != -1 && getObjektTabelle().getEditingRow() == -1) {
 						BasisObjekt objekt = objektModel.getRow(row);
 						int answer = JOptionPane.showConfirmDialog(panel, 
-								"Soll das Objekt "+ objekt.getObjektid() +" und alle seine Fachdaten wirklich gelöscht werden?\n" +
-								"Hinweis: Manche Objekte können auch erst gelöscht werden, wenn für sie\n" +
+								"Soll das Objekt "+ objekt.getObjektid() +" und alle seine Fachdaten wirklich gelÃ¶scht werden?\n" +
+								"Hinweis: Manche Objekte kÃ¶nnen auch erst gelÃ¶scht werden, wenn fÃ¼r sie\n" +
 								"keine Fachdaten mehr existieren.",
-								"Löschen bestätigen", JOptionPane.YES_NO_OPTION);
+								"LÃ¶schen bestÃ¤tigen", JOptionPane.YES_NO_OPTION);
 						if (answer == JOptionPane.YES_OPTION) {
 							if (objektModel.removeRow(row)) {
-								frame.changeStatus("Objekt gelöscht.", HauptFrame.SUCCESS_COLOR);
-								AUIKataster.debugOutput("Objekt " + objekt.getObjektid() + " wurde gelöscht!", "BetreiberSuchen.removeAction");
+								frame.changeStatus("Objekt gelÃ¶scht.", HauptFrame.SUCCESS_COLOR);
+								AUIKataster.debugOutput("Objekt " + objekt.getObjektid() + " wurde gelÃ¶scht!", "BetreiberSuchen.removeAction");
 							} else {
-								frame.changeStatus("Konnte das Objekt nicht löschen!", HauptFrame.ERROR_COLOR);
+								frame.changeStatus("Konnte das Objekt nicht lÃ¶schen!", HauptFrame.ERROR_COLOR);
 							}
 						}
 					}
@@ -669,11 +804,14 @@ public class StandortSuchen extends AbstractModul {
 					if((e.getClickCount() == 2) && (e.getButton() == 1)) {
 						Point origin = e.getPoint();
 						int row = getObjektTabelle().rowAtPoint(origin);
-						
-						if (row != -1) {
-							BasisObjekt obj = objektModel.getRow(row);
+						BasisObjekt obj = objektModel.getRow(row);
+						if (row != -1 && obj.getBasisObjektarten().getObjektartid().intValue() != 40) {
 							manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
 							manager.switchModul("m_objekt_bearbeiten");
+						}
+						else if (row != -1 && obj.getBasisObjektarten().getObjektartid().intValue() == 40) {
+							manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
+							manager.switchModul("m_sielhaut1");
 						}
 					}
 				}

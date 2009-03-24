@@ -80,9 +80,9 @@ public class AtlSielhaut
     }
     
     /**
-     * Lädt ein Objekt aus der Datenbank.
-     * @param id Der Primärschlüssel des zu ladenden Objekts.
-     * @return  Das BasisObjekt mit dem Primärschlüssel oder <code>null</code>, 
+     * LÃ¤dt ein Objekt aus der Datenbank.
+     * @param id Der PrimÃ¤rschlÃ¼ssel des zu ladenden Objekts.
+     * @return  Das BasisObjekt mit dem PrimÃ¤rschlÃ¼ssel oder <code>null</code>, 
      * 			falls ein solches nicht gefunden wurde.
      */
     public static AtlSielhaut getSielhaut(Integer id) {
@@ -119,7 +119,7 @@ public class AtlSielhaut
 				try {
 					tx.rollback();
 				} catch (HibernateException e1) {
-					throw new RuntimeException("Datenbank-Fehler: tx.rollback() nicht möglich! (AtlSielhaut)", e);
+					throw new RuntimeException("Datenbank-Fehler: tx.rollback() nicht mÃ¶glich! (AtlSielhaut)", e);
 				}
 			}
 		} finally {

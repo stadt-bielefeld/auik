@@ -47,7 +47,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 	}
 
 	/**
-	 * Sucht Anhang49-Fachdatens‰tze nach bestimmten Kriterien.
+	 * Sucht Anhang49-Fachdatens√§tze nach bestimmten Kriterien.
 	 * 
 	 * @param sachbearbeiter
 	 *            Welche(r) SachbearbeiterIn (oder "")?
@@ -56,7 +56,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 	 * @param abwasserfrei
 	 * @param dekratuev
 	 * @param nurWiedervorlageAbgelaufen
-	 *            Sollen nur Datens‰tze angezeigt werden, deren Wiedervorlage in
+	 *            Sollen nur Datens√§tze angezeigt werden, deren Wiedervorlage in
 	 *            der Vergangenheit liegt?
 	 * @return Eine Liste mit den entstprechenden Anh49Fachdaten.
 	 */

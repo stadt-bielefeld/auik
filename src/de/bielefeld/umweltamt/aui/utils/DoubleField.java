@@ -10,7 +10,7 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
 /**
- * Ein JFormattedTextField zum Bearbeiten von Flieﬂkomma-Zahlen.
+ * Ein JFormattedTextField zum Bearbeiten von Flie√ükomma-Zahlen.
  * @author David Klotz
  */
 public class DoubleField extends BasicFormattedField {

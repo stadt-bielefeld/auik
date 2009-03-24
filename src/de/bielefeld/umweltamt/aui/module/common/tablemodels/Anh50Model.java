@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh50Model.java,v 1.1 2008-06-05 11:38:40 u633d Exp $
+ * $Id: Anh50Model.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 15.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:40  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.1  2005/08/24 08:42:52  u633d
  * - Auswertungen und anderes
  *
@@ -18,7 +21,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches TableModel für Anhang 50-Fachdaten.
+ * Ein einfaches TableModel fÃ¼r Anhang 50-Fachdaten.
  * @author David Klotz
  */
 public class Anh50Model extends ListTableModel {
@@ -62,7 +65,7 @@ public class Anh50Model extends ListTableModel {
 	}
 	
 	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
+	 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
 	 */
 	public void updateList() {
 	}

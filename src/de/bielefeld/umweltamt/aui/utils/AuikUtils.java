@@ -28,23 +28,23 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 
 /**
- * Diverse häufiger benötigte Utility-Methoden, die keiner anderen
- * Klasse zugeordnet werden können.
+ * Diverse hÃ¤ufiger benÃ¶tigte Utility-Methoden, die keiner anderen
+ * Klasse zugeordnet werden kÃ¶nnen.
  * @author David Klotz
  */
 public class AuikUtils {
-	/** Das Default-Datumsformat für JDateChooser */
+	/** Das Default-Datumsformat fÃ¼r JDateChooser */
 	public static final String DATUMSFORMAT = "dd.MM.yy";
-	/** Die Datumsformate für TextFieldDateChooser */
+	/** Die Datumsformate fÃ¼r TextFieldDateChooser */
 	public static final String[] DATUMSFORMATE = new String[]{DATUMSFORMAT, "dd.MM.yyyy"};
 	
-    // Für die Datums-Methoden
+    // FÃ¼r die Datums-Methoden
 	private static Calendar cal = null;
 	
 	/**
 	 * Startet den Standard-Betrachter / -Editor, der vom Betriebssystem
-	 * mit der Datei <code>f</code> verknüpft ist. 
-	 * @param f Die zu öffnende Datei.
+	 * mit der Datei <code>f</code> verknÃ¼pft ist. 
+	 * @param f Die zu Ã¶ffnende Datei.
 	 */
 	public static void spawnFileProg(File f) {
 //		final File ff = f;
@@ -63,10 +63,10 @@ public class AuikUtils {
 //						Thread.sleep(500);
 						Runtime.getRuntime().exec(comspec + " /c start \"Bitte warten...\" " + f.getName(), null, f.getParentFile());
 					} catch (IOException e) {
-						throw new RuntimeException("Konnte den Betrachter für " + f + " nicht starten!", e);
+						throw new RuntimeException("Konnte den Betrachter fÃ¼r " + f + " nicht starten!", e);
 					}
 				} else {
-					AUIKataster.debugOutput("Fehler beim spawnFileProg für " + f, "AuikUtils");
+					AUIKataster.debugOutput("Fehler beim spawnFileProg fÃ¼r " + f, "AuikUtils");
 				}
 //			}
 //		});
@@ -92,7 +92,7 @@ public class AuikUtils {
     }
     
     /**
-     * Liefert einen FileFilter für einen FileChooser, der nur Dateien
+     * Liefert einen FileFilter fÃ¼r einen FileChooser, der nur Dateien
      * mit einer bestimmten Erweiterung und Verzeichnisse anzeigt.
      * @param extension Die Erweiterung (bspw. "txt").
      * @return Einen FileFilter, der nur Dateien mit einer bestimmten Erweiterung anzeigt.
@@ -125,7 +125,7 @@ public class AuikUtils {
     }
     
     /**
-     * Liefert einen FileFilter für einen FileChooser, der nur Dateien
+     * Liefert einen FileFilter fÃ¼r einen FileChooser, der nur Dateien
      * mit bestimmten Erweiterungen und Verzeichnisse anzeigt.
      * @param extensions Die Erweiterungen (bspw. {"txt", "csv"}).
      * @return Einen FileFilter, der nur Dateien mit bestimmten Erweiterungen anzeigt.
@@ -150,7 +150,7 @@ public class AuikUtils {
 			}
 
 			public String getDescription() {
-				String desc = "Alle unterstützten Dateitypen";
+				String desc = "Alle unterstÃ¼tzten Dateitypen";
 				
 				if (extensions.length < 6) {
 					desc += " (";
@@ -172,7 +172,7 @@ public class AuikUtils {
     }
     
     /**
-     * Liefert eine kurze Beschreibung für Dateien eines bestimmten Typs. 
+     * Liefert eine kurze Beschreibung fÃ¼r Dateien eines bestimmten Typs. 
      * @param extension Die Erweiterung (bspw. "txt").
      * @return Die Beschreibung (bspw. "Textdatei (*.txt)").
      */
@@ -196,7 +196,7 @@ public class AuikUtils {
     
 	/**
 	 * Zeigt einen FileChooser, um eine Tabelle in eine CSV-Datei zu exportieren.
-	 * Fragt vor dem Überschreiben von bereits vorhandenen Dateien nach.
+	 * Fragt vor dem Ã¼berschreiben von bereits vorhandenen Dateien nach.
 	 * @param tabelle Die Tabelle.
 	 * @param frame Das HauptFrame um den Chooser anzuzeigen und eventuelle Meldungen auszugeben. 
 	 */
@@ -218,7 +218,7 @@ public class AuikUtils {
 			boolean doIt = false;
 			if (exportDatei.exists()) {
 				boolean answer = frame.showQuestion( 
-						"Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?", 
+						"Soll die vorhandene Datei "+exportDatei.getName()+" wirklich Ã¼berschrieben werden?", 
 						"Datei bereits vorhanden!");
 				if (answer && exportDatei.canWrite()) {
 					doIt = true;
@@ -240,7 +240,7 @@ public class AuikUtils {
 	}
     
     /**
-     * Speichert den Inhalt einer Tabelle (mit samt Überschriften) in 
+     * Speichert den Inhalt einer Tabelle (mit samt Ã¼berschriften) in 
      * eine CSV-Datei (mit Semikolons getrennt).
      * @param table Die Tabelle.
      * @param file Die Datei in die geschrieben werden soll.
@@ -307,7 +307,7 @@ public class AuikUtils {
     }
 	
 	/**
-	 * Erzeugt einen neuen MaskFormatter für ein FormattedTextField
+	 * Erzeugt einen neuen MaskFormatter fÃ¼r ein FormattedTextField
 	 * @param s The formatting mask
 	 * @return The new MaskFormatter created using the mask or <code>null</code> if the mask was bad 
 	 * @see <a href="http://java.sun.com/docs/books/tutorial/uiswing/components/formattedtextfield.html#maskformatter">Swing Tutorial (MaskFormatter)</a>
@@ -334,7 +334,7 @@ public class AuikUtils {
 	}
 	
 	/**
-	 * Liefert einen String der Form "dd.mm.JJJJ" für ein 
+	 * Liefert einen String der Form "dd.mm.JJJJ" fÃ¼r ein 
 	 * gegebenes Datums-Objekt.
 	 * @param date Das Datum
 	 * @return Einen String der Form "dd.mm.JJJJ" oder <code>null</code>, falls date <code>null</code> ist
@@ -357,7 +357,7 @@ public class AuikUtils {
 	}
 	
 	/**
-	 * Liefert einen String der Form "dd.mm.JJJJ" für das 
+	 * Liefert einen String der Form "dd.mm.JJJJ" fÃ¼r das 
 	 * aktuelle Datum.
 	 * @return Einen String der Form "dd.mm.JJJJ"
 	 */
@@ -380,7 +380,7 @@ public class AuikUtils {
 	
 	/**
 	 * Erzeugt ein Icon aus einem Bild aus dem Icons-Package. 
-	 * Der Dateiname muss ohne Pfad o.ä. (also einfach "bild.png")
+	 * Der Dateiname muss ohne Pfad o.Ã„. (also einfach "bild.png")
 	 * angegeben werden.
 	 * @param filename Der Name der Bilddatei (ohne Pfad)
 	 * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens gefunden wurde)
@@ -391,10 +391,10 @@ public class AuikUtils {
 	
 	/**
 	 * Erzeugt ein Icon aus einem Bild aus dem Icons-Package. 
-	 * Der Dateiname muss ohne Pfad o.ä. (also einfach "bild.png")
-	 * angegeben werden. Zusätzlich muss die Größe (32 für 32x32 etc.)
+	 * Der Dateiname muss ohne Pfad o.Ã„. (also einfach "bild.png")
+	 * angegeben werden. ZusÃ¤tzlich muss die GrÃ¶ÃŸe (32 fÃ¼r 32x32 etc.)
 	 * angegeben werden.
-	 * @param size Die Größe des Icons
+	 * @param size Die GrÃ¶ÃŸe des Icons
 	 * @param filename Der Name der Bilddatei (ohne Pfad)
 	 * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens gefunden wurde)
 	 */
@@ -404,7 +404,7 @@ public class AuikUtils {
 	
 	/**
 	 * Erzeugt ein Icon aus einem Bild aus dem Icons-Package. 
-	 * Der Dateiname muss ohne Pfad o.ä. (also einfach "bild.png")
+	 * Der Dateiname muss ohne Pfad o.Ã„. (also einfach "bild.png")
 	 * angegeben werden.
 	 * @param filename Der Name der Bilddatei (ohne Pfad)
 	 * @param description Eine kurze textuelle Beschreibung
@@ -416,10 +416,10 @@ public class AuikUtils {
 	
 	/**
 	 * Erzeugt ein Icon aus einem Bild aus dem Icons-Package. 
-	 * Der Dateiname muss ohne Pfad o.ä. (also einfach "bild.png")
-	 * angegeben werden. Zusätzlich muss die Größe (32 für 32x32 etc.)
+	 * Der Dateiname muss ohne Pfad o.Ã„. (also einfach "bild.png")
+	 * angegeben werden. ZusÃ¤tzlich muss die GrÃ¶ÃŸe (32 fÃ¼r 32x32 etc.)
 	 * angegeben werden.
-	 * @param size Die Größe des Icons
+	 * @param size Die GrÃ¶ÃŸe des Icons
 	 * @param filename Der Name der Bilddatei (ohne Pfad)
 	 * @param description Eine kurze textuelle Beschreibung
 	 * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens gefunden wurde)
@@ -450,7 +450,7 @@ public class AuikUtils {
 	}
 	
 	/**
-	 * Überprüft, ob wir unter XP und mit dem XP-Stil angezeigt werden.
+	 * Ã¼berprÃ¼ft, ob wir unter XP und mit dem XP-Stil angezeigt werden.
 	 * @return <code>true</code>, wenn der XP-Stil aktiv ist, sonst <code>false</code>
 	 */
 	public static boolean isUsingXpStyle() {

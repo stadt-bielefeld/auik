@@ -8,9 +8,11 @@
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
 
     <class name="VawsGefaehrdungsstufen" table="vaws_gefaehrdungsstufen">
-        <id name="gefaehrdungsstufen" column="gefaehrdungsstufen" type="java.lang.String">
-            <generator class="assigned"/>
+         <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native"/>
         </id>
+        
+        <property name="gefaehrdungsstufen" column="gefaehrdungsstufen" type="java.lang.String"/>
 
     </class>
 

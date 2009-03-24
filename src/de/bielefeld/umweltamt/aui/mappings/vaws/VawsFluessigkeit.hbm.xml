@@ -8,11 +8,11 @@
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
 
     <class name="VawsFluessigkeit" table="vaws_fluessigkeit" mutable="false">
-        <id name="fluessigkeit" column="fluessigkeit" type="java.lang.String">
+        <id name="id" column="id" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>
 
-		<!--<property name="fluessigkeit" column="fluessigkeit" type="java.lang.String" />-->
+		<property name="fluessigkeit" column="fluessigkeit" type="java.lang.String" />
         <property name="idland" column="idland" type="java.lang.Integer" />
     </class>
 

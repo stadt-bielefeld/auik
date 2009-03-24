@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SielImport.java,v 1.2 2008-07-23 06:55:22 u633d Exp $
+ * $Id: SielImport.java,v 1.3 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 04.07.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/07/23 06:55:22  u633d
+ * Anh49 Auswertung und Sielhautimport neu
+ *
  * Revision 1.1  2008/06/05 11:38:33  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -114,7 +117,7 @@ public class SielImport extends AbstractModul {
 				}
 				String[] tmp = line.split(";");
 				if (tmp.length != 8) {
-					throw new IOException("Datei ist beschädigt!");
+					throw new IOException("Datei ist beschÃ¤digt!");
 				}
 				//System.out.println(count + ": " + line);
 				
@@ -163,7 +166,7 @@ public class SielImport extends AbstractModul {
 		private String kennummerAusZeile(String[] zeile) {
 			String tmp = zeile[3].replaceFirst(" \\(.*\\)", "");
 			
-			// Für neueres Format, bei dem die Kennnummer in der
+			// FÃ¼r neueres Format, bei dem die Kennnummer in der
 			// Form "Sielhautprobe 5071 (Adenauer)" angegeben ist:
 //			if (tmp.indexOf("(") != -1) {
 //				tmp = tmp.replaceFirst(" \\(.*\\)", "");
@@ -217,7 +220,7 @@ public class SielImport extends AbstractModul {
 				try {
 					updateList();
 				} catch (Exception e) {
-					frame.showErrorMessage("<html>Konnte Datei nicht öffnen: <br>"+e.getLocalizedMessage()+"</html>");
+					frame.showErrorMessage("<html>Konnte Datei nicht Ã¶ffnen: <br>"+e.getLocalizedMessage()+"</html>");
 					switchToStep(1);
 					return;
 				}
@@ -225,10 +228,10 @@ public class SielImport extends AbstractModul {
 					switchToStep(2);
 					selectAllImportableRows();
 				} else {
-					frame.showInfoMessage("Die Datei enthält keine importierbaren Analysepositionen!", "Import");
+					frame.showInfoMessage("Die Datei enthÃ¤lt keine importierbaren Analysepositionen!", "Import");
 				}
 			} else {
-				frame.showErrorMessage("Konnte die angegebene Datei nicht öffnen!", "Fehler beim Öffnen");
+				frame.showErrorMessage("Konnte die angegebene Datei nicht Ã¶ffnen!", "Fehler beim Ã¶ffnen");
 			}
 		}
 		
@@ -251,19 +254,19 @@ public class SielImport extends AbstractModul {
 						// Probenahme
 						AtlProbenahmen probe = AtlProbenahmen.getProbenahme(kennumer, true);
 						if (probe == null) {
-							// Sollte eigentlich nicht vorkommen, nötig?
+							// Sollte eigentlich nicht vorkommen, nÃ¶tig?
 							throw new Exception("Probenahme nicht gefunden!");
 						}
 						probe.addAnalyseposition(pos);
 						
 						// Wert
-						Double wert;
+						Float wert;
 						String strWert = wertAusZeile(current);
 						if (strWert.startsWith("<")) {
 							pos.setGrkl("<");
 							strWert = strWert.replaceFirst("< *", "");
 						}
-						wert = new Double(decform.parse(strWert).doubleValue());
+						wert = new Float(decform.parse(strWert).floatValue());
 						pos.setWert(wert);
 						
 						// Parameter
@@ -281,8 +284,8 @@ public class SielImport extends AbstractModul {
 								problemMessage += "Unbekannter Parameter: "+ sParam;
 							}
 						} else {
-							// Sollte eigentlich auch nicht vorkommen, nötig?
-							throw new Exception("Importdatei beschädigt!");
+							// Sollte eigentlich auch nicht vorkommen, nÃ¶tig?
+							throw new Exception("Importdatei beschÃ¤digt!");
 						}
 						
 						// Einheit
@@ -314,7 +317,7 @@ public class SielImport extends AbstractModul {
 					}
 				}
 				
-				frame.changeStatus(importCount + " Datensätze importiert!");
+				frame.changeStatus(importCount + " DatensÃ¤tze importiert!");
 				switchToStep(1);
 				if (!problemMessage.equals("")) {
 					throw new Exception(problemMessage);
@@ -450,8 +453,8 @@ public class SielImport extends AbstractModul {
 
 	private JButton getDateiButton() {
 		if (dateiButton == null) {
-			dateiButton = new JButton("Datei wählen");
-			dateiButton.setToolTipText("Wählt eine Datei zum Importieren aus");
+			dateiButton = new JButton("Datei wÃ¤hlen");
+			dateiButton.setToolTipText("WÃ¤hlt eine Datei zum Importieren aus");
 			dateiButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					File file = frame.openFile(new String[]{"csv"});
@@ -475,7 +478,7 @@ public class SielImport extends AbstractModul {
 	private JButton getImportButton() {
 		if (importButton == null) {
 			importButton = new JButton("Importieren");
-			importButton.setToolTipText("Importiert die gewählten Analysepositionen");
+			importButton.setToolTipText("Importiert die gewÃ¤hlten Analysepositionen");
 			importButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
@@ -493,7 +496,7 @@ public class SielImport extends AbstractModul {
 	private JLabel getErklaerungsLabel() {
 		if (erklaerungsLabel == null) {
 			String sErklaerung = "<html>" +
-					"<font color=green>Grün:</font> Position kann problemlos importiert werden.<br>" +
+					"<font color=green>GrÃ¼n:</font> Position kann problemlos importiert werden.<br>" +
 					"<font color=red>Rot:</font> Probenahme nicht gefunden oder Parameter/Einheit unbekannt." +
 					"</html>";
 			erklaerungsLabel = new JLabel(sErklaerung);
@@ -507,10 +510,10 @@ public class SielImport extends AbstractModul {
 				fileImporter = new FileImporter();
 			}
 			importTabelle = new JTable(fileImporter);
-			// Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
+			// Wir wollen wissen, wenn eine andere Zeile ausgewÃ¤hlt wurde
 			importTabelle.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				public void valueChanged(ListSelectionEvent e) {
-					// Überzählige Events ignorieren
+					// Ã¼berzÃ¤hlige Events ignorieren
 					if (e.getValueIsAdjusting()) {
 						return;
 					}

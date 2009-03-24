@@ -4,7 +4,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches TableModel für Anhang 55-Fachdaten.
+ * Ein einfaches TableModel fÃ¼r Anhang 55-Fachdaten.
  * @author Gerd Genuit
  */
 public class Anh55Model extends ListTableModel {
@@ -44,7 +44,7 @@ public class Anh55Model extends ListTableModel {
 	}
 	
 	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
+	 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
 	 */
 	public void updateList() {
 	}

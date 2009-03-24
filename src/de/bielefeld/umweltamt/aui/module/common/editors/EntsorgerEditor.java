@@ -1,25 +1,28 @@
 /*
  * Datei:
- * $Id: EntsorgerEditor.java,v 1.1 2008-06-05 11:38:41 u633d Exp $
+ * $Id: EntsorgerEditor.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:41  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.4  2005/06/10 11:07:09  u633z
  * - Datenbank-Zugriffe komplett in DB-Klassen ausgelagert
- * - Einige DB-Klassen vervollst‰ndigt
+ * - Einige DB-Klassen vervollst√§ndigt
  *
  * Revision 1.3  2005/06/09 10:17:00  u633z
  * - doSave verbessert
  *
  * Revision 1.2  2005/06/08 08:36:59  u633z
- * - ‹berfl¸ssigen ModulManager und Exception aus Editoren entfernt
+ * - √ºberfl√ºssigen ModulManager und Exception aus Editoren entfernt
  *
  * Revision 1.1  2005/05/30 08:35:41  u633z
- * - Aufger‰umt, mehrere neue Packages, Klassen sortiert
+ * - Aufger√§umt, mehrere neue Packages, Klassen sortiert
  *
  * Revision 1.2  2005/05/24 15:19:21  u633z
- * - Unnˆtiges neu laden des Betreiber-Caches entfernt
- * - Header hinzugef¸gt
+ * - Unn√∂tiges neu laden des Betreiber-Caches entfernt
+ * - Header hinzugef√ºgt
  *
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
@@ -94,7 +97,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
 				// Zeilen:
 				"pref, 3dlu, " +	//1	Stammdaten --------
 				"pref, 3dlu, " +	//3	Name
-				"pref, 3dlu, " +	//5	Straﬂe Hausnr
+				"pref, 3dlu, " +	//5	Stra√üe Hausnr
 				"pref, 3dlu, " +	//7 Plz Ort
 				"pref");			//9 Telefon
 				/*, 3dlu, " +	//9
@@ -116,7 +119,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
 		builder.addSeparator("Stammdaten",	cc.xyw(1, 1, 8));
 		builder.addLabel("Name:",			cc.xy( 1, 3));
 		builder.add(namenFeld,				cc.xyw(3, 3, 6));
-		builder.addLabel("Straﬂe:",			cc.xy( 1, 5));
+		builder.addLabel("Stra√üe:",			cc.xy( 1, 5));
 		builder.add(strassenFeld, 			cc.xyw(3, 5, 4));
 		builder.add(hausnrFeld, 			cc.xy( 8, 5));
 		// Ort
@@ -158,7 +161,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
 		} else {
 			getEntsorger().setEntsorger(name);
 		}
-		// Straﬂe
+		// Stra√üe
 		String stra = strassenFeld.getText();
 		if ("".equals(stra)) {
 			getEntsorger().setStrasse(null);
@@ -202,7 +205,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
 		
 		if (getEntsorger() != null) {
 			success = true;
-			AUIKataster.debugOutput("ƒnderungen gespeichert!", "editEntsorger");
+			AUIKataster.debugOutput("√Ñnderungen gespeichert!", "editEntsorger");
 		} else {
 			success = false;
 		}

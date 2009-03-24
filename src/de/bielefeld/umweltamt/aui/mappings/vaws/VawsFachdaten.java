@@ -68,7 +68,7 @@ public class VawsFachdaten
 	// Anlagenart:
 	
 	public boolean isAbfuellflaeche() {
-		if ("Abfüllfläche".equals(getAnlagenart())) {
+		if ("AbfÃ¼llflÃ¤che".equals(getAnlagenart())) {
 			return true;
 		} else {
 			return false;
@@ -111,13 +111,13 @@ public class VawsFachdaten
 	// TRUE und FALSE sind in dieser Klasse definierte 
 	// Short-Konstanten.
 	
-	// Der Grund, warum ich nicht einfach TRUE.equals(getXyz()) o.ä.
-	// zurück liefere ist, dass eigentlich nur festgelegt ist,
+	// Der Grund, warum ich nicht einfach TRUE.equals(getXyz()) o.Ã„.
+	// zurÃ¼ck liefere ist, dass eigentlich nur festgelegt ist,
 	// dass 0 == false ist. Deshalb ist alles ausser 0 und NULL
 	// bei mir true.
 	
 	/**
-     * Liefert alle VAWS-Fachdatensätze zu einem bestimmten BasisObjekt.
+     * Liefert alle VAWS-FachdatensÃ¤tze zu einem bestimmten BasisObjekt.
      * @param objekt Das BasisObjekt.
      * @return Eine Liste mit VawsFachdaten.
      */
@@ -133,7 +133,7 @@ public class VawsFachdaten
 					    .setEntity(0, objekt)
 					    .list();
 					    
-				AUIKataster.debugOutput(vaws.size() + " VawsFachdatensätze für BO " + objekt + " gefunden!", "VawsFachdaten");
+				AUIKataster.debugOutput(vaws.size() + " VawsFachdatensÃ¤tze fÃ¼r BO " + objekt + " gefunden!", "VawsFachdaten");
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler", e);
 			} finally {
@@ -148,7 +148,7 @@ public class VawsFachdaten
 	
 	
 	/**
-     * Liefert alle VAWS-Fachdatensätze zu einem bestimmten BasisObjekt.
+     * Liefert alle VAWS-FachdatensÃ¤tze zu einem bestimmten BasisObjekt.
      * @param objekt Das BasisObjekt.
      * @return Eine Liste mit VawsFachdaten.
      */
@@ -200,9 +200,9 @@ public class VawsFachdaten
     }
     
     /**
-     * Löscht einen vorhandenen Datensatz aus der Datenbank.
-     * @param fachdaten Der Datensatz, der gelöscht werden soll.
-     * @return <code>true</code>, wenn der Datensatz gelöscht wurde oder 
+     * LÃ¶scht einen vorhandenen Datensatz aus der Datenbank.
+     * @param fachdaten Der Datensatz, der gelÃ¶scht werden soll.
+     * @return <code>true</code>, wenn der Datensatz gelÃ¶scht wurde oder 
      * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Datensatz 
      * nicht in der Datenbank existiert).
      */
@@ -234,13 +234,13 @@ public class VawsFachdaten
     }
     
     /**
-     * Liefert alle VAWS-Ausführungen. 
+     * Liefert alle VAWS-AusfÃ¼hrungen. 
      * <br><b>ACHTUNG:</b> Liefert nicht alle VawsFachdaten, sondern 
      * alle in der Spalte "AUSFUEHRUNG" benutzten Werte!
-     * @return Ein Array mit den Namen aller Ausführungen.
+     * @return Ein Array mit den Namen aller AusfÃ¼hrungen.
      */
     public static String[] getAusfuehrungen() {
-    	// FIXME: select distinct nicht die beste Lösung
+    	// FIXME: select distinct nicht die beste LÃ¶sung
 		List list;
 		String suchString = "select distinct fd.ausfuehrung " +
 				"from VawsFachdaten fd " +

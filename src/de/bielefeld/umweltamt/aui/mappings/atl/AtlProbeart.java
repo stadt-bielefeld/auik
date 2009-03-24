@@ -149,7 +149,7 @@ public class AtlProbeart
 	
 	/**
 	 * Liefert alle vorhandenen Probearten. 
-	 * ÷ffnet eine neue Hibernate-Session und schlieﬂt sie wieder. 
+	 * √∂ffnet eine neue Hibernate-Session und schlie√üt sie wieder. 
 	 * @return Alle vorhandenen Probearten
 	 */
 	public static AtlProbeart[] getProbearten() {

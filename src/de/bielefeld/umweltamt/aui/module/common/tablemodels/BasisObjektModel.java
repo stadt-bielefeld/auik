@@ -6,7 +6,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 /**
- * Ein TableModel für die Basis-Objektdaten bei der Betreiber/Standort-Suche.
+ * Ein TableModel fÃ¼r die Basis-Objektdaten bei der Betreiber/Standort-Suche.
  * @author David Klotz
  */
 public class BasisObjektModel extends ListTableModel {
@@ -14,7 +14,7 @@ public class BasisObjektModel extends ListTableModel {
 	private String abteilung;
 	
 	/**
-	 * Erzeugt ein TableModel für BasisObjekte. Der Parameter
+	 * Erzeugt ein TableModel fÃ¼r BasisObjekte. Der Parameter
 	 * secondColumn entscheidet, was in der zweiten Tabellen-Spalte
 	 * angezeigt wird.
 	 * @param secondColumn Entweder "Standort" oder "Betreiber"
@@ -108,6 +108,30 @@ public class BasisObjektModel extends ListTableModel {
 	 * @param standortId Die Standort-Id
 	 */
 	public void searchByStandort(BasisStandort standort) {
-		setList(BasisObjekt.getObjekteByStandort(standort, abteilung));
+		setList(BasisObjekt.getObjekteByStandort(standort, abteilung, null));
+	}
+	
+	/** 
+	 * Durchsucht den Tabelleninhalt nach der Standort-Id.
+	 * @param standortId Die Standort-Id
+	 */
+	public void searchByStandort(BasisStandort standort, String abteilung) {
+		setList(BasisObjekt.getObjekteByStandort(standort, abteilung, null));
+	}
+	
+	/** 
+	 * Durchsucht den Tabelleninhalt nach der Standort-Id.
+	 * @param standortId Die Standort-Id
+	 */
+	public void searchByStandort(BasisStandort standort, String abteilung, Integer nichtartid) {
+		setList(BasisObjekt.getObjekteByStandort(standort, abteilung, nichtartid));
+	}
+	
+	/** 
+	 * Durchsucht den Tabelleninhalt nach der Standort-Id.
+	 * @param standortId Die Standort-Id
+	 */
+	public void searchByStandort(BasisStandort standort, Integer istartid) {
+		setList(BasisObjekt.getObjekteByStandort(standort, istartid));
 	}
 }

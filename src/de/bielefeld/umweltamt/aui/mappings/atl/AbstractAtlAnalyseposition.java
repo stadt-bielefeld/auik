@@ -35,7 +35,7 @@ public abstract class AbstractAtlAnalyseposition
     private java.lang.String grkl;
 
     /** The value of the simple wert property. */
-    private java.lang.Double wert;
+    private java.lang.Float wert;
 
     /** The value of the simple analyseVon property. */
     private java.lang.String analyseVon;
@@ -139,7 +139,7 @@ public abstract class AbstractAtlAnalyseposition
      * Return the value of the WERT column.
      * @return java.lang.Double
      */
-    public java.lang.Double getWert()
+    public java.lang.Float getWert()
     {
         return this.wert;
     }
@@ -148,7 +148,7 @@ public abstract class AbstractAtlAnalyseposition
      * Set the value of the WERT column.
      * @param wert
      */
-    public void setWert(java.lang.Double wert)
+    public void setWert(java.lang.Float wert)
     {
         this.wert = wert;
     }

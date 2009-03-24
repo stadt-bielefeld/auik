@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 09.04.2008 14:16:11 by Hibernate Tools 3.1.0.beta5 -->
+<!-- Generated 01.09.2008 14:20:15 by Hibernate Tools 3.2.0.beta8 -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.BasisObjektverknuepfung" table="basis_objektverknuepfung" schema="public">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.BasisObjektverknuepfungId">
-            <key-property name="id" type="int">
-                <column name="id" />
-            </key-property>
-            <key-property name="objekt" type="java.lang.Integer">
-                <column name="objekt" />
-            </key-property>
-            <key-property name="istVerknuepftMit" type="java.lang.Integer">
-                <column name="ist_verknuepft_mit" />
-            </key-property>
-        </composite-id>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung" table="basis_objektverknuepfung">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native">
+                <param name="sequence">basis_objektverknuepfung_id_seq</param>
+        	</generator>
+        </id>
+        <many-to-one name="basisObjektByIstVerknuepftMit" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select">
+            <column name="ist_verknuepft_mit" />
+        </many-to-one>
+        <many-to-one name="basisObjektByObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select">
+            <column name="objekt" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

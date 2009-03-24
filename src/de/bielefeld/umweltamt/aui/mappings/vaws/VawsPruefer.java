@@ -30,8 +30,8 @@ public class VawsPruefer
     /* Add customized code below */
 
     /**
-     * Liefert alle Prüfer für die Sachverständigenprüfung.
-     * @return Ein Array mit den Namen aller Prüfer.
+     * Liefert alle PrÃ¼fer fÃ¼r die SachverstÃ¤ndigenprÃ¼fung.
+     * @return Ein Array mit den Namen aller PrÃ¼fer.
      */
     public static String[] getAllPruefer() {
 		List list;

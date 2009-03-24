@@ -555,6 +555,115 @@ where vaws.atl_sielhaut.id = ?</property>
                         <column id="207">
                             <property name="width">1.718in</property>
                         </column>
+                        <row id="267">
+                            <cell id="268">
+                                <property name="paddingTop">3px</property>
+                                <property name="paddingLeft">10px</property>
+                                <property name="paddingBottom">3px</property>
+                                <property name="paddingRight">3px</property>
+                                <label id="270">
+                                    <text-property name="text">ID</text-property>
+                                </label>
+                            </cell>
+                            <cell id="269">
+                                <property name="paddingTop">3px</property>
+                                <property name="paddingLeft">10px</property>
+                                <property name="paddingBottom">3px</property>
+                                <property name="paddingRight">3px</property>
+                                <data id="272">
+                                    <property name="fontWeight">bold</property>
+                                    <property name="dataSet">Sielhaut</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">id</property>
+                                            <expression name="expression">dataSetRow["id"]</expression>
+                                            <property name="dataType">integer</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">bezeichnung</property>
+                                            <expression name="expression">dataSetRow["bezeichnung"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">haltungsnr</property>
+                                            <expression name="expression">dataSetRow["bezeichnung"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">alarmplannr</property>
+                                            <expression name="expression">dataSetRow["alarmplannr"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">entgeb</property>
+                                            <expression name="expression">dataSetRow["entgeb"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">rechtswert</property>
+                                            <expression name="expression">dataSetRow["rechtswert"]</expression>
+                                            <property name="dataType">decimal</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">hochwert</property>
+                                            <expression name="expression">dataSetRow["hochwert"]</expression>
+                                            <property name="dataType">decimal</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">lage</property>
+                                            <expression name="expression">dataSetRow["lage"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">bemerkungen</property>
+                                            <expression name="expression">dataSetRow["bemerkungen"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">twabfluss</property>
+                                            <expression name="expression">dataSetRow["twabfluss"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">bsb</property>
+                                            <expression name="expression">dataSetRow["bsb"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">ew</property>
+                                            <expression name="expression">dataSetRow["ew"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">gebiet</property>
+                                            <expression name="expression">dataSetRow["gebiet"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">p_sielhaut</property>
+                                            <expression name="expression">dataSetRow["p_sielhaut"]</expression>
+                                            <property name="dataType">any</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">p_alarmplan</property>
+                                            <expression name="expression">dataSetRow["p_alarmplan"]</expression>
+                                            <property name="dataType">any</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">p_nachprobe</property>
+                                            <expression name="expression">dataSetRow["p_nachprobe"]</expression>
+                                            <property name="dataType">any</property>
+                                        </structure>
+                                        <structure>
+                                            <property name="name">schlammprobe</property>
+                                            <expression name="expression">dataSetRow["schlammprobe"]</expression>
+                                            <property name="dataType">any</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">bezeichnung</property>
+                                </data>
+                            </cell>
+                        </row>
                         <row id="208">
                             <property name="backgroundColor">#D8D8D8</property>
                             <cell id="209">

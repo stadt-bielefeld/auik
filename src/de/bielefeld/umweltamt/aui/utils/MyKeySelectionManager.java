@@ -9,7 +9,7 @@ import javax.swing.JComboBox.KeySelectionManager;
 /**
  * Ein KeySelectionManager, der das Datenmodell basierend auf den 
  * eingegebenen Buchstaben durchsucht. 
- * Wenn die Zeit zwischen zwei Tastendrücken größer als maxTimeDif
+ * Wenn die Zeit zwischen zwei TastendrÃ¼cken grÃ¶ÃŸer als maxTimeDif
  * ist, wird mit der Suche von vorne angefangen.
  * @author David Klotz
  * @see <a href="http://emoxie.com/whitepapers/ExtendSwing-v2.html">Extending Swing By Example</a>
@@ -23,12 +23,12 @@ public class MyKeySelectionManager implements KeySelectionManager {
 	/**
 	 * Durchsucht das Datenmodell basierend auf dem eingegebenen
 	 * Buchstaben. 
-	 * Wenn die Zeit zwischen zwei Tastendrücken größer als maxTimeDif
+	 * Wenn die Zeit zwischen zwei TastendrÃ¼cken grÃ¶ÃŸer als maxTimeDif
 	 * ist, wird mit der Suche von vorne angefangen.
 	 * 
 	 * @param aKey Der getippte Buchstabe
 	 * @param aModel Das Model der ComboBox
-	 * @return Den Index des ausgewählten Items
+	 * @return Den Index des ausgewÃ¤hlten Items
 	 */
 	public int selectionForKey(char aKey, ComboBoxModel aModel) {
 		int iCount = aModel.getSize();
@@ -77,18 +77,18 @@ public class MyKeySelectionManager implements KeySelectionManager {
 	}
 	
 	/**
-	 * Liefert die maximale Zeit zwischen zwei Tastendrücken, über
+	 * Liefert die maximale Zeit zwischen zwei TastendrÃ¼cken, Ã¼ber
 	 * der angenommen wird, dass eine neue Suche begonnen werden soll.
-	 * @return Die maximale Zeit zwischen zwei Tastendrücken.
+	 * @return Die maximale Zeit zwischen zwei TastendrÃ¼cken.
 	 */
 	public long getMaxTimeDif() {
 		return maxTimeDif;
 	}
 	
 	/**
-	 * Setzt die maximale Zeit zwischen zwei Tastendrücken, über
+	 * Setzt die maximale Zeit zwischen zwei TastendrÃ¼cken, Ã¼ber
 	 * der angenommen wird, dass eine neue Suche begonnen werden soll.
-	 * @param maxTimeDif Die neue maximale Zeit zwischen zwei Tastendrücken.
+	 * @param maxTimeDif Die neue maximale Zeit zwischen zwei TastendrÃ¼cken.
 	 */
 	public void setMaxTimeDif(long maxTimeDif) {
 		this.maxTimeDif = maxTimeDif;

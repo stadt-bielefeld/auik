@@ -18,7 +18,7 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
  * Eine Klasse, die eine Zeile der 'BASIS_STANDORT'-Tabelle 
- * repr‰sentiert.
+ * repr√§sentiert.
  */
 public class BasisStandort
     extends AbstractBasisStandort
@@ -44,7 +44,7 @@ public class BasisStandort
     
     /**
      * Liefert einen String der Form "Strasse Nr.NrZusatz", also
-     * beispielsweise "Ravensberger Straﬂe 77", "Apfelstraﬂe 23b" 
+     * beispielsweise "Ravensberger Stra√üe 77", "Apfelstra√üe 23b" 
      * oder "Jahnplatz 41-42".
      */
     public String toString() {
@@ -60,7 +60,7 @@ public class BasisStandort
     
 	/**
 	 * Liefert einen Standort mit einer bestimmten ID.
-	 * @param id Die ID (der Prim‰rschl¸ssel) des Standorts.
+	 * @param id Die ID (der Prim√§rschl√ºssel) des Standorts.
 	 * @return Den gesuchten Standort oder <code>null</code>, 
 	 * falls kein Standort mit dieser ID existiert.
 	 */
@@ -78,11 +78,11 @@ public class BasisStandort
     }
     
     /**
-     * Durchsucht die Standort-Tabelle nach Straﬂe und Hausnummer.. 
-     * Bei der Straﬂe wird Groﬂ-/Kleinschreibung ignoriert und automatisch ein
-	 * '%' angeh‰ngt.
-	 * Wenn die Hausnummer -1 ist, wird nur nach der Straﬂe gesucht.
-     * @param strasse Der Straﬂenname (oder sein Anfang).
+     * Durchsucht die Standort-Tabelle nach Stra√üe und Hausnummer.. 
+     * Bei der Stra√üe wird Gro√ü-/Kleinschreibung ignoriert und automatisch ein
+	 * '%' angeh√§ngt.
+	 * Wenn die Hausnummer -1 ist, wird nur nach der Stra√üe gesucht.
+     * @param strasse Der Stra√üenname (oder sein Anfang).
      * @param hausnr Die Hausnummer (oder -1, falls nicht nach einer bestimmten Hausnummer gesucht werden soll)
      * @return Eine Liste mit allen gefundenen Standorten.
      */
@@ -135,10 +135,10 @@ public class BasisStandort
 			// Neue Session beginnen
 			Session session = HibernateSessionFactory.currentSession();
 			
-			// Alle ƒnderungen in einer Transaktion zusammenfassen
+			// Alle √Ñnderungen in einer Transaktion zusammenfassen
 			tx = session.beginTransaction();
 			
-			// Speichern / Transaktion durchf¸hren
+			// Speichern / Transaktion durchf√ºhren
 			session.saveOrUpdate(bsta);
 			bstaRet = bsta;
 
@@ -148,22 +148,22 @@ public class BasisStandort
 			AUIKataster.debugOutput("Neuer Standort "+ bsta +" gespeichert!", "BasisStandort.saveStandort");
 			//manager.getCache().invalidateCache("standorte");
 			
-			// Formular zur¸cksetzen
+			// Formular zur√ºcksetzen
 			//clearForm();
 		} catch (HibernateException e) {
 			bstaRet = null;
 			e.printStackTrace();
-			// Falls w‰hrend der ƒnderungen ein Hibernate Fehler auftritt
+			// Falls w√§hrend der √Ñnderungen ein Hibernate Fehler auftritt
 			if (tx != null) {
 				try {
-					// Alle ƒnderungen r¸ckg‰ngig machen
+					// Alle √Ñnderungen r√ºckg√§ngig machen
 					tx.rollback();
 				} catch (HibernateException e1) {
 					throw new RuntimeException("Datenbank-Fehler (BasisStandort)", e);
 				}
 			}
 		} finally {
-			// Am Ende (egal ob erfolgreich oder nicht) die Session schlieﬂen
+			// Am Ende (egal ob erfolgreich oder nicht) die Session schlie√üen
 			HibernateSessionFactory.closeSession();
 		}
 		
@@ -171,11 +171,11 @@ public class BasisStandort
     }
     
     /**
-	 * Liefert alle in der Tabelle benutzten Entw‰sserungsgebiete als Strings.
+	 * Liefert alle in der Tabelle benutzten Entw√§sserungsgebiete als Strings.
 	 * <br><b>ACHTUNG:</b> Diese Methode liefert <b>nicht</b> alle 
 	 * Standorte, sondern alle in der Spalte ENTWGEB benutzten Werte!
 	 * @param session Eine Hibernate-Session
-	 * @return Alle zur Zeit benutzten Entw‰sserungsgebiete
+	 * @return Alle zur Zeit benutzten Entw√§sserungsgebiete
 	 * @throws HibernateException Wenn ein Datenbank-Fehler auftritt
 	 */
 	private static String[] getEntwGebiete(Session session) throws HibernateException {
@@ -191,10 +191,10 @@ public class BasisStandort
 	}
 	
     /**
-	 * Liefert alle in der Tabelle benutzten Entw‰sserungsgebiete als Strings.
+	 * Liefert alle in der Tabelle benutzten Entw√§sserungsgebiete als Strings.
 	 * <br><b>ACHTUNG:</b> Diese Methode liefert <b>nicht</b> alle 
 	 * Standorte, sondern alle in der Spalte ENTWGEB benutzten Werte!
-	 * @return Alle zur Zeit benutzten Entw‰sserungsgebiete
+	 * @return Alle zur Zeit benutzten Entw√§sserungsgebiete
 	 */
 	public static String[] getEntwGebiete() {
 		String[] tmp;

@@ -39,7 +39,7 @@ import de.bielefeld.umweltamt.aui.utils.TabAction;
  * @author David Klotz
  */
 public class BetreiberEditor extends AbstractBaseEditor {
-	// Für die Comboboxen beim Bearbeiten
+	// FÃ¼r die Comboboxen beim Bearbeiten
 	private static String[] strassen = null;
 	private static VawsWirtschaftszweige[] wirtschaftszweige = null;
 	
@@ -95,14 +95,14 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		revdatumsFeld = new JTextField();
 		revdatumsFeld.setEditable(false);
 		revdatumsFeld.setFocusable(false);
-		revdatumsFeld.setToolTipText("Wird bei Änderungen automatisch aktualisiert.");
+		revdatumsFeld.setToolTipText("Wird bei Ã„nderungen automatisch aktualisiert.");
 		
 		handzeichenAltFeld = new JTextField();
 		handzeichenAltFeld.setEditable(false);
 		handzeichenAltFeld.setFocusable(false);
 		handzeichenAltFeld.setToolTipText("Handzeichen der letzten Revision");
 		handzeichenNeuFeld = new LimitedTextField(10, "");
-		handzeichenNeuFeld.setToolTipText("Neues Handzeichen bei Änderungen obligatorisch!");
+		handzeichenNeuFeld.setToolTipText("Neues Handzeichen bei Ã„nderungen obligatorisch!");
 		
 		bemerkungsArea = new LimitedTextArea(2000);
 		bemerkungsArea.setLineWrap(true);
@@ -155,7 +155,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		//strassenFeld.addKeyListener(escEnterListener);
 		wirtschaftszweigBox.addKeyListener(escEnterListener);
 		
-		// Ermögliche TAB aus dem Bemerkungs-Feld zu springen
+		// ErmÃ¶gliche TAB aus dem Bemerkungs-Feld zu springen
 		bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
 		bemerkungsScroller.getHorizontalScrollBar().setFocusable(false);
 		TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
@@ -203,8 +203,8 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		
 		// Adresse --------------------------------------
 		builder.addSeparator("Adresse", cc.xyw(1,11,10));
-		// Straße
-		builder.addLabel("Straße:",	cc.xy( 1,13));
+		// StraÃŸe
+		builder.addLabel("StraÃŸe:",	cc.xy( 1,13));
 		builder.add(strassenBox, 	cc.xyw(3,13,4));
 		builder.add(hausnrFeld, 	cc.xy( 8,13));
 		builder.add(hausnrZusFeld, 	cc.xy(10,13));
@@ -308,12 +308,12 @@ public class BetreiberEditor extends AbstractBaseEditor {
 				frame.clearStatus();
 			}
 		};
-		frame.changeStatus("Beschäftigt...");
+		frame.changeStatus("BeschÃ¤ftigt...");
 		worker.start();
 	}
 	
 	protected boolean canSave() {
-		// Eingaben überprüfen:
+		// Eingaben Ã¼berprÃ¼fen:
 		if (namenFeld.getText().equals("")) {
 			// Der Name darf nicht leer sein
 			namenLabel.setForeground(HauptFrame.ERROR_COLOR);
@@ -362,14 +362,14 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		} else {
 			getBetreiber().setBetrnamezus(nameZusatz);
 		}
-		// Straße
+		// StraÃŸe
 		String stra = (String) strassenBox.getSelectedItem();
 		if (stra != null) {
 			stra = stra.trim();
 			
 			// Weil ich bis jetzt noch keine LimitedComboBox oder so habe...
 			if (stra.length() > 50) {
-				// ... kürze ich hier den String auf 50 Zeichen
+				// ... kÃ¼rze ich hier den String auf 50 Zeichen
 				stra = stra.substring(0, 50);
 			}
 			
@@ -489,13 +489,13 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		
 		getBetreiber().setRevidatum(Calendar.getInstance().getTime());
 		
-		//frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
+		//frame.changeStatus("Keine Ã„nderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
 		
 		BasisBetreiber betr = BasisBetreiber.saveBetreiber(getBetreiber());
 		
 		if (betr != null) {
 			setEditedObject(betr);
-			AUIKataster.debugOutput("Änderungen gespeichert!", "editStandort");
+			AUIKataster.debugOutput("Ã„nderungen gespeichert!", "editStandort");
 			return true;
 		} else {
 			return false;

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ProbeSuchen.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Id: ProbeSuchen.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 23.05.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:33  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.9  2005/09/07 10:48:22  u633d
  * - Version vom 7.9.05
  *
@@ -13,13 +16,13 @@
  * - Auswertungen und anderes
  *
  * Revision 1.7  2005/06/02 15:18:40  u633z
- * - Submit-Buttons bei Suchen hinzugefügt
+ * - Submit-Buttons bei Suchen hinzugefÃ¼gt
  *
  * Revision 1.6  2005/05/30 08:35:42  u633z
- * - Aufgeräumt, mehrere neue Packages, Klassen sortiert
+ * - AufgerÃ¤umt, mehrere neue Packages, Klassen sortiert
  *
  * Revision 1.5  2005/05/24 14:46:06  u633z
- * - Kontext-Menüs der Tabellen
+ * - Kontext-MenÃ¼s der Tabellen
  * - Updaten der Tabellen und Auswahl nach dem Bearbeiten verbessert
  *
  * Revision 1.4  2005/05/24 11:03:22  u633z
@@ -29,7 +32,7 @@
  * - clearForm eingebaut, um die Liste bei show() zu leeren
  *
  * Revision 1.2  2005/05/23 10:17:12  u633z
- * - Neues Modul: ProbeSuchen für die direkte Suche nach einer Probenahme (nach Kennnummer o. Bemerkung)
+ * - Neues Modul: ProbeSuchen fÃ¼r die direkte Suche nach einer Probenahme (nach Kennnummer o. Bemerkung)
  *
  */
 package de.bielefeld.umweltamt.aui.module;
@@ -181,7 +184,7 @@ public class ProbeSuchen extends AbstractModul {
 	}
 	
 	/**
-	 * Leert die Ergebnis-Liste und wählt allen Text (falls vorhanden) im Suchfeld aus.
+	 * Leert die Ergebnis-Liste und wÃ¤hlt allen Text (falls vorhanden) im Suchfeld aus.
 	 */
 	public void clearForm() {
 		probeModel.setList(new ArrayList());
@@ -192,7 +195,7 @@ public class ProbeSuchen extends AbstractModul {
 	}
 	
 	/**
-	 * Öffnet einen Dialog um einen Probenahmen-Datensatz zu bearbeiten.
+	 * Ã¶ffnet einen Dialog um einen Probenahmen-Datensatz zu bearbeiten.
 	 * @param probe Die Probe.
 	 */
 	public void editProbe(AtlProbenahmen probe) {
@@ -204,7 +207,7 @@ public class ProbeSuchen extends AbstractModul {
 		lastProbe = probe;
 		
 		if (editor.wasSaved()) {
-			// Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen auch angezeigt werden.
+			// Nach dem Bearbeiten die Liste updaten, damit unsere Ã„nderungen auch angezeigt werden.
 			updateProbeListe();
 		}
 	}
@@ -235,7 +238,7 @@ public class ProbeSuchen extends AbstractModul {
 					
 					if (lastProbe != null) {
 						// Wenn die zuletzt bearbeitete Probe noch in der Liste ist, 
-						// wird sie ausgewählt.
+						// wird sie ausgewÃ¤hlt.
 						int row = probeModel.getList().indexOf(lastProbe);
 						if (row != -1) {
 							getProbeTabelle().setRowSelectionInterval(row, row);
@@ -266,7 +269,7 @@ public class ProbeSuchen extends AbstractModul {
 					int row = getProbeTabelle().getSelectedRow();
 					AUIKataster.debugOutput("Enter in Zeile " + row, "probeTabelle");
 					
-					// Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
+					// NatÃ¼rlich nur editieren, wenn wirklich eine Zeile ausgewÃ¤hlt ist
 					if (row != -1) {
 						AtlProbenahmen probe = probeModel.getRow(row);
 						editProbe(probe);
@@ -282,18 +285,18 @@ public class ProbeSuchen extends AbstractModul {
 	
 	private Action getProbeLoeschAction() {
 		if (probeLoeschAction == null) {
-			probeLoeschAction = new AbstractAction("Löschen") {
+			probeLoeschAction = new AbstractAction("LÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getProbeTabelle().getSelectedRow();
 					if (row != -1 && getProbeTabelle().getEditingRow() == -1) {
 						AtlProbenahmen probe = probeModel.getRow(row);
-						int answer = JOptionPane.showConfirmDialog(panel, "Soll die Probenahme '"+ probe.getKennummer() +"' wirklich inkl. aller Analysen gelöscht werden?", "Löschen bestätigen", JOptionPane.YES_NO_OPTION);
+						int answer = JOptionPane.showConfirmDialog(panel, "Soll die Probenahme '"+ probe.getKennummer() +"' wirklich inkl. aller Analysen gelÃ¶scht werden?", "LÃ¶schen bestÃ¤tigen", JOptionPane.YES_NO_OPTION);
 						if (answer == JOptionPane.YES_OPTION) {
 							if (probeModel.removeRow(row)) {
-								frame.changeStatus("Probenahme gelöscht.", HauptFrame.SUCCESS_COLOR);
-								AUIKataster.debugOutput("Probe " + probe + " wurde gelöscht!", "BetreiberSuchen.removeAction");
+								frame.changeStatus("Probenahme gelÃ¶scht.", HauptFrame.SUCCESS_COLOR);
+								AUIKataster.debugOutput("Probe " + probe + " wurde gelÃ¶scht!", "BetreiberSuchen.removeAction");
 							} else {
-								frame.changeStatus("Konnte die Probenahme nicht löschen!", HauptFrame.ERROR_COLOR);
+								frame.changeStatus("Konnte die Probenahme nicht lÃ¶schen!", HauptFrame.ERROR_COLOR);
 							}
 						}
 					}

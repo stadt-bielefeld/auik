@@ -24,7 +24,7 @@
 	<classpathentry kind="lib" path="lib/pg74.215.jdbc3.jar"/>
 	<classpathentry kind="lib" path="lib/proxool-0.8.3.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib/forms-1.0.5.jar"/>
+	<classpathentry kind="lib" path="lib/forms-1.0.5.jar" sourcepath="C:/Data/Gerd/Java/JGoodies/JGoodies/forms-1.0.5/forms-1.0.5-src.zip"/>
 	<classpathentry kind="lib" path="lib/looks-1.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/l2fprod-common-all.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.0-pre2.jar"/>
@@ -38,5 +38,6 @@
 	<classpathentry kind="lib" path="lib/sac.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
 	<classpathentry kind="lib" path="lib/ifxjdbc-g.jar"/>
+	<classpathentry kind="lib" path="D:/Data/Gerd/Java/DB/mysql-connector-java-5.0.5/mysql-connector-java-5.0.5-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

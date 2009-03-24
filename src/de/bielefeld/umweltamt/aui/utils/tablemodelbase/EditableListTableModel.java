@@ -7,7 +7,7 @@ package de.bielefeld.umweltamt.aui.utils.tablemodelbase;
 /**
  * Eine TableModel-Grundlage, basierend auf einer <code>java.util.List</code>e .
  * Jede Zeile der Tabelle ist ein Objekt in der Liste. 
- * Im EditableListTableModel ist die Liste zusätzlich noch editier- und erweiterbar.
+ * Im EditableListTableModel ist die Liste zusÃ¤tzlich noch editier- und erweiterbar.
  * @author David Klotz
  */
 public abstract class EditableListTableModel extends ListTableModel {
@@ -57,7 +57,7 @@ public abstract class EditableListTableModel extends ListTableModel {
 	/**
 	 * Liefert die Anzahl Zeilen in der Liste + 1. Damit wird
 	 * sichergestellt, dass immer eine Leerzeile zum anlegen
-	 * einer neuen Zeile zur Verfügung steht.
+	 * einer neuen Zeile zur VerfÃ¼gung steht.
 	 * @return Die Anzahlt der Zeilen + 1
 	 */
 	public int getRowCount() {
@@ -72,7 +72,7 @@ public abstract class EditableListTableModel extends ListTableModel {
 	}
 	
 	/**
-	 * Leitet die Veränderung an das entsprechende Objekt in der Liste
+	 * Leitet die VerÃ¤nderung an das entsprechende Objekt in der Liste
 	 * weiter, bzw. erzeugt zu erst ein neues Objekt (wenn die Leerzeile
 	 * bearbeitet wird).
 	 */
@@ -101,11 +101,11 @@ public abstract class EditableListTableModel extends ListTableModel {
 	}
 	
 	/**
-	 * Löscht eine Zeile der Tabelle, falls das erlaubt und implementiert ist. 
+	 * LÃ¶scht eine Zeile der Tabelle, falls das erlaubt und implementiert ist. 
 	 * @param rowIndex Die Zeile
-	 * @return <code>true</code>, wenn wirklich gelöscht wurde,
-	 * <code>false</code>, falls dabei ein Fehler auftrat oder es aus anderen Gründen
-	 * nicht möglich war
+	 * @return <code>true</code>, wenn wirklich gelÃ¶scht wurde,
+	 * <code>false</code>, falls dabei ein Fehler auftrat oder es aus anderen GrÃ¼nden
+	 * nicht mÃ¶glich war
 	 */
 	public boolean removeRow(int rowIndex) {
 		boolean tmp = super.removeRow(rowIndex);
@@ -117,8 +117,8 @@ public abstract class EditableListTableModel extends ListTableModel {
 		return tmp;
 	}
 	/**
-	 * Überprüft, ob die Liste verändert wurde.
-	 * @return <code>true</code>, wenn die Liste verändert wurde, sonst <code>false</code>
+	 * Ã¼berprÃ¼ft, ob die Liste verÃ¤ndert wurde.
+	 * @return <code>true</code>, wenn die Liste verÃ¤ndert wurde, sonst <code>false</code>
 	 */
 	public boolean hasChanged() {
 		return this.hasChanged;
@@ -127,18 +127,18 @@ public abstract class EditableListTableModel extends ListTableModel {
 	/**
 	 * Wird aufgerufen um das Attribut von <code>objectAtRow</code>
 	 * in der Zeile <code>columnIndex</code> auf <code>newValue</code>
-	 * zu ändern.
-	 * @param objectAtRow Das zu verändernde Objekt
-	 * @param columnIndex Welche Spalte verändert werden soll
-	 * @param newValue Der geänderte Wert
+	 * zu Ã¤ndern.
+	 * @param objectAtRow Das zu verÃ¤ndernde Objekt
+	 * @param columnIndex Welche Spalte verÃ¤ndert werden soll
+	 * @param newValue Der geÃ¤nderte Wert
 	 */
 	public abstract void editObject(Object objectAtRow, int columnIndex, Object newValue);
 	
 	/**
 	 * Wird aufgerufen um ein neues (mit Standard-Werten initialisiertes)
-	 * Objekt der Liste hinzuzufügen. Wird benötigt, wenn der Benutzer
+	 * Objekt der Liste hinzuzufÃ¼gen. Wird benÃ¶tigt, wenn der Benutzer
 	 * eine neue Zeile anlegt.
-	 * @return Ein neues Objekt, dass der Liste hinzugefügt wird
+	 * @return Ein neues Objekt, dass der Liste hinzugefÃ¼gt wird
 	 */
 	public abstract Object newObject();
 }

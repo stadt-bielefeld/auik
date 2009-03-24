@@ -87,20 +87,25 @@ public class BasisObjekt
      * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet sind.
      * @param betr Der Standort.
      * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll, sonst <code>null</code>.
+     * @param nichtartid Die Objektart, die nicht dargestellt werden soll.
      * @return Eine Liste von BasisObjekten an diesem Standort.
      */
-    public static List getObjekteByStandort(BasisStandort standort, String abteilung) {
+    public static List getObjekteByStandort(BasisStandort standort, String abteilung, Integer nichtartid) {
     	List objekte;
-    	Integer stdid = standort.getStandortid();
+    	
     	String query = 
     		"from BasisObjekt as bo " +
-			"where bo.basisStandort = ?";
+			"where bo.basisStandort = ? ";
     	
     	if (abteilung != null) {
     		query += "and bo.basisObjektarten.abteilung = '" + abteilung + "' ";
     	}
     	
-//    	query += "order by bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
+    	if (nichtartid != null) {
+    		query += "and bo.basisObjektarten.objektartid != " + nichtartid;
+    	}
+    	
+    	query += "order by bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
     	
     	try {
     	Session session = HibernateSessionFactory.currentSession();
@@ -119,9 +124,46 @@ public class BasisObjekt
     }
     
     /**
-     * Lädt ein Objekt aus der Datenbank.
-     * @param id Der Primärschlüssel des zu ladenden Objekts.
-     * @return  Das BasisObjekt mit dem Primärschlüssel oder <code>null</code>, 
+     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet sind.
+     * @param betr Der Standort.
+     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll, sonst <code>null</code>.
+     * @param nichtartid Die Objektart, die nicht dargestellt werden soll.
+     * @return Eine Liste von BasisObjekten an diesem Standort.
+     */
+    public static List getObjekteByStandort(BasisStandort standort, Integer istartid) {
+    	List objekte;
+    	
+    	String query = 
+    		"from BasisObjekt as bo " +
+			"where bo.basisStandort = ? ";
+    	
+    	if (istartid != null) {
+    		query += "and bo.basisObjektarten.objektartid = ?";
+    	}
+    	
+    	query += "order by bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
+    	
+    	try {
+    	Session session = HibernateSessionFactory.currentSession();
+		objekte = session.createQuery(
+				query)
+				.setEntity(0, standort)
+				.setInteger(1, 32)
+				.list();
+
+    	} catch (HibernateException e) {
+			throw new RuntimeException("Datenbank-Fehler", e);
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		
+		return objekte;
+    }
+    
+    /**
+     * LÃ¤dt ein Objekt aus der Datenbank.
+     * @param id Der PrimÃ¤rschlÃ¼ssel des zu ladenden Objekts.
+     * @return  Das BasisObjekt mit dem PrimÃ¤rschlÃ¼ssel oder <code>null</code>, 
      * 			falls ein solches nicht gefunden wurde.
      */
     public static BasisObjekt getObjekt(Integer id) {
@@ -171,9 +213,9 @@ public class BasisObjekt
     }
     
     /**
-     * Löscht ein Objekt aus der Datenbank.
-     * @param obj Das zu löschende Objekt.
-     * @return <code>true</code>, wenn das Objekt gelöscht wurde, sonst <code>false</code>.
+     * LÃ¶scht ein Objekt aus der Datenbank.
+     * @param obj Das zu lÃ¶schende Objekt.
+     * @return <code>true</code>, wenn das Objekt gelÃ¶scht wurde, sonst <code>false</code>.
      */
     public static boolean removeBasisObjekt(BasisObjekt obj) {
     	boolean removed;

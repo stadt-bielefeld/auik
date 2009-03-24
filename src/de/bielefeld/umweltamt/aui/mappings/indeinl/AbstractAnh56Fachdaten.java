@@ -30,6 +30,12 @@ public abstract class AbstractAnh56Fachdaten
     /** The value of the simple druckverfahren property. */
     private java.lang.String druckverfahren;
 
+    /** The value of the simple sachbearbeiterrav property. */
+    private java.lang.String sachbearbeiterrav;
+
+    /** The value of the simple sachbearbeiterheepen property. */
+    private java.lang.String sachbearbeiterheepen;
+
     /** The value of the simple verbrauch property. */
     private java.lang.String verbrauch;
 
@@ -53,6 +59,18 @@ public abstract class AbstractAnh56Fachdaten
 
     /** The value of the simple bemerkungen property. */
     private java.lang.String bemerkungen;
+
+    /** The value of the simple aba property. */
+    private java.lang.Boolean abfallrechtlentsorg;
+
+    /** The value of the simple aba property. */
+    private java.lang.Boolean spuelwasser;
+
+    /** The value of the simple aba property. */
+    private java.lang.Boolean leimabwasser;
+
+    /** The value of the simple gen58 property. */
+    private java.util.Date erfasstam;
 
     /**
      * Simple constructor of AbstractAnh56Fachdaten instances.
@@ -307,4 +325,52 @@ public abstract class AbstractAnh56Fachdaten
         }
         return this.hashValue;
     }
+
+	public java.lang.String getSachbearbeiterrav() {
+		return sachbearbeiterrav;
+	}
+
+	public void setSachbearbeiterrav(java.lang.String sachbearbeiterrav) {
+		this.sachbearbeiterrav = sachbearbeiterrav;
+	}
+
+	public java.lang.String getSachbearbeiterheepen() {
+		return sachbearbeiterheepen;
+	}
+
+	public void setSachbearbeiterheepen(java.lang.String sachbearbeiterheepen) {
+		this.sachbearbeiterheepen = sachbearbeiterheepen;
+	}
+
+	public java.lang.Boolean getAbfallrechtlentsorg() {
+		return abfallrechtlentsorg;
+	}
+
+	public void setAbfallrechtlentsorg(java.lang.Boolean abfallrechtlentsorg) {
+		this.abfallrechtlentsorg = abfallrechtlentsorg;
+	}
+
+	public java.lang.Boolean getSpuelwasser() {
+		return spuelwasser;
+	}
+
+	public void setSpuelwasser(java.lang.Boolean spuelwasser) {
+		this.spuelwasser = spuelwasser;
+	}
+
+	public java.lang.Boolean getLeimabwasser() {
+		return leimabwasser;
+	}
+
+	public void setLeimabwasser(java.lang.Boolean leimabwasser) {
+		this.leimabwasser = leimabwasser;
+	}
+
+	public java.util.Date getErfasstam() {
+		return erfasstam;
+	}
+
+	public void setErfasstam(java.util.Date erfasstam) {
+		this.erfasstam = erfasstam;
+	}
 }

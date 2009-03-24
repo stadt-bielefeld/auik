@@ -43,8 +43,8 @@ public class VawsGebuehrenarten
     }
 
     /**
-     * Liefert alle Gebührenarten für die Verwaltungsgebühren.
-     * @return Ein Array mit den Namen aller möglichen Gebührenarten.
+     * Liefert alle GebÃ¼hrenarten fÃ¼r die VerwaltungsgebÃ¼hren.
+     * @return Ein Array mit den Namen aller mÃ¶glichen GebÃ¼hrenarten.
      */
     public static VawsGebuehrenarten[] getAllGebuehrenarten() {
 		List list;

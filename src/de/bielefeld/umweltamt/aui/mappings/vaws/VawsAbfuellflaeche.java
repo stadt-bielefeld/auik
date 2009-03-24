@@ -25,13 +25,13 @@ public class VawsAbfuellflaeche
     extends AbstractVawsAbfuellflaeche
     implements Serializable
 {
-	// Für die Umwandlung von Bool'schen Werten zu Shorts
+	// FÃ¼r die Umwandlung von Bool'schen Werten zu Shorts
 	private static short fW = 0;
 	private static short tW = -1;
 	
-	/** Für die Umwandlung von Bool'schen Werten zu Shorts */
+	/** FÃ¼r die Umwandlung von Bool'schen Werten zu Shorts */
 	public static Short FALSE = new Short(fW);
-	/** Für die Umwandlung von Bool'schen Werten zu Shorts */
+	/** FÃ¼r die Umwandlung von Bool'schen Werten zu Shorts */
 	public static Short TRUE = new Short(tW);
 	
     /**
@@ -61,8 +61,8 @@ public class VawsAbfuellflaeche
 	// TRUE und FALSE sind in dieser Klasse definierte 
 	// Short-Konstanten.
 	
-	// Der Grund, warum ich nicht einfach TRUE.equals(getXyz()) o.ä.
-	// zurück liefere ist, dass eigentlich nur festgelegt ist,
+	// Der Grund, warum ich nicht einfach TRUE.equals(getXyz()) o.Ã„.
+	// zurÃ¼ck liefere ist, dass eigentlich nur festgelegt ist,
 	// dass 0 == false ist. Deshalb ist alles ausser 0 und NULL
 	// bei mir true.
 	
@@ -70,8 +70,8 @@ public class VawsAbfuellflaeche
     	VawsAbfuellflaeche flaeche;
     	List tmp;
     	
-    	if (fachdaten == null || !fachdaten.getAnlagenart().equals("Abfüllfläche")) {
-    		throw new IllegalArgumentException("Fachdaten-Objekt ist keine Abfüllfläche!");
+    	if (fachdaten == null || !fachdaten.getAnlagenart().equals("AbfÃ¼llflÃ¤che")) {
+    		throw new IllegalArgumentException("Fachdaten-Objekt ist keine AbfÃ¼llflÃ¤che!");
     	}
     	
     	if (fachdaten.getBehaelterId() == null) {
@@ -95,13 +95,13 @@ public class VawsAbfuellflaeche
 		
 		if (tmp.size() > 0) {
 			flaeche = (VawsAbfuellflaeche) tmp.get(0);
-			AUIKataster.debugOutput("Fläche '" + flaeche + "' geladen!", "VawsAbfuellflaeche.getAbfuellflaeche()");
+			AUIKataster.debugOutput("FlÃ¤che '" + flaeche + "' geladen!", "VawsAbfuellflaeche.getAbfuellflaeche()");
 		} else {
 			// Bei so ziemlich 95% aller Tankstellen gibts ein VawsFachdaten-
 			// Objekt, aber kein VawsAbfuellflaechen-Objekt.
 			// Seems like it's not a bug, it's a feature...
 			
-			// Also legen wir in diesen Fällen einfach ein neues
+			// Also legen wir in diesen FÃ¼llen einfach ein neues
 			// VawsAbfuellflaechen-Objekt an.
 			
 			// Das selbe tun wir bei einem noch ungespeicherten
@@ -109,14 +109,14 @@ public class VawsAbfuellflaeche
 			
 			flaeche = new VawsAbfuellflaeche();
 			flaeche.setVawsFachdaten(fachdaten);
-			AUIKataster.debugOutput("Neue Fläche für '" + fachdaten + "' erzeugt!", "VawsAbfuellflaeche.getAbfuellflaeche()");
+			AUIKataster.debugOutput("Neue FlÃ¤che fÃ¼r '" + fachdaten + "' erzeugt!", "VawsAbfuellflaeche.getAbfuellflaeche()");
 		}
     	
     	return flaeche;
     }
     
 	/**
-	 * Speichert einen VAWS-Abfüllflächen-Datensatz in der Datenbank.
+	 * Speichert einen VAWS-AbfÃ¼llflÃ¤chen-Datensatz in der Datenbank.
 	 * @param flaeche Der zu speichernde Datensatz.
 	 * @return <code>true</code>, falls beim Speichern kein Fehler auftritt, sonst <code>false</code>.
 	 */
@@ -152,13 +152,13 @@ public class VawsAbfuellflaeche
     }
     
     /**
-     * Liefert alle Bodenflächen-Ausführungen. 
+     * Liefert alle BodenflÃ¤chen-AusfÃ¼hrungen. 
      * <br><b>ACHTUNG:</b> Liefert nicht alle VawsAbfuellflaechen, 
      * sondern alle in der Spalte "BODENFLAECHENAUSF" benutzten Werte!
-     * @return Ein Array mit den Namen aller Ausführungen.
+     * @return Ein Array mit den Namen aller AusfÃ¼hrungen.
      */
     public static String[] getBodenflaechenausfArray() {
-    	//FIXME: select distinct nicht die beste Lösung
+    	//FIXME: select distinct nicht die beste LÃ¶sung
 		List list;
 		String suchString = "select distinct vabf.bodenflaechenausf " +
 				"from VawsAbfuellflaeche vabf " +
@@ -183,13 +183,13 @@ public class VawsAbfuellflaeche
 	}
     
     /**
-     * Liefert alle Bodenflächen-Ausführungen. 
+     * Liefert alle BodenflÃ¤chen-AusfÃ¼hrungen. 
      * <br><b>ACHTUNG:</b> Liefert nicht alle VawsAbfuellflaechen, 
      * sondern alle in der Spalte "BODENFLAECHENAUSF" benutzten Werte!
-     * @return Ein Array mit den Namen aller Ausführungen.
+     * @return Ein Array mit den Namen aller AusfÃ¼hrungen.
      */
     public static String[] getNiederschlagschutzArray() {
-    	//FIXME: select distinct nicht die beste Lösung
+    	//FIXME: select distinct nicht die beste LÃ¶sung
 		List list;
 		String suchString = "select distinct vabf.niederschlagschutz " +
 				"from VawsAbfuellflaeche vabf " +

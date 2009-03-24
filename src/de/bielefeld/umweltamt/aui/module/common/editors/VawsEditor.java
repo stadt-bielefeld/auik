@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: VawsEditor.java,v 1.4 2008-09-01 07:03:46 u633d Exp $
+ * $Id: VawsEditor.java,v 1.5 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 03.09.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2008/09/01 07:03:46  u633d
+ * *** empty log message ***
+ *
  * Revision 1.2  2008/06/12 10:21:42  u633d
  * diverse Bugfixes
  *
@@ -97,7 +100,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
- * Ein Editor für VAWS-Datensätze.
+ * Ein Editor fÃ¼r VAWS-DatensÃ¤tze.
  * @author David Klotz
  */
 public class VawsEditor extends AbstractBaseEditor {
@@ -107,11 +110,11 @@ public class VawsEditor extends AbstractBaseEditor {
 	private JPanel topPanel;
 	private JTabbedPane tabbedPane;
 	
-	// Für das Kontextmenü in den Tabellen
+	// FÃ¼r das KontextmenÃ¼ in den Tabellen
 	private Action tabellenItemLoeschAction;
 	private JPopupMenu tabellenPopup;
 	
-	// Widgets fürs Top-Panel:
+	// Widgets fÃ¼rs Top-Panel:
 	private JLabel header;
 //	private JLabel subHeader;
 //	private JLabel hnrLabel;
@@ -123,7 +126,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	private JComboBox wgkBox;
 	
 	//  Tabs:
-	// Widgets für alle Daten-Tabs:
+	// Widgets fÃ¼r alle Daten-Tabs:
 	private IntegerField baujahrFeld;
 	private TextFieldDateChooser inbetriebnahmeChooser;
 	private TextFieldDateChooser genehmigungChooser;
@@ -133,17 +136,17 @@ public class VawsEditor extends AbstractBaseEditor {
 	private LimitedTextArea bemerkungArea;
 	private JTable anlagenChronoTabelle;
 	private VawsAnlagenChronoModel anlagenChronoModel;
-	// Benötigt bei Lageranlagen & Rohrleitungen
+	// BenÃ¶tigt bei Lageranlagen & Rohrleitungen
 	private JComboBox behaelterArtBox;
 	private JComboBox materialBox;
 	
-	// Beschreibung für die Felder bei VAwS-Abscheider ### START
+	// Beschreibung fÃ¼r die Felder bei VAwS-Abscheider ### START
 	private JPanel datenVAWSAbscheiderTab;
-	private JPanel ausführungVAWSAbscheiderTab;
+	private JPanel ausfuehrungVAWSAbscheiderTab;
 	private JPanel schutzvorkehrungenVAWSAbscheiderTab;
 
 	// Daten TAB ### START
-//	private LimitedTextField flüssigkField;
+//	private LimitedTextField flÃ¼ssigkField;
 	private JCheckBox kompSFCheck;
 	private JCheckBox kompLFCheck;
 	private JCheckBox kompKCheck;
@@ -151,7 +154,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	private JCheckBox kompaktCheck;
 	// Daten TAB ### END
 
-	// Ausführung TAB ### START
+	// AusfÃ¼hrung TAB ### START
 	private LimitedTextField schlammHerstField;
 	private LimitedTextField schlammTypField;
 	private DoubleField schlammSFVField;
@@ -160,11 +163,11 @@ public class VawsEditor extends AbstractBaseEditor {
 
 	private LimitedTextField abscheiderHerstField;
 	private LimitedTextField abscheiderTypField;
-	private LimitedTextField abscheiderPrüfField;
+	private LimitedTextField abscheiderPruefField;
 	private DoubleField abscheiderNSField;
 	private LimitedTextField abscheiderMatField;
 	private LimitedTextField abscheiderBeschField;
-	private DoubleField abscheiderÖlField;
+	private DoubleField abscheideroelField;
 
 	private DoubleField zulDNField;
 	private LimitedTextField zulMatField;
@@ -175,18 +178,18 @@ public class VawsEditor extends AbstractBaseEditor {
 	private DoubleField sonsDNField;
 	private LimitedTextField sonsMatField;
 	private DoubleField sonsLField;
-	// Ausführung TAB ### END
+	// AusfÃ¼hrung TAB ### END
 
 	// Schutzvorkehrungen TAB ### START
-	private JCheckBox überCheck;
+	private JCheckBox ueberCheck;
 	private JCheckBox waschCheck;
 	private JCheckBox abgabeCheck;
 	private JCheckBox hochCheck;
-	private JCheckBox belüftCheck;
-	private JCheckBox rückCheck;
+	private JCheckBox belueftCheck;
+	private JCheckBox rueckCheck;
 	private LimitedTextArea bemerkArea;
 	// Schutzvorkehrungen TAB ### END
-	// Beschreibung für die Felder bei VAwS-Abscheider ### END	
+	// Beschreibung fÃ¼r die Felder bei VAwS-Abscheider ### END	
 	// Daten (Lageranlagen)
 	private JPanel datenLageranlagenTab;
 	private DoubleField mengeFeld;
@@ -216,7 +219,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	private JPanel datenRohrleitungenTab;
 	private JComboBox ausfuehrungBox;
 	
-	// Daten (Abfüllflächen)
+	// Daten (AbfÃ¼llflÃ¤chen)
 	private JPanel datenAbfuellflaechenTab;
 	private JCheckBox eohCheck;
 	private JCheckBox efCheck;
@@ -225,7 +228,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	private JRadioButton saniertCheck;
 	private JRadioButton neuErstelltCheck;
 	private JRadioButton unbktCheck;
-	// Ausführung (Abfüllflächen)
+	// AusfÃ¼hrung (AbfÃ¼llflÃ¤chen)
 	private JPanel ausfuehrungAbfuellflaechenTab;
 	private JComboBox bodenflaechenAusfBox;
 	private DoubleField dickeFeld;
@@ -237,7 +240,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	private LimitedTextArea beschrFugenmaterialArea;
 	private LimitedTextArea beschrAblNiederschlArea;
 	
-	// Sachverständigenprüfung
+	// SachverstÃ¤ndigenprÃ¼fung
 	private JPanel svPruefungTab;
 	private JTable svPruefungTabelle;
 	private JComboBox prueferBox;
@@ -250,7 +253,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	private JComboBox massnahmenBox;
 	private VerwVerfahrenModel verwVerfahrenModel;
 	
-	// Verwaltungsgebühren
+	// VerwaltungsgebÃ¼hren
 	private JPanel verwGebuehrenTab;
 	private JTable verwGebuehrenTabelle;
 	private JComboBox gebArtenBox;
@@ -267,11 +270,11 @@ public class VawsEditor extends AbstractBaseEditor {
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten von VAWS-Fachdaten.
 	 * Schaltet zu einem bestimmten Tab um.
-	 * @param tab "Sachverständigenprüfung" oder "Verwaltungsverfahren"
+	 * @param tab "SachverstÃ¤ndigenprÃ¼fung" oder "Verwaltungsverfahren"
 	 */
 	public VawsEditor(VawsFachdaten fachdaten, HauptFrame owner, String tab) {
 		this(fachdaten, owner);
-		if ("Sachverständigenprüfung".equals(tab)) {
+		if ("SachverstÃ¤ndigenprÃ¼fung".equals(tab)) {
 			tabbedPane.setSelectedComponent(getSvPruefungTab());
 		} else if ("Verwaltungsverfahren".equals(tab)) {
 			tabbedPane.setSelectedComponent(getVerwVerfahrenTab());
@@ -279,7 +282,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	}
 	
 	/* 
-	 * Überschrieben, damit die unterschiedlichen Anlagen-Arten ihre Größen
+	 * Ãœberschrieben, damit die unterschiedlichen Anlagen-Arten ihre GrÃ¶ÃŸen
 	 * separat speichern, obwohl ja alle von der Klasse VawsFachdaten sind.
 	 * 
 	 * @see de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#getEditedClassName()
@@ -311,8 +314,8 @@ public class VawsEditor extends AbstractBaseEditor {
 		return abscheider;
 	}	
 	/**
-	 * Liefert die Abfüllflächen-Fachdaten zum bearbeiteten Objekt.
-	 * Achtung: Nur bei Abfüllflächen-Objekten aufrufen!
+	 * Liefert die AbfÃ¼llflÃ¤chen-Fachdaten zum bearbeiteten Objekt.
+	 * Achtung: Nur bei AbfÃ¼llflÃ¤chen-Objekten aufrufen!
 	 * @return Ein VawsAbfuellflaechen-Objekt
 	 */
 	private VawsAbfuellflaeche getAbfuellflaeche() {
@@ -339,7 +342,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		
 		fluessigkeitBox = new JComboBox(VawsFluessigkeit.getFluessigkeiten());
 		fluessigkeitBox.setEditable(true);
-		//fluessigkeitBox.setPrototypeDisplayValue("Lösungsmittelrückstände");
+		//fluessigkeitBox.setPrototypeDisplayValue("LÃ¶sungsmittelrÃ¼ckstÃ¤nde");
 		
 		vbfBox = new JComboBox(VawsVbfeinstufung.getVbfeinstufungen());
 		vbfBox.setEditable(false);
@@ -357,7 +360,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
-		// Widgets für alle Daten-Tabs:
+		// Widgets fÃ¼r alle Daten-Tabs:
 		baujahrFeld = new IntegerField();
 		inbetriebnahmeChooser = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
 		genehmigungChooser = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
@@ -373,7 +376,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		materialBox.setEditable(true);
 		bemerkungArea = new LimitedTextArea(255);
 		
-		// Daten für die Anlagenchronologie-Tabelle:
+		// Daten fÃ¼r die Anlagenchronologie-Tabelle:
 		anlagenChronoModel = new VawsAnlagenChronoModel();
 		anlagenChronoTabelle = new JTable(anlagenChronoModel);
 		anlagenChronoTabelle.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -399,12 +402,12 @@ public class VawsEditor extends AbstractBaseEditor {
 		// Daten (Rohrleitungen)
 		ausfuehrungBox = new JComboBox(VawsFachdaten.getAusfuehrungen());
 		ausfuehrungBox.setEditable(false);
-		// TODO: Ausführung aus anderer Tabelle / Vorgaben? Welche noch?
+		// TODO: AusfÃ¼hrung aus anderer Tabelle / Vorgaben? Welche noch?
 		
-		// Daten (Abfüllflächen)
-		eohCheck = new JCheckBox("Einfach o. Herkömmlich");
+		// Daten (AbfÃ¼llflÃ¤chen)
+		eohCheck = new JCheckBox("Einfach o. HerkÃ¶mmlich");
 		efCheck = new JCheckBox("Eignungsfeststellung");
-		svbCheck = new JCheckBox("Sachverständigenbescheinigung");
+		svbCheck = new JCheckBox("SachverstÃ¤ndigenbescheinigung");
 		svbCheck.setEnabled(false);
 		zustandGroup = new ButtonGroup();
 		saniertCheck = new JRadioButton("Saniert");
@@ -435,7 +438,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		schutzrohrCheck = new JCheckBox("Mit Schutzrohr");
 		beschreibungRFeld = new LimitedTextArea(255);
 		
-		// Ausführung (Abfüllflächen)
+		// AusfÃ¼hrung (AbfÃ¼llflÃ¤chen)
 		bodenflaechenAusfBox = new JComboBox(VawsAbfuellflaeche.getBodenflaechenausfArray());
 		bodenflaechenAusfBox.setEditable(false);
 		dickeFeld = new DoubleField(0);
@@ -449,7 +452,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		beschrAblNiederschlArea = new LimitedTextArea(255);
 
 		// Daten (VAwS-Abscheider)
-//		flüssigkField = new LimitedTextField(25);
+//		fluessigkField = new LimitedTextField(25);
 		kompKCheck = new JCheckBox("K (Kl.I)");
 		kompLFCheck = new JCheckBox("LF (Kl.II)");
 		kompPSCheck = new JCheckBox("PS");
@@ -457,15 +460,15 @@ public class VawsEditor extends AbstractBaseEditor {
 		kompaktCheck = new JCheckBox("Kompaktanlage?");
 
 		// Schutzvorkehrungen (VAwS-Abscheider)
-		überCheck = new JCheckBox("Überhöhung ausreichend?");
+		ueberCheck = new JCheckBox("ÃœberhÃ¶hung ausreichend?");
 		waschCheck = new JCheckBox("Warnanlage vorhanden?");
 		abgabeCheck = new JCheckBox("Abgabeeinrichtung?");
 		hochCheck = new JCheckBox("Hochleistungszapfanlage?");
-		belüftCheck = new JCheckBox("Befüllung von Lagerbehältern?");
-		rückCheck = new JCheckBox("Rückhaltevermögen ausreichend?");
+		belueftCheck = new JCheckBox("BefÃ¼llung von LagerbehÃ¤ltern?");
+		rueckCheck = new JCheckBox("RÃ¼ckhaltevermÃ¶gen ausreichend?");
 		bemerkArea = new LimitedTextArea(255);
 
-		// Ausführung (VAwS-Abscheider)
+		// AusfÃ¼hrung (VAwS-Abscheider)
 		schlammBeschField = new LimitedTextField(25);
 		schlammHerstField = new LimitedTextField(25);
 		schlammMatField = new LimitedTextField(25);
@@ -475,9 +478,9 @@ public class VawsEditor extends AbstractBaseEditor {
 		abscheiderHerstField = new LimitedTextField(25);
 		abscheiderMatField = new LimitedTextField(25);
 		abscheiderNSField = new DoubleField(0);
-		abscheiderPrüfField = new LimitedTextField(25);
+		abscheiderPruefField = new LimitedTextField(25);
 		abscheiderTypField = new LimitedTextField(25);
-		abscheiderÖlField = new DoubleField(0);
+		abscheideroelField = new DoubleField(0);
 		zulDNField = new DoubleField(0);
 		zulLField = new DoubleField(0);
 		zulMatField = new LimitedTextField(25);
@@ -489,7 +492,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		sonsMatField = new LimitedTextField(25);
 
 		
-		// Sachverständigenprüfung
+		// SachverstÃ¤ndigenprÃ¼fung
 		svPruefungModel = new VawsKontrollenModel();
 		svPruefungTabelle = new JTable(svPruefungModel);
 		svPruefungTabelle.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -498,7 +501,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		svPruefungTabelle.getColumnModel().getColumn(3).setPreferredWidth(50);
 		svPruefungTabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
 		
-		// Für die ComboBox bei "Prüfer"
+		// FÃ¼r die ComboBox bei "PrÃ¼fer"
 		prueferBox = new JComboBox(VawsPruefer.getAllPruefer());
 		prueferBox.setEditable(false);
 		prueferBox.addFocusListener(new FocusAdapter() {
@@ -509,7 +512,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		prueferBox.setBorder(BorderFactory.createEmptyBorder());
 		svPruefungTabelle.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(prueferBox));
 		
-		// Für die ComboBox bei "Prüfergebnis"
+		// FÃ¼r die ComboBox bei "PrÃ¼fergebnis"
 		pruefergebnisBox = new JComboBox(VawsPruefergebnisse.getAllPruefergebnisse());
 		pruefergebnisBox.setEditable(false);
 		pruefergebnisBox.addFocusListener(new FocusAdapter() {
@@ -543,7 +546,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		verwVerfahrenTabelle.getColumnModel().getColumn(2).setPreferredWidth(50);
 		verwVerfahrenTabelle.getColumnModel().getColumn(3).setPreferredWidth(50);
 		
-		// Für die ComboBox bei "Maßnahme"
+		// FÃ¼r die ComboBox bei "MaÃŸnahme"
 		massnahmenBox = new JComboBox(VawsVerwmassnahmen.getAllMassnahmen());
 		massnahmenBox.setEditable(true);
 		massnahmenBox.addFocusListener(new FocusAdapter() {
@@ -576,7 +579,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		verwGebuehrenTabelle.getColumnModel().getColumn(3).setPreferredWidth(50);
 		verwGebuehrenTabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
 		
-		// Für die ComboBox bei "Gebührenart"
+		// FÃ¼r die ComboBox bei "GebÃ¼hrenart"
 		gebArtenBox = new JComboBox(VawsGebuehrenarten.getAllGebuehrenarten());
 		gebArtenBox.setEditable(false);
 		gebArtenBox.addFocusListener(new FocusAdapter() {
@@ -611,9 +614,9 @@ public class VawsEditor extends AbstractBaseEditor {
 //		topBuilder.append(ButtonBarFactory.buildRightAlignedBar(reportButton), 7);
 //		topBuilder.append(subHeader, 9);
 		/*hnrLabel =*/ topBuilder.append("Herstell-Nr.:");
-		topBuilder.append("Flüssigkeit:");
+		topBuilder.append("FlÃ¼ssigkeit:");
 		topBuilder.append("VbF:");
-		topBuilder.append("Gefährdungsstufe:");
+		topBuilder.append("GefÃ¤hrdungsstufe:");
 		topBuilder.append("WGK:");
 		topBuilder.append(hnrFeld, fluessigkeitBox, vbfBox);
 		topBuilder.append(gefStufeBox, wgkBox);
@@ -656,13 +659,13 @@ public class VawsEditor extends AbstractBaseEditor {
 
 		if (getFachdaten().isVAWSAbscheider()) {
 			tabbedPane.addTab("Daten", getDatenVAWSAbscheiderTab());
-			tabbedPane.addTab("Ausführung", getAusführungVAWSAbscheiderTab());
+			tabbedPane.addTab("AusfÃ¼hrung", getAusfuehrungVAWSAbscheiderTab());
 			tabbedPane.addTab("Schutzvorkehrungen", getSchutzvorkehrungenVAWSAbscheiderTab());
 
 			mengeFeld.setValue(getFachdaten().getMenge());
 
 			// Daten Tab
-//			flüssigkField.setText(getAbscheider().getMedium());
+//			flÃ¼ssigkField.setText(getAbscheider().getMedium());
 
 			if(getAbscheider().getKompaktanlage()!=null)
 				kompaktCheck.setSelected(getAbscheider().getKompaktanlage());
@@ -689,7 +692,7 @@ public class VawsEditor extends AbstractBaseEditor {
 			else
 				kompSFCheck.setSelected(false);
 
-			// Ausführung Tab
+			// AusfÃ¼hrung Tab
 			schlammBeschField.setText(getAbscheider().getSfbeschichtung());
 			schlammHerstField.setText(getAbscheider().getSfhersteller());
 			schlammMatField.setText(getAbscheider().getSfmaterial());
@@ -699,9 +702,9 @@ public class VawsEditor extends AbstractBaseEditor {
 			abscheiderHerstField.setText(getAbscheider().getAbhersteller());
 			abscheiderMatField.setText(getAbscheider().getAbmaterial());
 			abscheiderNSField.setText(getAbscheider().getAbnenngr());
-			abscheiderPrüfField.setText(getAbscheider().getAbpruefz());
+			abscheiderPruefField.setText(getAbscheider().getAbpruefz());
 			abscheiderTypField.setText(getAbscheider().getAbtyp());
-			abscheiderÖlField.setText(getAbscheider().getOelspeichervol());
+			abscheideroelField.setText(getAbscheider().getOelspeichervol());
 			zulDNField.setText(getAbscheider().getZuldn());
 			zulLField.setText(getAbscheider().getZullaenge());
 			zulMatField.setText(getAbscheider().getZulmaterial());
@@ -715,9 +718,9 @@ public class VawsEditor extends AbstractBaseEditor {
 			//Schutzvorkehrungen Tab
 
 			if(getAbscheider().getUeberhausr()!=null)
-				überCheck.setSelected(getAbscheider().getUeberhausr());
+				ueberCheck.setSelected(getAbscheider().getUeberhausr());
 			else
-				überCheck.setSelected(false);
+				ueberCheck.setSelected(false);
 
 			if(getAbscheider().getWaschanlvorh()!=null)
 				waschCheck.setSelected(getAbscheider().getWaschanlvorh());
@@ -735,14 +738,14 @@ public class VawsEditor extends AbstractBaseEditor {
 				hochCheck.setSelected(false);
 
 			if(getAbscheider().getBelvonlagerbh()!=null)
-				belüftCheck.setSelected(getAbscheider().getBelvonlagerbh());
+				belueftCheck.setSelected(getAbscheider().getBelvonlagerbh());
 			else
-				belüftCheck.setSelected(false);
+				belueftCheck.setSelected(false);
 
 			if(getAbscheider().getRueckhalteausr()!=null)
-				rückCheck.setSelected(getAbscheider().getRueckhalteausr());
+				rueckCheck.setSelected(getAbscheider().getRueckhalteausr());
 			else
-				rückCheck.setSelected(false);
+				rueckCheck.setSelected(false);
 		}
 		else if (getFachdaten().isLageranlage()) {
 			tabbedPane.addTab("Daten", getDatenLageranlagenTab());
@@ -833,7 +836,7 @@ public class VawsEditor extends AbstractBaseEditor {
 			
 		} else if (getFachdaten().isAbfuellflaeche()) {
 			tabbedPane.addTab("Daten", getDatenAbfuellflaechenTab());
-			tabbedPane.addTab("Ausführung", getAusfuehrungAbfuellflaechenTab());
+			tabbedPane.addTab("AusfÃ¼hrung", getAusfuehrungAbfuellflaechenTab());
 			
 			if(getAbfuellflaeche().getEoh()!=null)
 				eohCheck.setSelected(getAbfuellflaeche().getEoh());
@@ -871,11 +874,11 @@ public class VawsEditor extends AbstractBaseEditor {
 			beschrFugenmaterialArea.setText(getAbfuellflaeche().getBeschfugenmat());
 			beschrAblNiederschlArea.setText(getAbfuellflaeche().getBeschableitung());
 		}
-		tabbedPane.addTab("Sachverständigenprüfung", getSvPruefungTab());
+		tabbedPane.addTab("SachverstÃ¤ndigenprÃ¼fung", getSvPruefungTab());
 		svPruefungModel.setFachdaten(getFachdaten());
 		tabbedPane.addTab("Verwaltungsverfahren", getVerwVerfahrenTab());
 		verwVerfahrenModel.setFachdaten(getFachdaten());
-		tabbedPane.addTab("Verwaltungsgebühren", getVerwGebuehrenTab());
+		tabbedPane.addTab("VerwaltungsgebÃ¼hren", getVerwGebuehrenTab());
 		verwGebuehrenModel.setFachdaten(getFachdaten());
 		
 		this.pack();
@@ -887,7 +890,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	 * @see de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#canSave()
 	 */
 	protected boolean canSave() {
-		// TODO: Irgendwelche Überprüfungen nötig?
+		// TODO: Irgendwelche ÃœberprÃ¼fungen nÃ¶tig?
 //		String hnr = hnrFeld.getText();
 //		
 //		if (hnr == null || "".equals(hnr.trim())) {
@@ -974,7 +977,7 @@ public class VawsEditor extends AbstractBaseEditor {
 		success = success && VawsFachdaten.saveFachdaten(getFachdaten());
 		setEditedObject(VawsFachdaten.getVawsByBehaelterId(getFachdaten().getBehaelterId()));
 		
-		// Für Abfüllflächen (wg. dem VawsAbfuellflaechen-Objekt)
+		// FÃ¼r AbfÃ¼llflÃ¤chen (wg. dem VawsAbfuellflaechen-Objekt)
 		if (getFachdaten().isAbfuellflaeche()) {
 			getAbfuellflaeche().setEoh(eohCheck.isSelected());
 			getAbfuellflaeche().setEf(efCheck.isSelected());
@@ -1000,24 +1003,24 @@ public class VawsEditor extends AbstractBaseEditor {
 		}
 		if (getFachdaten().isVAWSAbscheider()) {
 			getAbscheider().setAbgabe(abgabeCheck.isSelected());
-			getAbscheider().setBelvonlagerbh(belüftCheck.isSelected());
+			getAbscheider().setBelvonlagerbh(belueftCheck.isSelected());
 			getAbscheider().setHlzapfanl(hochCheck.isSelected());
 			getAbscheider().setKompaktanlage(kompaktCheck.isSelected());
 			getAbscheider().setKkl1(kompKCheck.isSelected());
 			getAbscheider().setLfkl2(kompLFCheck.isSelected());
 			getAbscheider().setPs(kompPSCheck.isSelected());
 			getAbscheider().setSf(kompSFCheck.isSelected());
-			getAbscheider().setRueckhalteausr(rückCheck.isSelected());
+			getAbscheider().setRueckhalteausr(rueckCheck.isSelected());
 			getAbscheider().setWaschanlvorh(waschCheck.isSelected());
-			getAbscheider().setUeberhausr(überCheck.isSelected());
-//			getAbscheider().setMedium(flüssigkField.getText());
+			getAbscheider().setUeberhausr(ueberCheck.isSelected());
+//			getAbscheider().setMedium(flÃ¼ssigkField.getText());
 			getAbscheider().setAbbeschichtung(abscheiderBeschField.getText());
 			getAbscheider().setAbhersteller(abscheiderHerstField.getText());
 			getAbscheider().setAbmaterial(abscheiderMatField.getText());
 			getAbscheider().setAbnenngr(abscheiderNSField.getText());
-			getAbscheider().setAbpruefz(abscheiderPrüfField.getText());
+			getAbscheider().setAbpruefz(abscheiderPruefField.getText());
 			getAbscheider().setAbtyp(abscheiderTypField.getText());
-			getAbscheider().setOelspeichervol(abscheiderÖlField.getText());
+			getAbscheider().setOelspeichervol(abscheideroelField.getText());
 			getAbscheider().setSfbeschichtung(schlammBeschField.getText());
 			getAbscheider().setSfhersteller(schlammHerstField.getText());
 			getAbscheider().setSfmaterial(schlammMatField.getText());
@@ -1044,11 +1047,11 @@ public class VawsEditor extends AbstractBaseEditor {
 			success = success && VawsAnlagenchrono.removeAnlagenChrono((VawsAnlagenchrono) it.next());
 		}
 		AUIKataster.debugOutput(
-				anlagenChronoModel.getList().size() + " AnlagenChrono-Einträge neu/behalten, " + 
-				anlagenChronoModel.getGeloeschte().size()+" Einträge gelöscht.", "VawsEditor"
+				anlagenChronoModel.getList().size() + " AnlagenChrono-EintrÃ¤ge neu/behalten, " + 
+				anlagenChronoModel.getGeloeschte().size()+" EintrÃ¤ge gelÃ¶scht.", "VawsEditor"
 		);
 		
-		// Sachverständigenprüfung speichern:
+		// SachverstÃ¤ndigenprÃ¼fung speichern:
 		for (Iterator it = svPruefungModel.getList().iterator(); it.hasNext();) {
 			success = success && VawsKontrollen.saveKontrolle((VawsKontrollen) it.next());
 		}
@@ -1056,8 +1059,8 @@ public class VawsEditor extends AbstractBaseEditor {
 			success = success && VawsKontrollen.removeKontrolle((VawsKontrollen) it.next());
 		}
 		AUIKataster.debugOutput(
-				svPruefungModel.getList().size() + " Sachverständigenprüfungs-Einträge neu/behalten, " + 
-				svPruefungModel.getGeloeschte().size()+" Einträge gelöscht.", "VawsEditor"
+				svPruefungModel.getList().size() + " SachverstÃ¤ndigenprÃ¼fungs-EintrÃ¤ge neu/behalten, " + 
+				svPruefungModel.getGeloeschte().size()+" EintrÃ¤ge gelÃ¶scht.", "VawsEditor"
 		);
 		
 		// Verwaltungsverfahren speichern:
@@ -1068,11 +1071,11 @@ public class VawsEditor extends AbstractBaseEditor {
 			success = success && VawsVerwaltungsverf.removeVerfahren((VawsVerwaltungsverf) it.next());
 		}
 		AUIKataster.debugOutput(
-				verwVerfahrenModel.getList().size() + " Verwaltungsverfahren-Einträge neu/behalten, " + 
-				verwVerfahrenModel.getGeloeschte().size()+" Einträge gelöscht.", "VawsEditor"
+				verwVerfahrenModel.getList().size() + " Verwaltungsverfahren-EintrÃ¤ge neu/behalten, " + 
+				verwVerfahrenModel.getGeloeschte().size()+" EintrÃ¤ge gelÃ¶scht.", "VawsEditor"
 		);
 		
-		// Verwaltunggebühren speichern:
+		// VerwaltunggebÃ¼hren speichern:
 		for (Iterator it = verwGebuehrenModel.getList().iterator(); it.hasNext();) {
 			success = success && VawsVerwaltungsgebuehren.saveGebuehr((VawsVerwaltungsgebuehren) it.next());
 		}
@@ -1080,17 +1083,17 @@ public class VawsEditor extends AbstractBaseEditor {
 			success = success && VawsVerwaltungsgebuehren.removeGebuehr((VawsVerwaltungsgebuehren) it.next());
 		}
 		AUIKataster.debugOutput(
-				verwGebuehrenModel.getList().size() + " Verwaltungsgebühren-Einträge neu/behalten, " + 
-				verwGebuehrenModel.getGeloeschte().size()+" Einträge gelöscht.", "VawsEditor"
+				verwGebuehrenModel.getList().size() + " VerwaltungsgebÃ¼hren-EintrÃ¤ge neu/behalten, " + 
+				verwGebuehrenModel.getGeloeschte().size()+" EintrÃ¤ge gelÃ¶scht.", "VawsEditor"
 		);
 		
 		return success;
 	}
 	
-	// Kontextmenü für die Tabellen:
+	// KontextmenÃ¼ fÃ¼r die Tabellen:
 	
 	/**
-	 * Zeigt ein Kontextmenü an, wenn ein entsprechendes 
+	 * Zeigt ein KontextmenÃ¼ an, wenn ein entsprechendes 
 	 * MouseEvent vorliegt.
 	 * @param e Das MouseEvent.
 	 */
@@ -1116,7 +1119,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	
 	private Action getTabellenItemLoeschAction() {
 		if (tabellenItemLoeschAction == null) {
-			tabellenItemLoeschAction = new AbstractAction("Eintrag löschen") {
+			tabellenItemLoeschAction = new AbstractAction("Eintrag lÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int index = tabbedPane.getSelectedIndex();
 					System.out.println("index: " + index);
@@ -1140,7 +1143,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	private void removeRowFromTable(JTable table, EditableListTableModel model) {
 		int row = table.getSelectedRow();
 		
-		// Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
+		// NatÃ¼rlich nur, wenn wirklich eine Zeile ausgewÃ¤hlt ist
 		if (row != -1) {
 			model.removeRow(row);
 		}
@@ -1163,19 +1166,19 @@ public class VawsEditor extends AbstractBaseEditor {
 			builder.nextLine();
 
 			builder.append("Erfassung:", erfassungChooser);
-			builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
+			builder.append("PrÃ¼fturnus [Jahre]:", pruefTurnusFeld);
 			builder.nextLine();
 
 			builder.append("Stillegung:", stillegungChooser);
 			builder.nextLine();
 
 			/*builder.appendRow("fill:30dlu");
-			builder.append("Flüssigkeit/Medium", flüssigkField);
+			builder.append("FlÃ¼ssigkeit/Medium", flÃ¼ssigkField);
 			builder.nextLine();*/
 			builder.appendSeparator("Komponenten");
 //			builder.appendRow("3dlu");
 			//builder.appendColumn("r:p, 3dlu, f:p:g, 10dlu, r:p, r:p, r:p, r:p, 0:g");
-//			builder.append("Flüssigkeit/Medium", flüssigkField);
+//			builder.append("FlÃ¼ssigkeit/Medium", flÃ¼ssigkField);
 			builder.append("", kompaktCheck);
 			builder.nextLine();
 			builder.append("", kompSFCheck);
@@ -1202,9 +1205,9 @@ public class VawsEditor extends AbstractBaseEditor {
 		return datenVAWSAbscheiderTab;
 	}
 
-	private JPanel getAusführungVAWSAbscheiderTab()
+	private JPanel getAusfuehrungVAWSAbscheiderTab()
 	{
-		if (ausführungVAWSAbscheiderTab == null) {
+		if (ausfuehrungVAWSAbscheiderTab == null) {
 			FormLayout layout = new FormLayout(
 					"r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"
 			);
@@ -1224,36 +1227,36 @@ public class VawsEditor extends AbstractBaseEditor {
 			builder.appendSeparator("Abscheider");
 			builder.append("Hersteller:", abscheiderHerstField);
 			builder.append("Typ:", abscheiderTypField);
-			builder.append("Prüfzeichen:", abscheiderPrüfField);
+			builder.append("PrÃ¼fzeichen:", abscheiderPruefField);
 			builder.nextLine();
 			builder.append("Material:", abscheiderMatField);
 			builder.append("Beschichtung:", abscheiderBeschField);
-			builder.append("Nenngröße (NS):", abscheiderNSField);
+			builder.append("NenngrÃ¶ÃŸe (NS):", abscheiderNSField);
 			builder.nextLine();
-			builder.append("Ölspeichervolumen [Liter]:", abscheiderÖlField);
+			builder.append("Ã–lspeichervolumen [Liter]:", abscheideroelField);
 			builder.nextLine();
 
 			builder.appendSeparator("Rohrleitungen: Zuleitungen");
 			builder.append("DN:", zulDNField);
 			builder.append("Material:", zulMatField);
-			builder.append("Länge [m]:", zulLField);
+			builder.append("LÃ¤nge [m]:", zulLField);
 			builder.nextLine();
 
 			builder.appendSeparator("Rohrleitungen: Verbindungsleitungen");
 			builder.append("DN:", verbDNField);
 			builder.append("Material:", verbMatField);
-			builder.append("Länge [m]:", verbLField);
+			builder.append("LÃ¤nge [m]:", verbLField);
 			builder.nextLine();
 
 			builder.appendSeparator("Rohrleitungen: Sonstige");
 			builder.append("DN:", sonsDNField);
 			builder.append("Material:", sonsMatField);
-			builder.append("Länge [m]:", sonsLField);
+			builder.append("LÃ¤nge [m]:", sonsLField);
 			builder.nextLine();
 
-			ausführungVAWSAbscheiderTab = builder.getPanel();
+			ausfuehrungVAWSAbscheiderTab = builder.getPanel();
 		}
-		return ausführungVAWSAbscheiderTab;
+		return ausfuehrungVAWSAbscheiderTab;
 	}
 
 	private JPanel getSchutzvorkehrungenVAWSAbscheiderTab()
@@ -1265,20 +1268,20 @@ public class VawsEditor extends AbstractBaseEditor {
 			builder.setDefaultDialogBorder();
 
 			builder.appendSeparator("Stammdaten");
-			builder.append(überCheck);
+			builder.append(ueberCheck);
 			builder.nextLine();
 
 			builder.append(waschCheck);
 			builder.nextLine();
 
-			builder.appendSeparator("Rückhaltevermögen");
+			builder.appendSeparator("RÃ¼ckhaltevermÃ¶gen");
 			builder.append(abgabeCheck);
 			builder.nextLine();
 			builder.append(hochCheck);
 			builder.nextLine();
-			builder.append(belüftCheck);
+			builder.append(belueftCheck);
 			builder.nextLine();
-			builder.append(rückCheck);
+			builder.append(rueckCheck);
 			builder.nextLine();
 
 			schutzvorkehrungenVAWSAbscheiderTab = builder.getPanel();
@@ -1297,15 +1300,15 @@ public class VawsEditor extends AbstractBaseEditor {
 			
 			builder.appendSeparator("Stammdaten");
 			builder.append("Baujahr:", baujahrFeld);
-			builder.append("Menge [m³]:", mengeFeld);
+			builder.append("Menge [mÂ³]:", mengeFeld);
 			builder.nextLine();
 			
 			builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-			builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
+			builder.append("PrÃ¼fturnus [Jahre]:", pruefTurnusFeld);
 			builder.nextLine();
 			
 			builder.append("Genehmigung:", genehmigungChooser);
-			builder.append("Behälterart:", behaelterArtBox);
+			builder.append("BehÃ¤lterart:", behaelterArtBox);
 			builder.nextLine();
 			
 			builder.append("Erfassung:", erfassungChooser);
@@ -1394,11 +1397,11 @@ public class VawsEditor extends AbstractBaseEditor {
 			
 			builder.appendSeparator("Stammdaten");
 			builder.append("Baujahr:", baujahrFeld);
-			builder.append("Ausführung:", ausfuehrungBox);
+			builder.append("AusfÃ¼hrung:", ausfuehrungBox);
 			builder.nextLine();
 			
 			builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-			builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
+			builder.append("PrÃ¼fturnus [Jahre]:", pruefTurnusFeld);
 			builder.nextLine();
 			
 			builder.append("Genehmigung:", genehmigungChooser);
@@ -1441,7 +1444,7 @@ public class VawsEditor extends AbstractBaseEditor {
 			
 			builder.appendSeparator("Stammdaten");
 			builder.append("Baujahr:", baujahrFeld);
-			builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
+			builder.append("PrÃ¼fturnus [Jahre]:", pruefTurnusFeld);
 			
 			builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
 			builder.append("Erfassung:", erfassungChooser);
@@ -1449,7 +1452,7 @@ public class VawsEditor extends AbstractBaseEditor {
 			builder.append("Genehmigung:", genehmigungChooser);
 			builder.append("Stillegung:", stillegungChooser);
 			
-			builder.appendSeparator("Abfüllfläche");
+			builder.appendSeparator("AbfÃ¼llflÃ¤che");
 
 			builder.append("", neuErstelltCheck);
 			builder.append("", eohCheck);
@@ -1458,7 +1461,7 @@ public class VawsEditor extends AbstractBaseEditor {
 			builder.append("", unbktCheck);
 			builder.append("", svbCheck);
 			
-			builder.appendSeparator("Beschreibung der Abfüllfläche");
+			builder.appendSeparator("Beschreibung der AbfÃ¼llflÃ¤che");
 			builder.appendRow("3dlu");
 			builder.appendRow("fill:25dlu:grow(0.3)");
 			builder.nextLine(2);
@@ -1486,16 +1489,16 @@ public class VawsEditor extends AbstractBaseEditor {
 			builder.setDefaultDialogBorder();
 			
 			builder.appendSeparator("Daten");
-			builder.append("Bodenflächenausführung:", bodenflaechenAusfBox);
+			builder.append("BodenflÃ¤chenausfÃ¼hrung:", bodenflaechenAusfBox);
 			builder.append("Fugenmaterial:", fugenMaterialFeld);
 			
 			builder.append("Dicke [cm]:", dickeFeld);
 			builder.append("Niederschlagsschutz:", niederschlagSchutzBox);
 			
-			builder.append("Güte:", gueteFeld);
+			builder.append("GÃ¼te:", gueteFeld);
 			builder.append("", abscheiderVorhandenCheck);
 			
-			builder.appendSeparator("Beschreibung Bodenfläche");
+			builder.appendSeparator("Beschreibung BodenflÃ¤che");
 			builder.appendRow("3dlu");
 			builder.appendRow("fill:25dlu:grow");
 			builder.nextLine(2);
@@ -1571,7 +1574,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
 
 /**
- * Ein editierbares TableModel für die Vaws-Anlagenchronologie.
+ * Ein editierbares TableModel fÃ¼r die Vaws-Anlagenchronologie.
  * @author David Klotz
  */
 class VawsAnlagenChronoModel extends EditableListTableModel {
@@ -1579,7 +1582,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	private VawsFachdaten fachdaten;
 	
 	/**
-	 * Erzeugt ein einfaches TableModel für die Vaws-Anlagenchronologie.
+	 * Erzeugt ein einfaches TableModel fÃ¼r die Vaws-Anlagenchronologie.
 	 */
 	public VawsAnlagenChronoModel() {
 		super(new String[]{
@@ -1620,7 +1623,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 			}
 			break;
 		case 1:
-			// Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+			// Auf 255 Zeichen kÃ¼rzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
 			if (tmp.length() > 255) {
 				tmp = tmp.substring(0,255);
 			}
@@ -1703,16 +1706,16 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	}
 	
 	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
-	 * Die Liste wird direkt mittels setList "befüllt".
+	 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
+	 * Die Liste wird direkt mittels setList "befÃ¼llt".
 	 */
 	public void updateList() {
 	}
 }
 
 /**
- * Ein editierbares TableModel für die Vaws-Kontrollen 
- * (Sachverständigenprüfung).
+ * Ein editierbares TableModel fÃ¼r die Vaws-Kontrollen 
+ * (SachverstÃ¤ndigenprÃ¼fung).
  * @author David Klotz
  */
 class VawsKontrollenModel extends EditableListTableModel {
@@ -1720,14 +1723,14 @@ class VawsKontrollenModel extends EditableListTableModel {
 	private VawsFachdaten fachdaten;
 	
 	/**
-	 * Erzeugt ein einfaches TableModel für die Vaws-Kontrollen.
+	 * Erzeugt ein einfaches TableModel fÃ¼r die Vaws-Kontrollen.
 	 */
 	public VawsKontrollenModel() {
 		super(new String[]{
-				"Prüfdatum", 
-				"Prüfer", 
-				"Prüfergebnis",
-				"Nächste Prüfung",
+				"PrÃ¼fdatum", 
+				"PrÃ¼fer", 
+				"PrÃ¼fergebnis",
+				"NÃ¤chste PrÃ¼fung",
 				"Prfg. abgeschl."
 		}, 
 		false, true);
@@ -1821,23 +1824,23 @@ class VawsKontrollenModel extends EditableListTableModel {
 		Object tmp;
 		
 		switch (columnIndex) {
-		// Prüfdatum:
+		// PrÃ¼fdatum:
 		case 0:
 			tmp = AuikUtils.getStringFromDate(ac.getPruefdatum());
 			break;
-		// Prüfer:
+		// PrÃ¼fer:
 		case 1:
 			tmp = ac.getPruefer();
 			break;
-		// Prüfergebnis:
+		// PrÃ¼fergebnis:
 		case 2:
 			tmp = ac.getPruefergebnis();
 			break;
-		// Nächste Prüfung:
+		// NÃ¤chste PrÃ¼fung:
 		case 3:
 			tmp = AuikUtils.getStringFromDate(ac.getNaechstepruefung());
 			break;
-		// Prüfung abgeschlossen?:
+		// PrÃ¼fung abgeschlossen?:
 		case 4:
 			tmp = ac.getPruefungabgeschlossen();
 			break;
@@ -1869,15 +1872,15 @@ class VawsKontrollenModel extends EditableListTableModel {
 	}
 	
 	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
-	 * Die Liste wird direkt mittels setList "befüllt".
+	 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
+	 * Die Liste wird direkt mittels setList "befÃ¼llt".
 	 */
 	public void updateList() {
 	}
 }
 
 /**
- * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
+ * Ein editierbares TableModel fÃ¼r die VawsVerwaltungsverfahren.
  * @author David Klotz
  */
 class VerwVerfahrenModel extends EditableListTableModel {
@@ -1885,12 +1888,12 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	private VawsFachdaten fachdaten;
 	
 	/**
-	 * Erzeugt ein einfaches TableModel für die Vaws-Verwaltungsverfahren.
+	 * Erzeugt ein einfaches TableModel fÃ¼r die Vaws-Verwaltungsverfahren.
 	 */
 	public VerwVerfahrenModel() {
 		super(new String[]{
 				"Datum",  
-				"Maßnahmen der Verwaltung",
+				"MaÃŸnahmen der Verwaltung",
 				"Wiedervorlage",
 				"abgeschl."
 		}, 
@@ -1964,7 +1967,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	
 	public boolean objectRemoved(Object objectAtRow) {
 		VawsVerwaltungsverf verf = (VawsVerwaltungsverf) objectAtRow;
-		if (verf.getVerwverfid() != null) {
+		if (verf.getId() != null) {
 			geloeschte.add(verf);
 		}
 		return true;
@@ -1986,7 +1989,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 		case 0:
 			tmp = AuikUtils.getStringFromDate(verf.getDatum());
 			break;
-		// Maßnahme:
+		// MaÃŸnahme:
 		case 1:
 			tmp = verf.getMassnahme();
 			break;
@@ -1994,7 +1997,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 		case 2:
 			tmp = AuikUtils.getStringFromDate(verf.getWiedervorlage());
 			break;
-		// Prüfung abgeschlossen?:
+		// PrÃ¼fung abgeschlossen?:
 		case 3:
 			tmp = new Boolean(verf.getWvverwverf());
 			break;
@@ -2026,15 +2029,15 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	}
 	
 	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
-	 * Die Liste wird direkt mittels setList "befüllt".
+	 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
+	 * Die Liste wird direkt mittels setList "befÃ¼llt".
 	 */
 	public void updateList() {
 	}
 }
 
 /**
- * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
+ * Ein editierbares TableModel fÃ¼r die VawsVerwaltungsverfahren.
  * @author David Klotz
  */
 class VerwGebuehrenModel extends EditableListTableModel {
@@ -2042,12 +2045,12 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	private VawsFachdaten fachdaten;
 	
 	/**
-	 * Erzeugt ein einfaches TableModel für Vaws-Fachdaten.
+	 * Erzeugt ein einfaches TableModel fÃ¼r Vaws-Fachdaten.
 	 */
 	public VerwGebuehrenModel() {
 		super(new String[]{
 				"Datum",  
-				"Gebührenart",
+				"GebÃ¼hrenart",
 				"Betrag",
 				"Abschnitt",
 				"Kassenzeichen"
@@ -2142,7 +2145,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
 		case 0:
 			tmp = AuikUtils.getStringFromDate(gebuehr.getDatum());
 			break;
-		// Gebührenart:
+		// GebÃ¼hrenart:
 		case 1:
 			tmp = gebuehr.getVawsGebuehrenart();
 			break;
@@ -2188,8 +2191,8 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	}
 	
 	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
-	 * Die Liste wird direkt mittels setList "befüllt".
+	 * Leer, da kein Updaten der Liste nÃ¶tig/mÃ¶glich.
+	 * Die Liste wird direkt mittels setList "befÃ¼llt".
 	 */
 	public void updateList() {
 	}

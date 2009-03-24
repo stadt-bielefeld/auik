@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: KSAuswertung.java,v 1.5 2008-09-01 07:03:46 u633d Exp $
+ * $Id: KSAuswertung.java,v 1.6 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 12.05.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2008/09/01 07:03:46  u633d
+ * *** empty log message ***
+ *
  * Revision 1.3  2008/06/24 11:24:08  u633d
  * Version 0.3
  *
@@ -19,7 +22,7 @@
  * Version vom 13.10.
  *
  * Revision 1.13  2005/06/06 15:28:21  u633z
- * - Kontextmenü für Export-Tabelle hinzugefügt
+ * - KontextmenÃ¼ fÃ¼r Export-Tabelle hinzugefÃ¼gt
  *
  * Revision 1.12  2005/06/02 15:19:14  u633z
  * - Layout-Verbesserungen am Auswertungs-Dialog
@@ -30,21 +33,21 @@
  * Revision 1.9  2005/05/31 15:52:18  u633z
  * - Charts und ChartDataSets nach utils.charts verschoben
  * - Neue Klasse APosDataItem um eine Analyseposition als Punkt einer
- *   TimeSeries Datenreihe zu repräsentieren
+ *   TimeSeries Datenreihe zu reprÃ¤sentieren
  * - Bessere Tooltips im Auswertungs-Diagramm
  *
  * Revision 1.7  2005/05/24 11:02:53  u633z
- * Fehler in der Diagramm-Legende behoben (es wurde als Kläranlage immer "Heepen" angezeigt)
+ * Fehler in der Diagramm-Legende behoben (es wurde als KlÃ¤ranlage immer "Heepen" angezeigt)
  *
  * Revision 1.6  2005/05/23 10:13:56  u633z
  * - SwingWorker und besseres Feedback (Statusmeldungen) eingebaut
  *
  * Revision 1.5  2005/05/19 11:30:21  u633z
- * - Filter nach "Analyse von" ermöglicht
- * - Restliche Funktionalität verbessert
+ * - Filter nach "Analyse von" ermÃ¶glicht
+ * - Restliche FunktionalitÃ¤t verbessert
  *
  * Revision 1.4  2005/05/18 15:31:59  u633z
- * Diagramm-Erzeugung verbessert, Funktionalität der Auswertung hinzugefügt
+ * Diagramm-Erzeugung verbessert, FunktionalitÃ¤t der Auswertung hinzugefÃ¼gt
  *
  * Revision 1.1  2005/05/13 11:27:05  u633z
  * Neues Modul: KS-Auswertung
@@ -122,7 +125,7 @@ import de.bielefeld.umweltamt.aui.utils.charts.ChartDataSets;
 import de.bielefeld.umweltamt.aui.utils.charts.Charts;
 
 /**
- * Ein Modul um Analysedaten der Klärschlämme auszuwerten.
+ * Ein Modul um Analysedaten der KlÃ¤rschlÃ¤mme auszuwerten.
  * @author David Klotz
  */
 public class KSAuswertung extends AbstractModul {
@@ -130,12 +133,12 @@ public class KSAuswertung extends AbstractModul {
 	private static final String RIGHT = "right";
 	
 	/**
-	 * Ein Dialog um die Auswertung der Klärschlamm-Parameter zu betrachten.
+	 * Ein Dialog um die Auswertung der KlÃ¤rschlamm-Parameter zu betrachten.
 	 * @author David Klotz
 	 */
 	private class AuswertungsDialog extends JDialog {
 		/**
-		 * Ein Listener für die Events des Dialogs.
+		 * Ein Listener fÃ¼r die Events des Dialogs.
 		 * @author David Klotz
 		 */
 		private class DialogListener extends WindowAdapter implements ActionListener {
@@ -153,7 +156,7 @@ public class KSAuswertung extends AbstractModul {
 			}
 		}
 		/**
-		 * Ein Tablemodel für die 
+		 * Ein Tablemodel fÃ¼r die 
 		 * @author David Klotz
 		 */
 		private class ExportTableModel extends AbstractTableModel {
@@ -317,7 +320,7 @@ public class KSAuswertung extends AbstractModul {
 			
 			speichernButton = new JButton("Speichern");
 			speichernButton.addActionListener(listener);
-			abbrechenButton = new JButton("Schließen");
+			abbrechenButton = new JButton("SchlieÃŸen");
 			abbrechenButton.addActionListener(listener);
 			
 			JPanel tmp = new JPanel(new BorderLayout(0,7));
@@ -428,7 +431,7 @@ public class KSAuswertung extends AbstractModul {
 				boolean doIt = false;
 				if (exportDatei.exists()) {
 					boolean answer = owner.showQuestion( 
-							"Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?", 
+							"Soll die vorhandene Datei "+exportDatei.getName()+" wirklich Ã¼berschrieben werden?", 
 							"Datei bereits vorhanden!");
 					if (answer && exportDatei.canWrite()) {
 						doIt = true;
@@ -522,7 +525,7 @@ public class KSAuswertung extends AbstractModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	public String getName() {
-		return "Auswertung Klärschlamm";
+		return "Auswertung KlÃ¤rschlamm";
 	}
 
 	/* (non-Javadoc)
@@ -555,7 +558,7 @@ public class KSAuswertung extends AbstractModul {
 			
 			FormLayout gesamtLayout = new FormLayout(
 					"pref, 5dlu, "+ spaltenTeil +", 10dlu:g(0.2), "+ spaltenTeil,
-					zeileLuecke +", "+		//1,2	Kläranlagen----  Zeitraum----
+					zeileLuecke +", "+		//1,2	KlÃ¤ranlagen----  Zeitraum----
 					zeileLuecke +", "+		//3,4
 					zeileLuecke +", "+		//5,6
 					zeileLuecke +", "+		//7,8	Parameter -------------------
@@ -570,7 +573,7 @@ public class KSAuswertung extends AbstractModul {
 			CellConstraints cc = new CellConstraints();
 			CellConstraints cc2 = (CellConstraints) cc.clone();
 			
-			builder.addSeparator("Kläranlagen / Art",	cc.xyw( 1, 1, 5));
+			builder.addSeparator("KlÃ¤ranlagen / Art",	cc.xyw( 1, 1, 5));
 			builder.add(getHeepenCheck(),		cc.xy(  1, 3));
 			builder.add(getBrakeCheck(),		cc.xy(  3, 3));
 			builder.add(getSennestCheck(),		cc.xy(  5, 3));
@@ -606,7 +609,7 @@ public class KSAuswertung extends AbstractModul {
 					AuswertungsDialog dialog = new AuswertungsDialog(getArtBox().getSelectedItem().toString(), dataSet1, null, frame);
 					dialog.setVisible(true);
 				} else {
-					frame.changeStatus("Keine Parameter ausgewählt!");
+					frame.changeStatus("Keine Parameter ausgewÃ¤hlt!");
 				}
 			}
 		};
@@ -632,7 +635,7 @@ public class KSAuswertung extends AbstractModul {
 					AuswertungsDialog dialog = new AuswertungsDialog(getArtBox().getSelectedItem().toString(), dataSet1, dataSet2, frame);
 					dialog.setVisible(true);
 				} else {
-					frame.changeStatus("Keine Parameter ausgewählt!");
+					frame.changeStatus("Keine Parameter ausgewÃ¤hlt!");
 				}
 			}
 		};
@@ -696,7 +699,7 @@ public class KSAuswertung extends AbstractModul {
 				AtlParameter p = (AtlParameter) paramList.getModel()
 						.getElementAt(i);
 
-				frame.changeStatus("Erzeuge Datenreihe für " + p + ", " + ka);
+				frame.changeStatus("Erzeuge Datenreihe fÃ¼r " + p + ", " + ka);
 
 				List list = AtlAnalyseposition.getAnalysepositionen(p, einheit,
 						pkt, vonDate, bisDate, analyseVon);
@@ -809,7 +812,7 @@ public class KSAuswertung extends AbstractModul {
 					zeileLuecke +", " +		//13,14	|			|	Par6	|			|
 					zeileLuecke +", " +		//15,16	|			|	Par7	|			|
 					zeileLuecke +", " +		//17,18	|			|	[Par]	|			|
-					zeileLuecke +", " +		//19,20	( Löschen )				( Löschen )
+					zeileLuecke +", " +		//19,20	( LÃ¶schen )				( LÃ¶schen )
 					zeileLuecke +", " +		//21,22	[ Einheit ]				[ Einheit ]
 					"pref");				//23	[ AnalyVo ]				[ AnalyVo ]
 			
@@ -910,7 +913,7 @@ public class KSAuswertung extends AbstractModul {
 	
 	private JButton getLeftDeleteButton() {
 		if (leftDeleteButton == null) {
-			leftDeleteButton = new JButton("Löschen");
+			leftDeleteButton = new JButton("LÃ¶schen");
 			leftDeleteButton.setEnabled(false);
 			
 			leftDeleteButton.addActionListener(new ActionListener() {
@@ -943,7 +946,7 @@ public class KSAuswertung extends AbstractModul {
 	
 	private JButton getRightDeleteButton() {
 		if (rightDeleteButton == null) {
-			rightDeleteButton = new JButton("Löschen");
+			rightDeleteButton = new JButton("LÃ¶schen");
 			rightDeleteButton.setEnabled(false);
 			
 			rightDeleteButton.addActionListener(new ActionListener() {

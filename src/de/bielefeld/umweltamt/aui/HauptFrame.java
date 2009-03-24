@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: HauptFrame.java,v 1.2 2008-06-24 11:24:07 u633d Exp $
+ * $Id: HauptFrame.java,v 1.3 2009-03-24 12:35:19 u633d Exp $
  * 
  * Erstellt am 07.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2008/06/24 11:24:07  u633d
+ * Version 0.3
+ *
  * Revision 1.1  2008/06/05 11:38:40  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -28,10 +31,10 @@
  * - Neue showQuestion-Methoden
  *
  * Revision 1.67  2005/06/02 09:18:17  u633z
- * - Methoden für Datei-Speichern-Chooser hinzugefügt
+ * - Methoden fÃ¼r Datei-Speichern-Chooser hinzugefÃ¼gt
  *
  * Revision 1.66  2005/05/25 15:43:51  u633z
- * - Header hinzugefügt
+ * - Header hinzugefÃ¼gt
  * - Messagebox-Methoden umbenannt
  *
  */
@@ -100,17 +103,17 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  */
 public class HauptFrame extends JFrame {
 	
-	/**	Die Standard-Größe für die Kategorie-Buttons */
+	/**	Die Standard-GrÃ¶ÃŸe fÃ¼r die Kategorie-Buttons */
 	//static final Dimension BUTTON_SIZE = new Dimension(70,70);
-	/** Panel-Größe, um ein Layout-Problem zu umgehen, nur in Ausnahmefällen benutzen */
+	/** Panel-GrÃ¶ÃŸe, um ein Layout-Problem zu umgehen, nur in AusnahmefÃ¤llen benutzen */
 	//public static final Dimension PANEL_SIZE = new Dimension(515, 320);
 	
-	/** Die Farbe für Fehlermeldungen */
+	/** Die Farbe fÃ¼r Fehlermeldungen */
 	public static final Color ERROR_COLOR = new Color(200, 0, 0);
-	/** Die Farbe für Erfolgsmeldungen */
+	/** Die Farbe fÃ¼r Erfolgsmeldungen */
 	public static final Color SUCCESS_COLOR = new Color(0, 128, 0);
-	/** Die Farbe für normale Status-Meldungen.
-	 *  Nicht public, für normale Meldungen einfach changeStatus 
+	/** Die Farbe fÃ¼r normale Status-Meldungen.
+	 *  Nicht public, fÃ¼r normale Meldungen einfach changeStatus 
 	 *  ohne Farb-Argument benutzen. */
 	protected static final Color NORMAL_COLOR = Color.BLACK;
 	
@@ -144,12 +147,12 @@ public class HauptFrame extends JFrame {
 	private SimpleInternalFrame rightFrame = null;
 	private JPanel rightCardPanel = null;
 	
-	// Das Kategorien-Menü
+	// Das Kategorien-MenÃ¼
 	private JPopupMenu viewMenu = null;
 	private JToolBar viewMenuBar = null;
 	private JButton viewMenuButton = null;
 	
-	// Die Modul-Toolbar (vorwärts, zurück...)
+	// Die Modul-Toolbar (vorwÃ¤rts, zurÃ¼ck...)
 	private JToolBar modulBar = null;
 	private JButton modulBackButton = null;
 	private JButton modulFwdButton = null;
@@ -183,7 +186,7 @@ public class HauptFrame extends JFrame {
 			/* Falls mal ein Wechsel auf Linux anstehen sollte, wird
 			 * der Windows-L'n'F vermutlich nicht mehr funktionieren.
 			 * Auch kann es sein, dass man auf allen NT- und 
-			 * XP-Rechner den selben L'n'F haben möchte.
+			 * XP-Rechner den selben L'n'F haben mÃ¶chte.
 			 * Dann einfach statt der Zeile oben die folgende nehmen: 
 			 */ 
 			//UIManager.setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
@@ -191,12 +194,12 @@ public class HauptFrame extends JFrame {
 			// Erleichert das Finden von manchen Layout-Fehlern
 			//ClearLookManager.setMode(ClearLookMode.DEBUG);
 		} catch (Exception e) {
-			AUIKataster.debugOutput("Konnte Look & Feel nicht ändern!", "HauptFrame.initialize");
+			AUIKataster.debugOutput("Konnte Look & Feel nicht Ã¤ndern!", "HauptFrame.initialize");
 		}
 
 		this.setJMenuBar(getHauptMenue());
 		
-		// Fenstergröße setzen
+		// FenstergrÃ¶ÃŸe setzen
 		this.setSize(
 				settings.getIntSetting("auik.prefs.res_x"), 
 				settings.getIntSetting("auik.prefs.res_y")
@@ -210,7 +213,7 @@ public class HauptFrame extends JFrame {
 		this.setIconImage(icon.getImage());
 		this.setTitle(AUIKataster.SHORT_NAME);
 		
-		// Wird benötigt, um das Fenster mit dem Schließen-Icon zu schließen
+		// Wird benÃ¶tigt, um das Fenster mit dem SchlieÃŸen-Icon zu schlieÃŸen
 		this.addWindowListener(new java.awt.event.WindowAdapter() { 
 			public void windowClosing(java.awt.event.WindowEvent e) {    
 				HauptFrame.this.close();
@@ -237,7 +240,7 @@ public class HauptFrame extends JFrame {
 		if(askForDBCredentials()) {
 			// ... Erzeuge den Manager und ... 
 			this.manager = new ModulManager(this, settings);
-			// ... füge Module hinzu
+			// ... fÃ¼ge Module hinzu
 			manager.loadModule();
 			
 			// Zeige dieses Fenster an
@@ -349,7 +352,7 @@ public class HauptFrame extends JFrame {
 	 */
 	protected JButton getModulBackButton() {
 		if (modulBackButton == null) {
-			String desc = "Zurück";
+			String desc = "ZurÃ¼ck";
 			modulBackButton = new JButton(AuikUtils.getIcon(16, "back.png", desc));
 			
 			modulBackButton.setToolTipText(desc);
@@ -401,10 +404,10 @@ public class HauptFrame extends JFrame {
     }
     
     /**
-     * Schließt das Fenster und beendet die Applikation.
+     * SchlieÃŸt das Fenster und beendet die Applikation.
      */
     public void close() {
-    	// Dieses Fenster zerstören
+    	// Dieses Fenster zerstÃ¶ren
     	this.dispose();
     	
     	if (manager != null && manager.getCurrentModul() != null) {
@@ -412,7 +415,7 @@ public class HauptFrame extends JFrame {
     		manager.getCurrentModul().hide();
     	}
     	
-    	// Wenn die Session noch offen sein sollte, schließen wir sie hier
+    	// Wenn die Session noch offen sein sollte, schlieÃŸen wir sie hier
     	HibernateSessionFactory.closeSession();
 
     	// Fenster-Status speichern
@@ -546,7 +549,7 @@ public class HauptFrame extends JFrame {
 							+ "Debug-Modus: <i>"+ ((AUIKataster.DEBUG) ? "An" : "Aus") +"</i><br>"
 							+ "&copy;  2005  Umweltamt Bielefeld & David Klotz<br>"
 							+ "</center></html>",
-						"Info über's "+AUIKataster.SHORT_NAME);
+						"Info Ã¼ber's "+AUIKataster.SHORT_NAME);
 				}
 			});
 		}
@@ -690,7 +693,7 @@ public class HauptFrame extends JFrame {
 	
 	/**
 	 * Zeigt Text in einer bestimmten Farbe in der Statuszeile an.
-	 * Für Fehler/Erfolgsmeldungen die statischen Konstanten
+	 * FÃ¼r Fehler/Erfolgsmeldungen die statischen Konstanten
 	 * ERROR_COLOR/SUCCESS_COLOR dieser Klasse benutzen.
 	 * @param txt Der anzuzeigende Text
 	 * @param color Die Textfarbe
@@ -707,7 +710,7 @@ public class HauptFrame extends JFrame {
 	}
 	
 	/**
-	 * Löscht den in der Statuszeile angezeigten Text.
+	 * LÃ¶scht den in der Statuszeile angezeigten Text.
 	 */
 	public void clearStatus() {
 		statusLabel.setForeground(NORMAL_COLOR);
@@ -727,7 +730,7 @@ public class HauptFrame extends JFrame {
 	/**
 	 * Zeigt eine Fehlermeldung an.
 	 * @param msg Der Text der Meldung
-	 * @param title Ein Titel für die Meldung
+	 * @param title Ein Titel fÃ¼r die Meldung
 	 */
 	public void showErrorMessage(String msg, String title) {
 		JOptionPane.showMessageDialog(getRightFrame(), msg, title, JOptionPane.ERROR_MESSAGE);
@@ -736,7 +739,7 @@ public class HauptFrame extends JFrame {
 	/**
 	 * Zeigt eine Meldung an.
 	 * @param msg Der Text der Meldung
-	 * @param title Ein Titel für die Meldung
+	 * @param title Ein Titel fÃ¼r die Meldung
 	 */
 	public void showInfoMessage(String msg, String title) {
 		JOptionPane.showMessageDialog(getRightFrame(), msg, title, JOptionPane.INFORMATION_MESSAGE);
@@ -753,7 +756,7 @@ public class HauptFrame extends JFrame {
 	/**
 	 * Stellt dem Benutzer eine Ja/Nein-Frage.
 	 * @param question Die Frage.
-	 * @param title Ein Titel für die Meldung
+	 * @param title Ein Titel fÃ¼r die Meldung
 	 * @return <code>true</code>, wenn der Benutzer Ja angeklickt hat, sonst <code>false</code>.
 	 */
 	public boolean showQuestion(String question, String title) {
@@ -925,7 +928,7 @@ public class HauptFrame extends JFrame {
 							} else {
 								JOptionPane.showMessageDialog(BenutzerDatenDialog.this, 
 										"Der eingegebene Benutzername oder das Passwort war falsch (oder es ist aus anderen\n" +
-										"Gründen keine Verbindung mit der Datenbank möglich), bitte versuchen Sie es erneut!", "Fehler", JOptionPane.ERROR_MESSAGE);
+										"GrÃ¼nden keine Verbindung mit der Datenbank mÃ¶glich), bitte versuchen Sie es erneut!", "Fehler", JOptionPane.ERROR_MESSAGE);
 								benutzerFeld.setEnabled(true);
 								passwortFeld.setEnabled(true);
 								loginButton.setEnabled(true);

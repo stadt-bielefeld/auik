@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh50Auswertung.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Id: Anh50Auswertung.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 15.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:33  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.2  2005/09/14 11:25:37  u633d
  * - Version vom 14.9.
  *
@@ -32,18 +35,18 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh50Model;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches Auswertungs-Modul für Anhang 50-Datensätze.
+ * Ein einfaches Auswertungs-Modul fÃ¼r Anhang 50-DatensÃ¤tze.
  * @author David Klotz
  */
 public class Anh50Auswertung extends AbstractQueryModul {
 	/** Das obere Panel mit den Abfrage-Optionen */
 	private JPanel queryPanel;
 	
-	// Widgets für die Abfrage
+	// Widgets fÃ¼r die Abfrage
 	private JCheckBox wiedervorlageCheck;
 	private JButton submitButton;
 	
-	/** Das TableModel für die Ergebnis-Tabelle */
+	/** Das TableModel fÃ¼r die Ergebnis-Tabelle */
 	private Anh50Model tmodel;
 
 	/* (non-Javadoc)
@@ -63,8 +66,8 @@ public class Anh50Auswertung extends AbstractQueryModul {
 			
 			submitButton = new JButton("Suchen");
 			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
+			// Ein ActionListener fÃ¼r den Button, 
+			// der die eigentliche Suche auslÃ¶st: 
 			submitButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					((Anh50Model)getTableModel()).setList(Anh50Fachdaten.findByWiedervorlage(wiedervorlageCheck.isSelected()));

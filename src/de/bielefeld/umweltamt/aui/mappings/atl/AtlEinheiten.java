@@ -32,10 +32,10 @@ public class AtlEinheiten
 	final public static Integer DEFAULT_ID = MG_L_ID;
 	
 	/**
-	 * Die Map für die beim Import unterstützten Einheiten.
-	 * Sie enthält eine Zuordnung von Einheitennamen zu den 
-	 * jeweiligen Schlüsseln der Einheiten-Tabelle.
-	 * Sie wird in initMap() gefüllt.
+	 * Die Map fÃ¼r die beim Import unterstÃ¼tzten Einheiten.
+	 * Sie enthÃ¤lt eine Zuordnung von Einheitennamen zu den 
+	 * jeweiligen SchlÃ¼sseln der Einheiten-Tabelle.
+	 * Sie wird in initMap() gefÃ¼llt.
 	 */
 	private static Map sEinheiten = null;
 	
@@ -69,9 +69,9 @@ public class AtlEinheiten
 	}
 	
 	/**
-	 * Initialisiert die Map für die beim Import unterstützten 
-	 * Einheiten. Sie enthält eine Zuordnung von Einheitennamen 
-	 * zu den jeweiligen Schlüsseln der Einheiten-Tabelle.
+	 * Initialisiert die Map fÃ¼r die beim Import unterstÃ¼tzten 
+	 * Einheiten. Sie enthÃ¤lt eine Zuordnung von Einheitennamen 
+	 * zu den jeweiligen SchlÃ¼sseln der Einheiten-Tabelle.
 	 */
 	private static void initMap() {
 		if (sEinheiten == null) {
@@ -86,7 +86,7 @@ public class AtlEinheiten
 	}
 	
 	/**
-	 * Überprüft ob ein entsprechender Parameter importierbar ist.
+	 * Ã¼berprÃ¼ft ob ein entsprechender Parameter importierbar ist.
 	 * @param name Der Einheiten-Name (bspw. "%").
 	 * @return <code>true</code>, wenn eine entsprechende Einheit bekannt ist, sonst <code>false</code>.
 	 */
@@ -96,9 +96,9 @@ public class AtlEinheiten
 	}
 	
 	/**
-	 * Liefert den Schlüssel für eine Einheit.
+	 * Liefert den SchlÃ¼ssel fÃ¼r eine Einheit.
 	 * @param name Der Einheiten-Name (bspw. "%").
-	 * @return Den Schlüssel der Einheit oder <code>null</code>, falls die Einheit nicht unterstützt wird.
+	 * @return Den SchlÃ¼ssel der Einheit oder <code>null</code>, falls die Einheit nicht unterstÃ¼tzt wird.
 	 */
 	public static Integer getID(String name) {
 		initMap();

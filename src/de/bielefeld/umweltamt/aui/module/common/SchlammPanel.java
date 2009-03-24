@@ -1,23 +1,26 @@
 /*
  * Datei:
- * $Id: SchlammPanel.java,v 1.1 2008-06-05 11:38:41 u633d Exp $
+ * $Id: SchlammPanel.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 17.02.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:41  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.18  2005/07/06 09:38:37  u633z
  * *** empty log message ***
  *
  * Revision 1.17  2005/06/30 11:45:23  u633z
- * Nachfrage beim Löschen
+ * Nachfrage beim LÃ¶schen
  *
  * Revision 1.16  2005/05/31 11:11:08  u633z
  * - ProbenEditor / AtlProbenahmen: Datenbank-Zugriff in Mapping ausgelagert
  *
  * Revision 1.15  2005/05/30 15:44:17  u633z
- * - Kontextmenüs zur Tabelle hinzugefügt
- * - Aufgeräumt, Header hinzugefügt
+ * - KontextmenÃ¼s zur Tabelle hinzugefÃ¼gt
+ * - AufgerÃ¤umt, Header hinzugefÃ¼gt
  *
  */
 package de.bielefeld.umweltamt.aui.module.common;
@@ -64,7 +67,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 
 /**
- * Eine Maske um die Probenahmen der Klärschlämme anzuzeigen.
+ * Eine Maske um die Probenahmen der KlÃ¤rschlÃ¤mme anzuzeigen.
  * @author David Klotz
  */
 public class SchlammPanel extends JPanel {
@@ -75,7 +78,7 @@ public class SchlammPanel extends JPanel {
 	private ProbenahmenModel probeModel;
 	
 	/** Wird benutzt, um nach dem Bearbeiten etc. wieder die 
-	selbe Probe in der Liste auszuwählen. */
+	selbe Probe in der Liste auszuwÃ¤hlen. */
 	private AtlProbenahmen lastProbe;
 	
 	private Action probeEditAction;
@@ -107,7 +110,7 @@ public class SchlammPanel extends JPanel {
 		getProbeTabelle().addFocusListener(tfl);
 		
 		JScrollPane probeScroller = new JScrollPane(getProbeTabelle());
-		JLabel anlageLabel = new JLabel("Kläranlage:");
+		JLabel anlageLabel = new JLabel("KlÃ¤ranlage:");
 		
 		FormLayout anlegenLayout = new FormLayout(
 		"pref, 4dlu, max(60dlu;pref), 7dlu, pref, 4dlu, max(60dlu;pref), 7dlu, max(60dlu;pref)",	// spalten 
@@ -146,7 +149,7 @@ public class SchlammPanel extends JPanel {
 				probeModel.fireTableDataChanged();
 				
 				if (lastProbe != null) {
-					// Wenn die Probe noch in der Liste ist, wird sie ausgewählt.
+					// Wenn die Probe noch in der Liste ist, wird sie ausgewÃ¤hlt.
 					int row = probeModel.getList().indexOf(lastProbe);
 					if (row != -1) {
 						getProbeTabelle().setRowSelectionInterval(row, row);
@@ -206,7 +209,7 @@ public class SchlammPanel extends JPanel {
 				
 				updateProbeListe();
 			} else {
-				frame.changeStatus("Für " + art + " existiert in der KA "+ ka +" kein Probepunkt!", HauptFrame.ERROR_COLOR);
+				frame.changeStatus("FÃ¼r " + art + " existiert in der KA "+ ka +" kein Probepunkt!", HauptFrame.ERROR_COLOR);
 			}
 		} else {
 			frame.changeStatus("Eine Probenahme mit dieser Kennnummer existiert schon!", HauptFrame.ERROR_COLOR);
@@ -216,8 +219,8 @@ public class SchlammPanel extends JPanel {
 	public void showContent() {
 		lastProbe = null;
 		
-		// Standardmäßig wird Heepen ausgewählt (-1 weil der Index
-		// der Combobox bei 0 anfängt)
+		// StandardmÃ¤ÃŸig wird Heepen ausgewÃ¤hlt (-1 weil der Index
+		// der Combobox bei 0 anfÃ¤ngt)
 		getAnlageBox().setSelectedIndex(AtlKlaeranlagen.HEEPEN.intValue() - 1);
 	}
 	
@@ -226,7 +229,7 @@ public class SchlammPanel extends JPanel {
 			probeEditAction = new AbstractAction("Bearbeiten") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getProbeTabelle().getSelectedRow();
-					// Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
+					// NatÃ¼rlich nur editieren, wenn wirklich eine Zeile ausgewÃ¤hlt ist
 					if (row != -1) {
 						AtlProbenahmen probe = probeModel.getRow(row);
 						editProbenahme(probe);
@@ -242,17 +245,17 @@ public class SchlammPanel extends JPanel {
 	
 	private Action getProbeLoeschAction() {
 		if (probeLoeschAction == null) {
-			probeLoeschAction = new AbstractAction("Löschen") {
+			probeLoeschAction = new AbstractAction("LÃ¶schen") {
 				public void actionPerformed(ActionEvent e) {
 					int row = getProbeTabelle().getSelectedRow();
 					if (row != -1 && getProbeTabelle().getEditingRow() == -1) {
 						AtlProbenahmen probe = probeModel.getRow(row);
-						if (frame.showQuestion("Soll die Probenahme '"+ probe.getKennummer() +"' wirklich inkl. aller Analysen gelöscht werden?", "Löschen bestätigen")) {
+						if (frame.showQuestion("Soll die Probenahme '"+ probe.getKennummer() +"' wirklich inkl. aller Analysen gelÃ¶scht werden?", "LÃ¶schen bestÃ¤tigen")) {
 							if (probeModel.removeRow(row)) {
-								frame.changeStatus("Probenahme gelöscht!", HauptFrame.SUCCESS_COLOR);
-								AUIKataster.debugOutput("Probe " + probe.getKennummer() + " wurde gelöscht!", "SchlammPanel.removeAction");
+								frame.changeStatus("Probenahme gelÃ¶scht!", HauptFrame.SUCCESS_COLOR);
+								AUIKataster.debugOutput("Probe " + probe.getKennummer() + " wurde gelÃ¶scht!", "SchlammPanel.removeAction");
 							} else {
-								frame.changeStatus("Konnte Probenahme nicht löschen!", HauptFrame.ERROR_COLOR);
+								frame.changeStatus("Konnte Probenahme nicht lÃ¶schen!", HauptFrame.ERROR_COLOR);
 							}
 						}
 					}

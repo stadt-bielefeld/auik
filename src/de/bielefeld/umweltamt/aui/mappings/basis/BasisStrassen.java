@@ -49,7 +49,7 @@ public class BasisStrassen
 		return super.getStrasse();
 	}
 	
-	// Nur nötig, weil wir Strassen so komisch handhaben...
+	// Nur nÃ¶tig, weil wir Strassen so komisch handhaben...
     /**
      * Liefert das passende BasisStrassen-Objekt zu einem Strassennamen. 
      */
@@ -93,9 +93,9 @@ public class BasisStrassen
 	}
 	
 	/**
-	 * Liefert alle vorhandenen Straßennamen als Strings.
+	 * Liefert alle vorhandenen StraÃŸennamen als Strings.
 	 * @param session Eine Hibernate-Session
-	 * @return Alle vorhandenen Straßennamen
+	 * @return Alle vorhandenen StraÃŸennamen
 	 * @throws HibernateException Wenn ein Datenbank-Fehler auftritt
 	 */
 	public static String[] getStrassen(Session session) throws HibernateException {
@@ -112,11 +112,11 @@ public class BasisStrassen
 	}
 	
 	/**
-	 * Liefert alle vorhandenen Straßennamen als Strings. 
-	 * Erzeugt für die Abfrage eine neue Hibernate-Session und
-	 * schließt sie dann wieder. Diese Methode nur an Stellen benutzen,
-	 * wo gerade keine offene Session zur Verfügung steht.
-	 * @return Alle vorhandenen Straßennamen
+	 * Liefert alle vorhandenen StraÃŸennamen als Strings. 
+	 * Erzeugt fÃ¼r die Abfrage eine neue Hibernate-Session und
+	 * schlieÃŸt sie dann wieder. Diese Methode nur an Stellen benutzen,
+	 * wo gerade keine offene Session zur VerfÃ¼gung steht.
+	 * @return Alle vorhandenen StraÃŸennamen
 	 * @throws HibernateException Wenn ein Datenbank-Fehler auftritt
 	 */
 	public static String[] getStrassen() throws HibernateException {

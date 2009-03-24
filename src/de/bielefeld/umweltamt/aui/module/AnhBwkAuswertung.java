@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AnhBwkAuswertung.java,v 1.1 2008-06-05 11:38:32 u633d Exp $
+ * $Id: AnhBwkAuswertung.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 24.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.2  2005/09/14 11:25:38  u633d
  * - Version vom 14.9.
  *
@@ -34,18 +37,18 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches Auswertungs-Modul für BWK-Datensätze.
+ * Ein einfaches Auswertungs-Modul fÃ¼r BWK-DatensÃ¤tze.
  * @author David Klotz
  */
 public class AnhBwkAuswertung extends AbstractQueryModul {
 	/** Das obere Panel mit den Abfrage-Optionen */
 	private JPanel queryPanel;
 	
-	// Widgets für die Abfrage
+	// Widgets fÃ¼r die Abfrage
 	private JComboBox jahrBox;
 	private JButton submitButton;
 	
-	/** Das TableModel für die Ergebnis-Tabelle */
+	/** Das TableModel fÃ¼r die Ergebnis-Tabelle */
 	private AnhBwkModel tmodel;
 
 	/* (non-Javadoc)
@@ -63,7 +66,7 @@ public class AnhBwkAuswertung extends AbstractQueryModul {
 			// Die Widgets initialisieren:
 			
 			// Die jahrBox wird mit Werten von thisYear - range bis 
-			// thisYear + range gefüllt:
+			// thisYear + range gefÃ¼llt:
 			int range = 15;
 			Calendar cal = Calendar.getInstance();
 			int thisYear = cal.get(Calendar.YEAR);
@@ -78,8 +81,8 @@ public class AnhBwkAuswertung extends AbstractQueryModul {
 			
 			submitButton = new JButton("Suchen");
 			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
+			// Ein ActionListener fÃ¼r den Button, 
+			// der die eigentliche Suche auslÃ¶st: 
 			submitButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int jahrTMP;

@@ -1,13 +1,16 @@
 /*
  * Datei:
- * $Id: SelectTable.java,v 1.1 2008-06-05 11:38:34 u633d Exp $
+ * $Id: SelectTable.java,v 1.2 2009-03-24 12:35:21 u633d Exp $
  * 
  * Erstellt am 16.03.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:34  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.3  2005/06/13 14:03:45  u633z
- * - Überflüssige Debug-Ausgabe entfernt
+ * - Ã¼berflÃ¼ssige Debug-Ausgabe entfernt
  *
  * Revision 1.2  2005/06/09 13:42:33  u633z
  * - Konstruktor ohne Parameter benutzt jetzt anderen vorhandenen Konstruktor (um Dopplung zu vermeiden)
@@ -25,7 +28,7 @@ import javax.swing.text.JTextComponent;
 
 /**
  * Eine verbesserte editierbare Tabelle.
- * Der gesamte Inhalt wird ausgewählt
+ * Der gesamte Inhalt wird ausgewÃ¤hlt
  * @author David Klotz
  */
 public class SelectTable extends JTable {

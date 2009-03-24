@@ -6,8 +6,8 @@ package de.bielefeld.umweltamt.aui.utils.tablemodelbase;
 import javax.swing.table.AbstractTableModel;
 
 /**
- * Die Grundlage für weitere TableModels.
- * Die Namen der Spalten werden als String-Array im Konstruktor übergeben.
+ * Die Grundlage fÃ¼r weitere TableModels.
+ * Die Namen der Spalten werden als String-Array im Konstruktor Ã¼bergeben.
  * @author David Klotz
  */
 public abstract class BasicTableModel extends AbstractTableModel {

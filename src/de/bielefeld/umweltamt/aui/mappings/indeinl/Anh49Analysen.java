@@ -64,7 +64,7 @@ public class Anh49Analysen
 				    .setEntity(0, fd)
 				    .list();
 
-			AUIKataster.debugOutput("Analysen für " + fd + ", Anzahl: " + analyse.size(), "Anh49Analysen");
+			AUIKataster.debugOutput("Analysen fÃ¼r " + fd + ", Anzahl: " + analyse.size(), "Anh49Analysen");
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler", e);
 		} finally {
@@ -87,10 +87,10 @@ public class Anh49Analysen
 			tx.commit();
 			
 		} catch (HibernateException e) {
-			// Falls während der Änderungen ein Hibernate Fehler auftritt
+			// Falls wÃ¤hrend der Ã„nderungen ein Hibernate Fehler auftritt
 			if (tx != null) {
 				try {
-					// Alle Änderungen rückgängig machen
+					// Alle Ã„nderungen rÃ¼ckgÃ¤ngig machen
 					tx.rollback();
 				} catch (HibernateException e1) {
 					throw new RuntimeException("Datenbank-Fehler (Anh49Analysen)", e);

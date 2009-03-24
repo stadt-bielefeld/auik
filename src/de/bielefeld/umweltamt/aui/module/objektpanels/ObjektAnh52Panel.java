@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektAnh52Panel.java,v 1.1 2008-06-05 11:38:39 u633d Exp $
+ * $Id: ObjektAnh52Panel.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
  * 
  * Erstellt am 10.08.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:39  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.4  2006/10/17 09:10:59  u633d
  * small changeZ!
  *
@@ -16,7 +19,7 @@
  * Anhang 52
  *
  * Revision 1.1  2006/10/17 07:54:29  u633d
- * Anhang 52 (Chemische W‰schereien) haben nun einen eigenen Tab.
+ * Anhang 52 (Chemische W√§schereien) haben nun einen eigenen Tab.
  *
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
@@ -76,7 +79,7 @@ public class ObjektAnh52Panel extends JPanel{
 	private ActionListener editButtonListener;
 
 	public ObjektAnh52Panel(ObjektBearbeiten hauptModul) {
-		name = "Chemische W‰scherei";
+		name = "Chemische W√§scherei";
 		this.hauptModul = hauptModul;
 	
 		FormLayout layout = new FormLayout (
@@ -88,7 +91,7 @@ public class ObjektAnh52Panel extends JPanel{
 		builder.setDefaultDialogBorder();
 		
 		builder.appendSeparator("Fachdaten");
-		builder.append("Nr. der Betriebsst‰tte:", getNrBetriebsstaette());
+		builder.append("Nr. der Betriebsst√§tte:", getNrBetriebsstaette());
 		builder.append("");
 		builder.nextLine();
 		builder.append("Firmenname:", getFirmennameFeld());

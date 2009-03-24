@@ -1,11 +1,14 @@
 /*
- * $Id: Charts.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Id: Charts.java,v 1.2 2009-03-24 12:35:21 u633d Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:33  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.4  2005/05/19 06:48:37  u633z
- * Farben angepasst (weißer Hintergrund, hellgraue Linien, für besseren S/W-Ausdruch)
+ * Farben angepasst (weiÃŸer Hintergrund, hellgraue Linien, fÃ¼r besseren S/W-Ausdruch)
  *
  * Revision 1.3  2005/05/18 15:31:59  u633z
- * Diagramm-Erzeugung verbessert, Funktionalität der Auswertung hinzugefügt
+ * Diagramm-Erzeugung verbessert, FunktionalitÃ¤t der Auswertung hinzugefÃ¼gt
  *
  * Revision 1.2  2005/05/12 08:57:23  u633z
  * JavaDoc / Kommentare verbessert
@@ -55,7 +58,7 @@ public class Charts {
 	/**
 	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm. 
 	 * Das Diagramm hat keinen Untertitel und der Name der Y-Achse wird aus dem Dataset entnommen.
-	 * @param titel Die Überschrift
+	 * @param titel Die Ãœberschrift
 	 * @param dataset Die Daten, die geplottet werden sollen.
 	 * @return Das neue Diagramm
 	 */
@@ -67,7 +70,7 @@ public class Charts {
 	/**
 	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm. 
 	 * Der Name der Y-Achse wird aus dem Dataset entnommen.
-	 * @param titel Die Überschrift
+	 * @param titel Die Ãœberschrift
 	 * @param unterTitel Ein Untertitel (kann auch <code>null</code> sein)
 	 * @param dataset Die Daten, die geplottet werden sollen.
 	 * @return Das neue Diagramm
@@ -79,7 +82,7 @@ public class Charts {
 	
 	/**
 	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm.
-	 * @param titel Die Überschrift
+	 * @param titel Die Ãœberschrift
 	 * @param unterTitel Ein Untertitel (kann auch <code>null</code> sein)
 	 * @param yTitel Der Titel der Y-Achse (wenn er <code>null</code> ist, wird der Titel aus dem dataset genommen)
 	 * @param dataset Die Daten, die geplottet werden sollen.
@@ -94,10 +97,10 @@ public class Charts {
 				dataset, 	// Die Daten
 				true, 		// Legende zeigen
 				true, 		// Tooltips zeigen
-				false		// Urls? (vermutlich nur für Servlets...)
+				false		// Urls? (vermutlich nur fÃ¼r Servlets...)
 		);
 		
-		// Die Hintergrundfarbe für das ganze Diagramm setzen
+		// Die Hintergrundfarbe fÃ¼r das ganze Diagramm setzen
 		chart.setBackgroundPaint(Color.WHITE);
 		// Dem Diagramm einen sichtbaren Rand geben
 		chart.setBorderVisible(true);
@@ -119,7 +122,7 @@ public class Charts {
 		// Eine Referenz auf die Werte-Achse holen
 		NumberAxis axis = (NumberAxis) plot.getRangeAxis();
 		
-		// Wenn kein Titel übergeben wird, benutzen wir den der ersten Datenreihe
+		// Wenn kein Titel Ã¼bergeben wird, benutzen wir den der ersten Datenreihe
 		if (yTitel == null) {
 			if (dataset.getSeriesCount() > 0) {
 				TimeSeries series = dataset.getSeries(0);
@@ -140,7 +143,7 @@ public class Charts {
 		// Tooltip-Generator, der den Namen der Messreihe, das Datum und den Wert anzeigt.
 		XYToolTipGenerator ttgen = new StandardXYToolTipGenerator(StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, new SimpleDateFormat("dd.MM.yy HH:mm"), NumberFormat.getInstance());
 		
-		// Den Renderer für die Messwerte/-linien anpassen
+		// Den Renderer fÃ¼r die Messwerte/-linien anpassen
 		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
 		renderer.setDefaultShapesVisible(true);
 		renderer.setDefaultShapesFilled(true);
@@ -158,7 +161,7 @@ public class Charts {
 	/**
 	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm mit zwei Y-Achsen.
 	 * Das Diagramm hat keinen Untertitel und der Name der Y-Achsen wird aus den Datasets entnommen.
-	 * @param titel Die Überschrift
+	 * @param titel Die Ãœberschrift
 	 * @param dataset1 Die Daten, die gegen die erste Achse geplottet werden sollen.
 	 * @param dataset2 Die Daten, die gegen die zweite Achse geplottet werden sollen.
 	 * @return Das neue Diagramm
@@ -170,7 +173,7 @@ public class Charts {
 	/**
 	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm mit zwei Y-Achsen. 
 	 * Der Name der Y-Achsen wird aus den Datasets entnommen.
-	 * @param titel Die Überschrift
+	 * @param titel Die Ãœberschrift
 	 * @param unterTitel Ein Untertitel (kann auch <code>null</code> sein)
 	 * @param dataset1 Die Daten, die gegen die erste Achse geplottet werden sollen.
 	 * @param dataset2 Die Daten, die gegen die zweite Achse geplottet werden sollen.
@@ -182,7 +185,7 @@ public class Charts {
 	
 	/**
 	 * Erzeugt ein neues Zeit/Wert-Liniendiagramm mit zwei Y-Achsen.
-	 * @param titel Die Überschrift
+	 * @param titel Die Ãœberschrift
 	 * @param unterTitel Ein Untertitel (kann auch <code>null</code> sein)
 	 * @param yTitel1 Der Titel der ersten Y-Achse (wenn er <code>null</code> ist, wird der Titel aus dem dataset1 genommen)
 	 * @param yTitel2 Der Titel der zweiten Y-Achse (wenn er <code>null</code> ist, wird der Titel aus dem dataset2 genommen)
@@ -199,10 +202,10 @@ public class Charts {
 				dataset1, 	// Die Daten
 				false, 		// Legende zeigen
 				true, 		// Tooltips zeigen
-				false		// Urls? (vermutlich nur für Servlets...)
+				false		// Urls? (vermutlich nur fÃ¼r Servlets...)
 		);
 		
-		// Die Hintergrundfarbe für das ganze Diagramm setzen
+		// Die Hintergrundfarbe fÃ¼r das ganze Diagramm setzen
 		chart.setBackgroundPaint(Color.WHITE);
 		// Dem Diagramm einen sichtbaren Rand geben
 		chart.setBorderVisible(true);
@@ -224,7 +227,7 @@ public class Charts {
 		// Eine Referenz auf die erste Werte-Achse holen
 		NumberAxis axis1 = (NumberAxis) plot.getRangeAxis();
 		
-		// Wenn kein Titel übergeben wird, benutzen wir den der ersten Datenreihe
+		// Wenn kein Titel Ã¼bergeben wird, benutzen wir den der ersten Datenreihe
 		if (yTitel1 == null) {
 			if (dataset1.getSeriesCount() > 0) {
 				TimeSeries series = dataset1.getSeries(0);
@@ -236,7 +239,7 @@ public class Charts {
 		NumberAxis axis2 = new NumberAxis(yTitel2);
 		axis2.setAutoRangeIncludesZero(false);
 		
-		// Wenn kein Titel übergeben wird, benutzen wir den der zweiten Datenreihe
+		// Wenn kein Titel Ã¼bergeben wird, benutzen wir den der zweiten Datenreihe
 		if (yTitel2 == null) {
 			if (dataset2.getSeriesCount() > 0) {
 				TimeSeries series = dataset2.getSeries(0);
@@ -244,7 +247,7 @@ public class Charts {
 			}
 		}
 		
-		// Die zweite Achse dem Plot hinzufügen und mit dem zweiten Datensatz verknüpfen
+		// Die zweite Achse dem Plot hinzufÃ¼gen und mit dem zweiten Datensatz verknÃ¼pfen
 		plot.setRangeAxis(1, axis2);
 		plot.setDataset(1, dataset2);
 		plot.setRenderer(1, new XYLineAndShapeRenderer()); 
@@ -257,7 +260,7 @@ public class Charts {
 		// Tooltip-Generator, der den Namen der Messreihe, das Datum und den Wert anzeigt.
 		XYToolTipGenerator ttgen = new StandardXYToolTipGenerator(StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, new SimpleDateFormat("dd.MM.yy hh:mm"), NumberFormat.getInstance());
 		
-		// Den Renderer für die Messwerte/-linien der ersten Achse anpassen
+		// Den Renderer fÃ¼r die Messwerte/-linien der ersten Achse anpassen
 		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
 		renderer.setDefaultShapesVisible(true);
 		renderer.setDefaultShapesFilled(true);
@@ -266,7 +269,7 @@ public class Charts {
 			axis1.setLabelPaint(renderer.getSeriesPaint(0));
 		}
 		
-		// Den Renderer für die Messwerte/-linien der zweiten Achse anpassen
+		// Den Renderer fÃ¼r die Messwerte/-linien der zweiten Achse anpassen
 		XYLineAndShapeRenderer renderer2 = (XYLineAndShapeRenderer) plot.getRenderer(1);
 		renderer2.setDefaultShapesVisible(true);
 		renderer2.setDefaultShapesFilled(true);
@@ -294,7 +297,7 @@ public class Charts {
 		
 		chart.addSubtitle(compLegend);
 		
-		// Das fertige Diagramm zurückliefern
+		// Das fertige Diagramm zurÃ¼ckliefern
 		return chart;
 	}
 }

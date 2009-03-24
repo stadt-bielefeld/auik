@@ -8,7 +8,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein TableModel für eine Tabelle mit Probenahmen zu einem Probepunkt.
+ * Ein TableModel fÃ¼r eine Tabelle mit Probenahmen zu einem Probepunkt.
  * @author David Klotz
  */
 public class ProbenahmenModel extends ListTableModel {

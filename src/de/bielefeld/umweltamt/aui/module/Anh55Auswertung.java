@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh55Auswertung.java,v 1.1 2008-06-05 11:38:33 u633d Exp $
+ * $Id: Anh55Auswertung.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
  * 
  * Erstellt am 03.05.2006 von Gerd Genuit
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2008/06/05 11:38:33  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
  * Revision 1.1  2006/09/13 11:06:21  u633d
  * *** empty log message ***
  *
@@ -13,7 +16,7 @@
  * Anzahl der Datenaetze bei Auswertung anzeigen
  *
  * Revision 1.1  2006/05/03 09:01:54  u633d
- * Anhang 40 und 55 ergänzt
+ * Anhang 40 und 55 ergÃ¤nzt
  *
  * Revision 1.1  2005/08/25 14:46:59  u633d
  * - zu viel ;)
@@ -38,17 +41,17 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches Auswertungs-Modul für Anhang40-Datensätze.
+ * Ein einfaches Auswertungs-Modul fÃ¼r Anhang40-DatensÃ¤tze.
  * @author Gerd Genuit
  */
 public class Anh55Auswertung extends AbstractQueryModul {
 	/** Das obere Panel mit den Abfrage-Optionen */
 	private JPanel queryPanel;
 	
-	// Widgets für die Abfrage
+	// Widgets fÃ¼r die Abfrage
 	private JButton submitButton;
 	
-	/** Das TableModel für die Ergebnis-Tabelle */
+	/** Das TableModel fÃ¼r die Ergebnis-Tabelle */
 	private Anh55Model tmodel;
 
 	/* (non-Javadoc)
@@ -74,8 +77,8 @@ public class Anh55Auswertung extends AbstractQueryModul {
 			// Die Widgets initialisieren
 			submitButton = new JButton("Alle Objekte anzeigen");
 			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
+			// Ein ActionListener fÃ¼r den Button, 
+			// der die eigentliche Suche auslÃ¶st: 
 			submitButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {

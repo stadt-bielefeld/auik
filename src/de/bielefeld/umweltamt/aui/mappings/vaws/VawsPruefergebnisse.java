@@ -30,8 +30,8 @@ public class VawsPruefergebnisse
     /* Add customized code below */
 
     /**
-     * Liefert alle Prüfergebnisse für die Sachverständigenprüfung.
-     * @return Ein Array mit den Namen aller möglichen Prüfergebnisse.
+     * Liefert alle PrÃ¼fergebnisse fÃ¼r die SachverstÃ¤ndigenprÃ¼fung.
+     * @return Ein Array mit den Namen aller mÃ¶glichen PrÃ¼fergebnisse.
      */
     public static String[] getAllPruefergebnisse() {
 		List list;

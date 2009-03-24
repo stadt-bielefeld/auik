@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -16,8 +17,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -38,8 +41,11 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.module.ObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
@@ -72,6 +78,13 @@ public class ObjektProbepunktPanel extends JPanel {
 	private AtlProbeart[] probearten = null;
 	private AtlKlaeranlagen[] klaeranlagen = null;
 	
+	// Objektverknuepfer
+	private ObjektVerknuepfungModel objektVerknuepfungModel;
+	private JTable objektverknuepfungTabelle = null;
+	private JButton selectObjektButton = null;
+	private Action verknuepfungLoeschAction;
+	private JPopupMenu verknuepfungPopup;	
+	
 	public ObjektProbepunktPanel(ObjektBearbeiten hauptModul) {
 		name = "Probenahmepunkt";
 		this.hauptModul = hauptModul;
@@ -81,21 +94,27 @@ public class ObjektProbepunktPanel extends JPanel {
 				"r:50dlu, 5dlu, 150dlu, r:45dlu, 5dlu, 25dlu", // Spalten
 				"pref, " +  //1
 				"3dlu, " +  //2
-				"pref, " +	//1
-				"3dlu, " +	//2
 				"pref, " +	//3
-				"3dlu, " +  //4
-				"pref, " +  //5
-				"5dlu, " +	//6
-				"pref, " +	//7
-				"3dlu, " +	//8
-				"fill:23dlu:g(0.2), "+	//9
+				"3dlu, " +	//4
+				"pref, " +	//5
+				"3dlu, " +  //6
+				"pref, " +  //7
+				"5dlu, " +	//8
+				"pref, " +	//9
 				"3dlu, " +	//10
-				"pref, " +	//11
+				"pref, "+	//11
 				"3dlu, " +	//12
-				"fill:40dlu:g, "+ //13
+				"pref, " +	//13
 				"3dlu, " +	//14
-				"pref"); // 15
+				"fill:40dlu:g, "+ //15
+				"3dlu, " +	//16
+				"pref, " + 	// 17
+				"3dlu, " +	//18
+				"pref, " +	//19
+				"3dlu, " +	//20
+				"fill:40dlu:g, " +	//21
+				"3dlu, " +	//22
+				"pref");	//23
 		
 		PanelBuilder builder = new PanelBuilder(layout, this);
 		builder.setDefaultDialogBorder();
@@ -106,7 +125,7 @@ public class ObjektProbepunktPanel extends JPanel {
 		builder.add(getProbePktArtBox(), cc.xy( 3, 3));
 		builder.addLabel("Nr:", cc.xy( 4, 3));
 		builder.add(getProbePktNrFeld(), cc.xy( 6, 3));
-		builder.addLabel("Kl‰ranlage:", cc.xy( 1, 5));
+		builder.addLabel("Kl√§ranlage:", cc.xy( 1, 5));
 		builder.add(getProbeKABox(), cc.xy( 3, 5));
 		
 		JPanel buttonBar = ButtonBarFactory.buildOKBar(getSavePktButton());
@@ -120,9 +139,22 @@ public class ObjektProbepunktPanel extends JPanel {
 		builder.addSeparator("Probenahmen", cc.xyw( 1, 13, 6));
 		JScrollPane tabellenScroller = new JScrollPane(getProbenahmeTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		builder.add(tabellenScroller, cc.xyw( 1, 15, 6));
-		//builder.addSeparator("Neue Probenahme", cc.xyw( 1, 13, 7));
 		builder.add(getNeueProbePanel(), cc.xyw( 1, 17, 6));
+		
+
+		builder.addSeparator("Verkn√ºpfte Objekte", cc.xyw( 1, 19, 6));
+		JScrollPane objektverknuepfungScroller = new JScrollPane(
+				getObjektverknuepungTabelle(),
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		builder.add(objektverknuepfungScroller, cc.xyw( 1, 21, 6));
+
+		JPanel buttonBarOv = ButtonBarFactory.buildRightAlignedBar(
+				getSelectObjektButton());
+
+		builder.add(buttonBarOv, cc.xyw( 1, 23, 6));
 	}
+	
 	
 	public void fetchFormData() throws RuntimeException {
 		probepkt = AtlProbepkt.getProbepunktByObjekt(hauptModul.getObjekt());
@@ -156,6 +188,8 @@ public class ObjektProbepunktPanel extends JPanel {
 			
 			probenahmenModel.setProbepunkt(probepkt);
 			probenahmenModel.updateList();
+			
+			objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
 		}
 	}
 	
@@ -225,7 +259,7 @@ public class ObjektProbepunktPanel extends JPanel {
 		boolean success;
 		
 		if (probepkt != null) {
-			// Eingegebene Daten f¸r den Probepunkt ¸bernehmen
+			// Eingegebene Daten fÔøΩr den Probepunkt ÔøΩbernehmen
 			if (getProbePktArtBox().getSelectedItem() != null) {
 				probepkt.setAtlProbeart((AtlProbeart) getProbePktArtBox().getSelectedItem());
 			}
@@ -285,7 +319,7 @@ public class ObjektProbepunktPanel extends JPanel {
 			probePktBeschreibungsArea.setLineWrap(true);
 			probePktBeschreibungsArea.setWrapStyleWord(true);
 			probePktBeschreibungsArea.setEditable(false);
-			probePktBeschreibungsArea.setToolTipText("Diese Beschreibung kann unter \"Objekt\" ge‰ndert werden.");
+			probePktBeschreibungsArea.setToolTipText("Diese Beschreibung kann unter \"Objekt\" ge√§ndert werden.");
 			probePktBeschreibungsArea.setBackground(this.getBackground());
 		}
 		return probePktBeschreibungsArea;
@@ -310,15 +344,15 @@ public class ObjektProbepunktPanel extends JPanel {
 				}
 			});
 			
-			// Den KeyStroke holen, der "Enter" repr‰sentiert
+			// Den KeyStroke holen, der "Enter" repr√§sentiert
 	        KeyStroke enterKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false);
-	        // Den "Enter"-KeyStroke in die InputMap der Tabelle einf¸gen
+	        // Den "Enter"-KeyStroke in die InputMap der Tabelle einf√ºgen
 	        probenahmeTabelle.getInputMap().put(enterKeyStroke, "ENTER");
-	        // Eine neue Action f¸rs editieren erzeugen
+	        // Eine neue Action f√ºrs editieren erzeugen
 	        Action editAction = new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
 					int row = probenahmeTabelle.getSelectedRow();
-					// Nat¸rlich nur editieren, wenn wirklich eine Zeile ausgew‰hlt ist
+					// Nat√ºrlich nur editieren, wenn wirklich eine Zeile ausgew√§hlt ist
 					if (row != -1) {
 						AtlProbenahmen probe = probenahmenModel.getRow(row);
 						editProbenahme(probe);
@@ -335,10 +369,10 @@ public class ObjektProbepunktPanel extends JPanel {
 					int row = probenahmeTabelle.getSelectedRow();
 					if (row != -1 && probenahmeTabelle.getEditingRow() == -1) {
 						AtlProbenahmen probe = probenahmenModel.getRow(row);
-						int answer = JOptionPane.showConfirmDialog(ObjektProbepunktPanel.this, "Soll die Probenahme "+ probe.getKennummer() +" wirklich inkl. aller Analysen gelˆscht werden?", "Lˆschen best‰tigen", JOptionPane.YES_NO_OPTION);
+						int answer = JOptionPane.showConfirmDialog(ObjektProbepunktPanel.this, "Soll die Probenahme "+ probe.getKennummer() +" wirklich inkl. aller Analysen gel√∂scht werden?", "L√∂schen best√§tigen", JOptionPane.YES_NO_OPTION);
 						if (answer == JOptionPane.YES_OPTION) {
 							probenahmenModel.removeRow(row);
-							AUIKataster.debugOutput("Probe " + probe.getKennummer() + " wurde gelˆscht!", "SchlammPanel.removeAction");
+							AUIKataster.debugOutput("Probe " + probe.getKennummer() + " wurde gel√∂scht!", "SchlammPanel.removeAction");
 						}
 					}
 				}
@@ -420,5 +454,163 @@ public class ObjektProbepunktPanel extends JPanel {
 		}
 		
 		return savePktButton;
+	}
+
+	private JTable getObjektverknuepungTabelle() {
+	
+		if (objektVerknuepfungModel == null) {
+			objektVerknuepfungModel = new ObjektVerknuepfungModel(hauptModul
+					.getObjekt());
+	
+			if (objektverknuepfungTabelle == null) {
+				objektverknuepfungTabelle = new JTable(objektVerknuepfungModel);
+			} else {
+				objektverknuepfungTabelle.setModel(objektVerknuepfungModel);
+			}
+			objektverknuepfungTabelle.getColumnModel().getColumn(0)
+					.setPreferredWidth(5);
+			objektverknuepfungTabelle.getColumnModel().getColumn(1)
+					.setPreferredWidth(100);
+			objektverknuepfungTabelle.getColumnModel().getColumn(2)
+					.setPreferredWidth(250);
+	
+			objektverknuepfungTabelle
+					.addMouseListener(new java.awt.event.MouseAdapter() {
+						public void mouseClicked(java.awt.event.MouseEvent e) {
+							if ((e.getClickCount() == 2)
+									&& (e.getButton() == 1)) {
+								Point origin = e.getPoint();
+								int row = getObjektverknuepungTabelle()
+										.rowAtPoint(origin);
+	
+								if (row != -1) {
+									BasisObjektverknuepfung obj = objektVerknuepfungModel
+											.getRow(row);
+									if (obj.getBasisObjektByIstVerknuepftMit().getObjektid().intValue() != hauptModul
+											.getObjekt().getObjektid().intValue())
+										hauptModul
+												.getManager()
+												.getSettingsManager()
+												.setSetting(
+														"auik.imc.edit_object",
+														obj
+																.getBasisObjektByIstVerknuepftMit()
+																.getObjektid()
+																.intValue(),
+														false);
+									else
+										hauptModul
+												.getManager()
+												.getSettingsManager()
+												.setSetting(
+														"auik.imc.edit_object",
+														obj
+																.getBasisObjektByObjekt()
+																.getObjektid()
+																.intValue(),
+														false);
+									hauptModul.getManager().switchModul(
+											"m_objekt_bearbeiten");
+								}
+							}
+						}
+	
+						public void mousePressed(MouseEvent e) {
+							showVerknuepfungPopup(e);
+						}
+	
+						public void mouseReleased(MouseEvent e) {
+							showVerknuepfungPopup(e);
+						}
+					});
+	
+			objektverknuepfungTabelle.getInputMap().put(
+					(KeyStroke) getVerknuepfungLoeschAction().getValue(
+							Action.ACCELERATOR_KEY),
+					getVerknuepfungLoeschAction().getValue(Action.NAME));
+			objektverknuepfungTabelle.getActionMap().put(
+					getVerknuepfungLoeschAction().getValue(Action.NAME),
+					getVerknuepfungLoeschAction());
+		}
+	
+		return objektverknuepfungTabelle;
+	
+	}
+
+	private void showVerknuepfungPopup(MouseEvent e) {
+		if (verknuepfungPopup == null) {
+			verknuepfungPopup = new JPopupMenu("Objekt");
+			JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
+			verknuepfungPopup.add(loeschItem);
+		}
+	
+		if (e.isPopupTrigger()) {
+			Point origin = e.getPoint();
+			int row = objektverknuepfungTabelle.rowAtPoint(origin);
+	
+			if (row != -1) {
+				objektverknuepfungTabelle.setRowSelectionInterval(row, row);
+				verknuepfungPopup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		}
+	}
+
+	private Action getVerknuepfungLoeschAction() {
+		if (verknuepfungLoeschAction == null) {
+			verknuepfungLoeschAction = new AbstractAction("L√∂schen") {
+				public void actionPerformed(ActionEvent e) {
+					int row = getObjektverknuepungTabelle().getSelectedRow();
+					if (row != -1
+							&& getObjektverknuepungTabelle().getEditingRow() == -1) {
+						BasisObjektverknuepfung verknuepfung = objektVerknuepfungModel
+								.getRow(row);
+						int answer = JOptionPane
+								.showConfirmDialog(
+										hauptModul.getPanel(),
+										"Soll die Verkn√ºpfung wirklich gel√∂scht werden?\n"
+												+ "Hinweis: Die Aktion betrifft nur die Verkn√ºpfung, die Objekte bleiben erhalten und k√∂nnen jederzeit neu verkn√ºpft werden.",
+										"L√∂schen best√§tigen",
+										JOptionPane.YES_NO_OPTION);
+						if (answer == JOptionPane.YES_OPTION) {
+							if (objektVerknuepfungModel.removeRow(row)) {
+								hauptModul.getFrame().changeStatus(
+										"Objekt gel√∂scht.",
+										HauptFrame.SUCCESS_COLOR);
+								AUIKataster.debugOutput("Objekt "
+										+ verknuepfung.getId()
+										+ " wurde gel√∂scht!",
+										"BetreiberSuchen.removeAction");
+							} else {
+								hauptModul.getFrame().changeStatus(
+										"Konnte das Objekt nicht l√∂schen!",
+										HauptFrame.ERROR_COLOR);
+							}
+						}
+					}
+				}
+			};
+			verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+					KeyEvent.VK_L));
+			verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
+					.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+		}
+	
+		return verknuepfungLoeschAction;
+	}
+
+	private JButton getSelectObjektButton() {
+		if (selectObjektButton == null) {
+			selectObjektButton = new JButton("Objekt ausw√§hlen");
+	
+			selectObjektButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ObjektChooser chooser = new ObjektChooser(hauptModul
+							.getFrame(), probepkt.getBasisObjekt(),
+							objektVerknuepfungModel);
+					chooser.setVisible(true);
+				}
+			});
+		}
+		return selectObjektButton;
 	}
 }

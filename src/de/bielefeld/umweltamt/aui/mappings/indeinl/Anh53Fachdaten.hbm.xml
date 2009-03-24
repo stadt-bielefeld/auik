@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+
+    <class name="Anh53Fachdaten" table="anh_53_fachdaten">
+        <id name="objektid" column="objektid" type="java.lang.Integer">
+            <generator class="foreign">
+            	<param name="property">basisObjekt</param>
+            </generator>
+        </id>
+
+        <property name="branche" column="branche" type="java.lang.String" />
+        <property name="verfahren" column="verfahren" type="java.lang.String" />
+        <property name="antragsdatum" column="antragsdatum" type="java.util.Date" />
+        <property name="bagatell" column="bagatell" type="java.lang.Boolean" />
+        <property name="bagatelldatum" column="bagatelldatum" type="java.util.Date" />
+        <property name="genehmigungsdatum" column="genehmigungsdatum" type="java.util.Date" />
+        <property name="genehmigungaufgehoben" column="genehmigungaufgehoben" type="java.util.Date" />
+        <property name="abnahmedatum" column="abnahmedatum" type="java.util.Date" />
+        <property name="genehmigungstitel" column="genehmigungstitel" type="java.lang.String" />
+        <property name="genehmigung" column="genehmigung" type="java.lang.Boolean" />
+        <property name="durchsatz" column="durchsatz" type="java.lang.Integer" />
+        <property name="gesamtmengeEb" column="gesamtmenge_eb" type="java.lang.Integer" />
+        <property name="onlineentsilberung" column="onlineentsilberung" type="java.lang.Boolean" />
+        <property name="abwasser" column="abwasser" type="java.lang.Boolean" />
+        <property name="abwasserfrei" column="abwasserfrei" type="java.util.Date" />
+        <property name="kleiner200qm" column="kleiner200qm" type="java.util.Date" />
+        <property name="betriebAbgemeldet" column="betrieb_abgemeldet" type="java.lang.Boolean" />
+        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
+        <property name="betriebstagebuch" column="betriebstagebuch" type="java.lang.Boolean" />
+        <property name="wasseruhr" column="wasseruhr" type="java.lang.Boolean" />
+        <property name="spuelwassermenge" column="spuelwassermenge" type="java.lang.Integer" />
+        <property name="spuelwasserverbrauch" column="spuelwasserverbrauch" type="java.lang.Integer" />
+        <property name="wartungsvertrag" column="wartungsvertrag" type="java.lang.Boolean" />
+        <property name="grgen" column="grgen" type="java.lang.Boolean" />
+        <property name="genart" column="genart" type="java.lang.String" />
+        
+        <many-to-one name="anh53Entsorgungsbetriebe" column="id" class="Anh53Entsorgungsbetriebe" />
+
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"/>
+    </class>
+
+</hibernate-mapping>
