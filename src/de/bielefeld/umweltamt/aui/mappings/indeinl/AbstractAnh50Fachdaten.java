@@ -31,68 +31,20 @@ public abstract class AbstractAnh50Fachdaten
     /** The value of the basisObjekt association. */
     private BasisObjekt basisObjekt;
 
-    /** The value of the simple gemeinschaft property. */
-    private java.lang.String gemeinschaft;
-
-    /** The value of the simple anrede property. */
-    private java.lang.String anrede;
-
-    /** The value of the simple name property. */
-    private java.lang.String name;
-
-    /** The value of the simple vorname property. */
-    private java.lang.String vorname;
-
-    /** The value of the simple strassenid property. */
-    private java.lang.Integer strassenid;
-
-    /** The value of the simple hausnr property. */
-    private java.lang.Integer hausnr;
-
-    /** The value of the simple hausnrzus property. */
-    private java.lang.String hausnrzus;
-
     /** The value of the simple telefon property. */
     private java.lang.String telefon;
-
-    /** The value of the simple existenz property. */
-    private java.lang.Boolean existenz;
 
     /** The value of the simple erloschen property. */
     private java.lang.Boolean erloschen;
 
-    /** The value of the simple mListe property. */
-    private java.lang.Boolean mListe;
-
-    /** The value of the simple amalgam property. */
-    private java.lang.Boolean amalgam;
-
-    /** The value of the simple abscheidervor property. */
-    private java.lang.Boolean abscheidervor;
-
     /** The value of the simple datumantrag property. */
     private java.util.Date datumantrag;
-
-    /** The value of the simple drucken property. */
-    private java.lang.Boolean drucken;
 
     /** The value of the simple bemerkungen property. */
     private java.lang.String bemerkungen;
 
-    /** The value of the simple antragGueltig property. */
-    private java.lang.Boolean antragGueltig;
-
     /** The value of the simple genehmigung property. */
     private java.util.Date genehmigung;
-
-    /** The value of the simple angabenKorrekt property. */
-    private java.lang.Boolean angabenKorrekt;
-
-    /** The value of the simple antragStellen property. */
-    private java.lang.Boolean antragStellen;
-
-    /** The value of the simple genehmigungErforderlich property. */
-    private java.lang.Boolean genehmigungErforderlich;
 
     /** The value of the simple wiedervorlage property. */
     private java.util.Date wiedervorlage;
@@ -154,132 +106,6 @@ public abstract class AbstractAnh50Fachdaten
     }
 
     /**
-     * Return the value of the GEMEINSCHAFT column.
-     * @return java.lang.String
-     */
-    public java.lang.String getGemeinschaft()
-    {
-        return this.gemeinschaft;
-    }
-
-    /**
-     * Set the value of the GEMEINSCHAFT column.
-     * @param gemeinschaft
-     */
-    public void setGemeinschaft(java.lang.String gemeinschaft)
-    {
-        this.gemeinschaft = gemeinschaft;
-    }
-
-    /**
-     * Return the value of the ANREDE column.
-     * @return java.lang.String
-     */
-    public java.lang.String getAnrede()
-    {
-        return this.anrede;
-    }
-
-    /**
-     * Set the value of the ANREDE column.
-     * @param anrede
-     */
-    public void setAnrede(java.lang.String anrede)
-    {
-        this.anrede = anrede;
-    }
-
-    /**
-     * Return the value of the NAME column.
-     * @return java.lang.String
-     */
-    public java.lang.String getName()
-    {
-        return this.name;
-    }
-
-    /**
-     * Set the value of the NAME column.
-     * @param name
-     */
-    public void setName(java.lang.String name)
-    {
-        this.name = name;
-    }
-
-    /**
-     * Return the value of the VORNAME column.
-     * @return java.lang.String
-     */
-    public java.lang.String getVorname()
-    {
-        return this.vorname;
-    }
-
-    /**
-     * Set the value of the VORNAME column.
-     * @param vorname
-     */
-    public void setVorname(java.lang.String vorname)
-    {
-        this.vorname = vorname;
-    }
-
-    /**
-     * Return the value of the STRASSENID column.
-     * @return java.lang.Integer
-     */
-    public java.lang.Integer getStrassenid()
-    {
-        return this.strassenid;
-    }
-
-    /**
-     * Set the value of the STRASSENID column.
-     * @param strassenid
-     */
-    public void setStrassenid(java.lang.Integer strassenid)
-    {
-        this.strassenid = strassenid;
-    }
-
-    /**
-     * Return the value of the HAUSNR column.
-     * @return java.lang.Integer
-     */
-    public java.lang.Integer getHausnr()
-    {
-        return this.hausnr;
-    }
-
-    /**
-     * Set the value of the HAUSNR column.
-     * @param hausnr
-     */
-    public void setHausnr(java.lang.Integer hausnr)
-    {
-        this.hausnr = hausnr;
-    }
-
-    /**
-     * Return the value of the HAUSNRZUS column.
-     * @return java.lang.String
-     */
-    public java.lang.String getHausnrzus()
-    {
-        return this.hausnrzus;
-    }
-
-    /**
-     * Set the value of the HAUSNRZUS column.
-     * @param hausnrzus
-     */
-    public void setHausnrzus(java.lang.String hausnrzus)
-    {
-        this.hausnrzus = hausnrzus;
-    }
-
-    /**
      * Return the value of the TELEFON column.
      * @return java.lang.String
      */
@@ -295,24 +121,6 @@ public abstract class AbstractAnh50Fachdaten
     public void setTelefon(java.lang.String telefon)
     {
         this.telefon = telefon;
-    }
-
-    /**
-     * Return the value of the EXISTENZ column.
-     * @return java.lang.Boolean
-     */
-    public java.lang.Boolean getExistenz()
-    {
-        return this.existenz;
-    }
-
-    /**
-     * Set the value of the EXISTENZ column.
-     * @param existenz
-     */
-    public void setExistenz(java.lang.Boolean existenz)
-    {
-        this.existenz = existenz;
     }
 
     /**
@@ -334,60 +142,6 @@ public abstract class AbstractAnh50Fachdaten
     }
 
     /**
-     * Return the value of the M_LISTE column.
-     * @return java.lang.Boolean
-     */
-    public java.lang.Boolean getMListe()
-    {
-        return this.mListe;
-    }
-
-    /**
-     * Set the value of the M_LISTE column.
-     * @param mListe
-     */
-    public void setMListe(java.lang.Boolean mListe)
-    {
-        this.mListe = mListe;
-    }
-
-    /**
-     * Return the value of the AMALGAM column.
-     * @return java.lang.Boolean
-     */
-    public java.lang.Boolean getAmalgam()
-    {
-        return this.amalgam;
-    }
-
-    /**
-     * Set the value of the AMALGAM column.
-     * @param amalgam
-     */
-    public void setAmalgam(java.lang.Boolean amalgam)
-    {
-        this.amalgam = amalgam;
-    }
-
-    /**
-     * Return the value of the ABSCHEIDERVOR column.
-     * @return java.lang.Boolean
-     */
-    public java.lang.Boolean getAbscheidervor()
-    {
-        return this.abscheidervor;
-    }
-
-    /**
-     * Set the value of the ABSCHEIDERVOR column.
-     * @param abscheidervor
-     */
-    public void setAbscheidervor(java.lang.Boolean abscheidervor)
-    {
-        this.abscheidervor = abscheidervor;
-    }
-
-    /**
      * Return the value of the DATUMANTRAG column.
      * @return java.util.Date
      */
@@ -403,24 +157,6 @@ public abstract class AbstractAnh50Fachdaten
     public void setDatumantrag(java.util.Date datumantrag)
     {
         this.datumantrag = datumantrag;
-    }
-
-    /**
-     * Return the value of the DRUCKEN column.
-     * @return java.lang.Boolean
-     */
-    public java.lang.Boolean getDrucken()
-    {
-        return this.drucken;
-    }
-
-    /**
-     * Set the value of the DRUCKEN column.
-     * @param drucken
-     */
-    public void setDrucken(java.lang.Boolean drucken)
-    {
-        this.drucken = drucken;
     }
 
     /**
@@ -442,24 +178,6 @@ public abstract class AbstractAnh50Fachdaten
     }
 
     /**
-     * Return the value of the ANTRAG_GUELTIG column.
-     * @return java.lang.Boolean
-     */
-    public java.lang.Boolean getAntragGueltig()
-    {
-        return this.antragGueltig;
-    }
-
-    /**
-     * Set the value of the ANTRAG_GUELTIG column.
-     * @param antragGueltig
-     */
-    public void setAntragGueltig(java.lang.Boolean antragGueltig)
-    {
-        this.antragGueltig = antragGueltig;
-    }
-
-    /**
      * Return the value of the GENEHMIGUNG column.
      * @return java.util.Date
      */
@@ -475,60 +193,6 @@ public abstract class AbstractAnh50Fachdaten
     public void setGenehmigung(java.util.Date genehmigung)
     {
         this.genehmigung = genehmigung;
-    }
-
-    /**
-     * Return the value of the ANGABEN_KORREKT column.
-     * @return java.lang.Boolean
-     */
-    public java.lang.Boolean getAngabenKorrekt()
-    {
-        return this.angabenKorrekt;
-    }
-
-    /**
-     * Set the value of the ANGABEN_KORREKT column.
-     * @param angabenKorrekt
-     */
-    public void setAngabenKorrekt(java.lang.Boolean angabenKorrekt)
-    {
-        this.angabenKorrekt = angabenKorrekt;
-    }
-
-    /**
-     * Return the value of the ANTRAG_STELLEN column.
-     * @return java.lang.Boolean
-     */
-    public java.lang.Boolean getAntragStellen()
-    {
-        return this.antragStellen;
-    }
-
-    /**
-     * Set the value of the ANTRAG_STELLEN column.
-     * @param antragStellen
-     */
-    public void setAntragStellen(java.lang.Boolean antragStellen)
-    {
-        this.antragStellen = antragStellen;
-    }
-
-    /**
-     * Return the value of the GENEHMIGUNG_ERFORDERLICH column.
-     * @return java.lang.Boolean
-     */
-    public java.lang.Boolean getGenehmigungErforderlich()
-    {
-        return this.genehmigungErforderlich;
-    }
-
-    /**
-     * Set the value of the GENEHMIGUNG_ERFORDERLICH column.
-     * @param genehmigungErforderlich
-     */
-    public void setGenehmigungErforderlich(java.lang.Boolean genehmigungErforderlich)
-    {
-        this.genehmigungErforderlich = genehmigungErforderlich;
     }
 
     /**

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBasisPanel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
+ * $Id: ObjektBasisPanel.java,v 1.3 2009-04-28 06:59:43 u633d Exp $
  * 
  * Erstellt am 19.04.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:22  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:39  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -452,7 +455,7 @@ public class ObjektBasisPanel extends JPanel {
 	private boolean saveObjektDaten() {
 		boolean success;
 		
-		// Eingegebene Daten für das Objekt �bernehmen
+		// Eingegebene Daten für das Objekt übernehmen
 		// Betreiber / Standort werden schon nach der Auswahl durch die chooseButtons gesetzt
 		hauptModul.getObjekt().setBasisObjektarten((BasisObjektarten)getArtBox().getSelectedItem());
 		hauptModul.getObjekt().setBeschreibung(getBeschreibungsArea().getText());

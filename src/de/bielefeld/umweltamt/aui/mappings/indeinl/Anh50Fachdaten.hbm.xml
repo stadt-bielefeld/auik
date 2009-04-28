@@ -11,27 +11,11 @@
             </generator>
         </id>
 
-        <property name="gemeinschaft" column="gemeinschaft" type="java.lang.String" />
-        <property name="anrede" column="anrede" type="java.lang.String" />
-        <property name="name" column="name" type="java.lang.String" />
-        <property name="vorname" column="vorname" type="java.lang.String" />
-        <property name="strassenid" column="strassenid" type="java.lang.Integer" />
-        <property name="hausnr" column="hausnr" type="java.lang.Integer" />
-        <property name="hausnrzus" column="hausnrzus" type="java.lang.String" />
         <property name="telefon" column="telefon" type="java.lang.String" />
-        <property name="existenz" column="existenz" type="java.lang.Boolean" />
         <property name="erloschen" column="erloschen" type="java.lang.Boolean" />
-        <property name="MListe" column="m_liste" type="java.lang.Boolean" />
-        <property name="amalgam" column="amalgam" type="java.lang.Boolean" />
-        <property name="abscheidervor" column="abscheidervor" type="java.lang.Boolean" />
         <property name="datumantrag" column="datumantrag" type="java.util.Date" />
-        <property name="drucken" column="drucken" type="java.lang.Boolean" />
         <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
-        <property name="antragGueltig" column="antrag_gueltig" type="java.lang.Boolean" />
         <property name="genehmigung" column="genehmigung" type="java.util.Date" />
-        <property name="angabenKorrekt" column="angaben_korrekt" type="java.lang.Boolean" />
-        <property name="antragStellen" column="antrag_stellen" type="java.lang.Boolean" />
-        <property name="genehmigungErforderlich" column="genehmigung_erforderlich" type="java.lang.Boolean" />
         <property name="wiedervorlage" column="wiedervorlage" type="java.util.Date" />
         <property name="gefaehrdungsklasse" column="gefaehrdungsklasse" type="java.lang.String" />
 

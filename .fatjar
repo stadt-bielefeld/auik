@@ -1,10 +1,10 @@
 #Fat Jar Configuration File
-#Thu Jun 05 12:53:07 CEST 2008
+#Tue Mar 24 13:37:48 CET 2009
 onejar.license.required=false
 manifest.classpath=
 manifest.removesigners=true
 onejar.checkbox=true
-jarname=U\:\\Gruppen\\Verfahren\\Anlagenkataster\\AUIK\\auik_neu.jar
+jarname=X\:\\Applikationen\\Anlagenkataster\\AUIK\\auik_neu.jar
 manifest.mergeall=true
 manifest.mainclass=de.bielefeld.umweltamt.aui.AUIKSplash
 manifest.file=<createnew>

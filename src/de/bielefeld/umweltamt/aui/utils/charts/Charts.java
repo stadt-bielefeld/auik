@@ -1,6 +1,9 @@
 /*
- * $Id: Charts.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: Charts.java,v 1.3 2009-04-28 06:59:43 u633d Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:38  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -256,7 +259,7 @@ public class Charts {
 			}
 		}
 		
-		// Die zweite Achse dem Plot hinzufügen und mit dem zweiten Datensatz verkn�pfen
+		// Die zweite Achse dem Plot hinzufügen und mit dem zweiten Datensatz verknüpfen
 		plot.setRangeAxis(1, axis2);
 		plot.setDataset(1, dataset2);
 		plot.setRenderer(1, new XYLineAndShapeRenderer()); 

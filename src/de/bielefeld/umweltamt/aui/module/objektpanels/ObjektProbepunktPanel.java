@@ -259,7 +259,7 @@ public class ObjektProbepunktPanel extends JPanel {
 		boolean success;
 		
 		if (probepkt != null) {
-			// Eingegebene Daten f�r den Probepunkt �bernehmen
+			// Eingegebene Daten für den Probepunkt �bernehmen
 			if (getProbePktArtBox().getSelectedItem() != null) {
 				probepkt.setAtlProbeart((AtlProbeart) getProbePktArtBox().getSelectedItem());
 			}

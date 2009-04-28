@@ -213,7 +213,7 @@ public class ObjektAnh50Panel extends JPanel {
 			
 		success = Anh50Fachdaten.saveFachdaten(fachdaten);
 		if (success) {
-			AUIKataster.debugOutput("Zahnarzt " + fachdaten.getName() + " gespeichert.",
+			AUIKataster.debugOutput("Zahnarzt " + fachdaten.getBasisObjekt().getBasisBetreiber().getBetrname() + " gespeichert.",
 			"ObjektAnh50Panel.saveAnh50Daten");
 		} else {
 			AUIKataster.debugOutput("Zahnarzt " + fachdaten

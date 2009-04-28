@@ -83,6 +83,12 @@ public abstract class AbstractBasisStandort
     /** The value of the simple revihandz property. */
     private java.lang.String revihandz;
 
+    /** The value of the simple sachbearbeiter33 property. */
+    private java.lang.String sachbearbeiter33;
+
+    /** The value of the simple wassermenge property. */
+    private java.lang.Integer wassermenge;
+
     /**
      * Simple constructor of AbstractBasisStandort instances.
      */
@@ -443,6 +449,24 @@ public abstract class AbstractBasisStandort
     }
 
     /**
+     * Return the value of the Sachbearbeiter33 column.
+     * @return java.lang.String
+     */
+    public java.lang.String getSachbearbeiter33()
+    {
+        return this.revihandz;
+    }
+
+    /**
+     * Set the value of the Sachbearbeiter33 column.
+     * @param revihandz
+     */
+    public void setSachbearbeiter33(java.lang.String sachbearbeiter33)
+    {
+        this.sachbearbeiter33 = sachbearbeiter33;
+    }
+
+    /**
      * Return the value of the REVIHANDZ column.
      * @return java.lang.String
      */
@@ -458,6 +482,24 @@ public abstract class AbstractBasisStandort
     public void setRevihandz(java.lang.String revihandz)
     {
         this.revihandz = revihandz;
+    }
+
+    /**
+     * Return the value of the Wassermenge column.
+     * @return java.lang.Integer
+     */
+    public java.lang.Integer getWassermenge()
+    {
+        return this.hausnr;
+    }
+
+    /**
+     * Set the value of the Wassermenge column.
+     * @param hausnr
+     */
+    public void setWassermenge(java.lang.Integer wassermenge)
+    {
+        this.wassermenge = wassermenge;
     }
 
     /**
