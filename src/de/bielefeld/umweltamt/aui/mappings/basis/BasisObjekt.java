@@ -65,7 +65,7 @@ public class BasisObjekt
     		query += "and bo.basisObjektarten.abteilung = '" + abteilung + "' ";
     	}
     	
-    	query += "order by bo.basisStandort.strasse, bo.basisStandort.hausnr, bo.basisObjektarten.objektart";
+    	query += "order by bo.inaktiv, bo.basisStandort.strasse, bo.basisStandort.hausnr, bo.basisObjektarten.objektart";
     	
 		try {
 			Session session = HibernateSessionFactory.currentSession();
@@ -95,7 +95,8 @@ public class BasisObjekt
     	
     	String query = 
     		"from BasisObjekt as bo " +
-			"where bo.basisStandort = ? ";
+			"where bo.basisStandort = ? "; // +
+//			"and bo.inaktiv = ? ";
     	
     	if (abteilung != null) {
     		query += "and bo.basisObjektarten.abteilung = '" + abteilung + "' ";
@@ -105,13 +106,14 @@ public class BasisObjekt
     		query += "and bo.basisObjektarten.objektartid != " + nichtartid;
     	}
     	
-    	query += "order by bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
+    	query += "order by bo.inaktiv, bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
     	
     	try {
     	Session session = HibernateSessionFactory.currentSession();
 		objekte = session.createQuery(
 				query)
 				.setEntity(0, standort)
+//				.setString(1, "f")
 				.list();
 
     	} catch (HibernateException e) {
@@ -141,7 +143,7 @@ public class BasisObjekt
     		query += "and bo.basisObjektarten.objektartid = ?";
     	}
     	
-    	query += "order by bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
+    	query += "order by bo.inaktiv, bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
     	
     	try {
     	Session session = HibernateSessionFactory.currentSession();

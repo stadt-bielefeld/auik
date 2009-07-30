@@ -36,8 +36,6 @@
         <property name="wartungsvertrag" column="wartungsvertrag" type="java.lang.Boolean" />
         <property name="grgen" column="grgen" type="java.lang.Boolean" />
         <property name="genart" column="genart" type="java.lang.String" />
-        
-        <many-to-one name="anh53Entsorgungsbetriebe" column="id" class="Anh53Entsorgungsbetriebe" />
 
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"/>
     </class>

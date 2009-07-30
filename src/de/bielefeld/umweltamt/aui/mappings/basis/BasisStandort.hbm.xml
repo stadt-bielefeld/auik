@@ -30,8 +30,9 @@
         <property name="hausnrzuseigent" column="hausnrzuseigent" type="java.lang.String" />
         <property name="revidatum" column="revidatum" type="java.util.Date" />
         <property name="revihandz" column="revihandz" type="java.lang.String" />
-        <property name="sachbearbeiter33" column="sachbearbeiter33" type="java.lang.Integer" />
-        <property name="wassermenge" column="wassermenge" type="java.lang.String" />
+        <property name="wassermenge" column="wassermenge" type="java.lang.Integer" />
+        <property name="sachbe33rav" column="sachbe33rav" type="java.lang.String" />
+        <property name="sachbe33hee" column="sachbe33hee" type="java.lang.String" />
 
         <many-to-one name="basisGemarkung" column="gemarkungid" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung" />
 

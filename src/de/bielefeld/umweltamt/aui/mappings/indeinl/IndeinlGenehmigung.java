@@ -50,13 +50,13 @@ public class IndeinlGenehmigung
 			Session session) throws HibernateException {
 		IndeinlGenehmigung fachdaten = null;
 		if (objekt.getBasisObjektarten().isGenehmigung()) {
-			List suev = session.createQuery(
+			List gen = session.createQuery(
 					"from IndeinlGenehmigung as gen where "
 							+ "gen.basisObjekt = ?").setEntity(0, objekt)
 					.list();
 
-			if (suev.size() > 0) {
-				fachdaten = (IndeinlGenehmigung) suev.get(0);
+			if (gen.size() > 0) {
+				fachdaten = (IndeinlGenehmigung) gen.get(0);
 			}
 		}
 
@@ -111,17 +111,155 @@ public class IndeinlGenehmigung
 
     /**
      * Liefert eine Liste mit allen IndeinlGenehmigung Objekten.
-     * @return Eine Liste aus SuevFachdaten.
+     * @return Eine Liste aus IndeinlGenehmigungen.
      */
-    public static List getAuswertungsListe() {
+    public static List getAuswertungsListe(String gen58, String gen59) {
     	List liste;
     	
     	String query = "from IndeinlGenehmigung as gen " +
-    			"order by gen.objektid";
+		   		"where gen.gen58 = ? or gen.gen59 = ? " +
+    			"order by gen.basisObjekt.basisBetreiber.betrname";
     	
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		liste = session.createQuery(query)
+    		.setString(0, gen58)
+    		.setString(1, gen59)
+    		.list();
+    	} catch (HibernateException e) {
+    		throw new RuntimeException(e);
+    	} finally {
+    		HibernateSessionFactory.closeSession();
+    	}
+    	
+    	return liste;
+    }
+
+    /**
+     * Liefert eine Liste mit allen Anhang 40 Genehmigungsobjekten.
+     * @return Eine Liste aus Genehmigungsfachdaten.
+     */
+    public static List getAnh40Liste(String gen58, String gen59) {
+    	List liste;
+    	
+    	String query = "from IndeinlGenehmigung as gen " +
+    				   "where gen.anhang = 40 " +
+    				   "and gen.gen58 = ? or gen.anhang = 40 and gen.gen59 = ? " +
+    				   "order by gen.basisObjekt.basisBetreiber.betrname";
+    	
+    	try {
+    		Session session = HibernateSessionFactory.currentSession();
+    		liste = session.createQuery(query)
+    		.setString(0, gen58)
+    		.setString(1, gen59)
+    		.list();
+    	} catch (HibernateException e) {
+    		throw new RuntimeException(e);
+    	} finally {
+    		HibernateSessionFactory.closeSession();
+    	}
+    	
+    	return liste;
+    }
+
+    /**
+     * Liefert eine Liste mit allen Anhang 49 Genehmigungsobjekten.
+     * @return Eine Liste aus Genehmigungsfachdaten.
+     */
+    public static List getAnh49Liste(String gen58, String gen59) {
+    	List liste;
+    	
+    	String query = "from IndeinlGenehmigung as gen " +
+		   				"where gen.anhang = 49 " +
+		   				"and gen.gen58 = ? or gen.anhang = 49 and gen.gen59 = ? " +
+		   				"order by gen.basisObjekt.basisBetreiber.betrname";
+    	
+    	try {
+    		Session session = HibernateSessionFactory.currentSession();
+    		liste = session.createQuery(query)
+    		.setString(0, gen58)
+    		.setString(1, gen59)
+    		.list();
+    	} catch (HibernateException e) {
+    		throw new RuntimeException(e);
+    	} finally {
+    		HibernateSessionFactory.closeSession();
+    	}
+    	
+    	return liste;
+    }
+
+    /**
+     * Liefert eine Liste mit allen Anhang 50 Genehmigungsobjekten.
+     * @return Eine Liste aus Genehmigungsfachdaten.
+     */
+    public static List getAnh50Liste(String gen58, String gen59) {
+    	List liste;
+    	
+    	String query = "from IndeinlGenehmigung as gen " +
+		   				"where gen.anhang = 50 " +
+		   				"and gen.gen58 = ? or gen.anhang = 50 and gen.gen59 = ? " +
+		   				"order by gen.basisObjekt.basisBetreiber.betrname";
+    	
+    	try {
+    		Session session = HibernateSessionFactory.currentSession();
+    		liste = session.createQuery(query)
+    		.setString(0, gen58)
+    		.setString(1, gen59)
+    		.list();
+    	} catch (HibernateException e) {
+    		throw new RuntimeException(e);
+    	} finally {
+    		HibernateSessionFactory.closeSession();
+    	}
+    	
+    	return liste;
+    }
+
+    /**
+     * Liefert eine Liste mit allen Anhang 53 Genehmigungsobjekten.
+     * @return Eine Liste aus Genehmigungsfachdaten.
+     */
+    public static List getAnh53Liste(String gen58, String gen59) {
+    	List liste;
+    	
+    	String query = "from IndeinlGenehmigung as gen " +
+		   				"where gen.anhang = 53 " +
+		   				"and gen.gen58 = ? or gen.anhang = 53 and gen.gen59 = ? " +
+		   				"order by gen.basisObjekt.basisBetreiber.betrname";
+    	
+    	try {
+    		Session session = HibernateSessionFactory.currentSession();
+    		liste = session.createQuery(query)
+    		.setString(0, gen58)
+    		.setString(1, gen59)
+    		.list();
+    	} catch (HibernateException e) {
+    		throw new RuntimeException(e);
+    	} finally {
+    		HibernateSessionFactory.closeSession();
+    	}
+    	
+    	return liste;
+    }
+
+    /**
+     * Liefert eine Liste mit allen Anhang 40 Genehmigungsobjekten.
+     * @return Eine Liste aus Genehmigungsfachdaten.
+     */
+    public static List getBwkListe(String gen58, String gen59) {
+    	List liste;
+    	
+    	String query = "from IndeinlGenehmigung as gen " +
+    				   "where gen.anhang Is Null " +
+    				   "and gen.gen58 = ? or gen.anhang Is Null and gen.gen59 = ? " +
+    				   "order by gen.basisObjekt.basisBetreiber.betrname";
+    	
+    	try {
+    		Session session = HibernateSessionFactory.currentSession();
+    		liste = session.createQuery(query)
+    		.setString(0, gen58)
+    		.setString(1, gen59)
     		.list();
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);

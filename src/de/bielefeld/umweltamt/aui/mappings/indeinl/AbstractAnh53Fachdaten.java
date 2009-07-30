@@ -25,8 +25,8 @@ public abstract class AbstractAnh53Fachdaten
     /** The composite primary key value. */
     private java.lang.Integer objektid;
 
-    /** The value of the anh50Entsorger association. */
-    private Anh53Entsorgungsbetriebe anh53Entsorgungsbetriebe;
+    /** The value of the anhEntsorger association. */
+    private AnhEntsorger anhEntsorger;
 
     /** The value of the basisObjekt association. */
     private BasisObjekt basisObjekt;
@@ -68,7 +68,7 @@ public abstract class AbstractAnh53Fachdaten
     private java.lang.Integer gesamtmengeEb;
 
     /** The value of the simple hausnr property. */
-    private java.lang.Integer onlineentsilberung;
+    private java.lang.Boolean onlineentsilberung;
 
     /** The value of the simple mListe property. */
     private java.lang.Boolean abwasser;
@@ -163,18 +163,18 @@ public abstract class AbstractAnh53Fachdaten
      * Return the value of the ID column.
      * @return Anh53Entsorgungsbetriebe
      */
-    public Anh53Entsorgungsbetriebe getAnh53Entsorgungsbetriebe()
+    public AnhEntsorger getAnhEntsorger()
     {
-        return this.anh53Entsorgungsbetriebe;
+        return this.anhEntsorger;
     }
 
     /**
      * Set the value of the ID column.
-     * @param Anh53Entsorgungsbetriebe
+     * @param AnhEntsorger
      */
-    public void setAnh53Entsorgungsbetriebe(Anh53Entsorgungsbetriebe anh53Entsorgungsbetriebe)
+    public void setAnhEntsorger(AnhEntsorger anhEntsorger)
     {
-        this.anh53Entsorgungsbetriebe = anh53Entsorgungsbetriebe;
+        this.anhEntsorger = anhEntsorger;
     }
 
     /**
@@ -312,11 +312,11 @@ public abstract class AbstractAnh53Fachdaten
 		this.gesamtmengeEb = gesamtmengeEb;
 	}
 
-	public java.lang.Integer getOnlineentsilberung() {
+	public java.lang.Boolean getOnlineentsilberung() {
 		return onlineentsilberung;
 	}
 
-	public void setOnlineentsilberung(java.lang.Integer onlineentsilberung) {
+	public void setOnlineentsilberung(java.lang.Boolean onlineentsilberung) {
 		this.onlineentsilberung = onlineentsilberung;
 	}
 

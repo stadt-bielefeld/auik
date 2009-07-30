@@ -56,6 +56,9 @@ public abstract class AbstractBasisObjekt
     /** The value of the simple revidatum property. */
     private java.util.Date gueltig_bis;
 
+    /** The value of the simple inaktiv property. */
+    private java.lang.Boolean inaktiv;
+
     /**
      * Simple constructor of AbstractBasisObjekt instances.
      */
@@ -267,6 +270,24 @@ public abstract class AbstractBasisObjekt
     public void setAenderungsdatum(java.util.Date aenderungsdatum)
     {
         this.aenderungsdatum = aenderungsdatum;
+    }
+
+    /**
+     * Return the value of the aenderungsdatum column.
+     * @return java.util.Date
+     */
+    public java.lang.Boolean getInaktiv()
+    {
+        return this.inaktiv;
+    }
+
+    /**
+     * Set the value of the aenderungsdatum column.
+     * @param revidatum
+     */
+    public void setInaktiv(java.lang.Boolean inaktiv)
+    {
+        this.inaktiv = inaktiv;
     }
 
     /**

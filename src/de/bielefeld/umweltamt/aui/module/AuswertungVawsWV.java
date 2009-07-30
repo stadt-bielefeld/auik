@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AuswertungVawsWV.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: AuswertungVawsWV.java,v 1.3 2009-07-30 05:31:22 u633d Exp $
  * 
  * Erstellt am 27.09.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:32  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -20,6 +23,8 @@
 package de.bielefeld.umweltamt.aui.module;
 
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
@@ -74,7 +79,7 @@ public class AuswertungVawsWV extends AbstractQueryModul {
 	}
 	
 	public void updateListe() {
-		SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+		SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(10, 250, 150, 25, 250)) {
 			protected void doNonUILogic() throws RuntimeException {
 				((WiedervorlageVVModel)getTableModel()).updateList();
 			}
@@ -87,6 +92,32 @@ public class AuswertungVawsWV extends AbstractQueryModul {
 		worker.start();
 	}
 	
+	private JTable getResultTable(int a, int b, int c, int d, int e) {
+		
+		JTable resultTable = getResultTable();
+		
+		resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+		TableColumn column = null;
+
+		for (int i = 0; i < 5; i++) {
+			column = resultTable.getColumnModel().getColumn(i);
+
+			if (i == 0) {
+				column.setPreferredWidth(a);
+			} else if (i == 1) {
+				column.setPreferredWidth(b);
+			} else if (i == 2) {
+				column.setPreferredWidth(c);
+			} else if (i == 3) {
+				column.setPreferredWidth(d);
+			} else if (i == 4) {
+				column.setPreferredWidth(e);
+			}
+		}
+		
+		return resultTable;
+	}
+
 	public void show() {
 		super.show();
 		
@@ -115,7 +146,7 @@ class WiedervorlageVVModel extends ListTableModel {
 						"Betreiber", 
 						"Standort",
 						"Wiedervorlage",
-						"abgeschl.?"
+						"Maßnahmen der Verwaltung"
 				},
 				false
 		);
@@ -139,7 +170,7 @@ class WiedervorlageVVModel extends ListTableModel {
 			tmp = AuikUtils.getStringFromDate(vf.getWiedervorlage());
 			break;
 		case 4:
-			tmp = new Boolean(vf.getWvverwverf());
+			tmp = vf.getMassnahme();
 			break;
 
 		default:
@@ -149,14 +180,7 @@ class WiedervorlageVVModel extends ListTableModel {
 		
 		return tmp;
 	}
-	
-	public Class getColumnClass(int columnIndex) {
-		if (columnIndex == 4) {
-			return Boolean.class;
-		} else {
-			return super.getColumnClass(columnIndex);
-		}
-	}
+
 	
 	public void updateList() {
 		setList(VawsVerwaltungsverf.getAuswertung());

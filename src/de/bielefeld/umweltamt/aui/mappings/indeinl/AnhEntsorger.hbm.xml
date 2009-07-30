@@ -4,18 +4,18 @@
 
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
 
-    <class name="Anh53Entsorgungsbetriebe" table="anh_53_entsorgungsbetriebe" lazy="false">
-        <id name="id" column="id" type="java.lang.Integer">
+    <class name="AnhEntsorger" table="anh_entsorger" lazy="false">
+        <id name="entsorgerid" column="id" type="java.lang.Integer">
             <generator class="assigned"/>
         </id>
 
-        <property name="firmenname" column="firmenname" type="java.lang.String" />
+        <property name="entsorger" column="entsorger" type="java.lang.String" />
         <property name="strasse" column="strasse" type="java.lang.String" />
-        <property name="hausnr" column="hausnr" type="java.lang.String" />
+        <property name="hausnr" column="hausnr" type="java.lang.Integer" />
         <property name="plz" column="plz" type="java.lang.String" />
         <property name="ort" column="ort" type="java.lang.String" />
+        <property name="ansprechpartner" column="ansprechpartner" type="java.lang.String" />
         <property name="telefon" column="telefon" type="java.lang.String" />
-        <property name="taetigkeitsfeld" column="taetigkeitsfeld" type="java.lang.String" />
     </class>
 
 </hibernate-mapping>

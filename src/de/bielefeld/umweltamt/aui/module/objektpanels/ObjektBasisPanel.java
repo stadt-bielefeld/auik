@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBasisPanel.java,v 1.3 2009-04-28 06:59:43 u633d Exp $
+ * $Id: ObjektBasisPanel.java,v 1.4 2009-07-30 05:31:22 u633d Exp $
  * 
  * Erstellt am 19.04.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/04/28 06:59:43  u633d
+ * Anh 50 und Standort Tabelle bearbeitet
+ *
  * Revision 1.2  2009/03/24 12:35:22  u633d
  * Umstellung auf UTF8
  *
@@ -33,6 +36,7 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -317,8 +321,9 @@ public class ObjektBasisPanel extends JPanel {
 	private JButton standortEditButton;
 	private JButton standortNewButton;
 	
-	//   Art, Beschreibung, Speichern
+	//   Art, Inaktiv, Beschreibung, Speichern
 	private JComboBox artBox;
+	private JCheckBox inaktivBox;
 	private JTextArea beschreibungsArea;
 	private JButton saveButton;
 	
@@ -353,6 +358,9 @@ public class ObjektBasisPanel extends JPanel {
 		builder.nextLine();
 		
 		builder.append("Art:", getArtBox());
+		builder.nextLine();
+		
+		builder.append("Inaktiv:", getInaktivBox());
 		builder.nextLine();
 		
 		builder.appendSeparator("Beschreibung");
@@ -422,6 +430,13 @@ public class ObjektBasisPanel extends JPanel {
 			if (hauptModul.getObjekt().getBasisObjektarten() != null) {
 				getArtBox().setSelectedItem(hauptModul.getObjekt().getBasisObjektarten());
 			}
+			if (hauptModul.getObjekt().getInaktiv() != null) {
+				if (hauptModul.getObjekt().getInaktiv() == true) {
+					getInaktivBox().setSelected(true);
+				} else {
+					getInaktivBox().setSelected(false);
+				}
+			}
 			
 			if (hauptModul.getObjekt().getBeschreibung() != null) {
 				getBeschreibungsArea().setText(hauptModul.getObjekt().getBeschreibung());
@@ -437,6 +452,7 @@ public class ObjektBasisPanel extends JPanel {
 		if (getArtBox().getItemCount() > 0) {
 			getArtBox().setSelectedIndex(0);
 		}
+		getInaktivBox().setSelected(false);
 		getBeschreibungsArea().setText(null);
 	}
 	
@@ -445,6 +461,7 @@ public class ObjektBasisPanel extends JPanel {
 		getBetreiberToolBar().setEnabled(enabled);
 		getStandortToolBar().setEnabled(enabled);
 		getArtBox().setEnabled(enabled);
+		getInaktivBox().setEnabled(enabled);
 		getBeschreibungsArea().setEnabled(enabled);
 	}
 	
@@ -459,6 +476,7 @@ public class ObjektBasisPanel extends JPanel {
 		// Betreiber / Standort werden schon nach der Auswahl durch die chooseButtons gesetzt
 		hauptModul.getObjekt().setBasisObjektarten((BasisObjektarten)getArtBox().getSelectedItem());
 		hauptModul.getObjekt().setBeschreibung(getBeschreibungsArea().getText());
+		hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
 		
 		BasisObjekt tmp = BasisObjekt.saveBasisObjekt(hauptModul.getObjekt());
 		
@@ -686,6 +704,13 @@ public class ObjektBasisPanel extends JPanel {
 			artBox.setKeySelectionManager(new MyKeySelectionManager());
 		}
 		return artBox;
+	}
+	
+	private JCheckBox getInaktivBox() {
+		if (inaktivBox == null) {
+			inaktivBox = new JCheckBox();
+		}
+		return inaktivBox;
 	}
 	
 	public JTextArea getBeschreibungsArea() {

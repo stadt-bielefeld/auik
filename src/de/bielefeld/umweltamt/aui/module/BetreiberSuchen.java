@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: BetreiberSuchen.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: BetreiberSuchen.java,v 1.3 2009-07-30 05:31:22 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:32  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -397,10 +400,14 @@ public class BetreiberSuchen extends AbstractModul {
 			objektEditAction = new AbstractAction("Bearbeiten") {
 				public void actionPerformed(ActionEvent e) {
 					int row = objektTabelle.getSelectedRow();
-					if (row != -1) {
-						BasisObjekt obj = objektModel.getRow(row);
+					BasisObjekt obj = objektModel.getRow(row);
+					if (row != -1 || obj.getBasisObjektarten().getObjektartid() != 40) {
 						manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
 						manager.switchModul("m_objekt_bearbeiten");
+					}
+					else if (row != -1 || obj.getBasisObjektarten().getObjektartid() == 40) {
+						manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
+						manager.switchModul("m_sielhaut1");
 					}
 				}
 			};
@@ -560,11 +567,15 @@ public class BetreiberSuchen extends AbstractModul {
 					if((e.getClickCount() == 2) && (e.getButton() == 1)) {
 						Point origin = e.getPoint();
 						int row = getObjektTabelle().rowAtPoint(origin);
-						
 						BasisObjekt obj = objektModel.getRow(row);
-						
-						manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
-						manager.switchModul("m_objekt_bearbeiten");
+						if (row != -1 && obj.getBasisObjektarten().getObjektartid().intValue() != 40) {
+							manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
+							manager.switchModul("m_objekt_bearbeiten");
+						}
+						else if (row != -1 && obj.getBasisObjektarten().getObjektartid().intValue() == 40) {
+							manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
+							manager.switchModul("m_sielhaut1");
+						}
 					}
 				}
 				

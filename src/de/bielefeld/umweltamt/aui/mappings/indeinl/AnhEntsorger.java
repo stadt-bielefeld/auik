@@ -14,32 +14,32 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
- * A class that represents a row in the 'ANH_50_ENTSORGER' table. 
+ * A class that represents a row in the 'ANH_ENTSORGER' table. 
  * This class may be customized as it is never re-generated 
  * after being created.
  */
-public class Anh53Entsorgungsbetriebe
-    extends AbstractAnh53Entsorgungsbetriebe
+public class AnhEntsorger
+    extends AbstractAnhEntsorger
     implements Serializable
 {
     /**
-     * Simple constructor of Anh53Entsorgungsbetriebe instances.
+     * Simple constructor of Anh50Entsorger instances.
      */
-    public Anh53Entsorgungsbetriebe()
+    public AnhEntsorger()
     {
     }
 
     /**
-     * Constructor of Anh53Entsorgungsbetriebe instances given a simple primary key.
+     * Constructor of Anh50Entsorger instances given a simple primary key.
      * @param entsorgerid
      */
-    public Anh53Entsorgungsbetriebe(java.lang.Integer id)
+    public AnhEntsorger(java.lang.Integer entsorgerid)
     {
-        super(id);
+        super(entsorgerid);
     }
     
     public String toString() {
-    	return getAnh53Entsorgungsbetriebe().toString();
+    	return getEntsorger();
     }
 
 	/**
@@ -48,18 +48,18 @@ public class Anh53Entsorgungsbetriebe
 	 * @return Alle vorhandenen Entsorger
 	 * @throws HibernateException Wenn ein Datenbank-Fehler auftritt
 	 */
-	private static Anh53Entsorgungsbetriebe[] getEntsorg(Session session) throws HibernateException {
+	private static AnhEntsorger[] getEntsorg(Session session) throws HibernateException {
 		List list = null;
 		
-		String suchString = "from Anh53Entsorgungsbetriebe ah53e order by ah53e.id";
+		String suchString = "from AnhEntsorger ahe order by ahe.entsorgerid";
 
 		Query query = session.createQuery(suchString);
 		query.setCacheable(true);
 		query.setCacheRegion("entsorgerliste");
 		list = query.list();
 		
-		Anh53Entsorgungsbetriebe[] tmp = new Anh53Entsorgungsbetriebe[list.size()];
-		tmp = (Anh53Entsorgungsbetriebe[]) list.toArray(tmp);
+		AnhEntsorger[] tmp = new AnhEntsorger[list.size()];
+		tmp = (AnhEntsorger[]) list.toArray(tmp);
 		
 		return tmp;
 	}
@@ -70,8 +70,8 @@ public class Anh53Entsorgungsbetriebe
 	 * @return Alle vorhandenen Entsorger
 	 */
 
-	public static Anh53Entsorgungsbetriebe[] getAnh53Entsorgungsbetriebe() {
-		Anh53Entsorgungsbetriebe[] tmp;
+	public static AnhEntsorger[] getEntsorg() {
+		AnhEntsorger[] tmp;
 		
 		try {
 		Session session = HibernateSessionFactory.currentSession();
@@ -85,14 +85,14 @@ public class Anh53Entsorgungsbetriebe
 		return tmp;
 	}
 
-	public static Anh53Entsorgungsbetriebe saveEntsorger(Anh53Entsorgungsbetriebe ents) {
-		Anh53Entsorgungsbetriebe entsRet;
+	public static AnhEntsorger saveEntsorger(AnhEntsorger ents) {
+		AnhEntsorger entsRet;
 		
 		Transaction tx = null;
 		try {
 			Session session = HibernateSessionFactory.currentSession();
 			tx = session.beginTransaction();
-			entsRet = (Anh53Entsorgungsbetriebe) session.merge(ents);
+			entsRet = (AnhEntsorger) session.merge(ents);
 			tx.commit();
 		} catch (HibernateException e) {
 			entsRet = null;

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBearbeiten.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: ObjektBearbeiten.java,v 1.3 2009-07-30 05:31:22 u633d Exp $
  * 
  * Erstellt am 15.02.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:32  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -77,6 +80,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh49Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh50Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh52Panel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh53Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh55Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh56Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektBWKPanel;
@@ -104,14 +108,15 @@ public class ObjektBearbeiten extends AbstractModul {
 	private ObjektProbepunktPanel probepunktTab;
 	private ObjektBWKPanel bwkTab;
 	private ObjektAnh50Panel zahnarztTab;
+	private ObjektSuevPanel suevTab;
+	private ObjektAnh40Panel anhang40Tab;
 	private ObjektAnh49Panel anhang49Tab;
 	private Anh49DetailsPanel anh49detailTab;
 	private Anh49AnalysenPanel anh49analyseTab;
-	private ObjektSuevPanel suevTab;
-	private ObjektAnh40Panel anhang40Tab;
+	private ObjektAnh52Panel anhang52Tab;
+	private ObjektAnh53Panel anhang53Tab;
 	private ObjektAnh55Panel anhang55Tab;
 	private ObjektAnh56Panel anhang56Tab;
-	private ObjektAnh52Panel anhang52Tab;
 	private ObjektChronoPanel chronoTab;
 	private ObjektUebergabePanel uebergabeTab;
 	private ObjektGenehmigungPanel genehmigungTab;
@@ -293,6 +298,13 @@ public class ObjektBearbeiten extends AbstractModul {
 		return anhang52Tab;
 	}
 	
+	public ObjektAnh53Panel getAnh53Tab() {
+		if (anhang53Tab == null) {
+			anhang53Tab = new ObjektAnh53Panel(this);
+		}
+		return anhang53Tab;
+	}
+	
 	public ObjektChronoPanel getChronoTab() {
 		if (chronoTab == null) {
 			chronoTab = new ObjektChronoPanel(this);
@@ -400,6 +412,12 @@ public class ObjektBearbeiten extends AbstractModul {
 					} else if (objekt.getBasisObjektarten().isAnh52()) {
 						getChronoTab().fetchFormData();
 						getAnh52Tab().fetchFormData();
+					} else if (objekt.getBasisObjektarten().isAnh53Kl()) {
+						getChronoTab().fetchFormData();
+						getAnh53Tab().fetchFormData();
+					} else if (objekt.getBasisObjektarten().isAnh53Gr()) {
+						getChronoTab().fetchFormData();
+						getAnh53Tab().fetchFormData();
 					} else if (objekt.getBasisObjektarten().isUebergabestelle()) {
 						getChronoTab().fetchFormData();
 						getUebergabeTab().fetchFormData();
@@ -494,6 +512,18 @@ public class ObjektBearbeiten extends AbstractModul {
 							getChronoTab().updateForm();
 							getAnh52Tab().updateForm();
 							getTabbedPane().setSelectedComponent(getAnh52Tab());
+						} else if (objekt.getBasisObjektarten().isAnh53Kl()) {
+							getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+							getTabbedPane().addTab(getAnh53Tab().getName(), getAnh53Tab());
+							getChronoTab().updateForm();
+							getAnh53Tab().updateForm();
+							getTabbedPane().setSelectedComponent(getAnh53Tab());
+						} else if (objekt.getBasisObjektarten().isAnh53Gr()) {
+							getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+							getTabbedPane().addTab(getAnh53Tab().getName(), getAnh53Tab());
+							getChronoTab().updateForm();
+							getAnh53Tab().updateForm();
+							getTabbedPane().setSelectedComponent(getAnh53Tab());
 						} else if (objekt.getBasisObjektarten().isUebergabestelle()) {
 							getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
 							getTabbedPane().addTab(getUebergabeTab().getName(), getUebergabeTab());
@@ -556,6 +586,10 @@ public class ObjektBearbeiten extends AbstractModul {
 				getAnh56Tab().clearForm();
 			} else if (objekt.getBasisObjektarten().isAnh52()) {
 				getAnh52Tab().clearForm();
+			} else if (objekt.getBasisObjektarten().isAnh53Gr()) {
+				getAnh52Tab().clearForm();
+			} else if (objekt.getBasisObjektarten().isAnh53Kl()) {
+				getAnh52Tab().clearForm();
 			}
 		}
 	}
@@ -584,6 +618,10 @@ public class ObjektBearbeiten extends AbstractModul {
 			} else if (objekt.getBasisObjektarten().isAnh56()) {
 				getAnh56Tab().enableAll(enabled);
 			} else if (objekt.getBasisObjektarten().isAnh52()) {
+				getAnh52Tab().enableAll(enabled);
+			} else if (objekt.getBasisObjektarten().isAnh53Gr()) {
+				getAnh52Tab().enableAll(enabled);
+			} else if (objekt.getBasisObjektarten().isAnh53Kl()) {
 				getAnh52Tab().enableAll(enabled);
 			} else if (objekt.getBasisObjektarten().isUebergabestelle()) {
 				getUebergabeTab().enableAll(enabled);
@@ -621,6 +659,10 @@ public class ObjektBearbeiten extends AbstractModul {
 			} else if (objekt.getBasisObjektarten().isAnh56()) {
 				getAnh56Tab().completeObjekt();
 			} else if (objekt.getBasisObjektarten().isAnh52()) {
+				getAnh52Tab().completeObjekt();
+			} else if (objekt.getBasisObjektarten().isAnh53Gr()) {
+				getAnh52Tab().completeObjekt();
+			} else if (objekt.getBasisObjektarten().isAnh53Kl()) {
 				getAnh52Tab().completeObjekt();
 			} else if (objekt.getBasisObjektarten().isUebergabestelle()) {
 				getUebergabeTab().completeObjekt();

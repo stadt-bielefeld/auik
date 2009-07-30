@@ -91,7 +91,7 @@ public class ObjektAnh40Panel extends JPanel {
 		this.hauptModul = hauptModul;
 
 		FormLayout layout = new FormLayout(
-				"r:80dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 80dlu", // Spalten
+				"r:100dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 100dlu", // Spalten
 				"");
 
 		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);

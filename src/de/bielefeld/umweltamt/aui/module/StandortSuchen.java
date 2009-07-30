@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: StandortSuchen.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: StandortSuchen.java,v 1.3 2009-07-30 05:31:22 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:33  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -41,7 +44,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.Collections;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -106,6 +111,7 @@ public class StandortSuchen extends AbstractModul {
 	
 	private Action objektEditAction;
 	private Action objektLoeschAction;
+	private Action gisAction;
 	private JPopupMenu objektPopup;
 	
 	private BasisStandortModel standortModel;
@@ -702,8 +708,10 @@ public class StandortSuchen extends AbstractModul {
 			standortPopup = new JPopupMenu("Standort");
 			JMenuItem bearbItem = new JMenuItem(getStandortEditAction());
 			JMenuItem neuItem = new JMenuItem(getObjektNeuAction());
+			JMenuItem gisItem = new JMenuItem(getGisAction());
 			standortPopup.add(bearbItem);
 			standortPopup.add(neuItem);
+			standortPopup.add(gisItem);
 		}
 		
 		if (e.isPopupTrigger()) {
@@ -768,6 +776,34 @@ public class StandortSuchen extends AbstractModul {
 		}
 		
 		return objektLoeschAction;
+	}
+	
+	private Action getGisAction() {
+		if (gisAction == null) {
+			
+			
+			gisAction = new AbstractAction("GIS öffnen") {
+				public void actionPerformed(ActionEvent e) {
+					
+					int row = standortTabelle.getSelectedRow();
+					BasisStandort bsta = standortModel.getRow(row);
+					
+					ProcessBuilder pb = new ProcessBuilder( "cmd", "/c", "C:\\appz\\OSGeo4W\\bin\\qgis.bat   D:\\Data\\qgis\\MyProject.qgs"); 
+					Map<String, String> env = pb.environment(); 
+					env.put( "RECHTS", bsta.getRechtswert().toString() ); 
+					env.put( "HOCH", bsta.getHochwert().toString() ); 
+					try {
+						Process p = pb.start();
+					} catch (IOException e1) {
+						
+						e1.printStackTrace();
+					} 
+				}
+			};
+			gisAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_O));
+		}
+		
+		return gisAction;
 	}
 	
 	private void showObjektPopup(MouseEvent e) {

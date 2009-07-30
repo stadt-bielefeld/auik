@@ -70,6 +70,10 @@ public class BasisObjektModel extends ListTableModel {
 				tmp = null;
 		}
 		
+		if (bo.getInaktiv().booleanValue() != false) {
+			tmp = "<html><strike>" + tmp + "</strike></html>";
+		}
+		
 		return tmp;
 	}
 	

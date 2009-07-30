@@ -25,8 +25,8 @@ public abstract class AbstractAnh50Fachdaten
     /** The composite primary key value. */
     private java.lang.Integer objektid;
 
-    /** The value of the anh50Entsorger association. */
-    private Anh50Entsorger anh50Entsorger;
+    /** The value of the anhEntsorger association. */
+    private AnhEntsorger anhEntsorger;
 
     /** The value of the basisObjekt association. */
     private BasisObjekt basisObjekt;
@@ -235,18 +235,18 @@ public abstract class AbstractAnh50Fachdaten
      * Return the value of the ENTSORGERID column.
      * @return Anh50Entsorger
      */
-    public Anh50Entsorger getAnh50Entsorger()
+    public AnhEntsorger getAnhEntsorger()
     {
-        return this.anh50Entsorger;
+        return this.anhEntsorger;
     }
 
     /**
      * Set the value of the ENTSORGERID column.
      * @param anh50Entsorger
      */
-    public void setAnh50Entsorger(Anh50Entsorger anh50Entsorger)
+    public void setAnhEntsorger(AnhEntsorger anh50Entsorger)
     {
-        this.anh50Entsorger = anh50Entsorger;
+        this.anhEntsorger = anh50Entsorger;
     }
 
     /**

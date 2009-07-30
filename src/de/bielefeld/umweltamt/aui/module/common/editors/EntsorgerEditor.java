@@ -1,9 +1,12 @@
 /*
  * Datei:
- * $Id: EntsorgerEditor.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
+ * $Id: EntsorgerEditor.java,v 1.3 2009-07-30 05:31:22 u633d Exp $
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:23  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:41  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -41,7 +44,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Entsorger;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 /**
@@ -60,7 +63,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Zahnarztentsorgers.
 	 */
-	public EntsorgerEditor(Anh50Entsorger entsorg, HauptFrame owner) {
+	public EntsorgerEditor(AnhEntsorger entsorg, HauptFrame owner) {
 		super("Entsorger ("+ entsorg.getEntsorger() +")", entsorg, owner);
 	}
 	
@@ -201,7 +204,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
 		
 		boolean success;
 		
-		setEditedObject(Anh50Entsorger.saveEntsorger(getEntsorger()));
+		setEditedObject(AnhEntsorger.saveEntsorger(getEntsorger()));
 		
 		if (getEntsorger() != null) {
 			success = true;
@@ -213,7 +216,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
 		return success;
 	}
 	
-	public Anh50Entsorger getEntsorger() {
-		return (Anh50Entsorger) getEditedObject();
+	public AnhEntsorger getEntsorger() {
+		return (AnhEntsorger) getEditedObject();
 	}
 }

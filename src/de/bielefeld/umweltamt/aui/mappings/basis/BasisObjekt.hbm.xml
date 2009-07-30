@@ -20,6 +20,7 @@
         <property name="gueltigVon" column="gueltig_von" type="java.util.Date" />
         <property name="aenderungsdatum" column="aenderungsdatum" type="java.util.Date" />
         <property name="gueltigBis" column="gueltig_bis" type="java.util.Date" />
+        <property name="inaktiv" column="inaktiv" type="java.lang.Boolean" />
 
         <many-to-one name="basisBetreiber" column="betreiberid" class="BasisBetreiber" />
 

@@ -29,7 +29,7 @@ public class Anh53Fachdaten
     }
 
     /**
-     * Constructor of Anh52Fachdaten instances given a simple primary key.
+     * Constructor of Anh53Fachdaten instances given a simple primary key.
      * @param id
      */
     public Anh53Fachdaten(java.lang.Integer objektid)
@@ -43,16 +43,16 @@ public class Anh53Fachdaten
 
     public static Anh53Fachdaten getAnh53ByObjekt(BasisObjekt objekt, Session session) {
     	Anh53Fachdaten fachdaten = null;
-    	if (objekt.getBasisObjektarten().isAnh52()) {
+    	if (objekt.getBasisObjektarten().isAnh53Gr() || objekt.getBasisObjektarten().isAnh53Kl()) {
     		try {
-				List anhang52 = session.createQuery(
+				List anhang53 = session.createQuery(
 					    "from Anh53Fachdaten as anhang53 where " +
 					    "anhang53.basisObjekt = ?")
 					    .setEntity(0, objekt)
 					    .list();
 				
-				if (anhang52.size() > 0) {
-					fachdaten = (Anh53Fachdaten) anhang52.get(0);
+				if (anhang53.size() > 0) {
+					fachdaten = (Anh53Fachdaten) anhang53.get(0);
 				}
 			} catch (HibernateException e) {
 			}
@@ -102,8 +102,8 @@ public class Anh53Fachdaten
     }
 
 	/**
-	 * Liefert eine Liste mit allen Anhang52 Objekten.
-	 * @return Eine Liste aus Anh52Fachdaten.
+	 * Liefert eine Liste mit allen Anhang53 Objekten.
+	 * @return Eine Liste aus Anh53Fachdaten.
 	 */
 	public static List getAuswertungsListe() {
 		List liste;

@@ -19,7 +19,7 @@
         <property name="wiedervorlage" column="wiedervorlage" type="java.util.Date" />
         <property name="gefaehrdungsklasse" column="gefaehrdungsklasse" type="java.lang.String" />
 
-        <many-to-one name="anh50Entsorger" column="entsorgerid" class="Anh50Entsorger" />
+        <many-to-one name="anhEntsorger" column="entsorgerid" class="AnhEntsorger" />
 
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"/>
     </class>

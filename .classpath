@@ -16,7 +16,7 @@
 	<classpathentry kind="lib" path="lib/ehcache-1.2.3.jar"/>
 	<classpathentry kind="lib" path="lib/engineapi.jar"/>
 	<classpathentry kind="lib" path="lib/flute.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate3.jar" sourcepath="D:/Data/Gerd/Java/Hibernate/hibernate-3.2/src"/>
 	<classpathentry kind="lib" path="lib/jdbc2_0-stdext.jar"/>
 	<classpathentry kind="lib" path="lib/js.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.11.jar"/>
@@ -24,7 +24,7 @@
 	<classpathentry kind="lib" path="lib/pg74.215.jdbc3.jar"/>
 	<classpathentry kind="lib" path="lib/proxool-0.8.3.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib/forms-1.0.5.jar" sourcepath="C:/Data/Gerd/Java/JGoodies/JGoodies/forms-1.0.5/forms-1.0.5-src.zip"/>
+	<classpathentry kind="lib" path="lib/forms-1.0.5.jar" sourcepath="D:/Data/Gerd/Java/JGoodies/JGoodies/forms-1.0.5/forms-1.0.5-src.zip"/>
 	<classpathentry kind="lib" path="lib/looks-1.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/l2fprod-common-all.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.0-pre2.jar"/>
@@ -37,7 +37,7 @@
 	<classpathentry kind="lib" path="lib/com.ibm.icu_3.4.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/sac.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
-	<classpathentry kind="lib" path="lib/ifxjdbc-g.jar"/>
 	<classpathentry kind="lib" path="D:/Data/Gerd/Java/DB/mysql-connector-java-5.0.5/mysql-connector-java-5.0.5-bin.jar"/>
+	<classpathentry kind="lib" path="lib/ifxjdbc-g.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

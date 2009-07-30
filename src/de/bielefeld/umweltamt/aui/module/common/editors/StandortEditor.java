@@ -1,18 +1,26 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import org.hibernate.HibernateException;
 
@@ -52,10 +60,14 @@ public class StandortEditor extends AbstractBaseEditor {
 	private JTextField flurStkFeld;
 	private JFormattedTextField rechtsWFeld;
 	private JFormattedTextField hochWFeld;
+	private JButton ausAblageButton;
 	private JTextField datumFeld;
 	private JLabel handzeichenLabel;
 	private JTextField handzeichenAltFeld;
 	private JTextField handzeichenNeuFeld;
+	private JTextField sachbe33ravFeld;
+	private JTextField sachbe33heeFeld;
+	private JFormattedTextField wassermengeFeld;
 	
 	private JComboBox strassenBox;
 	private JComboBox gemarkungBox;
@@ -79,6 +91,9 @@ public class StandortEditor extends AbstractBaseEditor {
 		
 		flurFeld = new LimitedTextField(50);
 		flurStkFeld = new LimitedTextField(50);
+		sachbe33ravFeld = new LimitedTextField(50);
+		sachbe33heeFeld = new LimitedTextField(50);
+		wassermengeFeld = new IntegerField();
 		
 		rechtsWFeld = new DoubleField(1);
 		hochWFeld = new DoubleField(1);
@@ -137,6 +152,9 @@ public class StandortEditor extends AbstractBaseEditor {
 		rechtsWFeld.addKeyListener(escEnterListener);
 		hochWFeld.addKeyListener(escEnterListener);
 		handzeichenNeuFeld.addKeyListener(escEnterListener);
+		sachbe33ravFeld.addKeyListener(escEnterListener);
+		sachbe33heeFeld.addKeyListener(escEnterListener);
+		wassermengeFeld.addKeyListener(escEnterListener);
 		
 		String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
 		String rechteSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g";
@@ -161,8 +179,14 @@ public class StandortEditor extends AbstractBaseEditor {
 				"pref, " +	//15
 				"3dlu, " +	//16
 				"pref, " +	//17
-				"10dlu, " +	//18
-		"bottom:pref:grow");	//19
+				"3dlu, " +	//18
+				"pref, " +	//19
+				"10dlu, " +	//20
+				"pref, " +	//21
+				"3dlu, " +	//22
+				"pref, " +	//23
+				"10dlu, " +	//24
+		"bottom:pref:grow");	//25
 		
 		PanelBuilder builder = new PanelBuilder(layout);
 		builder.setDefaultDialogBorder();
@@ -179,9 +203,10 @@ public class StandortEditor extends AbstractBaseEditor {
 		
 		// Koordinaten
 		builder.addLabel("Rechtswert:",		cc.xy(  1, 7 ));
-		builder.add(rechtsWFeld,			cc.xyw( 3, 7, 3 ));
+		builder.add(rechtsWFeld,			cc.xy( 3, 7 ));
 		builder.addLabel("Hochwert:",		cc.xy(  1, 9 ));
-		builder.add(hochWFeld,				cc.xyw( 3, 9, 3 ));
+		builder.add(hochWFeld,				cc.xy( 3, 9 ));
+		builder.add(getAusAblageButton(),	cc.xywh( 5, 7, 1, 3 ));
 		
 		// 
 		builder.addLabel("Gemarkung:",		cc.xy(  1, 11 ));
@@ -202,17 +227,26 @@ public class StandortEditor extends AbstractBaseEditor {
 		builder.addLabel("W.Einzugsgebiet:",cc.xy(  1+rS, 5 ));
 		builder.add(wEinzugsGebBox,			cc.xyw( 3+rS, 5, 3));
 		
+		// Indirekteinleiter
+		builder.addSeparator("Indirekteinleiter", 		cc.xyw(1+rS, 9, 5));
+		builder.addLabel("Sachbearbeiter Rav.:",	cc.xy( 1+rS, 11));
+		builder.add(sachbe33ravFeld,			cc.xyw( 3+rS, 11, 3));
+		builder.addLabel("Sachbearbeiter Heepen:",cc.xy(  1+rS, 13 ));
+		builder.add(sachbe33heeFeld,			cc.xyw( 3+rS, 13, 3));
+		builder.addLabel("Wasserverbrauch:",cc.xy(  1+rS, 15 ));
+		builder.add(wassermengeFeld,			cc.xyw( 3+rS, 15, 3));
+		
 		// Letzte Revision
-		builder.addSeparator("Letzte Revision",	cc.xyw(1+rS, 9, 5));
-		builder.addLabel("Datum:",			cc.xy(  1+rS, 11 ));
-		builder.add(datumFeld,				cc.xyw( 3+rS, 11, 3 ));
-		builder.addLabel("Handzeichen:",	cc.xy(  1+rS, 13 ));
-		builder.add(handzeichenAltFeld,		cc.xyw( 3+rS, 13, 3 ));
+		builder.addSeparator("Letzte Revision",	cc.xyw(1, 19, 5));
+		builder.addLabel("Datum:",			cc.xy(  1, 21 ));
+		builder.add(datumFeld,				cc.xyw( 3, 21, 3 ));
+		builder.addLabel("Handzeichen:",	cc.xy(  1, 23 ));
+		builder.add(handzeichenAltFeld,		cc.xyw( 3, 23, 3 ));
 		
 		// Neue Revision
-		builder.addSeparator("Neue Revision",cc.xyw(1+rS, 15, 5));
-		builder.add(handzeichenLabel, 		cc.xy(  1+rS, 17));
-		builder.add(handzeichenNeuFeld,		cc.xyw( 3+rS, 17, 3 ));
+		builder.addSeparator("Neue Revision",cc.xyw(1+rS, 19, 5));
+		builder.add(handzeichenLabel, 		cc.xy(  1+rS, 21));
+		builder.add(handzeichenNeuFeld,		cc.xyw( 3+rS, 21, 3 ));
 		
 		strassenBox.addActionListener(new ActionListener() {
 			private int strassenCounter = 0; 
@@ -305,6 +339,9 @@ public class StandortEditor extends AbstractBaseEditor {
 				Date datum = getStandort().getRevidatum();
 				datumFeld.setText(AuikUtils.getStringFromDate(datum));
 				handzeichenAltFeld.setText(getStandort().getRevihandz());
+				sachbe33ravFeld.setText(getStandort().getSachbe33rav());
+				sachbe33heeFeld.setText(getStandort().getSachbe33hee());
+				wassermengeFeld.setValue(getStandort().getWassermenge());
 				
 				frame.clearStatus();
 			}
@@ -412,6 +449,29 @@ public class StandortEditor extends AbstractBaseEditor {
 		
 		getStandort().setRevidatum(new Date());
 		
+		// Indirekteinleiter
+		String sachrav = sachbe33ravFeld.getText();
+		if (sachrav != null) {
+			if (sachrav.equals("")) {
+				getStandort().setSachbe33rav(null);
+			} else { 
+				getStandort().setSachbe33rav(sachrav);
+			}
+		}
+
+		String sachhee = sachbe33heeFeld.getText();
+		if (sachhee != null) {
+			if (sachhee.equals("")) {
+				getStandort().setSachbe33hee(null);
+			} else { 
+				getStandort().setSachbe33hee(sachhee);
+			}
+		}
+		
+		// Wassermenge:
+		Integer wassermng = ((IntegerField)wassermengeFeld).getIntValue();
+		getStandort().setWassermenge(wassermng);
+		
 		BasisStandort bsta = BasisStandort.saveStandort(getStandort());
 		if (bsta != null) {
 			setEditedObject(bsta);
@@ -424,5 +484,58 @@ public class StandortEditor extends AbstractBaseEditor {
 	
 	public BasisStandort getStandort() {
 		return (BasisStandort) getEditedObject();
+	}
+	
+	private void readClipboard() {
+
+		Clipboard systemClipboard;
+		systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		Transferable transferData = systemClipboard.getContents(null);
+		for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
+			Object content = null;
+			try {
+				content = transferData.getTransferData(dataFlavor);
+			} catch (UnsupportedFlavorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (content instanceof String) {
+
+				String[] tmp = content.toString().split(",");
+				if (tmp.length == 4) {
+					String rechtswertAusZeile = tmp[2];
+					String hochwertAusZeile = tmp[3];
+					rechtsWFeld.setText(rechtswertAusZeile.substring(0, 7));
+					hochWFeld.setText(hochwertAusZeile.substring(0, 7));
+					frame.changeStatus("Rechts- und Hochwert eingetragen",
+							HauptFrame.SUCCESS_COLOR);
+				} else {
+					frame.changeStatus("Zwischenablage enthält keine verwertbaren Daten",
+							HauptFrame.ERROR_COLOR);
+				}
+				break;
+			}
+			
+			
+			
+		}
+	}
+
+	public JButton getAusAblageButton() {
+		if (ausAblageButton == null) {
+
+			ausAblageButton = new JButton("aus QGis");
+			ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
+			ausAblageButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					readClipboard();
+				}
+			});
+		}
+
+		return ausAblageButton;
 	}
 }

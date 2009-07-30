@@ -83,11 +83,14 @@ public abstract class AbstractBasisStandort
     /** The value of the simple revihandz property. */
     private java.lang.String revihandz;
 
-    /** The value of the simple sachbearbeiter33 property. */
-    private java.lang.String sachbearbeiter33;
-
     /** The value of the simple wassermenge property. */
     private java.lang.Integer wassermenge;
+
+    /** The value of the simple sachbe33rav property. */
+    private java.lang.String sachbe33rav;
+
+    /** The value of the simple sachbe33hee property. */
+    private java.lang.String sachbe33hee;
 
     /**
      * Simple constructor of AbstractBasisStandort instances.
@@ -449,24 +452,6 @@ public abstract class AbstractBasisStandort
     }
 
     /**
-     * Return the value of the Sachbearbeiter33 column.
-     * @return java.lang.String
-     */
-    public java.lang.String getSachbearbeiter33()
-    {
-        return this.revihandz;
-    }
-
-    /**
-     * Set the value of the Sachbearbeiter33 column.
-     * @param revihandz
-     */
-    public void setSachbearbeiter33(java.lang.String sachbearbeiter33)
-    {
-        this.sachbearbeiter33 = sachbearbeiter33;
-    }
-
-    /**
      * Return the value of the REVIHANDZ column.
      * @return java.lang.String
      */
@@ -490,7 +475,7 @@ public abstract class AbstractBasisStandort
      */
     public java.lang.Integer getWassermenge()
     {
-        return this.hausnr;
+        return this.wassermenge;
     }
 
     /**
@@ -500,6 +485,42 @@ public abstract class AbstractBasisStandort
     public void setWassermenge(java.lang.Integer wassermenge)
     {
         this.wassermenge = wassermenge;
+    }
+
+    /**
+     * Return the value of the Sachbearbeiter33 column.
+     * @return java.lang.String
+     */
+    public java.lang.String getSachbe33rav()
+    {
+        return this.sachbe33rav;
+    }
+
+    /**
+     * Set the value of the Sachbearbeiter33 column.
+     * @param revihandz
+     */
+    public void setSachbe33rav(java.lang.String sachbe33rav)
+    {
+        this.sachbe33rav = sachbe33rav;
+    }
+
+    /**
+     * Return the value of the Sachbearbeiter33 column.
+     * @return java.lang.String
+     */
+    public java.lang.String getSachbe33hee()
+    {
+        return this.sachbe33hee;
+    }
+
+    /**
+     * Set the value of the Sachbearbeiter33 column.
+     * @param revihandz
+     */
+    public void setSachbe33hee(java.lang.String sachbe33hee)
+    {
+        this.sachbe33hee = sachbe33hee;
     }
 
     /**

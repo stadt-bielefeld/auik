@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: StandortNeu.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: StandortNeu.java,v 1.3 2009-07-30 05:31:22 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:33  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -73,6 +76,8 @@ public class StandortNeu extends AbstractModul {
 	private JTextField datumFeld;
 	private JLabel handzeichenLabel;
 	private JTextField handzeichenNeuFeld;
+	private JTextField sachbe33ravFeld;
+	private JTextField sachbe33heeFeld;
 	
 	private JComboBox strassenBox;
 	private JComboBox gemarkungBox;
@@ -131,6 +136,8 @@ public class StandortNeu extends AbstractModul {
 			plzFeld = new LimitedTextField(10);
 			flurFeld = new LimitedTextField(50);
 			flurStkFeld = new LimitedTextField(50);
+			sachbe33ravFeld = new LimitedTextField(50);
+			sachbe33heeFeld = new LimitedTextField(50);
 			
 			rechtsWFeld = new DoubleField(1);
 			rechtsWFeld.setValue(new Float(0.0f));
