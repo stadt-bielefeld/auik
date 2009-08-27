@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBearbeiten.java,v 1.3 2009-07-30 05:31:22 u633d Exp $
+ * $Id: ObjektBearbeiten.java,v 1.4 2009-08-27 14:40:23 u633d Exp $
  * 
  * Erstellt am 15.02.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/07/30 05:31:22  u633d
+ * GIS, Entsorger vereinheitlicht, Objekte inaktivierbar und andere Erg�nzungen
+ *
  * Revision 1.2  2009/03/24 12:35:20  u633d
  * Umstellung auf UTF8
  *
@@ -668,6 +671,8 @@ public class ObjektBearbeiten extends AbstractModul {
 				getUebergabeTab().completeObjekt();
 			} else if (objekt.getBasisObjektarten().isGenehmigung()) {
 				getGenehmigungTab().completeObjekt();
+			} else if (objekt.getBasisObjektarten().isProbepunkt()) {
+				getProbepunktTab().completeObjekt();
 			}
 		}
 	}
