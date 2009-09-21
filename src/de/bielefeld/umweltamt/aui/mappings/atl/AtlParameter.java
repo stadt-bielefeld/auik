@@ -35,8 +35,6 @@ public class AtlParameter
 	final public static String BOR_ID = "L12110";
 	/** Die ID des Parameters "Barium (Ba)" */
 	final public static String BARIUM_ID = "B00070";
-	/* Die ID des Parameters "Wismut (Bi)" */
-	//final private static String WISMUT_ID = ?
 	/** Die ID des Parameters "Calcium (Ca)" */
 	final public static String CALCIUM_ID = "L11220";
 	/** Die ID des Parameters "Cadmium (Cd)" */
@@ -61,6 +59,10 @@ public class AtlParameter
 	final public static String NATRIUM_ID = "L11120";
 	/** Die ID des Parameters "Nickel (Ni)" */
 	final public static String NICKEL_ID = "L11880";
+	/** Die ID des Parameters "Natrium (Na)" */
+	final public static String ORTHOPHOSPHAT_ID = "B00127";
+	/** Die ID des Parameters "Nickel (Ni)" */
+	final public static String PHOSPHAT_ID = "B00018";
 	/** Die ID des Parameters "Blei (Pb)" */
 	final public static String BLEI_ID = "L11380";
 	/** Die ID des Parameters "Strontium (Sr)" */

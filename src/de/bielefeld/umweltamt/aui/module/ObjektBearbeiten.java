@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBearbeiten.java,v 1.4 2009-08-27 14:40:23 u633d Exp $
+ * $Id: ObjektBearbeiten.java,v 1.5 2009-09-21 11:14:51 u633d Exp $
  * 
  * Erstellt am 15.02.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2009/08/27 14:40:23  u633d
+ * Anlegen neuer Probepunkte korrigiert
+ *
  * Revision 1.3  2009/07/30 05:31:22  u633d
  * GIS, Entsorger vereinheitlicht, Objekte inaktivierbar und andere Erg�nzungen
  *
@@ -90,6 +93,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektBWKPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektBasisPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektChronoPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektGenehmigungPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektProbepktAuswPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektProbepunktPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektSuevPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektUebergabePanel;
@@ -109,6 +113,7 @@ public class ObjektBearbeiten extends AbstractModul {
 	// Tabs
 	private ObjektBasisPanel basisTab;
 	private ObjektProbepunktPanel probepunktTab;
+	private ObjektProbepktAuswPanel probeauswTab;
 	private ObjektBWKPanel bwkTab;
 	private ObjektAnh50Panel zahnarztTab;
 	private ObjektSuevPanel suevTab;
@@ -229,6 +234,13 @@ public class ObjektBearbeiten extends AbstractModul {
 			probepunktTab = new ObjektProbepunktPanel(this);
 		}
 		return probepunktTab;
+	}
+	
+	public ObjektProbepktAuswPanel getProbepktAuswTab() {
+		if (probeauswTab == null) {
+			probeauswTab = new ObjektProbepktAuswPanel(this);
+		}
+		return probeauswTab;
 	}
 	
 	public ObjektBWKPanel getBWKTab() {
@@ -460,6 +472,7 @@ public class ObjektBearbeiten extends AbstractModul {
 						if (objekt.getBasisObjektarten().isProbepunkt()) {
 							getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
 							getTabbedPane().addTab(getProbepunktTab().getName(), getProbepunktTab());
+							getTabbedPane().addTab(getProbepktAuswTab().getName(), getProbepktAuswTab());
 							getChronoTab().updateForm();
 							getProbepunktTab().updateForm();
 							getTabbedPane().setSelectedComponent(getProbepunktTab());
@@ -567,6 +580,7 @@ public class ObjektBearbeiten extends AbstractModul {
 		if (objekt.getBasisObjektarten() != null) {
 			if (objekt.getBasisObjektarten().isProbepunkt()) {
 				getProbepunktTab().clearForm();
+				getProbepktAuswTab().clearForm();
 			} else if (objekt.getBasisObjektarten().isBWK()) {
 				getBWKTab().clearForm();
 			} else if (objekt.getBasisObjektarten().isAnh50()) {

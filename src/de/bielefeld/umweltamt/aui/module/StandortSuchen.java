@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: StandortSuchen.java,v 1.3 2009-07-30 05:31:22 u633d Exp $
+ * $Id: StandortSuchen.java,v 1.4 2009-09-21 11:14:51 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/07/30 05:31:22  u633d
+ * GIS, Entsorger vereinheitlicht, Objekte inaktivierbar und andere Erg�nzungen
+ *
  * Revision 1.2  2009/03/24 12:35:20  u633d
  * Umstellung auf UTF8
  *
@@ -44,6 +47,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -788,19 +792,20 @@ public class StandortSuchen extends AbstractModul {
 					int row = standortTabelle.getSelectedRow();
 					BasisStandort bsta = standortModel.getRow(row);
 					
-					ProcessBuilder pb = new ProcessBuilder( "cmd", "/c", "C:\\appz\\OSGeo4W\\bin\\qgis.bat   D:\\Data\\qgis\\MyProject.qgs"); 
+					ProcessBuilder pb = new ProcessBuilder( "C:\\appz\\QuantumGIS\\bin\\qgis.exe" ); 
+					pb.directory(new File("C:/appz/QuantumGIS"));
 					Map<String, String> env = pb.environment(); 
 					env.put( "RECHTS", bsta.getRechtswert().toString() ); 
 					env.put( "HOCH", bsta.getHochwert().toString() ); 
 					try {
-						Process p = pb.start();
+						Process process = pb.start();
+						process.getOutputStream();
+						process.getErrorStream();
 					} catch (IOException e1) {
-						
 						e1.printStackTrace();
-					} 
+					}
 				}
 			};
-			gisAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_O));
 		}
 		
 		return gisAction;
