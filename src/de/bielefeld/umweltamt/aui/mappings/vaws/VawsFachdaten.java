@@ -263,4 +263,27 @@ public class VawsFachdaten
 		
 		return tmp;
 	}
+    
+    /* Durchsucht VawsFachdaten nach einer bestimmten Herstellnummer und gibt das Ergebnis als List zurück */
+    public static List findherstellnr(String herstellnr) {
+
+		List vaws;
+        
+		String query = 	"from VawsFachdaten vaws "+
+						"where vaws.herstellnr = ?";
+
+                        
+		Session session = HibernateSessionFactory.currentSession();
+		vaws = session.createQuery(query)
+			.setString(0, herstellnr)
+			.list();
+		HibernateSessionFactory.closeSession();
+
+		return vaws;
+
+	}
+    
+    
+    
+    
 }

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SettingsManager.java,v 1.3 2009-03-24 12:35:19 u633d Exp $
+ * $Id: SettingsManager.java,v 1.4 2009-10-06 09:15:20 u633d Exp $
  * 
  * Erstellt am 31.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/03/24 12:35:19  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.2  2008/06/24 11:24:07  u633d
  * Version 0.3
  *
@@ -104,7 +107,7 @@ public class SettingsManager {
 				"StandortSuchen, StandortNeu, " +
 				"ATLRohschlamm, ATLFaulschlamm, ProbeSuchen, KSAuswertung, ICPImport, " +
 				"Anh50Auswertung, Anh49Auswertung, AnhBwkAuswertung, SuevAuswertung, Anh40Auswertung, Anh56Auswertung, " +
-				"AuswertungSVPruefung, AuswertungVawsWV, " +
+				"HerstellNrSuchen, AuswertungSVPruefung, AuswertungVawsWV, " +
 				"BetreiberSuchen, BetreiberNeu, " +
 				"ObjektBearbeiten, " +
 				"Sielhaut, SielImport"

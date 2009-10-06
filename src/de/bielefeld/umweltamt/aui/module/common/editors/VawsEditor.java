@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: VawsEditor.java,v 1.5 2009-03-24 12:35:23 u633d Exp $
+ * $Id: VawsEditor.java,v 1.6 2009-10-06 09:17:17 u633d Exp $
  * 
  * Erstellt am 03.09.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2009/03/24 12:35:23  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.4  2008/09/01 07:03:46  u633d
  * *** empty log message ***
  *
@@ -253,6 +256,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	private JComboBox massnahmenBox;
 	private VerwVerfahrenModel verwVerfahrenModel;
 	
+	
 	// Verwaltungsgebühren
 	private JPanel verwGebuehrenTab;
 	private JTable verwGebuehrenTabelle;
@@ -270,7 +274,7 @@ public class VawsEditor extends AbstractBaseEditor {
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten von VAWS-Fachdaten.
 	 * Schaltet zu einem bestimmten Tab um.
-	 * @param tab "Sachverständigenprüfung" oder "Verwaltungsverfahren"
+	 * @param tab "Sachverständigenprüfung", "Verwaltungsverfahren" oder "Herstellnummer"
 	 */
 	public VawsEditor(VawsFachdaten fachdaten, HauptFrame owner, String tab) {
 		this(fachdaten, owner);
@@ -278,7 +282,11 @@ public class VawsEditor extends AbstractBaseEditor {
 			tabbedPane.setSelectedComponent(getSvPruefungTab());
 		} else if ("Verwaltungsverfahren".equals(tab)) {
 			tabbedPane.setSelectedComponent(getVerwVerfahrenTab());
+		} else if("Herstellnummer".equals(tab)) {
+			// Der Reiter Daten wird aufgerufen
+			
 		}
+		
 	}
 	
 	/* 
@@ -537,7 +545,12 @@ public class VawsEditor extends AbstractBaseEditor {
 		svPruefungTabelle.getInputMap().put((KeyStroke)getTabellenItemLoeschAction().getValue(Action.ACCELERATOR_KEY), getTabellenItemLoeschAction().getValue(Action.NAME));
 		svPruefungTabelle.getActionMap().put(getTabellenItemLoeschAction().getValue(Action.NAME), getTabellenItemLoeschAction());
 		
+		
+		
 
+		
+		
+		
 		// Verwaltungsverfahren
 		verwVerfahrenModel = new VerwVerfahrenModel();
 		verwVerfahrenTabelle = new JTable(verwVerfahrenModel);
@@ -1879,10 +1892,21 @@ class VawsKontrollenModel extends EditableListTableModel {
 	}
 }
 
+
+
+
+
+
+
+
+
 /**
  * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
  * @author David Klotz
  */
+
+
+
 class VerwVerfahrenModel extends EditableListTableModel {
 	private List geloeschte;
 	private VawsFachdaten fachdaten;
