@@ -49,7 +49,7 @@ public class BasisObjektModel extends ListTableModel {
 		switch(columnIndex) {
 			case 0:
 				tmp = bo.getObjektid();
-				break;
+				break;	
 			case 1:
 				if ("Standort".equals(secondColumn)) {
 					tmp = bo.getBasisStandort();
@@ -58,10 +58,12 @@ public class BasisObjektModel extends ListTableModel {
 				} else {
 					tmp = secondColumn;
 				}
+
 				break;
 			case 2:
 				BasisObjektarten boa = bo.getBasisObjektarten();
 				tmp = boa;
+
 				break;
 			case 3:
 				tmp = bo.getBeschreibung();
@@ -70,8 +72,9 @@ public class BasisObjektModel extends ListTableModel {
 				tmp = null;
 		}
 		
-		if (bo.getInaktiv().booleanValue() != false) {
-			tmp = "<html><strike>" + tmp + "</strike></html>";
+	if (tmp != bo.getBeschreibung() && bo.getInaktiv().booleanValue() != false  )
+		{
+				tmp = "<html><strike>" + tmp + "</strike></html>";
 		}
 		
 		return tmp;
