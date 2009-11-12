@@ -3,22 +3,15 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.6.0_01"/>
 	<classpathentry kind="lib" path="lib/c3p0-0.9.0.jar"/>
-	<classpathentry kind="lib" path="lib/commons-cli-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-2.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/concurrent-1.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/connector.jar"/>
-	<classpathentry kind="lib" path="lib/coreapi.jar"/>
-	<classpathentry kind="lib" path="lib/dataadapterapi.jar"/>
 	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/dteapi.jar"/>
 	<classpathentry kind="lib" path="lib/ehcache-1.2.3.jar"/>
-	<classpathentry kind="lib" path="lib/engineapi.jar"/>
-	<classpathentry kind="lib" path="lib/flute.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate3.jar" sourcepath="D:/Data/Gerd/Java/Hibernate/hibernate-3.2/src"/>
 	<classpathentry kind="lib" path="lib/jdbc2_0-stdext.jar"/>
-	<classpathentry kind="lib" path="lib/js.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.11.jar"/>
 	<classpathentry kind="lib" path="lib/oscache-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/pg74.215.jdbc3.jar"/>
@@ -34,10 +27,18 @@
 	<classpathentry kind="lib" path="lib/asm-attrs.jar"/>
 	<classpathentry kind="lib" path="lib/cglib-2.1.3.jar"/>
 	<classpathentry kind="lib" path="lib/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="lib/com.ibm.icu_3.4.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/sac.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
-	<classpathentry kind="lib" path="D:/Data/Gerd/Java/DB/mysql-connector-java-5.0.5/mysql-connector-java-5.0.5-bin.jar"/>
-	<classpathentry kind="lib" path="lib/ifxjdbc-g.jar"/>
+	<classpathentry kind="lib" path="lib/coreapi.jar"/>
+	<classpathentry kind="lib" path="lib/dataadapterapi.jar"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/com.ibm.icu_3.8.1.v20080530.jar"/>
+	<classpathentry kind="lib" path="lib/dteapi.jar"/>
+	<classpathentry kind="lib" path="lib/engineapi.jar"/>
+	<classpathentry kind="lib" path="lib/flute.jar"/>
+	<classpathentry kind="lib" path="lib/ifxjdbc.jar"/>
+	<classpathentry kind="lib" path="lib/js.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.5-bin.jar"/>
+	<classpathentry kind="lib" path="lib/modelapi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
