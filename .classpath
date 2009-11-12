@@ -36,9 +36,9 @@
 	<classpathentry kind="lib" path="lib/dteapi.jar"/>
 	<classpathentry kind="lib" path="lib/engineapi.jar"/>
 	<classpathentry kind="lib" path="lib/flute.jar"/>
-	<classpathentry kind="lib" path="lib/ifxjdbc.jar"/>
 	<classpathentry kind="lib" path="lib/js.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.5-bin.jar"/>
 	<classpathentry kind="lib" path="lib/modelapi.jar"/>
+	<classpathentry kind="lib" path="lib/ifxjdbc-g.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
