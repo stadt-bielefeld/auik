@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ReportManager.java,v 1.3 2009-03-24 12:35:19 u633d Exp $
+ * $Id: ReportManager.java,v 1.4 2009-11-12 06:30:17 u633d Exp $
  *
  * Erstellt am 18.10.2005 von David Klotz
  *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/03/24 12:35:19  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.2  2008/06/24 11:24:07  u633d
  * Version 0.3
  *
@@ -57,7 +60,6 @@ import org.eclipse.birt.report.engine.api.IReportEngine;
 import org.eclipse.birt.report.engine.api.IReportEngineFactory;
 import org.eclipse.birt.report.engine.api.IReportRunnable;
 import org.eclipse.birt.report.engine.api.IRunAndRenderTask;
-import org.eclipse.birt.report.engine.api.ReportEngine;
 
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;

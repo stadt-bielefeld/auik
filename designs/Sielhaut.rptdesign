@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.2" id="1">
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.17" id="1">
     <property name="author">Colin Atkins</property>
-    <property name="createdBy">Eclipse BIRT Designer Version 2.1.0.N20060628-1351 Build &lt;20060628-1537></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 2.3.2.r232_20090202 Build &lt;2.3.2.v20090218-0730></property>
     <property name="units">mm</property>
     <property name="comments">Copyright (c) 2008 &lt;&lt;Your Company Name here>></property>
     <parameters>
         <scalar-parameter name="foto" id="146">
             <property name="valueType">static</property>
             <property name="dataType">string</property>
+            <property name="isRequired">false</property>
             <property name="controlType">text-box</property>
             <property name="defaultValue">Kein Foto verfuegbar!</property>
             <structure name="format">
@@ -17,6 +18,7 @@
         <scalar-parameter name="karte" id="148">
             <property name="valueType">static</property>
             <property name="dataType">string</property>
+            <property name="isRequired">false</property>
             <property name="controlType">text-box</property>
             <property name="defaultValue">Keine Karte verfuegbar!</property>
             <structure name="format">
@@ -26,7 +28,7 @@
         <scalar-parameter name="id" id="149">
             <property name="valueType">static</property>
             <property name="dataType">string</property>
-            <property name="isRequired">true</property>
+            <property name="isRequired">false</property>
             <property name="controlType">text-box</property>
             <property name="defaultValue">10</property>
             <structure name="format">
@@ -39,7 +41,7 @@
             <property name="odaDriverClass">com.informix.jdbc.IfxDriver</property>
             <property name="odaURL">jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi</property>
             <property name="odaUser">vaws</property>
-            <encrypted-property name="odaPassword">VmF3czAw</encrypted-property>
+            <encrypted-property name="odaPassword" encryptionID="base64">VmF3czAw</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -137,7 +139,8 @@
             <list-property name="parameters">
                 <structure>
                     <property name="name">id</property>
-                    <property name="dataType">any</property>
+                    <property name="paramName">id</property>
+                    <property name="dataType">string</property>
                     <property name="position">1</property>
                     <expression name="defaultValue">params["id"]</expression>
                     <property name="isInput">true</property>
@@ -280,7 +283,7 @@ where vaws.atl_sielhaut.id = ?</property>
         <simple-master-page name="Simple MasterPage" id="2">
             <property name="type">a4</property>
             <property name="topMargin">5mm</property>
-            <property name="leftMargin">25mm</property>
+            <property name="leftMargin">14.022916666666667mm</property>
             <property name="bottomMargin">15mm</property>
             <property name="rightMargin">15mm</property>
             <property name="showHeaderOnFirst">false</property>
@@ -288,21 +291,16 @@ where vaws.atl_sielhaut.id = ?</property>
                 <grid id="239">
                     <property name="width">100%</property>
                     <column id="240">
-                        <property name="width">5.562in</property>
+                        <property name="width">1.052in</property>
                     </column>
                     <column id="241">
-                        <property name="width">1.052in</property>
+                        <property name="width">5.562in</property>
                         <property name="textAlign">right</property>
                     </column>
                     <row id="242">
                         <cell id="243">
+                            <property name="borderBottomStyle">none</property>
                             <property name="verticalAlign">bottom</property>
-                            <text id="3">
-                                <property name="contentType">html</property>
-                                <text-property name="content"><![CDATA[<span style="font-family: Arial;">&copy; Copyright 2008 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
-                            </text>
-                        </cell>
-                        <cell id="244">
                             <grid id="245">
                                 <property name="height">0.76in</property>
                                 <property name="width">0.979in</property>
@@ -337,7 +335,7 @@ where vaws.atl_sielhaut.id = ?</property>
                                             <property name="fontFamily">"Arial"</property>
                                             <property name="fontSize">8pt</property>
                                             <property name="textAlign">left</property>
-                                            <text-property name="text">Objekt</text-property>
+                                            <text-property name="text">Schacht</text-property>
                                         </label>
                                     </cell>
                                 </row>
@@ -359,6 +357,16 @@ where vaws.atl_sielhaut.id = ?</property>
                                     </cell>
                                 </row>
                             </grid>
+                        </cell>
+                        <cell id="244">
+                            <property name="textAlign">right</property>
+                            <property name="verticalAlign">bottom</property>
+                            <property name="widows">2</property>
+                            <text id="3">
+                                <property name="verticalAlign">bottom</property>
+                                <property name="contentType">html</property>
+                                <text-property name="content"><![CDATA[<span style="font-family: Arial;">&amp;copy; Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
+                            </text>
                         </cell>
                     </row>
                 </grid>
@@ -532,6 +540,7 @@ where vaws.atl_sielhaut.id = ?</property>
             <column id="200"/>
             <column id="201"/>
             <row id="202">
+                <property name="height">1.9895833333333333in</property>
                 <cell id="203">
                     <grid id="205">
                         <property name="fontFamily">"Arial"</property>
@@ -672,7 +681,7 @@ where vaws.atl_sielhaut.id = ?</property>
                                 <property name="paddingBottom">3px</property>
                                 <property name="paddingRight">3px</property>
                                 <label id="223">
-                                    <text-property name="text">Haltungsnummer</text-property>
+                                    <text-property name="text">Schachtnummer</text-property>
                                 </label>
                             </cell>
                             <cell id="210">
@@ -1215,18 +1224,20 @@ where vaws.atl_sielhaut.id = ?</property>
                     </grid>
                 </cell>
                 <cell id="204">
+                    <property name="colSpan">1</property>
+                    <property name="rowSpan">2</property>
                     <image id="233">
                         <property name="borderBottomColor">#000000</property>
-                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomStyle">none</property>
                         <property name="borderBottomWidth">thin</property>
                         <property name="borderLeftColor">#000000</property>
-                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftStyle">none</property>
                         <property name="borderLeftWidth">thin</property>
                         <property name="borderRightColor">#000000</property>
-                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightStyle">none</property>
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopColor">#000000</property>
-                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopStyle">none</property>
                         <property name="borderTopWidth">thin</property>
                         <property name="height">235px</property>
                         <property name="width">314px</property>
@@ -1235,21 +1246,28 @@ where vaws.atl_sielhaut.id = ?</property>
                     </image>
                 </cell>
             </row>
+            <row id="279">
+                <property name="verticalAlign">bottom</property>
+                <property name="pageBreakBefore">auto</property>
+                <property name="canShrink">false</property>
+                <cell id="280">
+                    <label id="234">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">12pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="borderBottomColor">#444444</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="marginTop">20px</property>
+                        <property name="paddingTop">7px</property>
+                        <property name="paddingLeft">10px</property>
+                        <property name="paddingBottom">2px</property>
+                        <property name="paddingRight">10px</property>
+                        <text-property name="text">Lagebeschreibung</text-property>
+                    </label>
+                </cell>
+            </row>
         </grid>
-        <label id="234">
-            <property name="fontFamily">"Arial"</property>
-            <property name="fontSize">12pt</property>
-            <property name="fontWeight">bold</property>
-            <property name="borderBottomColor">#444444</property>
-            <property name="borderBottomStyle">solid</property>
-            <property name="borderBottomWidth">thin</property>
-            <property name="marginTop">20px</property>
-            <property name="paddingTop">7px</property>
-            <property name="paddingLeft">10px</property>
-            <property name="paddingBottom">2px</property>
-            <property name="paddingRight">10px</property>
-            <text-property name="text">Lagebeschreibung</text-property>
-        </label>
         <data id="237">
             <property name="fontFamily">"Arial"</property>
             <property name="fontSize">10pt</property>
@@ -1361,24 +1379,39 @@ where vaws.atl_sielhaut.id = ?</property>
             </list-property>
             <property name="resultSetColumn">bezeichnung</property>
         </data>
-        <image id="238">
-            <property name="borderBottomColor">#000000</property>
-            <property name="borderBottomStyle">solid</property>
-            <property name="borderBottomWidth">thin</property>
-            <property name="borderLeftColor">#000000</property>
-            <property name="borderLeftStyle">solid</property>
-            <property name="borderLeftWidth">thin</property>
-            <property name="borderRightColor">#000000</property>
-            <property name="borderRightStyle">solid</property>
-            <property name="borderRightWidth">thin</property>
-            <property name="borderTopColor">#000000</property>
-            <property name="borderTopStyle">solid</property>
-            <property name="borderTopWidth">thin</property>
-            <property name="height">260px</property>
-            <property name="width">360px</property>
-            <property name="source">file</property>
-            <expression name="uri">params["karte"]</expression>
-        </image>
+        <grid id="273">
+            <property name="height">2.8958333333333335in</property>
+            <property name="width">6.760416666666667in</property>
+            <column id="274">
+                <property name="width">6.552083333333333in</property>
+            </column>
+            <column id="275"/>
+            <row id="276">
+                <property name="height">2.8958333333333335in</property>
+                <property name="orphans">2</property>
+                <cell id="277">
+                    <image id="238">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">none</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="height">267px</property>
+                        <property name="width">321px</property>
+                        <property name="source">file</property>
+                        <expression name="uri">params["karte"]</expression>
+                    </image>
+                </cell>
+                <cell id="278"/>
+            </row>
+        </grid>
     </body>
     <list-property name="images">
         <structure>

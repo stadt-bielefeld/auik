@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SettingsManager.java,v 1.4 2009-10-06 09:15:20 u633d Exp $
+ * $Id: SettingsManager.java,v 1.5 2009-11-12 06:33:01 u633d Exp $
  * 
  * Erstellt am 31.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2009/10/06 09:15:20  u633d
+ * hertsellnummerSuche
+ *
  * Revision 1.3  2009/03/24 12:35:19  u633d
  * Umstellung auf UTF8
  *
@@ -117,7 +120,7 @@ public class SettingsManager {
 		defaults.setProperty("auik.prefs.sielhaut_labor", "HBICON");
 
 		// FIXME: Birt-Pfade anpassen.
-		defaults.setProperty("auik.birt.enginepath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\birt-runtime-2_1_0\\ReportEngine\\");
+		defaults.setProperty("auik.birt.enginepath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\birt-runtime-2_3_2\\ReportEngine\\");
 		defaults.setProperty("auik.birt.reportpath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\designs\\");
 
 		
