@@ -270,7 +270,7 @@ public class VawsFachdaten
 		List vaws;
         
 		String query = 	"from VawsFachdaten vaws "+
-						"where vaws.herstellnr = ?";
+						"where vaws.herstellnr like ?";
 
                         
 		Session session = HibernateSessionFactory.currentSession();

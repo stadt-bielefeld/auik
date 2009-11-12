@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Sielhaut.java,v 1.5 2009-03-24 12:35:20 u633d Exp $
+ * $Id: Sielhaut.java,v 1.6 2009-11-12 06:24:45 u633d Exp $
  * 
  * Erstellt am 14.06.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.4  2008/09/01 07:03:46  u633d
  * *** empty log message ***
  *
@@ -803,7 +806,7 @@ public class Sielhaut extends AbstractModul {
 			builder.append("Hochwert:", getSpHochWertFeld(), getSpFirmenprobeCheck());
 			builder.nextLine();
 			
-			builder.append("Haltungs-Nr.:", getSpHaltungsnrFeld(), getSpNachprobeCheck());
+			builder.append("Schacht-Nr.:", getSpHaltungsnrFeld(), getSpNachprobeCheck());
 			builder.nextLine();
 			
 			builder.append("Alarmplan-Nr.:", getSpAlarmplannrFeld(), getSpAlarmplanCheck());
@@ -1035,6 +1038,7 @@ public class Sielhaut extends AbstractModul {
 							if (imgIcon.getIconWidth() > panelWidth) {
 								imgIcon.setImage(imgIcon.getImage().getScaledInstance(panelWidth,-1,Image.SCALE_FAST));
 							}
+							getFotoLabel().setIcon(null);
 							getFotoLabel().setIcon(imgIcon);
 							getFotoLabel().setText(null);
 						} else {
@@ -1088,6 +1092,7 @@ public class Sielhaut extends AbstractModul {
 				}
 			};
 		}
+		kartenRtPanel.repaint();
 		return kartenRtPanel;
 	}
 	
