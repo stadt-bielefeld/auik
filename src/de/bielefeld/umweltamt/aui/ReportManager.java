@@ -1,6 +1,6 @@
 /*
  * Datei:
- * $Id: ReportManager.java,v 1.4 2009-11-12 06:30:17 u633d Exp $
+ * $Id: ReportManager.java,v 1.5 2009-11-23 06:53:50 u633d Exp $
  *
  * Erstellt am 18.10.2005 von David Klotz
  *
@@ -60,6 +60,7 @@ import org.eclipse.birt.report.engine.api.IReportEngine;
 import org.eclipse.birt.report.engine.api.IReportEngineFactory;
 import org.eclipse.birt.report.engine.api.IReportRunnable;
 import org.eclipse.birt.report.engine.api.IRunAndRenderTask;
+import org.eclipse.birt.report.engine.api.ReportEngine;
 
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -81,6 +82,7 @@ public class ReportManager {
 	private String reportHome;
 	private String fotoPath;
 	private String mapPath;
+
 	
 	private ReportManager(String engineHome, String reportHome, String fotoPath, String mapPath) {
 		this.engineHome = engineHome;
@@ -150,6 +152,42 @@ public class ReportManager {
 		return pdfFile;
 	}
 	
+	
+	
+	
+	
+	public File runReport2(String Name, Integer StandortId, String Standort) throws EngineException {
+		File pdfFile;
+		try {
+			
+			pdfFile = File.createTempFile(Name + StandortId, ".pdf");
+			
+		} catch (IOException e) {
+			throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+		}
+		pdfFile.deleteOnExit();
+
+		runReport2(pdfFile, Name, StandortId, Standort);
+
+		return pdfFile;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	protected void initBirt()
 	{
 		config = null;
@@ -160,7 +198,8 @@ public class ReportManager {
 			config = new EngineConfig();
 			config.setEngineHome(engineHome);
 			config.setLogConfig(null, Level.OFF);
-
+			
+			
 		} catch( Exception ex) {
 			ex.printStackTrace();
 		}
@@ -170,10 +209,15 @@ public class ReportManager {
 		} catch (BirtException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
+			
 		}
 			IReportEngineFactory factory = (IReportEngineFactory) Platform
 			.createFactoryObject( IReportEngineFactory.EXTENSION_REPORT_ENGINE_FACTORY );
 		engine = factory.createReportEngine( config );
+		
+		
+		
 		engine.changeLogLevel( Level.OFF );
 	}
 	
@@ -245,6 +289,36 @@ public class ReportManager {
 
 		worker.start();
 	}
+	
+	
+	
+	public void startReportWorker2(final String Name, final Integer StandortId, final String Standort, Component focusComp ) {
+		SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
+			File pdfFile;
+			protected void doNonUILogic() throws RuntimeException {
+				//File report = new File(reportHome + reportname + ".rptdesign");
+				try {
+					
+					pdfFile = runReport2 (Name, StandortId, Standort);
+				} catch (EngineException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			protected void doUIUpdateLogic() throws RuntimeException {
+				AuikUtils.spawnFileProg(pdfFile);
+			}
+		};
+
+		worker.start();
+	}
+	
+	
+	
+	
+	
+	
 	
 	public void startReportWorker(final String Name, final Integer BehaelterId, final String Betreiber, final String Standort, Component focusComp) {
 		SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
@@ -371,6 +445,72 @@ public class ReportManager {
 		}
 	}
 	
+	
+	
+	
+	
+	
+	
+	public void runReport2(File pdffile, String Name, Integer StandortId, String Standort)  throws EngineException {
+
+		
+		if (config == null || engine == null || options == null)
+			initBirt();
+		
+		IReportRunnable design = null;
+		
+		
+		try{
+			design = engine.openReportDesign(reportHome + Name + ".rptdesign"); //reportHome + Name + ".rptdesign"	
+		    
+		}
+		catch (EngineException e1) {
+				AUIKataster
+				.debugOutput("Fehler: " +  e1);
+		}
+
+		
+		//Create task to run and render the report,
+		IRunAndRenderTask task = engine.createRunAndRenderTask(design); 
+		
+		task.setParameterValue("StandortID", StandortId);
+		task.setParameterValue("Standort", Standort);
+		task.validateParameters();
+		HTMLRenderOption options = new HTMLRenderOption();
+	
+		//Remove HTML and Body tags
+		options.setEmbeddable(true);
+		
+		//Set ouptut location
+		options.setOutputFileName(pdffile.getAbsolutePath());
+		
+		
+		//Set output format
+		options.setOutputFormat("pdf");
+		task.setRenderOption(options);
+		
+
+		try {
+			task.run();
+
+			shutdownBirt();
+		} catch (EngineException e1) {
+			throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+		}
+	}
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void runReport(File pdffile, String Name, Integer ObjektId, String Betreiber, String Standort, String Art) throws EngineException {
 //		EngineConfig config = null;
 //		IReportEngine engine = null;
@@ -400,7 +540,13 @@ public class ReportManager {
 			initBirt();
 		
 		IReportRunnable design = null;
+		
+	
+		
 		design = engine.openReportDesign(reportHome + Name + ".rptdesign"); //reportHome + Name + ".rptdesign"
+		
+	
+		
 		
 		//Create task to run and render the report,
 		IRunAndRenderTask task = engine.createRunAndRenderTask(design); 
