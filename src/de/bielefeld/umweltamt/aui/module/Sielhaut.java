@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Sielhaut.java,v 1.6 2009-11-12 06:24:45 u633d Exp $
+ * $Id: Sielhaut.java,v 1.7 2009-12-01 14:42:35 u633d Exp $
  * 
  * Erstellt am 14.06.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2009/11/12 06:24:45  u633d
+ * *** empty log message ***
+ *
  * Revision 1.5  2009/03/24 12:35:20  u633d
  * Umstellung auf UTF8
  *
@@ -51,6 +54,11 @@ package de.bielefeld.umweltamt.aui.module;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -58,6 +66,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -147,6 +156,7 @@ public class Sielhaut extends AbstractModul {
 	private DoubleField spHochWertFeld;
 	private JTextField spHaltungsnrFeld;
 	private JTextField spAlarmplannrFeld;
+	private JButton ausAblageButton;
 	private JCheckBox spSielhautCheck;
 	private JCheckBox spNachprobeCheck;
 	private JCheckBox spAlarmplanCheck;
@@ -781,37 +791,51 @@ public class Sielhaut extends AbstractModul {
 	private JPanel getDatenPanel() {
 		if (datenPanel == null) {
 			FormLayout layout = new FormLayout(
-					"r:p, 3dlu, p:g, 10dlu, p:g"
+					"r:p, 3dlu, 150dlu, 10dlu, 70dlu, 10dlu, 100dlu",
+					"pref, " +	//1
+					"3dlu, " +	//2
+					"pref, " +	//3
+					"3dlu, " +	//4
+					"pref, " +	//5
+					"3dlu, " +	//6
+					"fill:30dlu, " +	//7
+					"10dlu, " +	//8
+					"pref, " +	//9
+					"3dlu, " +	//10
+					"pref, " +	//11
+					"3dlu, " +	//12
+					"pref, " +	//13
+					"3dlu, " +	//14
+					"pref, "	//15
 			);
 			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 			builder.setDefaultDialogBorder();
+			CellConstraints cc = new CellConstraints();
+			JScrollPane bemerkungsScroller = new JScrollPane(getSpBemerkungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			
-			builder.append("<html><b>Name:</b></html>", getSpNamenFeld());
-			builder.nextLine();
-			builder.append("Entwässerungsgebiet:", getSpEntgebFeld());
-			builder.nextLine();
-			
-			builder.append("Lage:", getSpLageFeld(), 3);
-			
-			builder.appendRelatedComponentsGapRow();
-			builder.appendRow("f:30dlu");
-			builder.nextLine(2);
-			builder.append("Bemerkungen:", new JScrollPane(
-					getSpBemerkungsArea()), 3);
-			builder.appendUnrelatedComponentsGapRow();
-			builder.nextLine(2);
-			
-			builder.append("Rechtswert:", getSpRechtsWertFeld(), getSpSielhautCheck());
-			builder.nextLine();
-			builder.append("Hochwert:", getSpHochWertFeld(), getSpFirmenprobeCheck());
-			builder.nextLine();
-			
-			builder.append("Schacht-Nr.:", getSpHaltungsnrFeld(), getSpNachprobeCheck());
-			builder.nextLine();
-			
-			builder.append("Alarmplan-Nr.:", getSpAlarmplannrFeld(), getSpAlarmplanCheck());
-			builder.nextLine();
-			
+			builder.addLabel("<html><b>Name:</b></html>", 	cc.xy(  1, 1 ));
+			builder.add(getSpNamenFeld(),					cc.xy(  3, 1 ));
+			builder.addLabel("Entwässerungsgebiet:",		cc.xy(  1, 3 ));
+			builder.add(getSpEntgebFeld(),					cc.xy(  3, 3 ));
+			builder.addLabel("Lage:",						cc.xy(  1, 5 ));
+			builder.add(getSpLageFeld(),					cc.xy(  3, 5 ));
+			builder.addLabel("Bemerkungen:",				cc.xy(  1, 7 ));
+			builder.add(bemerkungsScroller,					cc.xyw(  3, 7, 5 ));
+			builder.addLabel("Rechtswert:",					cc.xy(  1, 9 ));
+			builder.add(getSpRechtsWertFeld(),				cc.xy(  3, 9 ));
+			builder.add(getAusAblageButton(),				cc.xywh(  5, 9, 1, 3 ));
+			builder.add(getSpSielhautCheck(),				cc.xy(  7, 9 ));
+			builder.addLabel("Hochwert:",					cc.xy(  1, 11 ));
+			builder.add(getSpHochWertFeld(),				cc.xy(  3, 11 ));
+			builder.add(getSpFirmenprobeCheck(),			cc.xy(  7, 11 ));
+			builder.addLabel("Schacht-Nr.:",				cc.xy(  1, 13 ));
+			builder.add(getSpHaltungsnrFeld(),				cc.xyw(  3, 13, 3 ));
+			builder.add(getSpNachprobeCheck(),				cc.xy(  7, 13 ));
+			builder.addLabel("Alarmplan-Nr.:",				cc.xy(  1, 15 ));
+			builder.add(getSpAlarmplannrFeld(),				cc.xyw(  3, 15, 3 ));
+			builder.add(getSpAlarmplanCheck(),				cc.xy(  7, 15 ));
+
+
 			//builder.getPanel().setBackground(Color.WHITE);
 			//builder.getPanel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			datenPanel = builder.getPanel();
@@ -1103,6 +1127,57 @@ public class Sielhaut extends AbstractModul {
 		
 		return kartenLabel;
 	}
+	
+	private void readClipboard() {
+
+		Clipboard systemClipboard;
+		systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		Transferable transferData = systemClipboard.getContents(null);
+		for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
+			Object content = null;
+			try {
+				content = transferData.getTransferData(dataFlavor);
+			} catch (UnsupportedFlavorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (content instanceof String) {
+
+				String[] tmp = content.toString().split(",");
+				if (tmp.length == 4) {
+					String rechtswertAusZeile = tmp[2];
+					String hochwertAusZeile = tmp[3];
+					spRechtsWertFeld.setText(rechtswertAusZeile.substring(0, 7));
+					spHochWertFeld.setText(hochwertAusZeile.substring(0, 7));
+					frame.changeStatus("Rechts- und Hochwert eingetragen",
+							HauptFrame.SUCCESS_COLOR);
+				} else {
+					frame.changeStatus(
+							"Zwischenablage enthält keine verwertbaren Daten",
+							HauptFrame.ERROR_COLOR);
+				}
+				break;
+			}
+		}
+	}
+	
+	public JButton getAusAblageButton() {
+		if (ausAblageButton == null) {
+
+			ausAblageButton = new JButton("aus QGis");
+			ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
+			ausAblageButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					readClipboard();
+				}
+			});
+		}
+
+		return ausAblageButton;
+	}
 }
 
 /**
@@ -1376,6 +1451,7 @@ class SielhautChooser extends OkCancelDialog {
 		
 		return ergebnisTabelle;
 	}
+	
 }
 
 class SielhautModel extends ListTableModel {
