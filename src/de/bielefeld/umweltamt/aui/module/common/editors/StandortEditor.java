@@ -513,14 +513,12 @@ public class StandortEditor extends AbstractBaseEditor {
 					frame.changeStatus("Rechts- und Hochwert eingetragen",
 							HauptFrame.SUCCESS_COLOR);
 				} else {
-					frame.changeStatus("Zwischenablage enthält keine verwertbaren Daten",
+					frame.changeStatus(
+							"Zwischenablage enthält keine verwertbaren Daten",
 							HauptFrame.ERROR_COLOR);
 				}
 				break;
 			}
-			
-			
-			
 		}
 	}
 

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: BetreiberNeu.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: BetreiberNeu.java,v 1.3 2009-12-01 14:39:05 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:33  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -255,7 +258,7 @@ public class BetreiberNeu extends AbstractModul {
 			builder.add(emailFeld, 		cc.xyw(3,21,4));
 			
 			// Betriebsbeauftragter -------------------------
-			builder.addSeparator("Betriebsbeauftragter", cc.xyw( 1,23,10));
+			builder.addSeparator("Ansprechpartner", cc.xyw( 1,23,10));
 			// Vorname
 			builder.addLabel("Vorname:",cc.xy(1,25));
 			builder.add(betrBeaufVornameFeld, 		cc.xyw(3,25,2));

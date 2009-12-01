@@ -224,7 +224,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		builder.add(emailFeld, 		cc.xyw(3,21,4));
 		
 		// Betriebsbeauftragter -------------------------
-		builder.addSeparator("Betriebsbeauftragter", cc.xyw( 1+11,1,10));
+		builder.addSeparator("Ansprechpartner", cc.xyw( 1+11,1,10));
 		// Vorname
 		builder.addLabel("Vorname:",		cc.xy(1+11,3));
 		builder.add(betrBeaufVornameFeld, 	cc.xyw(3+11,3,2));
