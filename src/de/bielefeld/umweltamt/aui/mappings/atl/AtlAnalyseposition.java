@@ -16,6 +16,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 
 /**
  * A class that represents a row in the 'ATL_ANALYSEPOSITION' table. 
@@ -208,6 +209,21 @@ public class AtlAnalyseposition
 		return tmp;
 	}
 	
+	// Liefert einObjekt vom Typ Analysepositionen mit einer gegebenen ID
+	public static AtlAnalyseposition getAnalysepositionObjekt (Integer id) {
+		AtlAnalyseposition objekt;
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			objekt = (AtlAnalyseposition) session.get(AtlAnalyseposition.class, id);
+			HibernateSessionFactory.closeSession();
+		} catch (HibernateException e) {
+			objekt = null;
+		}
+    	
+    	return objekt;
+    }
+	
+	
     /**
      * Liefert eine Liste der Analysepositionen mit einem gegebenen
      * Parameter aus einer gegebenen Probenahme.
@@ -278,6 +294,9 @@ public class AtlAnalyseposition
     	Integer einhID = einh.getId();
     	Integer pktID = pkt.getPktId();
     	
+    	
+    	
+    	
     	String query = 
     		"from AtlAnalyseposition pos " +
 			"where pos.atlParameter = ? " +
@@ -318,6 +337,8 @@ public class AtlAnalyseposition
 					.list();
 
 			}
+			
+			
 		} catch (HibernateException e) {
 			throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
 		} finally {
@@ -326,6 +347,51 @@ public class AtlAnalyseposition
 		
     	return proben;
     }
+   
+    // Liefert eine Liste der Analysepositionen mit einem gegebenen
+    // Parameter, an einem bestimmten Probepunkt.
+    public static List getAnalysepos(AtlParameter param,  Integer pkt) {
+    	AUIKataster.debugOutput("Suche (HQL): p:" + param+ " pkt:" + pkt ,  "AtlAnalyseposition");
+    	
+
+    	String query = 
+    		"from AtlAnalyseposition as pos " +
+			"where pos.atlParameter = ? " ;
+
+
+    	if (pkt != null) {
+    		query += "and pos.atlProbenahmen.atlProbepkt.pktId = '" + pkt + "' ";
+    	}
+    	else {
+    		
+    		AUIKataster.debugOutput("pktID = null","getAnalysepos" );
+    	}
+ 
+    	query += "order by pos.atlProbenahmen.datumDerEntnahme";
+    	
+    		List proben;
+		 try {
+			Session session = HibernateSessionFactory.currentSession();
+			
+			
+			
+			proben = session.createQuery(
+					query)
+					.setEntity(0, param)
+					.list(); 
+			
+		
+			
+		} catch (HibernateException e) {
+			throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		
+    	return proben;
+    }
+  
+    
     
     public static boolean saveAnalyseposition(AtlAnalyseposition pos) {
     	boolean saved;
