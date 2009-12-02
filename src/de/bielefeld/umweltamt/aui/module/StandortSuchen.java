@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: StandortSuchen.java,v 1.6 2009-11-23 06:52:53 u633d Exp $
+ * $Id: StandortSuchen.java,v 1.7 2009-12-02 06:31:41 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2009/11/23 06:52:53  u633d
+ * VAwS-StandortListe
+ *
  * Revision 1.4  2009/09/21 11:14:51  u633d
  * GIS oeffnen
  *
@@ -455,7 +458,7 @@ public class StandortSuchen extends AbstractModul {
 		BasisStandort standort = standortModel
 		.getRow(selectedRow);
 		
-        String standort2 = "" + standort;
+        String adresse = "" + standort;
         
         if (standort == null)
 		{
@@ -472,9 +475,9 @@ public class StandortSuchen extends AbstractModul {
 		
 		
 	AUIKataster
-	.debugOutput(standort2 +" mit ID: "+ standortID + " ausgewaehlt", "StandortSuchen.showReportListe");
+	.debugOutput(adresse +" mit ID: "+ standortID + " ausgewaehlt", "StandortSuchen.showReportListe");
 
-	ReportManager.getInstance().startReportWorker2("VAwS-StandortListe", standortID, standort2,  reportStandortListeButton);
+	ReportManager.getInstance().startReportWorker("VAwS-StandortListe",adresse, standortID,   reportStandortListeButton);
 	//ReportManager.getInstance().startReportWorker("Suev-Kan", standortID, reportStandortListeButton);
 	
 	}

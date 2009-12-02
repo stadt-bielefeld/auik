@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ReportManager.java,v 1.5 2009-11-23 06:53:50 u633d Exp $
+ * $Id: ReportManager.java,v 1.6 2009-12-02 06:30:17 u633d Exp $
  *
  * Erstellt am 18.10.2005 von David Klotz
  *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2009/11/23 06:53:50  u633d
+ * VAwS-StandortListe
+ *
  * Revision 1.3  2009/03/24 12:35:19  u633d
  * Umstellung auf UTF8
  *
@@ -138,7 +141,7 @@ public class ReportManager {
 		return pdfFile;
 	}
 	
-	public File runReport(String Name, Integer BehaelterId, String Betreiber, String Standort) throws EngineException {
+	public File runReport(String Name,String art, Integer BehaelterId, String Betreiber, String Standort) throws EngineException {
 		File pdfFile;
 		try {
 			pdfFile = File.createTempFile(Name + BehaelterId, ".pdf");
@@ -147,7 +150,7 @@ public class ReportManager {
 		}
 		pdfFile.deleteOnExit();
 
-		runReport(pdfFile, Name, BehaelterId, Betreiber, Standort);
+		runReport(pdfFile, art, Name, BehaelterId, Betreiber, Standort);
 
 		return pdfFile;
 	}
@@ -156,7 +159,7 @@ public class ReportManager {
 	
 	
 	
-	public File runReport2(String Name, Integer StandortId, String Standort) throws EngineException {
+	public File runReport( Integer StandortId, String Standort, String Name) throws EngineException {
 		File pdfFile;
 		try {
 			
@@ -167,23 +170,10 @@ public class ReportManager {
 		}
 		pdfFile.deleteOnExit();
 
-		runReport2(pdfFile, Name, StandortId, Standort);
+		runReport(pdfFile, StandortId, Standort,Name);
 
 		return pdfFile;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -292,14 +282,14 @@ public class ReportManager {
 	
 	
 	
-	public void startReportWorker2(final String Name, final Integer StandortId, final String Standort, Component focusComp ) {
+	public void startReportWorker(final String Name, final String Standort, final Integer StandortId,  Component focusComp ) {
 		SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
 			File pdfFile;
 			protected void doNonUILogic() throws RuntimeException {
 				//File report = new File(reportHome + reportname + ".rptdesign");
 				try {
 					
-					pdfFile = runReport2 (Name, StandortId, Standort);
+					pdfFile = runReport (StandortId, Standort,Name);
 				} catch (EngineException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -320,13 +310,13 @@ public class ReportManager {
 	
 	
 	
-	public void startReportWorker(final String Name, final Integer BehaelterId, final String Betreiber, final String Standort, Component focusComp) {
+	public void startReportWorker(final String Name, final Integer BehaelterId, final String Betreiber, final String Standort, Component focusComp, final String art) {
 		SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
 			File pdfFile;
 			protected void doNonUILogic() throws RuntimeException {
 				//File report = new File(reportHome + reportname + ".rptdesign");
 				try {
-					pdfFile = runReport(Name, BehaelterId, Betreiber, Standort);
+					pdfFile = runReport(Name, art, BehaelterId, Betreiber, Standort);
 				} catch (EngineException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -451,7 +441,7 @@ public class ReportManager {
 	
 	
 	
-	public void runReport2(File pdffile, String Name, Integer StandortId, String Standort)  throws EngineException {
+	public void runReport(File pdffile, Integer StandortId, String Standort, String Name)  throws EngineException {
 
 		
 		if (config == null || engine == null || options == null)
@@ -591,7 +581,7 @@ public class ReportManager {
 		}
 	}
 	
-	public void runReport(File pdffile, String Name, Integer BehaelterId, String Betreiber, String Standort) throws EngineException {
+	public void runReport(File pdffile, String art, String Name, Integer BehaelterId, String Betreiber, String Standort) throws EngineException {
 //		EngineConfig config = null;
 //		IReportEngine engine = null;
 //		try {
@@ -628,6 +618,7 @@ public class ReportManager {
 		task.setParameterValue("BehaelterId", BehaelterId);
 		task.setParameterValue("Betreiber", Betreiber);
 		task.setParameterValue("Standort", Standort);
+		task.setParameterValue("Objektart",art);
 		task.validateParameters();
 		HTMLRenderOption options = new HTMLRenderOption();
 	

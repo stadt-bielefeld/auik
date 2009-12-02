@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: VawsPanel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
+ * $Id: VawsPanel.java,v 1.3 2009-12-02 06:29:47 u633d Exp $
  * 
  * Erstellt am 25.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:22  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:39  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -239,7 +242,8 @@ public class VawsPanel extends JPanel {
 		if (betreiber != null || standort != null || objektid != null || art != null)
 		{
 			ReportManager.getInstance().startReportWorker("VAwS-Liste", objektid, betreiber, standort, art, reportListeButton);	
-		}
+		
+		}    
 //		ReportManager.getInstance().startReportWorker("vawsliste", params, scriptables, reportListeButton);
 	}
 	
@@ -249,12 +253,13 @@ public class VawsPanel extends JPanel {
 			VawsFachdaten anlage = vawsModel.getDatenSatz(row);
 			betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
 			standort = hauptModul.getObjekt().getBasisStandort().toString();
+			art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
 			behaelterid = anlage.getBehaelterId();
 			
 			//scriptables.put("liste", vawsModel.getList());
 			if (betreiber != null || standort != null || behaelterid != null)
 			{
-				ReportManager.getInstance().startReportWorker("VAwS-Anlage", behaelterid, betreiber, standort, reportListeButton);	
+				ReportManager.getInstance().startReportWorker("VAwS-Anlage", behaelterid, betreiber, standort,  reportListeButton, art );	
 			}
 //		int row = getVawsTable().getSelectedRow();
 //		if (row != -1) {

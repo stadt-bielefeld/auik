@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.2" id="1">
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.14" id="1">
     <property name="author">Colin Atkins</property>
     <property name="createdBy">Eclipse BIRT Designer Version 2.1.0.N20060628-1351 Build &lt;20060628-1537></property>
     <property name="units">mm</property>
@@ -25,6 +25,15 @@
             </structure>
         </scalar-parameter>
         <scalar-parameter name="Standort" id="233">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="isRequired">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="Objektart" id="416">
             <property name="valueType">static</property>
             <property name="dataType">string</property>
             <property name="isRequired">false</property>
@@ -758,6 +767,12 @@ order by pruefdatum ASC</property>
             <property name="paddingRight">10px</property>
             <property name="verticalAlign">bottom</property>
         </style>
+        <style name="NewStyle" id="415">
+            <property name="fontFamily">"Arial"</property>
+            <property name="fontSize">xx-large</property>
+            <property name="fontWeight">bolder</property>
+            <property name="paddingLeft">10pt</property>
+        </style>
     </styles>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
@@ -783,16 +798,17 @@ order by pruefdatum ASC</property>
             <row id="323">
                 <cell id="324">
                     <property name="backgroundColor">#D8D8D8</property>
-                    <label id="28">
-                        <property name="fontFamily">"Arial"</property>
-                        <property name="fontSize">16pt</property>
-                        <property name="fontWeight">bold</property>
-                        <property name="paddingTop">7px</property>
-                        <property name="paddingLeft">10px</property>
-                        <property name="paddingBottom">7px</property>
-                        <property name="paddingRight">10px</property>
-                        <text-property name="text">VAwS-Anlage von Betreiber</text-property>
-                    </label>
+                    <data id="417">
+                        <property name="style">NewStyle</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">Objektart</property>
+                                <expression name="expression">params["Objektart"]</expression>
+                                <property name="dataType">any</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">Objektart</property>
+                    </data>
                     <data id="235">
                         <property name="fontFamily">"Arial"</property>
                         <property name="fontSize">16pt</property>
