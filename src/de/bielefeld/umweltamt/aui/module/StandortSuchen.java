@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: StandortSuchen.java,v 1.7 2009-12-02 06:31:41 u633d Exp $
+ * $Id: StandortSuchen.java,v 1.8 2009-12-10 10:25:14 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2009/12/02 06:31:41  u633d
+ * Verbesserung Aufruf designs
+ *
  * Revision 1.6  2009/11/23 06:52:53  u633d
  * VAwS-StandortListe
  *
@@ -53,8 +56,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -870,6 +877,27 @@ public class StandortSuchen extends AbstractModul {
 		return objektLoeschAction;
 	}
 	
+	class StreamGobbler extends Thread {
+	    InputStream is;
+
+	    // reads everything from is until empty. 
+	    StreamGobbler(InputStream is) {
+	        this.is = is;
+	    }
+
+	    public void run() {
+	        try {
+	            InputStreamReader isr = new InputStreamReader(is);
+	            BufferedReader br = new BufferedReader(isr);
+	            String line=null;
+	            while ( (line = br.readLine()) != null)
+	                System.out.println(line);    
+	        } catch (IOException ioe) {
+	            ioe.printStackTrace();  
+	        }
+	    }
+	}
+	
 	private Action getGisAction()   {
 		
 		if (gisAction == null) {
@@ -881,31 +909,26 @@ public class StandortSuchen extends AbstractModul {
 
 
 				public void actionPerformed(ActionEvent e) {
-					
-					
-
-					File test = new File("C:\\\\appz\\Quantum GIS\\bin");
-					String test2 = "C:\\\\appz\\Quantum GIS\\bin\\qgis.exe";
-
-					
+										
 					int row = standortTabelle.getSelectedRow();
 					BasisStandort bsta = standortModel.getRow(row);
 				
-					 ProcessBuilder pb = new ProcessBuilder(test2);
+					ProcessBuilder pb = new ProcessBuilder("C:\\\\appz\\qgis\\bin\\qgis.exe", "D:\\\\data\\qgis\\MyProject.qgs");
 					
 				
 					//ProcessBuilder pb = new ProcessBuilder( "C:\\appz\\Quantum GIS\\bin\\qgis.bat"); 
-					pb.directory(test) ;
 					Map<String, String> env = pb.environment(); 
 					env.put( "RECHTS", bsta.getRechtswert().toString() ); 
 					env.put( "HOCH", bsta.getHochwert().toString() ); 
 					
 					try{
 					
+						Process process = pb.start();	
+						StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
+						StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
+						errorGobbler.start();
+						outputGobbler.start();
 
-						Process process = pb.start();				
-						process.getOutputStream();
-						process.getErrorStream();
 						
 					} catch (IOException e1) {
 						e1.printStackTrace();
