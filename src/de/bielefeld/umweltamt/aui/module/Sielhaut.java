@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Sielhaut.java,v 1.7 2009-12-01 14:42:35 u633d Exp $
+ * $Id: Sielhaut.java,v 1.8 2009-12-11 07:44:16 u633d Exp $
  * 
  * Erstellt am 14.06.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2009/12/01 14:42:35  u633d
+ * Sielhaut Gis Funktion
+ *
  * Revision 1.6  2009/11/12 06:24:45  u633d
  * *** empty log message ***
  *
@@ -51,6 +54,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
@@ -65,9 +69,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
+import java.text.NumberFormat;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -77,26 +85,41 @@ import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.BevelBorder;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import org.eclipse.birt.report.engine.api.EngineException;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.time.Minute;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -119,13 +142,15 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
-import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.RetractablePanel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
+import de.bielefeld.umweltamt.aui.utils.charts.APosDataItem;
+import de.bielefeld.umweltamt.aui.utils.charts.ChartDataSets;
+import de.bielefeld.umweltamt.aui.utils.charts.Charts;
 import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -146,6 +171,8 @@ public class Sielhaut extends AbstractModul {
 	private RetractablePanel probenRtPanel;
 	private RetractablePanel fotoRtPanel;
 	private RetractablePanel kartenRtPanel;
+	private JPanel auswertungPanel;
+	private JPanel neuProbPanel;
 	
 	// Widgets für Datenpanel
 	private JTextField spNamenFeld;
@@ -189,6 +216,23 @@ public class Sielhaut extends AbstractModul {
 	private BasisBetreiber betreiber;
 	private BasisObjektarten art;
 	private SielhautProbeModel probeModel;
+	
+	//Auswertung
+	private JDateChooser vonDateChooser;
+	private JDateChooser bisDateChooser;
+	private JCheckBox BleiCheck;
+	private JCheckBox CadmiumCheck;
+	private JCheckBox ChromCheck;
+	private JCheckBox KupferCheck;
+	private JCheckBox NickelCheck;
+	private JCheckBox QuecksilberCheck;
+	private JCheckBox ZinkCheck;
+	private JButton submitButton;
+	private int pkt;
+	private TimeSeriesCollection dataSet1;
+	private JList auswahlList;
+	
+	
 	
 	public void show() {
 		super.show();
@@ -922,19 +966,30 @@ public class Sielhaut extends AbstractModul {
 	private RetractablePanel getProbenRtPanel() {
 		if (probenRtPanel == null) {
 			FormLayout layout = new FormLayout(
-					"p, 4dlu, p:g, 7dlu, p, 4dlu, max(60dlu;p), 7dlu, max(60dlu;p), 7dlu, max(60dlu;p)"
-			);
+				
+					"p, 4dlu, p:g, 7dlu, p, 4dlu, max(60dlu;p), 7dlu,max(60dlu;p),7dlu,max(60dlu;p) "
+			); 
 			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 			builder.setDefaultDialogBorder();
 			
+			
+			
 			builder.appendRow("f:65dlu:g");
 			builder.append(new JScrollPane(getPrTabelle()), 11);
-			builder.appendSeparator("Neue Probenahme");
-			builder.append("Kennummer:", getPrNummerFeld());
-			builder.append("Datum:", getPrDateChooser());
-			builder.append(getPrAnlegenButton());
-			builder.append(getTabelleExportButton());
 			
+
+			builder.appendSeparator("Neue Probenahme");
+			builder.append(getNeuProbPanel());
+			//builder.append("Kennummer:", getPrNummerFeld());
+			//builder.append("Datum:", getPrDateChooser());
+			//builder.append(getPrAnlegenButton());
+			//builder.append(getTabelleExportButton());
+		    builder.nextLine();
+			builder.appendSeparator("Auswertung");
+            builder.append(getAuswertungPanel());
+			
+			
+
 			JPanel probenPanel = builder.getPanel();
 			probenRtPanel = new RetractablePanel(
 					DefaultComponentFactory.getInstance()
@@ -957,6 +1012,72 @@ public class Sielhaut extends AbstractModul {
 			};
 		}
 		return probenRtPanel;
+	}
+	private JPanel getNeuProbPanel() {
+		if (neuProbPanel == null) {
+			FormLayout layout = new FormLayout(
+					"pref, 5dlu,  pref, 5dlu, pref, 5dlu,  pref, 5dlu, pref, 5dlu,pref, 5dlu, pref, 5dlu,pref, 5dlu,pref, 5dlu,  pref, 5dlu, pref, 5dlu,  " +
+					"pref, 5dlu, pref, 5dlu,pref,pref, 5dlu, pref, 5dlu,pref",
+					
+					"pref, 3dlu" +", "+		
+							"pref");		
+			CellConstraints cc = new CellConstraints();
+			CellConstraints cc2 = (CellConstraints) cc.clone();
+			
+			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			builder.setDefaultDialogBorder();
+
+			
+			builder.add(new JLabel("Kennummer:"),		cc.xy(  1, 1), 
+					getPrNummerFeld(),		cc2.xyw( 3, 1, 20)); 
+			builder.add(new JLabel("Datum:"),		cc.xy(  25, 1),  
+					getPrDateChooser(),		cc2.xy( 28, 1)); 
+			
+			builder.add(getPrAnlegenButton(),		cc.xy( 30, 1));
+			builder.add(getTabelleExportButton(),		cc.xy( 32, 1));
+			
+		
+				neuProbPanel = builder.getPanel();
+			
+		}
+		return neuProbPanel;
+	}
+	
+	private JPanel getAuswertungPanel() {
+		if (auswertungPanel == null) {
+			FormLayout layout = new FormLayout(
+					"pref, 5dlu,  pref, 5dlu, pref, 5dlu,  pref, 5dlu, pref, 5dlu,pref, 5dlu, pref, 5dlu,pref, 5dlu,pref, 5dlu,  pref, 5dlu, pref, 5dlu,  " +
+					"pref, 5dlu, pref, 5dlu,pref",
+					
+					"pref, 3dlu" +", "+		
+							"pref");		
+			CellConstraints cc = new CellConstraints();
+			CellConstraints cc2 = (CellConstraints) cc.clone();
+			
+			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			builder.setDefaultDialogBorder();
+
+			
+
+			
+			builder.add(new JLabel("Von:"),		cc.xy(  1, 1), 
+					getVonDateChooser(),		cc2.xy( 3, 1)); 
+			builder.add(new JLabel("Bis:"),		cc.xy(  5, 1),  
+					getBisDateChooser(),		cc2.xy( 7, 1)); 
+			
+			builder.add(getBleiCheck(),		cc.xy( 11, 1));
+			builder.add(getCadmiumCheck(),		cc.xy( 13, 1));
+			builder.add(getChromCheck(),		cc.xy( 15, 1));
+			builder.add(getKupferCheck(),			cc.xy( 17, 1));
+			builder.add(getNickelCheck(),			cc.xy( 19, 1));
+			builder.add(getQuecksilberCheck(),		cc.xy( 21, 1));
+			builder.add(getZinkCheck(),  cc.xy( 23, 1));
+			builder.add(getSubmitButton(),      cc.xy( 27, 1));
+		
+				auswertungPanel = builder.getPanel();
+			
+		}
+		return auswertungPanel;
 	}
 	
 	private JTable getPrTabelle() {
@@ -994,6 +1115,562 @@ public class Sielhaut extends AbstractModul {
 			});
 		}
 		return prTabelle;
+	}
+	
+	
+	private JButton getSubmitButton() {
+		if (submitButton == null) {
+			submitButton = new JButton("Abschicken");
+			
+			submitButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					
+						showResultOneAxis();
+					
+				}
+			});
+		}
+		
+		return submitButton;
+	}
+	
+	
+	private class AuswertungsDialog extends JDialog {
+		/**
+		 * Ein Listener für die Events des Dialogs.
+		 * @author David Klotz
+		 */
+		private class DialogListener extends WindowAdapter implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == abbrechenButton) {
+					doAbbrechen();
+				} else if (e.getSource() == speichernButton) {
+					doSpeichern();
+				}
+			}
+			
+			public void windowClosing(WindowEvent e) {
+				// Wenn der Dialog geschlossen wird, wird das Bearbeiten abgebrochen 
+				frame.clearStatus();
+				doAbbrechen();
+				
+			}
+		}
+		/**
+		 * Ein Tablemodel 
+		 * @author David Klotz
+		 */
+		private class ExportTableModel extends AbstractTableModel {
+			private TimeSeriesCollection col1, col2;
+			private List dateList;
+			
+			public ExportTableModel(TimeSeriesCollection col1, TimeSeriesCollection col2) {
+				this.col1 = col1;
+				this.col2 = col2;
+				dateList = new ArrayList();
+				
+				initializeData();
+			}
+			
+			private void initializeData() {
+				TimeSeries series;
+				APosDataItem item;
+
+				for (int i = 0; i < col1.getSeriesCount(); i++) {
+					series = col1.getSeries(i);
+					for (int j = 0; j < series.getItemCount(); j++) {
+						item = (APosDataItem) series.getDataItem(j);
+					
+						if (!dateList.contains(item.getMinute())) {
+							dateList.add(item.getMinute());
+						}
+					}
+				}
+				
+				if (col2 != null) {
+					for (int i = 0; i < col2.getSeriesCount(); i++) {
+						series = col2.getSeries(i);
+						for (int j = 0; j < series.getItemCount(); j++) {
+							item = (APosDataItem) series.getDataItem(j);
+							//count++;
+							if (!dateList.contains(item.getMinute())) {
+								dateList.add(item.getMinute());
+							}
+						}
+					}
+				}
+				
+				Collections.sort(dateList);
+			}
+			
+			public int getColumnCount() {
+				return col1.getSeriesCount() + ((col2 != null) ? col2.getSeriesCount() : 0) + 1;//2;
+			}
+			
+			public int getRowCount() {
+				return dateList.size();// + 1;
+			}
+			
+			public Object getValueAt(int rowIndex, int columnIndex) {
+				String tmp = "!OOB!";
+				
+				NumberFormat kommaFormat = NumberFormat.getNumberInstance();
+				kommaFormat.setGroupingUsed(false);
+				kommaFormat.setMinimumFractionDigits(1);
+				
+				int seriesIndex = columnIndex - 1;
+				int series2Index = seriesIndex - col1.getSeriesCount();
+				int itemIndex = rowIndex;// - 1;
+				
+				Minute min = (Minute) dateList.get(itemIndex);
+			 if (columnIndex == 0) {
+					Date date = new Date(min.getFirstMillisecond());
+					tmp = AuikUtils.getStringFromDate(date);
+				} else {
+					APosDataItem item = null;
+					if (seriesIndex < col1.getSeriesCount()) {
+						item = (APosDataItem) col1.getSeries(seriesIndex).getDataItem(min);
+					} else if (col2 != null) {
+						item = (APosDataItem) col2.getSeries(series2Index).getDataItem(min);
+					}
+					if (item != null) {
+						tmp = kommaFormat.format(item.getValue());
+					} else {
+						tmp = "";
+					}
+				}
+				
+				return tmp;
+			}
+			
+			public Class getColumnClass(int columnIndex) {
+				return String.class;
+			}
+			
+			public String getColumnName(int column) {
+				String tmp = "!OOB!";
+				
+				int seriesIndex = column - 1;
+				int series2Index = seriesIndex - col1.getSeriesCount();
+				
+				 if (column == 0) {
+					tmp = "Datum";
+				} else {
+					if (seriesIndex < col1.getSeriesCount()) {
+						tmp = col1.getSeriesName(seriesIndex) + ", " + col1.getSeries(seriesIndex).getRangeDescription();
+					} else if (col2 != null) {
+						tmp = col2.getSeriesName(series2Index) + ", " + col2.getSeries(series2Index).getRangeDescription();
+					}
+				}
+				
+				return tmp;
+			}
+		}
+		
+		private JButton speichernButton;
+		private JButton abbrechenButton;
+		
+		private JTable exportTable;
+		private JPopupMenu tabellenMenu;
+		
+		private JTabbedPane tabbedPane;
+		private ChartPanel chartPanel;
+
+		
+		private DialogListener listener;
+		private String title;
+		
+		private TimeSeriesCollection leftDataset;
+		private TimeSeriesCollection rightDataset;
+		private HauptFrame owner;
+	
+		
+		public AuswertungsDialog  (String title, TimeSeriesCollection leftDataset, TimeSeriesCollection rightDataset, HauptFrame owner)  {
+			super( owner, title + "-Auswertung", true);
+			this.owner = owner;
+			this.title = title;
+			
+			this.leftDataset = leftDataset;
+			this.rightDataset = rightDataset;
+			
+			listener = new DialogListener();
+			
+			this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+			this.addWindowListener(listener);
+			
+			speichernButton = new JButton("Speichern");
+			speichernButton.addActionListener(listener);
+			abbrechenButton = new JButton("Schließen");
+			abbrechenButton.addActionListener(listener);
+			
+			JPanel tmp = new JPanel(new BorderLayout(0,7));
+			
+			tmp.add(initializeContent(), BorderLayout.CENTER);
+			JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(speichernButton, abbrechenButton);
+			tmp.add(buttonBar, BorderLayout.SOUTH);
+			tmp.setBorder(Borders.TABBED_DIALOG_BORDER);
+			
+			this.setContentPane(tmp);
+			this.pack();
+			this.setLocationRelativeTo(frame);
+		}
+		
+		private JComponent initializeContent() {
+			tabbedPane = new JTabbedPane();
+			
+			tabbedPane.addTab("Diagramm", createDiagrammPanel());
+			tabbedPane.addTab("Tabelle", createTabellenPanel());
+			
+			return tabbedPane;
+		}
+		
+		private JPanel createDiagrammPanel() {
+			JFreeChart chart;
+			if (rightDataset == null) {
+				chart = Charts.createDefaultTimeSeriesChart(title, leftDataset);
+			} else {
+				chart = Charts.createDefaultTimeSeriesChart(title, leftDataset, rightDataset);
+			}
+			
+			chartPanel = new ChartPanel(chart, false);
+			chartPanel.setBorder(Borders.DIALOG_BORDER);
+			
+			return chartPanel;
+		}
+		
+		private JComponent createTabellenPanel() {
+			exportTable = new JTable(new ExportTableModel(leftDataset, rightDataset));
+			exportTable.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+			exportTable.setColumnSelectionAllowed(true);
+			exportTable.setRowSelectionAllowed(true);
+			exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			
+			exportTable.addMouseListener(new MouseAdapter() {
+				public void mousePressed(MouseEvent e) {
+					showTabellenPopup(e);
+				}
+				
+				public void mouseReleased(MouseEvent e) {
+					showTabellenPopup(e);
+				}
+			});
+			
+			DefaultTableCellRenderer zentrierterRenderer = new DefaultTableCellRenderer();
+			zentrierterRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+			
+			DefaultTableCellRenderer rechtsBuendigRenderer = new DefaultTableCellRenderer();
+			rechtsBuendigRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+			
+			TableColumn column = null;
+			for (int i = 0; i < exportTable.getColumnCount(); i++) {
+				column = exportTable.getColumnModel().getColumn(i);
+				if (i == 0 ) {//|| i == 1) {
+					column.setCellRenderer(zentrierterRenderer);
+					column.setPreferredWidth(75);
+				} else {
+					column.setCellRenderer(rechtsBuendigRenderer);
+					column.setPreferredWidth(90);
+				}
+			}
+			
+			JScrollPane tabellenScroller = new JScrollPane(exportTable,
+					JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+					JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			tabellenScroller.setBorder(Borders.DIALOG_BORDER);
+			
+			return tabellenScroller;
+		}
+		
+		public void saveTabelle() {
+			frame.clearStatus();
+		File exportDatei;
+		String[] csv = new String []{"csv"};
+
+		
+		 exportDatei = owner.saveFile(csv);
+
+			
+			if (exportDatei != null) {
+				String ext = AuikUtils.getExtension(exportDatei);
+				
+				if (ext == null) {
+					String newExt;
+					if (exportDatei.getName().endsWith(".")) {
+						newExt = "csv";
+					} else {
+						newExt = ".csv";
+					}
+					exportDatei = new File(exportDatei.getParent(), exportDatei.getName()+newExt);
+				}
+				
+				boolean doIt = false;
+				if (exportDatei.exists()) {
+					boolean answer = owner.showQuestion( 
+							"Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?", 
+							"Datei bereits vorhanden!");
+					if (answer && exportDatei.canWrite()) {
+						doIt = true;
+					}
+				} else if (exportDatei.getParentFile().canWrite()) {
+					doIt = true;
+				}
+				
+				if (doIt) {
+					AUIKataster.debugOutput("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
+					if (AuikUtils.exportTableDataToCVS(exportTable, exportDatei)) {
+						owner.showInfoMessage("Speichern der CSV-Datei erfolgreich!", "Speichern erfolgreich");
+					} else {
+						AUIKataster.debugOutput("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+						owner.showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+					}
+				}
+			}
+		}
+		
+		private void showTabellenPopup(MouseEvent e) {
+			if (tabellenMenu == null) {
+				tabellenMenu = new JPopupMenu("Tabelle");
+				JMenuItem speichernItem = new JMenuItem(new AbstractAction("Speichern") {
+					public void actionPerformed(ActionEvent e) {
+						saveTabelle();
+					}
+				});
+				tabellenMenu.add(speichernItem);
+			}
+			
+			if (e.isPopupTrigger()) {
+				Point origin = e.getPoint();
+				int row = exportTable.rowAtPoint(origin);
+				int col = exportTable.columnAtPoint(origin);
+				
+				if (row != -1) {
+					exportTable.setRowSelectionInterval(row, row);
+					exportTable.setColumnSelectionInterval(col, col);
+					tabellenMenu.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
+		}
+		
+		public void doAbbrechen() {
+			frame.clearStatus();
+			this.dispose();
+		}
+		
+		public void doSpeichern() {
+			frame.clearStatus();
+		 if (tabbedPane.getSelectedIndex() == 0) {
+				try {
+					chartPanel.doSaveAs();
+				} catch (IOException e) {
+					AUIKataster.debugOutput("Konnte Datei nicht speichern!");
+				}
+			} else if (tabbedPane.getSelectedIndex() == 1) {
+				saveTabelle();
+			}
+		}
+	}
+	
+	
+	
+	
+	public void showResultOneAxis() {
+		SwingWorkerVariant worker = new SwingWorkerVariant(getSubmitButton()) {
+			protected void doNonUILogic() throws RuntimeException {
+				dataSet1 = createDataset();
+			}
+
+			protected void doUIUpdateLogic() throws RuntimeException {
+
+				if (dataSet1.getSeriesCount() > 0) {
+					
+					AuswertungsDialog dialog = new AuswertungsDialog("Sielhaut", dataSet1, null, frame ); 
+					
+					dialog.setVisible(true);
+				} else {
+					frame.changeStatus("Keine Parameter ausgewählt!");
+					}
+			}
+			
+		};
+		
+		frame.changeStatus("Bereite Auswertung vor...");
+		worker.start();
+		
+	}
+	
+	private TimeSeriesCollection createDataset() {
+		TimeSeriesCollection col = new TimeSeriesCollection();
+	
+		int parameterAnzahl;
+
+		JList paramList;
+		Date von = getVonDateChooser().getDate();
+		Date bis = getBisDateChooser().getDate();
+		DefaultListModel leftModel = (DefaultListModel) getAuswahlList().getModel();
+	    
+		
+		
+		if (getBleiCheck().isSelected()) 
+		{
+			leftModel.addElement("Blei (Pb)");
+		}
+		if (getCadmiumCheck().isSelected()) 
+		{
+			leftModel.addElement("Cadmium (Cd)");
+		}
+		if (getChromCheck().isSelected()) 
+		{
+			leftModel.addElement("Chrom (Cr)");
+		}
+		if (getKupferCheck().isSelected()) 
+		{
+			leftModel.addElement("Kupfer (Cu)");
+		}
+		if (getNickelCheck().isSelected()) 
+		{
+			leftModel.addElement("Nickel (Ni)");
+		}
+		if (getQuecksilberCheck().isSelected()) 
+		{
+			leftModel.addElement("Quecksilber (Hg)");
+		}
+		if (getZinkCheck().isSelected()) 
+		{
+			leftModel.addElement("Zink (Zn)");
+		}
+	    paramList = getAuswahlList();
+	    
+
+			  pkt = sprobePkt.getPktId();	
+			  parameterAnzahl = getAuswahlList().getModel().getSize();
+			  
+	  // Wenn keine Check Box angeklickt wurde sollen alle Paramater berücksichtig werden
+	
+	  if (parameterAnzahl == 0)
+	  {
+		  leftModel.addElement("Blei (Pb)");	
+		  leftModel.addElement("Cadmium (Cd)");
+		  leftModel.addElement("Chrom (Cr)");
+		  leftModel.addElement("Kupfer (Cu)");
+		  leftModel.addElement("Nickel (Ni)");
+		  leftModel.addElement("Quecksilber (Hg)");
+		  leftModel.addElement("Zink (Zn)");
+	  }
+			  
+		createSeries(paramList, pkt , von, bis, col);
+	    leftModel.clear();	
+			  
+		return col;
+	}
+	
+	private JList getAuswahlList() {
+		if (auswahlList == null) {
+			DefaultListModel listModel = new DefaultListModel();
+			auswahlList = new JList(listModel);
+			auswahlList.setPrototypeCellValue("Abcdefghij (Ab)");
+			
+			auswahlList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		
+		return auswahlList;
+	}
+	
+	
+	
+	private void createSeries( JList paramList, Integer pkt, Date von, Date bis,TimeSeriesCollection col)
+	{
+		String einheit;
+		
+		if (pkt != null) {
+
+			for (int i = 0; i < paramList.getModel().getSize(); i++) {
+				
+				
+				String p =(String) paramList.getModel().getElementAt(i);
+				
+						
+			    AtlAnalyseposition position;  
+			    position = AtlAnalyseposition.getAnalysepositionObjekt(pkt);
+			    einheit =  position.getAtlEinheiten().toString();
+
+			    
+				List list = AtlAnalyseposition.getSielhautpos(p, 
+						pkt, von, bis);
+				
+				
+				TimeSeries series = ChartDataSets
+						.createAnalysePositionenSielhautSeries(list, p+ " ",einheit);
+				col.addSeries(series);
+			}
+		}
+		frame.changeStatus("Auswertung abgeschlossen");
+	}	
+	
+	private JDateChooser getVonDateChooser() {
+		if (vonDateChooser == null) {
+			vonDateChooser = new JDateChooser(AuikUtils.DATUMSFORMAT, false);
+		}
+		
+		return vonDateChooser;
+	}
+	
+	private JDateChooser getBisDateChooser() {
+		
+		if (bisDateChooser == null) {
+			bisDateChooser = new JDateChooser(AuikUtils.DATUMSFORMAT, false);
+		}
+		
+		return bisDateChooser;
+	}
+
+	private JCheckBox getBleiCheck() {
+		if (BleiCheck == null) {
+			BleiCheck = new JCheckBox("Blei", false);
+		}
+		return BleiCheck;
+	}
+	
+	private JCheckBox getCadmiumCheck() {
+		if (CadmiumCheck == null) {
+			CadmiumCheck = new JCheckBox("Cadmium", false);
+		}
+		return CadmiumCheck;
+	}
+	
+	private JCheckBox getChromCheck() {
+		if (ChromCheck == null) {
+			ChromCheck = new JCheckBox("Chrom", false);
+		}
+		return ChromCheck;
+	}
+	
+	private JCheckBox getKupferCheck() {
+		if (KupferCheck == null) {
+			KupferCheck = new JCheckBox("Kupfer", false);
+		}
+		return KupferCheck;
+	}
+	
+	private JCheckBox getNickelCheck() {
+		if (NickelCheck == null) {
+			NickelCheck = new JCheckBox("Nickel", false);
+		}
+		return NickelCheck;
+	}
+	
+	private JCheckBox getQuecksilberCheck() {
+		if (QuecksilberCheck == null) {
+			QuecksilberCheck = new JCheckBox("Quecksilber", false);
+		}
+		return QuecksilberCheck;
+	}
+	
+	private JCheckBox getZinkCheck() {
+		if (ZinkCheck == null) {
+			ZinkCheck = new JCheckBox("Zink", false);
+		}
+		return ZinkCheck;
 	}
 	
 	private JTextField getPrNummerFeld() {
@@ -1058,7 +1735,7 @@ public class Sielhaut extends AbstractModul {
 						File imgFile = new File(imgPath);
 						if (imgFile.canRead()) {
 							ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
-							int panelWidth = getPanel().getWidth() - 55;
+							int panelWidth = getPanel().getWidth() - 50;
 							if (imgIcon.getIconWidth() > panelWidth) {
 								imgIcon.setImage(imgIcon.getImage().getScaledInstance(panelWidth,-1,Image.SCALE_FAST));
 							}
@@ -1128,6 +1805,8 @@ public class Sielhaut extends AbstractModul {
 		return kartenLabel;
 	}
 	
+
+		
 	private void readClipboard() {
 
 		Clipboard systemClipboard;
