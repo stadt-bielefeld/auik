@@ -70,8 +70,8 @@ import de.bielefeld.umweltamt.aui.utils.charts.ChartDataSets;
 import de.bielefeld.umweltamt.aui.utils.charts.Charts;
 
 /**
- * Das "Probepunkt"-Tab des ObjektBearbeiten-Moduls 
- * @author David Klotz
+ * Das "Auswertungs"-Tab des ObjektBearbeiten-Moduls 
+ * @author Sebastian Geller
  */
 public class ObjektProbepktAuswPanel extends JPanel {
 	
@@ -620,7 +620,7 @@ public class ObjektProbepktAuswPanel extends JPanel {
 			
 		}
 		
-		
+
 		
 		pkt = AtlProbepkt.getProbepunktByObjekt(hauptModul.getObjekt()).getPktId();
 		
@@ -648,9 +648,9 @@ public class ObjektProbepktAuswPanel extends JPanel {
 				AtlParameter p = (AtlParameter) paramList.getModel()
 						.getElementAt(i);
 
-			    AtlAnalyseposition test;  
-			    test = AtlAnalyseposition.getAnalysepositionObjekt(pkt);
-			    einheit =  test.getAtlEinheiten().toString();
+			    AtlAnalyseposition position;  
+			    position = AtlAnalyseposition.getAnalysepositionObjekt(pkt);
+			    einheit =  position.getAtlEinheiten().toString();
 
 			    
 				List list = AtlAnalyseposition.getAnalysepos(p, 

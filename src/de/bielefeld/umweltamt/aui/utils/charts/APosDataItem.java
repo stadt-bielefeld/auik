@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: APosDataItem.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: APosDataItem.java,v 1.3 2009-12-11 07:22:34 u633d Exp $
  * 
  * Erstellt am 31.05.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:38  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -25,6 +28,7 @@ import java.util.GregorianCalendar;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeriesDataItem;
 
+import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 
 /**
@@ -36,13 +40,28 @@ public class APosDataItem extends TimeSeriesDataItem {
 	private AtlAnalyseposition pos;
 	
 	public APosDataItem(AtlAnalyseposition pos) {
+		// es werden die Messwerte beachtet	
 		this(pos, createMinuteFromDate(pos.getAtlProbenahmen().getDatumDerEntnahme(), pos.getAtlProbenahmen().getZeitDerEntnahmen()));
 	}
 	
-	public APosDataItem(AtlAnalyseposition pos, Minute minute) {
-		super(minute, pos.getWert());
+	public APosDataItem(String norm,AtlAnalyseposition pos) {
+		// es werden die Normwerte beachtet	
+		this("normwert",pos, createMinuteFromDate(pos.getAtlProbenahmen().getDatumDerEntnahme(), pos.getAtlProbenahmen().getZeitDerEntnahmen()));
+	}
+	
+	public APosDataItem( AtlAnalyseposition pos, Minute minute) {
+		// es werden die Messwerte beachtet	
+			super(minute, pos.getWert());
+	
 		this.pos = pos;
 	}
+	
+	public APosDataItem(String norm ,AtlAnalyseposition pos, Minute minute) {
+	// es werden die Normwerte beachtet	
+		super(minute, pos.getNormwert());
+
+	this.pos = pos;
+}
 	
 	public Minute getMinute() {
 		return (Minute) getPeriod();

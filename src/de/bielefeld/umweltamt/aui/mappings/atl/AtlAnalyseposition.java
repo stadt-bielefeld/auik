@@ -392,6 +392,68 @@ public class AtlAnalyseposition
     }
   
     
+    public static List getSielhautpos(String param,  Integer pkt, Date anfang, Date ende) {
+    	AUIKataster.debugOutput("Suche (HQL): p:" + param+ ", pkt:" + pkt + ", bD:"+anfang+", eD:"+ende+", aV:'", "AtlAnalyseposition");
+    	List proben;
+    	proben = null;
+
+    	String query = 
+    		"from AtlAnalyseposition pos " +
+			"where pos.atlProbenahmen.datumDerEntnahme >= ? " +
+			"and pos.atlProbenahmen.datumDerEntnahme <= ? ";
+    	
+    	
+    	if (pkt != null) 
+    	{
+    		query += "and pos.atlProbenahmen.atlProbepkt.pktId = '" + pkt + "' ";
+    	}
+    	else 
+    	{
+    		
+    		AUIKataster.debugOutput("pktID = null","getSielhautpos" );
+    	}
+        
+    	if (param != null) 
+    	{
+    		query += "and pos.atlParameter.bezeichnung = '" + param + "' ";
+    		
+    	}
+    	else 
+    	{
+    		
+    		AUIKataster.debugOutput("param = null","getSielhautpos" );
+    	}
+    	
+    	
+    	
+    	query += "order by pos.atlProbenahmen.datumDerEntnahme";
+    	
+    	
+    	
+    	try {
+			Session session = HibernateSessionFactory.currentSession();
+			
+			
+			proben = session.createQuery(
+					query)
+					.setDate(0, anfang)
+					.setDate(1, ende)
+					.list();
+    	
+    	
+    	
+    	
+    } catch (HibernateException e) {
+		throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
+	} finally {
+		HibernateSessionFactory.closeSession();
+	}
+    	
+    	
+    	return proben;
+    }
+    
+    
     
     public static boolean saveAnalyseposition(AtlAnalyseposition pos) {
     	boolean saved;
