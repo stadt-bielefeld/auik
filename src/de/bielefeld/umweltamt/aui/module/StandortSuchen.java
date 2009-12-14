@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: StandortSuchen.java,v 1.8 2009-12-10 10:25:14 u633d Exp $
+ * $Id: StandortSuchen.java,v 1.9 2009-12-14 10:36:50 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2009/12/10 10:25:14  u633d
+ * GIS oeffnen
+ *
  * Revision 1.7  2009/12/02 06:31:41  u633d
  * Verbesserung Aufruf designs
  *
@@ -900,14 +903,11 @@ public class StandortSuchen extends AbstractModul {
 	
 	private Action getGisAction()   {
 		
-		if (gisAction == null) {
-		;	
+		if (gisAction == null) {	
 			
 			gisAction = new AbstractAction("GIS öffnen") {
 			
 				
-
-
 				public void actionPerformed(ActionEvent e) {
 										
 					int row = standortTabelle.getSelectedRow();
@@ -915,8 +915,6 @@ public class StandortSuchen extends AbstractModul {
 				
 					ProcessBuilder pb = new ProcessBuilder("C:\\\\appz\\qgis\\bin\\qgis.exe", "D:\\\\data\\qgis\\MyProject.qgs");
 					
-				
-					//ProcessBuilder pb = new ProcessBuilder( "C:\\appz\\Quantum GIS\\bin\\qgis.bat"); 
 					Map<String, String> env = pb.environment(); 
 					env.put( "RECHTS", bsta.getRechtswert().toString() ); 
 					env.put( "HOCH", bsta.getHochwert().toString() ); 
