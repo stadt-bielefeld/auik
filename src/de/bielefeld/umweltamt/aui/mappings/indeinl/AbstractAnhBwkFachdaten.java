@@ -76,6 +76,9 @@ public abstract class AbstractAnhBwkFachdaten
     /** The value of the simple genehmigung property. */
     private java.lang.Boolean genehmigung;
 
+    /** The value of the simple genehmigungspflicht property. */
+    private java.lang.Boolean genehmigungspflicht;
+
     /**
      * Simple constructor of AbstractAnhBwk instances.
      */
@@ -415,6 +418,24 @@ public abstract class AbstractAnhBwkFachdaten
     public void setGenehmigung(java.lang.Boolean genehmigung)
     {
         this.genehmigung = genehmigung;
+    }
+
+    /**
+     * Return the value of the GENEHMIGUNGSPFLICHT column.
+     * @return java.lang.Short
+     */
+    public java.lang.Boolean getGenehmigungspflicht()
+    {
+        return this.genehmigungspflicht;
+    }
+
+    /**
+     * Set the value of the GENEHMIGUNGSPFLICHT column.
+     * @param genehmigungspflicht
+     */
+    public void setGenehmigungspflicht(java.lang.Boolean genehmigungspflicht)
+    {
+        this.genehmigungspflicht = genehmigungspflicht;
     }
 
     /**

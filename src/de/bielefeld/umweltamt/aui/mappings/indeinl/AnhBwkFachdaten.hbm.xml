@@ -30,6 +30,7 @@
         <property name="anschreiben" column="anschreiben" type="java.util.Date" />
         <property name="erfassung" column="erfassung" type="java.lang.Integer" />
         <property name="genehmigung" column="genehmigung" type="java.lang.Boolean" />
+        <property name="genehmigungspflicht" column="genehmigungspflicht" type="java.lang.Boolean" />
 
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
     </class>
