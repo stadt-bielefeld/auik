@@ -65,6 +65,7 @@ public class ObjektBWKPanel extends JPanel {
 	private TextFieldDateChooser anschreibenFeld = null;
 	private TextFieldDateChooser genehmigungDatum = null;
 	private JCheckBox abaCheck = null;
+	private JCheckBox genehmpflichtCheck = null;
 	private JTextArea bwkBeschreibungsArea = null;
 	private JButton saveBwkButton = null;
 
@@ -85,7 +86,7 @@ public class ObjektBWKPanel extends JPanel {
 		this.hauptModul = hauptModul;
 		
 		FormLayout layout = new FormLayout (
-				"r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 70dlu", // Spalten
+				"r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 70dlu, , 70dlu, 70dlu", // Spalten
 				"pref, " +	//1
 				"3dlu, " +	//2
 				"pref, " +	//3
@@ -147,7 +148,8 @@ public class ObjektBWKPanel extends JPanel {
 		builder.addLabel("Genehmigung:", cc.xy( 5, 9));
 		builder.add(getGenehmigungDatum(), cc.xy( 7, 9));
 		//builder.addLabel("ABA:", cc.xy( 5, 11));
-		builder.add(getAbaCheck(), cc.xy( 7, 11));
+		builder.add(getgenehmpflichtCheck(), cc.xyw( 5, 11, 3));
+		builder.add(getAbaCheck(), cc.xy( 8, 11));		
 		builder.addSeparator("Bemerkungen", cc.xyw( 5, 13, 3));
 		builder.add(new JScrollPane(getBwkBeschreibungsArea(), 
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
@@ -224,6 +226,14 @@ public class ObjektBWKPanel extends JPanel {
 					getAbaCheck().setSelected(false);
 				}
 			}
+			if (bwk.getGenehmigungspflicht() != null) {
+				if (bwk.getGenehmigungspflicht().booleanValue() == true) {
+					getgenehmpflichtCheck().setSelected(true);
+				}
+				else {
+					getgenehmpflichtCheck().setSelected(false);
+				}
+			}
 			objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
 		}
 
@@ -245,11 +255,13 @@ public class ObjektBWKPanel extends JPanel {
 		getAnschreibenFeld().setDate(null);
 		getGenehmigungDatum().setDate(null);
 		getAbaCheck().setSelected(false);
+		getgenehmpflichtCheck().setSelected(false);
 
 	}
 	
 	public void enableAll(boolean enabled) {
 		getAbaCheck().setEnabled(enabled);
+		getgenehmpflichtCheck().setEnabled(enabled);
 		getAbgasleitungFeld().setEnabled(enabled);
 		getAbnahmeFeld().setEnabled(enabled);
 		getAnschreibenFeld().setEnabled(enabled);		
@@ -355,6 +367,14 @@ public class ObjektBWKPanel extends JPanel {
 		}
 		bwk.setAba(new Boolean(aba));
 		
+		Boolean genehmpflicht;
+		if (getgenehmpflichtCheck().isSelected())  {
+			genehmpflicht = true;
+		} else {
+			genehmpflicht = false;
+		}
+		bwk.setGenehmigungspflicht(new Boolean(genehmpflicht));
+		
 		String beschreibung = bwkBeschreibungsArea.getText();
 		if ("".equals(beschreibung)) {
 			bwk.setBemerkungen(null);
@@ -397,6 +417,12 @@ public class ObjektBWKPanel extends JPanel {
 			abaCheck = new JCheckBox("ABA");
 		}
 		return abaCheck;
+	}
+	private JCheckBox getgenehmpflichtCheck() {
+		if (genehmpflichtCheck == null) {
+			genehmpflichtCheck = new JCheckBox("Genehmigungspflicht");
+		}
+		return genehmpflichtCheck;
 	}
 	private JTextField getAbgasleitungFeld() {
 		if (abgasleitungFeld == null) {			
