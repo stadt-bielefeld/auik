@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Sielhaut.java,v 1.8 2009-12-11 07:44:16 u633d Exp $
+ * $Id: Sielhaut.java,v 1.9 2009-12-17 11:39:46 u633d Exp $
  * 
  * Erstellt am 14.06.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2009/12/11 07:44:16  u633d
+ * AuswertungSielhaut
+ *
  * Revision 1.7  2009/12/01 14:42:35  u633d
  * Sielhaut Gis Funktion
  *
@@ -1592,7 +1595,7 @@ public class Sielhaut extends AbstractModul {
 						
 			    AtlAnalyseposition position;  
 			    position = AtlAnalyseposition.getAnalysepositionObjekt(pkt);
-			    einheit =  position.getAtlEinheiten().toString();
+			    einheit =  "Verhältnis zum Hintergrundwert";
 
 			    
 				List list = AtlAnalyseposition.getSielhautpos(p, 
