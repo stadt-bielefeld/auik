@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AnhBwkAuswertung.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: AnhBwkAuswertung.java,v 1.3 2010-01-12 09:03:55 u633d Exp $
  * 
  * Erstellt am 24.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:32  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -55,7 +58,7 @@ public class AnhBwkAuswertung extends AbstractQueryModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	public String getName() {
-		return "Auswertung BWK";
+		return "BWK";
 	}
 	
 	/* (non-Javadoc)

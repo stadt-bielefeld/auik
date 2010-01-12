@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SuevAuswertung.java,v 1.3 2009-03-24 12:35:20 u633d Exp $
+ * $Id: SuevAuswertung.java,v 1.4 2010-01-12 09:05:11 u633d Exp $
  * 
  * Erstellt am 24.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.2  2008/06/24 11:24:08  u633d
  * Version 0.3
  *
@@ -57,7 +60,7 @@ public class SuevAuswertung extends AbstractQueryModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	public String getName() {
-		return "Auswertung SUEV-KAN";
+		return "SUEV-KAN";
 	}
 	
 	/* (non-Javadoc)

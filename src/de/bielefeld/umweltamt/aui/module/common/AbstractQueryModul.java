@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AbstractQueryModul.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
+ * $Id: AbstractQueryModul.java,v 1.3 2010-01-12 09:08:38 u633d Exp $
  * 
  * Erstellt am 28.07.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:23  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:41  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -48,8 +51,10 @@ import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -249,13 +254,24 @@ public abstract class AbstractQueryModul extends AbstractModul {
 	 * @param row Die Zeile der Tabelle.
 	 */
 	protected void editObject(int row) {
+		
 		if (row != -1) {
 			BasisObjekt obj = getBasisObjektFromFachdaten(getTableModel().getObjectAtRow(row));
+		   
+			if (obj == null)	{
+			Anh49Abscheiderdetails ad = (Anh49Abscheiderdetails) getTableModel().getObjectAtRow(row);
+				
+				if (ad != null) {
+					obj = ad.getAnh49Fachdaten().getBasisObjekt();
+				}
+			}	
+			
 			if (obj != null) {
 //				AUIKataster.debugOutput("Bearbeite BO: " + obj, "AQM");
 				manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
 				manager.switchModul("m_objekt_bearbeiten");
 			}
+				
 		}
 	}
 }

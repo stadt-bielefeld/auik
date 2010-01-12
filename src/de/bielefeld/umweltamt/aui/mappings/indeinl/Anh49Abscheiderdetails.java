@@ -6,13 +6,14 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.Hibernate;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+
 
 /**
  * A class that represents a row in the 'ANH_49_ABSCHEIDERDETAILS' table. 
@@ -84,7 +85,45 @@ public class Anh49Abscheiderdetails
 		
     	return details;
     }
+    
+    public static List getFettabschListe() {
 
+		List fettabsch;   // Liste für Fettabscheider aus Anh49Abscheiderdetails
+        List fettabsch2; //  Liste für Fettabscheider aus Anh49Fachdaten
+		Anh49Fachdaten item; 
+		
+		String query = "from Anh49Abscheiderdetails details where details.Anh49Fachdaten.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
+			+"order by details.nenngroesse desc";
+		
+		Session session = HibernateSessionFactory.currentSession();
+		fettabsch = session.createQuery(query).list();
+		HibernateSessionFactory.closeSession();
+		
+		String query2 = "from Anh49Fachdaten anh49"+
+						" where anh49.basisObjekt.basisObjektarten.objektart like 'Fettabscheider'";
+		
+		session = HibernateSessionFactory.currentSession();
+		fettabsch2 = session.createQuery(query2).list();
+		HibernateSessionFactory.closeSession();
+		
+    //Es können auch Abscheider eingepflegt sein zu denen keien Details vorhanden sind
+	// Diese Abscheider werden hier zur Liste fettabsch hinzugefügt		
+		for (int j = 0; j < fettabsch2.size(); j++) {
+			item = (Anh49Fachdaten) fettabsch2.get(j);
+					
+			if (getAbscheiderDetails(item).size() == 0 )
+			{
+				fettabsch.add(item);
+
+			}
+			
+		}
+	
+		return fettabsch;
+
+	}
+   
+    
     public static boolean saveAbscheider(Anh49Abscheiderdetails absch) {
     	boolean saved;
 		
@@ -138,4 +177,6 @@ public class Anh49Abscheiderdetails
 		
 		return removed;
     }
+
+
 }

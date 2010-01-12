@@ -29,7 +29,7 @@ public class Anh52Auswertung extends AbstractQueryModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	public String getName() {
-		return "Auswertung Anhang 52";
+		return "Anhang 52";
 	}
 
 	/*

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh55Auswertung.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: Anh55Auswertung.java,v 1.3 2010-01-12 09:03:30 u633d Exp $
  * 
  * Erstellt am 03.05.2006 von Gerd Genuit
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:33  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -41,7 +44,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches Auswertungs-Modul für Anhang40-Datensätze.
+ * Ein einfaches Auswertungs-Modul für Anhang55-Datensätze.
  * @author Gerd Genuit
  */
 public class Anh55Auswertung extends AbstractQueryModul {
@@ -58,7 +61,7 @@ public class Anh55Auswertung extends AbstractQueryModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	public String getName() {
-		return "Auswertung Anhang 55";
+		return "Anhang 55";
 	}
 
 	/*

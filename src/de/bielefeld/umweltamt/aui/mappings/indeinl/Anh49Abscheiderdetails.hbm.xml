@@ -56,7 +56,7 @@
         <property name="entsorgungsnachweis" column="entsorgungsnachweis" type="java.util.Date" />
         <property name="entsorgungsnachweisDurch" column="entsorgungsnachweis_durch" type="java.lang.String" />
 
-        <many-to-one name="Anh49Fachdaten" column="anh49id" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" />
+        <many-to-one name="Anh49Fachdaten" column="anh49id" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten"  lazy="false" />
 
     </class>
 

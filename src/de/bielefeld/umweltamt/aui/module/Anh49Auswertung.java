@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh49Auswertung.java,v 1.3 2009-03-24 12:35:20 u633d Exp $
+ * $Id: Anh49Auswertung.java,v 1.4 2010-01-12 09:02:32 u633d Exp $
  * 
  * Erstellt am 15.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.2  2008/07/23 06:55:22  u633d
  * Anh49 Auswertung und Sielhautimport neu
  *
@@ -46,7 +49,7 @@ import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches Auswertungs-Modul für Anhang 49-Datensätze.
+ * Ein einfaches Auswertungs-Modul für Anhang 49-Datensätze(ausgenommen Fettabscheider).
  * @author David Klotz
  */
 public class Anh49Auswertung extends AbstractQueryModul {
@@ -72,9 +75,12 @@ public class Anh49Auswertung extends AbstractQueryModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	public String getName() {
-		return "Auswertung Anhang 49";
+		return "Anhang 49";
 	}
 	
+	public String getIdentifier() {
+		return "m_auswertung_anh49";
+	}
 	/* (non-Javadoc)
 	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
 	 */

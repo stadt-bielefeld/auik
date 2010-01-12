@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh56Auswertung.java,v 1.4 2009-03-24 12:35:20 u633d Exp $
+ * $Id: Anh56Auswertung.java,v 1.5 2010-01-12 09:03:42 u633d Exp $
  * 
  * Erstellt am 03.05.2006 von Gerd Genuit
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.3  2008/09/01 07:03:46  u633d
  * *** empty log message ***
  *
@@ -60,7 +63,7 @@ public class Anh56Auswertung extends AbstractQueryModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	public String getName() {
-		return "Auswertung Anhang 56";
+		return "Anhang 56";
 	}
 
 	/*

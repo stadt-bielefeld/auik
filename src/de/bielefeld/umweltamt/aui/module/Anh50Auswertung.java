@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh50Auswertung.java,v 1.2 2009-03-24 12:35:20 u633d Exp $
+ * $Id: Anh50Auswertung.java,v 1.3 2010-01-12 09:02:44 u633d Exp $
  * 
  * Erstellt am 15.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:33  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -53,7 +56,7 @@ public class Anh50Auswertung extends AbstractQueryModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	public String getName() {
-		return "Auswertung Anhang 50";
+		return "Anhang 50";
 	}
 	
 	/* (non-Javadoc)

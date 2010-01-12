@@ -40,7 +40,7 @@ public class GenehmigungAuswertung extends AbstractQueryModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	public String getName() {
-		return "Auswertung Genehmigung";
+		return "Genehmigung";
 	}
 
 	/*
