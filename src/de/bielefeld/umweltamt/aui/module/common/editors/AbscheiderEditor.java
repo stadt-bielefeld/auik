@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AbscheiderEditor.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
+ * $Id: AbscheiderEditor.java,v 1.3 2010-01-18 10:13:22 u633d Exp $
  * 
  * Erstellt am 01.06.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:23  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:41  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -65,6 +68,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 	private JFormattedTextField ngsfFeld;
 	private JFormattedTextField ngbaFeld;
 	private JFormattedTextField ngkaFeld;
+	private JFormattedTextField ngfaFeld;
 	private JCheckBox tankstelleCheck;
 	private JCheckBox schlammfangCheck;
 	private JCheckBox benzinabscheiderCheck;
@@ -137,6 +141,8 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 		builder.addLabel("NG KA:",			cc.xy( 1,17));
 		builder.add(getNgkaFeld(),			cc.xy( 3,17));
 		builder.add(getEmulsionCheck(),		cc.xy(5,17));
+		builder.addLabel("NG FA:",			cc.xy( 1,19));
+		builder.add(getNgfaFeld(),			cc.xy( 3,19));
 		builder.add(getSchwimmerCheck(),	cc.xy(5,19));
 		builder.add(getWohnhausCheck(),		cc.xy(5,21));
 		builder.addSeparator("Bemerkungen",	cc.xyw(1,23,5));
@@ -157,6 +163,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 		getNgsfFeld().setValue(getDetails().getNgSf());
 		getNgbaFeld().setValue(getDetails().getNgBa());
 		getNgkaFeld().setValue(getDetails().getNgKa());
+		getNgfaFeld().setValue(getDetails().getNenngroesse());
 		getBemerkungsArea().setText(getDetails().getBemerkung());
 		
 		if (getDetails().getTankstelle() == true) {
@@ -380,6 +387,12 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 			ngkaFeld = new IntegerField();
 		}
 		return ngkaFeld;
+	}
+	private JFormattedTextField getNgfaFeld() {
+		if (ngfaFeld == null) {			
+			ngfaFeld = new IntegerField();
+		}
+		return ngfaFeld;
 	}
 	private JFormattedTextField getNgsfFeld() {
 		if (ngsfFeld == null) {			

@@ -108,8 +108,10 @@ public class Anh53Fachdaten
 	public static List getAuswertungsListe() {
 		List liste;
 		
-		String query = "from Anh53Fachdaten as anh53 " +
-				"order by anh53.id";
+		String query = "from Anh53Fachdaten as anh53 " 
+				+ "order by anh53.basisObjekt.basisObjektarten.objektartid, "
+				+ "anh53.basisObjekt.basisStandort.strasse, "
+				+ "anh53.basisObjekt.basisStandort.hausnr";
 		
 		try {
 			Session session = HibernateSessionFactory.currentSession();

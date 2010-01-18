@@ -12,7 +12,8 @@ public class Anh53Model extends ListTableModel {
 		super(new String[]{
 				"Betreiber", 
 				"Standort", 
-				"Bemerkungen"
+				"Größe",
+				"Beschreibung"
 		}, 
 		false);
 	}
@@ -32,7 +33,13 @@ public class Anh53Model extends ListTableModel {
 			tmp = fd.getBasisObjekt().getBasisStandort();
 			break;
 		case 2:
-			tmp = fd.getBemerkungen();
+			if (fd.getBasisObjekt().getBasisObjektarten().getObjektartid()==17)
+				tmp = "kleiner 3000";
+			else
+				tmp = "größer 3000";
+			break;
+		case 3:
+			tmp = fd.getBasisObjekt().getBeschreibung();
 			break;
 
 		default:
