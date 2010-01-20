@@ -93,15 +93,17 @@ public class Anh49Abscheiderdetails
 		Anh49Fachdaten item; 
 		
 		String query = "from Anh49Abscheiderdetails details where details.Anh49Fachdaten.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
-			+"order by details.nenngroesse desc";
-		
+			//+"order by details.nenngroesse desc";
+			  +"order by details.Anh49Fachdaten.basisObjekt.basisStandort.plz, "
+			  +"details.Anh49Fachdaten.basisObjekt.basisBetreiber"; 
 		Session session = HibernateSessionFactory.currentSession();
 		fettabsch = session.createQuery(query).list();
 		HibernateSessionFactory.closeSession();
 		
 		String query2 = "from Anh49Fachdaten anh49"+
-						" where anh49.basisObjekt.basisObjektarten.objektart like 'Fettabscheider'";
-		
+						" where anh49.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
+		 				+"order by anh49.basisObjekt.basisStandort.plz, "
+		 				+"anh49.basisObjekt.basisBetreiber"; 
 		session = HibernateSessionFactory.currentSession();
 		fettabsch2 = session.createQuery(query2).list();
 		HibernateSessionFactory.closeSession();
