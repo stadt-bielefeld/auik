@@ -61,20 +61,20 @@ public class Anh50Fachdaten
     		if (nurWiedervorlageAbgelaufen) {
     			Date today = new Date();
     			anhang50 = session.createQuery(
-    					"from Anh50Fachdaten as ah50 where " +
-						"ah50.wiedervorlage <= ? " +
-						"and ah50.erloschen = 'f' " +
-						"order by anh50.basisObjekt.inaktiv, ah50.wiedervorlage, " +
-						"ah50.basisObjekt.basisBetreiber.betrname")
+    					"from Anh50Fachdaten as anh50 where " +
+						"anh50.wiedervorlage <= ? " +
+						"and anh50.erloschen = 'f' " +
+						"order by anh50.basisObjekt.inaktiv, anh50.wiedervorlage, " +
+						"anh50.basisObjekt.basisBetreiber.betrname")
 						.setDate(0, today)
 						.list();
 
     		} else {
     			anhang50 = session.createQuery(
-    					"from Anh50Fachdaten as ah50 where " +
-						"ah50.erloschen = 'f' " +
-						"order by anh50.basisObjekt.inaktiv, ah50.wiedervorlage, " +
-						"ah50.basisObjekt.basisBetreiber.betrname")
+    					"from Anh50Fachdaten as anh50 where " +
+						"anh50.erloschen = 'f' " +
+						"order by anh50.basisObjekt.inaktiv, anh50.wiedervorlage, " +
+						"anh50.basisObjekt.basisBetreiber.betrname")
 						.list();
 
     		}
