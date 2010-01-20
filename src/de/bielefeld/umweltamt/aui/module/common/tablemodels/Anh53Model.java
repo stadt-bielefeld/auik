@@ -12,8 +12,7 @@ public class Anh53Model extends ListTableModel {
 		super(new String[]{
 				"Betreiber", 
 				"Standort", 
-				"Größe",
-				"Beschreibung"
+				"Bemerkungen"
 		}, 
 		false);
 	}
@@ -46,7 +45,10 @@ public class Anh53Model extends ListTableModel {
 			tmp = "ERROR";
 			break;
 		}
-		
+		if (fd.getBasisObjekt().getInaktiv() == true)
+		{
+			tmp = "<html><strike>" + tmp + "</strike></html>";	
+		}
 		return tmp;
 	}
 	
