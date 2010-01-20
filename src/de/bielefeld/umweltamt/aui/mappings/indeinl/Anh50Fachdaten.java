@@ -64,7 +64,7 @@ public class Anh50Fachdaten
     					"from Anh50Fachdaten as ah50 where " +
 						"ah50.wiedervorlage <= ? " +
 						"and ah50.erloschen = 'f' " +
-						"order by ah50.wiedervorlage, " +
+						"order by anh50.basisObjekt.inaktiv, ah50.wiedervorlage, " +
 						"ah50.basisObjekt.basisBetreiber.betrname")
 						.setDate(0, today)
 						.list();
@@ -73,7 +73,7 @@ public class Anh50Fachdaten
     			anhang50 = session.createQuery(
     					"from Anh50Fachdaten as ah50 where " +
 						"ah50.erloschen = 'f' " +
-						"order by ah50.wiedervorlage, " +
+						"order by anh50.basisObjekt.inaktiv, ah50.wiedervorlage, " +
 						"ah50.basisObjekt.basisBetreiber.betrname")
 						.list();
 

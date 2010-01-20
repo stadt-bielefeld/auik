@@ -31,13 +31,14 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 		String tmp = "[Anh49:" + getBasisObjekt() + "]";
 		return tmp;
 	}
-	
+// es werden alle Datensätze aus Anh49Fachdaten ausser Fettabscheidern ausgewählt 	
 	public static List findAlle() {
 
 		List anhang49;
 
-		String query = "from Anh49Fachdaten anh49 order by anh49.sachbearbeiterIn";
-
+		String query = "from Anh49Fachdaten anh49 where anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "+ 
+				"order by anh49.basisObjekt.inaktiv, anh49.sachbearbeiterIn";
+	
 		Session session = HibernateSessionFactory.currentSession();
 		anhang49 = session.createQuery(query).list();
 		HibernateSessionFactory.closeSession();
@@ -46,6 +47,9 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 
 	}
 
+	
+	
+	
 	/**
 	 * Sucht Anhang49-Fachdatensätze nach bestimmten Kriterien.
 	 * 
@@ -72,12 +76,13 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 		String query = "from Anh49Fachdaten ah49 where "
 				+ "ah49.abgemeldet = ? and "
 				+ "lower(ah49.sonstigestechnik) like ? and "
-				+ "ah49.abwasserfrei = ?";
+				+ "ah49.abwasserfrei = ?" +
+				" and ah49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' ";
 
 		if (nurWiedervorlageAbgelaufen) {
 
 			query += "and ah49.wiedervorlage <= ? "
-					+ "order by ah49.wiedervorlage, "
+					+ "order by anh49.basisObjekt.inaktiv, ah49.wiedervorlage, "
 					+ "ah49.basisObjekt.basisBetreiber.betrname";
 
 			Session session = HibernateSessionFactory.currentSession();
@@ -89,7 +94,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 			HibernateSessionFactory.closeSession();
 
 		} else {
-			query += "order by ah49.wiedervorlage, "
+			query += "order by anh49.basisObjekt.inaktiv, ah49.wiedervorlage, "
 					+ "ah49.basisObjekt.basisBetreiber.betrname";
 
 			Session session = HibernateSessionFactory.currentSession();
@@ -103,7 +108,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 
 		return anhang49;
 	}
-
+	
 	public static Anh49Fachdaten getAnh49ByObjekt(BasisObjekt objekt,
 			Session session) {
 		Anh49Fachdaten fachdaten = null;
@@ -177,7 +182,8 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 
 		String query = 	"from Anh49Fachdaten anh49 "+
 						"where anh49.dekraTuevTermin = ?" +
-						"order by anh49.sachbearbeiterIn";
+						" and anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' " +
+						"order by anh49.basisObjekt.inaktiv, anh49.sachbearbeiterIn";
 
 		Session session = HibernateSessionFactory.currentSession();
 		anhang49 = session.createQuery(query)
@@ -194,7 +200,9 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 		List anhang49;
 
 		String query = 	"from Anh49Fachdaten anh49 "+
-						"where anh49.sachbearbeiterIn = ?";
+						"where anh49.sachbearbeiterIn = ?"+
+						" and anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "
+					+	"order by anh49.basisObjekt.inaktiv,";
 
 		Session session = HibernateSessionFactory.currentSession();
 		anhang49 = session.createQuery(query)

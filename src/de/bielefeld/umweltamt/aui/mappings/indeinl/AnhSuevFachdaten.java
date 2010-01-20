@@ -117,7 +117,7 @@ public class AnhSuevFachdaten
     	List liste;
     	
     	String query = "from AnhSuevFachdaten as sv " +
-    			"order by sv.objektid";
+    			"order by sv.basisObjekt.inaktiv, sv.objektid";
     	
     	try {
     		Session session = HibernateSessionFactory.currentSession();

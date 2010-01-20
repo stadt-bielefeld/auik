@@ -95,8 +95,24 @@ public class FettabschModel extends ListTableModel {
 		default:
 			tmp = "ERROR";
 			break;
+			
+
+			
 		}
-		
+		if (kennung == "Fachdaten")
+		{	
+			if (fd.getBasisObjekt().getInaktiv() == true)
+			{
+				tmp = "<html><strike>" + tmp + "</strike></html>";	
+			}
+		}
+		else
+		{
+			if (ad.getAnh49Fachdaten().getBasisObjekt().getInaktiv() == true)
+			{
+				tmp = "<html><strike>" + tmp + "</strike></html>";	
+			}
+		}
 		return tmp;
 	}
 	

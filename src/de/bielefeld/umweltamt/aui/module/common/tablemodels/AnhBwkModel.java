@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AnhBwkModel.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
+ * $Id: AnhBwkModel.java,v 1.3 2010-01-20 12:57:31 u633d Exp $
  * 
  * Erstellt am 24.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:23  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:40  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -95,7 +98,10 @@ public class AnhBwkModel extends ListTableModel {
 			tmp = "ERROR";
 			break;
 		}
-		
+		if (fd.getBasisObjekt().getInaktiv() == true)
+		{
+			tmp = "<html><strike>" + tmp + "</strike></html>";	
+		}
 		return tmp;
 	}
 	

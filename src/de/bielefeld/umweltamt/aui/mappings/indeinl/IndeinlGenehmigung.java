@@ -118,7 +118,7 @@ public class IndeinlGenehmigung
     	
     	String query = "from IndeinlGenehmigung as gen " +
 		   		"where gen.gen58 = ? or gen.gen59 = ? " +
-    			"order by gen.basisObjekt.basisBetreiber.betrname";
+    			"order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
     	
     	try {
     		Session session = HibernateSessionFactory.currentSession();
@@ -145,7 +145,7 @@ public class IndeinlGenehmigung
     	String query = "from IndeinlGenehmigung as gen " +
     				   "where gen.anhang = 40 " +
     				   "and gen.gen58 = ? or gen.anhang = 40 and gen.gen59 = ? " +
-    				   "order by gen.basisObjekt.basisBetreiber.betrname";
+    				   "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
     	
     	try {
     		Session session = HibernateSessionFactory.currentSession();
@@ -172,7 +172,7 @@ public class IndeinlGenehmigung
     	String query = "from IndeinlGenehmigung as gen " +
 		   				"where gen.anhang = 49 " +
 		   				"and gen.gen58 = ? or gen.anhang = 49 and gen.gen59 = ? " +
-		   				"order by gen.basisObjekt.basisBetreiber.betrname";
+		   				"order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
     	
     	try {
     		Session session = HibernateSessionFactory.currentSession();
@@ -199,7 +199,7 @@ public class IndeinlGenehmigung
     	String query = "from IndeinlGenehmigung as gen " +
 		   				"where gen.anhang = 50 " +
 		   				"and gen.gen58 = ? or gen.anhang = 50 and gen.gen59 = ? " +
-		   				"order by gen.basisObjekt.basisBetreiber.betrname";
+		   				"order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
     	
     	try {
     		Session session = HibernateSessionFactory.currentSession();
@@ -226,7 +226,7 @@ public class IndeinlGenehmigung
     	String query = "from IndeinlGenehmigung as gen " +
 		   				"where gen.anhang = 53 " +
 		   				"and gen.gen58 = ? or gen.anhang = 53 and gen.gen59 = ? " +
-		   				"order by gen.basisObjekt.basisBetreiber.betrname";
+		   				"order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
     	
     	try {
     		Session session = HibernateSessionFactory.currentSession();
@@ -253,7 +253,7 @@ public class IndeinlGenehmigung
     	String query = "from IndeinlGenehmigung as gen " +
     				   "where gen.anhang Is Null " +
     				   "and gen.gen58 = ? or gen.anhang Is Null and gen.gen59 = ? " +
-    				   "order by gen.basisObjekt.basisBetreiber.betrname";
+    				   "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
     	
     	try {
     		Session session = HibernateSessionFactory.currentSession();

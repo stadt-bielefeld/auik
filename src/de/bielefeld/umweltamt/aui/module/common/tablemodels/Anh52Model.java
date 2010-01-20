@@ -40,7 +40,10 @@ public class Anh52Model extends ListTableModel {
 			tmp = "ERROR";
 			break;
 		}
-		
+		if (fd.getBasisObjekt().getInaktiv() == true)
+		{
+			tmp = "<html><strike>" + tmp + "</strike></html>";	
+		}
 		return tmp;
 	}
 	

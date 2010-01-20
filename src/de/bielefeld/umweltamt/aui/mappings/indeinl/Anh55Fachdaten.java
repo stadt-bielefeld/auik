@@ -109,7 +109,7 @@ public class Anh55Fachdaten
 		List liste;
 		
 		String query = "from Anh55Fachdaten as anh55 " +
-				"order by anh55.id";
+				"order by anh55.basisObjekt.inaktiv, anh55.id";
 		
 		try {
 			Session session = HibernateSessionFactory.currentSession();

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh49Model.java,v 1.3 2009-03-24 12:35:23 u633d Exp $
+ * $Id: Anh49Model.java,v 1.4 2010-01-20 12:55:20 u633d Exp $
  * 
  * Erstellt am 15.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/03/24 12:35:23  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.2  2008/07/23 06:55:22  u633d
  * Anh49 Auswertung und Sielhautimport neu
  *
@@ -67,7 +70,10 @@ public class Anh49Model extends ListTableModel {
 			tmp = "ERROR";
 			break;
 		}
-		
+		if (fd.getBasisObjekt().getInaktiv() == true)
+		{
+			tmp = "<html><strike>" + tmp + "</strike></html>";	
+		}
 		return tmp;
 	}
 	

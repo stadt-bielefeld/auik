@@ -139,7 +139,7 @@ public class AnhBwkFachdaten
     		query += "where bwk.erfassung = ? ";
     	}
     	
-    	query += "order by bwk.erfassung, " +
+    	query += "order by bwk.basisObjekt.inaktiv, bwk.erfassung, " +
     			"bwk.basisObjekt.basisBetreiber.betrname, " +
     			"bwk.basisObjekt.basisBetreiber.betrnamezus, " +
     			"bwk.basisObjekt.basisStandort.strasse, " +

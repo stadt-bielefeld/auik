@@ -52,7 +52,7 @@ public class Anh56Fachdaten
 		List liste;
 		
 		String query = "from Anh56Fachdaten as anh56 " +
-				"order by anh56.basisObjekt.basisStandort.strasse, " +
+				"order by anh56.basisObjekt.inaktiv, anh56.basisObjekt.basisStandort.strasse, " +
 				"anh56.basisObjekt.basisStandort.hausnr";
 		
 		try {
@@ -77,7 +77,7 @@ public class Anh56Fachdaten
 		
 		String query = "from Anh56Fachdaten as anh56 " +
 				"where anh56.abwasseranfall = ? " +
-				"order by anh56.basisObjekt.basisStandort.strasse, " +
+				"order by anh56.basisObjekt.inaktiv, anh56.basisObjekt.basisStandort.strasse, " +
 				"anh56.basisObjekt.basisStandort.hausnr";
 		
 		try {
@@ -104,7 +104,7 @@ public class Anh56Fachdaten
 		
 		String query = "from Anh56Fachdaten as anh56 " +
 				"where anh56.genpflicht = ? " +
-				"order by anh56.basisObjekt.basisStandort.strasse, " +
+				"order by anh56.basisObjekt.inaktiv, anh56.basisObjekt.basisStandort.strasse, " +
 				"anh56.basisObjekt.basisStandort.hausnr";
 		
 		try {
