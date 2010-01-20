@@ -647,12 +647,9 @@ public class ObjektProbepktAuswPanel extends JPanel {
 			for (int i = 0; i < paramList.getModel().getSize(); i++) {
 				AtlParameter p = (AtlParameter) paramList.getModel()
 						.getElementAt(i);
+				
+				einheit = "mg/l";
 
-			    AtlAnalyseposition position;  
-			    position = AtlAnalyseposition.getAnalysepositionObjekt(pkt);
-			    einheit =  position.getAtlEinheiten().toString();
-
-			    
 				List list = AtlAnalyseposition.getAnalysepos(p, 
 						pkt);
 				
