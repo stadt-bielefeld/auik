@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBearbeiten.java,v 1.5 2009-09-21 11:14:51 u633d Exp $
+ * $Id: ObjektBearbeiten.java,v 1.6 2010-01-26 09:37:58 u633d Exp $
  * 
  * Erstellt am 15.02.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2009/09/21 11:14:51  u633d
+ * GIS oeffnen
+ *
  * Revision 1.4  2009/08/27 14:40:23  u633d
  * Anlegen neuer Probepunkte korrigiert
  *
@@ -82,6 +85,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49DetailsPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.FettAnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh49Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh50Panel;
@@ -105,6 +109,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * @author David Klotz
  */
 public class ObjektBearbeiten extends AbstractModul {
+	
 	// Widgets für Registerbereich
 	private JPanel topPanel;
 	private JTabbedPane tabbedPane;
@@ -121,6 +126,7 @@ public class ObjektBearbeiten extends AbstractModul {
 	private ObjektAnh49Panel anhang49Tab;
 	private Anh49DetailsPanel anh49detailTab;
 	private Anh49AnalysenPanel anh49analyseTab;
+	private FettAnalysenPanel fettanalyseTab;
 	private ObjektAnh52Panel anhang52Tab;
 	private ObjektAnh53Panel anhang53Tab;
 	private ObjektAnh55Panel anhang55Tab;
@@ -200,6 +206,8 @@ public class ObjektBearbeiten extends AbstractModul {
 		this.isNew = isNew;
 	}
 	
+	
+	
 	private JPanel getTopPanel() {
 		if (topPanel == null) {
 			FormLayout layout = new FormLayout("100dlu:g");
@@ -276,6 +284,13 @@ public class ObjektBearbeiten extends AbstractModul {
 			anh49analyseTab = new Anh49AnalysenPanel(this);
 		}
 		return anh49analyseTab;
+	}
+	
+	public FettAnalysenPanel getFettAnalyseTab() {
+		if (fettanalyseTab == null) {
+			fettanalyseTab = new FettAnalysenPanel(this);
+		}
+		return fettanalyseTab;
 	}
 	
 	public ObjektSuevPanel getSuevTab() {
@@ -363,6 +378,7 @@ public class ObjektBearbeiten extends AbstractModul {
 	}
 
 	public void show() {
+	
 		super.show();
 		
 		if (manager.getSettingsManager().getSetting("auik.imc.edit_object") != null) {
@@ -396,6 +412,10 @@ public class ObjektBearbeiten extends AbstractModul {
 			protected void doNonUILogic() throws RuntimeException {
 				getBasisTab().fetchFormData();
 				
+				
+					
+				
+				
 				// Daten für verschiedene Objektarten holen
 				if (objekt.getBasisObjektarten() != null) {
 					if (objekt.getBasisObjektarten().isProbepunkt()) {
@@ -410,8 +430,18 @@ public class ObjektBearbeiten extends AbstractModul {
 					} else if (objekt.getBasisObjektarten().isAnh49()) {
 						getChronoTab().fetchFormData();
 						getAnhang49Tab().fetchFormData();
-						getAnh49DetailTab().setFachdaten(getAnhang49Tab().getFachdaten());
-						getAnh49AnalyseTab().setFachdaten(getAnhang49Tab().getFachdaten());
+						getAnh49DetailTab().setFachdaten(getAnhang49Tab().getFachdaten());	
+						
+						if (objekt.getBasisObjektarten().isFettabscheider()== true)
+						{
+							getFettAnalyseTab().setFachdaten(getAnhang49Tab().getFachdaten());
+						}
+						
+						if (objekt.getBasisObjektarten().isFettabscheider() == false)
+						{	
+						    getAnh49AnalyseTab().setFachdaten(getAnhang49Tab().getFachdaten());	
+						}
+						
 					} else if (objekt.getBasisObjektarten().isSuev()) {
 						getChronoTab().fetchFormData();
 						getSuevTab().fetchFormData();
@@ -444,7 +474,7 @@ public class ObjektBearbeiten extends AbstractModul {
 						getVawsTab().fetchFormData();
 					} else if (objekt.getBasisObjektarten().abteilungIs33()) {
 						getChronoTab().fetchFormData();
-					}
+					} 
 				}
 			}
 
@@ -490,13 +520,40 @@ public class ObjektBearbeiten extends AbstractModul {
 							getTabbedPane().setSelectedComponent(getZahnarztTab());
 						} else if (objekt.getBasisObjektarten().isAnh49()) {
 							getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-							getTabbedPane().addTab(getAnhang49Tab().getName(), getAnhang49Tab());
+							
+							if (objekt.getBasisObjektarten().isFettabscheider() == false)
+							{	
+								getTabbedPane().addTab(getAnhang49Tab().getName(), getAnhang49Tab());
+							}
+							
+							if ( objekt.getBasisObjektarten().isFettabscheider()== true)
+							{
+								getTabbedPane().addTab("Fettabscheider", getAnhang49Tab());
+							}
+							
 							getTabbedPane().addTab(getAnh49DetailTab().getName(), getAnh49DetailTab());
-							getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
+							
+							if (objekt.getBasisObjektarten().isFettabscheider() == false)
+							{	
+								getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
+							}
+							
+							if ( objekt.getBasisObjektarten().isFettabscheider()== true)
+							{
+								getTabbedPane().addTab(getFettAnalyseTab().getName(), getFettAnalyseTab());
+							}
+							
 							getChronoTab().updateForm();
 							getAnhang49Tab().updateForm();
 							getAnh49DetailTab().updateForm();
-							getAnh49AnalyseTab().updateForm();
+							if ( objekt.getBasisObjektarten().isFettabscheider()== true)
+							{
+								getFettAnalyseTab().updateForm();
+							}
+							if (objekt.getBasisObjektarten().isFettabscheider() == false)
+							{	
+							    getAnh49AnalyseTab().updateForm();	
+							}
 							getTabbedPane().setSelectedComponent(getAnhang49Tab());
 						} else if (objekt.getBasisObjektarten().isSuev()) {
 							getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
@@ -690,4 +747,5 @@ public class ObjektBearbeiten extends AbstractModul {
 			}
 		}
 	}
+	
 }
