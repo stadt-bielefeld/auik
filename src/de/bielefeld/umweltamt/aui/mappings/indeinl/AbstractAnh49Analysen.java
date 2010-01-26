@@ -66,6 +66,15 @@ public abstract class AbstractAnh49Analysen
     /** The value of the simple bsb5CsbRelation property. */
     private java.lang.String bsb5CsbRelation;
 
+    
+    /** The value of the simple peWert property. */
+    private java.lang.String peWert;
+    
+    
+    /** The value of the simple kupferWert property. */
+    private java.lang.String kupferWert;
+    
+    
     /** The value of the simple bemerkungen property. */
     private java.lang.String bemerkungen;
 
@@ -360,6 +369,27 @@ public abstract class AbstractAnh49Analysen
         this.bsb5CsbRelation = bsb5CsbRelation;
     }
 
+    public java.lang.String getPeWert()
+    {
+        return this.peWert;
+    }
+
+   
+    public void setPeWert(java.lang.String peWert)
+    {
+        this.peWert = peWert;
+    }
+   
+    public java.lang.String getKupferWert()
+    {
+        return this.kupferWert;
+    }
+
+   
+    public void setKupferWert(java.lang.String kupferWert)
+    {
+        this.kupferWert = kupferWert;
+    }
     /**
      * Return the value of the BEMERKUNGEN column.
      * @return java.lang.String

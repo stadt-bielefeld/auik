@@ -1,15 +1,18 @@
 /*
  * Datei:
 <<<<<<< BasisObjektarten.java
- * $Id: BasisObjektarten.java,v 1.4 2009-03-24 12:35:23 u633d Exp $
+ * $Id: BasisObjektarten.java,v 1.5 2010-01-26 09:20:43 u633d Exp $
 =======
- * $Id: BasisObjektarten.java,v 1.4 2009-03-24 12:35:23 u633d Exp $
+ * $Id: BasisObjektarten.java,v 1.5 2010-01-26 09:20:43 u633d Exp $
 >>>>>>> 1.20.6.1
  * 
  * Erstellt am 19.01.05 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2009/03/24 12:35:23  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.3  2008/09/01 07:00:29  u633d
  * Anlegen von Sielhautproben ueberabeitet
  *
@@ -194,6 +197,19 @@ public class BasisObjektarten
 			return false;
 		}
 	}
+	
+	public boolean isFettabscheider()
+	{
+		if (FETTABSCHEIDER == this.getObjektartid().intValue())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	
 	/** Liefert <code>true</code>, wenn diese Objektart "Chemische Wäscherei" ist */
 	public boolean isAnh52() {
