@@ -62,7 +62,7 @@ public class GenehmigungModel extends ListTableModel {
 			tmp = "ERROR";
 			break;
 		}
-		if (fd.getBasisObjekt().getInaktiv() == true)
+		if (fd.getBasisObjekt().getInaktiv() == true && columnIndex != 4 && columnIndex != 5)
 		{
 			tmp = "<html><strike>" + tmp + "</strike></html>";	
 		}
