@@ -82,7 +82,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 		if (nurWiedervorlageAbgelaufen) {
 
 			query += "and ah49.wiedervorlage <= ? "
-					+ "order by anh49.basisObjekt.inaktiv, ah49.wiedervorlage, "
+					+ "order by ah49.basisObjekt.inaktiv, ah49.wiedervorlage, "
 					+ "ah49.basisObjekt.basisBetreiber.betrname";
 
 			Session session = HibernateSessionFactory.currentSession();
@@ -94,7 +94,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 			HibernateSessionFactory.closeSession();
 
 		} else {
-			query += "order by anh49.basisObjekt.inaktiv, ah49.wiedervorlage, "
+			query += "order by ah49.basisObjekt.inaktiv, ah49.wiedervorlage, "
 					+ "ah49.basisObjekt.basisBetreiber.betrname";
 
 			Session session = HibernateSessionFactory.currentSession();
@@ -201,8 +201,9 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 
 		String query = 	"from Anh49Fachdaten anh49 "+
 						"where anh49.sachbearbeiterIn = ?"+
-						" and anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "
-					+	"order by anh49.basisObjekt.inaktiv,";
+						" and anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' " +
+						"order by anh49.basisObjekt.inaktiv" ;
+		
 
 		Session session = HibernateSessionFactory.currentSession();
 		anhang49 = session.createQuery(query)
