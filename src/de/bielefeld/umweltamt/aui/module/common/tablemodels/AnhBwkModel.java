@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AnhBwkModel.java,v 1.3 2010-01-20 12:57:31 u633d Exp $
+ * $Id: AnhBwkModel.java,v 1.4 2010-01-27 07:51:09 u633d Exp $
  * 
  * Erstellt am 24.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2010/01/20 12:57:31  u633d
+ * Auswertungen order by inaktiv
+ *
  * Revision 1.2  2009/03/24 12:35:23  u633d
  * Umstellung auf UTF8
  *
@@ -20,6 +23,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
+import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -38,7 +42,10 @@ public class AnhBwkModel extends ListTableModel {
 				"Hersteller",
 				"Brennmittel",
 				"Leistung", 
-				"Erfassung"
+				"Erfassung",
+				"Anschreiben",
+				"Genehmigung",
+				"Beschreibung"
 		}, 
 		false);
 	}
@@ -92,6 +99,15 @@ public class AnhBwkModel extends ListTableModel {
 			break;
 		case 5:
 			tmp = fd.getErfassung();
+			break;
+		case 6:
+			tmp = AuikUtils.getStringFromDate(fd.getAnschreiben());
+			break;
+		case 7:
+			tmp = AuikUtils.getStringFromDate(fd.getDatumG());
+			break;
+		case 8:
+			tmp = fd.getBasisObjekt().getBeschreibung();
 			break;
 
 		default:

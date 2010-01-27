@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: AbscheiderEditor.java,v 1.3 2010-01-18 10:13:22 u633d Exp $
+ * $Id: AbscheiderEditor.java,v 1.4 2010-01-27 07:51:08 u633d Exp $
  * 
  * Erstellt am 01.06.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2010/01/18 10:13:22  u633d
+ * Anh 53 und Abscheider ergaenzt
+ *
  * Revision 1.2  2009/03/24 12:35:23  u633d
  * Umstellung auf UTF8
  *
@@ -261,6 +264,10 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 		// Nenngroesse Koaleszenzabscheider:
 		Integer ngka = ((IntegerField)ngkaFeld).getIntValue();
 		getDetails().setNgKa(ngka);
+		
+		// Nenngroesse Fettabscheider:
+		Integer ngfa = ((IntegerField)ngfaFeld).getIntValue();
+		getDetails().setNenngroesse(ngfa);
 		
 		//Tankstelle ja/nein
 		if (getTankstelleCheck().isSelected())  {
