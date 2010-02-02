@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBearbeiten.java,v 1.6 2010-01-26 09:37:58 u633d Exp $
+ * $Id: ObjektBearbeiten.java,v 1.7 2010-02-02 12:24:00 u633d Exp $
  * 
  * Erstellt am 15.02.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2010/01/26 09:37:58  u633d
+ * Fettabscheider-Analysen
+ *
  * Revision 1.5  2009/09/21 11:14:51  u633d
  * GIS oeffnen
  *
@@ -85,7 +88,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49DetailsPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.FettAnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh49Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjektAnh50Panel;
@@ -126,7 +128,6 @@ public class ObjektBearbeiten extends AbstractModul {
 	private ObjektAnh49Panel anhang49Tab;
 	private Anh49DetailsPanel anh49detailTab;
 	private Anh49AnalysenPanel anh49analyseTab;
-	private FettAnalysenPanel fettanalyseTab;
 	private ObjektAnh52Panel anhang52Tab;
 	private ObjektAnh53Panel anhang53Tab;
 	private ObjektAnh55Panel anhang55Tab;
@@ -286,12 +287,7 @@ public class ObjektBearbeiten extends AbstractModul {
 		return anh49analyseTab;
 	}
 	
-	public FettAnalysenPanel getFettAnalyseTab() {
-		if (fettanalyseTab == null) {
-			fettanalyseTab = new FettAnalysenPanel(this);
-		}
-		return fettanalyseTab;
-	}
+
 	
 	public ObjektSuevPanel getSuevTab() {
 		if (suevTab == null) {
@@ -434,7 +430,7 @@ public class ObjektBearbeiten extends AbstractModul {
 						
 						if (objekt.getBasisObjektarten().isFettabscheider()== true)
 						{
-							getFettAnalyseTab().setFachdaten(getAnhang49Tab().getFachdaten());
+							
 						}
 						
 						if (objekt.getBasisObjektarten().isFettabscheider() == false)
@@ -540,7 +536,7 @@ public class ObjektBearbeiten extends AbstractModul {
 							
 							if ( objekt.getBasisObjektarten().isFettabscheider()== true)
 							{
-								getTabbedPane().addTab(getFettAnalyseTab().getName(), getFettAnalyseTab());
+								
 							}
 							
 							getChronoTab().updateForm();
@@ -548,7 +544,7 @@ public class ObjektBearbeiten extends AbstractModul {
 							getAnh49DetailTab().updateForm();
 							if ( objekt.getBasisObjektarten().isFettabscheider()== true)
 							{
-								getFettAnalyseTab().updateForm();
+								
 							}
 							if (objekt.getBasisObjektarten().isFettabscheider() == false)
 							{	
