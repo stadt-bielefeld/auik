@@ -253,7 +253,7 @@ public class IndeinlGenehmigung
     	String query = "from IndeinlGenehmigung as gen " +
     				   "where gen.anhang Is Null " +
     				   "and gen.gen58 = ? or gen.anhang Is Null and gen.gen59 = ? " +
-    				   "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
+    				   "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisStandort.strasse, gen.basisObjekt.basisStandort.hausnr";
     	
     	try {
     		Session session = HibernateSessionFactory.currentSession();
