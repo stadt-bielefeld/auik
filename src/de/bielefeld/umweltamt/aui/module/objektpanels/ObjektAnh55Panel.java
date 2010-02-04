@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektAnh55Panel.java,v 1.3 2010-02-04 13:09:38 u633d Exp $
+ * $Id: ObjektAnh55Panel.java,v 1.4 2010-02-04 13:34:29 u633d Exp $
  * 
  * Erstellt am 10.08.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2010/02/04 13:09:38  u633d
+ * Verkn�pfte Objekte
+ *
  * Revision 1.2  2009/03/24 12:35:22  u633d
  * Umstellung auf UTF8
  *
@@ -673,7 +676,7 @@ public class ObjektAnh55Panel extends JPanel{
 //				getAbwasseranfallCheck().setSelected(false);
 //			}
 //		}
-		
+		objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
 	}
 	
 	}
