@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlUebergabestelle;
 
 /**
  * A class that represents a row in the 'VAWS_BasisObjektverknuepfung' table. 
@@ -43,7 +44,8 @@ public class BasisObjektverknuepfung
 
     
     // Statischer Teil:
-    
+	
+   
     /**
      * Liefert alle verknuepften Objekte zu einem bestimmten BasisObjekt.
      * @param objekt Das BasisObjekt.
@@ -60,6 +62,32 @@ public class BasisObjektverknuepfung
 					"or ov.basisObjektByIstVerknuepftMit = ? ")
 					.setEntity(0, objekt)
 					.setEntity(1, objekt)
+					.list();
+    		
+    	} catch (HibernateException e) {
+    		throw new RuntimeException("Datenbank-Fehler", e);
+    	} finally {
+    		HibernateSessionFactory.closeSession();
+    	}
+    	
+    	return verknuepf;
+    }
+     
+	/**
+     * Liefert alle verknuepften Sielhautmessstellen zu einem bestimmten BasisObjekt.
+     * @param objekt Das BasisObjekt.
+     * @return Eine Liste mit Objekten.
+     */
+	public static List getVerknuepfungSielhaut(BasisObjekt objekt) {
+    	List verknuepf;
+    	
+    	try {
+    		Session session = HibernateSessionFactory.currentSession();
+    		verknuepf = session.createQuery(
+    				"from BasisObjektverknuepfung ov where " +
+					"ov.basisObjektByObjekt = ? " +
+					"and ov.basisObjektByIstVerknuepftMit.basisObjektarten.objektart like 'Sielhautmessstelle' ")
+					.setEntity(0, objekt)
 					.list();
     		
     	} catch (HibernateException e) {

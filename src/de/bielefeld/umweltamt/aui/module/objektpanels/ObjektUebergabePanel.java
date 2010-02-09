@@ -3,20 +3,28 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.Color;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,12 +37,19 @@ import javax.swing.KeyStroke;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlUebergabestelle;
 import de.bielefeld.umweltamt.aui.module.ObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
@@ -43,6 +58,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.RetractablePanel;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -54,6 +70,8 @@ public class ObjektUebergabePanel extends JPanel {
 	private String name;
 	private ObjektBearbeiten hauptModul;
 
+	private IndeinlUebergabestelle upunkt;
+	private RetractablePanel fotoRtPanel;
 	// Widgets
 
 	private JTextArea ueberstBemerkungArea = null;
@@ -78,18 +96,25 @@ public class ObjektUebergabePanel extends JPanel {
 	private Action verknuepfungLoeschAction;
 	private JPopupMenu verknuepfungPopup;	
 	
+	// Widgets für Fotopanel
+	private JLabel fotoLabel;
+	
+	
 	
 	public ObjektUebergabePanel(ObjektBearbeiten hauptModul) {
 		name = "Übergabestelle";
 		this.hauptModul = hauptModul;
 
+		
+		
 		FormLayout layout = new FormLayout(
-				"r:80dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 80dlu", // Spalten
+				"r:80dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 80dlu, 100dlu:g", // Spalten
 				"");
-
+				
 		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
 		builder.setDefaultDialogBorder();
-
+		
+		
 		builder.appendSeparator("Fachdaten");
 		builder.append("Erfasst:", getErfassungsDatum());
 		builder.append("Kanalart:", getKanalartBox());
@@ -100,9 +125,14 @@ public class ObjektUebergabePanel extends JPanel {
 		builder.append("Rechtswert:", getRechtswertFeld());
 		builder.append("Hochwert:", getHochwertFeld());
 		builder.nextLine();
+		
+		builder.append(getFotoRtPanel(),8);
+		builder.nextLine();
+		
 		builder.appendSeparator("Bemerkungen");
 		builder.appendRow("3dlu");
 		builder.nextLine(2);
+		
 		JScrollPane bemerkungsScroller = new JScrollPane(
 				getUeberstBemerkungArea(),
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -110,7 +140,9 @@ public class ObjektUebergabePanel extends JPanel {
 		builder.appendRow("fill:30dlu");
 		builder.append(bemerkungsScroller, 7);
 		builder.nextLine();
-
+		
+	
+		
 		builder.appendSeparator("Verknüpfte Objekte");
 		builder.appendRow("3dlu");
 		builder.nextLine(2);
@@ -501,4 +533,91 @@ public class ObjektUebergabePanel extends JPanel {
 			}
 		return ueberstBemerkungArea;
 	}
+	
+	// Foto
+	private RetractablePanel getFotoRtPanel() {
+
+		if (fotoRtPanel == null) {
+			JPanel fotoPanel = new JPanel();
+	
+			fotoPanel.add(getFotoLabel());
+			fotoPanel.setBackground(Color.WHITE);
+			fotoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			fotoRtPanel = new RetractablePanel(DefaultComponentFactory.getInstance()
+					.createSeparator("Foto"),  
+					fotoPanel, false, null) {
+				public void opening()  {
+			    // Aufruf wenn FotoPanel geöffnet wird
+				// Die Bezeichnung einer verknüpften Sielhautmesstelle wird ausgelesen
+			   //  um das passende Foto anzuzeigen
+					BasisObjektverknuepfung obj = null;
+			        BasisObjekt bo = hauptModul.getObjekt();
+			        String messstelleBez;
+			        int id;
+			        
+			        List messstelle = BasisObjektverknuepfung.getVerknuepfungSielhaut(bo);
+			        
+			        if (messstelle.size()  == 1)
+			        {	
+			        	for (int j = 0; j < messstelle.size(); j++) {
+			        		obj = (BasisObjektverknuepfung) messstelle.get(j);
+			        	}
+			
+			        	id  = obj.getBasisObjektByIstVerknuepftMit().getObjektid();	
+			        	messstelleBez= AtlProbepkt.getProbepunkt(id).getAtlSielhaut().getBezeichnung();
+			        }		
+			        else if (messstelle.size() > 1)
+			        {
+			        	messstelleBez = "Nur eine verknüpfte Sielhautmessstelle zulässig";	
+					}	
+			        else 
+			        {
+			        	messstelleBez = "Keine Sielhautmessstelle verknüpft";
+			        }
+			        
+			        
+			        // Foto wird geladen
+					if (messstelleBez != null) {
+						String imgPath ="X:/Applikationen/Anlagenkataster/Sielhaut/fotos/" + messstelleBez + ".jpg";
+						File imgFile = new File(imgPath);
+						
+						if (imgFile.canRead()) {
+							ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
+						
+							if (imgIcon.getIconWidth() > 1000) {
+								imgIcon.setImage(imgIcon.getImage().getScaledInstance(1000,-1,Image.SCALE_FAST));
+							}
+							
+							getFotoLabel().setIcon(null);
+							getFotoLabel().setIcon(imgIcon);
+							getFotoLabel().setText(null);
+						} else {
+							if (messstelleBez == "Keine Sielhautmessstelle verknüpft" || messstelleBez == "Nur eine verknüpfte Sielhautmessstelle zulässig")
+							{
+								getFotoLabel().setIcon(null);
+								getFotoLabel().setText("<html><b>-  Fehler: "+ messstelleBez +" -</b></html>");
+							}
+							else
+							{	
+								getFotoLabel().setIcon(null);
+								getFotoLabel().setText("<html><b>-  Foto "+ messstelleBez +".jpg nicht gefunden!  -</b></html>");
+							}
+						}
+					}
+				}
+			};
+		}
+		return fotoRtPanel;
+	}
+	
+	
+	private JLabel getFotoLabel() {
+		if (fotoLabel == null) {
+			fotoLabel = new JLabel("<html><b>- Kein Foto verfügbar! -</b></html>");
+		}
+		
+		return fotoLabel;
+	}
+	
+	
 }

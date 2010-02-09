@@ -25,7 +25,7 @@
 
         <many-to-one name="atlProbeart" column="art_id" class="AtlProbeart" />
 
-        <many-to-one name="atlSielhaut" column="sielhaut_id" class="AtlSielhaut" />
+        <many-to-one name="atlSielhaut" column="sielhaut_id" class="AtlSielhaut" lazy="false" />
 
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"/>
     </class>
