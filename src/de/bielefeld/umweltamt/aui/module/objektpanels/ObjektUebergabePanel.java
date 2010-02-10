@@ -184,9 +184,13 @@ public class ObjektUebergabePanel extends JPanel {
 			if (fachdaten.getAenderungsDatum() != null) {
 				getAenderungsDatum().setDate(fachdaten.getAenderungsDatum());
 			}
-			if (klaeranlagen != null) {
-				getKlaeranlageBox().setSelectedItem(fachdaten.getAtlKlaeranlagen());
+			  if (fachdaten.getAtlKlaeranlagen() != null)
+			  {  
+				getKlaeranlageBox().setSelectedItem(fachdaten.getAtlKlaeranlagen());	
 			}
+			
+			
+			
 			if (fachdaten.getKanalart() != null) {
 				if (fachdaten.getKanalart() == 1)
 					getKanalartBox().setSelectedItem("Schmutzwasser");
@@ -217,6 +221,8 @@ public class ObjektUebergabePanel extends JPanel {
 		getHochwertFeld().setText(null);
 		getErfassungsDatum().setDate(null);
 		getAenderungsDatum().setDate(null);
+		getKlaeranlageBox().setSelectedItem(null);
+		getKanalartBox().setSelectedItem(null);
 		getUeberstBemerkungArea().setText(null);
 	}
 
@@ -226,6 +232,8 @@ public class ObjektUebergabePanel extends JPanel {
 		getHochwertFeld().setEnabled(enabled);
 		getErfassungsDatum().setEnabled(enabled);
 		getAenderungsDatum().setEnabled(enabled);
+		getKanalartBox().setEnabled(enabled);
+		getKlaeranlageBox().setEnabled(enabled);
 		getUeberstBemerkungArea().setEnabled(enabled);
 
 	}
@@ -255,6 +263,7 @@ public class ObjektUebergabePanel extends JPanel {
 
 		if (getKlaeranlageBox().getSelectedItem() != null) {
 			fachdaten.setAtlKlaeranlagen((AtlKlaeranlagen) getKlaeranlageBox().getSelectedItem());
+		
 		}
 
 		if (getKanalartBox().getSelectedItem() != null) {
