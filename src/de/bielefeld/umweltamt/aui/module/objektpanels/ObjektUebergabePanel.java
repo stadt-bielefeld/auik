@@ -210,7 +210,10 @@ public class ObjektUebergabePanel extends JPanel {
 				getUeberstBemerkungArea().setText(fachdaten.getBemerkungen());
 			}
 			objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
-
+			
+			if (getFotoRtPanel().isOpen()) {
+				getFotoRtPanel().setOpen(true);
+			}
 		}
 
 	}
