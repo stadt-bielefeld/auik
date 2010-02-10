@@ -262,6 +262,9 @@ public class AtlParameter
 				    "from AtlParameter as param where " +
 				    "param.sielhautGw is not null or " +
 					"param.klaerschlammGw is not null " +
+					"or param.bezeichnung like 'lipophile Stoffe' "+
+					"or param.bezeichnung like 'Sulfat (SO4)'" +
+					"or param.bezeichnung like 'Fluorid (F)'" +
 					"order by param.bezeichnung")
 					.list();
 			
