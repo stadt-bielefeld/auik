@@ -178,11 +178,16 @@ public class ObjektUebergabePanel extends JPanel {
 				getHochwertFeld().setText(
 						fachdaten.getHochwert().toString());
 			}
-			if (fachdaten.getErfassungsDatum() != null) {
+			if (fachdaten.getErfassungsDatum() != null) {				
 				getErfassungsDatum().setDate(fachdaten.getErfassungsDatum());
+
 			}
 			if (fachdaten.getAenderungsDatum() != null) {
 				getAenderungsDatum().setDate(fachdaten.getAenderungsDatum());
+			}
+			if (fachdaten.getErfassungsDatum() == null) {				
+				getErfassungsDatum().setDate(null);
+
 			}
 			  if (fachdaten.getAtlKlaeranlagen() != null)
 			  {  
