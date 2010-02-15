@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBasisPanel.java,v 1.4 2009-07-30 05:31:22 u633d Exp $
+ * $Id: ObjektBasisPanel.java,v 1.5 2010-02-15 09:24:09 u633d Exp $
  * 
  * Erstellt am 19.04.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2009/07/30 05:31:22  u633d
+ * GIS, Entsorger vereinheitlicht, Objekte inaktivierbar und andere Erg�nzungen
+ *
  * Revision 1.3  2009/04/28 06:59:43  u633d
  * Anh 50 und Standort Tabelle bearbeitet
  *
@@ -46,6 +49,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
+import org.hibernate.HibernateException;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -74,10 +79,10 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  * Das "Objekt"-Tab des ObjektBearbeiten-Moduls 
  * @author David Klotz
  */
-public class ObjektBasisPanel extends JPanel {
+
+public class ObjektBasisPanel  extends JPanel {
 	private class ChooseDialog extends JDialog {
 		private HauptFrame frame;
-		
 		private BasisBetreiber betreiber;
 		private BasisStandort standort;
 		
@@ -90,6 +95,7 @@ public class ObjektBasisPanel extends JPanel {
 		
 		private JButton okButton;
 		private JButton abbrechenButton;
+		
 		
 		public ChooseDialog(Object initial, HauptFrame frame) {
 			super(frame, true);
@@ -123,6 +129,9 @@ public class ObjektBasisPanel extends JPanel {
 			setLocationRelativeTo(frame);
 			setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		}
+		
+		
+		
 		
 		public BasisBetreiber getChosenBetreiber() {
 			if (betreiber.getBetreiberid() != null) {
@@ -328,7 +337,7 @@ public class ObjektBasisPanel extends JPanel {
 	private JButton saveButton;
 	
 	private ActionListener editButtonListener;
-	
+
 	// Daten
 	private String name;
 	private ObjektBearbeiten hauptModul;
@@ -337,9 +346,10 @@ public class ObjektBasisPanel extends JPanel {
 	private BasisObjektarten[] objektarten;
 	
 	public ObjektBasisPanel(ObjektBearbeiten hauptModul) {
+		
 		name = "Objekt";
 		this.hauptModul = hauptModul;
-		
+
 		FormLayout layout = new FormLayout (
 				"r:50dlu, 5dlu, 180dlu, 3dlu, l:min(55dlu;p)",
 				""		// Zeilen werden dynamisch erzeugt
@@ -347,6 +357,8 @@ public class ObjektBasisPanel extends JPanel {
 		
 		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
 		builder.setDefaultDialogBorder();
+		
+		
 		
 		builder.appendSeparator("Eigenschaften");
 		builder.append("Betreiber:", getBetreiberFeld());
@@ -378,16 +390,55 @@ public class ObjektBasisPanel extends JPanel {
 		builder.append(buttonBar, 5);
 	}
 	
+
 	public void fetchFormData() {
-		if (objektarten == null) {
+		if (objektarten == null) 
+		{	
+			
+		
 			objektarten = BasisObjektarten.getObjektarten();
-		}
+		}	
 	}
 	
 	public void updateForm() {
-		if (objektarten != null && (objektarten.length != getArtBox().getItemCount())) {
-			getArtBox().setModel(new DefaultComboBoxModel(objektarten));
+		boolean neu;
+		
+
+		try
+		{
+			// Nur wenn Objekte neu angelegt werden stehen alle Objektarten zur Auswahl.
+			// Sobald eine Objet gespeichert wurde ist die Objektart nicht mehr veränderbar	
+			int id  = hauptModul.getObjekt().getObjektid();
+			neu = false;
 		}
+		catch (NullPointerException e) 
+		{
+			neu = true;
+		}
+
+		if (neu == true)
+		{	
+			if (objektarten != null && (objektarten.length != getArtBox().getItemCount())) 
+			{
+				getArtBox().setModel(new DefaultComboBoxModel(objektarten));				
+			}
+		}
+		
+		else
+		{	
+			getArtBox().removeAllItems();
+			// Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000) und umgekehrt ist weiterhin möglich
+			if (hauptModul.getObjekt().getBasisObjektarten().isAnh53Kl() | hauptModul.getObjekt().getBasisObjektarten().isAnh53Gr())
+			{
+				getArtBox().addItem(BasisObjektarten.getObjektart(17)); //Anhang 53 (<3000) (360.33)
+				getArtBox().addItem(BasisObjektarten.getObjektart(18));    // Anhang 53 (>3000) (360.33)
+			}
+			
+			else
+			{	
+				getArtBox().addItem(hauptModul.getObjekt().getBasisObjektarten());	
+			}
+		} 	
 		
 		if (hauptModul.getObjekt() != null) {
 			if (hauptModul.getObjekt().getBasisBetreiber() != null) {
@@ -700,8 +751,10 @@ public class ObjektBasisPanel extends JPanel {
 	
 	private JComboBox getArtBox() {
 		if (artBox == null) {
-			artBox = new JComboBox();
-			artBox.setKeySelectionManager(new MyKeySelectionManager());
+			
+				artBox = new JComboBox();
+				artBox.setKeySelectionManager(new MyKeySelectionManager());
+		
 		}
 		return artBox;
 	}
