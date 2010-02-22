@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: HauptFrame.java,v 1.3 2009-03-24 12:35:19 u633d Exp $
+ * $Id: HauptFrame.java,v 1.4 2010-02-22 07:49:45 u633d Exp $
  * 
  * Erstellt am 07.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/03/24 12:35:19  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.2  2008/06/24 11:24:07  u633d
  * Version 0.3
  *
@@ -57,6 +60,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -132,6 +137,8 @@ public class HauptFrame extends JFrame {
 	private JMenuItem exitMenuItem = null;
 	private JMenu helpMenu = null;
 	private JMenuItem aboutMenuItem = null;
+	private JMenuItem DokuItem = null;
+	
 	
 	private JPanel titlePanel = null;
 	
@@ -498,6 +505,7 @@ public class HauptFrame extends JFrame {
 			helpMenu.setMnemonic(KeyEvent.VK_H);
 			helpMenu.putClientProperty(Options.NO_ICONS_KEY, Boolean.TRUE);
 			helpMenu.add(getAboutMenuItem());
+			helpMenu.add(getDoku());
 		}
 		return helpMenu;
 	}
@@ -556,6 +564,31 @@ public class HauptFrame extends JFrame {
 		return aboutMenuItem;
 	}
 	
+	
+	private JMenuItem getDoku() {
+		if (DokuItem == null) {
+			DokuItem = new JMenuItem();
+			DokuItem.setText("Doku");
+			DokuItem.setMnemonic(KeyEvent.VK_U);
+			DokuItem.setEnabled(false);
+			DokuItem.addActionListener(new java.awt.event.ActionListener() { 				
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					 File file = new File("X:\\Pfad zur Doku angeben");
+					String command = "cmd /C start "+file.getPath();
+					    try {
+					      Runtime.getRuntime().exec(command);
+					    } catch (IOException e1) {
+					    
+					    	e1.printStackTrace();
+					      
+					    }
+					}
+			});
+		}
+		return DokuItem;
+	}
+	
+	
 	/**
 	 * @return Returns the titlePanel.
 	 */
@@ -581,7 +614,7 @@ public class HauptFrame extends JFrame {
 			statusPanel = new JPanel();
 			statusPanel.setLayout(new BorderLayout());
 			
-			statusLabel.setText("Willkommen im AUI-K");
+			statusLabel.setText("Willkommen im AUI-K");	
 			statusLabel.setBorder(BorderFactory.createEmptyBorder(1,5,1,1));
 			
 			statusPanel.add(statusLabel, BorderLayout.CENTER);
