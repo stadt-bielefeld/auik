@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektChronoPanel.java,v 1.3 2010-02-23 12:45:14 u633d Exp $
+ * $Id: ObjektChronoPanel.java,v 1.4 2010-02-23 13:27:01 u633d Exp $
  * 
  * Erstellt am 07.10.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2010/02/23 12:45:14  u633d
+ * Sachbearbeiter
+ *
  * Revision 1.2  2009/03/24 12:35:22  u633d
  * Umstellung auf UTF8
  *
@@ -130,8 +133,8 @@ public class ObjektChronoPanel extends JPanel {
 		public ChronoModel() {
 			super(new String[]{
 					"Datum", 
-					"Sachverhalt",
 					"Sachbearbeiter",
+					"Sachverhalt",
 			}, 
 			false, true);
 		}
@@ -169,9 +172,9 @@ public class ObjektChronoPanel extends JPanel {
 				}
 				break;
 			case 1:
-				// Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
-				if (tmp.length() > 255) {
-					tmp = tmp.substring(0,255);
+				// Auf 10 Zeichen kürzen, da die Datenbank-Spalte nur 10 Zeichen breit ist
+				if (tmp.length() > 10) {
+					tmp = tmp.substring(0,10);
 				}
 				chrono.setSachverhalt(tmp);
 				break;
@@ -222,11 +225,11 @@ public class ObjektChronoPanel extends JPanel {
 				break;
 			// Sachverhalt:
 			case 1:
-			    tmp = oc.getSachverhalt();
+			    tmp = oc.getSachbearbeiter();
 				break;
 		// Sachbearbeiter
 			case 2:
-				tmp = oc.getSachbearbeiter();
+				tmp = oc.getSachverhalt();
 				break;
 			// Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
 			default:
@@ -386,8 +389,9 @@ public class ObjektChronoPanel extends JPanel {
 		if (chronoTable == null) {
 			chronoTable = new JTable(chronoModel);
 			chronoTable.getColumnModel().getColumn(0).setMaxWidth(80);
-			chronoTable.getColumnModel().getColumn(1).setPreferredWidth(300);
-			//chronoTable.getColumnModel().getColumn(2).setPreferredWidth(300);
+			chronoTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+			chronoTable.getColumnModel().getColumn(1).setMaxWidth(100);
+			chronoTable.getColumnModel().getColumn(2).setPreferredWidth(300);
 			chronoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
 			chronoTable.addMouseListener(new java.awt.event.MouseAdapter() {
