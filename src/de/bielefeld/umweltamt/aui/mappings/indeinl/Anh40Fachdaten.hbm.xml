@@ -21,7 +21,7 @@
         <property name="klaeranlage" column="klaeranlage" type="java.lang.String" />
         <property name="herkunftsbereich" column="herkunftsbereich" type="java.lang.String" />
         <property name="wsg" column="wsg" type="java.lang.Boolean" />
-        <property name="prioritaet" column="prioritaet" type="java.lang.Boolean" />
+        <property name="prioritaet" column="prioritaet" type="java.lang.Short" />
         <property name="genehmigungspflicht" column="genehmigungspflicht" type="java.lang.Boolean" />
         <property name="nachtrag" column="nachtrag" type="java.lang.Boolean" />
         <property name="bimsch" column="bimsch" type="java.lang.Boolean" />
