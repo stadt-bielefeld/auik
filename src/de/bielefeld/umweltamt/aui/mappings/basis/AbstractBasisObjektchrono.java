@@ -152,7 +152,7 @@ public abstract class AbstractBasisObjektchrono
      */
     public java.lang.String getSachbearbeiter()
     {
-        return this.sachverhalt;
+        return this.sachbearbeiter;
     }
 
     /**

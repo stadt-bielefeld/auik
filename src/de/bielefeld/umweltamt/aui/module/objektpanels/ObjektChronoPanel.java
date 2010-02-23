@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektChronoPanel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
+ * $Id: ObjektChronoPanel.java,v 1.3 2010-02-23 12:45:14 u633d Exp $
  * 
  * Erstellt am 07.10.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:22  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:39  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -128,6 +131,7 @@ public class ObjektChronoPanel extends JPanel {
 			super(new String[]{
 					"Datum", 
 					"Sachverhalt",
+					"Sachbearbeiter",
 			}, 
 			false, true);
 		}
@@ -151,6 +155,7 @@ public class ObjektChronoPanel extends JPanel {
 			String tmp = "";
 			if (newValue instanceof String) {
 				tmp = (String) newValue;
+
 			}
 			DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
 			
@@ -170,7 +175,14 @@ public class ObjektChronoPanel extends JPanel {
 				}
 				chrono.setSachverhalt(tmp);
 				break;
-		
+			case 2:
+				// Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+				if (tmp.length() > 255) {
+					tmp = tmp.substring(0,255);
+				}
+
+				chrono.setSachbearbeiter(tmp);
+				break;
 			default:
 				break;
 			}
@@ -210,9 +222,12 @@ public class ObjektChronoPanel extends JPanel {
 				break;
 			// Sachverhalt:
 			case 1:
-				tmp = oc.getSachverhalt();
+			    tmp = oc.getSachverhalt();
 				break;
-			
+		// Sachbearbeiter
+			case 2:
+				tmp = oc.getSachbearbeiter();
+				break;
 			// Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
 			default:
 				tmp = "ERROR";
@@ -372,6 +387,7 @@ public class ObjektChronoPanel extends JPanel {
 			chronoTable = new JTable(chronoModel);
 			chronoTable.getColumnModel().getColumn(0).setMaxWidth(80);
 			chronoTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+			//chronoTable.getColumnModel().getColumn(2).setPreferredWidth(300);
 			chronoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
 			chronoTable.addMouseListener(new java.awt.event.MouseAdapter() {
