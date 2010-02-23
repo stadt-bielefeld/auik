@@ -15,6 +15,7 @@
         <property name="datum" column="datum" type="java.util.Date" />
         <property name="sachverhalt" column="sachverhalt" type="java.lang.String" />
         <property name="wv" column="wv" type="java.util.Date" />
+        <property name="sachbearbeiter" column="sachbearbeiter" type="java.lang.String" />
 
         <many-to-one name="basisObjekt" column="objektid" class="BasisObjekt" />
     </class>

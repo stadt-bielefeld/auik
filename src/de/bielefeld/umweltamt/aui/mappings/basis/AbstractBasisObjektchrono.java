@@ -36,6 +36,9 @@ public abstract class AbstractBasisObjektchrono
     /** The value of the simple wv property. */
     private java.util.Date wv;
 
+    /** The value of the simple sachverhalt property. */
+    private java.lang.String sachbearbeiter;
+
     /**
      * Simple constructor of AbstractVawsObjektchrono instances.
      */
@@ -141,6 +144,24 @@ public abstract class AbstractBasisObjektchrono
     public void setWv(java.util.Date wv)
     {
         this.wv = wv;
+    }
+
+    /**
+     * Return the value of the SACHVERHALT column.
+     * @return java.lang.String
+     */
+    public java.lang.String getSachbearbeiter()
+    {
+        return this.sachverhalt;
+    }
+
+    /**
+     * Set the value of the SACHVERHALT column.
+     * @param sachverhalt
+     */
+    public void setSachbearbeiter(java.lang.String sachbearbeiter)
+    {
+        this.sachbearbeiter = sachbearbeiter;
     }
 
     /**
