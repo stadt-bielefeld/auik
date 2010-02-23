@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBasisPanel.java,v 1.5 2010-02-15 09:24:09 u633d Exp $
+ * $Id: ObjektBasisPanel.java,v 1.6 2010-02-23 13:28:10 u633d Exp $
  * 
  * Erstellt am 19.04.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2010/02/15 09:24:09  u633d
+ * Objektart nicht �nderbar
+ *
  * Revision 1.4  2009/07/30 05:31:22  u633d
  * GIS, Entsorger vereinheitlicht, Objekte inaktivierbar und andere Erg�nzungen
  *
@@ -33,21 +36,29 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 
 import org.hibernate.HibernateException;
 
@@ -62,12 +73,15 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.ObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisBetreiberModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandortModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
@@ -344,6 +358,13 @@ public class ObjektBasisPanel  extends JPanel {
 	
 	// Fachdaten
 	private BasisObjektarten[] objektarten;
+		
+	// Objektverknuepfer
+	private ObjektVerknuepfungModel objektVerknuepfungModel;
+	private JTable objektverknuepfungTabelle = null;
+	private JButton selectObjektButton = null;
+	private Action verknuepfungLoeschAction;
+	private JPopupMenu verknuepfungPopup;
 	
 	public ObjektBasisPanel(ObjektBearbeiten hauptModul) {
 		
@@ -385,8 +406,21 @@ public class ObjektBasisPanel  extends JPanel {
 		
 		builder.appendRelatedComponentsGapRow();
 		builder.nextLine(2);
-		
-		JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveButton());
+
+		builder.appendSeparator("Verknüpfte Objekte");
+		builder.appendRow("3dlu");
+		builder.nextLine(2);
+				JScrollPane objektverknuepfungScroller = new JScrollPane(
+				getObjektverknuepungTabelle(),
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		builder.appendRow("fill:100dlu");
+		builder.append(objektverknuepfungScroller, 5);
+		builder.nextLine();
+
+		JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
+				getSelectObjektButton(), getSaveButton());
+
 		builder.append(buttonBar, 5);
 	}
 	
@@ -492,6 +526,7 @@ public class ObjektBasisPanel  extends JPanel {
 			if (hauptModul.getObjekt().getBeschreibung() != null) {
 				getBeschreibungsArea().setText(hauptModul.getObjekt().getBeschreibung());
 			}
+			objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
 		}
 	}
 	
@@ -798,4 +833,163 @@ public class ObjektBasisPanel  extends JPanel {
 		}
 		return saveButton;
 	}
+
+	private JTable getObjektverknuepungTabelle() {
+		
+		if (objektVerknuepfungModel == null) {
+			objektVerknuepfungModel = new ObjektVerknuepfungModel(hauptModul
+					.getObjekt());
+	
+			if (objektverknuepfungTabelle == null) {
+				objektverknuepfungTabelle = new JTable(objektVerknuepfungModel);
+			} else {
+				objektverknuepfungTabelle.setModel(objektVerknuepfungModel);
+			}
+			objektverknuepfungTabelle.getColumnModel().getColumn(0)
+					.setPreferredWidth(5);
+			objektverknuepfungTabelle.getColumnModel().getColumn(1)
+					.setPreferredWidth(100);
+			objektverknuepfungTabelle.getColumnModel().getColumn(2)
+					.setPreferredWidth(250);
+	
+			objektverknuepfungTabelle
+					.addMouseListener(new java.awt.event.MouseAdapter() {
+						public void mouseClicked(java.awt.event.MouseEvent e) {
+							if ((e.getClickCount() == 2)
+									&& (e.getButton() == 1)) {
+								Point origin = e.getPoint();
+								int row = getObjektverknuepungTabelle()
+										.rowAtPoint(origin);
+	
+								if (row != -1) {
+									BasisObjektverknuepfung obj = objektVerknuepfungModel
+											.getRow(row);
+									if (obj.getBasisObjektByIstVerknuepftMit().getObjektid().intValue() != hauptModul
+											.getObjekt().getObjektid().intValue())
+										hauptModul
+												.getManager()
+												.getSettingsManager()
+												.setSetting(
+														"auik.imc.edit_object",
+														obj
+																.getBasisObjektByIstVerknuepftMit()
+																.getObjektid()
+																.intValue(),
+														false);
+									else
+										hauptModul
+												.getManager()
+												.getSettingsManager()
+												.setSetting(
+														"auik.imc.edit_object",
+														obj
+																.getBasisObjektByObjekt()
+																.getObjektid()
+																.intValue(),
+														false);
+									hauptModul.getManager().switchModul(
+											"m_objekt_bearbeiten");
+								}
+							}
+						}
+	
+						public void mousePressed(MouseEvent e) {
+							showVerknuepfungPopup(e);
+						}
+	
+						public void mouseReleased(MouseEvent e) {
+							showVerknuepfungPopup(e);
+						}
+					});
+	
+			objektverknuepfungTabelle.getInputMap().put(
+					(KeyStroke) getVerknuepfungLoeschAction().getValue(
+							Action.ACCELERATOR_KEY),
+					getVerknuepfungLoeschAction().getValue(Action.NAME));
+			objektverknuepfungTabelle.getActionMap().put(
+					getVerknuepfungLoeschAction().getValue(Action.NAME),
+					getVerknuepfungLoeschAction());
+		}
+	
+		return objektverknuepfungTabelle;
+	
+	}
+
+	private void showVerknuepfungPopup(MouseEvent e) {
+		if (verknuepfungPopup == null) {
+			verknuepfungPopup = new JPopupMenu("Objekt");
+			JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
+			verknuepfungPopup.add(loeschItem);
+		}
+	
+		if (e.isPopupTrigger()) {
+			Point origin = e.getPoint();
+			int row = objektverknuepfungTabelle.rowAtPoint(origin);
+	
+			if (row != -1) {
+				objektverknuepfungTabelle.setRowSelectionInterval(row, row);
+				verknuepfungPopup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		}
+	}
+
+	private Action getVerknuepfungLoeschAction() {
+		if (verknuepfungLoeschAction == null) {
+			verknuepfungLoeschAction = new AbstractAction("Löschen") {
+				public void actionPerformed(ActionEvent e) {
+					int row = getObjektverknuepungTabelle().getSelectedRow();
+					if (row != -1
+							&& getObjektverknuepungTabelle().getEditingRow() == -1) {
+						BasisObjektverknuepfung verknuepfung = objektVerknuepfungModel
+								.getRow(row);
+						int answer = JOptionPane
+								.showConfirmDialog(
+										hauptModul.getPanel(),
+										"Soll die Verknüpfung wirklich gelöscht werden?\n"
+												+ "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
+										"Löschen bestätigen",
+										JOptionPane.YES_NO_OPTION);
+						if (answer == JOptionPane.YES_OPTION) {
+							if (objektVerknuepfungModel.removeRow(row)) {
+								hauptModul.getFrame().changeStatus(
+										"Objekt gelöscht.",
+										HauptFrame.SUCCESS_COLOR);
+								AUIKataster.debugOutput("Objekt "
+										+ verknuepfung.getId()
+										+ " wurde gelöscht!",
+										"BetreiberSuchen.removeAction");
+							} else {
+								hauptModul.getFrame().changeStatus(
+										"Konnte das Objekt nicht löschen!",
+										HauptFrame.ERROR_COLOR);
+							}
+						}
+					}
+				}
+			};
+			verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+					KeyEvent.VK_L));
+			verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
+					.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+		}
+
+		return verknuepfungLoeschAction;
+	}
+
+	private JButton getSelectObjektButton() {
+		if (selectObjektButton == null) {
+			selectObjektButton = new JButton("Objekt auswählen");
+
+			selectObjektButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ObjektChooser chooser = new ObjektChooser(hauptModul
+							.getFrame(), hauptModul.getObjekt(),
+							objektVerknuepfungModel);
+					chooser.setVisible(true);
+				}
+			});
+		}
+		return selectObjektButton;
+	}
+
 }

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBearbeiten.java,v 1.7 2010-02-02 12:24:00 u633d Exp $
+ * $Id: ObjektBearbeiten.java,v 1.8 2010-02-23 13:29:11 u633d Exp $
  * 
  * Erstellt am 15.02.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2010/02/02 12:24:00  u633d
+ * Fettabscheider-Analysen entfernen
+ *
  * Revision 1.6  2010/01/26 09:37:58  u633d
  * Fettabscheider-Analysen
  *
@@ -614,7 +617,7 @@ public class ObjektBearbeiten extends AbstractModul {
 						} else if (objekt.getBasisObjektarten().abteilungIs33()) {
 							getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
 							getChronoTab().updateForm();
-							getTabbedPane().setSelectedComponent(getChronoTab());
+							getTabbedPane().setSelectedComponent(getBasisTab());
 						}
 					}
 				}
