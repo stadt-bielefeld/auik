@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektBasisPanel.java,v 1.6 2010-02-23 13:28:10 u633d Exp $
+ * $Id: ObjektBasisPanel.java,v 1.7 2010-02-24 10:46:35 u633d Exp $
  * 
  * Erstellt am 19.04.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2010/02/23 13:28:10  u633d
+ * Objektverknuepfung im Objekt-Panel
+ *
  * Revision 1.5  2010/02/15 09:24:09  u633d
  * Objektart nicht �nderbar
  *
@@ -526,7 +529,12 @@ public class ObjektBasisPanel  extends JPanel {
 			if (hauptModul.getObjekt().getBeschreibung() != null) {
 				getBeschreibungsArea().setText(hauptModul.getObjekt().getBeschreibung());
 			}
-			objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
+			
+			if (hauptModul.getObjekt().getObjektid() != null) {
+				objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
+			} else {
+				objektVerknuepfungModel.clearList();
+			}
 		}
 	}
 	

@@ -103,4 +103,9 @@ public class ObjektVerknuepfungModel extends ListTableModel {
 	public BasisObjektverknuepfung getRow(int rowIndex) {
 		return (BasisObjektverknuepfung) getObjectAtRow(rowIndex);
 	}
+
+	public void clearList() {
+		setList(null);
+		fireTableDataChanged();
+	}
 }
