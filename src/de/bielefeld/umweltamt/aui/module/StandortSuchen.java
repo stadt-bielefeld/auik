@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: StandortSuchen.java,v 1.9 2009-12-14 10:36:50 u633d Exp $
+ * $Id: StandortSuchen.java,v 1.10 2010-02-24 10:45:53 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2009/12/14 10:36:50  u633d
+ * *** empty log message ***
+ *
  * Revision 1.8  2009/12/10 10:25:14  u633d
  * GIS oeffnen
  *
@@ -909,11 +912,14 @@ public class StandortSuchen extends AbstractModul {
 			
 				
 				public void actionPerformed(ActionEvent e) {
-										
+						
+					String prog = manager.getSettingsManager().getSetting("auik.gis.programmpath");
+					String proj = manager.getSettingsManager().getSetting("auik.gis.projectpath");
+					
 					int row = standortTabelle.getSelectedRow();
 					BasisStandort bsta = standortModel.getRow(row);
 				
-					ProcessBuilder pb = new ProcessBuilder("C:\\\\appz\\qgis\\bin\\qgis.exe", "D:\\\\data\\qgis\\MyProject.qgs");
+					ProcessBuilder pb = new ProcessBuilder(prog, proj);
 					
 					Map<String, String> env = pb.environment(); 
 					env.put( "RECHTS", bsta.getRechtswert().toString() ); 

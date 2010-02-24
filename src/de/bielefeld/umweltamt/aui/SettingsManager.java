@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SettingsManager.java,v 1.5 2009-11-12 06:33:01 u633d Exp $
+ * $Id: SettingsManager.java,v 1.6 2010-02-24 10:44:51 u633d Exp $
  * 
  * Erstellt am 31.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2009/11/12 06:33:01  u633d
+ * Birt aktualisiert
+ *
  * Revision 1.4  2009/10/06 09:15:20  u633d
  * hertsellnummerSuche
  *
@@ -119,10 +122,14 @@ public class SettingsManager {
 		defaults.setProperty("auik.prefs.status_time", "40");
 		defaults.setProperty("auik.prefs.sielhaut_labor", "HBICON");
 
-		// FIXME: Birt-Pfade anpassen.
 		defaults.setProperty("auik.birt.enginepath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\birt-runtime-2_3_2\\ReportEngine\\");
 		defaults.setProperty("auik.birt.reportpath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\designs\\");
 
+		defaults.setProperty("auik.gis.programmpath", "C:\\appz\\qgis\\bin\\qgis.exe\\");
+		defaults.setProperty("auik.gis.projectpath", "D:\\\\data\\qgis\\MyProject.qgs");
+		
+//		defaults.setProperty("auik.gis.programmpath", "G:\\qgis\\bin\\qgis.exe\\");
+//		defaults.setProperty("auik.gis.projectpath", "G:\\\\MyProjekt.qgs");
 		
 		appSettings = new Properties(defaults);
 		
