@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektChronoPanel.java,v 1.4 2010-02-23 13:27:01 u633d Exp $
+ * $Id: ObjektChronoPanel.java,v 1.5 2010-02-25 13:09:08 u633d Exp $
  * 
  * Erstellt am 07.10.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2010/02/23 13:27:01  u633d
+ * basis_chrono plus sachbearbeiter
+ *
  * Revision 1.3  2010/02/23 12:45:14  u633d
  * Sachbearbeiter
  *
@@ -176,7 +179,7 @@ public class ObjektChronoPanel extends JPanel {
 				if (tmp.length() > 10) {
 					tmp = tmp.substring(0,10);
 				}
-				chrono.setSachverhalt(tmp);
+				chrono.setSachbearbeiter(tmp);
 				break;
 			case 2:
 				// Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
@@ -184,7 +187,7 @@ public class ObjektChronoPanel extends JPanel {
 					tmp = tmp.substring(0,255);
 				}
 
-				chrono.setSachbearbeiter(tmp);
+				chrono.setSachverhalt(tmp);
 				break;
 			default:
 				break;
