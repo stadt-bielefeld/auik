@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektChronoPanel.java,v 1.5 2010-02-25 13:09:08 u633d Exp $
+ * $Id: ObjektChronoPanel.java,v 1.6 2010-03-05 06:02:47 u633d Exp $
  * 
  * Erstellt am 07.10.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2010/02/25 13:09:08  u633d
+ * basis_chrono plus sachbearbeiter
+ *
  * Revision 1.4  2010/02/23 13:27:01  u633d
  * basis_chrono plus sachbearbeiter
  *
@@ -64,6 +67,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
@@ -138,6 +142,7 @@ public class ObjektChronoPanel extends JPanel {
 					"Datum", 
 					"Sachbearbeiter",
 					"Sachverhalt",
+					
 			}, 
 			false, true);
 		}
@@ -175,7 +180,7 @@ public class ObjektChronoPanel extends JPanel {
 				}
 				break;
 			case 1:
-				// Auf 10 Zeichen kürzen, da die Datenbank-Spalte nur 10 Zeichen breit ist
+				// Auf 10 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
 				if (tmp.length() > 10) {
 					tmp = tmp.substring(0,10);
 				}
@@ -296,11 +301,60 @@ public class ObjektChronoPanel extends JPanel {
 			chronoTable.getCellEditor().stopCellEditing();
 		}
 		List chronoListe = chronoModel.getList();
+		boolean sachbear = true;
+		boolean gespeichert = true;
 		for (int i = 0; i < chronoListe.size(); i++) {
-			BasisObjektchrono chrono = (BasisObjektchrono) chronoListe.get(i);
-			BasisObjektchrono.saveObjektChrono(chrono);
+				
+				
+					BasisObjektchrono chrono = (BasisObjektchrono) chronoListe.get(i);							
+// Wenn ein Eintrag neu ist ( id = null) wird überprüft ob ein Sachbearbeiter angegeben ist.
+// Ein Eintrag wird nur gespeichert, wenn ein Sachbearbeiter eingetragen ist.
+					if (chrono.getId() == null)
+					{
+						String sachbearbeiter = chrono.getSachbearbeiter();
+
+					  if (sachbearbeiter == null || sachbearbeiter.length() == 0)
+					  {   
+						   sachbear = false;	
+					  }
+					  else
+					  {
+						  BasisObjektchrono.saveObjektChrono(chrono);
+						  chronoModel.fireTableDataChanged();
+						  
+						  if (BasisObjektchrono.saveObjektChrono(chrono) == false)
+						  {
+							  gespeichert = false;
+						  }
+						
+					  }
+					}
+					else
+					{	
+						BasisObjektchrono.saveObjektChrono(chrono);
+						chronoModel.fireTableDataChanged();
+						
+						 if (BasisObjektchrono.saveObjektChrono(chrono) == false)
+						 {
+							 gespeichert = false;
+						 }
+						
+					}
+
 		}
-		chronoModel.fireTableDataChanged();
+		
+		if (sachbear == false & gespeichert == true )
+		{
+			hauptModul.getFrame().showErrorMessage("Es muss ein Sachbearbeiter angegeben werden!", "Sachbearbeiter fehlt");
+		}
+		else if (sachbear == true & gespeichert == true )
+		{
+		   hauptModul.getFrame().changeStatus("Speichern erfolgreich", HauptFrame.SUCCESS_COLOR);
+		}
+		else if (gespeichert == false)
+		{
+			hauptModul.getFrame().changeStatus("Chronoligie konnte nicht gespeichert werden", HauptFrame.ERROR_COLOR);
+		}
 	}
 	
 	
@@ -393,7 +447,6 @@ public class ObjektChronoPanel extends JPanel {
 			chronoTable = new JTable(chronoModel);
 			chronoTable.getColumnModel().getColumn(0).setMaxWidth(80);
 			chronoTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-			chronoTable.getColumnModel().getColumn(1).setMaxWidth(100);
 			chronoTable.getColumnModel().getColumn(2).setPreferredWidth(300);
 			chronoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
