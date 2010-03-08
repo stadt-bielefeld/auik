@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ObjektChronoPanel.java,v 1.6 2010-03-05 06:02:47 u633d Exp $
+ * $Id: ObjektChronoPanel.java,v 1.7 2010-03-08 08:49:08 u633d Exp $
  * 
  * Erstellt am 07.10.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2010/03/05 06:02:47  u633d
+ * Sachbearbeiter-Chrono
+ *
  * Revision 1.5  2010/02/25 13:09:08  u633d
  * basis_chrono plus sachbearbeiter
  *
@@ -447,6 +450,7 @@ public class ObjektChronoPanel extends JPanel {
 			chronoTable = new JTable(chronoModel);
 			chronoTable.getColumnModel().getColumn(0).setMaxWidth(80);
 			chronoTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+			chronoTable.getColumnModel().getColumn(1).setMaxWidth(100);
 			chronoTable.getColumnModel().getColumn(2).setPreferredWidth(300);
 			chronoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
