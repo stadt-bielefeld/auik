@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: HauptFrame.java,v 1.4 2010-02-22 07:49:45 u633d Exp $
+ * $Id: HauptFrame.java,v 1.5 2010-03-09 09:24:42 u633d Exp $
  * 
  * Erstellt am 07.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2010/02/22 07:49:45  u633d
+ * Doku
+ *
  * Revision 1.3  2009/03/24 12:35:19  u633d
  * Umstellung auf UTF8
  *
@@ -43,6 +46,7 @@
  */
 package de.bielefeld.umweltamt.aui;
 
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -53,7 +57,12 @@ import java.awt.HeadlessException;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -98,6 +107,8 @@ import com.jgoodies.plaf.Options;
 import com.jgoodies.uif_lite.component.Factory;
 import com.jgoodies.uif_lite.panel.SimpleInternalFrame;
 
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.GradientPanel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -163,6 +174,7 @@ public class HauptFrame extends JFrame {
 	private JToolBar modulBar = null;
 	private JButton modulBackButton = null;
 	private JButton modulFwdButton = null;
+	private JButton qgis = null;
 	
 	private ModulManager manager;
 	private SettingsManager settings;
@@ -189,6 +201,7 @@ public class HauptFrame extends JFrame {
 			
 			// Look & Feel umschalten
 			UIManager.setLookAndFeel("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
+			
 			
 			/* Falls mal ein Wechsel auf Linux anstehen sollte, wird
 			 * der Windows-L'n'F vermutlich nicht mehr funktionieren.
@@ -348,6 +361,7 @@ public class HauptFrame extends JFrame {
 			modulBar.putClientProperty("JToolBar.isRollover", Boolean.TRUE);
 			modulBar.setFloatable(false);
 			modulBar.setOpaque(false);
+			modulBar.add(getQgis());
 			modulBar.add(getModulBackButton());
 			modulBar.add(getModulFwdButton());
 		}
@@ -399,7 +413,28 @@ public class HauptFrame extends JFrame {
 		}
 		return modulFwdButton;
 	}
-    /**
+	private JButton getQgis() {
+		if (qgis == null) {
+
+			String desc = "in QGIS ausgewähltes Objekt aufrufen";
+			qgis = new JButton("GIS",AuikUtils.getIcon(16, "qgis.png", desc));
+			
+			qgis.setForeground(getRightFrame().getTextForeground(true));
+			qgis.setOpaque(false);
+			
+			qgis.setToolTipText(desc);
+			qgis.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					readClipboard();
+				}
+				
+			});
+		}
+		
+		return qgis;
+	}
+	
+	/**
      * Zentriert ein Fenster auf dem Desktop.
      */
     public void locateOnScreen(Window win) {
@@ -568,8 +603,8 @@ public class HauptFrame extends JFrame {
 	private JMenuItem getDoku() {
 		if (DokuItem == null) {
 			DokuItem = new JMenuItem();
-			DokuItem.setText("Doku");
-			DokuItem.setMnemonic(KeyEvent.VK_U);
+			DokuItem.setText("Handbuch");
+			DokuItem.setMnemonic(KeyEvent.VK_B);
 			DokuItem.setEnabled(false);
 			DokuItem.addActionListener(new java.awt.event.ActionListener() { 				
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -1008,4 +1043,98 @@ public class HauptFrame extends JFrame {
 			return success;
 		}
 	}
+	
+	private void readClipboard() {
+		String tmp = null;
+		Clipboard systemClipboard;
+		systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		Transferable transferData = systemClipboard.getContents(null);
+		for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
+			Object content = null;
+			try {
+				content = transferData.getTransferData(dataFlavor);
+			} catch (UnsupportedFlavorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if (content instanceof String) {
+
+				tmp = content.toString();
+			}
+			
+				if (tmp != null){
+					int index = tmp.indexOf("bezeichnung");
+
+					if (index != -1)
+					{
+						char leer = 0;
+						char ersetzen = '"';
+						String tmp2 = tmp.replace(ersetzen, leer);
+
+						int indexBez = tmp2.indexOf("bsb");
+				
+						if (indexBez == -1)
+						{
+							indexBez = tmp2.indexOf("entgeb");
+						}
+
+						String bezeichnung = tmp2.substring(tmp2.indexOf("bezeichnung")+ 13, indexBez-1 );
+				
+				
+					
+						AtlSielhaut sielhaut = AtlSielhaut.getSielhautByBez(bezeichnung);
+					  
+						if ( sielhaut != null)
+						{	
+							AtlProbepkt probepunkt = AtlProbepkt.getSielhautProbepunkt(sielhaut);
+							manager.getSettingsManager().setSetting("auik.imc.edit_object", probepunkt.getBasisObjekt().getObjektid(), false);
+						
+
+							manager.switchModul("m_sielhaut1"); 
+						
+
+							changeStatus("Daten aus Zwischenablage ausgelesen",
+							HauptFrame.SUCCESS_COLOR);
+						}
+						else
+						{
+							changeStatus(
+							"Zwischenablage enthält keine verwertbaren Daten",
+							HauptFrame.ERROR_COLOR);
+						}
+						
+						
+						
+						
+				} 
+					else 
+					{					
+						changeStatus(
+						"Zwischenablage enthält keine verwertbaren Daten",
+						HauptFrame.ERROR_COLOR);
+					}
+				
+				break;
+				}
+				
+			
+		}
+		
+		if (tmp == null)
+		{
+			changeStatus(
+			"Zwischenablage enthält keine verwertbaren Daten",
+			HauptFrame.ERROR_COLOR);
+		}
+		
+		
+		
+	}	
+	
+	
+	
 }  //  @jve:decl-index=0:visual-constraint="10,10"

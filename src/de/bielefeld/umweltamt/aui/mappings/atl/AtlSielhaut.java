@@ -79,6 +79,41 @@ public class AtlSielhaut
     	return punkte;
     }
     
+    
+    public static AtlSielhaut getSielhautByBez(String bezeichnung) {
+    	AtlSielhaut sielhaut;
+String sucheF = bezeichnung.toLowerCase().trim() + "%";
+    	
+    	List punkte;
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			
+			punkte = session.createQuery(
+					"from AtlSielhaut as sp where " +
+					"lower(sp.bezeichnung) like ? " +
+					"order by sp.psielhaut desc, sp.pfirmenprobe desc, sp.bezeichnung")
+					.setString(0, sucheF)
+					.list();
+			
+			if (punkte.size() > 0) {
+				sielhaut = (AtlSielhaut) punkte.get(0);
+				
+			} else {
+				sielhaut = null;
+			}
+    	} catch (HibernateException e) {
+    		sielhaut = null;
+    		throw new RuntimeException("Datenbank-Fehler", e);
+    	} finally {
+    		HibernateSessionFactory.closeSession();
+    	}
+    	
+    	return sielhaut;
+    }
+    
+    
+    
+    
     /**
      * Lädt ein Objekt aus der Datenbank.
      * @param id Der Primärschlüssel des zu ladenden Objekts.
@@ -97,6 +132,8 @@ public class AtlSielhaut
     	
     	return sielhaut;
     }
+    
+   
     
     public static boolean saveSielhautPunkt(AtlSielhaut spunkt) {
     	boolean success;
