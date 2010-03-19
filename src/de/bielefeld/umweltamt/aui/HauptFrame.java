@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: HauptFrame.java,v 1.5 2010-03-09 09:24:42 u633d Exp $
+ * $Id: HauptFrame.java,v 1.6 2010-03-19 06:28:03 u633d Exp $
  * 
  * Erstellt am 07.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2010/03/09 09:24:42  u633d
+ * Verkn�pfung GIS/AUIK
+ *
  * Revision 1.4  2010/02/22 07:49:45  u633d
  * Doku
  *
@@ -605,13 +608,12 @@ public class HauptFrame extends JFrame {
 			DokuItem = new JMenuItem();
 			DokuItem.setText("Handbuch");
 			DokuItem.setMnemonic(KeyEvent.VK_B);
-			DokuItem.setEnabled(false);
+			DokuItem.setEnabled(true);
 			DokuItem.addActionListener(new java.awt.event.ActionListener() { 				
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					 File file = new File("X:\\Pfad zur Doku angeben");
-					String command = "cmd /C start "+file.getPath();
 					    try {
-					      Runtime.getRuntime().exec(command);
+					    	String cmdstart[] = { "cmd", "/c", "explorer", "X:\\Orga\\360\\360-3\\360-3-3\\Alle\\Datenbanken\\Bedienungsanleitung AUIK"};
+					    	Runtime.getRuntime().exec(cmdstart);
 					    } catch (IOException e1) {
 					    
 					    	e1.printStackTrace();
