@@ -265,6 +265,8 @@ public class AtlParameter
 					"or param.bezeichnung like 'lipophile Stoffe' "+
 					"or param.bezeichnung like 'Sulfat (SO4)'" +
 					"or param.bezeichnung like 'Fluorid (F)'" +
+					"or param.bezeichnung like 'CSB'" +
+					"or param.bezeichnung like 'BSB 5'" +
 					"order by param.bezeichnung")
 					.list();
 			
