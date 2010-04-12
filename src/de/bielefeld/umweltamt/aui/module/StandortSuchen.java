@@ -1,6 +1,6 @@
 /*
  * Datei:
- * $Id: StandortSuchen.java,v 1.11 2010-03-12 07:03:44 u633d Exp $
+ * $Id: StandortSuchen.java,v 1.10 2010-02-24 10:45:53 u633d Exp $
  * 
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  * 
@@ -56,11 +56,6 @@ import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.awt.Label;
 import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -68,13 +63,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -213,7 +206,7 @@ public class StandortSuchen extends AbstractModul {
 			
 			JPanel restrictPanel =new JPanel(new BorderLayout());
 			
-			JPanel restrictButtonBar = ButtonBarFactory.buildLeftAlignedBar(getDreiButton(), getVierButton(), getProbepktButton());
+			JPanel restrictButtonBar = ButtonBarFactory.buildLeftAlignedBar(getDreiButton(), getVierButton(), getProbepktButton() );
 			JPanel restrictButtonBar2 = ButtonBarFactory.buildRightAlignedBar( getReportListeButton() );
 			
 			restrictPanel.add(new Label("Objekte einschränken:"), BorderLayout.WEST);
@@ -630,8 +623,6 @@ public class StandortSuchen extends AbstractModul {
 		
 		return dreiButton;
 	}
-
-	
 	
 	private JButton getVierButton() {
 		if (vierButton == null) {
@@ -900,8 +891,7 @@ public class StandortSuchen extends AbstractModul {
 	        this.is = is;
 	    }
 
-	   
-		public void run() {
+	    public void run() {
 	        try {
 	            InputStreamReader isr = new InputStreamReader(is);
 	            BufferedReader br = new BufferedReader(isr);
@@ -921,53 +911,28 @@ public class StandortSuchen extends AbstractModul {
 			gisAction = new AbstractAction("GIS öffnen") {
 			
 				
-				
 				public void actionPerformed(ActionEvent e) {
-
-// Wenn QGis schon geöffnet ist, wird es geschlossen, damit es nicht 2 mal geöffnet ist
-					
-				/*String[] command ={"cmd",  "/C",  "Taskkill/F /Im qgis.exe"};			
-				try {
-				
-					ProcessBuilder processBuilder = new ProcessBuilder(command);
-			         Process process = processBuilder.start();
-			         try {
-			        	 process.waitFor();
-					} catch (InterruptedException e1) {
-
-						e1.printStackTrace();
-					}
-
-				} catch (IOException e2) {
-				
-					e2.printStackTrace();
-				}*/				  
-				
-				    
-				    	
-					
+						
+					String prog = manager.getSettingsManager().getSetting("auik.gis.programmpath");
+					String proj = manager.getSettingsManager().getSetting("auik.gis.projectpath");
 					
 					int row = standortTabelle.getSelectedRow();
 					BasisStandort bsta = standortModel.getRow(row);
-					
-					
-					ProcessBuilder pb = new ProcessBuilder("C:\\\\appz\\qgis\\bin\\qgis.exe", "D:\\\\data\\qgis\\MyProject.qgs");
 				
+					ProcessBuilder pb = new ProcessBuilder(prog, proj);
 					
 					Map<String, String> env = pb.environment(); 
 					env.put( "RECHTS", bsta.getRechtswert().toString() ); 
 					env.put( "HOCH", bsta.getHochwert().toString() ); 
 					
-
 					try{
-							Process process = pb.start();
-							
-						
-								
-							StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
-							StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
-							errorGobbler.start();
-							outputGobbler.start();
+					
+						Process process = pb.start();	
+						StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
+						StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
+						errorGobbler.start();
+						outputGobbler.start();
+
 						
 					} catch (IOException e1) {
 						e1.printStackTrace();
@@ -1041,8 +1006,5 @@ public class StandortSuchen extends AbstractModul {
 			objektTabelle.getActionMap().put(getObjektLoeschAction().getValue(Action.NAME), getObjektLoeschAction());
 		}
 		return objektTabelle;
-	
-	
 	}
-
 }
