@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SettingsManager.java,v 1.6 2010-02-24 10:44:51 u633d Exp $
+ * $Id: SettingsManager.java,v 1.6.2.1 2010-11-23 10:25:58 u633d Exp $
  * 
  * Erstellt am 31.01.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2010/02/24 10:44:51  u633d
+ * Gis Pfade ueber Settings
+ *
  * Revision 1.5  2009/11/12 06:33:01  u633d
  * Birt aktualisiert
  *
@@ -46,7 +49,7 @@
  * - Datenbank-URL
  *
  * Revision 1.14  2005/05/23 10:08:08  u633z
- * - ProbeSuchen mit in die Liste der Standard-Module aufgenommen
+ * - LaborProbeSuchen mit in die Liste der Standard-Module aufgenommen
  * - Header-Kommentar angepasst
  *
  */
@@ -104,19 +107,19 @@ public class SettingsManager {
 		defaults.setProperty("auik.prefs.maximized", "false");
 		defaults.setProperty("auik.prefs.save_size", "true");
 		
-		defaults.setProperty("auik.system.spath_fotos","X:/Applikationen/Anlagenkataster/Sielhaut/fotos/");
-		defaults.setProperty("auik.system.spath_karten", "X:/Applikationen/Anlagenkataster/Sielhaut/karten/");
+		defaults.setProperty("auik.system.spath_fotos","X:/Applikationen/Anlagenkataster/SielhautBearbeiten/fotos/");
+		defaults.setProperty("auik.system.spath_karten", "X:/Applikationen/Anlagenkataster/SielhautBearbeiten/karten/");
 		
 		defaults.setProperty(
 				"auik.system.module",
 				
-				"StandortSuchen, StandortNeu, " +
-				"ATLRohschlamm, ATLFaulschlamm, ProbeSuchen, KSAuswertung, ICPImport, " +
-				"Anh50Auswertung, Anh49Auswertung, AnhBwkAuswertung, SuevAuswertung, Anh40Auswertung, Anh56Auswertung, " +
-				"HerstellNrSuchen, AuswertungSVPruefung, AuswertungVawsWV, " +
-				"BetreiberSuchen, BetreiberNeu, " +
-				"ObjektBearbeiten, " +
-				"Sielhaut, SielImport"
+				"BasisStandortSuchen, BasisStandortNeu, " +
+				"KlaerschlammRohschlammproben, KlaerschlammFaulschlammproben, LaborProbeSuchen, KlaerschlammAuswertung, LaborIcpImport, " +
+				"EinleiterAnh50Auswertung, EinleiterAnh49Auswertung, EinleiterBrennwertAuswertung, EinleiterSuevkanAuswertung, EinleiterAnh40Auswertung, EinleiterAnh56Auswertung, " +
+				"VawsHerstellernummerSuchen, VawsKontrollenAuswertung, VawsVerwaltungsverfAuswertung, " +
+				"BasisBetreiberSuchen, BasisBetreiberNeu, " +
+				"BasisObjektBearbeiten, " +
+				"SielhautBearbeiten, SielhautImport"
 		);
 		
 		defaults.setProperty("auik.prefs.status_time", "40");
@@ -127,9 +130,6 @@ public class SettingsManager {
 
 		defaults.setProperty("auik.gis.programmpath", "C:\\appz\\qgis\\bin\\qgis.exe\\");
 		defaults.setProperty("auik.gis.projectpath", "D:\\\\data\\qgis\\MyProject.qgs");
-		
-//		defaults.setProperty("auik.gis.programmpath", "G:\\qgis\\bin\\qgis.exe\\");
-//		defaults.setProperty("auik.gis.projectpath", "G:\\\\MyProjekt.qgs");
 		
 		appSettings = new Properties(defaults);
 		

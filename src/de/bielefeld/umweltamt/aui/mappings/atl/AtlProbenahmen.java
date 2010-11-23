@@ -83,7 +83,7 @@ public class AtlProbenahmen
      */
     public static List getProbenahmen(AtlProbepkt pkt, boolean loadPos, int limit) {
     	List proben;
-    	if (pkt.getPktId() != null) {
+    	if (pkt.getObjektid() != null) {
     		try {
     			Session session = HibernateSessionFactory.currentSession();
     			Query query = session.createQuery("from AtlProbenahmen as probenahme where " +

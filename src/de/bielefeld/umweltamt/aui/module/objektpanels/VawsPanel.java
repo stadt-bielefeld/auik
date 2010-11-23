@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: VawsPanel.java,v 1.3 2009-12-02 06:29:47 u633d Exp $
+ * $Id: VawsPanel.java,v 1.3.2.1 2010-11-23 10:25:57 u633d Exp $
  * 
  * Erstellt am 25.08.2005 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/12/02 06:29:47  u633d
+ * Verbesserung Aufruf designs
+ *
  * Revision 1.2  2009/03/24 12:35:22  u633d
  * Umstellung auf UTF8
  *
@@ -73,7 +76,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
-import de.bielefeld.umweltamt.aui.module.ObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.VawsModel;
 
@@ -83,7 +86,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.VawsModel;
  */
 public class VawsPanel extends JPanel {
 	private String name;
-	private ObjektBearbeiten hauptModul;
+	private BasisObjektBearbeiten hauptModul;
 	
 	private VawsModel vawsModel;
 	
@@ -105,10 +108,10 @@ public class VawsPanel extends JPanel {
 	private JButton reportAnlageButton;
 	
 	/**
-	 * Erzeugt das Vaws-Panel für das ObjektBearbeiten-Modul.
-	 * @param hauptModul Das ObjektBearbeiten-Hauptmodul.
+	 * Erzeugt das Vaws-Panel für das BasisObjektBearbeiten-Modul.
+	 * @param hauptModul Das BasisObjektBearbeiten-Hauptmodul.
 	 */
-	public VawsPanel(ObjektBearbeiten hauptModul) {
+	public VawsPanel(BasisObjektBearbeiten hauptModul) {
 		name = "VAwS";
 		this.hauptModul = hauptModul;
 		vawsModel = new VawsModel();

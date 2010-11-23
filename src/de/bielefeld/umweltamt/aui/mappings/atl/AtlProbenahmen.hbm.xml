@@ -2,27 +2,20 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-
-<!-- DO NOT EDIT: This is a generated file that is synchronized -->
-<!-- by MyEclipse Hibernate tool integration.                   -->
-<!-- Created Fri Feb 18 12:42:30 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
 
     <class name="AtlProbenahmen" table="atl_probenahmen" lazy="false">
-        <id name="id" column="id" type="java.lang.Integer">
+        <id name="id" type="java.lang.Integer">
+        	<column name="id" sql-type="serial"/>
             <generator class="native">
                 <param name="sequence">atl_probenahmen_id_seq</param>
              </generator>
         </id>
 
-        <property name="kennummer" column="kennummer" type="java.lang.String" />      
-        <property name="sielhautId" column="sielhaut_id" type="java.lang.Integer" />
-        <property name="firmenId" column="firmen_id" type="java.lang.Integer" />
+        <property name="kennummer" column="kennummer" type="java.lang.String" />   
         <property name="art" column="art" type="java.lang.String" />
-        <property name="betrieb" column="betrieb" type="java.lang.String" />
-        <property name="probenahmepkt" column="probenahmepkt" type="java.lang.String" />
-        <property name="nrProbenahmepkt" column="nr_probenahmepkt" type="java.lang.Integer" />
-        <property name="datumDerEntnahme" column="datum_der_entnahme" type="java.util.Date" />
+        <property name="datumDerEntnahme" column="datum_der_entnahme" type="java.sql.Timestamp" />
+        <property name="zeitAnfang" column="zeit_anfang" type="java.sql.Time" />
         <property name="bisDatum" column="bis_datum" type="java.util.Date" />
         <property name="zeitDerEntnahmen" column="zeit_der_entnahmen" type="java.lang.String" />
         <property name="einwaage" column="einwaage" type="java.lang.Float" />
@@ -34,13 +27,19 @@
         <property name="bemerkung" column="bemerkung" type="java.lang.String" />
         <property name="an360x11" column="an_360x11" type="java.util.Date" />
         <property name="ueberschreitung" column="ueberschreitung" type="java.lang.String" />
+        <property name="anzahlbeteiligte" column="anzahlbeteiligte" type="java.lang.Integer" />
+        <property name="uhrzeitbeginn" column="uhrzeitbeginn" type="java.lang.String" />
+        <property name="uhrzeitende" column="uhrzeitende" type="java.lang.String" />
+        <property name="fahrtzeit" column="fahrtzeit" type="java.lang.String" />
         <property name="bescheid" column="bescheid" type="java.util.Date" />
         <property name="kosten" column="kosten" type="java.lang.Double" />
+		<property name="sachbearbeiter" column="sachbearbeiter" type="java.lang.String" />
         <property name="massnahmen" column="massnahmen" type="java.lang.String" />
         <property name="bezeichnung" column="bezeichnung" type="java.lang.String" />
-        <property name="quartal" column="quartal" type="java.lang.String" />
 
         <many-to-one name="atlProbepkt" column="objektid" class="AtlProbepkt" />
+
+        <many-to-one name="atlStatus" column="status" class="AtlStatus" />
 
         <set name="atlAnalysepositionen" lazy="true" inverse="true" cascade="all-delete-orphan">
         	<key column="probenahme_id"/>

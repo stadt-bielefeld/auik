@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: UebergabeModel.java,v 1.1 2010-02-04 14:25:17 u633d Exp $
+ * $Id: UebergabeModel.java,v 1.1.2.1 2010-11-23 10:25:58 u633d Exp $
  * 
  * Erstellt am 03.05.2006 von David Klotz
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2010/02/04 14:25:17  u633d
+ * EinleiterUebergabestellenAuswertung
+ *
  * Revision 1.3  2010/01/20 12:55:00  u633d
  * Auswertungen order by inaktiv
  *

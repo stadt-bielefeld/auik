@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
+
+    <class name="AtlStatus" table="atl_status" lazy="false" mutable="false">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="assigned"/>
+        </id>
+
+        <property name="bezeichnung" column="bezeichnung" type="java.lang.String" />
+    </class>
+
+</hibernate-mapping>

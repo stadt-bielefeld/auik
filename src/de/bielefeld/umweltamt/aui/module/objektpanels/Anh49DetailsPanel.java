@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh49DetailsPanel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
+ * $Id: Anh49DetailsPanel.java,v 1.2.2.1 2010-11-23 10:25:56 u633d Exp $
  * 
  * Erstellt am 18.05.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:22  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:39  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -113,7 +116,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
-import de.bielefeld.umweltamt.aui.module.ObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.AbscheiderEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
@@ -321,7 +324,7 @@ public class Anh49DetailsPanel extends JPanel{
 	}
 	private String name;
 
-	private ObjektBearbeiten hauptModul;
+	private BasisObjektBearbeiten hauptModul;
 	
 	private Anh49Fachdaten fachdaten;
 	private Anh49AbscheiderModel abscheiderModel;
@@ -338,7 +341,7 @@ public class Anh49DetailsPanel extends JPanel{
 	
 	private JButton speichernButton;
 	
-	public Anh49DetailsPanel(ObjektBearbeiten hauptModul) {
+	public Anh49DetailsPanel(BasisObjektBearbeiten hauptModul) {
 		name = "Abscheider-Details";
 		this.hauptModul = hauptModul;
 		

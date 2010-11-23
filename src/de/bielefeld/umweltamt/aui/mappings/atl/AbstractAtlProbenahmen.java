@@ -28,6 +28,9 @@ public abstract class AbstractAtlProbenahmen
 
     /** The value of the atlProbepkt association. */
     private AtlProbepkt atlProbepkt;
+
+    /** The value of the atlStatus association. */
+    private AtlStatus atlStatus;
     
     /** The value of the atlAnalysepositionen association. */
     private Set atlAnalysepositionen;
@@ -35,26 +38,14 @@ public abstract class AbstractAtlProbenahmen
     /** The value of the simple id property. */
     private java.lang.Integer objektid;
 
-    /** The value of the simple sielhautId property. */
-    private java.lang.Integer sielhautId;
-
-    /** The value of the simple firmenId property. */
-    private java.lang.Integer firmenId;
-
     /** The value of the simple art property. */
     private java.lang.String art;
 
-    /** The value of the simple betrieb property. */
-    private java.lang.String betrieb;
-
-    /** The value of the simple probenahmepkt property. */
-    private java.lang.String probenahmepkt;
-
-    /** The value of the simple nrProbenahmepkt property. */
-    private java.lang.Integer nrProbenahmepkt;
+    /** The value of the simple datumDerEntnahme property. */
+    private java.sql.Timestamp datumDerEntnahme;
 
     /** The value of the simple datumDerEntnahme property. */
-    private java.util.Date datumDerEntnahme;
+    private java.util.Date zeitAnfang;
 
     /** The value of the simple bisDatum property. */
     private java.util.Date bisDatum;
@@ -89,20 +80,35 @@ public abstract class AbstractAtlProbenahmen
     /** The value of the simple ueberschreitung property. */
     private java.lang.String ueberschreitung;
 
+    /** The value of the simple anzahlbeteiligte property. */
+    private java.lang.Integer anzahlbeteiligte;
+
+    /** The value of the simple uhrzeitbeginn property. */
+    private java.lang.String uhrzeitbeginn;
+
+    /** The value of the simple uhrzeitende property. */
+    private java.lang.String uhrzeitende;
+
+    /** The value of the simple fahrtzeit property. */
+    private java.lang.String fahrtzeit;
+
     /** The value of the simple bescheid property. */
     private java.util.Date bescheid;
 
     /** The value of the simple kosten property. */
     private java.lang.Double kosten;
+    
+    /** The value of the simple status property. */
+    private java.lang.String status;
+    
+    /** The value of the simple sachbearbeiter property. */
+    private java.lang.String sachbearbeiter;
 
     /** The value of the simple massnahmen property. */
     private java.lang.String massnahmen;
 
     /** The value of the simple bezeichnung property. */
     private java.lang.String bezeichnung;
-
-    /** The value of the simple quartal property. */
-    private java.lang.String quartal;
 
     /**
      * Simple constructor of AbstractAtlProbenahmen instances.
@@ -158,42 +164,6 @@ public abstract class AbstractAtlProbenahmen
     }
 
     /**
-     * Return the value of the SIELHAUT_ID column.
-     * @return java.lang.Integer
-     */
-    public java.lang.Integer getSielhautId()
-    {
-        return this.sielhautId;
-    }
-
-    /**
-     * Set the value of the SIELHAUT_ID column.
-     * @param sielhautId
-     */
-    public void setSielhautId(java.lang.Integer sielhautId)
-    {
-        this.sielhautId = sielhautId;
-    }
-
-    /**
-     * Return the value of the FIRMEN_ID column.
-     * @return java.lang.Integer
-     */
-    public java.lang.Integer getFirmenId()
-    {
-        return this.firmenId;
-    }
-
-    /**
-     * Set the value of the FIRMEN_ID column.
-     * @param firmenId
-     */
-    public void setFirmenId(java.lang.Integer firmenId)
-    {
-        this.firmenId = firmenId;
-    }
-
-    /**
      * Return the value of the PROBEPKT_ID column.
      * @return AtlProbepkt
      */
@@ -209,6 +179,24 @@ public abstract class AbstractAtlProbenahmen
     public void setAtlProbepkt(AtlProbepkt atlProbepkt)
     {
         this.atlProbepkt = atlProbepkt;
+    }
+
+    /**
+     * Return the value of the AtlStatus column.
+     * @return AtlProbepkt
+     */
+    public AtlStatus getAtlStatus()
+    {
+        return this.atlStatus;
+    }
+
+    /**
+     * Set the value of the AtlStatus column.
+     * @param atlProbepkt
+     */
+    public void setAtlStatus(AtlStatus atlStatus)
+    {
+        this.atlStatus = atlStatus;
     }
     
     /**
@@ -267,60 +255,6 @@ public abstract class AbstractAtlProbenahmen
     }
 
     /**
-     * Return the value of the BETRIEB column.
-     * @return java.lang.String
-     */
-    public java.lang.String getBetrieb()
-    {
-        return this.betrieb;
-    }
-
-    /**
-     * Set the value of the BETRIEB column.
-     * @param betrieb
-     */
-    public void setBetrieb(java.lang.String betrieb)
-    {
-        this.betrieb = betrieb;
-    }
-
-    /**
-     * Return the value of the PROBENAHMEPKT column.
-     * @return java.lang.String
-     */
-    public java.lang.String getProbenahmepkt()
-    {
-        return this.probenahmepkt;
-    }
-
-    /**
-     * Set the value of the PROBENAHMEPKT column.
-     * @param probenahmepkt
-     */
-    public void setProbenahmepkt(java.lang.String probenahmepkt)
-    {
-        this.probenahmepkt = probenahmepkt;
-    }
-
-    /**
-     * Return the value of the NR_PROBENAHMEPKT column.
-     * @return java.lang.Integer
-     */
-    public java.lang.Integer getNrProbenahmepkt()
-    {
-        return this.nrProbenahmepkt;
-    }
-
-    /**
-     * Set the value of the NR_PROBENAHMEPKT column.
-     * @param nrProbenahmepkt
-     */
-    public void setNrProbenahmepkt(java.lang.Integer nrProbenahmepkt)
-    {
-        this.nrProbenahmepkt = nrProbenahmepkt;
-    }
-
-    /**
      * Return the value of the DATUM_DER_ENTNAHME column.
      * @return java.util.Date
      */
@@ -333,9 +267,27 @@ public abstract class AbstractAtlProbenahmen
      * Set the value of the DATUM_DER_ENTNAHME column.
      * @param datumDerEntnahme
      */
-    public void setDatumDerEntnahme(java.util.Date datumDerEntnahme)
+    public void setDatumDerEntnahme(java.sql.Timestamp datumDerEntnahme)
     {
         this.datumDerEntnahme = datumDerEntnahme;
+    }
+
+    /**
+     * Return the value of the DATUM_DER_ENTNAHME column.
+     * @return java.util.Date
+     */
+    public java.util.Date getZeitAnfang()
+    {
+        return this.zeitAnfang;
+    }
+
+    /**
+     * Set the value of the DATUM_DER_ENTNAHME column.
+     * @param zeitAnfang
+     */
+    public void setZeitAnfang(java.util.Date zeitAnfang)
+    {
+        this.zeitAnfang = zeitAnfang;
     }
 
     /**
@@ -537,6 +489,78 @@ public abstract class AbstractAtlProbenahmen
     }
 
     /**
+     * Return the value of the anzahlbeteiligte column.
+     * @return java.lang.String
+     */
+    public java.lang.Integer getAnzahlbeteiligte()
+    {
+        return this.anzahlbeteiligte;
+    }
+
+    /**
+     * Set the value of the UEBERSCHREITUNG column.
+     * @param ueberschreitung
+     */
+    public void setAnzahlbeteiligte(java.lang.Integer anzahlbeteiligte)
+    {
+        this.anzahlbeteiligte = anzahlbeteiligte;
+    }
+
+    /**
+     * Return the value of the uhrzeitbeginn column.
+     * @return java.lang.String
+     */
+    public java.lang.String getUhrzeitbeginn()
+    {
+        return this.ueberschreitung;
+    }
+
+    /**
+     * Set the value of the uhrzeitbeginn column.
+     * @param uhrzeitbeginn
+     */
+    public void setUhrzeitbeginn(java.lang.String uhrzeitbeginn)
+    {
+        this.uhrzeitbeginn = uhrzeitbeginn;
+    }
+
+    /**
+     * Return the value of the uhrzeitende column.
+     * @return java.lang.String
+     */
+    public java.lang.String getUhrzeitende()
+    {
+        return this.uhrzeitende;
+    }
+
+    /**
+     * Set the value of the uhrzeitende column.
+     * @param uhrzeitende
+     */
+    public void setUhrzeitende(java.lang.String uhrzeitende)
+    {
+        this.uhrzeitende = uhrzeitende;
+    }
+
+    /**
+     * Return the value of the fahrtzeit column.
+     * @return java.lang.String
+     */
+    public java.lang.String getFahrtzeit()
+    {
+        return this.fahrtzeit;
+    }
+
+    /**
+     * Set the value of the fahrtzeit column.
+     * @param fahrtzeit
+     */
+    public void setFahrtzeit(java.lang.String fahrtzeit)
+    {
+        this.fahrtzeit = fahrtzeit;
+    }
+
+    /**
      * Return the value of the BESCHEID column.
      * @return java.util.Date
      */
@@ -570,6 +594,42 @@ public abstract class AbstractAtlProbenahmen
     public void setKosten(java.lang.Double kosten)
     {
         this.kosten = kosten;
+    }
+    
+    /**
+     * Return the value of the Status column.
+     * @return java.lang.String
+     */
+    public java.lang.String getStatus()
+    {
+        return this.status;
+    }
+
+    /**
+     * Set the value of the Status column.
+     * @param status
+     */
+    public void setStatus(java.lang.String status)
+    {
+        this.status = status;
+    }
+    
+    /**
+     * Return the value of the Sachbearbeiter column.
+     * @return java.lang.String
+     */
+    public java.lang.String getSachbearbeiter()
+    {
+        return this.sachbearbeiter;
+    }
+
+    /**
+     * Set the value of the Sachbearbeiter column.
+     * @param sachbearbeiter
+     */
+    public void setSachbearbeiter(java.lang.String sachbearbeiter)
+    {
+        this.sachbearbeiter = sachbearbeiter;
     }
 
     /**
@@ -606,24 +666,6 @@ public abstract class AbstractAtlProbenahmen
     public void setBezeichnung(java.lang.String bezeichnung)
     {
         this.bezeichnung = bezeichnung;
-    }
-
-    /**
-     * Return the value of the QUARTAL column.
-     * @return java.lang.String
-     */
-    public java.lang.String getQuartal()
-    {
-        return this.quartal;
-    }
-
-    /**
-     * Set the value of the QUARTAL column.
-     * @param quartal
-     */
-    public void setQuartal(java.lang.String quartal)
-    {
-        this.quartal = quartal;
     }
 
     /**

@@ -61,7 +61,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
 	/**
 	 * <p>
 	 * Creates an instance whose text field will accept the specified
-	 * date patterns. The pattern displayed by the text field will be
+	 * DateFormatter patterns. The pattern displayed by the text field will be
 	 * the first pattern of the <code>patterns</code> array. If
 	 * <code>patterns</code> is <code>null</code> a default array
 	 * of patterns will be used.
@@ -121,10 +121,10 @@ implements ActionListener, FocusListener, PropertyChangeListener {
 	}
 	
 	/**
-	 * Sets the date displayed by the text field and returned by
+	 * Sets the DateFormatter displayed by the text field and returned by
 	 * {@link #getDate()}.
 	 *
-	 * @param date The new date.
+	 * @param DateFormatter The new DateFormatter.
 	 */
 	public void setDate(Date date) {
 		lastSelectedDate = date;
@@ -145,9 +145,9 @@ implements ActionListener, FocusListener, PropertyChangeListener {
 	}
 	
 	/**
-	 * Returns the date.
+	 * Returns the DateFormatter.
 	 *
-	 * @return The currently selected date (may be NULL)
+	 * @return The currently selected DateFormatter (may be NULL)
 	 */
 	public Date getDate() {
 		return lastSelectedDate;
@@ -180,7 +180,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
 	}
 	
 	/**
-	 * Called when JCalendar's date is changed.
+	 * Called when JCalendar's DateFormatter is changed.
 	 */
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (!ignorePropertyChangeEvent && evt.getPropertyName().equals("day")) {
@@ -205,7 +205,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
 		
 		String enteredDate = textField.getText().trim();
 		
-		// If the text field was blanked then set the selected date to null.
+		// If the text field was blanked then set the selected DateFormatter to null.
 		if ((enteredDate == null) || (enteredDate.length() == 0)) {
 			setDate(null);
 			return;
@@ -213,7 +213,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
 		
 		Date date = null;
 		
-		// Loop through the accepted patterns and try to parse the date.
+		// Loop through the accepted patterns and try to parse the DateFormatter.
 		for (int i = 0; i < patterns.length; i++) {
 			dateFormat.applyPattern(patterns[i]);
 			
@@ -229,7 +229,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
 		// Reset the pattern of the format to the default.
 		dateFormat.applyPattern(patterns[0]);
 		
-		// If the entered date could not be parsed, then display an error.
+		// If the entered DateFormatter could not be parsed, then display an error.
 		if (date == null) {
 			displayErrorMessage();
 			textField.selectAll();
@@ -237,7 +237,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
 		}
 		
 		// Set the text field with the default pattern and
-		// set JCalendar's date.
+		// set JCalendar's DateFormatter.
 		setDate(date);
 	}
 	

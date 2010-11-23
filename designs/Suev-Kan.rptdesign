@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.2" id="1">
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.17" id="1">
     <property name="author">Colin Atkins</property>
-    <property name="createdBy">Eclipse BIRT Designer Version 2.1.0.N20060628-1351 Build &lt;20060628-1537></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 2.3.2.r232_20090202 Build &lt;@BUILD@></property>
     <property name="units">mm</property>
     <property name="comments">Copyright (c) 2008 &lt;&lt;Your Company Name here>></property>
     <data-sources>
@@ -10,11 +10,37 @@
             <property name="odaDriverClass">com.informix.jdbc.IfxDriver</property>
             <property name="odaURL">jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi</property>
             <property name="odaUser">vaws</property>
-            <encrypted-property name="odaPassword">VmF3czAw</encrypted-property>
+            <encrypted-property name="odaPassword" encryptionID="base64">VmF3czAw</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>
         <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="joineddataset" id="417">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">betrname</property>
+                    <property name="displayName">betrname</property>
+                </structure>
+                <structure>
+                    <property name="columnName">strasse</property>
+                    <property name="displayName">strasse</property>
+                </structure>
+                <structure>
+                    <property name="columnName">hausnr</property>
+                    <property name="displayName">hausnr</property>
+                </structure>
+                <structure>
+                    <property name="columnName">hausnrzus</property>
+                    <property name="displayName">hausnrzus</property>
+                </structure>
+                <structure>
+                    <property name="columnName">vers_flaeche</property>
+                    <property name="displayName">vers_flaeche</property>
+                </structure>
+                <structure>
+                    <property name="columnName">suevkan_pflicht</property>
+                    <property name="displayName">suevkan_pflicht</property>
+                </structure>
+            </list-property>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
@@ -41,6 +67,11 @@
                         <property name="position">5</property>
                         <property name="name">vers_flaeche</property>
                         <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">suevkan_pflicht</property>
+                        <property name="dataType">boolean</property>
                     </structure>
                 </list-property>
             </structure>
@@ -81,8 +112,15 @@
                     <property name="dataType">integer</property>
                     <property name="nativeDataType">4</property>
                 </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">suevkan_pflicht</property>
+                    <property name="nativeName">suevkan_pflicht</property>
+                    <property name="dataType">boolean</property>
+                    <property name="nativeDataType">16</property>
+                </structure>
             </list-property>
-            <property name="queryText">SELECT vaws.basis_betreiber.betrname, vaws.basis_standort.strasse, vaws.basis_standort.hausnr, vaws.basis_standort.hausnrzus, vaws.anh_suev_fachdaten.vers_flaeche
+            <property name="queryText">SELECT vaws.basis_betreiber.betrname, vaws.basis_standort.strasse, vaws.basis_standort.hausnr, vaws.basis_standort.hausnrzus, vaws.anh_suev_fachdaten.vers_flaeche, vaws.anh_suev_fachdaten.suevkan_pflicht
 FROM vaws.basis_standort INNER JOIN (vaws.basis_betreiber INNER JOIN (vaws.anh_suev_fachdaten INNER JOIN vaws.basis_objekt ON vaws.anh_suev_fachdaten.objektid = vaws.basis_objekt.objektid) ON vaws.basis_betreiber.id = vaws.basis_objekt.betreiberid) ON vaws.basis_standort.id = vaws.basis_objekt.standortid order by strasse, hausnr;</property>
         </oda-data-set>
     </data-sets>
@@ -120,7 +158,7 @@ FROM vaws.basis_standort INNER JOIN (vaws.basis_betreiber INNER JOIN (vaws.anh_s
             <page-footer>
                 <text id="3">
                     <property name="contentType">html</property>
-                    <text-property name="content"><![CDATA[<span style="font-family: Arial;">&copy; Copyright 2008 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
+                    <text-property name="content"><![CDATA[<span style="font-family: Arial;">&amp;copy; Copyright 2008 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
                 </text>
             </page-footer>
         </simple-master-page>
@@ -222,6 +260,7 @@ FROM vaws.basis_standort INNER JOIN (vaws.basis_betreiber INNER JOIN (vaws.anh_s
                     <property name="dataType">any</property>
                 </structure>
             </list-property>
+            <property name="pageBreakInterval">50</property>
             <column id="380">
                 <property name="width">7cm</property>
             </column>

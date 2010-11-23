@@ -6,7 +6,7 @@
 
     <class name="VawsVerwmassnahmen" table="vaws_verwmassnahmen">
         <id name="id" column="id" type="java.lang.Integer">
-            <generator class="native"/>
+            <generator class="assigned"/>
         </id>
         
         <property name="massnahmen" column="massnahmen" type="java.lang.String"/>

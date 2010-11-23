@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: SimpleDialog.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
+ * $Id: SimpleDialog.java,v 1.2.2.1 2010-11-23 10:25:59 u633d Exp $
  * 
  * Erstellt am 06.06.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:23  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:41  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -43,7 +46,7 @@ import com.jgoodies.forms.factories.ButtonBarFactory;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 
 /**
- * Eine Grundlage für einen einfachen Dialog mit einem oder zwei Buttons.
+ * Eine Grundlage für einen einfachen Dialog mit einem, zwei oder drei Buttons.
  * @author David Klotz
  */
 public abstract class SimpleDialog extends JDialog {
@@ -56,9 +59,10 @@ public abstract class SimpleDialog extends JDialog {
 	protected HauptFrame frame;
 	
 	protected boolean twoButtons = false;
+	protected boolean threeButtons = false;
 	
 	protected JPanel buttonBar;
-	protected JButton button1, button2;
+	protected JButton button1, button2, button3;
 	
 	public SimpleDialog(HauptFrame frame) {
 		this(null, frame);
@@ -73,6 +77,10 @@ public abstract class SimpleDialog extends JDialog {
 			button2 = new JButton(getSecondButtonAction());
 			twoButtons = true;
 		}
+		if (getThirdButtonAction() != null) {
+			button3 = new JButton(getThirdButtonAction());
+			threeButtons = true;
+		}
 		
 		JPanel tmp = new JPanel(new BorderLayout());
 		tmp.setBorder(Borders.DIALOG_BORDER);
@@ -80,7 +88,9 @@ public abstract class SimpleDialog extends JDialog {
 		JComponent content = buildContentArea();
 		tmp.add(content, BorderLayout.CENTER);
 		
-		if (twoButtons) {
+		if (threeButtons) {
+			buttonBar = ButtonBarFactory.buildOKCancelApplyBar(button1, button2, button3);
+		} else if (twoButtons) {
 			buttonBar = ButtonBarFactory.buildOKCancelBar(button1, button2);
 		} else {
 			buttonBar = ButtonBarFactory.buildOKBar(button1);
@@ -108,6 +118,9 @@ public abstract class SimpleDialog extends JDialog {
 	
 	protected abstract Action getFirstButtonAction();
 	protected Action getSecondButtonAction() {
+		return null;
+	}
+	protected Action getThirdButtonAction() {
 		return null;
 	}
 }

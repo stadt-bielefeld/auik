@@ -54,7 +54,7 @@ public class VawsVerwaltungsverf
 			kontrollen = session.createQuery(
 					query)
 					.setDate(0, new Date())
-					.setString(1, "f")
+					.setBoolean(1, false)
 					.list();
 
 		} catch (HibernateException e) {

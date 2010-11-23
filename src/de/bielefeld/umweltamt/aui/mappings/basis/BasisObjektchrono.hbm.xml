@@ -6,7 +6,8 @@
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
 
     <class name="BasisObjektchrono" table="basis_objektchrono">
-        <id name="id" column="id" type="java.lang.Integer">
+        <id name="id" type="java.lang.Integer">
+        	<column name="id" sql-type="serial"/>
             <generator class="native">
             	<param name="sequence">basis_objektchrono_id_seq</param>
         	</generator>

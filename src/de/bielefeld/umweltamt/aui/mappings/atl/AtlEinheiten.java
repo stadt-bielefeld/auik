@@ -77,7 +77,7 @@ public class AtlEinheiten
 		if (sEinheiten == null) {
 			sEinheiten = new HashMap();
 			
-			// Sielhaut:
+			// SielhautBearbeiten:
 			sEinheiten.put("mg/kg TS", AtlEinheiten.MG_KG_ID);
 			sEinheiten.put("%", AtlEinheiten.PROZENT_ID);
 			

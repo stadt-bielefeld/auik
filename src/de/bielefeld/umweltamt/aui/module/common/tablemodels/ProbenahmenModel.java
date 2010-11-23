@@ -77,7 +77,7 @@ public class ProbenahmenModel extends ListTableModel {
 					if (secondColumn.equals("Art")) {
 						value = probe.getAtlProbepkt().getAtlProbeart();
 					} else if (secondColumn.equals("Pkt-ID")) {
-						value = probe.getAtlProbepkt().getPktId();
+						value = probe.getAtlProbepkt().getObjektid();
 					} else {
 						value = "";
 					}

@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: Anh49AnalysenPanel.java,v 1.2 2009-03-24 12:35:22 u633d Exp $
+ * $Id: Anh49AnalysenPanel.java,v 1.2.2.1 2010-11-23 10:25:56 u633d Exp $
  * 
  * Erstellt am 01.06.2005 von Gerhard Genuit (u633d)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2009/03/24 12:35:22  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:39  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -72,7 +75,7 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
-import de.bielefeld.umweltamt.aui.module.ObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -281,7 +284,7 @@ public class Anh49AnalysenPanel extends JPanel{
 	
 	private String name;
 
-	private ObjektBearbeiten hauptModul;
+	private BasisObjektBearbeiten hauptModul;
 	
 	private Anh49Fachdaten fachdaten;
 	private Anh49AnalysenModel analysenModel;
@@ -289,7 +292,7 @@ public class Anh49AnalysenPanel extends JPanel{
 	private JTable analysenTabelle;
 	private JButton speichernButton;
 	
-	public Anh49AnalysenPanel(ObjektBearbeiten hauptModul) {
+	public Anh49AnalysenPanel(BasisObjektBearbeiten hauptModul) {
 		name = "Analysen";
 		this.hauptModul = hauptModul;
 		

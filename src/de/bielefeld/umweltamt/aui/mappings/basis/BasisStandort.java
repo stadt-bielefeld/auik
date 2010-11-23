@@ -208,4 +208,39 @@ public class BasisStandort
 		
 		return tmp;
 	}
+	
+    
+    /**
+     * Löscht einen vorhandenen Standort aus der Datenbank.
+     * @param standort Der Standort, der gelöscht werden soll.
+     * @return <code>true</code>, wenn der Betreiber gelöscht wurde oder 
+     * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Standort 
+     * nicht in der Datenbank existiert).
+     */
+    public static boolean removeStandort(BasisStandort standort) {
+    	boolean removed;
+		
+		Transaction tx = null;
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			tx = session.beginTransaction();
+			session.delete(standort);
+			tx.commit();
+			removed = true;
+		} catch (HibernateException e) {
+			removed = false;
+			e.printStackTrace();
+			if (tx != null) {
+				try {
+					tx.rollback();
+				} catch (HibernateException e1) {
+					AUIKataster.handleDBException(e1, "BasisStandort.removeStandort", false);
+				}
+			}
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		
+		return removed;
+    }
 }

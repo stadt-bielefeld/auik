@@ -62,7 +62,7 @@ public class VawsKontrollen
 			kontrollen = session.createQuery(
 					query)
 					.setDate(0, new Date())
-					.setString(1, "f")
+					.setBoolean(1, false)
 //					.setCacheable(true)
 					.list();
 

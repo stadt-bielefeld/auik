@@ -34,17 +34,17 @@ public class AtlProbepkt
 
     /**
      * Constructor of AtlProbepkt instances given a simple primary key.
-     * @param pktId
+     * @param objektid
      */
-    public AtlProbepkt(java.lang.Integer pktId)
+    public AtlProbepkt(java.lang.Integer objektid)
     {
-        super(pktId);
+        super(objektid);
     }
 
     /* Add customized code below */
     
 	public String toString() {
-		return "[Probepunkt:"+getPktId()+", Art:"+getAtlProbeart()+", Nr:"+getNummer()+"]";
+		return "[Probepunkt:"+getObjektid()+", Art:"+getAtlProbeart()+", Nr:"+getNummer()+"]";
 	}
     
     /**
@@ -60,7 +60,7 @@ public class AtlProbepkt
 				    "from AtlProbepkt as probepkt where " +
 				    "probepkt.atlProbeart = ? " +
 				    "and probepkt.atlKlaeranlagen = ? " +
-				    "order by probepkt.pktId asc")
+				    "order by probepkt.objektid asc")
 				    .setEntity(0, art)
 				    .setEntity(1, ka)
 				    .list();
@@ -117,7 +117,7 @@ public class AtlProbepkt
     	try {
     		List pkte = session.createQuery(
     				"from AtlProbepkt as probepkt where " +
-					"probepkt.pktId = ?")
+					"probepkt.objektid = ?")
 					.setInteger(0, id)
 					.list();
     		
@@ -148,7 +148,7 @@ public class AtlProbepkt
     private static AtlProbepkt getProbepunktByObjekt(BasisObjekt objekt, Session session) {
     	AtlProbepkt punkt = null;
 
-//    	if (objekt.getBasisObjektarten().isProbepunkt()) {
+    	if (objekt != null) {
     		try {
 				List pkte = session.createQuery(
 					    "from AtlProbepkt as probepkt where " +
@@ -162,7 +162,7 @@ public class AtlProbepkt
 			} catch (HibernateException e) {
 				throw new RuntimeException("Datenbank-Fehler (AtlProbepkt)", e);
 			}
-//    	}
+    	}
     	
     	return punkt;
     }
@@ -195,7 +195,7 @@ public class AtlProbepkt
 			
 			if (pkte.size() > 0) {
 				punkt = (AtlProbepkt) pkte.get(0);
-				AUIKataster.debugOutput("Sielhaut-Probepunkt " + punkt + " aus DB geholt.", "AtlProbepkt");
+				AUIKataster.debugOutput("SielhautBearbeiten-Probepunkt " + punkt + " aus DB geholt.", "AtlProbepkt");
 			} else {
 				punkt = null;
 			}
@@ -207,6 +207,27 @@ public class AtlProbepkt
     	}
     	
     	return punkt;
+    }
+    
+    public static List getProbenehmerpunkte() {
+    	List pkte;
+
+    	try {
+    		Session session = HibernateSessionFactory.currentSession();
+    		pkte = session.createQuery(
+				    "select distinct pk from AtlProbepkt as pk " +
+				    "inner join pk.atlProbenahmen as pn " +
+				    "where pn.kennummer like '3%' ")
+				    .list();
+    		
+    	} catch (HibernateException e) {
+    		//punkt = null;
+    		throw new RuntimeException("Datenbank-Fehler", e);
+    	} finally {
+    		HibernateSessionFactory.closeSession();
+    	}
+    	
+    	return pkte;
     }
     
     public static boolean saveProbepunkt(AtlProbepkt punkt) {
@@ -247,16 +268,16 @@ public class AtlProbepkt
 			session.saveOrUpdate(punkt);
 			tx.commit();
 			removed = true;
-			AUIKataster.debugOutput("Probepunkt "+punkt+" gespeichert.", "ObjektProbepunktPanel.saveProbepunktDaten");
+			AUIKataster.debugOutput("Probepunkt "+punkt+" gespeichert.", "ProbepunktPanel.saveProbepunktDaten");
 		} catch (HibernateException e) {
 			removed = false;
-			AUIKataster.debugOutput("Probepunkt "+punkt+" konnte nicht gespeichert werden!", "ObjektProbepunktPanel.saveProbepunktDaten");
+			AUIKataster.debugOutput("Probepunkt "+punkt+" konnte nicht gespeichert werden!", "ProbepunktPanel.saveProbepunktDaten");
 			e.printStackTrace();
 			if (tx != null) {
 				try {
 					tx.rollback();
 				} catch (HibernateException e1) {
-					AUIKataster.handleDBException(e1, "ObjektProbepunktPanel.saveProbepunktDaten", false);
+					AUIKataster.handleDBException(e1, "ProbepunktPanel.saveProbepunktDaten", false);
 				}
 			}
 		} finally {
