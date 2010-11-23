@@ -12,9 +12,7 @@
         </id>
 
         <property name="beschreibung" column="beschreibung" type="java.lang.String" />
-
         <property name="nummer" column="nr_probepkt" type="java.lang.Integer" />
-
         <property name="atlFirmen" column="firmen_id" type="java.lang.Integer" />
 
         <many-to-one name="atlKlaeranlagen" column="ka_id" class="AtlKlaeranlagen" />

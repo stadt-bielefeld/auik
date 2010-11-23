@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ProbenEditor.java,v 1.2.2.1 2010-11-23 10:25:57 u633d Exp $
+ * $Id: ProbenEditor.java,v 1.2.2.2 2010-11-23 14:25:23 u633d Exp $
  * 
  * Erstellt am 25.5.05 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2.2.1  2010/11/23 10:25:57  u633d
+ * start auik_pg branch
+ *
  * Revision 1.2  2009/03/24 12:35:23  u633d
  * Umstellung auf UTF8
  *
@@ -643,6 +646,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 	private void choose(int row) {
 		if (row != -1) {
 			chosenParameter = (AtlParameter) parameterAuswahlModel.getObjectAtRow(row);
+			parameterAuswahlModel.setValueAt(true, row, 0);
+			parameterAuswahlModel.fireTableDataChanged();
 			dispose();
 		}
 	}
@@ -694,6 +699,15 @@ public class ProbenEditor extends AbstractApplyEditor {
 					submitAction.getValue(Action.NAME), submitAction);
 
 			ergebnisTabelle.addFocusListener(TableFocusListener.getInstance());
+			ergebnisTabelle.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					if((e.getClickCount() == 2) && (e.getButton() == 1)) {
+						Point origin = e.getPoint();
+						int row = ergebnisTabelle.rowAtPoint(origin);
+						choose(row);
+					}
+				}
+			});
 
 		}
 

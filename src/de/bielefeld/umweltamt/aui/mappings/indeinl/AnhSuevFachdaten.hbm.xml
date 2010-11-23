@@ -2,9 +2,6 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<!-- DO NOT EDIT: This is a generated file that is synchronized -->
-<!-- by MyEclipse Hibernate tool integration.                   -->
-<!-- Created Tue Jun 28 08:35:52 CEST 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
 
     <class name="AnhSuevFachdaten" table="anh_suev_fachdaten">
