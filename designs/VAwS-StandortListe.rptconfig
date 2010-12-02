@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.17" id="1">
+    <list-property name="configVars">
+        <structure>
+            <property name="name">__isdisplay__StandortID_414_0</property>
+            <property name="value">1</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__Standort_445_1</property>
+            <property name="value">Herforder Straße 301</property>
+        </structure>
+        <structure>
+            <property name="name">Standort_445_2</property>
+            <property name="value">Herforder Straße 301</property>
+        </structure>
+        <structure>
+            <property name="name">Standort_445_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">StandortID_414_3</property>
+            <property name="value">1</property>
+        </structure>
+        <structure>
+            <property name="name">StandortID_414_type_</property>
+            <property name="value">integer</property>
+        </structure>
+    </list-property>
+</report>

@@ -32,7 +32,7 @@ public class AtlProbeart
 	final public static Integer FAULSCHLAMM = new Integer(5);
 	/** Die ID von Rohschlamm-Proben */
 	final public static Integer ROHSCHLAMM = new Integer(6);
-	/** Die ID von Sielhaut-Proben */
+	/** Die ID von SielhautBearbeiten-Proben */
 	final public static Integer SIELHAUT = new Integer(7);
 	/** Die ID von sonstigen Proben */
 	final public static Integer SONSTIGE = new Integer(8);

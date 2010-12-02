@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: APosDataItem.java,v 1.3 2009-12-11 07:22:34 u633d Exp $
+ * $Id: APosDataItem.java,v 1.3.2.1 2010-11-23 10:25:59 u633d Exp $
  * 
  * Erstellt am 31.05.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/12/11 07:22:34  u633d
+ * AuswertungSielhaut
+ *
  * Revision 1.2  2009/03/24 12:35:20  u633d
  * Umstellung auf UTF8
  *
@@ -21,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.utils.charts;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -41,12 +45,12 @@ public class APosDataItem extends TimeSeriesDataItem {
 	
 	public APosDataItem(AtlAnalyseposition pos) {
 		// es werden die Messwerte beachtet	
-		this(pos, createMinuteFromDate(pos.getAtlProbenahmen().getDatumDerEntnahme(), pos.getAtlProbenahmen().getZeitDerEntnahmen()));
+		this(pos, createMinuteFromDate(new Timestamp(pos.getAtlProbenahmen().getDatumDerEntnahme().getTime()), pos.getAtlProbenahmen().getDatumDerEntnahme().toString().substring(11, 16)));
 	}
 	
 	public APosDataItem(String norm,AtlAnalyseposition pos) {
 		// es werden die Normwerte beachtet	
-		this("normwert",pos, createMinuteFromDate(pos.getAtlProbenahmen().getDatumDerEntnahme(), pos.getAtlProbenahmen().getZeitDerEntnahmen()));
+		this("normwert",pos, createMinuteFromDate(new Timestamp(pos.getAtlProbenahmen().getDatumDerEntnahme().getTime()), pos.getAtlProbenahmen().getZeitDerEntnahmen()));
 	}
 	
 	public APosDataItem( AtlAnalyseposition pos, Minute minute) {
@@ -71,7 +75,7 @@ public class APosDataItem extends TimeSeriesDataItem {
 		return pos;
 	}
 	
-	public static Minute createMinuteFromDate(Date date, String zeit) {
+	public static Minute createMinuteFromDate(Timestamp date, String zeit) {
 		int hour = 0;
 		int minute = 0;
 		

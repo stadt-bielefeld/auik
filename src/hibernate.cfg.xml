@@ -7,27 +7,27 @@
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         
         <!-- Informix: -->
-		      
+        <!--		   
         <property name="hibernate.connection.driver_class">com.informix.jdbc.IfxDriver</property>
         <property name="hibernate.connection.url">jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi</property>
         <property name="hibernate.dialect">org.hibernate.dialect.InformixDialect</property>
-		
-        <!-- PostgreSQL: -->
-        <!--
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://umweltamt.bielefeld.int/auik</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         -->	
-        
+        <!-- PostgreSQL: -->
+           
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://wbis-h051412/auik</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.password">genial</property>
+        <property name="hibernate.connection.username">u633d</property>        	
+        	
         <!-- MySQL: -->
-        <!--
-        <property name="hbm2ddl.auto">create</property>
-        -->
-        <!-- 
+		<!--
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost/auik</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        -->
+        <property name="hibernate.connection.password">wasser1</property>
+        <property name="hibernate.connection.username">auik</property>
+		-->
         	 
         <!-- configuration pool via c3p0--> 
 		<!--
@@ -47,6 +47,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlProbepkt.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlSielhaut.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlStatus.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisStandort.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisStrassen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisGemarkung.hbm.xml" />

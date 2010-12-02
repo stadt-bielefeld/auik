@@ -1,15 +1,18 @@
 /*
  * Datei:
 <<<<<<< BasisObjektarten.java
- * $Id: BasisObjektarten.java,v 1.5 2010-01-26 09:20:43 u633d Exp $
+ * $Id: BasisObjektarten.java,v 1.5.2.1 2010-11-23 10:25:58 u633d Exp $
 =======
- * $Id: BasisObjektarten.java,v 1.5 2010-01-26 09:20:43 u633d Exp $
+ * $Id: BasisObjektarten.java,v 1.5.2.1 2010-11-23 10:25:58 u633d Exp $
 >>>>>>> 1.20.6.1
  * 
  * Erstellt am 19.01.05 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2010/01/26 09:20:43  u633d
+ * Fettabscheider-Analysen
+ *
  * Revision 1.4  2009/03/24 12:35:23  u633d
  * Umstellung auf UTF8
  *
@@ -75,6 +78,9 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
@@ -345,5 +351,89 @@ public class BasisObjektarten
 		}
     	
     	return art;
+    }
+    
+    /**
+     * Speichert eine Objektart in die Datenbank, bzw. updatet eine 
+     * schon vorhandene Objektart mit neuen Werten.
+     * @param art Die Objektart, die gespeichert werden soll.
+     * @return Die gespeicherte Objektart, oder <code>null</code>, falls beim Speichern ein Fehler auftrat.
+     */
+    public static BasisObjektarten saveObjektart(BasisObjektarten art) {
+    	BasisObjektarten artRet;
+    	
+    	Transaction tx = null;
+		try {
+			// Neue Session beginnen
+			Session session = HibernateSessionFactory.currentSession();
+			
+			// Alle Änderungen in einer Transaktion zusammenfassen
+			tx = session.beginTransaction();
+			
+			// Speichern / Transaktion durchführen
+			session.saveOrUpdate(art);
+			artRet = art;
+
+			tx.commit();
+			
+			//frame.changeStatus("Neue Objektart "+art.getObejktartid()+" erfolgreich gespeichert!", HauptFrame.SUCCESS_COLOR);
+			AUIKataster.debugOutput("Neue Objektart "+ art +" gespeichert!", "BasisObjektarten.saveObejktart");
+			//manager.getCache().invalidateCache("standorte");
+			
+			// Formular zurücksetzen
+			//clearForm();
+		} catch (HibernateException e) {
+			artRet = null;
+			e.printStackTrace();
+			// Falls während der Änderungen ein Hibernate Fehler auftritt
+			if (tx != null) {
+				try {
+					// Alle Änderungen rückgängig machen
+					tx.rollback();
+				} catch (HibernateException e1) {
+					throw new RuntimeException("Datenbank-Fehler (BasisStandort)", e);
+				}
+			}
+		} finally {
+			// Am Ende (egal ob erfolgreich oder nicht) die Session schließen
+			HibernateSessionFactory.closeSession();
+		}
+		
+		return artRet;
+    }
+	
+    
+    /**
+     * Löscht eine vorhandene Objektart aus der Datenbank.
+     * @param standort Die Objektart, der gelöscht werden soll.
+     * @return <code>true</code>, wenn die Objektart gelöscht wurde oder 
+     * <code>false</code> falls dabei ein Fehler auftrat (z.B. die Objektart 
+     * nicht in der Datenbank existiert).
+     */
+    public static boolean removeObjektart(BasisObjektarten objektart) {
+    	boolean removed;
+		
+		Transaction tx = null;
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			tx = session.beginTransaction();
+			session.delete(objektart);
+			tx.commit();
+			removed = true;
+		} catch (HibernateException e) {
+			removed = false;
+			e.printStackTrace();
+			if (tx != null) {
+				try {
+					tx.rollback();
+				} catch (HibernateException e1) {
+					AUIKataster.handleDBException(e1, "BasisObjektarten.removeObjektart", false);
+				}
+			}
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		
+		return removed;
     }
 }

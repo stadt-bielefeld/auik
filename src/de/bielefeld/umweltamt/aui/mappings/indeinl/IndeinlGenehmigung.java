@@ -113,7 +113,7 @@ public class IndeinlGenehmigung
      * Liefert eine Liste mit allen IndeinlGenehmigung Objekten.
      * @return Eine Liste aus IndeinlGenehmigungen.
      */
-    public static List getAuswertungsListe(String gen58, String gen59) {
+    public static List getAuswertungsListe(Boolean gen58, Boolean gen59) {
     	List liste;
     	
     	String query = "from IndeinlGenehmigung as gen " +
@@ -123,8 +123,8 @@ public class IndeinlGenehmigung
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		liste = session.createQuery(query)
-    		.setString(0, gen58)
-    		.setString(1, gen59)
+    		.setBoolean(0, gen58)
+    		.setBoolean(1, gen59)
     		.list();
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);
@@ -139,7 +139,7 @@ public class IndeinlGenehmigung
      * Liefert eine Liste mit allen Anhang 40 Genehmigungsobjekten.
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
-    public static List getAnh40Liste(String gen58, String gen59) {
+    public static List getAnh40Liste(Boolean gen58, Boolean gen59) {
     	List liste;
     	
     	String query = "from IndeinlGenehmigung as gen " +
@@ -150,8 +150,8 @@ public class IndeinlGenehmigung
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		liste = session.createQuery(query)
-    		.setString(0, gen58)
-    		.setString(1, gen59)
+    		.setBoolean(0, gen58)
+    		.setBoolean(1, gen59)
     		.list();
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);
@@ -166,7 +166,7 @@ public class IndeinlGenehmigung
      * Liefert eine Liste mit allen Anhang 49 Genehmigungsobjekten.
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
-    public static List getAnh49Liste(String gen58, String gen59) {
+    public static List getAnh49Liste(Boolean gen58, Boolean gen59) {
     	List liste;
     	
     	String query = "from IndeinlGenehmigung as gen " +
@@ -177,8 +177,8 @@ public class IndeinlGenehmigung
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		liste = session.createQuery(query)
-    		.setString(0, gen58)
-    		.setString(1, gen59)
+    		.setBoolean(0, gen58)
+    		.setBoolean(1, gen59)
     		.list();
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);
@@ -193,7 +193,7 @@ public class IndeinlGenehmigung
      * Liefert eine Liste mit allen Anhang 50 Genehmigungsobjekten.
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
-    public static List getAnh50Liste(String gen58, String gen59) {
+    public static List getAnh50Liste(Boolean gen58, Boolean gen59) {
     	List liste;
     	
     	String query = "from IndeinlGenehmigung as gen " +
@@ -204,8 +204,8 @@ public class IndeinlGenehmigung
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		liste = session.createQuery(query)
-    		.setString(0, gen58)
-    		.setString(1, gen59)
+    		.setBoolean(0, gen58)
+    		.setBoolean(1, gen59)
     		.list();
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);
@@ -220,7 +220,7 @@ public class IndeinlGenehmigung
      * Liefert eine Liste mit allen Anhang 53 Genehmigungsobjekten.
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
-    public static List getAnh53Liste(String gen58, String gen59) {
+    public static List getAnh53Liste(Boolean gen58, Boolean gen59) {
     	List liste;
     	
     	String query = "from IndeinlGenehmigung as gen " +
@@ -231,8 +231,8 @@ public class IndeinlGenehmigung
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		liste = session.createQuery(query)
-    		.setString(0, gen58)
-    		.setString(1, gen59)
+    		.setBoolean(0, gen58)
+    		.setBoolean(1, gen59)
     		.list();
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);
@@ -247,7 +247,7 @@ public class IndeinlGenehmigung
      * Liefert eine Liste mit allen Anhang 40 Genehmigungsobjekten.
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
-    public static List getBwkListe(String gen58, String gen59) {
+    public static List getBwkListe(Boolean gen58, Boolean gen59) {
     	List liste;
     	
     	String query = "from IndeinlGenehmigung as gen " +
@@ -258,8 +258,8 @@ public class IndeinlGenehmigung
     	try {
     		Session session = HibernateSessionFactory.currentSession();
     		liste = session.createQuery(query)
-    		.setString(0, gen58)
-    		.setString(1, gen59)
+    		.setBoolean(0, gen58)
+    		.setBoolean(1, gen59)
     		.list();
     	} catch (HibernateException e) {
     		throw new RuntimeException(e);

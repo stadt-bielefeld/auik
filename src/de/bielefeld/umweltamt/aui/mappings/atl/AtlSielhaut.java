@@ -30,7 +30,7 @@ public class AtlSielhaut
      */
     public AtlSielhaut()
     {
-    	//AUIKataster.debugOutput("Neues Sielhaut-Objekt", "AtlSielhaut");
+    	//AUIKataster.debugOutput("Neues SielhautBearbeiten-Objekt", "AtlSielhaut");
     	
 //    	setSielhaut(true);
 //    	setAlarmplan(false);
@@ -54,7 +54,7 @@ public class AtlSielhaut
     /* Add customized code below */
 
     public String toString() {
-		return "[Sielhaut:"+getId()+", " + getBezeichnung()+"]";
+		return "[SielhautBearbeiten:"+getId()+", " + getBezeichnung()+"]";
 	}
     
     public static List findPunkte(String suche) {

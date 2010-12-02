@@ -292,7 +292,7 @@ public class AtlAnalyseposition
     	
     	String paramID = param.getOrdnungsbegriff();
     	Integer einhID = einh.getId();
-    	Integer pktID = pkt.getPktId();
+    	Integer pktID = pkt.getObjektid();
     	
     	
     	
@@ -306,7 +306,7 @@ public class AtlAnalyseposition
 			"and pos.atlProbenahmen.datumDerEntnahme <= ? ";
     	
     	if (analyseVon != null && !analyseVon.equals("")) {
-    		query += "and lower(pos.analyseVon) like ? ";
+    		query += "and pos.analyseVon like ? ";
     	}
     	
     	query += "order by pos.atlProbenahmen.datumDerEntnahme";
@@ -360,11 +360,11 @@ public class AtlAnalyseposition
 
 
     	if (pkt != null) {
-    		query += "and pos.atlProbenahmen.atlProbepkt.pktId = '" + pkt + "' ";
+    		query += "and pos.atlProbenahmen.atlProbepkt.objektid = '" + pkt + "' ";
     	}
     	else {
     		
-    		AUIKataster.debugOutput("pktID = null","getAnalysepos" );
+    		AUIKataster.debugOutput("objektid = null","getAnalysepos" );
     	}
  
     	query += "order by pos.atlProbenahmen.datumDerEntnahme";
@@ -405,12 +405,12 @@ public class AtlAnalyseposition
     	
     	if (pkt != null) 
     	{
-    		query += "and pos.atlProbenahmen.atlProbepkt.pktId = '" + pkt + "' ";
+    		query += "and pos.atlProbenahmen.atlProbepkt.objektid = '" + pkt + "' ";
     	}
     	else 
     	{
     		
-    		AUIKataster.debugOutput("pktID = null","getSielhautpos" );
+    		AUIKataster.debugOutput("objektid = null","getSielhautpos" );
     	}
         
     	if (param != null) 
@@ -451,6 +451,30 @@ public class AtlAnalyseposition
     	
     	
     	return proben;
+    }
+   
+    // Liefert eine Liste der Analyseinstitute.
+    public static String[]  getAnalysierer() {
+    	
+    	List proben = null;
+    	String query = 
+    		"select distinct analyseVon from AtlAnalyseposition";
+
+		 try {
+			Session session = HibernateSessionFactory.currentSession();
+			
+			proben = session.createQuery(
+					query)
+					.list(); 	
+		} catch (HibernateException e) {
+			throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		String[] tmp = new String[proben.size()];
+		tmp = (String[]) proben.toArray(tmp);
+		
+    	return tmp;
     }
     
     

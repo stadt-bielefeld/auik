@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ChartDataSets.java,v 1.3 2009-12-11 07:22:46 u633d Exp $
+ * $Id: ChartDataSets.java,v 1.3.2.1 2010-11-23 10:25:59 u633d Exp $
  * 
  * Erstellt am 11.05.2005 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2009/12/11 07:22:46  u633d
+ * AuswertungSielhaut
+ *
  * Revision 1.2  2009/03/24 12:35:20  u633d
  * Umstellung auf UTF8
  *
@@ -79,7 +82,7 @@ public class ChartDataSets {
 	 * @param einheit Der Name der Einheit (für die Achsenbeschriftung des Diagramms)
 	 * @return Eine Analysepositionen-Datenreihe
 	 */
-	// Bei der Auswertung der Sielhaut werden statt der Messwerte, die Normwerte ausgegeben
+	// Bei der Auswertung der SielhautBearbeiten werden statt der Messwerte, die Normwerte ausgegeben
 	public static TimeSeries createAnalysePositionenSeries(List list, String name, String einheit) {
 		TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
 		AUIKataster.debugOutput("Erzeuge TimeSeries: " + name, "ChartDataSets.createAnalysepositionenSeries");

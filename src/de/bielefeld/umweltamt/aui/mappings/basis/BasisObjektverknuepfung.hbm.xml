@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 01.09.2008 14:20:15 by Hibernate Tools 3.2.0.beta8 -->
+
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung" table="basis_objektverknuepfung">
-        <id name="id" column="id" type="java.lang.Integer">
+        <id name="id" type="java.lang.Integer">
+        	<column name="id" sql-type="serial"/>
             <generator class="native">
                 <param name="sequence">basis_objektverknuepfung_id_seq</param>
         	</generator>

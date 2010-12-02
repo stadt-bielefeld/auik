@@ -1,11 +1,17 @@
 /*
  * Datei:
- * $Id: ProbenEditor.java,v 1.2 2009-03-24 12:35:23 u633d Exp $
+ * $Id: ProbenEditor.java,v 1.2.2.2 2010-11-23 14:25:23 u633d Exp $
  * 
  * Erstellt am 25.5.05 von David Klotz (u633z)
  * 
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.2.2.1  2010/11/23 10:25:57  u633d
+ * start auik_pg branch
+ *
+ * Revision 1.2  2009/03/24 12:35:23  u633d
+ * Umstellung auf UTF8
+ *
  * Revision 1.1  2008/06/05 11:38:41  u633d
  * Start AUIK auf Informix und Postgresql
  *
@@ -16,7 +22,7 @@
  * - Version vom 7.9.05
  *
  * Revision 1.9  2005/07/06 09:40:13  u633z
- * - Grenzwerte auch für Sielhaut-Proben
+ * - Grenzwerte auch für SielhautBearbeiten-Proben
  *
  * Revision 1.8  2005/06/30 11:46:33  u633z
  * *** empty log message ***
@@ -35,14 +41,20 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EventObject;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -62,14 +74,18 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
@@ -77,15 +93,19 @@ import de.bielefeld.umweltamt.aui.utils.DoubleRenderer;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
+import de.bielefeld.umweltamt.aui.utils.TabAction;
+import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
+import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
+import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Ein Dialog um eine Probenahme mit ihren Analysepositionen zu bearbeiten.
  * (Momentan ist vieles noch auf Klärschlamm-Proben ausgerichtet)
  * @author David Klotz
  */
-public class ProbenEditor extends AbstractBaseEditor {
+public class ProbenEditor extends AbstractApplyEditor {
 	private class ParameterModel extends EditableListTableModel {
 		private AtlProbenahmen probe;
 		private boolean isNew;
@@ -274,7 +294,8 @@ public class ProbenEditor extends AbstractBaseEditor {
 			} else {
 				tmp.setAtlEinheiten(AtlEinheiten.getEinheit(AtlEinheiten.MG_L_ID));
 			}
-			tmp.setAtlParameter(AtlParameter.getParameter(AtlParameter.DEFAULT_ID));
+			tmp.setAtlParameter((AtlParameter) parameterBox.getSelectedItem());
+			tmp.setAtlEinheiten(AtlEinheiten.getEinheit(tmp.getAtlParameter().getWirdgemessenineinheit()));
 			//tmp.setAnalyseVon("");
 			return tmp;
 		}
@@ -319,7 +340,9 @@ public class ProbenEditor extends AbstractBaseEditor {
 	
 	private Dimension minimumSize;
 	
+	private JLabel entnahmepunktFeld;
 	private TextFieldDateChooser datumFeld;
+	private JFormattedTextField uhrzeitFeld;
 	private JFormattedTextField icpEinwaageFeld;
 	private TextFieldDateChooser icpDatumFeld;
 	private JTextArea bemerkungsArea;
@@ -346,7 +369,11 @@ public class ProbenEditor extends AbstractBaseEditor {
 	}
 	
 	protected JComponent buildContentArea() {
+		entnahmepunktFeld = new JLabel();
 		datumFeld = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat ("HH:mm");
+		uhrzeitFeld = new JFormattedTextField(formatter); 
 		
 		//if (probe.isKlaerschlammProbe()) {
 			icpEinwaageFeld = new DoubleField(0);
@@ -386,7 +413,10 @@ public class ProbenEditor extends AbstractBaseEditor {
 		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 		
 		builder.appendSeparator("Probe");//+ probe.getKennummer() +" - "+probe.getAtlProbepkt().getAtlProbeart());
+		builder.append("Entnahmepunkt:", entnahmepunktFeld, 6);
+		builder.nextLine();
 		builder.append("Datum:", datumFeld);
+		builder.append("Uhrzeit:", uhrzeitFeld);
 		builder.nextLine();
 		
 		builder.appendSeparator("ICP");
@@ -420,13 +450,16 @@ public class ProbenEditor extends AbstractBaseEditor {
 			}
 		});
 		
-		//parameterModel = new ParameterModel(getProbe(), isNew);
-		//parameterTabelle.setModel(parameterModel);
+//		parameterModel = new ParameterModel(getProbe(), isNew);
+//		parameterTabelle.setModel(parameterModel);
 		
-		//initColumns();
+//		initColumns();
 		
+		entnahmepunktFeld.setText(getProbe().getAtlProbepkt().getBasisObjekt().getBasisStandort() + ", "
+								+ getProbe().getAtlProbepkt().getBasisObjekt().getBasisBetreiber());
 		Date entnahmeDatum = getProbe().getDatumDerEntnahme();
 		datumFeld.setDate(entnahmeDatum);
+		uhrzeitFeld.setText(entnahmeDatum.toString().substring(11, 16));
 		
 		if (getProbe().isKlaerschlammProbe()) {
         	icpEinwaageFeld.setValue(getProbe().getEinwaage());
@@ -504,7 +537,19 @@ public class ProbenEditor extends AbstractBaseEditor {
 	
 	protected boolean doSave() {
 		// Datum der Entnahme
-		Date newDate = datumFeld.getDate();
+	    SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+	    String uhrzeit = uhrzeitFeld.getText();
+		String datum = df.format(datumFeld.getDate());
+		String timestring = (String) datum.subSequence(0, 11) + uhrzeit;
+	    
+	    Date convertedDate = new Date();
+	    try {
+			convertedDate = df.parse(timestring);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Timestamp newDate = new Timestamp(convertedDate.getTime());
 		if (newDate != null) {
 			getProbe().setDatumDerEntnahme(newDate);
 		}
@@ -536,15 +581,16 @@ public class ProbenEditor extends AbstractBaseEditor {
 		}
 		
 		// Analysepositionen
-		if (parameterModel.hasChanged()) {
-			Set newPositionen = new HashSet(parameterModel.getList());
-			getProbe().getAtlAnalysepositionen().clear();
-			getProbe().getAtlAnalysepositionen().addAll(newPositionen);
-			//getProbe().setAtlAnalysepositionen(newPositionen);
-			AUIKataster.debugOutput("Analysepositionen geändert: " + getProbe().getAtlAnalysepositionen(), "ProbenEditor.doSave");
-		}
+		Set newPositionen = new HashSet(parameterModel.getList());
+		getProbe().getAtlAnalysepositionen().clear();
+		getProbe().getAtlAnalysepositionen().addAll(newPositionen);
+		// getProbe().setAtlAnalysepositionen(newPositionen);
+		AUIKataster.debugOutput("Analysepositionen geändert: "
+				+ getProbe().getAtlAnalysepositionen(), "ProbenEditor.doSave");
+		
 		
 		boolean success;
+
 		if (isNew) {
 			success = AtlProbenahmen.saveProbenahme(getProbe());
 		} else {
@@ -554,7 +600,181 @@ public class ProbenEditor extends AbstractBaseEditor {
 		return success;
 	}
 	
+	protected void doApply() {
+		ParameterChooser chooser = new ParameterChooser(frame);
+		chooser.setVisible(true);
+	}
+	
 	public AtlProbenahmen getProbe() {
 		return (AtlProbenahmen) getEditedObject();
+	}
+}
+
+	class ParameterChooser extends OkCancelDialog {
+	private JTable ergebnisTabelle;
+
+	private ParameterAuswahlModel parameterAuswahlModel;
+	private AtlParameter chosenParameter = null;
+
+	public ParameterChooser(HauptFrame owner) {
+		super("Parameter auswählen", owner);
+
+		parameterAuswahlModel = new ParameterAuswahlModel();
+		getErgebnisTabelle().setModel(parameterAuswahlModel);
+		ergebnisTabelle.setColumnSelectionInterval(0, 0);
+
+		ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(20);
+		ergebnisTabelle.getColumnModel().getColumn(1).setPreferredWidth(230);
+
+		setResizable(true);
+
+		parameterAuswahlModel.filterList();
+		parameterAuswahlModel.fireTableDataChanged();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog#doOk()
+	 */
+	protected void doOk() {
+		int row = getErgebnisTabelle().getSelectedRow();
+		choose(row);
+	}
+
+
+	private void choose(int row) {
+		if (row != -1) {
+			chosenParameter = (AtlParameter) parameterAuswahlModel.getObjectAtRow(row);
+			parameterAuswahlModel.setValueAt(true, row, 0);
+			parameterAuswahlModel.fireTableDataChanged();
+			dispose();
+		}
+	}
+
+	public AtlParameter getChosenParameter() {
+		return chosenParameter;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog#buildContentArea
+	 * ()
+	 */
+	protected JComponent buildContentArea() {
+		JScrollPane tabellenScroller = new JScrollPane(getErgebnisTabelle(),
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		TabAction ta = new TabAction();
+		ta.addComp(ergebnisTabelle);
+
+		FormLayout layout = new FormLayout("180dlu:g, 3dlu, min(16dlu;p)", // spalten
+				"20dlu, 3dlu, 300dlu:g"); // zeilen
+		PanelBuilder builder = new PanelBuilder(layout);
+		CellConstraints cc = new CellConstraints();
+
+		builder.add(tabellenScroller, cc.xyw(1, 3, 3));
+
+		return builder.getPanel();
+	}
+
+	private JTable getErgebnisTabelle() {
+		if (ergebnisTabelle == null) {
+			ergebnisTabelle = new SelectTable();
+
+			Action submitAction = new AbstractAction("Auswählen") {
+				public void actionPerformed(ActionEvent e) {
+					doOk();
+				}
+			};
+			submitAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
+					.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+
+			ergebnisTabelle.getInputMap().put(
+					(KeyStroke) submitAction.getValue(Action.ACCELERATOR_KEY),
+					submitAction.getValue(Action.NAME));
+			ergebnisTabelle.getActionMap().put(
+					submitAction.getValue(Action.NAME), submitAction);
+
+			ergebnisTabelle.addFocusListener(TableFocusListener.getInstance());
+			ergebnisTabelle.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					if((e.getClickCount() == 2) && (e.getButton() == 1)) {
+						Point origin = e.getPoint();
+						int row = ergebnisTabelle.rowAtPoint(origin);
+						choose(row);
+					}
+				}
+			});
+
+		}
+
+		return ergebnisTabelle;
+	}
+
+}
+
+class ParameterAuswahlModel extends ListTableModel {
+	public ParameterAuswahlModel() {
+		super(new String[] { "wählen", "Parameter" }, false);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue
+	 * (java.lang.Object, int)
+	 */
+	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+		AtlParameter para = (AtlParameter) objectAtRow;
+		Object tmp;
+
+		switch (columnIndex) {
+		case 0:
+			tmp = new Boolean(false);
+			break;
+		case 1:
+			tmp = para.getBezeichnung();
+			break;
+
+		default:
+			tmp = "FEHLER!";
+			break;
+		}
+
+		return tmp;
+	}
+
+	public Class getColumnClass(int columnIndex) {
+		if (columnIndex == 0) {
+			return Boolean.class;
+		} else {
+			return super.getColumnClass(columnIndex);
+		}
+	}
+	
+	public boolean isCellEditable(EventObject anEvent) {
+
+			return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#updateList
+	 * ()
+	 */
+	public void updateList() {
+	}
+
+	public void filterList() {
+		setList(AtlParameter.getParameter());
+		AUIKataster.debugOutput("Suche nach '" 
+				+ getList().size() + " Ergebnisse)",
+				"ParameterAuswahlModel.filterList()");
 	}
 }

@@ -336,8 +336,8 @@ public class AuikUtils {
 	/**
 	 * Liefert einen String der Form "dd.mm.JJJJ" für ein 
 	 * gegebenes Datums-Objekt.
-	 * @param date Das Datum
-	 * @return Einen String der Form "dd.mm.JJJJ" oder <code>null</code>, falls date <code>null</code> ist
+	 * @param DateFormatter Das Datum
+	 * @return Einen String der Form "dd.mm.JJJJ" oder <code>null</code>, falls DateFormatter <code>null</code> ist
 	 */
 	public static String getStringFromDate(Date date) {
 		if (date != null) {

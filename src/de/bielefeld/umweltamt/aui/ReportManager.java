@@ -1,11 +1,14 @@
 /*
  * Datei:
- * $Id: ReportManager.java,v 1.6 2009-12-02 06:30:17 u633d Exp $
+ * $Id: ReportManager.java,v 1.6.2.1 2010-11-23 10:25:58 u633d Exp $
  *
  * Erstellt am 18.10.2005 von David Klotz
  *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2009/12/02 06:30:17  u633d
+ * Verbesserung Aufruf designs
+ *
  * Revision 1.5  2009/11/23 06:53:50  u633d
  * VAwS-StandortListe
  *
@@ -19,7 +22,7 @@
  * Start AUIK auf Informix und Postgresql
  *
  * Revision 1.3  2006/11/08 10:10:05  u633d
- * Die Bilder von Sielhaut PDFs werden nun über die Haltungsnummer aufgeloest
+ * Die Bilder von SielhautBearbeiten PDFs werden nun über die Haltungsnummer aufgeloest
  *
  * Revision 1.2  2006/09/11 06:40:50  u633d
  * Objektchronologie PDF ist erstellbar
@@ -36,7 +39,7 @@
  * für VAwS-Anlagen muss ich nur noch das Java schreiben
  *
  * Revision 1.1.4.2  2006/08/29 08:27:54  u633d
- * Der Kataster unterstützt jetzt bei den Sielhaut Punkten den Aufruf eines Reports ohne HashMap,
+ * Der Kataster unterstützt jetzt bei den SielhautBearbeiten Punkten den Aufruf eines Reports ohne HashMap,
  * allerdings muss noch die unterstützung für die VaWS Anlagen und Reports für die Objektchronologie erstellt werden!
  *
  * Revision 1.1.4.1  2006/08/16 10:06:48  u633d

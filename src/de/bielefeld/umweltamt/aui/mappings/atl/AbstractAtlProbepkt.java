@@ -7,6 +7,7 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
@@ -22,7 +23,7 @@ public abstract class AbstractAtlProbepkt
     private int hashValue = 0;
 
     /** The composite primary key value. */
-    private java.lang.Integer pktId;
+    private java.lang.Integer objektid;
 
     /** The value of the simple atlFirmen property. */
     private Integer atlFirmen;
@@ -44,6 +45,8 @@ public abstract class AbstractAtlProbepkt
     
     /** The value of the simple nummer property. */
     private java.lang.Integer nummer;
+    
+    private Set atlProbenahmen;
 
     /**
      * Simple constructor of AbstractAtlProbepkt instances.
@@ -56,28 +59,28 @@ public abstract class AbstractAtlProbepkt
      * Constructor of AbstractAtlProbepkt instances given a simple primary key.
      * @param pktId
      */
-    public AbstractAtlProbepkt(java.lang.Integer pktId)
+    public AbstractAtlProbepkt(java.lang.Integer objektid)
     {
-        this.setPktId(pktId);
+        this.setObjektid(objektid);
     }
 
     /**
      * Return the simple primary key value that identifies this object.
      * @return java.lang.Integer
      */
-    public java.lang.Integer getPktId()
+    public java.lang.Integer getObjektid()
     {
-        return pktId;
+        return objektid;
     }
 
     /**
      * Set the simple primary key value that identifies this object.
      * @param pktId
      */
-    public void setPktId(java.lang.Integer pktId)
+    public void setObjektid(java.lang.Integer objektid)
     {
         this.hashValue = 0;
-        this.pktId = pktId;
+        this.objektid = objektid;
     }
 
     /**
@@ -205,6 +208,24 @@ public abstract class AbstractAtlProbepkt
     }
 
     /**
+     * Return the set of the AtlProbenahmen.
+     * @return AtlProbenahmen
+     */
+    public Set getAtlProbenahmen()
+    {
+        return this.atlProbenahmen;
+    }
+
+    /**
+     * Set the set of the AtlProbenahmen.
+     * @param atlProbenahmen
+     */
+    public void setAtlProbenahmen(Set atlProbenahmen)
+    {
+        this.atlProbenahmen = atlProbenahmen;
+    }
+
+    /**
      * Implementation of the equals comparison on the basis of equality of the primary key values.
      * @param rhs
      * @return boolean
@@ -216,9 +237,9 @@ public abstract class AbstractAtlProbepkt
         if (! (rhs instanceof AtlProbepkt))
             return false;
         AtlProbepkt that = (AtlProbepkt) rhs;
-        if (this.getPktId() != null && that.getPktId() != null)
+        if (this.getObjektid() != null && that.getObjektid() != null)
         {
-            if (! this.getPktId().equals(that.getPktId()))
+            if (! this.getObjektid().equals(that.getObjektid()))
             {
                 return false;
             }
@@ -236,7 +257,7 @@ public abstract class AbstractAtlProbepkt
         if (this.hashValue == 0)
         {
             int result = 17;
-            int pktIdValue = this.getPktId() == null ? 0 : this.getPktId().hashCode();
+            int pktIdValue = this.getObjektid() == null ? 0 : this.getObjektid().hashCode();
             result = result * 37 + pktIdValue;
             this.hashValue = result;
         }

@@ -136,7 +136,7 @@ public class AtlParameter
 		if (sParams == null) {
 			sParams = new HashMap();
 			
-			// Sielhaut:
+			// SielhautBearbeiten:
 			sParams.put("Blei", AtlParameter.BLEI_ID);
 			sParams.put("Cadmium", AtlParameter.CADMIUM_ID);
 			sParams.put("Chrom ges.", AtlParameter.CHROM_ID);
@@ -229,28 +229,31 @@ public class AtlParameter
 	}*/
 	
 	/*
-	 * Liefert alle Parameter, die für Sielhaut-Probenahmen relevant sind.
-	 * D.h. alle, deren Sielhaut-Grenzwert nicht <code>NULL</code> ist.
-	 * @return Ein Array mit allen für Sielhaut-Probenahmen relevanten Parametern
+	 * Liefert alle Parameter, die für SielhautBearbeiten-Probenahmen relevant sind.
+	 * D.h. alle, deren SielhautBearbeiten-Grenzwert nicht <code>NULL</code> ist.
+	 * @return Ein Array mit allen für SielhautBearbeiten-Probenahmen relevanten Parametern
 	 * @throws HibernateException
 	 */
-	/*public static List getSielhautParameter() throws HibernateException {
-		Session session = HibernateSessionFactory.currentSession();
-    	List parameter = session.find(
-    		    "from AtlParameter as param where " +
-    		    "param.sielhautGw is not null " +
-				"order by param.bezeichnung");
-    	HibernateSessionFactory.closeSession();
+	public static List getParameter() throws HibernateException {
 		
-    	//AtlParameter[] tmp = new AtlParameter[parameters.size()];
-    	//tmp = (AtlParameter[]) parameters.toArray(tmp);
+		List parameter = null;
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			parameter = session.createQuery(
+					"from AtlParameter as param "
+							+ "order by param.bezeichnung").list();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
     	
 		return parameter;
-	}*/
+	}
 	
 	/**
 	 * Liefert alle Parameter, die für Probenahmen relevant sind.
-	 * D.h. alle, deren Sielhaut- oder Klärschlamm-Grenzwert nicht 
+	 * D.h. alle, deren SielhautBearbeiten- oder Klärschlamm-Grenzwert nicht 
 	 * <code>NULL</code> ist.
 	 * @return Ein Array mit allen für Probenahmen relevanten Parametern
 	 */

@@ -2,23 +2,17 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-
-<!-- DO NOT EDIT: This is a generated file that is synchronized -->
-<!-- by MyEclipse Hibernate tool integration.                   -->
-<!-- Created Wed Feb 16 15:12:02 CET 2005                         -->
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl">
 
     <class name="AtlProbepkt" table="atl_probepkt" lazy="false">
-        <id name="pktId" column="objektid" type="java.lang.Integer">
+        <id name="objektid" column="objektid" type="java.lang.Integer">
             <generator class="foreign">
             	<param name="property">basisObjekt</param>
             </generator>
         </id>
 
         <property name="beschreibung" column="beschreibung" type="java.lang.String" />
-
         <property name="nummer" column="nr_probepkt" type="java.lang.Integer" />
-
         <property name="atlFirmen" column="firmen_id" type="java.lang.Integer" />
 
         <many-to-one name="atlKlaeranlagen" column="ka_id" class="AtlKlaeranlagen" />
@@ -28,6 +22,12 @@
         <many-to-one name="atlSielhaut" column="sielhaut_id" class="AtlSielhaut" lazy="false" />
 
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"/>
+                                
+        <set name="atlProbenahmen" cascade="all">
+            <key column="objektid"/>
+            <one-to-many class="AtlProbenahmen"/>
+        </set>
+        
     </class>
 
 </hibernate-mapping>
