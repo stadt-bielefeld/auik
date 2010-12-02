@@ -1,0 +1,56 @@
+<project name="AUIK" default="compile" basedir=".">
+
+    <description>
+        Buildfile for project AUIK
+    </description>
+
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="dist" location="dist"/>
+    <property name="libs" location="lib"/>
+    <property name="icons" location="/de/bielefeld/umweltamt/aui/icons"/>
+
+    <target name="compile" description="Compile the source">
+        <mkdir dir="${build}"/>
+        <javac srcdir="${src}" destdir="${build}">
+            <classpath>
+                <fileset dir="${libs}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <copy todir="${build}">
+            <fileset dir="${src}">
+                <include name="**/*.png"/>
+                <include name="**/*.jpg"/>
+                <include name="**/*.gif"/>
+                <include name="**/*.xml"/>
+                <include name="**/*.properties"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- TODO add the timestamp to the name of the jar archive -->
+    <target name="dist" depends="compile" description="Create a jar archive">
+        <mkdir dir="${dist}"/>
+        <jar jarfile="${dist}/AUIK.jar" basedir="${build}"/>
+    </target>
+
+    <target name="clean" description="Clean up">
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
+
+    <target name="run" depends="dist" description="Run the application">
+        <java fork="true" classname="de.bielefeld.umweltamt.aui.AUIKSplash">
+            <classpath>
+                <fileset dir="${libs}">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${dist}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </java>
+    </target>
+</project>

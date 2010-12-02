@@ -1,0 +1,16 @@
+2010-12-02  Ingo Weinzierl <ingo@intevation.de>
+
+	* build.xml: Neu. Diese Ant Konfiguration hat derzeit 5 Optionen:
+	  1) initdb: Initialisiert die Datenbank mittels Hibernate.
+	  2) compile: Compiliert die Quellen und kopiert die übersetzten Klassen
+	              plus benötigte Icons und Konfigurationen nach 'build'.
+	  3) dist:    Erstellt ein Jar-Archiv aus den übersetzten Quellen, Icons und
+	              Konfigurationen und kopiert dieses nach 'dist'.
+	  4) run:     Übersetzt die Quellen, erstellt und Jar-Archiv und startet die
+	              Anwendung (mit Splash-Screen).
+	  5) clean:   Entfernt die Ordner 'build' und 'dist'.
+
+	Hinweis: das Projekt wurde mittels cvs2svn von CVS in ein SVN Repository
+	konvertiert. Im CVS Repository gab es kein ChangeLog. Dies ist jedoch nicht
+	der Start des gesamten Projekts, sondern lediglich der Beginn des
+	ChangeLogs. Für weitere Infos, siehe 'svn log'.
