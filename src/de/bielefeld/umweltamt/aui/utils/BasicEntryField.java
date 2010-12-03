@@ -13,18 +13,18 @@ import javax.swing.JTextField;
  * @author David Klotz
  */
 public class BasicEntryField extends JTextField {
-	public BasicEntryField() {
-		super();
-	}
-	public BasicEntryField(String text) {
-		super(text);
-	}
-	
-	protected void processFocusEvent(FocusEvent e) 
-	{
-		super.processFocusEvent(e);
-		if (e.getID() == FocusEvent.FOCUS_GAINED) {
-			selectAll() ;
-		}
-	}
+    public BasicEntryField() {
+        super();
+    }
+    public BasicEntryField(String text) {
+        super(text);
+    }
+
+    protected void processFocusEvent(FocusEvent e)
+    {
+        super.processFocusEvent(e);
+        if (e.getID() == FocusEvent.FOCUS_GAINED) {
+            selectAll() ;
+        }
+    }
 }

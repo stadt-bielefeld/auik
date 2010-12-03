@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: UebergabeModel.java,v 1.1.2.1 2010-11-23 10:25:58 u633d Exp $
- * 
+ *
  * Erstellt am 03.05.2006 von David Klotz
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.1  2010/02/04 14:25:17  u633d
@@ -40,47 +40,47 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Sebastian Geller
  */
 public class UebergabeModel extends ListTableModel {
-	public UebergabeModel() {
-		super(new String[]{
-				"Betreiber", 
-				"Standort", 
-				"Bemerkungen"
-		}, 
-		false);
-	}
+    public UebergabeModel() {
+        super(new String[]{
+                "Betreiber",
+                "Standort",
+                "Bemerkungen"
+        },
+        false);
+    }
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
-	 */
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		IndeinlUebergabestelle iu = (IndeinlUebergabestelle) objectAtRow;
-		Object tmp;
-		
-		switch (columnIndex) {
-		case 0:
-			tmp = iu.getBasisObjekt().getBasisBetreiber();
-			break;
-		case 1:
-			tmp = iu.getBasisObjekt().getBasisStandort();
-			break;
-		case 2:
-			tmp = iu.getBemerkungen();
-			break;
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
+     */
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+        IndeinlUebergabestelle iu = (IndeinlUebergabestelle) objectAtRow;
+        Object tmp;
 
-		default:
-			tmp = "ERROR";
-			break;
-		}
-		if (iu.getBasisObjekt().getInaktiv() == true)
-		{
-			tmp = "<html><strike>" + tmp + "</strike></html>";	
-		}
-		return tmp;
-	}
-	
-	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
-	 */
-	public void updateList() {
-	}
+        switch (columnIndex) {
+        case 0:
+            tmp = iu.getBasisObjekt().getBasisBetreiber();
+            break;
+        case 1:
+            tmp = iu.getBasisObjekt().getBasisStandort();
+            break;
+        case 2:
+            tmp = iu.getBemerkungen();
+            break;
+
+        default:
+            tmp = "ERROR";
+            break;
+        }
+        if (iu.getBasisObjekt().getInaktiv() == true)
+        {
+            tmp = "<html><strike>" + tmp + "</strike></html>";
+        }
+        return tmp;
+    }
+
+    /*
+     * Leer, da kein Updaten der Liste nötig/möglich.
+     */
+    public void updateList() {
+    }
 }

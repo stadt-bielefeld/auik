@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: SuevModel.java,v 1.3 2010-01-20 12:58:19 u633d Exp $
- * 
+ *
  * Erstellt am 24.08.2005 von David Klotz
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.2  2009/03/24 12:35:23  u633d
@@ -27,59 +27,59 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class SuevModel extends ListTableModel {
-	/**
-	 * Erzeugt ein einfaches TableModel für 
-	 * SUEV-Fachdaten.
-	 */
-	public SuevModel() {
-		super(new String[]{
-				"Betreiber", 
-				"Standort",
-				"vers. Fläche"
-		}, 
-		false);
-	}
+    /**
+     * Erzeugt ein einfaches TableModel für
+     * SUEV-Fachdaten.
+     */
+    public SuevModel() {
+        super(new String[]{
+                "Betreiber",
+                "Standort",
+                "vers. Fläche"
+        },
+        false);
+    }
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
-	 */
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		AnhSuevFachdaten fd = (AnhSuevFachdaten) objectAtRow;
-		Object tmp;
-		
-		switch (columnIndex) {
-		case 0:
-			if (fd.getBasisObjekt() != null) {
-				tmp = fd.getBasisObjekt().getBasisBetreiber();
-			} else {
-				tmp = "<html><font color=red>KEIN BASISOBJEKT!</font></html>";
-			}
-			break;
-		case 1:
-			if (fd.getBasisObjekt() != null) {
-				tmp = fd.getBasisObjekt().getBasisStandort();
-			} else {
-				tmp = "<html><font color=red>KEIN BASISOBJEKT!</font></html>";
-			}
-			break;
-		case 2:
-			tmp = fd.getVersFlaeche();
-			break;
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
+     */
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+        AnhSuevFachdaten fd = (AnhSuevFachdaten) objectAtRow;
+        Object tmp;
 
-		default:
-			tmp = "ERROR";
-			break;
-		}
-		if (fd.getBasisObjekt().getInaktiv() == true)
-		{
-			tmp = "<html><strike>" + tmp + "</strike></html>";	
-		}
-		return tmp;
-	}
-	
-	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
-	 */
-	public void updateList() {
-	}
+        switch (columnIndex) {
+        case 0:
+            if (fd.getBasisObjekt() != null) {
+                tmp = fd.getBasisObjekt().getBasisBetreiber();
+            } else {
+                tmp = "<html><font color=red>KEIN BASISOBJEKT!</font></html>";
+            }
+            break;
+        case 1:
+            if (fd.getBasisObjekt() != null) {
+                tmp = fd.getBasisObjekt().getBasisStandort();
+            } else {
+                tmp = "<html><font color=red>KEIN BASISOBJEKT!</font></html>";
+            }
+            break;
+        case 2:
+            tmp = fd.getVersFlaeche();
+            break;
+
+        default:
+            tmp = "ERROR";
+            break;
+        }
+        if (fd.getBasisObjekt().getInaktiv() == true)
+        {
+            tmp = "<html><strike>" + tmp + "</strike></html>";
+        }
+        return tmp;
+    }
+
+    /*
+     * Leer, da kein Updaten der Liste nötig/möglich.
+     */
+    public void updateList() {
+    }
 }

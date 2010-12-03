@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: AUIKataster.java,v 1.3 2009-03-24 12:35:19 u633d Exp $
- * 
+ *
  * Erstellt am 07.01.2005 von David Klotz (u633z)
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.2  2008/06/24 11:24:07  u633d
@@ -34,71 +34,71 @@ import javax.swing.JOptionPane;
  * @author David Klotz
  */
 public class AUIKataster {
-	/** Der kurze Name des Programms */
-	public static final String SHORT_NAME= "AUI-Kataster";
-	/** Der lange Name des Programms */
-	public static final String LONG_NAME= "Anlagen- und Indirekteinleiter-Kataster";
-	/** Die Version des Programms */
-	public static final String VERSION = "0.3";
-	/** Debug-Ausgaben */
-	public static final boolean DEBUG = true;
-	
-	private static HauptFrame runningFrame = null;
-	
-	/**
-	 * Gibt Debug-Ausgaben/Fehler auf der Konsole aus.
-	 * @param msg Die auszugebende Nachricht
-	 */
-	public static void debugOutput(String msg) {
-		debugOutput(msg, "Unknown");
-	}
-	
-	/**
-	 * Gibt Debug-Ausgaben/Fehler auf der Konsole aus.
-	 * @param msg Die auszugebende Nachricht
-	 * @param src Wo trat der Fehler auf
-	 */
-	public static void debugOutput(String msg, String src) {
-		if (DEBUG) {
-			System.out.println("DEBUG (" + src + "): " + msg);
-		}
-	}
-	
-	/**
-	 * Wird benutzt um mit im laufenden Betrieb auftretenden 
-	 * Datenbank-Fehlern umzugehen.
-	 * @param e Die aufgetretene Exception
-	 * @param src Wo trat der Fehler auf
-	 * @param fatal Soll das Programm beendet werden?
-	 */
-	public static void handleDBException(Throwable e, String src, boolean fatal) {
-		String errMsg = "%%%% ";
-		errMsg += fatal ? "Fataler " : "";
-		errMsg += "DB-Fehler: " + e.getMessage() + " %%%%";
-		//debugOutput(errMsg, src);
-		//e.printStackTrace();
-		if (runningFrame != null) {
-			runningFrame.changeStatus("Ein Datenbank-Fehler ist aufgetreten!", HauptFrame.ERROR_COLOR);
-			if (fatal) {
-				JOptionPane.showMessageDialog(runningFrame, "Es ist keine Verbindung mit der Datenbank möglich!", "Fehler", JOptionPane.ERROR_MESSAGE);
-				runningFrame.close();
-			}
-		} else if (fatal) {
-			JOptionPane.showMessageDialog(null, "Es ist keine Verbindung mit der Datenbank möglich!", "Fehler", JOptionPane.ERROR_MESSAGE);
-		}
-		
-		throw new RuntimeException(errMsg + " ("+src+")", e);
-	}
-	
-	/**
-	 * Die Hauptmethode des AUI-Katasters.
-	 * @param args Kommandozeilenargumente
-	 */
-	public static void main(String[] args) {
-		//long time = System.currentTimeMillis();
-		SettingsManager settings = SettingsManager.getInstance();
-		runningFrame = new HauptFrame(settings);
-		//frame.show();
-		//debugOutput((System.currentTimeMillis() - time) + " ms", "ZeitDif");
-	}
+    /** Der kurze Name des Programms */
+    public static final String SHORT_NAME= "AUI-Kataster";
+    /** Der lange Name des Programms */
+    public static final String LONG_NAME= "Anlagen- und Indirekteinleiter-Kataster";
+    /** Die Version des Programms */
+    public static final String VERSION = "0.3";
+    /** Debug-Ausgaben */
+    public static final boolean DEBUG = true;
+
+    private static HauptFrame runningFrame = null;
+
+    /**
+     * Gibt Debug-Ausgaben/Fehler auf der Konsole aus.
+     * @param msg Die auszugebende Nachricht
+     */
+    public static void debugOutput(String msg) {
+        debugOutput(msg, "Unknown");
+    }
+
+    /**
+     * Gibt Debug-Ausgaben/Fehler auf der Konsole aus.
+     * @param msg Die auszugebende Nachricht
+     * @param src Wo trat der Fehler auf
+     */
+    public static void debugOutput(String msg, String src) {
+        if (DEBUG) {
+            System.out.println("DEBUG (" + src + "): " + msg);
+        }
+    }
+
+    /**
+     * Wird benutzt um mit im laufenden Betrieb auftretenden
+     * Datenbank-Fehlern umzugehen.
+     * @param e Die aufgetretene Exception
+     * @param src Wo trat der Fehler auf
+     * @param fatal Soll das Programm beendet werden?
+     */
+    public static void handleDBException(Throwable e, String src, boolean fatal) {
+        String errMsg = "%%%% ";
+        errMsg += fatal ? "Fataler " : "";
+        errMsg += "DB-Fehler: " + e.getMessage() + " %%%%";
+        //debugOutput(errMsg, src);
+        //e.printStackTrace();
+        if (runningFrame != null) {
+            runningFrame.changeStatus("Ein Datenbank-Fehler ist aufgetreten!", HauptFrame.ERROR_COLOR);
+            if (fatal) {
+                JOptionPane.showMessageDialog(runningFrame, "Es ist keine Verbindung mit der Datenbank möglich!", "Fehler", JOptionPane.ERROR_MESSAGE);
+                runningFrame.close();
+            }
+        } else if (fatal) {
+            JOptionPane.showMessageDialog(null, "Es ist keine Verbindung mit der Datenbank möglich!", "Fehler", JOptionPane.ERROR_MESSAGE);
+        }
+
+        throw new RuntimeException(errMsg + " ("+src+")", e);
+    }
+
+    /**
+     * Die Hauptmethode des AUI-Katasters.
+     * @param args Kommandozeilenargumente
+     */
+    public static void main(String[] args) {
+        //long time = System.currentTimeMillis();
+        SettingsManager settings = SettingsManager.getInstance();
+        runningFrame = new HauptFrame(settings);
+        //frame.show();
+        //debugOutput((System.currentTimeMillis() - time) + " ms", "ZeitDif");
+    }
 }

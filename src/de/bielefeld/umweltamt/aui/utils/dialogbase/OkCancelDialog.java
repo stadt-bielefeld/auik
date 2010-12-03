@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: OkCancelDialog.java,v 1.3 2009-04-28 06:59:43 u633d Exp $
- * 
+ *
  * Erstellt am 06.06.2005 von David Klotz (u633z)
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.2  2009/03/24 12:35:23  u633d
@@ -29,42 +29,42 @@ import javax.swing.Action;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 
 /**
- * Eine Grundlage für einen einfachen Dialog mit einem 
+ * Eine Grundlage für einen einfachen Dialog mit einem
  * "Ok"- und einem "Abbrechen"-Button.
  * @author David Klotz
  */
 public abstract class OkCancelDialog extends SimpleDialog {
-	public OkCancelDialog(HauptFrame frame) {
-		this(null, frame);
-	}
-	
-	public OkCancelDialog(String title, HauptFrame frame) {
-		super(title, frame);
-	}
+    public OkCancelDialog(HauptFrame frame) {
+        this(null, frame);
+    }
 
-	public Action getFirstButtonAction() {
-		return new AbstractAction(getOkButtonText()) {
-			public void actionPerformed(ActionEvent e) {
-				doOk();
-			}
-		};
-	}
-	
-	public Action getSecondButtonAction() {
-		return new AbstractAction("Abbrechen") {
-			public void actionPerformed(ActionEvent e) {
-				doCancel();
-			}
-		};
-	}
-	
-	protected String getOkButtonText() {
-		return "OK";
-	}
+    public OkCancelDialog(String title, HauptFrame frame) {
+        super(title, frame);
+    }
 
-	protected abstract void doOk();
-	
-	protected void doCancel() {
-		close();
-	}
+    public Action getFirstButtonAction() {
+        return new AbstractAction(getOkButtonText()) {
+            public void actionPerformed(ActionEvent e) {
+                doOk();
+            }
+        };
+    }
+
+    public Action getSecondButtonAction() {
+        return new AbstractAction("Abbrechen") {
+            public void actionPerformed(ActionEvent e) {
+                doCancel();
+            }
+        };
+    }
+
+    protected String getOkButtonText() {
+        return "OK";
+    }
+
+    protected abstract void doOk();
+
+    protected void doCancel() {
+        close();
+    }
 }

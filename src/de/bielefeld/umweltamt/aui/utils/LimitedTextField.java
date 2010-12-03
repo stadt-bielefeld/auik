@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: LimitedTextField.java,v 1.2 2009-03-24 12:35:21 u633d Exp $
- * 
+ *
  * Erstellt am 21.04.2005 von David Klotz (u633z)
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.1  2008/06/05 11:38:34  u633d
@@ -24,16 +24,16 @@ import javax.swing.text.AbstractDocument;
  * @author David Klotz
  */
 public class LimitedTextField extends BasicEntryField {
-	public LimitedTextField(int maxLength) {
-		this(maxLength, null);
-	}
-	
-	public LimitedTextField(int maxLength, String text) {
-		AbstractDocument doc = (AbstractDocument)this.getDocument();
-	    doc.setDocumentFilter(new FixedSizeFilter(maxLength));
-	    
-	    if (text != null) {
-	    	setText(text);
-	    }
-	}
+    public LimitedTextField(int maxLength) {
+        this(maxLength, null);
+    }
+
+    public LimitedTextField(int maxLength, String text) {
+        AbstractDocument doc = (AbstractDocument)this.getDocument();
+        doc.setDocumentFilter(new FixedSizeFilter(maxLength));
+
+        if (text != null) {
+            setText(text);
+        }
+    }
 }

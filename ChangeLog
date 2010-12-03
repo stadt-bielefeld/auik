@@ -1,5 +1,16 @@
 2010-12-03  Ingo Weinzierl <ingo@intevation.de>
 
+	* auik.properties: Entfernt. Diese Datei ändert sich ggf bei jeder Nutzung
+	  des Programms und gehört daher nicht in die Versionsverwaltung.
+
+	* *.java: Code bereinigt. Tabs durch vier Leerzeichen ersetzt und Trailing
+	  Spaces entfernt. Folgende sed Aufrufe per Console verwendet:
+
+	    sed -i -e 's/\t/    /g' `find -name \*.java`
+	    sed -i -e 's/[ ]*$// `find -name \*.java`
+
+2010-12-03  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/HibernateSessionFactory.java: Der Name der
 	  Konfigurationsdatei, die von Hibernate genutzt wird, wird aus einer System
 	  Property 'auik.hibernate.config' gelesen. Falls keine solche System

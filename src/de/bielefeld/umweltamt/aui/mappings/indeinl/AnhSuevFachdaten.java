@@ -16,8 +16,8 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
- * A class that represents a row in the 'SUEV_FACHDATEN' table. 
- * This class may be customized as it is never re-generated 
+ * A class that represents a row in the 'SUEV_FACHDATEN' table.
+ * This class may be customized as it is never re-generated
  * after being created.
  */
 public class AnhSuevFachdaten
@@ -42,71 +42,71 @@ public class AnhSuevFachdaten
     /**
      * Liefert einen String der Form "[SuevKan Verfahren:ID]"
      */
-	public String toString() {
-		return "[SuevKan Verfahren:" + getObjektid() + "]";
-	}
-	
-	private static AnhSuevFachdaten getSuevByObjekt(BasisObjekt objekt,
-			Session session) throws HibernateException {
-		AnhSuevFachdaten fachdaten = null;
-		if (objekt.getBasisObjektarten().isSuev()) {
-			List suev = session.createQuery(
-					"from AnhSuevFachdaten as suev where "
-							+ "suev.basisObjekt = ?").setEntity(0, objekt)
-					.list();
+    public String toString() {
+        return "[SuevKan Verfahren:" + getObjektid() + "]";
+    }
 
-			if (suev.size() > 0) {
-				fachdaten = (AnhSuevFachdaten) suev.get(0);
-			}
-		}
+    private static AnhSuevFachdaten getSuevByObjekt(BasisObjekt objekt,
+            Session session) throws HibernateException {
+        AnhSuevFachdaten fachdaten = null;
+        if (objekt.getBasisObjektarten().isSuev()) {
+            List suev = session.createQuery(
+                    "from AnhSuevFachdaten as suev where "
+                            + "suev.basisObjekt = ?").setEntity(0, objekt)
+                    .list();
 
-		return fachdaten;
-	}
+            if (suev.size() > 0) {
+                fachdaten = (AnhSuevFachdaten) suev.get(0);
+            }
+        }
+
+        return fachdaten;
+    }
 
     public static AnhSuevFachdaten getSuevByObjekt(BasisObjekt objekt) {
-    	AnhSuevFachdaten fachdaten;
-    	try {
-    		Session session = HibernateSessionFactory.currentSession();
-    		fachdaten = getSuevByObjekt(objekt, session);
-    		HibernateSessionFactory.closeSession();
-    	} catch (HibernateException e) {
-    		fachdaten = null;
-    	}
-    	
-    	return fachdaten;
+        AnhSuevFachdaten fachdaten;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            fachdaten = getSuevByObjekt(objekt, session);
+            HibernateSessionFactory.closeSession();
+        } catch (HibernateException e) {
+            fachdaten = null;
+        }
+
+        return fachdaten;
     }
 
     /**
-     * Speichert ein SUEV-KAN Fachdaten-Objekt 
+     * Speichert ein SUEV-KAN Fachdaten-Objekt
      * in der Datenbank.
      * @param fachdaten Das zu speichernde Fachdaten-Objekt.
      * @return <code>true</code>, wenn das Objekt gespeichert wurde, sonst <code>false</code>.
      */
     public static boolean saveFachdaten(AnhSuevFachdaten fachdaten) {
-    	boolean saved;
-		
-		Transaction tx = null;
-		try {
-			Session session = HibernateSessionFactory.currentSession();
-			tx = session.beginTransaction();
-			session.saveOrUpdate(fachdaten);
-			tx.commit();
-			saved = true;
-		} catch (HibernateException e) {
-			saved = false;
-			e.printStackTrace();
-			if (tx != null) {
-				try {
-					tx.rollback();
-				} catch (HibernateException e1) {
-					AUIKataster.handleDBException(e1, "SuevFachdaten.save", false);
-				}
-			}
-		} finally {
-			HibernateSessionFactory.closeSession();
-		}
-		
-		return saved;
+        boolean saved;
+
+        Transaction tx = null;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            tx = session.beginTransaction();
+            session.saveOrUpdate(fachdaten);
+            tx.commit();
+            saved = true;
+        } catch (HibernateException e) {
+            saved = false;
+            e.printStackTrace();
+            if (tx != null) {
+                try {
+                    tx.rollback();
+                } catch (HibernateException e1) {
+                    AUIKataster.handleDBException(e1, "SuevFachdaten.save", false);
+                }
+            }
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return saved;
     }
 
     /**
@@ -114,21 +114,21 @@ public class AnhSuevFachdaten
      * @return Eine Liste aus SuevFachdaten.
      */
     public static List getAuswertungsListe() {
-    	List liste;
-    	
-    	String query = "from AnhSuevFachdaten as sv " +
-    			"order by sv.basisObjekt.inaktiv, sv.objektid";
-    	
-    	try {
-    		Session session = HibernateSessionFactory.currentSession();
-    		liste = session.createQuery(query)
-    		.list();
-    	} catch (HibernateException e) {
-    		throw new RuntimeException(e);
-    	} finally {
-    		HibernateSessionFactory.closeSession();
-    	}
-    	
-    	return liste;
+        List liste;
+
+        String query = "from AnhSuevFachdaten as sv " +
+                "order by sv.basisObjekt.inaktiv, sv.objektid";
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            liste = session.createQuery(query)
+            .list();
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return liste;
     }
 }

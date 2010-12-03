@@ -12,8 +12,8 @@ import org.hibernate.Session;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
- * A class that represents a row in the 'VAWS_VBFEINSTUFUNG' table. 
- * This class may be customized as it is never re-generated 
+ * A class that represents a row in the 'VAWS_VBFEINSTUFUNG' table.
+ * This class may be customized as it is never re-generated
  * after being created.
  */
 public class VawsVbfeinstufung
@@ -30,34 +30,34 @@ public class VawsVbfeinstufung
     /* Add customized code below */
 
     public String toString() {
-		return super.getVbfeinstufung();
-	}
+        return super.getVbfeinstufung();
+    }
 
     /**
      * Liefer alle VBF-Einstufungen.
      * @return Ein Array mit den Namen aller VBF-Einstufungen.
      */
     public static String[] getVbfeinstufungen() {
-		List list;
-		String suchString = "select vbf.vbfeinstufung " +
-				"from VawsVbfeinstufung vbf " +
-				"order by vbf.vbfeinstufung";
-		String[] tmp;
-		
-		try {
-			Session session = HibernateSessionFactory.currentSession();
-			Query query = session.createQuery(suchString);
-			query.setCacheable(true);
-			query.setCacheRegion("vawsvbfliste");
-			list = query.list();
-			tmp = new String[list.size()];
-			tmp = (String[]) list.toArray(tmp);
-		} catch (HibernateException e) {
-			throw new RuntimeException("Datenbank-Fehler (VawsVbfeinstufung)", e);
-		} finally {
-			HibernateSessionFactory.closeSession();
-		}
-		
-		return tmp;
-	}
+        List list;
+        String suchString = "select vbf.vbfeinstufung " +
+                "from VawsVbfeinstufung vbf " +
+                "order by vbf.vbfeinstufung";
+        String[] tmp;
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            Query query = session.createQuery(suchString);
+            query.setCacheable(true);
+            query.setCacheRegion("vawsvbfliste");
+            list = query.list();
+            tmp = new String[list.size()];
+            tmp = (String[]) list.toArray(tmp);
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler (VawsVbfeinstufung)", e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return tmp;
+    }
 }

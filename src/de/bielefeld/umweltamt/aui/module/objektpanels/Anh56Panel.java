@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: Anh56Panel.java,v 1.1.2.1 2010-11-23 10:25:56 u633d Exp $
- * 
+ *
  * Erstellt am 10.08.2005 von Gerhard Genuit (u633d)
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.2  2010/02/04 13:34:38  u633d
@@ -60,507 +60,507 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author u633d
  */
 public class Anh56Panel extends JPanel{
-	private String name;
-	private BasisObjektBearbeiten hauptModul;
-	
-	// Widgets
-	
-	private JTextField druckverfahrenFeld = null;
-	private JTextField verbrauchFeld = null;
-	private JTextField entsorgungFeld = null;
-	private TextFieldDateChooser gen59Datum = null;
-	private TextFieldDateChooser gen58Datum = null;
-	private JCheckBox abaCheck = null;
-	private JCheckBox genpflichtCheck = null;
-	private JCheckBox abwasseranfallCheck = null;
-	private JTextArea BemerkungenArea = null;
-	
-	private JButton saveAnh56Button = null;
-	
-	// Daten
-	private Anh56Fachdaten fachdaten = null;
-	
-	
-	// Objektverknuepfer
-	private ObjektVerknuepfungModel objektVerknuepfungModel;
-	private JTable objektverknuepfungTabelle = null;
-	private JButton selectObjektButton = null;
-	private Action verknuepfungLoeschAction;
-	private JPopupMenu verknuepfungPopup;	
-	
-	
-	//Listener
-	private ActionListener editButtonListener;
+    private String name;
+    private BasisObjektBearbeiten hauptModul;
 
-	public Anh56Panel(BasisObjektBearbeiten hauptModul) {
-		name = "Druckerei";
-		this.hauptModul = hauptModul;
-	
-		FormLayout layout = new FormLayout (
-				"r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
-				"");
-		
-		
-		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-		builder.setDefaultDialogBorder();
-		
-		builder.appendSeparator("Fachdaten");
-		builder.append("Druckverfahren:", getDruckverfahrenFeld());
-		builder.append("", getAbwasseranfallCheck());
-		builder.nextLine();
-		builder.append("Wasserverbrauch:", getVerbrauchFeld());
-		builder.append("", getAbaCheck());
-		builder.nextLine();
-		builder.append("Entsorgung:", getEntsorgungFeld());
-		builder.append("", getGenpflichtCheck());
-		builder.nextLine();
-		builder.append("Datum 58er Genehmigung:", getGen58Datum());
-		builder.nextLine();
-		builder.append("Datum 59er Genehmigung:", getGen59Datum());
-		builder.nextLine();
-		
-		builder.appendSeparator("Bemerkungen");
-		builder.appendRow("3dlu");
-		builder.nextLine(2);
-		JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		builder.appendRow("fill:30dlu");
-		builder.append(bemerkungsScroller, 7);
-		
-		builder.appendSeparator("Verknüpfte Objekte");
-		builder.appendRow("3dlu");
-		builder.nextLine(2);
-		JScrollPane objektverknuepfungScroller = new JScrollPane(
-				getObjektverknuepungTabelle(),
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		builder.appendRow("fill:100dlu");
-		builder.append(objektverknuepfungScroller, 7);
-		builder.nextLine();
+    // Widgets
 
-		JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-				getSelectObjektButton(), getSaveAnh56Button());
-		
-		
-		//JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveAnh56Button());
-		builder.append(buttonBar, 7);
-		
-	}
-	
-	public void completeObjekt() {
-		if (hauptModul.isNew() || fachdaten == null) {
-			// Neues Anhang 56 Objekt erzeugen
-			fachdaten = new Anh56Fachdaten();
-			// Objekt_Id setzen
-			fachdaten.setBasisObjekt(hauptModul.getObjekt());
-			
-			// Anhang 56 Objekt speichern
-			Anh56Fachdaten.saveFachdaten(fachdaten);
-			AUIKataster.debugOutput("Neues Anh 56 Objekt "+fachdaten+" gespeichert.", "BasisObjektBearbeiten.completeObjekt");
-		}
-	}
+    private JTextField druckverfahrenFeld = null;
+    private JTextField verbrauchFeld = null;
+    private JTextField entsorgungFeld = null;
+    private TextFieldDateChooser gen59Datum = null;
+    private TextFieldDateChooser gen58Datum = null;
+    private JCheckBox abaCheck = null;
+    private JCheckBox genpflichtCheck = null;
+    private JCheckBox abwasseranfallCheck = null;
+    private JTextArea BemerkungenArea = null;
 
-	private boolean saveAnh56Daten() {
-		boolean success;
-		
-		String bemerkungen = BemerkungenArea.getText();
-		if ("".equals(bemerkungen)) {
-			fachdaten.setBemerkungen(null);
-		} else {
-			fachdaten.setBemerkungen(bemerkungen);
-		}
-		
-		String druckverf = druckverfahrenFeld.getText();
-		if ("".equals(druckverf)) {
-			fachdaten.setDruckverfahren(null);
-		} else {
-			fachdaten.setDruckverfahren(druckverf);
-		}
-		
-		String verbrauch = verbrauchFeld.getText();
-		if ("".equals(verbrauch)) {
-			fachdaten.setVerbrauch(null);
-		} else {
-			fachdaten.setVerbrauch(verbrauch);
-		}
-		
-		String entsorgung = entsorgungFeld.getText();
-		if ("".equals(entsorgung)) {
-			fachdaten.setEntsorgung(null);
-		} else {
-			fachdaten.setEntsorgung(entsorgung);
-		}
-		
-		Date gen58 = gen58Datum.getDate();
-		fachdaten.setGen58(gen58);	
-		
-		Date gen59 = gen59Datum.getDate();
-		fachdaten.setGen59(gen59);
-		
-		
-		if (getAbaCheck().isSelected())  {
-			fachdaten.setAba(true);
-		} else {
-			fachdaten.setAba(false);
-		}
+    private JButton saveAnh56Button = null;
 
-		if (getGenpflichtCheck().isSelected())  {
-			fachdaten.setGenpflicht(true);
-		} else {
-			fachdaten.setGenpflicht(false);
-		}
-		
-		if (getAbwasseranfallCheck().isSelected())  {
-			fachdaten.setAbwasseranfall(true);
-		} else {
-			fachdaten.setAbwasseranfall(false);
-		}
-		
-	
-
-		
-		success = Anh56Fachdaten.saveFachdaten(fachdaten);
-		if (success) {
-			AUIKataster.debugOutput("Anh 56 Objekt " + fachdaten.getObjektid() + " gespeichert.",
-			"Anh56Panel.saveFachdaten");
-		} else {
-			AUIKataster.debugOutput("Anh 56 Objekt " + fachdaten
-					+ " konnte nicht gespeichert werden!",
-			"Anh56Panel.saveFachdaten");
-		}
-		return success;
-	}
-
-	public void enableAll(boolean enabled) {
-		
-		getBemerkungenArea().setEnabled(enabled);
-		getDruckverfahrenFeld().setEnabled(enabled);
-		getVerbrauchFeld().setEnabled(enabled);
-		getEntsorgungFeld().setEnabled(enabled);
-
-		getGen58Datum().setEnabled(enabled);
-		getGen59Datum().setEnabled(enabled);
-		
-		getAbaCheck().setEnabled(enabled);
-		getGenpflichtCheck().setEnabled(enabled);
-		getAbwasseranfallCheck().setEnabled(enabled);
-	
-	}
-
-	public void clearForm() {
-		
-		getBemerkungenArea().setText(null);
-		getDruckverfahrenFeld().setText(null);
-		getVerbrauchFeld().setText(null);
-		getEntsorgungFeld().setText(null);	
-		
-		getGen58Datum().setDate(null);
-		getGen59Datum().setDate(null);
-		
-		getAbaCheck().setSelected(false);
-		getGenpflichtCheck().setSelected(false);
-		getAbwasseranfallCheck().setSelected(false);
-	
-	}
-
-	public void updateForm() throws RuntimeException {
-	
-	if (fachdaten != null) {
-		if (fachdaten.getBemerkungen() != null) {
-			getBemerkungenArea().setText(fachdaten.getBemerkungen());
-		}
-		if (fachdaten.getDruckverfahren() != null) {
-			getDruckverfahrenFeld().setText(fachdaten.getDruckverfahren());
-		}
-		if (fachdaten.getVerbrauch() != null) {
-			getVerbrauchFeld().setText(fachdaten.getVerbrauch());
-		}
-		if (fachdaten.getEntsorgung() != null) {
-			getEntsorgungFeld().setText(fachdaten.getEntsorgung());
-		}
-		
-		if (fachdaten.getGen58() != null) {
-			getGen58Datum().setDate(fachdaten.getGen58());
-		}
-		if (fachdaten.getGen59() != null) {
-			getGen59Datum().setDate(fachdaten.getGen59());
-		}
+    // Daten
+    private Anh56Fachdaten fachdaten = null;
 
 
-		if (fachdaten.getAba() != null) {
-			if (fachdaten.getAba() == true) {
-				getAbaCheck().setSelected(true);
-			}
-			else {
-				getAbaCheck().setSelected(false);
-			}
-		}
-		if (fachdaten.getGenpflicht() != null) {
-			if (fachdaten.getGenpflicht() == true) {
-				getGenpflichtCheck().setSelected(true);
-			}
-			else {
-				getGenpflichtCheck().setSelected(false);
-			}
-		}
-		if (fachdaten.getAbwasseranfall() != null) {
-			if (fachdaten.getAbwasseranfall() == true) {
-				getAbwasseranfallCheck().setSelected(true);
-			}
-			else {
-				getAbwasseranfallCheck().setSelected(false);
-			}
-			objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
-		}
-	}
-	
-	}
+    // Objektverknuepfer
+    private ObjektVerknuepfungModel objektVerknuepfungModel;
+    private JTable objektverknuepfungTabelle = null;
+    private JButton selectObjektButton = null;
+    private Action verknuepfungLoeschAction;
+    private JPopupMenu verknuepfungPopup;
 
-	public void fetchFormData() throws RuntimeException {
-		fachdaten = Anh56Fachdaten.getAnh56ByObjekt(hauptModul.getObjekt());
-		AUIKataster.debugOutput("Anhang 56 Objekt aus DB geholt: ID" + fachdaten, "Anh56Panel.fetchFormData");
-	}
 
-	private JButton getSaveAnh56Button() {
-		if (saveAnh56Button == null) {
-			saveAnh56Button = new JButton("Speichern");
-			
-			saveAnh56Button.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					enableAll(false);
-					if (saveAnh56Daten()) {
-						hauptModul.getFrame().changeStatus("Anh 56 Objekt "+fachdaten.getObjektid()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
-					} else {
-						hauptModul.getFrame().changeStatus("Fehler beim Speichern des Anh 56 Objekt!", HauptFrame.ERROR_COLOR);
-					}
-					
-					hauptModul.fillForm();
-				}
-			});
-		}
-		return saveAnh56Button;
-	}
+    //Listener
+    private ActionListener editButtonListener;
 
-	public String getName() {
-		return name;
-	}
+    public Anh56Panel(BasisObjektBearbeiten hauptModul) {
+        name = "Druckerei";
+        this.hauptModul = hauptModul;
 
-	private JCheckBox getAbaCheck() {
-		if (abaCheck == null) {
-			abaCheck = new JCheckBox("Abwasserbehandlung");
-		}
-		return abaCheck;
-	}
+        FormLayout layout = new FormLayout (
+                "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
+                "");
 
-	private JCheckBox getAbwasseranfallCheck() {
-		if (abwasseranfallCheck == null) {
-			abwasseranfallCheck = new JCheckBox("Abwasseranfall");
-		}
-		return abwasseranfallCheck;
-	}
-	private JTextField getDruckverfahrenFeld() {
-		if (druckverfahrenFeld == null) {			
-			druckverfahrenFeld = new LimitedTextField(150);
-		}
-		return druckverfahrenFeld;
-	}
-	private JTextField getEntsorgungFeld() {
-		if (entsorgungFeld == null) {			
-			entsorgungFeld = new LimitedTextField(150);
-		}
-		return entsorgungFeld;
-	}
-	private TextFieldDateChooser getGen58Datum() {
-		if (gen58Datum == null) {			
-			gen58Datum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-		}
-		return gen58Datum;
-	}
-	private TextFieldDateChooser getGen59Datum() {
-		if (gen59Datum == null) {			
-			gen59Datum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-		}
-		return gen59Datum;
-	}
-	private JCheckBox getGenpflichtCheck() {
-		if (genpflichtCheck == null) {
-			genpflichtCheck = new JCheckBox("Genehmigungspflicht");
-		}
-		return genpflichtCheck;
-	}
-	private JTextField getVerbrauchFeld() {
-		if (verbrauchFeld == null) {			
-			verbrauchFeld = new LimitedTextField(150);
-		}
-		return verbrauchFeld;
-	}
-	private JTextArea getBemerkungenArea() {
-		if (BemerkungenArea == null) {			
-			BemerkungenArea = new LimitedTextArea(255);
-			BemerkungenArea.setLineWrap(true);
-			BemerkungenArea.setWrapStyleWord(true);
-		}
-		return BemerkungenArea;
-	}
-	
+
+        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        builder.setDefaultDialogBorder();
+
+        builder.appendSeparator("Fachdaten");
+        builder.append("Druckverfahren:", getDruckverfahrenFeld());
+        builder.append("", getAbwasseranfallCheck());
+        builder.nextLine();
+        builder.append("Wasserverbrauch:", getVerbrauchFeld());
+        builder.append("", getAbaCheck());
+        builder.nextLine();
+        builder.append("Entsorgung:", getEntsorgungFeld());
+        builder.append("", getGenpflichtCheck());
+        builder.nextLine();
+        builder.append("Datum 58er Genehmigung:", getGen58Datum());
+        builder.nextLine();
+        builder.append("Datum 59er Genehmigung:", getGen59Datum());
+        builder.nextLine();
+
+        builder.appendSeparator("Bemerkungen");
+        builder.appendRow("3dlu");
+        builder.nextLine(2);
+        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        builder.appendRow("fill:30dlu");
+        builder.append(bemerkungsScroller, 7);
+
+        builder.appendSeparator("Verknüpfte Objekte");
+        builder.appendRow("3dlu");
+        builder.nextLine(2);
+        JScrollPane objektverknuepfungScroller = new JScrollPane(
+                getObjektverknuepungTabelle(),
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        builder.appendRow("fill:100dlu");
+        builder.append(objektverknuepfungScroller, 7);
+        builder.nextLine();
+
+        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
+                getSelectObjektButton(), getSaveAnh56Button());
+
+
+        //JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveAnh56Button());
+        builder.append(buttonBar, 7);
+
+    }
+
+    public void completeObjekt() {
+        if (hauptModul.isNew() || fachdaten == null) {
+            // Neues Anhang 56 Objekt erzeugen
+            fachdaten = new Anh56Fachdaten();
+            // Objekt_Id setzen
+            fachdaten.setBasisObjekt(hauptModul.getObjekt());
+
+            // Anhang 56 Objekt speichern
+            Anh56Fachdaten.saveFachdaten(fachdaten);
+            AUIKataster.debugOutput("Neues Anh 56 Objekt "+fachdaten+" gespeichert.", "BasisObjektBearbeiten.completeObjekt");
+        }
+    }
+
+    private boolean saveAnh56Daten() {
+        boolean success;
+
+        String bemerkungen = BemerkungenArea.getText();
+        if ("".equals(bemerkungen)) {
+            fachdaten.setBemerkungen(null);
+        } else {
+            fachdaten.setBemerkungen(bemerkungen);
+        }
+
+        String druckverf = druckverfahrenFeld.getText();
+        if ("".equals(druckverf)) {
+            fachdaten.setDruckverfahren(null);
+        } else {
+            fachdaten.setDruckverfahren(druckverf);
+        }
+
+        String verbrauch = verbrauchFeld.getText();
+        if ("".equals(verbrauch)) {
+            fachdaten.setVerbrauch(null);
+        } else {
+            fachdaten.setVerbrauch(verbrauch);
+        }
+
+        String entsorgung = entsorgungFeld.getText();
+        if ("".equals(entsorgung)) {
+            fachdaten.setEntsorgung(null);
+        } else {
+            fachdaten.setEntsorgung(entsorgung);
+        }
+
+        Date gen58 = gen58Datum.getDate();
+        fachdaten.setGen58(gen58);
+
+        Date gen59 = gen59Datum.getDate();
+        fachdaten.setGen59(gen59);
+
+
+        if (getAbaCheck().isSelected())  {
+            fachdaten.setAba(true);
+        } else {
+            fachdaten.setAba(false);
+        }
+
+        if (getGenpflichtCheck().isSelected())  {
+            fachdaten.setGenpflicht(true);
+        } else {
+            fachdaten.setGenpflicht(false);
+        }
+
+        if (getAbwasseranfallCheck().isSelected())  {
+            fachdaten.setAbwasseranfall(true);
+        } else {
+            fachdaten.setAbwasseranfall(false);
+        }
+
+
+
+
+        success = Anh56Fachdaten.saveFachdaten(fachdaten);
+        if (success) {
+            AUIKataster.debugOutput("Anh 56 Objekt " + fachdaten.getObjektid() + " gespeichert.",
+            "Anh56Panel.saveFachdaten");
+        } else {
+            AUIKataster.debugOutput("Anh 56 Objekt " + fachdaten
+                    + " konnte nicht gespeichert werden!",
+            "Anh56Panel.saveFachdaten");
+        }
+        return success;
+    }
+
+    public void enableAll(boolean enabled) {
+
+        getBemerkungenArea().setEnabled(enabled);
+        getDruckverfahrenFeld().setEnabled(enabled);
+        getVerbrauchFeld().setEnabled(enabled);
+        getEntsorgungFeld().setEnabled(enabled);
+
+        getGen58Datum().setEnabled(enabled);
+        getGen59Datum().setEnabled(enabled);
+
+        getAbaCheck().setEnabled(enabled);
+        getGenpflichtCheck().setEnabled(enabled);
+        getAbwasseranfallCheck().setEnabled(enabled);
+
+    }
+
+    public void clearForm() {
+
+        getBemerkungenArea().setText(null);
+        getDruckverfahrenFeld().setText(null);
+        getVerbrauchFeld().setText(null);
+        getEntsorgungFeld().setText(null);
+
+        getGen58Datum().setDate(null);
+        getGen59Datum().setDate(null);
+
+        getAbaCheck().setSelected(false);
+        getGenpflichtCheck().setSelected(false);
+        getAbwasseranfallCheck().setSelected(false);
+
+    }
+
+    public void updateForm() throws RuntimeException {
+
+    if (fachdaten != null) {
+        if (fachdaten.getBemerkungen() != null) {
+            getBemerkungenArea().setText(fachdaten.getBemerkungen());
+        }
+        if (fachdaten.getDruckverfahren() != null) {
+            getDruckverfahrenFeld().setText(fachdaten.getDruckverfahren());
+        }
+        if (fachdaten.getVerbrauch() != null) {
+            getVerbrauchFeld().setText(fachdaten.getVerbrauch());
+        }
+        if (fachdaten.getEntsorgung() != null) {
+            getEntsorgungFeld().setText(fachdaten.getEntsorgung());
+        }
+
+        if (fachdaten.getGen58() != null) {
+            getGen58Datum().setDate(fachdaten.getGen58());
+        }
+        if (fachdaten.getGen59() != null) {
+            getGen59Datum().setDate(fachdaten.getGen59());
+        }
+
+
+        if (fachdaten.getAba() != null) {
+            if (fachdaten.getAba() == true) {
+                getAbaCheck().setSelected(true);
+            }
+            else {
+                getAbaCheck().setSelected(false);
+            }
+        }
+        if (fachdaten.getGenpflicht() != null) {
+            if (fachdaten.getGenpflicht() == true) {
+                getGenpflichtCheck().setSelected(true);
+            }
+            else {
+                getGenpflichtCheck().setSelected(false);
+            }
+        }
+        if (fachdaten.getAbwasseranfall() != null) {
+            if (fachdaten.getAbwasseranfall() == true) {
+                getAbwasseranfallCheck().setSelected(true);
+            }
+            else {
+                getAbwasseranfallCheck().setSelected(false);
+            }
+            objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
+        }
+    }
+
+    }
+
+    public void fetchFormData() throws RuntimeException {
+        fachdaten = Anh56Fachdaten.getAnh56ByObjekt(hauptModul.getObjekt());
+        AUIKataster.debugOutput("Anhang 56 Objekt aus DB geholt: ID" + fachdaten, "Anh56Panel.fetchFormData");
+    }
+
+    private JButton getSaveAnh56Button() {
+        if (saveAnh56Button == null) {
+            saveAnh56Button = new JButton("Speichern");
+
+            saveAnh56Button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    enableAll(false);
+                    if (saveAnh56Daten()) {
+                        hauptModul.getFrame().changeStatus("Anh 56 Objekt "+fachdaten.getObjektid()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
+                    } else {
+                        hauptModul.getFrame().changeStatus("Fehler beim Speichern des Anh 56 Objekt!", HauptFrame.ERROR_COLOR);
+                    }
+
+                    hauptModul.fillForm();
+                }
+            });
+        }
+        return saveAnh56Button;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private JCheckBox getAbaCheck() {
+        if (abaCheck == null) {
+            abaCheck = new JCheckBox("Abwasserbehandlung");
+        }
+        return abaCheck;
+    }
+
+    private JCheckBox getAbwasseranfallCheck() {
+        if (abwasseranfallCheck == null) {
+            abwasseranfallCheck = new JCheckBox("Abwasseranfall");
+        }
+        return abwasseranfallCheck;
+    }
+    private JTextField getDruckverfahrenFeld() {
+        if (druckverfahrenFeld == null) {
+            druckverfahrenFeld = new LimitedTextField(150);
+        }
+        return druckverfahrenFeld;
+    }
+    private JTextField getEntsorgungFeld() {
+        if (entsorgungFeld == null) {
+            entsorgungFeld = new LimitedTextField(150);
+        }
+        return entsorgungFeld;
+    }
+    private TextFieldDateChooser getGen58Datum() {
+        if (gen58Datum == null) {
+            gen58Datum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        }
+        return gen58Datum;
+    }
+    private TextFieldDateChooser getGen59Datum() {
+        if (gen59Datum == null) {
+            gen59Datum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        }
+        return gen59Datum;
+    }
+    private JCheckBox getGenpflichtCheck() {
+        if (genpflichtCheck == null) {
+            genpflichtCheck = new JCheckBox("Genehmigungspflicht");
+        }
+        return genpflichtCheck;
+    }
+    private JTextField getVerbrauchFeld() {
+        if (verbrauchFeld == null) {
+            verbrauchFeld = new LimitedTextField(150);
+        }
+        return verbrauchFeld;
+    }
+    private JTextArea getBemerkungenArea() {
+        if (BemerkungenArea == null) {
+            BemerkungenArea = new LimitedTextArea(255);
+            BemerkungenArea.setLineWrap(true);
+            BemerkungenArea.setWrapStyleWord(true);
+        }
+        return BemerkungenArea;
+    }
+
 private JTable getObjektverknuepungTabelle() {
-		
-		if (objektVerknuepfungModel == null) {
-			objektVerknuepfungModel = new ObjektVerknuepfungModel(hauptModul
-					.getObjekt());
-	
-			if (objektverknuepfungTabelle == null) {
-				objektverknuepfungTabelle = new JTable(objektVerknuepfungModel);
-			} else {
-				objektverknuepfungTabelle.setModel(objektVerknuepfungModel);
-			}
-			objektverknuepfungTabelle.getColumnModel().getColumn(0)
-					.setPreferredWidth(5);
-			objektverknuepfungTabelle.getColumnModel().getColumn(1)
-					.setPreferredWidth(100);
-			objektverknuepfungTabelle.getColumnModel().getColumn(2)
-					.setPreferredWidth(250);
-	
-			objektverknuepfungTabelle
-					.addMouseListener(new java.awt.event.MouseAdapter() {
-						public void mouseClicked(java.awt.event.MouseEvent e) {
-							if ((e.getClickCount() == 2)
-									&& (e.getButton() == 1)) {
-								Point origin = e.getPoint();
-								int row = getObjektverknuepungTabelle()
-										.rowAtPoint(origin);
-	
-								if (row != -1) {
-									BasisObjektverknuepfung obj = objektVerknuepfungModel
-											.getRow(row);
-									if (obj.getBasisObjektByIstVerknuepftMit().getObjektid().intValue() != hauptModul
-											.getObjekt().getObjektid().intValue())
-										hauptModul
-												.getManager()
-												.getSettingsManager()
-												.setSetting(
-														"auik.imc.edit_object",
-														obj
-																.getBasisObjektByIstVerknuepftMit()
-																.getObjektid()
-																.intValue(),
-														false);
-									else
-										hauptModul
-												.getManager()
-												.getSettingsManager()
-												.setSetting(
-														"auik.imc.edit_object",
-														obj
-																.getBasisObjektByObjekt()
-																.getObjektid()
-																.intValue(),
-														false);
-									hauptModul.getManager().switchModul(
-											"m_objekt_bearbeiten");
-								}
-							}
-						}
-	
-						public void mousePressed(MouseEvent e) {
-							showVerknuepfungPopup(e);
-						}
-	
-						public void mouseReleased(MouseEvent e) {
-							showVerknuepfungPopup(e);
-						}
-					});
-	
-			objektverknuepfungTabelle.getInputMap().put(
-					(KeyStroke) getVerknuepfungLoeschAction().getValue(
-							Action.ACCELERATOR_KEY),
-					getVerknuepfungLoeschAction().getValue(Action.NAME));
-			objektverknuepfungTabelle.getActionMap().put(
-					getVerknuepfungLoeschAction().getValue(Action.NAME),
-					getVerknuepfungLoeschAction());
-		}
-	
-		return objektverknuepfungTabelle;
-	
-	}
 
-	private void showVerknuepfungPopup(MouseEvent e) {
-		if (verknuepfungPopup == null) {
-			verknuepfungPopup = new JPopupMenu("Objekt");
-			JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-			verknuepfungPopup.add(loeschItem);
-		}
-	
-		if (e.isPopupTrigger()) {
-			Point origin = e.getPoint();
-			int row = objektverknuepfungTabelle.rowAtPoint(origin);
-	
-			if (row != -1) {
-				objektverknuepfungTabelle.setRowSelectionInterval(row, row);
-				verknuepfungPopup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		}
-	}
+        if (objektVerknuepfungModel == null) {
+            objektVerknuepfungModel = new ObjektVerknuepfungModel(hauptModul
+                    .getObjekt());
 
-	private Action getVerknuepfungLoeschAction() {
-		if (verknuepfungLoeschAction == null) {
-			verknuepfungLoeschAction = new AbstractAction("Löschen") {
-				public void actionPerformed(ActionEvent e) {
-					int row = getObjektverknuepungTabelle().getSelectedRow();
-					if (row != -1
-							&& getObjektverknuepungTabelle().getEditingRow() == -1) {
-						BasisObjektverknuepfung verknuepfung = objektVerknuepfungModel
-								.getRow(row);
-						int answer = JOptionPane
-								.showConfirmDialog(
-										hauptModul.getPanel(),
-										"Soll die Verknüpfung wirklich gelöscht werden?\n"
-												+ "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
-										"Löschen bestätigen",
-										JOptionPane.YES_NO_OPTION);
-						if (answer == JOptionPane.YES_OPTION) {
-							if (objektVerknuepfungModel.removeRow(row)) {
-								hauptModul.getFrame().changeStatus(
-										"Objekt gelöscht.",
-										HauptFrame.SUCCESS_COLOR);
-								AUIKataster.debugOutput("Objekt "
-										+ verknuepfung.getId()
-										+ " wurde gelöscht!",
-										"BasisBetreiberSuchen.removeAction");
-							} else {
-								hauptModul.getFrame().changeStatus(
-										"Konnte das Objekt nicht löschen!",
-										HauptFrame.ERROR_COLOR);
-							}
-						}
-					}
-				}
-			};
-			verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-					KeyEvent.VK_L));
-			verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
-					.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
-		}
+            if (objektverknuepfungTabelle == null) {
+                objektverknuepfungTabelle = new JTable(objektVerknuepfungModel);
+            } else {
+                objektverknuepfungTabelle.setModel(objektVerknuepfungModel);
+            }
+            objektverknuepfungTabelle.getColumnModel().getColumn(0)
+                    .setPreferredWidth(5);
+            objektverknuepfungTabelle.getColumnModel().getColumn(1)
+                    .setPreferredWidth(100);
+            objektverknuepfungTabelle.getColumnModel().getColumn(2)
+                    .setPreferredWidth(250);
 
-		return verknuepfungLoeschAction;
-	}
+            objektverknuepfungTabelle
+                    .addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent e) {
+                            if ((e.getClickCount() == 2)
+                                    && (e.getButton() == 1)) {
+                                Point origin = e.getPoint();
+                                int row = getObjektverknuepungTabelle()
+                                        .rowAtPoint(origin);
 
-	private JButton getSelectObjektButton() {
-		if (selectObjektButton == null) {
-			selectObjektButton = new JButton("Objekt auswählen");
+                                if (row != -1) {
+                                    BasisObjektverknuepfung obj = objektVerknuepfungModel
+                                            .getRow(row);
+                                    if (obj.getBasisObjektByIstVerknuepftMit().getObjektid().intValue() != hauptModul
+                                            .getObjekt().getObjektid().intValue())
+                                        hauptModul
+                                                .getManager()
+                                                .getSettingsManager()
+                                                .setSetting(
+                                                        "auik.imc.edit_object",
+                                                        obj
+                                                                .getBasisObjektByIstVerknuepftMit()
+                                                                .getObjektid()
+                                                                .intValue(),
+                                                        false);
+                                    else
+                                        hauptModul
+                                                .getManager()
+                                                .getSettingsManager()
+                                                .setSetting(
+                                                        "auik.imc.edit_object",
+                                                        obj
+                                                                .getBasisObjektByObjekt()
+                                                                .getObjektid()
+                                                                .intValue(),
+                                                        false);
+                                    hauptModul.getManager().switchModul(
+                                            "m_objekt_bearbeiten");
+                                }
+                            }
+                        }
 
-			selectObjektButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					ObjektChooser chooser = new ObjektChooser(hauptModul
-							.getFrame(), fachdaten.getBasisObjekt(),
-							objektVerknuepfungModel);
-					chooser.setVisible(true);
-				}
-			});
-		}
-		return selectObjektButton;
-	}
-	
-	
-	
+                        public void mousePressed(MouseEvent e) {
+                            showVerknuepfungPopup(e);
+                        }
+
+                        public void mouseReleased(MouseEvent e) {
+                            showVerknuepfungPopup(e);
+                        }
+                    });
+
+            objektverknuepfungTabelle.getInputMap().put(
+                    (KeyStroke) getVerknuepfungLoeschAction().getValue(
+                            Action.ACCELERATOR_KEY),
+                    getVerknuepfungLoeschAction().getValue(Action.NAME));
+            objektverknuepfungTabelle.getActionMap().put(
+                    getVerknuepfungLoeschAction().getValue(Action.NAME),
+                    getVerknuepfungLoeschAction());
+        }
+
+        return objektverknuepfungTabelle;
+
+    }
+
+    private void showVerknuepfungPopup(MouseEvent e) {
+        if (verknuepfungPopup == null) {
+            verknuepfungPopup = new JPopupMenu("Objekt");
+            JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
+            verknuepfungPopup.add(loeschItem);
+        }
+
+        if (e.isPopupTrigger()) {
+            Point origin = e.getPoint();
+            int row = objektverknuepfungTabelle.rowAtPoint(origin);
+
+            if (row != -1) {
+                objektverknuepfungTabelle.setRowSelectionInterval(row, row);
+                verknuepfungPopup.show(e.getComponent(), e.getX(), e.getY());
+            }
+        }
+    }
+
+    private Action getVerknuepfungLoeschAction() {
+        if (verknuepfungLoeschAction == null) {
+            verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                public void actionPerformed(ActionEvent e) {
+                    int row = getObjektverknuepungTabelle().getSelectedRow();
+                    if (row != -1
+                            && getObjektverknuepungTabelle().getEditingRow() == -1) {
+                        BasisObjektverknuepfung verknuepfung = objektVerknuepfungModel
+                                .getRow(row);
+                        int answer = JOptionPane
+                                .showConfirmDialog(
+                                        hauptModul.getPanel(),
+                                        "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                                + "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
+                                        "Löschen bestätigen",
+                                        JOptionPane.YES_NO_OPTION);
+                        if (answer == JOptionPane.YES_OPTION) {
+                            if (objektVerknuepfungModel.removeRow(row)) {
+                                hauptModul.getFrame().changeStatus(
+                                        "Objekt gelöscht.",
+                                        HauptFrame.SUCCESS_COLOR);
+                                AUIKataster.debugOutput("Objekt "
+                                        + verknuepfung.getId()
+                                        + " wurde gelöscht!",
+                                        "BasisBetreiberSuchen.removeAction");
+                            } else {
+                                hauptModul.getFrame().changeStatus(
+                                        "Konnte das Objekt nicht löschen!",
+                                        HauptFrame.ERROR_COLOR);
+                            }
+                        }
+                    }
+                }
+            };
+            verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                    KeyEvent.VK_L));
+            verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
+                    .getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+        }
+
+        return verknuepfungLoeschAction;
+    }
+
+    private JButton getSelectObjektButton() {
+        if (selectObjektButton == null) {
+            selectObjektButton = new JButton("Objekt auswählen");
+
+            selectObjektButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ObjektChooser chooser = new ObjektChooser(hauptModul
+                            .getFrame(), fachdaten.getBasisObjekt(),
+                            objektVerknuepfungModel);
+                    chooser.setVisible(true);
+                }
+            });
+        }
+        return selectObjektButton;
+    }
+
+
+
 }
 

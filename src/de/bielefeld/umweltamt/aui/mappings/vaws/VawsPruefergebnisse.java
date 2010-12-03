@@ -12,8 +12,8 @@ import org.hibernate.Session;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
- * A class that represents a row in the 'VAWS_PRUEFERGEBNISSE' table. 
- * This class may be customized as it is never re-generated 
+ * A class that represents a row in the 'VAWS_PRUEFERGEBNISSE' table.
+ * This class may be customized as it is never re-generated
  * after being created.
  */
 public class VawsPruefergebnisse
@@ -34,26 +34,26 @@ public class VawsPruefergebnisse
      * @return Ein Array mit den Namen aller möglichen Prüfergebnisse.
      */
     public static String[] getAllPruefergebnisse() {
-		List list;
-		String suchString = "select prferg.pruefergebnis " +
-				"from VawsPruefergebnisse prferg " +
-				"order by prferg.pruefergebnis";
-		String[] tmp;
-		
-		try {
-			Session session = HibernateSessionFactory.currentSession();
-			Query query = session.createQuery(suchString);
-			query.setCacheable(true);
-			query.setCacheRegion("vawsprfergliste");
-			list = query.list();
-			tmp = new String[list.size()];
-			tmp = (String[]) list.toArray(tmp);
-		} catch (HibernateException e) {
-			throw new RuntimeException("Datenbank-Fehler", e);
-		} finally {
-			HibernateSessionFactory.closeSession();
-		}
-		
-		return tmp;
-	}
+        List list;
+        String suchString = "select prferg.pruefergebnis " +
+                "from VawsPruefergebnisse prferg " +
+                "order by prferg.pruefergebnis";
+        String[] tmp;
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            Query query = session.createQuery(suchString);
+            query.setCacheable(true);
+            query.setCacheRegion("vawsprfergliste");
+            list = query.list();
+            tmp = new String[list.size()];
+            tmp = (String[]) list.toArray(tmp);
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler", e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return tmp;
+    }
 }

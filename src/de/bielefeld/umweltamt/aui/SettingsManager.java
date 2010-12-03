@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: SettingsManager.java,v 1.6.2.1 2010-11-23 10:25:58 u633d Exp $
- * 
+ *
  * Erstellt am 31.01.2005 von David Klotz (u633z)
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.6  2010/02/24 10:44:51  u633d
@@ -67,191 +67,191 @@ import java.util.Properties;
  * @author David Klotz
  */
 public class SettingsManager {
-	private Properties instanceSettings;
-	private Properties appSettings;
-	
-	private static SettingsManager _instance;
-	
-	/**
-	 * Erzeugt einen neuen SettingsManager und initialisiert die Werte 
-	 * der Einstellungen.
-	 */
-	private SettingsManager() {
-		this.instanceSettings = new Properties();
-		
-		initAppSettings();
-	}
-	
-	/**
-	 * Liefert den (einzigen) SettingsManager.
-	 * Wenn diese Methode zum ersten Mal aufgerufen wird, wird eine Instanz
-	 * dieser Klasse erzeugt und initialisiert. 
-	 * @return Eine (evtl. neu erzeugte) Instanz dieser Klasse.
-	 */
-	public static synchronized SettingsManager getInstance() {
-		if (_instance == null) {
-			_instance = new SettingsManager();
-		}
-		
-		return _instance;
-	}
-	
-	/**
-	 * Initialisiert die Standard-Werte der Einstellungen und liest die Werte der Datei
-	 * auik.properties im aktuellen Verzeichnis ein.
-	 */
-	private void initAppSettings() {
-		Properties defaults = new Properties();
-		defaults.setProperty("auik.prefs.res_x", "700");
-		defaults.setProperty("auik.prefs.res_y", "525");
-		defaults.setProperty("auik.prefs.maximized", "false");
-		defaults.setProperty("auik.prefs.save_size", "true");
-		
-		defaults.setProperty("auik.system.spath_fotos","X:/Applikationen/Anlagenkataster/SielhautBearbeiten/fotos/");
-		defaults.setProperty("auik.system.spath_karten", "X:/Applikationen/Anlagenkataster/SielhautBearbeiten/karten/");
-		
-		defaults.setProperty(
-				"auik.system.module",
-				
-				"BasisStandortSuchen, BasisStandortNeu, " +
-				"KlaerschlammRohschlammproben, KlaerschlammFaulschlammproben, LaborProbeSuchen, KlaerschlammAuswertung, LaborIcpImport, " +
-				"EinleiterAnh50Auswertung, EinleiterAnh49Auswertung, EinleiterBrennwertAuswertung, EinleiterSuevkanAuswertung, EinleiterAnh40Auswertung, EinleiterAnh56Auswertung, " +
-				"VawsHerstellernummerSuchen, VawsKontrollenAuswertung, VawsVerwaltungsverfAuswertung, " +
-				"BasisBetreiberSuchen, BasisBetreiberNeu, " +
-				"BasisObjektBearbeiten, " +
-				"SielhautBearbeiten, SielhautImport"
-		);
-		
-		defaults.setProperty("auik.prefs.status_time", "40");
-		defaults.setProperty("auik.prefs.sielhaut_labor", "HBICON");
+    private Properties instanceSettings;
+    private Properties appSettings;
 
-		defaults.setProperty("auik.birt.enginepath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\birt-runtime-2_3_2\\ReportEngine\\");
-		defaults.setProperty("auik.birt.reportpath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\designs\\");
+    private static SettingsManager _instance;
 
-		defaults.setProperty("auik.gis.programmpath", "C:\\appz\\qgis\\bin\\qgis.exe\\");
-		defaults.setProperty("auik.gis.projectpath", "D:\\\\data\\qgis\\MyProject.qgs");
-		
-		appSettings = new Properties(defaults);
-		
-		try {
-			appSettings.load(new FileInputStream("auik.properties"));
-		} catch (FileNotFoundException e) {
-			// Wir tun hier nichts. Wenn die Datei nicht gefunden 
-			// wird, wird sie halt nicht benutzt
-			//e.printStackTrace();
-		} catch (IOException e) {
-			// Bin mir noch nicht ganz sicher, wann das hier
-			// auftreten kann und ob uns das interessieren muss.
-			// Die Defaults werden ja auch so benutzt...
-			AUIKataster.debugOutput("Fehler beim laden der Benutzer-Einstellungen", "SettingsManager.initAppSettings");
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Alle persistenten Settings speichern.
-	 */
-	public void saveSettings() {
-		try {
-			appSettings.store(new FileOutputStream("auik.properties"), "Allgemeine Einstellungen für " + AUIKataster.SHORT_NAME + " v" + AUIKataster.VERSION);
-		} catch (IOException e) {
-			// Tritt auf, wenn aus irgend einem Grund keine 
-			// Datei gespeichert werden kann.
-			AUIKataster.debugOutput("Konnte Einstellungen nicht speichern!", "SettingsManager.saveSettings");
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Setzt eine Einstellung.
-	 * @param setting Den Key der Einstellung.
-	 * @param value Den Wert der Einstellung.
-	 * @param persist Soll die Einstellung beim Programm-Ende gespeichert werden.
-	 */
-	public void setSetting(String setting, String value, boolean persist) {
-		if (persist) {
-			appSettings.setProperty(setting, value);
-		} else {
-			instanceSettings.setProperty(setting, value);
-		}
-	}
-	
-	/**
-	 * Setzt eine Einstellung. Wrapper-Methode für setSetting(String, String, boolean).
-	 * @param setting Den Key der Einstellung.
-	 * @param value Den Wert der Einstellung.
-	 * @param persist Soll die Einstellung beim Programm-Ende gespeichert werden.
-	 */
-	public void setSetting(String setting, int value, boolean persist) {
-		setSetting(setting, Integer.toString(value), persist);
-	}
-	
-	/**
-	 * Setzt eine Einstellung. Wrapper-Methode für setSetting(String, String, boolean).
-	 * @param setting Den Key der Einstellung.
-	 * @param value Den Wert der Einstellung.
-	 * @param persist Soll die Einstellung beim Programm-Ende gespeichert werden.
-	 */
-	public void setSetting(String setting, boolean value, boolean persist) {
-		setSetting(setting, Boolean.toString(value), persist);
-	}
-	
-	/**
-	 * Liefert den aktuellen Wert einer Einstellung.
-	 * @param setting Den Key der Einstellung.
-	 * @return Den Wert der Einstellung oder <code>null</code>, falls diese nicht existiert.
-	 */
-	public String getSetting(String setting) {
-		if (instanceSettings.containsKey(setting)) {
-			return instanceSettings.getProperty(setting);
-		} else {
-			return appSettings.getProperty(setting);
-		}
-	}
-	
-	/**
-	 * Liefert den aktuellen Wert einer Einstellung. Wrapper-Methode.
-	 * @param setting Den Key der Einstellung.
-	 * @return Den Wert der Einstellung oder -1, falls diese nicht existiert.
-	 */
-	public int getIntSetting(String setting) {
-		String tmp = getSetting(setting);
-		if (tmp != null) {
-			try {
-				return Integer.parseInt(tmp);
-			} catch (NumberFormatException e) {
-				return -1;
-			}
-		} else {
-			return -1;
-		}
-	}
-	
-	/**
-	 * Liefert den aktuellen Wert einer Einstellung. Wrapper-Methode.
-	 * @param setting Den Key der Einstellung.
-	 * @return Den Wert der Einstellung oder <code>false</code>, falls diese nicht existiert.
-	 */
-	public boolean getBoolSetting(String setting) {
-		String tmp = getSetting(setting);
-		if (tmp != null) {
-			return Boolean.valueOf(tmp).booleanValue();
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * Entfernt eine Einstellung komplett.
-	 * @param setting Den Key der Einstellung.
-	 */
-	public void removeSetting(String setting) {
-		if (instanceSettings.containsKey(setting)) {
-			instanceSettings.remove(setting);
-		} 
-		
-		if (appSettings.containsKey(setting)) {
-			appSettings.remove(setting);
-		}
-	}
+    /**
+     * Erzeugt einen neuen SettingsManager und initialisiert die Werte
+     * der Einstellungen.
+     */
+    private SettingsManager() {
+        this.instanceSettings = new Properties();
+
+        initAppSettings();
+    }
+
+    /**
+     * Liefert den (einzigen) SettingsManager.
+     * Wenn diese Methode zum ersten Mal aufgerufen wird, wird eine Instanz
+     * dieser Klasse erzeugt und initialisiert.
+     * @return Eine (evtl. neu erzeugte) Instanz dieser Klasse.
+     */
+    public static synchronized SettingsManager getInstance() {
+        if (_instance == null) {
+            _instance = new SettingsManager();
+        }
+
+        return _instance;
+    }
+
+    /**
+     * Initialisiert die Standard-Werte der Einstellungen und liest die Werte der Datei
+     * auik.properties im aktuellen Verzeichnis ein.
+     */
+    private void initAppSettings() {
+        Properties defaults = new Properties();
+        defaults.setProperty("auik.prefs.res_x", "700");
+        defaults.setProperty("auik.prefs.res_y", "525");
+        defaults.setProperty("auik.prefs.maximized", "false");
+        defaults.setProperty("auik.prefs.save_size", "true");
+
+        defaults.setProperty("auik.system.spath_fotos","X:/Applikationen/Anlagenkataster/SielhautBearbeiten/fotos/");
+        defaults.setProperty("auik.system.spath_karten", "X:/Applikationen/Anlagenkataster/SielhautBearbeiten/karten/");
+
+        defaults.setProperty(
+                "auik.system.module",
+
+                "BasisStandortSuchen, BasisStandortNeu, " +
+                "KlaerschlammRohschlammproben, KlaerschlammFaulschlammproben, LaborProbeSuchen, KlaerschlammAuswertung, LaborIcpImport, " +
+                "EinleiterAnh50Auswertung, EinleiterAnh49Auswertung, EinleiterBrennwertAuswertung, EinleiterSuevkanAuswertung, EinleiterAnh40Auswertung, EinleiterAnh56Auswertung, " +
+                "VawsHerstellernummerSuchen, VawsKontrollenAuswertung, VawsVerwaltungsverfAuswertung, " +
+                "BasisBetreiberSuchen, BasisBetreiberNeu, " +
+                "BasisObjektBearbeiten, " +
+                "SielhautBearbeiten, SielhautImport"
+        );
+
+        defaults.setProperty("auik.prefs.status_time", "40");
+        defaults.setProperty("auik.prefs.sielhaut_labor", "HBICON");
+
+        defaults.setProperty("auik.birt.enginepath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\birt-runtime-2_3_2\\ReportEngine\\");
+        defaults.setProperty("auik.birt.reportpath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\designs\\");
+
+        defaults.setProperty("auik.gis.programmpath", "C:\\appz\\qgis\\bin\\qgis.exe\\");
+        defaults.setProperty("auik.gis.projectpath", "D:\\\\data\\qgis\\MyProject.qgs");
+
+        appSettings = new Properties(defaults);
+
+        try {
+            appSettings.load(new FileInputStream("auik.properties"));
+        } catch (FileNotFoundException e) {
+            // Wir tun hier nichts. Wenn die Datei nicht gefunden
+            // wird, wird sie halt nicht benutzt
+            //e.printStackTrace();
+        } catch (IOException e) {
+            // Bin mir noch nicht ganz sicher, wann das hier
+            // auftreten kann und ob uns das interessieren muss.
+            // Die Defaults werden ja auch so benutzt...
+            AUIKataster.debugOutput("Fehler beim laden der Benutzer-Einstellungen", "SettingsManager.initAppSettings");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Alle persistenten Settings speichern.
+     */
+    public void saveSettings() {
+        try {
+            appSettings.store(new FileOutputStream("auik.properties"), "Allgemeine Einstellungen für " + AUIKataster.SHORT_NAME + " v" + AUIKataster.VERSION);
+        } catch (IOException e) {
+            // Tritt auf, wenn aus irgend einem Grund keine
+            // Datei gespeichert werden kann.
+            AUIKataster.debugOutput("Konnte Einstellungen nicht speichern!", "SettingsManager.saveSettings");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Setzt eine Einstellung.
+     * @param setting Den Key der Einstellung.
+     * @param value Den Wert der Einstellung.
+     * @param persist Soll die Einstellung beim Programm-Ende gespeichert werden.
+     */
+    public void setSetting(String setting, String value, boolean persist) {
+        if (persist) {
+            appSettings.setProperty(setting, value);
+        } else {
+            instanceSettings.setProperty(setting, value);
+        }
+    }
+
+    /**
+     * Setzt eine Einstellung. Wrapper-Methode für setSetting(String, String, boolean).
+     * @param setting Den Key der Einstellung.
+     * @param value Den Wert der Einstellung.
+     * @param persist Soll die Einstellung beim Programm-Ende gespeichert werden.
+     */
+    public void setSetting(String setting, int value, boolean persist) {
+        setSetting(setting, Integer.toString(value), persist);
+    }
+
+    /**
+     * Setzt eine Einstellung. Wrapper-Methode für setSetting(String, String, boolean).
+     * @param setting Den Key der Einstellung.
+     * @param value Den Wert der Einstellung.
+     * @param persist Soll die Einstellung beim Programm-Ende gespeichert werden.
+     */
+    public void setSetting(String setting, boolean value, boolean persist) {
+        setSetting(setting, Boolean.toString(value), persist);
+    }
+
+    /**
+     * Liefert den aktuellen Wert einer Einstellung.
+     * @param setting Den Key der Einstellung.
+     * @return Den Wert der Einstellung oder <code>null</code>, falls diese nicht existiert.
+     */
+    public String getSetting(String setting) {
+        if (instanceSettings.containsKey(setting)) {
+            return instanceSettings.getProperty(setting);
+        } else {
+            return appSettings.getProperty(setting);
+        }
+    }
+
+    /**
+     * Liefert den aktuellen Wert einer Einstellung. Wrapper-Methode.
+     * @param setting Den Key der Einstellung.
+     * @return Den Wert der Einstellung oder -1, falls diese nicht existiert.
+     */
+    public int getIntSetting(String setting) {
+        String tmp = getSetting(setting);
+        if (tmp != null) {
+            try {
+                return Integer.parseInt(tmp);
+            } catch (NumberFormatException e) {
+                return -1;
+            }
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * Liefert den aktuellen Wert einer Einstellung. Wrapper-Methode.
+     * @param setting Den Key der Einstellung.
+     * @return Den Wert der Einstellung oder <code>false</code>, falls diese nicht existiert.
+     */
+    public boolean getBoolSetting(String setting) {
+        String tmp = getSetting(setting);
+        if (tmp != null) {
+            return Boolean.valueOf(tmp).booleanValue();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Entfernt eine Einstellung komplett.
+     * @param setting Den Key der Einstellung.
+     */
+    public void removeSetting(String setting) {
+        if (instanceSettings.containsKey(setting)) {
+            instanceSettings.remove(setting);
+        }
+
+        if (appSettings.containsKey(setting)) {
+            appSettings.remove(setting);
+        }
+    }
 }

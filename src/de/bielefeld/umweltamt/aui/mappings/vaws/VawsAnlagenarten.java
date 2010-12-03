@@ -12,8 +12,8 @@ import org.hibernate.Session;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
- * A class that represents a row in the 'VAWS_ANLAGENARTEN' table. 
- * This class may be customized as it is never re-generated 
+ * A class that represents a row in the 'VAWS_ANLAGENARTEN' table.
+ * This class may be customized as it is never re-generated
  * after being created.
  */
 public class VawsAnlagenarten
@@ -28,9 +28,9 @@ public class VawsAnlagenarten
     }
 
     /* Add customized code below */
-    
+
     public String toString() {
-    	return getAnlagenart();
+        return getAnlagenart();
     }
 
     /**
@@ -38,26 +38,26 @@ public class VawsAnlagenarten
      * @return Ein Array mit den Namen aller Anlagenarten.
      */
     public static String[] getAnlagenarten() {
-		List list;
-		String suchString = "select ala.anlagenart " +
-				"from VawsAnlagenarten ala " +
-				"order by ala.id";
-		String[] tmp;
-		
-		try {
-			Session session = HibernateSessionFactory.currentSession();
-			Query query = session.createQuery(suchString);
-			query.setCacheable(true);
-			query.setCacheRegion("vawsalaliste");
-			list = query.list();
-			tmp = new String[list.size()];
-			tmp = (String[]) list.toArray(tmp);
-		} catch (HibernateException e) {
-			throw new RuntimeException("Datenbank-Fehler", e);
-		} finally {
-			HibernateSessionFactory.closeSession();
-		}
-		
-		return tmp;
-	}
+        List list;
+        String suchString = "select ala.anlagenart " +
+                "from VawsAnlagenarten ala " +
+                "order by ala.id";
+        String[] tmp;
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            Query query = session.createQuery(suchString);
+            query.setCacheable(true);
+            query.setCacheRegion("vawsalaliste");
+            list = query.list();
+            tmp = new String[list.size()];
+            tmp = (String[]) list.toArray(tmp);
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler", e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return tmp;
+    }
 }

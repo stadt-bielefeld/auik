@@ -54,18 +54,18 @@ public class DoubleEditor extends DefaultCellEditor {
                                         KeyEvent.VK_ENTER, 0),
                                         "check");
         ftf.getActionMap().put("check", new AbstractAction() {
-        	public void actionPerformed(ActionEvent e) {
-        		if (!ftf.isEditValid()) { //The text is invalid.
-        			setBorderRed();
-        			if (DEBUG) {
+            public void actionPerformed(ActionEvent e) {
+                if (!ftf.isEditValid()) { //The text is invalid.
+                    setBorderRed();
+                    if (DEBUG) {
                         System.out.println("check: '" + ftf.getText() + "' is invalid!");
                     }
-        		} else try {              //The text is valid,
-        			ftf.commitEdit();     //so use it.
-        			setBorderNormal();
-        			ftf.postActionEvent(); //stop editing
-        		} catch (java.text.ParseException exc) { }
-        	}
+                } else try {              //The text is valid,
+                    ftf.commitEdit();     //so use it.
+                    setBorderNormal();
+                    ftf.postActionEvent(); //stop editing
+                } catch (java.text.ParseException exc) { }
+            }
         });
     }
 
@@ -78,7 +78,7 @@ public class DoubleEditor extends DefaultCellEditor {
                 table, value, isSelected, row, column);
         ftf.setValue(value);
         if (DEBUG) {
-        	System.out.println("getTableCellEditorComp: " + isSelected + ", " + row + ", " + column);
+            System.out.println("getTableCellEditorComp: " + isSelected + ", " + row + ", " + column);
         }
         return ftf;
     }
@@ -107,31 +107,31 @@ public class DoubleEditor extends DefaultCellEditor {
     //Override to check whether the edit is valid,
     //setting the value if it is and complaining if
     //it isn't.  If it's OK for the editor to go
-    //away, we need to invoke the superclass's version 
+    //away, we need to invoke the superclass's version
     //of this method so that everything gets cleaned up.
     public boolean stopCellEditing() {
-    	JFormattedTextField ftf = (JFormattedTextField)getComponent();
-    	if (ftf.isEditValid()) {
-    		setBorderNormal();
-    		try {
-    			ftf.commitEdit();
-    		} catch (java.text.ParseException exc) { }
-    		
-    	} else { //text is invalid
-    		setBorderRed();
-    		if (DEBUG) {
+        JFormattedTextField ftf = (JFormattedTextField)getComponent();
+        if (ftf.isEditValid()) {
+            setBorderNormal();
+            try {
+                ftf.commitEdit();
+            } catch (java.text.ParseException exc) { }
+
+        } else { //text is invalid
+            setBorderRed();
+            if (DEBUG) {
                 System.out.println("stopCellEditing: '" + ftf.getText() + "' is invalid!");
             }
-    		return false; //don't let the editor go away
-    	}
-    	return super.stopCellEditing();
+            return false; //don't let the editor go away
+        }
+        return super.stopCellEditing();
     }
-    
+
     public void setBorderNormal() {
-    	ftf.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        ftf.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
-    
+
     public void setBorderRed() {
-    	ftf.setBorder(BorderFactory.createLineBorder(Color.RED));
+        ftf.setBorder(BorderFactory.createLineBorder(Color.RED));
     }
 }

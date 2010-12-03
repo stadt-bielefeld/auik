@@ -58,7 +58,7 @@ public class AuswertungTest extends TestCase {
         _sessionFactory =
                 configuration.buildSessionFactory();
 
-      
+
     }
 
     protected void tearDown() throws Exception {
@@ -67,7 +67,7 @@ public class AuswertungTest extends TestCase {
     }
 
     /**
-     * Testen ob Anhang 40 Auswertung fehlerfrei funktioniert 
+     * Testen ob Anhang 40 Auswertung fehlerfrei funktioniert
      */
    public void testAusAnh40() {
         Session session = null;
@@ -75,19 +75,19 @@ public class AuswertungTest extends TestCase {
             session = _sessionFactory.openSession();
 
             List list = Anh40Fachdaten.getAuswertungsListe();
-            
-            
-         List listquery;   
+
+
+         List listquery;
             String query = "from Anh40Fachdaten as anh40 " +
-			"order by anh40.basisObjekt.inaktiv, anh40.id";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+            "order by anh40.basisObjekt.inaktiv, anh40.id";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
         }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
         }
         finally {
             if (session != null &&
@@ -97,7 +97,7 @@ public class AuswertungTest extends TestCase {
         }
     }
    /**
-    * Testen ob Anhang 49 Auswertung fehlerfrei funktioniert 
+    * Testen ob Anhang 49 Auswertung fehlerfrei funktioniert
     */
    public void testAusAnh49() {
        Session session = null;
@@ -105,19 +105,19 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = Anh49Fachdaten.findAlle();
-           
-           
-        List listquery;   
-        String query = "from Anh49Fachdaten anh49 where anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "+ 
-		"order by anh49.basisObjekt.inaktiv, anh49.sachbearbeiterIn";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+
+
+        List listquery;
+        String query = "from Anh49Fachdaten anh49 where anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "+
+        "order by anh49.basisObjekt.inaktiv, anh49.sachbearbeiterIn";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -127,7 +127,7 @@ public class AuswertungTest extends TestCase {
        }
    }
    /**
-    * Testen ob Anhang 50 Auswertung fehlerfrei funktioniert 
+    * Testen ob Anhang 50 Auswertung fehlerfrei funktioniert
     */
    public void testAusAnh50() {
        Session session = null;
@@ -135,21 +135,21 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = Anh50Fachdaten.findByWiedervorlage(false);
-           
-           
-        List listquery;   
+
+
+        List listquery;
         String query = "from Anh50Fachdaten as ah50 where " +
-		"ah50.erloschen = 'f' " +
-		"order by ah50.basisObjekt.inaktiv, ah50.wiedervorlage, " +
-		"ah50.basisObjekt.basisBetreiber.betrname";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+        "ah50.erloschen = 'f' " +
+        "order by ah50.basisObjekt.inaktiv, ah50.wiedervorlage, " +
+        "ah50.basisObjekt.basisBetreiber.betrname";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -159,7 +159,7 @@ public class AuswertungTest extends TestCase {
        }
    }
    /**
-    * Testen ob Anhang 52 Auswertung fehlerfrei funktioniert 
+    * Testen ob Anhang 52 Auswertung fehlerfrei funktioniert
     */
    public void testAusAnh52() {
        Session session = null;
@@ -167,19 +167,19 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = Anh52Fachdaten.getAuswertungsListe();
-           
-           
-        List listquery;   
+
+
+        List listquery;
         String query = "from Anh52Fachdaten as anh52 " +
-		"order by anh52.basisObjekt.inaktiv, anh52.id";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+        "order by anh52.basisObjekt.inaktiv, anh52.id";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -189,7 +189,7 @@ public class AuswertungTest extends TestCase {
        }
    }
    /**
-    * Testen ob Anhang 53 Auswertung fehlerfrei funktioniert 
+    * Testen ob Anhang 53 Auswertung fehlerfrei funktioniert
     */
    public void testAusAnh53() {
        Session session = null;
@@ -197,21 +197,21 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = Anh53Fachdaten.getAuswertungsListe();
-           
-           
-        List listquery;   
-        String query = "from Anh53Fachdaten as anh53 " 
-			+ "order by anh53.basisObjekt.inaktiv, anh53.basisObjekt.basisObjektarten.objektartid, "
-			+ "anh53.basisObjekt.basisStandort.strasse, "
-			+ "anh53.basisObjekt.basisStandort.hausnr";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+
+
+        List listquery;
+        String query = "from Anh53Fachdaten as anh53 "
+            + "order by anh53.basisObjekt.inaktiv, anh53.basisObjekt.basisObjektarten.objektartid, "
+            + "anh53.basisObjekt.basisStandort.strasse, "
+            + "anh53.basisObjekt.basisStandort.hausnr";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -221,7 +221,7 @@ public class AuswertungTest extends TestCase {
        }
    }
    /**
-    * Testen ob Anhang 55 Auswertung fehlerfrei funktioniert 
+    * Testen ob Anhang 55 Auswertung fehlerfrei funktioniert
     */
    public void testAusAnh55() {
        Session session = null;
@@ -229,19 +229,19 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = Anh55Fachdaten.getAuswertungsListe();
-           
-           
-        List listquery;   
+
+
+        List listquery;
         String query = "from Anh55Fachdaten as anh55 " +
-		"order by anh55.basisObjekt.inaktiv, anh55.id";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+        "order by anh55.basisObjekt.inaktiv, anh55.id";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -251,7 +251,7 @@ public class AuswertungTest extends TestCase {
        }
    }
    /**
-    * Testen ob Anhang 56 Auswertung fehlerfrei funktioniert 
+    * Testen ob Anhang 56 Auswertung fehlerfrei funktioniert
     */
    public void testAusAnh56() {
        Session session = null;
@@ -259,20 +259,20 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = Anh56Fachdaten.getAuswertungsListe();
-           
-           
-        List listquery;   
+
+
+        List listquery;
         String query = "from Anh56Fachdaten as anh56 " +
-		"order by anh56.basisObjekt.inaktiv, anh56.basisObjekt.basisStandort.strasse, " +
-		"anh56.basisObjekt.basisStandort.hausnr";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+        "order by anh56.basisObjekt.inaktiv, anh56.basisObjekt.basisStandort.strasse, " +
+        "anh56.basisObjekt.basisStandort.hausnr";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -282,7 +282,7 @@ public class AuswertungTest extends TestCase {
        }
    }
    /**
-    * Testen ob Fettabscheider Auswertung fehlerfrei funktioniert 
+    * Testen ob Fettabscheider Auswertung fehlerfrei funktioniert
     */
    public void testAusFettabsch() {
        Session session = null;
@@ -290,34 +290,34 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = Anh49Abscheiderdetails.getFettabschListe();
-           Anh49Fachdaten item; 
-           
+           Anh49Fachdaten item;
+
         List fettabsch;
         List fettabsch2;
         String query =  "from Anh49Abscheiderdetails details where details.Anh49Fachdaten.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
-			  +"order by details.Anh49Fachdaten.basisObjekt.inaktiv, details.Anh49Fachdaten.basisObjekt.basisBetreiber.betrname";
-	
-	try {
-		fettabsch = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
-       }
-	String query2 = "from Anh49Fachdaten anh49"+
-	" where anh49.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
-		+"order by anh49.basisObjekt.inaktiv, anh49.basisObjekt.basisBetreiber.betrname";
-	fettabsch2 = session.createQuery(query2).list();
-	
-	for (int j = 0; j < fettabsch2.size(); j++) {
-		item = (Anh49Fachdaten) fettabsch2.get(j);
-				
-		if ( Anh49Abscheiderdetails.getAbscheiderDetails(item).size() == 0 )
-		{
-			fettabsch.add(item);
+              +"order by details.Anh49Fachdaten.basisObjekt.inaktiv, details.Anh49Fachdaten.basisObjekt.basisBetreiber.betrname";
 
-		}
-		
-	}
-	     assertEquals(list.size(), fettabsch.size());
+    try {
+        fettabsch = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
+       }
+    String query2 = "from Anh49Fachdaten anh49"+
+    " where anh49.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
+        +"order by anh49.basisObjekt.inaktiv, anh49.basisObjekt.basisBetreiber.betrname";
+    fettabsch2 = session.createQuery(query2).list();
+
+    for (int j = 0; j < fettabsch2.size(); j++) {
+        item = (Anh49Fachdaten) fettabsch2.get(j);
+
+        if ( Anh49Abscheiderdetails.getAbscheiderDetails(item).size() == 0 )
+        {
+            fettabsch.add(item);
+
+        }
+
+    }
+         assertEquals(list.size(), fettabsch.size());
        }
        finally {
            if (session != null &&
@@ -327,7 +327,7 @@ public class AuswertungTest extends TestCase {
        }
    }
    /**
-    * Testen ob Uebergabe Auswertung fehlerfrei funktioniert 
+    * Testen ob Uebergabe Auswertung fehlerfrei funktioniert
     */
    public void testAusUebergabe() {
        Session session = null;
@@ -335,19 +335,19 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = IndeinlUebergabestelle.getAuswertungsListe();
-           
-           
-        List listquery;   
+
+
+        List listquery;
         String query = "from IndeinlUebergabestelle as stelle " +
-		"order by stelle.objektid";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+        "order by stelle.objektid";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -357,7 +357,7 @@ public class AuswertungTest extends TestCase {
        }
    }
    /**
-    * Testen ob BWK Auswertung fehlerfrei funktioniert 
+    * Testen ob BWK Auswertung fehlerfrei funktioniert
     */
    public void testAusBWK() {
        Session session = null;
@@ -365,19 +365,19 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = ViewBwk.findByErfassungsjahr(2010);
-           
-           
-        List listquery;   
+
+
+        List listquery;
         String query = "from ViewBwk as bwk " +
         "where bwk.erfassung = 2010";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -387,7 +387,7 @@ public class AuswertungTest extends TestCase {
        }
    }
    /**
-    * Testen ob Genehmigung Auswertung fehlerfrei funktioniert 
+    * Testen ob Genehmigung Auswertung fehlerfrei funktioniert
     */
    public void testAusGenehmigung() {
        Session session = null;
@@ -395,20 +395,20 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list =IndeinlGenehmigung.getAuswertungsListe(true, true);
-           
-           
-        List listquery;   
+
+
+        List listquery;
         String query = "from IndeinlGenehmigung as gen " +
-   		"where gen.gen58 = 't' or gen.gen59 = 't' " +
-		"order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+           "where gen.gen58 = 't' or gen.gen59 = 't' " +
+        "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -418,7 +418,7 @@ public class AuswertungTest extends TestCase {
        }
    }
    /**
-    * Testen ob Suev Auswertung fehlerfrei funktioniert 
+    * Testen ob Suev Auswertung fehlerfrei funktioniert
     */
    public void testAusSuev() {
        Session session = null;
@@ -426,19 +426,19 @@ public class AuswertungTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list =AnhSuevFachdaten.getAuswertungsListe();
-           
-           
-        List listquery;   
+
+
+        List listquery;
         String query = "from AnhSuevFachdaten as sv " +
-		"order by sv.basisObjekt.inaktiv, sv.objektid";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+        "order by sv.basisObjekt.inaktiv, sv.objektid";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&

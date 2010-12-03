@@ -16,15 +16,15 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
  */
 public class HibernateSessionFactory {
 
-    /** 
+    /**
      * Location of hibernate.cfg.xml file.
      * NOTICE: Location should be on the classpath as Hibernate uses
      * #resourceAsStream style lookup for its configuration file. That
      * is place the config file in a Java package - the default location
      * is the default Java package.<br><br>
      * Examples: <br>
-     * <code>CONFIG_FILE_LOCATION = "/hibernate.conf.xml". 
-     * CONFIG_FILE_LOCATION = "/com/foo/bar/myhiberstuff.conf.xml".</code> 
+     * <code>CONFIG_FILE_LOCATION = "/hibernate.conf.xml".
+     * CONFIG_FILE_LOCATION = "/com/foo/bar/myhiberstuff.conf.xml".</code>
      */
     private static String CONFIG_FILE_LOCATION =
         System.getProperty("auik.hibernate.config", "/hibernate.cfg.xml");
@@ -37,7 +37,7 @@ public class HibernateSessionFactory {
 
     /** The single instance of hibernate SessionFactory */
     private static org.hibernate.SessionFactory sessionFactory;
-    
+
     /** The Database-User */
     private static String DB_USER = "";
     /** The Database-Password */
@@ -66,9 +66,9 @@ public class HibernateSessionFactory {
         if (session == null) {
             if (sessionFactory == null) {
                 try {
-                	cfg.setProperty("hibernate.connection.username", DB_USER);
-                	cfg.setProperty("hibernate.connection.password", DB_PASS);
-                	cfg.setProperty("hibernate.connection.url", "jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi");
+                    cfg.setProperty("hibernate.connection.username", DB_USER);
+                    cfg.setProperty("hibernate.connection.password", DB_PASS);
+                    cfg.setProperty("hibernate.connection.url", "jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi");
                     cfg.configure(CONFIG_FILE_LOCATION);
                     sessionFactory = cfg.buildSessionFactory();
                 }
@@ -95,101 +95,101 @@ public class HibernateSessionFactory {
 
         if (session != null) {
             try {
-				session.close();
-				AUIKataster.debugOutput("Session geschlossen!", "HibernateSessionFactory");
-			} catch (HibernateException e) {
-				AUIKataster.handleDBException(e, "HibernateSessionFactory.closeSession", false);
-			}
+                session.close();
+                AUIKataster.debugOutput("Session geschlossen!", "HibernateSessionFactory");
+            } catch (HibernateException e) {
+                AUIKataster.handleDBException(e, "HibernateSessionFactory.closeSession", false);
+            }
         }
     }
-    
+
     /**
      * Legt fest, welche Datenbank benutzt wird.
      * @param name Der Name der Datenbank
      */
     public static void setDBUrl(String url) {
-    	DB_URL = url;
+        DB_URL = url;
     }
-    
+
     /**
      * Stellt fest, welche Datenbank benutzt wird.
      * @return Der Name der Datenbank
      */
     public static String getDBUrl() {
-    	return DB_URL;
+        return DB_URL;
     }
 
     public static String getDBDriver() {
-		return DB_Driver;
-	}
+        return DB_Driver;
+    }
 
     public static void setDBDriver(String driver) {
-		DB_Driver = driver;
-	}
+        DB_Driver = driver;
+    }
 
     public static String getDBDialect() {
-		return DB_Dialect;
-	}
+        return DB_Dialect;
+    }
 
     public static void setDBDialect(String dialect) {
-		DB_Dialect = dialect;
-	}
+        DB_Dialect = dialect;
+    }
 
-	/**
-	 * Setzt die Benutzerdaten für die Datenbank.
-	 * @param user Der Datenbank-Benutzer
-	 * @param pass Das Passwort des Datenbank-Benutzers
-	 */
-	public static void setDBData(String user, String pass) {
-		DB_USER = user;
-		DB_PASS = pass;
-		closeSession();
-		sessionFactory = null;
-		cfg = new Configuration();
-		//AUIKataster.debugOutput("User: " + DB_USER + ", Pass: " + DB_PASS, "HSF.setDBData");
-	}
+    /**
+     * Setzt die Benutzerdaten für die Datenbank.
+     * @param user Der Datenbank-Benutzer
+     * @param pass Das Passwort des Datenbank-Benutzers
+     */
+    public static void setDBData(String user, String pass) {
+        DB_USER = user;
+        DB_PASS = pass;
+        closeSession();
+        sessionFactory = null;
+        cfg = new Configuration();
+        //AUIKataster.debugOutput("User: " + DB_USER + ", Pass: " + DB_PASS, "HSF.setDBData");
+    }
 
-	/**
-	 * überprüft die Benutzerdaten für die Datenbank. 
-	 * Wenn sie richtig sind, werden die Daten auch automatisch 
-	 * für weitere Sessions gespeichert.
-	 * @param user Der Datenbank-Benutzer
-	 * @param pass Das Passwort des Datenbank-Benutzers
-	 * @return <code>true</code>, wenn die Benutzerdaten korrekt sind, sonst <code>false</code>
-	 */
-	public static boolean checkCredentials(String user, String pass) throws HibernateException {
-		setDBData(user, pass);
-		//AUIKataster.debugOutput("User: " + DB_USER + ", Pass: " + DB_PASS, "HSF.checkCredentials");
-		
-		boolean tmp = false;
-		
-		try {
-			Session session = currentSession();
-			// TODO: Vielleicht etwas allgemeineren Test finden?
-			List test = session.createSQLQuery(
-					"select strasse from basis_strassen where id=5"
-			).list();
-			
-			tmp = true;
-			AUIKataster.debugOutput(test.toString(), "checkCredentials");
-		} catch (HibernateException e) {
-			if (e.getClass().equals(org.hibernate.exception.JDBCConnectionException.class)) {
-				tmp = false;
-				setDBData("", "");
-			} else {
-				throw e;
-			}
-		} finally {
-			closeSession();
-		}
-		
-		return tmp;
-	}
+    /**
+     * überprüft die Benutzerdaten für die Datenbank.
+     * Wenn sie richtig sind, werden die Daten auch automatisch
+     * für weitere Sessions gespeichert.
+     * @param user Der Datenbank-Benutzer
+     * @param pass Das Passwort des Datenbank-Benutzers
+     * @return <code>true</code>, wenn die Benutzerdaten korrekt sind, sonst <code>false</code>
+     */
+    public static boolean checkCredentials(String user, String pass) throws HibernateException {
+        setDBData(user, pass);
+        //AUIKataster.debugOutput("User: " + DB_USER + ", Pass: " + DB_PASS, "HSF.checkCredentials");
 
-	/**
-	 * Default constructor.
-	 */
-	private HibernateSessionFactory() {
-	}
+        boolean tmp = false;
+
+        try {
+            Session session = currentSession();
+            // TODO: Vielleicht etwas allgemeineren Test finden?
+            List test = session.createSQLQuery(
+                    "select strasse from basis_strassen where id=5"
+            ).list();
+
+            tmp = true;
+            AUIKataster.debugOutput(test.toString(), "checkCredentials");
+        } catch (HibernateException e) {
+            if (e.getClass().equals(org.hibernate.exception.JDBCConnectionException.class)) {
+                tmp = false;
+                setDBData("", "");
+            } else {
+                throw e;
+            }
+        } finally {
+            closeSession();
+        }
+
+        return tmp;
+    }
+
+    /**
+     * Default constructor.
+     */
+    private HibernateSessionFactory() {
+    }
 
 }

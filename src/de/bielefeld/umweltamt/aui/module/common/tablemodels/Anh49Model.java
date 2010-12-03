@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: Anh49Model.java,v 1.4 2010-01-20 12:55:20 u633d Exp $
- * 
+ *
  * Erstellt am 15.08.2005 von David Klotz
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.3  2009/03/24 12:35:23  u633d
@@ -31,55 +31,55 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class Anh49Model extends ListTableModel {
-	public Anh49Model() {
-		super(new String[]{
-				"Betreiber", 
-				"Standort", 
-				"Wiedervorl.", 
-				"Sonstiges Technik",
-				"SachbearbeiterIn"
-		}, 
-		false);
-	}
+    public Anh49Model() {
+        super(new String[]{
+                "Betreiber",
+                "Standort",
+                "Wiedervorl.",
+                "Sonstiges Technik",
+                "SachbearbeiterIn"
+        },
+        false);
+    }
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
-	 */
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Anh49Fachdaten fd = (Anh49Fachdaten) objectAtRow;
-		Object tmp;
-		
-		switch (columnIndex) {
-		case 0:
-			tmp = fd.getBasisObjekt().getBasisBetreiber();
-			break;
-		case 1:
-			tmp = fd.getBasisObjekt().getBasisStandort();
-			break;
-		case 2:
-			tmp = AuikUtils.getStringFromDate(fd.getWiedervorlage());
-			break;
-		case 3:
-			tmp = fd.getSonstigestechnik();
-			break;
-		case 4:
-			tmp = fd.getSachbearbeiterIn();
-			break;
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
+     */
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+        Anh49Fachdaten fd = (Anh49Fachdaten) objectAtRow;
+        Object tmp;
 
-		default:
-			tmp = "ERROR";
-			break;
-		}
-		if (fd.getBasisObjekt().getInaktiv() == true)
-		{
-			tmp = "<html><strike>" + tmp + "</strike></html>";	
-		}
-		return tmp;
-	}
-	
-	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
-	 */
-	public void updateList() {
-	}
+        switch (columnIndex) {
+        case 0:
+            tmp = fd.getBasisObjekt().getBasisBetreiber();
+            break;
+        case 1:
+            tmp = fd.getBasisObjekt().getBasisStandort();
+            break;
+        case 2:
+            tmp = AuikUtils.getStringFromDate(fd.getWiedervorlage());
+            break;
+        case 3:
+            tmp = fd.getSonstigestechnik();
+            break;
+        case 4:
+            tmp = fd.getSachbearbeiterIn();
+            break;
+
+        default:
+            tmp = "ERROR";
+            break;
+        }
+        if (fd.getBasisObjekt().getInaktiv() == true)
+        {
+            tmp = "<html><strike>" + tmp + "</strike></html>";
+        }
+        return tmp;
+    }
+
+    /*
+     * Leer, da kein Updaten der Liste nötig/möglich.
+     */
+    public void updateList() {
+    }
 }

@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: EinleiterAnh40Auswertung.java,v 1.1.2.1 2010-11-23 10:25:54 u633d Exp $
- * 
+ *
  * Erstellt am 03.05.2006 von Gerd Genuit
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.3  2010/01/12 09:02:20  u633d
@@ -48,75 +48,75 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class EinleiterAnh40Auswertung extends AbstractQueryModul {
-	/** Das obere Panel mit den Abfrage-Optionen */
-	private JPanel queryPanel;
-	
-	// Widgets für die Abfrage
-	private JButton submitButton;
-	
-	/** Das TableModel für die Ergebnis-Tabelle */
-	private Anh40Model tmodel;
+    /** Das obere Panel mit den Abfrage-Optionen */
+    private JPanel queryPanel;
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
-	 */
-	public String getName() {
-		return "Anhang 40";
-	}
+    // Widgets für die Abfrage
+    private JButton submitButton;
 
-	/*
-	 * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
-	 * @return "m_auswertung_anh40"
-	 */
-	public String getIdentifier() {
-		return "m_auswertung_anh40";
-	}
-	
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
-	 */
-	public JPanel getQueryOptionsPanel() {
-		if (queryPanel == null) {
-			// Die Widgets initialisieren
-			submitButton = new JButton("Alle Objekte anzeigen");
-			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
-			submitButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
-						protected void doNonUILogic() {
-							((Anh40Model)getTableModel()).setList(Anh40Fachdaten.getAuswertungsListe());
-						}
+    /** Das TableModel für die Ergebnis-Tabelle */
+    private Anh40Model tmodel;
 
-						protected void doUIUpdateLogic(){
-							((Anh40Model)getTableModel()).fireTableDataChanged();
-							frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-						}
-					};
-					worker.start();
-				}
-			});
-			
-			// Noch etwas Layout...
-			FormLayout layout = new FormLayout("pref");
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-			
-			builder.append(submitButton);
-			
-			queryPanel = builder.getPanel();
-		}
-		
-		return queryPanel;
-	}
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.Modul#getName()
+     */
+    public String getName() {
+        return "Anhang 40";
+    }
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
-	 */
-	public ListTableModel getTableModel() {
-		if (tmodel == null) {
-			tmodel = new Anh40Model();
-		}
-		return tmodel;
-	}
+    /*
+     * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
+     * @return "m_auswertung_anh40"
+     */
+    public String getIdentifier() {
+        return "m_auswertung_anh40";
+    }
+
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
+     */
+    public JPanel getQueryOptionsPanel() {
+        if (queryPanel == null) {
+            // Die Widgets initialisieren
+            submitButton = new JButton("Alle Objekte anzeigen");
+
+            // Ein ActionListener für den Button,
+            // der die eigentliche Suche auslöst:
+            submitButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        protected void doNonUILogic() {
+                            ((Anh40Model)getTableModel()).setList(Anh40Fachdaten.getAuswertungsListe());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((Anh40Model)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+
+            // Noch etwas Layout...
+            FormLayout layout = new FormLayout("pref");
+            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+
+            builder.append(submitButton);
+
+            queryPanel = builder.getPanel();
+        }
+
+        return queryPanel;
+    }
+
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
+     */
+    public ListTableModel getTableModel() {
+        if (tmodel == null) {
+            tmodel = new Anh40Model();
+        }
+        return tmodel;
+    }
 }

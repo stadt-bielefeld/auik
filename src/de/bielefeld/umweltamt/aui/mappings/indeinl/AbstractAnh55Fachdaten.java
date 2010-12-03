@@ -5,10 +5,10 @@ import java.io.Serializable;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
- * A class that represents a row in the ANH_55_FACHDATEN table. 
+ * A class that represents a row in the ANH_55_FACHDATEN table.
  * You can customize the behavior of this class by editing the class, {@link Anh55Fachdaten()}.
  */
-public abstract class AbstractAnh55Fachdaten 
+public abstract class AbstractAnh55Fachdaten
     implements Serializable
 {
     /** The cached hash code value for this instance.  Settting to 0 triggers re-calculation. */
@@ -19,7 +19,7 @@ public abstract class AbstractAnh55Fachdaten
 
     /** The value of the basisObjekt association. */
     private BasisObjekt basisObjekt;
-    
+
 //    private java.lang.Integer objektId;
     private java.lang.Boolean abgemeldet;
     private java.lang.Boolean putztuecher;
@@ -103,365 +103,365 @@ public abstract class AbstractAnh55Fachdaten
 
 
     /**
-	 * @return the abgemeldet
-	 */
-	public java.lang.Boolean getAbgemeldet() {
-		return abgemeldet;
-	}
+     * @return the abgemeldet
+     */
+    public java.lang.Boolean getAbgemeldet() {
+        return abgemeldet;
+    }
 
-	/**
-	 * @param abgemeldet the abgemeldet to set
-	 */
-	public void setAbgemeldet(java.lang.Boolean abgemeldet) {
-		this.abgemeldet = abgemeldet;
-	}
+    /**
+     * @param abgemeldet the abgemeldet to set
+     */
+    public void setAbgemeldet(java.lang.Boolean abgemeldet) {
+        this.abgemeldet = abgemeldet;
+    }
 
-	/**
-	 * @return the aktivchlor
-	 */
-	public java.lang.Boolean getAktivchlor() {
-		return aktivchlor;
-	}
+    /**
+     * @return the aktivchlor
+     */
+    public java.lang.Boolean getAktivchlor() {
+        return aktivchlor;
+    }
 
-	/**
-	 * @param aktivchlor the aktivchlor to set
-	 */
-	public void setAktivchlor(java.lang.Boolean aktivchlor) {
-		this.aktivchlor = aktivchlor;
-	}
+    /**
+     * @param aktivchlor the aktivchlor to set
+     */
+    public void setAktivchlor(java.lang.Boolean aktivchlor) {
+        this.aktivchlor = aktivchlor;
+    }
 
-	/**
-	 * @return the ansprechpartner
-	 */
-	public java.lang.String getAnsprechpartner() {
-		return ansprechpartner;
-	}
+    /**
+     * @return the ansprechpartner
+     */
+    public java.lang.String getAnsprechpartner() {
+        return ansprechpartner;
+    }
 
-	/**
-	 * @param ansprechpartner the ansprechpartner to set
-	 */
-	public void setAnsprechpartner(java.lang.String ansprechpartner) {
-		this.ansprechpartner = ansprechpartner;
-	}
+    /**
+     * @param ansprechpartner the ansprechpartner to set
+     */
+    public void setAnsprechpartner(java.lang.String ansprechpartner) {
+        this.ansprechpartner = ansprechpartner;
+    }
 
-	/**
-	 * @return the anteilgesamtgut
-	 */
-	public java.lang.Integer getAnteilgesamtgut() {
-		return anteilgesamtgut;
-	}
+    /**
+     * @return the anteilgesamtgut
+     */
+    public java.lang.Integer getAnteilgesamtgut() {
+        return anteilgesamtgut;
+    }
 
-	/**
-	 * @param anteilgesamtgut the anteilgesamtgut to set
-	 */
-	public void setAnteilgesamtgut(java.lang.Integer anteilgesamtgut) {
-		this.anteilgesamtgut = anteilgesamtgut;
-	}
+    /**
+     * @param anteilgesamtgut the anteilgesamtgut to set
+     */
+    public void setAnteilgesamtgut(java.lang.Integer anteilgesamtgut) {
+        this.anteilgesamtgut = anteilgesamtgut;
+    }
 
-	/**
-	 * @return the anteilwaschgut
-	 */
-	public java.lang.Integer getAnteilwaschgut() {
-		return anteilwaschgut;
-	}
+    /**
+     * @return the anteilwaschgut
+     */
+    public java.lang.Integer getAnteilwaschgut() {
+        return anteilwaschgut;
+    }
 
-	/**
-	 * @param anteilwaschgut the anteilwaschgut to set
-	 */
-	public void setAnteilwaschgut(java.lang.Integer anteilwaschgut) {
-		this.anteilwaschgut = anteilwaschgut;
-	}
+    /**
+     * @param anteilwaschgut the anteilwaschgut to set
+     */
+    public void setAnteilwaschgut(java.lang.Integer anteilwaschgut) {
+        this.anteilwaschgut = anteilwaschgut;
+    }
 
-	/**
-	 * @return the berufskl
-	 */
-	public java.lang.Boolean getBerufskl() {
-		return berufskl;
-	}
+    /**
+     * @return the berufskl
+     */
+    public java.lang.Boolean getBerufskl() {
+        return berufskl;
+    }
 
-	/**
-	 * @param berufskl the berufskl to set
-	 */
-	public void setBerufskl(java.lang.Boolean berufskl) {
-		this.berufskl = berufskl;
-	}
+    /**
+     * @param berufskl the berufskl to set
+     */
+    public void setBerufskl(java.lang.Boolean berufskl) {
+        this.berufskl = berufskl;
+    }
 
-	/**
-	 * @return the betrwasseraufber
-	 */
-	public java.lang.Boolean getBetrwasseraufber() {
-		return betrwasseraufber;
-	}
+    /**
+     * @return the betrwasseraufber
+     */
+    public java.lang.Boolean getBetrwasseraufber() {
+        return betrwasseraufber;
+    }
 
-	/**
-	 * @param betrwasseraufber the betrwasseraufber to set
-	 */
-	public void setBetrwasseraufber(java.lang.Boolean betrwasseraufber) {
-		this.betrwasseraufber = betrwasseraufber;
-	}
+    /**
+     * @param betrwasseraufber the betrwasseraufber to set
+     */
+    public void setBetrwasseraufber(java.lang.Boolean betrwasseraufber) {
+        this.betrwasseraufber = betrwasseraufber;
+    }
 
-	/**
-	 * @return the branche
-	 */
-	public java.lang.String getBranche() {
-		return branche;
-	}
+    /**
+     * @return the branche
+     */
+    public java.lang.String getBranche() {
+        return branche;
+    }
 
-	/**
-	 * @param branche the branche to set
-	 */
-	public void setBranche(java.lang.String branche) {
-		this.branche = branche;
-	}
+    /**
+     * @param branche the branche to set
+     */
+    public void setBranche(java.lang.String branche) {
+        this.branche = branche;
+    }
 
-	/**
-	 * @return the chlor
-	 */
-	public java.lang.Boolean getChlor() {
-		return chlor;
-	}
+    /**
+     * @return the chlor
+     */
+    public java.lang.Boolean getChlor() {
+        return chlor;
+    }
 
-	/**
-	 * @param chlor the chlor to set
-	 */
-	public void setChlor(java.lang.Boolean chlor) {
-		this.chlor = chlor;
-	}
+    /**
+     * @param chlor the chlor to set
+     */
+    public void setChlor(java.lang.Boolean chlor) {
+        this.chlor = chlor;
+    }
 
-	/**
-	 * @return the entgebId
-	 */
-	public java.lang.String getEntgebId() {
-		return entgebId;
-	}
+    /**
+     * @return the entgebId
+     */
+    public java.lang.String getEntgebId() {
+        return entgebId;
+    }
 
-	/**
-	 * @param entgebId the entgebId to set
-	 */
-	public void setEntgebId(java.lang.String entgebId) {
-		this.entgebId = entgebId;
-	}
+    /**
+     * @param entgebId the entgebId to set
+     */
+    public void setEntgebId(java.lang.String entgebId) {
+        this.entgebId = entgebId;
+    }
 
-	/**
-	 * @return the fischfleisch
-	 */
-	public java.lang.Boolean getFischfleisch() {
-		return fischfleisch;
-	}
+    /**
+     * @return the fischfleisch
+     */
+    public java.lang.Boolean getFischfleisch() {
+        return fischfleisch;
+    }
 
-	/**
-	 * @param fischfleisch the fischfleisch to set
-	 */
-	public void setFischfleisch(java.lang.Boolean fischfleisch) {
-		this.fischfleisch = fischfleisch;
-	}
+    /**
+     * @param fischfleisch the fischfleisch to set
+     */
+    public void setFischfleisch(java.lang.Boolean fischfleisch) {
+        this.fischfleisch = fischfleisch;
+    }
 
-	/**
-	 * @return the gasthotel
-	 */
-	public java.lang.Boolean getGasthotel() {
-		return gasthotel;
-	}
+    /**
+     * @return the gasthotel
+     */
+    public java.lang.Boolean getGasthotel() {
+        return gasthotel;
+    }
 
-	/**
-	 * @param gasthotel the gasthotel to set
-	 */
-	public void setGasthotel(java.lang.Boolean gasthotel) {
-		this.gasthotel = gasthotel;
-	}
+    /**
+     * @param gasthotel the gasthotel to set
+     */
+    public void setGasthotel(java.lang.Boolean gasthotel) {
+        this.gasthotel = gasthotel;
+    }
 
-	/**
-	 * @return the haushaltstex
-	 */
-	public java.lang.Boolean getHaushaltstex() {
-		return haushaltstex;
-	}
+    /**
+     * @return the haushaltstex
+     */
+    public java.lang.Boolean getHaushaltstex() {
+        return haushaltstex;
+    }
 
-	/**
-	 * @param haushaltstex the haushaltstex to set
-	 */
-	public void setHaushaltstex(java.lang.Boolean haushaltstex) {
-		this.haushaltstex = haushaltstex;
-	}
+    /**
+     * @param haushaltstex the haushaltstex to set
+     */
+    public void setHaushaltstex(java.lang.Boolean haushaltstex) {
+        this.haushaltstex = haushaltstex;
+    }
 
-	/**
-	 * @return the heimwaesche
-	 */
-	public java.lang.Boolean getHeimwaesche() {
-		return heimwaesche;
-	}
+    /**
+     * @return the heimwaesche
+     */
+    public java.lang.Boolean getHeimwaesche() {
+        return heimwaesche;
+    }
 
-	/**
-	 * @param heimwaesche the heimwaesche to set
-	 */
-	public void setHeimwaesche(java.lang.Boolean heimwaesche) {
-		this.heimwaesche = heimwaesche;
-	}
+    /**
+     * @param heimwaesche the heimwaesche to set
+     */
+    public void setHeimwaesche(java.lang.Boolean heimwaesche) {
+        this.heimwaesche = heimwaesche;
+    }
 
-	/**
-	 * @return the krankenhaus
-	 */
-	public java.lang.Boolean getKrankenhaus() {
-		return krankenhaus;
-	}
+    /**
+     * @return the krankenhaus
+     */
+    public java.lang.Boolean getKrankenhaus() {
+        return krankenhaus;
+    }
 
-	/**
-	 * @param krankenhaus the krankenhaus to set
-	 */
-	public void setKrankenhaus(java.lang.Boolean krankenhaus) {
-		this.krankenhaus = krankenhaus;
-	}
+    /**
+     * @param krankenhaus the krankenhaus to set
+     */
+    public void setKrankenhaus(java.lang.Boolean krankenhaus) {
+        this.krankenhaus = krankenhaus;
+    }
 
-	/**
-	 * @return the matten
-	 */
-	public java.lang.Boolean getMatten() {
-		return matten;
-	}
+    /**
+     * @return the matten
+     */
+    public java.lang.Boolean getMatten() {
+        return matten;
+    }
 
-	/**
-	 * @param matten the matten to set
-	 */
-	public void setMatten(java.lang.Boolean matten) {
-		this.matten = matten;
-	}
+    /**
+     * @param matten the matten to set
+     */
+    public void setMatten(java.lang.Boolean matten) {
+        this.matten = matten;
+    }
 
-	/**
-	 * @return the mengewaesche
-	 */
-	public java.lang.String getMengewaesche() {
-		return mengewaesche;
-	}
+    /**
+     * @return the mengewaesche
+     */
+    public java.lang.String getMengewaesche() {
+        return mengewaesche;
+    }
 
-	/**
-	 * @param mengewaesche the mengewaesche to set
-	 */
-	public void setMengewaesche(java.lang.String mengewaesche) {
-		this.mengewaesche = mengewaesche;
-	}
+    /**
+     * @param mengewaesche the mengewaesche to set
+     */
+    public void setMengewaesche(java.lang.String mengewaesche) {
+        this.mengewaesche = mengewaesche;
+    }
 
-	/**
-	 * @return the monatwasserverb
-	 */
-	public java.lang.String getMonatwasserverb() {
-		return monatwasserverb;
-	}
+    /**
+     * @return the monatwasserverb
+     */
+    public java.lang.String getMonatwasserverb() {
+        return monatwasserverb;
+    }
 
-	/**
-	 * @param monatwasserverb the monatwasserverb to set
-	 */
-	public void setMonatwasserverb(java.lang.String monatwasserverb) {
-		this.monatwasserverb = monatwasserverb;
-	}
+    /**
+     * @param monatwasserverb the monatwasserverb to set
+     */
+    public void setMonatwasserverb(java.lang.String monatwasserverb) {
+        this.monatwasserverb = monatwasserverb;
+    }
 
-//	/**
-//	 * @return the objektId
-//	 */
-//	public java.lang.Integer getObjektId() {
-//		return objektId;
-//	}
+//    /**
+//     * @return the objektId
+//     */
+//    public java.lang.Integer getObjektId() {
+//        return objektId;
+//    }
 //
-//	/**
-//	 * @param objektId the objektId to set
-//	 */
-//	public void setObjektId(java.lang.Integer objektId) {
-//		this.objektId = objektId;
-//	}
+//    /**
+//     * @param objektId the objektId to set
+//     */
+//    public void setObjektId(java.lang.Integer objektId) {
+//        this.objektId = objektId;
+//    }
 
-	/**
-	 * @return the putztuecher
-	 */
-	public java.lang.Boolean getPutztuecher() {
-		return putztuecher;
-	}
+    /**
+     * @return the putztuecher
+     */
+    public java.lang.Boolean getPutztuecher() {
+        return putztuecher;
+    }
 
-	/**
-	 * @param putztuecher the putztuecher to set
-	 */
-	public void setPutztuecher(java.lang.Boolean putztuecher) {
-		this.putztuecher = putztuecher;
-	}
+    /**
+     * @param putztuecher the putztuecher to set
+     */
+    public void setPutztuecher(java.lang.Boolean putztuecher) {
+        this.putztuecher = putztuecher;
+    }
 
-	/**
-	 * @return the sachbearbeiter
-	 */
-	public java.lang.String getSachbearbeiter() {
-		return sachbearbeiter;
-	}
+    /**
+     * @return the sachbearbeiter
+     */
+    public java.lang.String getSachbearbeiter() {
+        return sachbearbeiter;
+    }
 
-	/**
-	 * @param sachbearbeiter the sachbearbeiter to set
-	 */
-	public void setSachbearbeiter(java.lang.String sachbearbeiter) {
-		this.sachbearbeiter = sachbearbeiter;
-	}
+    /**
+     * @param sachbearbeiter the sachbearbeiter to set
+     */
+    public void setSachbearbeiter(java.lang.String sachbearbeiter) {
+        this.sachbearbeiter = sachbearbeiter;
+    }
 
-	/**
-	 * @return the sonsttex
-	 */
-	public java.lang.String getSonsttex() {
-		return sonsttex;
-	}
+    /**
+     * @return the sonsttex
+     */
+    public java.lang.String getSonsttex() {
+        return sonsttex;
+    }
 
-	/**
-	 * @param sonsttex the sonsttex to set
-	 */
-	public void setSonsttex(java.lang.String sonsttex) {
-		this.sonsttex = sonsttex;
-	}
+    /**
+     * @param sonsttex the sonsttex to set
+     */
+    public void setSonsttex(java.lang.String sonsttex) {
+        this.sonsttex = sonsttex;
+    }
 
-	/**
-	 * @return the teppich
-	 */
-	public java.lang.Boolean getTeppich() {
-		return teppich;
-	}
+    /**
+     * @return the teppich
+     */
+    public java.lang.Boolean getTeppich() {
+        return teppich;
+    }
 
-	/**
-	 * @param teppich the teppich to set
-	 */
-	public void setTeppich(java.lang.Boolean teppich) {
-		this.teppich = teppich;
-	}
+    /**
+     * @param teppich the teppich to set
+     */
+    public void setTeppich(java.lang.Boolean teppich) {
+        this.teppich = teppich;
+    }
 
-	/**
-	 * @return the vlies
-	 */
-	public java.lang.Boolean getVlies() {
-		return vlies;
-	}
+    /**
+     * @return the vlies
+     */
+    public java.lang.Boolean getVlies() {
+        return vlies;
+    }
 
-	/**
-	 * @param vlies the vlies to set
-	 */
-	public void setVlies(java.lang.Boolean vlies) {
-		this.vlies = vlies;
-	}
+    /**
+     * @param vlies the vlies to set
+     */
+    public void setVlies(java.lang.Boolean vlies) {
+        this.vlies = vlies;
+    }
 
-	/**
-	 * @return the waschsituation
-	 */
-	public java.lang.String getWaschsituation() {
-		return waschsituation;
-	}
+    /**
+     * @return the waschsituation
+     */
+    public java.lang.String getWaschsituation() {
+        return waschsituation;
+    }
 
-	/**
-	 * @param waschsituation the waschsituation to set
-	 */
-	public void setWaschsituation(java.lang.String waschsituation) {
-		this.waschsituation = waschsituation;
-	}
-	
+    /**
+     * @param waschsituation the waschsituation to set
+     */
+    public void setWaschsituation(java.lang.String waschsituation) {
+        this.waschsituation = waschsituation;
+    }
 
-	public java.lang.Boolean getLoesungsmittel() {
-		return loesungsmittel;
-	}
 
-	public void setLoesungsmittel(java.lang.Boolean loesungsmittel) {
-		this.loesungsmittel = loesungsmittel;
-	}
+    public java.lang.Boolean getLoesungsmittel() {
+        return loesungsmittel;
+    }
 
-	/**
+    public void setLoesungsmittel(java.lang.Boolean loesungsmittel) {
+        this.loesungsmittel = loesungsmittel;
+    }
+
+    /**
      * Return the value of the BEMERKUNGEN column.
      * @return java.lang.String
      */

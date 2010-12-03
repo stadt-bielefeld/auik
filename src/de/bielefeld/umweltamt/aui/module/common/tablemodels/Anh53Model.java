@@ -8,53 +8,53 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class Anh53Model extends ListTableModel {
-	public Anh53Model() {
-		super(new String[]{
-				"Betreiber", 
-				"Standort", 
-				"Bemerkungen"
-		}, 
-		false);
-	}
+    public Anh53Model() {
+        super(new String[]{
+                "Betreiber",
+                "Standort",
+                "Bemerkungen"
+        },
+        false);
+    }
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
-	 */
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Anh53Fachdaten fd = (Anh53Fachdaten) objectAtRow;
-		Object tmp;
-		
-		switch (columnIndex) {
-		case 0:
-			tmp = fd.getBasisObjekt().getBasisBetreiber();
-			break;
-		case 1:
-			tmp = fd.getBasisObjekt().getBasisStandort();
-			break;
-		case 2:
-			if (fd.getBasisObjekt().getBasisObjektarten().getObjektartid()==17)
-				tmp = "kleiner 3000";
-			else
-				tmp = "größer 3000";
-			break;
-		case 3:
-			tmp = fd.getBasisObjekt().getBeschreibung();
-			break;
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
+     */
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+        Anh53Fachdaten fd = (Anh53Fachdaten) objectAtRow;
+        Object tmp;
 
-		default:
-			tmp = "ERROR";
-			break;
-		}
-		if (fd.getBasisObjekt().getInaktiv() == true)
-		{
-			tmp = "<html><strike>" + tmp + "</strike></html>";	
-		}
-		return tmp;
-	}
-	
-	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
-	 */
-	public void updateList() {
-	}
+        switch (columnIndex) {
+        case 0:
+            tmp = fd.getBasisObjekt().getBasisBetreiber();
+            break;
+        case 1:
+            tmp = fd.getBasisObjekt().getBasisStandort();
+            break;
+        case 2:
+            if (fd.getBasisObjekt().getBasisObjektarten().getObjektartid()==17)
+                tmp = "kleiner 3000";
+            else
+                tmp = "größer 3000";
+            break;
+        case 3:
+            tmp = fd.getBasisObjekt().getBeschreibung();
+            break;
+
+        default:
+            tmp = "ERROR";
+            break;
+        }
+        if (fd.getBasisObjekt().getInaktiv() == true)
+        {
+            tmp = "<html><strike>" + tmp + "</strike></html>";
+        }
+        return tmp;
+    }
+
+    /*
+     * Leer, da kein Updaten der Liste nötig/möglich.
+     */
+    public void updateList() {
+    }
 }

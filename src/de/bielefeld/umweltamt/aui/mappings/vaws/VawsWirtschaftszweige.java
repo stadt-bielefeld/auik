@@ -12,8 +12,8 @@ import org.hibernate.Session;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
- * A class that represents a row in the 'VAWS_WIRTSCHAFTSZWEIGE' table. 
- * This class may be customized as it is never re-generated 
+ * A class that represents a row in the 'VAWS_WIRTSCHAFTSZWEIGE' table.
+ * This class may be customized as it is never re-generated
  * after being created.
  */
 public class VawsWirtschaftszweige
@@ -38,36 +38,36 @@ public class VawsWirtschaftszweige
 
     /* Add customized code below */
 
-	/**
-	 * Liefert den Namen des Wirtschaftszweiges.
-	 */
-    public String toString() {
-		return super.getWirtschaftszweig();
-	}
-    
     /**
-	 * Liefert alle vorhandenen VAWS-Wirtschaftszweige.
-	 * @param session Eine Hibernate-Session
-	 * @return Alle vorhandenen Wirtschaftszweige
-	 * @throws HibernateException Falls ein Datenbank-Fehler auftritt
-	 */
-	public static VawsWirtschaftszweige[] getWirtschaftszweige(Session session) throws HibernateException {
-		List list = null;
-		String suchString = "FROM VawsWirtschaftszweige wizw ORDER BY wizw.wirtschaftszweigid";
-		VawsWirtschaftszweige[] tmp;
-		Query query = session.createQuery(suchString);
-		query.setCacheable(true);
-		query.setCacheRegion("wizwliste");
-		list = query.list();
-		tmp = new VawsWirtschaftszweige[list.size()];
-		tmp = (VawsWirtschaftszweige[]) list.toArray(tmp);
-		return tmp;
-	}
-	
-	public static VawsWirtschaftszweige[] getWirtschaftszweige() throws HibernateException {
-		Session session = HibernateSessionFactory.currentSession();
-		VawsWirtschaftszweige[] tmp = getWirtschaftszweige(session);
-		HibernateSessionFactory.closeSession();
-		return tmp;
-	}
+     * Liefert den Namen des Wirtschaftszweiges.
+     */
+    public String toString() {
+        return super.getWirtschaftszweig();
+    }
+
+    /**
+     * Liefert alle vorhandenen VAWS-Wirtschaftszweige.
+     * @param session Eine Hibernate-Session
+     * @return Alle vorhandenen Wirtschaftszweige
+     * @throws HibernateException Falls ein Datenbank-Fehler auftritt
+     */
+    public static VawsWirtschaftszweige[] getWirtschaftszweige(Session session) throws HibernateException {
+        List list = null;
+        String suchString = "FROM VawsWirtschaftszweige wizw ORDER BY wizw.wirtschaftszweigid";
+        VawsWirtschaftszweige[] tmp;
+        Query query = session.createQuery(suchString);
+        query.setCacheable(true);
+        query.setCacheRegion("wizwliste");
+        list = query.list();
+        tmp = new VawsWirtschaftszweige[list.size()];
+        tmp = (VawsWirtschaftszweige[]) list.toArray(tmp);
+        return tmp;
+    }
+
+    public static VawsWirtschaftszweige[] getWirtschaftszweige() throws HibernateException {
+        Session session = HibernateSessionFactory.currentSession();
+        VawsWirtschaftszweige[] tmp = getWirtschaftszweige(session);
+        HibernateSessionFactory.closeSession();
+        return tmp;
+    }
 }

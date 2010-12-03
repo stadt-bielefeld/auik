@@ -141,25 +141,25 @@ public class GUITest extends TestCase {
         super.setUp();
         Configuration configuration =
                 new Configuration().configure();
- 
-      
-        
-	   _sessionFactory =
+
+
+
+       _sessionFactory =
                 configuration.buildSessionFactory();
 
-      
+
     }
 
     protected void tearDown() throws Exception {
         super.tearDown();
         _sessionFactory.close();
     }
-   
+
 
     /**
      * Testen die Funktionen des Modul Managers
      */
-	private ModulManager manager;
+    private ModulManager manager;
    public void testModulManager() {
         Session session = null;
         try {
@@ -167,132 +167,132 @@ public class GUITest extends TestCase {
 
             //Aufruf des Login-Fensters
             SettingsManager settings = SettingsManager.getInstance();
-    		runningFrame = new HauptFrame(settings);
-    		manager = new ModulManager(runningFrame, settings);
-			// ... füge Module hinzu
-			manager.loadModule();
-			// Zeige dieses Fenster an
-			runningFrame.setVisible(true);
-						
-			//modul wechslen
-			manager.switchModul("m_sielhaut1");
-			Modul modul = manager.getCurrentModul();
-			// wurde das Modul gewechselt?
-			assertEquals("m_sielhaut1",modul.getIdentifier());
-			// ist es der richtige Kategorie zugeordnet?
-			assertEquals("Sielhaut", modul.getCategory());
-			
-			manager.switchModul("m_auswertung_anh40");
-			modul = manager.getCurrentModul();
-			assertEquals("m_auswertung_anh40", modul.getIdentifier());
-			assertEquals("Auswertung", modul.getCategory());
-			 
-			manager.switchModul("m_auswertung_anh49");
-			modul = manager.getCurrentModul();
-			assertEquals("m_auswertung_anh49", modul.getIdentifier());
-			assertEquals("Auswertung", modul.getCategory());
-			
-			manager.switchModul("m_auswertung_anh52");
-			modul = manager.getCurrentModul();
-			assertEquals("m_auswertung_anh52", modul.getIdentifier());
-			assertEquals("Auswertung", modul.getCategory());
-			
-			manager.switchModul("m_auswertung_anh53");
-			modul = manager.getCurrentModul();
-			assertEquals("m_auswertung_anh53", modul.getIdentifier());
-			assertEquals("Auswertung", modul.getCategory());
-			
-			manager.switchModul("m_auswertung_anh55");
-			modul = manager.getCurrentModul();
-			assertEquals("m_auswertung_anh55", modul.getIdentifier());
-			assertEquals("Auswertung", modul.getCategory());
-			
-			manager.switchModul("m_auswertung_anh56");
-			modul = manager.getCurrentModul();
-			assertEquals("m_auswertung_anh56", modul.getIdentifier());
-			assertEquals("Auswertung", modul.getCategory());
-			
-			manager.switchModul("m_schlaemme_faul");
-			modul = manager.getCurrentModul();
-			assertEquals("m_schlaemme_faul", modul.getIdentifier());
-			assertEquals("Klärschlamm", modul.getCategory());
-			
-			manager.switchModul("m_schlaemme_roh");
-			modul = manager.getCurrentModul();
-			assertEquals("m_schlaemme_roh", modul.getIdentifier());
-			assertEquals("Klärschlamm", modul.getCategory());
-			
-			manager.switchModul("m_betreiber_neu");
-			modul = manager.getCurrentModul();
-			assertEquals("m_betreiber_neu", modul.getIdentifier());
-			assertEquals("Betriebe", modul.getCategory());
-			
-			manager.switchModul("m_betreiber_suchen");
-			modul = manager.getCurrentModul();
-			assertEquals("m_betreiber_suchen", modul.getIdentifier());
-			assertEquals("Betriebe", modul.getCategory());
-			
-			manager.switchModul("m_fettabscheider_auswertung");
-			modul = manager.getCurrentModul();
-			assertEquals("m_fettabscheider_auswertung", modul.getIdentifier());
-			assertEquals("Auswertung", modul.getCategory());
-			
-			manager.switchModul("m_auswertung_genehmigung");
-			modul = manager.getCurrentModul();
-			assertEquals("m_auswertung_genehmigung", modul.getIdentifier());
-			assertEquals("Auswertung", modul.getCategory());
-			
-			manager.switchModul("atl_icp_import");
-			modul = manager.getCurrentModul();
-			assertEquals("atl_icp_import", modul.getIdentifier());
-			assertEquals("Labor", modul.getCategory());
-			
-			manager.switchModul("m_schlaemme_auswertung");
-			modul = manager.getCurrentModul();
-			assertEquals("m_schlaemme_auswertung",modul.getIdentifier());
-			assertEquals("Klärschlamm", modul.getCategory());
-			
-			manager.switchModul("m_objekt_bearbeiten");
-			modul = manager.getCurrentModul();
-			assertEquals("m_objekt_bearbeiten",modul.getIdentifier());
-			assertEquals("Betriebe", modul.getCategory());
-						
-			manager.switchModul("m_probe_suchen");
-			modul = manager.getCurrentModul();
-			assertEquals("m_probe_suchen", modul.getIdentifier());
-			assertEquals("Labor", modul.getCategory());
-			
-			manager.switchModul("m_sielhaut_import");
-			modul = manager.getCurrentModul();
-			assertEquals("m_sielhaut_import", modul.getIdentifier());
-			assertEquals("Sielhaut",modul.getCategory());
-			
-			manager.switchModul("m_standort_neu");
-			modul = manager.getCurrentModul();
-			assertEquals("m_standort_neu", modul.getIdentifier());
-			assertEquals("Betriebe",modul.getCategory());
-			
-			manager.switchModul("m_standort_suchen");
-			modul = manager.getCurrentModul();
-			assertEquals("m_standort_suchen", modul.getIdentifier());
-			assertEquals("Betriebe", modul.getCategory());
-			
-			manager.switchModul("m_auswertung_uebergabe");
-			modul = manager.getCurrentModul();
-			assertEquals("m_auswertung_uebergabe",modul.getIdentifier());
-			assertEquals("Auswertung",modul.getCategory());
-			
-			manager.back();
-			modul = manager.getCurrentModul();
-			assertEquals("m_standort_suchen", modul.getIdentifier());
-			assertEquals("Betriebe", modul.getCategory());
-			
-			manager.forward();
-			modul = manager.getCurrentModul();
-			assertEquals("m_auswertung_uebergabe",modul.getIdentifier());
-			assertEquals("Auswertung",modul.getCategory());
+            runningFrame = new HauptFrame(settings);
+            manager = new ModulManager(runningFrame, settings);
+            // ... füge Module hinzu
+            manager.loadModule();
+            // Zeige dieses Fenster an
+            runningFrame.setVisible(true);
 
-						
+            //modul wechslen
+            manager.switchModul("m_sielhaut1");
+            Modul modul = manager.getCurrentModul();
+            // wurde das Modul gewechselt?
+            assertEquals("m_sielhaut1",modul.getIdentifier());
+            // ist es der richtige Kategorie zugeordnet?
+            assertEquals("Sielhaut", modul.getCategory());
+
+            manager.switchModul("m_auswertung_anh40");
+            modul = manager.getCurrentModul();
+            assertEquals("m_auswertung_anh40", modul.getIdentifier());
+            assertEquals("Auswertung", modul.getCategory());
+
+            manager.switchModul("m_auswertung_anh49");
+            modul = manager.getCurrentModul();
+            assertEquals("m_auswertung_anh49", modul.getIdentifier());
+            assertEquals("Auswertung", modul.getCategory());
+
+            manager.switchModul("m_auswertung_anh52");
+            modul = manager.getCurrentModul();
+            assertEquals("m_auswertung_anh52", modul.getIdentifier());
+            assertEquals("Auswertung", modul.getCategory());
+
+            manager.switchModul("m_auswertung_anh53");
+            modul = manager.getCurrentModul();
+            assertEquals("m_auswertung_anh53", modul.getIdentifier());
+            assertEquals("Auswertung", modul.getCategory());
+
+            manager.switchModul("m_auswertung_anh55");
+            modul = manager.getCurrentModul();
+            assertEquals("m_auswertung_anh55", modul.getIdentifier());
+            assertEquals("Auswertung", modul.getCategory());
+
+            manager.switchModul("m_auswertung_anh56");
+            modul = manager.getCurrentModul();
+            assertEquals("m_auswertung_anh56", modul.getIdentifier());
+            assertEquals("Auswertung", modul.getCategory());
+
+            manager.switchModul("m_schlaemme_faul");
+            modul = manager.getCurrentModul();
+            assertEquals("m_schlaemme_faul", modul.getIdentifier());
+            assertEquals("Klärschlamm", modul.getCategory());
+
+            manager.switchModul("m_schlaemme_roh");
+            modul = manager.getCurrentModul();
+            assertEquals("m_schlaemme_roh", modul.getIdentifier());
+            assertEquals("Klärschlamm", modul.getCategory());
+
+            manager.switchModul("m_betreiber_neu");
+            modul = manager.getCurrentModul();
+            assertEquals("m_betreiber_neu", modul.getIdentifier());
+            assertEquals("Betriebe", modul.getCategory());
+
+            manager.switchModul("m_betreiber_suchen");
+            modul = manager.getCurrentModul();
+            assertEquals("m_betreiber_suchen", modul.getIdentifier());
+            assertEquals("Betriebe", modul.getCategory());
+
+            manager.switchModul("m_fettabscheider_auswertung");
+            modul = manager.getCurrentModul();
+            assertEquals("m_fettabscheider_auswertung", modul.getIdentifier());
+            assertEquals("Auswertung", modul.getCategory());
+
+            manager.switchModul("m_auswertung_genehmigung");
+            modul = manager.getCurrentModul();
+            assertEquals("m_auswertung_genehmigung", modul.getIdentifier());
+            assertEquals("Auswertung", modul.getCategory());
+
+            manager.switchModul("atl_icp_import");
+            modul = manager.getCurrentModul();
+            assertEquals("atl_icp_import", modul.getIdentifier());
+            assertEquals("Labor", modul.getCategory());
+
+            manager.switchModul("m_schlaemme_auswertung");
+            modul = manager.getCurrentModul();
+            assertEquals("m_schlaemme_auswertung",modul.getIdentifier());
+            assertEquals("Klärschlamm", modul.getCategory());
+
+            manager.switchModul("m_objekt_bearbeiten");
+            modul = manager.getCurrentModul();
+            assertEquals("m_objekt_bearbeiten",modul.getIdentifier());
+            assertEquals("Betriebe", modul.getCategory());
+
+            manager.switchModul("m_probe_suchen");
+            modul = manager.getCurrentModul();
+            assertEquals("m_probe_suchen", modul.getIdentifier());
+            assertEquals("Labor", modul.getCategory());
+
+            manager.switchModul("m_sielhaut_import");
+            modul = manager.getCurrentModul();
+            assertEquals("m_sielhaut_import", modul.getIdentifier());
+            assertEquals("Sielhaut",modul.getCategory());
+
+            manager.switchModul("m_standort_neu");
+            modul = manager.getCurrentModul();
+            assertEquals("m_standort_neu", modul.getIdentifier());
+            assertEquals("Betriebe",modul.getCategory());
+
+            manager.switchModul("m_standort_suchen");
+            modul = manager.getCurrentModul();
+            assertEquals("m_standort_suchen", modul.getIdentifier());
+            assertEquals("Betriebe", modul.getCategory());
+
+            manager.switchModul("m_auswertung_uebergabe");
+            modul = manager.getCurrentModul();
+            assertEquals("m_auswertung_uebergabe",modul.getIdentifier());
+            assertEquals("Auswertung",modul.getCategory());
+
+            manager.back();
+            modul = manager.getCurrentModul();
+            assertEquals("m_standort_suchen", modul.getIdentifier());
+            assertEquals("Betriebe", modul.getCategory());
+
+            manager.forward();
+            modul = manager.getCurrentModul();
+            assertEquals("m_auswertung_uebergabe",modul.getIdentifier());
+            assertEquals("Auswertung",modul.getCategory());
+
+
         }
         finally {
             if (session != null &&

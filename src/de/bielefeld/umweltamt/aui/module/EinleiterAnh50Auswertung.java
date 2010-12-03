@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: EinleiterAnh50Auswertung.java,v 1.1.2.1 2010-11-23 10:25:53 u633d Exp $
- * 
+ *
  * Erstellt am 15.08.2005 von David Klotz
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.3  2010/01/12 09:02:44  u633d
@@ -45,62 +45,62 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class EinleiterAnh50Auswertung extends AbstractQueryModul {
-	/** Das obere Panel mit den Abfrage-Optionen */
-	private JPanel queryPanel;
-	
-	// Widgets für die Abfrage
-	private JCheckBox wiedervorlageCheck;
-	private JButton submitButton;
-	
-	/** Das TableModel für die Ergebnis-Tabelle */
-	private Anh50Model tmodel;
+    /** Das obere Panel mit den Abfrage-Optionen */
+    private JPanel queryPanel;
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
-	 */
-	public String getName() {
-		return "Anhang 50";
-	}
-	
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
-	 */
-	public JPanel getQueryOptionsPanel() {
-		if (queryPanel == null) {
-			// Die Widgets initialisieren:
-			wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage", true);
-			
-			submitButton = new JButton("Suchen");
-			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
-			submitButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					((Anh50Model)getTableModel()).setList(Anh50Fachdaten.findByWiedervorlage(wiedervorlageCheck.isSelected()));
-					((Anh50Model)getTableModel()).fireTableDataChanged();
-					frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-				}
-			});
-			
-			// Noch etwas Layout...
-			FormLayout layout = new FormLayout("pref, 3dlu, pref");
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-			
-			builder.append(wiedervorlageCheck, submitButton);
-			
-			queryPanel = builder.getPanel();
-		}
-		
-		return queryPanel;
-	}
+    // Widgets für die Abfrage
+    private JCheckBox wiedervorlageCheck;
+    private JButton submitButton;
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
-	 */
-	public ListTableModel getTableModel() {
-		if (tmodel == null) {
-			tmodel = new Anh50Model();
-		}
-		return tmodel;
-	}
+    /** Das TableModel für die Ergebnis-Tabelle */
+    private Anh50Model tmodel;
+
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.Modul#getName()
+     */
+    public String getName() {
+        return "Anhang 50";
+    }
+
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
+     */
+    public JPanel getQueryOptionsPanel() {
+        if (queryPanel == null) {
+            // Die Widgets initialisieren:
+            wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage", true);
+
+            submitButton = new JButton("Suchen");
+
+            // Ein ActionListener für den Button,
+            // der die eigentliche Suche auslöst:
+            submitButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ((Anh50Model)getTableModel()).setList(Anh50Fachdaten.findByWiedervorlage(wiedervorlageCheck.isSelected()));
+                    ((Anh50Model)getTableModel()).fireTableDataChanged();
+                    frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                }
+            });
+
+            // Noch etwas Layout...
+            FormLayout layout = new FormLayout("pref, 3dlu, pref");
+            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+
+            builder.append(wiedervorlageCheck, submitButton);
+
+            queryPanel = builder.getPanel();
+        }
+
+        return queryPanel;
+    }
+
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
+     */
+    public ListTableModel getTableModel() {
+        if (tmodel == null) {
+            tmodel = new Anh50Model();
+        }
+        return tmodel;
+    }
 }

@@ -12,8 +12,8 @@ import org.hibernate.Session;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
- * A class that represents a row in the 'VAWS_FLUESSIGKEIT' table. 
- * This class may be customized as it is never re-generated 
+ * A class that represents a row in the 'VAWS_FLUESSIGKEIT' table.
+ * This class may be customized as it is never re-generated
  * after being created.
  */
 public class VawsFluessigkeit
@@ -28,36 +28,36 @@ public class VawsFluessigkeit
     }
 
     /* Add customized code below */
-    
+
     public String toString() {
-		return super.getFluessigkeit();
-	}
+        return super.getFluessigkeit();
+    }
 
     /**
      * Liefer alle VAWS-Flüssigkeiten.
      * @return Ein Array mit allen Flüssigkeiten.
      */
     public static String[] getFluessigkeiten() {
-		List list;
-		String suchString = "select fl.fluessigkeit " +
-				"from VawsFluessigkeit fl " +
-				"order by fl.fluessigkeit";
-		String[] tmp;
-		
-		try {
-			Session session = HibernateSessionFactory.currentSession();
-			Query query = session.createQuery(suchString);
-			query.setCacheable(true);
-			query.setCacheRegion("vawsflliste");
-			list = query.list();
-			tmp = new String[list.size()];
-			tmp = (String[]) list.toArray(tmp);
-		} catch (HibernateException e) {
-			throw new RuntimeException("Datenbank-Fehler (VawsStandortgghwsg)", e);
-		} finally {
-			HibernateSessionFactory.closeSession();
-		}
-		
-		return tmp;
-	}
+        List list;
+        String suchString = "select fl.fluessigkeit " +
+                "from VawsFluessigkeit fl " +
+                "order by fl.fluessigkeit";
+        String[] tmp;
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            Query query = session.createQuery(suchString);
+            query.setCacheable(true);
+            query.setCacheRegion("vawsflliste");
+            list = query.list();
+            tmp = new String[list.size()];
+            tmp = (String[]) list.toArray(tmp);
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler (VawsStandortgghwsg)", e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return tmp;
+    }
 }

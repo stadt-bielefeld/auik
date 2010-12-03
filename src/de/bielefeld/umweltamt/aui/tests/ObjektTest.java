@@ -49,25 +49,25 @@ public class ObjektTest extends TestCase {
      */
     protected void setUp() throws Exception {
         super.setUp();
-        
+
         betreiber = findeBetreiber();
         standort = findeStandort();
         objektart = findeObjektart();
-       
+
 
     }
 
     protected void tearDown() throws Exception {
         super.tearDown();
     }
-    
+
     public void testErzeugen()
     {
-    	 String id = "leer";       
+         String id = "leer";
          _id = erzeugeObjekt(betreiber, standort, objektart);
          if(_id != 0)
          {
-        	 id = "vorhanden";
+             id = "vorhanden";
          }
          assertEquals(id,"vorhanden");
     }
@@ -75,13 +75,13 @@ public class ObjektTest extends TestCase {
     /**
      * Das erstellet Objekt wird in der Datenbank gesucht
      */
-   	public BasisObjekt testQuery() {
+       public BasisObjekt testQuery() {
         Session session = null;
-       
+
         try {
 
             List result = BasisObjekt.getObjekteByStandort(standort, null, 16);
-              
+
 
             BasisObjekt objekt = (BasisObjekt) result.get(0);
 
@@ -91,7 +91,7 @@ public class ObjektTest extends TestCase {
         finally {
 
         }
-        
+
     }
 
     /**
@@ -124,13 +124,13 @@ public class ObjektTest extends TestCase {
 
             BasisObjekt objekt = testQuery();
             List chronolist =  BasisObjektchrono.getChronoByObjekt(objekt);
-           
+
             BasisObjektchrono chrono = (BasisObjektchrono) chronolist.get(0);
-            
+
            assertEquals(1, chronolist.size());
-           
+
            assertEquals("JUNIT", chrono.getSachbearbeiter());
-         
+
         }
         finally {
 
@@ -145,25 +145,25 @@ public class ObjektTest extends TestCase {
 
             BasisObjekt objekt = testQuery();
             List chronolist =  BasisObjektchrono.getChronoByObjekt(objekt);
-            
-            BasisObjektchrono chrono = (BasisObjektchrono) chronolist.get(0);         
+
+            BasisObjektchrono chrono = (BasisObjektchrono) chronolist.get(0);
 
             BasisObjektchrono.removeObjektChrono(chrono);
             BasisObjekt.removeBasisObjekt(objekt);
 
-            List result = BasisObjekt.getObjekteByStandort(standort, 1);            
-         
-         
+            List result = BasisObjekt.getObjekteByStandort(standort, 1);
+
+
             assertEquals(0, result.size());
         }
         finally {
 
-        }              
+        }
     }
 
     /**
      * Kleine Hilfsmethode, mit der ein Objekt mit Objektchronologie erzeugt und in der Datenbank gesichert wird.
-     * 
+     *
      * @param betreiber Betreiber des Objekts.
      * @param standort Standort des Objekts
      * @param objektart Objektart des Objekts
@@ -183,19 +183,19 @@ public class ObjektTest extends TestCase {
             chrono.setBasisObjekt(objekt);
             chrono.setSachbearbeiter("JUNIT");
             chrono.saveObjektChrono(chrono);
-            chronoid = chrono.getId();	
+            chronoid = chrono.getId();
         }
         catch (HibernateException e) {
 
                 throw e;
-            
+
         }
-       
-        
+
+
         finally {
 
         }
-       
+
         return objekt.getObjektid();
     }
     private BasisStandort findeStandort()
@@ -210,8 +210,8 @@ public class ObjektTest extends TestCase {
     }
     private BasisObjektarten findeObjektart()
     {
-    	BasisObjektarten objektart = BasisObjektarten.getObjektart(1);
-    	return objektart;
+        BasisObjektarten objektart = BasisObjektarten.getObjektart(1);
+        return objektart;
     }
     private int _id;
     private int chronoid;

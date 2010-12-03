@@ -47,7 +47,7 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 public class WiedervorlageVawsTest extends TestCase {
     /**
-     * Starten einer SessionFactory 
+     * Starten einer SessionFactory
      */
     protected void setUp() throws Exception {
         super.setUp();
@@ -56,7 +56,7 @@ public class WiedervorlageVawsTest extends TestCase {
         _sessionFactory =
                 configuration.buildSessionFactory();
 
-      
+
     }
 
     protected void tearDown() throws Exception {
@@ -65,7 +65,7 @@ public class WiedervorlageVawsTest extends TestCase {
     }
 
     /**
-     * Testen ob Wiedervorlage Sachverständigenprüfung fehlerfrei funktioniert 
+     * Testen ob Wiedervorlage Sachverständigenprüfung fehlerfrei funktioniert
      */
    public void testWiederSach() {
         Session session = null;
@@ -73,25 +73,25 @@ public class WiedervorlageVawsTest extends TestCase {
             session = _sessionFactory.openSession();
 
             List list = VawsKontrollen.getAuswertung();
-            
-            
-         List listquery;   
+
+
+         List listquery;
             String query = "from VawsKontrollen vk where " +
-			"vk.naechstepruefung < ? " +
-			"and vk.pruefungabgeschlossen = ? " +
-			"order by vk.naechstepruefung, vk.vawsFachdaten";
-	
-	try {
-		listquery = session.createQuery(
-				query)
-				.setDate(0, new Date())
-				.setBoolean(1, false)
-				.list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+            "vk.naechstepruefung < ? " +
+            "and vk.pruefungabgeschlossen = ? " +
+            "order by vk.naechstepruefung, vk.vawsFachdaten";
+
+    try {
+        listquery = session.createQuery(
+                query)
+                .setDate(0, new Date())
+                .setBoolean(1, false)
+                .list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
         }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
         }
         finally {
             if (session != null &&
@@ -109,26 +109,26 @@ public class WiedervorlageVawsTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = VawsVerwaltungsverf.getAuswertung();
-           
-           
-        List listquery;   
+
+
+        List listquery;
         String query = "from VawsVerwaltungsverf vf where " +
-		"vf.wiedervorlage < ? " +
-		"and " +
-		"(vf.wvverwverf = ? or vf.wvverwverf is NULL) " +
-		"order by vf.wiedervorlage, vf.vawsFachdaten";
-	
-	try {
-		listquery = session.createQuery(
-				query)
-				.setDate(0, new Date())
-				.setBoolean(1, false)
-				.list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+        "vf.wiedervorlage < ? " +
+        "and " +
+        "(vf.wvverwverf = ? or vf.wvverwverf is NULL) " +
+        "order by vf.wiedervorlage, vf.vawsFachdaten";
+
+    try {
+        listquery = session.createQuery(
+                query)
+                .setDate(0, new Date())
+                .setBoolean(1, false)
+                .list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -146,19 +146,19 @@ public class WiedervorlageVawsTest extends TestCase {
            session = _sessionFactory.openSession();
 
            List list = VawsFachdaten.findherstellnr("");
-           
-           
-        List listquery;   
+
+
+        List listquery;
         String query = "from VawsFachdaten vaws "+
-		"where vaws.herstellnr like ''";
-	
-	try {
-		listquery = session.createQuery(query).list();
-	} catch (HibernateException e) {
-		throw new RuntimeException(e);
+        "where vaws.herstellnr like ''";
+
+    try {
+        listquery = session.createQuery(query).list();
+    } catch (HibernateException e) {
+        throw new RuntimeException(e);
        }
-	
-	     assertEquals(list.size(), listquery.size());
+
+         assertEquals(list.size(), listquery.size());
        }
        finally {
            if (session != null &&
@@ -169,8 +169,8 @@ public class WiedervorlageVawsTest extends TestCase {
    }
    private SessionFactory _sessionFactory;
 
-   
-   
-   
-   
+
+
+
+
 }

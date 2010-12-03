@@ -12,58 +12,58 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
  */
 public class AbstractIndeinlUebergabestelle implements java.io.Serializable {
 
-	// Fields    
+    // Fields
 
-	private int objektid;
-	
+    private int objektid;
+
     private BasisObjekt basisObjekt;
-    
+
     private java.lang.String bemerkungen;
 
-	private AtlKlaeranlagen atlKlaeranlagen;
+    private AtlKlaeranlagen atlKlaeranlagen;
 
-	private Date aenderungsDatum;
+    private Date aenderungsDatum;
 
-	private Date erfassungsDatum;
+    private Date erfassungsDatum;
 
-	private Integer kanalart;
+    private Integer kanalart;
 
-	private Integer rechtswert;
+    private Integer rechtswert;
 
-	private Integer hochwert;
+    private Integer hochwert;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public AbstractIndeinlUebergabestelle() {
-	}
+    /** default constructor */
+    public AbstractIndeinlUebergabestelle() {
+    }
 
-	/** minimal constructor */
-	public AbstractIndeinlUebergabestelle(int objektid) {
-		this.objektid = objektid;
-	}
+    /** minimal constructor */
+    public AbstractIndeinlUebergabestelle(int objektid) {
+        this.objektid = objektid;
+    }
 
-	/** full constructor */
-	public AbstractIndeinlUebergabestelle(int objektid, AtlKlaeranlagen atlKlaeranlagen, Date aenderungsDatum,
-			Date erfassungsDatum, Integer kanalart, Integer rechtswert,
-			Integer hochwert) {
-		this.objektid = objektid;
-		this.atlKlaeranlagen = atlKlaeranlagen;
-		this.aenderungsDatum = aenderungsDatum;
-		this.erfassungsDatum = erfassungsDatum;
-		this.kanalart = kanalart;
-		this.rechtswert = rechtswert;
-		this.hochwert = hochwert;
-	}
+    /** full constructor */
+    public AbstractIndeinlUebergabestelle(int objektid, AtlKlaeranlagen atlKlaeranlagen, Date aenderungsDatum,
+            Date erfassungsDatum, Integer kanalart, Integer rechtswert,
+            Integer hochwert) {
+        this.objektid = objektid;
+        this.atlKlaeranlagen = atlKlaeranlagen;
+        this.aenderungsDatum = aenderungsDatum;
+        this.erfassungsDatum = erfassungsDatum;
+        this.kanalart = kanalart;
+        this.rechtswert = rechtswert;
+        this.hochwert = hochwert;
+    }
 
-	// Property accessors
-	public int getObjektid() {
-		return this.objektid;
-	}
+    // Property accessors
+    public int getObjektid() {
+        return this.objektid;
+    }
 
-	public void setObjektid(int objektid) {
-		this.objektid = objektid;
-	}
+    public void setObjektid(int objektid) {
+        this.objektid = objektid;
+    }
 
     /**
      * Return the value of the OBJEKTID column.
@@ -119,44 +119,44 @@ public class AbstractIndeinlUebergabestelle implements java.io.Serializable {
         this.atlKlaeranlagen = atlKlaeranlagen;
     }
 
-	public Date getAenderungsDatum() {
-		return this.aenderungsDatum;
-	}
+    public Date getAenderungsDatum() {
+        return this.aenderungsDatum;
+    }
 
-	public void setAenderungsDatum(Date aenderungsDatum) {
-		this.aenderungsDatum = aenderungsDatum;
-	}
+    public void setAenderungsDatum(Date aenderungsDatum) {
+        this.aenderungsDatum = aenderungsDatum;
+    }
 
-	public Date getErfassungsDatum() {
-		return this.erfassungsDatum;
-	}
+    public Date getErfassungsDatum() {
+        return this.erfassungsDatum;
+    }
 
-	public void setErfassungsDatum(Date erfassungsDatum) {
-		this.erfassungsDatum = erfassungsDatum;
-	}
+    public void setErfassungsDatum(Date erfassungsDatum) {
+        this.erfassungsDatum = erfassungsDatum;
+    }
 
-	public Integer getKanalart() {
-		return this.kanalart;
-	}
+    public Integer getKanalart() {
+        return this.kanalart;
+    }
 
-	public void setKanalart(Integer kanalart) {
-		this.kanalart = kanalart;
-	}
+    public void setKanalart(Integer kanalart) {
+        this.kanalart = kanalart;
+    }
 
-	public Integer getRechtswert() {
-		return this.rechtswert;
-	}
+    public Integer getRechtswert() {
+        return this.rechtswert;
+    }
 
-	public void setRechtswert(Integer rechtswert) {
-		this.rechtswert = rechtswert;
-	}
+    public void setRechtswert(Integer rechtswert) {
+        this.rechtswert = rechtswert;
+    }
 
-	public Integer getHochwert() {
-		return this.hochwert;
-	}
+    public Integer getHochwert() {
+        return this.hochwert;
+    }
 
-	public void setHochwert(Integer hochwert) {
-		this.hochwert = hochwert;
-	}
+    public void setHochwert(Integer hochwert) {
+        this.hochwert = hochwert;
+    }
 
 }

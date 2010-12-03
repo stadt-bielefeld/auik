@@ -41,10 +41,10 @@ public class AutoCompletion extends PlainDocument {
     boolean hidePopupOnFocusLoss;
     boolean hitBackspace=false;
     boolean hitBackspaceOnSelection;
-    
+
     KeyListener editorKeyListener;
     FocusListener editorFocusListener;
-    
+
     public AutoCompletion(final JComboBox comboBox) {
         this.comboBox = comboBox;
         model = comboBox.getModel();
@@ -94,12 +94,12 @@ public class AutoCompletion extends PlainDocument {
         if (selected!=null) setText(selected.toString());
         highlightCompletedText(0);
     }
-    
+
     public void setPrototypeValue() {
         JList list = getListBox();
         setPrototypeValue(getPrototypeValue(list), list);
     }
-    
+
     void setPrototypeValue(Object value, JList list) {
         comboBox.setPrototypeDisplayValue(value);
         list.setPrototypeCellValue(value);
@@ -137,7 +137,7 @@ public class AutoCompletion extends PlainDocument {
         }
         return listBox;
     }
-    
+
     /**
      * Schaltet die automatische Vervollständigung für eine Combobox an.
      * @param comboBox Die Combobox
@@ -148,13 +148,13 @@ public class AutoCompletion extends PlainDocument {
         // change the editor's document
         new AutoCompletion(comboBox);
     }
-    
+
     void configureEditor(ComboBoxEditor newEditor) {
         if (editor != null) {
             editor.removeKeyListener(editorKeyListener);
             editor.removeFocusListener(editorFocusListener);
         }
-        
+
         if (newEditor != null) {
             editor = (JTextComponent) newEditor.getEditorComponent();
             editor.addKeyListener(editorKeyListener);
@@ -162,7 +162,7 @@ public class AutoCompletion extends PlainDocument {
             editor.setDocument(this);
         }
     }
-    
+
     public void remove(int offs, int len) throws BadLocationException {
         // return immediately when selecting an item
         if (selecting) return;
@@ -180,7 +180,7 @@ public class AutoCompletion extends PlainDocument {
             super.remove(offs, len);
         }
     }
-    
+
     public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
         // return immediately when selecting an item
         if (selecting) return;
@@ -197,15 +197,15 @@ public class AutoCompletion extends PlainDocument {
             offs = offs-str.length();
             // provide feedback to the user that his input has been received but can not be accepted
             if (str != null && str.length() <= 1) {
-            	//comboBox.getToolkit().beep(); // when available use: 
-            	UIManager.getLookAndFeel().provideErrorFeedback(comboBox);
+                //comboBox.getToolkit().beep(); // when available use:
+                UIManager.getLookAndFeel().provideErrorFeedback(comboBox);
             }
         }
         setText(item.toString());
         // select the completed part
         highlightCompletedText(offs+str.length());
     }
-    
+
     private void setText(String text) {
         try {
             // remove all text and insert the completed string
@@ -215,18 +215,18 @@ public class AutoCompletion extends PlainDocument {
             throw new RuntimeException(e.toString());
         }
     }
-    
+
     private void highlightCompletedText(int start) {
         editor.setCaretPosition(getLength());
         editor.moveCaretPosition(start);
     }
-    
+
     private void setSelectedItem(Object item) {
         selecting = true;
         model.setSelectedItem(item);
         selecting = false;
     }
-    
+
     private Object lookupItem(String pattern) {
         Object selectedItem = model.getSelectedItem();
         // only search for a different item if the currently selected does not match
@@ -245,7 +245,7 @@ public class AutoCompletion extends PlainDocument {
         // no item starts with the pattern => return null
         return null;
     }
-    
+
     // checks if str1 starts with str2 - ignores case
     private boolean startsWithIgnoreCase(String str1, String str2) {
         return str1.toUpperCase().startsWith(str2.toUpperCase());

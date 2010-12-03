@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: SimpleDialog.java,v 1.2.2.1 2010-11-23 10:25:59 u633d Exp $
- * 
+ *
  * Erstellt am 06.06.2005 von David Klotz (u633z)
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.2  2009/03/24 12:35:23  u633d
@@ -50,77 +50,77 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
  * @author David Klotz
  */
 public abstract class SimpleDialog extends JDialog {
-	private class SimpleDialogListener extends WindowAdapter {
-		public void windowClosing(WindowEvent e) {
-			close();
-		}
-	}
-	
-	protected HauptFrame frame;
-	
-	protected boolean twoButtons = false;
-	protected boolean threeButtons = false;
-	
-	protected JPanel buttonBar;
-	protected JButton button1, button2, button3;
-	
-	public SimpleDialog(HauptFrame frame) {
-		this(null, frame);
-	}
-	
-	public SimpleDialog(String title, HauptFrame frame) {
-		super(frame, title, true);
-		this.frame = frame;
-		
-		button1 = new JButton(getFirstButtonAction());
-		if (getSecondButtonAction() != null) {
-			button2 = new JButton(getSecondButtonAction());
-			twoButtons = true;
-		}
-		if (getThirdButtonAction() != null) {
-			button3 = new JButton(getThirdButtonAction());
-			threeButtons = true;
-		}
-		
-		JPanel tmp = new JPanel(new BorderLayout());
-		tmp.setBorder(Borders.DIALOG_BORDER);
-		
-		JComponent content = buildContentArea();
-		tmp.add(content, BorderLayout.CENTER);
-		
-		if (threeButtons) {
-			buttonBar = ButtonBarFactory.buildOKCancelApplyBar(button1, button2, button3);
-		} else if (twoButtons) {
-			buttonBar = ButtonBarFactory.buildOKCancelBar(button1, button2);
-		} else {
-			buttonBar = ButtonBarFactory.buildOKBar(button1);
-		}
-		buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
-		tmp.add(buttonBar, BorderLayout.SOUTH);
-		
-		this.addWindowListener(new SimpleDialogListener());
-		this.setContentPane(tmp);
-		this.pack();
-		this.setLocationRelativeTo(frame);
-	}
-	
-	// super.close() aufrufen, falls diese Methode überschrieben wird!
-	public void close() {
-		dispose();
-	}
-	
-	/**
-	 * Erzeugt den Bereich des Dialogs, in dem die eigentlichen Daten 
-	 * angezeigt werden.
-	 * @return Eine JComponent (bswp. ein JPanel).
-	 */
-	protected abstract JComponent buildContentArea();
-	
-	protected abstract Action getFirstButtonAction();
-	protected Action getSecondButtonAction() {
-		return null;
-	}
-	protected Action getThirdButtonAction() {
-		return null;
-	}
+    private class SimpleDialogListener extends WindowAdapter {
+        public void windowClosing(WindowEvent e) {
+            close();
+        }
+    }
+
+    protected HauptFrame frame;
+
+    protected boolean twoButtons = false;
+    protected boolean threeButtons = false;
+
+    protected JPanel buttonBar;
+    protected JButton button1, button2, button3;
+
+    public SimpleDialog(HauptFrame frame) {
+        this(null, frame);
+    }
+
+    public SimpleDialog(String title, HauptFrame frame) {
+        super(frame, title, true);
+        this.frame = frame;
+
+        button1 = new JButton(getFirstButtonAction());
+        if (getSecondButtonAction() != null) {
+            button2 = new JButton(getSecondButtonAction());
+            twoButtons = true;
+        }
+        if (getThirdButtonAction() != null) {
+            button3 = new JButton(getThirdButtonAction());
+            threeButtons = true;
+        }
+
+        JPanel tmp = new JPanel(new BorderLayout());
+        tmp.setBorder(Borders.DIALOG_BORDER);
+
+        JComponent content = buildContentArea();
+        tmp.add(content, BorderLayout.CENTER);
+
+        if (threeButtons) {
+            buttonBar = ButtonBarFactory.buildOKCancelApplyBar(button1, button2, button3);
+        } else if (twoButtons) {
+            buttonBar = ButtonBarFactory.buildOKCancelBar(button1, button2);
+        } else {
+            buttonBar = ButtonBarFactory.buildOKBar(button1);
+        }
+        buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
+        tmp.add(buttonBar, BorderLayout.SOUTH);
+
+        this.addWindowListener(new SimpleDialogListener());
+        this.setContentPane(tmp);
+        this.pack();
+        this.setLocationRelativeTo(frame);
+    }
+
+    // super.close() aufrufen, falls diese Methode überschrieben wird!
+    public void close() {
+        dispose();
+    }
+
+    /**
+     * Erzeugt den Bereich des Dialogs, in dem die eigentlichen Daten
+     * angezeigt werden.
+     * @return Eine JComponent (bswp. ein JPanel).
+     */
+    protected abstract JComponent buildContentArea();
+
+    protected abstract Action getFirstButtonAction();
+    protected Action getSecondButtonAction() {
+        return null;
+    }
+    protected Action getThirdButtonAction() {
+        return null;
+    }
 }

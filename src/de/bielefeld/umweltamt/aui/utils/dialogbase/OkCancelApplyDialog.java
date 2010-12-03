@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: OkCancelApplyDialog.java,v 1.1.2.1 2010-11-23 10:25:59 u633d Exp $
- * 
+ *
  * Erstellt am 06.06.2005 von David Klotz (u633z)
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.3  2009/04/28 06:59:43  u633d
@@ -32,52 +32,52 @@ import javax.swing.Action;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 
 /**
- * Eine Grundlage für einen einfachen Dialog mit einem 
+ * Eine Grundlage für einen einfachen Dialog mit einem
  * "Ok"- und einem "Abbrechen"-Button.
  * @author David Klotz
  */
 public abstract class OkCancelApplyDialog extends SimpleDialog {
-	public OkCancelApplyDialog(HauptFrame frame) {
-		this(null, frame);
-	}
-	
-	public OkCancelApplyDialog(String title, HauptFrame frame) {
-		super(title, frame);
-	}
+    public OkCancelApplyDialog(HauptFrame frame) {
+        this(null, frame);
+    }
 
-	public Action getFirstButtonAction() {
-		return new AbstractAction(getOkButtonText()) {
-			public void actionPerformed(ActionEvent e) {
-				doOk();
-			}
-		};
-	}
-	
-	public Action getSecondButtonAction() {
-		return new AbstractAction("Abbrechen") {
-			public void actionPerformed(ActionEvent e) {
-				doCancel();
-			}
-		};
-	}
-	
-	public Action getThirdButtonAction() {
-		return new AbstractAction("Parameter auswählen") {
-			public void actionPerformed(ActionEvent e) {
-				doApply();
-			}
-		};
-	}
-	
-	protected String getOkButtonText() {
-		return "OK";
-	}
+    public OkCancelApplyDialog(String title, HauptFrame frame) {
+        super(title, frame);
+    }
 
-	protected abstract void doOk();
-	
-	protected void doCancel() {
-		close();
-	}
-	
-	protected abstract void doApply();
+    public Action getFirstButtonAction() {
+        return new AbstractAction(getOkButtonText()) {
+            public void actionPerformed(ActionEvent e) {
+                doOk();
+            }
+        };
+    }
+
+    public Action getSecondButtonAction() {
+        return new AbstractAction("Abbrechen") {
+            public void actionPerformed(ActionEvent e) {
+                doCancel();
+            }
+        };
+    }
+
+    public Action getThirdButtonAction() {
+        return new AbstractAction("Parameter auswählen") {
+            public void actionPerformed(ActionEvent e) {
+                doApply();
+            }
+        };
+    }
+
+    protected String getOkButtonText() {
+        return "OK";
+    }
+
+    protected abstract void doOk();
+
+    protected void doCancel() {
+        close();
+    }
+
+    protected abstract void doApply();
 }

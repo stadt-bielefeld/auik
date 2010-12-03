@@ -49,7 +49,7 @@ public class BetreiberTest extends TestCase {
      */
     protected void setUp() throws Exception {
         super.setUp();
-       
+
     }
 
     protected void tearDown() throws Exception {
@@ -57,14 +57,14 @@ public class BetreiberTest extends TestCase {
     }
 public void testErzeugen()
 {
-	String id = "leer";
-	_id = erzeugeBetreiber(Name, Handz);
-	if(_id != 0)
-	{
-		id = "vorhanden";
-	}
-	assertEquals(id,"vorhanden");
-	
+    String id = "leer";
+    _id = erzeugeBetreiber(Name, Handz);
+    if(_id != 0)
+    {
+        id = "vorhanden";
+    }
+    assertEquals(id,"vorhanden");
+
 }
      /**
      * Und hier versuchen wir ihn über eine Datenbankabfrage zu finden.
@@ -72,15 +72,15 @@ public void testErzeugen()
    private BasisBetreiber testQuery() {
 
        BasisBetreiber betreiber;
-        
+
               List result = BasisBetreiber.findBetreiber(Name,"name");
-              
-              
+
+
             betreiber = (BasisBetreiber) result.get(0);
-           
+
             assertEquals(Name, betreiber.getBetrname());
-            
-     
+
+
       return betreiber;
     }
 
@@ -123,7 +123,7 @@ public void testErzeugen()
 
 
             List result = BasisBetreiber.findBetreiber(Name,"name");
-            
+
             assertEquals(0, result.size());
         }
         finally {
@@ -133,7 +133,7 @@ public void testErzeugen()
 
     /**
      * Kleine Hilfsmethode, mit der ein Betreiber erzeugt und in der Datenbank gesichert wird.
-     * 
+     *
      * @param name Der Name des zu erzeugenden Betreibers.
      * @param handz Das Handzeichen
      * @return Gibt die ID des erzeugten Betreibers zurück.
@@ -152,14 +152,14 @@ public void testErzeugen()
         catch (HibernateException e) {
 
                 throw e;
-            
+
         }
-       
-        
+
+
         finally {
 
         }
-       
+
         return betreiber.getBetreiberid();
     }
 

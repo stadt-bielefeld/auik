@@ -16,7 +16,7 @@ import javax.swing.UIManager;
  * @author Karsten Lentzsch
  */
 public class GradientPanel extends JPanel {
-    
+
     public GradientPanel(LayoutManager lm, Color background) {
         super(lm);
         setBackground(background);

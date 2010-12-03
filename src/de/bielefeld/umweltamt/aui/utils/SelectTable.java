@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: SelectTable.java,v 1.2 2009-03-24 12:35:21 u633d Exp $
- * 
+ *
  * Erstellt am 16.03.2005 von David Klotz (u633z)
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.1  2008/06/05 11:38:34  u633d
@@ -32,22 +32,22 @@ import javax.swing.text.JTextComponent;
  * @author David Klotz
  */
 public class SelectTable extends JTable {
-	public SelectTable() {
-		this(null);
-	}
-	
-	//  Select the text when the cell starts editing
+    public SelectTable() {
+        this(null);
+    }
+
+    //  Select the text when the cell starts editing
     //  a) text will be replaced when you start typing in a cell
     //  b) text will be selected when you use F2 to start editing
     //  c) caret is placed at end of text when double clicking to start editing
-	
-	public SelectTable(TableModel dm) {
-		super(dm);
-		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.setColumnSelectionAllowed(false);
-		this.setRowSelectionAllowed(true);
-		this.setSurrendersFocusOnKeystroke(true);
-	}
+
+    public SelectTable(TableModel dm) {
+        super(dm);
+        this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.setColumnSelectionAllowed(false);
+        this.setRowSelectionAllowed(true);
+        this.setSurrendersFocusOnKeystroke(true);
+    }
 
     public Component prepareEditor(
     TableCellEditor editor, int row, int column)

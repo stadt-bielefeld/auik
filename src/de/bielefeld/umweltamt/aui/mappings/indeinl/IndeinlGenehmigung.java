@@ -16,8 +16,8 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
- * A class that represents a row in the 'IndeinlGenehmigung' table. 
- * This class may be customized as it is never re-generated 
+ * A class that represents a row in the 'IndeinlGenehmigung' table.
+ * This class may be customized as it is never re-generated
  * after being created.
  */
 public class IndeinlGenehmigung
@@ -42,71 +42,71 @@ public class IndeinlGenehmigung
     /**
      * Liefert einen String der Form "[Genehmigung Verfahren:ID]"
      */
-	public String toString() {
-		return "[Genehmigung Verfahren:" + getObjektid() + "]";
-	}
-	
-	private static IndeinlGenehmigung getGenByObjekt(BasisObjekt objekt,
-			Session session) throws HibernateException {
-		IndeinlGenehmigung fachdaten = null;
-		if (objekt.getBasisObjektarten().isGenehmigung()) {
-			List gen = session.createQuery(
-					"from IndeinlGenehmigung as gen where "
-							+ "gen.basisObjekt = ?").setEntity(0, objekt)
-					.list();
+    public String toString() {
+        return "[Genehmigung Verfahren:" + getObjektid() + "]";
+    }
 
-			if (gen.size() > 0) {
-				fachdaten = (IndeinlGenehmigung) gen.get(0);
-			}
-		}
+    private static IndeinlGenehmigung getGenByObjekt(BasisObjekt objekt,
+            Session session) throws HibernateException {
+        IndeinlGenehmigung fachdaten = null;
+        if (objekt.getBasisObjektarten().isGenehmigung()) {
+            List gen = session.createQuery(
+                    "from IndeinlGenehmigung as gen where "
+                            + "gen.basisObjekt = ?").setEntity(0, objekt)
+                    .list();
 
-		return fachdaten;
-	}
+            if (gen.size() > 0) {
+                fachdaten = (IndeinlGenehmigung) gen.get(0);
+            }
+        }
+
+        return fachdaten;
+    }
 
     public static IndeinlGenehmigung getGenByObjekt(BasisObjekt objekt) {
-    	IndeinlGenehmigung fachdaten;
-    	try {
-    		Session session = HibernateSessionFactory.currentSession();
-    		fachdaten = getGenByObjekt(objekt, session);
-    		HibernateSessionFactory.closeSession();
-    	} catch (HibernateException e) {
-    		fachdaten = null;
-    	}
-    	
-    	return fachdaten;
+        IndeinlGenehmigung fachdaten;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            fachdaten = getGenByObjekt(objekt, session);
+            HibernateSessionFactory.closeSession();
+        } catch (HibernateException e) {
+            fachdaten = null;
+        }
+
+        return fachdaten;
     }
 
     /**
-     * Speichert ein IndeinlGenehmigung Fachdaten-Objekt 
+     * Speichert ein IndeinlGenehmigung Fachdaten-Objekt
      * in der Datenbank.
      * @param fachdaten Das zu speichernde Fachdaten-Objekt.
      * @return <code>true</code>, wenn das Objekt gespeichert wurde, sonst <code>false</code>.
      */
     public static boolean saveFachdaten(IndeinlGenehmigung fachdaten) {
-    	boolean saved;
-		
-		Transaction tx = null;
-		try {
-			Session session = HibernateSessionFactory.currentSession();
-			tx = session.beginTransaction();
-			session.saveOrUpdate(fachdaten);
-			tx.commit();
-			saved = true;
-		} catch (HibernateException e) {
-			saved = false;
-			e.printStackTrace();
-			if (tx != null) {
-				try {
-					tx.rollback();
-				} catch (HibernateException e1) {
-					AUIKataster.handleDBException(e1, "GenFachdaten.save", false);
-				}
-			}
-		} finally {
-			HibernateSessionFactory.closeSession();
-		}
-		
-		return saved;
+        boolean saved;
+
+        Transaction tx = null;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            tx = session.beginTransaction();
+            session.saveOrUpdate(fachdaten);
+            tx.commit();
+            saved = true;
+        } catch (HibernateException e) {
+            saved = false;
+            e.printStackTrace();
+            if (tx != null) {
+                try {
+                    tx.rollback();
+                } catch (HibernateException e1) {
+                    AUIKataster.handleDBException(e1, "GenFachdaten.save", false);
+                }
+            }
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return saved;
     }
 
     /**
@@ -114,25 +114,25 @@ public class IndeinlGenehmigung
      * @return Eine Liste aus IndeinlGenehmigungen.
      */
     public static List getAuswertungsListe(Boolean gen58, Boolean gen59) {
-    	List liste;
-    	
-    	String query = "from IndeinlGenehmigung as gen " +
-		   		"where gen.gen58 = ? or gen.gen59 = ? " +
-    			"order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
-    	
-    	try {
-    		Session session = HibernateSessionFactory.currentSession();
-    		liste = session.createQuery(query)
-    		.setBoolean(0, gen58)
-    		.setBoolean(1, gen59)
-    		.list();
-    	} catch (HibernateException e) {
-    		throw new RuntimeException(e);
-    	} finally {
-    		HibernateSessionFactory.closeSession();
-    	}
-    	
-    	return liste;
+        List liste;
+
+        String query = "from IndeinlGenehmigung as gen " +
+                   "where gen.gen58 = ? or gen.gen59 = ? " +
+                "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            liste = session.createQuery(query)
+            .setBoolean(0, gen58)
+            .setBoolean(1, gen59)
+            .list();
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return liste;
     }
 
     /**
@@ -140,26 +140,26 @@ public class IndeinlGenehmigung
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
     public static List getAnh40Liste(Boolean gen58, Boolean gen59) {
-    	List liste;
-    	
-    	String query = "from IndeinlGenehmigung as gen " +
-    				   "where gen.anhang = 40 " +
-    				   "and gen.gen58 = ? or gen.anhang = 40 and gen.gen59 = ? " +
-    				   "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
-    	
-    	try {
-    		Session session = HibernateSessionFactory.currentSession();
-    		liste = session.createQuery(query)
-    		.setBoolean(0, gen58)
-    		.setBoolean(1, gen59)
-    		.list();
-    	} catch (HibernateException e) {
-    		throw new RuntimeException(e);
-    	} finally {
-    		HibernateSessionFactory.closeSession();
-    	}
-    	
-    	return liste;
+        List liste;
+
+        String query = "from IndeinlGenehmigung as gen " +
+                       "where gen.anhang = 40 " +
+                       "and gen.gen58 = ? or gen.anhang = 40 and gen.gen59 = ? " +
+                       "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            liste = session.createQuery(query)
+            .setBoolean(0, gen58)
+            .setBoolean(1, gen59)
+            .list();
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return liste;
     }
 
     /**
@@ -167,26 +167,26 @@ public class IndeinlGenehmigung
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
     public static List getAnh49Liste(Boolean gen58, Boolean gen59) {
-    	List liste;
-    	
-    	String query = "from IndeinlGenehmigung as gen " +
-		   				"where gen.anhang = 49 " +
-		   				"and gen.gen58 = ? or gen.anhang = 49 and gen.gen59 = ? " +
-		   				"order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
-    	
-    	try {
-    		Session session = HibernateSessionFactory.currentSession();
-    		liste = session.createQuery(query)
-    		.setBoolean(0, gen58)
-    		.setBoolean(1, gen59)
-    		.list();
-    	} catch (HibernateException e) {
-    		throw new RuntimeException(e);
-    	} finally {
-    		HibernateSessionFactory.closeSession();
-    	}
-    	
-    	return liste;
+        List liste;
+
+        String query = "from IndeinlGenehmigung as gen " +
+                           "where gen.anhang = 49 " +
+                           "and gen.gen58 = ? or gen.anhang = 49 and gen.gen59 = ? " +
+                           "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            liste = session.createQuery(query)
+            .setBoolean(0, gen58)
+            .setBoolean(1, gen59)
+            .list();
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return liste;
     }
 
     /**
@@ -194,26 +194,26 @@ public class IndeinlGenehmigung
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
     public static List getAnh50Liste(Boolean gen58, Boolean gen59) {
-    	List liste;
-    	
-    	String query = "from IndeinlGenehmigung as gen " +
-		   				"where gen.anhang = 50 " +
-		   				"and gen.gen58 = ? or gen.anhang = 50 and gen.gen59 = ? " +
-		   				"order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
-    	
-    	try {
-    		Session session = HibernateSessionFactory.currentSession();
-    		liste = session.createQuery(query)
-    		.setBoolean(0, gen58)
-    		.setBoolean(1, gen59)
-    		.list();
-    	} catch (HibernateException e) {
-    		throw new RuntimeException(e);
-    	} finally {
-    		HibernateSessionFactory.closeSession();
-    	}
-    	
-    	return liste;
+        List liste;
+
+        String query = "from IndeinlGenehmigung as gen " +
+                           "where gen.anhang = 50 " +
+                           "and gen.gen58 = ? or gen.anhang = 50 and gen.gen59 = ? " +
+                           "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            liste = session.createQuery(query)
+            .setBoolean(0, gen58)
+            .setBoolean(1, gen59)
+            .list();
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return liste;
     }
 
     /**
@@ -221,26 +221,26 @@ public class IndeinlGenehmigung
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
     public static List getAnh53Liste(Boolean gen58, Boolean gen59) {
-    	List liste;
-    	
-    	String query = "from IndeinlGenehmigung as gen " +
-		   				"where gen.anhang = 53 " +
-		   				"and gen.gen58 = ? or gen.anhang = 53 and gen.gen59 = ? " +
-		   				"order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
-    	
-    	try {
-    		Session session = HibernateSessionFactory.currentSession();
-    		liste = session.createQuery(query)
-    		.setBoolean(0, gen58)
-    		.setBoolean(1, gen59)
-    		.list();
-    	} catch (HibernateException e) {
-    		throw new RuntimeException(e);
-    	} finally {
-    		HibernateSessionFactory.closeSession();
-    	}
-    	
-    	return liste;
+        List liste;
+
+        String query = "from IndeinlGenehmigung as gen " +
+                           "where gen.anhang = 53 " +
+                           "and gen.gen58 = ? or gen.anhang = 53 and gen.gen59 = ? " +
+                           "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            liste = session.createQuery(query)
+            .setBoolean(0, gen58)
+            .setBoolean(1, gen59)
+            .list();
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return liste;
     }
 
     /**
@@ -248,25 +248,25 @@ public class IndeinlGenehmigung
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
     public static List getBwkListe(Boolean gen58, Boolean gen59) {
-    	List liste;
-    	
-    	String query = "from IndeinlGenehmigung as gen " +
-    				   "where gen.anhang Is Null " +
-    				   "and gen.gen58 = ? or gen.anhang Is Null and gen.gen59 = ? " +
-    				   "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisStandort.strasse, gen.basisObjekt.basisStandort.hausnr";
-    	
-    	try {
-    		Session session = HibernateSessionFactory.currentSession();
-    		liste = session.createQuery(query)
-    		.setBoolean(0, gen58)
-    		.setBoolean(1, gen59)
-    		.list();
-    	} catch (HibernateException e) {
-    		throw new RuntimeException(e);
-    	} finally {
-    		HibernateSessionFactory.closeSession();
-    	}
-    	
-    	return liste;
+        List liste;
+
+        String query = "from IndeinlGenehmigung as gen " +
+                       "where gen.anhang Is Null " +
+                       "and gen.gen58 = ? or gen.anhang Is Null and gen.gen59 = ? " +
+                       "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisStandort.strasse, gen.basisObjekt.basisStandort.hausnr";
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            liste = session.createQuery(query)
+            .setBoolean(0, gen58)
+            .setBoolean(1, gen59)
+            .list();
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return liste;
     }
 }

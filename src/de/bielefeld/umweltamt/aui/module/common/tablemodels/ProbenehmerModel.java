@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: ProbenehmerModel.java,v 1.1.2.1 2010-11-23 10:25:58 u633d Exp $
- * 
+ *
  * Erstellt am 03.05.2006 von David Klotz
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.3  2010/01/20 12:55:00  u633d
@@ -36,51 +36,51 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class ProbenehmerModel extends ListTableModel {
-	public ProbenehmerModel() {
-		super(new String[]{
-				"Betreiber", 
-				"Beschreibung", 
-				"Straße", 
-				"Hausnr."
-		}, 
-		false);
-	}
+    public ProbenehmerModel() {
+        super(new String[]{
+                "Betreiber",
+                "Beschreibung",
+                "Straße",
+                "Hausnr."
+        },
+        false);
+    }
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
-	 */
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		AtlProbepkt fd = (AtlProbepkt) objectAtRow;
-		Object tmp;
-		
-		switch (columnIndex) {
-		case 0:
-			tmp = fd.getBasisObjekt().getBasisBetreiber().getBetrname();
-			break;
-		case 1:
-			tmp = fd.getBasisObjekt().getBeschreibung();
-			break;
-		case 2:
-			tmp = fd.getBasisObjekt().getBasisStandort().getStrasse();
-			break;
-		case 3:
-			tmp = fd.getBasisObjekt().getBasisStandort().getHausnr();
-			break;
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
+     */
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+        AtlProbepkt fd = (AtlProbepkt) objectAtRow;
+        Object tmp;
 
-		default:
-			tmp = "ERROR";
-			break;
-		}
-		if (fd.getBasisObjekt().getInaktiv() == true)
-		{
-			tmp = "<html><strike>" + tmp + "</strike></html>";	
-		}
-		return tmp;
-	}
-	
-	/* 
-	 * Leer, da kein Updaten der Liste nötig/möglich.
-	 */
-	public void updateList() {
-	}
+        switch (columnIndex) {
+        case 0:
+            tmp = fd.getBasisObjekt().getBasisBetreiber().getBetrname();
+            break;
+        case 1:
+            tmp = fd.getBasisObjekt().getBeschreibung();
+            break;
+        case 2:
+            tmp = fd.getBasisObjekt().getBasisStandort().getStrasse();
+            break;
+        case 3:
+            tmp = fd.getBasisObjekt().getBasisStandort().getHausnr();
+            break;
+
+        default:
+            tmp = "ERROR";
+            break;
+        }
+        if (fd.getBasisObjekt().getInaktiv() == true)
+        {
+            tmp = "<html><strike>" + tmp + "</strike></html>";
+        }
+        return tmp;
+    }
+
+    /*
+     * Leer, da kein Updaten der Liste nötig/möglich.
+     */
+    public void updateList() {
+    }
 }

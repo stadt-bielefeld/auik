@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: EinleiterAnh56Auswertung.java,v 1.1.2.1 2010-11-23 10:25:54 u633d Exp $
- * 
+ *
  * Erstellt am 03.05.2006 von Gerd Genuit
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.5  2010/01/12 09:03:42  u633d
@@ -51,115 +51,115 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class EinleiterAnh56Auswertung extends AbstractQueryModul {
-	/** Das obere Panel mit den Abfrage-Optionen */
-	private JPanel queryPanel;
-	
-	// Widgets für die Abfrage
-	private JButton submitButton;
-	private JButton abwasserButton;
-	private JButton genehmigungButton;
-	
-	/** Das TableModel für die Ergebnis-Tabelle */
-	private Anh56Model tmodel;
+    /** Das obere Panel mit den Abfrage-Optionen */
+    private JPanel queryPanel;
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
-	 */
-	public String getName() {
-		return "Anhang 56";
-	}
+    // Widgets für die Abfrage
+    private JButton submitButton;
+    private JButton abwasserButton;
+    private JButton genehmigungButton;
 
-	/*
-	 * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
-	 * @return "m_auswertung_anh56"
-	 */
-	public String getIdentifier() {
-		return "m_auswertung_anh56";
-	}
-	
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
-	 */
-	public JPanel getQueryOptionsPanel() {
-		if (queryPanel == null) {
-			// Die Widgets initialisieren
-			submitButton = new JButton("Alle Objekte anzeigen");
-			abwasserButton = new JButton("Abwasseranfall");
-			genehmigungButton = new JButton("Genehmigungspflicht");
-			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
-			submitButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
-						protected void doNonUILogic() {
-							((Anh56Model)getTableModel()).setList(Anh56Fachdaten.getAuswertungsListe());
-						}
+    /** Das TableModel für die Ergebnis-Tabelle */
+    private Anh56Model tmodel;
 
-						protected void doUIUpdateLogic(){
-							((Anh56Model)getTableModel()).fireTableDataChanged();
-							frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
-						}
-					};
-					worker.start();
-				}
-			});
-			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
-			abwasserButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
-						protected void doNonUILogic() {
-							((Anh56Model)getTableModel()).setList(Anh56Fachdaten.getAbwasserListe());
-						}
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.Modul#getName()
+     */
+    public String getName() {
+        return "Anhang 56";
+    }
 
-						protected void doUIUpdateLogic(){
-							((Anh56Model)getTableModel()).fireTableDataChanged();
-							frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
-						}
-					};
-					worker.start();
-				}
-			});
-			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
-			genehmigungButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
-						protected void doNonUILogic() {
-							((Anh56Model)getTableModel()).setList(Anh56Fachdaten.getGenehmigungListe());
-						}
+    /*
+     * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
+     * @return "m_auswertung_anh56"
+     */
+    public String getIdentifier() {
+        return "m_auswertung_anh56";
+    }
 
-						protected void doUIUpdateLogic(){
-							((Anh56Model)getTableModel()).fireTableDataChanged();
-							frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
-						}
-					};
-					worker.start();
-				}
-			});
-			
-			// Noch etwas Layout...
-			FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref");
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-			
-			builder.append(submitButton, abwasserButton, genehmigungButton);
-			
-			queryPanel = builder.getPanel();
-		}
-		
-		return queryPanel;
-	}
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
+     */
+    public JPanel getQueryOptionsPanel() {
+        if (queryPanel == null) {
+            // Die Widgets initialisieren
+            submitButton = new JButton("Alle Objekte anzeigen");
+            abwasserButton = new JButton("Abwasseranfall");
+            genehmigungButton = new JButton("Genehmigungspflicht");
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
-	 */
-	public ListTableModel getTableModel() {
-		if (tmodel == null) {
-			tmodel = new Anh56Model();
-		}
-		return tmodel;
-	}
+            // Ein ActionListener für den Button,
+            // der die eigentliche Suche auslöst:
+            submitButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        protected void doNonUILogic() {
+                            ((Anh56Model)getTableModel()).setList(Anh56Fachdaten.getAuswertungsListe());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((Anh56Model)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+
+            // Ein ActionListener für den Button,
+            // der die eigentliche Suche auslöst:
+            abwasserButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        protected void doNonUILogic() {
+                            ((Anh56Model)getTableModel()).setList(Anh56Fachdaten.getAbwasserListe());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((Anh56Model)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+
+            // Ein ActionListener für den Button,
+            // der die eigentliche Suche auslöst:
+            genehmigungButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        protected void doNonUILogic() {
+                            ((Anh56Model)getTableModel()).setList(Anh56Fachdaten.getGenehmigungListe());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((Anh56Model)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+
+            // Noch etwas Layout...
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref");
+            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+
+            builder.append(submitButton, abwasserButton, genehmigungButton);
+
+            queryPanel = builder.getPanel();
+        }
+
+        return queryPanel;
+    }
+
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
+     */
+    public ListTableModel getTableModel() {
+        if (tmodel == null) {
+            tmodel = new Anh56Model();
+        }
+        return tmodel;
+    }
 }

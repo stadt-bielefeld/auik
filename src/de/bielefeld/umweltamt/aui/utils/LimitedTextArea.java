@@ -12,19 +12,19 @@ import javax.swing.text.AbstractDocument;
  * @author David Klotz
  */
 public class LimitedTextArea extends JTextArea {
-	public LimitedTextArea(int maxLength) {
-		this(maxLength, null);
-	}
-	
-	public LimitedTextArea(int maxLength, String text) {
-		AbstractDocument doc = (AbstractDocument)this.getDocument();
-	    doc.setDocumentFilter(new FixedSizeFilter(maxLength));
-	    
-	    setLineWrap(true);
-	    setWrapStyleWord(true);
-	    
-	    if (text != null) {
-	    	setText(text);
-	    }
-	}
+    public LimitedTextArea(int maxLength) {
+        this(maxLength, null);
+    }
+
+    public LimitedTextArea(int maxLength, String text) {
+        AbstractDocument doc = (AbstractDocument)this.getDocument();
+        doc.setDocumentFilter(new FixedSizeFilter(maxLength));
+
+        setLineWrap(true);
+        setWrapStyleWord(true);
+
+        if (text != null) {
+            setText(text);
+        }
+    }
 }

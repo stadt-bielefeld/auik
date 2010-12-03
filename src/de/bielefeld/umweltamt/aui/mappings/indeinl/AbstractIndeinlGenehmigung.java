@@ -11,63 +11,63 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
  */
 public class AbstractIndeinlGenehmigung implements java.io.Serializable {
 
-	// Fields    
+    // Fields
 
-	private int objektid;
-	
+    private int objektid;
+
     private BasisObjekt basisObjekt;
-	
+
     private java.lang.String bemerkungen;
 
-	private Date erstellungsDatum;
+    private Date erstellungsDatum;
 
-	private Date aenderungsDatum;
+    private Date aenderungsDatum;
 
-	private Date antragDatum;
-	
-	private Boolean befristet;
+    private Date antragDatum;
 
-	private Date befristetBis;
-	
-	private Integer anhang;
-	
-	private Integer genMenge;
-	
-	private Boolean gen58;
-	
-	private Boolean gen59;
-	
-	private Boolean selbstueberw;
-	
-	private Boolean esatzung;
+    private Boolean befristet;
 
-	// Constructors
+    private Date befristetBis;
 
-	/** default constructor */
-	public AbstractIndeinlGenehmigung() {
-	}
+    private Integer anhang;
 
-	/** minimal constructor */
-	public AbstractIndeinlGenehmigung(int objektid) {
-		this.objektid = objektid;
-	}
+    private Integer genMenge;
 
-	/** full constructor */
-	public AbstractIndeinlGenehmigung(int objektid, Date erstellungsDatum,
-			Date aenderungsDatum) {
-		this.objektid = objektid;
-		this.erstellungsDatum = erstellungsDatum;
-		this.aenderungsDatum = aenderungsDatum;
-	}
+    private Boolean gen58;
 
-	// Property accessors
-	public int getObjektid() {
-		return this.objektid;
-	}
+    private Boolean gen59;
 
-	public void setObjektid(int objektid) {
-		this.objektid = objektid;
-	}
+    private Boolean selbstueberw;
+
+    private Boolean esatzung;
+
+    // Constructors
+
+    /** default constructor */
+    public AbstractIndeinlGenehmigung() {
+    }
+
+    /** minimal constructor */
+    public AbstractIndeinlGenehmigung(int objektid) {
+        this.objektid = objektid;
+    }
+
+    /** full constructor */
+    public AbstractIndeinlGenehmigung(int objektid, Date erstellungsDatum,
+            Date aenderungsDatum) {
+        this.objektid = objektid;
+        this.erstellungsDatum = erstellungsDatum;
+        this.aenderungsDatum = aenderungsDatum;
+    }
+
+    // Property accessors
+    public int getObjektid() {
+        return this.objektid;
+    }
+
+    public void setObjektid(int objektid) {
+        this.objektid = objektid;
+    }
 
     /**
      * Return the value of the OBJEKTID column.
@@ -105,92 +105,92 @@ public class AbstractIndeinlGenehmigung implements java.io.Serializable {
         this.bemerkungen = bemerkungen;
     }
 
-	public Date getErstellungsDatum() {
-		return this.erstellungsDatum;
-	}
+    public Date getErstellungsDatum() {
+        return this.erstellungsDatum;
+    }
 
-	public void setErstellungsDatum(Date erstellungsDatum) {
-		this.erstellungsDatum = erstellungsDatum;
-	}
+    public void setErstellungsDatum(Date erstellungsDatum) {
+        this.erstellungsDatum = erstellungsDatum;
+    }
 
-	public Date getAenderungsDatum() {
-		return this.aenderungsDatum;
-	}
+    public Date getAenderungsDatum() {
+        return this.aenderungsDatum;
+    }
 
-	public void setAenderungsDatum(Date aenderungsDatum) {
-		this.aenderungsDatum = aenderungsDatum;
-	}
+    public void setAenderungsDatum(Date aenderungsDatum) {
+        this.aenderungsDatum = aenderungsDatum;
+    }
 
-	public Date getAntragDatum() {
-		return this.antragDatum;
-	}
+    public Date getAntragDatum() {
+        return this.antragDatum;
+    }
 
-	public void setAntragDatum(Date antragDatum) {
-		this.antragDatum = antragDatum;
-	}
+    public void setAntragDatum(Date antragDatum) {
+        this.antragDatum = antragDatum;
+    }
 
-	public Boolean getBefristet() {
-		return this.befristet;
-	}
+    public Boolean getBefristet() {
+        return this.befristet;
+    }
 
-	public void setBefristet(Boolean befristet) {
-		this.befristet = befristet;
-	}
+    public void setBefristet(Boolean befristet) {
+        this.befristet = befristet;
+    }
 
-	public Date getBefristetBis() {
-		return this.befristetBis;
-	}
+    public Date getBefristetBis() {
+        return this.befristetBis;
+    }
 
-	public void setBefristetBis(Date befristetBis) {
-		this.befristetBis = befristetBis;
-	}
+    public void setBefristetBis(Date befristetBis) {
+        this.befristetBis = befristetBis;
+    }
 
-	public Integer getAnhang() {
-		return this.anhang;
-	}
+    public Integer getAnhang() {
+        return this.anhang;
+    }
 
-	public void setAnhang(Integer anhang) {
-		this.anhang = anhang;
-	}
+    public void setAnhang(Integer anhang) {
+        this.anhang = anhang;
+    }
 
-	public Integer getGenMenge() {
-		return this.genMenge;
-	}
+    public Integer getGenMenge() {
+        return this.genMenge;
+    }
 
-	public void setGenMenge(Integer genMenge) {
-		this.genMenge = genMenge;
-	}
+    public void setGenMenge(Integer genMenge) {
+        this.genMenge = genMenge;
+    }
 
-	public Boolean getGen58() {
-		return this.gen58;
-	}
+    public Boolean getGen58() {
+        return this.gen58;
+    }
 
-	public void setGen58(Boolean gen58) {
-		this.gen58 = gen58;
-	}
+    public void setGen58(Boolean gen58) {
+        this.gen58 = gen58;
+    }
 
-	public Boolean getGen59() {
-		return this.gen59;
-	}
+    public Boolean getGen59() {
+        return this.gen59;
+    }
 
-	public void setGen59(Boolean gen59) {
-		this.gen59 = gen59;
-	}
+    public void setGen59(Boolean gen59) {
+        this.gen59 = gen59;
+    }
 
-	public Boolean getSelbstueberw() {
-		return this.selbstueberw;
-	}
+    public Boolean getSelbstueberw() {
+        return this.selbstueberw;
+    }
 
-	public void setSelbstueberw(Boolean selbstueberw) {
-		this.selbstueberw = selbstueberw;
-	}
+    public void setSelbstueberw(Boolean selbstueberw) {
+        this.selbstueberw = selbstueberw;
+    }
 
-	public Boolean getEsatzung() {
-		return this.esatzung;
-	}
+    public Boolean getEsatzung() {
+        return this.esatzung;
+    }
 
-	public void setEsatzung(Boolean esatzung) {
-		this.esatzung = esatzung;
-	}
+    public void setEsatzung(Boolean esatzung) {
+        this.esatzung = esatzung;
+    }
 
 }

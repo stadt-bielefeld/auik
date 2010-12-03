@@ -17,15 +17,15 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
- * A class that represents a row in the 'VAWS_Abscheider' table. 
- * This class may be customized as it is never re-generated 
+ * A class that represents a row in the 'VAWS_Abscheider' table.
+ * This class may be customized as it is never re-generated
  * after being created.
  */
 public class VawsAbscheider
     extends AbstractVawsAbscheider
     implements Serializable
 {
-	
+
     /**
      * Simple constructor of VawsAbscheider instances.
      */
@@ -43,157 +43,157 @@ public class VawsAbscheider
     }
 
     /* Add customized code below */
-    
+
     public String toString() {
-    	return "[VawsAbscheider: " + getBehaelterid() + ", FD:"+getVawsFachdaten()+"]";
+        return "[VawsAbscheider: " + getBehaelterid() + ", FD:"+getVawsFachdaten()+"]";
     }
-    
-	// Statischer Teil:
+
+    // Statischer Teil:
 
     public static VawsAbscheider getAbscheider(VawsFachdaten fachdaten) {
-    	VawsAbscheider abscheider;
-    	List tmp;
-    	
-    	if (fachdaten == null || !fachdaten.getAnlagenart().equals("VAwS-Abscheider")) {
-    		throw new IllegalArgumentException("Fachdaten-Objekt ist kein VAwS-Abscheider!");
-    	}
-    	
-    	if (fachdaten.getBehaelterId() == null) {
-    		tmp = new ArrayList();
-    	} else {
-    		try {
-    			Session session = HibernateSessionFactory.currentSession();
-    			
-    			tmp = session.createQuery(
-    					"from VawsAbscheider abff " +
-						"where abff.vawsFachdaten = ? ")
-						.setEntity(0, fachdaten)
-						.list();
-    			
-    		} catch (HibernateException e) {
-    			throw new RuntimeException("Datenbank-Fehler", e);
-    		} finally {
-    			HibernateSessionFactory.closeSession();
-    		}
-    	}
-		
-		if (tmp.size() > 0) {
-			abscheider = (VawsAbscheider) tmp.get(0);
-			AUIKataster.debugOutput("Fläche '" + abscheider + "' geladen!", "VawsAbscheider.getAbscheider()");
-		} else {
-			// Bei so ziemlich 95% aller Tankstellen gibts ein VawsFachdaten-
-			// Objekt, aber kein VawsAbscheidern-Objekt.
-			// Seems like it's not a bug, it's a feature...
-			
-			// Also legen wir in diesen Füllen einfach ein neues
-			// VawsAbscheidern-Objekt an.
-			
-			// Das selbe tun wir bei einem noch ungespeicherten
-			// neuen VawsFachdaten-Objekt.
-			
-			abscheider = new VawsAbscheider();
-			abscheider.setVawsFachdaten(fachdaten);
-			AUIKataster.debugOutput("Neuer Abscheider für '" + fachdaten + "' erzeugt!", "VawsAbscheider.getAbscheider()");
-		}
-    	
-    	return abscheider;
+        VawsAbscheider abscheider;
+        List tmp;
+
+        if (fachdaten == null || !fachdaten.getAnlagenart().equals("VAwS-Abscheider")) {
+            throw new IllegalArgumentException("Fachdaten-Objekt ist kein VAwS-Abscheider!");
+        }
+
+        if (fachdaten.getBehaelterId() == null) {
+            tmp = new ArrayList();
+        } else {
+            try {
+                Session session = HibernateSessionFactory.currentSession();
+
+                tmp = session.createQuery(
+                        "from VawsAbscheider abff " +
+                        "where abff.vawsFachdaten = ? ")
+                        .setEntity(0, fachdaten)
+                        .list();
+
+            } catch (HibernateException e) {
+                throw new RuntimeException("Datenbank-Fehler", e);
+            } finally {
+                HibernateSessionFactory.closeSession();
+            }
+        }
+
+        if (tmp.size() > 0) {
+            abscheider = (VawsAbscheider) tmp.get(0);
+            AUIKataster.debugOutput("Fläche '" + abscheider + "' geladen!", "VawsAbscheider.getAbscheider()");
+        } else {
+            // Bei so ziemlich 95% aller Tankstellen gibts ein VawsFachdaten-
+            // Objekt, aber kein VawsAbscheidern-Objekt.
+            // Seems like it's not a bug, it's a feature...
+
+            // Also legen wir in diesen Füllen einfach ein neues
+            // VawsAbscheidern-Objekt an.
+
+            // Das selbe tun wir bei einem noch ungespeicherten
+            // neuen VawsFachdaten-Objekt.
+
+            abscheider = new VawsAbscheider();
+            abscheider.setVawsFachdaten(fachdaten);
+            AUIKataster.debugOutput("Neuer Abscheider für '" + fachdaten + "' erzeugt!", "VawsAbscheider.getAbscheider()");
+        }
+
+        return abscheider;
     }
-    
-	/**
-	 * Speichert einen VAWS-Abfüllflächen-Datensatz in der Datenbank.
-	 * @param flaeche Der zu speichernde Datensatz.
-	 * @return <code>true</code>, falls beim Speichern kein Fehler auftritt, sonst <code>false</code>.
-	 */
+
+    /**
+     * Speichert einen VAWS-Abfüllflächen-Datensatz in der Datenbank.
+     * @param flaeche Der zu speichernde Datensatz.
+     * @return <code>true</code>, falls beim Speichern kein Fehler auftritt, sonst <code>false</code>.
+     */
     public static boolean saveAbscheider(VawsAbscheider abscheider) {
-    	boolean saved;
-    	
-    	if (abscheider.getVawsFachdaten() == null) {
-    		throw new IllegalArgumentException("Die VawsAbscheider muss einem VawsFachdaten-Objekt zugeordnet sein!");
-    	}
-		
-		Transaction tx = null;
-		try {
-			Session session = HibernateSessionFactory.currentSession();
-			tx = session.beginTransaction();
-			session.saveOrUpdate(abscheider);
-			tx.commit();
-			saved = true;
-		} catch (HibernateException e) {
-			saved = false;
-			e.printStackTrace();
-			if (tx != null) {
-				try {
-					tx.rollback();
-				} catch (HibernateException e1) {
-					AUIKataster.handleDBException(e1, "VawsAbscheider.save", false);
-				}
-			}
-		} finally {
-			HibernateSessionFactory.closeSession();
-		}
-		
-		return saved;
+        boolean saved;
+
+        if (abscheider.getVawsFachdaten() == null) {
+            throw new IllegalArgumentException("Die VawsAbscheider muss einem VawsFachdaten-Objekt zugeordnet sein!");
+        }
+
+        Transaction tx = null;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            tx = session.beginTransaction();
+            session.saveOrUpdate(abscheider);
+            tx.commit();
+            saved = true;
+        } catch (HibernateException e) {
+            saved = false;
+            e.printStackTrace();
+            if (tx != null) {
+                try {
+                    tx.rollback();
+                } catch (HibernateException e1) {
+                    AUIKataster.handleDBException(e1, "VawsAbscheider.save", false);
+                }
+            }
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return saved;
     }
-    
+
 //    /**
-//     * Liefert alle Bodenflächen-Ausführungen. 
-//     * <br><b>ACHTUNG:</b> Liefert nicht alle VawsAbscheidern, 
+//     * Liefert alle Bodenflächen-Ausführungen.
+//     * <br><b>ACHTUNG:</b> Liefert nicht alle VawsAbscheidern,
 //     * sondern alle in der Spalte "BODENFLAECHENAUSF" benutzten Werte!
 //     * @return Ein Array mit den Namen aller Ausführungen.
 //     */
 //    public static String[] getBodenflaechenausfArray() {
-//    	//FIXME: select distinct nicht die beste Lösung
-//		List list;
-//		String suchString = "select distinct vabf.bodenflaechenausf " +
-//				"from VawsAbscheider vabf " +
-//				"order by vabf.bodenflaechenausf";
-//		String[] tmp;
-//		
-//		try {
-//			Session session = HibernateSessionFactory.currentSession();
-//			Query query = session.createQuery(suchString);
-//			query.setCacheable(true);
-//			query.setCacheRegion("vawsabausfliste");
-//			list = query.list();
-//			tmp = new String[list.size()];
-//			tmp = (String[]) list.toArray(tmp);
-//		} catch (HibernateException e) {
-//			throw new RuntimeException("Datenbank-Fehler", e);
-//		} finally {
-//			HibernateSessionFactory.closeSession();
-//		}
-//		
-//		return tmp;
-//	}
-    
+//        //FIXME: select distinct nicht die beste Lösung
+//        List list;
+//        String suchString = "select distinct vabf.bodenflaechenausf " +
+//                "from VawsAbscheider vabf " +
+//                "order by vabf.bodenflaechenausf";
+//        String[] tmp;
+//
+//        try {
+//            Session session = HibernateSessionFactory.currentSession();
+//            Query query = session.createQuery(suchString);
+//            query.setCacheable(true);
+//            query.setCacheRegion("vawsabausfliste");
+//            list = query.list();
+//            tmp = new String[list.size()];
+//            tmp = (String[]) list.toArray(tmp);
+//        } catch (HibernateException e) {
+//            throw new RuntimeException("Datenbank-Fehler", e);
+//        } finally {
+//            HibernateSessionFactory.closeSession();
+//        }
+//
+//        return tmp;
+//    }
+
 //    /**
-//     * Liefert alle Bodenflächen-Ausführungen. 
-//     * <br><b>ACHTUNG:</b> Liefert nicht alle VawsAbscheidern, 
+//     * Liefert alle Bodenflächen-Ausführungen.
+//     * <br><b>ACHTUNG:</b> Liefert nicht alle VawsAbscheidern,
 //     * sondern alle in der Spalte "BODENFLAECHENAUSF" benutzten Werte!
 //     * @return Ein Array mit den Namen aller Ausführungen.
 //     */
 //    public static String[] getNiederschlagschutzArray() {
-//    	//FIXME: select distinct nicht die beste Lösung
-//		List list;
-//		String suchString = "select distinct vabf.niederschlagschutz " +
-//				"from VawsAbscheider vabf " +
-//				"order by vabf.niederschlagschutz";
-//		String[] tmp;
-//		
-//		try {
-//			Session session = HibernateSessionFactory.currentSession();
-//			Query query = session.createQuery(suchString);
-//			query.setCacheable(true);
-//			query.setCacheRegion("vawsabnieliste");
-//			list = query.list();
-//			tmp = new String[list.size()];
-//			tmp = (String[]) list.toArray(tmp);
-//		} catch (HibernateException e) {
-//			throw new RuntimeException("Datenbank-Fehler", e);
-//		} finally {
-//			HibernateSessionFactory.closeSession();
-//		}
-//		
-//		return tmp;
-//	}
+//        //FIXME: select distinct nicht die beste Lösung
+//        List list;
+//        String suchString = "select distinct vabf.niederschlagschutz " +
+//                "from VawsAbscheider vabf " +
+//                "order by vabf.niederschlagschutz";
+//        String[] tmp;
+//
+//        try {
+//            Session session = HibernateSessionFactory.currentSession();
+//            Query query = session.createQuery(suchString);
+//            query.setCacheable(true);
+//            query.setCacheRegion("vawsabnieliste");
+//            list = query.list();
+//            tmp = new String[list.size()];
+//            tmp = (String[]) list.toArray(tmp);
+//        } catch (HibernateException e) {
+//            throw new RuntimeException("Datenbank-Fehler", e);
+//        } finally {
+//            HibernateSessionFactory.closeSession();
+//        }
+//
+//        return tmp;
+//    }
 }

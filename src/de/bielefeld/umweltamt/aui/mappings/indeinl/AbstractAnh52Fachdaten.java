@@ -5,10 +5,10 @@ import java.io.Serializable;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
- * A class that represents a row in the ANH_52_FACHDATEN table. 
+ * A class that represents a row in the ANH_52_FACHDATEN table.
  * You can customize the behavior of this class by editing the class, {@link Anh52Fachdaten()}.
  */
-public abstract class AbstractAnh52Fachdaten 
+public abstract class AbstractAnh52Fachdaten
     implements Serializable
 {
     /** The cached hash code value for this instance.  Settting to 0 triggers re-calculation. */
@@ -19,7 +19,7 @@ public abstract class AbstractAnh52Fachdaten
 
     /** The value of the basisObjekt association. */
     private BasisObjekt basisObjekt;
-    
+
 //    private java.lang.Integer objektId;
     private java.lang.Integer nrbetriebsstaette;
     private java.lang.String firmenname;
@@ -83,54 +83,54 @@ public abstract class AbstractAnh52Fachdaten
     }
 
     public java.lang.String getAnsprechpartner() {
-		return ansprechpartner;
-	}
+        return ansprechpartner;
+    }
 
-	public void setAnsprechpartner(java.lang.String ansprechpartner) {
-		this.ansprechpartner = ansprechpartner;
-	}
+    public void setAnsprechpartner(java.lang.String ansprechpartner) {
+        this.ansprechpartner = ansprechpartner;
+    }
 
-	public java.lang.String getBemerkungen() {
-		return bemerkungen;
-	}
+    public java.lang.String getBemerkungen() {
+        return bemerkungen;
+    }
 
-	public void setBemerkungen(java.lang.String bemerkungen) {
-		this.bemerkungen = bemerkungen;
-	}
+    public void setBemerkungen(java.lang.String bemerkungen) {
+        this.bemerkungen = bemerkungen;
+    }
 
-	public java.lang.String getFirmenname() {
-		return firmenname;
-	}
+    public java.lang.String getFirmenname() {
+        return firmenname;
+    }
 
-	public void setFirmenname(java.lang.String firmenname) {
-		this.firmenname = firmenname;
-	}
+    public void setFirmenname(java.lang.String firmenname) {
+        this.firmenname = firmenname;
+    }
 
-	public java.lang.Integer getNrbetriebsstaette() {
-		return nrbetriebsstaette;
-	}
+    public java.lang.Integer getNrbetriebsstaette() {
+        return nrbetriebsstaette;
+    }
 
-	public void setNrbetriebsstaette(java.lang.Integer nrbetriebsstaette) {
-		this.nrbetriebsstaette = nrbetriebsstaette;
-	}
+    public void setNrbetriebsstaette(java.lang.Integer nrbetriebsstaette) {
+        this.nrbetriebsstaette = nrbetriebsstaette;
+    }
 
-	public java.lang.String getTelefax() {
-		return telefax;
-	}
+    public java.lang.String getTelefax() {
+        return telefax;
+    }
 
-	public void setTelefax(java.lang.String telefax) {
-		this.telefax = telefax;
-	}
+    public void setTelefax(java.lang.String telefax) {
+        this.telefax = telefax;
+    }
 
-	public java.lang.String getTelefon() {
-		return telefon;
-	}
+    public java.lang.String getTelefon() {
+        return telefon;
+    }
 
-	public void setTelefon(java.lang.String telefon) {
-		this.telefon = telefon;
-	}
+    public void setTelefon(java.lang.String telefon) {
+        this.telefon = telefon;
+    }
 
-	/**
+    /**
      * Implementation of the equals comparison on the basis of equality of the primary key values.
      * @param rhs
      * @return boolean
@@ -169,11 +169,11 @@ public abstract class AbstractAnh52Fachdaten
         return this.hashValue;
     }
 
-	public java.util.Date getDatumGen() {
-		return datumGen;
-	}
+    public java.util.Date getDatumGen() {
+        return datumGen;
+    }
 
-	public void setDatumGen(java.util.Date datumGen) {
-		this.datumGen = datumGen;
-	}
+    public void setDatumGen(java.util.Date datumGen) {
+        this.datumGen = datumGen;
+    }
 }

@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: ChronoPanel.java,v 1.1.2.1 2010-11-23 10:25:57 u633d Exp $
- * 
+ *
  * Erstellt am 07.10.2005 von David Klotz
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.7  2010/03/08 08:49:08  u633d
@@ -86,403 +86,403 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * @author Gerd Genuit
  */
 public class ChronoPanel extends JPanel {
-	private String name;
-	private BasisObjektBearbeiten hauptModul;
-	
-	private ChronoModel chronoModel;
-	
-	private Action chronoItemLoeschAction;
-	private Action chronoSaveAction;
-	
-	private JPopupMenu chronoPopup;
-	
-	private Integer objektid;
-	private String betreiber;
-	private String art;
-	private String standort;
-	
-	private JTable chronoTable;
-	private JButton saveButton;
-	private JButton reportListeButton;
-	
-	/**
-	 * Erzeugt das Vaws-Panel für das BasisObjektBearbeiten-Modul.
-	 * @param hauptModul Das BasisObjektBearbeiten-Hauptmodul.
-	 */
-	public ChronoPanel(BasisObjektBearbeiten hauptModul) {
-		name = "Chronologie";
-		this.hauptModul = hauptModul;
-		AUIKataster.debugOutput(hauptModul.getObjekt().toString());
-		chronoModel = new ChronoModel();
-		
-		
-		reportListeButton = new JButton("PDF-Liste generieren");
-		reportListeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showReportListe();
-			}
-		});
-		
-		JScrollPane chronoScroller = new JScrollPane(getChronoTable());
-		
-		FormLayout layout = new FormLayout(
-				"pref 3dlu, pref, 3dlu, pref:g", 
-				"f:100dlu:g, 3dlu, pref"
-		);
-		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-		builder.setDefaultDialogBorder();
-		
-		builder.append(chronoScroller, 5);
-		builder.nextLine(2);
-		builder.append(reportListeButton, getSaveButton());
-	}
-	public class ChronoModel extends EditableListTableModel {
-		private BasisObjekt obj;
+    private String name;
+    private BasisObjektBearbeiten hauptModul;
 
-		/**
-		 * Erzeugt ein einfaches TableModel für die Chronologie.
-		 * @param obj
-		 */
-		public ChronoModel() {
-			super(new String[]{
-					"Datum", 
-					"Sachbearbeiter",
-					"Sachverhalt",
-					
-			}, 
-			false, true);
-		}
+    private ChronoModel chronoModel;
+
+    private Action chronoItemLoeschAction;
+    private Action chronoSaveAction;
+
+    private JPopupMenu chronoPopup;
+
+    private Integer objektid;
+    private String betreiber;
+    private String art;
+    private String standort;
+
+    private JTable chronoTable;
+    private JButton saveButton;
+    private JButton reportListeButton;
+
+    /**
+     * Erzeugt das Vaws-Panel für das BasisObjektBearbeiten-Modul.
+     * @param hauptModul Das BasisObjektBearbeiten-Hauptmodul.
+     */
+    public ChronoPanel(BasisObjektBearbeiten hauptModul) {
+        name = "Chronologie";
+        this.hauptModul = hauptModul;
+        AUIKataster.debugOutput(hauptModul.getObjekt().toString());
+        chronoModel = new ChronoModel();
 
 
-		/**
-		 * Setzt das Basis-Objekt und aktualisiert die Tabelle.
-		 * @param obj Das Basis-Objekt
-		 */
-		public void setBasisObjekt(BasisObjekt obj) {
-			this.obj = obj;
-			
-			if (obj != null) {
-				setList(BasisObjektchrono.getChronoByObjekt(obj));
-				fireTableDataChanged();
-			}
-		}
+        reportListeButton = new JButton("PDF-Liste generieren");
+        reportListeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showReportListe();
+            }
+        });
 
-		public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-			BasisObjektchrono chrono = (BasisObjektchrono) objectAtRow;
-			String tmp = "";
-			if (newValue instanceof String) {
-				tmp = (String) newValue;
+        JScrollPane chronoScroller = new JScrollPane(getChronoTable());
 
-			}
-			DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
-			
-			switch (columnIndex) {
-			case 0:
-				try {
-					Date tmpDate = format.parse(tmp);
-					chrono.setDatum(tmpDate);
-				} catch (ParseException e) {
-					//.changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
-				}
-				break;
-			case 1:
-				// Auf 10 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
-				if (tmp.length() > 10) {
-					tmp = tmp.substring(0,10);
-				}
-				chrono.setSachbearbeiter(tmp);
-				break;
-			case 2:
-				// Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
-				if (tmp.length() > 255) {
-					tmp = tmp.substring(0,255);
-				}
+        FormLayout layout = new FormLayout(
+                "pref 3dlu, pref, 3dlu, pref:g",
+                "f:100dlu:g, 3dlu, pref"
+        );
+        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        builder.setDefaultDialogBorder();
 
-				chrono.setSachverhalt(tmp);
-				break;
-			default:
-				break;
-			}
-		}
+        builder.append(chronoScroller, 5);
+        builder.nextLine(2);
+        builder.append(reportListeButton, getSaveButton());
+    }
+    public class ChronoModel extends EditableListTableModel {
+        private BasisObjekt obj;
 
-		public Object newObject() {
-			BasisObjektchrono chr = new BasisObjektchrono();
-			chr.setBasisObjekt(hauptModul.getObjekt());
-			chr.setDatum(new Date());
-			return chr;
-		}
-		
-		public boolean objectRemoved(Object objectAtRow) {
-			BasisObjektchrono removedchr = (BasisObjektchrono) objectAtRow;
-			boolean removed;
-			
-			if (removedchr.getId() != null) {
-				removed = BasisObjektchrono.removeObjektChrono(removedchr);
-			} else {
-				removed = true;
-			}
-			
-			return removed;
-		}
+        /**
+         * Erzeugt ein einfaches TableModel für die Chronologie.
+         * @param obj
+         */
+        public ChronoModel() {
+            super(new String[]{
+                    "Datum",
+                    "Sachbearbeiter",
+                    "Sachverhalt",
 
-		/* (non-Javadoc)
-		 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
-		 */
-		public Object getColumnValue(Object objectAtRow, int columnIndex) {
-			BasisObjektchrono oc = (BasisObjektchrono) objectAtRow;
-			Object tmp;
-			
-			switch (columnIndex) {
-			// Datum:
-			case 0:
-				tmp = AuikUtils.getStringFromDate(oc.getDatum());
-				break;
-			// Sachverhalt:
-			case 1:
-			    tmp = oc.getSachbearbeiter();
-				break;
-		// Sachbearbeiter
-			case 2:
-				tmp = oc.getSachverhalt();
-				break;
-			// Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
-			default:
-				tmp = "ERROR";
-				break;
-			}
-			
-			return tmp;
-		}
-
-		/**
-		 * Liefert einen Datensatz in einer bestimmten Zeile.
-		 * @param row Die Zeile der Tabelle.
-		 * @return Den Datensatz, der in dieser Zeile angezeigt wird.
-		 */
-		public BasisObjektchrono getDatenSatz(int row) {
-			return (BasisObjektchrono) getObjectAtRow(row);
-		}
-
-		/* 
-		 * Leer, da kein Updaten der Liste nötig/möglich.
-		 * Die Liste wird direkt mittels setList "befüllt".
-		 */
-		public void updateList() {
-		}
-	}
-
-	/**
-	 * Liefert den Namen dieses Panels.
-	 * @return "Chronologie"
-	 */
-	public String getName() {
-		return name;
-	}
-	
-	// Funktionalität:
-	
-	/**
-	 * Holt die Liste mit Fachdatensätzen aus der Datenbank.
-	 */
-	public void fetchFormData() {
-		chronoModel.setList(
-				BasisObjektchrono.getChronoByObjekt(hauptModul.getObjekt()));
-	}
-	
-	/**
-	 * Erneuert die Anzeige der Tabelle.
-	 */
-	public void updateForm() {
-		chronoModel.fireTableDataChanged();
-	}
-	
-	/**
-	 * Speichert die Objekt-Chronologie-Einträge und löscht gelöschte Datensätze
-	 * aus der Datenbank. 
-	 */
+            },
+            false, true);
+        }
 
 
-	public void speichernChronologie() {
-		if (chronoTable.getCellEditor() != null) {
-			chronoTable.getCellEditor().stopCellEditing();
-		}
-		List chronoListe = chronoModel.getList();
-		boolean sachbear = true;
-		boolean gespeichert = true;
-		for (int i = 0; i < chronoListe.size(); i++) {
-				
-				
-					BasisObjektchrono chrono = (BasisObjektchrono) chronoListe.get(i);							
+        /**
+         * Setzt das Basis-Objekt und aktualisiert die Tabelle.
+         * @param obj Das Basis-Objekt
+         */
+        public void setBasisObjekt(BasisObjekt obj) {
+            this.obj = obj;
+
+            if (obj != null) {
+                setList(BasisObjektchrono.getChronoByObjekt(obj));
+                fireTableDataChanged();
+            }
+        }
+
+        public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
+            BasisObjektchrono chrono = (BasisObjektchrono) objectAtRow;
+            String tmp = "";
+            if (newValue instanceof String) {
+                tmp = (String) newValue;
+
+            }
+            DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+
+            switch (columnIndex) {
+            case 0:
+                try {
+                    Date tmpDate = format.parse(tmp);
+                    chrono.setDatum(tmpDate);
+                } catch (ParseException e) {
+                    //.changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
+                }
+                break;
+            case 1:
+                // Auf 10 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+                if (tmp.length() > 10) {
+                    tmp = tmp.substring(0,10);
+                }
+                chrono.setSachbearbeiter(tmp);
+                break;
+            case 2:
+                // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+                if (tmp.length() > 255) {
+                    tmp = tmp.substring(0,255);
+                }
+
+                chrono.setSachverhalt(tmp);
+                break;
+            default:
+                break;
+            }
+        }
+
+        public Object newObject() {
+            BasisObjektchrono chr = new BasisObjektchrono();
+            chr.setBasisObjekt(hauptModul.getObjekt());
+            chr.setDatum(new Date());
+            return chr;
+        }
+
+        public boolean objectRemoved(Object objectAtRow) {
+            BasisObjektchrono removedchr = (BasisObjektchrono) objectAtRow;
+            boolean removed;
+
+            if (removedchr.getId() != null) {
+                removed = BasisObjektchrono.removeObjektChrono(removedchr);
+            } else {
+                removed = true;
+            }
+
+            return removed;
+        }
+
+        /* (non-Javadoc)
+         * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
+         */
+        public Object getColumnValue(Object objectAtRow, int columnIndex) {
+            BasisObjektchrono oc = (BasisObjektchrono) objectAtRow;
+            Object tmp;
+
+            switch (columnIndex) {
+            // Datum:
+            case 0:
+                tmp = AuikUtils.getStringFromDate(oc.getDatum());
+                break;
+            // Sachverhalt:
+            case 1:
+                tmp = oc.getSachbearbeiter();
+                break;
+        // Sachbearbeiter
+            case 2:
+                tmp = oc.getSachverhalt();
+                break;
+            // Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
+            default:
+                tmp = "ERROR";
+                break;
+            }
+
+            return tmp;
+        }
+
+        /**
+         * Liefert einen Datensatz in einer bestimmten Zeile.
+         * @param row Die Zeile der Tabelle.
+         * @return Den Datensatz, der in dieser Zeile angezeigt wird.
+         */
+        public BasisObjektchrono getDatenSatz(int row) {
+            return (BasisObjektchrono) getObjectAtRow(row);
+        }
+
+        /*
+         * Leer, da kein Updaten der Liste nötig/möglich.
+         * Die Liste wird direkt mittels setList "befüllt".
+         */
+        public void updateList() {
+        }
+    }
+
+    /**
+     * Liefert den Namen dieses Panels.
+     * @return "Chronologie"
+     */
+    public String getName() {
+        return name;
+    }
+
+    // Funktionalität:
+
+    /**
+     * Holt die Liste mit Fachdatensätzen aus der Datenbank.
+     */
+    public void fetchFormData() {
+        chronoModel.setList(
+                BasisObjektchrono.getChronoByObjekt(hauptModul.getObjekt()));
+    }
+
+    /**
+     * Erneuert die Anzeige der Tabelle.
+     */
+    public void updateForm() {
+        chronoModel.fireTableDataChanged();
+    }
+
+    /**
+     * Speichert die Objekt-Chronologie-Einträge und löscht gelöschte Datensätze
+     * aus der Datenbank.
+     */
+
+
+    public void speichernChronologie() {
+        if (chronoTable.getCellEditor() != null) {
+            chronoTable.getCellEditor().stopCellEditing();
+        }
+        List chronoListe = chronoModel.getList();
+        boolean sachbear = true;
+        boolean gespeichert = true;
+        for (int i = 0; i < chronoListe.size(); i++) {
+
+
+                    BasisObjektchrono chrono = (BasisObjektchrono) chronoListe.get(i);
 // Wenn ein Eintrag neu ist ( id = null) wird überprüft ob ein Sachbearbeiter angegeben ist.
 // Ein Eintrag wird nur gespeichert, wenn ein Sachbearbeiter eingetragen ist.
-					if (chrono.getId() == null)
-					{
-						String sachbearbeiter = chrono.getSachbearbeiter();
+                    if (chrono.getId() == null)
+                    {
+                        String sachbearbeiter = chrono.getSachbearbeiter();
 
-					  if (sachbearbeiter == null || sachbearbeiter.length() == 0)
-					  {   
-						   sachbear = false;	
-					  }
-					  else
-					  {
-						  BasisObjektchrono.saveObjektChrono(chrono);
-						  chronoModel.fireTableDataChanged();
-						  
-						  if (BasisObjektchrono.saveObjektChrono(chrono) == false)
-						  {
-							  gespeichert = false;
-						  }
-						
-					  }
-					}
-					else
-					{	
-						BasisObjektchrono.saveObjektChrono(chrono);
-						chronoModel.fireTableDataChanged();
-						
-						 if (BasisObjektchrono.saveObjektChrono(chrono) == false)
-						 {
-							 gespeichert = false;
-						 }
-						
-					}
+                      if (sachbearbeiter == null || sachbearbeiter.length() == 0)
+                      {
+                           sachbear = false;
+                      }
+                      else
+                      {
+                          BasisObjektchrono.saveObjektChrono(chrono);
+                          chronoModel.fireTableDataChanged();
 
-		}
-		
-		if (sachbear == false & gespeichert == true )
-		{
-			hauptModul.getFrame().showErrorMessage("Es muss ein Sachbearbeiter angegeben werden!", "Sachbearbeiter fehlt");
-		}
-		else if (sachbear == true & gespeichert == true )
-		{
-		   hauptModul.getFrame().changeStatus("Speichern erfolgreich", HauptFrame.SUCCESS_COLOR);
-		}
-		else if (gespeichert == false)
-		{
-			hauptModul.getFrame().changeStatus("Chronoligie konnte nicht gespeichert werden", HauptFrame.ERROR_COLOR);
-		}
-	}
-	
-	
-	public void showReportListe() {
-		objektid = hauptModul.getObjekt().getObjektid();
-		betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
-		standort = hauptModul.getObjekt().getBasisStandort().toString();
-		art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
-		
-		if (objektid != null && betreiber != null && standort != null && art != null)
-		{
-			AUIKataster.debugOutput("Starte Objekt-Chronologie Report für ObjektId = " + objektid);
-			ReportManager.getInstance().startReportWorker("Objekt-Chronologie", objektid, betreiber, standort, art, reportListeButton);
-		}
-		else
-		{
-			AUIKataster.debugOutput("ObjektID, Betreiber, Standort oder Art == NULL");	
-		}
-	}
-	
-	/**
-	 * Liefert die Action um einen Datensatz zu löschen.
-	 */
-	private Action getChronoItemLoeschAction() {
-		if (chronoItemLoeschAction == null) {
-			chronoItemLoeschAction = new AbstractAction("Eintrag löschen") {
-				public void actionPerformed(ActionEvent e) {
-					int row = getChronoTable().getSelectedRow();
-					
-					// Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
-					if (row != -1) {
-						chronoModel.removeRow(row);
-					}
-				}
-			};
-			chronoItemLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
-			chronoItemLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
-		}
-		
-		return chronoItemLoeschAction;
-	}
-	
-	/**
-	 * Liefert die Action um die ganze Chronologie zu speichern.
-	 */
-	private Action getChronoSaveAction() {
-		if (chronoSaveAction == null) {
-			chronoSaveAction = new AbstractAction("Chronologie speichern") {
-				public void actionPerformed(ActionEvent e) {
-					speichernChronologie();
-				}
-			};
-			chronoSaveAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_S));
-			chronoSaveAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.ALT_DOWN_MASK, false));
-			
-		}
-		return chronoSaveAction;
-	}
-	
-	/**
-	 * Zeigt ein Kontextmenü an, wenn ein entsprechendes 
-	 * MouseEvent vorliegt.
-	 * @param e Das MouseEvent.
-	 */
-	private void showChronoPopup(MouseEvent e) {
-		if (chronoPopup == null) {
-			chronoPopup = new JPopupMenu("Chronologie");
-			JMenuItem loeschItem = new JMenuItem(getChronoItemLoeschAction());
-			JMenuItem saveItem = new JMenuItem(getChronoSaveAction());
-			
-			chronoPopup.add(loeschItem);
-			chronoPopup.add(saveItem);
-		}
-		
-		if (e.isPopupTrigger()) {
-			Point origin = e.getPoint();
-			int row = getChronoTable().rowAtPoint(origin);
-			
-			if (row != -1) {
-				getChronoTable().setRowSelectionInterval(row, row);
-				chronoPopup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		}
-	}
-	
-	// Widget-Getter:
-	
-	private JTable getChronoTable() {
-		if (chronoTable == null) {
-			chronoTable = new JTable(chronoModel);
-			chronoTable.getColumnModel().getColumn(0).setMaxWidth(80);
-			chronoTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-			chronoTable.getColumnModel().getColumn(1).setMaxWidth(100);
-			chronoTable.getColumnModel().getColumn(2).setPreferredWidth(300);
-			chronoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			
-			chronoTable.addMouseListener(new java.awt.event.MouseAdapter() {
-				public void mousePressed(MouseEvent e) {
-					showChronoPopup(e);
-				}
-				
-				public void mouseReleased(MouseEvent e) {
-					showChronoPopup(e);
-				}
-			});
-			
-			chronoTable.getInputMap().put((KeyStroke)getChronoItemLoeschAction().getValue(Action.ACCELERATOR_KEY), getChronoItemLoeschAction().getValue(Action.NAME));
-			chronoTable.getActionMap().put(getChronoItemLoeschAction().getValue(Action.NAME), getChronoItemLoeschAction());
-		}
-		return chronoTable;
-	}
-	
-	private JButton getSaveButton() {
-		if (saveButton == null) {
-			saveButton = new JButton("Objekt-Chronologie speichern");
-			saveButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					speichernChronologie();
-				}
-			});
-		}
-		
-		return saveButton;
-	}
+                          if (BasisObjektchrono.saveObjektChrono(chrono) == false)
+                          {
+                              gespeichert = false;
+                          }
+
+                      }
+                    }
+                    else
+                    {
+                        BasisObjektchrono.saveObjektChrono(chrono);
+                        chronoModel.fireTableDataChanged();
+
+                         if (BasisObjektchrono.saveObjektChrono(chrono) == false)
+                         {
+                             gespeichert = false;
+                         }
+
+                    }
+
+        }
+
+        if (sachbear == false & gespeichert == true )
+        {
+            hauptModul.getFrame().showErrorMessage("Es muss ein Sachbearbeiter angegeben werden!", "Sachbearbeiter fehlt");
+        }
+        else if (sachbear == true & gespeichert == true )
+        {
+           hauptModul.getFrame().changeStatus("Speichern erfolgreich", HauptFrame.SUCCESS_COLOR);
+        }
+        else if (gespeichert == false)
+        {
+            hauptModul.getFrame().changeStatus("Chronoligie konnte nicht gespeichert werden", HauptFrame.ERROR_COLOR);
+        }
+    }
+
+
+    public void showReportListe() {
+        objektid = hauptModul.getObjekt().getObjektid();
+        betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
+        standort = hauptModul.getObjekt().getBasisStandort().toString();
+        art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
+
+        if (objektid != null && betreiber != null && standort != null && art != null)
+        {
+            AUIKataster.debugOutput("Starte Objekt-Chronologie Report für ObjektId = " + objektid);
+            ReportManager.getInstance().startReportWorker("Objekt-Chronologie", objektid, betreiber, standort, art, reportListeButton);
+        }
+        else
+        {
+            AUIKataster.debugOutput("ObjektID, Betreiber, Standort oder Art == NULL");
+        }
+    }
+
+    /**
+     * Liefert die Action um einen Datensatz zu löschen.
+     */
+    private Action getChronoItemLoeschAction() {
+        if (chronoItemLoeschAction == null) {
+            chronoItemLoeschAction = new AbstractAction("Eintrag löschen") {
+                public void actionPerformed(ActionEvent e) {
+                    int row = getChronoTable().getSelectedRow();
+
+                    // Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
+                    if (row != -1) {
+                        chronoModel.removeRow(row);
+                    }
+                }
+            };
+            chronoItemLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
+            chronoItemLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+        }
+
+        return chronoItemLoeschAction;
+    }
+
+    /**
+     * Liefert die Action um die ganze Chronologie zu speichern.
+     */
+    private Action getChronoSaveAction() {
+        if (chronoSaveAction == null) {
+            chronoSaveAction = new AbstractAction("Chronologie speichern") {
+                public void actionPerformed(ActionEvent e) {
+                    speichernChronologie();
+                }
+            };
+            chronoSaveAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_S));
+            chronoSaveAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.ALT_DOWN_MASK, false));
+
+        }
+        return chronoSaveAction;
+    }
+
+    /**
+     * Zeigt ein Kontextmenü an, wenn ein entsprechendes
+     * MouseEvent vorliegt.
+     * @param e Das MouseEvent.
+     */
+    private void showChronoPopup(MouseEvent e) {
+        if (chronoPopup == null) {
+            chronoPopup = new JPopupMenu("Chronologie");
+            JMenuItem loeschItem = new JMenuItem(getChronoItemLoeschAction());
+            JMenuItem saveItem = new JMenuItem(getChronoSaveAction());
+
+            chronoPopup.add(loeschItem);
+            chronoPopup.add(saveItem);
+        }
+
+        if (e.isPopupTrigger()) {
+            Point origin = e.getPoint();
+            int row = getChronoTable().rowAtPoint(origin);
+
+            if (row != -1) {
+                getChronoTable().setRowSelectionInterval(row, row);
+                chronoPopup.show(e.getComponent(), e.getX(), e.getY());
+            }
+        }
+    }
+
+    // Widget-Getter:
+
+    private JTable getChronoTable() {
+        if (chronoTable == null) {
+            chronoTable = new JTable(chronoModel);
+            chronoTable.getColumnModel().getColumn(0).setMaxWidth(80);
+            chronoTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+            chronoTable.getColumnModel().getColumn(1).setMaxWidth(100);
+            chronoTable.getColumnModel().getColumn(2).setPreferredWidth(300);
+            chronoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+            chronoTable.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
+                    showChronoPopup(e);
+                }
+
+                public void mouseReleased(MouseEvent e) {
+                    showChronoPopup(e);
+                }
+            });
+
+            chronoTable.getInputMap().put((KeyStroke)getChronoItemLoeschAction().getValue(Action.ACCELERATOR_KEY), getChronoItemLoeschAction().getValue(Action.NAME));
+            chronoTable.getActionMap().put(getChronoItemLoeschAction().getValue(Action.NAME), getChronoItemLoeschAction());
+        }
+        return chronoTable;
+    }
+
+    private JButton getSaveButton() {
+        if (saveButton == null) {
+            saveButton = new JButton("Objekt-Chronologie speichern");
+            saveButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    speichernChronologie();
+                }
+            });
+        }
+
+        return saveButton;
+    }
 }

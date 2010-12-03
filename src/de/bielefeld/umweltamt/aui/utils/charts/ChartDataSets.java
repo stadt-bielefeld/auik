@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: ChartDataSets.java,v 1.3.2.1 2010-11-23 10:25:59 u633d Exp $
- * 
+ *
  * Erstellt am 11.05.2005 von David Klotz (u633z)
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.3  2009/12/11 07:22:46  u633d
@@ -59,115 +59,115 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
  * @author David Klotz
  */
 public class ChartDataSets {
-	/**
-	 * Erzeugt eine TimeSeriesCollection (eine Sammlung von Zeit/Wert-Datenreihen)
-	 * mit einer Datenreihe. Die Zeitwerte werden als Zeitpunkte und nicht 
-	 * als Zeitabschnitte behandelt.
-	 * @param series Die erste Datenreihe (mehr können hinzugefügt werden)
-	 * @return Eine TimeSeriesCollection mit einer Datenreihe
-	 */
-	public static TimeSeriesCollection createDataset(TimeSeries series) {
-		TimeSeriesCollection dataset = new TimeSeriesCollection(series);
-		dataset.setDomainIsPointsInTime(true);
-		
-		return dataset;
-	}
-	
-	/**
-	 * Erzeugt eine TimeSeries (eine Zeit/Wert-Datenreihe) aus einer Liste
-	 * mit AtlAnalysepositionen. Die Analysepositionen sollten natürlich 
-	 * alle den selben Parameter und die selbe Einheit haben.
-	 * @param list Die Liste aus <code>AtlAnalyseposition</code>en
-	 * @param name Der Name des Parameters/der Datenreihe (für die Legende des Diagramms) 
-	 * @param einheit Der Name der Einheit (für die Achsenbeschriftung des Diagramms)
-	 * @return Eine Analysepositionen-Datenreihe
-	 */
-	// Bei der Auswertung der SielhautBearbeiten werden statt der Messwerte, die Normwerte ausgegeben
-	public static TimeSeries createAnalysePositionenSeries(List list, String name, String einheit) {
-		TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
-		AUIKataster.debugOutput("Erzeuge TimeSeries: " + name, "ChartDataSets.createAnalysepositionenSeries");
-		
-		if (list != null) {
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i) instanceof AtlAnalyseposition) {
-					AtlAnalyseposition pos = (AtlAnalyseposition) list.get(i);
-					
-					APosDataItem item = new APosDataItem(pos);
-					
-					addPosToMinuteSeries(result, item);
-				}
-			}
-		}
-		
-		return result;
-	}
-	
-	public static TimeSeries createAnalysePositionenSielhautSeries(List list, String name, String einheit) {
-		TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
-		AUIKataster.debugOutput("Erzeuge TimeSeries: " + name, "ChartDataSets.createAnalysepositionenSielhautSeries");
-		
-		if (list != null) {
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i) instanceof AtlAnalyseposition) {
-					AtlAnalyseposition pos = (AtlAnalyseposition) list.get(i);
-					
-					APosDataItem item = new APosDataItem("Normwert", pos);
-					
-					addPosToMinuteSielhautSeries(result, item);
-				}
-			}
-		}
-		
-		return result;
-	}
-	
-	
-	/**
-	 * Fügt den Wert einer AtlAnalyseposition zu einer TimeSeries an 
-	 * einer bestimmten Position (in Minuten) hinzu.
-	 * Wenn an dieser Position schon ein Wert existiert, ruft sich diese
-	 * Methode rekursiv mit einer Position eine Minute später wieder auf.
-	 * @param series Die Datenreihe
-	 * @param minute Die Position in der Datenreihe (in Minuten)
-	 * @param pos Die Analyseposition
-	 */
-	private static void addPosToMinuteSeries(TimeSeries series, APosDataItem item/*Minute minute, AtlAnalyseposition pos*/) {
-		if (series.getDataItem(item.getPeriod()) == null) {
-			//AUIKataster.debugOutput("  |- Füge " + pos + " bei " + minute + " hinzu.", "ChartDataSets.createAnalysepositionenSeries");
-			series.add(item);
-		} else {
-			//AUIKataster.debugOutput("  |- !Bei " + minute + " existiert schon ein Eintrag -> Rekursion!.", "ChartDataSets.createAnalysepositionenSeries");
-			Calendar cal = GregorianCalendar.getInstance();
-			cal.setTime(item.getAnalysePosition().getAtlProbenahmen().getDatumDerEntnahme());
-			Minute minute = item.getMinute();
-			APosDataItem item2 = new APosDataItem(item.getAnalysePosition(), new Minute(minute.getMinute()+1, minute.getHour().getHour(), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH)+1, cal.get(Calendar.YEAR)));
-			
-			
-			addPosToMinuteSeries(series, item2);
-		}
-	}
-	
-	
-	private static void addPosToMinuteSielhautSeries(TimeSeries series, APosDataItem item/*Minute minute, AtlAnalyseposition pos*/) {
-		if (series.getDataItem(item.getPeriod()) == null) {
-			//AUIKataster.debugOutput("  |- Füge " + pos + " bei " + minute + " hinzu.", "ChartDataSets.createAnalysepositionenSeries");
-			series.add(item);
-		} else {
-			//AUIKataster.debugOutput("  |- !Bei " + minute + " existiert schon ein Eintrag -> Rekursion!.", "ChartDataSets.createAnalysepositionenSeries");
-			Calendar cal = GregorianCalendar.getInstance();
-			cal.setTime(item.getAnalysePosition().getAtlProbenahmen().getDatumDerEntnahme());
-			Minute minute = item.getMinute();
-			APosDataItem item2 = new APosDataItem("Normwert",item.getAnalysePosition(), new Minute(minute.getMinute()+1, minute.getHour().getHour(), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH)+1, cal.get(Calendar.YEAR)));
-			
-			
-			addPosToMinuteSielhautSeries(series, item2);
-		}
-	}
-	
-	
-	/*
-	 * Private, da nie eine Instanz dieser Klasse erzeugt werden soll.
-	 */
-	private ChartDataSets() {
-	}
+    /**
+     * Erzeugt eine TimeSeriesCollection (eine Sammlung von Zeit/Wert-Datenreihen)
+     * mit einer Datenreihe. Die Zeitwerte werden als Zeitpunkte und nicht
+     * als Zeitabschnitte behandelt.
+     * @param series Die erste Datenreihe (mehr können hinzugefügt werden)
+     * @return Eine TimeSeriesCollection mit einer Datenreihe
+     */
+    public static TimeSeriesCollection createDataset(TimeSeries series) {
+        TimeSeriesCollection dataset = new TimeSeriesCollection(series);
+        dataset.setDomainIsPointsInTime(true);
+
+        return dataset;
+    }
+
+    /**
+     * Erzeugt eine TimeSeries (eine Zeit/Wert-Datenreihe) aus einer Liste
+     * mit AtlAnalysepositionen. Die Analysepositionen sollten natürlich
+     * alle den selben Parameter und die selbe Einheit haben.
+     * @param list Die Liste aus <code>AtlAnalyseposition</code>en
+     * @param name Der Name des Parameters/der Datenreihe (für die Legende des Diagramms)
+     * @param einheit Der Name der Einheit (für die Achsenbeschriftung des Diagramms)
+     * @return Eine Analysepositionen-Datenreihe
+     */
+    // Bei der Auswertung der SielhautBearbeiten werden statt der Messwerte, die Normwerte ausgegeben
+    public static TimeSeries createAnalysePositionenSeries(List list, String name, String einheit) {
+        TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
+        AUIKataster.debugOutput("Erzeuge TimeSeries: " + name, "ChartDataSets.createAnalysepositionenSeries");
+
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) instanceof AtlAnalyseposition) {
+                    AtlAnalyseposition pos = (AtlAnalyseposition) list.get(i);
+
+                    APosDataItem item = new APosDataItem(pos);
+
+                    addPosToMinuteSeries(result, item);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static TimeSeries createAnalysePositionenSielhautSeries(List list, String name, String einheit) {
+        TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
+        AUIKataster.debugOutput("Erzeuge TimeSeries: " + name, "ChartDataSets.createAnalysepositionenSielhautSeries");
+
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) instanceof AtlAnalyseposition) {
+                    AtlAnalyseposition pos = (AtlAnalyseposition) list.get(i);
+
+                    APosDataItem item = new APosDataItem("Normwert", pos);
+
+                    addPosToMinuteSielhautSeries(result, item);
+                }
+            }
+        }
+
+        return result;
+    }
+
+
+    /**
+     * Fügt den Wert einer AtlAnalyseposition zu einer TimeSeries an
+     * einer bestimmten Position (in Minuten) hinzu.
+     * Wenn an dieser Position schon ein Wert existiert, ruft sich diese
+     * Methode rekursiv mit einer Position eine Minute später wieder auf.
+     * @param series Die Datenreihe
+     * @param minute Die Position in der Datenreihe (in Minuten)
+     * @param pos Die Analyseposition
+     */
+    private static void addPosToMinuteSeries(TimeSeries series, APosDataItem item/*Minute minute, AtlAnalyseposition pos*/) {
+        if (series.getDataItem(item.getPeriod()) == null) {
+            //AUIKataster.debugOutput("  |- Füge " + pos + " bei " + minute + " hinzu.", "ChartDataSets.createAnalysepositionenSeries");
+            series.add(item);
+        } else {
+            //AUIKataster.debugOutput("  |- !Bei " + minute + " existiert schon ein Eintrag -> Rekursion!.", "ChartDataSets.createAnalysepositionenSeries");
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.setTime(item.getAnalysePosition().getAtlProbenahmen().getDatumDerEntnahme());
+            Minute minute = item.getMinute();
+            APosDataItem item2 = new APosDataItem(item.getAnalysePosition(), new Minute(minute.getMinute()+1, minute.getHour().getHour(), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH)+1, cal.get(Calendar.YEAR)));
+
+
+            addPosToMinuteSeries(series, item2);
+        }
+    }
+
+
+    private static void addPosToMinuteSielhautSeries(TimeSeries series, APosDataItem item/*Minute minute, AtlAnalyseposition pos*/) {
+        if (series.getDataItem(item.getPeriod()) == null) {
+            //AUIKataster.debugOutput("  |- Füge " + pos + " bei " + minute + " hinzu.", "ChartDataSets.createAnalysepositionenSeries");
+            series.add(item);
+        } else {
+            //AUIKataster.debugOutput("  |- !Bei " + minute + " existiert schon ein Eintrag -> Rekursion!.", "ChartDataSets.createAnalysepositionenSeries");
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.setTime(item.getAnalysePosition().getAtlProbenahmen().getDatumDerEntnahme());
+            Minute minute = item.getMinute();
+            APosDataItem item2 = new APosDataItem("Normwert",item.getAnalysePosition(), new Minute(minute.getMinute()+1, minute.getHour().getHour(), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH)+1, cal.get(Calendar.YEAR)));
+
+
+            addPosToMinuteSielhautSeries(series, item2);
+        }
+    }
+
+
+    /*
+     * Private, da nie eine Instanz dieser Klasse erzeugt werden soll.
+     */
+    private ChartDataSets() {
+    }
 }

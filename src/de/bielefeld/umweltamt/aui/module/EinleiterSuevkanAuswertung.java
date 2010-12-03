@@ -1,9 +1,9 @@
 /*
  * Datei:
  * $Id: EinleiterSuevkanAuswertung.java,v 1.1.2.1 2010-11-23 10:25:53 u633d Exp $
- * 
+ *
  * Erstellt am 24.08.2005 von David Klotz
- * 
+ *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
  * Revision 1.4  2010/01/12 09:05:11  u633d
@@ -49,87 +49,87 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class EinleiterSuevkanAuswertung extends AbstractQueryModul {
-	/** Das obere Panel mit den Abfrage-Optionen */
-	private JPanel queryPanel;
-	
-	// Widgets für die Abfrage
-	private JButton submitButton;
-	private JButton printButton;
-	
-	/** Das TableModel für die Ergebnis-Tabelle */
-	private SuevModel tmodel;
+    /** Das obere Panel mit den Abfrage-Optionen */
+    private JPanel queryPanel;
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
-	 */
-	public String getName() {
-		return "SUEV-KAN";
-	}
-	
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
-	 */
-	public JPanel getQueryOptionsPanel() {
-		if (queryPanel == null) {
-			// Die Widgets initialisieren
-			submitButton = new JButton("Alle Objekte anzeigen");
-			printButton = new JButton("Liste drucken");
-			
-			// Ein ActionListener für den Button, 
-			// der die eigentliche Suche auslöst: 
-			submitButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
-						protected void doNonUILogic() {
-							((SuevModel)getTableModel()).setList(AnhSuevFachdaten.getAuswertungsListe());
-						}
+    // Widgets für die Abfrage
+    private JButton submitButton;
+    private JButton printButton;
 
-						protected void doUIUpdateLogic(){
-							((SuevModel)getTableModel()).fireTableDataChanged();
-							frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-						}
-					};
-					worker.start();
-				}
-			});
-			
-			printButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					showReportListe();
-				}
-			});
-			
-			// Noch etwas Layout...
-			FormLayout layout = new FormLayout("pref, 3dlu, pref");
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-			
-			builder.append(submitButton, printButton);
-			
-			queryPanel = builder.getPanel();
-		}
-		
-		return queryPanel;
-	}
-	
-	
-	public void showReportListe() {
+    /** Das TableModel für die Ergebnis-Tabelle */
+    private SuevModel tmodel;
 
-			try {
-				ReportManager.getInstance().startReportWorker("Suev-Kan", printButton);
-			} catch (EngineException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.Modul#getName()
+     */
+    public String getName() {
+        return "SUEV-KAN";
+    }
 
-	}
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
+     */
+    public JPanel getQueryOptionsPanel() {
+        if (queryPanel == null) {
+            // Die Widgets initialisieren
+            submitButton = new JButton("Alle Objekte anzeigen");
+            printButton = new JButton("Liste drucken");
 
-	/* (non-Javadoc)
-	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
-	 */
-	public ListTableModel getTableModel() {
-		if (tmodel == null) {
-			tmodel = new SuevModel();
-		}
-		return tmodel;
-	}
+            // Ein ActionListener für den Button,
+            // der die eigentliche Suche auslöst:
+            submitButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        protected void doNonUILogic() {
+                            ((SuevModel)getTableModel()).setList(AnhSuevFachdaten.getAuswertungsListe());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((SuevModel)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+
+            printButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    showReportListe();
+                }
+            });
+
+            // Noch etwas Layout...
+            FormLayout layout = new FormLayout("pref, 3dlu, pref");
+            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+
+            builder.append(submitButton, printButton);
+
+            queryPanel = builder.getPanel();
+        }
+
+        return queryPanel;
+    }
+
+
+    public void showReportListe() {
+
+            try {
+                ReportManager.getInstance().startReportWorker("Suev-Kan", printButton);
+            } catch (EngineException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+    }
+
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
+     */
+    public ListTableModel getTableModel() {
+        if (tmodel == null) {
+            tmodel = new SuevModel();
+        }
+        return tmodel;
+    }
 }

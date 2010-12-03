@@ -8,16 +8,16 @@ import java.awt.Toolkit;
 import java.net.URL;
 
 /**
- * Ein Splashscreen, der ein Bild anzeigt und währenddessen das 
+ * Ein Splashscreen, der ein Bild anzeigt und währenddessen das
  * eigentliche Hauptprogramm lädt.
 */
 public class AUIKSplash {
 
-	/**
-	 * Zeigt einen Splashscreen an und lädt das eigentlich Hauptprogramm.
-	 * @param args
-	 */
-	public static void main(String[] args) {
+    /**
+     * Zeigt einen Splashscreen an und lädt das eigentlich Hauptprogramm.
+     * @param args
+     */
+    public static void main(String[] args) {
         // Read the image data and display the splash screen
 
         // -------------------------------------------------
@@ -47,5 +47,5 @@ public class AUIKSplash {
         // Dispose the splash screen
         // -------------------------
         if (splashFrame != null) splashFrame.dispose();
-	}
+    }
 }

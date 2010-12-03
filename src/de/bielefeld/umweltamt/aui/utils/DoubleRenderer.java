@@ -12,32 +12,32 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author David Klotz
  */
 public class DoubleRenderer extends DefaultTableCellRenderer {
-	private NumberFormat formatter;
-	
-	public DoubleRenderer() {
-		super(); 
-	}
-	
-	public void setValue(Object value) {
-		setText((value == null) ? "" : formatObject(value));
-	}
-	
-	private String formatObject(Object value) {
-		if (formatter==null) {
-			formatter = NumberFormat.getNumberInstance();
-			formatter.setGroupingUsed(false);
-			//formatter.setMaximumFractionDigits(1);
-		}
-		
-		String tmp;
-		if (value instanceof Number) {
-			tmp = formatter.format(value);
-		} else if (value instanceof KommaDouble) {
-			tmp = formatter.format(((KommaDouble)value).getValue());
-		} else {
-			tmp = "";
-		}
-		
-		return tmp;
-	}
+    private NumberFormat formatter;
+
+    public DoubleRenderer() {
+        super();
+    }
+
+    public void setValue(Object value) {
+        setText((value == null) ? "" : formatObject(value));
+    }
+
+    private String formatObject(Object value) {
+        if (formatter==null) {
+            formatter = NumberFormat.getNumberInstance();
+            formatter.setGroupingUsed(false);
+            //formatter.setMaximumFractionDigits(1);
+        }
+
+        String tmp;
+        if (value instanceof Number) {
+            tmp = formatter.format(value);
+        } else if (value instanceof KommaDouble) {
+            tmp = formatter.format(((KommaDouble)value).getValue());
+        } else {
+            tmp = "";
+        }
+
+        return tmp;
+    }
 }

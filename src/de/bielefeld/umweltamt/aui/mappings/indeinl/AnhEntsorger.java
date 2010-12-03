@@ -14,8 +14,8 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
- * A class that represents a row in the 'ANH_ENTSORGER' table. 
- * This class may be customized as it is never re-generated 
+ * A class that represents a row in the 'ANH_ENTSORGER' table.
+ * This class may be customized as it is never re-generated
  * after being created.
  */
 public class AnhEntsorger
@@ -37,80 +37,80 @@ public class AnhEntsorger
     {
         super(entsorgerid);
     }
-    
+
     public String toString() {
-    	return getEntsorger();
+        return getEntsorger();
     }
 
-	/**
-	 * Liefert alle vorhandenen Entsorger.
-	 * @param session Eine Hibernate-Session
-	 * @return Alle vorhandenen Entsorger
-	 * @throws HibernateException Wenn ein Datenbank-Fehler auftritt
-	 */
-	private static AnhEntsorger[] getEntsorg(Session session) throws HibernateException {
-		List list = null;
-		
-		String suchString = "from AnhEntsorger ahe order by ahe.entsorgerid";
+    /**
+     * Liefert alle vorhandenen Entsorger.
+     * @param session Eine Hibernate-Session
+     * @return Alle vorhandenen Entsorger
+     * @throws HibernateException Wenn ein Datenbank-Fehler auftritt
+     */
+    private static AnhEntsorger[] getEntsorg(Session session) throws HibernateException {
+        List list = null;
 
-		Query query = session.createQuery(suchString);
-		query.setCacheable(true);
-		query.setCacheRegion("entsorgerliste");
-		list = query.list();
-		
-		AnhEntsorger[] tmp = new AnhEntsorger[list.size()];
-		tmp = (AnhEntsorger[]) list.toArray(tmp);
-		
-		return tmp;
-	}
-	
-	/**
-	 * Liefert alle vorhandenen Entsorger. 
-	 * öffnet eine neue Hibernate-Session und schließt sie wieder. 
-	 * @return Alle vorhandenen Entsorger
-	 */
+        String suchString = "from AnhEntsorger ahe order by ahe.entsorgerid";
 
-	public static AnhEntsorger[] getEntsorg() {
-		AnhEntsorger[] tmp;
-		
-		try {
-		Session session = HibernateSessionFactory.currentSession();
-		tmp = getEntsorg(session);
-		} catch (HibernateException e) {
-			tmp = null;
-		} finally {
-			HibernateSessionFactory.closeSession();
-		}
-		
-		return tmp;
-	}
+        Query query = session.createQuery(suchString);
+        query.setCacheable(true);
+        query.setCacheRegion("entsorgerliste");
+        list = query.list();
 
-	public static AnhEntsorger saveEntsorger(AnhEntsorger ents) {
-		AnhEntsorger entsRet;
-		
-		Transaction tx = null;
-		try {
-			Session session = HibernateSessionFactory.currentSession();
-			tx = session.beginTransaction();
-			entsRet = (AnhEntsorger) session.merge(ents);
-			tx.commit();
-		} catch (HibernateException e) {
-			entsRet = null;
-			// Falls während der Änderungen ein Hibernate Fehler auftritt
-			if (tx != null) {
-				// Alle Änderungen rückgängig machen
-				try {
-					tx.rollback();
-				} catch (HibernateException e1) {
-					e1.printStackTrace();
-					AUIKataster.handleDBException(e1, "EntsorgerEditor.doSpeichern", false);
-				}
-			}
-		} finally {
-			// Am Ende (egal ob erfolgreich oder nicht) die Session schließen
-			HibernateSessionFactory.closeSession();
-		}
-		
-		return entsRet;
-	}
+        AnhEntsorger[] tmp = new AnhEntsorger[list.size()];
+        tmp = (AnhEntsorger[]) list.toArray(tmp);
+
+        return tmp;
+    }
+
+    /**
+     * Liefert alle vorhandenen Entsorger.
+     * öffnet eine neue Hibernate-Session und schließt sie wieder.
+     * @return Alle vorhandenen Entsorger
+     */
+
+    public static AnhEntsorger[] getEntsorg() {
+        AnhEntsorger[] tmp;
+
+        try {
+        Session session = HibernateSessionFactory.currentSession();
+        tmp = getEntsorg(session);
+        } catch (HibernateException e) {
+            tmp = null;
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return tmp;
+    }
+
+    public static AnhEntsorger saveEntsorger(AnhEntsorger ents) {
+        AnhEntsorger entsRet;
+
+        Transaction tx = null;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            tx = session.beginTransaction();
+            entsRet = (AnhEntsorger) session.merge(ents);
+            tx.commit();
+        } catch (HibernateException e) {
+            entsRet = null;
+            // Falls während der Änderungen ein Hibernate Fehler auftritt
+            if (tx != null) {
+                // Alle Änderungen rückgängig machen
+                try {
+                    tx.rollback();
+                } catch (HibernateException e1) {
+                    e1.printStackTrace();
+                    AUIKataster.handleDBException(e1, "EntsorgerEditor.doSpeichern", false);
+                }
+            }
+        } finally {
+            // Am Ende (egal ob erfolgreich oder nicht) die Session schließen
+            HibernateSessionFactory.closeSession();
+        }
+
+        return entsRet;
+    }
 }

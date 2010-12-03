@@ -13,8 +13,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
- * A class that represents a row in the 'VAWS_WASSEREINZUGSGEBIETE' table. 
- * This class may be customized as it is never re-generated 
+ * A class that represents a row in the 'VAWS_WASSEREINZUGSGEBIETE' table.
+ * This class may be customized as it is never re-generated
  * after being created.
  */
 public class VawsWassereinzugsgebiete
@@ -39,36 +39,36 @@ public class VawsWassereinzugsgebiete
 
     /* Add customized code below */
 
-	/**
-	 * Liefert den Namen des Einzugsgebietes.
-	 */
-    public String toString() {
-		return super.getEzgbname();
-	}
-    
     /**
-	 * Liefert alle vorhandenen VAWS-Wassereinzugsgebiete.
-	 * @param session Eine Hibernate-Session
-	 * @return Alle vorhandenen Wassereinzugsgebiete
-	 * @throws HibernateException Falls ein Datenbank-Fehler auftritt
-	 */
-	public static VawsWassereinzugsgebiete[] getWEinzugsgebiete(Session session) throws HibernateException {
-		List list = null;
-		String suchString = "FROM VawsWassereinzugsgebiete vwezg ORDER BY vwezg.wasserezgbid";
-		VawsWassereinzugsgebiete[] tmp;
-		Query query = session.createQuery(suchString);
-		query.setCacheable(true);
-		query.setCacheRegion("wezgbliste");
-		list = query.list();
-		tmp = new VawsWassereinzugsgebiete[list.size()];
-		tmp = (VawsWassereinzugsgebiete[]) list.toArray(tmp);
-		return tmp;
-	}
-	
-	public static VawsWassereinzugsgebiete[] getWEinzugsgebiete() throws HibernateException {
-		Session session = HibernateSessionFactory.currentSession();
-		VawsWassereinzugsgebiete[] tmp = getWEinzugsgebiete(session);
-		HibernateSessionFactory.closeSession();
-		return tmp;
-	}
+     * Liefert den Namen des Einzugsgebietes.
+     */
+    public String toString() {
+        return super.getEzgbname();
+    }
+
+    /**
+     * Liefert alle vorhandenen VAWS-Wassereinzugsgebiete.
+     * @param session Eine Hibernate-Session
+     * @return Alle vorhandenen Wassereinzugsgebiete
+     * @throws HibernateException Falls ein Datenbank-Fehler auftritt
+     */
+    public static VawsWassereinzugsgebiete[] getWEinzugsgebiete(Session session) throws HibernateException {
+        List list = null;
+        String suchString = "FROM VawsWassereinzugsgebiete vwezg ORDER BY vwezg.wasserezgbid";
+        VawsWassereinzugsgebiete[] tmp;
+        Query query = session.createQuery(suchString);
+        query.setCacheable(true);
+        query.setCacheRegion("wezgbliste");
+        list = query.list();
+        tmp = new VawsWassereinzugsgebiete[list.size()];
+        tmp = (VawsWassereinzugsgebiete[]) list.toArray(tmp);
+        return tmp;
+    }
+
+    public static VawsWassereinzugsgebiete[] getWEinzugsgebiete() throws HibernateException {
+        Session session = HibernateSessionFactory.currentSession();
+        VawsWassereinzugsgebiete[] tmp = getWEinzugsgebiete(session);
+        HibernateSessionFactory.closeSession();
+        return tmp;
+    }
 }

@@ -7,63 +7,63 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
  */
 public class AbstractBasisObjektverknuepfung implements java.io.Serializable {
 
-	// Fields    
+    // Fields
 
     /** The cached hash code value for this instance.  Settting to 0 triggers re-calculation. */
     private int hashValue = 0;
-	
-	private java.lang.Integer id;
 
-	private BasisObjekt basisObjektByIstVerknuepftMit;
+    private java.lang.Integer id;
 
-	private BasisObjekt basisObjektByObjekt;
+    private BasisObjekt basisObjektByIstVerknuepftMit;
 
-	// Constructors
+    private BasisObjekt basisObjektByObjekt;
 
-	/** default constructor */
-	public AbstractBasisObjektverknuepfung() {
-	}
+    // Constructors
 
-	/** minimal constructor */
-	public AbstractBasisObjektverknuepfung(java.lang.Integer id) {
+    /** default constructor */
+    public AbstractBasisObjektverknuepfung() {
+    }
+
+    /** minimal constructor */
+    public AbstractBasisObjektverknuepfung(java.lang.Integer id) {
         this.hashValue = 0;
-		this.id = id;
-	}
+        this.id = id;
+    }
 
-	/** full constructor */
-	public AbstractBasisObjektverknuepfung(java.lang.Integer id,
-			BasisObjekt basisObjektByIstVerknuepftMit,
-			BasisObjekt basisObjektByObjekt) {
-		this.id = id;
-		this.basisObjektByIstVerknuepftMit = basisObjektByIstVerknuepftMit;
-		this.basisObjektByObjekt = basisObjektByObjekt;
-	}
+    /** full constructor */
+    public AbstractBasisObjektverknuepfung(java.lang.Integer id,
+            BasisObjekt basisObjektByIstVerknuepftMit,
+            BasisObjekt basisObjektByObjekt) {
+        this.id = id;
+        this.basisObjektByIstVerknuepftMit = basisObjektByIstVerknuepftMit;
+        this.basisObjektByObjekt = basisObjektByObjekt;
+    }
 
-	// Property accessors
-	public java.lang.Integer getId() {
-		return this.id;
-	}
+    // Property accessors
+    public java.lang.Integer getId() {
+        return this.id;
+    }
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
+    public void setId(java.lang.Integer id) {
+        this.id = id;
+    }
 
-	public BasisObjekt getBasisObjektByIstVerknuepftMit() {
-		return this.basisObjektByIstVerknuepftMit;
-	}
+    public BasisObjekt getBasisObjektByIstVerknuepftMit() {
+        return this.basisObjektByIstVerknuepftMit;
+    }
 
-	public void setBasisObjektByIstVerknuepftMit(
-			BasisObjekt basisObjektByIstVerknuepftMit) {
-		this.basisObjektByIstVerknuepftMit = basisObjektByIstVerknuepftMit;
-	}
+    public void setBasisObjektByIstVerknuepftMit(
+            BasisObjekt basisObjektByIstVerknuepftMit) {
+        this.basisObjektByIstVerknuepftMit = basisObjektByIstVerknuepftMit;
+    }
 
-	public BasisObjekt getBasisObjektByObjekt() {
-		return this.basisObjektByObjekt;
-	}
+    public BasisObjekt getBasisObjektByObjekt() {
+        return this.basisObjektByObjekt;
+    }
 
-	public void setBasisObjektByObjekt(BasisObjekt basisObjektByObjekt) {
-		this.basisObjektByObjekt = basisObjektByObjekt;
-	}
+    public void setBasisObjektByObjekt(BasisObjekt basisObjektByObjekt) {
+        this.basisObjektByObjekt = basisObjektByObjekt;
+    }
     /**
      * Implementation of the equals comparison on the basis of equality of the primary key values.
      * @param rhs

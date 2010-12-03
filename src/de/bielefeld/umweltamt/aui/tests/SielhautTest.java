@@ -55,7 +55,7 @@ public class SielhautTest extends TestCase {
         _sessionFactory =
                 configuration.buildSessionFactory();
 
-        
+
     }
 
     protected void tearDown() throws Exception {
@@ -64,32 +64,32 @@ public class SielhautTest extends TestCase {
     }
     public void testErzeugen()
     {
-    	String id = "leer";
-    	_id = erzeugeSielhaut(Messstelle);
-    	if (_id != 0)
-    	{
-    		id = "vorhanden";    		
-    	}
-    	assertEquals(id,"vorhanden");
+        String id = "leer";
+        _id = erzeugeSielhaut(Messstelle);
+        if (_id != 0)
+        {
+            id = "vorhanden";
+        }
+        assertEquals(id,"vorhanden");
     }
-   
+
     /**
      * Und hier versuchen wir ihn über eine Datenbankabfrage zu finden.
      */
-   	private AtlSielhaut testQuery() {
+       private AtlSielhaut testQuery() {
         Session session = null;
-       
+
     try{
             session = _sessionFactory.openSession();
-            
+
 
               List result = AtlSielhaut.findPunkte(Messstelle);
-              
+
             AtlSielhaut sielhaut = (AtlSielhaut) result.get(0);
 
             assertEquals(Messstelle, sielhaut.getBezeichnung());
-            
-    
+
+
       return sielhaut;
     }
       finally {
@@ -128,7 +128,7 @@ public class SielhautTest extends TestCase {
     }
 
     /**
-     * der Sielhutpunkt wird gelöscht 
+     * der Sielhutpunkt wird gelöscht
      */
     public void Delete() {
         Session session = null;
@@ -142,7 +142,7 @@ public class SielhautTest extends TestCase {
             session.close();
             session = _sessionFactory.openSession();
 
-           
+
         }
         finally {
             if (session != null && session.isConnected()) {
@@ -153,7 +153,7 @@ public class SielhautTest extends TestCase {
 
     /**
      * Kleine Hilfsmethode, mit der ein Sielhautpunkt erzeugt und in der Datenbank gesichert wird.
-     * 
+     *
      * @param messtelle Messtellenbezeichnung
      * @return Gibt die ID des Sielhautpunktes zurück.
      */
@@ -161,9 +161,9 @@ public class SielhautTest extends TestCase {
             String messstelle) {
         AtlSielhaut sielhaut = new AtlSielhaut();
         sielhaut.setBezeichnung(messstelle);
-        
 
-        
+
+
         Session session = null;
         Transaction transaction = null;
         try {
@@ -180,15 +180,15 @@ public class SielhautTest extends TestCase {
                 throw e;
             }
         }
-       
-        
+
+
         finally {
             if (session != null) {
                 session.close();
             }
 
         }
-       
+
         return sielhaut.getId();
     }
 
