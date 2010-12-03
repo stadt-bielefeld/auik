@@ -4,11 +4,15 @@
         Buildfile for project AUIK
     </description>
 
+    <!-- Some properties for necessary path definitions -->
     <property name="src" location="src"/>
     <property name="build" location="build"/>
     <property name="dist" location="dist"/>
     <property name="libs" location="lib"/>
     <property name="icons" location="/de/bielefeld/umweltamt/aui/icons"/>
+
+    <!-- Some properties for SystemProperties -->
+    <property name="auik.hibernate.config" value="hibernate.cfg.xml"/>
 
     <target name="compile" description="Compile the source">
         <mkdir dir="${build}"/>
@@ -51,6 +55,8 @@
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
+            <sysproperty key="auik.hibernate.config"
+                         value="${auik.hibernate.config}"/>
         </java>
     </target>
 </project>

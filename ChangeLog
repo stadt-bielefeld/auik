@@ -1,3 +1,20 @@
+2010-12-03  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/HibernateSessionFactory.java: Der Name der
+	  Konfigurationsdatei, die von Hibernate genutzt wird, wird aus einer System
+	  Property 'auik.hibernate.config' gelesen. Falls keine solche System
+	  Property existiert, wird 'hibernate.cfg.xml' als standard Dateiname
+	  genutzt.
+	
+	* build.xml: Beim Starten der Anwendung wird eine System Property
+	  hinzugefügt, die auf die zu nutzende Konfigurationsdatei für Hibernate
+	  verweist (siehe oben). Der standard Wert dieser System Property ist
+	  'hibernate.cfg.xml'. Um eine andere Hibernate Konfiguration zu verwenden,
+	  kann diese Property verändert, oder mit folgendem Aufruf für den nächsten
+	  Start angepasst werden:
+	
+	    ant run -Dauik.hibernate.config=YourConfig.cfg.xml
+
 2010-12-02  Ingo Weinzierl <ingo@intevation.de>
 
 	* build.xml: Neu. Diese Ant Konfiguration hat derzeit 5 Optionen:
