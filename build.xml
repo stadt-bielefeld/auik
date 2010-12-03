@@ -5,10 +5,11 @@
     </description>
 
     <!-- Some properties for necessary path definitions -->
-    <property name="src" location="src"/>
+    <property name="src"   location="src"/>
     <property name="build" location="build"/>
-    <property name="dist" location="dist"/>
-    <property name="libs" location="lib"/>
+    <property name="dist"  location="dist"/>
+    <property name="libs"  location="lib"/>
+    <property name="doc"   location="doc"/>
     <property name="icons" location="/de/bielefeld/umweltamt/aui/icons"/>
 
     <!-- Some properties for SystemProperties -->
@@ -43,6 +44,7 @@
     <target name="clean" description="Clean up">
         <delete dir="${build}"/>
         <delete dir="${dist}"/>
+        <delete dir="${doc}"/>
     </target>
 
     <target name="run" depends="dist" description="Run the application">
@@ -59,4 +61,14 @@
                          value="${auik.hibernate.config}"/>
         </java>
     </target>
+
+    <target name="javadoc" depends="dist" description="Creates JavaDoc for this application">
+        <mkdir dir="${doc}"/>
+        <javadoc destdir="${doc}" author="true" version="true" use="true">
+            <fileset dir="${src}">
+                <include name="**/*.java"/>
+            </fileset>
+        </javadoc>
+    </target>
+
 </project>
