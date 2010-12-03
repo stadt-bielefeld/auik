@@ -30,7 +30,10 @@ package de.bielefeld.umweltamt.aui;
 import javax.swing.JOptionPane;
 
 /**
- * Das Anlagen- und Indirekteinleiter-Kataster.
+ * Das Anlagen- und Indirekteinleiter-Kataster. Diese Klasse stellt den
+ * eigentlichen Einstiegspunkt der Anwendung dar. Die Methode {@link main}
+ * sollte dazu verwendet werden, das Programm zu starten.
+ *
  * @author David Klotz
  */
 public class AUIKataster {
@@ -91,7 +94,9 @@ public class AUIKataster {
     }
 
     /**
-     * Die Hauptmethode des AUI-Katasters.
+     * Die Hauptmethode des AUI-Katasters. Hier wird der {@link SettingsManager}
+     * sowie das {@link HauptFrame} instanziert. Das {@link HauptFrame} bekommt
+     * die Instanz des {@link SettingsManager} als Konstruktor &uuml;bergeben.
      * @param args Kommandozeilenargumente
      */
     public static void main(String[] args) {

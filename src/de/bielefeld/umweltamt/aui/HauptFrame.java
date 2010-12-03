@@ -73,7 +73,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -117,7 +116,9 @@ import de.bielefeld.umweltamt.aui.utils.GradientPanel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 /**
- * Das Hauptfenster des AUI-K.
+ * Das Hauptfenster des AUI-K. Dieses Fenster beinhaltet alle weiteren
+ * GUI-Komponenten der Anwendung.
+ *
  * @author David Klotz
  */
 public class HauptFrame extends JFrame {
@@ -193,7 +194,12 @@ public class HauptFrame extends JFrame {
     }
 
     /**
-     * This method initializes this frame.
+     * Diese Meethode initialisiert das Fenster sowie dessen beinhalteten
+     * Komponenten. <br><b>Hinweis:</b> Das Look and Feel der Anwendung wird
+     * ebenfalls an dieser Stelle gesetzt.<br><b>Achtung:</b> Au&szlig;erdem
+     * werden in dieser Methode die Parameter für Datenbankverbindung abgefragt
+     * und an Hibernate &uuml;bergeben. Dies sollte optimalerweise nicht an
+     * dieser Stelle geschehen!
      */
     private void initialize() {
         try {

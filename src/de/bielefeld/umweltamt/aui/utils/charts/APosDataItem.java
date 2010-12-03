@@ -26,13 +26,11 @@ package de.bielefeld.umweltamt.aui.utils.charts;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeriesDataItem;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 
 /**

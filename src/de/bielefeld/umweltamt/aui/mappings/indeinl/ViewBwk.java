@@ -13,7 +13,6 @@ import org.hibernate.Transaction;
 import org.hibernate.type.Type;
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AbstractAnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**

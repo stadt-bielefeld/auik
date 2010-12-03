@@ -26,112 +26,19 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package de.bielefeld.umweltamt.aui.tests;
 
-import java.awt.Frame;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URL;
-import java.util.Date;
-import java.util.List;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPasswordField;
-import javax.swing.Timer;
-import javax.swing.UIManager;
-
-import de.bielefeld.umweltamt.aui.AUIKSplash;
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.Modul;
 import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.SettingsManager;
-import de.bielefeld.umweltamt.aui.SplashWindow;
 import de.bielefeld.umweltamt.aui.mappings.basis.*;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.*;
 import de.bielefeld.umweltamt.aui.mappings.atl.*;
 import de.bielefeld.umweltamt.aui.mappings.vaws.*;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import junit.framework.TestCase;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
-
-import com.jgoodies.plaf.FontSizeHints;
-import com.jgoodies.plaf.Options;
-
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.Window;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
-import javax.swing.UIManager;
-
-import org.hibernate.HibernateException;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.plaf.FontSizeHints;
-import com.jgoodies.plaf.HeaderStyle;
-import com.jgoodies.plaf.Options;
-import com.jgoodies.uif_lite.component.Factory;
-import com.jgoodies.uif_lite.panel.SimpleInternalFrame;
-
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
-import de.bielefeld.umweltamt.aui.utils.GradientPanel;
-import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 public class GUITest extends TestCase {
     /**

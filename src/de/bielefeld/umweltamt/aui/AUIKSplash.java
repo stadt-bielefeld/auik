@@ -8,13 +8,13 @@ import java.awt.Toolkit;
 import java.net.URL;
 
 /**
- * Ein Splashscreen, der ein Bild anzeigt und währenddessen das
- * eigentliche Hauptprogramm lädt.
+ * Ein Splashscreen, der ein Bild anzeigt und w&auml;hrenddessen das
+ * eigentliche Hauptprogramm l&auml;dt.
 */
 public class AUIKSplash {
 
     /**
-     * Zeigt einen Splashscreen an und lädt das eigentlich Hauptprogramm.
+     * Zeigt einen Splashscreen an und l&auml;dt das eigentlich Hauptprogramm.
      * @param args
      */
     public static void main(String[] args) {

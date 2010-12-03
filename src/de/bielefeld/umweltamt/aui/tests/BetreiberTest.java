@@ -26,7 +26,6 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package de.bielefeld.umweltamt.aui.tests;
 
-import java.util.Date;
 import java.util.List;
 import de.bielefeld.umweltamt.aui.mappings.basis.*;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.*;
@@ -35,12 +34,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.*;
 import junit.framework.TestCase;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.classic.Session;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 
 public class BetreiberTest extends TestCase {

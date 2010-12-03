@@ -120,7 +120,10 @@ public class ModulManager {
     }
 
     /**
-     * Lädt alle Module.
+     * Lädt alle Module. Diese Methode wird dazu verwendet, die Module der
+     * Anwemdung zu laden. Der {@link SettingsManager} liefert die Beschreibung
+     * aller Module als String. Diese werden dann mittels Aufruf von {@link
+     * loadModul(String)} instanziert und dieser Instanz bekannt gemacht.
      */
     public void loadModule() {
 
@@ -135,7 +138,12 @@ public class ModulManager {
     }
 
     /**
-     * Lädt ein Modul anhand seines Klassennamens.
+     * Lädt ein Modul anhand seines Klassennamens mittels Reflection. Alle
+     * Module m&uuml;ssen im Paket {@linkPlain de.bielefeld.umweltamt.aui.module}
+     * enthalten sein - andernfalls kann das entsprechende Modul nicht geladen
+     * werden.<br><b>Achtung</b>: Es wird kein Hinweis gegeben, falls ein Modul
+     * nicht geladen werden konnte.
+     *
      * @param modulName Der Name der Klasse (bspw. "BasisBetreiberNeu")
      */
     private void loadModul(String modulName) {

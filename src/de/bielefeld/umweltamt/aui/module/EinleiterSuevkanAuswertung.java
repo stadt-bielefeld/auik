@@ -36,7 +36,6 @@ import org.eclipse.birt.report.engine.api.EngineException;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;

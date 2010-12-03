@@ -11,7 +11,12 @@ import de.bielefeld.umweltamt.aui.utils.MD5Password;
 
 /**
  * Eine abstrakte Basis-Klasse für alle Module.
- * Alle konkreten Module sollten von dieser Klasse erben.
+ * Alle konkreten Module sollten von dieser Klasse erben. Ein {@link
+ * AbstractModul} enth&auml;lt eine {@link HauptFrame} und eine {@link
+ * ModulManager}Instanz. Diese werden mit entsprechenden Setter-Methoden
+ * bekanntgemacht. Dies sollte direkt nach der Initialisierung des konkreten
+ * Moduls geschehen um potentiellen Fehlern vorzubeugen.
+ *
  * @author David Klotz
  */
 public abstract class AbstractModul implements Modul {

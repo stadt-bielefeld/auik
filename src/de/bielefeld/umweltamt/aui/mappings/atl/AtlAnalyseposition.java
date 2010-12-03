@@ -16,7 +16,6 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 
 /**
  * A class that represents a row in the 'ATL_ANALYSEPOSITION' table.

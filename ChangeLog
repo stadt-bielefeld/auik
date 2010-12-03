@@ -1,5 +1,58 @@
 2010-12-03  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/AbstractModul.java,
+	  src/de/bielefeld/umweltamt/aui/AUIKSplash.java,
+	  src/de/bielefeld/umweltamt/aui/module/objektpanels/Anh55Panel.java,
+	  src/de/bielefeld/umweltamt/aui/module/objektpanels/UebergabePanel.java,
+	  src/de/bielefeld/umweltamt/aui/module/objektpanels/ProbepktAuswPanel.java,
+	  src/de/bielefeld/umweltamt/aui/module/objektpanels/ChronoPanel.java,
+	  src/de/bielefeld/umweltamt/aui/module/objektpanels/ProbepunktPanel.java,
+	  src/de/bielefeld/umweltamt/aui/module/objektpanels/BasisPanel.java,
+	  src/de/bielefeld/umweltamt/aui/module/objektpanels/Anh52Panel.java,
+	  src/de/bielefeld/umweltamt/aui/module/EinleiterSuevkanAuswertung.java,
+	  src/de/bielefeld/umweltamt/aui/module/common/SchlammPanel.java,
+	  src/de/bielefeld/umweltamt/aui/module/common/editors/StandortEditor.java,
+	  src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java,
+	  src/de/bielefeld/umweltamt/aui/module/EinleiterAnh49Auswertung.java,
+	  src/de/bielefeld/umweltamt/aui/module/BasisStandortSuchen.java,
+	  src/de/bielefeld/umweltamt/aui/module/ProbenehmerAuswertung.java,
+	  src/de/bielefeld/umweltamt/aui/ReportManager.java,
+	  src/de/bielefeld/umweltamt/aui/ModulManager.java,
+	  src/de/bielefeld/umweltamt/aui/AUIKataster.java,
+	  src/de/bielefeld/umweltamt/aui/utils/charts/APosDataItem.java,
+	  src/de/bielefeld/umweltamt/aui/tests/WiedervorlageVawsTest.java,
+	  src/de/bielefeld/umweltamt/aui/tests/BetreiberTest.java,
+	  src/de/bielefeld/umweltamt/aui/tests/AuswertungTest.java,
+	  src/de/bielefeld/umweltamt/aui/tests/GUITest.java,
+	  src/de/bielefeld/umweltamt/aui/tests/ObjektTest.java,
+	  src/de/bielefeld/umweltamt/aui/tests/SielhautTest.java,
+	  src/de/bielefeld/umweltamt/aui/tests/StandortTest.java,
+	  src/de/bielefeld/umweltamt/aui/HauptFrame.java,
+	  src/de/bielefeld/umweltamt/aui/HibernateSessionFactory.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/atl/AtlAnalyseposition.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/atl/AtlStatus.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/vaws/VawsVerwaltungsverf.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/vaws/VawsKontrollen.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/vaws/VawsFachdaten.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektverknuepfung.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/basis/BasisStandort.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/basis/BasisBetreiber.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/indeinl/Anh52Fachdaten.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/indeinl/Anh53Fachdaten.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/indeinl/Anh55Fachdaten.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/indeinl/ViewBwk.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/indeinl/IndeinlGenehmigung.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/indeinl/AbstractAnh49Ortstermine.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/indeinl/AnhSuevFachdaten.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Analysen.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/indeinl/AbstractAnh49Abscheiderdetails.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/indeinl/IndeinlUebergabestelle.java:
+	  Nicht verwendete importierte Klassen entfernt. "*"-Imports wurden jedoch
+	  nicht bereinigt.
+
+2010-12-03  Ingo Weinzierl <ingo@intevation.de>
+
 	* build.xml: Neue Option 'javadoc'. Der Aufruf `ant javadoc` generiert nun
 	  eine HTML Ausgabe der JavaDoc im Verzeichnis `doc`.
 

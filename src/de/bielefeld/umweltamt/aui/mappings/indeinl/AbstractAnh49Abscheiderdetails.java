@@ -8,8 +8,6 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AbstractAnh49Fachdaten;
-
 /**
  * A class that represents a row in the ANH_49_ABSCHEIDERDETAILS table.
  * You can customize the behavior of this class by editing the class, {@link Anh49Abscheiderdetails()}.
