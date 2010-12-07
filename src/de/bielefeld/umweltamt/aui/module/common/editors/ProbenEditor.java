@@ -53,10 +53,12 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.EventObject;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -106,6 +108,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class ProbenEditor extends AbstractApplyEditor {
+
     private class ParameterModel extends EditableListTableModel {
         private AtlProbenahmen probe;
         private boolean isNew;
@@ -359,7 +362,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private JComboBox            parameterBox;
     private JComboBox            einheitenBox;
 
-    private ParameterModel parameterModel;
+    private ParameterModel       parameterModel;
     private boolean isNew;
 
 
@@ -797,8 +800,18 @@ public class ProbenEditor extends AbstractApplyEditor {
 }
 
 class ParameterAuswahlModel extends ListTableModel {
+
+    protected boolean[] selection;
+
     public ParameterAuswahlModel() {
         super(new String[] { "wählen", "Parameter" }, false);
+    }
+
+    public void setList(List newList) {
+        super.setList(newList);
+
+        selection = new boolean[newList.size()];
+        Arrays.fill(selection, false);
     }
 
     /*
@@ -809,23 +822,44 @@ class ParameterAuswahlModel extends ListTableModel {
      * (java.lang.Object, int)
      */
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        AtlParameter para = (AtlParameter) objectAtRow;
-        Object tmp;
+        // we don't need this method
+        return null;
+    }
 
-        switch (columnIndex) {
-        case 0:
-            tmp = new Boolean(false);
-            break;
-        case 1:
-            tmp = para.getBezeichnung();
-            break;
 
-        default:
-            tmp = "FEHLER!";
-            break;
+    public Object getValueAt(int row, int col) {
+        if (rowExists(row)) {
+            if (col < columns.length) {
+
+                switch (col) {
+                    case 0:
+                        return new Boolean(selection[row]);
+                    case 1:
+                        AtlParameter p = (AtlParameter) getObjectAtRow(row);
+                        return p.getBezeichnung();
+                    default:
+                        return "FEHLER!";
+                }
+            }
         }
 
-        return tmp;
+        return null;
+    }
+
+
+    public void setValueAt(Object value, int row, int col) {
+        AUIKataster.debugOutput(
+            "ParameterAuswahlModel - setValueAt(" + row + ", " + col +")");
+
+        if (rowExists(row)) {
+            if (col < columns.length) {
+                switch (col) {
+                    case 0:
+                        boolean cur = selection[row];
+                        selection[row] = cur ? false : true;
+                }
+            }
+        }
     }
 
     public Class getColumnClass(int columnIndex) {
@@ -836,9 +870,8 @@ class ParameterAuswahlModel extends ListTableModel {
         }
     }
 
-    public boolean isCellEditable(EventObject anEvent) {
-
-            return true;
+    public boolean isCellEditable(int row, int col) {
+        return col == 0 ? true : false;
     }
 
     /*

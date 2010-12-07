@@ -1,6 +1,11 @@
 2010-12-07  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Bugfix: Die Parameter in der Parameterauswahl sind nun selektierbar.
+
+2010-12-07  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Oberfläche zur Eingabe von Probenahmedetails um weitere Parameter
 	  erweitert.
 
