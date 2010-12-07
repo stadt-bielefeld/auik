@@ -1,3 +1,11 @@
+2010-12-07  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Oberfläche zur Eingabe von Probenahmedetails um weitere Parameter
+	  erweitert.
+
+	  TODO: Werte aus der Oberfläche in die DB persistieren.
+
 2010-12-03  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/AbstractModul.java,

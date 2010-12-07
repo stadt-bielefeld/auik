@@ -56,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.EventObject;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -69,6 +70,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -336,21 +338,30 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
     }
 
-    private Dimension minimumSize;
+    private Dimension            minimumSize;
 
-    private JLabel entnahmepunktFeld;
-    private TextFieldDateChooser datumFeld;
-    private JFormattedTextField uhrzeitFeld;
-    private JFormattedTextField icpEinwaageFeld;
-    private TextFieldDateChooser icpDatumFeld;
-    private JTextArea bemerkungsArea;
-    private JTable parameterTabelle;
+    private TextFieldDateChooser datum;
+    private JFormattedTextField  uhrzeitVon;
+    private JFormattedTextField  uhrzeitBis;
+    private JFormattedTextField  fahrtzeit;
+    private JTextField           bezug;
+    private JTextField           beteiligte;
+    private TextFieldDateChooser rechnungsDatum;
+    private JFormattedTextField  rechnungsBetrag;
+    private JTextArea            bemerkungsArea;
 
-    private JComboBox parameterBox;
-    private JComboBox einheitenBox;
+    private JTextField           betrieb;
+    private JLabel               entnahmepunkt;
+    private JFormattedTextField  icpEinwaageFeld;
+    private TextFieldDateChooser icpDatum;
+    private JTable               parameterTabelle;
+
+    private JComboBox            parameterBox;
+    private JComboBox            einheitenBox;
 
     private ParameterModel parameterModel;
     private boolean isNew;
+
 
     public ProbenEditor(AtlProbenahmen probe, HauptFrame owner, boolean isNew) {
         super("Probenahme " + probe.getKennummer(), probe, owner);
@@ -367,22 +378,33 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
     protected JComponent buildContentArea() {
-        entnahmepunktFeld = new JLabel();
-        datumFeld = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        entnahmepunkt = new JLabel();
+
+        datum          = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        rechnungsDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
 
         SimpleDateFormat formatter = new SimpleDateFormat ("HH:mm");
-        uhrzeitFeld = new JFormattedTextField(formatter);
+        uhrzeitVon = new JFormattedTextField(formatter);
+        uhrzeitBis = new JFormattedTextField(formatter);
 
-        //if (probe.isKlaerschlammProbe()) {
-            icpEinwaageFeld = new DoubleField(0);
-        //}
+        SimpleDateFormat zeitFormatter = new SimpleDateFormat("HH:mm:ss");
+        fahrtzeit = new JFormattedTextField(zeitFormatter);
 
-        icpDatumFeld = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+        rechnungsBetrag = new JFormattedTextField(nf);
 
+        bezug      = new JTextField();
+        beteiligte = new JTextField();
+
+        icpEinwaageFeld = new DoubleField(0);
+        icpDatum        = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
 
         bemerkungsArea = new LimitedTextArea(255);
         bemerkungsArea.setLineWrap(true);
         bemerkungsArea.setWrapStyleWord(true);
+
+        betrieb = new JTextField();
+
         JScrollPane bemerkungsScroller = new JScrollPane(bemerkungsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         bemerkungsScroller.setPreferredSize(new Dimension(0, 50));
 
@@ -397,42 +419,106 @@ public class ProbenEditor extends AbstractApplyEditor {
                 }
             }
         };
-        KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false);
-        aposRemoveAction.putValue(Action.ACCELERATOR_KEY, deleteKeyStroke);
-        parameterTabelle.getInputMap().put(deleteKeyStroke, aposRemoveAction.getValue(Action.NAME));
-        parameterTabelle.getActionMap().put(aposRemoveAction.getValue(Action.NAME), aposRemoveAction);
 
-        JScrollPane parameterScroller = new JScrollPane(parameterTabelle, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        //parameterScroller.setPreferredSize(new Dimension(600, 150));
+        KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(
+            KeyEvent.VK_DELETE, 0, false);
+
+        aposRemoveAction.putValue(Action.ACCELERATOR_KEY, deleteKeyStroke);
+
+        parameterTabelle.getInputMap().put(
+            deleteKeyStroke, aposRemoveAction.getValue(Action.NAME));
+
+        parameterTabelle.getActionMap().put(
+            aposRemoveAction.getValue(Action.NAME), aposRemoveAction);
+
+        JScrollPane parameterScroller = new JScrollPane(
+            parameterTabelle,
+            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         FormLayout layout = new FormLayout(
-                "r:p, 3dlu, max(70dlu;p), 5dlu, r:p, 3dlu, max(70dlu;p), 0dlu:grow");    // Spalten, Zeilen werden dynamisch erzeugt
-        layout.setColumnGroups(new int[][]{{1,5}, {3,7}});
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+            "70dlu, 50dlu, 30dlu, 5dlu, 30dlu, 50dlu, 5dlu, 40dlu, 50dlu, 5dlu, 50dlu",
+            "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu," +
+            "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 16dlu, pref, 8dlu," +
+            "pref, 16dlu, pref, 8dlu, pref, 16dlu, pref, 8dlu, 150dlu");
 
-        builder.appendSeparator("Probe");//+ probe.getKennummer() +" - "+probe.getAtlProbepkt().getAtlProbeart());
-        builder.append("Entnahmepunkt:", entnahmepunktFeld, 6);
-        builder.nextLine();
-        builder.append("Datum:", datumFeld);
-        builder.append("Uhrzeit:", uhrzeitFeld);
-        builder.nextLine();
+        PanelBuilder builder = new PanelBuilder(layout);
+        CellConstraints cc = new CellConstraints();
 
-        builder.appendSeparator("ICP");
-        //if (probe.isKlaerschlammProbe()) {
-            builder.append("Einwaage:", icpEinwaageFeld);
-        //}
-        builder.append("Datum:", icpDatumFeld);
-        builder.nextLine();
+        // TODO find existing values and fill into form
+        String probenummer = "E/11-2010"; // FAKE VALUE!
 
-        builder.appendSeparator("Bemerkung");
-        builder.append(bemerkungsScroller, 7);
-        builder.nextLine();
+        int row = 1;
+        builder.addSeparator("Probe", cc.xyw(1, row, 11));
 
-        builder.appendSeparator("Parameter");
-        builder.appendRow("3dlu");
-        builder.appendRow("fill:60dlu:grow");
-        builder.nextLine(2);
-        builder.append(parameterScroller, 8);
+        row += 2;
+        builder.addLabel("Probenummer:", cc.xyw(1, row, 1));
+        builder.addLabel(probenummer, cc.xyw(2, row, 4));
+
+        row += 2;
+        builder.addLabel("Vorgangsart:", cc.xyw(1, row, 1));
+        builder.add(new JTextField(), cc.xyw(2, row, 4));
+
+        row += 2;
+        builder.add(new JLabel("Vorgangsstatus:"), cc.xyw(1, row, 1));
+        builder.add(new JTextField(), cc.xyw(2, row, 4));
+
+        row += 2;
+        builder.addLabel("Name des Betriebs:", cc.xyw(1, row, 1));
+        builder.add(betrieb, cc.xyw(2, row, 4));
+
+        row += 2;
+        builder.addLabel("Entnahmepunkt:", cc.xyw(1, row, 1));
+        builder.add(entnahmepunkt, cc.xyw(2, row, 7));
+
+        row += 2;
+        builder.add(new JLabel("Datum:"), cc.xyw(1, row, 1));
+        builder.add(datum, cc.xyw(2, row, 1));
+        builder.addLabel("von:", cc.xyw(3, row, 1, CellConstraints.RIGHT, CellConstraints.CENTER));
+        builder.addLabel("", cc.xyw(4, row, 1)); // just to create a small gap
+        builder.add(uhrzeitVon, cc.xyw(5, row, 1));
+        builder.addLabel("bis:", cc.xyw(6, row, 1, CellConstraints.RIGHT, CellConstraints.CENTER));
+        builder.addLabel("", cc.xyw(7, row, 1)); // just to create a small gap
+        builder.add(uhrzeitBis, cc.xyw(8, row, 1));
+        builder.addLabel("Fahrtzeit:", cc.xyw(9, row, 1, CellConstraints.RIGHT, CellConstraints.CENTER));
+        builder.addLabel("", cc.xyw(10, row, 1)); // just to create a small gap
+        builder.add(fahrtzeit, cc.xyw(11, row, 1));
+
+        row += 2;
+        builder.addLabel("Bezug:", cc.xyw(1, row, 1));
+        builder.add(bezug, cc.xyw(2, row, 4));
+        builder.addLabel("Beteiligte:", cc.xyw(6, row, 1, CellConstraints.RIGHT, CellConstraints.CENTER));
+        builder.addLabel("", cc.xyw(7, row, 1)); // just to create a small gap
+        builder.add(beteiligte, cc.xyw(8, row, 1));
+
+        row += 2;
+        builder.addLabel("Rechnungsdatum:", cc.xyw(1, row, 1));
+        builder.add(rechnungsDatum, cc.xyw(2, row, 1));
+        builder.addLabel("Rechnungsbetrag:", cc.xyw(3, row, 4, CellConstraints.RIGHT, CellConstraints.CENTER));
+        builder.addLabel("", cc.xyw(7, row, 1)); // just to create a small gap
+        builder.add(rechnungsBetrag, cc.xyw(8, row, 1));
+
+        row += 2;
+        builder.addSeparator("ICP", cc.xyw(1, row, 11));
+
+        row += 2;
+        builder.addLabel("Einwaage:", cc.xyw(1, row, 1));
+        builder.add(icpEinwaageFeld, cc.xyw(2, row, 1));
+        builder.addLabel("Datum:", cc.xyw(3, row, 4, CellConstraints.RIGHT, CellConstraints.CENTER));
+        builder.addLabel("", cc.xyw(7, row, 1)); // just to create a small gap
+        builder.add(icpDatum, cc.xyw(8, row, 1));
+
+        row += 2;
+        builder.addSeparator("Bemerkung", cc.xyw(1, row, 11));
+
+        row += 2;
+        builder.add(bemerkungsScroller, cc.xyw(1, row, 11));
+
+        row += 2;
+        builder.addSeparator("Parameter", cc.xyw(1, row, 11));
+
+        row += 2;
+        builder.add(parameterScroller, cc.xyw(1, row, 11));
 
         return builder.getPanel();
     }
@@ -448,16 +534,11 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
         });
 
-//        parameterModel = new ParameterModel(getProbe(), isNew);
-//        parameterTabelle.setModel(parameterModel);
-
-//        initColumns();
-
-        entnahmepunktFeld.setText(getProbe().getAtlProbepkt().getBasisObjekt().getBasisStandort() + ", "
+        entnahmepunkt.setText(getProbe().getAtlProbepkt().getBasisObjekt().getBasisStandort() + ", "
                                 + getProbe().getAtlProbepkt().getBasisObjekt().getBasisBetreiber());
         Date entnahmeDatum = getProbe().getDatumDerEntnahme();
-        datumFeld.setDate(entnahmeDatum);
-        uhrzeitFeld.setText(entnahmeDatum.toString().substring(11, 16));
+        datum.setDate(entnahmeDatum);
+        uhrzeitVon.setText(entnahmeDatum.toString().substring(11, 16));
 
         if (getProbe().isKlaerschlammProbe()) {
             icpEinwaageFeld.setValue(getProbe().getEinwaage());
@@ -465,8 +546,8 @@ public class ProbenEditor extends AbstractApplyEditor {
             icpEinwaageFeld.setEditable(false);
             icpEinwaageFeld.setEnabled(false);
         }
-        Date icpDatum = getProbe().getDatumIcp();
-        icpDatumFeld.setDate(icpDatum);
+        Date icpDate = getProbe().getDatumIcp();
+        icpDatum.setDate(icpDate);
 
         bemerkungsArea.setText(getProbe().getBemerkung());
     }
@@ -536,9 +617,10 @@ public class ProbenEditor extends AbstractApplyEditor {
     protected boolean doSave() {
         // Datum der Entnahme
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-        String uhrzeit = uhrzeitFeld.getText();
-        String datum = df.format(datumFeld.getDate());
-        String timestring = (String) datum.subSequence(0, 11) + uhrzeit;
+        String uhrzeitVonVal = uhrzeitVon.getText();
+        String uhrzeitBisVal = uhrzeitBis.getText();
+        String datumVal      = df.format(datum.getDate());
+        String timestring    = (String) datumVal.subSequence(0, 11) + uhrzeitVonVal;
 
         Date convertedDate = new Date();
         try {
@@ -561,7 +643,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         // ICP-Datum
-        Date newIcpDate = icpDatumFeld.getDate();
+        Date newIcpDate = icpDatum.getDate();
         if (newIcpDate != null) {
             getProbe().setDatumIcp(newIcpDate);
         }
