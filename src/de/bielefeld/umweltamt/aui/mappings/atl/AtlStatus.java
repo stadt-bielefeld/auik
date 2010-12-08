@@ -74,6 +74,37 @@ public class AtlStatus
     }
 
     /**
+     * Liefert das AtlStatus Objekt mit der passenden Bezeichnung.
+     *
+     * @return das Objekt passend zu <i>bezeichnung</i>, oder <i>null</i> falls
+     * kein Objekt mit dieser Bezeichnung existiert.
+     */
+    public static AtlStatus getStatus(String bezeichnung) {
+        AtlStatus[] status = getStatus();
+
+        for (AtlStatus s: status) {
+            if (bezeichnung.equals(s.getBezeichnung())) {
+                return s;
+            }
+        }
+
+        return null;
+    }
+
+
+    public static String[] getStatusAsString() {
+        AtlStatus[] status = getStatus();
+        String[]    str    = new String[status.length];
+
+        int idx = 0;
+        for (AtlStatus s: status) {
+            str[idx++] = s.getBezeichnung();
+        }
+
+        return str;
+    }
+
+    /**
      * Liefert einen bestimmten Status.
      * @param id Die ID des Statuses
      * @return Der Status mit der gegebenen ID oder <code>null</code> falls diese nicht existiert

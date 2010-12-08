@@ -512,7 +512,7 @@ public abstract class AbstractAtlProbenahmen
      */
     public java.lang.String getUhrzeitbeginn()
     {
-        return this.ueberschreitung;
+        return this.uhrzeitbeginn;
     }
 
     /**

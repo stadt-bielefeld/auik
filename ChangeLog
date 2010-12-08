@@ -1,5 +1,23 @@
 2010-12-08  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Noch fehlende notwendige Eingabefelder wurden hinzugefügt. Außerdem werden
+	  die Werte nun auch nach Knopfdruck auf den Button "speichern" in die
+	  Datenbank persistiert - beim Initialisieren der Oberfläche werden diese
+	  Werte wieder ausgelesen und die entsprechenden Felder der GUI mit diesen
+	  Werten vorbelegt.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AbstractAtlProbenahmen.java:
+	  Bugfix: die Methode getUhrzeitbeginn() liefert wieder den Wert des
+	  Attributes 'uhrzeitbeginn' und nicht den Wert von 'ueberschreitung'.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlStatus.java: Es gibt nun
+	  zwei weitere Funktionen, die zum einen, ein AtlStatus Objekt anhand einer
+	  Bezeichnung, und zum anderen alle möglichen Status als String Array
+	  liefern.
+
+2010-12-08  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/AUIKataster.java: Funktion errorOutput(.)
 	  analog zur Funktion debugOutput(.) hinzugefügt. Die Meldungen dieser
 	  Funktion werden jedoch immer ausgegeben. Man hätte auch direkt an
