@@ -1,5 +1,14 @@
 2010-12-08  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/AUIKataster.java: Funktion errorOutput(.)
+	  analog zur Funktion debugOutput(.) hinzugefügt. Die Meldungen dieser
+	  Funktion werden jedoch immer ausgegeben. Man hätte auch direkt an
+	  entsprechenden Stellen im Quelltext System.err.println(.) aufrufen können
+	  - diese Funktion wahrt jedoch eine einheitliche Formatierung der
+	  Nachrichten.
+
+2010-12-08  Ingo Weinzierl <ingo@intevation.de>
+
 	* build.xml: Abhängigkeit vom Ant `run` Target von `dist` zu `compile`
 	  geändert. Es ist nun nicht mehr notwendig ein Jar-Archiv zu erstellen, um
 	  die Anwendung auszuführen - es reicht das übersetzen der Quellen.

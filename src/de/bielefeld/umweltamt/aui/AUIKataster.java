@@ -67,6 +67,11 @@ public class AUIKataster {
         }
     }
 
+
+    public static void errorOutput(String msg, String src) {
+        System.err.println("ERROR (" + src + "): " + msg);
+    }
+
     /**
      * Wird benutzt um mit im laufenden Betrieb auftretenden
      * Datenbank-Fehlern umzugehen.
