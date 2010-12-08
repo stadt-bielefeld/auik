@@ -15,9 +15,18 @@
     <!-- Some properties for SystemProperties -->
     <property name="auik.hibernate.config" value="hibernate.cfg.xml"/>
 
+    <!-- The classpath that includes the necessary external libs and AUIK -->
+    <path id="classpath">
+        <fileset dir="${libs}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <path location="${build}"/>
+    </path>
+
     <target name="compile" description="Compile the source">
         <mkdir dir="${build}"/>
-        <javac srcdir="${src}" destdir="${build}">
+        <javac srcdir="${src}" destdir="${build}" debug="on"
+               debuglevel="lines,vars,source">
             <classpath>
                 <fileset dir="${libs}">
                     <include name="**/*.jar"/>
@@ -47,16 +56,9 @@
         <delete dir="${doc}"/>
     </target>
 
-    <target name="run" depends="dist" description="Run the application">
+    <target name="run" depends="compile" description="Run the application">
         <java fork="true" classname="de.bielefeld.umweltamt.aui.AUIKSplash">
-            <classpath>
-                <fileset dir="${libs}">
-                    <include name="**/*.jar"/>
-                </fileset>
-                <fileset dir="${dist}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
+            <classpath refid="classpath"/>
             <sysproperty key="auik.hibernate.config"
                          value="${auik.hibernate.config}"/>
         </java>

@@ -1,3 +1,11 @@
+2010-12-08  Ingo Weinzierl <ingo@intevation.de>
+
+	* build.xml: Abhängigkeit vom Ant `run` Target von `dist` zu `compile`
+	  geändert. Es ist nun nicht mehr notwendig ein Jar-Archiv zu erstellen, um
+	  die Anwendung auszuführen - es reicht das übersetzen der Quellen.
+	  Außerdem wurden den übersetzten Klassen DEBUG Informationen hinzugefügt,
+	  damit Stack-Traces u.a. Zeilennummern enthalten.
+
 2010-12-07  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
