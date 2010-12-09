@@ -1,5 +1,16 @@
 2010-12-09  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Die Knöpfe in
+	  der Oberfläche triggern nun entsprechende Funktionen an. Nach dem Laden
+	  einer Datei wird das Label der Dateiauswahl nun grün hervorgehoben und das
+	  Label zum Importieren bekommt den Fokus. Der Knopf zum Importieren wird
+	  erst jetzt aktiv.
+	  Hinweis: Das Laden der Daten ist noch nicht implementiert. Der Parser
+	  liest zwar die Daten ein, wertet sie jedoch noch nicht aus. Eine Prüfung
+	  der Daten findet ebenfalls noch nicht statt.
+
+2010-12-09  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Neues Modul zum
 	  Importieren von Probenahme-Analyseergebnissen. Zurzeit ist lediglich die
 	  Oberfläche implementiert. Die Logik zum Importieren der Daten und

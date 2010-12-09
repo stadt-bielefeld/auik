@@ -7,6 +7,8 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -123,15 +125,51 @@ public class AnalyseImport extends AbstractModul {
             setList(new ArrayList());
             toImport = null;
 
+            activateFileChooser(true, false);
+            activateImport(false, false);
+
             fireTableDataChanged();
         }
 
-        public void parse(File file) {
-            if (!file.isFile() || !file.canRead()) {
+        public void parse(File f) {
+            if (!f.isFile() || !f.canRead()) {
                 frame.showErrorMessage(
-                    "Konnte die angegebene Datei '" + file.getName() +
+                    "Konnte die angegebene Datei '" + f.getName() +
                     "' nicht öffnen!",
                     "Fehler beim Öffnen der Datei");
+            }
+
+            reset();
+            String name = f.getName();
+
+            try {
+                toImport = f;
+
+                AUIKataster.debugOutput(
+                    "Beginne Analyseergebnisse aus '" + name + "' zu lesen.",
+                    getClass().getName());
+
+                updateList();
+                List data = getList();
+
+                if (data.size() > 0) {
+                    getDateiLabel().setText("Datei: " + name);
+
+                    activateFileChooser(false, true);
+                    activateImport(true, false);
+                }
+                else {
+                    frame.showInfoMessage(
+                        "Datei '" + name + "' wurde erfolgreich geladen.\n" +
+                        "Es wurden jedoch keine Daten gefunden.",
+                        "Keine Daten");
+                }
+            }
+            catch (Exception e) {
+                frame.showErrorMessage(
+                    "Beim Lesen der Datei " + name +
+                    "ist ein Fehler aufgetreten: " + e.getMessage(),
+                    "Konnte Datei nicht lesen.");
             }
         }
     } // end of AnalyseImporter
@@ -144,7 +182,6 @@ public class AnalyseImport extends AbstractModul {
     protected JLabel      dateiLabel;
     protected JLabel      parseLabel;
     protected JLabel      importLabel;
-    protected JLabel      listLabel;
     protected JLabel      beschreibungLabel;
     protected JScrollPane listScroller;
     protected JTable      table;
@@ -155,14 +192,9 @@ public class AnalyseImport extends AbstractModul {
 
         dateiButton = new JButton("Datei wählen");
         dateiLabel  = new JLabel();
-        parseLabel  = new JLabel(AuikUtils.getIcon(
-            "step1_grey.png",
-            "Schritt Eins"));
+        parseLabel  = new JLabel();
 
         listScroller = new JScrollPane(table);
-        listLabel    = new JLabel(AuikUtils.getIcon(
-            "step2_grey.png",
-            "Schritt Zwei"));
 
         beschreibungLabel = new JLabel(
             "<html><table width='100%'>" +
@@ -179,7 +211,25 @@ public class AnalyseImport extends AbstractModul {
             "step3_grey.png",
             "Schritt Drei"));
 
-        // TODO add action listener to both buttons
+        activateFileChooser(true, false);
+        activateImport(false, false);
+
+        dateiButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                File file = frame.openFile(new String[]{"txt"});
+
+                if (file != null) {
+                    doImport(file);
+                }
+            }
+        });
+
+
+        importButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                doSave();
+            }
+        });
     }
 
 
@@ -228,7 +278,7 @@ public class AnalyseImport extends AbstractModul {
         b.appendRow("f:50dlu:g");
         b.nextLine(2);
 
-        b.append(getListLabel());
+        b.append(""); // no label in front of the list
         b.append(getListScroller(), 3);
         b.appendRelatedComponentsGapRow();
         b.nextLine(2);
@@ -256,11 +306,6 @@ public class AnalyseImport extends AbstractModul {
     }
 
 
-    public JLabel getListLabel() {
-        return listLabel;
-    }
-
-
     public JLabel getBeschreibungLabel() {
         return beschreibungLabel;
     }
@@ -283,6 +328,104 @@ public class AnalyseImport extends AbstractModul {
 
     public JScrollPane getListScroller() {
         return listScroller;
+    }
+
+
+    /**
+     * Diese Methode ändert das Aussehen des Labels der Dateiauswahl.
+     * Das Label kann drei verschiebene Farben annehmen:<br>
+     * <ul>
+     * <li>
+     *  <i>active</i> und <i>success</i>gesetzt: Label gr&uuml;n hervorgehoben
+     * </li>
+     * <li>
+     *  <i>active</i> gesetzt: Label wei&szilg; hervorgehoben
+     * </li>
+     * <li>
+     *  <i>active</i> nicht gesetzt (<i>success</i> spielt in diesem Fall keine
+     *  Rolle): Label wird ausgegraut.
+     * </li>
+     * </ul>
+     *
+     * @param active True, zum Hervorheben (wei&szilg;) des Labels
+     * @param success Falls true und <i>active</i> ebenfalls true, zum
+     * Hervorheben (gr&uuml;n) des Labels
+     */
+    protected void activateFileChooser(boolean active, boolean success) {
+        if (active) {
+            parseLabel.setIcon(AuikUtils.getIcon(
+                "step1_w.png", "Schritt Eins"));
+        }
+        else {
+            if (success) {
+                parseLabel.setIcon(AuikUtils.getIcon(
+                    "step1_g.png", "Schritt Eins"));
+            }
+            else {
+                parseLabel.setIcon(AuikUtils.getIcon(
+                    "step1_grey.png", "Schritt Eins"));
+            }
+        }
+    }
+
+
+    /**
+     * Diese Methode ändert das Aussehen des Labels des Imports und aktiviert
+     * bzw deaktiviert den Knopf, der das Persistieren der Daten startet. Wenn
+     * <i>active</i> gesetzt ist, wird der Knopf aktiv, ansonsten wird er
+     * deaktiviert. Das Label kann drei verschiebene Farben annehmen:<br>
+     * <ul>
+     * <li>
+     *  <i>active</i> und <i>success</i>gesetzt: Label gr&uuml;n hervorgehoben
+     * </li>
+     * <li>
+     *  <i>active</i> gesetzt: Label wei&szilg; hervorgehoben
+     * </li>
+     * <li>
+     *  <i>active</i> nicht gesetzt (<i>success</i> spielt in diesem Fall keine
+     *  Rolle): Label wird ausgegraut.
+     * </li>
+     * </ul>
+     *
+     * @param active True, zum Hervorheben des Labels
+     */
+    protected void activateImport(boolean active, boolean success) {
+        if (active) {
+            importLabel.setIcon(AuikUtils.getIcon(
+                "step2_w.png", "Schritt Zwei"));
+            importButton.setEnabled(true);
+        }
+        else {
+            importButton.setEnabled(false);
+
+            if (success) {
+                importLabel.setIcon(AuikUtils.getIcon(
+                    "step2_g.png", "Schritt Zwei"));
+            }
+            else {
+                importLabel.setIcon(AuikUtils.getIcon(
+                    "step2_grey.png", "Schritt Zwei"));
+            }
+        }
+    }
+
+
+    protected void doImport(File file) {
+        importer.parse(file);
+    }
+
+
+    protected void doSave() {
+        AUIKataster.debugOutput(
+            "Speichere die importieren Daten.",
+            getClass().getName());
+
+        // TODO IMPLEMENT ME
+        frame.showErrorMessage(
+            "Diese Funktion ist derzeit noch nicht implementiert.\n" +
+            "Es werden keine Daten gespeichert!");
+
+        activateImport(false, true);
     }
 }
 // vim:set ts=4 sw=4 si et sta sts=4 fenc=utf8:
