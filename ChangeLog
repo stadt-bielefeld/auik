@@ -1,3 +1,13 @@
+2010-12-09  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Neues Modul zum
+	  Importieren von Probenahme-Analyseergebnissen. Zurzeit ist lediglich die
+	  Oberfläche implementiert. Die Logik zum Importieren der Daten und
+	  Persistieren in die Datenbank fehlen noch.
+
+	* src/de/bielefeld/umweltamt/aui/SettingsManager.java: AnalyseImport als
+	  Modul hinzugefügt.
+
 2010-12-08  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:

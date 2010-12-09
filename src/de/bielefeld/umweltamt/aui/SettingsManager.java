@@ -119,7 +119,8 @@ public class SettingsManager {
                 "VawsHerstellernummerSuchen, VawsKontrollenAuswertung, VawsVerwaltungsverfAuswertung, " +
                 "BasisBetreiberSuchen, BasisBetreiberNeu, " +
                 "BasisObjektBearbeiten, " +
-                "SielhautBearbeiten, SielhautImport"
+                "SielhautBearbeiten, SielhautImport, " +
+                "AnalyseImport"
         );
 
         defaults.setProperty("auik.prefs.status_time", "40");
