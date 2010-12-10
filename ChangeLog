@@ -1,3 +1,21 @@
+2010-12-10  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Der Import
+	  ignoriert nun die erste Zeile der Txt Datei - diese hat für die
+	  Analyseergebnisse keine Relevanz. Außerdem wird das Speichern der
+	  Ergebnisse nun angestoßen (allerdings werden alle Zeilen gespeichert).
+	  
+	  Derzeit fehlt weiterhin die Anzeige der Importierten Daten und eine
+	  Auswahlmöglichkeit zur Plausibilitätsprüfung. 
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java: Neue
+	  Methode zum Suchen einer bestimmten AtlAnalyseposition anhand eines
+	  Parameters und einer Einheit.
+
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseProcessor.java: Neu. Diese
+	  Klasse stellt einige Hilfsfunktionen zum Verarbeiten von
+	  Analyseergebnis-Imports zu Verfügung.
+
 2010-12-09  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Die Knöpfe in

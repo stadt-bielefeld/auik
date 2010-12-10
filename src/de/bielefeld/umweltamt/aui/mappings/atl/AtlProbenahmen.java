@@ -5,7 +5,9 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
@@ -427,5 +429,41 @@ public class AtlProbenahmen
     public void addAnalyseposition(AtlAnalyseposition pos) {
         pos.setAtlProbenahmen(this);
         this.getAtlAnalysepositionen().add(pos);
+    }
+
+
+    /**
+     * Suche eine bestimmte AtlAnalyseposition anhand des Ordnungsbegriffs eines
+     * Parameters.
+     *
+     * @param ordnungsbegriff Der Ordnungsbegriff eines AtlParameter der zu der
+     * AtlAnalyseposition geh&ouml;rt.
+     *
+     * @return eine bereits existente {@link AtlAnalyseposition} oder eine neue
+     * {@link AtlAnalyseposition}.
+     */
+    public AtlAnalyseposition findAtlAnalyseposition(
+        AtlParameter parameter, AtlEinheiten einheit)
+    {
+        String ordnungsbegriff = parameter.getOrdnungsbegriff();
+        Set positionen         = getAtlAnalysepositionen();
+        Iterator iter          = positionen.iterator();
+
+        while (iter.hasNext()) {
+            AtlAnalyseposition tmp = (AtlAnalyseposition) iter.next();
+            AtlParameter     param = tmp.getAtlParameter();
+
+            if (ordnungsbegriff.equals(param.getOrdnungsbegriff())) {
+                return tmp;
+            }
+        }
+
+        AtlAnalyseposition neu = new AtlAnalyseposition(this);
+        neu.setAtlParameter(parameter);
+        neu.setAtlEinheiten(einheit);
+
+        addAnalyseposition(neu);
+
+        return neu;
     }
 }

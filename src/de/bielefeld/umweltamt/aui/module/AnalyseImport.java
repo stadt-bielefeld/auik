@@ -88,11 +88,13 @@ public class AnalyseImport extends AbstractModul {
                 in            = new BufferedReader(new FileReader(toImport));
                 List dataList = getList();
                 String   line = null;
-                int     count = 0;
+                int     count = -1;
 
                 while ((line = in.readLine()) != null) {
-                    String[] columns = line.split(",");
-                    dataList.add(columns);
+                    if (count >= 0) {
+                        String[] columns = line.split(",");
+                        dataList.add(columns);
+                    }
 
                     count++;
                 }
@@ -415,15 +417,26 @@ public class AnalyseImport extends AbstractModul {
     }
 
 
+    /**
+     * Diese Methode wird aufgerufen, nachdem eine Datei mit Analyseergebnissen
+     * eingelesen wurde. Es werden alle selektierten Zeilen importiert, die in
+     * {@link table} ausgew&auml;hlt sind. Diese Method gibt einzelne Zeilen der
+     * Tabelle an die Methode {@link processAnalyseposition} weiter, die
+     * letzlich die Daten auswertet und einer Probenahme zuordnet.
+     */
     protected void doSave() {
         AUIKataster.debugOutput(
             "Speichere die importieren Daten.",
             getClass().getName());
 
-        // TODO IMPLEMENT ME
-        frame.showErrorMessage(
-            "Diese Funktion ist derzeit noch nicht implementiert.\n" +
-            "Es werden keine Daten gespeichert!");
+        // TODO just take the selected rows of JTable instead of all rows
+        List data = importer.getList();
+        int  size = data.size();
+
+        for (int i = 0; i < size; i++) {
+            String[] row = (String[]) data.get(i);
+            AnalyseProcessor.process(row);
+        }
 
         activateImport(false, true);
     }
