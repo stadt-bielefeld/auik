@@ -1,5 +1,11 @@
 2010-12-13  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Es werden nun
+	  nurnoch die ausgewählten Zeilen importiert und zu der entsprechenden
+	  Probenahme gespeichert - nicht mehr zwangsläufig alle Zeilen des Imports.
+
+2010-12-13  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java: Die
 	  Methode findAtlAnalyseposition(.) hat einen weiteren Parameter 'createNew'
 	  bekommen, um zu bestimmen, ob eine neue Analyseposition angelegt werden

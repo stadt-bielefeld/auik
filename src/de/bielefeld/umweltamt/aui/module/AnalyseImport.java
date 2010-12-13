@@ -218,6 +218,25 @@ public class AnalyseImport extends AbstractModul {
 
 
         /**
+         * Diese Methode liefert eine Liste mit allen selektierten Zeilen.
+         *
+         * @return Liste mit allen selektierten Zeilen.
+         */
+        public List getSelectedRows() {
+            List selected = new ArrayList();
+
+            for (int i = 0; i < selection.length; i++) {
+                boolean s = Boolean.TRUE.equals(getValueAt(i, 6));
+                if (s) {
+                    selected.add((String[]) getObjectAtRow(i));
+                }
+            }
+
+            return selected;
+        }
+
+
+        /**
          * Diese Methode liefert <code>Boolean.class</code>, falls <i>col</i> ==
          * 6. In jedem anderen Fall wird <code>String.class</code>
          * zurückgegeben.
@@ -630,8 +649,7 @@ public class AnalyseImport extends AbstractModul {
             "Speichere die importieren Daten.",
             getClass().getName());
 
-        // TODO just take the selected rows of JTable instead of all rows
-        List data = importer.getList();
+        List data = importer.getSelectedRows();
         int  size = data.size();
 
         for (int i = 0; i < size; i++) {
