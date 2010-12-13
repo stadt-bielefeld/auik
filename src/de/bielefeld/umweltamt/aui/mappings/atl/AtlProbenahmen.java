@@ -443,7 +443,7 @@ public class AtlProbenahmen
      * {@link AtlAnalyseposition}.
      */
     public AtlAnalyseposition findAtlAnalyseposition(
-        AtlParameter parameter, AtlEinheiten einheit)
+        AtlParameter parameter, AtlEinheiten einheit, boolean createNew)
     {
         String ordnungsbegriff = parameter.getOrdnungsbegriff();
         Set positionen         = getAtlAnalysepositionen();
@@ -458,6 +458,10 @@ public class AtlProbenahmen
             }
         }
 
+        if (!createNew) {
+            return null;
+        }
+
         AtlAnalyseposition neu = new AtlAnalyseposition(this);
         neu.setAtlParameter(parameter);
         neu.setAtlEinheiten(einheit);
@@ -465,5 +469,17 @@ public class AtlProbenahmen
         addAnalyseposition(neu);
 
         return neu;
+    }
+
+
+    /**
+     * Diese Methode ruft {@link findAtlAnalyseposition(AtlParameter,
+     * AtlEinheiten, boolean)} mit einem gesetzten <code>createNew</code>
+     * Parameter auf.
+     */
+    public AtlAnalyseposition findAtlAnalyseposition(
+        AtlParameter parameter, AtlEinheiten einheit)
+    {
+        return findAtlAnalyseposition(parameter, einheit, true);
     }
 }

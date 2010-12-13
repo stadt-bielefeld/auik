@@ -1,3 +1,23 @@
+2010-12-13  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java: Die
+	  Methode findAtlAnalyseposition(.) hat einen weiteren Parameter 'createNew'
+	  bekommen, um zu bestimmen, ob eine neue Analyseposition angelegt werden
+	  soll, falls noch keine durch den Parameter und der Einheit beschriebene
+	  existiert.
+
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseProcessor.java: Einführung
+	  einer neuen Funktion importStatus(.) um den Import-Status einer
+	  Analyseergebnis-Zeile zu ermitteln. Die Funktion hat drei Rückgabewerte:
+	  -1 Falls keine Probenahme mit entsprechender Kennnummer existiert
+	   1 Falls eine Probenahme mit enstpechender Analyseposition existiert
+	   2 Falls eine Probenahme existiert, die Analyseposition jedoch erstellt
+	   werden müsste.
+
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Implementierung
+	  zur Darstellung der Analyseergebnis-Zeilen in der Tabelle. Die Zeilen sind
+	  entsprechend grün, orange oder rot (abhängig vom Import-Status) markiert.
+
 2010-12-10  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Der Import

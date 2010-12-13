@@ -86,5 +86,43 @@ public class AnalyseProcessor {
     public static String unquote(String raw) {
         return raw.substring(1, raw.length()-1);
     }
+
+
+    /**
+     * Diese Methode liefert den Status eines Analyseimports.
+     *
+     * @param param Der Ordnungsbegriff eines {@link AtlParameter}.
+     * @param einheit Die ID einer {@link AtlEinheiten}.
+     *
+     * @return <b>-1</b>, falls es keine {@link AtlProbenahmen} mit einer
+     * Kennnummer <i>kenn</i> existiert oder kein {@link AtlParameter} oder
+     * {@link AtlEinheiten} gibt. <b>1</b> falls eine {@link AtlProbenahmen}
+     * mit entsprechendem {@link AtlParameter} gibt, <b>2</b> falls es eine
+     * {@link AtlProbenahmen} gibt, die jedoch keinen passenden
+     * {@link AtlParameter} besitzt.
+     */
+    public static int importStatus(String kenn, String param, String einheit) {
+        AtlProbenahmen probe = AtlProbenahmen.getProbenahme(kenn, true);
+
+        if (probe == null) {
+            return -1;
+        }
+
+        if (param == null || einheit == null) {
+            return 2;
+        }
+
+        int               id   = Integer.parseInt(einheit);
+        AtlParameter       p   = AtlParameter.getParameter(param);
+        AtlEinheiten       e   = AtlEinheiten.getEinheit(id);
+
+        if (p == null || e == null) {
+            return -1;
+        }
+
+        AtlAnalyseposition pos = probe.findAtlAnalyseposition(p, e, false);
+
+        return pos != null ? 1 : 2;
+    }
 }
 // vim:set ts=4 sw=4 si et sta sts=4 fenc=utf8:
