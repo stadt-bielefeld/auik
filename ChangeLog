@@ -1,5 +1,19 @@
 2010-12-13  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Die Oberfläche wurde um das Feld 'Vorgangsart' erleichtert, da dies nicht
+	  benötigt wird. Desweiteren gibt es nun für den Probenahmeauftrag und den
+	  Gebührenbescheid jeweils einen Knopf zum Öffnen eines Dateidialogs und
+	  einen Knopf zum Drucken des Dokuments. Nach Auswahl einer Datei bzw eines
+	  Dateinamens wird dieser im Feld links daneben angezeigt. Die 'Drucken'
+	  Knöpfe haben noch keine Funktionalität.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbepkt.java: Methoden
+	  hinzugefügt, um den BasisBetreiber des jeweiligen Objekts abzufragen.
+
+2010-12-13  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Es werden nun
 	  nurnoch die ausgewählten Zeilen importiert und zu der entsprechenden
 	  Probenahme gespeichert - nicht mehr zwangsläufig alle Zeilen des Imports.

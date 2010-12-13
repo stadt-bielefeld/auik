@@ -93,6 +93,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
@@ -361,10 +362,13 @@ public class ProbenEditor extends AbstractApplyEditor {
     private JTextArea            bemerkungsArea;
 
     private JTextField           ansprechpartner;
-    private JTextField           datei;
-    private JButton              dateiWahl;
+    private JTextField           bescheidDatei;
+    private JButton              bescheidWahl;
+    private JButton              bescheidDrucken;
+    private JTextField           auftragDatei;
+    private JButton              auftragWahl;
+    private JButton              auftragDrucken;
     private JFileChooser         dateiChooser;
-    private JButton              drucken;
     private JTextField           betrieb;
     private JLabel               entnahmepunkt;
     private JFormattedTextField  icpEinwaageFeld;
@@ -409,9 +413,12 @@ public class ProbenEditor extends AbstractApplyEditor {
         probenummer      = new JTextField();
         vorgangsstatus   = new JComboBox();
         ansprechpartner  = new JTextField();
-        datei            = new JTextField();
-        dateiWahl        = new JButton("Auswählen");
-        drucken          = new JButton("Drucken");
+        bescheidDatei    = new JTextField();
+        bescheidWahl     = new JButton("Auswählen");
+        bescheidDrucken  = new JButton("Drucken");
+        auftragDatei     = new JTextField();
+        auftragWahl      = new JButton("Auswählen");
+        auftragDrucken   = new JButton("Drucken");
         dateiChooser     = new JFileChooser();
         icpEinwaageFeld  = new DoubleField(0);
         icpDatum         = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
@@ -426,11 +433,18 @@ public class ProbenEditor extends AbstractApplyEditor {
         ComboBoxModel comboModel = new DefaultComboBoxModel(bezeichnungen);
         vorgangsstatus.setModel(comboModel);
 
-        datei.setEnabled(false);
+        bescheidDatei.setEnabled(false);
+        auftragDatei.setEnabled(false);
 
-        dateiWahl.addActionListener(new ActionListener() {
+        auftragWahl.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                openFileChooser();
+                openFileChooser(auftragDatei);
+            }
+        });
+
+        bescheidWahl.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                openFileChooser(bescheidDatei);
             }
         });
 
@@ -470,8 +484,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         FormLayout layout = new FormLayout(
             "70dlu, 50dlu, 30dlu, 5dlu, 30dlu, 5dlu, 60dlu, 5dlu, 60dlu, 50dlu, 5dlu, 50dlu",
             "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu," +
-            "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu," +
-            "pref, 16dlu, pref, 8dlu, pref, 16dlu, pref, 8dlu, pref, 16dlu, pref, 8dlu, 150dlu");
+            "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, " +
+            "pref, 16dlu,pref, 8dlu, pref, 16dlu, pref, 8dlu, pref, 16dlu, pref, 8dlu, 150dlu");
 
         PanelBuilder builder = new PanelBuilder(layout);
         CellConstraints cc = new CellConstraints();
@@ -482,10 +496,6 @@ public class ProbenEditor extends AbstractApplyEditor {
         row += 2;
         builder.addLabel("Probenummer:", cc.xyw(1, row, 1));
         builder.add(probenummer, cc.xyw(2, row, 4));
-
-        row += 2;
-        builder.addLabel("Vorgangsart:", cc.xyw(1, row, 1));
-        builder.add(new JTextField(), cc.xyw(2, row, 4));
 
         row += 2;
         builder.add(new JLabel("Vorgangsstatus:"), cc.xyw(1, row, 1));
@@ -534,12 +544,20 @@ public class ProbenEditor extends AbstractApplyEditor {
         builder.add(rechnungsBetrag, cc.xyw(9, row, 1));
 
         row += 2;
-        builder.addLabel("Datei:", cc.xyw(1, row, 1));
-        builder.add(datei, cc.xyw(2, row, 4));
+        builder.addLabel("Probenahmeauftrag:", cc.xyw(1, row, 1));
+        builder.add(auftragDatei, cc.xyw(2, row, 4));
         builder.addLabel("", cc.xyw(1, row, 1));
-        builder.add(dateiWahl, cc.xyw(7, row, 1));
+        builder.add(auftragWahl, cc.xyw(7, row, 1));
         builder.addLabel("", cc.xyw(8, row, 1));
-        builder.add(drucken, cc.xyw(9, row, 1));
+        builder.add(auftragDrucken, cc.xyw(9, row, 1));
+
+        row += 2;
+        builder.addLabel("Gebührenbescheid:", cc.xyw(1, row, 1));
+        builder.add(bescheidDatei, cc.xyw(2, row, 4));
+        builder.addLabel("", cc.xyw(1, row, 1));
+        builder.add(bescheidWahl, cc.xyw(7, row, 1));
+        builder.addLabel("", cc.xyw(8, row, 1));
+        builder.add(bescheidDrucken, cc.xyw(9, row, 1));
 
         row += 2;
         builder.addSeparator("ICP", cc.xyw(1, row, 12));
@@ -567,11 +585,21 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
-    protected void openFileChooser() {
+    /**
+     * Diese Methode &ouml;ffnet einen Dateidialog. Falls eine Datei ausgew
+     */
+    protected void openFileChooser(JTextField datei) {
         dateiChooser.showSaveDialog(this);
 
         File file = dateiChooser.getSelectedFile();
-        datei.setText(file.getAbsolutePath());
+
+        if (file != null) {
+            AUIKataster.debugOutput(
+                "Speichere Datei unter: " + file.getAbsolutePath(),
+                getClass().getName());
+
+            datei.setText(file.getAbsolutePath());
+        }
     }
 
     protected void fillForm() {
@@ -587,7 +615,8 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
         });
 
-        AtlProbenahmen probe = getProbe();
+        AtlProbenahmen probe     = getProbe();
+        BasisBetreiber basisBetr = probe.getBasisBetreiber();
 
         probenummer.setText(probe.getKennummer());
         ansprechpartner.setText(probe.getSachbearbeiter());
@@ -599,6 +628,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         uhrzeitVon.setText(probe.getUhrzeitbeginn());
         uhrzeitBis.setText(probe.getUhrzeitende());
         fahrtzeit.setText(probe.getFahrtzeit());
+
+        if (basisBetr != null) {
+            betrieb.setText(basisBetr.getBetrname());
+        }
 
         if (probe.getAnzahlbeteiligte() != null) {
             beteiligte.setText(Integer.toString(probe.getAnzahlbeteiligte()));
@@ -801,11 +834,6 @@ public class ProbenEditor extends AbstractApplyEditor {
         String sachbearbeiter = ansprechpartner.getText();
         if (sachbearbeiter != null) {
             probe.setSachbearbeiter(sachbearbeiter);
-        }
-
-        String pfad = datei.getText();
-        if (pfad != null) {
-            // XXX zurzeit existiert hierfür noch kein DB-Feld
         }
 
         // Kennnummer

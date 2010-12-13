@@ -15,6 +15,7 @@ import org.hibernate.type.Type;
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 
 /**
  * A class that represents a row in the 'ATL_PROBEPKT' table.
@@ -285,5 +286,12 @@ public class AtlProbepkt
         }
 
         return removed;
+    }
+
+
+    public BasisBetreiber getBasisBetreiber() {
+        BasisObjekt basisObj = getBasisObjekt();
+
+        return basisObj != null ? basisObj.getBasisBetreiber() : null;
     }
 }

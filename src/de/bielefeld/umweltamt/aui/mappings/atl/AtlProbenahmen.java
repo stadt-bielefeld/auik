@@ -17,6 +17,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 
 /**
@@ -481,5 +482,12 @@ public class AtlProbenahmen
         AtlParameter parameter, AtlEinheiten einheit)
     {
         return findAtlAnalyseposition(parameter, einheit, true);
+    }
+
+
+    public BasisBetreiber getBasisBetreiber() {
+        AtlProbepkt pkt = getAtlProbepkt();
+
+        return pkt != null ? pkt.getBasisBetreiber() : null;
     }
 }
