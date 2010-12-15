@@ -27,7 +27,7 @@ public class AnalyseProcessor {
      *
      * @param columns Spalten einer Zeile eines Analyseergebnis-Imports.
      */
-    public static void process(String[] columns) {
+    public static boolean process(String[] columns) {
         if (columns == null || columns.length < 8) {
             AUIKataster.errorOutput(
                 "Analyseimport: AtlAnalyseoption nicht vollständig.",
@@ -58,7 +58,7 @@ public class AnalyseProcessor {
                 "gefunden werden: " + kennnummer,
                 "AnalyseProcessor");
 
-            return;
+            return false;
         }
 
         AtlParameter parameter = AtlParameter.getParameter(ordnungsbegriff);
@@ -72,6 +72,8 @@ public class AnalyseProcessor {
 
             AtlProbenahmen.updateProbenahme(probe);
         }
+
+        return true;
     }
 
 

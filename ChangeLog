@@ -1,5 +1,16 @@
 2010-12-15  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseProcessor.java: Die Funktion
+	  process() gibt bei erfolgreichem Persistieren nun True zurück, falls das
+	  Persistieren fehlgeschlagen ist, wird False zurückgeliefert.
+
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Nach dem
+	  Importieren der Daten (speichern in die Datenbank) wird ein Dialog
+	  geöffnet, das den Nutzer über die Anzahl der erfolgreich importierten
+	  Zeilen der Analyseergebnisse informiert.
+
+2010-12-15  Ingo Weinzierl <ingo@intevation.de>
+
 	* build.xml: Neues Target zum Compilieren von JasperReports Templates. Die
 	  Targets `compile` und `run` hängen von diesem ab, damit die Templates
 	  nicht während der Lauftzeit übersetzt werden müssen.

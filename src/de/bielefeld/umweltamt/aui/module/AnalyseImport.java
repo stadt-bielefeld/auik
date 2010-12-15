@@ -651,11 +651,19 @@ public class AnalyseImport extends AbstractModul {
 
         List data = importer.getSelectedRows();
         int  size = data.size();
+        int count = 0;
 
         for (int i = 0; i < size; i++) {
             String[] row = (String[]) data.get(i);
-            AnalyseProcessor.process(row);
+            if (AnalyseProcessor.process(row)) {
+                count++;
+            }
         }
+
+        frame.showInfoMessage(
+            "Es wurden " + count + " Zeilen der Analyseergebnisse erfolgreich" +
+            "\nin die Datenbank gespeichert.",
+            "Import erfolgreich");
 
         activateImport(false, true);
     }
