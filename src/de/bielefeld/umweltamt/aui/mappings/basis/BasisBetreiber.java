@@ -220,4 +220,23 @@ public class BasisBetreiber
 
         return removed;
     }
+
+    public String getBetriebsgrundstueck() {
+        String  strasse    = getStrasse();
+        Integer hausnr     = getHausnr();
+        String  hausnrZus = getHausnrzus();
+
+        StringBuilder sb = new StringBuilder(strasse);
+
+        if (hausnr != null) {
+            sb.append(" ");
+            sb.append(hausnr.toString());
+        }
+
+        if (hausnr != null && hausnrZus != null) {
+            sb.append(hausnrZus);
+        }
+
+        return sb.toString();
+    }
 }

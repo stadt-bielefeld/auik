@@ -1,3 +1,35 @@
+2010-12-15  Ingo Weinzierl <ingo@intevation.de>
+
+	* build.xml: Neues Target zum Compilieren von JasperReports Templates. Die
+	  Targets `compile` und `run` hängen von diesem ab, damit die Templates
+	  nicht während der Lauftzeit übersetzt werden müssen.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Die Knöpfe zum Drucken eines Probenahmeauftrags und Gebührenbescheids
+	  triggern nun den PDFExporter an, der entsprechende PDFs erzeugt.
+
+	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Ein PDF Generator
+	  für Probenahmeaufträge und Gebührenbescheide. Bisher ist nur die Funktion
+	  zum Erstellen eines Probenahmeauftrag-PDFs implementiert. Die eigentliche
+	  Erstellung der PDFs wird von JasperReports durchgeführt.
+
+	* reports/probenahmeauftrag.jrxml: Das JasperReports Template, welches zum
+	  Erstellen von Probenahmenauftrag-PDFs benutzt wird.
+
+	* src/de/bielefeld/umweltamt/aui/utils/JRMapDataSource.java: Dies ist eine
+	  Datenquelle für JasperReports. Bei der Erstellung eines solchen Objekts
+	  wird eine java.util.Map übergeben, in der die einzufüllenden Felder des
+	  Templates enthalten sind.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/basis/BasisBetreiber.java: Eine
+	  neue Funktion implementiert, die die Adresse des Betreibers als String
+	  ausgibt.
+
+	* lib/jasperreports-3.7.6.jar,
+	  lib/commons-digester-1.7.jar,
+	  lib/iText-2.1.7.jar,
+	  lib/commons-beanutils-1.8.0.jar: JasperReports-3.7.6 mit Abhängigkeiten.
+
 2010-12-13  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:

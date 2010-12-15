@@ -57,9 +57,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -92,6 +94,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -100,6 +103,7 @@ import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.DoubleRenderer;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
+import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -445,6 +449,80 @@ public class ProbenEditor extends AbstractApplyEditor {
         bescheidWahl.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 openFileChooser(bescheidDatei);
+            }
+        });
+
+        // triggert das Erzeugen eines PDFs und einen Druck-Job an
+        auftragDrucken.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                AtlProbenahmen probe = getProbe();
+                Map params           = getAuftragDurckMap(probe);
+
+                String path = auftragDatei.getText();
+                if (path == null || path.equals("")) {
+                    frame.showErrorMessage(
+                        "Bitte geben Sie den Pfad zum Speichern des PDFs an.",
+                        "Pfad zum Speichern fehlt");
+                    return;
+                }
+
+                try {
+                    // TODO Senden an Drucker
+                    PDFExporter.exportAuftrag(params, path);
+
+                    frame.showInfoMessage(
+                        "Der Probenahmeauftrag wurde erfolgreich gedruckt " +
+                        "und \nunter '" + path + "' gespeichert.",
+                        "Probenahmeauftrag erfolgreich");
+                }
+                catch (Exception ex) {
+                    AUIKataster.errorOutput(
+                        "Druck schlug fehlt: " + ex.getMessage(),
+                        getClass().getName());
+
+                    frame.showErrorMessage(
+                        "Der Druck des Probenahmeauftrags ist fehlgeschlagen." +
+                        "\n" + ex.getLocalizedMessage(),
+                        "Probenahmeauftrag-Druck fehlgeschlagen");
+                }
+            }
+        });
+
+        // trigger das Erzeugen eines PDFs und einen Druck-Job an
+        bescheidDrucken.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                AtlProbenahmen probe = getProbe();
+
+                // TODO richtige Parameter setzen
+                Map params = new HashMap();
+
+                String path = bescheidDatei.getText();
+                if (path == null || path.equals("")) {
+                    frame.showErrorMessage(
+                        "Bitte geben Sie den Pfad zum Speichern des PDFs an.",
+                        "Pfad zum Speichern fehlt");
+                    return;
+                }
+
+                try {
+                    // TODO Senden an Drucker
+                    PDFExporter.exportBescheid(params, path);
+
+                    frame.showErrorMessage(
+                        "Diese Funktion ist derzeig noch nicht implementiert.",
+                        "Nicht implementiert.");
+                }
+                catch (Exception ex) {
+                    AUIKataster.errorOutput(
+                        "Druck schlug fehlt: " + ex.getMessage(),
+                        getClass().getName());
+
+                    frame.showErrorMessage(
+                        "Der Druck des Gebührenbescheids ist fehlgeschlagen." +
+                        "\n" + ex.getLocalizedMessage(),
+                        "Gebührenbescheid-Druck fehlgeschlagen");
+
+                }
             }
         });
 
@@ -872,6 +950,50 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         return success;
+    }
+
+
+    public Map getAuftragDurckMap(AtlProbenahmen probe) {
+        BasisBetreiber betr = probe.getBasisBetreiber();
+        AtlProbeart    art  = probe.getAtlProbepkt().getAtlProbeart();
+
+        HashMap params = new HashMap();
+        params.put("kennnummer", probenummer.getText());
+        params.put("name", betr.toString());
+        params.put("art", art.getArt());
+        params.put("betriebsgrundstueck", betr.getBetriebsgrundstueck());
+
+        try {
+            Integer anzahl = Integer.parseInt(beteiligte.getText());
+            params.put("anzahlMitarbeiter", anzahl.toString());
+        }
+        catch (NumberFormatException nfe) {
+            // do nothing
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        params.put("entnahmeDatum", df.format(datum.getDate()));
+        params.put("beginn", uhrzeitVon.getText());
+        params.put("ende", uhrzeitBis.getText());
+        params.put("fahrtzeit", fahrtzeit.getText());
+
+        // TODO fill in the correct values if they exist
+        params.put("vorgangsnummer", "");
+        params.put("anzahlEntnahmestellen", "");
+        params.put("boolEntwaesserungssatzung", "");
+        params.put("abholDatum", "");
+        params.put("labor", "");
+        params.put("untersuchungsnummer", "");
+        params.put("entnahmestelle", "");
+        params.put("farbe", "");
+        params.put("truebung", "");
+        params.put("schaumbildung", "");
+        params.put("geruch", "");
+        params.put("schwimmstoffe", "");
+        params.put("sonstiges", "");
+        params.put("probeentnahmegeraet", "");
+
+        return params;
     }
 
     protected void doApply() {

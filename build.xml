@@ -6,7 +6,9 @@
 
     <!-- Some properties for necessary path definitions -->
     <property name="src"   location="src"/>
+    <property name="reportsrc" location="reports"/>
     <property name="build" location="build"/>
+    <property name="reports" location="build/reports"/>
     <property name="dist"  location="dist"/>
     <property name="libs"  location="lib"/>
     <property name="doc"   location="doc"/>
@@ -44,8 +46,31 @@
         </copy>
     </target>
 
+    <target name="jasper">
+        <mkdir dir="${reports}"/>
+        <taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask">
+            <classpath refid="classpath"/>
+        </taskdef>
+        <jrc
+            destdir="${reportsrc}"
+            tempdir="${reportsrc}"
+            keepjava="false">
+            <src>
+                <fileset dir="${reportsrc}">
+                    <include name="**/*.jrxml"/>
+                </fileset>
+            </src>
+            <classpath refid="classpath"/>
+        </jrc>
+        <copy todir="${reports}">
+            <fileset dir="${reportsrc}">
+                <include name="**/*.jasper"/>
+            </fileset>
+        </copy>
+    </target>
+
     <!-- TODO add the timestamp to the name of the jar archive -->
-    <target name="dist" depends="compile" description="Create a jar archive">
+    <target name="dist" depends="compile,jasper" description="Create a jar archive">
         <mkdir dir="${dist}"/>
         <jar jarfile="${dist}/AUIK.jar" basedir="${build}"/>
     </target>
@@ -56,7 +81,7 @@
         <delete dir="${doc}"/>
     </target>
 
-    <target name="run" depends="compile" description="Run the application">
+    <target name="run" depends="compile,jasper" description="Run the application">
         <java fork="true" classname="de.bielefeld.umweltamt.aui.AUIKSplash">
             <classpath refid="classpath"/>
             <sysproperty key="auik.hibernate.config"
