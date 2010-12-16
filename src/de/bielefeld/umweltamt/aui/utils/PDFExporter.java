@@ -12,6 +12,7 @@ import java.util.Map;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JRException;
 
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
@@ -35,8 +36,10 @@ public class PDFExporter {
      * @param reportFile Der Name des <i>JasperReport</i> Templates <b>ohne</b>
      * Endung.
      * @param dest Der Pfad zu einem Ort an dem das PDF gespeichert werden soll.
+     *
+     * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
-    protected static void export(Map fields, String reportFile, String dest)
+    protected static JasperPrint export(Map fields, String reportFile, String dest)
     throws Exception
     {
         JasperPrint print = JasperFillManager.fillReport(
@@ -45,6 +48,8 @@ public class PDFExporter {
             new JRMapDataSource(fields));
 
         JasperExportManager.exportReportToPdfFile(print, dest);
+
+        return print;
     }
 
 
@@ -58,12 +63,26 @@ public class PDFExporter {
      * einzuf&uuml;llen sind.
      * @param destination Der Pfad zu einem Ort, an dem das PDF gespeichert
      * werden soll.
+     * @param printPDF Wenn das erzeugte PDF gedruckt werden soll, muss diese
+     * Flagge gesetzt werden.
+     *
+     * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
-    public static void exportAuftrag(Map fields, String destination)
+    public static JasperPrint exportAuftrag(
+        Map fields, String destination, boolean printPDF)
     throws Exception
     {
         try {
-            export(fields, "probenahmeauftrag", destination);
+            JasperPrint jprint = export(
+                fields,
+                "probenahmeauftrag",
+                destination);
+
+            if (printPDF) {
+                print(jprint);
+            }
+
+            return jprint;
         }
         catch (JRException jre) {
             throw new Exception(
@@ -83,17 +102,46 @@ public class PDFExporter {
      * einzuf&uuml;llen sind.
      * @param destination Der Pfad zu einem Ort, an dem das PDF gespeichert
      * werden soll.
+     * @param printPDF Wenn das erzeugte PDF gedruckt werden soll, muss diese
+     * Flagge gesetzt werden.
+     *
+     * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
-    public static void exportBescheid(Map fields, String destination)
+    public static JasperPrint exportBescheid(
+        Map fields, String destination, boolean printPDF)
     throws Exception
     {
         try {
-            export(fields, "gebuehrenbescheid", destination);
+            JasperPrint jprint = export(
+                fields,
+                "gebuehrenbescheid",
+                destination);
+
+            if (printPDF) {
+                print(jprint);
+            }
+
+            return jprint;
         }
         catch (JRException jre) {
             throw new Exception(
                 "Druck des Gebührenbescheid schlug fehl: " + jre.getMessage());
         }
+    }
+
+
+    /**
+     * Diese Funktion erlaubt es, ein JasperPrint Objekt an einen Drucker zu
+     * schicken.
+     *
+     * @param jprint Ein JasperPrint Objekt, welches zB bei
+     * {@link exportAuftrag(Map,String,boolean)} oder {@link
+     * exportBescheid(Map,String,boolean)} zurückgeliefert wird.
+     */
+    public static void print(JasperPrint jprint)
+    throws Exception
+    {
+        JasperPrintManager.printReport(jprint, true);
     }
 }
 // vim:set ts=4 sw=4 si et sta sts=4 fenc=utf8:

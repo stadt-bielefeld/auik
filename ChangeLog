@@ -1,3 +1,15 @@
+2010-12-16  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Die Funktionen zum
+	  Erstellen von Probenahmeauftrag- und Gebührenbescheid-PDFs haben einen
+	  weiteren boolean Parameter erhalten, der bestimmt, ob nach der Erstellung
+	  des PDFs ein Druckdialog geöffnet werden soll. Außerdem geben diese
+	  Funktionen nun ein befülltes JasperPrint Objekt zurück.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Nach Erstellung von Probenahmeauftrag- und Gebührenbescheid-PDF wird ein
+	  Druckdialog geöffnet, in dem die PDFs gedruckt werden können.
+
 2010-12-15  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/AnalyseProcessor.java: Die Funktion

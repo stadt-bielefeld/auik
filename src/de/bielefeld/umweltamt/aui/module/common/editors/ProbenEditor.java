@@ -467,8 +467,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 }
 
                 try {
-                    // TODO Senden an Drucker
-                    PDFExporter.exportAuftrag(params, path);
+                    PDFExporter.exportAuftrag(params, path, true);
 
                     frame.showInfoMessage(
                         "Der Probenahmeauftrag wurde erfolgreich gedruckt " +
@@ -505,8 +504,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 }
 
                 try {
-                    // TODO Senden an Drucker
-                    PDFExporter.exportBescheid(params, path);
+                    PDFExporter.exportBescheid(params, path, true);
 
                     frame.showErrorMessage(
                         "Diese Funktion ist derzeig noch nicht implementiert.",
