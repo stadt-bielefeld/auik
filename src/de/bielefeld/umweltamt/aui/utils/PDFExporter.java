@@ -7,6 +7,7 @@
  */
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.io.InputStream;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -27,6 +28,34 @@ import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 public class PDFExporter {
 
     /**
+     * Die einzige Instanz dieser Klasse wird in dieser Variablen gespeichert.
+     */
+    private static PDFExporter INSTANCE;
+
+
+    /**
+     * Dieser Konstruktor soll nicht aufgerufen werden, um zu verhindern, dass
+     * mehr als nur eine Instanz dieser Klasse erstellt wird. Stattdessen soll
+     * {@link getInstance()} verwendet werden, um an eine Instanz zu gelangen.
+     */
+    private PDFExporter() {
+    }
+
+
+    /**
+     * Liefert die Singleton Instanz dieser Klasse.
+     *
+     * @return die einzige Instanz dieser Klasse.
+     */
+    public static PDFExporter getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new PDFExporter();
+        }
+
+        return INSTANCE;
+    }
+
+    /**
      * Diese Funktion erzeugt ein PDF mit Hilfe von <i>JasperReport</i>. Die
      * dazu ben&ouml;tigten Templates m&uuml;ssen sich in <i>build/reports/</i>
      * befinden und bereits compiliert sein.
@@ -39,11 +68,17 @@ public class PDFExporter {
      *
      * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
-    protected static JasperPrint export(Map fields, String reportFile, String dest)
+    protected static JasperPrint export(
+        Map fields, InputStream reportFile, String dest)
     throws Exception
     {
+        //JasperPrint print = JasperFillManager.fillReport(
+        //    "build/reports/" + reportFile + ".jasper",
+        //    null,
+        //    new JRMapDataSource(fields));
+
         JasperPrint print = JasperFillManager.fillReport(
-            "build/reports/" + reportFile + ".jasper",
+            reportFile,
             null,
             new JRMapDataSource(fields));
 
@@ -68,15 +103,19 @@ public class PDFExporter {
      *
      * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
-    public static JasperPrint exportAuftrag(
-        Map fields, String destination, boolean printPDF)
+    public JasperPrint exportAuftrag(Map fields, String dest, boolean printPDF)
     throws Exception
     {
+        InputStream inputStream = getClass().getResourceAsStream(
+            "/reports/probenahmeauftrag.jasper");
+
+        if (inputStream == null) {
+            throw new Exception(
+                "Konnte Template 'probenahmeauftrag.jasper' nicht finden.");
+        }
+
         try {
-            JasperPrint jprint = export(
-                fields,
-                "probenahmeauftrag",
-                destination);
+            JasperPrint jprint = export(fields, inputStream, dest);
 
             if (printPDF) {
                 print(jprint);
@@ -107,15 +146,19 @@ public class PDFExporter {
      *
      * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
-    public static JasperPrint exportBescheid(
-        Map fields, String destination, boolean printPDF)
+    public JasperPrint exportBescheid(Map fields, String dest, boolean printPDF)
     throws Exception
     {
+        InputStream inputStream = getClass().getResourceAsStream(
+            "/reports/gebuehrenbescheid.jasper");
+
+        if (inputStream == null) {
+            throw new Exception(
+                "Konnte Template 'gebuehrenbescheid.jasper' nicht finden.");
+        }
+
         try {
-            JasperPrint jprint = export(
-                fields,
-                "gebuehrenbescheid",
-                destination);
+            JasperPrint jprint = export(fields, inputStream, dest);
 
             if (printPDF) {
                 print(jprint);

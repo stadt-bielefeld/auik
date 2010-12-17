@@ -467,7 +467,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 }
 
                 try {
-                    PDFExporter.exportAuftrag(params, path, true);
+                    PDFExporter.getInstance().exportAuftrag(params, path, true);
 
                     frame.showInfoMessage(
                         "Der Probenahmeauftrag wurde erfolgreich gedruckt " +
@@ -502,7 +502,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 }
 
                 try {
-                    PDFExporter.exportBescheid(params, path, true);
+                    PDFExporter.getInstance().exportBescheid(params, path,true);
 
                     frame.showInfoMessage(
                         "Der Gebührenbescheid wurde erfolgreich gedruckt " +

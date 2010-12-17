@@ -1,5 +1,15 @@
 2010-12-17  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Ein paar
+	  Änderungen, damit die Jasper Templates gefunden werden, egal ob man AUIK
+	  aus den übersetzten Quellen startet, oder aus einem Jar-Archiv. Dazu wird
+	  der Resource-Mechanismus aus Class.getResourceAsStream() genutzt.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Anpassungen des PDF Exports bzgl der Änderungen in PDFExporter.
+
+2010-12-17  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Implementation einer neuen Methode getBescheidDruckMap() zur Ermittlung
 	  der benötigten Parameter zum Befüllen eines Gebührenbescheides.
