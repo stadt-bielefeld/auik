@@ -1,5 +1,10 @@
 2010-12-17  Ingo Weinzierl <ingo@intevation.de>
 
+	* reports/gebuehrenbescheid.jrxml: Verbesserungen am Template (Platz
+	  zwischen Elementen zueinander).
+
+2010-12-17  Ingo Weinzierl <ingo@intevation.de>
+
 	* build.xml: Es gibt nun zwei unterschiedliche Clean-Tasks.
 	  clean:    Löscht das `build` und `dist` Verzeichnis sowie die übersetzten
 	            JasperReports Templates.
