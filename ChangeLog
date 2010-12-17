@@ -1,3 +1,11 @@
+2010-12-17  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Implementation einer neuen Methode getBescheidDruckMap() zur Ermittlung
+	  der benötigten Parameter zum Befüllen eines Gebührenbescheides.
+	  Es sind jedoch noch ein paar fehlende Parameter, bei denen noch unklar
+	  ist, woher diese Informationen stammen sollen (siehe `TODO` im Code).
+
 2010-12-16  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Die Funktionen zum

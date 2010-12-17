@@ -491,9 +491,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         bescheidDrucken.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 AtlProbenahmen probe = getProbe();
-
-                // TODO richtige Parameter setzen
-                Map params = new HashMap();
+                Map params           = getBescheidDruckMap(probe);
 
                 String path = bescheidDatei.getText();
                 if (path == null || path.equals("")) {
@@ -506,9 +504,10 @@ public class ProbenEditor extends AbstractApplyEditor {
                 try {
                     PDFExporter.exportBescheid(params, path, true);
 
-                    frame.showErrorMessage(
-                        "Diese Funktion ist derzeig noch nicht implementiert.",
-                        "Nicht implementiert.");
+                    frame.showInfoMessage(
+                        "Der Gebührenbescheid wurde erfolgreich gedruckt " +
+                        "und \nunter '" + path + "' gespeichert.",
+                        "Gebührenbescheid erfolgreich");
                 }
                 catch (Exception ex) {
                     AUIKataster.errorOutput(
@@ -993,6 +992,55 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         return params;
     }
+
+
+    public Map getBescheidDruckMap(AtlProbenahmen probe) {
+        BasisBetreiber betr = probe.getBasisBetreiber();
+
+        HashMap params = new HashMap();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        params.put("datum", df.format(new Date()));
+        params.put("entnahmedatum", df.format(datum.getDate()));
+        params.put("maxdatum", df.format(rechnungsDatum.getDate()));
+
+        try {
+            Integer anzahl = Integer.parseInt(beteiligte.getText());
+            params.put("probenehmer", anzahl.toString());
+        }
+        catch (NumberFormatException nfe) {
+            params.put("probenehmer", "1");
+        }
+
+        try {
+            SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
+            String beginn = uhrzeitVon.getText();
+            String ende   = uhrzeitBis.getText();
+
+            Date beginnDate = tf.parse(beginn);
+            Date endeDate   = tf.parse(ende);
+            Date dauer      = new Date(beginnDate.getTime()-endeDate.getTime());
+
+            params.put("dauer", tf.format(dauer));
+        }
+        catch (NumberFormatException nfe) {
+            params.put("dauer", "hh:mm");
+        }
+        catch (ParseException pe) {
+            params.put("dauer", "hh:mm");
+        }
+
+        params.put("gesamtkosten", rechnungsBetrag.getText());
+        params.put("entnahmeort", betr.getBetriebsgrundstueck());
+
+        // TODO
+        params.put("kassenzeichen", "53656.100046.5"); // woher?
+        params.put("entnahmestellen", "1"); // immer 1 ?
+        params.put("kosten", ""); // woher?
+
+        return params;
+    }
+
 
     protected void doApply() {
         ParameterChooser chooser = new ParameterChooser(frame);
