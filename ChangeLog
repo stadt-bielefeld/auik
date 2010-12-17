@@ -1,5 +1,17 @@
 2010-12-17  Ingo Weinzierl <ingo@intevation.de>
 
+	* reports/gebuehrenbescheid.jrxml: Der erste Entwurf eines
+	  Gebührenbescheid-Templates. Hier müssen/sollten noch ein paar Anpassungen
+	  gemacht werden (Schriftgröße, Abstand von Feldern zueinander, etc).
+
+	* src/de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid-icon.jpg: Dieses
+	  Icon wird vom Gebührenbescheid referenziert.
+
+	* lib/groovy-all-1.7.5.jar: Beim Übersetzen des Gebührenbescheides wird
+	  diese Lib benötigt (Abhängigkeit von JasperReports).
+
+2010-12-17  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Ein paar
 	  Änderungen, damit die Jasper Templates gefunden werden, egal ob man AUIK
 	  aus den übersetzten Quellen startet, oder aus einem Jar-Archiv. Dazu wird
