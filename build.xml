@@ -75,10 +75,21 @@
         <jar jarfile="${dist}/AUIK.jar" basedir="${build}"/>
     </target>
 
-    <target name="clean" description="Clean up">
+    <target name="clean" description="Clean up everything but the directory that contains the documentation">
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+        <delete>
+            <fileset dir="${reportsrc}" includes="**/*.jasper"/>
+        </delete>
+    </target>
+
+    <target name="cleanall" description="Clean up everything">
         <delete dir="${build}"/>
         <delete dir="${dist}"/>
         <delete dir="${doc}"/>
+        <delete>
+            <fileset dir="${reportsrc}" includes="**/*.jasper"/>
+        </delete>
     </target>
 
     <target name="run" depends="compile,jasper" description="Run the application">
