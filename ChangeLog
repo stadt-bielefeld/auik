@@ -1,6 +1,13 @@
 2010-12-20  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Knopf zum manuellen Erhöhen des Vorgangsstatus von Probenahmen
+	  integriert. Die Funktionalität ist jedoch noch nicht implementiert -
+	  hier wurde erstmal nur die GUI erweitert.
+
+2010-12-20  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Felder in der Probenahmeauftrag-Oberfläche bzgl des Betriebs angepasst:
 	  der Name des Betriebs ist nicht mehr editierbar und enthält den Names
 	  sowie die Adresse des Betriebes. Das Feld `Entnahmepunkt` zeigt die

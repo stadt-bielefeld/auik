@@ -354,6 +354,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private Dimension            minimumSize;
 
     private JComboBox            vorgangsstatus;
+    private JButton              statusHoch;
     private TextFieldDateChooser datum;
     private JFormattedTextField  uhrzeitVon;
     private JFormattedTextField  uhrzeitBis;
@@ -416,6 +417,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         beteiligte       = new JTextField();
         probenummer      = new JTextField();
         vorgangsstatus   = new JComboBox();
+        statusHoch       = new JButton("erhöhen");
         ansprechpartner  = new JTextField();
         bescheidDatei    = new JTextField();
         bescheidWahl     = new JButton("Auswählen");
@@ -439,6 +441,14 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         bescheidDatei.setEnabled(false);
         auftragDatei.setEnabled(false);
+
+        statusHoch.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.showInfoMessage(
+                    "Diese Funktion ist derzeit noch nicht implementiert.",
+                    "NOT IMPLEMENTED");
+            }
+        });
 
         auftragWahl.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -575,6 +585,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         row += 2;
         builder.add(new JLabel("Vorgangsstatus:"), cc.xyw(1, row, 1));
         builder.add(vorgangsstatus, cc.xyw(2, row, 4));
+        builder.addLabel("", cc.xyw(1, row, 1));
+        builder.add(statusHoch, cc.xyw(7, row, 1));
 
         row += 2;
         builder.addLabel("Ansprechpartner:", cc.xyw(1, row, 1));
