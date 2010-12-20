@@ -466,7 +466,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         auftragDrucken.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 AtlProbenahmen probe = getProbe();
-                Map params           = getAuftragDurckMap(probe);
+                Map params           = getAuftragDruckMap(probe);
 
                 String path = auftragDatei.getText();
                 if (path == null || path.equals("")) {
@@ -475,6 +475,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                         "Pfad zum Speichern fehlt");
                     return;
                 }
+
+                params.put("localFile", path);
 
                 try {
                     PDFExporter.getInstance().exportAuftrag(params, path, true);
@@ -994,7 +996,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
-    public Map getAuftragDurckMap(AtlProbenahmen probe) {
+    public Map getAuftragDruckMap(AtlProbenahmen probe) {
         BasisBetreiber betr = probe.getBasisBetreiber();
         AtlProbeart    art  = probe.getAtlProbepkt().getAtlProbeart();
 
@@ -1017,22 +1019,12 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("beginn", uhrzeitVon.getText());
         params.put("ende", uhrzeitBis.getText());
         params.put("fahrtzeit", fahrtzeit.getText());
+        params.put("entnahmestelle", entnahmepunkt.getText());
+        params.put("sachbearbeiterInfo", sachbearbeiter.getText());
 
         // TODO fill in the correct values if they exist
-        params.put("vorgangsnummer", "");
         params.put("anzahlEntnahmestellen", "");
         params.put("boolEntwaesserungssatzung", "");
-        params.put("abholDatum", "");
-        params.put("labor", "");
-        params.put("untersuchungsnummer", "");
-        params.put("entnahmestelle", "");
-        params.put("farbe", "");
-        params.put("truebung", "");
-        params.put("schaumbildung", "");
-        params.put("geruch", "");
-        params.put("schwimmstoffe", "");
-        params.put("sonstiges", "");
-        params.put("probeentnahmegeraet", "");
 
         return params;
     }

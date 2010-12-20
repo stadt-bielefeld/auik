@@ -1,5 +1,13 @@
 2010-12-20  Ingo Weinzierl <ingo@intevation.de>
 
+	* reports/probenahmeauftrag.jrxml: Verbesserungen am Template - maßgeblich
+	  Sonderzeichen.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Pfad zur PDF Datei mit zum Befüllen des Tempaltes.
+
+2010-12-20  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Label und Variable `Ansprechpartner` in `Sachbearbeiter` geändert. Das
 	  Feld speicherte seinen Inhalt sowieso bereits in der DB-Spalte
