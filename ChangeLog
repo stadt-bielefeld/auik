@@ -1,3 +1,11 @@
+2010-12-20  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Felder in der Probenahmeauftrag-Oberfläche bzgl des Betriebs angepasst:
+	  der Name des Betriebs ist nicht mehr editierbar und enthält den Names
+	  sowie die Adresse des Betriebes. Das Feld `Entnahmepunkt` zeigt die
+	  Beschreibung des Entnahmepunktes.
+
 2010-12-17  Ingo Weinzierl <ingo@intevation.de>
 
 	* reports/gebuehrenbescheid.jrxml: Verbesserungen am Template (Platz

@@ -373,7 +373,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private JButton              auftragWahl;
     private JButton              auftragDrucken;
     private JFileChooser         dateiChooser;
-    private JTextField           betrieb;
+    private JLabel               betrieb;
     private JLabel               entnahmepunkt;
     private JFormattedTextField  icpEinwaageFeld;
     private TextFieldDateChooser icpDatum;
@@ -427,7 +427,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         icpEinwaageFeld  = new DoubleField(0);
         icpDatum         = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
         bemerkungsArea   = new LimitedTextArea(255);
-        betrieb          = new JTextField();
+        betrieb          = new JLabel();
         parameterTabelle = new SelectTable();
 
         // wir nehmen hier nur die Strings um die ComboBox zu füllen, da die Box
@@ -582,11 +582,11 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         row += 2;
         builder.addLabel("Name des Betriebs:", cc.xyw(1, row, 1));
-        builder.add(betrieb, cc.xyw(2, row, 4));
+        builder.add(betrieb, cc.xyw(2, row, 8));
 
         row += 2;
         builder.addLabel("Entnahmepunkt:", cc.xyw(1, row, 1));
-        builder.add(entnahmepunkt, cc.xyw(2, row, 7));
+        builder.add(entnahmepunkt, cc.xyw(2, row, 8));
 
         row += 2;
         builder.add(new JLabel("Datum:"), cc.xyw(1, row, 1));
@@ -696,8 +696,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         probenummer.setText(probe.getKennummer());
         ansprechpartner.setText(probe.getSachbearbeiter());
         entnahmepunkt.setText(
-            probe.getAtlProbepkt().getBasisObjekt().getBasisStandort() + ", " +
-            probe.getAtlProbepkt().getBasisObjekt().getBasisBetreiber());
+            probe.getAtlProbepkt().getBasisObjekt().getBeschreibung());
         Date entnahmeDatum = probe.getDatumDerEntnahme();
         datum.setDate(entnahmeDatum);
         uhrzeitVon.setText(probe.getUhrzeitbeginn());
@@ -705,7 +704,21 @@ public class ProbenEditor extends AbstractApplyEditor {
         fahrtzeit.setText(probe.getFahrtzeit());
 
         if (basisBetr != null) {
-            betrieb.setText(basisBetr.getBetrname());
+            String name = basisBetr.getBetrname();
+            String addr = basisBetr.getBetriebsgrundstueck();
+
+            StringBuilder sb = new StringBuilder();
+
+            if (name != null) {
+                sb.append(name);
+            }
+
+            if (addr != null) {
+                sb.append(", ");
+                sb.append(addr);
+            }
+
+            betrieb.setText(sb.toString());
         }
 
         if (probe.getAnzahlbeteiligte() != null) {
@@ -845,8 +858,6 @@ public class ProbenEditor extends AbstractApplyEditor {
             getClass().getName());
 
         AtlProbenahmen probe = getProbe();
-
-        // TODO Vorgangart
 
         // Vorgangsstatus
         String status = (String) vorgangsstatus.getSelectedItem();
