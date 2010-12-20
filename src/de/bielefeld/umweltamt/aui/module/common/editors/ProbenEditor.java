@@ -366,7 +366,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private DoubleField          rechnungsBetrag;
     private JTextArea            bemerkungsArea;
 
-    private JTextField           ansprechpartner;
+    private JTextField           sachbearbeiter;
     private JTextField           bescheidDatei;
     private JButton              bescheidWahl;
     private JButton              bescheidDrucken;
@@ -418,7 +418,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         probenummer      = new JTextField();
         vorgangsstatus   = new JComboBox();
         statusHoch       = new JButton("erhöhen");
-        ansprechpartner  = new JTextField();
+        sachbearbeiter   = new JTextField();
         bescheidDatei    = new JTextField();
         bescheidWahl     = new JButton("Auswählen");
         bescheidDrucken  = new JButton("Drucken");
@@ -600,8 +600,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         builder.add(statusHoch, cc.xyw(7, row, 1));
 
         row += 2;
-        builder.addLabel("Ansprechpartner:", cc.xyw(1, row, 1));
-        builder.add(ansprechpartner, cc.xyw(2, row, 4));
+        builder.addLabel("Sachbearbeiter:", cc.xyw(1, row, 1));
+        builder.add(sachbearbeiter, cc.xyw(2, row, 4));
 
         row += 2;
         builder.addLabel("Name des Betriebs:", cc.xyw(1, row, 1));
@@ -717,7 +717,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         BasisBetreiber basisBetr = probe.getBasisBetreiber();
 
         probenummer.setText(probe.getKennummer());
-        ansprechpartner.setText(probe.getSachbearbeiter());
+        sachbearbeiter.setText(probe.getSachbearbeiter());
         entnahmepunkt.setText(
             probe.getAtlProbepkt().getBasisObjekt().getBeschreibung());
         Date entnahmeDatum = probe.getDatumDerEntnahme();
@@ -950,9 +950,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         // Rechnungsbetrag
         probe.setKosten(rechnungsBetrag.getDoubleValue());
 
-        String sachbearbeiter = ansprechpartner.getText();
+        String sachbearb = sachbearbeiter.getText();
         if (sachbearbeiter != null) {
-            probe.setSachbearbeiter(sachbearbeiter);
+            probe.setSachbearbeiter(sachbearb);
         }
 
         // Kennnummer

@@ -1,6 +1,14 @@
 2010-12-20  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Label und Variable `Ansprechpartner` in `Sachbearbeiter` geändert. Das
+	  Feld speicherte seinen Inhalt sowieso bereits in der DB-Spalte
+	  `sachbearbeiter` der Tabelle `atl_probenahmen`. Das Feld
+	  `Ansprechpartner` wird an anderer Stelle gepflegt werden.
+
+2010-12-20  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Das Drucken von Probenahmeaufträgen und Gebührenbescheiden erhöht nun
 	  automatisch den Status der aktuellen Probenahme.
 
