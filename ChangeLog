@@ -1,6 +1,12 @@
 2010-12-20  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Das Drucken von Probenahmeaufträgen und Gebührenbescheiden erhöht nun
+	  automatisch den Status der aktuellen Probenahme.
+
+2010-12-20  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Knopf zum manuellen Erhöhen des Vorgangsstatus von Probenahmen
 	  integriert. Die Funktionalität ist jedoch noch nicht implementiert -
 	  hier wurde erstmal nur die GUI erweitert.

@@ -478,6 +478,11 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                 try {
                     PDFExporter.getInstance().exportAuftrag(params, path, true);
+                    String gedruckt = updateVorgangsstatus(
+                        "Probenahmeauftrag gedruckt");
+
+                    probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
+                    AtlProbenahmen.updateProbenahme(probe);
 
                     frame.showInfoMessage(
                         "Der Probenahmeauftrag wurde erfolgreich gedruckt " +
@@ -513,6 +518,12 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                 try {
                     PDFExporter.getInstance().exportBescheid(params, path,true);
+
+                    String gedruckt = updateVorgangsstatus(
+                        "Bescheid gedruckt");
+
+                    probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
+                    AtlProbenahmen.updateProbenahme(probe);
 
                     frame.showInfoMessage(
                         "Der Gebührenbescheid wurde erfolgreich gedruckt " +
@@ -838,17 +849,25 @@ public class ProbenEditor extends AbstractApplyEditor {
             "Aktueller Status: " + status.getBezeichnung(),
             getClass().getName());
 
-        DefaultComboBoxModel model = (DefaultComboBoxModel) vorgangsstatus.getModel();
+        String bezeichnung = status.getBezeichnung();
+
+        updateVorgangsstatus(bezeichnung);
+    }
+
+
+    protected String updateVorgangsstatus(String bezeichnung) {
+        DefaultComboBoxModel model =
+            (DefaultComboBoxModel) vorgangsstatus.getModel();
 
         Object selection = null;
         int size         = model.getSize();
 
-        String bezeichnung = status.getBezeichnung();
+        bezeichnung = bezeichnung.trim().toLowerCase();
 
         for (int i = 0; i < size; i++) {
             String tmp = (String) model.getElementAt(i);
 
-            if (bezeichnung.equals(tmp)) {
+            if (bezeichnung.equals(tmp.trim().toLowerCase())) {
                 selection = tmp;
                 break;
             }
@@ -857,6 +876,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         if (selection != null) {
             model.setSelectedItem(selection);
         }
+
+        return (String) selection;
     }
 
 
