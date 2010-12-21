@@ -88,6 +88,8 @@ import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+import net.sf.jasperreports.engine.JRDataSource;
+
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
@@ -101,6 +103,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.DoubleRenderer;
+import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
@@ -479,7 +482,11 @@ public class ProbenEditor extends AbstractApplyEditor {
                 params.put("localFile", path);
 
                 try {
-                    PDFExporter.getInstance().exportAuftrag(params, path, true);
+                    // TODO Sammeln der korrekten Parameter für den
+                    // Untersuchungsauftrag
+                    JRDataSource subdata = new JRMapDataSource();
+                    PDFExporter.getInstance().exportAuftrag(
+                        params, subdata, path, true);
                     String gedruckt = updateVorgangsstatus(
                         "Probenahmeauftrag gedruckt");
 

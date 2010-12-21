@@ -14,9 +14,9 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
-
-import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 
 
 /**
@@ -72,15 +72,10 @@ public class PDFExporter {
         Map fields, InputStream reportFile, String dest)
     throws Exception
     {
-        //JasperPrint print = JasperFillManager.fillReport(
-        //    "build/reports/" + reportFile + ".jasper",
-        //    null,
-        //    new JRMapDataSource(fields));
-
         JasperPrint print = JasperFillManager.fillReport(
             reportFile,
             fields,
-            new JRMapDataSource(fields));
+            new JREmptyDataSource(1));
 
         JasperExportManager.exportReportToPdfFile(print, dest);
 
@@ -103,7 +98,8 @@ public class PDFExporter {
      *
      * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
-    public JasperPrint exportAuftrag(Map fields, String dest, boolean printPDF)
+    public JasperPrint exportAuftrag(
+        Map fields, JRDataSource subdata, String dest, boolean printPDF)
     throws Exception
     {
         InputStream inputStream = getClass().getResourceAsStream(
@@ -113,6 +109,12 @@ public class PDFExporter {
             throw new Exception(
                 "Konnte Template 'probenahmeauftrag.jasper' nicht finden.");
         }
+
+        fields.put("SUBDATA", subdata);
+
+        // TODO Suche das korrekte `report` Verzeichnis - unabhängig, ob aus
+        // den übersetzten Quellen oder aus dem Jar-Archiv gestartet wird.
+        fields.put("SUBREPORT_DIR", "build/reports/");
 
         try {
             JasperPrint jprint = export(fields, inputStream, dest);

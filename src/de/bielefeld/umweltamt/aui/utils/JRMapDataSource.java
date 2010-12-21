@@ -23,8 +23,13 @@ import net.sf.jasperreports.engine.JRField;
  */
 public class JRMapDataSource implements JRDataSource {
 
-    protected Map values;
     protected int index;
+    protected Object[][] values =
+    {
+        {"", "Berne", "Heidrun Fill", "277 Seventh Av."},
+        {"", "Boston", "Holger Hoff", "339 College Av."},
+        {"", "Chicago", "Julia White", "412 Upland Pl."},
+    };
 
 
     /**
@@ -33,8 +38,7 @@ public class JRMapDataSource implements JRDataSource {
      * @param values Die Werte, die in den JasperReport eingef&uuml;llt werden
      * sollen.
      */
-    public JRMapDataSource(Map values) {
-        this.values = values;
+    public JRMapDataSource() {
         this.index  = 0;
     }
 
@@ -45,8 +49,9 @@ public class JRMapDataSource implements JRDataSource {
      * @return beim ersten Aufruf <i>true</i>, bei allen weiteren <i>false</i>.
      */
     public boolean next() {
+        System.out.println("Step forward.");
         index++;
-        return index <= 1 ? true : false;
+        return (index < values.length);
     }
 
 
@@ -60,7 +65,23 @@ public class JRMapDataSource implements JRDataSource {
      * existiert, wird <i>null</i> zur&uuml;ckgegeben.
      */
     public Object getFieldValue(JRField field) throws JRException {
-        return values.get(field.getName());
+        String col = field.getName();
+        System.out.println("Search for field: " + col);
+
+        if (col.equals("auswahl")) {
+            return "x";
+        }
+        else if (col.equals("Parameter")) {
+            return values[index][1];
+        }
+        else if (col.equals("Kennzeichnung")) {
+            return values[index][2];
+        }
+        else if (col.equals("Konservierung")) {
+            return values[index][3];
+        }
+
+        return "Name '" + col + "' nicht gefunden.";
     }
 }
 // vim:set ts=4 sw=4 si et sta sts=4 fenc=utf8:

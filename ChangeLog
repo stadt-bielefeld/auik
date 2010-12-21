@@ -1,5 +1,31 @@
 2010-12-21  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Der Probenahmenauftrag wird mit einer JRMapDataSource gefüllt, welche
+	  die Liste der zu beprobenden Parameter enthält. An dieser Stelle muss
+	  noch dafür gesorgt werden, dass die richtigen Parameter in die
+	  JRMapDataSource gefüllt werden.
+
+	* src/de/bielefeld/umweltamt/aui/utils/JRMapDataSource.java: Dies wird
+	  eine Datenquelle, die die zu beprobenden Parameter enthält. Zur Zeit
+	  werden nur statische Daten geliefert.
+
+	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Die Parameter für
+	  den Subreport werden hier beim Probenahmeauftrag-Export hinzugefügt.
+	  Außerdem wird generell für einen Probenahmeauftrag, sowie für den
+	  Gebührenbescheid keine Datenquelle mehr verwendet - stattdessen wird
+	  JREmptyDataSource benutzt, um genau 1x das Template als PDF zu
+	  erstellen.
+
+	* reports/probenahmeauftrag.jrxml: Der Probenahmeauftrag hat nun ein
+	  Subreport `ParameterReport`, welcher die zu probenden Parameter als
+	  Liste darstellt.
+
+	* reports/ParameterReport.jrxml: Template, welches die zu beprobenden
+	  Parameter als Liste darstellt.
+
+2010-12-21  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Die Parameter für
 	  die Templates werden nun als Parameter in den JasperFillManager
 	  gereicht - nicht mehr als Datenquelle. Die Datenquelle wird noch

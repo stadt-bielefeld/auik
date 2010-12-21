@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="291"/>
+	<property name="ireport.y" value="444"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -20,6 +20,10 @@
 	<parameter name="fahrtzeit" class="java.lang.String"/>
 	<parameter name="sachbearbeiterInfo" class="java.lang.String"/>
 	<parameter name="localFile" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/ingo/work/auik/reports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBDATA" class="net.sf.jasperreports.engine.JRDataSource" isForPrompting="false"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -1021,6 +1025,25 @@
 				</textElement>
 				<text><![CDATA[2]]></text>
 			</staticText>
+		</band>
+		<band height="83">
+			<subreport>
+				<reportElement x="10" y="7" width="518" height="64"/>
+				<subreportParameter name="ende">
+					<subreportParameterExpression><![CDATA[$P{ende}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="subkennnummer">
+					<subreportParameterExpression><![CDATA[$P{kennnummer}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="beginn">
+					<subreportParameterExpression><![CDATA[$P{beginn}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="datum">
+					<subreportParameterExpression><![CDATA[$P{entnahmeDatum}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{SUBDATA}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ParameterReport.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
