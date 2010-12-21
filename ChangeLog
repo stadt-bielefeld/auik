@@ -1,3 +1,14 @@
+2010-12-21  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Die Parameter für
+	  die Templates werden nun als Parameter in den JasperFillManager
+	  gereicht - nicht mehr als Datenquelle. Die Datenquelle wird noch
+	  benötigt, um Listen zu füllen.
+
+	* reports/probenahmeauftrag.jrxml,
+	  reports/gebuehrenbescheid.jrxml: Die Felder werden nun nicht mehr aus
+	  der Datenquelle gelesen, sondern aus den Parametern.
+
 2010-12-20  Ingo Weinzierl <ingo@intevation.de>
 
 	* reports/probenahmeauftrag.jrxml: Verbesserungen am Template - maßgeblich

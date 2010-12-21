@@ -79,7 +79,7 @@ public class PDFExporter {
 
         JasperPrint print = JasperFillManager.fillReport(
             reportFile,
-            null,
+            fields,
             new JRMapDataSource(fields));
 
         JasperExportManager.exportReportToPdfFile(print, dest);

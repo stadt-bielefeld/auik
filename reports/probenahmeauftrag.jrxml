@@ -2,37 +2,24 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="probenahmeauftrag" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
 	<property name="ireport.scriptlethandling" value="2"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="610"/>
+	<property name="ireport.y" value="291"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<field name="art" class="java.lang.String"/>
-	<field name="kennnummer" class="java.lang.String"/>
-	<field name="vorgangsnummer" class="java.lang.String"/>
-	<field name="name" class="java.lang.String"/>
-	<field name="betriebsgrundstueck" class="java.lang.String"/>
-	<field name="anzahlEntnahmestellen" class="java.lang.String"/>
-	<field name="anzahlMitarbeiter" class="java.lang.String"/>
-	<field name="boolEntwaesserungssatzung" class="java.lang.Boolean"/>
-	<field name="entnahmeDatum" class="java.lang.String"/>
-	<field name="abholDatum" class="java.lang.String"/>
-	<field name="beginn" class="java.lang.String"/>
-	<field name="labor" class="java.lang.String"/>
-	<field name="ende" class="java.lang.String"/>
-	<field name="fahrtzeit" class="java.lang.String"/>
-	<field name="untersuchungsnummer" class="java.lang.String"/>
-	<field name="entnahmestelle" class="java.lang.String"/>
-	<field name="farbe" class="java.lang.String"/>
-	<field name="truebung" class="java.lang.String"/>
-	<field name="schaumbildung" class="java.lang.String"/>
-	<field name="geruch" class="java.lang.String"/>
-	<field name="schwimmstoffe" class="java.lang.String"/>
-	<field name="sonstiges" class="java.lang.String"/>
-	<field name="probeentnahmegeraet" class="java.lang.String"/>
-	<field name="sachbearbeiterInfo" class="java.lang.String"/>
-	<field name="localFile" class="java.lang.String"/>
+	<parameter name="art" class="java.lang.String"/>
+	<parameter name="kennnummer" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="betriebsgrundstueck" class="java.lang.String"/>
+	<parameter name="anzahlMitarbeiter" class="java.lang.String"/>
+	<parameter name="entnahmestelle" class="java.lang.String"/>
+	<parameter name="entnahmeDatum" class="java.lang.String"/>
+	<parameter name="beginn" class="java.lang.String"/>
+	<parameter name="ende" class="java.lang.String"/>
+	<parameter name="fahrtzeit" class="java.lang.String"/>
+	<parameter name="sachbearbeiterInfo" class="java.lang.String"/>
+	<parameter name="localFile" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -87,7 +74,7 @@
 				<textElement textAlignment="Center">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{kennnummer}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{kennnummer}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-3" x="10" y="49" width="372" height="20"/>
@@ -100,7 +87,7 @@
 				<textElement>
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Probeentnahmeprotokoll für "+$F{art}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Probeentnahmeprotokoll für "+$P{art}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -155,7 +142,7 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-5" x="15" y="59" width="507" height="15"/>
@@ -168,7 +155,7 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{betriebsgrundstueck}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{betriebsgrundstueck}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement key="line-3" x="185" y="105" width="345" height="1"/>
@@ -217,7 +204,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{anzahlMitarbeiter}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{anzahlMitarbeiter}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-11" x="184" y="107" width="346" height="17"/>
@@ -349,7 +336,7 @@
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{entnahmestelle}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{entnahmestelle}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-9" x="15" y="228" width="120" height="15"/>
@@ -360,7 +347,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{entnahmeDatum}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{entnahmeDatum}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement key="line-16" x="150" y="216" width="1" height="57"/>
@@ -467,7 +454,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{beginn}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{beginn}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-13" x="295" y="229" width="113" height="15"/>
@@ -478,7 +465,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{ende}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ende}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-14" x="415" y="229" width="113" height="15"/>
@@ -491,7 +478,7 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{fahrtzeit}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{fahrtzeit}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement key="rectangle-5" x="13" y="-252" width="520" height="58"/>
@@ -534,7 +521,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-17" x="18" y="-211" width="507" height="15"/>
@@ -545,7 +532,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{betriebsgrundstueck}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{betriebsgrundstueck}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement key="rectangle-6" x="10" y="325" width="520" height="58"/>
@@ -1018,7 +1005,7 @@
 			<textField>
 				<reportElement x="15" y="602" width="502" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{sachbearbeiterInfo}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{sachbearbeiterInfo}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="262" y="476" width="8" height="8"/>
@@ -1046,7 +1033,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{localFile}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{localFile}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="15" y="2" width="513" height="14"/>

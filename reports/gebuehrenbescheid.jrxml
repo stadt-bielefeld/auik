@@ -2,18 +2,18 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gebuehrenbescheid" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="358"/>
+	<property name="ireport.y" value="1050"/>
 	<subDataset name="dataset1"/>
-	<field name="datum" class="java.lang.String"/>
-	<field name="kassenzeichen" class="java.lang.String"/>
-	<field name="probenehmer" class="java.lang.String"/>
-	<field name="dauer" class="java.lang.String"/>
-	<field name="kosten" class="java.lang.String"/>
-	<field name="gesamtkosten" class="java.lang.String"/>
-	<field name="entnahmestellen" class="java.lang.String"/>
-	<field name="entnahmedatum" class="java.lang.String"/>
-	<field name="entnahmeort" class="java.lang.String"/>
-	<field name="maxdatum" class="java.lang.String"/>
+	<parameter name="datum" class="java.lang.String"/>
+	<parameter name="kassenzeichen" class="java.lang.String"/>
+	<parameter name="probenehmer" class="java.lang.String"/>
+	<parameter name="dauer" class="java.lang.String"/>
+	<parameter name="kosten" class="java.lang.String"/>
+	<parameter name="gesamtkosten" class="java.lang.String"/>
+	<parameter name="entnahmestellen" class="java.lang.String"/>
+	<parameter name="entnahmedatum" class="java.lang.String"/>
+	<parameter name="entnahmeort" class="java.lang.String"/>
+	<parameter name="maxdatum" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -141,7 +141,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="320" splitType="Stretch">
+		<band height="303" splitType="Stretch">
 			<image>
 				<reportElement x="437" y="4" width="113" height="136"/>
 				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
@@ -168,126 +168,42 @@
 				<text><![CDATA[1.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="20" y="138" width="14" height="15"/>
+				<reportElement x="20" y="130" width="14" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[2.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="40" y="138" width="360" height="15"/>
+				<reportElement x="40" y="130" width="360" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Analysekosten gem. § 10 (3) KdS in Verbindung mit dem Gebührentarif für Analysen:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="39" y="113" width="10" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{probenehmer}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="49" y="113" width="45" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[Probenehmer *]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="94" y="113" width="20" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{probenehmer}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="107" y="113" width="26" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[Stunden]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="132" y="112" width="9" height="15"/>
-				<textElement>
-					<font size="4"/>
-				</textElement>
-				<text><![CDATA[1]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="136" y="113" width="9" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[*]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="142" y="113" width="22" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{kosten}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="164" y="113" width="15" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[€  = ]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="179" y="113" width="21" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{gesamtkosten}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="200" y="113" width="24" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[€ ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="39" y="122" width="85" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[Anzahl der Entnahmestellen:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="125" y="122" width="10" height="10"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{entnahmestellen}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="40" y="152" width="207" height="10"/>
+				<reportElement x="40" y="144" width="207" height="10"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[Datum, Zeit und Ort der Probeentnahme:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="40" y="161" width="100" height="10"/>
+				<reportElement x="40" y="153" width="100" height="10"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{entnahmedatum}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{entnahmedatum}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="40" y="170" width="100" height="10"/>
+				<reportElement x="40" y="162" width="100" height="10"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{entnahmeort}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{entnahmeort}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="73" y="234" width="408" height="44"/>
+				<reportElement x="73" y="205" width="408" height="44"/>
 				<textElement textAlignment="Center">
 					<font size="24"/>
 				</textElement>
@@ -301,14 +217,14 @@
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{datum}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{datum}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="179" y="32" width="121" height="15"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{kassenzeichen}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{kassenzeichen}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="179" y="4" width="121" height="13"/>
@@ -338,79 +254,44 @@
 				</textElement>
 				<text><![CDATA[Bielefeld]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="40" y="114" width="371" height="9"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{probenehmer} + " Probenehmer * " + $P{dauer} + " Stunden * " + $P{kosten} + " € = " + $P{gesamtkosten}]]></textFieldExpression>
+			</textField>
 		</band>
-		<band height="36">
-			<staticText>
-				<reportElement x="20" y="5" width="132" height="8"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[Bitte überweisen Sie die Gesamtgebühr von ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="171" y="5" width="30" height="8"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[€ bis zum ]]></text>
-			</staticText>
+		<band height="34">
 			<textField>
-				<reportElement x="152" y="5" width="20" height="8"/>
+				<reportElement x="20" y="3" width="519" height="28"/>
 				<textElement>
-					<font size="6"/>
+					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{gesamtkosten}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Bitte überweisen Sie die Gesamtgebühr von " + $P{gesamtkosten} + " bis zum " + $P{maxdatum} + " unter Angabe des Kassenzeichens " + $P{kassenzeichen} + " an die Stadtkasse Bielefeld, Konto-Nr. 26 bei der Sparkasse Bielefeld, Bankleitzahl 480 501 61."]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="200" y="5" width="30" height="8"/>
-				<textElement textAlignment="Center">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{maxdatum}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="229" y="5" width="106" height="8"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[unter Angabe des Kassenzeichens ]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="334" y="5" width="59" height="8"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{kassenzeichen}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="20" y="12" width="519" height="8"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[an die Stadtkasse Bielefeld, Konto-Nr. 26 bei der Sparkasse Bielefeld, Bankleitzahl 480 501 61.]]></text>
-			</staticText>
 		</band>
-		<band height="60">
+		<band height="44">
 			<staticText>
-				<reportElement x="20" y="5" width="100" height="8"/>
+				<reportElement x="20" y="3" width="100" height="8"/>
 				<textElement>
 					<font size="6" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Hinweis:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="20" y="12" width="519" height="32"/>
+				<reportElement x="20" y="10" width="519" height="32"/>
 				<textElement>
 					<font size="6" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Bitte überprüfen Sie die diesem Bescheid zugrunde liegenden Tatsachen. Wenn diese nach Ihrer Auffassung fehlerhaft sein sollten, können Sie sich zur schnellen Klärung direkt an mich wenden. Dies führt nicht zu einer Verlängerung der einmonatigen Klagefrist nach Bekanntgabe dieses Bescheides (s. folgende Rechtsbehelfsbelehrung). Falls ich meine Entscheidung nicht ändern kann, müssen Sie trotzdem innerhalb eines Monats nach Bekanntgabe des Bescheides Klage erheben, wenn Sie Ihre Beschwerde weiterverfolgen wollen]]></text>
 			</staticText>
 		</band>
-		<band height="51">
+		<band height="82">
 			<staticText>
-				<reportElement x="20" y="12" width="519" height="38"/>
+				<reportElement x="20" y="13" width="519" height="65"/>
 				<textElement>
-					<font size="6" isUnderline="false"/>
+					<font size="8" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe Klage erhoben werden. Die Klage ist entweder schriftlich beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden, oder dort zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungsgerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrsverordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG) vom 23.11.2005 (GV. NRW. S. 926) einzureichen.
 Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten versäumt werden, so würde deren / dessen Verschulden Ihnen zugerechnet werden.]]></text>
@@ -423,26 +304,51 @@ Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten
 				<text><![CDATA[Rechtsbehelfsbelehrung:]]></text>
 			</staticText>
 		</band>
-		<band height="98">
+		<band height="40">
 			<staticText>
-				<reportElement x="20" y="1" width="519" height="96"/>
+				<reportElement x="20" y="1" width="519" height="38"/>
 				<textElement>
-					<font size="6"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Des Weiteren weise ich darauf hin, dass eine Klage gegen die Anforderung der Gebühren gemäß § 80 Abs. 2 Nr. 1 Verwaltungsgerichtsordnung (VwGO) keine aufschiebende Wirkung hat. Bescheide, die öffentliche Abgaben oder Kosten festsetzen, sind sofort vollziehbar. Dies bedeutet, dass Sie unabhängig von der Einreichung einer Klage zur fristgerechten Zahlung der festgesetzten Gebühren verpflichtet sind.
-Sie können jedoch gemäß § 80 Abs. 4 VwGO einen Antrag auf Aussetzung der sofortigen Vollziehung (ohne Einhaltung einer Frist) bei dem Oberbürgermeister der Stadt Bielefeld in Bielefeld stellen.
+]]></text>
+			</staticText>
+		</band>
+		<band height="67">
+			<staticText>
+				<reportElement x="20" y="1" width="519" height="65"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sie können jedoch gemäß § 80 Abs. 4 VwGO einen Antrag auf Aussetzung der sofortigen Vollziehung (ohne Einhaltung einer Frist) bei dem Oberbürgermeister der Stadt Bielefeld in Bielefeld stellen.
 Ferner können Sie gemäß § 80 Abs. 5 VwGO einen Antrag auf Anordnung der aufschiebenden Wirkung der Klage beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden schriftlich, zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungsgerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrsverordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG vom 23.11.2005 (GV. NRW. S. 926) einreichen.
-Gemäß § 80 Abs. 6 VwGO ist der Antrag an das Verwaltungsgericht nach § 80 Abs. 5 VwGO nur zulässig, wenn die Behörde einen Antrag auf Aussetzung der Vollziehung ganz oder zum Teil abgelehnt hat. Das gilt nicht, wenn 1. die Behörde über den Antrag ohne Mitteilung eines zureichenden Grundes in angemessener Frist sachlich nicht entschieden hat oder 2. eine Vollstreckung droht.
+]]></text>
+			</staticText>
+		</band>
+		<band height="57">
+			<staticText>
+				<reportElement x="20" y="1" width="519" height="55"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Gemäß § 80 Abs. 6 VwGO ist der Antrag an das Verwaltungsgericht nach § 80 Abs. 5 VwGO nur zulässig, wenn die Behörde einen Antrag auf Aussetzung der Vollziehung ganz oder zum Teil abgelehnt hat. Das gilt nicht, wenn 1. die Behörde über den Antrag ohne Mitteilung eines zureichenden Grundes in angemessener Frist sachlich nicht entschieden hat oder 2. eine Vollstreckung droht.
 Ist der Verwaltungsakt zum Zeitpunkt der Entscheidung schon vollzogen, können Sie beim Verwaltungsgericht beantragen, dass dieses die Aufhebung der Vollziehung anordnet.
 
 ]]></text>
 			</staticText>
 		</band>
-		<band height="88">
+		<band height="116">
 			<staticText>
-				<reportElement x="20" y="2" width="519" height="71"/>
+				<reportElement x="20" y="101" width="100" height="12"/>
 				<textElement>
-					<font size="6"/>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Gößling]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="1" width="519" height="102"/>
+				<textElement>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Hinweis nach § 12 (2) Datenschutzgesetz NW (DSG NW):
 Personenbezogene Daten, d. h. Einzelangaben über persönliche und sachliche Verhältnisse einer bestimmten oder bestimmbaren natürlichen Person, können gemäß § 12 (1) DSG NW erhoben werden.
@@ -450,13 +356,6 @@ Die Angaben werden aufgrund einer Auskunftspflicht gemäß § 10 der Satzung üb
 Das Erheben, Speichern, Verändern und Nutzen dieser Daten ist somit nach § 12 (1) und 13 (1) DSG NW zulässig. Die Daten dürfen grundsätzlich nur für Zwecke weiterverarbeitet werden, für die sie erhoben worden sind.
 Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.
 I. A.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="20" y="72" width="100" height="12"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[Gößling]]></text>
 			</staticText>
 		</band>
 	</detail>
