@@ -7,6 +7,7 @@
  */
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRDataSource;
@@ -27,16 +28,21 @@ public class JRMapDataSource implements JRDataSource {
 
     protected int index;
 
+    protected String[] columns;
+    protected Map      indexBuffer;
+
     protected Object[]   current;
     protected Object[][] values;
 
     /**
      * Dieser Konstruktor erstellt ein leeres JRMapDataSource ohne Inhalt und
-     * sollte nicht benutzt werden.
+     * sollte nicht direkt benutzt werden, jedoch immer von anderen
+     * Konstruktoren aufgerufen werden!
      */
     protected JRMapDataSource() {
-        this.index   = 0;
-        this.current = null;
+        this.index       = 0;
+        this.indexBuffer = new HashMap();
+        this.current     = null;
     }
 
 
@@ -46,10 +52,11 @@ public class JRMapDataSource implements JRDataSource {
      * @param values Die Werte, die in den JasperReport eingef&uuml;llt werden
      * sollen.
      */
-    public JRMapDataSource(Object[][] values) {
+    public JRMapDataSource(String[] columns, Object[][] values) {
         super();
 
-        this.values = values;
+        this.columns = columns;
+        this.values  = values;
     }
 
 
@@ -72,15 +79,9 @@ public class JRMapDataSource implements JRDataSource {
      * @throws NullPointerException if no values have been filled in.
      */
     public boolean next() {
-        System.out.println("BEGIN STEPPING BY INDEX = " + index);
         index++;
-        System.out.println("AFTER STEPPING INDEX = " + index);
 
         if (index <= size()) {
-            AUIKataster.debugOutput(
-                getClass().getName(),
-                "Step forward to index " + index);
-
             current = values[index-1];
             return true;
         }
@@ -101,25 +102,41 @@ public class JRMapDataSource implements JRDataSource {
      */
     public Object getFieldValue(JRField field) throws JRException {
         String col = field.getName();
+        int idx    = getIndexOf(col);
 
-        AUIKataster.debugOutput(
-            getClass().getName(),
-            "Search for field: " + col + " | Index = " + index);
+        return idx >= 0 ? current[idx] : "";
+    }
 
-        if (col.equals("auswahl")) {
-            return current[0];
-        }
-        else if (col.equals("Parameter")) {
-            return current[1];
-        }
-        else if (col.equals("Kennzeichnung")) {
-            return current[2];
-        }
-        else if (col.equals("Konservierung")) {
-            return current[3];
+
+    /**
+     * Diese Methode liefert den Index einer Spalte anhand ihres Namen.
+     *
+     * @param col Der Name der Spalte.
+     *
+     * @return den Index der Spalte <i>col</i>.
+     */
+    public int getIndexOf(String col) {
+        if (indexBuffer == null) {
+            indexBuffer = new HashMap();
         }
 
-        return "Name '" + col + "' nicht gefunden.";
+        Object ib = indexBuffer.get(col);
+
+        if (ib != null) {
+            return ((Integer) ib).intValue();
+        }
+
+        int idx = 0;
+
+        for (String column: columns) {
+            if (column.equals(col)) {
+                indexBuffer.put(col, new Integer(idx));
+                return idx;
+            }
+            idx++;
+        }
+
+        return -1;
     }
 }
 // vim:set ts=4 sw=4 si et sta sts=4 fenc=utf8:

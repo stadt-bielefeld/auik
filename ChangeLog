@@ -1,6 +1,34 @@
 2011-01-03  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Der Gebührenbescheid wird nun mit den Parametern der Probe gefüllt.
+
+	* src/de/bielefeld/umweltamt/aui/utils/JRMapDataSource.java: Der DataSource
+	  wurde ein wenig aufgebohrt und damit generischer gemacht, damit dieser
+	  nicht nur für einen Probenahmeauftrag sondern auch für den
+	  Gebührenbescheid funktioniert. Der Standard-Konstruktor nimmt nun zwei
+	  Parameter entgegen - die Werte als Object Array sowie die Spaltennamen als
+	  String Array. Die Methode getFieldValue() sucht sich die Werte aus dem
+	  Werte-Array nun anhand der Indizes der Spaltennamen.
+
+	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Das Template des
+	  Gebührenbescheids wird nun auch mit Subdaten befüllt, welche die
+	  wiederum die Parameterliste befüllen.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java: Analog
+	  zum Probenahmeauftrag gibt es hier nun eine Methode
+	  getBescheidDataSource(), die ein JRMapDataSource Objekt für den
+	  Gebührenbescheid liefert.
+
+	* reports/gebuehren_parameterliste.jrxml: Ein Subtemplate, welches die
+	  Parameterliste des Gebührenbescheides erstellt.
+
+	* reports/gebuehrenbescheid.jrxml: Integration des Templates
+	  'gebuehren_parameterliste'.
+
+2011-01-03  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Bugfix: Die Dauer einer Probenahme wird im Gebührenbescheid nun korrekt
 	  dargestellt.
 

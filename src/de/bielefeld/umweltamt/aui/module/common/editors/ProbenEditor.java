@@ -483,7 +483,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                 params.put("localFile", path);
 
                 try {
-                    JRDataSource subdata = AtlProbenahmen.getDataSource(probe);
+                    JRDataSource subdata =
+                        AtlProbenahmen.getAuftragDataSource(probe);
 
                     AUIKataster.debugOutput(
                         getClass().getName(),
@@ -531,7 +532,11 @@ public class ProbenEditor extends AbstractApplyEditor {
                 }
 
                 try {
-                    PDFExporter.getInstance().exportBescheid(params, path,true);
+                    JRDataSource subdata =
+                        AtlProbenahmen.getBescheidDataSource(probe);
+
+                    PDFExporter.getInstance().exportBescheid(
+                        params, subdata, path,true);
 
                     String gedruckt = updateVorgangsstatus(
                         "Bescheid gedruckt");

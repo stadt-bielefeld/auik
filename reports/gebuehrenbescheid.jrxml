@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gebuehrenbescheid" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1050"/>
+	<property name="ireport.y" value="813"/>
 	<subDataset name="dataset1"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
@@ -14,6 +14,10 @@
 	<parameter name="entnahmedatum" class="java.lang.String"/>
 	<parameter name="entnahmeort" class="java.lang.String"/>
 	<parameter name="maxdatum" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/vol1/home/ingo/AUIK_REPOS/von_thoe/trunk/reports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBDATA" class="net.sf.jasperreports.engine.JRDataSource" isForPrompting="false"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -141,7 +145,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="303" splitType="Stretch">
+		<band height="285" splitType="Stretch">
 			<image>
 				<reportElement x="437" y="4" width="113" height="136"/>
 				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
@@ -202,13 +206,6 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{entnahmeort}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="73" y="205" width="408" height="44"/>
-				<textElement textAlignment="Center">
-					<font size="24"/>
-				</textElement>
-				<text><![CDATA[TODO: Parameterliste]]></text>
-			</staticText>
 			<rectangle>
 				<reportElement x="6" y="18" width="10" height="10" backcolor="#000000"/>
 			</rectangle>
@@ -261,6 +258,11 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{probenehmer} + " Probenehmer * " + $P{dauer} + " Stunden * " + $P{kosten} + " € = " + $P{gesamtkosten}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="20" y="177" width="529" height="100"/>
+				<dataSourceExpression><![CDATA[$P{SUBDATA}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "gebuehren_parameterliste.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 		<band height="34">
 			<textField>
@@ -289,7 +291,7 @@
 		</band>
 		<band height="82">
 			<staticText>
-				<reportElement x="20" y="13" width="519" height="65"/>
+				<reportElement x="20" y="13" width="519" height="68"/>
 				<textElement>
 					<font size="8" isUnderline="false"/>
 				</textElement>
@@ -314,9 +316,9 @@ Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten
 ]]></text>
 			</staticText>
 		</band>
-		<band height="67">
+		<band height="70">
 			<staticText>
-				<reportElement x="20" y="1" width="519" height="65"/>
+				<reportElement x="20" y="1" width="519" height="68"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -327,7 +329,7 @@ Ferner können Sie gemäß § 80 Abs. 5 VwGO einen Antrag auf Anordnung der aufs
 		</band>
 		<band height="57">
 			<staticText>
-				<reportElement x="20" y="1" width="519" height="55"/>
+				<reportElement x="20" y="1" width="519" height="56"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>

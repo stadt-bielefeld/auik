@@ -30,6 +30,15 @@ public class AtlProbenahmen
     extends AbstractAtlProbenahmen
     implements Serializable
 {
+    public static final String[] COLUMNS_AUFTRAG = {
+        "auswahl", "Parameter", "Kennzeichnung", "Konservierung"
+    };
+
+    public static final String[] COLUMNS_BESCHEID = {
+        "Pos", "Parameter", "Grenzwert", "Ergebnis", "Gebühr"
+    };
+
+
     /**
      * Simple constructor of AtlProbenahmen instances.
      */
@@ -377,7 +386,7 @@ public class AtlProbenahmen
     }
 
 
-    public static JRMapDataSource getDataSource(AtlProbenahmen probe) {
+    public static JRMapDataSource getAuftragDataSource(AtlProbenahmen probe) {
         List sorted   = sortAnalysepositionen(probe);
         int  elements = sorted.size();
 
@@ -399,7 +408,35 @@ public class AtlProbenahmen
             values[i] = columns;
         }
 
-        return new JRMapDataSource(values);
+        return new JRMapDataSource(COLUMNS_AUFTRAG, values);
+    }
+
+
+    public static JRMapDataSource getBescheidDataSource(AtlProbenahmen probe) {
+        List sorted   = sortAnalysepositionen(probe);
+        int  elements = sorted.size();
+
+        Object[][] values  = new Object[elements][];
+        Object[]   columns;
+
+        for (int i = 0; i < elements; i++) {
+            columns = new Object[5];
+
+            AtlAnalyseposition pos  = (AtlAnalyseposition) sorted.get(i);
+            AtlParameter parameter  = pos.getAtlParameter();
+            String einheit          = pos.getAtlEinheiten().getBezeichnung();
+            Double grenzwert        = parameter.getGrenzwert();
+
+            columns[0] = i;
+            columns[1] = parameter.getBezeichnung();
+            columns[2] = grenzwert != null ? grenzwert + " " + einheit : "";
+            columns[3] = pos.getWert() + " " + einheit;
+            columns[4] = "0,00";
+
+            values[i] = columns;
+        }
+
+        return new JRMapDataSource(COLUMNS_BESCHEID, values);
     }
 
     /**

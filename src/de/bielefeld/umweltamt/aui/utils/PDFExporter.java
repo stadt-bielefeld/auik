@@ -148,7 +148,8 @@ public class PDFExporter {
      *
      * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
-    public JasperPrint exportBescheid(Map fields, String dest, boolean printPDF)
+    public JasperPrint exportBescheid(
+        Map fields, JRDataSource subdata, String dest, boolean printPDF)
     throws Exception
     {
         InputStream inputStream = getClass().getResourceAsStream(
@@ -158,6 +159,12 @@ public class PDFExporter {
             throw new Exception(
                 "Konnte Template 'gebuehrenbescheid.jasper' nicht finden.");
         }
+
+        fields.put("SUBDATA", subdata);
+
+        // TODO Suche das korrekte `report` Verzeichnis - unabhängig, ob aus
+        // den übersetzten Quellen oder aus dem Jar-Archiv gestartet wird.
+        fields.put("SUBREPORT_DIR", "build/reports/");
 
         try {
             JasperPrint jprint = export(fields, inputStream, dest);
