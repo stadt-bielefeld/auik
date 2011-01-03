@@ -452,9 +452,13 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         statusHoch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frame.showInfoMessage(
-                    "Diese Funktion ist derzeit noch nicht implementiert.",
-                    "NOT IMPLEMENTED");
+                AtlStatus current = getVorgangsstatus();
+                if (current == null) return;
+
+                AtlStatus next = AtlStatus.getStatus(current.getId()+1);
+                if (next == null) return;
+
+                updateVorgangsstatus(next.getBezeichnung());
             }
         });
 
@@ -875,6 +879,14 @@ public class ProbenEditor extends AbstractApplyEditor {
         String bezeichnung = status.getBezeichnung();
 
         updateVorgangsstatus(bezeichnung);
+    }
+
+
+    protected AtlStatus getVorgangsstatus() {
+        String    selection = (String) vorgangsstatus.getSelectedItem();
+        AtlStatus current   = AtlStatus.getStatus(selection);
+
+        return current;
     }
 
 

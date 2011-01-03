@@ -1,6 +1,18 @@
 2011-01-03  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Der Knopf zum Erhöhen des Vorgangsstatus hat erfüllt nun seinen Zweck -
+	  der Vorgang wird nach dem Knopfdruck erhöht. Wichtig hierbei ist, dass die
+	  Reihenfolge der Status von der Datenbank-ID abhängig ist. Ist
+	  beispielsweise ein Status mit der ID 1 selektiert, wird nach dem Druck des
+	  Knopfes der Status mit der ID 2 ausgewählt, etc...
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlStatus.java: Es gibt eine
+	  neue Funktion, die ein AtlStatus Objekt anhand einer ID liefert.
+
+2011-01-03  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Knopf zum Speichern und Drucken von Probenahmeaufträgen und
 	  Gebührenbescheiden in "Speichern und Drucken" umbenannt bzw beschriftet,
 	  damit das Verhalten des Knopfes deutlicher wird.

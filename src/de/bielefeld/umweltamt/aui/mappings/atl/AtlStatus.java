@@ -92,6 +92,19 @@ public class AtlStatus
     }
 
 
+    public static AtlStatus getStatus(int id) {
+        AtlStatus[] status = getStatus();
+
+        for (AtlStatus s: status) {
+            if (id == s.getId()) {
+                return s;
+            }
+        }
+
+        return null;
+    }
+
+
     public static String[] getStatusAsString() {
         AtlStatus[] status = getStatus();
         String[]    str    = new String[status.length];
