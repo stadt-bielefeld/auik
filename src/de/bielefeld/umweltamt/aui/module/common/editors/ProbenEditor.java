@@ -429,10 +429,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         sachbearbeiter   = new JTextField();
         bescheidDatei    = new JTextField();
         bescheidWahl     = new JButton("Auswählen");
-        bescheidDrucken  = new JButton("Drucken");
+        bescheidDrucken  = new JButton("Speichern und Drucken");
         auftragDatei     = new JTextField();
         auftragWahl      = new JButton("Auswählen");
-        auftragDrucken   = new JButton("Drucken");
+        auftragDrucken   = new JButton("Speichern und Drucken");
         dateiChooser     = new JFileChooser();
         icpEinwaageFeld  = new DoubleField(0);
         icpDatum         = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
@@ -670,7 +670,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         builder.addLabel("", cc.xyw(1, row, 1));
         builder.add(auftragWahl, cc.xyw(7, row, 1));
         builder.addLabel("", cc.xyw(8, row, 1));
-        builder.add(auftragDrucken, cc.xyw(9, row, 1));
+        builder.add(auftragDrucken, cc.xyw(9, row, 2));
 
         row += 2;
         builder.addLabel("Gebührenbescheid:", cc.xyw(1, row, 1));
@@ -678,7 +678,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         builder.addLabel("", cc.xyw(1, row, 1));
         builder.add(bescheidWahl, cc.xyw(7, row, 1));
         builder.addLabel("", cc.xyw(8, row, 1));
-        builder.add(bescheidDrucken, cc.xyw(9, row, 1));
+        builder.add(bescheidDrucken, cc.xyw(9, row, 2));
 
         row += 2;
         builder.addSeparator("ICP", cc.xyw(1, row, 12));

@@ -1,6 +1,13 @@
 2011-01-03  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Knopf zum Speichern und Drucken von Probenahmeaufträgen und
+	  Gebührenbescheiden in "Speichern und Drucken" umbenannt bzw beschriftet,
+	  damit das Verhalten des Knopfes deutlicher wird.
+
+2011-01-03  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Die Personal- und Sachkosten werden nun anhand eines festen Stundentarifs
 	  und der Dauer berechnet.
 
