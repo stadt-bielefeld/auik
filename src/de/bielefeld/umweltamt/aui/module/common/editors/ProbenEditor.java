@@ -482,9 +482,13 @@ public class ProbenEditor extends AbstractApplyEditor {
                 params.put("localFile", path);
 
                 try {
-                    // TODO Sammeln der korrekten Parameter für den
-                    // Untersuchungsauftrag
-                    JRDataSource subdata = new JRMapDataSource();
+                    JRDataSource subdata = AtlProbenahmen.getDataSource(probe);
+
+                    AUIKataster.debugOutput(
+                        getClass().getName(),
+                        "Fülle Probenahmeauftrag mit " +
+                        ((JRMapDataSource) subdata).size() + " Zeilen.");
+
                     PDFExporter.getInstance().exportAuftrag(
                         params, subdata, path, true);
                     String gedruckt = updateVorgangsstatus(

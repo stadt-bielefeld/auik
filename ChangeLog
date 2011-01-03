@@ -1,3 +1,18 @@
+2011-01-03  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Die zu beprobenden Parameter werden nun in die Parameterliste eingefüllt.
+	  Es werden also keine statischen Daten mehr angezeigt.
+
+	* src/de/bielefeld/umweltamt/aui/utils/JRMapDataSource.java: Es gibt nun
+	  einen weiteren Konstruktor, der als Parameter ein Object[][] erwartet,
+	  welches die Zeilen und Spalten enthält, die in die Parameterliste des
+	  Probenahmeauftrags gefüllt werden sollen.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java: Eine
+	  weitere Funktion getDataSource() liefert ein JRMapDataSource Objekt einer
+	  vorhandenen Probenahme.
+
 2010-12-21  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:

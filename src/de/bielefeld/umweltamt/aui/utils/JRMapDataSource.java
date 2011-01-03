@@ -13,23 +13,31 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 
+import de.bielefeld.umweltamt.aui.AUIKataster;
+
 
 /**
  * Diese Klasse stellt ein {@link JRDataSource} dar. Die Werte, die von
- * {@link getFieldValue(JRField)} geliefert werden, kommen aus einer {@link
- * Map}, die beim Erstellen des Objekts integriert wird.
+ * {@link getFieldValue(JRField)} geliefert werden, kommen aus einem Object[][],
+ * das beim Erstellen des Objekts bef&uuml;llt wird.
  *
  * @author <a href="mailto:ingo.weinzierl@intevation.de">Ingo Weinzierl</a>
  */
 public class JRMapDataSource implements JRDataSource {
 
     protected int index;
-    protected Object[][] values =
-    {
-        {"", "Berne", "Heidrun Fill", "277 Seventh Av."},
-        {"", "Boston", "Holger Hoff", "339 College Av."},
-        {"", "Chicago", "Julia White", "412 Upland Pl."},
-    };
+
+    protected Object[]   current;
+    protected Object[][] values;
+
+    /**
+     * Dieser Konstruktor erstellt ein leeres JRMapDataSource ohne Inhalt und
+     * sollte nicht benutzt werden.
+     */
+    protected JRMapDataSource() {
+        this.index   = 0;
+        this.current = null;
+    }
 
 
     /**
@@ -38,8 +46,21 @@ public class JRMapDataSource implements JRDataSource {
      * @param values Die Werte, die in den JasperReport eingef&uuml;llt werden
      * sollen.
      */
-    public JRMapDataSource() {
-        this.index  = 0;
+    public JRMapDataSource(Object[][] values) {
+        super();
+
+        this.values = values;
+    }
+
+
+    /**
+     * Liefert die Anzahl der Elemente in diesem Datensatz.
+     *
+     * @return die Anzahl der Elemente dieses Datensatzes oder -1 falls keine
+     * Datens&auml;tze vorhanden sind.
+     */
+    public int size() {
+        return values != null ? values.length : -1;
     }
 
 
@@ -47,11 +68,25 @@ public class JRMapDataSource implements JRDataSource {
      * Diese Methode liefert nur f&uuml;r einen Durchgang <i>true</i>.
      *
      * @return beim ersten Aufruf <i>true</i>, bei allen weiteren <i>false</i>.
+     *
+     * @throws NullPointerException if no values have been filled in.
      */
     public boolean next() {
-        System.out.println("Step forward.");
+        System.out.println("BEGIN STEPPING BY INDEX = " + index);
         index++;
-        return (index < values.length);
+        System.out.println("AFTER STEPPING INDEX = " + index);
+
+        if (index <= size()) {
+            AUIKataster.debugOutput(
+                getClass().getName(),
+                "Step forward to index " + index);
+
+            current = values[index-1];
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 
@@ -66,19 +101,22 @@ public class JRMapDataSource implements JRDataSource {
      */
     public Object getFieldValue(JRField field) throws JRException {
         String col = field.getName();
-        System.out.println("Search for field: " + col);
+
+        AUIKataster.debugOutput(
+            getClass().getName(),
+            "Search for field: " + col + " | Index = " + index);
 
         if (col.equals("auswahl")) {
-            return "x";
+            return current[0];
         }
         else if (col.equals("Parameter")) {
-            return values[index][1];
+            return current[1];
         }
         else if (col.equals("Kennzeichnung")) {
-            return values[index][2];
+            return current[2];
         }
         else if (col.equals("Konservierung")) {
-            return values[index][3];
+            return current[3];
         }
 
         return "Name '" + col + "' nicht gefunden.";

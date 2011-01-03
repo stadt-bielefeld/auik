@@ -19,6 +19,7 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 
 /**
  * A class that represents a row in the 'ATL_PROBENAHMEN' table.
@@ -373,6 +374,32 @@ public class AtlProbenahmen
         }
 
         return sortedPositionen;
+    }
+
+
+    public static JRMapDataSource getDataSource(AtlProbenahmen probe) {
+        List sorted   = sortAnalysepositionen(probe);
+        int  elements = sorted.size();
+
+        Object[][] values  = new Object[elements][];
+        Object[]   columns;
+
+        for (int i = 0; i < elements; i++) {
+            columns = new Object[4];
+
+            AtlAnalyseposition pos   = (AtlAnalyseposition) sorted.get(i);
+            AtlParameter parameter   = pos.getAtlParameter();
+            String       bezeichnung = parameter.getBezeichnung();
+
+            columns[0] = true; // this value is always true
+            columns[1] = bezeichnung;
+            columns[2] = ""; // TODO
+            columns[3] = ""; // TODO
+
+            values[i] = columns;
+        }
+
+        return new JRMapDataSource(values);
     }
 
     /**
