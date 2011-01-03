@@ -101,6 +101,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
+import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.DoubleRenderer;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
@@ -1066,12 +1067,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             Date beginnDate = tf.parse(beginn);
             Date endeDate   = tf.parse(ende);
-            Date dauer      = new Date(beginnDate.getTime()-endeDate.getTime());
-
-            params.put("dauer", tf.format(dauer));
-        }
-        catch (NumberFormatException nfe) {
-            params.put("dauer", "hh:mm");
+            params.put("dauer", DateUtils.getDuration(beginnDate, endeDate));
         }
         catch (ParseException pe) {
             params.put("dauer", "hh:mm");

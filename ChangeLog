@@ -1,5 +1,15 @@
 2011-01-03  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Bugfix: Die Dauer einer Probenahme wird im Gebührenbescheid nun korrekt
+	  dargestellt.
+
+	* src/de/bielefeld/umweltamt/aui/utils/DateUtils.java: Eine neue
+	  Hilfsklasse, die das Arbeiten mit Datums- und Zeitobjekten vereinfachen
+	  soll.
+
+2011-01-03  Ingo Weinzierl <ingo@intevation.de>
+
 	* reports/probenahmeauftrag.jrxml: Das Feld "handgeschöpft" wurde in
 	  "handgeschöpft mit Becherglas" umbenannt. Außerdem gibt es rechts daneben
 	  nun ein Feld "sonstiges", in dem die Verwendung anderer Entnahmegeräte
