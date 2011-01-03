@@ -1,5 +1,12 @@
 2011-01-03  Ingo Weinzierl <ingo@intevation.de>
 
+	* reports/probenahmeauftrag.jrxml: Das Feld "handgeschöpft" wurde in
+	  "handgeschöpft mit Becherglas" umbenannt. Außerdem gibt es rechts daneben
+	  nun ein Feld "sonstiges", in dem die Verwendung anderer Entnahmegeräte
+	  festgehalten werden kann.
+
+2011-01-03  Ingo Weinzierl <ingo@intevation.de>
+
 	* reports/probenahmeauftrag.jrxml: Bugfix: Die Seitenzahl wird nun auf jeder
 	  Seite korrekt angezeigt.
 
