@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="444"/>
+	<property name="ireport.y" value="236"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -1059,11 +1059,18 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{localFile}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="15" y="2" width="513" height="14"/>
+				<reportElement x="15" y="3" width="150" height="12" backcolor="#FFFFFF"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Stand 2004 / D / Klipker / Seite "+$V{PAGE_NUMBER}+" von "+$V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Stand 2004 / D / Klipker / Seite "+$V{PAGE_NUMBER}+" von"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="146" y="3" width="40" height="12" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

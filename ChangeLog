@@ -1,5 +1,10 @@
 2011-01-03  Ingo Weinzierl <ingo@intevation.de>
 
+	* reports/probenahmeauftrag.jrxml: Bugfix: Die Seitenzahl wird nun auf jeder
+	  Seite korrekt angezeigt.
+
+2011-01-03  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Die zu beprobenden Parameter werden nun in die Parameterliste eingefüllt.
 	  Es werden also keine statischen Daten mehr angezeigt.
