@@ -123,6 +123,10 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class ProbenEditor extends AbstractApplyEditor {
 
+    /** Dieser Wert stellt den Preis einer Stunde f&uuml;r Personal- und
+     * Sachkosten dar **/
+    public static final double PERSONAL_UND_SACHKOSTEN = 40.99;
+
     private class ParameterModel extends EditableListTableModel {
         private AtlProbenahmen probe;
         private boolean isNew;
@@ -1053,6 +1057,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         HashMap params = new HashMap();
 
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        NumberFormat     nf = NumberFormat.getNumberInstance(Locale.GERMAN);
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+
         params.put("datum", df.format(new Date()));
         params.put("entnahmedatum", df.format(datum.getDate()));
         params.put("maxdatum", df.format(rechnungsDatum.getDate()));
@@ -1072,19 +1080,23 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             Date beginnDate = tf.parse(beginn);
             Date endeDate   = tf.parse(ende);
+            double dauer  = DateUtils.getDurationHours(beginnDate, endeDate);
+            double kosten = PERSONAL_UND_SACHKOSTEN * dauer;
+
             params.put("dauer", DateUtils.getDuration(beginnDate, endeDate));
+            params.put("gesamtkosten", nf.format(kosten));
         }
         catch (ParseException pe) {
             params.put("dauer", "hh:mm");
+            params.put("gesamtkosten", "xx,xx");
         }
 
-        params.put("gesamtkosten", rechnungsBetrag.getText());
+        params.put("kosten", Double.toString(PERSONAL_UND_SACHKOSTEN));
         params.put("entnahmeort", betr.getBetriebsgrundstueck());
+        params.put("entnahmestellen", "1");
 
         // TODO
-        params.put("kassenzeichen", "53656.100046.5"); // woher?
-        params.put("entnahmestellen", "1"); // immer 1 ?
-        params.put("kosten", ""); // woher?
+        params.put("kassenzeichen", "53656.100046.5"); // DB-Felder fehlen noch
 
         return params;
     }

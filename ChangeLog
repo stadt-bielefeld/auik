@@ -1,6 +1,20 @@
 2011-01-03  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Die Personal- und Sachkosten werden nun anhand eines festen Stundentarifs
+	  und der Dauer berechnet.
+
+	* src/de/bielefeld/umweltamt/aui/utils/DateUtils.java: Ein paar neue
+	  Methoden, die die Stunden, Minuten und Sekunden aus einem Timestamp im
+	  einzelnen ermitteln. Außerdem gibt es eine Methode, die die Stunden
+	  zwischen zwei Datumsobjekten ermittelt (Achtung: begrenzt auf 1 Tag).
+
+	* reports/gebuehrenbescheid.jrxml: Kleinere Anpassungen (Euro Zeichen, etc)
+	  für die Personal- und Sachkosten durchgeführt.
+
+2011-01-03  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Der Gebührenbescheid wird nun mit den Parametern der Probe gefüllt.
 
 	* src/de/bielefeld/umweltamt/aui/utils/JRMapDataSource.java: Der DataSource

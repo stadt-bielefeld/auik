@@ -33,19 +33,45 @@ public class DateUtils {
             return "--:--";
         }
 
-        long duration = end.getTime() - start.getTime();
-        long hours    = duration / 1000;
+        long duration = (end.getTime() - start.getTime()) / 1000;
 
-        int seconds = (int) hours % 60;
-        hours /= 60;
-
-        int minutes = (int) hours % 60;
-        hours /= 60;
+        int seconds = getSeconds(duration);
+        int minutes = getMinutes(duration);
+        int hours   = getHours(duration);
 
         String h = hours <= 9 ? "0" + hours : "" + hours;
         String m = minutes <= 9 ? "0" + minutes : "" + minutes;
 
         return h + ":" + m;
+    }
+
+
+    public static double getDurationHours(Date start, Date end) {
+        if (start == null || end == null) {
+            return 0;
+        }
+
+        long duration = (end.getTime() - start.getTime()) / 1000;
+
+        int hours   = getHours(duration);
+        int minutes = getMinutes(duration);
+
+        return hours + (minutes / 60.0);
+    }
+
+
+    protected static int getSeconds(long seconds) {
+        return (int) seconds % 60;
+    }
+
+    protected static int getMinutes(long seconds) {
+        seconds /= 60;
+        return (int) seconds % 60;
+    }
+
+    protected static int getHours(long seconds) {
+        seconds /= (60*60);
+        return (int) seconds % 60;
     }
 }
 // vim:set ts=4 sw=4 si et sta sts=4 fenc=utf8:
