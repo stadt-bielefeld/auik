@@ -7,6 +7,7 @@
  */
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -17,6 +18,12 @@ import java.util.Date;
  * @author <a href="mailto:ingo.weinzierl@intevation.de">Ingo Weinzierl</a>
  */
 public class DateUtils {
+
+    /**
+     * Die Anzahl der Tage, nachdem der Geb&uuml;hrenbescheid bezahlt werden
+     * muss: 31
+     */
+    public static final int BILLING_DEADLINE = 31;
 
     /**
      * Diese Funktion liefert die Dauer zwischen <i>start</i> und <i>end</i> als
@@ -72,6 +79,42 @@ public class DateUtils {
     protected static int getHours(long seconds) {
         seconds /= (60*60);
         return (int) seconds % 60;
+    }
+
+
+    /**
+     * Diese Methode berechnet ein basierend auf einem Datum ein neues Datum.
+     * Dabei werden auf <i>notification</i> 31 Werktage addiert. Sollte dieses
+     * neue Datum an einem Wochenende liegen, wird der kommende Montag
+     * zur&uuml;ckgeliefert.
+     *
+     * @param notification Datum, an dem ein Geb&uuml;hrenbescheid verschickt
+     * wird.
+     *
+     * @return das Datum, an dem die Rechnungsfrist abl&auml;uft.
+     */
+    public static Date getDateOfBill(Date notification)
+    throws NullPointerException
+    {
+        if (notification == null) {
+            throw new NullPointerException("Empty Date object not permitted.");
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(notification);
+
+        int index = 0;
+        do {
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+            int day = cal.get(Calendar.DAY_OF_WEEK);
+
+            if (day != Calendar.SATURDAY && day != Calendar.SUNDAY) {
+                index++;
+            }
+
+        } while (index != 31);
+
+        return cal.getTime();
     }
 }
 // vim:set ts=4 sw=4 si et sta sts=4 fenc=utf8:

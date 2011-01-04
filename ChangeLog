@@ -1,3 +1,13 @@
+2011-01-04  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/utils/DateUtils.java: Es gibt eine neue
+	  Funktion, die anhand einer Frist von 31 Tagen und einem Ausgangsdatum ein
+	  neues Datum berechnet. Es werden dabei lediglich die Werktage gezählt.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Das Datum, an dem ein Gebührenbescheid bezahlt werden muss, wird nun
+	  mittels der neuen Funktion in DateUtils errechnet.
+
 2011-01-03  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:

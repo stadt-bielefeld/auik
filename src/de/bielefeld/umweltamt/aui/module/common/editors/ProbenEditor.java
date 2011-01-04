@@ -1073,9 +1073,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
 
-        params.put("datum", df.format(new Date()));
+        Date now = new Date();
+        params.put("datum", df.format(now));
         params.put("entnahmedatum", df.format(datum.getDate()));
-        params.put("maxdatum", df.format(rechnungsDatum.getDate()));
+        params.put("maxdatum", df.format(DateUtils.getDateOfBill(now)));
 
         try {
             Integer anzahl = Integer.parseInt(beteiligte.getText());
