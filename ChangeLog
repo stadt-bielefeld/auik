@@ -1,6 +1,14 @@
 2011-01-04  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Die Verbindung zwischen dem Dialog zur Parameterauswahl und der
+	  Parameterliste wurde nun hergestellt. Parameter, die im Dialog ausgewählt
+	  werden, werden in die Liste der Probenahmedetail-Oberfläche übernommen.
+	  Wenn der Parameter jedoch bereits vorhanden ist, wird er verworfen.
+
+2011-01-04  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Neben dem Gebührenbescheid wird nun auch eine Datei kasse.txt erzeugt, die
 	  neben den Betreiberdaten das Rechnungsdatum und den Rechnungsbetrag
 	  enthält. Diese Datei wird nur einmal erstellt, bevor der Vorgangsstatus

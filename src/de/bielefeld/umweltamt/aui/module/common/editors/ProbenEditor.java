@@ -126,6 +126,10 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class ProbenEditor extends AbstractApplyEditor {
 
+    public interface OKListener {
+        public void onOK(AtlParameter[] params);
+    }
+
     /** Dieser Wert stellt den Preis einer Stunde f&uuml;r Personal- und
      * Sachkosten dar. **/
     public static final double PERSONAL_UND_SACHKOSTEN = 40.99;
@@ -326,6 +330,60 @@ public class ProbenEditor extends AbstractApplyEditor {
             tmp.setAtlEinheiten(AtlEinheiten.getEinheit(tmp.getAtlParameter().getWirdgemessenineinheit()));
             //tmp.setAnalyseVon("");
             return tmp;
+        }
+
+
+        /**
+         * Diese Methode fügt dem Model einen neuen Parameter hinzu. Falls
+         * dieser jedoch schon enthalten ist, wird er verworfen - es kommen also
+         * keine doppelten Parameter vor.
+         *
+         * @param parameter Ein neuer Parameter.
+         */
+        public void addParameter(AtlParameter parameter) {
+            if (isParameterAlreadyThere(parameter)) {
+                AUIKataster.debugOutput(
+                    getClass().getName(),
+                    "Der Parameter wird bereits geprüft.");
+                return;
+            }
+
+            AtlAnalyseposition pos = new AtlAnalyseposition(probe);
+
+            pos.setAtlParameter(parameter);
+            pos.setAtlEinheiten(AtlEinheiten.getEinheit(
+                parameter.getWirdgemessenineinheit()));
+
+            getList().add(pos);
+            fireTableDataChanged();
+        }
+
+
+        /**
+         * Diese Methode prüft, ob ein Parameter bereits zur Prüfung vorgemerkt
+         * ist - also bereits im ParameterModel enthalten ist.
+         *
+         * @param newParam Ein neu zu probender Parameter.
+         *
+         * @return true, wenn der Parameter bereits im Model enthalten ist,
+         * andernfalls false.
+         */
+        public boolean isParameterAlreadyThere(AtlParameter newParam) {
+            List data = getList();
+            int size  = data.size();
+
+            String newOrdnungsbegriff = newParam.getOrdnungsbegriff();
+
+            for (int i = 0; i < size; i++) {
+                AtlAnalyseposition pos = (AtlAnalyseposition) data.get(i);
+                AtlParameter     param = pos.getAtlParameter();
+
+                if (param.getOrdnungsbegriff().equals(newOrdnungsbegriff)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public boolean objectRemoved(Object objectAtRow) {
@@ -1194,12 +1252,20 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     protected void doApply() {
         ParameterChooser chooser = new ParameterChooser(frame);
+        chooser.addOKListener(new OKListener() {
+            public void onOK(AtlParameter[] params) {
+                for (AtlParameter param: params) {
+                    parameterModel.addParameter(param);
+                }
+            }
+        });
         chooser.setVisible(true);
     }
 
     public AtlProbenahmen getProbe() {
         return (AtlProbenahmen) getEditedObject();
     }
+
 }
 
     class ParameterChooser extends OkCancelDialog {
@@ -1207,6 +1273,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     private ParameterAuswahlModel parameterAuswahlModel;
     private AtlParameter chosenParameter = null;
+    private ProbenEditor.OKListener oklistener;
 
     public ParameterChooser(HauptFrame owner) {
         super("Parameter auswählen", owner);
@@ -1224,25 +1291,30 @@ public class ProbenEditor extends AbstractApplyEditor {
         parameterAuswahlModel.fireTableDataChanged();
     }
 
+    public void addOKListener(ProbenEditor.OKListener listener) {
+        this.oklistener = listener;
+    }
+
     /*
      * (non-Javadoc)
      *
      * @see de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog#doOk()
      */
     protected void doOk() {
-        int row = getErgebnisTabelle().getSelectedRow();
-        choose(row);
+        AtlParameter[] selected = parameterAuswahlModel.getSelectedParameter();
+        fireOKEvent(selected);
+
+        dispose();
     }
 
-
-    private void choose(int row) {
-        if (row != -1) {
-            chosenParameter = (AtlParameter) parameterAuswahlModel.getObjectAtRow(row);
-            parameterAuswahlModel.setValueAt(true, row, 0);
-            parameterAuswahlModel.fireTableDataChanged();
-            dispose();
+    protected void fireOKEvent(AtlParameter[] parameter) {
+        if (oklistener == null) {
+            return;
         }
+
+        oklistener.onOK(parameter);
     }
+
 
     public AtlParameter getChosenParameter() {
         return chosenParameter;
@@ -1296,7 +1368,6 @@ public class ProbenEditor extends AbstractApplyEditor {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
                         int row = ergebnisTabelle.rowAtPoint(origin);
-                        choose(row);
                     }
                 }
             });
@@ -1321,6 +1392,21 @@ class ParameterAuswahlModel extends ListTableModel {
 
         selection = new boolean[newList.size()];
         Arrays.fill(selection, false);
+    }
+
+
+    public AtlParameter[] getSelectedParameter() {
+        List params = new ArrayList();
+        List data   = getList();
+        int  rows   = getRowCount();
+
+        for (int idx = 0; idx < rows; idx++) {
+            if (selection[idx]) {
+                params.add(data.get(idx));
+            }
+        }
+
+        return (AtlParameter[]) params.toArray(new AtlParameter[params.size()]);
     }
 
     /*
