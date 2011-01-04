@@ -1,5 +1,13 @@
 2011-01-04  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Neben dem Gebührenbescheid wird nun auch eine Datei kasse.txt erzeugt, die
+	  neben den Betreiberdaten das Rechnungsdatum und den Rechnungsbetrag
+	  enthält. Diese Datei wird nur einmal erstellt, bevor der Vorgangsstatus
+	  auf "Bescheid gedruckt" erhöht wird.
+
+2011-01-04  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/utils/DateUtils.java: Es gibt eine neue
 	  Funktion, die anhand einer Frist von 31 Tagen und einem Ausgangsdatum ein
 	  neues Datum berechnet. Es werden dabei lediglich die Werktage gezählt.

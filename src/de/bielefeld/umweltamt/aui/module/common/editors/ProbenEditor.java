@@ -49,7 +49,10 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.File;
+import java.io.FileWriter;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -124,8 +127,12 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 public class ProbenEditor extends AbstractApplyEditor {
 
     /** Dieser Wert stellt den Preis einer Stunde f&uuml;r Personal- und
-     * Sachkosten dar **/
+     * Sachkosten dar. **/
     public static final double PERSONAL_UND_SACHKOSTEN = 40.99;
+
+    /** Der Dateiname <i>(kasse.txt)</i> der Kassendatei eines
+     * Geb&uuml;hrenbescheides. **/
+    public static final String KASSE_FILENAME = "kasse.txt";
 
     private class ParameterModel extends EditableListTableModel {
         private AtlProbenahmen probe;
@@ -546,6 +553,22 @@ public class ProbenEditor extends AbstractApplyEditor {
                     PDFExporter.getInstance().exportBescheid(
                         params, subdata, path,true);
 
+                    AtlStatus currentStatus = getVorgangsstatus();
+                    String    currentBez    = currentStatus.getBezeichnung();
+
+                    currentBez = currentBez.trim();
+
+                    if (!currentBez.equals("Bescheid gedruckt")) {
+                        // Diese Datei soll nur 1x erzeugt werden. Nachdem der
+                        // Status auf "Bescheid gedruckt" erhöht wurde, kann
+                        // zwar der Bescheid nochmals gedruckt werden, jedoch
+                        // wird keine neue kasse.txt angelegt.
+                        AUIKataster.debugOutput(
+                            getClass().getName(),
+                            "Erstelle kasse.txt für Gebührenbescheid.");
+                        createKasseFile(path);
+                    }
+
                     String gedruckt = updateVorgangsstatus(
                         "Bescheid gedruckt");
 
@@ -726,6 +749,60 @@ public class ProbenEditor extends AbstractApplyEditor {
             datei.setText(file.getAbsolutePath());
         }
     }
+
+
+    /**
+     * Diese Methode erzeugt neben dem PDF des Geb&uuml;hrenbescheids eine
+     * Datei namens kasse.txt, die Informationen &uuml;ber den Betreiber sowie
+     * die H&ouml;he des Rechnungsbetrags und des Rechnungsdatums enth&auml;lt.
+     *
+     * @param bescheid Der Pfad, an dem das PDF gespeichert wurde.
+     */
+    protected void createKasseFile(String bescheid) {
+        File path  = new File(bescheid).getParentFile();
+        File kasse = new File(path, KASSE_FILENAME);
+
+        BasisBetreiber basisBetr = getProbe().getBasisBetreiber();
+
+        Date rechnungsdatum = DateUtils.getDateOfBill(new Date());
+        SimpleDateFormat df = new SimpleDateFormat("ddmmyyyy");
+
+        String rechnungsbetrag = rechnungsBetrag.getText();
+        rechnungsbetrag        = rechnungsbetrag.replace("€", "");
+        rechnungsbetrag        = rechnungsbetrag.replace(",", "");
+        rechnungsbetrag        = rechnungsbetrag.trim();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("53656100465\t"); // TODO KASSENZEICHEN
+        sb.append(basisBetr.getBetrname() + "\t");
+        sb.append(basisBetr.getBetriebsgrundstueck() + "\t");
+        sb.append("Gebuehr fuer Abwasserunters.\t");
+        sb.append(df.format(rechnungsdatum)); // TODO RECHNUNGSBETRAG
+        sb.append("0000000");
+        sb.append(rechnungsbetrag);
+
+        String row = sb.toString();
+
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(kasse));
+            writer.write(row, 0, row.length());
+            writer.flush();
+        }
+        catch (IOException ioe) {
+            frame.showErrorMessage(ioe.getLocalizedMessage());
+        }
+        finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            }
+            catch (IOException ioe) { /* do nothing */ }
+        }
+    }
+
 
     protected void fillForm() {
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
