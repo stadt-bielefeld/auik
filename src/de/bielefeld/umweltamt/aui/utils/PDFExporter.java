@@ -112,10 +112,6 @@ public class PDFExporter {
 
         fields.put("SUBDATA", subdata);
 
-        // TODO Suche das korrekte `report` Verzeichnis - unabhängig, ob aus
-        // den übersetzten Quellen oder aus dem Jar-Archiv gestartet wird.
-        fields.put("SUBREPORT_DIR", "build/reports/");
-
         try {
             JasperPrint jprint = export(fields, inputStream, dest);
 
@@ -161,10 +157,6 @@ public class PDFExporter {
         }
 
         fields.put("SUBDATA", subdata);
-
-        // TODO Suche das korrekte `report` Verzeichnis - unabhängig, ob aus
-        // den übersetzten Quellen oder aus dem Jar-Archiv gestartet wird.
-        fields.put("SUBREPORT_DIR", "build/reports/");
 
         try {
             JasperPrint jprint = export(fields, inputStream, dest);

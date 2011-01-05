@@ -262,7 +262,7 @@
 			<subreport>
 				<reportElement x="20" y="177" width="529" height="100"/>
 				<dataSourceExpression><![CDATA[$P{SUBDATA}]]></dataSourceExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "gebuehren_parameterliste.jasper"]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("/reports/gebuehren_parameterliste.jasper"))]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="34">

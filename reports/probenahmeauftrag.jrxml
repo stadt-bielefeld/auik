@@ -1041,7 +1041,7 @@
 					<subreportParameterExpression><![CDATA[$P{entnahmeDatum}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[$P{SUBDATA}]]></dataSourceExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ParameterReport.jasper"]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("/reports/ParameterReport.jasper"))]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

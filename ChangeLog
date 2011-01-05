@@ -1,3 +1,14 @@
+2011-01-05  Ingo Weinzierl <ingo@intevation.de>
+
+	* reports/probenahmeauftrag.jrxml,
+	  reports/gebuehrenbescheid.jrxml: Die Pfade zu den jeweiligen Subrepports
+	  befinden sich nun im direkt im Template und müssen somit nicht mehr aus
+	  dem Code verfügbar gemacht werden. Nun werden die Subreports auch
+	  gefunden, wenn die Anwendung aus einem JAR Archiv heraus gestartet wird.
+
+	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Die Pfade zu den
+	  Subreports müssen nun nicht mehr im Code angegeben werden.
+
 2011-01-04  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
