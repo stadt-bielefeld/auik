@@ -16,6 +16,7 @@
         <property name="grenzwertname" column="grenzwertname" type="java.lang.String" />
         <property name="sielhautGw" column="sielhaut_gw" type="java.lang.Double" />
         <property name="klaerschlammGw" column="klaerschlamm_gw" type="java.lang.Double" />
+        <property name="preisfueranalyse" column="preisfueranalyse" type="java.lang.Double" />
     </class>
 
 </hibernate-mapping>

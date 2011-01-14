@@ -1,3 +1,23 @@
+2011-01-14  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AbstractAtlParameter.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/atl/AtlParameter.hbm.xml:
+	  Parameter haben nun einen Preis für die Analyse. Dies ist wichtig, um den
+	  Rechnungsbetrag im Gebührenbescheid zu errechnen.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/basis/AbstractBasisBetreiber.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/basis/BasisBetreiber.hbm.xml:
+	  Betreiben haben nun ein Kassenzeichen, welches im Gebührenbescheid
+	  verwendet wird.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/basis/BasisSachbearbeiter.hbm.xml,
+	  src/de/bielefeld/umweltamt/aui/mappings/basis/AbstractBasisSachbearbeiter.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/basis/BasisSachbearbeiter.java:
+	  Neu. Ein Sachbearbeiter beinhaltet verschiedene Informationen, die im
+	  Probenahmeprotokoll benötigt werden.
+
+	* src/hibernate.cfg.xml: BasisSachbearbeiter hinzugefügt.
+
 2011-01-05  Ingo Weinzierl <ingo@intevation.de>
 
 	* reports/probenahmeauftrag.jrxml,

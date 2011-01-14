@@ -43,6 +43,9 @@ public abstract class AbstractAtlParameter
     /** The value of the simple klaerschlammGw property. */
     private java.lang.Double klaerschlammGw;
 
+    /** The value of the simple sielhautGw property. */
+    private java.lang.Double preisfueranalyse;
+
     /**
      * Simple constructor of AbstractAtlParameter instances.
      */
@@ -202,6 +205,24 @@ public abstract class AbstractAtlParameter
     public void setKlaerschlammGw(java.lang.Double klaerschlammGw)
     {
         this.klaerschlammGw = klaerschlammGw;
+    }
+
+    /**
+     * Return the value of the Preisfueranalyse column.
+     * @return java.lang.Double
+     */
+    public java.lang.Double getPreisfueranalyse()
+    {
+        return this.preisfueranalyse;
+    }
+
+    /**
+     * Set the value of the Preisfueranalyse column.
+     * @param preisfueranalyse
+     */
+    public void setPreisfueranalyse(java.lang.Double preisfueranalyse)
+    {
+        this.preisfueranalyse = preisfueranalyse;
     }
 
     /**

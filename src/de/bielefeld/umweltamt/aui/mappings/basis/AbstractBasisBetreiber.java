@@ -78,6 +78,9 @@ public abstract class AbstractBasisBetreiber
     /** The value of the simple revihandz property. */
     private java.lang.String revihandz;
 
+    /** The value of the simple kassenzeichen property. */
+    private java.lang.String kassenzeichen;
+
     /**
      * Simple constructor of AbstractBasisBetreiber instances.
      */
@@ -435,6 +438,24 @@ public abstract class AbstractBasisBetreiber
     public void setRevihandz(java.lang.String revihandz)
     {
         this.revihandz = revihandz;
+    }
+
+    /**
+     * Return the value of the Kassenzeichen column.
+     * @return java.lang.String
+     */
+    public java.lang.String getKassenzeichen()
+    {
+        return this.kassenzeichen;
+    }
+
+    /**
+     * Set the value of the Kassenzeichen column.
+     * @param revihandz
+     */
+    public void setKassenzeichen(java.lang.String kassenzeichen)
+    {
+        this.kassenzeichen = kassenzeichen;
     }
 
     /**

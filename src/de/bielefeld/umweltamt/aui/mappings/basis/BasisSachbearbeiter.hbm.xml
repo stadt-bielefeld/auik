@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
+
+    <class name="BasisSachbearbeiter" table="basis_sachbearbeiter" lazy="false" mutable="false">
+        <id name="kennummer" column="kennummer" type="java.lang.String">
+            <generator class="assigned"/>
+        </id>
+
+        <property name="name" column="name" type="java.lang.String" />
+        <property name="zeichen" column="zeichen" type="java.lang.String" />
+        <property name="zimmer" column="zimmer" type="java.lang.String" />
+        <property name="telefon" column="telefon" type="java.lang.String" />
+        <property name="telefax" column="telefax" type="java.lang.String" />
+        <property name="email" column="email" type="java.lang.String" />
+        <property name="istadministrator" column="istadministrator" type="java.lang.Boolean" />
+        <property name="pfadspeichern" column="pfadspeichern" type="java.lang.String" />
+        <property name="gehoertzuarbeitsgr" column="gehoertzuarbeitsgr" type="java.lang.Integer" />
+    </class>
+
+</hibernate-mapping>
