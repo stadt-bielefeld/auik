@@ -1191,8 +1191,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("sachbearbeiterInfo", sachbearbeiter.getText());
 
         // TODO fill in the correct values if they exist
-        params.put("anzahlEntnahmestellen", "");
-        params.put("boolEntwaesserungssatzung", "");
+        params.put("anzahlEntnahmestellen", "1");
 
         return params;
     }
@@ -1203,15 +1202,31 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         HashMap params = new HashMap();
 
-        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        NumberFormat     nf = NumberFormat.getNumberInstance(Locale.GERMAN);
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMAN);
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
 
+        String entnahmedatum = DateUtils.format(
+            datum.getDate(),
+            DateUtils.FORMAT_DATE);
+        String entnahmezeit = DateUtils.format(
+            datum.getDate(),
+            DateUtils.FORMAT_TIME);
+
+        String entnahmezeitpunkt = entnahmedatum + ", " + entnahmezeit + " Uhr";
+
         Date now = new Date();
-        params.put("datum", df.format(now));
-        params.put("entnahmedatum", df.format(datum.getDate()));
-        params.put("maxdatum", df.format(DateUtils.getDateOfBill(now)));
+        params.put("datum", DateUtils.format(now, DateUtils.FORMAT_DATE));
+        params.put("entnahmedatum", entnahmezeitpunkt);
+        params.put("entnahmeort", betr.getBetriebsgrundstueck());
+        params.put("entnahmestelle",
+            probe.getAtlProbepkt().getBasisObjekt().getBeschreibung());
+        params.put("entnahmestellen", "1");
+        params.put("maxdatum", DateUtils.format(
+            DateUtils.getDateOfBill(now),
+            DateUtils.FORMAT_DATE));
+        params.put("kosten", Double.toString(PERSONAL_UND_SACHKOSTEN));
+        params.put("kassenzeichen", betr.getKassenzeichen());
 
         try {
             Integer anzahl = Integer.parseInt(beteiligte.getText());
@@ -1230,23 +1245,35 @@ public class ProbenEditor extends AbstractApplyEditor {
             Date endeDate   = tf.parse(ende);
             double dauer  = DateUtils.getDurationHours(beginnDate, endeDate);
             double kosten = PERSONAL_UND_SACHKOSTEN * dauer;
+            params.put("personalsachkosten", nf.format(kosten));
+            params.put("analysekosten",
+                nf.format(getAnalysekosten(probe)) +" €");
+            params.put("gesamtkosten",
+                nf.format(kosten+getAnalysekosten(probe)) + " €");
 
             params.put("dauer", DateUtils.getDuration(beginnDate, endeDate));
-            params.put("gesamtkosten", nf.format(kosten));
         }
         catch (ParseException pe) {
             params.put("dauer", "hh:mm");
             params.put("gesamtkosten", "xx,xx");
         }
 
-        params.put("kosten", Double.toString(PERSONAL_UND_SACHKOSTEN));
-        params.put("entnahmeort", betr.getBetriebsgrundstueck());
-        params.put("entnahmestellen", "1");
-
-        // TODO
-        params.put("kassenzeichen", "53656.100046.5"); // DB-Felder fehlen noch
-
         return params;
+    }
+
+
+    public static double getAnalysekosten(AtlProbenahmen probe) {
+        List sorted  = AtlProbenahmen.sortAnalysepositionen(probe);
+        double total = 0d;
+
+        for (int i = 0; i < sorted.size(); i++) {
+            AtlAnalyseposition pos = (AtlAnalyseposition) sorted.get(i);
+            AtlParameter      para = pos.getAtlParameter();
+
+            total += para.getPreisfueranalyse();
+        }
+
+        return total;
     }
 
 

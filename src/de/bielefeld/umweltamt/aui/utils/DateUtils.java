@@ -7,6 +7,7 @@
  */
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,10 +21,49 @@ import java.util.Date;
 public class DateUtils {
 
     /**
+     * Ein String, der das Format eines Zeitstempels beschreibt.
+     * Das Format beinhaltet das Datum und die Zeit: dd.MM.yyyy hh:mm
+     */
+    public static final String FORMAT_DATETIME = "dd.MM.yyyy hh:mm";
+
+    /**
+     * Ein String, der das Format eines Zeitstempels beschreibt.
+     * Das Format beinhaltet lediglich das Datum: dd.MM.yyyy
+     */
+    public static final String FORMAT_DATE = "dd.MM.yyyy";
+
+    /**
+     * Ein String, der das Format eines Zeitstempels beschreibt.
+     * Das Format beinhaltet lediglich das Datum: hh:mm
+     */
+    public static final String FORMAT_TIME = "HH:mm";
+
+    /**
      * Die Anzahl der Tage, nachdem der Geb&uuml;hrenbescheid bezahlt werden
      * muss: 31
      */
     public static final int BILLING_DEADLINE = 31;
+
+
+    /**
+     * Diese Funktion formatiert ein Datum <i>date</i> mittels eines String, der
+     * das Format beschreibt.
+     *
+     * @param date Das zu formatierende Datum
+     * @param format Ein String, der das Format beschreibt.
+     *
+     * @return ein formatiertes Format oder null, falls das Format ung&uuml;ltig
+     * ist.
+     */
+    public static String format(Date date, String format) {
+        if (format == null || date == null || format.equals("")) {
+            return null;
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat(format);
+        return df.format(date);
+    }
+
 
     /**
      * Diese Funktion liefert die Dauer zwischen <i>start</i> und <i>end</i> als

@@ -3,6 +3,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="analysekosten" class="java.lang.String"/>
+	<parameter name="gesamtkosten" class="java.lang.String"/>
 	<field name="Pos" class="java.lang.String"/>
 	<field name="Parameter" class="java.lang.String"/>
 	<field name="Grenzwert" class="java.lang.String"/>
@@ -55,54 +57,38 @@
 			<textField>
 				<reportElement x="10" y="0" width="30" height="10"/>
 				<textElement>
-					<font size="8"/>
+					<font size="6"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Pos}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="50" y="0" width="150" height="10"/>
 				<textElement>
-					<font size="8"/>
+					<font size="6"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Parameter}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="200" y="0" width="120" height="10"/>
 				<textElement>
-					<font size="8"/>
+					<font size="6"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Grenzwert}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="320" y="0" width="120" height="10"/>
 				<textElement>
-					<font size="8"/>
+					<font size="6"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Ergebnis}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="440" y="0" width="100" height="10"/>
 				<textElement>
-					<font size="8"/>
+					<font size="6"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Gebühr}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<summary>
-		<band height="28" splitType="Stretch">
-			<staticText>
-				<reportElement x="50" y="0" width="117" height="12"/>
-				<textElement/>
-				<text><![CDATA[Analysekosten gesamt:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="14" width="213" height="12"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Gesamtgebühr (Summe aus 1. und 2.):]]></text>
-			</staticText>
-		</band>
-	</summary>
 </jasperReport>

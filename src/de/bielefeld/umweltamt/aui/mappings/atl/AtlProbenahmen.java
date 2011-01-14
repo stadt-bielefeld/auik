@@ -20,6 +20,7 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
+import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 
 /**
  * A class that represents a row in the 'ATL_PROBENAHMEN' table.
@@ -431,7 +432,8 @@ public class AtlProbenahmen
             columns[1] = parameter.getBezeichnung();
             columns[2] = grenzwert != null ? grenzwert + " " + einheit : "";
             columns[3] = pos.getWert() + " " + einheit;
-            columns[4] = "0,00";
+            columns[4] = new KommaDouble(
+                parameter.getPreisfueranalyse()).toString() + " €";
 
             values[i] = columns;
         }

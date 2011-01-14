@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gebuehrenbescheid" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="31"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="4"/>
 	<subDataset name="dataset1"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
@@ -18,7 +18,9 @@
 		<defaultValueExpression><![CDATA["/vol1/home/ingo/AUIK_REPOS/von_thoe/trunk/reports/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBDATA" class="net.sf.jasperreports.engine.JRDataSource" isForPrompting="false"/>
-	<parameter name="personalsachkosten" class="java.lang.Double"/>
+	<parameter name="personalsachkosten" class="java.lang.String"/>
+	<parameter name="entnahmestelle" class="java.lang.String"/>
+	<parameter name="analysekosten" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -257,13 +259,48 @@
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{probenehmer} + " Probenehmer * " + $P{dauer} + " Stunden * " + $P{kosten} + " € = " + $P{gesamtkosten} + " €"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{probenehmer} + " Probenehmer * " + $P{dauer} + " Stunden * " + $P{kosten} + " € = " + $P{personalsachkosten} + " €"]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="20" y="177" width="529" height="100"/>
+				<reportElement x="20" y="185" width="529" height="77"/>
 				<dataSourceExpression><![CDATA[$P{SUBDATA}]]></dataSourceExpression>
 				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("/reports/gebuehren_parameterliste.jasper"))]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement x="40" y="172" width="100" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{entnahmestelle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="262" width="50" height="10"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{analysekosten}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="272" width="50" height="10"/>
+				<textElement>
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{gesamtkosten}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="262" width="139" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Analysekosten  gesamt:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="272" width="260" height="10"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gesamtgebühr (Summe aus 1. und 2.):]]></text>
+			</staticText>
 		</band>
 		<band height="34">
 			<textField>
@@ -271,7 +308,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Bitte überweisen Sie die Gesamtgebühr von " + $P{gesamtkosten} + " € bis zum " + $P{maxdatum} + " unter Angabe des Kassenzeichens " + $P{kassenzeichen} + " an die Stadtkasse Bielefeld, Konto-Nr. 26 bei der Sparkasse Bielefeld, Bankleitzahl 480 501 61."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Bitte überweisen Sie die Gesamtgebühr von " + $P{gesamtkosten} + " bis zum " + $P{maxdatum} + " unter Angabe des Kassenzeichens " + $P{kassenzeichen} + " an die Stadtkasse Bielefeld, Konto-Nr. 26 bei der Sparkasse Bielefeld, Bankleitzahl 480 501 61."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="44">
@@ -285,7 +322,7 @@
 			<staticText>
 				<reportElement x="20" y="10" width="519" height="32"/>
 				<textElement>
-					<font size="6" isUnderline="false"/>
+					<font size="6" isItalic="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Bitte überprüfen Sie die diesem Bescheid zugrunde liegenden Tatsachen. Wenn diese nach Ihrer Auffassung fehlerhaft sein sollten, können Sie sich zur schnellen Klärung direkt an mich wenden. Dies führt nicht zu einer Verlängerung der einmonatigen Klagefrist nach Bekanntgabe dieses Bescheides (s. folgende Rechtsbehelfsbelehrung). Falls ich meine Entscheidung nicht ändern kann, müssen Sie trotzdem innerhalb eines Monats nach Bekanntgabe des Bescheides Klage erheben, wenn Sie Ihre Beschwerde weiterverfolgen wollen]]></text>
 			</staticText>
@@ -346,19 +383,24 @@ Ist der Verwaltungsakt zum Zeitpunkt der Entscheidung schon vollzogen, können S
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Gößling]]></text>
+				<text><![CDATA[i.A. Gößling]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="20" y="1" width="519" height="102"/>
+				<reportElement x="20" y="10" width="519" height="90"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Hinweis nach § 12 (2) Datenschutzgesetz NW (DSG NW):
-Personenbezogene Daten, d. h. Einzelangaben über persönliche und sachliche Verhältnisse einer bestimmten oder bestimmbaren natürlichen Person, können gemäß § 12 (1) DSG NW erhoben werden.
+				<text><![CDATA[Personenbezogene Daten, d. h. Einzelangaben über persönliche und sachliche Verhältnisse einer bestimmten oder bestimmbaren natürlichen Person, können gemäß § 12 (1) DSG NW erhoben werden.
 Die Angaben werden aufgrund einer Auskunftspflicht gemäß § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchung in der Stadt Bielefeld in Verbindung mit §§ 19 und 20 der Satzung der Stadt Bielefeld über die Entwässerung der Grundstücke erhoben und dienen dem Zweck der Überwachung der Benutzung der öffentlichen Abwasseranlagen.
 Das Erheben, Speichern, Verändern und Nutzen dieser Daten ist somit nach § 12 (1) und 13 (1) DSG NW zulässig. Die Daten dürfen grundsätzlich nur für Zwecke weiterverarbeitet werden, für die sie erhoben worden sind.
-Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.
-I. A.]]></text>
+Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="1" width="511" height="10"/>
+				<textElement>
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Hinweis nach § 12 (2) Datenschutzgesetz NW (DSG NW):]]></text>
 			</staticText>
 		</band>
 	</detail>

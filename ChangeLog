@@ -1,5 +1,21 @@
 2011-01-14  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Die fehlende Werte werden nun für den Gebührenbescheid bereitgestellt.
+
+	* src/de/bielefeld/umweltamt/aui/utils/DateUtils.java: Eine neue Funktion
+	  hinzugefügt, die es so an zentraler Stelle erlaubt java.util.Date Objekte
+	  zu formatieren. Dazu gibt es auch drei Konstanten, die Formate vorgeben.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java: Der Preis
+	  pro Analyseparameter wird nun in den Datentyp für den Gebührenbescheid
+	  geschrieben, so dass dieser im Bescheid auftaucht.
+
+	* reports/gebuehren_parameterliste.jrxml,
+	  reports/gebuehrenbescheid.jrxml: Kleinere Layout Anpassungen.
+
+2011-01-14  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/mappings/atl/AbstractAtlParameter.java,
 	  src/de/bielefeld/umweltamt/aui/mappings/atl/AtlParameter.hbm.xml:
 	  Parameter haben nun einen Preis für die Analyse. Dies ist wichtig, um den
