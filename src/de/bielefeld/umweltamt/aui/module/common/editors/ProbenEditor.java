@@ -84,6 +84,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -522,6 +523,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         BasisSachbearbeiter[] bSachbearbeiter =
             BasisSachbearbeiter.getSachbearbeiter();
         sachbearbeiter.setModel(new DefaultComboBoxModel(bSachbearbeiter));
+
+        dateiChooser.addChoosableFileFilter(
+            new FileNameExtensionFilter("PDF Dateien", "pdf"));
 
         bescheidDatei.setEnabled(false);
         auftragDatei.setEnabled(false);
