@@ -484,7 +484,6 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     protected JComponent buildContentArea() {
         NumberFormat     nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
-        SimpleDateFormat zf = new SimpleDateFormat("HH:mm:ss");
         SimpleDateFormat f  = new SimpleDateFormat ("HH:mm");
 
         entnahmepunkt    = new JLabel();
@@ -492,7 +491,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         rechnungsDatum   = new JLabel();
         uhrzeitVon       = new JFormattedTextField(f);
         uhrzeitBis       = new JFormattedTextField(f);
-        fahrtzeit        = new JFormattedTextField(zf);
+        fahrtzeit        = new JFormattedTextField(f);
         rechnungsBetrag  = new JLabel();
         bezug            = new JTextField();
         beteiligte       = new JTextField();

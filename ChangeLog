@@ -1,5 +1,11 @@
 2011-01-17  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Die Fahrtzeit muss nun im Format HH:mm eingegeben werden - die Sekunden
+	  nicht länger relevant.
+
+2011-01-17  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/mappings/basis/BasisSachbearbeiter.java:
 	  Eine neue Funktion hinzugefügt, die es erlaubt, alle in der Datenbank
 	  enthaltenen Sachbearbeiter abzufragen.
