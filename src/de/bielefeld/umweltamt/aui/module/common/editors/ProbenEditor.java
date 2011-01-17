@@ -102,6 +102,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
@@ -445,7 +446,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private JLabel               rechnungsBetrag;
     private JTextArea            bemerkungsArea;
 
-    private JTextField           sachbearbeiter;
+    private JComboBox            sachbearbeiter;
     private JTextField           bescheidDatei;
     private JButton              bescheidWahl;
     private JButton              bescheidDrucken;
@@ -498,7 +499,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         probenummer      = new JTextField();
         vorgangsstatus   = new JComboBox();
         statusHoch       = new JButton("erhöhen");
-        sachbearbeiter   = new JTextField();
+        sachbearbeiter   = new JComboBox();
         bescheidDatei    = new JTextField();
         bescheidWahl     = new JButton("Auswählen");
         bescheidDrucken  = new JButton("Speichern und Drucken");
@@ -518,6 +519,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         String[] bezeichnungen   = AtlStatus.getStatusAsString();
         ComboBoxModel comboModel = new DefaultComboBoxModel(bezeichnungen);
         vorgangsstatus.setModel(comboModel);
+
+        BasisSachbearbeiter[] bSachbearbeiter =
+            BasisSachbearbeiter.getSachbearbeiter();
+        sachbearbeiter.setModel(new DefaultComboBoxModel(bSachbearbeiter));
 
         bescheidDatei.setEnabled(false);
         auftragDatei.setEnabled(false);
@@ -925,7 +930,6 @@ public class ProbenEditor extends AbstractApplyEditor {
         BasisBetreiber basisBetr = probe.getBasisBetreiber();
 
         probenummer.setText(probe.getKennummer());
-        sachbearbeiter.setText(probe.getSachbearbeiter());
         entnahmepunkt.setText(
             probe.getAtlProbepkt().getBasisObjekt().getBeschreibung());
         Date entnahmeDatum = probe.getDatumDerEntnahme();
@@ -976,6 +980,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         // TODO Datei
 
         fillVorgangsstatus();
+        fillSachbearbeiter();
 
         if (getProbe().isKlaerschlammProbe()) {
             icpEinwaageFeld.setValue(getProbe().getEinwaage());
@@ -1072,11 +1077,40 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
+    protected void fillSachbearbeiter() {
+        AtlProbenahmen probe = getProbe();
+
+        if (probe == null)
+            return;
+
+        String sb = probe.getSachbearbeiter();
+
+        ComboBoxModel model = sachbearbeiter.getModel();
+        int          anzahl = model.getSize();
+
+        for (int i = 0; i < anzahl; i++) {
+            BasisSachbearbeiter b = (BasisSachbearbeiter) model.getElementAt(i);
+
+            if (b.getName().equals(sb)) {
+                sachbearbeiter.setSelectedItem(b);
+                return;
+            }
+        }
+    }
+
+
     protected AtlStatus getVorgangsstatus() {
         String    selection = (String) vorgangsstatus.getSelectedItem();
         AtlStatus current   = AtlStatus.getStatus(selection);
 
         return current;
+    }
+
+
+    protected BasisSachbearbeiter getSachbearbeiter() {
+        ComboBoxModel model = sachbearbeiter.getModel();
+
+        return (BasisSachbearbeiter) model.getSelectedItem();
     }
 
 
@@ -1166,9 +1200,11 @@ public class ProbenEditor extends AbstractApplyEditor {
                 getClass().getName());
         }
 
-        String sachbearb = sachbearbeiter.getText();
-        if (sachbearbeiter != null) {
-            probe.setSachbearbeiter(sachbearb);
+        // Sachbearbeiter
+        BasisSachbearbeiter b = (BasisSachbearbeiter)
+            sachbearbeiter.getSelectedItem();
+        if (b != null) {
+            probe.setSachbearbeiter(b.getName());;
         }
 
         // Kennnummer
@@ -1235,7 +1271,19 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("ende", uhrzeitBis.getText());
         params.put("fahrtzeit", fahrtzeit.getText());
         params.put("entnahmestelle", entnahmepunkt.getText());
-        params.put("sachbearbeiterInfo", sachbearbeiter.getText());
+
+        BasisSachbearbeiter sb = (BasisSachbearbeiter)
+            sachbearbeiter.getSelectedItem();
+
+        StringBuilder info = new StringBuilder();
+        if (sb != null) {
+            info.append(sb.getName());
+            info.append(", ");
+            info.append(sb.getKennummer());
+            info.append(", ");
+            info.append(sb.getTelefon());
+        }
+        params.put("sachbearbeiterInfo", info.toString());
 
         // TODO fill in the correct values if they exist
         params.put("anzahlEntnahmestellen", "1");

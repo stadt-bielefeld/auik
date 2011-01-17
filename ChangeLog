@@ -1,5 +1,17 @@
 2011-01-17  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/mappings/basis/BasisSachbearbeiter.java:
+	  Eine neue Funktion hinzugefügt, die es erlaubt, alle in der Datenbank
+	  enthaltenen Sachbearbeiter abzufragen.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Statt eines Textfelds zum Editieren eines Sachbearbeiters wird nun eine
+	  Combobox angezeigt, die alle in der DB enthaltenen Sachbearbeiter enthält.
+	  Der Probenhameauftrag wird nun auch mit allen zum gewählten Sachbearbeiter
+	  relevanten Informationen befüllt.
+
+2011-01-17  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Beim Erstellen der kasse.txt wird nun das Kassenzeichen des Betreibers
 	  geschrieben. Außerdem wird darauf geachtet, dass die letzte Zahlenfolge in

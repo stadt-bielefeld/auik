@@ -94,11 +94,30 @@ public class BasisSachbearbeiter
 
     /** Liefert den Namen dieses Sachbearbeiters */
     public String toString() {
-        String sachbearbeiter = "";
-        if (getName() != null) {
-            sachbearbeiter = " (" + getName() + ")";
-        }
-        return getKennummer() + sachbearbeiter;
+        String sachbearbeiter = getName();
+        String kennnummer     = getKennummer();
+
+        return sachbearbeiter != null
+            ? sachbearbeiter + " (" + kennnummer + ")"
+            : kennnummer;
     }
 
+
+    public static BasisSachbearbeiter[] getSachbearbeiter() {
+        try {
+            Session s = HibernateSessionFactory.currentSession();
+
+            List bearbeiter =
+                s.createQuery("from BasisSachbearbeiter as sachbearbeiter").list();
+
+            return (BasisSachbearbeiter[]) bearbeiter.toArray(
+                new BasisSachbearbeiter[bearbeiter.size()]);
+        }
+        catch (HibernateException he) {
+            throw new RuntimeException("Datenbank-Fehler", he);
+        }
+        finally {
+            HibernateSessionFactory.closeSession();
+        }
+    }
 }
