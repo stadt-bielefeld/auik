@@ -940,9 +940,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         Date bescheid = probe.getBescheid();
         if (bescheid != null) {
-            Date bill = DateUtils.getDateOfBill(bescheid);
             rechnungsDatum.setText(
-                DateUtils.format(bill, DateUtils.FORMAT_DATE));
+                DateUtils.format(bescheid, DateUtils.FORMAT_DATE));
         }
 
         // For some reason, there occur a NullPointerException when creating a
@@ -1353,8 +1352,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         probe.setBescheid(now);
 
-        rechnungsDatum.setText(
-            DateUtils.format(datum, DateUtils.FORMAT_DATE));
+        rechnungsDatum.setText(DateUtils.format(now, DateUtils.FORMAT_DATE));
     }
 
 

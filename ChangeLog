@@ -1,5 +1,11 @@
 2011-01-17  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java: In
+	  der Probenahmedetail-Oberfläche wird nun im Feld `Rechnungsdatum` das
+	  Datum angezeigt, an dem der Gebührenbescheid gestellt wurde.
+
+2011-01-17  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Die Felder Rechnungsbetrag und -datum sind nicht mehr editierbar. Sie
 	  werden vom System berechnet und automatisch ausgefüllt. Dazu wurde ein
