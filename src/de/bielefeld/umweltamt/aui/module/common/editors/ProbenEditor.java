@@ -135,6 +135,11 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Sachkosten dar. **/
     public static final double PERSONAL_UND_SACHKOSTEN = 40.99;
 
+    /** Dieser Wert gibt an, wieviele Stellen das Feld in der Datei kasse.txt
+     * besitzen muss, welches das Rechnungsdatum und den Rechnungsbetrag
+     * enth&auml;lt. **/
+    public static final int ZIFFERN_RECHNUNGS_FELD = 19;
+
     /** Der Dateiname <i>(kasse.txt)</i> der Kassendatei eines
      * Geb&uuml;hrenbescheides. **/
     public static final String KASSE_FILENAME = "kasse.txt";
@@ -600,10 +605,6 @@ public class ProbenEditor extends AbstractApplyEditor {
             public void actionPerformed(ActionEvent e) {
                 AtlProbenahmen probe = getProbe();
 
-                doSave();
-
-                Map params = getBescheidDruckMap(probe);
-
                 String path = bescheidDatei.getText();
                 if (path == null || path.equals("")) {
                     frame.showErrorMessage(
@@ -613,6 +614,14 @@ public class ProbenEditor extends AbstractApplyEditor {
                 }
 
                 try {
+                    updateRechnungsdatum(probe);
+
+                    doSave();
+
+                    updateRechnungsbetrag(probe);
+
+                    Map params = getBescheidDruckMap(probe);
+
                     JRDataSource subdata =
                         AtlProbenahmen.getBescheidDataSource(probe);
 
@@ -636,9 +645,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                             createKasseFile(path);
                         }
                         catch (ParseException pe) {
-                            AUIKataster.errorOutput(
-                                "Druck schlug fehlt: " + pe.getMessage(),
-                                getClass().getName());
+                                pe.printStackTrace();
 
                             frame.showErrorMessage(
                                 "Der Druck des Gebührenbescheids ist fehlgeschlagen." +
@@ -654,9 +661,6 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
 
-                    updateRechnungsbetrag(probe);
-                    updateRechnungsdatum(probe);
-
                     AtlProbenahmen.updateProbenahme(probe);
 
                     frame.showInfoMessage(
@@ -666,8 +670,10 @@ public class ProbenEditor extends AbstractApplyEditor {
                 }
                 catch (Exception ex) {
                     AUIKataster.errorOutput(
-                        "Druck schlug fehlt: " + ex.getMessage(),
+                        "Druck schlug fehlt.",
                         getClass().getName());
+
+                    ex.printStackTrace();
 
                     frame.showErrorMessage(
                         "Der Druck des Gebührenbescheids ist fehlgeschlagen." +
@@ -850,22 +856,34 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         BasisBetreiber basisBetr = probe.getBasisBetreiber();
 
-        Date rechnungsdatum = DateUtils.getDateOfBill(new Date());
-        SimpleDateFormat df = new SimpleDateFormat("ddmmyyyy");
+        Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
+        CurrencyDouble cd   = new CurrencyDouble(
+            getRechnungsbetrag(probe), Locale.GERMANY);
 
-        String rechnungsbetrag = Double.toString(getRechnungsbetrag(probe));
+        String rechnungsbetrag = cd.toString();
         rechnungsbetrag        = rechnungsbetrag.replace("€", "");
-        rechnungsbetrag        = rechnungsbetrag.replace(".", "");
+        rechnungsbetrag        = rechnungsbetrag.replace(",", "");
         rechnungsbetrag        = rechnungsbetrag.trim();
+
+        String kasseDatum = DateUtils.format(
+            rechnungsdatum, DateUtils.FORMAT_KASSE);
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("53656100465\t"); // TODO KASSENZEICHEN
+        int fill = ZIFFERN_RECHNUNGS_FELD;
+        fill -= kasseDatum.length();
+        fill -= rechnungsbetrag.length();
+
+        sb.append(basisBetr.getKassenzeichen() + "\t");
         sb.append(basisBetr.getBetrname() + "\t");
         sb.append(basisBetr.getBetriebsgrundstueck() + "\t");
         sb.append("Gebuehr fuer Abwasserunters.\t");
-        sb.append(df.format(rechnungsdatum)); // TODO RECHNUNGSBETRAG
-        sb.append("0000000");
+        sb.append(kasseDatum);
+
+        for (int i = 1; i <= fill; i++) {
+            sb.append("0");
+        }
+
         sb.append(rechnungsbetrag);
 
         String row = sb.toString();

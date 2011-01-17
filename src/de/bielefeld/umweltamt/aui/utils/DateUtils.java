@@ -40,6 +40,13 @@ public class DateUtils {
     public static final String FORMAT_TIME = "HH:mm";
 
     /**
+     * Ein String, der das Format eines Zeitstempels beschreibt.
+     * Das Format beinhaltet das Datum des Zeitstempels für die Datei
+     * kasse.txt: ddmmyyyy
+     */
+    public static final String FORMAT_KASSE = "ddmmyyyy";
+
+    /**
      * Die Anzahl der Tage, nachdem der Geb&uuml;hrenbescheid bezahlt werden
      * muss: 31
      */
