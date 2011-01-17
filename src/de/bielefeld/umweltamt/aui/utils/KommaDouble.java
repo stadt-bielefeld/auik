@@ -11,8 +11,8 @@ import java.text.NumberFormat;
  * @author David Klotz
  */
 public class KommaDouble {
-    private Double value;
-    private NumberFormat formatter;
+    protected Double value;
+    protected NumberFormat formatter;
 
     public KommaDouble(Double value) {
         this.value = value;

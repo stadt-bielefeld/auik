@@ -1,3 +1,25 @@
+2011-01-17  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Die Felder Rechnungsbetrag und -datum sind nicht mehr editierbar. Sie
+	  werden vom System berechnet und automatisch ausgefüllt. Dazu wurde ein
+	  wenig refaktoriert.
+
+	* src/de/bielefeld/umweltamt/aui/utils/DateUtils.java: Ein neue Funktion
+	  hinzugefügt, die es an zentraler Stelle erlaubt, anhand eines
+	  Datumsstrings ein Datum-Objekt zu erzeugen.
+
+
+	* src/de/bielefeld/umweltamt/aui/utils/KommaDouble.java:
+	  Die Felder dieser Klasse sind nun 'protected', damit sie in abgeleiteten
+	  Klassen zugreifbar sind - CurrencyDouble benötigt dies.
+
+	* src/de/bielefeld/umweltamt/aui/utils/CurrencyDouble.java: Neu. Diese
+	  Klasse kann dazu verwendet werden, formatierte Ausgaben einer
+	  Fließkommazahl zu erzeugen. Im diesem Fall wird die Fließkommazahl als
+	  Währung einer bestimmten - im Konstruktor eingestellten - Locale
+	  formatiert.
+
 2011-01-14  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:

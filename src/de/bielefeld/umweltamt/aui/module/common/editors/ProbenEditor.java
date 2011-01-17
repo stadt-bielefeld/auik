@@ -104,6 +104,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
+import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.DoubleRenderer;
@@ -435,8 +436,8 @@ public class ProbenEditor extends AbstractApplyEditor {
     private JTextField           bezug;
     private JTextField           beteiligte;
     private JTextField           probenummer;
-    private TextFieldDateChooser rechnungsDatum;
-    private DoubleField          rechnungsBetrag;
+    private JLabel               rechnungsDatum;
+    private JLabel               rechnungsBetrag;
     private JTextArea            bemerkungsArea;
 
     private JTextField           sachbearbeiter;
@@ -474,6 +475,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         initColumns();
     }
 
+
     protected JComponent buildContentArea() {
         NumberFormat     nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         SimpleDateFormat zf = new SimpleDateFormat("HH:mm:ss");
@@ -481,11 +483,11 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         entnahmepunkt    = new JLabel();
         datum            = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-        rechnungsDatum   = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        rechnungsDatum   = new JLabel();
         uhrzeitVon       = new JFormattedTextField(f);
         uhrzeitBis       = new JFormattedTextField(f);
         fahrtzeit        = new JFormattedTextField(zf);
-        rechnungsBetrag  = new DoubleField(0,2);
+        rechnungsBetrag  = new JLabel();
         bezug            = new JTextField();
         beteiligte       = new JTextField();
         probenummer      = new JTextField();
@@ -543,7 +545,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         auftragDrucken.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 AtlProbenahmen probe = getProbe();
-                Map params           = getAuftragDruckMap(probe);
+
+                doSave();
+
+                Map params = getAuftragDruckMap(probe);
 
                 String path = auftragDatei.getText();
                 if (path == null || path.equals("")) {
@@ -594,7 +599,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         bescheidDrucken.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 AtlProbenahmen probe = getProbe();
-                Map params           = getBescheidDruckMap(probe);
+
+                doSave();
+
+                Map params = getBescheidDruckMap(probe);
 
                 String path = bescheidDatei.getText();
                 if (path == null || path.equals("")) {
@@ -624,13 +632,31 @@ public class ProbenEditor extends AbstractApplyEditor {
                         AUIKataster.debugOutput(
                             getClass().getName(),
                             "Erstelle kasse.txt für Gebührenbescheid.");
-                        createKasseFile(path);
+                        try {
+                            createKasseFile(path);
+                        }
+                        catch (ParseException pe) {
+                            AUIKataster.errorOutput(
+                                "Druck schlug fehlt: " + pe.getMessage(),
+                                getClass().getName());
+
+                            frame.showErrorMessage(
+                                "Der Druck des Gebührenbescheids ist fehlgeschlagen." +
+                                "Die Datei kasse.txt konnte nicht erstellt werden.",
+                                "Gebührenbescheid-Druck fehlgeschlagen");
+
+                            return;
+                        }
                     }
 
                     String gedruckt = updateVorgangsstatus(
                         "Bescheid gedruckt");
 
                     probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
+
+                    updateRechnungsbetrag(probe);
+                    updateRechnungsdatum(probe);
+
                     AtlProbenahmen.updateProbenahme(probe);
 
                     frame.showInfoMessage(
@@ -647,7 +673,6 @@ public class ProbenEditor extends AbstractApplyEditor {
                         "Der Druck des Gebührenbescheids ist fehlgeschlagen." +
                         "\n" + ex.getLocalizedMessage(),
                         "Gebührenbescheid-Druck fehlgeschlagen");
-
                 }
             }
         });
@@ -743,8 +768,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         row += 2;
         builder.addLabel("Rechnungsdatum:", cc.xyw(1, row, 1));
-        builder.add(rechnungsDatum, cc.xyw(2, row, 1));
-        builder.addLabel("", cc.xyw(3, row, 1));
+        builder.add(rechnungsDatum, cc.xyw(2, row, 2));
         builder.addLabel("Rechnungsbetrag:", cc.xyw(4, row, 4, CellConstraints.RIGHT, CellConstraints.CENTER));
         builder.addLabel("", cc.xyw(8, row, 1)); // just to create a small gap
         builder.add(rechnungsBetrag, cc.xyw(9, row, 1));
@@ -816,18 +840,22 @@ public class ProbenEditor extends AbstractApplyEditor {
      *
      * @param bescheid Der Pfad, an dem das PDF gespeichert wurde.
      */
-    protected void createKasseFile(String bescheid) {
+    protected void createKasseFile(String bescheid)
+    throws ParseException
+    {
         File path  = new File(bescheid).getParentFile();
         File kasse = new File(path, KASSE_FILENAME);
 
-        BasisBetreiber basisBetr = getProbe().getBasisBetreiber();
+        AtlProbenahmen probe = getProbe();
+
+        BasisBetreiber basisBetr = probe.getBasisBetreiber();
 
         Date rechnungsdatum = DateUtils.getDateOfBill(new Date());
         SimpleDateFormat df = new SimpleDateFormat("ddmmyyyy");
 
-        String rechnungsbetrag = rechnungsBetrag.getText();
+        String rechnungsbetrag = Double.toString(getRechnungsbetrag(probe));
         rechnungsbetrag        = rechnungsbetrag.replace("€", "");
-        rechnungsbetrag        = rechnungsbetrag.replace(",", "");
+        rechnungsbetrag        = rechnungsbetrag.replace(".", "");
         rechnungsbetrag        = rechnungsbetrag.trim();
 
         StringBuilder sb = new StringBuilder();
@@ -910,12 +938,22 @@ public class ProbenEditor extends AbstractApplyEditor {
             beteiligte.setText(Integer.toString(probe.getAnzahlbeteiligte()));
         }
 
-        if (probe.getBescheid() != null) {
-            rechnungsDatum.setDate(probe.getBescheid());
+        Date bescheid = probe.getBescheid();
+        if (bescheid != null) {
+            Date bill = DateUtils.getDateOfBill(bescheid);
+            rechnungsDatum.setText(
+                DateUtils.format(bill, DateUtils.FORMAT_DATE));
         }
 
-        if (probe.getKosten() != null) {
-            rechnungsBetrag.setText(nf.format(probe.getKosten()));
+        // For some reason, there occur a NullPointerException when creating a
+        // new AtlProbenahmen.
+        try {
+            double kosten = getProbe().getKosten();
+            CurrencyDouble cd = new CurrencyDouble(kosten, Locale.GERMANY);
+            rechnungsBetrag.setText(cd.toString());
+        }
+        catch (NullPointerException npe) {
+            // do nothing
         }
 
         // TODO Datei
@@ -1111,15 +1149,6 @@ public class ProbenEditor extends AbstractApplyEditor {
                 getClass().getName());
         }
 
-        // Rechnungsdatum
-        Date bescheid = rechnungsDatum.getDate();
-        if (bescheid != null) {
-            probe.setBescheid(bescheid);
-        }
-
-        // Rechnungsbetrag
-        probe.setKosten(rechnungsBetrag.getDoubleValue());
-
         String sachbearb = sachbearbeiter.getText();
         if (sachbearbeiter != null) {
             probe.setSachbearbeiter(sachbearb);
@@ -1154,6 +1183,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         boolean success;
 
         if (isNew) {
+            isNew = false;
             success = AtlProbenahmen.saveProbenahme(probe);
         }
         else {
@@ -1237,14 +1267,15 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         try {
-            SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
             String beginn = uhrzeitVon.getText();
             String ende   = uhrzeitBis.getText();
 
-            Date beginnDate = tf.parse(beginn);
-            Date endeDate   = tf.parse(ende);
+            Date beginnDate = DateUtils.parse(beginn, DateUtils.FORMAT_TIME);
+            Date endeDate   = DateUtils.parse(ende, DateUtils.FORMAT_TIME);
+
             double dauer  = DateUtils.getDurationHours(beginnDate, endeDate);
-            double kosten = PERSONAL_UND_SACHKOSTEN * dauer;
+            double kosten = getSachUndPersonalkosten();
+
             params.put("personalsachkosten", nf.format(kosten));
             params.put("analysekosten",
                 nf.format(getAnalysekosten(probe)) +" €");
@@ -1262,7 +1293,27 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
-    public static double getAnalysekosten(AtlProbenahmen probe) {
+    protected double getDauer()
+    throws ParseException
+    {
+        String beginn = uhrzeitVon.getText();
+        String ende   = uhrzeitBis.getText();
+
+        Date beginnDate = DateUtils.parse(beginn, DateUtils.FORMAT_TIME);
+        Date endeDate   = DateUtils.parse(ende, DateUtils.FORMAT_TIME);
+
+        return DateUtils.getDurationHours(beginnDate, endeDate);
+    }
+
+
+    public double getSachUndPersonalkosten()
+    throws ParseException
+    {
+        return PERSONAL_UND_SACHKOSTEN * getDauer();
+    }
+
+
+    public double getAnalysekosten(AtlProbenahmen probe) {
         List sorted  = AtlProbenahmen.sortAnalysepositionen(probe);
         double total = 0d;
 
@@ -1274,6 +1325,36 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         return total;
+    }
+
+
+    public double getRechnungsbetrag(AtlProbenahmen probe)
+    throws ParseException
+    {
+        return getSachUndPersonalkosten() + getAnalysekosten(probe);
+    }
+
+
+    protected void updateRechnungsbetrag(AtlProbenahmen probe)
+    throws ParseException
+    {
+        double betrag = getRechnungsbetrag(probe);
+
+        probe.setKosten(betrag);
+
+        CurrencyDouble cd = new CurrencyDouble(betrag, Locale.GERMANY);
+        rechnungsBetrag.setText(cd.toString());
+    }
+
+
+    protected void updateRechnungsdatum(AtlProbenahmen probe) {
+        Date now   = new Date();
+        Date datum = DateUtils.getDateOfBill(now);
+
+        probe.setBescheid(now);
+
+        rechnungsDatum.setText(
+            DateUtils.format(datum, DateUtils.FORMAT_DATE));
     }
 
 

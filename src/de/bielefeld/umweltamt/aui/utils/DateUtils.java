@@ -7,6 +7,7 @@
  */
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,6 +63,18 @@ public class DateUtils {
 
         SimpleDateFormat df = new SimpleDateFormat(format);
         return df.format(date);
+    }
+
+
+    public static Date parse(String date, String format)
+    throws ParseException
+    {
+        if (format == null || date == null || format.equals("")) {
+            return null;
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+        return df.parse(date);
     }
 
 
