@@ -1,3 +1,9 @@
+2011-01-18  Ingo Weinzierl <ingo@intevation.de>
+
+	* reports/gebuehren_parameterliste.jrxml,
+	  reports/gebuehrenbescheid.jrxml: Anpassungen der Schriftgröße und bessere
+	  Behandlung von Fließtexten.
+
 2011-01-17  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
