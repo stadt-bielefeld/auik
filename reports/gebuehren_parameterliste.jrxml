@@ -8,8 +8,9 @@
 	<field name="Pos" class="java.lang.String"/>
 	<field name="Parameter" class="java.lang.String"/>
 	<field name="Grenzwert" class="java.lang.String"/>
-	<field name="Ergebnis" class="java.lang.String"/>
+	<field name="Ergebnis_Wert" class="java.lang.String"/>
 	<field name="Gebühr" class="java.lang.String"/>
+	<field name="Ergebnis_Einheit" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -38,7 +39,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="320" y="0" width="104" height="14"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ergebnis]]></text>
@@ -76,11 +77,11 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Grenzwert}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="320" y="0" width="104" height="12"/>
-				<textElement>
+				<reportElement x="320" y="0" width="55" height="12"/>
+				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{Ergebnis}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Ergebnis_Wert}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="424" y="0" width="74" height="12"/>
@@ -88,6 +89,11 @@
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Gebühr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="1" width="46" height="12"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Ergebnis_Einheit}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

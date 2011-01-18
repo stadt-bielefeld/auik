@@ -36,7 +36,8 @@ public class AtlProbenahmen
     };
 
     public static final String[] COLUMNS_BESCHEID = {
-        "Pos", "Parameter", "Grenzwert", "Ergebnis", "Gebühr"
+        "Pos", "Parameter", "Grenzwert", "Ergebnis_Wert", "Ergebnis_Einheit",
+        "Gebühr"
     };
 
 
@@ -421,18 +422,19 @@ public class AtlProbenahmen
         Object[]   columns;
 
         for (int i = 0; i < elements; i++) {
-            columns = new Object[5];
+            columns = new Object[6];
 
             AtlAnalyseposition pos  = (AtlAnalyseposition) sorted.get(i);
             AtlParameter parameter  = pos.getAtlParameter();
             String einheit          = pos.getAtlEinheiten().getBezeichnung();
             Double grenzwert        = parameter.getGrenzwert();
 
-            columns[0] = i;
+            columns[0] = i+1;
             columns[1] = parameter.getBezeichnung();
             columns[2] = grenzwert != null ? grenzwert + " " + einheit : "";
-            columns[3] = pos.getWert() + " " + einheit;
-            columns[4] = new KommaDouble(
+            columns[3] = pos.getWert();
+            columns[4] = einheit;
+            columns[5] = new KommaDouble(
                 parameter.getPreisfueranalyse()).toString() + " €";
 
             values[i] = columns;
