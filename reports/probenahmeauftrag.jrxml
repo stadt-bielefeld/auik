@@ -970,10 +970,10 @@
 				<text><![CDATA[Name,  Orga. Nr.,  Telefon]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-43" x="10" y="660" width="201" height="1"/>
+				<reportElement key="line-43" x="10" y="660" width="225" height="1"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-58" x="10" y="664" width="201" height="14"/>
+				<reportElement key="staticText-58" x="10" y="664" width="225" height="14"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

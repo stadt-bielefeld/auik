@@ -1,5 +1,11 @@
 2011-01-19  Ingo Weinzierl <ingo@intevation.de>
 
+	* reports/probenahmeauftrag.jrxml: Größe des "Unterschrift"-Textfeldes
+	  angepasst. Bisher wurde der Text abgeschnitten, weil das Feld zu klein
+	  war.
+
+2011-01-19  Ingo Weinzierl <ingo@intevation.de>
+
 	* lib/jasperreports-fonts-3.7.6.jar: Die JR Extension, die benötigt ist,
 	  um Schriftarten in ein PDF einzubetten. Dies ist notwendig, um das
 	  Rendering von PDFs auf verschiedenen Viewern zu gewährleisten.
