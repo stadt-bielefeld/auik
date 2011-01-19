@@ -36,7 +36,7 @@
 			<staticText>
 				<reportElement x="0" y="32" width="477" height="20"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font fontName="DejaVu Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Untersuchungsauftrag]]></text>
 			</staticText>
@@ -51,28 +51,28 @@
 			<staticText>
 				<reportElement x="5" y="73" width="105" height="12"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="DejaVu Serif" size="8"/>
 				</textElement>
 				<text><![CDATA[Probekennzeichnung]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="120" y="73" width="45" height="12"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="DejaVu Serif" size="8"/>
 				</textElement>
 				<text><![CDATA[Datum]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="225" y="73" width="41" height="12"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="DejaVu Serif" size="8"/>
 				</textElement>
 				<text><![CDATA[Uhrzeit]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="380" y="73" width="72" height="12"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="DejaVu Serif" size="8"/>
 				</textElement>
 				<text><![CDATA[Handzeichen]]></text>
 			</staticText>
@@ -88,21 +88,21 @@
 			<textField>
 				<reportElement x="5" y="90" width="105" height="20"/>
 				<textElement textAlignment="Center">
-					<font size="10" isBold="true"/>
+					<font fontName="DejaVu Serif" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{subkennnummer}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="225" y="98" width="18" height="12"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="DejaVu Serif" size="8"/>
 				</textElement>
 				<text><![CDATA[von]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="302" y="98" width="15" height="12"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="DejaVu Serif" size="8"/>
 				</textElement>
 				<text><![CDATA[bis]]></text>
 			</staticText>
@@ -131,14 +131,14 @@
 			<staticText>
 				<reportElement x="165" y="3" width="143" height="20"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font fontName="DejaVu Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Kennzeichnung]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="325" y="3" width="137" height="20"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font fontName="DejaVu Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Konservierung]]></text>
 			</staticText>
@@ -151,7 +151,7 @@
 			<staticText>
 				<reportElement x="30" y="3" width="124" height="20"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font fontName="DejaVu Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Parameter]]></text>
 			</staticText>
@@ -210,7 +210,7 @@
 			<staticText>
 				<reportElement x="9" y="4" width="12" height="12"/>
 				<textElement>
-					<font isBold="true"/>
+					<font fontName="DejaVu Serif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[X]]></text>
 			</staticText>

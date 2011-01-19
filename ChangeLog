@@ -1,3 +1,15 @@
+2011-01-19  Ingo Weinzierl <ingo@intevation.de>
+
+	* lib/jasperreports-fonts-3.7.6.jar: Die JR Extension, die benötigt ist,
+	  um Schriftarten in ein PDF einzubetten. Dies ist notwendig, um das
+	  Rendering von PDFs auf verschiedenen Viewern zu gewährleisten.
+
+	* reports/gebuehren_parameterliste.jrxml,
+	  reports/probenahmeauftrag.jrxml,
+	  reports/ParameterReport.jrxml,
+	  reports/gebuehrenbescheid.jrxml: Benutze die Schrift `DejaVu Serif`,
+	  welche in der Font Extension verfügbar ist.
+
 2011-01-18  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java,
