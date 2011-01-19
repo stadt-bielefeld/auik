@@ -1,5 +1,9 @@
 2011-01-19  Ingo Weinzierl <ingo@intevation.de>
 
+	* reports/gebuehrenbescheid.jrxml: Größenanpassung eines Textfeldes.
+
+2011-01-19  Ingo Weinzierl <ingo@intevation.de>
+
 	* reports/probenahmeauftrag.jrxml: Größe des "Unterschrift"-Textfeldes
 	  angepasst. Bisher wurde der Text abgeschnitten, weil das Feld zu klein
 	  war.
