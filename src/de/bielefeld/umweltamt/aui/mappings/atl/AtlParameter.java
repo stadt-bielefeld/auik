@@ -283,4 +283,24 @@ public class AtlParameter
 
         return tmp;
     }
+
+
+    public static AtlParameter[] getParameterGroup(int id) {
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            List p = session.createQuery(
+                "from AtlParameter as param where " +
+                "param.atlParameterGruppe.id = " + id).list();
+
+            return (AtlParameter[]) p.toArray(new AtlParameter[p.size()]);
+        }
+        catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return null;
+    }
 }

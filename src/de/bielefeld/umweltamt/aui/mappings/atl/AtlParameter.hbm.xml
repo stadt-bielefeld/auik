@@ -17,6 +17,9 @@
         <property name="sielhautGw" column="sielhaut_gw" type="java.lang.Double" />
         <property name="klaerschlammGw" column="klaerschlamm_gw" type="java.lang.Double" />
         <property name="preisfueranalyse" column="preisfueranalyse" type="java.lang.Double" />
+        <property name="einzelnBeauftragbar" column="einzelnBeauftragbar" type="java.lang.Boolean" />
+
+        <many-to-one name="atlParameterGruppe" column="parametergruppe_id" class="AtlParameterGruppen" />
     </class>
 
 </hibernate-mapping>

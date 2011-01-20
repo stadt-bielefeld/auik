@@ -1,5 +1,31 @@
 2011-01-20  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Bei der Berechnung der Analysekosten wird nun berücksichtigt, dass
+	  Parameter in Gruppen gepfüft werden können. In diesem Fall wird ein
+	  Gruppenpreis berechnet. Außerdem wird berücksichtigt, ob ein Parameter,
+	  der als Gruppenparameter vermerkt ist, auch einzeln geprüft werden kann,
+	  falls dieser nicht die komplette Gruppen zur Probenahme ausgewählt ist.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlParameter.hbm.xml,
+	  src/de/bielefeld/umweltamt/aui/mappings/atl/AbstractAtlParameter.java:
+	  Ein Parameter hat nun zwei weitere Eigenschaften: zum einen eine Boolean
+	  Eigenschaft, die zeigt, ob der Parameter einzeln prüfbar ist. Dies
+	  sollte der Standard-Fall sein. Zum Anderen kann der Parameter eine
+	  AtlParameterGruppen besitzen.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlParameter.java: Der
+	  Paramter hat eine neue Funktion, die die Parametergruppe des Parameters
+	  liefert.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlParameterGruppen.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/atl/AbstractAtlParameterGruppen.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/atl/AtlParameterGruppen.hbm.xml:
+	  Hibernate Mapping und Java Klassen, zur Representation von
+	  Parametergruppen.
+
+2011-01-20  Ingo Weinzierl <ingo@intevation.de>
+
 	* lib/freemarker.jar,
 	  lib/hibernate-tools.jar: Diese Bibliotheken werden verwendet, um aus den
 	  Hibernate XML Mapping Dateien Java Klassen zu erzeugen.

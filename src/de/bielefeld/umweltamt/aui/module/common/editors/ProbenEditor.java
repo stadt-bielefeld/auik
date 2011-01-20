@@ -62,6 +62,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.List;
 import java.util.Map;
@@ -99,6 +100,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameterGruppen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
@@ -1250,6 +1252,12 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
+    /**
+     * Diese Methode liefert die Parameter-Map für den Druck/Export eines
+     * Probenahmeauftrages.
+     *
+     * @return die Variablen für den Probenahmeauftrag als Map.
+     */
     public Map getAuftragDruckMap(AtlProbenahmen probe) {
         BasisBetreiber betr = probe.getBasisBetreiber();
         AtlProbeart    art  = probe.getAtlProbepkt().getAtlProbeart();
@@ -1295,7 +1303,15 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
-    public Map getBescheidDruckMap(AtlProbenahmen probe) {
+    /**
+     * Diese Methode liefert eine Map, mit allen Variablen, die für den
+     * Druck/Export des Geb&uuml;hrenbescheid notwendig sind.
+     *
+     * @return die Variablen des Geb&uuml;hrenbescheids als Map.
+     */
+    public Map getBescheidDruckMap(AtlProbenahmen probe)
+    throws IllegalArgumentException
+    {
         BasisBetreiber betr = probe.getBasisBetreiber();
 
         HashMap params = new HashMap();
@@ -1361,6 +1377,10 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
+    /**
+     * Diese Funktion berechnet die Dauer der Probenahme anhand Start- und
+     * Endzeit.
+     */
     protected double getDauer()
     throws ParseException
     {
@@ -1374,6 +1394,11 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
+    /**
+     * Diese Methode liefert die Sach- und Personalkosten.
+     *
+     * @return die Personal- und Sachkosten.
+     */
     public double getSachUndPersonalkosten()
     throws ParseException
     {
@@ -1381,28 +1406,133 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
-    public double getAnalysekosten(AtlProbenahmen probe) {
+    /**
+     * Diese Methode liefert die Analysekosten der <i>probe</i>.
+     *
+     * @return die Analysekosten.
+     */
+    public double getAnalysekosten(AtlProbenahmen probe)
+    throws IllegalArgumentException
+    {
         List sorted  = AtlProbenahmen.sortAnalysepositionen(probe);
-        double total = 0d;
+        Map  gruppen = new HashMap();
+        double single = 0d;
+        double group  = 0d;
 
         for (int i = 0; i < sorted.size(); i++) {
-            AtlAnalyseposition pos = (AtlAnalyseposition) sorted.get(i);
-            AtlParameter      para = pos.getAtlParameter();
+            AtlAnalyseposition  pos    = (AtlAnalyseposition) sorted.get(i);
+            AtlParameter        para   = pos.getAtlParameter();
+            AtlParameterGruppen gruppe = para.getAtlParameterGruppe();
 
-            total += para.getPreisfueranalyse();
+            if (gruppe == null) {
+                single += para.getPreisfueranalyse();
+            }
+            else {
+                Integer id = gruppe.getId();
+
+                if (gruppen.containsKey(id)) {
+                    ((List) gruppen.get(id)).add(para);
+                }
+                else {
+                    List neu = new ArrayList();
+                    neu.add(para);
+
+                    gruppen.put(id, neu);
+                }
+            }
         }
 
-        return total;
+        int anzahlGruppen = gruppen.size();
+        if (anzahlGruppen == 0) {
+            return single;
+        }
+
+        Set      keys = gruppen.keySet();
+        Iterator iter = keys.iterator();
+
+        while (iter.hasNext()) {
+            Integer id = (Integer) iter.next();
+            group     += getGruppierteAnalysekosten(id, (List) gruppen.get(id));
+        }
+
+        return single + group;
     }
 
 
+    /**
+     * Diese Methode errechnet den Preis einer Parametergruppe. Wenn alle
+     * Parameter einer Parametergruppen in der Probenahme enthalten sind, wird
+     * der entsprechende Gruppenpreis zur&uuml;ckgegeben. Sind nicht alle
+     * Parameter enthalten, werden die Preise jedes Parameters addiert, und
+     * dieser Wert zur&uuml;ckgegeben. Falls eine Gruppe jedoch nicht komplett
+     * ist, aber die Parameter nicht einzeln gepr&uuml;ft werden k&ouml;nnen,
+     * wird ein Fehler geworfen.
+     *
+     * @param gruppe Die ID der Paramtergruppe
+     * @param params Eine Liste, die die Parameter einer Gruppe enth&auml;lt
+     *
+     * @return den Preis der Parameter.
+     *
+     * @throws IllegalArgumentException
+     */
+    public double getGruppierteAnalysekosten(int gruppe, List params)
+    throws IllegalArgumentException
+    {
+        double preis = 0d;
+
+        if (AtlParameterGruppen.isGroupComplete(gruppe, params)) {
+            AtlParameterGruppen g = AtlParameterGruppen.getParameterGroup(gruppe);
+
+            if (g == null) {
+                System.out.println("No such group with id: " + gruppe);
+                return 0;
+            }
+
+            preis += g.getPreisfueranalyse();
+        }
+        else {
+            int parameter = params.size();
+
+            for (int i = 0; i < parameter; i++) {
+                AtlParameter p = (AtlParameter) params.get(i);
+
+                if (p.getEinzelnBeauftragbar()) {
+                    preis += p.getPreisfueranalyse();
+                }
+                else {
+                    String msg =
+                        "Parameter " + p.getOrdnungsbegriff() + " ist nicht " +
+                        "einzeln prüfbar.";
+
+                    AUIKataster.errorOutput(
+                        msg, getClass().getName());
+
+                    throw new IllegalArgumentException(msg);
+                }
+            }
+        }
+
+        return preis;
+    }
+
+
+    /**
+     * Dies Funktion liefert den Rechnungsbetrag der Probenhame bestehend aus
+     * Sach- und Personalkosten und der Analysekosten.
+     *
+     * @return den Rechnungsbetrag.
+     */
     public double getRechnungsbetrag(AtlProbenahmen probe)
-    throws ParseException
+    throws ParseException, IllegalArgumentException
     {
         return getSachUndPersonalkosten() + getAnalysekosten(probe);
     }
 
 
+    /**
+     * Diese Funktion berechnet den Rechnungsbetrag der <i>probe</i>, setzt den
+     * Betrag am Objekt und aktualisiert die GUI.
+     */
     protected void updateRechnungsbetrag(AtlProbenahmen probe)
     throws ParseException
     {
@@ -1415,6 +1545,10 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
+    /**
+     * Diese Funktion berechnet das Rechnugnsdatum, setzt dies am AtlProbenahmen
+     * Objekt und aktualisiert die GUI mit dem aktuellen Datum.
+     */
     protected void updateRechnungsdatum(AtlProbenahmen probe) {
         Date now   = new Date();
         Date datum = DateUtils.getDateOfBill(now);
