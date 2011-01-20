@@ -1,3 +1,14 @@
+2011-01-20  Ingo Weinzierl <ingo@intevation.de>
+
+	* lib/freemarker.jar,
+	  lib/hibernate-tools.jar: Diese Bibliotheken werden verwendet, um aus den
+	  Hibernate XML Mapping Dateien Java Klassen zu erzeugen.
+
+	* build.xml: Neues Ant Task `hbmmappings`. Dies erzeugt JAVA Klassen aus
+	  den Hibernate XML Mapping Dateien. Mit Hilfe einer Property
+	  `auik.hibernate.mappings` kann das Zielverzeichnis der Java Klassen
+	  angegeben werden.
+
 2011-01-19  Ingo Weinzierl <ingo@intevation.de>
 
 	* reports/gebuehrenbescheid.jrxml: Größenanpassung eines Textfeldes.

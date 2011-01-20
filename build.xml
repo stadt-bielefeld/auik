@@ -14,8 +14,19 @@
     <property name="doc"   location="doc"/>
     <property name="icons" location="/de/bielefeld/umweltamt/aui/icons"/>
 
+    <path id="hibernate-tools">
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <taskdef name="hibernatetool"
+             classname="org.hibernate.tool.ant.HibernateToolTask"
+             classpathref="hibernate-tools" />
+
     <!-- Some properties for SystemProperties -->
     <property name="auik.hibernate.config" value="hibernate.cfg.xml"/>
+    <property name="auik.hibernate.mappings" value="${src}/de/bielefeld/umweltamt/aui/mappings/atl"/>
 
     <!-- The classpath that includes the necessary external libs and AUIK -->
     <path id="classpath">
@@ -24,6 +35,21 @@
         </fileset>
         <path location="${build}"/>
     </path>
+
+
+    <path id="hibernate-classpath">
+        <path location="${src}"/>
+    </path>
+
+
+    <target name="hbmmappings" description="Create java classes from hibernate configuration">
+        <hibernatetool destdir="${auik.hibernate.mappings}">
+            <classpath refid="hibernate-classpath"/>
+            <configuration configurationfile="${src}/${auik.hibernate.config}"/>
+            <hbm2java/>
+        </hibernatetool>
+    </target>
+
 
     <target name="compile" description="Compile the source">
         <mkdir dir="${build}"/>
