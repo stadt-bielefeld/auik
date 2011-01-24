@@ -1,3 +1,8 @@
+2011-01-24  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/hibernate.cfg.xml: Hinzufügen der ParameterGruppen als Mapping
+	  hinzugefügt.
+
 2011-01-20  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
