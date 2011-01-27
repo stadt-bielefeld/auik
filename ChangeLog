@@ -1,5 +1,12 @@
 2011-01-27  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Probenahmeauftrag und Gebührenbescheid werden nun nicht mehr direkt aus
+	  der GUI heraus gedruckt, sondern werden lediglich als PDF im Dateisystem
+	  gespeichert. Das Drucken muss nun manuell erfolgen.
+
+2011-01-27  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/SettingsManager.java: Es existieren nun
 	  zwei neue Properties, die den Pfad zum Speichern von Gebührenbescheiden
 	  und Probenahmeaufträgen enthalten.

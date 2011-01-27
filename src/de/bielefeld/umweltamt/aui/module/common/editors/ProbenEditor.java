@@ -568,7 +568,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         ((JRMapDataSource) subdata).size() + " Zeilen.");
 
                     PDFExporter.getInstance().exportAuftrag(
-                        params, subdata, path.getAbsolutePath(), true);
+                        params, subdata, path.getAbsolutePath(), false);
                     String gedruckt = updateVorgangsstatus(
                         "Probenahmeauftrag gedruckt");
 
@@ -576,8 +576,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                     AtlProbenahmen.updateProbenahme(probe);
 
                     frame.showInfoMessage(
-                        "Der Probenahmeauftrag wurde erfolgreich gedruckt " +
-                        "und \nunter '" + path.getAbsolutePath() + "' gespeichert.",
+                        "Der Probenahmeauftrag wurde erfolgreich unter '" +
+                        path.getAbsolutePath() + "' gespeichert.",
                         "Probenahmeauftrag erfolgreich");
                 }
                 catch (Exception ex) {
@@ -628,7 +628,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         AtlProbenahmen.getBescheidDataSource(probe);
 
                     PDFExporter.getInstance().exportBescheid(
-                        params, subdata, path.getAbsolutePath(),true);
+                        params, subdata, path.getAbsolutePath(), false);
 
                     AtlStatus currentStatus = getVorgangsstatus();
                     String    currentBez    = currentStatus.getBezeichnung();
@@ -666,8 +666,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                     AtlProbenahmen.updateProbenahme(probe);
 
                     frame.showInfoMessage(
-                        "Der Gebührenbescheid wurde erfolgreich gedruckt " +
-                        "und \nunter '" + path.getAbsolutePath() + "' gespeichert.",
+                        "Der Gebührenbescheid wurde erfolgreich unter ' " +
+                        path.getAbsolutePath() + "' gespeichert.",
                         "Gebührenbescheid erfolgreich");
                 }
                 catch (Exception ex) {
