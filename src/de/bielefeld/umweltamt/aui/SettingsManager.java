@@ -131,6 +131,8 @@ public class SettingsManager {
 
         defaults.setProperty("auik.gis.programmpath", "C:\\appz\\qgis\\bin\\qgis.exe\\");
         defaults.setProperty("auik.gis.projectpath", "D:\\\\data\\qgis\\MyProject.qgs");
+        defaults.setProperty("auik.probenahme.auftraege", "D:\\Data\\auik\\auftraege");
+        defaults.setProperty("auik.probenahme.bescheide", "D:\\Data\\auik\\bescheide");
 
         appSettings = new Properties(defaults);
 

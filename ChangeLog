@@ -1,5 +1,17 @@
 2011-01-27  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/SettingsManager.java: Es existieren nun
+	  zwei neue Properties, die den Pfad zum Speichern von Gebührenbescheiden
+	  und Probenahmeaufträgen enthalten.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Die FileChooser zur Auswahl eines Speicherpfades für Gebührenbescheide und
+	  Probenahmeaufträgen wurde entfernt. Diese werden nun in den Pfaden des
+	  SettingsManagers gespeichert. Der konkrte Name der Datei ist dabei jeweils
+	  die Kennung der Probenahme.
+
+2011-01-27  Ingo Weinzierl <ingo@intevation.de>
+
 	  ISSSUE1917
 
 	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Die Zeilen eines

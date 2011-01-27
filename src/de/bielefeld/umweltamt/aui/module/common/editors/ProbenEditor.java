@@ -97,6 +97,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -450,11 +451,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private JTextArea            bemerkungsArea;
 
     private JComboBox            sachbearbeiter;
-    private JTextField           bescheidDatei;
-    private JButton              bescheidWahl;
     private JButton              bescheidDrucken;
-    private JTextField           auftragDatei;
-    private JButton              auftragWahl;
     private JButton              auftragDrucken;
     private JFileChooser         dateiChooser;
     private JLabel               betrieb;
@@ -502,13 +499,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         vorgangsstatus   = new JComboBox();
         statusHoch       = new JButton("erhöhen");
         sachbearbeiter   = new JComboBox();
-        bescheidDatei    = new JTextField();
-        bescheidWahl     = new JButton("Auswählen");
         bescheidDrucken  = new JButton("Speichern und Drucken");
-        auftragDatei     = new JTextField();
-        auftragWahl      = new JButton("Auswählen");
         auftragDrucken   = new JButton("Speichern und Drucken");
-        dateiChooser     = new JFileChooser();
         icpEinwaageFeld  = new DoubleField(0);
         icpDatum         = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
         bemerkungsArea   = new LimitedTextArea(255);
@@ -526,12 +518,6 @@ public class ProbenEditor extends AbstractApplyEditor {
             BasisSachbearbeiter.getSachbearbeiter();
         sachbearbeiter.setModel(new DefaultComboBoxModel(bSachbearbeiter));
 
-        dateiChooser.addChoosableFileFilter(
-            new FileNameExtensionFilter("PDF Dateien", "pdf"));
-
-        bescheidDatei.setEnabled(false);
-        auftragDatei.setEnabled(false);
-
         statusHoch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 AtlStatus current = getVorgangsstatus();
@@ -544,18 +530,6 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
         });
 
-        auftragWahl.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                openFileChooser(auftragDatei);
-            }
-        });
-
-        bescheidWahl.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                openFileChooser(bescheidDatei);
-            }
-        });
-
         // triggert das Erzeugen eines PDFs und einen Druck-Job an
         auftragDrucken.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -565,15 +539,24 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                 Map params = getAuftragDruckMap(probe);
 
-                String path = auftragDatei.getText();
-                if (path == null || path.equals("")) {
+                String basePath = SettingsManager.getInstance().getSetting(
+                    "auik.probenahme.auftraege");
+
+                String filename = probe.getKennummer();
+                if (!filename.endsWith(".pdf")) {
+                    filename += ".pdf";
+                }
+
+                File path = new File(basePath, filename);
+                if (path == null) {
                     frame.showErrorMessage(
-                        "Bitte geben Sie den Pfad zum Speichern des PDFs an.",
+                        "Kann die Datei nicht speichern, da der Pfad nicht " +
+                        "korrekt ist.",
                         "Pfad zum Speichern fehlt");
                     return;
                 }
 
-                params.put("localFile", path);
+                params.put("localFile", path.getAbsolutePath());
 
                 try {
                     JRDataSource subdata =
@@ -585,7 +568,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         ((JRMapDataSource) subdata).size() + " Zeilen.");
 
                     PDFExporter.getInstance().exportAuftrag(
-                        params, subdata, path, true);
+                        params, subdata, path.getAbsolutePath(), true);
                     String gedruckt = updateVorgangsstatus(
                         "Probenahmeauftrag gedruckt");
 
@@ -594,7 +577,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     frame.showInfoMessage(
                         "Der Probenahmeauftrag wurde erfolgreich gedruckt " +
-                        "und \nunter '" + path + "' gespeichert.",
+                        "und \nunter '" + path.getAbsolutePath() + "' gespeichert.",
                         "Probenahmeauftrag erfolgreich");
                 }
                 catch (Exception ex) {
@@ -615,10 +598,19 @@ public class ProbenEditor extends AbstractApplyEditor {
             public void actionPerformed(ActionEvent e) {
                 AtlProbenahmen probe = getProbe();
 
-                String path = bescheidDatei.getText();
-                if (path == null || path.equals("")) {
+                String basePath = SettingsManager.getInstance().getSetting(
+                    "auik.probenahme.bescheide");
+
+                String filename = probe.getKennummer();
+                if (!filename.endsWith(".pdf")) {
+                    filename += ".pdf";
+                }
+
+                File path = new File(basePath, filename);
+                if (path == null) {
                     frame.showErrorMessage(
-                        "Bitte geben Sie den Pfad zum Speichern des PDFs an.",
+                        "Kann die Datei nicht speichern, da der Pfad nicht " +
+                        "korrekt ist.",
                         "Pfad zum Speichern fehlt");
                     return;
                 }
@@ -636,7 +628,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         AtlProbenahmen.getBescheidDataSource(probe);
 
                     PDFExporter.getInstance().exportBescheid(
-                        params, subdata, path,true);
+                        params, subdata, path.getAbsolutePath(),true);
 
                     AtlStatus currentStatus = getVorgangsstatus();
                     String    currentBez    = currentStatus.getBezeichnung();
@@ -652,7 +644,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                             getClass().getName(),
                             "Erstelle kasse.txt für Gebührenbescheid.");
                         try {
-                            createKasseFile(path);
+                            createKasseFile(path.getAbsolutePath());
                         }
                         catch (ParseException pe) {
                                 pe.printStackTrace();
@@ -675,7 +667,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     frame.showInfoMessage(
                         "Der Gebührenbescheid wurde erfolgreich gedruckt " +
-                        "und \nunter '" + path + "' gespeichert.",
+                        "und \nunter '" + path.getAbsolutePath() + "' gespeichert.",
                         "Gebührenbescheid erfolgreich");
                 }
                 catch (Exception ex) {
@@ -791,17 +783,17 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         row += 2;
         builder.addLabel("Probenahmeauftrag:", cc.xyw(1, row, 1));
-        builder.add(auftragDatei, cc.xyw(2, row, 4));
+        builder.addLabel("", cc.xyw(2, row, 4));
         builder.addLabel("", cc.xyw(1, row, 1));
-        builder.add(auftragWahl, cc.xyw(7, row, 1));
+        builder.addLabel("", cc.xyw(7, row, 1));
         builder.addLabel("", cc.xyw(8, row, 1));
         builder.add(auftragDrucken, cc.xyw(9, row, 2));
 
         row += 2;
         builder.addLabel("Gebührenbescheid:", cc.xyw(1, row, 1));
-        builder.add(bescheidDatei, cc.xyw(2, row, 4));
+        builder.addLabel("", cc.xyw(2, row, 4));
         builder.addLabel("", cc.xyw(1, row, 1));
-        builder.add(bescheidWahl, cc.xyw(7, row, 1));
+        builder.addLabel("", cc.xyw(7, row, 1));
         builder.addLabel("", cc.xyw(8, row, 1));
         builder.add(bescheidDrucken, cc.xyw(9, row, 2));
 
