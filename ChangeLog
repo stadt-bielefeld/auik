@@ -1,3 +1,51 @@
+2011-01-27  Ingo Weinzierl <ingo@intevation.de>
+
+	* libs.txt: Neu. Eine Übersicht über die benutzten Bibliotheken. Aufgeführt
+	  sind deren Projekt-Seiten und Lizenzen.
+
+	* lib/groovy-all-1.7.5.txt,
+	  lib/jcommon-1.0.0-pre2.txt,
+	  lib/postgresql-8.3-605.jdbc3.txt,
+	  lib/jasperreports-3.7.6.txt,
+	  lib/jta.txt,
+	  lib/concurrent-1.3.2.txt,
+	  lib/freemarker.txt,
+	  lib/commons-collections-2.1.1.txt,
+	  lib/org.eclipse.emf.common_2.4.0.v200902171115.txt,
+	  lib/org.eclipse.emf.ecore.xmi_2.4.1.v200902171115.txt,
+	  lib/log4j-1.2.11.txt,
+	  lib/iText-2.1.7.txt,
+	  lib/org.w3c.css.sac_1.3.0.v200805290154.txt,
+	  lib/jcalendar.txt,
+	  lib/forms-1.0.5.txt,
+	  lib/org.apache.commons.codec_1.3.0.v20080530-1600.txt,
+	  lib/junit-3.8.1.txt,
+	  lib/commons-beanutils-1.8.0.txt,
+	  lib/oscache-2.1.txt,
+	  lib/proxool-0.8.3.txt,
+	  lib/jdbc2_0-stdext.txt,
+	  lib/jfreechart-1.0.0-pre2.txt,
+	  lib/dom4j-1.6.1.txt,
+	  lib/cglib-2.1.3.txt,
+	  lib/commons-digester-1.7.txt,
+	  lib/hibernate-tools.txt,
+	  lib/jasperreports-fonts-3.7.6.txt,
+	  lib/l2fprod-common-all.txt,
+	  lib/commons-cli-1.0.txt,
+	  lib/js.txt,
+	  lib/com.ibm.icu_3.8.1.v20080530.txt,
+	  lib/hibernate3.txt,
+	  lib/commons-codec-1.3.txt,
+	  lib/looks-1.2.2.txt,
+	  lib/antlr-2.7.6.txt,
+	  lib/commons-logging-1.0.4.txt,
+	  lib/org.eclipse.emf.ecore_2.4.2.v200902171115.txt: Lizenztexte der
+	  jeweils gleichnamigen Bibliotheken.
+
+	* lib/ifxjdbc-g.jar,
+	  lib/ifxjdbc.jar: Entfernt. Die Informix Treiber werden nicht mehr
+	  benötigt, da die DB-Anbindung auf PostgreSQL basiert.
+
 2011-01-24  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/hibernate.cfg.xml: Hinzufügen der ParameterGruppen als Mapping
