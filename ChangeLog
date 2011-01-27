@@ -2,6 +2,17 @@
 
 	  ISSSUE1917
 
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Die Zeilen eines
+	  Imports, die mit einem Punkt beginnen, werden ab nun ignoriert. Dies
+	  betrifft im Normalfall die erste Zeile - die eine Art Titelzeile darstellt
+	  - sowie die letzte Zeile - die mit 2 Punkten die Datei abschließt. Diese
+	  Zeilen werden _NICHT_ als kaputte Zeilen des Imports angesehen, sondern
+	  schlichtweg nicht vom Import behandelt.
+
+2011-01-27  Ingo Weinzierl <ingo@intevation.de>
+
+	  ISSSUE1917
+
 	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Fehlerbehandlung
 	  kaputter Analyse-Zeilen verbessert: eine Zeile muss nun mindestens 9
 	  komma-separierte Spalten enthalten - andernfalls wird sie ignoriert. Falls
