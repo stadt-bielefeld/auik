@@ -1,5 +1,15 @@
 2011-01-27  Ingo Weinzierl <ingo@intevation.de>
 
+	  ISSSUE1917
+
+	* src/de/bielefeld/umweltamt/aui/module/AnalyseImport.java: Fehlerbehandlung
+	  kaputter Analyse-Zeilen verbessert: eine Zeile muss nun mindestens 9
+	  komma-separierte Spalten enthalten - andernfalls wird sie ignoriert. Falls
+	  kaputte Zeilen enthalten waren, wird ein Hinweis-Dialog geöffnet, um den
+	  Nutzer über diese zu informieren.
+
+2011-01-27  Ingo Weinzierl <ingo@intevation.de>
+
 	* libs.txt: Neu. Eine Übersicht über die benutzten Bibliotheken. Aufgeführt
 	  sind deren Projekt-Seiten und Lizenzen.
 

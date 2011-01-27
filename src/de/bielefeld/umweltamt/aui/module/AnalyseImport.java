@@ -280,20 +280,46 @@ public class AnalyseImport extends AbstractModul {
                 List dataList = getList();
                 String   line = null;
                 int     count = -1;
+                int      bad  = 0;
 
                 while ((line = in.readLine()) != null) {
                     if (count >= 0) {
                         String[] columns = line.split(",");
-                        dataList.add(columns);
+
+                        if (columns == null) {
+                            AUIKataster.errorOutput(
+                                "Fehler beim Lesen einer Analyse-Zeile: " +
+                                "Es konnte keine komma-serparierten Spalten " +
+                                "gefunden werden!",
+                                getClass().getName());
+                                bad++;
+                        }
+                        else if (columns.length < 9) {
+                            AUIKataster.errorOutput(
+                                "Fehler beim Lesen einer Analyse-Zeile: " +
+                                "Es wurden eine kaputte Analyse-Zeile " +
+                                "gefunden!",
+                                getClass().getName());
+                                bad++;
+                        }
+                        else {
+                            dataList.add(columns);
+                        }
                     }
 
                     count++;
                 }
 
+                frame.showInfoMessage(
+                    "Beim Lesen des Analyse-Imports war/en " + bad + " kaputte "+
+                    "Zeile/n enthalten. Diese wurde/n ignoriert.\n" +
+                    "Weitere Informationen sind im Logfile enthalten.",
+                    "Ungültige Zeilen im Analyse-Import");
+
+
                 AUIKataster.debugOutput(
                     count + " Zeilen eingelesen.",
                     getClass().getName());
-
 
                 fireTableDataChanged();
 
