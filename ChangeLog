@@ -1,5 +1,16 @@
 2011-01-28  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Stellt nun Informationen über die Firma bereit (Straße, Ort, Name).
+
+	* src/de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid.png: Neues Logo
+	  für den Gebührenbescheid.
+
+	* reports/gebuehrenbescheid.jrxml: Logo und Betreiberinformationen
+	  eingefügt.
+
+2011-01-28  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/resources/authors.txt,
 	  src/de/bielefeld/umweltamt/aui/resources/version.txt,
 	  src/de/bielefeld/umweltamt/aui/resources/revision.txt: Diese Dateien

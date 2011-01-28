@@ -1336,6 +1336,9 @@ public class ProbenEditor extends AbstractApplyEditor {
             DateUtils.FORMAT_DATE));
         params.put("kosten", Double.toString(PERSONAL_UND_SACHKOSTEN));
         params.put("kassenzeichen", betr.getKassenzeichen());
+        params.put("firmaName", betr.getBetrname());
+        params.put("firmaStrasse", betr.getStrasse());
+        params.put("firmaOrt", betr.getPlz() + " " + betr.getOrt());
 
         try {
             Integer anzahl = Integer.parseInt(beteiligte.getText());
