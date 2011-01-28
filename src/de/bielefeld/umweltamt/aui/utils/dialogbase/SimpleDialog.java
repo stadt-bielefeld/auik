@@ -85,17 +85,12 @@ public abstract class SimpleDialog extends JDialog {
         JPanel tmp = new JPanel(new BorderLayout());
         tmp.setBorder(Borders.DIALOG_BORDER);
 
+        buttonBar = createButtonBar();
+        buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
+
         JComponent content = buildContentArea();
         tmp.add(content, BorderLayout.CENTER);
 
-        if (threeButtons) {
-            buttonBar = ButtonBarFactory.buildOKCancelApplyBar(button1, button2, button3);
-        } else if (twoButtons) {
-            buttonBar = ButtonBarFactory.buildOKCancelBar(button1, button2);
-        } else {
-            buttonBar = ButtonBarFactory.buildOKBar(button1);
-        }
-        buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
         tmp.add(buttonBar, BorderLayout.SOUTH);
 
         this.addWindowListener(new SimpleDialogListener());
@@ -103,6 +98,26 @@ public abstract class SimpleDialog extends JDialog {
         this.pack();
         this.setLocationRelativeTo(frame);
     }
+
+
+    /**
+     * Diese Methode wird vom Construktor aufgerufen. Sie erstellt das Panel,
+     * das s&auml;mtliche Kn&ouml;pfe der Oberfl&auml;che enth&auml;lt.
+     *
+     * @return ein {@link javax.swing.JPanel} mit {@link javax.swing.JButton}s.
+     */
+    protected JPanel createButtonBar() {
+        if (threeButtons) {
+            return ButtonBarFactory.buildOKCancelApplyBar(button1, button2, button3);
+        }
+        else if (twoButtons) {
+            return ButtonBarFactory.buildOKCancelBar(button1, button2);
+        }
+        else {
+           return ButtonBarFactory.buildOKBar(button1);
+        }
+    }
+
 
     // super.close() aufrufen, falls diese Methode überschrieben wird!
     public void close() {

@@ -1,5 +1,18 @@
 2011-01-28  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/utils/dialogbase/SimpleDialog.java: Die
+	  Erstellung des Button-Panels ist in eine eigene Methode ausgelagert, damit
+	  dies ggf von abgeleiteten Klassen überschrieben werden kann - der
+	  ProbenEditor tut genau dies.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Die Erstellung des Button-Panels findet nicht mehr wie bisher in
+	  SimpleDialog statt, sondern wird von dieser Klasse vorgenommen. Hier
+	  werden nun nämlich zwei weitere Knöpfe hinzugefügt - das Erzeugen von
+	  Probenahmeaufträgen und Gebührenbescheiden.
+
+2011-01-28  Ingo Weinzierl <ingo@intevation.de>
+
 	  ISSUE1918
 
 	* src/de/bielefeld/umweltamt/aui/utils/DateUtils.java: Korrektur des

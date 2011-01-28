@@ -80,16 +80,17 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -482,53 +483,18 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
-    protected JComponent buildContentArea() {
-        NumberFormat     nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
-        SimpleDateFormat f  = new SimpleDateFormat ("HH:mm");
-
-        entnahmepunkt    = new JLabel();
-        datum            = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-        rechnungsDatum   = new JLabel();
-        uhrzeitVon       = new JFormattedTextField(f);
-        uhrzeitBis       = new JFormattedTextField(f);
-        fahrtzeit        = new JFormattedTextField(f);
-        rechnungsBetrag  = new JLabel();
-        bezug            = new JTextField();
-        beteiligte       = new JTextField();
-        probenummer      = new JTextField();
-        vorgangsstatus   = new JComboBox();
-        statusHoch       = new JButton("erhöhen");
-        sachbearbeiter   = new JComboBox();
-        bescheidDrucken  = new JButton("Speichern und Drucken");
-        auftragDrucken   = new JButton("Speichern und Drucken");
-        icpEinwaageFeld  = new DoubleField(0);
-        icpDatum         = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-        bemerkungsArea   = new LimitedTextArea(255);
-        betrieb          = new JLabel();
-        parameterTabelle = new SelectTable();
-
-        // wir nehmen hier nur die Strings um die ComboBox zu füllen, da die Box
-        // nicht mehr auf Änderungen reagiert, wenn man sie mit AtlStatus
-        // Objekten befüllt
-        String[] bezeichnungen   = AtlStatus.getStatusAsString();
-        ComboBoxModel comboModel = new DefaultComboBoxModel(bezeichnungen);
-        vorgangsstatus.setModel(comboModel);
-
-        BasisSachbearbeiter[] bSachbearbeiter =
-            BasisSachbearbeiter.getSachbearbeiter();
-        sachbearbeiter.setModel(new DefaultComboBoxModel(bSachbearbeiter));
-
-        statusHoch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                AtlStatus current = getVorgangsstatus();
-                if (current == null) return;
-
-                AtlStatus next = AtlStatus.getStatus(current.getId()+1);
-                if (next == null) return;
-
-                updateVorgangsstatus(next.getBezeichnung());
-            }
-        });
+    /**
+     * Diese Methode erstellt das {@link javax..swing.JPanel} mit {@link
+     * javax.swing.JButton}s. Hier werden f&uuml;nf Kn&ouml;pfe hinzugef&uuml;gt,
+     * die das Erstellt des Probenahmeauftrags und Geb&uuml;hrenbescheids starten,
+     * sowie die Kn&ouml;pfe zum Speichern, Abbrechen und zur Parameterauswahl.
+     *
+     * @return ein {@link javax.swing.JPanel} mit {@link javax.swing.JButton}s.
+     */
+    @Override
+    protected JPanel createButtonBar() {
+        bescheidDrucken  = new JButton("Bescheid erzeugen");
+        auftragDrucken   = new JButton("Auftrag erzeugen");
 
         // triggert das Erzeugen eines PDFs und einen Druck-Job an
         auftragDrucken.addActionListener(new ActionListener() {
@@ -685,6 +651,59 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
         });
 
+        return ButtonBarFactory.buildRightAlignedBar(
+            new JButton[] {
+                button1, button2, button3, auftragDrucken, bescheidDrucken},
+            true);
+    }
+
+
+    protected JComponent buildContentArea() {
+        NumberFormat     nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+        SimpleDateFormat f  = new SimpleDateFormat ("HH:mm");
+
+        entnahmepunkt    = new JLabel();
+        datum            = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        rechnungsDatum   = new JLabel();
+        uhrzeitVon       = new JFormattedTextField(f);
+        uhrzeitBis       = new JFormattedTextField(f);
+        fahrtzeit        = new JFormattedTextField(f);
+        rechnungsBetrag  = new JLabel();
+        bezug            = new JTextField();
+        beteiligte       = new JTextField();
+        probenummer      = new JTextField();
+        vorgangsstatus   = new JComboBox();
+        statusHoch       = new JButton("erhöhen");
+        sachbearbeiter   = new JComboBox();
+        icpEinwaageFeld  = new DoubleField(0);
+        icpDatum         = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        bemerkungsArea   = new LimitedTextArea(255);
+        betrieb          = new JLabel();
+        parameterTabelle = new SelectTable();
+
+        // wir nehmen hier nur die Strings um die ComboBox zu füllen, da die Box
+        // nicht mehr auf Änderungen reagiert, wenn man sie mit AtlStatus
+        // Objekten befüllt
+        String[] bezeichnungen   = AtlStatus.getStatusAsString();
+        ComboBoxModel comboModel = new DefaultComboBoxModel(bezeichnungen);
+        vorgangsstatus.setModel(comboModel);
+
+        BasisSachbearbeiter[] bSachbearbeiter =
+            BasisSachbearbeiter.getSachbearbeiter();
+        sachbearbeiter.setModel(new DefaultComboBoxModel(bSachbearbeiter));
+
+        statusHoch.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                AtlStatus current = getVorgangsstatus();
+                if (current == null) return;
+
+                AtlStatus next = AtlStatus.getStatus(current.getId()+1);
+                if (next == null) return;
+
+                updateVorgangsstatus(next.getBezeichnung());
+            }
+        });
+
         bemerkungsArea.setLineWrap(true);
         bemerkungsArea.setWrapStyleWord(true);
 
@@ -722,7 +741,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             "70dlu, 50dlu, 30dlu, 5dlu, 30dlu, 5dlu, 60dlu, 5dlu, 60dlu, 50dlu, 5dlu, 50dlu",
             "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu," +
             "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, " +
-            "pref, 16dlu,pref, 8dlu, pref, 16dlu, pref, 8dlu, pref, 16dlu, pref, 8dlu, 150dlu");
+            "pref, 16dlu,pref, 16dlu, pref, 16dlu, pref, 8dlu, 150dlu");
 
         PanelBuilder builder = new PanelBuilder(layout);
         CellConstraints cc = new CellConstraints();
@@ -780,22 +799,6 @@ public class ProbenEditor extends AbstractApplyEditor {
         builder.addLabel("Rechnungsbetrag:", cc.xyw(4, row, 4, CellConstraints.RIGHT, CellConstraints.CENTER));
         builder.addLabel("", cc.xyw(8, row, 1)); // just to create a small gap
         builder.add(rechnungsBetrag, cc.xyw(9, row, 1));
-
-        row += 2;
-        builder.addLabel("Probenahmeauftrag:", cc.xyw(1, row, 1));
-        builder.addLabel("", cc.xyw(2, row, 4));
-        builder.addLabel("", cc.xyw(1, row, 1));
-        builder.addLabel("", cc.xyw(7, row, 1));
-        builder.addLabel("", cc.xyw(8, row, 1));
-        builder.add(auftragDrucken, cc.xyw(9, row, 2));
-
-        row += 2;
-        builder.addLabel("Gebührenbescheid:", cc.xyw(1, row, 1));
-        builder.addLabel("", cc.xyw(2, row, 4));
-        builder.addLabel("", cc.xyw(1, row, 1));
-        builder.addLabel("", cc.xyw(7, row, 1));
-        builder.addLabel("", cc.xyw(8, row, 1));
-        builder.add(bescheidDrucken, cc.xyw(9, row, 2));
 
         row += 2;
         builder.addSeparator("ICP", cc.xyw(1, row, 12));
