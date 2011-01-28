@@ -42,9 +42,9 @@ public class DateUtils {
     /**
      * Ein String, der das Format eines Zeitstempels beschreibt.
      * Das Format beinhaltet das Datum des Zeitstempels für die Datei
-     * kasse.txt: ddmmyyyy
+     * kasse.txt: ddMMyyyy
      */
-    public static final String FORMAT_KASSE = "ddmmyyyy";
+    public static final String FORMAT_KASSE = "ddMMyyyy";
 
     /**
      * Die Anzahl der Tage, nachdem der Geb&uuml;hrenbescheid bezahlt werden

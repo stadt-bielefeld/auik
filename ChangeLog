@@ -1,3 +1,11 @@
+2011-01-28  Ingo Weinzierl <ingo@intevation.de>
+
+	  ISSUE1918
+
+	* src/de/bielefeld/umweltamt/aui/utils/DateUtils.java: Korrektur des
+	  kasse.txt Formats. Dies beinhaltete statt des Monats die Minuten des
+	  Rechnungsdatums (Groß- und Kleinschreibung waren vertauscht).
+
 2011-01-27  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
