@@ -595,12 +595,17 @@ public class HauptFrame extends JFrame {
             aboutMenuItem.setMnemonic(KeyEvent.VK_O);
             aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    showInfoMessage("<html><center>"
-                            + "<i>"+AUIKataster.SHORT_NAME+"</i> v."+AUIKataster.VERSION+"<br>"
-                            + "Datenbank: <i>"+ HibernateSessionFactory.getDBUrl() +"</i><br>"
-                            + "Debug-Modus: <i>"+ ((AUIKataster.DEBUG) ? "An" : "Aus") +"</i><br>"
-                            + "&copy;  2005  Umweltamt Bielefeld & David Klotz<br>"
-                            + "</center></html>",
+                    showInfoMessage("<html><table valign='top'>"
+                            + "<tr><th align='left'>Version:</th><td>"+AUIKataster.getVersion()+ " " + AUIKataster.getRevision() +"</td>"
+                            + "<tr><th align='left'>Copyright:</th><td>2005 - 2011 Umweltamt Bielefeld & David Klotz</td></tr>"
+                            + "<tr><th align='left'>Projekthomepage:</th><td><a href='http://auik.wald.intevation.org'>http://auik.wald.intevation.org</a></td></tr>"
+                            + "<tr><th align='left'>Datenbank: </th><td>"+ HibernateSessionFactory.getDBUrl() +"</td></tr>"
+                            + "<tr><th align='left'>Debug-Modus: </th><td>"+ ((AUIKataster.DEBUG) ? "An" : "Aus") +"</td></tr>"
+                            + "<tr><th align='left'>Autoren:</th><td>" + AUIKataster.getAuthorsAsHTML() + "</td></tr>"
+                            + "<tr><th align='left'>Weiterentwicklung seit 2011:</th><td>"
+                            + "<table valign='top'><tr><td>Intevation GmbH</td><td><img src='" + HauptFrame.class.getResource("icons/intevation-logo-50ppi-nontrans.png") + "'></td></tr></table>"
+                            + "</td></tr>"
+                            + "</table></html>",
                         "Info über's "+AUIKataster.SHORT_NAME);
                 }
             });

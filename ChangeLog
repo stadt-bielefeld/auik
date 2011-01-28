@@ -1,5 +1,37 @@
 2011-01-28  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/resources/authors.txt,
+	  src/de/bielefeld/umweltamt/aui/resources/version.txt,
+	  src/de/bielefeld/umweltamt/aui/resources/revision.txt: Diese Dateien
+	  können dazu genutzt werden, die SVN Revision, die Version der Software,
+	  sowie die Liste der Autoren anzupassen. Sie werden vom Programm gelesen,
+	  und an verschiedenen Stellen ausgewertet.
+
+	* src/de/bielefeld/umweltamt/aui/icons/intevation-logo-50ppi-nontrans.png:
+	  Das Logo der Intevation GmbH - taucht im Hilfe-Dialog des AUIK auf.
+
+	  HINWEIS: Diese Dateien _MÜSSEN_ manuell gepflegt werden. Einen
+	  automatisierten Mechanismus gibt es dafür noch nicht, wäre aber später
+	  durchaus denkbar.
+
+	* build.xml: Kopieren der Resource Dateien in den build-Ordner beim
+	  Bauen des Projekts.
+
+	* src/de/bielefeld/umweltamt/aui/AUIKataster.java: Hier wurden neue
+	  Funktionen hinzugefügt, die es erlauben, die Versionsnummer, die Revision
+	  Nummber und die Autoren von beliebiger Stelle des AUIK abzufragen. Dazu
+	  werden die Resource Dateien eingelesen und ausgewertet.
+
+	* src/de/bielefeld/umweltamt/aui/SettingsManager.java: Die statische
+	  Versionsnummer wurde durch eine Abfrage in AUIKataster ersetzt.
+
+	* src/de/bielefeld/umweltamt/aui/HauptFrame.java: Überarbeitung des
+	  About-Dialogs. Das Layout wurde hier etwas verbessert, das Copyright und
+	  die Autoren angepasst. Außerdem befindet sich ein Hinweis die Beteiligten
+	  der Weiterentwicklung.
+
+2011-01-28  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/utils/dialogbase/SimpleDialog.java: Die
 	  Erstellung des Button-Panels ist in eine eigene Methode ausgelagert, damit
 	  dies ggf von abgeleiteten Klassen überschrieben werden kann - der

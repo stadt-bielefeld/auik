@@ -156,7 +156,7 @@ public class SettingsManager {
      */
     public void saveSettings() {
         try {
-            appSettings.store(new FileOutputStream("auik.properties"), "Allgemeine Einstellungen für " + AUIKataster.SHORT_NAME + " v" + AUIKataster.VERSION);
+            appSettings.store(new FileOutputStream("auik.properties"), "Allgemeine Einstellungen für " + AUIKataster.SHORT_NAME + " v" + AUIKataster.getVersion());
         } catch (IOException e) {
             // Tritt auf, wenn aus irgend einem Grund keine
             // Datei gespeichert werden kann.

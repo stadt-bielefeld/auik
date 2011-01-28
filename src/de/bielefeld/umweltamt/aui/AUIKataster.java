@@ -27,6 +27,12 @@
  */
 package de.bielefeld.umweltamt.aui;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -41,8 +47,6 @@ public class AUIKataster {
     public static final String SHORT_NAME= "AUI-Kataster";
     /** Der lange Name des Programms */
     public static final String LONG_NAME= "Anlagen- und Indirekteinleiter-Kataster";
-    /** Die Version des Programms */
-    public static final String VERSION = "0.3";
     /** Debug-Ausgaben */
     public static final boolean DEBUG = true;
 
@@ -110,5 +114,143 @@ public class AUIKataster {
         runningFrame = new HauptFrame(settings);
         //frame.show();
         //debugOutput((System.currentTimeMillis() - time) + " ms", "ZeitDif");
+    }
+
+
+    /**
+     * Diese Methode liefert die aktuelle Version der Software.
+     *
+     * @return die Versionsnummer
+     */
+    public static final String getVersion() {
+        InputStream    is      = null;
+        BufferedReader in      = null;
+        String         version = null;
+
+        try {
+            is      = AUIKataster.class.getResourceAsStream("/de/bielefeld/umweltamt/aui/resources/version.txt");
+            in      = new BufferedReader(new InputStreamReader(is));
+            version = in.readLine();
+        }
+        catch (FileNotFoundException fnfe) {
+            System.err.println("Could not find version file: 'version.txt'");
+        }
+        catch (NullPointerException npe) {
+            System.err.println("Could not find version file: 'version.txt'");
+        }
+        catch (IOException ioe) {
+            System.err.println("Error while reading version file: 'version.txt'");
+        }
+        finally {
+            if (in != null) {
+                try {
+                    in.close();
+                }
+                catch (IOException ioe) { /* do nothing */ }
+            }
+        }
+
+        return version;
+    }
+
+
+    /**
+     * Diese Methode liefert die aktuelle Revision der Software aus dem SCM.
+     */
+    public static final String getRevision() {
+        InputStream    is  = null;
+        BufferedReader in  = null;
+        String         rev = null;
+
+        try {
+            is = AUIKataster.class.getResourceAsStream(
+                "/de/bielefeld/umweltamt/aui/resources/revision.txt");
+            in  = new BufferedReader(new InputStreamReader(is));
+            rev = in.readLine();
+        }
+        catch (FileNotFoundException fnfe) {
+            System.err.println("Could not find revision file: 'revision.txt'");
+        }
+        catch (NullPointerException npe) {
+            System.err.println("Could not find revision file: 'revision.txt'");
+        }
+        catch (IOException ioe) {
+            System.err.println("Error while reading revision file: 'revision.txt'");
+        }
+        finally {
+            if (in != null) {
+                try {
+                    in.close();
+                }
+                catch (IOException ioe) { /* do nothing */ }
+            }
+        }
+
+        return rev;
+    }
+
+
+    /**
+     * Diese Methode liefert eine Liste der Autoren des AUIK.
+     *
+     * @return die Autoren des AUIK als Array.
+     */
+    public static final String[] getAuthors() {
+        ArrayList authors = new ArrayList();
+        InputStream    is = null;
+        BufferedReader in = null;
+
+        try {
+            is = AUIKataster.class.getResourceAsStream(
+                "/de/bielefeld/umweltamt/aui/resources/authors.txt");
+            in = new BufferedReader(new InputStreamReader(is));
+            String line = null;
+
+            while ((line = in.readLine()) != null) {
+                authors.add(line);
+            }
+        }
+        catch (FileNotFoundException fnfe) {
+            System.err.println("Could not find authors file: 'authors.txt'");
+        }
+        catch (NullPointerException npe) {
+            System.err.println("Could not find authors file: 'authors.txt'");
+        }
+        catch (IOException ioe) {
+            System.err.println("Error while reading authors file: 'authors.txt'");
+        }
+        finally {
+            if (in != null) {
+                try {
+                    in.close();
+                }
+                catch (IOException ioe) { /* do nothing */ }
+            }
+        }
+
+        return (String[]) authors.toArray(new String[authors.size()]);
+    }
+
+
+    /**
+     * Diese Methode liefert die Liste der Autoren als HTML Tabelle formatiert.
+     *
+     * @return die Autorenliste als HTML Tabelle.
+     */
+    public static final String getAuthorsAsHTML() {
+        String[] authors = getAuthors();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("<table>");
+
+        for (String author: authors) {
+            sb.append("<tr><td>");
+            sb.append(author);
+            sb.append("</td></tr>");
+        }
+
+        sb.append("</table>");
+
+        return sb.toString();
     }
 }
