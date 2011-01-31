@@ -514,6 +514,10 @@ public class ProbenEditor extends AbstractApplyEditor {
                     filename += ".pdf";
                 }
 
+                if (filename.indexOf(File.separator) >= 0) {
+                    filename = filename.replace(File.separator, "-");
+                }
+
                 File path = new File(basePath, filename);
                 if (path == null) {
                     frame.showErrorMessage(
@@ -572,6 +576,10 @@ public class ProbenEditor extends AbstractApplyEditor {
                 filename        = filename.replace(" ", "");
                 if (!filename.endsWith(".pdf")) {
                     filename += ".pdf";
+                }
+
+                if (filename.indexOf(File.separator) >= 0) {
+                    filename = filename.replace(File.separator, "-");
                 }
 
                 File path = new File(basePath, filename);
