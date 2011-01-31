@@ -509,6 +509,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     "auik.probenahme.auftraege");
 
                 String filename = probe.getKennummer();
+                filename        = filename.replace(" ", "");
                 if (!filename.endsWith(".pdf")) {
                     filename += ".pdf";
                 }
@@ -568,6 +569,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     "auik.probenahme.bescheide");
 
                 String filename = probe.getKennummer();
+                filename        = filename.replace(" ", "");
                 if (!filename.endsWith(".pdf")) {
                     filename += ".pdf";
                 }
