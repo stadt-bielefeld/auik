@@ -1,5 +1,10 @@
 2011-02-07  Ingo Weinzierl <ingo@intevation.de>
 
+	* reports/ParameterReport.jrxml: Bugfix: Parameter werden nun angezeigt und
+	  überflüssiges Feld entfernt.
+
+2011-02-07  Ingo Weinzierl <ingo@intevation.de>
+
 	* reports/gebuehrenbescheid.jrxml,
 	  reports/gebuehren_parameterliste.jrxml: Abstände für Briefumschlag
 	  korrigiert, Schrift leicht verkleinert.
