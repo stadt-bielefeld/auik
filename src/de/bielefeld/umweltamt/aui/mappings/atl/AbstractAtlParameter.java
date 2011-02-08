@@ -20,6 +20,8 @@ public class AbstractAtlParameter  implements java.io.Serializable {
      private Double preisfueranalyse;
      private Boolean einzelnBeauftragbar;
      private AtlParameterGruppen atlParameterGruppe;
+     private String kennzeichnung;
+     private String konservierung;
 
     public AbstractAtlParameter() {
     }
@@ -40,6 +42,8 @@ public class AbstractAtlParameter  implements java.io.Serializable {
        this.preisfueranalyse = preisfueranalyse;
        this.einzelnBeauftragbar = einzelnBeauftragbar;
        this.atlParameterGruppe = atlParameterGruppe;
+       this.kennzeichnung = kennzeichnung;
+       this.konservierung = konservierung;
     }
    
     public String getOrdnungsbegriff() {
@@ -119,9 +123,21 @@ public class AbstractAtlParameter  implements java.io.Serializable {
     public void setAtlParameterGruppe(AtlParameterGruppen atlParameterGruppe) {
         this.atlParameterGruppe = atlParameterGruppe;
     }
-
-
-
+    
+    public String getKennzeichnung() {
+        return this.kennzeichnung;
+    }
+    
+    public void setKennzeichnung(String kennzeichnung) {
+        this.kennzeichnung = kennzeichnung;
+    }
+    public String getKonservierung() {
+        return this.konservierung;
+    }
+    
+    public void setKonservierung(String konservierung) {
+        this.konservierung = konservierung;
+    }
 
 }
 

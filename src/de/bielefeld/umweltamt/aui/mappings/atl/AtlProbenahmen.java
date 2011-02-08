@@ -401,11 +401,13 @@ public class AtlProbenahmen
             AtlAnalyseposition pos   = (AtlAnalyseposition) sorted.get(i);
             AtlParameter parameter   = pos.getAtlParameter();
             String       bezeichnung = parameter.getBezeichnung();
+            String       kennzeichnung = parameter.getKennzeichnung();
+            String       konservierung = parameter.getKonservierung();
 
             columns[0] = true; // this value is always true
             columns[1] = bezeichnung;
-            columns[2] = ""; // TODO
-            columns[3] = ""; // TODO
+            columns[2] = kennzeichnung;
+            columns[3] = konservierung;
 
             values[i] = columns;
         }
