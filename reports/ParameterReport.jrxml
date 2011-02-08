@@ -4,6 +4,8 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="Parameter" class="java.lang.String"/>
+	<field name="Kennzeichnung" class="java.lang.String"/>
+	<field name="Konservierung" class="java.lang.String"/>
 	<group name="ParameterGroup">
 		<groupExpression><![CDATA[$F{Parameter}]]></groupExpression>
 	</group>
@@ -157,6 +159,20 @@
 					<font fontName="DejaVu Serif" size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Parameter}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="325" y="4" width="124" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Serif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Konservierung}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="4" width="124" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Serif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Kennzeichnung}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

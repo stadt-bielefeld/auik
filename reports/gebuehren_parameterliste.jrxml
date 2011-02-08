@@ -19,35 +19,35 @@
 			<staticText>
 				<reportElement x="0" y="0" width="50" height="14"/>
 				<textElement>
-					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Pos.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="50" y="0" width="118" height="14"/>
 				<textElement>
-					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Parameter]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="172" y="0" width="98" height="14"/>
 				<textElement>
-					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Grenzwert]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="270" y="0" width="104" height="14"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ergebnis]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="375" y="0" width="74" height="14"/>
 				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Gebühr]]></text>
 			</staticText>
@@ -58,42 +58,42 @@
 			<textField>
 				<reportElement x="1" y="0" width="22" height="12"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="8" isBold="false"/>
+					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Pos}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="50" y="0" width="118" height="12"/>
 				<textElement>
-					<font fontName="DejaVu Sans" size="8" isBold="false"/>
+					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Parameter}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="172" y="0" width="98" height="12"/>
 				<textElement>
-					<font fontName="DejaVu Sans" size="8" isBold="false"/>
+					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Grenzwert}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="270" y="0" width="55" height="12"/>
 				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="8" isBold="false"/>
+					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Ergebnis_Wert}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="375" y="0" width="74" height="12"/>
 				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="8" isBold="false"/>
+					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Gebühr}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="328" y="0" width="46" height="12"/>
 				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Ergebnis_Einheit}]]></textFieldExpression>
 			</textField>
