@@ -1,5 +1,10 @@
 2011-02-14  Ingo Weinzierl <ingo@intevation.de>
 
+	* reports/gebuehrenbescheid.jrxml: Wichtige Passagen in Textblöcken werden
+	  nun fett und ggf unterstrichen dargestellt.
+
+2011-02-14  Ingo Weinzierl <ingo@intevation.de>
+
 	* reports/gebuehrenbescheid.jrxml: Es werden nun automatisch Zeilenumbrüche
 	  ins Template eingefügt damit die Zwischenüberschriften und dessen Inhalt
 	  nicht mehr voneinander getrennt werden. Die Zeilenumbrüche werden abhängig

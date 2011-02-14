@@ -346,10 +346,10 @@
 		<band height="40">
 			<textField pattern="">
 				<reportElement x="0" y="0" width="483" height="34"/>
-				<textElement>
+				<textElement markup="styled">
 					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Bitte überweisen Sie die Gesamtgebühr von " + $P{gesamtkosten} + " bis zum " + $P{maxdatum} + " unter Angabe des Kassenzeichens " + $P{kassenzeichen} + " an die Stadtkasse Bielefeld, Konto-Nr. 26 bei der Sparkasse Bielefeld, Bankleitzahl 480 501 61."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Bitte überweisen Sie die Gesamtgebühr von <style isBold='true'>"+ $P{gesamtkosten} +"</style> bis zum <style isBold='true'>" + $P{maxdatum} + "</style> unter Angabe des Kassenzeichens <style isBold='true'>" + $P{kassenzeichen} + "</style> an die Stadtkasse Bielefeld, Konto-Nr. 26 bei der Sparkasse Bielefeld, Bankleitzahl 480 501 61."]]></textFieldExpression>
 			</textField>
 			<break>
 				<reportElement x="0" y="35" width="100" height="1">
@@ -360,10 +360,10 @@
 		<band height="72">
 			<staticText>
 				<reportElement x="0" y="12" width="483" height="39"/>
-				<textElement textAlignment="Justified">
+				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="DejaVu Sans" size="7" isItalic="true" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Bitte überprüfen Sie die diesem Bescheid zugrunde liegenden Tatsachen. Wenn diese nach Ihrer Auffassung fehlerhaft sein sollten, können Sie sich zur schnellen Klärung direkt an mich wenden. Dies führt nicht zu einer Verlängerung der einmonatigen Klagefrist nach Bekanntgabe dieses Bescheides (s. folgende Rechtsbehelfsbelehrung). Falls ich meine Entscheidung nicht ändern kann, müssen Sie trotzdem innerhalb eines Monats nach Bekanntgabe des Bescheides Klage erheben, wenn Sie Ihre Beschwerde weiterverfolgen wollen.]]></text>
+				<text><![CDATA[Bitte überprüfen Sie die diesem Bescheid zugrunde liegenden Tatsachen. Wenn diese nach Ihrer Auffassung fehlerhaft sein sollten, können Sie sich zur schnellen Klärung direkt an mich wenden. <style isBold='true'>Dies führt <style isUnderline='true'>nicht</style> zu einer Verlängerung der einmonatigen Klagefrist nach Bekanntgabe dieses Bescheides (s. folgende Rechtsbehelfsbelehrung).</style> Falls ich meine Entscheidung nicht ändern kann, müssen Sie trotzdem innerhalb eines Monats nach Bekanntgabe des Bescheides Klage erheben, wenn Sie Ihre Beschwerde weiterverfolgen wollen.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="1" width="100" height="10"/>
@@ -398,10 +398,10 @@ Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten
 		<band height="43">
 			<staticText>
 				<reportElement x="0" y="0" width="483" height="43"/>
-				<textElement textAlignment="Justified">
+				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
-				<text><![CDATA[Des Weiteren weise ich darauf hin, dass eine Klage gegen die Anforderung der Gebühren gemäß § 80 Abs. 2 Nr. 1 Verwaltungsgerichtsordnung (VwGO) keine aufschiebende Wirkung hat. Bescheide, die öffentliche Abgaben oder Kosten festsetzen, sind sofort vollziehbar. Dies bedeutet, dass Sie unabhängig von der Einreichung einer Klage zur fristgerechten Zahlung der festgesetzten Gebühren verpflichtet sind.
+				<text><![CDATA[Des Weiteren weise ich darauf hin, dass eine Klage gegen die Anforderung der Gebühren gemäß § 80 Abs. 2 Nr. 1 Verwaltungsgerichtsordnung (VwGO) keine aufschiebende Wirkung hat. Bescheide, die öffentliche Abgaben oder Kosten festsetzen, sind sofort vollziehbar. <style isBold='true'>Dies bedeutet, dass Sie unabhängig von der Einreichung einer Klage zur fristgerechten Zahlung der festgesetzten Gebühren verpflichtet sind.</style>
 ]]></text>
 			</staticText>
 		</band>
