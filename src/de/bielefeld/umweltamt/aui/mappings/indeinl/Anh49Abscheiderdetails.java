@@ -13,6 +13,9 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 
 /**
@@ -176,6 +179,13 @@ public class Anh49Abscheiderdetails
         }
 
         return removed;
+    }
+
+
+    public BasisObjekt getBasisObjekt() {
+        Anh49Fachdaten fd = getAnh49Fachdaten();
+
+        return fd != null ? fd.getBasisObjekt() : null;
     }
 
 

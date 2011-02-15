@@ -258,14 +258,6 @@ public abstract class AbstractQueryModul extends AbstractModul {
         if (row != -1) {
             BasisObjekt obj = getBasisObjektFromFachdaten(getTableModel().getObjectAtRow(row));
 
-            if (obj == null)    {
-            Anh49Abscheiderdetails ad = (Anh49Abscheiderdetails) getTableModel().getObjectAtRow(row);
-
-                if (ad != null) {
-                    obj = ad.getAnh49Fachdaten().getBasisObjekt();
-                }
-            }
-
             if (obj != null) {
 //                AUIKataster.debugOutput("Bearbeite BO: " + obj, "AQM");
                 manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);

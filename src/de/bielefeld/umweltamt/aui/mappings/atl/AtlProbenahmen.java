@@ -18,6 +18,7 @@ import org.hibernate.Transaction;
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
@@ -166,6 +167,23 @@ public class AtlProbenahmen
                     "lower(probenahme."+property+") like ? " +
                     "order by probenahme.datumDerEntnahme desc, probenahme.kennummer desc")
                     .setString(0, suche2)
+                    .list();
+            HibernateSessionFactory.closeSession();
+
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler", e);
+        }
+        return proben;
+    }
+
+    public static List findBescheiddruck() {
+        List proben;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            proben = session.createQuery(
+                    "from AtlProbenahmen as pn where " +
+                    "pn.atlStatus.id = 11 " +
+                    "order by pn.datumDerEntnahme desc, pn.kennummer desc")
                     .list();
             HibernateSessionFactory.closeSession();
 
@@ -559,5 +577,12 @@ public class AtlProbenahmen
         AtlProbepkt pkt = getAtlProbepkt();
 
         return pkt != null ? pkt.getBasisBetreiber() : null;
+    }
+
+
+    public BasisObjekt getBasisObjekt() {
+        AtlProbepkt pkt = getAtlProbepkt();
+
+        return pkt != null ? pkt.getBasisObjekt() : null;
     }
 }

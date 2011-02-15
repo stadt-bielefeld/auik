@@ -120,7 +120,7 @@ public class SettingsManager {
                 "BasisBetreiberSuchen, BasisBetreiberNeu, " +
                 "BasisObjektBearbeiten, " +
                 "SielhautBearbeiten, SielhautImport, " +
-                "AnalyseImport"
+                "AnalyseImport, EinleiterBescheidAuswertung"
         );
 
         defaults.setProperty("auik.prefs.status_time", "40");

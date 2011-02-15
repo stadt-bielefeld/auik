@@ -8,6 +8,8 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+
 /**
  * A class that represents a row in the BASIS_OBJEKT table.
  * You can customize the behavior of this class by editing the class, {@link BasisObjekt}.
@@ -31,6 +33,9 @@ public abstract class AbstractBasisObjekt
 
     /** The value of the basisStandort association. */
     private BasisStandort basisStandort;
+
+    /** The value of the atlProbepkt association. */
+    private AtlProbepkt atlProbepkt;
 
     /** The value of the simple uschistdid property. */
     private java.lang.Integer uschistdid;
@@ -146,6 +151,24 @@ public abstract class AbstractBasisObjekt
     public void setBasisObjektarten(BasisObjektarten basisObjektarten)
     {
         this.basisObjektarten = basisObjektarten;
+    }
+
+    /**
+     * Return the value of the STANDORTID column.
+     * @return BasisStandort
+     */
+    public AtlProbepkt getAtlProbepkt()
+    {
+        return this.atlProbepkt;
+    }
+
+    /**
+     * Set the value of the STANDORTID column.
+     * @param atlProbepkt
+     */
+    public void setAtlProbepkt(AtlProbepkt atlProbepkt)
+    {
+        this.atlProbepkt = atlProbepkt;
     }
 
     /**

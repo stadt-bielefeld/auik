@@ -27,6 +27,8 @@
         <many-to-one name="basisObjektarten" column="objektartid" class="BasisObjektarten" />
 
         <many-to-one name="basisStandort" column="standortid" class="BasisStandort" />
+        
+        <one-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" />
 
     </class>
 

@@ -241,7 +241,10 @@ public class AtlParameter
             Session session = HibernateSessionFactory.currentSession();
             parameter = session.createQuery(
                     "from AtlParameter as param "
-                            + "order by param.bezeichnung").list();
+            				+ "where param.atlParameterGruppe.id = 1"
+            				+ "or param.atlParameterGruppe.id = 2"
+            				+ "or param.atlParameterGruppe.id = 3"
+                            + "order by param.atlParameterGruppe, param.bezeichnung").list();
         } catch (HibernateException e) {
             e.printStackTrace();
         } finally {

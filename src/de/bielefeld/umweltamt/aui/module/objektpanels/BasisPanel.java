@@ -340,7 +340,7 @@ public class BasisPanel  extends JPanel {
     private JButton betreiberChooseButton;
     private JButton betreiberEditButton;
     private JButton betreiberNewButton;
-    private JButton betreiberGotoButton;
+//    private JButton betreiberGotoButton;
 
     //   Standort
     private JTextField standortFeld;
@@ -348,7 +348,7 @@ public class BasisPanel  extends JPanel {
     private JButton standortChooseButton;
     private JButton standortEditButton;
     private JButton standortNewButton;
-    private JButton standortGotoButton;
+//    private JButton standortGotoButton;
 
     //   Art, Inaktiv, Beschreibung, Speichern
     private JComboBox artBox;
@@ -668,7 +668,7 @@ public class BasisPanel  extends JPanel {
             betreiberToolBar.add(getBetreiberChooseButton());
             betreiberToolBar.add(getBetreiberNewButton());
             betreiberToolBar.add(getBetreiberEditButton());
-            betreiberToolBar.add(getBetreiberGotoButton());
+//            betreiberToolBar.add(getBetreiberGotoButton());
         }
         return betreiberToolBar;
     }
@@ -710,18 +710,18 @@ public class BasisPanel  extends JPanel {
         return betreiberEditButton;
     }
 
-    private JButton getBetreiberGotoButton() {
-        if (betreiberGotoButton == null) {
-            betreiberGotoButton = new JButton(AuikUtils.getIcon(16, "edit.png", ""));
-            betreiberGotoButton.setHorizontalAlignment(JButton.CENTER);
-            betreiberGotoButton.setToolTipText("Betreibersuche aufrufen");
-            betreiberGotoButton.setActionCommand("betreiber_goto");
-
-            betreiberGotoButton.addActionListener(getGotoButtonListener());
-        }
-
-        return betreiberGotoButton;
-    }
+//    private JButton getBetreiberGotoButton() {
+//        if (betreiberGotoButton == null) {
+//            betreiberGotoButton = new JButton(AuikUtils.getIcon(16, "edit.png", ""));
+//            betreiberGotoButton.setHorizontalAlignment(JButton.CENTER);
+//            betreiberGotoButton.setToolTipText("Betreibersuche aufrufen");
+//            betreiberGotoButton.setActionCommand("betreiber_goto");
+//
+//            betreiberGotoButton.addActionListener(getGotoButtonListener());
+//        }
+//
+//        return betreiberGotoButton;
+//    }
 
     private JButton getBetreiberNewButton() {
         if (betreiberNewButton == null) {
@@ -767,7 +767,7 @@ public class BasisPanel  extends JPanel {
             standortToolBar.add(getStandortChooseButton());
             standortToolBar.add(getStandortNewButton());
             standortToolBar.add(getStandortEditButton());
-            standortToolBar.add(getStandortGotoButton());
+//            standortToolBar.add(getStandortGotoButton());
         }
         return standortToolBar;
     }
@@ -810,18 +810,18 @@ public class BasisPanel  extends JPanel {
         return standortEditButton;
     }
 
-    private JButton getStandortGotoButton() {
-        if (standortGotoButton == null) {
-            standortGotoButton = new JButton(AuikUtils.getIcon(16, "edit.png", ""));
-            standortGotoButton.setHorizontalAlignment(JButton.CENTER);
-            standortGotoButton.setToolTipText("Standortsuche aufrufen");
-            standortGotoButton.setActionCommand("standort_goto");
-
-            standortGotoButton.addActionListener(getGotoButtonListener());
-        }
-
-        return standortGotoButton;
-    }
+//    private JButton getStandortGotoButton() {
+//        if (standortGotoButton == null) {
+//            standortGotoButton = new JButton(AuikUtils.getIcon(16, "edit.png", ""));
+//            standortGotoButton.setHorizontalAlignment(JButton.CENTER);
+//            standortGotoButton.setToolTipText("Standortsuche aufrufen");
+//            standortGotoButton.setActionCommand("standort_goto");
+//
+//            standortGotoButton.addActionListener(getGotoButtonListener());
+//        }
+//
+//        return standortGotoButton;
+//    }
 
     private JButton getStandortNewButton() {
         if (standortNewButton == null) {

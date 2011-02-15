@@ -28,6 +28,7 @@ public class ProbenahmenModel extends ListTableModel {
         super(new String[]{
                 "Kennnummer",
                 "Datum",
+                "Status",
                 "Bemerkung"}, false, true);
     }
 
@@ -63,6 +64,12 @@ public class ProbenahmenModel extends ListTableModel {
                     value = AuikUtils.getStringFromDate(probe.getDatumDerEntnahme());
                     break;
                 case 2:
+                	if (probe.getAtlStatus() != null)
+                		value = probe.getAtlStatus().getBezeichnung();
+                	else
+                		value = "";
+                    break;
+                case 3:
                     value = probe.getBemerkung();
                     break;
                 default:

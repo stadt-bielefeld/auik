@@ -539,7 +539,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         ((JRMapDataSource) subdata).size() + " Zeilen.");
 
                     PDFExporter.getInstance().exportAuftrag(
-                        params, subdata, path.getAbsolutePath(), false);
+                        params, subdata, path.getAbsolutePath(), true);
                     String gedruckt = updateVorgangsstatus(
                         "Probenahmeauftrag gedruckt");
 
@@ -604,7 +604,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         AtlProbenahmen.getBescheidDataSource(probe);
 
                     PDFExporter.getInstance().exportBescheid(
-                        params, subdata, path.getAbsolutePath(), false);
+                        params, subdata, path.getAbsolutePath(), true);
 
                     AtlStatus currentStatus = getVorgangsstatus();
                     String    currentBez    = currentStatus.getBezeichnung();
@@ -946,7 +946,13 @@ public class ProbenEditor extends AbstractApplyEditor {
         datum.setDate(entnahmeDatum);
         uhrzeitVon.setText(probe.getUhrzeitbeginn());
         uhrzeitBis.setText(probe.getUhrzeitende());
-        fahrtzeit.setText(probe.getFahrtzeit());
+        
+        if (probe.getFahrtzeit() != null) {
+        	fahrtzeit.setText(probe.getFahrtzeit());
+        }
+        else {
+        	fahrtzeit.setText("01:00");
+        }
 
         if (basisBetr != null) {
             String name = basisBetr.getBetrname();
@@ -968,6 +974,9 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         if (probe.getAnzahlbeteiligte() != null) {
             beteiligte.setText(Integer.toString(probe.getAnzahlbeteiligte()));
+        }
+        else {
+        	beteiligte.setText("1");
         }
 
         Date bescheid = probe.getBescheid();

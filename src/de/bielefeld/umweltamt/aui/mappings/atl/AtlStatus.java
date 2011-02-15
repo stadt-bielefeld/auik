@@ -23,14 +23,14 @@ public class AtlStatus
 
 
     /**
-     * Simple constructor of AtlEinheiten instances.
+     * Simple constructor of AtlStatus instances.
      */
     public AtlStatus()
     {
     }
 
     /**
-     * Constructor of AtlEinheiten instances given a simple primary key.
+     * Constructor of AtlStatus instances given a simple primary key.
      * @param id
      */
     public AtlStatus(java.lang.Integer id)
