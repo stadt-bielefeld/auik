@@ -618,7 +618,7 @@ public class HauptFrame extends JFrame {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     showInfoMessage("<html><table valign='top'>"
                             + "<tr><th align='left'>Version:</th><td>"+AUIKataster.getVersion()+ " " + AUIKataster.getRevision() +"</td>"
-                            + "<tr><th align='left'>Copyright:</th><td>2005 - 2011 Umweltamt Bielefeld & David Klotz</td></tr>"
+                            + "<tr><th align='left'>Copyright:</th><td>2005 - 2011 Umweltamt Bielefeld</td></tr>"
                             + "<tr><th align='left'>Projekthomepage:</th><td><a href='http://auik.wald.intevation.org'>http://auik.wald.intevation.org</a></td></tr>"
                             + "<tr><th align='left'>Datenbank: </th><td>"+ HibernateSessionFactory.getDBUrl() +"</td></tr>"
                             + "<tr><th align='left'>Debug-Modus: </th><td>"+ ((AUIKataster.DEBUG) ? "An" : "Aus") +"</td></tr>"

@@ -1,5 +1,18 @@
 2011-02-15  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/resources/version.txt: Version auf v1.1 RC1
+	  aktualisiert.
+
+	* src/de/bielefeld/umweltamt/aui/resources/revision.txt: Revision auf 162
+	  aktualisiert.
+
+	  HINWEIS: Dies muss noch immer manuell gemacht werden und birgt somit die
+	  Gefahr, dass dies vergessen wird!
+
+	* src/de/bielefeld/umweltamt/aui/HauptFrame.java: Copyright angepasst.
+
+2011-02-15  Ingo Weinzierl <ingo@intevation.de>
+
 	* *.java: Lizenzheader in alle Java Quellcode Dateien hinzugefügt.
 
 	* LICENSE: Der Lizenztext der GNU Lesser General Public License.
