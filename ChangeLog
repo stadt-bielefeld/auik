@@ -1,3 +1,9 @@
+2011-02-15  Ingo Weinzierl <ingo@intevation.de>
+
+	* *.java: Lizenzheader in alle Java Quellcode Dateien hinzugefügt.
+
+	* LICENSE: Der Lizenztext der GNU Lesser General Public License.
+
 2011-02-14  Ingo Weinzierl <ingo@intevation.de>
 
 	* reports/gebuehrenbescheid.jrxml: Wichtige Passagen in Textblöcken werden
