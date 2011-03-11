@@ -1,5 +1,9 @@
 2011-03-11  Ingo Weinzierl <ingo@intevation.de>
 
+	* reports/verfuegung.jrxml: Neu. Ein Template für Verfügungen.
+
+2011-03-11  Ingo Weinzierl <ingo@intevation.de>
+
 	* src/de/bielefeld/umweltamt/aui/utils/GermanDouble.java: Neu. Diese
 	  Klasse stellt einen Wrapper um Fließkommazahlen dar. Eine toString()
 	  Methode liefert den Wert der Fließkommazahl als String nach deutscher

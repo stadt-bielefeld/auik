@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="748"/>
+	<parameter name="datum" class="java.lang.String"/>
+	<parameter name="kassenzeichen" class="java.lang.String"/>
+	<parameter name="probenehmer" class="java.lang.String"/>
+	<parameter name="dauer" class="java.lang.String"/>
+	<parameter name="kosten" class="java.lang.String"/>
+	<parameter name="gesamtkosten" class="java.lang.String"/>
+	<parameter name="entnahmestellen" class="java.lang.String"/>
+	<parameter name="entnahmedatum" class="java.lang.String"/>
+	<parameter name="entnahmeort" class="java.lang.String"/>
+	<parameter name="maxdatum" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/vol1/home/ingo/AUIK_REPOS/von_thoe/trunk/reports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBDATA" class="de.bielefeld.umweltamt.aui.utils.JRMapDataSource" isForPrompting="false"/>
+	<parameter name="personalsachkosten" class="java.lang.String"/>
+	<parameter name="entnahmestelle" class="java.lang.String"/>
+	<parameter name="analysekosten" class="java.lang.String"/>
+	<parameter name="firmaName" class="java.lang.String"/>
+	<parameter name="firmaStrasse" class="java.lang.String"/>
+	<parameter name="firmaOrt" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="298" splitType="Stretch">
+			<staticText>
+				<reportElement x="348" y="110" width="130" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Frau Gößling]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="147" width="40" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Telefax]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="53" width="125" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Umweltamt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="138" width="40" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Telefon]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="156" width="40" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Internet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="67" width="130" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Ehemaliges Ankergebäude]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="156" width="83" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[www.bielefeld.de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="147" width="83" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[0521 51-3395]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="76" width="125" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Ravensberger Straße 12]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="15" width="125" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stadt Bielefeld]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="119" width="125" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Zimmer 10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="29" width="125" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Der Oberbürgermeister]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="96" width="125" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Auskunft gibt Ihnen:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="138" width="83" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[0521 51-6561]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="166" width="40" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[E-Mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="166" width="93" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[umweltamt@bielefeld.de]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="291" y="271" width="71" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{datum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="150" y="249" width="135" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Bitte bei Antwort und Zahlung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="259" width="71" height="13"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Bielefeld]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="259" width="136" height="13"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Datum und Zeichen ihres Schreibens]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="259" width="121" height="13"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Kassenzeichen angeben:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="273" width="121" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{kassenzeichen}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-10" y="276" width="9" height="6" backcolor="#000000"/>
+			</rectangle>
+			<image>
+				<reportElement x="146" y="1" width="185" height="65"/>
+				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid.png"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="-10" y="118" width="9" height="6" backcolor="#000000"/>
+			</rectangle>
+			<textField>
+				<reportElement x="3" y="137" width="156" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="148" width="156" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="159" width="156" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaOrt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="98" width="156" height="13"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Stadt Bielefeld · 360.11 · D-33597 Bielefeld]]></text>
+			</staticText>
+			<image>
+				<reportElement x="408" y="185" width="75" height="101"/>
+				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="3" y="116" width="100" height="12"/>
+				<textElement/>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="72" width="100" height="16"/>
+				<textElement>
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Vfg.]]></text>
+			</staticText>
+		</band>
+		<band height="84">
+			<staticText>
+				<reportElement x="0" y="0" width="479" height="40"/>
+				<textElement textAlignment="Justified">
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 32. Änderungssatzung vom 16.12.2010 (KdS)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="51" width="360" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Abdeckung der Personal- und Sachkosten gem. § 10 (2) KdS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="69" width="370" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{probenehmer} + " Probenehmer * " + $P{dauer} + " Stunden ¹* " + $P{kosten} + " € = "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="51" width="14" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="408" y="69" width="60" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{personalsachkosten} + " €"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="54">
+			<textField>
+				<reportElement x="20" y="42" width="400" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{entnahmestelle}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="18" width="202" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Datum, Zeit und Ort der Probeentnahme:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="30" width="400" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{entnahmeort}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="222" y="18" width="202" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{entnahmedatum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="14" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="1" width="463" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Analysekosten gem. § 10 (3) KdS in Verbindung mit dem Gebührentarif für Analysen:]]></text>
+			</staticText>
+		</band>
+		<band height="55">
+			<subreport>
+				<reportElement x="1" y="0" width="482" height="55"/>
+				<dataSourceExpression><![CDATA[$P{SUBDATA}]]></dataSourceExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("/reports/gebuehren_parameterliste.jasper"))]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="45">
+			<textField>
+				<reportElement x="408" y="0" width="60" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{analysekosten}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="0" width="139" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Analysekosten  gesamt:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="22" width="260" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gesamtgebühr (Summe aus 1. und 2.):]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="408" y="22" width="60" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{gesamtkosten}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="408" y="34" width="60" height="1"/>
+			</line>
+			<line>
+				<reportElement x="408" y="36" width="60" height="1"/>
+			</line>
+		</band>
+		<band height="40">
+			<textField pattern="">
+				<reportElement x="0" y="0" width="483" height="34"/>
+				<textElement markup="styled">
+					<font fontName="DejaVu Sans" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Bitte überweisen Sie die Gesamtgebühr von <style isBold='true'>"+ $P{gesamtkosten} +"</style> bis zum <style isBold='true'>" + $P{maxdatum} + "</style> unter Angabe des Kassenzeichens <style isBold='true'>" + $P{kassenzeichen} + "</style> an die Stadtkasse Bielefeld, Konto-Nr. 26 bei der Sparkasse Bielefeld, Bankleitzahl 480 501 61."]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="35" width="100" height="1">
+					<printWhenExpression><![CDATA[$P{SUBDATA}.size() > 8 && $P{SUBDATA}.size() <= 12]]></printWhenExpression>
+				</reportElement>
+			</break>
+		</band>
+		<band height="72">
+			<staticText>
+				<reportElement x="0" y="12" width="483" height="50"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="7" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Bitte überprüfen Sie die diesem Bescheid zugrunde liegenden Tatsachen. Wenn diese nach Ihrer Auffassung fehlerhaft sein sollten, können Sie sich zur schnellen Klärung direkt an mich wenden. <style isBold='true'>Dies führt <style isUnderline='true'>nicht</style> zu einer Verlängerung der einmonatigen Klagefrist nach Bekanntgabe dieses Bescheides (s. folgende Rechtsbehelfsbelehrung).</style> Falls ich meine Entscheidung nicht ändern kann, müssen Sie trotzdem innerhalb eines Monats nach Bekanntgabe des Bescheides Klage erheben, wenn Sie Ihre Beschwerde weiterverfolgen wollen.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="1" width="100" height="10"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Hinweis:]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="62" width="443" height="1">
+					<printWhenExpression><![CDATA[$P{SUBDATA}.size() <= 5]]></printWhenExpression>
+				</reportElement>
+			</break>
+		</band>
+		<band height="90">
+			<staticText>
+				<reportElement x="0" y="14" width="483" height="73"/>
+				<textElement textAlignment="Justified">
+					<font fontName="DejaVu Sans" size="9" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe Klage erhoben werden. Die Klage ist entweder schriftlich beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden, oder dort zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungsgerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrsverordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG) vom 23.11.2005 (GV. NRW. S. 926) einzureichen.
+Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten versäumt werden, so würde deren / dessen Verschulden Ihnen zugerechnet werden.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="1" width="159" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Rechtsbehelfsbelehrung:]]></text>
+			</staticText>
+		</band>
+		<band height="55">
+			<staticText>
+				<reportElement x="0" y="0" width="483" height="52"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Des Weiteren weise ich darauf hin, dass eine Klage gegen die Anforderung der Gebühren gemäß § 80 Abs. 2 Nr. 1 Verwaltungsgerichtsordnung (VwGO) keine aufschiebende Wirkung hat. Bescheide, die öffentliche Abgaben oder Kosten festsetzen, sind sofort vollziehbar. <style isBold='true'>Dies bedeutet, dass Sie unabhängig von der Einreichung einer Klage zur fristgerechten Zahlung der festgesetzten Gebühren verpflichtet sind.</style>
+]]></text>
+			</staticText>
+		</band>
+		<band height="105">
+			<staticText>
+				<reportElement x="0" y="0" width="483" height="102"/>
+				<textElement textAlignment="Justified">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Sie können jedoch gemäß § 80 Abs. 4 VwGO einen Antrag auf Aussetzung der sofortigen Vollziehung (ohne Einhaltung einer Frist) bei dem Oberbürgermeister der Stadt Bielefeld in Bielefeld stellen.
+Ferner können Sie gemäß § 80 Abs. 5 VwGO einen Antrag auf Anordnung der aufschiebenden Wirkung der Klage beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden schriftlich, zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungsgerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrsverordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG vom 23.11.2005 (GV. NRW. S. 926) einreichen.
+]]></text>
+			</staticText>
+		</band>
+		<band height="75">
+			<staticText>
+				<reportElement x="0" y="0" width="483" height="72"/>
+				<textElement textAlignment="Justified">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Gemäß § 80 Abs. 6 VwGO ist der Antrag an das Verwaltungsgericht nach § 80 Abs. 5 VwGO nur zulässig, wenn die Behörde einen Antrag auf Aussetzung der Vollziehung ganz oder zum Teil abgelehnt hat. Das gilt nicht, wenn 1. die Behörde über den Antrag ohne Mitteilung eines zureichenden Grundes in angemessener Frist sachlich nicht entschieden hat oder 2. eine Vollstreckung droht.
+Ist der Verwaltungsakt zum Zeitpunkt der Entscheidung schon vollzogen, können Sie beim Verwaltungsgericht beantragen, dass dieses die Aufhebung der Vollziehung anordnet.
+
+]]></text>
+			</staticText>
+		</band>
+		<band height="226">
+			<staticText>
+				<reportElement x="0" y="12" width="483" height="86"/>
+				<textElement textAlignment="Justified">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<text><![CDATA[Personenbezogene Daten, d. h. Einzelangaben über persönliche und sachliche Verhältnisse einer bestimmten oder bestimmbaren natürlichen Person, können gemäß § 12 (1) DSG NW erhoben werden.
+Die Angaben werden aufgrund einer Auskunftspflicht gemäß § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchung in der Stadt Bielefeld in Verbindung mit §§ 19 und 20 der Satzung der Stadt Bielefeld über die Entwässerung der Grundstücke erhoben und dienen dem Zweck der Überwachung der Benutzung der öffentlichen Abwasseranlagen.
+Das Erheben, Speichern, Verändern und Nutzen dieser Daten ist somit nach § 12 (1) und 13 (1) DSG NW zulässig. Die Daten dürfen grundsätzlich nur für Zwecke weiterverarbeitet werden, für die sie erhoben worden sind.
+Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="483" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Hinweis nach § 12 (2) Datenschutzgesetz NW (DSG NW):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="135" width="100" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Gößling]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="99" width="100" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[I.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="175" width="336" height="12"/>
+				<textElement/>
+				<text><![CDATA[2. Annahme-AO per File-Transfer-Kasse]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="187" width="100" height="12"/>
+				<textElement/>
+				<text><![CDATA[3. SAP-GP-Nr.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="199" width="100" height="12"/>
+				<textElement/>
+				<text><![CDATA[4. SAP-Beleg-Nr.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="211" width="100" height="12"/>
+				<textElement/>
+				<text><![CDATA[5. z.d.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="187" width="100" height="12"/>
+				<textElement/>
+				<text><![CDATA[110_______]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="199" width="100" height="12"/>
+				<textElement/>
+				<text><![CDATA[1200_______]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="346" y="17" width="66" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Montag - Freitag]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="9" width="139" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Konten der Stadtkasse Bielefeld]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="41" width="97" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[im übrigen nach Vereinbarung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="33" width="139" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Postbank Hannover Kto.-Nr. 20-307 (BLZ 250 100 30)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="407" y="25" width="66" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[08.00 - 12.00 Uhr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="17" width="139" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Sparkasse Bielefeld Kto.-Nr. 26 (BLZ 480 501 61)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="25" width="66" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Donnerstag]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="9" width="120" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sprechzeiten:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="407" y="17" width="66" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[08.00 - 12.00 Uhr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="407" y="33" width="66" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[14.30 - 18.00 Uhr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="33" width="105" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[D-33602 Bielefeld]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="25" width="139" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[und bei weiteren Bielefelder Geldinstituten]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="9" width="105" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lieferanschrift:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="25" width="105" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Neues Rathaus (Niederwall 23)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="17" width="105" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Stadt Bielefeld]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="35">
+			<staticText>
+				<reportElement x="20" y="5" width="453" height="25"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<text><![CDATA[Aus Gründen der Gleichbehandlung wird bei Probenahmen im Bielefelder Stadtgebiet für An- und Abfahrt einschl. Transport der Proben zum Labor pauschal 1 Stunde berechnet.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="5" width="12" height="25"/>
+				<textElement/>
+				<text><![CDATA[¹]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>
