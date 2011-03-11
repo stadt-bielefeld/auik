@@ -593,13 +593,20 @@ public class ProbenEditor extends AbstractApplyEditor {
                 String basePath = SettingsManager.getInstance().getSetting(
                     "auik.probenahme.bescheide");
 
-                String filename = probe.getKennummer();
-                filename        = filename.replace(" ", "");
+                String filename  = probe.getKennummer();
+                String vFilename = filename;
+
+                filename = filename.replace(" ", "");
                 if (!filename.endsWith(".pdf")) {
-                    filename += ".pdf";
+                    filename  += ".pdf";
+                    vFilename += "-vfg.pdf";
                 }
-                filename = filename.replace("/", "_");
-                
+                else {
+                    vFilename = vFilename.substring(0, vFilename.length() - 5);
+                    vFilename += "-vfg.pdf";
+                }
+                filename  = filename.replace("/", "_");
+                vFilename = vFilename.replace("/", "_");
 
                 File path = new File(basePath, filename);
                 if (path == null) {
@@ -609,6 +616,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                         "Pfad zum Speichern fehlt");
                     return;
                 }
+
+                File vPath = new File(basePath, vFilename);
 
                 try {
                     updateRechnungsdatum(probe);
@@ -623,7 +632,21 @@ public class ProbenEditor extends AbstractApplyEditor {
                         AtlProbenahmen.getBescheidDataSource(probe);
 
                     PDFExporter.getInstance().exportBescheid(
-                        params, subdata, path.getAbsolutePath(), true);
+                        params,
+                        subdata,
+                        PDFExporter.BESCHEID,
+                        path.getAbsolutePath(),
+                        true);
+
+                    JRDataSource vSubdata =
+                        AtlProbenahmen.getBescheidDataSource(probe);
+
+                    PDFExporter.getInstance().exportBescheid(
+                        params,
+                        vSubdata,
+                        PDFExporter.VFG,
+                        vPath.getAbsolutePath(),
+                        true);
 
                     AtlStatus currentStatus = getVorgangsstatus();
                     String    currentBez    = currentStatus.getBezeichnung();
@@ -1402,8 +1425,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             double dauer  = DateUtils.getDurationHours(beginnDate, endeDate);
             double kosten = getSachUndPersonalkosten();
-            //double gesamt = kosten + getAnalysekosten(probe);
-            double gesamt = 1023.89d;
+            double gesamt = kosten + getAnalysekosten(probe);
 
             params.put("personalsachkosten", nf.format(kosten));
             params.put("analysekosten",

@@ -1,6 +1,16 @@
 2011-03-11  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Beim Erstellen eines Gebührenbescheids wird automatisch eine Verfügung
+	  erstellt, als PDF gespeichert und ggf mit auf den Drucker geschickt.
+
+	* src/de/bielefeld/umweltamt/aui/utils/PDFExporter.java: Einführung neuer
+	  Konstanten, die auf Templates des Gebührenbescheid und der Verfügung
+	  zeigen.
+
+2011-03-11  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
 	  Wenn die kasse.txt beim Erstellen eines Gebührenbescheides vorhanden
 	  ist, wird nun für den aktuellen Bescheid eine neue Zeile eingefügt. Die
 	  Daten der kasse.txt bleiben bestehen.

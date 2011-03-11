@@ -46,6 +46,13 @@ public class PDFExporter {
     private static PDFExporter INSTANCE;
 
 
+    /** Die Gebührenbescheid.*/
+    public static final String BESCHEID = "/reports/gebuehrenbescheid.jasper";
+
+    /** Die Verfügung.*/
+    public static final String VFG = "/reports/verfuegung.jasper";
+
+
     /**
      * Dieser Konstruktor soll nicht aufgerufen werden, um zu verhindern, dass
      * mehr als nur eine Instanz dieser Klasse erstellt wird. Stattdessen soll
@@ -158,15 +165,19 @@ public class PDFExporter {
      * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
     public JasperPrint exportBescheid(
-        Map fields, JRDataSource subdata, String dest, boolean printPDF)
+        Map          fields,
+        JRDataSource subdata,
+        String       report,
+        String       dest,
+        boolean printPDF)
     throws Exception
     {
-        InputStream inputStream = getClass().getResourceAsStream(
-            "/reports/gebuehrenbescheid.jasper");
+        InputStream inputStream = getClass().getResourceAsStream(report);
 
         if (inputStream == null) {
             throw new Exception(
-                "Konnte Template 'gebuehrenbescheid.jasper' nicht finden.");
+                "Konnte Template '" + report + "' oder " +
+                "'verfuegung.jasper' nicht finden.");
         }
 
         fields.put("SUBDATA", subdata);
@@ -182,7 +193,7 @@ public class PDFExporter {
         }
         catch (JRException jre) {
             throw new Exception(
-                "Druck des Gebührenbescheid schlug fehl: " + jre.getMessage());
+                "Druck des Reports schlug fehl: " + jre.getMessage());
         }
     }
 
