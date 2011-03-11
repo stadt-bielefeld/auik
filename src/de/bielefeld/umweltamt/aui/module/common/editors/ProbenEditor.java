@@ -923,8 +923,15 @@ public class ProbenEditor extends AbstractApplyEditor {
         String row = sb.toString();
 
         BufferedWriter writer = null;
+        boolean isNew = kasse.exists();
+
         try {
-            writer = new BufferedWriter(new FileWriter(kasse));
+            writer = new BufferedWriter(new FileWriter(kasse, true));
+
+            if (isNew) {
+                writer.newLine();
+            }
+
             writer.write(row, 0, row.length());
             writer.flush();
         }

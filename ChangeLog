@@ -1,5 +1,12 @@
 2011-03-11  Ingo Weinzierl <ingo@intevation.de>
 
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Wenn die kasse.txt beim Erstellen eines Gebührenbescheides vorhanden
+	  ist, wird nun für den aktuellen Bescheid eine neue Zeile eingefügt. Die
+	  Daten der kasse.txt bleiben bestehen.
+
+2011-03-11  Ingo Weinzierl <ingo@intevation.de>
+
 	* reports/verfuegung.jrxml: Neu. Ein Template für Verfügungen.
 
 2011-03-11  Ingo Weinzierl <ingo@intevation.de>
