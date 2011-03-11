@@ -136,6 +136,7 @@ import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.DoubleRenderer;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
+import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
@@ -1374,7 +1375,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("kosten", Double.toString(PERSONAL_UND_SACHKOSTEN));
         params.put("kassenzeichen", betr.getKassenzeichen());
         params.put("firmaName", betr.getBetrname());
-        params.put("firmaStrasse", betr.getStrasse());
+        params.put("firmaStrasse", betr.getBetriebsgrundstueck());
         params.put("firmaOrt", betr.getPlz() + " " + betr.getOrt());
 
         try {
@@ -1394,12 +1395,14 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             double dauer  = DateUtils.getDurationHours(beginnDate, endeDate);
             double kosten = getSachUndPersonalkosten();
+            //double gesamt = kosten + getAnalysekosten(probe);
+            double gesamt = 1023.89d;
 
             params.put("personalsachkosten", nf.format(kosten));
             params.put("analysekosten",
                 nf.format(getAnalysekosten(probe)) +" €");
             params.put("gesamtkosten",
-                nf.format(kosten+getAnalysekosten(probe)) + " €");
+                new GermanDouble(gesamt).toString() + " €");
 
             params.put("dauer", DateUtils.getDuration(beginnDate, endeDate));
         }

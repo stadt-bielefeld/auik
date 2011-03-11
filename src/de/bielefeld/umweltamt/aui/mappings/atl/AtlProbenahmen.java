@@ -42,7 +42,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
-import de.bielefeld.umweltamt.aui.utils.KommaDouble;
+import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 
 /**
  * A class that represents a row in the 'ATL_PROBENAHMEN' table.
@@ -58,8 +58,8 @@ public class AtlProbenahmen
     };
 
     public static final String[] COLUMNS_BESCHEID = {
-        "Pos", "Parameter", "Grenzwert", "Ergebnis_Wert", "Ergebnis_Einheit",
-        "Gebühr"
+        "Pos", "Parameter", "Grenzwert_Wert", "Grenzwert_Einheit",
+        "Ergebnis_Wert", "Ergebnis_Einheit", "Gebühr"
     };
 
 
@@ -463,7 +463,7 @@ public class AtlProbenahmen
         Object[]   columns;
 
         for (int i = 0; i < elements; i++) {
-            columns = new Object[6];
+            columns = new Object[COLUMNS_BESCHEID.length];
 
             AtlAnalyseposition pos  = (AtlAnalyseposition) sorted.get(i);
             AtlParameter parameter  = pos.getAtlParameter();
@@ -472,10 +472,11 @@ public class AtlProbenahmen
 
             columns[0] = i+1;
             columns[1] = parameter.getBezeichnung();
-            columns[2] = grenzwert != null ? grenzwert + " " + einheit : "";
-            columns[3] = pos.getWert();
-            columns[4] = einheit;
-            columns[5] = new KommaDouble(
+            columns[2] = grenzwert;
+            columns[3] = einheit;
+            columns[4] = pos.getWert();
+            columns[5] = einheit;
+            columns[6] = new GermanDouble(
                 parameter.getPreisfueranalyse()).toString() + " €";
 
             values[i] = columns;

@@ -1,3 +1,23 @@
+2011-03-11  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/utils/GermanDouble.java: Neu. Diese
+	  Klasse stellt einen Wrapper um Fließkommazahlen dar. Eine toString()
+	  Methode liefert den Wert der Fließkommazahl als String nach deutscher
+	  Formatierung mti einem Tausender-Trenner. Diese Klasse wurde
+	  hinzugefügt, um die Symmetrie des Programms aufrecht zu erhalten - es
+	  gibt bereits eine Klasse KommaDouble, die ebenfalls einen Wrapper um
+	  Fließkommazahlen darstellt.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java: Alle
+	  Zahlenwerte werden nun von ihren Einheiten getrennt und als echte
+	  Doubles in den JRMapDataSource geschrieben. Die Formatierung muss in den
+	  Klassen stattfinden, die die JRMapDataSource benutzen.
+
+	* reports/gebuehren_parameterliste.jrxml,
+	  reports/gebuehrenbescheid.jrxml: Layout Anpassungen.
+
 2011-02-15  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/resources/version.txt: Version auf v1.1 RC1

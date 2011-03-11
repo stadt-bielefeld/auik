@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="240"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -26,16 +26,6 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band height="20">
-			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}>1]]></printWhenExpression>
-			<textField>
-				<reportElement x="214" y="1" width="22" height="19"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageHeader>
 	<detail>
 		<band height="298" splitType="Stretch">
 			<staticText>
@@ -99,7 +89,7 @@
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
-				<text><![CDATA[Ravensburger Straße 12]]></text>
+				<text><![CDATA[Ravensberger Straße 12]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="348" y="15" width="125" height="15"/>
@@ -176,7 +166,7 @@
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
-				<text><![CDATA[Datum und Zeichen ihres Schreibes]]></text>
+				<text><![CDATA[Datum und Zeichen ihres Schreibens]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="150" y="259" width="121" height="13"/>
@@ -202,29 +192,22 @@
 			<rectangle>
 				<reportElement x="-10" y="118" width="9" height="6" backcolor="#000000"/>
 			</rectangle>
-			<staticText>
-				<reportElement x="3" y="117" width="156" height="12"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<text><![CDATA[Firma]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="3" y="132" width="156" height="12"/>
+				<reportElement x="3" y="117" width="156" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="3" y="147" width="156" height="12"/>
+				<reportElement x="3" y="128" width="156" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="3" y="163" width="156" height="12"/>
+				<reportElement x="3" y="139" width="156" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -248,7 +231,7 @@
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 31. Änderungssatzung vom 21.12.2009 (KdS)]]></text>
+				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 32. Änderungssatzung vom 16.12.2010 (KdS)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="20" y="51" width="360" height="15"/>
@@ -258,11 +241,11 @@
 				<text><![CDATA[Abdeckung der Personal- und Sachkosten gem. § 10 (2) KdS:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="20" y="69" width="463" height="12"/>
+				<reportElement x="20" y="69" width="370" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{probenehmer} + " Probenehmer * " + $P{dauer} + " Stunden ¹* " + $P{kosten} + " € = " + $P{personalsachkosten} + " €"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{probenehmer} + " Probenehmer * " + $P{dauer} + " Stunden ¹* " + $P{kosten} + " € = " ]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="51" width="14" height="15"/>
@@ -271,6 +254,13 @@
 				</textElement>
 				<text><![CDATA[1.]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="408" y="69" width="60" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{personalsachkosten} + " €" ]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="54">
 			<textField>
@@ -348,10 +338,16 @@
 			<textField>
 				<reportElement x="408" y="22" width="60" height="12"/>
 				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="10" isBold="true" isUnderline="true"/>
+					<font fontName="DejaVu Sans" size="10" isBold="true" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{gesamtkosten}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="408" y="34" width="60" height="1"/>
+			</line>
+			<line>
+				<reportElement x="408" y="36" width="60" height="1"/>
+			</line>
 		</band>
 		<band height="40">
 			<textField pattern="">
@@ -369,7 +365,7 @@
 		</band>
 		<band height="72">
 			<staticText>
-				<reportElement x="0" y="12" width="483" height="39"/>
+				<reportElement x="0" y="12" width="483" height="50"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="DejaVu Sans" size="7" isItalic="true" isUnderline="false"/>
 				</textElement>
@@ -388,11 +384,11 @@
 				</reportElement>
 			</break>
 		</band>
-		<band height="91">
+		<band height="90">
 			<staticText>
-				<reportElement x="0" y="14" width="483" height="77"/>
+				<reportElement x="0" y="14" width="483" height="73"/>
 				<textElement textAlignment="Justified">
-					<font fontName="DejaVu Sans" size="8" isUnderline="false"/>
+					<font fontName="DejaVu Sans" size="9" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe Klage erhoben werden. Die Klage ist entweder schriftlich beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden, oder dort zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungsgerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrsverordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG) vom 23.11.2005 (GV. NRW. S. 926) einzureichen.
 Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten versäumt werden, so würde deren / dessen Verschulden Ihnen zugerechnet werden.]]></text>
@@ -400,37 +396,37 @@ Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten
 			<staticText>
 				<reportElement x="0" y="1" width="159" height="14"/>
 				<textElement>
-					<font fontName="DejaVu Sans" size="8" isBold="true" isUnderline="true"/>
+					<font fontName="DejaVu Sans" size="9" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Rechtsbehelfsbelehrung:]]></text>
 			</staticText>
 		</band>
-		<band height="43">
+		<band height="55">
 			<staticText>
-				<reportElement x="0" y="0" width="483" height="43"/>
+				<reportElement x="0" y="0" width="483" height="52"/>
 				<textElement textAlignment="Justified" markup="styled">
-					<font fontName="DejaVu Sans" size="8"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Des Weiteren weise ich darauf hin, dass eine Klage gegen die Anforderung der Gebühren gemäß § 80 Abs. 2 Nr. 1 Verwaltungsgerichtsordnung (VwGO) keine aufschiebende Wirkung hat. Bescheide, die öffentliche Abgaben oder Kosten festsetzen, sind sofort vollziehbar. <style isBold='true'>Dies bedeutet, dass Sie unabhängig von der Einreichung einer Klage zur fristgerechten Zahlung der festgesetzten Gebühren verpflichtet sind.</style>
 ]]></text>
 			</staticText>
 		</band>
-		<band height="77">
+		<band height="105">
 			<staticText>
-				<reportElement x="0" y="0" width="483" height="77"/>
+				<reportElement x="0" y="0" width="483" height="102"/>
 				<textElement textAlignment="Justified">
-					<font fontName="DejaVu Sans" size="8"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Sie können jedoch gemäß § 80 Abs. 4 VwGO einen Antrag auf Aussetzung der sofortigen Vollziehung (ohne Einhaltung einer Frist) bei dem Oberbürgermeister der Stadt Bielefeld in Bielefeld stellen.
 Ferner können Sie gemäß § 80 Abs. 5 VwGO einen Antrag auf Anordnung der aufschiebenden Wirkung der Klage beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden schriftlich, zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungsgerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrsverordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG vom 23.11.2005 (GV. NRW. S. 926) einreichen.
 ]]></text>
 			</staticText>
 		</band>
-		<band height="62">
+		<band height="75">
 			<staticText>
-				<reportElement x="0" y="0" width="483" height="62"/>
+				<reportElement x="0" y="0" width="483" height="72"/>
 				<textElement textAlignment="Justified">
-					<font fontName="DejaVu Sans" size="8"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Gemäß § 80 Abs. 6 VwGO ist der Antrag an das Verwaltungsgericht nach § 80 Abs. 5 VwGO nur zulässig, wenn die Behörde einen Antrag auf Aussetzung der Vollziehung ganz oder zum Teil abgelehnt hat. Das gilt nicht, wenn 1. die Behörde über den Antrag ohne Mitteilung eines zureichenden Grundes in angemessener Frist sachlich nicht entschieden hat oder 2. eine Vollstreckung droht.
 Ist der Verwaltungsakt zum Zeitpunkt der Entscheidung schon vollzogen, können Sie beim Verwaltungsgericht beantragen, dass dieses die Aufhebung der Vollziehung anordnet.
@@ -438,11 +434,11 @@ Ist der Verwaltungsakt zum Zeitpunkt der Entscheidung schon vollzogen, können S
 ]]></text>
 			</staticText>
 		</band>
-		<band height="128">
+		<band height="150">
 			<staticText>
-				<reportElement x="0" y="11" width="483" height="68"/>
+				<reportElement x="0" y="12" width="483" height="86"/>
 				<textElement textAlignment="Justified">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
 				<text><![CDATA[Personenbezogene Daten, d. h. Einzelangaben über persönliche und sachliche Verhältnisse einer bestimmten oder bestimmbaren natürlichen Person, können gemäß § 12 (1) DSG NW erhoben werden.
 Die Angaben werden aufgrund einer Auskunftspflicht gemäß § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchung in der Stadt Bielefeld in Verbindung mit §§ 19 und 20 der Satzung der Stadt Bielefeld über die Entwässerung der Grundstücke erhoben und dienen dem Zweck der Überwachung der Benutzung der öffentlichen Abwasseranlagen.
@@ -452,23 +448,23 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 			<staticText>
 				<reportElement x="0" y="0" width="483" height="12"/>
 				<textElement>
-					<font fontName="DejaVu Sans" size="8" isUnderline="true"/>
+					<font fontName="DejaVu Sans" size="9" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Hinweis nach § 12 (2) Datenschutzgesetz NW (DSG NW):]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="116" width="100" height="12"/>
+				<reportElement x="0" y="135" width="100" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Gößling]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="81" width="100" height="12"/>
+				<reportElement x="0" y="99" width="100" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
-				<text><![CDATA[i.A.]]></text>
+				<text><![CDATA[I.A.]]></text>
 			</staticText>
 		</band>
 	</detail>
