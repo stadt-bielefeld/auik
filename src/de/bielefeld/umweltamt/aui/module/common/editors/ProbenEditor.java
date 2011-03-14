@@ -1425,9 +1425,9 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             double dauer  = DateUtils.getDurationHours(beginnDate, endeDate);
             double kosten = getSachUndPersonalkosten();
-            double gesamt = kosten + getAnalysekosten(probe);
+            double gesamt = Math.round((kosten + getAnalysekosten(probe)) * 100) / 100.0;
 
-            params.put("personalsachkosten", nf.format(kosten));
+            params.put("personalsachkosten", nf.format(kosten) +" €");
             params.put("analysekosten",
                 nf.format(getAnalysekosten(probe)) +" €");
             params.put("gesamtkosten",

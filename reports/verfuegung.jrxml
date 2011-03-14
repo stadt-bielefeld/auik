@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="748"/>
+	<property name="ireport.y" value="288"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -193,21 +193,21 @@
 				<reportElement x="-10" y="118" width="9" height="6" backcolor="#000000"/>
 			</rectangle>
 			<textField>
-				<reportElement x="3" y="137" width="156" height="12"/>
+				<reportElement x="0" y="117" width="156" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="3" y="148" width="156" height="12"/>
+				<reportElement x="0" y="130" width="156" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="3" y="159" width="156" height="12"/>
+				<reportElement x="0" y="143" width="156" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -225,8 +225,10 @@
 				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="3" y="116" width="100" height="12"/>
-				<textElement/>
+				<reportElement x="-27" y="117" width="17" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[1.]]></text>
 			</staticText>
 			<staticText>
@@ -269,7 +271,7 @@
 			<textField>
 				<reportElement x="408" y="69" width="60" height="12"/>
 				<textElement textAlignment="Right">
-					<font size="10" isBold="true"/>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{personalsachkosten} + " €"]]></textFieldExpression>
 			</textField>
@@ -476,36 +478,48 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
-				<text><![CDATA[I.A.]]></text>
+				<text><![CDATA[I. A.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="175" width="336" height="12"/>
-				<textElement/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[2. Annahme-AO per File-Transfer-Kasse]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="187" width="100" height="12"/>
-				<textElement/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[3. SAP-GP-Nr.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="199" width="100" height="12"/>
-				<textElement/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[4. SAP-Beleg-Nr.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="211" width="100" height="12"/>
-				<textElement/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[5. z.d.A.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="105" y="187" width="100" height="12"/>
-				<textElement/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[110_______]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="105" y="199" width="100" height="12"/>
-				<textElement/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[1200_______]]></text>
 			</staticText>
 		</band>
