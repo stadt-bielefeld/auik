@@ -134,6 +134,34 @@ public class DateUtils {
     }
 
 
+    /**
+     * Diese Funktion liefert die Addition zweier Zeiten  <i>one</i> und <i>two</i> als
+     * String in Form von HH:MM zur&uuml;ck. Wenn einer der Parameter
+     * ung&uuml;tig oder <i>null</i> ist, wird "--:--" geliefert.
+     *
+     * @param one Die erste Zeit
+     * @param two Die zweite Zeit
+     *
+     * @return die Stunden und Minuten von <i>one</i> plus <i>two</i>.
+     */
+    public static String getAddition(Date one, Date two) {
+        if (one == null || two == null) {
+            return "--:--";
+        }
+
+        long duration = ((one.getTime() + 3600000) + (two.getTime() + 3600000)) / 1000;
+
+        int seconds = getSeconds(duration);
+        int minutes = getMinutes(duration);
+        int hours   = getHours(duration);
+
+        String h = hours <= 9 ? "0" + hours : "" + hours;
+        String m = minutes <= 9 ? "0" + minutes : "" + minutes;
+
+        return h + ":" + m;
+    }
+
+
     public static double getDurationHours(Date start, Date end) {
         if (start == null || end == null) {
             return 0;
@@ -142,9 +170,15 @@ public class DateUtils {
         long duration = (end.getTime() - start.getTime()) / 1000;
 
         int hours   = getHours(duration);
-        int minutes = getMinutes(duration);
+        int minutes = 0;
+        if(getMinutes(duration) % 15 == 0){
+        	minutes = getMinutes(duration) / 15;
+        }
+        else{
+        	minutes = getMinutes(duration) / 15 + 1;
+        }
 
-        return hours + (minutes / 60.0);
+        return hours + (minutes / 4.0);
     }
 
 

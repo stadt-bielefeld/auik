@@ -59,7 +59,7 @@ public class AtlProbenahmen
 
     public static final String[] COLUMNS_BESCHEID = {
         "Pos", "Parameter", "Grenzwert_Wert", "Grenzwert_Einheit",
-        "Ergebnis_Wert", "Ergebnis_Einheit", "Gebühr"
+        "Ergebnis_Wert", "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett"
     };
 
 
@@ -468,16 +468,35 @@ public class AtlProbenahmen
             AtlAnalyseposition pos  = (AtlAnalyseposition) sorted.get(i);
             AtlParameter parameter  = pos.getAtlParameter();
             String einheit          = pos.getAtlEinheiten().getBezeichnung();
-            Double grenzwert        = parameter.getGrenzwert();
+            String grenzwert        = "";
+            if (parameter.getGrenzwert() != null && parameter.getGrenzwert() < 100){
+            	grenzwert = parameter.getGrenzwert().toString().replace(".", ",");
+            }
+            else if (parameter.getGrenzwert() != null && parameter.getGrenzwert() > 100){
+            	grenzwert = parameter.getGrenzwert().toString().replace(".0", "");
+            }
+            String wert				= "";
+            if (pos.getWert() < 100){
+            	wert = pos.getWert().toString().replace(".", ",");
+            }
+            else {
+            	wert = pos.getWert().toString().replace(".0", "");
+            }
+            Boolean fett			= false;
+            if (pos.getWert() != null && parameter.getGrenzwert() != null && pos.getWert() > parameter.getGrenzwert()){
+            	fett = true;
+            }
 
             columns[0] = i+1;
             columns[1] = parameter.getBezeichnung();
             columns[2] = grenzwert;
             columns[3] = einheit;
-            columns[4] = pos.getWert();
+            columns[4] = wert;
             columns[5] = einheit;
             columns[6] = new GermanDouble(
                 parameter.getPreisfueranalyse()).toString() + " €";
+            columns[7] = pos.getGrkl();
+            columns[8] = fett;
 
             values[i] = columns;
         }

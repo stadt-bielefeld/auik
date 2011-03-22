@@ -161,7 +161,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     /** Dieser Wert stellt den Preis einer Stunde f&uuml;r Personal- und
      * Sachkosten dar. **/
-    public static final double PERSONAL_UND_SACHKOSTEN = 40.99;
+    public static final double PERSONAL_UND_SACHKOSTEN = 50.31;
 
     /** Dieser Wert gibt an, wieviele Stellen das Feld in der Datei kasse.txt
      * besitzen muss, welches das Rechnungsdatum und den Rechnungsbetrag
@@ -320,7 +320,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     break;
 
                 case 2:
-                    Float tmpWert = null;
+                	Float tmpWert = null;
                     if (newValue instanceof Float) {
                         tmpWert = (Float) newValue;
                     } else if (newValue instanceof KommaDouble) {
@@ -1402,7 +1402,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("maxdatum", DateUtils.format(
             DateUtils.getDateOfBill(now),
             DateUtils.FORMAT_DATE));
-        params.put("kosten", Double.toString(PERSONAL_UND_SACHKOSTEN));
+        params.put("kosten", Double.toString(PERSONAL_UND_SACHKOSTEN).replace(".", ","));
         params.put("kassenzeichen", betr.getKassenzeichen());
         params.put("firmaName", betr.getBetrname());
         params.put("firmaStrasse", betr.getBetriebsgrundstueck());
@@ -1419,11 +1419,15 @@ public class ProbenEditor extends AbstractApplyEditor {
         try {
             String beginn = uhrzeitVon.getText();
             String ende   = uhrzeitBis.getText();
+            String fahrt  = fahrtzeit.getText();
 
             Date beginnDate = DateUtils.parse(beginn, DateUtils.FORMAT_TIME);
+            Date fahrtDate  = DateUtils.parse(fahrt, DateUtils.FORMAT_TIME);
             Date endeDate   = DateUtils.parse(ende, DateUtils.FORMAT_TIME);
+            String mitFahrt	= DateUtils.getAddition(endeDate, fahrtDate);
+            Date mitFahrtDate = DateUtils.parse(mitFahrt, DateUtils.FORMAT_TIME);
 
-            double dauer  = DateUtils.getDurationHours(beginnDate, endeDate);
+            String dauer  = DateUtils.getDuration(beginnDate, mitFahrtDate);
             double kosten = getSachUndPersonalkosten();
             double gesamt = Math.round((kosten + getAnalysekosten(probe)) * 100) / 100.0;
 
@@ -1431,9 +1435,9 @@ public class ProbenEditor extends AbstractApplyEditor {
             params.put("analysekosten",
                 nf.format(getAnalysekosten(probe)) +" €");
             params.put("gesamtkosten",
-                new GermanDouble(gesamt).toString() + " €");
+            	nf.format(gesamt) + " €");
 
-            params.put("dauer", DateUtils.getDuration(beginnDate, endeDate));
+            params.put("dauer", dauer);
         }
         catch (ParseException pe) {
             params.put("dauer", "hh:mm");
@@ -1453,11 +1457,27 @@ public class ProbenEditor extends AbstractApplyEditor {
     {
         String beginn = uhrzeitVon.getText();
         String ende   = uhrzeitBis.getText();
+        String fahrt  = fahrtzeit.getText();
 
-        Date beginnDate = DateUtils.parse(beginn, DateUtils.FORMAT_TIME);
-        Date endeDate   = DateUtils.parse(ende, DateUtils.FORMAT_TIME);
+        Date beginnDate 	= DateUtils.parse(beginn, DateUtils.FORMAT_TIME);
+        Date fahrtDate  	= DateUtils.parse(fahrt, DateUtils.FORMAT_TIME);
+        Date endeDate   	= DateUtils.parse(ende, DateUtils.FORMAT_TIME);
+        String mitFahrt		= DateUtils.getAddition(endeDate, fahrtDate);
+        Date mitFahrtDate 	= DateUtils.parse(mitFahrt, DateUtils.FORMAT_TIME);
 
-        return DateUtils.getDurationHours(beginnDate, endeDate);
+        return DateUtils.getDurationHours(beginnDate, mitFahrtDate);
+    }
+
+
+    /**
+     * Diese Funktion liefert die Anzahl der beteiligten Probenehmer.
+     */
+    protected Integer getAnzahl()
+    throws ParseException
+    {
+        Integer anzahl = new Integer(beteiligte.getText());
+    	
+        return anzahl;
     }
 
 
@@ -1469,7 +1489,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     public double getSachUndPersonalkosten()
     throws ParseException
     {
-        return PERSONAL_UND_SACHKOSTEN * getDauer();
+        return PERSONAL_UND_SACHKOSTEN * getDauer() * getAnzahl();
     }
 
 

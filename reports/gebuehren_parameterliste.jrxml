@@ -7,11 +7,13 @@
 	<parameter name="gesamtkosten" class="java.lang.String"/>
 	<field name="Pos" class="java.lang.String"/>
 	<field name="Parameter" class="java.lang.String"/>
-	<field name="Grenzwert_Wert" class="java.lang.Double"/>
-	<field name="Ergebnis_Wert" class="java.lang.Double"/>
+	<field name="Grenzwert_Wert" class="java.lang.String"/>
+	<field name="Ergebnis_Wert" class="java.lang.String"/>
 	<field name="Gebühr" class="java.lang.String"/>
 	<field name="Ergebnis_Einheit" class="java.lang.String"/>
 	<field name="Grenzwert_Einheit" class="java.lang.String"/>
+	<field name="Gr_Kl" class="java.lang.String"/>
+	<field name="Fett" class="java.lang.Boolean"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -32,14 +34,14 @@
 				<text><![CDATA[Parameter]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="196" y="0" width="88" height="14"/>
+				<reportElement x="199" y="0" width="76" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Grenzwert]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="287" y="0" width="94" height="14"/>
+				<reportElement x="280" y="0" width="94" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
@@ -64,29 +66,20 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Pos}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="34" y="0" width="153" height="11"/>
+				<reportElement x="34" y="0" width="144" height="11"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Parameter}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="195" y="0" width="46" height="11">
-					<printWhenExpression><![CDATA[$F{Grenzwert_Wert} != null]]></printWhenExpression>
+			<textField pattern="">
+				<reportElement x="291" y="0" width="39" height="11">
+					<printWhenExpression><![CDATA[$F{Fett} == false]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{Grenzwert_Wert}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="288" y="0" width="50" height="11">
-					<printWhenExpression><![CDATA[$F{Grenzwert_Wert} == null || $F{Grenzwert_Wert} > $F{Ergebnis_Wert}]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="9" isBold="false"/>
-				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{Ergebnis_Wert}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Ergebnis_Wert}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="385" y="0" width="64" height="11"/>
@@ -96,29 +89,47 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Gebühr}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="340" y="0" width="41" height="11"/>
+				<reportElement x="332" y="0" width="53" height="11"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Ergebnis_Einheit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="243" y="0" width="41" height="11">
-					<printWhenExpression><![CDATA[$F{Grenzwert_Wert} != null]]></printWhenExpression>
+				<reportElement x="226" y="0" width="39" height="11">
+					<printWhenExpression><![CDATA[$F{Grenzwert_Wert}.length() != 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Grenzwert_Einheit}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="288" y="0" width="50" height="11">
-					<printWhenExpression><![CDATA[$F{Grenzwert_Wert} != null && $F{Grenzwert_Wert} < $F{Ergebnis_Wert}]]></printWhenExpression>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement x="291" y="0" width="39" height="11">
+					<printWhenExpression><![CDATA[$F{Fett} == true]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{Ergebnis_Wert}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Ergebnis_Wert}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="0" width="18" height="11">
+					<printWhenExpression><![CDATA[$F{Gr_Kl}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Gr_Kl}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="178" y="0" width="46" height="11">
+					<printWhenExpression><![CDATA[$F{Grenzwert_Wert} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Grenzwert_Wert}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

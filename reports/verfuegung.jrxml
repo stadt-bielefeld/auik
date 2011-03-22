@@ -273,7 +273,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{personalsachkosten} + " €"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{personalsachkosten}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="54">
