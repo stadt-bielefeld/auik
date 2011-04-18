@@ -218,18 +218,18 @@ public class DateUtils {
         Calendar cal = Calendar.getInstance();
         cal.setTime(notification);
 
-        int index = 0;
-        do {
-            cal.add(Calendar.DAY_OF_MONTH, 1);
-            int day = cal.get(Calendar.DAY_OF_WEEK);
+		cal.add(Calendar.DAY_OF_MONTH, 30);
+		int day = cal.get(Calendar.DAY_OF_WEEK);
 
-            if (day != Calendar.SATURDAY && day != Calendar.SUNDAY) {
-                index++;
-            }
+		if (day == Calendar.SATURDAY) {
+			cal.add(Calendar.DAY_OF_MONTH, 2);
+		}
 
-        } while (index != 31);
+		else if (day == Calendar.SUNDAY) {
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+		}
 
-        return cal.getTime();
+ return cal.getTime();
     }
 }
 // vim:set ts=4 sw=4 si et sta sts=4 fenc=utf8:

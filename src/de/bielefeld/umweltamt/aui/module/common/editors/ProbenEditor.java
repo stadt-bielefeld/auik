@@ -150,7 +150,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Ein Dialog um eine Probenahme mit ihren Analysepositionen zu bearbeiten.
- * (Momentan ist vieles noch auf Klärschlamm-Proben ausgerichtet)
+ * (Momentan ist vieles noch auf Kärschlamm-Proben ausgerichtet)
  * @author David Klotz
  */
 public class ProbenEditor extends AbstractApplyEditor {
@@ -916,6 +916,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
         CurrencyDouble cd   = new CurrencyDouble(
             getRechnungsbetrag(probe), Locale.GERMANY);
+        
+        String kassenzeichen   = basisBetr.getKassenzeichen().toString();
+        kassenzeichen		   = kassenzeichen.replace(".", "");
 
         String rechnungsbetrag = cd.toString();
         rechnungsbetrag        = rechnungsbetrag.replace("€", "");
@@ -931,10 +934,21 @@ public class ProbenEditor extends AbstractApplyEditor {
         fill -= kasseDatum.length();
         fill -= rechnungsbetrag.length();
 
-        sb.append(basisBetr.getKassenzeichen() + "\t");
-        sb.append(basisBetr.getBetrname() + "\t");
-        sb.append(basisBetr.getBetriebsgrundstueck() + "\t");
-        sb.append("Gebuehr fuer Abwasserunters.\t");
+        sb.append(kassenzeichen);
+        sb.append(basisBetr.getBetrname());
+        
+        for (int i = 1; i <= 56 - basisBetr.getBetrname().length(); i++) {
+            sb.append(" ");
+        }
+
+        sb.append(basisBetr.getBetriebsgrundstueck());
+        
+        for (int i = 1; i <= 28 - basisBetr.getBetriebsgrundstueck().length(); i++) {
+            sb.append(" ");
+        }
+       
+        sb.append(basisBetr.getPlz().toString() + "Bielefeld              ");
+        sb.append("Gebühr für Abwasserunters.  ");
         sb.append(kasseDatum);
 
         for (int i = 1; i <= fill; i++) {
@@ -993,8 +1007,20 @@ public class ProbenEditor extends AbstractApplyEditor {
             probe.getAtlProbepkt().getBasisObjekt().getBeschreibung());
         Date entnahmeDatum = probe.getDatumDerEntnahme();
         datum.setDate(entnahmeDatum);
-        uhrzeitVon.setText(probe.getUhrzeitbeginn());
-        uhrzeitBis.setText(probe.getUhrzeitende());
+        
+        if (probe.getUhrzeitbeginn() != null) {
+        	uhrzeitVon.setText(probe.getUhrzeitbeginn());
+        }
+        else {
+        	uhrzeitVon.setText("00:00");
+        }
+        
+        if (probe.getUhrzeitende() != null) {
+        	uhrzeitBis.setText(probe.getUhrzeitende());
+        }
+        else {
+        	uhrzeitBis.setText("00:00");
+        }
         
         if (probe.getFahrtzeit() != null) {
         	fahrtzeit.setText(probe.getFahrtzeit());
@@ -1227,8 +1253,12 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         // Von
         String uhrzeitVonVal = uhrzeitVon.getText();
-        if (uhrzeitVonVal != null) {
+        if (probe.getUhrzeitbeginn() != null || probe.getUhrzeitbeginn() != "") {
             probe.setUhrzeitbeginn(uhrzeitVonVal);
+        }
+        else {
+        	uhrzeitVonVal = "00:00";
+        	probe.setUhrzeitbeginn(uhrzeitVonVal);
         }
 
         // Bis
@@ -1428,7 +1458,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             Date mitFahrtDate = DateUtils.parse(mitFahrt, DateUtils.FORMAT_TIME);
 
             String dauer  = DateUtils.getDuration(beginnDate, mitFahrtDate);
-            double kosten = getSachUndPersonalkosten();
+            double kosten = Math.round((getSachUndPersonalkosten()) * 100) / 100.0;
             double gesamt = Math.round((kosten + getAnalysekosten(probe)) * 100) / 100.0;
 
             params.put("personalsachkosten", nf.format(kosten) +" €");

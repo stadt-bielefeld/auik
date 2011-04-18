@@ -486,6 +486,10 @@ public class AtlProbenahmen
             if (pos.getWert() != null && parameter.getGrenzwert() != null && pos.getWert() > parameter.getGrenzwert()){
             	fett = true;
             }
+            String gebuehr	= "0,00 €";
+            if (parameter.getPreisfueranalyse() != 0)
+            	gebuehr = new GermanDouble(
+                        parameter.getPreisfueranalyse()).toString() + " €";
 
             columns[0] = i+1;
             columns[1] = parameter.getBezeichnung();
@@ -493,8 +497,7 @@ public class AtlProbenahmen
             columns[3] = einheit;
             columns[4] = wert;
             columns[5] = einheit;
-            columns[6] = new GermanDouble(
-                parameter.getPreisfueranalyse()).toString() + " €";
+            columns[6] = gebuehr;
             columns[7] = pos.getGrkl();
             columns[8] = fett;
 
