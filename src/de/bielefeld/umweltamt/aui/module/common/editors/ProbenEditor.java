@@ -73,7 +73,8 @@ import java.awt.event.MouseAdapter;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -963,7 +964,11 @@ public class ProbenEditor extends AbstractApplyEditor {
         boolean isNew = kasse.exists();
 
         try {
-            writer = new BufferedWriter(new FileWriter(kasse, true));
+            writer =
+                new BufferedWriter(
+                    new OutputStreamWriter(
+                        new FileOutputStream(kasse),
+                        "cp1252"));
 
             if (isNew) {
                 writer.newLine();

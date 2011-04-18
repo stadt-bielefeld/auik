@@ -1,3 +1,8 @@
+2011-04-18  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
+	  Kasse.txt wird nun im Encoding 'cp1252' geschrieben.
+
 2011-03-11  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:
