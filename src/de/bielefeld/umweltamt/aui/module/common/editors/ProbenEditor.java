@@ -130,6 +130,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
@@ -901,6 +902,20 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Diese Methode erzeugt neben dem PDF des Geb&uuml;hrenbescheids eine
      * Datei namens kasse.txt, die Informationen &uuml;ber den Betreiber sowie
      * die H&ouml;he des Rechnungsbetrags und des Rechnungsdatums enth&auml;lt.
+     * 
+     * Eine Zeile in dieser Datei entspricht einem Bescheid und hat folgendes Format:
+     * 
+     * Feldname                             Länge
+	 * 
+	 * Kassenzeichen                          12        ohne Punkte
+	 * Ansprechpartner Name                   28
+	 * Ansprechpartner Vorname                28
+	 * Ansprechpartner Straße, Hausnummer     28
+	 * PLZ                                    05
+	 * Ort                                    23
+	 * Kommentar                              28
+	 * Fälligkeitsdatum                       08
+	 * Betrag                                 11        ohne Tausender oder Cent Trennzeichen mit führenden Nullen
      *
      * @param bescheid Der Pfad, an dem das PDF gespeichert wurde.
      */
@@ -938,7 +953,18 @@ public class ProbenEditor extends AbstractApplyEditor {
         sb.append(kassenzeichen);
         sb.append(basisBetr.getBetrname());
         
-        for (int i = 1; i <= 56 - basisBetr.getBetrname().length(); i++) {
+        for (int i = 1; i <= 28 - basisBetr.getBetrname().length(); i++) {
+            sb.append(" ");
+        }
+               
+        sb.append(basisBetr.getBetranrede());
+        
+        int anrede = 0;
+        if (basisBetr.getBetranrede() != null){
+        	anrede = basisBetr.getBetranrede().length();
+        }
+        
+        for (int i = 1; i <= 28 - anrede; i++) {
             sb.append(" ");
         }
 
@@ -948,7 +974,14 @@ public class ProbenEditor extends AbstractApplyEditor {
             sb.append(" ");
         }
        
-        sb.append(basisBetr.getPlz().toString() + "Bielefeld              ");
+        sb.append(basisBetr.getPlz().toString());
+        sb.append(basisBetr.getOrt().toString());
+
+        
+        for (int i = 1; i <= 23 - basisBetr.getOrt().length(); i++) {
+            sb.append(" ");
+        }
+        
         sb.append("Gebühr für Abwasserunters.  ");
         sb.append(kasseDatum);
 
@@ -961,16 +994,16 @@ public class ProbenEditor extends AbstractApplyEditor {
         String row = sb.toString();
 
         BufferedWriter writer = null;
-        boolean isNew = kasse.exists();
+        boolean exists = kasse.exists();
 
         try {
             writer =
                 new BufferedWriter(
                     new OutputStreamWriter(
-                        new FileOutputStream(kasse),
+                        new FileOutputStream(kasse, true),
                         "cp1252"));
 
-            if (isNew) {
+            if (exists) {
                 writer.newLine();
             }
 
@@ -1411,6 +1444,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     throws IllegalArgumentException
     {
         BasisBetreiber betr = probe.getBasisBetreiber();
+        BasisStandort basisStandort = probe.getBasisObjekt().getBasisStandort();
 
         HashMap params = new HashMap();
 
@@ -1430,7 +1464,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         Date now = new Date();
         params.put("datum", DateUtils.format(now, DateUtils.FORMAT_DATE));
         params.put("entnahmedatum", entnahmezeitpunkt);
-        params.put("entnahmeort", betr.getBetriebsgrundstueck());
+        params.put("entnahmeort", basisStandort.getAdresse());
         params.put("entnahmestelle",
             probe.getAtlProbepkt().getBasisObjekt().getBeschreibung());
         params.put("entnahmestellen", "1");

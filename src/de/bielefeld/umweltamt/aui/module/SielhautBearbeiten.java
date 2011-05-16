@@ -505,7 +505,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 frame.changeStatus("Leere Kennummer!", HauptFrame.ERROR_COLOR);
             } else {
                 String kennNummer = getPrNummerFeld().getText().trim().replaceAll(" ", "");
-                Date datum = getPrDateChooser().getDate();
+                Timestamp datum = (new Timestamp(getPrDateChooser().getDate().getTime()));
 
                 boolean exists = AtlProbenahmen.probenahmeExists(kennNummer);
 

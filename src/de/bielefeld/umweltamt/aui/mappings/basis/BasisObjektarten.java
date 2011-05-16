@@ -237,6 +237,18 @@ public class BasisObjektarten
         }
     }
 
+    public boolean isAbscheider()
+    {
+        if (ABSCHEIDER == this.getObjektartid().intValue())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
     /** Liefert <code>true</code>, wenn diese Objektart "Chemische Wäscherei" ist */
     public boolean isAnh52() {

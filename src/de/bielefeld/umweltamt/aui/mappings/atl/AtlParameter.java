@@ -294,6 +294,7 @@ public class AtlParameter
                     "or param.bezeichnung like 'Fluorid (F)'" +
                     "or param.bezeichnung like 'CSB'" +
                     "or param.bezeichnung like 'BSB 5'" +
+                    "or param.bezeichnung like 'Verseifbare Öle und Fette'" +
                     "order by param.bezeichnung")
                     .list();
 

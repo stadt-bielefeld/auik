@@ -37,7 +37,8 @@ public class BasisStandortModel extends ListTableModel {
                 /*"St.ID",*/
                 "Straße",
                 "Hausnr.",
-        "PLZ"}, true);
+        		"PLZ",
+        		"Entw.-Gebiet"}, true);
     }
 
     /**
@@ -99,6 +100,9 @@ public class BasisStandortModel extends ListTableModel {
                 break;
             case 2:
                 value = bsta.getPlz();
+                break;
+            case 3:
+                value = bsta.getEntgebid();
                 break;
             default:
                 value = null;

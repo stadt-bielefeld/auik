@@ -495,6 +495,13 @@ public class BasisPanel  extends JPanel {
                 getArtBox().addItem(BasisObjektarten.getObjektart(17)); //Anhang 53 (<3000) (360.33)
                 getArtBox().addItem(BasisObjektarten.getObjektart(18));    // Anhang 53 (>3000) (360.33)
             }
+            
+            else if (hauptModul.getObjekt().getBasisObjektarten().isAnh49() | hauptModul.getObjekt().getBasisObjektarten().isFettabscheider() | hauptModul.getObjekt().getBasisObjektarten().isAbscheider())
+            {
+                getArtBox().addItem(BasisObjektarten.getObjektart(14)); // Anhang 49 (360.33)
+                getArtBox().addItem(BasisObjektarten.getObjektart(19)); // Abscheider (360.33)
+                getArtBox().addItem(BasisObjektarten.getObjektart(15)); // Fettabscheider (360.33)
+            }
 
             else
             {

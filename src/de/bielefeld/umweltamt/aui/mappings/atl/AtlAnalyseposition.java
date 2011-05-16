@@ -267,7 +267,7 @@ public class AtlAnalyseposition
 
         for (Iterator it = probe.getAtlAnalysepositionen().iterator(); it.hasNext();) {
             AtlAnalyseposition pos = (AtlAnalyseposition) it.next();
-            if (pos.getAtlParameter().equals(param)) {
+            if ((pos.getAtlParameter().getOrdnungsbegriff().equals(param.getOrdnungsbegriff()))) {
                 proben.add(pos);
             }
         }

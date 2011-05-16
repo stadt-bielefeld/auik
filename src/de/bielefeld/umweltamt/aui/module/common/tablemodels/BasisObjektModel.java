@@ -73,7 +73,7 @@ public class BasisObjektModel extends ListTableModel {
                 break;
             case 1:
                 if ("Standort".equals(secondColumn)) {
-                    tmp = bo.getBasisStandort();
+                    tmp = bo.getBasisStandort() + " (" + bo.getBasisStandort().getEntgebid() + ")";
                 } else if ("Betreiber".equals(secondColumn)) {
                     tmp = bo.getBasisBetreiber();
                 } else {
