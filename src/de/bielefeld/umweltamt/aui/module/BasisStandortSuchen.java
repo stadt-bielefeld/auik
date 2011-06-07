@@ -940,7 +940,7 @@ public class BasisStandortSuchen extends AbstractModul {
                     int row = standortTabelle.getSelectedRow();
                     BasisStandort bsta = standortModel.getRow(row);
 
-                    ProcessBuilder pb = new ProcessBuilder(prog, proj);
+                    ProcessBuilder pb = new ProcessBuilder("cmd", "/K", prog, proj);
 
                     Map<String, String> env = pb.environment();
                     env.put( "RECHTS", bsta.getRechtswert().toString() );

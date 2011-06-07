@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
 
     <class name="Anh49Ortstermine" table="anh_49_ortstermine">
         <id name="ortsterminid" type="java.lang.Integer">

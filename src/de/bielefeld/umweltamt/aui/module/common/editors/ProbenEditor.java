@@ -207,7 +207,10 @@ public class ProbenEditor extends AbstractApplyEditor {
             } else {
                 //AUIKataster.debugOutput("Bearbeite neue Probe! Positionen leer.");
                 //positionen = new HashSet();
-                setList(new ArrayList());
+            	setList(new ArrayList());
+            	addParameter(AtlParameter.getParameter("L10821"));
+            	addParameter(AtlParameter.getParameter("B00600"));
+            	addParameter(AtlParameter.getParameter("L10111"));
             }
 
             fireTableDataChanged();
@@ -481,7 +484,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private JFileChooser         dateiChooser;
     private JLabel               betrieb;
     private JLabel               entnahmepunkt;
-    private JFormattedTextField  icpEinwaageFeld;
+    private DoubleField			 icpEinwaageFeld;
     private TextFieldDateChooser icpDatum;
     private JTable               parameterTabelle;
 
@@ -1223,10 +1226,11 @@ public class ProbenEditor extends AbstractApplyEditor {
         for (int i = 0; i < anzahl; i++) {
             BasisSachbearbeiter b = (BasisSachbearbeiter) model.getElementAt(i);
 
-            if (b.getName().equals(sb)) {
+            if (b.getKennummer().equals(sb)) {
                 sachbearbeiter.setSelectedItem(b);
                 return;
             }
+            else sachbearbeiter.setSelectedIndex(-1);
         }
     }
 
@@ -1340,7 +1344,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         BasisSachbearbeiter b = (BasisSachbearbeiter)
             sachbearbeiter.getSelectedItem();
         if (b != null) {
-            probe.setSachbearbeiter(b.getName());;
+            probe.setSachbearbeiter(b.getKennummer());;
         }
 
         // Kennnummer
@@ -1349,6 +1353,17 @@ public class ProbenEditor extends AbstractApplyEditor {
             probe.setKennummer(kennnummer);
         }
 
+        // ICP
+        Date  icpDate = icpDatum.getDate();
+        if (icpDate != null) {
+            probe.setDatumIcp(icpDate);
+        }
+        
+        Double einwaage = icpEinwaageFeld.getDoubleValue();
+        if (einwaage != null) {
+            probe.setEinwaage(new Float(einwaage));
+        }
+        
         // Bemerkung
         String newBemerkung = bemerkungsArea.getText();
         if (newBemerkung != null) {
@@ -1413,6 +1428,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("ende", uhrzeitBis.getText());
         params.put("fahrtzeit", fahrtzeit.getText());
         params.put("entnahmestelle", entnahmepunkt.getText());
+        params.put("bemerkungen", bemerkungsArea.getText());
 
         BasisSachbearbeiter sb = (BasisSachbearbeiter)
             sachbearbeiter.getSelectedItem();
@@ -1421,7 +1437,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         if (sb != null) {
             info.append(sb.getName());
             info.append(", ");
-            info.append(sb.getKennummer());
+            info.append(sb.getGehoertzuarbeitsgr());
             info.append(", ");
             info.append(sb.getTelefon());
         }

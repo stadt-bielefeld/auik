@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis" schema="auik">
 
     <class name="BasisObjekt" table="basis_objekt" lazy="false">
         <id name="objektid" type="java.lang.Integer">

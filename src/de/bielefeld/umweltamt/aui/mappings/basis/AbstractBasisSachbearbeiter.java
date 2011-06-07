@@ -58,7 +58,7 @@ public abstract class AbstractBasisSachbearbeiter
     private java.lang.String pfadspeichern;
 
     /** The value of the simple gehoertzuarbeitsgr property. */
-    private java.lang.Integer gehoertzuarbeitsgr;
+    private java.lang.String gehoertzuarbeitsgr;
 
     /**
      * Simple constructor of AbstractBasisSachbearbeiter instances.
@@ -243,7 +243,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the value of the Gehoertzuarbeitsgr column.
      * @return java.lang.Integer
      */
-    public java.lang.Integer getGehoertzuarbeitsgr()
+    public java.lang.String getGehoertzuarbeitsgr()
     {
         return this.gehoertzuarbeitsgr;
     }
@@ -252,7 +252,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Set the value of the Istadministrator column.
      * @param gehoertzuarbeitsgr
      */
-    public void setGehoertzuarbeitsgr(java.lang.Integer gehoertzuarbeitsgr)
+    public void setGehoertzuarbeitsgr(java.lang.String gehoertzuarbeitsgr)
     {
         this.gehoertzuarbeitsgr = gehoertzuarbeitsgr;
     }

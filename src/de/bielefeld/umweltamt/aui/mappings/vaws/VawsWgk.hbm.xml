@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws" schema="auik">
 
     <class name="VawsWgk" table="vaws_wgk">
          <id name="id" column="id" type="java.lang.Integer">

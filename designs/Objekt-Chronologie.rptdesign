@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.2" id="1">
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.17" id="1">
     <property name="author">Colin Atkins</property>
-    <property name="createdBy">Eclipse BIRT Designer Version 2.1.0.N20060628-1351 Build &lt;20060628-1537></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 2.3.2.r232_20090202 Build &lt;@BUILD@></property>
     <property name="units">mm</property>
     <property name="comments">Copyright (c) 2006 &lt;&lt;Your Company Name here>></property>
     <parameters>
         <scalar-parameter name="ObjektId" id="149">
             <property name="valueType">static</property>
             <property name="dataType">string</property>
-            <property name="isRequired">true</property>
+            <property name="isRequired">false</property>
             <property name="controlType">text-box</property>
             <property name="defaultValue">450</property>
             <structure name="format">
@@ -18,6 +18,7 @@
         <scalar-parameter name="Betreiber" id="232">
             <property name="valueType">static</property>
             <property name="dataType">string</property>
+            <property name="isRequired">false</property>
             <property name="controlType">text-box</property>
             <structure name="format">
                 <property name="category">Unformatted</property>
@@ -26,6 +27,7 @@
         <scalar-parameter name="Standort" id="233">
             <property name="valueType">static</property>
             <property name="dataType">string</property>
+            <property name="isRequired">false</property>
             <property name="controlType">text-box</property>
             <structure name="format">
                 <property name="category">Unformatted</property>
@@ -34,6 +36,7 @@
         <scalar-parameter name="Art" id="234">
             <property name="valueType">static</property>
             <property name="dataType">string</property>
+            <property name="isRequired">false</property>
             <property name="controlType">text-box</property>
             <structure name="format">
                 <property name="category">Unformatted</property>
@@ -43,10 +46,10 @@
     <data-sources>
         <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="auik" id="413">
             <text-property name="displayName">auik</text-property>
-            <property name="odaDriverClass">com.informix.jdbc.IfxDriver</property>
-            <property name="odaURL">jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi</property>
-            <property name="odaUser">vaws</property>
-            <encrypted-property name="odaPassword">VmF3czAw</encrypted-property>
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://172.20.70.24/fisumwelt</property>
+            <property name="odaUser">auikread</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">cmVhZGVyMQ==</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -161,7 +164,7 @@
             <page-footer>
                 <text id="3">
                     <property name="contentType">html</property>
-                    <text-property name="content"><![CDATA[<span style="font-family: Arial;">&copy; Copyright 2006 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
+                    <text-property name="content"><![CDATA[<span style="font-family: Arial;">&amp;copy; Copyright 2006 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
                 </text>
             </page-footer>
         </simple-master-page>
@@ -328,6 +331,7 @@
                     <property name="dataType">string</property>
                 </structure>
             </list-property>
+            <property name="pageBreakInterval">50</property>
             <column id="380">
                 <property name="width">1.187in</property>
             </column>

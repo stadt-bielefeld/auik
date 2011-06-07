@@ -412,7 +412,35 @@ public class AtlAnalyseposition
     }
 
 
-    public static List getSielhautpos(String param,  Integer pkt, Date anfang, Date ende) {
+    // Liefert eine Liste der Parameter, die immer bestimmt werden.
+	public static List getVorOrtParameter() {
+	
+	    String query =
+	        "from AtlAnalyseposition as pos " +
+	        "where pos.atlParameter.ordnungsbegriff = 'L10821' " ;
+	
+	        List param;
+	     try {
+	        Session session = HibernateSessionFactory.currentSession();
+	
+	
+	
+	        param = session.createQuery(
+	                query)
+	                .list();
+	
+	
+	
+	    } catch (HibernateException e) {
+	        throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
+	    } finally {
+	        HibernateSessionFactory.closeSession();
+	    }
+	
+	    return param;
+	}
+
+	public static List getSielhautpos(String param,  Integer pkt, Date anfang, Date ende) {
         AUIKataster.debugOutput("Suche (HQL): p:" + param+ ", pkt:" + pkt + ", bD:"+anfang+", eD:"+ende+", aV:'", "AtlAnalyseposition");
         List proben;
         proben = null;

@@ -150,7 +150,7 @@ public class SettingsManager {
         defaults.setProperty("auik.birt.enginepath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\birt-runtime-2_3_2\\ReportEngine\\");
         defaults.setProperty("auik.birt.reportpath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\designs\\");
 
-        defaults.setProperty("auik.gis.programmpath", "C:\\appz\\qgis\\bin\\qgis.exe\\");
+        defaults.setProperty("auik.gis.programmpath", "C:\\appz\\qgis\\bin\\qgis.bat.lnk");
         defaults.setProperty("auik.gis.projectpath", "D:\\\\data\\qgis\\MyProject.qgs");
         defaults.setProperty("auik.probenahme.auftraege", "D:\\Data\\auik\\auftraege");
         defaults.setProperty("auik.probenahme.bescheide", "D:\\Data\\auik\\bescheide");

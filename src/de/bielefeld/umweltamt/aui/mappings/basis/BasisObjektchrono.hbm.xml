@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09.04.2008 14:16:11 by Hibernate Tools 3.1.0.beta5 -->
 
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis" schema="auik">
 
     <class name="BasisObjektchrono" table="basis_objektchrono">
         <id name="id" type="java.lang.Integer">

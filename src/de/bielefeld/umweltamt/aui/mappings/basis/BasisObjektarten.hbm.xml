@@ -5,7 +5,7 @@
 <!-- DO NOT EDIT: This is a generated file that is synchronized -->
 <!-- by MyEclipse Hibernate tool integration.                   -->
 <!-- Created Wed Jan 19 10:44:46 CET 2005                         -->
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis" schema="auik">
 
     <class name="BasisObjektarten" table="basis_objektarten" lazy="false" mutable="false">
         <id name="objektartid" column="id" type="java.lang.Integer">

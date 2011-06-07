@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 01.09.2008 14:20:15 by Hibernate Tools 3.2.0.beta8 -->
 
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl">
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
 
     <class name="IndeinlUebergabestelle" table="indeinl_uebergabestelle">
         <id name="objektid" type="int">

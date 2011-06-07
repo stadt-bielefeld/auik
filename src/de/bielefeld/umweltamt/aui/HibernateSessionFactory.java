@@ -186,7 +186,7 @@ public class HibernateSessionFactory {
             Session session = currentSession();
             // TODO: Vielleicht etwas allgemeineren Test finden?
             List test = session.createSQLQuery(
-                    "select strasse from basis_strassen where id=5"
+                    "select strasse from auik.basis_strassen where id=5"
             ).list();
 
             tmp = true;

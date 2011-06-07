@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis">
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis" schema="auik">
 
     <class name="BasisSachbearbeiter" table="basis_sachbearbeiter" lazy="false" mutable="false">
         <id name="kennummer" column="kennummer" type="java.lang.String">
@@ -16,7 +16,7 @@
         <property name="email" column="email" type="java.lang.String" />
         <property name="istadministrator" column="istadministrator" type="java.lang.Boolean" />
         <property name="pfadspeichern" column="pfadspeichern" type="java.lang.String" />
-        <property name="gehoertzuarbeitsgr" column="gehoertzuarbeitsgr" type="java.lang.Integer" />
+        <property name="gehoertzuarbeitsgr" column="gehoertzuarbeitsgr" type="java.lang.String" />
     </class>
 
 </hibernate-mapping>

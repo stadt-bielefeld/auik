@@ -108,9 +108,9 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 
             Session session = HibernateSessionFactory.currentSession();
             anhang49 = session.createQuery(query)
-                    .setString(0, abgemeldet.booleanValue() ? "t" : "f")
+                    .setBoolean(0, abgemeldet)
                     .setString(1, abgr)
-                    .setString(2, abwasserfrei.booleanValue() ? "t" : "f")
+                    .setBoolean(2, abwasserfrei)
                     .setDate(3, today).list();
             HibernateSessionFactory.closeSession();
 
@@ -120,9 +120,9 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 
             Session session = HibernateSessionFactory.currentSession();
             anhang49 = session.createQuery(query)
-                    .setString(0, abgemeldet.booleanValue() ? "t" : "f")
+                    .setBoolean(0, abgemeldet)
                     .setString(1, abgr)
-                    .setString(2, abwasserfrei.booleanValue() ? "t" : "f")
+                    .setBoolean(2, abwasserfrei)
                     .list();
             HibernateSessionFactory.closeSession();
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.14" id="1">
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.17" id="1">
     <property name="author">Colin Atkins</property>
-    <property name="createdBy">Eclipse BIRT Designer Version 2.1.0.N20060628-1351 Build &lt;20060628-1537></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 2.3.2.r232_20090202 Build &lt;@BUILD@></property>
     <property name="units">mm</property>
     <property name="comments">Copyright (c) 2006 &lt;&lt;Your Company Name here>></property>
     <parameters>
@@ -46,10 +46,10 @@
     <data-sources>
         <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="auik" id="413">
             <text-property name="displayName">AUIK_INF</text-property>
-            <property name="odaDriverClass">com.informix.jdbc.IfxDriver</property>
-            <property name="odaURL">jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi</property>
-            <property name="odaUser">vaws</property>
-            <encrypted-property name="odaPassword">VmF3czAw</encrypted-property>
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://172.20.70.24/fisumwelt</property>
+            <property name="odaUser">auikread</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">cmVhZGVyMQ==</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -786,7 +786,7 @@ order by pruefdatum ASC</property>
             <page-footer>
                 <text id="3">
                     <property name="contentType">html</property>
-                    <text-property name="content"><![CDATA[<span style="font-family: Arial;">&copy; Copyright 2006 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
+                    <text-property name="content"><![CDATA[<span style="font-family: Arial;">&amp;copy; Copyright 2006 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: <value-of>new Date()</value-of></span>]]></text-property>
                 </text>
             </page-footer>
         </simple-master-page>
@@ -1375,6 +1375,7 @@ order by pruefdatum ASC</property>
                     <property name="dataType">string</property>
                 </structure>
             </list-property>
+            <property name="pageBreakInterval">50</property>
             <column id="348">
                 <property name="width">1.208in</property>
             </column>
@@ -1556,13 +1557,17 @@ order by pruefdatum ASC</property>
                                 <structure>
                                     <expression name="testExpr">row["pruefungabgeschlossen"]</expression>
                                     <property name="operator">eq</property>
-                                    <expression name="value1">"f"</expression>
+                                    <simple-property-list name="value1">
+                                        <value>"f"</value>
+                                    </simple-property-list>
                                     <text-property name="display">nein</text-property>
                                 </structure>
                                 <structure>
                                     <expression name="testExpr">row["pruefungabgeschlossen"]</expression>
                                     <property name="operator">eq</property>
-                                    <expression name="value1">"t"</expression>
+                                    <simple-property-list name="value1">
+                                        <value>"t"</value>
+                                    </simple-property-list>
                                     <text-property name="display">ja</text-property>
                                 </structure>
                                 <structure>

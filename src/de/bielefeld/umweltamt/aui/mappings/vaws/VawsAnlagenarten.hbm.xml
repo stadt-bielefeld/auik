@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws">
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws" schema="auik">
 
     <class name="VawsAnlagenarten" table="vaws_anlagenarten">
         <id name="id" column="id" type="java.lang.Integer">

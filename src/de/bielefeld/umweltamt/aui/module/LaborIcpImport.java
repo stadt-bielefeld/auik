@@ -159,7 +159,7 @@ public class LaborIcpImport extends AbstractModul {
                 if (count == 0 && !line.startsWith("Solution Label")) {
                     throw new IOException("Datei ist kein ICP-Export!");
                 }
-                String[] tmp = line.split("    ");
+                String[] tmp = line.split("\t");
                 if (!(tmp.length == 18 || tmp.length == 15)) {
                     throw new IOException("Datei ist beschädigt!");
                 }

@@ -413,7 +413,7 @@ public class AtlProbenahmen
             Session session = HibernateSessionFactory.currentSession();
             AtlProbenahmen newProbe = (AtlProbenahmen) session.get(AtlProbenahmen.class, probe.getId());
             //Hibernate.initialize(probe.getAtlAnalysepositionen());
-            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(), "order by lower(this.atlParameter.bezeichnung) asc, this.atlEinheiten.id desc, this.wert desc")
+            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(), "order by this.atlParameter.bezeichnung asc, this.atlEinheiten.id desc, this.wert desc")
                 .list();
 
             //AUIKataster.debugOutput("Sorted (Klasse: "+sortedPositionen.getClass()+"):\n " + sortedPositionen);
