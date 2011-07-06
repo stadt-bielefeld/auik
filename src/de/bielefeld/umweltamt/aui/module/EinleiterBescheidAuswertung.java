@@ -74,7 +74,10 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
     private JPanel queryPanel;
 
     // Widgets für die Abfrage
-    private JButton submitButton;
+    private JButton bescheidButton;
+    private JButton eingetragenButton;
+    private JButton ergaenztButton;
+    private JButton angelegtButton;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private BescheidModel tmodel;
@@ -83,7 +86,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
     public String getName() {
-        return "Gebührenbescheid";
+        return "E-Satzung";
     }
 
     /*
@@ -100,11 +103,14 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren
-            submitButton = new JButton("Alle Objekte anzeigen");
+        	bescheidButton = new JButton("Gebührenbescheid");
+        	eingetragenButton = new JButton("Daten eingetragen");
+        	ergaenztButton = new JButton("ergänzt und freigegeben");
+        	angelegtButton = new JButton("Auftrag gedruckt");
 
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
-            submitButton.addActionListener(new ActionListener() {
+        	bescheidButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         protected void doNonUILogic() {
@@ -119,13 +125,61 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     worker.start();
                 }
             });
+        	
+        	eingetragenButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        protected void doNonUILogic() {
+                            ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findEingetragen());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((BescheidModel)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+        	
+        	ergaenztButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        protected void doNonUILogic() {
+                            ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findEingetragen());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((BescheidModel)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+        	
+        	angelegtButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        protected void doNonUILogic() {
+                            ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findAngelegt());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((BescheidModel)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref");
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(submitButton);
-
+            builder.append(bescheidButton, eingetragenButton);
+            builder.append(ergaenztButton, angelegtButton);
             queryPanel = builder.getPanel();
         }
 

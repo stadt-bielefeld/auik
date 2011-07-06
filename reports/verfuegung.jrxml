@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -183,31 +183,31 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{kassenzeichen}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="-10" y="276" width="9" height="6" backcolor="#000000"/>
+				<reportElement x="-13" y="276" width="9" height="6" backcolor="#000000"/>
 			</rectangle>
 			<image>
 				<reportElement x="146" y="1" width="185" height="65"/>
 				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid.png"]]></imageExpression>
 			</image>
 			<rectangle>
-				<reportElement x="-10" y="118" width="9" height="6" backcolor="#000000"/>
+				<reportElement x="-13" y="118" width="9" height="6" backcolor="#000000"/>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="117" width="156" height="12"/>
+				<reportElement x="0" y="117" width="291" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="130" width="156" height="12"/>
+				<reportElement x="-1" y="130" width="292" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="143" width="156" height="12"/>
+				<reportElement x="0" y="143" width="291" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -225,7 +225,7 @@
 				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="-27" y="117" width="17" height="12"/>
+				<reportElement x="-30" y="117" width="17" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans"/>
 				</textElement>
@@ -271,7 +271,7 @@
 			<textField>
 				<reportElement x="408" y="69" width="60" height="12"/>
 				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{personalsachkosten}]]></textFieldExpression>
 			</textField>
@@ -331,7 +331,7 @@
 			<textField>
 				<reportElement x="408" y="0" width="60" height="12"/>
 				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{analysekosten}]]></textFieldExpression>
 			</textField>
@@ -352,7 +352,7 @@
 			<textField>
 				<reportElement x="408" y="22" width="60" height="12"/>
 				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="10" isBold="true" isUnderline="false"/>
+					<font fontName="DejaVu Sans" size="9" isBold="true" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{gesamtkosten}]]></textFieldExpression>
 			</textField>
@@ -398,9 +398,9 @@
 				</reportElement>
 			</break>
 		</band>
-		<band height="90">
+		<band height="115">
 			<staticText>
-				<reportElement x="0" y="14" width="483" height="73"/>
+				<reportElement x="0" y="14" width="483" height="101"/>
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isUnderline="false"/>
 				</textElement>
@@ -415,9 +415,9 @@ Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten
 				<text><![CDATA[Rechtsbehelfsbelehrung:]]></text>
 			</staticText>
 		</band>
-		<band height="55">
+		<band height="58">
 			<staticText>
-				<reportElement x="0" y="0" width="483" height="52"/>
+				<reportElement x="0" y="0" width="483" height="56"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
@@ -481,51 +481,52 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<text><![CDATA[I. A.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="175" width="336" height="12"/>
+				<reportElement x="0" y="155" width="336" height="10"/>
 				<textElement>
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
 				<text><![CDATA[2. Annahme-AO per File-Transfer-Kasse]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="187" width="100" height="12"/>
+				<reportElement x="0" y="165" width="100" height="10"/>
 				<textElement>
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
 				<text><![CDATA[3. SAP-GP-Nr.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="199" width="100" height="12"/>
+				<reportElement x="0" y="175" width="100" height="10"/>
 				<textElement>
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
 				<text><![CDATA[4. SAP-Beleg-Nr.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="211" width="100" height="12"/>
+				<reportElement x="0" y="185" width="100" height="10"/>
 				<textElement>
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
 				<text><![CDATA[5. z.d.A.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="105" y="187" width="100" height="12"/>
+				<reportElement x="105" y="165" width="100" height="10"/>
 				<textElement>
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
-				<text><![CDATA[110_______]]></text>
+				<text><![CDATA[110 _ _ _ _ _ _ _]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="105" y="199" width="100" height="12"/>
+				<reportElement x="105" y="175" width="100" height="10"/>
 				<textElement>
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
-				<text><![CDATA[1200_______]]></text>
+				<text><![CDATA[1200 _ _ _ _ _ _ _]]></text>
 			</staticText>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 			<staticText>
 				<reportElement x="346" y="17" width="66" height="9"/>
 				<textElement>
@@ -643,7 +644,7 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<text><![CDATA[Aus Gründen der Gleichbehandlung wird bei Probenahmen im Bielefelder Stadtgebiet für An- und Abfahrt einschl. Transport der Proben zum Labor pauschal 1 Stunde berechnet.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="8" y="5" width="12" height="25"/>
+				<reportElement x="13" y="1" width="5" height="25"/>
 				<textElement/>
 				<text><![CDATA[¹]]></text>
 			</staticText>

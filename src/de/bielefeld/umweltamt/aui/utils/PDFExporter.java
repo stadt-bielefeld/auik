@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -98,6 +99,7 @@ public class PDFExporter {
             new JREmptyDataSource(1));
 
         JasperExportManager.exportReportToPdfFile(print, dest);
+        AuikUtils.spawnFileProg(new File(dest));
 
         return print;
     }
@@ -186,7 +188,7 @@ public class PDFExporter {
             JasperPrint jprint = export(fields, inputStream, dest);
 
             if (printPDF) {
-                print(jprint);
+//                print(jprint);
             }
 
             return jprint;

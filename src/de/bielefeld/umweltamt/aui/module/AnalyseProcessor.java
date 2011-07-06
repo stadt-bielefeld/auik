@@ -33,6 +33,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 
 
 /**
@@ -88,9 +89,11 @@ public class AnalyseProcessor {
             parameter, einheit);
 
         if (pos != null) {
+        	
             pos.setWert(Float.parseFloat(wert));
             pos.setGrkl(grkl);
 
+            probe.setAtlStatus(new AtlStatus(10));
             AtlProbenahmen.updateProbenahme(probe);
         }
 
@@ -101,13 +104,13 @@ public class AnalyseProcessor {
     /**
      * Diese Funktion liefert einen Teilstring einer Eingabe.
      *
-     * @param raw Ein String, der als erstes und letztes Zeichen ein einfaches
+     * @param raw Ein String, der als erstes oder letztes Zeichen einen einfachen
      * Anf&uuml;hrungsstrich besitzt.
      *
-     * @return Den Eingabestring ohne erstes und letztes Zeichen.
+     * @return Den Eingabestring ohne einfachen Anf&uuml;hrungsstrich.
      */
     public static String unquote(String raw) {
-        return raw.substring(1, raw.length()-1);
+        return raw.replace("'", "");
     }
 
 

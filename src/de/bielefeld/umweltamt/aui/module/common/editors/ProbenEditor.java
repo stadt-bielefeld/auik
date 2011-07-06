@@ -132,6 +132,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.AutoCompletion;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -141,6 +142,7 @@ import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
+import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
@@ -1143,7 +1145,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         // mit ComboBoxCelleditor und Java 1.5
         //parameterBox.setKeySelectionManager(new MyKeySelectionManager());
         //AutoCompletion.enable(parameterBox);
-        parameterBox.setBorder(BorderFactory.createEmptyBorder());
+        //parameterBox.setBorder(BorderFactory.createEmptyBorder());
         parameterBox.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {
                 parameterBox.showPopup();

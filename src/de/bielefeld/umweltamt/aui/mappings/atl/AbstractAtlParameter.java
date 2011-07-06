@@ -43,6 +43,7 @@ public class AbstractAtlParameter  implements java.io.Serializable {
      private AtlParameterGruppen atlParameterGruppe;
      private String kennzeichnung;
      private String konservierung;
+     private Integer reihenfolge;
 
     public AbstractAtlParameter() {
     }
@@ -51,7 +52,7 @@ public class AbstractAtlParameter  implements java.io.Serializable {
     public AbstractAtlParameter(String ordnungsbegriff) {
         this.ordnungsbegriff = ordnungsbegriff;
     }
-    public AbstractAtlParameter(String ordnungsbegriff, String analyseverfahren, String bezeichnung, Integer wirdgemessenineinheit, Double grenzwert, String grenzwertname, Double sielhautGw, Double klaerschlammGw, Double preisfueranalyse, Boolean einzelnBeauftragbar, AtlParameterGruppen atlParameterGruppe) {
+    public AbstractAtlParameter(String ordnungsbegriff, String analyseverfahren, String bezeichnung, Integer wirdgemessenineinheit, Double grenzwert, String grenzwertname, Double sielhautGw, Double klaerschlammGw, Double preisfueranalyse, Boolean einzelnBeauftragbar, String kennzeichnung, String konservierung, Integer reihenfolge, AtlParameterGruppen atlParameterGruppe) {
        this.ordnungsbegriff = ordnungsbegriff;
        this.analyseverfahren = analyseverfahren;
        this.bezeichnung = bezeichnung;
@@ -65,6 +66,7 @@ public class AbstractAtlParameter  implements java.io.Serializable {
        this.atlParameterGruppe = atlParameterGruppe;
        this.kennzeichnung = kennzeichnung;
        this.konservierung = konservierung;
+       this.reihenfolge = reihenfolge;
     }
    
     public String getOrdnungsbegriff() {
@@ -158,6 +160,13 @@ public class AbstractAtlParameter  implements java.io.Serializable {
     
     public void setKonservierung(String konservierung) {
         this.konservierung = konservierung;
+    }
+    public Integer getReihenfolge() {
+        return this.reihenfolge;
+    }
+    
+    public void setReihenfolge(Integer reihenfolge) {
+        this.reihenfolge = reihenfolge;
     }
 
 }

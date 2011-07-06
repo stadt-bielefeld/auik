@@ -20,6 +20,7 @@
         <property name="einzelnBeauftragbar" column="einzelnBeauftragbar" type="java.lang.Boolean" />
         <property name="kennzeichnung" column="kennzeichnung" type="java.lang.String" />
         <property name="konservierung" column="konservierung" type="java.lang.String" />
+        <property name="reihenfolge" column="reihenfolge" type="java.lang.Integer" />
 
         <many-to-one name="atlParameterGruppe" column="parametergruppe_id" class="AtlParameterGruppen" />
     </class>

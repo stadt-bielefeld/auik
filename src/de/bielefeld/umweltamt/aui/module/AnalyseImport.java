@@ -300,7 +300,7 @@ public class AnalyseImport extends AbstractModul {
                         continue;
                     }
 
-                    String[] columns = line.split(",");
+                    String[] columns = line.split("','");
 
                     if (columns == null) {
                         AUIKataster.errorOutput(

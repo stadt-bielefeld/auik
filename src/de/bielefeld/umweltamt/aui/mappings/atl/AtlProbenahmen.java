@@ -214,6 +214,57 @@ public class AtlProbenahmen
         return proben;
     }
 
+    public static List findEingetragen() {
+        List proben;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            proben = session.createQuery(
+                    "from AtlProbenahmen as pn where " +
+                    "pn.atlStatus.id = 10 " +
+                    "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+                    .list();
+            HibernateSessionFactory.closeSession();
+
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler", e);
+        }
+        return proben;
+    }
+
+    public static List findErgaenzt() {
+        List proben;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            proben = session.createQuery(
+                    "from AtlProbenahmen as pn where " +
+                    "pn.atlStatus.id = 9 " +
+                    "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+                    .list();
+            HibernateSessionFactory.closeSession();
+
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler", e);
+        }
+        return proben;
+    }
+
+    public static List findAngelegt() {
+        List proben;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            proben = session.createQuery(
+                    "from AtlProbenahmen as pn where " +
+                    "pn.atlStatus.id = 8 " +
+                    "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+                    .list();
+            HibernateSessionFactory.closeSession();
+
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler", e);
+        }
+        return proben;
+    }
+
     /**
      * überprüft ob eine Probenahme mit einer bestimmten Kennnummer existiert.
      * @param kennnummer Die Kennnummer.
@@ -413,7 +464,31 @@ public class AtlProbenahmen
             Session session = HibernateSessionFactory.currentSession();
             AtlProbenahmen newProbe = (AtlProbenahmen) session.get(AtlProbenahmen.class, probe.getId());
             //Hibernate.initialize(probe.getAtlAnalysepositionen());
-            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(), "order by this.atlParameter.bezeichnung asc, this.atlEinheiten.id desc, this.wert desc")
+            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(), 
+            		"order by this.atlParameter.reihenfolge")
+                .list();
+
+            //AUIKataster.debugOutput("Sorted (Klasse: "+sortedPositionen.getClass()+"):\n " + sortedPositionen);
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler (AtlAnalysepos.)", e);
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return sortedPositionen;
+    }
+
+    public static List sortExterneAnalysepositionen(AtlProbenahmen probe) {
+        List sortedPositionen;
+
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            AtlProbenahmen newProbe = (AtlProbenahmen) session.get(AtlProbenahmen.class, probe.getId());
+            //Hibernate.initialize(probe.getAtlAnalysepositionen());
+            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(), 
+            		"where this.atlParameter.bezeichnung not like ? " + 
+            		"order by this.atlParameter.bezeichnung asc, this.atlEinheiten.id desc, this.wert desc")
+            	.setString(0, new String("%bei Probenahme"))
                 .list();
 
             //AUIKataster.debugOutput("Sorted (Klasse: "+sortedPositionen.getClass()+"):\n " + sortedPositionen);
@@ -428,7 +503,7 @@ public class AtlProbenahmen
 
 
     public static JRMapDataSource getAuftragDataSource(AtlProbenahmen probe) {
-        List sorted   = sortAnalysepositionen(probe);
+        List sorted   = sortExterneAnalysepositionen(probe);
         int  elements = sorted.size();
 
         Object[][] values  = new Object[elements][];

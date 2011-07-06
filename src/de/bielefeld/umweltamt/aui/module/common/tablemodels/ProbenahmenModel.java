@@ -41,6 +41,8 @@ public class ProbenahmenModel extends ListTableModel {
                 "Kennnummer",
                 secondColumn,
                 "Datum",
+                "Status",
+                "Firma",
                 "Bemerkung"}, false, true);
         this.secondColumn = secondColumn;
     }
@@ -114,6 +116,15 @@ public class ProbenahmenModel extends ListTableModel {
                     value = AuikUtils.getStringFromDate(probe.getDatumDerEntnahme());
                     break;
                 case 3:
+                	if (probe.getAtlStatus() != null)
+                		value = probe.getAtlStatus().getBezeichnung();
+                	else
+                		value = "";
+                    break;
+                case 4:
+                    value = probe.getBasisObjekt().getBasisBetreiber();
+                    break;
+                case 5:
                     value = probe.getBemerkung();
                     break;
                 default:

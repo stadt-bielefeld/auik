@@ -554,4 +554,31 @@ public class AtlAnalyseposition
 
         return saved;
     }
+
+    public static boolean removeAnalyseposition(AtlAnalyseposition pos) {
+        boolean success;
+
+        Transaction tx = null;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            tx = session.beginTransaction();
+            session.delete(pos);
+            tx.commit();
+            success = true;
+        } catch (HibernateException e) {
+            success = false;
+            e.printStackTrace();
+            if (tx != null) {
+                try {
+                    tx.rollback();
+                } catch (HibernateException e1) {
+                    AUIKataster.handleDBException(e1, "Analyseposition.objectRemoved", false);
+                }
+            }
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return success;
+    }
 }

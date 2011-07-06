@@ -265,7 +265,7 @@ public class AtlParameter
             				+ "where param.atlParameterGruppe.id = 1"
             				+ "or param.atlParameterGruppe.id = 2"
             				+ "or param.atlParameterGruppe.id = 3"
-                            + "order by param.atlParameterGruppe, param.bezeichnung").list();
+                            + "order by param.reihenfolge").list();
         } catch (HibernateException e) {
             e.printStackTrace();
         } finally {
@@ -295,7 +295,7 @@ public class AtlParameter
                     "or param.bezeichnung like 'CSB'" +
                     "or param.bezeichnung like 'BSB 5'" +
                     "or param.bezeichnung like 'Verseifbare Öle und Fette'" +
-                    "order by param.bezeichnung")
+                    "order by param.reihenfolge")
                     .list();
 
             tmp = new AtlParameter[parameter.size()];

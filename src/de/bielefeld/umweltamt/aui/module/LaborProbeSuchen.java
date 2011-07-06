@@ -358,10 +358,12 @@ public class LaborProbeSuchen extends AbstractModul {
             probeTabelle = new JTable(probeModel);
 
             probeTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-            probeTabelle.getColumnModel().getColumn(0).setPreferredWidth(30);
+            probeTabelle.getColumnModel().getColumn(0).setPreferredWidth(15);
             probeTabelle.getColumnModel().getColumn(1).setPreferredWidth(45);
-            probeTabelle.getColumnModel().getColumn(2).setPreferredWidth(30);
-            probeTabelle.getColumnModel().getColumn(3).setPreferredWidth(200);
+            probeTabelle.getColumnModel().getColumn(2).setPreferredWidth(15);
+            probeTabelle.getColumnModel().getColumn(3).setPreferredWidth(100);
+            probeTabelle.getColumnModel().getColumn(4).setPreferredWidth(200);
+            probeTabelle.getColumnModel().getColumn(5).setPreferredWidth(200);
 
             probeTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             probeTabelle.setColumnSelectionAllowed(false);

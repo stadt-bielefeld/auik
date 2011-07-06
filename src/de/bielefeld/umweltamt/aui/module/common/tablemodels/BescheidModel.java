@@ -56,6 +56,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 public class BescheidModel extends ListTableModel {
     public BescheidModel() {
         super(new String[]{
+                "Kennummer",
                 "Betreiber",
                 "Standort",
                 "Bemerkungen"
@@ -72,12 +73,15 @@ public class BescheidModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
+            tmp = fd.getKennummer();
             break;
         case 1:
             tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisStandort();
             break;
         case 2:
+            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
+            break;
+        case 3:
             tmp = fd.getBemerkung();
             break;
 
