@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -20,7 +20,9 @@
 	<parameter name="personalsachkosten" class="java.lang.String"/>
 	<parameter name="entnahmestelle" class="java.lang.String"/>
 	<parameter name="analysekosten" class="java.lang.String"/>
+	<parameter name="firmaAnrede" class="java.lang.String"/>
 	<parameter name="firmaName" class="java.lang.String"/>
+	<parameter name="firmaNameZus" class="java.lang.String"/>
 	<parameter name="firmaStrasse" class="java.lang.String"/>
 	<parameter name="firmaOrt" class="java.lang.String"/>
 	<background>
@@ -192,27 +194,6 @@
 			<rectangle>
 				<reportElement x="-13" y="118" width="9" height="6" backcolor="#000000"/>
 			</rectangle>
-			<textField>
-				<reportElement x="0" y="117" width="291" height="12"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaName}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="-1" y="130" width="292" height="12"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="143" width="291" height="12"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaOrt}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="3" y="98" width="156" height="13"/>
 				<textElement>
@@ -238,6 +219,41 @@
 				</textElement>
 				<text><![CDATA[Vfg.]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="156" width="291" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="117" width="291" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaAnrede}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="130" width="291" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="171" width="291" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaOrt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="143" width="291" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaNameZus}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="84">
 			<staticText>
@@ -377,7 +393,7 @@
 				</reportElement>
 			</break>
 		</band>
-		<band height="72">
+		<band height="63">
 			<staticText>
 				<reportElement x="0" y="12" width="483" height="50"/>
 				<textElement textAlignment="Justified" markup="styled">
@@ -404,7 +420,7 @@
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe Klage erhoben werden. Die Klage ist entweder schriftlich beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden, oder dort zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungsgerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrsverordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG) vom 23.11.2005 (GV. NRW. S. 926) einzureichen.
+				<text><![CDATA[Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe Klage erhoben werden. Die Klage ist entweder schriftlich beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden, oder dort zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungs-gerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrs-verordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG) vom 23.11.2005 (GV. NRW. S. 926) einzureichen.
 Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten versäumt werden, so würde deren / dessen Verschulden Ihnen zugerechnet werden.]]></text>
 			</staticText>
 			<staticText>
@@ -425,9 +441,9 @@ Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten
 ]]></text>
 			</staticText>
 		</band>
-		<band height="105">
+		<band height="93">
 			<staticText>
-				<reportElement x="0" y="0" width="483" height="102"/>
+				<reportElement x="0" y="0" width="483" height="93"/>
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
@@ -436,19 +452,19 @@ Ferner können Sie gemäß § 80 Abs. 5 VwGO einen Antrag auf Anordnung der aufs
 ]]></text>
 			</staticText>
 		</band>
-		<band height="75">
+		<band height="72">
 			<staticText>
 				<reportElement x="0" y="0" width="483" height="72"/>
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Gemäß § 80 Abs. 6 VwGO ist der Antrag an das Verwaltungsgericht nach § 80 Abs. 5 VwGO nur zulässig, wenn die Behörde einen Antrag auf Aussetzung der Vollziehung ganz oder zum Teil abgelehnt hat. Das gilt nicht, wenn 1. die Behörde über den Antrag ohne Mitteilung eines zureichenden Grundes in angemessener Frist sachlich nicht entschieden hat oder 2. eine Vollstreckung droht.
-Ist der Verwaltungsakt zum Zeitpunkt der Entscheidung schon vollzogen, können Sie beim Verwaltungsgericht beantragen, dass dieses die Aufhebung der Vollziehung anordnet.
+Ist der Verwaltungsakt zum Zeitpunkt der Entscheidung schon vollzogen, können Sie beim Verwaltungs-gericht beantragen, dass dieses die Aufhebung der Vollziehung anordnet.
 
 ]]></text>
 			</staticText>
 		</band>
-		<band height="226">
+		<band height="195">
 			<staticText>
 				<reportElement x="0" y="12" width="483" height="86"/>
 				<textElement textAlignment="Justified">
@@ -525,108 +541,108 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="44" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 			<staticText>
-				<reportElement x="346" y="17" width="66" height="9"/>
+				<reportElement x="346" y="10" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Montag - Freitag]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="9" width="139" height="9"/>
+				<reportElement x="0" y="2" width="139" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Konten der Stadtkasse Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="346" y="41" width="97" height="9"/>
+				<reportElement x="346" y="34" width="97" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[im übrigen nach Vereinbarung]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="33" width="139" height="9"/>
+				<reportElement x="0" y="26" width="139" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Postbank Hannover Kto.-Nr. 20-307 (BLZ 250 100 30)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="407" y="25" width="66" height="9"/>
+				<reportElement x="407" y="18" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[08.00 - 12.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="17" width="139" height="9"/>
+				<reportElement x="0" y="10" width="139" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Sparkasse Bielefeld Kto.-Nr. 26 (BLZ 480 501 61)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="346" y="25" width="66" height="9"/>
+				<reportElement x="346" y="18" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Donnerstag]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="346" y="9" width="120" height="9"/>
+				<reportElement x="346" y="2" width="120" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sprechzeiten:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="407" y="17" width="66" height="9"/>
+				<reportElement x="407" y="10" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[08.00 - 12.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="407" y="33" width="66" height="9"/>
+				<reportElement x="407" y="26" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[14.30 - 18.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="33" width="105" height="9"/>
+				<reportElement x="186" y="26" width="105" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[D-33602 Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="25" width="139" height="9"/>
+				<reportElement x="0" y="18" width="139" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[und bei weiteren Bielefelder Geldinstituten]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="9" width="105" height="9"/>
+				<reportElement x="186" y="2" width="105" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lieferanschrift:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="25" width="105" height="9"/>
+				<reportElement x="186" y="18" width="105" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Neues Rathaus (Niederwall 23)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="17" width="105" height="9"/>
+				<reportElement x="186" y="10" width="105" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
@@ -635,19 +651,22 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 		</band>
 	</pageFooter>
 	<lastPageFooter>
-		<band height="35">
+		<band height="31">
 			<staticText>
-				<reportElement x="20" y="5" width="453" height="25"/>
+				<reportElement x="7" y="3" width="453" height="25"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
 				<text><![CDATA[Aus Gründen der Gleichbehandlung wird bei Probenahmen im Bielefelder Stadtgebiet für An- und Abfahrt einschl. Transport der Proben zum Labor pauschal 1 Stunde berechnet.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="1" width="5" height="25"/>
+				<reportElement x="0" y="0" width="5" height="25"/>
 				<textElement/>
 				<text><![CDATA[¹]]></text>
 			</staticText>
+			<break>
+				<reportElement x="0" y="28" width="100" height="1"/>
+			</break>
 		</band>
 	</lastPageFooter>
 </jasperReport>

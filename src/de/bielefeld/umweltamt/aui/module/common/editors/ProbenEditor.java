@@ -1491,7 +1491,9 @@ public class ProbenEditor extends AbstractApplyEditor {
             DateUtils.FORMAT_DATE));
         params.put("kosten", Double.toString(PERSONAL_UND_SACHKOSTEN).replace(".", ","));
         params.put("kassenzeichen", betr.getKassenzeichen());
+        params.put("firmaAnrede", betr.getBetranrede());
         params.put("firmaName", betr.getBetrname());
+        params.put("firmaNameZus", betr.getBetrnamezus());
         params.put("firmaStrasse", betr.getBetriebsgrundstueck());
         params.put("firmaOrt", betr.getPlz() + " " + betr.getOrt());
 
