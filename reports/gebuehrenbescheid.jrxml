@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -20,7 +20,9 @@
 	<parameter name="personalsachkosten" class="java.lang.String"/>
 	<parameter name="entnahmestelle" class="java.lang.String"/>
 	<parameter name="analysekosten" class="java.lang.String"/>
+	<parameter name="firmaAnrede" class="java.lang.String"/>
 	<parameter name="firmaName" class="java.lang.String"/>
+	<parameter name="firmaNameZus" class="java.lang.String"/>
 	<parameter name="firmaStrasse" class="java.lang.String"/>
 	<parameter name="firmaOrt" class="java.lang.String"/>
 	<background>
@@ -192,27 +194,6 @@
 			<rectangle>
 				<reportElement x="-13" y="118" width="9" height="6" backcolor="#000000"/>
 			</rectangle>
-			<textField>
-				<reportElement x="0" y="116" width="291" height="12"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10" isBold="false"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaName}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="129" width="291" height="12"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="142" width="291" height="12"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaOrt}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="3" y="98" width="156" height="13"/>
 				<textElement>
@@ -221,9 +202,54 @@
 				<text><![CDATA[Stadt Bielefeld · 360.11 · D-33597 Bielefeld]]></text>
 			</staticText>
 			<image>
-				<reportElement x="408" y="185" width="75" height="101"/>
+				<reportElement x="399" y="176" width="75" height="101"/>
 				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
 			</image>
+			<frame>
+				<reportElement x="1" y="117" width="331" height="65" forecolor="#FFFFFF"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed"/>
+				</box>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="0" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaAnrede}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="12" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaName}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="24" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaNameZus}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="36" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="48" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaOrt}]]></textFieldExpression>
+				</textField>
+			</frame>
 		</band>
 		<band height="84">
 			<staticText>

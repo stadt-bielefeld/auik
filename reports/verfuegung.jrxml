@@ -219,41 +219,51 @@
 				</textElement>
 				<text><![CDATA[Vfg.]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="0" y="156" width="291" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="0" y="117" width="291" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaAnrede}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="0" y="130" width="291" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaName}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="0" y="171" width="291" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaOrt}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="0" y="143" width="291" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaNameZus}]]></textFieldExpression>
-			</textField>
+			<frame>
+				<reportElement x="0" y="116" width="331" height="65" forecolor="#FFFFFF"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed"/>
+				</box>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="0" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaAnrede}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="12" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaName}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="24" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaNameZus}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="36" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="48" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{firmaOrt}]]></textFieldExpression>
+				</textField>
+			</frame>
 		</band>
 		<band height="84">
 			<staticText>
