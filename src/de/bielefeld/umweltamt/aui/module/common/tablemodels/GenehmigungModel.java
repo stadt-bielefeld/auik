@@ -21,6 +21,8 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.util.Date;
+
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -52,13 +54,13 @@ public class GenehmigungModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = fd.getBasisObjekt().getBasisBetreiber();
+            tmp = fd.getBasisObjekt().getBasisBetreiber().toString();
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBasisStandort();
+            tmp = fd.getBasisObjekt().getBasisStandort().toString();
             break;
         case 2:
-            tmp = AuikUtils.getStringFromDate(fd.getErstellungsDatum());
+            tmp = fd.getErstellungsDatum();
             break;
         case 3:
             tmp = fd.getAnhang();
@@ -82,23 +84,27 @@ public class GenehmigungModel extends ListTableModel {
         default:
             tmp = "ERROR";
             break;
-        }
-        if (fd.getBasisObjekt().getInaktiv() == true && columnIndex != 4 && columnIndex != 5)
-        {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
+//        }
+//        if (fd.getBasisObjekt().getInaktiv() == true && columnIndex != 4 && columnIndex != 5)
+//        {
+//            tmp = "<html><strike>" + tmp + "</strike></html>";
         }
         return tmp;
     }
-
-    public Class getColumnClass(int columnIndex) {
-        if (columnIndex == 4) {
-            return Boolean.class;
-        }else if (columnIndex == 5) {
-            return Boolean.class;
-        } else {
-            return super.getColumnClass(columnIndex);
-        }
-    }
+    
+	  @Override
+	public Class<?> getColumnClass( int columnIndex ){
+		switch( columnIndex ){
+			case 0: return String.class;
+			case 1: return String.class;
+			case 2: return Date.class;
+			case 3: return Integer.class;
+			case 4: return Boolean.class;
+			case 5: return Boolean.class;
+			case 6: return String.class;
+			default: return null;
+		}
+	}
 
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.

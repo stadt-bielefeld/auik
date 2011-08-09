@@ -28,6 +28,7 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
@@ -165,7 +166,12 @@ public abstract class AbstractAnh49Fachdaten
     /** The value of the simple durchgefuehrt property. */
     private java.lang.Integer durchgefuehrt;
 
-    /**
+    /** The value of the simple antragvom property. */
+    private java.util.Date dekraTuevDatum;
+	/** The value of the Anh49Analyse association. */
+    private Set anh49Analysen;
+
+	/**
      * Simple constructor of AbstractAnh49Fachdaten instances.
      */
     public AbstractAnh49Fachdaten()
@@ -199,6 +205,44 @@ public abstract class AbstractAnh49Fachdaten
         this.hashValue = 0;
         this.basisObjekt = basisObjekt;
     }
+
+    /**
+     * Return the Anh49Analyse
+     * @return Set
+     */
+
+    public Set getAnh49Analysen() {
+		return anh49Analysen;
+	}
+
+    /**
+     * Set the Anh49Analyse
+     * @param Anh49Analyse
+     */
+
+	public void setAnh49Analysen(Set anh49Analysen) {
+		this.anh49Analysen = anh49Analysen;
+	}
+
+
+    /**
+     * Return the value of the dekraTuevDatum column.
+     * @return java.util.Date
+     */
+
+    public java.util.Date getDekraTuevDatum() {
+		return dekraTuevDatum;
+	}
+
+    /**
+     * Set the value of the dekraTuevDatum column.
+     * @param dekraTuevDatum
+     */
+
+	public void setDekraTuevDatum(java.util.Date dekraTuevDatum) {
+		this.dekraTuevDatum = dekraTuevDatum;
+	}
+
 
     /**
      * Return the value of the NR column.

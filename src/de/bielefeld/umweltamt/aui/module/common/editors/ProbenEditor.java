@@ -299,66 +299,68 @@ public class ProbenEditor extends AbstractApplyEditor {
                 return true;
             }
         }
-        public void editObject(Object objectAtRow, int columnIndex,
-                Object newValue) {
-            AtlAnalyseposition tmp = (AtlAnalyseposition) objectAtRow;
 
-            switch (columnIndex) {
-                case 0:
-                    if (newValue instanceof AtlParameter) {
-                        AtlParameter tmpPara = (AtlParameter) newValue;
-                        tmp.setAtlParameter(tmpPara);
-                    }
-                    break;
+		public void editObject(Object objectAtRow, int columnIndex,
+				Object newValue) {
+			AtlAnalyseposition tmp = (AtlAnalyseposition) objectAtRow;
 
-                case 1:
-                    String tmpGrKl = (String) newValue;
-                    if (tmpGrKl != null) {
-                        tmpGrKl = tmpGrKl.trim();
-                        if (tmpGrKl.equals("")) {
-                            tmp.setGrkl(null);
-                        } else {
-                            tmpGrKl = tmpGrKl.substring(0,1);
-                            if (tmpGrKl.equals("<") || tmpGrKl.equals(">")) {
-                                tmp.setGrkl(tmpGrKl);
-                            }
-                        }
-                    }
-                    break;
+			switch (columnIndex) {
+			case 0:
+				AtlParameter tmpPara = (AtlParameter) newValue;
+				tmp.setAtlParameter(tmpPara);
+//				AtlParameter sParameter = AtlParameter.getParameter(tmpPara.getBezeichnung());
+//				parameterBox.setSelectedItem(tmpPara);
+				break;
 
-                case 2:
-                	Float tmpWert = null;
-                    if (newValue instanceof Float) {
-                        tmpWert = (Float) newValue;
-                    } else if (newValue instanceof KommaDouble) {
-                        tmpWert = ((KommaDouble)newValue).getValue().floatValue();
-                    }
-                    tmp.setWert(tmpWert);
-                    break;
+			case 1:
+				String tmpGrKl = (String) newValue;
+				if (tmpGrKl != null) {
+					tmpGrKl = tmpGrKl.trim();
+					if (tmpGrKl.equals("")) {
+						tmp.setGrkl(null);
+					} else {
+						tmpGrKl = tmpGrKl.substring(0, 1);
+						if (tmpGrKl.equals("<") || tmpGrKl.equals(">")) {
+							tmp.setGrkl(tmpGrKl);
+						}
+					}
+				}
+				break;
 
-                case 3:
-                    AtlEinheiten tmpEinheit = (AtlEinheiten) newValue;
-                    tmp.setAtlEinheiten(tmpEinheit);
-                    break;
+			case 2:
+				Float tmpWert = null;
+				if (newValue instanceof Float) {
+					tmpWert = (Float) newValue;
+				} else if (newValue instanceof KommaDouble) {
+					tmpWert = ((KommaDouble) newValue).getValue().floatValue();
+				}
+				tmp.setWert(tmpWert);
+				break;
 
-                case 4:
-                    String tmpAnalyse = (String) newValue;
-                    if (tmpAnalyse != null) {
-                        tmpAnalyse = tmpAnalyse.trim();
-                        if (tmpAnalyse.equals("")) {
-                            tmp.setAnalyseVon(null);
-                        } else {
-                            tmp.setAnalyseVon(tmpAnalyse);
-                        }
-                    }
-                    break;
+			case 3:
+				AtlEinheiten tmpEinheit = (AtlEinheiten) newValue;
+				tmp.setAtlEinheiten(tmpEinheit);
+				break;
 
-                default:
-                    break;
-            }
+			case 4:
+				String tmpAnalyse = (String) newValue;
+				if (tmpAnalyse != null) {
+					tmpAnalyse = tmpAnalyse.trim();
+					if (tmpAnalyse.equals("")) {
+						tmp.setAnalyseVon(null);
+					} else {
+						tmp.setAnalyseVon(tmpAnalyse);
+					}
+				}
+				break;
 
-            AUIKataster.debugOutput("EDIT: " + tmp, "ParameterModel.editObject");
-        }
+			default:
+				break;
+			}
+
+			AUIKataster
+					.debugOutput("EDIT: " + tmp, "ParameterModel.editObject");
+		}
 
         public Object newObject() {
             AtlAnalyseposition tmp = new AtlAnalyseposition(probe);
@@ -503,6 +505,10 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         if (!isNew /*probe.isAnalysepositionenInitialized()*/) {
             setEditedObject(AtlProbenahmen.getProbenahme(probe.getId(), true));
+        }
+        
+        if (isNew){
+        sachbearbeiter.setSelectedItem(BasisSachbearbeiter.getSachbearbeiter(SettingsManager.getInstance().getSetting("auik.prefs.lastuser")));
         }
 
         parameterModel = new ParameterModel(getProbe(), isNew);
@@ -749,7 +755,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         BasisSachbearbeiter[] bSachbearbeiter =
             BasisSachbearbeiter.getSachbearbeiter();
-        sachbearbeiter.setModel(new DefaultComboBoxModel(bSachbearbeiter));
+        ComboBoxModel sachbearbeiterModel = (new DefaultComboBoxModel(bSachbearbeiter));
+        sachbearbeiter.setModel(sachbearbeiterModel);
 
         statusHoch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -956,13 +963,11 @@ public class ProbenEditor extends AbstractApplyEditor {
         fill -= rechnungsbetrag.length();
 
         sb.append(kassenzeichen);
-        sb.append(basisBetr.getBetrname());
+        sb.append(basisBetr.getBetrname().substring(0, 28));
         
         for (int i = 1; i <= 28 - basisBetr.getBetrname().length(); i++) {
             sb.append(" ");
         }
-               
-        sb.append(basisBetr.getBetranrede());
         
         int anrede = 0;
         if (basisBetr.getBetranrede() != null){
@@ -1117,7 +1122,6 @@ public class ProbenEditor extends AbstractApplyEditor {
         // TODO Datei
 
         fillVorgangsstatus();
-        fillSachbearbeiter();
 
         if (getProbe().isKlaerschlammProbe()) {
             icpEinwaageFeld.setValue(getProbe().getEinwaage());
@@ -1133,6 +1137,11 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     /** Initialisiert die Spalten der Analysepositionen-Tabelle */
     private void initColumns() {
+
+        // Messwert... (alle Doubles)
+        parameterTabelle.setDefaultRenderer(Double.class, new DoubleRenderer());
+        parameterTabelle.setDefaultRenderer(KommaDouble.class, new DoubleRenderer());
+        
         // Parameter
         TableColumn parameterColumn = parameterTabelle.getColumnModel().getColumn(0);
         parameterColumn.setPreferredWidth(150);
@@ -1155,10 +1164,6 @@ public class ProbenEditor extends AbstractApplyEditor {
         parameterColumn.setCellEditor(new DefaultCellEditor(parameterBox));
         parameterColumn.setCellRenderer(new ComboBoxRenderer());
 
-        // Messwert... (alle Doubles)
-        parameterTabelle.setDefaultRenderer(Double.class, new DoubleRenderer());
-        parameterTabelle.setDefaultRenderer(KommaDouble.class, new DoubleRenderer());
-
         // Einheit
         TableColumn einheitenColumn = parameterTabelle.getColumnModel().getColumn(3);
         einheitenColumn.setPreferredWidth(100);
@@ -1175,7 +1180,6 @@ public class ProbenEditor extends AbstractApplyEditor {
         einheitenBox.setBorder(BorderFactory.createEmptyBorder());
 
         einheitenColumn.setCellEditor(new DefaultCellEditor(einheitenBox));
-        //einheitenColumn.setCellEditor(new ComboBoxCellEditor(einheitenBox));
         einheitenColumn.setCellRenderer(new ComboBoxRenderer());
 
         // Analyse von
@@ -1211,29 +1215,6 @@ public class ProbenEditor extends AbstractApplyEditor {
         String bezeichnung = status.getBezeichnung();
 
         updateVorgangsstatus(bezeichnung);
-    }
-
-
-    protected void fillSachbearbeiter() {
-        AtlProbenahmen probe = getProbe();
-
-        if (probe == null)
-            return;
-
-        String sb = probe.getSachbearbeiter();
-
-        ComboBoxModel model = sachbearbeiter.getModel();
-        int          anzahl = model.getSize();
-
-        for (int i = 0; i < anzahl; i++) {
-            BasisSachbearbeiter b = (BasisSachbearbeiter) model.getElementAt(i);
-
-            if (b.getKennummer().equals(sb)) {
-                sachbearbeiter.setSelectedItem(b);
-                return;
-            }
-            else sachbearbeiter.setSelectedIndex(-1);
-        }
     }
 
 

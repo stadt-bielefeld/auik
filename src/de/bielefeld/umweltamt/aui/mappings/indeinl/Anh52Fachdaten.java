@@ -58,7 +58,7 @@ public class Anh52Fachdaten
     }
 
     public String toString() {
-        return "[ID:" + this.getId() + "]";
+        return "[ID:" + this.getObjektid() + "]";
     }
 
     public static Anh52Fachdaten getAnh52ByObjekt(BasisObjekt objekt, Session session) {

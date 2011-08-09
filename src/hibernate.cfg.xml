@@ -9,7 +9,7 @@
         <!-- PostgreSQL: -->
            
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://172.20.70.24/fisumwelt</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost/fisumwelt</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>       	
         	
         <!-- MySQL: -->
@@ -42,6 +42,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Abscheiderdetails.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Analysen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Kontrollen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Ortstermine.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/AnhEntsorger.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh50Fachdaten.hbm.xml" />

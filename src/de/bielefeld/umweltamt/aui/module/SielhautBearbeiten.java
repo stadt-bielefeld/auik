@@ -214,7 +214,6 @@ public class SielhautBearbeiten extends AbstractModul {
     private JButton ausAblageButton;
     private JCheckBox spSielhautCheck;
     private JCheckBox spNachprobeCheck;
-    private JCheckBox spAlarmplanCheck;
     private JCheckBox spFirmenprobeCheck;
 
     // Widgets für Probenpanel
@@ -336,12 +335,6 @@ public class SielhautBearbeiten extends AbstractModul {
         }
         else
         getSpNachprobeCheck().setSelected(spunkt.getPnachprobe());
-
-        if (spunkt.getPalarmplan() == null){
-            getSpAlarmplanCheck().setSelected(false);
-        }
-        else
-        getSpAlarmplanCheck().setSelected(spunkt.getPalarmplan());
 
         if (spunkt.getPfirmenprobe() == null){
             getSpFirmenprobeCheck().setSelected(false);
@@ -465,7 +458,6 @@ public class SielhautBearbeiten extends AbstractModul {
             // SielhautBearbeiten, Nachprobe & Alarmplan
             spunkt.setPsielhaut(getSpSielhautCheck().isSelected());
             spunkt.setPnachprobe(getSpNachprobeCheck().isSelected());
-            spunkt.setPalarmplan(getSpAlarmplanCheck().isSelected());
             spunkt.setPfirmenprobe(getSpFirmenprobeCheck().isSelected());
 
             if (saveObjekt()) {
@@ -515,6 +507,7 @@ public class SielhautBearbeiten extends AbstractModul {
                     probe.setDatumDerEntnahme((Timestamp) datum);
                     probe.setAtlAnalysepositionen(new HashSet());
                     probe.setAtlProbepkt(sprobePkt);
+                    probe.setArt("Sielhaut");
 
                     ProbenEditor editDialog = new ProbenEditor(probe, frame, true);
                     editDialog.setVisible(true);
@@ -905,7 +898,6 @@ public class SielhautBearbeiten extends AbstractModul {
             builder.add(getSpNachprobeCheck(),                cc.xy(  7, 13 ));
             builder.addLabel("Alarmplan-Nr.:",                cc.xy(  1, 15 ));
             builder.add(getSpAlarmplannrFeld(),                cc.xyw(  3, 15, 3 ));
-            builder.add(getSpAlarmplanCheck(),                cc.xy(  7, 15 ));
 
 
             //builder.getPanel().setBackground(Color.WHITE);
@@ -913,13 +905,6 @@ public class SielhautBearbeiten extends AbstractModul {
             datenPanel = builder.getPanel();
         }
         return datenPanel;
-    }
-
-    private JCheckBox getSpAlarmplanCheck() {
-        if (spAlarmplanCheck == null) {
-            spAlarmplanCheck = new JCheckBox("Alarmplan");
-        }
-        return spAlarmplanCheck;
     }
     private JTextField getSpAlarmplannrFeld() {
         if (spAlarmplannrFeld == null) {
@@ -2015,10 +2000,9 @@ class SielhautChooser extends OkCancelDialog {
 
         ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(80);
         ergebnisTabelle.getColumnModel().getColumn(1).setPreferredWidth(230);
-        ergebnisTabelle.getColumnModel().getColumn(2).setPreferredWidth(10);
-        ergebnisTabelle.getColumnModel().getColumn(3).setPreferredWidth(10);
-        ergebnisTabelle.getColumnModel().getColumn(4).setPreferredWidth(10);
-        ergebnisTabelle.getColumnModel().getColumn(5).setPreferredWidth(10);
+        ergebnisTabelle.getColumnModel().getColumn(2).setPreferredWidth(8);
+        ergebnisTabelle.getColumnModel().getColumn(3).setPreferredWidth(8);
+        ergebnisTabelle.getColumnModel().getColumn(4).setPreferredWidth(8);
 
         setResizable(true);
 
@@ -2166,7 +2150,7 @@ class SielhautChooser extends OkCancelDialog {
 
 class SielhautModel extends ListTableModel {
     public SielhautModel() {
-        super(new String[]{"Bezeichnung", "Lage", "R", "F", "A", "N"}, false);
+        super(new String[]{"Bezeichnung", "Lage", "R", "F", "N"}, false);
     }
 
     /* (non-Javadoc)
@@ -2199,14 +2183,6 @@ class SielhautModel extends ListTableModel {
             tmp = new Boolean(spunkt.getPfirmenprobe());
             break;
         case 4:
-            if (spunkt.getPalarmplan() == null) {
-                tmp = new Boolean(false);
-            }
-            else
-
-            tmp = new Boolean(spunkt.getPalarmplan());
-            break;
-        case 5:
             if (spunkt.getPnachprobe() == null) {
                 tmp = new Boolean(false);
             }

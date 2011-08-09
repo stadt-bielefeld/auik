@@ -363,7 +363,7 @@ public class Anh49DetailsPanel extends JPanel{
     private JButton speichernButton;
 
     public Anh49DetailsPanel(BasisObjektBearbeiten hauptModul) {
-        name = "Abscheider-Details";
+        name = "Details und Ortstermine";
         this.hauptModul = hauptModul;
 
         abscheiderModel = new Anh49AbscheiderModel();

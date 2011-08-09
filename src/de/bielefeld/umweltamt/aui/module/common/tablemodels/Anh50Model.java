@@ -40,6 +40,8 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.util.Date;
+
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -68,13 +70,13 @@ public class Anh50Model extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = fd.getBasisObjekt().getBasisBetreiber();
+            tmp = fd.getBasisObjekt().getBasisBetreiber().toString();
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBasisStandort();
+            tmp = fd.getBasisObjekt().getBasisStandort().toString();
             break;
         case 2:
-            tmp = AuikUtils.getStringFromDate(fd.getWiedervorlage());
+            tmp = fd.getWiedervorlage();
             break;
         case 3:
             tmp = fd.getBemerkungen();
@@ -84,12 +86,23 @@ public class Anh50Model extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getBasisObjekt().getInaktiv() == true)
-        {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
-        }
+//        if (fd.getBasisObjekt().getInaktiv() == true)
+//        {
+//            tmp = "<html><strike>" + tmp + "</strike></html>";
+//        }
         return tmp;
     }
+    
+	  @Override
+	public Class<?> getColumnClass( int columnIndex ){
+		switch( columnIndex ){
+			case 0: return String.class;
+			case 1: return String.class;
+			case 2: return Date.class;
+			case 3: return String.class;
+			default: return null;
+		}
+	}
 
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.

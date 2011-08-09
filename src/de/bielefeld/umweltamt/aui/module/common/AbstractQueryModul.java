@@ -52,12 +52,16 @@
  */
 package de.bielefeld.umweltamt.aui.module.common;
 
+import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -67,6 +71,13 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.RowSorter;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
+import org.jfree.ui.DateCellRenderer;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -92,6 +103,9 @@ public abstract class AbstractQueryModul extends AbstractModul {
     private Action objektEditAction;
     private Action saveAction;
     private JPopupMenu resultPopup;
+    private RowSorter sorter;
+   
+    
 
     /**
      * Liefert die Kategorie des Moduls.
@@ -167,6 +181,27 @@ public abstract class AbstractQueryModul extends AbstractModul {
 
         return tmp;
     }
+    
+	public class CellRenderer extends DefaultTableCellRenderer {
+		public Component getTableCellRendererComponent(JTable table,
+				Object value, boolean isSelected, boolean hasFocus, int row,
+				int column) {
+			super.getTableCellRendererComponent(table, value, isSelected,
+					hasFocus, row, column);
+			if (value instanceof Date) {
+				// Use SimpleDateFormat class to get a formatted String from
+				// Date object.
+				String strDate = new SimpleDateFormat("dd.MM.yyyy")
+						.format((Date) value);
+				// Sorting algorithm will work with model value. So you dont
+				// need to worry
+				// about the renderer's display value.
+				this.setText(strDate);
+			}	
+
+			return this;
+		}
+	}
 
     /**
      * @return Eine Tabelle für die Ergebnisse der Abfrage.
@@ -174,12 +209,14 @@ public abstract class AbstractQueryModul extends AbstractModul {
     protected JTable getResultTable() {
         if (resultTable == null) {
             resultTable = new JTable(getTableModel());
+            resultTable.setAutoCreateRowSorter(true);
+            resultTable.setDefaultRenderer(Object.class, new CellRenderer());
 
             resultTable.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
-                        int row = resultTable.rowAtPoint(origin);
+                        int row = resultTable.convertRowIndexToModel(resultTable.rowAtPoint(origin));
                         editObject(row);
                     }
                 }
@@ -198,6 +235,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
         }
         return resultTable;
     }
+
 
     /**
      * @return Das ScrollPane für die Ergebnis-Tabelle.

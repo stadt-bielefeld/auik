@@ -5,7 +5,7 @@
 <hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
 
     <class name="Anh52Fachdaten" table="anh_52_fachdaten">
-        <id name="id" column="objektid" type="java.lang.Integer">
+        <id name="objektid" column="objektid" type="java.lang.Integer">
             <generator class="foreign">
             	<param name="property">basisObjekt</param>
             </generator>
@@ -19,7 +19,7 @@
 		<property name="datumGen" column="datumgenehmigung" type="java.util.Date" />
         <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
 
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
     </class>
 
 </hibernate-mapping>

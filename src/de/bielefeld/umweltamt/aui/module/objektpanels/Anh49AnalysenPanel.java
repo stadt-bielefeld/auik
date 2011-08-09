@@ -84,6 +84,7 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.TableColumn;
@@ -91,11 +92,13 @@ import javax.swing.table.TableColumn;
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.uif_lite.component.Factory;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
@@ -303,36 +306,159 @@ public class Anh49AnalysenPanel extends JPanel{
         }
     }
 
+
+    /**
+     * Ein TableModel für eine Tabelle mit Abscheider-Kontrollen.
+     * @author Gerhard Genuit
+     */
+    private class Anh49KontrollenModel extends EditableListTableModel {
+        private Anh49Fachdaten fachdaten;
+
+        /**
+         * Erzeugt ein neues Ortstermin-TableModel.
+         * Dieses hat die Spalten "Datum", "SachbearbeiterIn" und "Bemerkung".
+         */
+        public Anh49KontrollenModel() {
+            super(new String[]{"Prüfdatum", "Prüfergebnis", "Nächste Prüfung"}, false, true);
+        }
+
+        /**
+         * Setzt das Fachdatenobjekt, nach dessen Abscheider-Details gesucht werden soll.
+         * @param fachdaten Das Anhang49-Fachdatenobjekt
+         */
+        private void setFachdaten(Anh49Fachdaten fachdaten) {
+            this.fachdaten = fachdaten;
+            updateList();
+        }
+
+        public Object getColumnValue(Object objectAtRow, int columnIndex) {
+            Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
+
+            Object tmp;
+
+            switch (columnIndex) {
+            case 0:
+                tmp = AuikUtils.getStringFromDate(kt.getPruefdatum());
+                break;
+
+            case 1:
+                tmp = kt.getPruefergebnis();
+                break;
+
+            case 2:
+                tmp = AuikUtils.getStringFromDate(kt.getNaechstepruefung());
+                break;
+
+            default:
+                tmp = null;
+            break;
+            }
+
+            return tmp;
+        }
+
+        public boolean objectRemoved(Object objectAtRow) {
+        	Anh49Kontrollen removedOt = (Anh49Kontrollen) objectAtRow;
+            boolean removed;
+
+            if (removedOt.getId() != null) {
+                removed = Anh49Kontrollen.removeOrtstermin(removedOt);
+            } else {
+                removed = true;
+            }
+
+            return removed;
+        }
+
+        public void updateList() {
+            if (fachdaten != null) {
+                setList(Anh49Kontrollen.getKontrollen(fachdaten));
+            }
+            fireTableDataChanged();
+        }
+        public void editObject(Object objectAtRow, int columnIndex,
+                Object newValue) {
+        	Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
+
+            String tmp = (String) newValue;
+
+            switch (columnIndex) {
+            case 0:
+                DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+                try {
+                    Date tmpDate = format.parse(tmp);
+                    kt.setPruefdatum(tmpDate);
+                } catch (ParseException e) {
+                    hauptModul.getFrame().changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
+                }
+                break;
+            case 1:
+                // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+                if (tmp.length() > 255) {
+                    tmp = tmp.substring(0,255);
+                }
+                kt.setPruefergebnis(tmp);
+                break;
+            case 2:
+                DateFormat formatNp = DateFormat.getDateInstance(DateFormat.SHORT);
+                try {
+                    Date tmpDate = formatNp.parse(tmp);
+                    kt.setNaechstepruefung(tmpDate);
+                } catch (ParseException e) {
+                    hauptModul.getFrame().changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
+                }
+                break;
+
+            default:
+                break;
+            }
+        }
+        public Object newObject() {
+            Anh49Kontrollen kt = new Anh49Kontrollen();
+            kt.setAnh49Fachdaten(fachdaten);
+            kt.setPruefdatum(new Date());
+            return kt;
+        }
+        public Anh49Kontrollen getRow(int rowIndex) {
+            return (Anh49Kontrollen) getObjectAtRow(rowIndex);
+        }
+    }
     private String name;
 
     private BasisObjektBearbeiten hauptModul;
 
     private Anh49Fachdaten fachdaten;
     private Anh49AnalysenModel analysenModel;
+    private Anh49KontrollenModel kontrollenModel;
 
     private JTable analysenTabelle;
+    private JTable kontrollenTabelle;
     private JButton speichernButton;
 
     public Anh49AnalysenPanel(BasisObjektBearbeiten hauptModul) {
-        name = "Analysen";
+        name = "Analysen und Dichtheitsprüfungen";
         this.hauptModul = hauptModul;
 
         this.analysenModel = new Anh49AnalysenModel();
+        this.kontrollenModel = new Anh49KontrollenModel();
 
         TableFocusListener tfl = TableFocusListener.getInstance();
         getAnalysenTabelle().addFocusListener(tfl);
 
-        JScrollPane abscheiderScroller = new JScrollPane(getAnalysenTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane analysenScroller = new JScrollPane(getAnalysenTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane kontrollenScroller = new JScrollPane(getKontrollenTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        JSplitPane tabellenSplit = Factory.createStrippedSplitPane(JSplitPane.VERTICAL_SPLIT, analysenScroller, kontrollenScroller, 0.5);
 
         FormLayout layout = new FormLayout(
-                "150dlu:grow, 100dlu",        // Spalten
+                "150dlu:grow, 150dlu",        // Spalten
                 "f:100dlu:grow, 3dlu, pref");     // Zeilen
 
         PanelBuilder builder = new PanelBuilder(layout, this);
         builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
 
-        builder.add(abscheiderScroller, cc.xyw( 1, 1, 2));
+        builder.add(tabellenSplit, cc.xyw( 1, 1, 2));
         builder.add(getSpeichernButton(), cc.xy( 2, 3));
     }
 
@@ -391,11 +517,71 @@ public class Anh49AnalysenPanel extends JPanel{
         return analysenTabelle;
     }
 
+
+    private JTable getKontrollenTabelle() {
+        if (kontrollenTabelle == null) {
+        	kontrollenTabelle = new SelectTable(kontrollenModel);
+
+            // Wenn die Spaltengröße sich verändert, verändert sich nur die Nachbarspalte mit
+        	kontrollenTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+
+            KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false);
+            kontrollenTabelle.getInputMap().put(deleteKeyStroke, "DEL");
+            Action konRemoveAction = new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    int row = kontrollenTabelle.getSelectedRow();
+                    if (row != -1 && kontrollenTabelle.getEditingRow() == -1) {
+                        Anh49Kontrollen kontrollen = kontrollenModel.getRow(row);
+
+                        if (hauptModul.getFrame().showQuestion("Soll die Dichtheitsprüfung vom "+ kontrollen.getPruefdatum() +" wirklich gelöscht werden?", "Löschen bestätigen")) {
+                        	kontrollenModel.removeRow(row);
+                            AUIKataster.debugOutput("Dichtheitsprüfung vom " + kontrollen.getPruefdatum() + " wurde gelöscht!");
+                        }
+                        else {
+                            AUIKataster.debugOutput("Löschen der Dichtheitsprüfung vom " + kontrollen.getPruefergebnis() + " wurde abgebrochen!");
+                        }
+                    }
+                }
+            };
+            kontrollenTabelle.getActionMap().put("DEL", konRemoveAction);
+
+
+            // Die Größen der Spalten werden angepasst
+            TableColumn column = null;
+            for (int i = 0; i < kontrollenTabelle.getColumnCount(); i++) {
+                column = kontrollenTabelle.getColumnModel().getColumn(i);
+                if (i == 0) {
+                    column.setMaxWidth(100);
+                    column.setPreferredWidth(75);
+                }
+                else if (i == 1) {
+                    column.setMaxWidth(980);
+                    column.setPreferredWidth(780);
+                }
+                else if (i == 2) {
+                    column.setMaxWidth(100);
+                    column.setPreferredWidth(75);
+                }
+
+            }
+        }
+        return kontrollenTabelle;
+    }
+
     public void speichernAnalyse() {
         List anaListe = analysenModel.getList();
         for (int i = 0; i < anaListe.size(); i++) {
             Anh49Analysen analyse = (Anh49Analysen) anaListe.get(i);
             Anh49Analysen.saveOrUpdateAnalyse(analyse);
+        }
+        analysenModel.updateList();
+    }
+
+    public void speichernKontrollen() {
+        List konListe = kontrollenModel.getList();
+        for (int i = 0; i < konListe.size(); i++) {
+            Anh49Kontrollen kontrolle = (Anh49Kontrollen) konListe.get(i);
+            Anh49Kontrollen.saveOrUpdateAnalyse(kontrolle);
         }
         analysenModel.updateList();
     }
@@ -408,17 +594,21 @@ public class Anh49AnalysenPanel extends JPanel{
         if (fachdaten != null) {
             analysenModel.setFachdaten(fachdaten);
             analysenModel.updateList();
+            kontrollenModel.setFachdaten(fachdaten);
+            kontrollenModel.updateList();
         }
     }
 
     public void clearForm() {
         // Hier füllen wir das Analysen-TableModel mit einer leeren Liste
         analysenModel.setList(new ArrayList());
+        kontrollenModel.setList(new ArrayList());
     }
 
     public void enableAll(boolean enabled) {
         if (!(enabled && (fachdaten == null))) {
             getAnalysenTabelle().setEnabled(enabled);
+            getKontrollenTabelle().setEnabled(enabled);
             getSpeichernButton().setEnabled(enabled);
         }
     }
@@ -429,11 +619,12 @@ public class Anh49AnalysenPanel extends JPanel{
 
     private JButton getSpeichernButton() {
         if (speichernButton == null) {
-            speichernButton = new JButton("Analysen speichern");
+            speichernButton = new JButton("Analysen und Kontrollen speichern");
 
             speichernButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     speichernAnalyse();
+                    speichernKontrollen();
                 }
             });
         }

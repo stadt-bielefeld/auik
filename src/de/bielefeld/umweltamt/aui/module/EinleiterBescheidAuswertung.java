@@ -146,7 +146,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                 public void actionPerformed(ActionEvent e) {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         protected void doNonUILogic() {
-                            ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findEingetragen());
+                            ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findErgaenzt());
                         }
 
                         protected void doUIUpdateLogic(){

@@ -562,7 +562,7 @@ public class AtlProbenahmen
             	fett = true;
             }
             String gebuehr	= "0,00 €";
-            if (parameter.getPreisfueranalyse() != 0)
+            if (parameter.getPreisfueranalyse() != 0 )
             	gebuehr = new GermanDouble(
                         parameter.getPreisfueranalyse()).toString() + " €";
 

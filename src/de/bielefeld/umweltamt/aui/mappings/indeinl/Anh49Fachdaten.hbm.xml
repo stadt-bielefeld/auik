@@ -50,9 +50,14 @@
         <property name="behoben" column="behoben" type="java.lang.Boolean" />
         <property name="frist" column="frist" type="java.util.Date" />
         <property name="durchgefuehrt" column="durchgefuehrt" type="java.lang.Integer" />
+        <property name="dekraTuevDatum" column="dekra_tuev_datum" type="java.util.Date" />
         
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" />
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
         
+        <set name="anh49Analysen" lazy="true" inverse="true" cascade="all-delete-orphan">
+        	<key column="anh49id"/>
+        	<one-to-many class="Anh49Analysen"/>
+    	</set>
     </class>
 
 </hibernate-mapping>

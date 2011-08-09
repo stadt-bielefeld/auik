@@ -53,6 +53,7 @@ import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
@@ -70,6 +71,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
+    private JTable resultTable;
 
     // Widgets für die Abfrage
     private JComboBox jahrBox;
@@ -77,6 +79,14 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private AnhBwkModel tmodel;
+    
+    @Override
+    protected JTable getResultTable() {
+        if (resultTable == null) {
+            resultTable = new JTable(getTableModel());
+        }
+    	return super.getResultTable();
+    }
 
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()

@@ -25,7 +25,7 @@
         <property name="datAnzeige58" column="dat_anzeige58" type="java.util.Date" />
         <property name="datAnschreiben" column="dat_anschreiben" type="java.util.Date" />
 
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" />
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
     </class>
 
 </hibernate-mapping>

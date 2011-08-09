@@ -138,8 +138,8 @@ public class IndeinlGenehmigung
         List liste;
 
         String query = "from IndeinlGenehmigung as gen " +
-                   "where gen.gen58 = ? or gen.gen59 = ? " +
-                "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
+                   "where gen.gen58 = ? or gen.gen59 = ? and gen.basisObjekt.inaktiv = 'false'" +
+                "order by gen.basisObjekt.basisBetreiber.betrname";
 
         try {
             Session session = HibernateSessionFactory.currentSession();

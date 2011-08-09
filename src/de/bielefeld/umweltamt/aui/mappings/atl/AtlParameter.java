@@ -286,17 +286,11 @@ public class AtlParameter
         try {
             Session session = HibernateSessionFactory.currentSession();
             List parameter = session.createQuery(
-                    "from AtlParameter as param where " +
-                    "param.sielhautGw is not null or " +
-                    "param.klaerschlammGw is not null " +
-                    "or param.bezeichnung like 'lipophile Stoffe' "+
-                    "or param.bezeichnung like 'Sulfat (SO4)'" +
-                    "or param.bezeichnung like 'Fluorid (F)'" +
-                    "or param.bezeichnung like 'CSB'" +
-                    "or param.bezeichnung like 'BSB 5'" +
-                    "or param.bezeichnung like 'Verseifbare Öle und Fette'" +
-                    "order by param.reihenfolge")
-                    .list();
+                    "from AtlParameter as param "
+    				+ "where param.atlParameterGruppe.id = 1"
+    				+ "or param.atlParameterGruppe.id = 2"
+    				+ "or param.atlParameterGruppe.id = 3"
+                    + "order by param.reihenfolge").list();
 
             tmp = new AtlParameter[parameter.size()];
             tmp = (AtlParameter[]) parameter.toArray(tmp);

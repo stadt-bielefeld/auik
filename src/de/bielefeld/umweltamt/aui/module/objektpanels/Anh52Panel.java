@@ -147,7 +147,7 @@ public class Anh52Panel extends JPanel{
             // Neues Anhang 52 Objekt erzeugen
             fachdaten = new Anh52Fachdaten();
             // Objekt_Id setzen
-            fachdaten.setId(hauptModul.getObjekt().getObjektid());
+            fachdaten.setBasisObjekt(hauptModul.getObjekt());
 
             // Anhang 52 Objekt speichern
             Anh52Fachdaten.saveFachdaten(fachdaten);
@@ -201,7 +201,7 @@ public class Anh52Panel extends JPanel{
 
         success = Anh52Fachdaten.saveFachdaten(fachdaten);
         if (success) {
-            AUIKataster.debugOutput("Anh 52 Objekt " + fachdaten.getId() + " gespeichert.",
+            AUIKataster.debugOutput("Anh 52 Objekt " + fachdaten.getObjektid() + " gespeichert.",
             "Anh52Panel.saveFachdaten");
         } else {
             AUIKataster.debugOutput("Anh 52 Objekt " + fachdaten
@@ -285,7 +285,7 @@ public class Anh52Panel extends JPanel{
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveAnh52Daten()) {
-                        hauptModul.getFrame().changeStatus("Anh 52 Objekt "+fachdaten.getId()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
+                        hauptModul.getFrame().changeStatus("Anh 52 Objekt "+fachdaten.getObjektid()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
                     } else {
                         hauptModul.getFrame().changeStatus("Fehler beim Speichern des Anh 40 Objekt!", HauptFrame.ERROR_COLOR);
                     }

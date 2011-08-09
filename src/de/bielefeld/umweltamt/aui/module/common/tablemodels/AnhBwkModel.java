@@ -43,6 +43,8 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.util.Date;
+
 import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -122,10 +124,10 @@ public class AnhBwkModel extends ListTableModel {
             tmp = fd.getErfassung();
             break;
         case 6:
-            tmp = AuikUtils.getStringFromDate(fd.getAnschreiben());
+            tmp = fd.getAnschreiben();
             break;
         case 7:
-            tmp = AuikUtils.getStringFromDate(fd.getDatumG());
+            tmp = fd.getDatumG();
             break;
         case 8:
             tmp = fd.getBasisObjekt().getBeschreibung();
@@ -141,6 +143,22 @@ public class AnhBwkModel extends ListTableModel {
         }
         return tmp;
     }
+    
+	  @Override
+  	public Class<?> getColumnClass( int columnIndex ){
+  		switch( columnIndex ){
+  			case 0: return String.class;
+  			case 1: return String.class;
+  			case 2: return String.class;
+  			case 3: return String.class;
+  			case 4: return Integer.class;
+  			case 5: return Integer.class;
+  			case 6: return Date.class;
+  			case 7: return Date.class;
+  			case 8: return String.class;
+  			default: return null;
+  		}
+  	}
 
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.

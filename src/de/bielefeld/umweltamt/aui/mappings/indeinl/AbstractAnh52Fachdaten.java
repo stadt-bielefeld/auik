@@ -36,7 +36,7 @@ public abstract class AbstractAnh52Fachdaten
     private int hashValue = 0;
 
     /** The composite primary key value. */
-    private java.lang.Integer id;
+    private java.lang.Integer objektid;
 
     /** The value of the basisObjekt association. */
     private BasisObjekt basisObjekt;
@@ -61,28 +61,28 @@ public abstract class AbstractAnh52Fachdaten
      * Constructor of AbstractAnh52Fachdaten instances given a simple primary key.
      * @param id
      */
-    public AbstractAnh52Fachdaten(java.lang.Integer id)
+    public AbstractAnh52Fachdaten(java.lang.Integer objektid)
     {
-        this.setId(id);
+        this.setObjektid(objektid);
     }
 
     /**
      * Return the simple primary key value that identifies this object.
      * @return java.lang.Integer
      */
-    public java.lang.Integer getId()
+    public java.lang.Integer getObjektid()
     {
-        return id;
+        return objektid;
     }
 
     /**
      * Set the simple primary key value that identifies this object.
      * @param id
      */
-    public void setId(java.lang.Integer id)
+    public void setObjektid(java.lang.Integer objektid)
     {
         this.hashValue = 0;
-        this.id = id;
+        this.objektid = objektid;
     }
 
     /**
@@ -163,9 +163,9 @@ public abstract class AbstractAnh52Fachdaten
         if (! (rhs instanceof Anh52Fachdaten))
             return false;
         Anh52Fachdaten that = (Anh52Fachdaten) rhs;
-        if (this.getId() != null && that.getId() != null)
+        if (this.getObjektid() != null && that.getObjektid() != null)
         {
-            if (! this.getId().equals(that.getId()))
+            if (! this.getObjektid().equals(that.getObjektid()))
             {
                 return false;
             }
@@ -183,7 +183,7 @@ public abstract class AbstractAnh52Fachdaten
         if (this.hashValue == 0)
         {
             int result = 17;
-            int idValue = this.getId() == null ? 0 : this.getId().hashCode();
+            int idValue = this.getObjektid() == null ? 0 : this.getObjektid().hashCode();
             result = result * 37 + idValue;
             this.hashValue = result;
         }

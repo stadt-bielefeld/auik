@@ -506,7 +506,8 @@ public class AtlAnalyseposition
 
         List proben = null;
         String query =
-            "select distinct analyseVon from AtlAnalyseposition";
+            "select distinct analyseVon from AtlAnalyseposition as ap " + 
+            "order by ap.analyseVon";
 
          try {
             Session session = HibernateSessionFactory.currentSession();

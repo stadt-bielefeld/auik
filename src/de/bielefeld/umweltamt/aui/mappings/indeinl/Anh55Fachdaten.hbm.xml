@@ -38,7 +38,7 @@
         <property name="branche" column="branche" type="java.lang.String" />
         <property name="loesungsmittel" column="loesungsmittel" type="java.lang.Boolean" />
 
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" cascade="all"/>
     </class>
 
 </hibernate-mapping>

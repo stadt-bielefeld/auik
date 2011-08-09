@@ -11,7 +11,7 @@
         	</generator>
         </id>
 
-        <many-to-one name="basisObjekt" column="objektid" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" not-null="true"/>
+        <many-to-one name="basisObjekt" column="objektid" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" cascade="all"/>
 
         <property name="herstellnr" column="herstellnr" type="java.lang.String" />
         <property name="hersteller" column="hersteller" type="java.lang.String" />

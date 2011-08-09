@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -120,11 +121,14 @@ public class ProbepktAuswPanel extends JPanel {
     private TimeSeriesCollection dataSet1;
     private TimeSeriesCollection dataSet2;
     private ActionListener rlButtonListener;
+    private AtlEinheiten[] einheiten;
 
 
     // Daten
     private AtlProbepkt pkt;
     private JComboBox parameterBox;
+    private JComboBox leftEinheitenBox;
+    private JComboBox rightEinheitenBox;
 
 
 
@@ -138,6 +142,7 @@ public class ProbepktAuswPanel extends JPanel {
         name = "Auswertung";
 
 
+        einheiten = AtlEinheiten.getEinheiten();
         this.hauptModul = hauptModul;
 
 
@@ -167,7 +172,9 @@ public class ProbepktAuswPanel extends JPanel {
                 "pref, 3dlu" +", " +    //22
                 "pref, 3dlu" +", " +    //23
                 "pref, 3dlu" +", " +    //24
-                "pref");    //25
+                "pref, 3dlu" +", " +    //25
+                "pref, 3dlu" +", " +    //26
+                "pref");    //27
 
         PanelBuilder builder = new PanelBuilder(layout, this);
         builder.setDefaultDialogBorder();
@@ -226,9 +233,13 @@ public class ProbepktAuswPanel extends JPanel {
         builder.add(getParameterBox(),                 cc.xy( 11,23, "f,d"));
         builder.add(createRLButton(false, "box"),    cc.xy( 13,23));
 
-        builder.add(getLeftDeleteButton(),        cc.xyw( 1, 25, 7, "c,d"));
-        builder.add(getRightDeleteButton(),        cc.xy( 15, 25, "c,d"));
-        builder.add(getSubmitButton() ,        cc.xy(11, 25));
+        builder.add(getLeftEinheitenBox(),        cc.xyw( 1, 25, 7, "c,d"));
+        builder.add(new JLabel("<  Einheit  >", JLabel.CENTER),    cc.xy( 11, 25, "f,d"));
+        builder.add(getRightEinheitenBox(),        cc.xy( 15, 25, "c,d"));
+
+        builder.add(getLeftDeleteButton(),        cc.xyw( 1, 27, 7, "c,d"));
+        builder.add(getRightDeleteButton(),        cc.xy( 15, 27, "c,d"));
+        builder.add(getSubmitButton() ,        cc.xy(11, 27));
     }
 
     private class AuswertungsDialog extends JDialog {
@@ -595,6 +606,24 @@ public class ProbepktAuswPanel extends JPanel {
         return submitButton;
     }
 
+    private JComboBox getLeftEinheitenBox() {
+        if (leftEinheitenBox == null) {
+            leftEinheitenBox = new SearchBox(einheiten);
+            leftEinheitenBox.setSelectedItem(AtlEinheiten.getEinheit(AtlEinheiten.MG_L_ID));
+        }
+
+        return leftEinheitenBox;
+    }
+
+    private JComboBox getRightEinheitenBox() {
+        if (rightEinheitenBox == null) {
+            rightEinheitenBox = new SearchBox(einheiten);
+            rightEinheitenBox.setSelectedItem(AtlEinheiten.getEinheit(AtlEinheiten.MG_L_ID));
+        }
+
+        return rightEinheitenBox;
+    }
+
 
 
 
@@ -650,23 +679,26 @@ public class ProbepktAuswPanel extends JPanel {
         TimeSeriesCollection col = new TimeSeriesCollection();
 
         int parameterAnzahl;
-        //AtlEinheiten einheit;
+        AtlEinheiten einheit;
         JList paramList;
         if (axis.equals(LEFT)) {
             parameterAnzahl = getLeftList().getModel().getSize();
+            einheit = (AtlEinheiten) getLeftEinheitenBox().getSelectedItem();
             paramList = getLeftList();
 
         } else {
             parameterAnzahl = getRightList().getModel().getSize();
+            einheit = (AtlEinheiten) getRightEinheitenBox().getSelectedItem();
             paramList = getRightList();
 
         }
 
-        AtlEinheiten einheit = AtlEinheiten.getEinheit(42);
         Timestamp vonDate = new Timestamp(getVonDateChooser().getDate().getTime());
         Timestamp bisDate = new Timestamp(getBisDateChooser().getDate().getTime());
-        String analyeVon = analyseVonBox.getSelectedItem().toString();
-
+        String analyeVon = "";
+        if (analyseVonBox.getSelectedItem() != null){
+        	analyeVon = analyseVonBox.getSelectedItem().toString();
+        }
 
 
         pkt = AtlProbepkt.getProbepunktByObjekt(hauptModul.getObjekt());
@@ -728,10 +760,11 @@ public class ProbepktAuswPanel extends JPanel {
     private JComboBox getAnalyseVonBox() {
         if (analyseVonBox == null) {
             String[]  inst = AtlAnalyseposition.getAnalysierer();
-            analyseVonBox = new JComboBox(inst);
+            analyseVonBox = new JComboBox();
             analyseVonBox.setEditable(true);
             analyseVonBox.setModel(new DefaultComboBoxModel(inst));
             analyseVonBox.setPrototypeDisplayValue("Faulschlamm   abc");
+            analyseVonBox.setSelectedIndex(-1);
         }
 
         return analyseVonBox;

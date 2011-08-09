@@ -57,17 +57,33 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Comparator;
+import java.util.GregorianCalendar;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
+import junit.runner.Sorter;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49Model;
+import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -80,7 +96,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     private JPanel queryPanel;
 
     // Widgets für die Abfrage
-    private JTextField sachbFeld;
+    private JComboBox sachbBox;
     private IntegerField dekraTuevFeld;
     private JCheckBox abgemeldetCheck;
     private JCheckBox abgerissenCheck;
@@ -90,10 +106,13 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     private JButton tuevButton;
     private JButton sachbearbeiterButton;
     private JButton alleButton;
+    private JButton inaktiveButton;
+    private JButton tabelleExportButton;
+    
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private Anh49Model tmodel;
-
+    
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
@@ -104,13 +123,18 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     public String getIdentifier() {
         return "m_auswertung_anh49";
     }
+
+    public HauptFrame getFrame() {
+        return frame;
+    }
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
-            sachbFeld = new JTextField("", 12);
+            sachbBox = new JComboBox();
+            
             dekraTuevFeld = new IntegerField();
 
             abgemeldetCheck = new JCheckBox("Abgemeldet");
@@ -123,13 +147,20 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
 
             submitButton = new JButton("Suchen");
 
-            alleButton = new JButton("Alle anzeigen");
+            alleButton = new JButton("Alle aktiven");
+
+            inaktiveButton = new JButton("Alle inaktiven");
 
             tuevButton = new JButton("Suchen");
             tuevButton.setToolTipText("Tuev/Dekra suchen");
 
             sachbearbeiterButton = new JButton("Suchen");
             sachbearbeiterButton.setToolTipText("SachbearbeiterIn anzeigen");
+            
+            String[] sachbearbeiter =
+                Anh49Fachdaten.getSachbearbeiter();
+            sachbBox.setModel(new DefaultComboBoxModel(sachbearbeiter));
+            
 
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
@@ -177,6 +208,16 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                 }
             });
 
+            inaktiveButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                    ((Anh49Model)getTableModel()).setList(
+                            Anh49Fachdaten.findInaktive());
+                    ((Anh49Model)getTableModel()).fireTableDataChanged();
+                    frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                }
+            });
+
             tuevButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
 
@@ -192,7 +233,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             sachbearbeiterButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
 
-                    String sachbearb = sachbFeld.getText();
+                    String sachbearb = sachbBox.getSelectedItem().toString();
 
                     ((Anh49Model)getTableModel()).setList(
                             Anh49Fachdaten.findSachbearbeiter(sachbearb));
@@ -203,18 +244,18 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
 
             // Noch etwas Layout...
             FormLayout layout = new FormLayout(
-                    "pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 20dlu, pref"
+                    "pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 20dlu, pref, 20dlu, pref"
                     );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append(abgemeldetCheck, abwasserfreiCheck);
-            builder.append(abgerissenCheck);
-            builder.append("SachbearbeiterIn:", sachbFeld, sachbearbeiterButton);
-            builder.nextLine();
-            builder.append(wiedervorlageCheck);
             builder.append("");
+            builder.append("SachbearbeiterIn:", sachbBox, sachbearbeiterButton);
+            builder.nextLine();
+            builder.append(wiedervorlageCheck, abgerissenCheck);
             builder.append(submitButton);
-            builder.append("Dekra-TÜV-T.:", dekraTuevFeld, tuevButton, alleButton);
+            builder.append("Dekra-TÜV-T.:", dekraTuevFeld, tuevButton, alleButton, inaktiveButton);
+            builder.append(getTabelleExportButton());
 
             queryPanel = builder.getPanel();
         }
@@ -230,5 +271,63 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             tmodel = new Anh49Model();
         }
         return tmodel;
+    }
+
+    private JButton getTabelleExportButton() {
+        if (tabelleExportButton == null) {
+            tabelleExportButton = new JButton("Tabelle speichern");
+            tabelleExportButton.setEnabled(true);
+
+            tabelleExportButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    saveTabelle();
+                }
+            });
+        }
+
+        return tabelleExportButton;
+    }
+
+
+    /**
+     * Speichert eine ProbenTabelle.
+     */
+    public void saveTabelle() {
+        File exportDatei = getFrame().saveFile(new String[]{"csv"});
+        if (exportDatei != null) {
+            String ext = AuikUtils.getExtension(exportDatei);
+
+            if (ext == null) {
+                String newExt;
+                if (exportDatei.getName().endsWith(".")) {
+                    newExt = "csv";
+                } else {
+                    newExt = ".csv";
+                }
+                exportDatei = new File(exportDatei.getParent(), exportDatei.getName()+newExt);
+            }
+
+            boolean doIt = false;
+            if (exportDatei.exists()) {
+                boolean answer = getFrame().showQuestion(
+                        "Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?",
+                        "Datei bereits vorhanden!");
+                if (answer && exportDatei.canWrite()) {
+                    doIt = true;
+                }
+            } else if (exportDatei.getParentFile().canWrite()) {
+                doIt = true;
+            }
+
+            if (doIt) {
+                AUIKataster.debugOutput("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
+                if (AuikUtils.exportTableDataToCVS(getResultTable(), exportDatei)) {
+                    AUIKataster.debugOutput("Speichern erfolgreich!");
+                } else {
+                    AUIKataster.debugOutput("Fehler beim Speichern!");
+                    getFrame().showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+                }
+            }
+        }
     }
 }

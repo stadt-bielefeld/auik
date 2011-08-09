@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
+
+    <class name="Anh49Kontrollen" table="anh_49_kontrollen">
+        <id name="id" type="java.lang.Integer">
+        	<column name="id" sql-type="serial"/>
+            <generator class="native">
+                <param name="sequence">anh_49_kontrollen_id_seq</param>
+        	</generator>
+        </id>
+
+        <property name="pruefdatum" column="pruefdatum" type="java.util.Date" />
+        <property name="naechstepruefung" column="naechstepruefung" type="java.util.Date" />
+        <property name="pruefergebnis" column="pruefergebnis" type="java.lang.String" />
+
+        <many-to-one name="anh49Fachdaten" column="anh49id" class="Anh49Fachdaten" />
+
+    </class>
+
+</hibernate-mapping>

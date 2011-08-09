@@ -49,7 +49,7 @@
         	<column name="e_satzung" />
         </property>
         
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" />
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
         
     </class>
 </hibernate-mapping>

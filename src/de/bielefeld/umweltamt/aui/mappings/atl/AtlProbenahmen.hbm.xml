@@ -33,13 +33,13 @@
         <property name="fahrtzeit" column="fahrtzeit" type="java.lang.String" />
         <property name="bescheid" column="bescheid" type="java.util.Date" />
         <property name="kosten" column="kosten" type="java.lang.Double" />
-		<property name="sachbearbeiter" column="sachbearbeiter" type="java.lang.String" />
         <property name="massnahmen" column="massnahmen" type="java.lang.String" />
         <property name="bezeichnung" column="bezeichnung" type="java.lang.String" />
 
         <many-to-one name="atlProbepkt" column="objektid" class="AtlProbepkt" />
 
         <many-to-one name="atlStatus" column="status" class="AtlStatus" />
+        <many-to-one name="basisSachbearbeiter" column="sachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" />
 
         <set name="atlAnalysepositionen" lazy="true" inverse="true" cascade="all-delete-orphan">
         	<key column="probenahme_id"/>

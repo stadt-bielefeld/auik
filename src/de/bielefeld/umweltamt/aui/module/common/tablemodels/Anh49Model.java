@@ -43,6 +43,8 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.util.Date;
+
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -56,7 +58,8 @@ public class Anh49Model extends ListTableModel {
         super(new String[]{
                 "Betreiber",
                 "Standort",
-                "Wiedervorl.",
+                "Letzte Analyse",
+                "TÜV/DEKRA",
                 "Sonstiges Technik",
                 "SachbearbeiterIn"
         },
@@ -78,12 +81,15 @@ public class Anh49Model extends ListTableModel {
             tmp = fd.getBasisObjekt().getBasisStandort();
             break;
         case 2:
-            tmp = AuikUtils.getStringFromDate(fd.getWiedervorlage());
+        	tmp = fd.getLetzteAnalyse(fd);
             break;
         case 3:
-            tmp = fd.getSonstigestechnik();
+            tmp = fd.getDekraTuevDatum();
             break;
         case 4:
+            tmp = fd.getSonstigestechnik();
+            break;
+        case 5:
             tmp = fd.getSachbearbeiterIn();
             break;
 
@@ -91,12 +97,25 @@ public class Anh49Model extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getBasisObjekt().getInaktiv() == true)
-        {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
-        }
+//        if (fd.getBasisObjekt().getInaktiv() == true)
+//        {
+//            tmp = "<html><strike>" + tmp + "</strike></html>";
+//        }
         return tmp;
     }
+    
+	  @Override
+	public Class<?> getColumnClass( int columnIndex ){
+		switch( columnIndex ){
+			case 0: return String.class;
+			case 1: return String.class;
+			case 2: return Date.class;
+			case 3: return Date.class;
+			case 4: return String.class;
+			case 5: return String.class;
+			default: return null;
+		}
+	}
 
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.

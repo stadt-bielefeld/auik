@@ -84,6 +84,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 
 /**
  * A class that represents a row in the 'BasisSachbearbeiter' table.
@@ -140,5 +141,18 @@ public class BasisSachbearbeiter
         finally {
             HibernateSessionFactory.closeSession();
         }
+    }
+
+
+    public static BasisSachbearbeiter getSachbearbeiter(String kennummer) {
+    	BasisSachbearbeiter[] sachbearbeiter = getSachbearbeiter();
+
+        for (BasisSachbearbeiter s: sachbearbeiter) {
+            if (kennummer.equals(s.getKennummer())) {
+                return s;
+            }
+        }
+
+        return null;
     }
 }

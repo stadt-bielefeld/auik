@@ -30,6 +30,8 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.Set;
 
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+
 /**
  * A class that represents a row in the ATL_PROBENAHMEN table.
  * You can customize the behavior of this class by editing the class, {@link AtlProbenahmen}.
@@ -52,6 +54,9 @@ public abstract class AbstractAtlProbenahmen
 
     /** The value of the atlStatus association. */
     private AtlStatus atlStatus;
+
+    /** The value of the atlStatus association. */
+    private BasisSachbearbeiter basisSachbearbeiter;
 
     /** The value of the atlAnalysepositionen association. */
     private Set atlAnalysepositionen;
@@ -200,6 +205,24 @@ public abstract class AbstractAtlProbenahmen
     public void setAtlProbepkt(AtlProbepkt atlProbepkt)
     {
         this.atlProbepkt = atlProbepkt;
+    }
+
+    /**
+     * Return the value of the AtlStatus column.
+     * @return AtlProbepkt
+     */
+    public BasisSachbearbeiter getBasisSachbearbeiter()
+    {
+        return this.basisSachbearbeiter;
+    }
+
+    /**
+     * Set the value of the AtlStatus column.
+     * @param atlProbepkt
+     */
+    public void setBasisSachbearbeiter(BasisSachbearbeiter basisSachbearbeiter)
+    {
+        this.basisSachbearbeiter = basisSachbearbeiter;
     }
 
     /**
