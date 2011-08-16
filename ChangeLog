@@ -1,3 +1,9 @@
+2011-08-16  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java:
+	  Parameter, die in einer vollständigen Parametergruppe enthalten sind,
+	  werden beim Gebührenbescheid mit 0,00 € angezeigt.
+
 2011-04-18  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/module/common/editors/ProbenEditor.java:

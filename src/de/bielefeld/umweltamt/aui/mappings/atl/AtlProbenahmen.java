@@ -59,7 +59,8 @@ public class AtlProbenahmen
 
     public static final String[] COLUMNS_BESCHEID = {
         "Pos", "Parameter", "Grenzwert_Wert", "Grenzwert_Einheit",
-        "Ergebnis_Wert", "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett"
+        "Ergebnis_Wert", "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett",
+        "inGruppe"
     };
 
 
@@ -532,6 +533,7 @@ public class AtlProbenahmen
 
     public static JRMapDataSource getBescheidDataSource(AtlProbenahmen probe) {
         List sorted   = sortAnalysepositionen(probe);
+        List params   = probe.getAtlParameter();
         int  elements = sorted.size();
 
         Object[][] values  = new Object[elements][];
@@ -545,26 +547,30 @@ public class AtlProbenahmen
             String einheit          = pos.getAtlEinheiten().getBezeichnung();
             String grenzwert        = "";
             if (parameter.getGrenzwert() != null && parameter.getGrenzwert() < 100){
-            	grenzwert = parameter.getGrenzwert().toString().replace(".", ",");
+                grenzwert = parameter.getGrenzwert().toString().replace(".", ",");
             }
             else if (parameter.getGrenzwert() != null && parameter.getGrenzwert() > 100){
-            	grenzwert = parameter.getGrenzwert().toString().replace(".0", "");
+                grenzwert = parameter.getGrenzwert().toString().replace(".0", "");
             }
-            String wert				= "";
+            String wert = "";
             if (pos.getWert() < 100){
-            	wert = pos.getWert().toString().replace(".", ",");
+                wert = pos.getWert().toString().replace(".", ",");
             }
             else {
-            	wert = pos.getWert().toString().replace(".0", "");
+                wert = pos.getWert().toString().replace(".0", "");
             }
-            Boolean fett			= false;
+            Boolean fett = false;
             if (pos.getWert() != null && parameter.getGrenzwert() != null && pos.getWert() > parameter.getGrenzwert()){
-            	fett = true;
+                fett = true;
             }
-            String gebuehr	= "0,00 €";
+            String gebuehr    = "0,00 €";
             if (parameter.getPreisfueranalyse() != 0 )
-            	gebuehr = new GermanDouble(
+                gebuehr = new GermanDouble(
                         parameter.getPreisfueranalyse()).toString() + " €";
+
+            AtlParameterGruppen gr = parameter.getAtlParameterGruppe();
+            int groupId            = gr != null ? gr.getId() : -1;
+            boolean inGroup = AtlParameterGruppen.isGroupComplete(groupId, params);
 
             columns[0] = i+1;
             columns[1] = parameter.getBezeichnung();
@@ -572,7 +578,7 @@ public class AtlProbenahmen
             columns[3] = einheit;
             columns[4] = wert;
             columns[5] = einheit;
-            columns[6] = gebuehr;
+            columns[6] = inGroup ? "0,00 €" : gebuehr;
             columns[7] = pos.getGrkl();
             columns[8] = fett;
 
@@ -580,6 +586,21 @@ public class AtlProbenahmen
         }
 
         return new JRMapDataSource(COLUMNS_BESCHEID, values);
+    }
+
+
+    public List getAtlParameter() {
+        List sorted = sortAnalysepositionen(this);
+
+        int num = sorted != null ? sorted.size() : 0;
+
+        List params = new ArrayList(num);
+
+        for (int i = 0; i < num; i++) {
+            params.add(((AtlAnalyseposition) sorted.get(i)).getAtlParameter());
+        }
+
+        return params;
     }
 
     /**
