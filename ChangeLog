@@ -1,3 +1,9 @@
+2011-08-18  Ingo Weinzierl <ingo@intevation.de>
+
+	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java: Im
+	  Gebührenbescheid wird nun die Gruppe (sofern alle Parameter enthalten)
+	  aufgelistet mit Name und Analysepreis.
+
 2011-08-16  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java:

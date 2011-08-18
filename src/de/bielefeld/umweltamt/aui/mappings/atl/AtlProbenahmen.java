@@ -26,8 +26,12 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Hibernate;
@@ -539,6 +543,8 @@ public class AtlProbenahmen
         Object[][] values  = new Object[elements][];
         Object[]   columns;
 
+        Map groups = new HashMap(1);
+
         for (int i = 0; i < elements; i++) {
             columns = new Object[COLUMNS_BESCHEID.length];
 
@@ -572,6 +578,10 @@ public class AtlProbenahmen
             int groupId            = gr != null ? gr.getId() : -1;
             boolean inGroup = AtlParameterGruppen.isGroupComplete(groupId, params);
 
+            if (inGroup) {
+                groups.put(groupId, gr);
+            }
+
             columns[0] = i+1;
             columns[1] = parameter.getBezeichnung();
             columns[2] = grenzwert;
@@ -585,7 +595,41 @@ public class AtlProbenahmen
             values[i] = columns;
         }
 
-        return new JRMapDataSource(COLUMNS_BESCHEID, values);
+        int numGroups = groups.size();
+
+        if (numGroups == 0) {
+            return new JRMapDataSource(COLUMNS_BESCHEID, values);
+        }
+
+        Object[][] newValues = new Object[elements+numGroups][];
+        int i;
+
+        for (i = 0; i < elements; i++) {
+            newValues[i] = values[i];
+        }
+
+        Collection theGroups = groups.values();
+        for (Object obj: theGroups) {
+            AtlParameterGruppen apg = (AtlParameterGruppen) obj;
+
+            String gebuehr = new GermanDouble(
+                apg.getPreisfueranalyse()).toString() + " €";
+
+            columns = new Object[COLUMNS_BESCHEID.length];
+            columns[0] = i+1;
+            columns[1] = apg.getName();
+            columns[2] = "";
+            columns[3] = "";
+            columns[4] = "";
+            columns[5] = "";
+            columns[6] = gebuehr;
+            columns[7] = "";
+            columns[8] = "";
+
+            newValues[i] = columns;
+        }
+
+        return new JRMapDataSource(COLUMNS_BESCHEID, newValues);
     }
 
 
