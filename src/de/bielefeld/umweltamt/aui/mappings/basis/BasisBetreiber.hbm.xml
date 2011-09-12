@@ -13,6 +13,7 @@
         </id>
 
         <property name="betranrede" column="betranrede" type="java.lang.String" />
+        <property name="betrvorname" column="betrvorname" type="java.lang.String" />
         <property name="betrname" column="betrname" type="java.lang.String" />
         <property name="betrnamezus" column="betrnamezus" type="java.lang.String" />
         <property name="namebetrbeauf" column="namebetrbeauf" type="java.lang.String" />

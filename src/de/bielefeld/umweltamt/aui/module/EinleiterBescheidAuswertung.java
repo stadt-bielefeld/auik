@@ -55,12 +55,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.eclipse.birt.chart.computation.withaxes.AllAxes;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BescheidModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbepunktModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -79,7 +83,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
     private JButton ergaenztButton;
     private JButton angelegtButton;
 
-    /** Das TableModel für die Ergebnis-Tabelle */
+    /** Die TableModels für die Ergebnis-Tabelle */
     private BescheidModel tmodel;
 
     /* (non-Javadoc)
@@ -175,7 +179,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append(bescheidButton, eingetragenButton);

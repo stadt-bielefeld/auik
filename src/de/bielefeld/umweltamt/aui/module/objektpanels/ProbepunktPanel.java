@@ -63,6 +63,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
@@ -83,6 +84,8 @@ public class ProbepunktPanel extends JPanel {
     // Widgets
     private JComboBox probePktArtBox = null;
     private JComboBox probeKABox = null;
+    private JComboBox sachbearbeiterBox = null;
+    private JTextField brancheFeld = null;
     private JFormattedTextField probePktNrFeld = null;
     private JTextArea probePktBeschreibungsArea = null;
     private JTable probenahmeTabelle = null;
@@ -98,6 +101,7 @@ public class ProbepunktPanel extends JPanel {
     private AtlProbepkt probepkt = null;
     private AtlProbeart[] probearten = null;
     private AtlKlaeranlagen[] klaeranlagen = null;
+    private BasisSachbearbeiter[] sachbearbeiter = null;
 
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
@@ -113,29 +117,33 @@ public class ProbepunktPanel extends JPanel {
 
         FormLayout layout = new FormLayout (
                 "r:50dlu, 5dlu, 150dlu, r:45dlu, 5dlu, 25dlu", // Spalten
-                "pref, " +  //1
-                "3dlu, " +  //2
+                "pref, " +    //1
+                "3dlu, " +    //2
                 "pref, " +    //3
                 "3dlu, " +    //4
                 "pref, " +    //5
-                "3dlu, " +  //6
-                "pref, " +  //7
+                "3dlu, " +    //6
+                "pref, " +    //7
                 "5dlu, " +    //8
                 "pref, " +    //9
                 "3dlu, " +    //10
-                "pref, "+    //11
+                "pref, "+     //11
                 "3dlu, " +    //12
                 "pref, " +    //13
                 "3dlu, " +    //14
-                "fill:40dlu:g, "+ //15
+                "pref, "+     //15
                 "3dlu, " +    //16
-                "pref, " +     // 17
+                "pref, " +    //17
                 "3dlu, " +    //18
-                "pref, " +    //19
+                "fill:40dlu:g, "+ //19
                 "3dlu, " +    //20
-                "fill:40dlu:g, " +    //21
+                "pref, " +     // 21
                 "3dlu, " +    //22
-                "pref");    //23
+                "pref, " +    //23
+                "3dlu, " +    //24
+                "fill:40dlu:g, " +    //25
+                "3dlu, " +    //26
+                "pref");    //27
 
         PanelBuilder builder = new PanelBuilder(layout, this);
         builder.setDefaultDialogBorder();
@@ -148,32 +156,36 @@ public class ProbepunktPanel extends JPanel {
         builder.add(getProbePktNrFeld(), cc.xy( 6, 3));
         builder.addLabel("Kläranlage:", cc.xy( 1, 5));
         builder.add(getProbeKABox(), cc.xy( 3, 5));
+        builder.addLabel("Sachbearbeiter:", cc.xy( 1, 7));
+        builder.add(getSachbearbeiterBox(), cc.xy( 3, 7));
+        builder.addLabel("Branche:", cc.xy( 1, 9));
+        builder.add(getBrancheFeld(), cc.xy( 3, 9));
 
         JPanel buttonBar = ButtonBarFactory.buildOKBar(getSavePktButton());
-        builder.add(buttonBar, cc.xyw( 1, 7, 6));
+        builder.add(buttonBar, cc.xyw( 1, 11, 6));
 
-        builder.addSeparator("Beschreibung", cc.xyw( 1, 9, 6));
+        builder.addSeparator("Beschreibung", cc.xyw( 1, 13, 6));
         JScrollPane beschScroller = new JScrollPane(getProbePktBeschreibungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         beschScroller.setBorder(null);
-        builder.add(beschScroller, cc.xyw( 1, 11, 6));
+        builder.add(beschScroller, cc.xyw( 1, 15, 6));
 
-        builder.addSeparator("Probenahmen", cc.xyw( 1, 13, 6));
+        builder.addSeparator("Probenahmen", cc.xyw( 1, 17, 6));
         JScrollPane tabellenScroller = new JScrollPane(getProbenahmeTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(tabellenScroller, cc.xyw( 1, 15, 6));
-        builder.add(getNeueProbePanel(), cc.xyw( 1, 17, 6));
+        builder.add(tabellenScroller, cc.xyw( 1, 19, 6));
+        builder.add(getNeueProbePanel(), cc.xyw( 1, 21, 6));
 
 
-        builder.addSeparator("Verknüpfte Objekte", cc.xyw( 1, 19, 6));
+        builder.addSeparator("Verknüpfte Objekte", cc.xyw( 1, 23, 6));
         JScrollPane objektverknuepfungScroller = new JScrollPane(
                 getObjektverknuepungTabelle(),
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(objektverknuepfungScroller, cc.xyw( 1, 21, 6));
+        builder.add(objektverknuepfungScroller, cc.xyw( 1, 25, 6));
 
         JPanel buttonBarOv = ButtonBarFactory.buildRightAlignedBar(
                 getSelectObjektButton());
 
-        builder.add(buttonBarOv, cc.xyw( 1, 23, 6));
+        builder.add(buttonBarOv, cc.xyw( 1, 27, 6));
     }
 
 
@@ -187,6 +199,9 @@ public class ProbepunktPanel extends JPanel {
         if (klaeranlagen == null) {
             klaeranlagen = AtlKlaeranlagen.getKlaeranlagen();
         }
+        if (sachbearbeiter == null) {
+        	sachbearbeiter = BasisSachbearbeiter.getSachbearbeiter();
+        }
     }
 
     public void updateForm() throws RuntimeException {
@@ -196,15 +211,20 @@ public class ProbepunktPanel extends JPanel {
         if (klaeranlagen != null) {
             getProbeKABox().setModel(new DefaultComboBoxModel(klaeranlagen));
         }
+        if (sachbearbeiter != null) {
+            getSachbearbeiterBox().setModel(new DefaultComboBoxModel(sachbearbeiter));
+        }
 
         if (probepkt != null) {
             getProbePktArtBox().setSelectedItem(probepkt.getAtlProbeart());
             getProbeKABox().setSelectedItem(probepkt.getAtlKlaeranlagen());
+            getSachbearbeiterBox().setSelectedItem(probepkt.getBasisSachbearbeiter());
 
             if (probepkt.getNummer() != null) {
                 getProbePktNrFeld().setValue(probepkt.getNummer());
             }
 
+            getBrancheFeld().setText(probepkt.getBranche());
             getProbePktBeschreibungsArea().setText(hauptModul.getObjekt().getBeschreibung());
 
             probenahmenModel.setProbepunkt(probepkt);
@@ -218,6 +238,7 @@ public class ProbepunktPanel extends JPanel {
         getProbePktNrFeld().setText(null);
         getProbePktBeschreibungsArea().setText(null);
         getKennummerFeld().setText("");
+        getBrancheFeld().setText("");
     }
 
     public void enableAll(boolean enabled) {
@@ -225,6 +246,7 @@ public class ProbepunktPanel extends JPanel {
         getProbeKABox().setEnabled(enabled);
         getProbePktNrFeld().setEnabled(enabled);
         getProbePktBeschreibungsArea().setEnabled(enabled);
+        getBrancheFeld().setEnabled(enabled);
 
         getProbenahmeTabelle().setEnabled(enabled);
         getKennummerFeld().setEnabled(enabled);
@@ -287,6 +309,16 @@ public class ProbepunktPanel extends JPanel {
             if (getProbeKABox().getSelectedItem() != null) {
                 probepkt.setAtlKlaeranlagen((AtlKlaeranlagen) getProbeKABox().getSelectedItem());
             }
+            if (getSachbearbeiterBox().getSelectedItem() != null) {
+                probepkt.setBasisSachbearbeiter((BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
+            }
+
+            String branche = brancheFeld.getText();
+            if ("".equals(branche)) {
+            	probepkt.setBranche(null);
+            } else {
+            	probepkt.setBranche(branche);
+            }
 
             if (getProbePktNrFeld().getValue() != null) {
                 probepkt.setNummer(((IntegerField) getProbePktNrFeld()).getIntValue());
@@ -327,6 +359,18 @@ public class ProbepunktPanel extends JPanel {
             probeKABox = new JComboBox();
         }
         return probeKABox;
+    }
+    private JComboBox getSachbearbeiterBox() {
+        if (sachbearbeiterBox == null) {
+        	sachbearbeiterBox = new JComboBox();
+        }
+        return sachbearbeiterBox;
+    }
+    private JTextField getBrancheFeld() {
+        if (brancheFeld == null) {
+        	brancheFeld = new LimitedTextField(50, "");
+        }
+        return brancheFeld;
     }
     private JFormattedTextField getProbePktNrFeld() {
         if (probePktNrFeld == null) {

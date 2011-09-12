@@ -58,7 +58,7 @@ public class AtlProbenahmen
     implements Serializable
 {
     public static final String[] COLUMNS_AUFTRAG = {
-        "auswahl", "Parameter", "Kennzeichnung", "Konservierung"
+        "auswahl", "Parameter", "Kennzeichnung", "Konservierung", "Zusatz"
     };
 
     public static final String[] COLUMNS_BESCHEID = {
@@ -515,18 +515,20 @@ public class AtlProbenahmen
         Object[]   columns;
 
         for (int i = 0; i < elements; i++) {
-            columns = new Object[4];
+            columns = new Object[5];
 
             AtlAnalyseposition pos   = (AtlAnalyseposition) sorted.get(i);
             AtlParameter parameter   = pos.getAtlParameter();
             String       bezeichnung = parameter.getBezeichnung();
             String       kennzeichnung = parameter.getKennzeichnung();
             String       konservierung = parameter.getKonservierung();
+            String       zusatz = parameter.getAnalyseverfahren();
 
             columns[0] = true; // this value is always true
             columns[1] = bezeichnung;
             columns[2] = kennzeichnung;
             columns[3] = konservierung;
+            columns[4] = zusatz;
 
             values[i] = columns;
         }
@@ -578,9 +580,9 @@ public class AtlProbenahmen
             int groupId            = gr != null ? gr.getId() : -1;
             boolean inGroup = AtlParameterGruppen.isGroupComplete(groupId, params);
 
-            if (inGroup) {
-                groups.put(groupId, gr);
-            }
+//            if (inGroup) {
+//                groups.put(groupId, gr);
+//            }
 
             columns[0] = i+1;
             columns[1] = parameter.getBezeichnung();

@@ -138,7 +138,7 @@ public class SettingsManager {
                 "KlaerschlammRohschlammproben, KlaerschlammFaulschlammproben, LaborProbeSuchen, KlaerschlammAuswertung, LaborIcpImport, " +
                 "EinleiterAnh50Auswertung, EinleiterAnh49Auswertung, EinleiterBrennwertAuswertung, EinleiterSuevkanAuswertung, EinleiterAnh40Auswertung, EinleiterAnh56Auswertung, " +
                 "VawsHerstellernummerSuchen, VawsKontrollenAuswertung, VawsVerwaltungsverfAuswertung, " +
-                "BasisBetreiberSuchen, BasisBetreiberNeu, " +
+                "BasisBetreiberSuchen, BasisBetreiberNeu, ProbepunkteAuswertung, " +
                 "BasisObjektBearbeiten, " +
                 "SielhautBearbeiten, SielhautImport, " +
                 "AnalyseImport, EinleiterBescheidAuswertung"

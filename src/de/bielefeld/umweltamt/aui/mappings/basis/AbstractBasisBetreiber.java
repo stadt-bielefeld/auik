@@ -51,6 +51,9 @@ public abstract class AbstractBasisBetreiber
     /** The value of the simple betranrede property. */
     private java.lang.String betranrede;
 
+    /** The value of the simple betrvorname property. */
+    private java.lang.String betrvorname;
+
     /** The value of the simple betrname property. */
     private java.lang.String betrname;
 
@@ -153,6 +156,24 @@ public abstract class AbstractBasisBetreiber
     public void setBetranrede(java.lang.String betranrede)
     {
         this.betranrede = betranrede;
+    }
+
+    /**
+     * Return the value of the BETRVORNAME column.
+     * @return java.lang.String
+     */
+    public java.lang.String getBetrvorname()
+    {
+        return this.betrvorname;
+    }
+
+    /**
+     * Set the value of the BETRVORNAME column.
+     * @param betrvorname
+     */
+    public void setBetrvorname(java.lang.String betrvorname)
+    {
+        this.betrvorname = betrvorname;
     }
 
     /**

@@ -55,6 +55,9 @@ public abstract class AbstractBasisObjekt
     /** The value of the basisStandort association. */
     private BasisStandort basisStandort;
 
+    /** The value of the basisSachbearbeiter association. */
+    private BasisSachbearbeiter basisSachbearbeiter;
+
     /** The value of the atlProbepkt association. */
     private AtlProbepkt atlProbepkt;
 
@@ -63,9 +66,6 @@ public abstract class AbstractBasisObjekt
 
     /** The value of the simple beschreibung property. */
     private java.lang.String beschreibung;
-
-    /** The value of the simple beschreibung property. */
-    private java.lang.String sachbearbeiter;
 
     /** The value of the simple revidatum property. */
     private java.util.Date wiedervorlage;
@@ -175,6 +175,24 @@ public abstract class AbstractBasisObjekt
     }
 
     /**
+     * Return the value of the BasisSachbearbeiter column.
+     * @return BasisSachbearbeiter
+     */
+    public BasisSachbearbeiter getBasisSachbearbeiter()
+    {
+        return this.basisSachbearbeiter;
+    }
+
+    /**
+     * Set the value of the BasisSachbearbeiter column.
+     * @param BasisSachbearbeiter
+     */
+    public void setBasisSachbearbeiter(BasisSachbearbeiter basisSachbearbeiter)
+    {
+        this.basisSachbearbeiter = basisSachbearbeiter;
+    }
+
+    /**
      * Return the value of the STANDORTID column.
      * @return BasisStandort
      */
@@ -208,23 +226,6 @@ public abstract class AbstractBasisObjekt
     public void setUschistdid(java.lang.Integer uschistdid)
     {
         this.uschistdid = uschistdid;
-    }
-    /**
-     * Return the value of the BESCHREIBUNG column.
-     * @return java.lang.String
-     */
-    public java.lang.String getSachbearbeiter()
-    {
-        return this.sachbearbeiter;
-    }
-
-    /**
-     * Set the value of the BESCHREIBUNG column.
-     * @param beschreibung
-     */
-    public void setSachbearbeiter(java.lang.String sachbearbeiter)
-    {
-        this.sachbearbeiter = sachbearbeiter;
     }
     /**
      * Return the value of the BESCHREIBUNG column.

@@ -482,7 +482,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private JLabel               rechnungsBetrag;
     private JTextArea            bemerkungsArea;
 
-    private JComboBox            sachbearbeiter;
+    private JComboBox            sachbearbeiterBox;
     private JButton              bescheidDrucken;
     private JButton              auftragDrucken;
     private JFileChooser         dateiChooser;
@@ -508,7 +508,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
         
         if (isNew){
-        sachbearbeiter.setSelectedItem(BasisSachbearbeiter.getSachbearbeiter(SettingsManager.getInstance().getSetting("auik.prefs.lastuser")));
+        sachbearbeiterBox.setSelectedItem(BasisSachbearbeiter.getSachbearbeiter(SettingsManager.getInstance().getSetting("auik.prefs.lastuser")));
         }
 
         parameterModel = new ParameterModel(getProbe(), isNew);
@@ -739,7 +739,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         probenummer      = new JTextField();
         vorgangsstatus   = new JComboBox();
         statusHoch       = new JButton("erhöhen");
-        sachbearbeiter   = new JComboBox();
+        sachbearbeiterBox   = new JComboBox();
         icpEinwaageFeld  = new DoubleField(0);
         icpDatum         = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
         bemerkungsArea   = new LimitedTextArea(255);
@@ -756,7 +756,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         BasisSachbearbeiter[] bSachbearbeiter =
             BasisSachbearbeiter.getSachbearbeiter();
         ComboBoxModel sachbearbeiterModel = (new DefaultComboBoxModel(bSachbearbeiter));
-        sachbearbeiter.setModel(sachbearbeiterModel);
+        sachbearbeiterBox.setModel(sachbearbeiterModel);
 
         statusHoch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -827,7 +827,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         row += 2;
         builder.addLabel("Sachbearbeiter:", cc.xyw(1, row, 1));
-        builder.add(sachbearbeiter, cc.xyw(2, row, 4));
+        builder.add(sachbearbeiterBox, cc.xyw(2, row, 4));
 
         row += 2;
         builder.addLabel("Name des Betriebs:", cc.xyw(1, row, 1));
@@ -1133,6 +1133,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         icpDatum.setDate(icpDate);
 
         bemerkungsArea.setText(getProbe().getBemerkung());
+        sachbearbeiterBox.setSelectedItem(probe.getBasisSachbearbeiter());
     }
 
     /** Initialisiert die Spalten der Analysepositionen-Tabelle */
@@ -1227,7 +1228,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
 
     protected BasisSachbearbeiter getSachbearbeiter() {
-        ComboBoxModel model = sachbearbeiter.getModel();
+        ComboBoxModel model = sachbearbeiterBox.getModel();
 
         return (BasisSachbearbeiter) model.getSelectedItem();
     }
@@ -1325,9 +1326,9 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         // Sachbearbeiter
         BasisSachbearbeiter b = (BasisSachbearbeiter)
-            sachbearbeiter.getSelectedItem();
+            sachbearbeiterBox.getSelectedItem();
         if (b != null) {
-            probe.setSachbearbeiter(b.getKennummer());;
+            probe.setBasisSachbearbeiter(b);;
         }
 
         // Kennnummer
@@ -1414,7 +1415,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("bemerkungen", bemerkungsArea.getText());
 
         BasisSachbearbeiter sb = (BasisSachbearbeiter)
-            sachbearbeiter.getSelectedItem();
+            sachbearbeiterBox.getSelectedItem();
 
         StringBuilder info = new StringBuilder();
         if (sb != null) {
@@ -1422,7 +1423,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             info.append(", ");
             info.append(sb.getGehoertzuarbeitsgr());
             info.append(", ");
-            info.append(sb.getTelefon());
+            info.append("0521/51-" + sb.getTelefon());
         }
         params.put("sachbearbeiterInfo", info.toString());
 
@@ -1473,7 +1474,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("kosten", Double.toString(PERSONAL_UND_SACHKOSTEN).replace(".", ","));
         params.put("kassenzeichen", betr.getKassenzeichen());
         params.put("firmaAnrede", betr.getBetranrede());
-        params.put("firmaName", betr.getBetrname());
+        if (betr.getBetrvorname() != null)
+        	params.put("firmaName", betr.getBetrvorname() + " " + betr.getBetrname());
+        else
+            params.put("firmaName", betr.getBetrname());
         params.put("firmaNameZus", betr.getBetrnamezus());
         params.put("firmaStrasse", betr.getBetriebsgrundstueck());
         params.put("firmaOrt", betr.getPlz() + " " + betr.getOrt());

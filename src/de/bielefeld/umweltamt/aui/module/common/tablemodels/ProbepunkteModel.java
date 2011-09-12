@@ -56,13 +56,16 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Probenehmereinsaetze.
  * @author Gerd Genuit
  */
-public class ProbenehmerModel extends ListTableModel {
-    public ProbenehmerModel() {
+public class ProbepunkteModel extends ListTableModel {
+    public ProbepunkteModel() {
         super(new String[]{
+                "Standort",
+                "Entgeb",
                 "Betreiber",
+                "Branche",
                 "Beschreibung",
-                "Straße",
-                "Hausnr."
+                "Sachb.(Rav)",
+                "Sachb.(Heepen)"
         },
         false);
     }
@@ -76,25 +79,29 @@ public class ProbenehmerModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = fd.getBasisObjekt().getBasisBetreiber().getBetrname();
+            tmp = fd.getBasisObjekt().getBasisStandort();
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBeschreibung();
+            tmp = fd.getBasisObjekt().getBasisStandort().getEntgebid();
             break;
         case 2:
-            tmp = fd.getBasisObjekt().getBasisStandort().getStrasse();
+            tmp = fd.getBasisObjekt().getBasisBetreiber();
             break;
         case 3:
-            tmp = fd.getBasisObjekt().getBasisStandort().getHausnr();
+            tmp = fd.getBranche();
             break;
-
+        case 4:
+            tmp = fd.getBasisObjekt().getBeschreibung();
+            break;
+        case 5:
+            tmp = fd.getBasisObjekt().getBasisSachbearbeiter();
+            break;
+        case 6:
+            tmp = fd.getBasisSachbearbeiter();
+            break;
         default:
             tmp = "ERROR";
             break;
-        }
-        if (fd.getBasisObjekt().getInaktiv() == true)
-        {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
         }
         return tmp;
     }

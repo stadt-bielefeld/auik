@@ -33,7 +33,6 @@ public class Anh52Model extends ListTableModel {
         super(new String[]{
                 "Betreiber",
                 "Standort",
-                "Druckverfahren",
                 "Bemerkungen"
         },
         false);

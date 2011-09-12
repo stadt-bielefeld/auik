@@ -684,9 +684,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
             } else if (objekt.getBasisObjektarten().isAnh52()) {
                 getAnh52Tab().clearForm();
             } else if (objekt.getBasisObjektarten().isAnh53Gr()) {
-                getAnh52Tab().clearForm();
+                getAnh53Tab().clearForm();
             } else if (objekt.getBasisObjektarten().isAnh53Kl()) {
-                getAnh52Tab().clearForm();
+                getAnh53Tab().clearForm();
             }
         }
     }
@@ -717,9 +717,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
             } else if (objekt.getBasisObjektarten().isAnh52()) {
                 getAnh52Tab().enableAll(enabled);
             } else if (objekt.getBasisObjektarten().isAnh53Gr()) {
-                getAnh52Tab().enableAll(enabled);
+                getAnh53Tab().enableAll(enabled);
             } else if (objekt.getBasisObjektarten().isAnh53Kl()) {
-                getAnh52Tab().enableAll(enabled);
+                getAnh53Tab().enableAll(enabled);
             } else if (objekt.getBasisObjektarten().isUebergabestelle()) {
                 getUebergabeTab().enableAll(enabled);
             } else if (objekt.getBasisObjektarten().isGenehmigung()) {
@@ -758,9 +758,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
             } else if (objekt.getBasisObjektarten().isAnh52()) {
                 getAnh52Tab().completeObjekt();
             } else if (objekt.getBasisObjektarten().isAnh53Gr()) {
-                getAnh52Tab().completeObjekt();
+                getAnh53Tab().completeObjekt();
             } else if (objekt.getBasisObjektarten().isAnh53Kl()) {
-                getAnh52Tab().completeObjekt();
+                getAnh53Tab().completeObjekt();
             } else if (objekt.getBasisObjektarten().isUebergabestelle()) {
                 getUebergabeTab().completeObjekt();
             } else if (objekt.getBasisObjektarten().isGenehmigung()) {

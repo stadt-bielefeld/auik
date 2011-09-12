@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 
 /**
  * A class that represents a row in the ATL_PROBEPKT table.
@@ -61,8 +62,14 @@ public abstract class AbstractAtlProbepkt
     /** The value of the atlSielhaut association. */
     private AtlSielhaut atlSielhaut;
 
+    /** The value of the basisSachbearbeiter association. */
+    private BasisSachbearbeiter basisSachbearbeiter;
+
     /** The value of the simple beschreibung property. */
     private java.lang.String beschreibung;
+
+    /** The value of the simple branche property. */
+    private java.lang.String branche;
 
     /** The value of the simple nummer property. */
     private java.lang.Integer nummer;
@@ -177,6 +184,24 @@ public abstract class AbstractAtlProbepkt
     }
 
     /**
+     * Return the value of the SACHBEARBEITER column.
+     * @return AtlProbeart
+     */
+    public BasisSachbearbeiter getBasisSachbearbeiter()
+    {
+        return this.basisSachbearbeiter;
+    }
+
+    /**
+     * Set the value of the SACHBEARBEITER column.
+     * @param atlProbeart
+     */
+    public void setBasisSachbearbeiter(BasisSachbearbeiter basisSachbearbeiter)
+    {
+        this.basisSachbearbeiter = basisSachbearbeiter;
+    }
+
+    /**
      * Return the value of the OBJEKT_ID column.
      * @return BasisObjekt
      */
@@ -208,6 +233,24 @@ public abstract class AbstractAtlProbepkt
     public void setBeschreibung(java.lang.String beschreibung)
     {
         this.beschreibung = beschreibung;
+    }
+
+    /**
+     * Return the value of the Branche column.
+     * @return java.lang.String
+     */
+    public java.lang.String getBranche()
+    {
+        return this.branche;
+    }
+
+    /**
+     * Set the value of the BESCHRBrancheEIBUNG column.
+     * @param beschreibung
+     */
+    public void setBranche(java.lang.String branche)
+    {
+        this.branche = branche;
     }
 
     /**

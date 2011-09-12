@@ -9,7 +9,7 @@
         <!-- PostgreSQL: -->
            
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost/fisumwelt</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://172.20.70.24/fisumwelt</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>       	
         	
         <!-- MySQL: -->

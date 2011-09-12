@@ -99,6 +99,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
@@ -206,7 +207,7 @@ public class BasisPanel  extends JPanel {
             submitToolBar.add(getSubmitButton());
 
             FormLayout layout = new FormLayout(
-                    "180dlu, 3dlu, min(16dlu;p)",        // spalten
+                    "200dlu, 3dlu, min(16dlu;p)",        // spalten
                     "pref, 3dlu, 100dlu, 3dlu, pref");     // zeilen
             PanelBuilder builder = new PanelBuilder(layout);
             builder.setDefaultDialogBorder();
@@ -371,8 +372,9 @@ public class BasisPanel  extends JPanel {
     private JButton standortNewButton;
 //    private JButton standortGotoButton;
 
-    //   Art, Inaktiv, Beschreibung, Speichern
+    //   Art, Sachbearbeiter, Inaktiv, Beschreibung, Speichern
     private JComboBox artBox;
+    private JComboBox sachbearbeiterBox;
     private JCheckBox inaktivBox;
     private JTextArea beschreibungsArea;
     private JButton saveButton;
@@ -386,6 +388,9 @@ public class BasisPanel  extends JPanel {
 
     // Fachdaten
     private BasisObjektarten[] objektarten;
+    
+    //Sachbearbeiter
+    private BasisSachbearbeiter[] sachbearbeiter;
 
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
@@ -400,7 +405,7 @@ public class BasisPanel  extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout (
-                "r:50dlu, 5dlu, 180dlu, 3dlu, l:min(55dlu;p)",
+                "r:70dlu, 5dlu, 180dlu, 3dlu, l:min(55dlu;p)",
                 ""        // Zeilen werden dynamisch erzeugt
         );
 
@@ -419,6 +424,9 @@ public class BasisPanel  extends JPanel {
         builder.nextLine();
 
         builder.append("Art:", getArtBox());
+        builder.nextLine();
+
+        builder.append("Sachbearbeiter:", getSachbearbeiterBox());
         builder.nextLine();
 
         builder.append("Inaktiv:", getInaktivBox());
@@ -456,14 +464,19 @@ public class BasisPanel  extends JPanel {
     public void fetchFormData() {
         if (objektarten == null)
         {
-
-
             objektarten = BasisObjektarten.getObjektarten();
+        }
+
+        if (sachbearbeiter == null)
+        {
+        	sachbearbeiter = BasisSachbearbeiter.getSachbearbeiter();
         }
     }
 
     public void updateForm() {
         boolean neu;
+        getSachbearbeiterBox().setModel(new DefaultComboBoxModel(sachbearbeiter));
+        getSachbearbeiterBox().setSelectedIndex(-1);
 
 
         try
@@ -550,6 +563,10 @@ public class BasisPanel  extends JPanel {
             if (hauptModul.getObjekt().getBasisObjektarten() != null) {
                 getArtBox().setSelectedItem(hauptModul.getObjekt().getBasisObjektarten());
             }
+
+            if (hauptModul.getObjekt().getBasisSachbearbeiter() != null) {
+                getSachbearbeiterBox().setSelectedItem(hauptModul.getObjekt().getBasisSachbearbeiter());
+            }
             if (hauptModul.getObjekt().getInaktiv() != null) {
                 if (hauptModul.getObjekt().getInaktiv() == true) {
                     getInaktivBox().setSelected(true);
@@ -578,6 +595,9 @@ public class BasisPanel  extends JPanel {
         if (getArtBox().getItemCount() > 0) {
             getArtBox().setSelectedIndex(0);
         }
+        if (getSachbearbeiterBox().getItemCount() > 0) {
+            getSachbearbeiterBox().setSelectedIndex(0);
+        }
         getInaktivBox().setSelected(false);
         getBeschreibungsArea().setText(null);
     }
@@ -587,6 +607,7 @@ public class BasisPanel  extends JPanel {
         getBetreiberToolBar().setEnabled(enabled);
         getStandortToolBar().setEnabled(enabled);
         getArtBox().setEnabled(enabled);
+        getSachbearbeiterBox().setEnabled(enabled);
         getInaktivBox().setEnabled(enabled);
         getBeschreibungsArea().setEnabled(enabled);
     }
@@ -602,6 +623,7 @@ public class BasisPanel  extends JPanel {
         // Betreiber / Standort werden schon nach der Auswahl durch die chooseButtons gesetzt
         hauptModul.getObjekt().setBasisObjektarten((BasisObjektarten)getArtBox().getSelectedItem());
         hauptModul.getObjekt().setBeschreibung(getBeschreibungsArea().getText());
+        hauptModul.getObjekt().setBasisSachbearbeiter((BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
         hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
 
         BasisObjekt tmp = BasisObjekt.saveBasisObjekt(hauptModul.getObjekt());
@@ -887,6 +909,16 @@ public class BasisPanel  extends JPanel {
 
         }
         return artBox;
+    }
+
+    private JComboBox getSachbearbeiterBox() {
+        if (sachbearbeiterBox == null) {
+
+        	sachbearbeiterBox = new JComboBox();
+        	sachbearbeiterBox.setKeySelectionManager(new MyKeySelectionManager());
+
+        }
+        return sachbearbeiterBox;
     }
 
     private JCheckBox getInaktivBox() {

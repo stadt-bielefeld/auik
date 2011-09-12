@@ -93,8 +93,10 @@ public class BasisBetreiberNeu extends AbstractModul {
     private JLabel namenLabel;
 
     private JTextField anredeFeld;
+    private JTextField vornamenFeld;
     private JTextField namenFeld;
     private JTextField nameZusFeld;
+    private JTextField kassenzeichenFeld;
     //private JTextField strassenFeld;
     private JFormattedTextField hausnrFeld;
     private JTextField hausnrZusFeld;
@@ -154,8 +156,10 @@ public class BasisBetreiberNeu extends AbstractModul {
             speichernButton = new JButton("Speichern");
 
             anredeFeld = new LimitedTextField(100);
+            vornamenFeld = new LimitedTextField(100);
             namenFeld = new LimitedTextField(100);
             nameZusFeld = new LimitedTextField(50);
+            kassenzeichenFeld = new LimitedTextField(50);
             hausnrFeld = new IntegerField();
             hausnrZusFeld = new LimitedTextField(10);
             plzZsFeld = new LimitedTextField(3, "");
@@ -218,26 +222,28 @@ public class BasisBetreiberNeu extends AbstractModul {
                     "pref, 3dlu, " +    //5
                     "pref, 3dlu, " +    //7
                     "pref, 3dlu, " +    //9
-
-                    "pref, 3dlu, " +    //11 - Adresse
+                    "pref, 3dlu, " +    //11
                     "pref, 3dlu, " +    //13
-                    "pref, 3dlu, " +    //15
+
+                    "pref, 3dlu, " +    //15 - Adresse
                     "pref, 3dlu, " +    //17
                     "pref, 3dlu, " +    //19
                     "pref, 3dlu, " +    //21
-
-                    "pref, 3dlu, " +    //23 - Betriebsbeauftrager
+                    "pref, 3dlu, " +    //23
                     "pref, 3dlu, " +    //25
 
-                    "pref, 3dlu, " +    //27 - Bemerkungen
+                    "pref, 3dlu, " +    //27 - Betriebsbeauftrager
                     "pref, 3dlu, " +    //29
-                    "pref, 3dlu, " +    //31
 
-                    "pref, 3dlu, " +    //33 - Revision
+                    "pref, 3dlu, " +    //31 - Bemerkungen
+                    "pref, 3dlu, " +    //33
                     "pref, 3dlu, " +    //35
-                    "pref, 10dlu, " +    //37
 
-                    "top:pref:grow");//39 - Buttons
+                    "pref, 3dlu, " +    //37 - Revision
+                    "pref, 3dlu, " +    //39
+                    "pref, 10dlu, " +    //41
+
+                    "top:pref:grow");//43 - Buttons
             layout.setRowGroups(new int[][]{{1,3,5,7,9, 11,13,15,17,19,21, 23,25, 27,29,30,31, 33,35,37}});
 
             PanelBuilder builder = new PanelBuilder(layout);
@@ -249,62 +255,68 @@ public class BasisBetreiberNeu extends AbstractModul {
             // Anrede
             builder.addLabel("Anrede:",    cc.xy( 1, 3));
             builder.add(anredeFeld,        cc.xyw(3, 3,4));
+            // Vorname
+            builder.addLabel("Vorame:",    cc.xy( 1, 5));
+            builder.add(vornamenFeld,                    cc.xyw(3, 5,4));
             // Name
-            namenLabel = builder.addLabel("Name:",    cc.xy( 1, 5));
-            builder.add(namenFeld,                    cc.xyw(3, 5,4));
+            namenLabel = builder.addLabel("Name:",    cc.xy( 1, 7));
+            builder.add(namenFeld,                    cc.xyw(3, 7,4));
             // Zusatz
-            builder.addLabel("Zusatz:",     cc.xy( 1, 7));
-            builder.add(nameZusFeld,         cc.xyw(3, 7,4));
+            builder.addLabel("Zusatz:",     cc.xy( 1, 9));
+            builder.add(nameZusFeld,         cc.xyw(3, 9,4));
+            // Zusatz
+            builder.addLabel("Kassenzeichen:",     cc.xy( 1, 11));
+            builder.add(kassenzeichenFeld,         cc.xyw(3, 11,4));
             // Wirtschaftszweig
-            builder.addLabel("Wirtschaftszweig:",    cc.xy( 1,9));
-            builder.add(wirtschaftszweigBox,         cc.xyw(3,9,4));
+            builder.addLabel("Wirtschaftszweig:",    cc.xy( 1,13));
+            builder.add(wirtschaftszweigBox,         cc.xyw(3,13,4));
 
             // Adresse --------------------------------------
-            builder.addSeparator("Adresse", cc.xyw(1,11,10));
+            builder.addSeparator("Adresse", cc.xyw(1,15,10));
             // Straße
-            builder.addLabel("Straße:",    cc.xy( 1,13));
-            builder.add(strassenBox,     cc.xyw(3,13,4));
-            builder.add(hausnrFeld,     cc.xy( 8,13));
-            builder.add(hausnrZusFeld,     cc.xy(10,13));
+            builder.addLabel("Straße:",    cc.xy( 1,17));
+            builder.add(strassenBox,     cc.xyw(3,17,4));
+            builder.add(hausnrFeld,     cc.xy( 8,17));
+            builder.add(hausnrZusFeld,     cc.xy(10,17));
             // Ort
-            builder.addLabel("Ort:",     cc.xy( 1,15));
-            builder.add(plzZsFeld,         cc.xy( 3,15));
-            builder.add(plzFeld,         cc.xy( 4,15));
-            builder.add(ortsFeld,         cc.xyw(6,15,5));
+            builder.addLabel("Ort:",     cc.xy( 1,19));
+            builder.add(plzZsFeld,         cc.xy( 3,19));
+            builder.add(plzFeld,         cc.xy( 4,19));
+            builder.add(ortsFeld,         cc.xyw(6,19,5));
             // Telefon
-            builder.addLabel("Telefon:",cc.xy( 1,17));
-            builder.add(telefonFeld,     cc.xyw(3,17,4));
+            builder.addLabel("Telefon:",cc.xy( 1,21));
+            builder.add(telefonFeld,     cc.xyw(3,21,4));
             // Telefax
-            builder.addLabel("Telefax:",cc.xy( 1,19));
-            builder.add(telefaxFeld,     cc.xyw(3,19,4));
+            builder.addLabel("Telefax:",cc.xy( 1,23));
+            builder.add(telefaxFeld,     cc.xyw(3,23,4));
             // eMail
-            builder.addLabel("E-Mail:", cc.xy(1,21));
-            builder.add(emailFeld,         cc.xyw(3,21,4));
+            builder.addLabel("E-Mail:", cc.xy(1,25));
+            builder.add(emailFeld,         cc.xyw(3,25,4));
 
             // Betriebsbeauftragter -------------------------
-            builder.addSeparator("Ansprechpartner", cc.xyw( 1,23,10));
+            builder.addSeparator("Ansprechpartner", cc.xyw( 1,27,10));
             // Vorname
-            builder.addLabel("Vorname:",cc.xy(1,25));
-            builder.add(betrBeaufVornameFeld,         cc.xyw(3,25,2));
+            builder.addLabel("Vorname:",cc.xy(1,29));
+            builder.add(betrBeaufVornameFeld,         cc.xyw(3,29,2));
             // Nachname
-            builder.addLabel("Nachname:",cc.xy(6,25));
-            builder.add(betrBeaufNachnameFeld,         cc.xyw(8,25,3));
+            builder.addLabel("Nachname:",cc.xy(6,29));
+            builder.add(betrBeaufNachnameFeld,         cc.xyw(8,29,3));
 
             // Bemerkungen ----------------------------------
-            builder.addSeparator("Bemerkungen", cc.xyw( 1,27,10));
-            builder.add(bemerkungsScroller,        cc.xywh(1,29,10,3));
+            builder.addSeparator("Bemerkungen", cc.xyw( 1,31,10));
+            builder.add(bemerkungsScroller,        cc.xywh(1,33,10,3));
 
             // Revision -------------------------------------
-            builder.addSeparator("Revision", cc.xyw( 1,33,10));
+            builder.addSeparator("Revision", cc.xyw( 1,37,10));
             // Datum
-            builder.addLabel("Datum:",     cc.xy(  1,35));
-            builder.add(revdatumsFeld,     cc.xyw( 3,35,4));
+            builder.addLabel("Datum:",     cc.xy(  1,39));
+            builder.add(revdatumsFeld,     cc.xyw( 3,39,4));
             // Handzeichen
-            handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy( 1,37));
-            builder.add(handzeichenNeuFeld,                     cc.xyw(3,37,4));
+            handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy( 1,41));
+            builder.add(handzeichenNeuFeld,                     cc.xyw(3,41,4));
 
             // Buttons
-            builder.add(buttonBar,                 cc.xyw( 1, 39, 10));
+            builder.add(buttonBar,                 cc.xyw( 1, 43, 10));
 
             BetreiberNeuListener dialogListener = new BetreiberNeuListener();
 
@@ -358,6 +370,13 @@ public class BasisBetreiberNeu extends AbstractModul {
             } else {
                 betrn.setBetranrede(anrede);
             }
+            // Vorame
+            String vorname = vornamenFeld.getText();
+            if (vorname.equals("")) {
+                betrn.setBetrvorname(null);
+            } else {
+                betrn.setBetrvorname(vorname);
+            }
             // Name
             String name = namenFeld.getText();
             if (name.equals("")) {
@@ -371,6 +390,13 @@ public class BasisBetreiberNeu extends AbstractModul {
                 betrn.setBetrnamezus(null);
             } else {
                 betrn.setBetrnamezus(nameZusatz);
+            }
+            // Kassenzeichen
+            String kassenzeichen = kassenzeichenFeld.getText();
+            if (kassenzeichen.equals("")) {
+                betrn.setKassenzeichen(null);
+            } else {
+                betrn.setKassenzeichen(kassenzeichen);
             }
             // Straße
             String stra = (String) strassenBox.getSelectedItem();
@@ -533,9 +559,11 @@ public class BasisBetreiberNeu extends AbstractModul {
                 plzZsFeld.setText("D");
                 plzFeld.setText("");
                 anredeFeld.setText("");
+                vornamenFeld.setText("");
                 namenFeld.setText("");
                 namenLabel.setForeground(panel.getForeground());
                 nameZusFeld.setText("");
+                kassenzeichenFeld.setText("");
                 ortsFeld.setText("");
                 telefonFeld.setText("");
                 telefaxFeld.setText("");
@@ -572,8 +600,10 @@ public class BasisBetreiberNeu extends AbstractModul {
         plzFeld.setEditable(enabled);
         plzZsFeld.setEditable(enabled);
         anredeFeld.setEditable(enabled);
+        vornamenFeld.setEditable(enabled);
         namenFeld.setEditable(enabled);
         nameZusFeld.setEditable(enabled);
+        kassenzeichenFeld.setEditable(enabled);
         ortsFeld.setEditable(enabled);
         telefonFeld.setEditable(enabled);
         telefaxFeld.setEditable(enabled);

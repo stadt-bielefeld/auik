@@ -13,6 +13,8 @@
 
         <property name="beschreibung" column="beschreibung" type="java.lang.String" />
         <property name="nummer" column="nr_probepkt" type="java.lang.Integer" />
+        <property name="branche" column="branche" type="java.lang.String" />
+        
         <property name="atlFirmen" column="firmen_id" type="java.lang.Integer" />
 
         <many-to-one name="atlKlaeranlagen" column="ka_id" class="AtlKlaeranlagen" />
@@ -20,6 +22,8 @@
         <many-to-one name="atlProbeart" column="art_id" class="AtlProbeart" />
 
         <many-to-one name="atlSielhaut" column="sielhaut_id" class="AtlSielhaut" lazy="false" />
+
+        <many-to-one name="basisSachbearbeiter" column="sachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" lazy="false" />
 
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"/>
                                 

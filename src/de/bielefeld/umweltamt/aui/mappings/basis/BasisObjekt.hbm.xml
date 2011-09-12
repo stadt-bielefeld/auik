@@ -14,7 +14,6 @@
 
         <property name="uschistdid" column="uschistdid" type="java.lang.Integer" />
 		<property name="beschreibung" column="beschreibung" type="java.lang.String" />
-		<property name="sachbearbeiter" column="sachbearbeiter" type="java.lang.String" />
         <property name="wiedervorlage" column="wiedervorlage" type="java.util.Date" />
         <property name="erfassungsdatum" column="erfassungsdatum" type="java.util.Date" />
         <property name="gueltigVon" column="gueltig_von" type="java.util.Date" />
@@ -27,6 +26,8 @@
         <many-to-one name="basisObjektarten" column="objektartid" class="BasisObjektarten" />
 
         <many-to-one name="basisStandort" column="standortid" class="BasisStandort" />
+
+        <many-to-one name="basisSachbearbeiter" column="sachbearbeiter" class="BasisSachbearbeiter" />
         
         <one-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" />
 

@@ -130,7 +130,7 @@ public class BasisSachbearbeiter
             Session s = HibernateSessionFactory.currentSession();
 
             List bearbeiter =
-                s.createQuery("from BasisSachbearbeiter as sachbearbeiter").list();
+                s.createQuery("from BasisSachbearbeiter as sachbearbeiter order by sachbearbeiter.name").list();
 
             return (BasisSachbearbeiter[]) bearbeiter.toArray(
                 new BasisSachbearbeiter[bearbeiter.size()]);

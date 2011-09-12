@@ -57,8 +57,9 @@ public class BescheidModel extends ListTableModel {
     public BescheidModel() {
         super(new String[]{
                 "Kennummer",
-                "Betreiber",
+                "Entnahmedatum",
                 "Standort",
+                "Betreiber",
                 "Bemerkungen"
         },
         false);
@@ -76,12 +77,15 @@ public class BescheidModel extends ListTableModel {
             tmp = fd.getKennummer();
             break;
         case 1:
-            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisStandort();
+            tmp = fd.getDatumDerEntnahme();
             break;
         case 2:
-            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
+            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisStandort();
             break;
         case 3:
+            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
+            break;
+        case 4:
             tmp = fd.getBemerkung();
             break;
 

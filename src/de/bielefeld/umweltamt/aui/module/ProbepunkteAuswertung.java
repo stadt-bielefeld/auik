@@ -54,13 +54,16 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenehmerModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbepunktModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbepunkteModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -68,21 +71,22 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches Auswertungs-Modul für Probenehmereinsaetze.
  * @author Gerd Genuit
  */
-public class ProbenehmerAuswertung extends AbstractQueryModul {
+public class ProbepunkteAuswertung extends AbstractQueryModul {
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
 
     // Widgets für die Abfrage
-    private JButton submitButton;
+    private JButton probenehmerButton;
+    private JButton eSatzungButton;
 
     /** Das TableModel für die Ergebnis-Tabelle */
-    private ProbenehmerModel tmodel;
+    private ProbepunkteModel tmodel;
 
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
     public String getName() {
-        return "Probenemhmer";
+        return "Probepunkte";
     }
 
     /*
@@ -90,7 +94,7 @@ public class ProbenehmerAuswertung extends AbstractQueryModul {
      * @return "m_auswertung_probenehmer"
      */
     public String getIdentifier() {
-        return "m_auswertung_probenehmer";
+        return "m_auswertung_probepunkte";
     }
 
     /* (non-Javadoc)
@@ -99,19 +103,37 @@ public class ProbenehmerAuswertung extends AbstractQueryModul {
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren
-            submitButton = new JButton("Alle Probenahmepunkte anzeigen");
+        	probenehmerButton = new JButton("Probenehmereinsätze");
+        	eSatzungButton = new JButton("E-Satzungspunkte");
 
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
-            submitButton.addActionListener(new ActionListener() {
+        	probenehmerButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
                         protected void doNonUILogic() {
-                            ((ProbenehmerModel)getTableModel()).setList(AtlProbepkt.getProbenehmerpunkte());
+                            ((ProbepunkteModel)getTableModel()).setList(AtlProbepkt.getProbenehmerpunkte());
                         }
 
                         protected void doUIUpdateLogic(){
-                            ((ProbenehmerModel)getTableModel()).fireTableDataChanged();
+                            ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+        	
+        	eSatzungButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
+                        protected void doNonUILogic() {
+                            ((ProbepunkteModel)getTableModel()).setList(AtlProbepkt.getESatzung());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
+                            
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -120,10 +142,10 @@ public class ProbenehmerAuswertung extends AbstractQueryModul {
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref");
+            FormLayout layout = new FormLayout("pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(submitButton);
+            builder.append(eSatzungButton, probenehmerButton);
 
             queryPanel = builder.getPanel();
         }
@@ -136,8 +158,38 @@ public class ProbenehmerAuswertung extends AbstractQueryModul {
      */
     public ListTableModel getTableModel() {
         if (tmodel == null) {
-            tmodel = new ProbenehmerModel();
+            tmodel = new ProbepunkteModel();
         }
         return tmodel;
+    }
+
+    private JTable getResultTable(int a, int b, int c, int d, int e, int f, int g) {
+
+        JTable resultTable = getResultTable();
+
+        resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+        TableColumn column = null;
+
+        for (int i = 0; i < 5; i++) {
+            column = resultTable.getColumnModel().getColumn(i);
+
+            if (i == 0) {
+                column.setPreferredWidth(a);
+            } else if (i == 1) {
+                column.setPreferredWidth(b);
+            } else if (i == 2) {
+                column.setPreferredWidth(c);
+            } else if (i == 3) {
+                column.setPreferredWidth(d);
+            } else if (i == 4) {
+                column.setPreferredWidth(e);
+            } else if (i == 5) {
+                column.setPreferredWidth(e);
+            } else if (i == 6) {
+                column.setPreferredWidth(e);
+            }
+        }
+
+        return resultTable;
     }
 }

@@ -239,7 +239,8 @@ public class AtlProbepkt
             pkte = session.createQuery(
                     "select distinct pk from AtlProbepkt as pk " +
                     "inner join pk.atlProbenahmen as pn " +
-                    "where pn.kennummer like '3%' ")
+                    "where pn.kennummer like '3%' " +
+                    "and pk.basisObjekt.inaktiv = false ")
                     .list();
 
         } catch (HibernateException e) {
@@ -315,4 +316,22 @@ public class AtlProbepkt
 
         return basisObj != null ? basisObj.getBasisBetreiber() : null;
     }
+
+	public static List getESatzung() {
+        List pkt;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            pkt = session.createQuery(
+                    "from AtlProbepkt as pk where " +
+                    "pk.atlProbeart.id = 3 " +
+                    "and pk.basisObjekt.inaktiv = false " +
+                    "order by pk.basisObjekt.basisStandort")
+                    .list();
+            HibernateSessionFactory.closeSession();
+
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler", e);
+        }
+		return pkt;
+	}
 }

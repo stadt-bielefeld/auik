@@ -68,9 +68,10 @@ public class BetreiberEditor extends AbstractBaseEditor {
     private JLabel namenLabel;
 
     private JTextField anredeFeld;
+    private JTextField vornamenFeld;
     private JTextField namenFeld;
     private JTextField nameZusFeld;
-    private JTextField kasseFeld;
+    private JTextField kassenzeichenFeld;
     private JFormattedTextField hausnrFeld;
     private JTextField hausnrZusFeld;
     private JTextField plzZsFeld;
@@ -100,9 +101,10 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
     protected JComponent buildContentArea() {
         anredeFeld = new LimitedTextField(100);
+        vornamenFeld = new LimitedTextField(100);
         namenFeld = new LimitedTextField(100);
         nameZusFeld = new LimitedTextField(50);
-        kasseFeld = new LimitedTextField(50);
+        kassenzeichenFeld = new LimitedTextField(50);
         hausnrFeld = new IntegerField();
         hausnrZusFeld = new LimitedTextField(10);
         plzZsFeld = new LimitedTextField(3);
@@ -160,9 +162,10 @@ public class BetreiberEditor extends AbstractBaseEditor {
             }
         };
         anredeFeld.addKeyListener(escEnterListener);
+        vornamenFeld.addKeyListener(escEnterListener);
         namenFeld.addKeyListener(escEnterListener);
         nameZusFeld.addKeyListener(escEnterListener);
-        kasseFeld.addKeyListener(escEnterListener);
+        kassenzeichenFeld.addKeyListener(escEnterListener);
         hausnrFeld.addKeyListener(escEnterListener);
         hausnrZusFeld.addKeyListener(escEnterListener);
         plzZsFeld.addKeyListener(escEnterListener);
@@ -198,13 +201,14 @@ public class BetreiberEditor extends AbstractBaseEditor {
                 "pref, 3dlu, " +    //7
                 "pref, 3dlu, " +    //9
                 "pref, 3dlu, " +    //11
+                "pref, 3dlu, " +    //13
 
-                "pref, 3dlu, " +    //13 Adresse    - Alte Revision
-                "pref, 3dlu, " +    //15
+                "pref, 3dlu, " +    //15 Adresse    - Alte Revision
                 "pref, 3dlu, " +    //17
-                "pref, 3dlu, " +    //19            - Neue Revision
-                "pref, 3dlu, " +    //21
-        "pref");            //23
+                "pref, 3dlu, " +    //19
+                "pref, 3dlu, " +    //21            - Neue Revision
+                "pref, 3dlu, " +    //23
+        "pref");            //25
         layout.setRowGroups(new int[][]{{1,3,5,7,9, 11,13,15,17,19,21}});
 
         PanelBuilder builder = new PanelBuilder(layout);
@@ -216,40 +220,43 @@ public class BetreiberEditor extends AbstractBaseEditor {
         // Anrede
         builder.addLabel("Anrede:",    cc.xy( 1, 3));
         builder.add(anredeFeld,        cc.xyw(3, 3,8));
+        // Vorame
+        namenLabel = builder.addLabel("Vorname:",    cc.xy( 1, 5));
+        builder.add(vornamenFeld,                    cc.xyw(3, 5,8));
         // Name
-        namenLabel = builder.addLabel("Name:",    cc.xy( 1, 5));
-        builder.add(namenFeld,                    cc.xyw(3, 5,8));
+        namenLabel = builder.addLabel("Name:",    cc.xy( 1, 7));
+        builder.add(namenFeld,                    cc.xyw(3, 7,8));
         // Zusatz
-        builder.addLabel("Vorname/Zusatz:",     cc.xy( 1, 7));
-        builder.add(nameZusFeld,         cc.xyw(3, 7,8));
+        builder.addLabel("Zusatz:",     cc.xy( 1, 9));
+        builder.add(nameZusFeld,         cc.xyw(3, 9,8));
         // Zusatz
-        builder.addLabel("Kassenzeichen:",     cc.xy( 1, 9));
-        builder.add(kasseFeld,         cc.xyw(3, 9,8));
+        builder.addLabel("Kassenzeichen:",     cc.xy( 1, 11));
+        builder.add(kassenzeichenFeld,         cc.xyw(3, 11,8));
         // Wirtschaftszweig
-        builder.addLabel("Wirtschaftszweig:",    cc.xy( 1,11));
-        builder.add(wirtschaftszweigBox,         cc.xyw(3,11,8));
+        builder.addLabel("Wirtschaftszweig:",    cc.xy( 1,13));
+        builder.add(wirtschaftszweigBox,         cc.xyw(3,13,8));
 
         // Adresse --------------------------------------
-        builder.addSeparator("Adresse", cc.xyw(1,13,10));
+        builder.addSeparator("Adresse", cc.xyw(1,15,10));
         // Straße
-        builder.addLabel("Straße:",    cc.xy( 1,15));
-        builder.add(strassenBox,     cc.xyw(3,15,4));
-        builder.add(hausnrFeld,     cc.xy( 8,15));
-        builder.add(hausnrZusFeld,     cc.xy(10,15));
+        builder.addLabel("Straße:",    cc.xy( 1,17));
+        builder.add(strassenBox,     cc.xyw(3,17,4));
+        builder.add(hausnrFeld,     cc.xy( 8,17));
+        builder.add(hausnrZusFeld,     cc.xy(10,17));
         // Ort
-        builder.addLabel("Ort:",     cc.xy( 1,17));
-        builder.add(plzZsFeld,         cc.xy( 3,17));
-        builder.add(plzFeld,         cc.xy( 4,17));
-        builder.add(ortsFeld,         cc.xyw(6,17,5));
+        builder.addLabel("Ort:",     cc.xy( 1,19));
+        builder.add(plzZsFeld,         cc.xy( 3,19));
+        builder.add(plzFeld,         cc.xy( 4,19));
+        builder.add(ortsFeld,         cc.xyw(6,19,5));
         // Telefon
-        builder.addLabel("Telefon:",cc.xy( 1,19));
-        builder.add(telefonFeld,     cc.xyw(3,19,4));
+        builder.addLabel("Telefon:",cc.xy( 1,21));
+        builder.add(telefonFeld,     cc.xyw(3,21,4));
         // Telefax
-        builder.addLabel("Telefax:",cc.xy( 1,21));
-        builder.add(telefaxFeld,     cc.xyw(3,21,4));
+        builder.addLabel("Telefax:",cc.xy( 1,23));
+        builder.add(telefaxFeld,     cc.xyw(3,23,4));
         // eMail
-        builder.addLabel("E-Mail:", cc.xy(1,23));
-        builder.add(emailFeld,         cc.xyw(3,23,4));
+        builder.addLabel("E-Mail:", cc.xy(1,25));
+        builder.add(emailFeld,         cc.xyw(3,25,4));
 
         // Betriebsbeauftragter -------------------------
         builder.addSeparator("Ansprechpartner", cc.xyw( 1+11,1,10));
@@ -262,22 +269,22 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
         // Bemerkungen ----------------------------------
         builder.addSeparator("Bemerkungen", cc.xyw( 1+11,5,10));
-        builder.add(bemerkungsScroller,        cc.xywh(1+11,7,10,5));
+        builder.add(bemerkungsScroller,        cc.xywh(1+11,7,10,7));
 
         // Alte Revision --------------------------------
-        builder.addSeparator("Letzte Revision", cc.xyw( 1+11,13,10));
+        builder.addSeparator("Letzte Revision", cc.xyw( 1+11,15,10));
         // Datum
-        builder.addLabel("Datum:",         cc.xy( 1+11,15));
-        builder.add(revdatumsFeld,         cc.xyw(3+11,15,4));
+        builder.addLabel("Datum:",         cc.xy( 1+11,17));
+        builder.add(revdatumsFeld,         cc.xyw(3+11,17,4));
         // Handzeichen (alt)
-        builder.addLabel("Handzeichen:",cc.xy( 1+11,17));
-        builder.add(handzeichenAltFeld, cc.xyw(3+11,17,4));
+        builder.addLabel("Handzeichen:",cc.xy( 1+11,19));
+        builder.add(handzeichenAltFeld, cc.xyw(3+11,19,4));
 
         // Neue Revision --------------------------------
-        builder.addSeparator("Neue Revision", cc.xyw( 1+11,19,10));
+        builder.addSeparator("Neue Revision", cc.xyw( 1+11,21,10));
         // Handzeichen (neu)
-        handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy( 1+11,21));
-        builder.add(handzeichenNeuFeld,                     cc.xyw(3+11,21,4));
+        handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy( 1+11,23));
+        builder.add(handzeichenNeuFeld,                     cc.xyw(3+11,23,4));
 
         return builder.getPanel();
     }
@@ -309,9 +316,10 @@ public class BetreiberEditor extends AbstractBaseEditor {
                 }
 
                 anredeFeld.setText(getBetreiber().getBetranrede());
+                vornamenFeld.setText(getBetreiber().getBetrvorname());
                 namenFeld.setText(getBetreiber().getBetrname());
                 nameZusFeld.setText(getBetreiber().getBetrnamezus());
-                kasseFeld.setText(getBetreiber().getKassenzeichen());
+                kassenzeichenFeld.setText(getBetreiber().getKassenzeichen());
                 hausnrFeld.setValue(getBetreiber().getHausnr());
                 hausnrZusFeld.setText(getBetreiber().getHausnrzus());
                 String plzZs = getBetreiber().getPlzzs();
@@ -376,6 +384,13 @@ public class BetreiberEditor extends AbstractBaseEditor {
             getBetreiber().setBetranrede(null);
         } else {
             getBetreiber().setBetranrede(anrede);
+            // Vorname
+            String vorname = vornamenFeld.getText();
+            if ("".equals(vorname)) {
+                getBetreiber().setBetrvorname(null);
+            } else {
+                getBetreiber().setBetrvorname(vorname);
+            }
         }
         // Name
         String name = namenFeld.getText();
@@ -392,7 +407,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
             getBetreiber().setBetrnamezus(nameZusatz);
         }
         // kassenzeichen
-        String kasse = kasseFeld.getText();
+        String kasse = kassenzeichenFeld.getText();
         if ("".equals(kasse)) {
             getBetreiber().setKassenzeichen(null);
         } else {
