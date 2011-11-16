@@ -153,7 +153,7 @@ public class SettingsManager {
         defaults.setProperty("auik.gis.programmpath", "C:\\appz\\qgis\\bin\\qgis.bat.lnk");
         defaults.setProperty("auik.gis.projectpath", "D:\\\\data\\qgis\\MyProject.qgs");
         defaults.setProperty("auik.probenahme.auftraege", "D:\\Data\\auik\\auftraege");
-        defaults.setProperty("auik.probenahme.bescheide", "D:\\Data\\auik\\bescheide");
+        defaults.setProperty("auik.probenahme.bescheide", "X:\\Orga\\360\\360-1\\360-1-1\\Alle\\Texte\\Indirekteinleiter");
 
         appSettings = new Properties(defaults);
 

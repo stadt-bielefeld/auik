@@ -78,6 +78,8 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
     // Widgets für die Abfrage
     private JButton probenehmerButton;
     private JButton eSatzungButton;
+    private JButton uwbButton;
+    private JButton inaktivButton;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private ProbepunkteModel tmodel;
@@ -104,6 +106,8 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         if (queryPanel == null) {
             // Die Widgets initialisieren
         	probenehmerButton = new JButton("Probenehmereinsätze");
+        	inaktivButton = new JButton("inaktive Probepunkte");
+        	uwbButton = new JButton("UWB-Punkte");
         	eSatzungButton = new JButton("E-Satzungspunkte");
 
             // Ein ActionListener für den Button,
@@ -140,12 +144,47 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                     worker.start();
                 }
             });
+        	
+        	uwbButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
+                        protected void doNonUILogic() {
+                            ((ProbepunkteModel)getTableModel()).setList(AtlProbepkt.getUWB());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
+                            
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+        	
+        	inaktivButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
+                        protected void doNonUILogic() {
+                            ((ProbepunkteModel)getTableModel()).setList(AtlProbepkt.getInaktiv());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
+                            
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref");
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(eSatzungButton, probenehmerButton);
+            builder.append(eSatzungButton, uwbButton);
+            builder.append(inaktivButton, probenehmerButton);
 
             queryPanel = builder.getPanel();
         }

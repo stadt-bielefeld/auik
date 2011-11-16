@@ -274,6 +274,23 @@ public class AtlParameter
 
         return parameter;
     }
+    
+    public static List getAll() throws HibernateException {
+
+        List parameter = null;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            parameter = session.createQuery(
+                    "from AtlParameter as param "
+                            + "order by param.bezeichnung").list();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            HibernateSessionFactory.closeSession();
+        }
+
+        return parameter;
+    }
 
     /**
      * Liefert alle Parameter, die für Probenahmen relevant sind.

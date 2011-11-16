@@ -384,13 +384,13 @@ public class BetreiberEditor extends AbstractBaseEditor {
             getBetreiber().setBetranrede(null);
         } else {
             getBetreiber().setBetranrede(anrede);
-            // Vorname
-            String vorname = vornamenFeld.getText();
-            if ("".equals(vorname)) {
-                getBetreiber().setBetrvorname(null);
-            } else {
-                getBetreiber().setBetrvorname(vorname);
-            }
+        }
+        // Vorname
+        String vorname = vornamenFeld.getText();
+        if ("".equals(vorname)) {
+            getBetreiber().setBetrvorname(null);
+        } else {
+            getBetreiber().setBetrvorname(vorname);
         }
         // Name
         String name = namenFeld.getText();

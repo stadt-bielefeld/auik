@@ -38,7 +38,8 @@ public class BasisStandortModel extends ListTableModel {
                 "Straße",
                 "Hausnr.",
         		"PLZ",
-        		"Entw.-Gebiet"}, true);
+        		"Entw.-Gebiet",
+        		"VAwS-Gebiet"}, true);
     }
 
     /**
@@ -103,6 +104,9 @@ public class BasisStandortModel extends ListTableModel {
                 break;
             case 3:
                 value = bsta.getEntgebid();
+                break;
+            case 4:
+                value = bsta.getVawsWassereinzugsgebiete();
                 break;
             default:
                 value = null;

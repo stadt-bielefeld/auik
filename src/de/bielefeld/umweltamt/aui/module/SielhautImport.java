@@ -188,7 +188,7 @@ public class SielhautImport extends AbstractModul {
         }
 
         private String kennummerAusZeile(String[] zeile) {
-            String tmp = zeile[3].replaceFirst(" \\(.*\\)", "");
+            String tmp = zeile[3].replaceFirst("\\(.*\\)", "");
 
             // Für neueres Format, bei dem die Kennnummer in der
             // Form "Sielhautprobe 5071 (Adenauer)" angegeben ist:
@@ -196,7 +196,7 @@ public class SielhautImport extends AbstractModul {
 //                tmp = tmp.replaceFirst(" \\(.*\\)", "");
 //            }
 
-            return tmp;
+            return tmp.trim();
         }
 
         private String paramAusZeile(String[] zeile) {

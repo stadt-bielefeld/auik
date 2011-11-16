@@ -92,6 +92,7 @@ public class AnalyseProcessor {
         	
             pos.setWert(Float.parseFloat(wert));
             pos.setGrkl(grkl);
+            pos.setAtlEinheiten(einheit);
             pos.setAnalyseVon("E-Satzung");
 
             probe.setAtlStatus(new AtlStatus(10));

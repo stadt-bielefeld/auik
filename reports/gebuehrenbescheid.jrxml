@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="764"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -410,7 +410,7 @@
 				</reportElement>
 			</break>
 		</band>
-		<band height="115">
+		<band height="115" splitType="Prevent">
 			<staticText>
 				<reportElement x="0" y="14" width="483" height="96"/>
 				<textElement textAlignment="Justified">
@@ -460,7 +460,7 @@ Ist der Verwaltungsakt zum Zeitpunkt der Entscheidung schon vollzogen, können S
 ]]></text>
 			</staticText>
 		</band>
-		<band height="150">
+		<band height="160">
 			<staticText>
 				<reportElement x="0" y="12" width="483" height="86"/>
 				<textElement textAlignment="Justified">
@@ -479,7 +479,7 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<text><![CDATA[Hinweis nach § 12 (2) Datenschutzgesetz NW (DSG NW):]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="135" width="100" height="12"/>
+				<reportElement x="0" y="147" width="100" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -495,108 +495,108 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="45" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 			<staticText>
-				<reportElement x="346" y="17" width="66" height="9"/>
+				<reportElement x="346" y="11" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Montag - Freitag]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="9" width="139" height="9"/>
+				<reportElement x="0" y="3" width="139" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Konten der Stadtkasse Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="346" y="41" width="97" height="9"/>
+				<reportElement x="346" y="35" width="97" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[im übrigen nach Vereinbarung]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="33" width="159" height="9"/>
+				<reportElement x="0" y="27" width="159" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Postbank Hannover Kto.-Nr. 20-307 (BLZ 250 100 30)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="407" y="25" width="66" height="9"/>
+				<reportElement x="407" y="19" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[08.00 - 12.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="17" width="159" height="9"/>
+				<reportElement x="0" y="11" width="159" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Sparkasse Bielefeld Kto.-Nr. 26 (BLZ 480 501 61)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="346" y="25" width="66" height="9"/>
+				<reportElement x="346" y="19" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Donnerstag]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="346" y="9" width="120" height="9"/>
+				<reportElement x="346" y="3" width="120" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sprechzeiten:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="407" y="17" width="66" height="9"/>
+				<reportElement x="407" y="11" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[08.00 - 12.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="407" y="33" width="66" height="9"/>
+				<reportElement x="407" y="27" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[14.30 - 18.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="33" width="105" height="9"/>
+				<reportElement x="186" y="27" width="105" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[D-33602 Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="25" width="159" height="9"/>
+				<reportElement x="0" y="19" width="159" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[und bei weiteren Bielefelder Geldinstituten]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="9" width="105" height="9"/>
+				<reportElement x="186" y="3" width="105" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lieferanschrift:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="25" width="105" height="9"/>
+				<reportElement x="186" y="19" width="105" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Neues Rathaus (Niederwall 23)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="17" width="105" height="9"/>
+				<reportElement x="186" y="11" width="105" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
@@ -607,14 +607,14 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 	<lastPageFooter>
 		<band height="35">
 			<staticText>
-				<reportElement x="20" y="5" width="453" height="25"/>
+				<reportElement x="7" y="5" width="453" height="25"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
 				<text><![CDATA[Aus Gründen der Gleichbehandlung wird bei Probenahmen im Bielefelder Stadtgebiet für An- und Abfahrt einschl. Transport der Proben zum Labor pauschal 1 Stunde berechnet.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="14" y="2" width="6" height="15"/>
+				<reportElement x="1" y="2" width="6" height="15"/>
 				<textElement/>
 				<text><![CDATA[¹]]></text>
 			</staticText>

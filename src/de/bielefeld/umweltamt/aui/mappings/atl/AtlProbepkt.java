@@ -334,4 +334,39 @@ public class AtlProbepkt
         }
 		return pkt;
 	}
+
+	public static List getUWB() {
+        List pkt;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            pkt = session.createQuery(
+                    "from AtlProbepkt as pk where " +
+                    "pk.atlProbeart.id = 2 " +
+                    "and pk.basisObjekt.inaktiv = false " +
+                    "order by pk.basisObjekt.basisStandort")
+                    .list();
+            HibernateSessionFactory.closeSession();
+
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler", e);
+        }
+		return pkt;
+	}
+
+	public static List getInaktiv() {
+        List pkt;
+        try {
+            Session session = HibernateSessionFactory.currentSession();
+            pkt = session.createQuery(
+                    "from AtlProbepkt as pk where " +
+                    "pk.basisObjekt.inaktiv = true " +
+                    "order by pk.basisObjekt.basisStandort")
+                    .list();
+            HibernateSessionFactory.closeSession();
+
+        } catch (HibernateException e) {
+            throw new RuntimeException("Datenbank-Fehler", e);
+        }
+		return pkt;
+	}
 }

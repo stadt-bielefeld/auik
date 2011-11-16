@@ -71,9 +71,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
@@ -85,8 +85,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -111,12 +111,12 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import net.sf.jasperreports.engine.JRDataSource;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-
-import net.sf.jasperreports.engine.JRDataSource;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -125,30 +125,27 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameterGruppen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
-import de.bielefeld.umweltamt.aui.utils.AutoCompletion;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.DoubleRenderer;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
-import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
-import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
-import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
+import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelApplyDialog;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -179,8 +176,9 @@ public class ProbenEditor extends AbstractApplyEditor {
     private class ParameterModel extends EditableListTableModel {
         private AtlProbenahmen probe;
         private boolean isNew;
+        private boolean isSchlamm;
 
-        public ParameterModel(AtlProbenahmen probe, boolean isNew) {
+        public ParameterModel(AtlProbenahmen probe, boolean isNew, boolean isSchlamm) {
             super(new String[]{
                     "Parameter",
                     "GrKl",
@@ -191,6 +189,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     "% Normwert"}, false, true);
             this.probe = probe;
             this.isNew = isNew;
+            this.isSchlamm = isSchlamm;
 
             updateList();
         }
@@ -206,13 +205,18 @@ public class ProbenEditor extends AbstractApplyEditor {
                 //positionen = probe.getAtlAnalysepositionen();
                 probe = AtlProbenahmen.getProbenahme(probe.getId(), true);
                 setList(AtlProbenahmen.sortAnalysepositionen(probe));
-            } else {
+            } else if (isNew && !isSchlamm) {
                 //AUIKataster.debugOutput("Bearbeite neue Probe! Positionen leer.");
                 //positionen = new HashSet();
             	setList(new ArrayList());
             	addParameter(AtlParameter.getParameter("L10821"));
             	addParameter(AtlParameter.getParameter("B00600"));
             	addParameter(AtlParameter.getParameter("L10111"));
+            } else {
+            	setList(new ArrayList());
+            	addParameter(AtlParameter.getParameter("L11650"));
+            	addParameter(AtlParameter.getParameter("B00040"));
+            	addParameter(AtlParameter.getParameter("L11610"));
             }
 
             fireTableDataChanged();
@@ -497,11 +501,17 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     private ParameterModel       parameterModel;
     private boolean isNew;
+    private boolean isSchlamm;
 
 
     public ProbenEditor(AtlProbenahmen probe, HauptFrame owner, boolean isNew) {
         super("Probenahme " + probe.getKennummer(), probe, owner);
         this.isNew = isNew;
+        isSchlamm = false;
+        
+        if (probe.isKlaerschlammProbe()){
+        	isSchlamm = true;
+        }
 
         if (!isNew /*probe.isAnalysepositionenInitialized()*/) {
             setEditedObject(AtlProbenahmen.getProbenahme(probe.getId(), true));
@@ -511,7 +521,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         sachbearbeiterBox.setSelectedItem(BasisSachbearbeiter.getSachbearbeiter(SettingsManager.getInstance().getSetting("auik.prefs.lastuser")));
         }
 
-        parameterModel = new ParameterModel(getProbe(), isNew);
+        parameterModel = new ParameterModel(getProbe(), isNew, isSchlamm);
         parameterTabelle.setModel(parameterModel);
 
         initColumns();
@@ -963,7 +973,11 @@ public class ProbenEditor extends AbstractApplyEditor {
         fill -= rechnungsbetrag.length();
 
         sb.append(kassenzeichen);
-        sb.append(basisBetr.getBetrname().substring(0, 28));
+        if (basisBetr.getBetrname().length() > 28){
+        	sb.append(basisBetr.getBetrname().substring(0, 27));
+        }
+        else
+        	sb.append(basisBetr.getBetrname());
         
         for (int i = 1; i <= 28 - basisBetr.getBetrname().length(); i++) {
             sb.append(" ");
@@ -1738,7 +1752,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
 }
 
-    class ParameterChooser extends OkCancelDialog {
+    class ParameterChooser extends OkCancelApplyDialog {
     private JTable ergebnisTabelle;
 
     private ParameterAuswahlModel parameterAuswahlModel;
@@ -1761,6 +1775,22 @@ public class ProbenEditor extends AbstractApplyEditor {
         parameterAuswahlModel.fireTableDataChanged();
     }
 
+    public Action getSecondButtonAction() {
+        return new AbstractAction("Alle Parameter zeigen") {
+            public void actionPerformed(ActionEvent e) {
+                doApply();
+            }
+        };
+    }
+
+    public Action getThirdButtonAction() {
+        return new AbstractAction("Abbrechen") {
+            public void actionPerformed(ActionEvent e) {
+                doCancel();
+            }
+        };
+    }
+
     public void addOKListener(ProbenEditor.OKListener listener) {
         this.oklistener = listener;
     }
@@ -1776,6 +1806,12 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         dispose();
     }
+
+    protected void doApply() {
+
+        parameterAuswahlModel.AlleParameter();
+        parameterAuswahlModel.fireTableDataChanged();
+	}
 
     protected void fireOKEvent(AtlParameter[] parameter) {
         if (oklistener == null) {
@@ -1951,6 +1987,13 @@ class ParameterAuswahlModel extends ListTableModel {
 
     public void filterList() {
         setList(AtlParameter.getParameter());
+        AUIKataster.debugOutput("Suche nach '"
+                + getList().size() + " Ergebnisse)",
+                "ParameterAuswahlModel.filterList()");
+    }
+
+    public void AlleParameter() {
+        setList(AtlParameter.getAll());
         AUIKataster.debugOutput("Suche nach '"
                 + getList().size() + " Ergebnisse)",
                 "ParameterAuswahlModel.filterList()");

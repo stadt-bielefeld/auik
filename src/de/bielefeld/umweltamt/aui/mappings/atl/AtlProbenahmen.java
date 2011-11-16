@@ -492,7 +492,7 @@ public class AtlProbenahmen
             //Hibernate.initialize(probe.getAtlAnalysepositionen());
             sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(), 
             		"where this.atlParameter.bezeichnung not like ? " + 
-            		"order by this.atlParameter.bezeichnung asc, this.atlEinheiten.id desc, this.wert desc")
+            		"order by this.atlParameter.reihenfolge")
             	.setString(0, new String("%bei Probenahme"))
                 .list();
 
@@ -554,15 +554,22 @@ public class AtlProbenahmen
             AtlParameter parameter  = pos.getAtlParameter();
             String einheit          = pos.getAtlEinheiten().getBezeichnung();
             String grenzwert        = "";
-            if (parameter.getGrenzwert() != null && parameter.getGrenzwert() < 100){
+            if (parameter.getGrenzwert() != null && parameter.getGrenzwert() <= 10){
                 grenzwert = parameter.getGrenzwert().toString().replace(".", ",");
             }
-            else if (parameter.getGrenzwert() != null && parameter.getGrenzwert() > 100){
+            else if (parameter.getGrenzwert() != null && parameter.getGrenzwert() > 10){
                 grenzwert = parameter.getGrenzwert().toString().replace(".0", "");
             }
             String wert = "";
-            if (pos.getWert() < 100){
-                wert = pos.getWert().toString().replace(".", ",");
+            if (pos.getWert() == 0.0){
+            	wert = pos.getWert().toString().replace(".", ",");
+            }
+            else if (pos.getWert() < 0.009){
+            	wert = pos.getWert().toString().substring(0, 5);
+                wert = wert.replace(".", ",");
+            }
+            else if (pos.getWert() < 100){
+            	wert = pos.getWert().toString().replace(".", ",");
             }
             else {
                 wert = pos.getWert().toString().replace(".0", "");
@@ -583,13 +590,17 @@ public class AtlProbenahmen
 //            if (inGroup) {
 //                groups.put(groupId, gr);
 //            }
+            String einh = "";
+            if (!pos.getAtlEinheiten().getBezeichnung().equals("ohne")){
+            	einh = pos.getAtlEinheiten().getBezeichnung();
+            }
 
             columns[0] = i+1;
             columns[1] = parameter.getBezeichnung();
             columns[2] = grenzwert;
-            columns[3] = einheit;
+            columns[3] = einh;
             columns[4] = wert;
-            columns[5] = einheit;
+            columns[5] = einh;
             columns[6] = inGroup ? "0,00 €" : gebuehr;
             columns[7] = pos.getGrkl();
             columns[8] = fett;

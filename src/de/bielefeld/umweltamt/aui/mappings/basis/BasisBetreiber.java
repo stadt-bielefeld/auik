@@ -75,10 +75,7 @@ public class BasisBetreiber
     public String toString() {
         String name = this.getBetrname();
         String zusatz = "";
-        if (this.getBetranrede() != null) {
-            zusatz = ", " + this.getBetranrede();
-        }
-        else if (this.getBetrvorname() != null) {
+        if (this.getBetrvorname() != null) {
             zusatz = ", " + this.getBetrvorname();
         }
         else if (this.getBetrnamezus() != null) {
