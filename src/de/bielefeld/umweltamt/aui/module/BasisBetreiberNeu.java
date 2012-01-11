@@ -256,7 +256,7 @@ public class BasisBetreiberNeu extends AbstractModul {
             builder.addLabel("Anrede:",    cc.xy( 1, 3));
             builder.add(anredeFeld,        cc.xyw(3, 3,4));
             // Vorname
-            builder.addLabel("Vorame:",    cc.xy( 1, 5));
+            builder.addLabel("Vorname:",    cc.xy( 1, 5));
             builder.add(vornamenFeld,                    cc.xyw(3, 5,4));
             // Name
             namenLabel = builder.addLabel("Name:",    cc.xy( 1, 7));
