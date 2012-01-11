@@ -214,9 +214,14 @@ public class ProbenEditor extends AbstractApplyEditor {
             	addParameter(AtlParameter.getParameter("L10111"));
             } else {
             	setList(new ArrayList());
-            	addParameter(AtlParameter.getParameter("L11650"));
-            	addParameter(AtlParameter.getParameter("B00040"));
-            	addParameter(AtlParameter.getParameter("L11610"));
+            	addParameter(AtlParameter.getParameter("L11380"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
+            	addParameter(AtlParameter.getParameter("L11650"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
+            	addParameter(AtlParameter.getParameter("L11510"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
+            	addParameter(AtlParameter.getParameter("L11610"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
+            	addParameter(AtlParameter.getParameter("L11880"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
+            	addParameter(AtlParameter.getParameter("L11660"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
+            	addParameter(AtlParameter.getParameter("L11640"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
+            	addParameter(AtlParameter.getParameter("L13430"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
             }
 
             fireTableDataChanged();
@@ -400,6 +405,32 @@ public class ProbenEditor extends AbstractApplyEditor {
             pos.setAtlParameter(parameter);
             pos.setAtlEinheiten(AtlEinheiten.getEinheit(
                 parameter.getWirdgemessenineinheit()));
+
+            getList().add(pos);
+            fireTableDataChanged();
+        }
+
+
+        /**
+         * Diese Methode fügt dem Model einen neuen Parameter hinzu. Falls
+         * dieser jedoch schon enthalten ist, wird er verworfen - es kommen also
+         * keine doppelten Parameter vor.
+         *
+         * @param parameter Ein neuer Parameter.
+         */
+        public void addParameter(AtlParameter parameter, AtlEinheiten einheit, String analysevon) {
+            if (isParameterAlreadyThere(parameter)) {
+                AUIKataster.debugOutput(
+                    getClass().getName(),
+                    "Der Parameter wird bereits geprüft.");
+                return;
+            }
+
+            AtlAnalyseposition pos = new AtlAnalyseposition(probe);
+
+            pos.setAtlParameter(parameter);
+            pos.setAtlEinheiten(einheit);
+            pos.setAnalyseVon(analysevon);
 
             getList().add(pos);
             fireTableDataChanged();
@@ -974,7 +1005,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         sb.append(kassenzeichen);
         if (basisBetr.getBetrname().length() > 28){
-        	sb.append(basisBetr.getBetrname().substring(0, 27));
+        	sb.append(basisBetr.getBetrname().substring(0, 28));
         }
         else
         	sb.append(basisBetr.getBetrname());
@@ -985,6 +1016,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         
         int anrede = 0;
         if (basisBetr.getBetranrede() != null){
+        	sb.append(basisBetr.getBetranrede());
         	anrede = basisBetr.getBetranrede().length();
         }
         
@@ -1700,7 +1732,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     public double getRechnungsbetrag(AtlProbenahmen probe)
     throws ParseException, IllegalArgumentException
     {
-        return getSachUndPersonalkosten() + getAnalysekosten(probe);
+        return Math.round(getSachUndPersonalkosten() * 100.) / 100. + Math.round(getAnalysekosten(probe) * 100.) / 100.;
     }
 
 
