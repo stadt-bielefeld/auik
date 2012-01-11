@@ -76,6 +76,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -99,6 +100,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -372,10 +374,11 @@ public class BasisPanel  extends JPanel {
     private JButton standortNewButton;
 //    private JButton standortGotoButton;
 
-    //   Art, Sachbearbeiter, Inaktiv, Beschreibung, Speichern
+    //   Art, Sachbearbeiter, Inaktiv, Priorität, Beschreibung, Speichern
     private JComboBox artBox;
     private JComboBox sachbearbeiterBox;
     private JCheckBox inaktivBox;
+    private JFormattedTextField prioritaetFeld;
     private JTextArea beschreibungsArea;
     private JButton saveButton;
 
@@ -405,7 +408,7 @@ public class BasisPanel  extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout (
-                "r:70dlu, 5dlu, 180dlu, 3dlu, l:min(55dlu;p)",
+                "r:70dlu, 5dlu, 15dlu, 3dlu, 165dlu, 3dlu, l:min(55dlu;p)",
                 ""        // Zeilen werden dynamisch erzeugt
         );
 
@@ -415,21 +418,24 @@ public class BasisPanel  extends JPanel {
 
 
         builder.appendSeparator("Eigenschaften");
-        builder.append("Betreiber:", getBetreiberFeld());
+        builder.append("Betreiber:", getBetreiberFeld(), 3);
         builder.append(getBetreiberToolBar());
         builder.nextLine();
 
-        builder.append("Standort:", getStandortFeld());
+        builder.append("Standort:", getStandortFeld(), 3);
         builder.append(getStandortToolBar());
         builder.nextLine();
 
-        builder.append("Art:", getArtBox());
+        builder.append("Art:", getArtBox(), 3);
         builder.nextLine();
 
-        builder.append("Sachbearbeiter:", getSachbearbeiterBox());
+        builder.append("Sachbearbeiter:", getSachbearbeiterBox(), 3);
         builder.nextLine();
 
         builder.append("Inaktiv:", getInaktivBox());
+        builder.nextLine();
+
+        builder.append("Priorität:", getPrioritaetFeld());
         builder.nextLine();
 
         builder.appendSeparator("Beschreibung");
@@ -497,6 +503,7 @@ public class BasisPanel  extends JPanel {
             {
                 getArtBox().setModel(new DefaultComboBoxModel(objektarten));
             }
+            hauptModul.getObjekt().setPrioritaet(0);
         }
 
         else
@@ -575,6 +582,14 @@ public class BasisPanel  extends JPanel {
                 }
             }
 
+			if (!neu) {
+				if (hauptModul.getObjekt().getPrioritaet() != null) {
+					getPrioritaetFeld().setText(
+							hauptModul.getObjekt().getPrioritaet().toString());
+				}
+			}
+			
+
             if (hauptModul.getObjekt().getBeschreibung() != null) {
                 getBeschreibungsArea().setText(hauptModul.getObjekt().getBeschreibung());
             }
@@ -599,6 +614,7 @@ public class BasisPanel  extends JPanel {
             getSachbearbeiterBox().setSelectedIndex(0);
         }
         getInaktivBox().setSelected(false);
+        getPrioritaetFeld().setText("");
         getBeschreibungsArea().setText(null);
     }
 
@@ -609,6 +625,7 @@ public class BasisPanel  extends JPanel {
         getArtBox().setEnabled(enabled);
         getSachbearbeiterBox().setEnabled(enabled);
         getInaktivBox().setEnabled(enabled);
+        getPrioritaetFeld().setEnabled(enabled);
         getBeschreibungsArea().setEnabled(enabled);
     }
 
@@ -619,14 +636,22 @@ public class BasisPanel  extends JPanel {
     private boolean saveObjektDaten() {
         boolean success;
 
+        Integer prio = null;
+        
+        if (!getPrioritaetFeld().getText().equals("")){
+        	prio = Integer.parseInt(getPrioritaetFeld().getText());
+        }
+        
         // Eingegebene Daten für das Objekt übernehmen
         // Betreiber / Standort werden schon nach der Auswahl durch die chooseButtons gesetzt
         hauptModul.getObjekt().setBasisObjektarten((BasisObjektarten)getArtBox().getSelectedItem());
         hauptModul.getObjekt().setBeschreibung(getBeschreibungsArea().getText());
         hauptModul.getObjekt().setBasisSachbearbeiter((BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
         hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
+        
 
-        BasisObjekt tmp = BasisObjekt.saveBasisObjekt(hauptModul.getObjekt());
+        BasisObjekt tmp = BasisObjekt.saveBasisObjekt(hauptModul.getObjekt(),
+        		prio);
 
         if (tmp != null) {
             hauptModul.setObjekt(tmp);
@@ -926,6 +951,13 @@ public class BasisPanel  extends JPanel {
             inaktivBox = new JCheckBox();
         }
         return inaktivBox;
+    }
+
+    private JFormattedTextField getPrioritaetFeld() {
+        if (prioritaetFeld == null) {
+        	prioritaetFeld = new JFormattedTextField();
+        }
+        return prioritaetFeld;
     }
 
     public JTextArea getBeschreibungsArea() {

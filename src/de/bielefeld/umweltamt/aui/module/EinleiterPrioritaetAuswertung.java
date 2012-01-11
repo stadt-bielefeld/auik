@@ -1,0 +1,183 @@
+/**
+ * Copyright 2005-2011, Stadt Bielefeld
+ *
+ * This file is part of AUIK (Anlagen- und Indirekteinleiter-Kataster).
+ *
+ * AUIK is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * AUIK is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with AUIK. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
+ */
+
+/*
+ * Datei:
+ * $Id: EinleiterBrennwertAuswertung.java,v 1.1.2.1 2010-11-23 10:25:55 u633d Exp $
+ *
+ * Erstellt am 24.08.2005 von David Klotz
+ *
+ * CVS-Log:
+ * $Log: not supported by cvs2svn $
+ * Revision 1.3  2010/01/12 09:03:55  u633d
+ * Fettabscheider-Auswertung
+ *
+ * Revision 1.2  2009/03/24 12:35:20  u633d
+ * Umstellung auf UTF8
+ *
+ * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Start AUIK auf Informix und Postgresql
+ *
+ * Revision 1.2  2005/09/14 11:25:38  u633d
+ * - Version vom 14.9.
+ *
+ * Revision 1.1  2005/08/25 14:46:59  u633d
+ * - zu viel ;)
+ *
+ *
+ */
+package de.bielefeld.umweltamt.aui.module;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+
+import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
+import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.AnhBwkModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.PrioritaetModel;
+import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
+import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+
+/**
+ * Ein einfaches Auswertungs-Modul zur Abfrage der Prioritäten.
+ * @author Gerhard Genuit
+ */
+public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
+    /** Das obere Panel mit den Abfrage-Optionen */
+    private JPanel queryPanel;
+    private JTable resultTable;
+
+    // Widgets für die Abfrage
+    private JButton submitButton;
+//    private JComboBox sachbearbeiterBox;
+//    private JButton suchButton;
+
+    /** Das TableModel für die Ergebnis-Tabelle */
+    private PrioritaetModel tmodel;
+    
+    @Override
+    protected JTable getResultTable() {
+        if (resultTable == null) {
+            resultTable = new JTable(getTableModel());
+        }
+    	return super.getResultTable();
+    }
+
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.Modul#getName()
+     */
+    public String getName() {
+        return "Priorität";
+    }
+
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
+     */
+    public JPanel getQueryOptionsPanel() {
+        if (queryPanel == null) {
+            // Die Widgets initialisieren:
+
+
+//            sachbearbeiterBox = new JComboBox(BasisSachbearbeiter.getSachbearbeiter());
+//            sachbearbeiterBox.setSelectedItem(-1);
+//            sachbearbeiterBox.setEditable(true);
+
+            submitButton = new JButton("Alle auswählen");
+//            suchButton = new JButton("suchen");
+
+            // Ein ActionListener für den Button,
+            // der die eigentliche Suche auslöst:
+            submitButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                	SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        protected void doNonUILogic() {
+                            ((PrioritaetModel)getTableModel()).setList(BasisObjekt.getObjekteMitPrioritaet());
+                        }
+
+                        protected void doUIUpdateLogic(){
+                            ((PrioritaetModel)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+
+            // Noch etwas Layout...
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
+            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+
+            builder.append(submitButton);
+//            builder.append("Sachbearbeiter:", sachbearbeiterBox, suchButton);
+
+            queryPanel = builder.getPanel();
+        }
+
+        return queryPanel;
+    }
+
+    /* (non-Javadoc)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
+     */
+    public ListTableModel getTableModel() {
+        if (tmodel == null) {
+            tmodel = new PrioritaetModel();
+        }
+        return tmodel;
+    }
+
+	/**
+	 * Schaltet zum "Standort suchen"-Modul um, wenn zu einer Zeile in der
+	 * Ergebnis-Tabelle ein BasisStandort vorhanden ist.
+	 * 
+	 * @param row
+	 *            Die Zeile der Tabelle.
+	 */
+	protected void editObject(int row) {
+	
+	        if (row != -1) {
+	            Object obj = getTableModel().getObjectAtRow(row);
+            	Object[] fd = (Object[])obj;
+            	Object standort = fd[0];
+	
+	            if (standort != null) {
+	            	manager.getSettingsManager().setStandort((BasisStandort)standort);
+	                manager.switchModul("m_standort_suchen");
+	            }
+	
+	        }
+	    }
+}

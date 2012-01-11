@@ -199,7 +199,7 @@ public class HauptFrame extends JFrame {
     private JToolBar modulBar = null;
     private JButton modulBackButton = null;
     private JButton modulFwdButton = null;
-    private JButton qgis = null;
+//    private JButton qgis = null;
 
     private ModulManager manager;
     private SettingsManager settings;
@@ -391,7 +391,7 @@ public class HauptFrame extends JFrame {
             modulBar.putClientProperty("JToolBar.isRollover", Boolean.TRUE);
             modulBar.setFloatable(false);
             modulBar.setOpaque(false);
-            modulBar.add(getQgis());
+//            modulBar.add(getQgis());
             modulBar.add(getModulBackButton());
             modulBar.add(getModulFwdButton());
         }
@@ -443,26 +443,26 @@ public class HauptFrame extends JFrame {
         }
         return modulFwdButton;
     }
-    private JButton getQgis() {
-        if (qgis == null) {
-
-            String desc = "in QGIS ausgewähltes Objekt aufrufen";
-            qgis = new JButton("GIS",AuikUtils.getIcon(16, "qgis.png", desc));
-
-            qgis.setForeground(getRightFrame().getTextForeground(true));
-            qgis.setOpaque(false);
-
-            qgis.setToolTipText(desc);
-            qgis.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    readClipboard();
-                }
-
-            });
-        }
-
-        return qgis;
-    }
+//    private JButton getQgis() {
+//        if (qgis == null) {
+//
+//            String desc = "in QGIS ausgewähltes Objekt aufrufen";
+//            qgis = new JButton("GIS",AuikUtils.getIcon(16, "qgis.png", desc));
+//
+//            qgis.setForeground(getRightFrame().getTextForeground(true));
+//            qgis.setOpaque(false);
+//
+//            qgis.setToolTipText(desc);
+//            qgis.addActionListener(new ActionListener() {
+//                public void actionPerformed(ActionEvent e) {
+//                    readClipboard();
+//                }
+//
+//            });
+//        }
+//
+//        return qgis;
+//    }
 
     /**
      * Zentriert ein Fenster auf dem Desktop.

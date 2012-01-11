@@ -21,6 +21,8 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -72,6 +74,14 @@ public class BasisStandortModel extends ListTableModel {
         setList(BasisStandort.findStandorte(strasse, hausnr));
         lastStrasse = strasse;
         lastHausNr = hausnr;
+    }
+
+    /**
+     * Filtert den Tabelleninhalt nach einem Standort.
+     * @param std BasisStandort
+     */
+    public void filterList(BasisStandort std) {
+        setList((List)BasisStandort.getStandortList(std.getStandortid()));
     }
 
     /**

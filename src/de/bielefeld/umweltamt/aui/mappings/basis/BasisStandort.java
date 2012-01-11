@@ -98,6 +98,30 @@ public class BasisStandort
     }
 
     /**
+     * Liefert einen Standort mit einer bestimmten ID.
+     * @param id Die ID (der Primärschlüssel) des Standorts.
+     * @return Den gesuchten Standort oder <code>null</code>,
+     * falls kein Standort mit dieser ID existiert.
+     */
+    public static List getStandortList(Integer id) {
+		List standort;
+		try {
+			Session session = HibernateSessionFactory.currentSession();
+			standort = session.createQuery(
+					"from BasisStandort as bsta where "
+							+ "bsta.standortid = ? ")
+							.setInteger(0, id)
+							.list();
+
+		} catch (HibernateException e) {
+			throw new RuntimeException("Datenbank-Fehler", e);
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		return standort;
+	}
+
+    /**
      * Durchsucht die Standort-Tabelle nach Straße und Hausnummer..
      * Bei der Straße wird Groß-/Kleinschreibung ignoriert und automatisch ein
      * '%' angehängt.

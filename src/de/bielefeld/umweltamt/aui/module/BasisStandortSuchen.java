@@ -333,28 +333,33 @@ public class BasisStandortSuchen extends AbstractModul {
             protected void doUIUpdateLogic() {
                 standortModel.fireTableDataChanged();
 
-                if (lastStandort != null) {
+                if (SettingsManager.getInstance().getStandort() != null){
+                	filterStandortListe(getStandortTabelle());
+                }                
+                else if (lastStandort != null) {
                     // Wenn der Standort noch in der Liste ist, wird er ausgewählt.
                     int row = standortModel.getList().indexOf(lastStandort);
                     if (row != -1) {
-                        getStandortTabelle().setRowSelectionInterval(row, row);
-                        getStandortTabelle().scrollRectToVisible(getStandortTabelle().getCellRect(row, 0, true));
-                        getStandortTabelle().requestFocus();
-                    }
-                } else {
-                    int standortCount = standortModel.getRowCount();
-                    if (standortCount > 0) {
-                        String statusMsg = "Suche: " + standortCount + " Ergebnis";
-                        if (standortCount != 1) {
-                            statusMsg += "se";
-                        }
-                        statusMsg += ".";
-                        frame.changeStatus(statusMsg);
-                    }
-                }
+						getStandortTabelle().setRowSelectionInterval(row, row);
+						getStandortTabelle().scrollRectToVisible(
+								getStandortTabelle().getCellRect(row, 0, true));
+						getStandortTabelle().requestFocus();
+					}
+				} else {
+					int standortCount = standortModel.getRowCount();
+					if (standortCount > 0) {
+						String statusMsg = "Suche: " + standortCount
+								+ " Ergebnis";
+						if (standortCount != 1) {
+							statusMsg += "se";
+						}
+						statusMsg += ".";
+						frame.changeStatus(statusMsg);
+					}
+				}
 
-                updateObjekte();
-            }
+				updateObjekte();
+			}
         };
 
         worker.start();
@@ -462,9 +467,19 @@ public class BasisStandortSuchen extends AbstractModul {
         final int fhausnr = hausnr;
 
         SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
-            protected void doNonUILogic() {
-                standortModel.filterList(getStrassenFeld().getText(), fhausnr);
-            }
+
+			protected void doNonUILogic() {
+				if (SettingsManager.getInstance().getStandort() == null) {
+					standortModel.filterList(getStrassenFeld().getText(),
+							fhausnr);
+				}
+				else {
+					standortModel.filterList(SettingsManager.getInstance().getStandort());
+					SettingsManager.getInstance().setStandort(null);
+					getStrassenFeld().setText("");
+					getHausnrFeld().setText("");
+				}
+			}
 
             protected void doUIUpdateLogic() {
                 getStandortTabelle().clearSelection();

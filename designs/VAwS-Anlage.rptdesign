@@ -55,6 +55,180 @@
     <data-sets>
         <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="VAWS_FACHDATEN" id="212">
             <text-property name="displayName">vaws_fachdaten</text-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">behaelterid</property>
+                    <property name="displayName">behaelterid</property>
+                </structure>
+                <structure>
+                    <property name="columnName">objektid</property>
+                    <property name="displayName">objektid</property>
+                </structure>
+                <structure>
+                    <property name="columnName">herstellnr</property>
+                    <property name="displayName">herstellnr</property>
+                </structure>
+                <structure>
+                    <property name="columnName">hersteller</property>
+                    <property name="displayName">hersteller</property>
+                </structure>
+                <structure>
+                    <property name="columnName">datuminbetriebnahme</property>
+                    <property name="displayName">datuminbetriebnahme</property>
+                </structure>
+                <structure>
+                    <property name="columnName">datumerfassung</property>
+                    <property name="displayName">datumerfassung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">datumaenderung</property>
+                    <property name="displayName">datumaenderung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">datumgenehmigung</property>
+                    <property name="displayName">datumgenehmigung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">anlagenart</property>
+                    <property name="displayName">anlagenart</property>
+                </structure>
+                <structure>
+                    <property name="columnName">behaelterart</property>
+                    <property name="displayName">behaelterart</property>
+                </structure>
+                <structure>
+                    <property name="columnName">material</property>
+                    <property name="displayName">material</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fluessigkeit</property>
+                    <property name="displayName">fluessigkeit</property>
+                </structure>
+                <structure>
+                    <property name="columnName">vbfeinstufung</property>
+                    <property name="displayName">vbfeinstufung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">menge</property>
+                    <property name="displayName">menge</property>
+                </structure>
+                <structure>
+                    <property name="columnName">wgk</property>
+                    <property name="displayName">wgk</property>
+                </structure>
+                <structure>
+                    <property name="columnName">gefaehrdungsstufe</property>
+                    <property name="displayName">gefaehrdungsstufe</property>
+                </structure>
+                <structure>
+                    <property name="columnName">baujahr</property>
+                    <property name="displayName">baujahr</property>
+                </structure>
+                <structure>
+                    <property name="columnName">doppelwandig</property>
+                    <property name="displayName">doppelwandig</property>
+                </structure>
+                <structure>
+                    <property name="columnName">leckanzeige</property>
+                    <property name="displayName">leckanzeige</property>
+                </structure>
+                <structure>
+                    <property name="columnName">auffangraum</property>
+                    <property name="displayName">auffangraum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">grenzwertgeber</property>
+                    <property name="displayName">grenzwertgeber</property>
+                </structure>
+                <structure>
+                    <property name="columnName">leckschutzauskleidung</property>
+                    <property name="displayName">leckschutzauskleidung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">kellerlagerung</property>
+                    <property name="displayName">kellerlagerung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">innenbeschichtung</property>
+                    <property name="displayName">innenbeschichtung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">beschreibung_a</property>
+                    <property name="displayName">beschreibung_a</property>
+                </structure>
+                <structure>
+                    <property name="columnName">beschreibung_s</property>
+                    <property name="displayName">beschreibung_s</property>
+                </structure>
+                <structure>
+                    <property name="columnName">oberirdisch</property>
+                    <property name="displayName">oberirdisch</property>
+                </structure>
+                <structure>
+                    <property name="columnName">unterirdisch</property>
+                    <property name="displayName">unterirdisch</property>
+                </structure>
+                <structure>
+                    <property name="columnName">saugleitung</property>
+                    <property name="displayName">saugleitung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">rohr_kathodenschutz</property>
+                    <property name="displayName">rohr_kathodenschutz</property>
+                </structure>
+                <structure>
+                    <property name="columnName">aus_kupfer</property>
+                    <property name="displayName">aus_kupfer</property>
+                </structure>
+                <structure>
+                    <property name="columnName">aus_stahl</property>
+                    <property name="displayName">aus_stahl</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mit_schutzrohr</property>
+                    <property name="displayName">mit_schutzrohr</property>
+                </structure>
+                <structure>
+                    <property name="columnName">beschreibung_r</property>
+                    <property name="displayName">beschreibung_r</property>
+                </structure>
+                <structure>
+                    <property name="columnName">pruefturnus</property>
+                    <property name="displayName">pruefturnus</property>
+                </structure>
+                <structure>
+                    <property name="columnName">angemahntkz</property>
+                    <property name="displayName">angemahntkz</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mahnfrist</property>
+                    <property name="displayName">mahnfrist</property>
+                </structure>
+                <structure>
+                    <property name="columnName">wiedervorlage</property>
+                    <property name="displayName">wiedervorlage</property>
+                </structure>
+                <structure>
+                    <property name="columnName">stillegungsdatum</property>
+                    <property name="displayName">stillegungsdatum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">bemerkungen</property>
+                    <property name="displayName">bemerkungen</property>
+                </structure>
+                <structure>
+                    <property name="columnName">ausfuehrung</property>
+                    <property name="displayName">ausfuehrung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">pruefumfang</property>
+                    <property name="displayName">pruefumfang</property>
+                </structure>
+                <structure>
+                    <property name="columnName">verwendung</property>
+                    <property name="displayName">verwendung</property>
+                </structure>
+            </list-property>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
@@ -145,37 +319,37 @@
                     <structure>
                         <property name="position">18</property>
                         <property name="name">doppelwandig</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">19</property>
                         <property name="name">leckanzeige</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">20</property>
                         <property name="name">auffangraum</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">21</property>
                         <property name="name">grenzwertgeber</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">22</property>
                         <property name="name">leckschutzauskleidung</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">23</property>
                         <property name="name">kellerlagerung</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">24</property>
                         <property name="name">innenbeschichtung</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">25</property>
@@ -190,37 +364,37 @@
                     <structure>
                         <property name="position">27</property>
                         <property name="name">oberirdisch</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">28</property>
                         <property name="name">unterirdisch</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">29</property>
                         <property name="name">saugleitung</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">30</property>
                         <property name="name">rohr_kathodenschutz</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">31</property>
                         <property name="name">aus_kupfer</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">32</property>
                         <property name="name">aus_stahl</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">33</property>
                         <property name="name">mit_schutzrohr</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">34</property>
@@ -235,7 +409,7 @@
                     <structure>
                         <property name="position">36</property>
                         <property name="name">angemahntkz</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">37</property>
@@ -279,7 +453,7 @@
                 <structure>
                     <property name="name">BehaelterId</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">0</property>
+                    <property name="nativeDataType">4</property>
                     <property name="position">1</property>
                     <expression name="defaultValue">params["BehaelterId"]</expression>
                     <property name="isOptional">false</property>
@@ -320,28 +494,28 @@
                     <property name="name">datuminbetriebnahme</property>
                     <property name="nativeName">datuminbetriebnahme</property>
                     <property name="dataType">date-time</property>
-                    <property name="nativeDataType">91</property>
+                    <property name="nativeDataType">93</property>
                 </structure>
                 <structure>
                     <property name="position">6</property>
                     <property name="name">datumerfassung</property>
                     <property name="nativeName">datumerfassung</property>
                     <property name="dataType">date-time</property>
-                    <property name="nativeDataType">91</property>
+                    <property name="nativeDataType">93</property>
                 </structure>
                 <structure>
                     <property name="position">7</property>
                     <property name="name">datumaenderung</property>
                     <property name="nativeName">datumaenderung</property>
                     <property name="dataType">date-time</property>
-                    <property name="nativeDataType">91</property>
+                    <property name="nativeDataType">93</property>
                 </structure>
                 <structure>
                     <property name="position">8</property>
                     <property name="name">datumgenehmigung</property>
                     <property name="nativeName">datumgenehmigung</property>
                     <property name="dataType">date-time</property>
-                    <property name="nativeDataType">91</property>
+                    <property name="nativeDataType">93</property>
                 </structure>
                 <structure>
                     <property name="position">9</property>
@@ -383,7 +557,7 @@
                     <property name="name">menge</property>
                     <property name="nativeName">menge</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">6</property>
+                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">15</property>
@@ -410,50 +584,50 @@
                     <property name="position">18</property>
                     <property name="name">doppelwandig</property>
                     <property name="nativeName">doppelwandig</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">19</property>
                     <property name="name">leckanzeige</property>
                     <property name="nativeName">leckanzeige</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">20</property>
                     <property name="name">auffangraum</property>
                     <property name="nativeName">auffangraum</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">21</property>
                     <property name="name">grenzwertgeber</property>
                     <property name="nativeName">grenzwertgeber</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">22</property>
                     <property name="name">leckschutzauskleidung</property>
                     <property name="nativeName">leckschutzauskleidung</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">23</property>
                     <property name="name">kellerlagerung</property>
                     <property name="nativeName">kellerlagerung</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">24</property>
                     <property name="name">innenbeschichtung</property>
                     <property name="nativeName">innenbeschichtung</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">25</property>
@@ -473,50 +647,50 @@
                     <property name="position">27</property>
                     <property name="name">oberirdisch</property>
                     <property name="nativeName">oberirdisch</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">28</property>
                     <property name="name">unterirdisch</property>
                     <property name="nativeName">unterirdisch</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">29</property>
                     <property name="name">saugleitung</property>
                     <property name="nativeName">saugleitung</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">30</property>
                     <property name="name">rohr_kathodenschutz</property>
                     <property name="nativeName">rohr_kathodenschutz</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">31</property>
                     <property name="name">aus_kupfer</property>
                     <property name="nativeName">aus_kupfer</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">32</property>
                     <property name="name">aus_stahl</property>
                     <property name="nativeName">aus_stahl</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">33</property>
                     <property name="name">mit_schutzrohr</property>
                     <property name="nativeName">mit_schutzrohr</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">34</property>
@@ -530,35 +704,35 @@
                     <property name="name">pruefturnus</property>
                     <property name="nativeName">pruefturnus</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">6</property>
+                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">36</property>
                     <property name="name">angemahntkz</property>
                     <property name="nativeName">angemahntkz</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1111</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
                     <property name="position">37</property>
                     <property name="name">mahnfrist</property>
                     <property name="nativeName">mahnfrist</property>
                     <property name="dataType">date-time</property>
-                    <property name="nativeDataType">91</property>
+                    <property name="nativeDataType">93</property>
                 </structure>
                 <structure>
                     <property name="position">38</property>
                     <property name="name">wiedervorlage</property>
                     <property name="nativeName">wiedervorlage</property>
                     <property name="dataType">date-time</property>
-                    <property name="nativeDataType">91</property>
+                    <property name="nativeDataType">93</property>
                 </structure>
                 <structure>
                     <property name="position">39</property>
                     <property name="name">stillegungsdatum</property>
                     <property name="nativeName">stillegungsdatum</property>
                     <property name="dataType">date-time</property>
-                    <property name="nativeDataType">91</property>
+                    <property name="nativeDataType">93</property>
                 </structure>
                 <structure>
                     <property name="position">40</property>
@@ -590,11 +764,61 @@
                 </structure>
             </list-property>
             <property name="queryText">select *
-from VAWS_FACHDATEN
-where BEHAELTERID = ?</property>
+from auik.vaws_fachdaten
+where behaelterid = ?</property>
         </oda-data-set>
         <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="VAWS_KONTROLLEN" id="308">
             <text-property name="displayName">vaws_kontrollen</text-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">id</property>
+                    <property name="displayName">id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">grundderpruefung</property>
+                    <property name="displayName">grundderpruefung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">pruefturnus</property>
+                    <property name="displayName">pruefturnus</property>
+                </structure>
+                <structure>
+                    <property name="columnName">pruefdatum</property>
+                    <property name="displayName">pruefdatum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">pruefer</property>
+                    <property name="displayName">pruefer</property>
+                </structure>
+                <structure>
+                    <property name="columnName">pruefungabgeschlossen</property>
+                    <property name="displayName">pruefungabgeschlossen</property>
+                </structure>
+                <structure>
+                    <property name="columnName">nachpruefung</property>
+                    <property name="displayName">nachpruefung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">nachpruefdatum</property>
+                    <property name="displayName">nachpruefdatum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">nachpruefer</property>
+                    <property name="displayName">nachpruefer</property>
+                </structure>
+                <structure>
+                    <property name="columnName">naechstepruefung</property>
+                    <property name="displayName">naechstepruefung</property>
+                </structure>
+                <structure>
+                    <property name="columnName">pruefergebnis</property>
+                    <property name="displayName">pruefergebnis</property>
+                </structure>
+                <structure>
+                    <property name="columnName">behaelterid</property>
+                    <property name="displayName">behaelterid</property>
+                </structure>
+            </list-property>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
@@ -604,58 +828,58 @@ where BEHAELTERID = ?</property>
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">behaelterid</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">3</property>
                         <property name="name">grundderpruefung</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">4</property>
+                        <property name="position">3</property>
                         <property name="name">pruefturnus</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">5</property>
+                        <property name="position">4</property>
                         <property name="name">pruefdatum</property>
                         <property name="dataType">date-time</property>
                     </structure>
                     <structure>
-                        <property name="position">6</property>
+                        <property name="position">5</property>
                         <property name="name">pruefer</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">7</property>
+                        <property name="position">6</property>
                         <property name="name">pruefungabgeschlossen</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">8</property>
+                        <property name="position">7</property>
                         <property name="name">nachpruefung</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">9</property>
+                        <property name="position">8</property>
                         <property name="name">nachpruefdatum</property>
                         <property name="dataType">date-time</property>
                     </structure>
                     <structure>
-                        <property name="position">10</property>
+                        <property name="position">9</property>
                         <property name="name">nachpruefer</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">11</property>
+                        <property name="position">10</property>
                         <property name="name">naechstepruefung</property>
                         <property name="dataType">date-time</property>
                     </structure>
                     <structure>
-                        <property name="position">12</property>
+                        <property name="position">11</property>
                         <property name="name">pruefergebnis</property>
                         <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">behaelterid</property>
+                        <property name="dataType">integer</property>
                     </structure>
                 </list-property>
             </structure>
@@ -663,7 +887,8 @@ where BEHAELTERID = ?</property>
             <list-property name="parameters">
                 <structure>
                     <property name="name">behaelterid</property>
-                    <property name="nativeDataType">0</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
                     <property name="position">1</property>
                     <expression name="defaultValue">params["BehaelterId"]</expression>
                     <property name="isOptional">false</property>
@@ -676,76 +901,88 @@ where BEHAELTERID = ?</property>
                     <property name="name">id</property>
                     <property name="nativeName">id</property>
                     <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
-                    <property name="name">behaelterid</property>
-                    <property name="nativeName">behaelterid</property>
-                    <property name="dataType">integer</property>
-                </structure>
-                <structure>
-                    <property name="position">3</property>
                     <property name="name">grundderpruefung</property>
                     <property name="nativeName">grundderpruefung</property>
                     <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">4</property>
+                    <property name="position">3</property>
                     <property name="name">pruefturnus</property>
                     <property name="nativeName">pruefturnus</property>
                     <property name="dataType">float</property>
+                    <property name="nativeDataType">7</property>
                 </structure>
                 <structure>
-                    <property name="position">5</property>
+                    <property name="position">4</property>
                     <property name="name">pruefdatum</property>
                     <property name="nativeName">pruefdatum</property>
                     <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
                 </structure>
                 <structure>
-                    <property name="position">6</property>
+                    <property name="position">5</property>
                     <property name="name">pruefer</property>
                     <property name="nativeName">pruefer</property>
                     <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">7</property>
+                    <property name="position">6</property>
                     <property name="name">pruefungabgeschlossen</property>
                     <property name="nativeName">pruefungabgeschlossen</property>
                     <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
-                    <property name="position">8</property>
+                    <property name="position">7</property>
                     <property name="name">nachpruefung</property>
                     <property name="nativeName">nachpruefung</property>
                     <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
                 </structure>
                 <structure>
-                    <property name="position">9</property>
+                    <property name="position">8</property>
                     <property name="name">nachpruefdatum</property>
                     <property name="nativeName">nachpruefdatum</property>
                     <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
                 </structure>
                 <structure>
-                    <property name="position">10</property>
+                    <property name="position">9</property>
                     <property name="name">nachpruefer</property>
                     <property name="nativeName">nachpruefer</property>
                     <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">11</property>
+                    <property name="position">10</property>
                     <property name="name">naechstepruefung</property>
                     <property name="nativeName">naechstepruefung</property>
                     <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
                 </structure>
                 <structure>
-                    <property name="position">12</property>
+                    <property name="position">11</property>
                     <property name="name">pruefergebnis</property>
                     <property name="nativeName">pruefergebnis</property>
                     <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">behaelterid</property>
+                    <property name="nativeName">behaelterid</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
                 </structure>
             </list-property>
             <property name="queryText">select * 
-from vaws_kontrollen
+from auik.vaws_kontrollen
 where behaelterid = ?
 order by pruefdatum ASC</property>
         </oda-data-set>
@@ -968,13 +1205,81 @@ order by pruefdatum ASC</property>
                     <property name="paddingLeft">10px</property>
                     <property name="paddingBottom">3px</property>
                     <property name="paddingRight">3px</property>
+                    <label id="426">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">10pt</property>
+                        <text-property name="text">Behälterart</text-property>
+                    </label>
+                </cell>
+                <cell id="372">
+                    <property name="paddingTop">3px</property>
+                    <property name="paddingLeft">10px</property>
+                    <property name="paddingBottom">3px</property>
+                    <property name="paddingRight">3px</property>
+                    <data id="427">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="dataSet">VAWS_FACHDATEN</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">behaelterart</property>
+                                <property name="displayName">behaelterart</property>
+                                <expression name="expression">dataSetRow["behaelterart"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">behaelterart</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="418">
+                <property name="backgroundColor">#D8D8D8</property>
+                <cell id="419">
+                    <property name="paddingTop">3px</property>
+                    <property name="paddingLeft">10px</property>
+                    <property name="paddingBottom">3px</property>
+                    <property name="paddingRight">3px</property>
+                    <label id="423">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Menge</text-property>
+                    </label>
+                </cell>
+                <cell id="420">
+                    <property name="paddingTop">3px</property>
+                    <property name="paddingLeft">10px</property>
+                    <property name="paddingBottom">3px</property>
+                    <property name="paddingRight">3px</property>
+                    <data id="425">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="dataSet">VAWS_FACHDATEN</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">menge</property>
+                                <property name="displayName">menge</property>
+                                <expression name="expression">dataSetRow["menge"]</expression>
+                                <property name="dataType">float</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">menge</property>
+                    </data>
+                </cell>
+                <cell id="421">
+                    <property name="paddingTop">3px</property>
+                    <property name="paddingLeft">10px</property>
+                    <property name="paddingBottom">3px</property>
+                    <property name="paddingRight">3px</property>
                     <label id="244">
                         <property name="fontFamily">"Arial"</property>
                         <property name="fontSize">10pt</property>
                         <text-property name="text">Baujahr</text-property>
                     </label>
                 </cell>
-                <cell id="372">
+                <cell id="422">
                     <property name="paddingTop">3px</property>
                     <property name="paddingLeft">10px</property>
                     <property name="paddingBottom">3px</property>
@@ -996,7 +1301,6 @@ order by pruefdatum ASC</property>
                 </cell>
             </row>
             <row id="373">
-                <property name="backgroundColor">#D8D8D8</property>
                 <cell id="374">
                     <property name="paddingTop">3px</property>
                     <property name="paddingLeft">10px</property>
@@ -1069,6 +1373,7 @@ order by pruefdatum ASC</property>
                 </cell>
             </row>
             <row id="378">
+                <property name="backgroundColor">#D8D8D8</property>
                 <cell id="379">
                     <property name="paddingTop">3px</property>
                     <property name="paddingLeft">10px</property>
@@ -1141,7 +1446,6 @@ order by pruefdatum ASC</property>
                 </cell>
             </row>
             <row id="383">
-                <property name="backgroundColor">#D8D8D8</property>
                 <cell id="384">
                     <property name="paddingTop">3px</property>
                     <property name="paddingLeft">10px</property>
@@ -1210,6 +1514,7 @@ order by pruefdatum ASC</property>
                 </cell>
             </row>
             <row id="388">
+                <property name="backgroundColor">#D8D8D8</property>
                 <cell id="389">
                     <property name="paddingTop">3px</property>
                     <property name="paddingLeft">10px</property>

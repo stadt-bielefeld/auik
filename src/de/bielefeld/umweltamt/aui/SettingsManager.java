@@ -82,12 +82,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+
 /**
  * Diese Klasse verwaltet alle Programm-Einstellungen.
  * Alle momentan benutzten Keys: siehe doc/properties.txt
  * @author David Klotz
  */
 public class SettingsManager {
+	private BasisStandort standort;
     private Properties instanceSettings;
     private Properties appSettings;
 
@@ -221,6 +224,16 @@ public class SettingsManager {
     }
 
     /**
+     * Setzt eine Einstellung. Wrapper-Methode für setSetting(String, BasisStandort, boolean).
+     * @param setting Den Key der Einstellung.
+     * @param value Den Wert der Einstellung.
+     * @param persist Soll die Einstellung beim Programm-Ende gespeichert werden.
+     */
+    public void setStandort(BasisStandort std) {
+        this.standort = std;
+    }
+
+    /**
      * Liefert den aktuellen Wert einer Einstellung.
      * @param setting Den Key der Einstellung.
      * @return Den Wert der Einstellung oder <code>null</code>, falls diese nicht existiert.
@@ -263,6 +276,17 @@ public class SettingsManager {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Liefert den aktuellen Wert einer Einstellung. Wrapper-Methode.
+     * @param setting Den Key der Einstellung.
+     * @return Den Wert der Einstellung oder <code>false</code>, falls diese nicht existiert.
+     */
+    public BasisStandort getStandort() {
+
+            return standort;
+        
     }
 
     /**

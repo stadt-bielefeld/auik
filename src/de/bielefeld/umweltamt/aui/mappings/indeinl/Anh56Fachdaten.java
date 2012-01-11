@@ -104,7 +104,7 @@ public class Anh56Fachdaten
         try {
             Session session = HibernateSessionFactory.currentSession();
             liste = session.createQuery(query)
-                .setString(0, abwasser.booleanValue() ? "t" : "f")
+                .setBoolean(0, abwasser)
                 .list();
         } catch (HibernateException e) {
             throw new RuntimeException(e);
@@ -131,7 +131,7 @@ public class Anh56Fachdaten
         try {
             Session session = HibernateSessionFactory.currentSession();
             liste = session.createQuery(query)
-                .setString(0, genpflicht.booleanValue() ? "t" : "f")
+                .setBoolean(0, genpflicht)
                 .list();
         } catch (HibernateException e) {
             throw new RuntimeException(e);
