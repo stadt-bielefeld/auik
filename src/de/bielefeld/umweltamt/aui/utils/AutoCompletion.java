@@ -53,7 +53,8 @@ import javax.swing.text.PlainDocument;
  * werden.
  */
 public class AutoCompletion extends PlainDocument {
-    JComboBox comboBox;
+	private static final long serialVersionUID = -3459357175359246741L;
+	SearchBox comboBox;
     ComboBoxModel model;
     JTextComponent editor;
     // flag to indicate if setSelectedItem has been called
@@ -66,7 +67,7 @@ public class AutoCompletion extends PlainDocument {
     KeyListener editorKeyListener;
     FocusListener editorFocusListener;
 
-    public AutoCompletion(final JComboBox comboBox) {
+    public AutoCompletion(final SearchBox comboBox) {
         this.comboBox = comboBox;
         model = comboBox.getModel();
         comboBox.addActionListener(new ActionListener() {
@@ -86,13 +87,19 @@ public class AutoCompletion extends PlainDocument {
                 hitBackspace=false;
                 switch (e.getKeyCode()) {
                     // determine if the pressed key is backspace (needed by the remove method)
-                    case KeyEvent.VK_BACK_SPACE : hitBackspace=true;
-                    hitBackspaceOnSelection=editor.getSelectionStart()!=editor.getSelectionEnd();
-                    break;
+                    case KeyEvent.VK_BACK_SPACE :
+                    	hitBackspace=true;
+                    	hitBackspaceOnSelection=editor.getSelectionStart()!=editor.getSelectionEnd();
+                    	break;
                     // ignore delete key
-                    case KeyEvent.VK_DELETE : e.consume();
-                    comboBox.getToolkit().beep();
-                    break;
+                    case KeyEvent.VK_DELETE :
+                    	if (comboBox.allowsNewValues()) {
+                    		// This block is intentionally left blank
+                    	} else {
+                        	e.consume();
+                        	comboBox.getToolkit().beep();
+                    	}
+                    	break;
                 }
             }
         };
@@ -163,7 +170,7 @@ public class AutoCompletion extends PlainDocument {
      * Schaltet die automatische Vervollständigung für eine Combobox an.
      * @param comboBox Die Combobox
      */
-    public static void enable(JComboBox comboBox) {
+    public static void enable(SearchBox comboBox) {
         // has to be editable
         comboBox.setEditable(true);
         // change the editor's document
@@ -211,7 +218,8 @@ public class AutoCompletion extends PlainDocument {
         Object item = lookupItem(getText(0, getLength()));
         if (item != null) {
             setSelectedItem(item);
-        } else {
+        	setText(item.toString());
+        } else if (!comboBox.allowsNewValues()) {
             // keep old item selected if there is no match
             item = comboBox.getSelectedItem();
             // imitate no insert (later on offs will be incremented by str.length(): selection won't move forward)
@@ -221,8 +229,8 @@ public class AutoCompletion extends PlainDocument {
                 //comboBox.getToolkit().beep(); // when available use:
                 UIManager.getLookAndFeel().provideErrorFeedback(comboBox);
             }
+        	setText(item.toString());
         }
-        setText(item.toString());
         // select the completed part
         highlightCompletedText(offs+str.length());
     }

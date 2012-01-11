@@ -79,8 +79,8 @@ import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.LongNameComboBoxRenderer;
+import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
-import de.bielefeld.umweltamt.aui.utils.TabAction;
 
 /**
  * Ein Modul zum neuen Anlegen eines Betreibers.
@@ -114,7 +114,7 @@ public class BasisBetreiberNeu extends AbstractModul {
 
     private JTextArea bemerkungsArea;
 
-    private JComboBox strassenBox;
+    private SearchBox strassenBox;
     private JComboBox wirtschaftszweigBox;
 
     private String[] strassen = null;
@@ -184,8 +184,9 @@ public class BasisBetreiberNeu extends AbstractModul {
             bemerkungsArea.setWrapStyleWord(true);
             JScrollPane bemerkungsScroller = new JScrollPane(bemerkungsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-            strassenBox = new JComboBox();
+            strassenBox = new SearchBox();
             strassenBox.setEditable(true);
+            strassenBox.allowsNewValues(true);
 
             wirtschaftszweigBox = new JComboBox();
             wirtschaftszweigBox.setRenderer(new LongNameComboBoxRenderer());
@@ -213,7 +214,8 @@ public class BasisBetreiberNeu extends AbstractModul {
             // Ermögliche TAB aus dem Bemerkungs-Feld zu springen
             bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
             bemerkungsScroller.getHorizontalScrollBar().setFocusable(false);
-            TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
+            // This was not used:
+//            TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
 
             FormLayout layout = new FormLayout(
                     "right:pref, 3dlu, 20dlu, 40dlu, 5dlu, right:pref, 3dlu, 27dlu, 3dlu, 30dlu, 5dlu:grow(0.5)",    // Spalten

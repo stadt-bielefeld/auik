@@ -38,8 +38,15 @@ import javax.swing.event.PopupMenuListener;
  * @author David Klotz
  */
 public class SearchBox extends JComboBox {
+	
+	private static final long serialVersionUID = 9149548665485817298L;
 
-    /**
+	/**
+	 * Sind neue Werte in der SearchBox erlaubt.
+	 */
+	private boolean allowsNewValues = false;
+	
+	/**
      * Erleichterungs-Konstruktor, der eine leere JComboBox erzeugt.
      */
     public SearchBox() {
@@ -51,7 +58,7 @@ public class SearchBox extends JComboBox {
      * in einen Array konvertiert.
      * @param list Eine Liste mit Objekten, die in dieser ComboBox angezeigt werden sollen
      */
-    public SearchBox(final List list) {
+    public SearchBox(final List<Object> list) {
         this(list.toArray());
     }
 
@@ -91,5 +98,25 @@ public class SearchBox extends JComboBox {
         });
 
         AutoCompletion.enable(this);
+    }
+    
+    /**
+     * Getter für die Option neue Werte zuzulassen.
+     * 
+     * @return Ob neue Werte in der SearchBox erlaubt sind.
+     */
+    public boolean allowsNewValues() {
+    	return this.allowsNewValues;
+    }
+
+    /**
+     * Setter für die Option neue Werte zuzulassen.
+     * 
+     * @param pAllowsNewValues Neuer Wert für diese Eigenschaft
+     * @return
+     */
+    public boolean allowsNewValues(boolean pAllowsNewValues) {
+    	this.allowsNewValues = pAllowsNewValues;
+    	return allowsNewValues();
     }
 }
