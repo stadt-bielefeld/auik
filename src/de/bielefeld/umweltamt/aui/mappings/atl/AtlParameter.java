@@ -160,7 +160,7 @@ public class AtlParameter
             // SielhautBearbeiten:
             sParams.put("Blei", AtlParameter.BLEI_ID);
             sParams.put("Cadmium", AtlParameter.CADMIUM_ID);
-            sParams.put("Chrom ges.", AtlParameter.CHROM_ID);
+            sParams.put("Chrom", AtlParameter.CHROM_ID);
             sParams.put("Gold", AtlParameter.GOLD_ID);
             sParams.put("Kupfer", AtlParameter.KUPFER_ID);
             sParams.put("Nickel", AtlParameter.NICKEL_ID);
