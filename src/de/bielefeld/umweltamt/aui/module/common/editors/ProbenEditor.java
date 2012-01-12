@@ -1436,13 +1436,14 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public Map getAuftragDruckMap(AtlProbenahmen probe) {
         BasisBetreiber betr = probe.getBasisBetreiber();
+        BasisStandort  std  = probe.getBasisObjekt().getBasisStandort();
         AtlProbeart    art  = probe.getAtlProbepkt().getAtlProbeart();
 
         HashMap params = new HashMap();
         params.put("kennnummer", probenummer.getText());
         params.put("name", betr.toString());
         params.put("art", art.getArt());
-        params.put("betriebsgrundstueck", betr.getBetriebsgrundstueck());
+        params.put("betriebsgrundstueck", std.toString());
 
         try {
             Integer anzahl = Integer.parseInt(beteiligte.getText());
