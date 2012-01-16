@@ -75,7 +75,8 @@
     </target>
 
     <target name="jasper">
-        <mkdir dir="${reports}"/>
+        <mkdir dir="${reports1}"/>
+        <mkdir dir="${reports2}"/>
         <taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask">
             <classpath refid="classpath"/>
         </taskdef>
