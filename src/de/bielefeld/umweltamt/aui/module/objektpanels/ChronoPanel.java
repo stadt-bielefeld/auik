@@ -106,7 +106,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * @author Gerd Genuit
  */
 public class ChronoPanel extends JPanel {
-    private String name;
+    private static final long serialVersionUID = 5763325969928267241L;
+	private String name;
     private BasisObjektBearbeiten hauptModul;
 
     private ChronoModel chronoModel;
@@ -157,7 +158,8 @@ public class ChronoPanel extends JPanel {
         builder.append(reportListeButton, getSaveButton());
     }
     public class ChronoModel extends EditableListTableModel {
-        private BasisObjekt obj;
+		private static final long serialVersionUID = 1268693292182383330L;
+		private BasisObjekt obj;
 
         /**
          * Erzeugt ein einfaches TableModel für die Chronologie.
@@ -182,7 +184,7 @@ public class ChronoPanel extends JPanel {
             this.obj = obj;
 
             if (obj != null) {
-                setList(BasisObjektchrono.getChronoByObjekt(obj));
+                setList(BasisObjektchrono.getChronoByObjekt(this.obj));
                 fireTableDataChanged();
             }
         }
@@ -288,6 +290,7 @@ public class ChronoPanel extends JPanel {
          * Die Liste wird direkt mittels setList "befüllt".
          */
         public void updateList() {
+        	// This is intentionally left blank.
         }
     }
 
@@ -326,7 +329,7 @@ public class ChronoPanel extends JPanel {
         if (chronoTable.getCellEditor() != null) {
             chronoTable.getCellEditor().stopCellEditing();
         }
-        List chronoListe = chronoModel.getList();
+        List<?> chronoListe = chronoModel.getList();
         boolean sachbear = true;
         boolean gespeichert = true;
         for (int i = 0; i < chronoListe.size(); i++) {
@@ -387,7 +390,7 @@ public class ChronoPanel extends JPanel {
     public void showReportListe() {
         objektid = hauptModul.getObjekt().getObjektid();
         betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
-        standort = hauptModul.getObjekt().getBasisStandort().toString();
+        standort = hauptModul.getObjekt().getBasisStandort().getFormatierteStrasse();
         art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
 
         if (objektid != null && betreiber != null && standort != null && art != null)
@@ -407,7 +410,9 @@ public class ChronoPanel extends JPanel {
     private Action getChronoItemLoeschAction() {
         if (chronoItemLoeschAction == null) {
             chronoItemLoeschAction = new AbstractAction("Eintrag löschen") {
-                public void actionPerformed(ActionEvent e) {
+				private static final long serialVersionUID = 2467112578637006165L;
+
+				public void actionPerformed(ActionEvent e) {
                     int row = getChronoTable().getSelectedRow();
 
                     // Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
@@ -429,7 +434,9 @@ public class ChronoPanel extends JPanel {
     private Action getChronoSaveAction() {
         if (chronoSaveAction == null) {
             chronoSaveAction = new AbstractAction("Chronologie speichern") {
-                public void actionPerformed(ActionEvent e) {
+				private static final long serialVersionUID = 1835366305260553709L;
+
+				public void actionPerformed(ActionEvent e) {
                     speichernChronologie();
                 }
             };

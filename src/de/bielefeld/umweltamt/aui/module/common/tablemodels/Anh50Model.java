@@ -43,7 +43,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -51,7 +50,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class Anh50Model extends ListTableModel {
-    public Anh50Model() {
+	private static final long serialVersionUID = 5854006303057335338L;
+
+	public Anh50Model() {
         super(new String[]{
                 "Betreiber",
                 "Standort",
@@ -73,7 +74,7 @@ public class Anh50Model extends ListTableModel {
             tmp = fd.getBasisObjekt().getBasisBetreiber().toString();
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBasisStandort().toString();
+            tmp = fd.getBasisObjekt().getBasisStandort().getFormatierteStrasse();
             break;
         case 2:
             tmp = fd.getWiedervorlage();
@@ -108,5 +109,6 @@ public class Anh50Model extends ListTableModel {
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
     public void updateList() {
+    	// This is intentionally left blank.
     }
 }

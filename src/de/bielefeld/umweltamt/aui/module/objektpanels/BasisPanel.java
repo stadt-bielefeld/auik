@@ -100,7 +100,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -123,8 +122,11 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  */
 
 public class BasisPanel  extends JPanel {
-    private class ChooseDialog extends JDialog {
-        private HauptFrame frame;
+	private static final long serialVersionUID = 2520878475016486007L;
+
+	private class ChooseDialog extends JDialog {
+		private static final long serialVersionUID = 6320119317944629431L;
+		private HauptFrame frame;
         private BasisBetreiber betreiber;
         private BasisStandort standort;
 
@@ -143,7 +145,7 @@ public class BasisPanel  extends JPanel {
             super(frame, true);
             this.frame = frame;
 
-            List initialList = new ArrayList();
+            List<Object> initialList = new ArrayList<Object>();
             initialList.add(initial);
 
             if (initial instanceof BasisBetreiber) {
@@ -168,7 +170,7 @@ public class BasisPanel  extends JPanel {
 
             pack();
             setResizable(false);
-            setLocationRelativeTo(frame);
+            setLocationRelativeTo(this.frame);
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         }
 
@@ -383,7 +385,7 @@ public class BasisPanel  extends JPanel {
     private JButton saveButton;
 
     private ActionListener editButtonListener;
-    private ActionListener gotoButtonListener;
+//    private ActionListener gotoButtonListener;
 
     // Daten
     private String name;
@@ -489,7 +491,7 @@ public class BasisPanel  extends JPanel {
         {
             // Nur wenn Objekte neu angelegt werden stehen alle Objektarten zur Auswahl.
             // Sobald eine Objet gespeichert wurde ist die Objektart nicht mehr veränderbar
-            int id  = hauptModul.getObjekt().getObjektid();
+//            int id  = hauptModul.getObjekt().getObjektid();
             neu = false;
         }
         catch (NullPointerException e)
@@ -564,7 +566,7 @@ public class BasisPanel  extends JPanel {
                     ((sta.getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "+sta.getEntgebid() : "") +
                     "</html>";
                 getStandortFeld().setToolTipText(toolTip);
-                getStandortFeld().setText(sta.toString());
+                getStandortFeld().setText(sta.getFormatierteStrasse());
             }
 
             if (hauptModul.getObjekt().getBasisObjektarten() != null) {
@@ -699,32 +701,34 @@ public class BasisPanel  extends JPanel {
         return editButtonListener;
     }
 
-    private ActionListener getGotoButtonListener() {
-        if (gotoButtonListener == null) {
-            gotoButtonListener = new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    String action = e.getActionCommand();
-
-                    BasisBetreiber betreiber = hauptModul.getObjekt().getBasisBetreiber();
-                    BasisStandort standort = hauptModul.getObjekt().getBasisStandort();
-
-                    if ("betreiber_goto".equals(action) && betreiber != null) {
-
-                        hauptModul.getManager().switchModul("m_betreiber_suchen");
-
-                    } else if ("standort_goto".equals(action) && standort != null) {
-
-                        hauptModul.getManager().switchModul("m_standort_suchen");
-
-                    }
-
-                    updateForm();
-                }
-            };
-        }
-
-        return gotoButtonListener;
-    }
+    // TODO: Check this:
+    // This method was private and never used locally 
+//    private ActionListener getGotoButtonListener() {
+//        if (gotoButtonListener == null) {
+//            gotoButtonListener = new ActionListener() {
+//                public void actionPerformed(ActionEvent e) {
+//                    String action = e.getActionCommand();
+//
+//                    BasisBetreiber betreiber = hauptModul.getObjekt().getBasisBetreiber();
+//                    BasisStandort standort = hauptModul.getObjekt().getBasisStandort();
+//
+//                    if ("betreiber_goto".equals(action) && betreiber != null) {
+//
+//                        hauptModul.getManager().switchModul("m_betreiber_suchen");
+//
+//                    } else if ("standort_goto".equals(action) && standort != null) {
+//
+//                        hauptModul.getManager().switchModul("m_standort_suchen");
+//
+//                    }
+//
+//                    updateForm();
+//                }
+//            };
+//        }
+//
+//        return gotoButtonListener;
+//    }
 
     public JTextField getBetreiberFeld() {
         if (betreiberFeld == null) {
@@ -1095,7 +1099,9 @@ public class BasisPanel  extends JPanel {
     private Action getVerknuepfungLoeschAction() {
         if (verknuepfungLoeschAction == null) {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
-                public void actionPerformed(ActionEvent e) {
+				private static final long serialVersionUID = 1214869561793347819L;
+
+				public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                             && getObjektverknuepungTabelle().getEditingRow() == -1) {

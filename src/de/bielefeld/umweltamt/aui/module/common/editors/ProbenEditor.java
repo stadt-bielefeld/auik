@@ -62,7 +62,7 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.Dimension;
-import java.awt.Point;
+//import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -155,8 +155,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class ProbenEditor extends AbstractApplyEditor {
+	private static final long serialVersionUID = 5903518104076020136L;
 
-    public interface OKListener {
+	public interface OKListener {
         public void onOK(AtlParameter[] params);
     }
 
@@ -174,7 +175,8 @@ public class ProbenEditor extends AbstractApplyEditor {
     public static final String KASSE_FILENAME = "kasse.txt";
 
     private class ParameterModel extends EditableListTableModel {
-        private AtlProbenahmen probe;
+		private static final long serialVersionUID = 6042681141925302970L;
+		private AtlProbenahmen probe;
         private boolean isNew;
         private boolean isSchlamm;
 
@@ -208,12 +210,12 @@ public class ProbenEditor extends AbstractApplyEditor {
             } else if (isNew && !isSchlamm) {
                 //AUIKataster.debugOutput("Bearbeite neue Probe! Positionen leer.");
                 //positionen = new HashSet();
-            	setList(new ArrayList());
+            	setList(new ArrayList<Object>());
             	addParameter(AtlParameter.getParameter("L10821"));
             	addParameter(AtlParameter.getParameter("B00600"));
             	addParameter(AtlParameter.getParameter("L10111"));
             } else {
-            	setList(new ArrayList());
+            	setList(new ArrayList<Object>());
             	addParameter(AtlParameter.getParameter("L11380"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
             	addParameter(AtlParameter.getParameter("L11650"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
             	addParameter(AtlParameter.getParameter("L11510"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
@@ -406,7 +408,10 @@ public class ProbenEditor extends AbstractApplyEditor {
             pos.setAtlEinheiten(AtlEinheiten.getEinheit(
                 parameter.getWirdgemessenineinheit()));
 
-            getList().add(pos);
+//            getList().add(pos);
+            List<AtlAnalyseposition> list = (List<AtlAnalyseposition>) getList();
+            list.add(pos);
+            
             fireTableDataChanged();
         }
 
@@ -432,7 +437,10 @@ public class ProbenEditor extends AbstractApplyEditor {
             pos.setAtlEinheiten(einheit);
             pos.setAnalyseVon(analysevon);
 
-            getList().add(pos);
+//          getList().add(pos);
+            List<AtlAnalyseposition> list = (List<AtlAnalyseposition>) getList();
+            list.add(pos);
+
             fireTableDataChanged();
         }
 
@@ -447,13 +455,13 @@ public class ProbenEditor extends AbstractApplyEditor {
          * andernfalls false.
          */
         public boolean isParameterAlreadyThere(AtlParameter newParam) {
-            List data = getList();
+            List<AtlAnalyseposition> data = (List<AtlAnalyseposition>) getList();
             int size  = data.size();
 
             String newOrdnungsbegriff = newParam.getOrdnungsbegriff();
 
             for (int i = 0; i < size; i++) {
-                AtlAnalyseposition pos = (AtlAnalyseposition) data.get(i);
+                AtlAnalyseposition pos = data.get(i);
                 AtlParameter     param = pos.getAtlParameter();
 
                 if (param.getOrdnungsbegriff().equals(newOrdnungsbegriff)) {
@@ -471,8 +479,8 @@ public class ProbenEditor extends AbstractApplyEditor {
             return true;//probe.getAtlAnalysepositionen().remove(tmp);
         }
 
-        public Class getColumnClass(int columnIndex) {
-            Class tmp;
+        public Class<?> getColumnClass(int columnIndex) {
+            Class<?> tmp;
             switch (columnIndex) {
                 case 0:
                     tmp = AtlParameter.class;
@@ -579,7 +587,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                 doSave();
 
-                Map params = getAuftragDruckMap(probe);
+                Map<String,String> params = (Map<String,String>) getAuftragDruckMap(probe);
 
                 String basePath = SettingsManager.getInstance().getSetting(
                     "auik.probenahme.auftraege");
@@ -594,13 +602,15 @@ public class ProbenEditor extends AbstractApplyEditor {
                 
 
                 File path = new File(basePath, filename);
-                if (path == null) {
-                    frame.showErrorMessage(
-                        "Kann die Datei nicht speichern, da der Pfad nicht " +
-                        "korrekt ist.",
-                        "Pfad zum Speichern fehlt");
-                    return;
-                }
+                // TODO: Check this!
+                // (path == null) never happens
+//                if (path == null) {
+//                    frame.showErrorMessage(
+//                        "Kann die Datei nicht speichern, da der Pfad nicht " +
+//                        "korrekt ist.",
+//                        "Pfad zum Speichern fehlt");
+//                    return;
+//                }
 
                 params.put("localFile", path.getAbsolutePath());
 
@@ -663,13 +673,15 @@ public class ProbenEditor extends AbstractApplyEditor {
                 vFilename = vFilename.replace("/", "_");
 
                 File path = new File(basePath, filename);
-                if (path == null) {
-                    frame.showErrorMessage(
-                        "Kann die Datei nicht speichern, da der Pfad nicht " +
-                        "korrekt ist.",
-                        "Pfad zum Speichern fehlt");
-                    return;
-                }
+                // TODO: Check this!
+                // (path == null) never happens
+//                if (path == null) {
+//                    frame.showErrorMessage(
+//                        "Kann die Datei nicht speichern, da der Pfad nicht " +
+//                        "korrekt ist.",
+//                        "Pfad zum Speichern fehlt");
+//                    return;
+//                }
 
                 File vPath = new File(basePath, vFilename);
 
@@ -680,7 +692,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     updateRechnungsbetrag(probe);
 
-                    Map params = getBescheidDruckMap(probe);
+                    Map<String,String> params = getBescheidDruckMap(probe);
 
                     JRDataSource subdata =
                         AtlProbenahmen.getBescheidDataSource(probe);
@@ -765,7 +777,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
 
     protected JComponent buildContentArea() {
-        NumberFormat     nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+//        NumberFormat     nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         SimpleDateFormat f  = new SimpleDateFormat ("HH:mm");
 
         entnahmepunkt    = new JLabel();
@@ -820,7 +832,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         parameterTabelle.setRowHeight(20);
 
         Action aposRemoveAction = new AbstractAction("Analyseposition löschen") {
-            public void actionPerformed(ActionEvent e) {
+			private static final long serialVersionUID = -5755536713201543469L;
+			public void actionPerformed(ActionEvent e) {
                 int row = parameterTabelle.getSelectedRow();
                 if (row != -1 && parameterTabelle.getEditingRow() == -1) {
                     parameterModel.removeRow(row);
@@ -1081,8 +1094,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
 
     protected void fillForm() {
-        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
-
+//        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         this.minimumSize = new Dimension(this.getSize());
 
         this.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -1434,16 +1446,16 @@ public class ProbenEditor extends AbstractApplyEditor {
      *
      * @return die Variablen für den Probenahmeauftrag als Map.
      */
-    public Map getAuftragDruckMap(AtlProbenahmen probe) {
+    public Map<String,String> getAuftragDruckMap(AtlProbenahmen probe) {
         BasisBetreiber betr = probe.getBasisBetreiber();
         BasisStandort  std  = probe.getBasisObjekt().getBasisStandort();
         AtlProbeart    art  = probe.getAtlProbepkt().getAtlProbeart();
 
-        HashMap params = new HashMap();
+        HashMap<String,String> params = new HashMap<String,String>();
         params.put("kennnummer", probenummer.getText());
         params.put("name", betr.toString());
         params.put("art", art.getArt());
-        params.put("betriebsgrundstueck", std.toString());
+        params.put("betriebsgrundstueck", std.getFormatierteStrasse());
 
         try {
             Integer anzahl = Integer.parseInt(beteiligte.getText());
@@ -1487,13 +1499,13 @@ public class ProbenEditor extends AbstractApplyEditor {
      *
      * @return die Variablen des Geb&uuml;hrenbescheids als Map.
      */
-    public Map getBescheidDruckMap(AtlProbenahmen probe)
+    public Map<String,String> getBescheidDruckMap(AtlProbenahmen probe)
     throws IllegalArgumentException
     {
         BasisBetreiber betr = probe.getBasisBetreiber();
         BasisStandort basisStandort = probe.getBasisObjekt().getBasisStandort();
 
-        HashMap params = new HashMap();
+        HashMap<String,String> params = new HashMap<String,String>();
 
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMAN);
         nf.setMinimumFractionDigits(2);
@@ -1622,13 +1634,13 @@ public class ProbenEditor extends AbstractApplyEditor {
     public double getAnalysekosten(AtlProbenahmen probe)
     throws IllegalArgumentException
     {
-        List sorted  = AtlProbenahmen.sortAnalysepositionen(probe);
-        Map  gruppen = new HashMap();
+        List<AtlAnalyseposition> sorted = (List<AtlAnalyseposition>) AtlProbenahmen.sortAnalysepositionen(probe);
+        HashMap<Integer,List<AtlParameter>> gruppen = new HashMap<Integer,List<AtlParameter>>();
         double single = 0d;
         double group  = 0d;
 
         for (int i = 0; i < sorted.size(); i++) {
-            AtlAnalyseposition  pos    = (AtlAnalyseposition) sorted.get(i);
+            AtlAnalyseposition  pos    = sorted.get(i);
             AtlParameter        para   = pos.getAtlParameter();
             AtlParameterGruppen gruppe = para.getAtlParameterGruppe();
 
@@ -1639,10 +1651,10 @@ public class ProbenEditor extends AbstractApplyEditor {
                 Integer id = gruppe.getId();
 
                 if (gruppen.containsKey(id)) {
-                    ((List) gruppen.get(id)).add(para);
+                    gruppen.get(id).add(para);
                 }
                 else {
-                    List neu = new ArrayList();
+                    List<AtlParameter> neu = new ArrayList<AtlParameter>();
                     neu.add(para);
 
                     gruppen.put(id, neu);
@@ -1655,12 +1667,12 @@ public class ProbenEditor extends AbstractApplyEditor {
             return single;
         }
 
-        Set      keys = gruppen.keySet();
-        Iterator iter = keys.iterator();
+        Set<Integer>      keys = gruppen.keySet();
+        Iterator<Integer> iter = keys.iterator();
 
         while (iter.hasNext()) {
             Integer id = (Integer) iter.next();
-            group     += getGruppierteAnalysekosten(id, (List) gruppen.get(id));
+            group     += getGruppierteAnalysekosten(id, gruppen.get(id));
         }
 
         return single + group;
@@ -1683,7 +1695,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      *
      * @throws IllegalArgumentException
      */
-    public double getGruppierteAnalysekosten(int gruppe, List params)
+    public double getGruppierteAnalysekosten(int gruppe, List<AtlParameter>	params)
     throws IllegalArgumentException
     {
         double preis = 0d;
@@ -1702,7 +1714,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             int parameter = params.size();
 
             for (int i = 0; i < parameter; i++) {
-                AtlParameter p = (AtlParameter) params.get(i);
+                AtlParameter p = params.get(i);
 
                 if (p.getEinzelnBeauftragbar()) {
                     preis += p.getPreisfueranalyse();
@@ -1759,7 +1771,9 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     protected void updateRechnungsdatum(AtlProbenahmen probe) {
         Date now   = new Date();
-        Date datum = DateUtils.getDateOfBill(now);
+        // TODO: Check this!
+        // This variable was not used, but should it really not?
+//        Date datum = DateUtils.getDateOfBill(now);
 
         probe.setBescheid(now);
 
@@ -1785,8 +1799,10 @@ public class ProbenEditor extends AbstractApplyEditor {
 
 }
 
-    class ParameterChooser extends OkCancelApplyDialog {
-    private JTable ergebnisTabelle;
+class ParameterChooser extends OkCancelApplyDialog {
+	private static final long serialVersionUID = -5057778595979307787L;
+
+	private JTable ergebnisTabelle;
 
     private ParameterAuswahlModel parameterAuswahlModel;
     private AtlParameter chosenParameter = null;
@@ -1810,7 +1826,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     public Action getSecondButtonAction() {
         return new AbstractAction("Alle Parameter zeigen") {
-            public void actionPerformed(ActionEvent e) {
+			private static final long serialVersionUID = 5342325510907705899L;
+			public void actionPerformed(ActionEvent e) {
                 doApply();
             }
         };
@@ -1818,7 +1835,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     public Action getThirdButtonAction() {
         return new AbstractAction("Abbrechen") {
-            public void actionPerformed(ActionEvent e) {
+			private static final long serialVersionUID = -5702077878210981297L;
+			public void actionPerformed(ActionEvent e) {
                 doCancel();
             }
         };
@@ -1888,7 +1906,8 @@ public class ProbenEditor extends AbstractApplyEditor {
             ergebnisTabelle = new SelectTable();
 
             Action submitAction = new AbstractAction("Auswählen") {
-                public void actionPerformed(ActionEvent e) {
+				private static final long serialVersionUID = -6645922378885851686L;
+				public void actionPerformed(ActionEvent e) {
                     doOk();
                 }
             };
@@ -1905,8 +1924,10 @@ public class ProbenEditor extends AbstractApplyEditor {
             ergebnisTabelle.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                        Point origin = e.getPoint();
-                        int row = ergebnisTabelle.rowAtPoint(origin);
+                        // TODO: Check this:
+                        // Nothing happens here
+//                        Point origin = e.getPoint();
+//                        int row = ergebnisTabelle.rowAtPoint(origin);
                     }
                 }
             });
@@ -1919,8 +1940,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 }
 
 class ParameterAuswahlModel extends ListTableModel {
-
-    protected boolean[] selection;
+	private static final long serialVersionUID = -502436804713980533L;
+	protected boolean[] selection;
 
     public ParameterAuswahlModel() {
         super(new String[] { "wählen", "Parameter" }, false);
@@ -1935,8 +1956,8 @@ class ParameterAuswahlModel extends ListTableModel {
 
 
     public AtlParameter[] getSelectedParameter() {
-        List params = new ArrayList();
-        List data   = getList();
+        List<AtlParameter> params = new ArrayList<AtlParameter>();
+        List<AtlParameter> data   = (List<AtlParameter>) getList();
         int  rows   = getRowCount();
 
         for (int idx = 0; idx < rows; idx++) {
@@ -1996,7 +2017,7 @@ class ParameterAuswahlModel extends ListTableModel {
         }
     }
 
-    public Class getColumnClass(int columnIndex) {
+    public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex == 0) {
             return Boolean.class;
         } else {

@@ -106,7 +106,8 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.VawsModel;
  * @author David Klotz
  */
 public class VawsPanel extends JPanel {
-    private String name;
+	private static final long serialVersionUID = -6308803486523520730L;
+	private String name;
     private BasisObjektBearbeiten hauptModul;
 
     private VawsModel vawsModel;
@@ -258,7 +259,7 @@ public class VawsPanel extends JPanel {
 
     public void showReportListe() {
         betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
-        standort = hauptModul.getObjekt().getBasisStandort().toString();
+        standort = hauptModul.getObjekt().getBasisStandort().getFormatierteStrasse();
         art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
         objektid = hauptModul.getObjekt().getObjektid();
 
@@ -276,7 +277,7 @@ public class VawsPanel extends JPanel {
         if (row != -1) {
             VawsFachdaten anlage = vawsModel.getDatenSatz(row);
             betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
-            standort = hauptModul.getObjekt().getBasisStandort().toString();
+            standort = hauptModul.getObjekt().getBasisStandort().getFormatierteStrasse();
             art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
             behaelterid = anlage.getBehaelterId();
 
@@ -343,7 +344,9 @@ public class VawsPanel extends JPanel {
     private Action getVawsEditAction() {
         if (vawsEditAction == null) {
             vawsEditAction = new AbstractAction("Bearbeiten") {
-                public void actionPerformed(ActionEvent e) {
+				private static final long serialVersionUID = 4646432365839296566L;
+
+				public void actionPerformed(ActionEvent e) {
                     int row = getVawsTable().getSelectedRow();
 
                     // Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
@@ -366,7 +369,9 @@ public class VawsPanel extends JPanel {
     private Action getVawsLoeschAction() {
         if (vawsLoeschAction == null) {
             vawsLoeschAction = new AbstractAction("Löschen") {
-                public void actionPerformed(ActionEvent e) {
+				private static final long serialVersionUID = -1355761143104436343L;
+
+				public void actionPerformed(ActionEvent e) {
                     int row = getVawsTable().getSelectedRow();
 
                     // Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
@@ -389,7 +394,9 @@ public class VawsPanel extends JPanel {
     private Action getReportAnlageAction() {
         if (reportAnlageAction == null) {
             reportAnlageAction = new AbstractAction("PDF-Datenblatt generieren") {
-                public void actionPerformed(ActionEvent e) {
+				private static final long serialVersionUID = -4668237100126864516L;
+
+				public void actionPerformed(ActionEvent e) {
                     showReportAnlage();
                 }
             };

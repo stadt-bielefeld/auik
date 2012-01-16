@@ -27,7 +27,6 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -44,11 +43,14 @@ public class BasisStandort
     extends AbstractBasisStandort
     implements Serializable
 {
-    /**
+	private static final long serialVersionUID = 2774552431508434460L;
+
+	/**
      * Simple constructor of BasisStandort instances.
      */
     public BasisStandort()
     {
+    	// This is intentionally left blank.
     }
 
     /**
@@ -63,19 +65,13 @@ public class BasisStandort
     /* Add customized code below */
 
     /**
-     * Liefert einen String der Form "Strasse Nr.NrZusatz", also
-     * beispielsweise "Ravensberger Straße 77", "Apfelstraße 23b"
-     * oder "Jahnplatz 41-42".
+     * @deprecated Somebody was misusing this method...
+     * 
+     * @see {@link this.getFormatierteStrasse} for the original method. 
      */
     public String toString() {
-        String strasse = this.getStrasse();
-        String nr = "";
-        if (this.getHausnr() != null && this.getHausnrzus() != null) {
-            nr = " " + this.getHausnr() + this.getHausnrzus();
-        } else if (this.getHausnr() != null) {
-            nr = " " + this.getHausnr();
-        }
-        return strasse + nr;
+    	AUIKataster.debugOutput("If you see this message, something needs to be fixed!");
+        return super.toString();
     }
     
     /**
@@ -123,8 +119,8 @@ public class BasisStandort
      * @return Den gesuchten Standort oder <code>null</code>,
      * falls kein Standort mit dieser ID existiert.
      */
-    public static List getStandortList(Integer id) {
-		List standort;
+    public static List<?> getStandortList(Integer id) {
+		List<?> standort;
 		try {
 			Session session = HibernateSessionFactory.currentSession();
 			standort = session.createQuery(
@@ -150,12 +146,12 @@ public class BasisStandort
      * @param hausnr Die Hausnummer (oder -1, falls nicht nach einer bestimmten Hausnummer gesucht werden soll)
      * @return Eine Liste mit allen gefundenen Standorten.
      */
-    public static List findStandorte(String strasse, int hausnr) {
+    public static List<?> findStandorte(String strasse, int hausnr) {
         String strasse2 = strasse.toLowerCase().trim() + "%";
         Integer hausNummer = new Integer(hausnr);
 
         AUIKataster.debugOutput("Suche nach '" + strasse2 + "' Nr. " + hausnr, "BasisStandort.findStandorte");
-        List standorte;
+        List<?> standorte;
         try {
             Session session = HibernateSessionFactory.currentSession();
             if (hausnr != -1) {
@@ -243,7 +239,7 @@ public class BasisStandort
      * @throws HibernateException Wenn ein Datenbank-Fehler auftritt
      */
     private static String[] getEntwGebiete(Session session) throws HibernateException {
-        List list = null;
+        List<?> list = null;
         String suchString = "SELECT DISTINCT sta.entgebid FROM de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort sta";
         Query query = session.createQuery(suchString);
         query.setCacheable(true);

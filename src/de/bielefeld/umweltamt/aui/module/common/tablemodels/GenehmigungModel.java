@@ -24,7 +24,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -32,7 +31,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class GenehmigungModel extends ListTableModel {
-    public GenehmigungModel() {
+	private static final long serialVersionUID = -4532120849988042653L;
+
+	public GenehmigungModel() {
         super(new String[]{
                 "Betreiber",
                 "Standort",
@@ -57,7 +58,7 @@ public class GenehmigungModel extends ListTableModel {
             tmp = fd.getBasisObjekt().getBasisBetreiber().toString();
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBasisStandort().toString();
+            tmp = fd.getBasisObjekt().getBasisStandort().getFormatierteStrasse();
             break;
         case 2:
             tmp = fd.getErstellungsDatum();
@@ -110,5 +111,6 @@ public class GenehmigungModel extends ListTableModel {
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
     public void updateList() {
+    	// This is intentionally left blank.
     }
 }
