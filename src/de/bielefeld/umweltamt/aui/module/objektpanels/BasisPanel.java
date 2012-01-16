@@ -701,8 +701,7 @@ public class BasisPanel  extends JPanel {
         return editButtonListener;
     }
 
-    // TODO: Check this:
-    // This method was private and never used locally 
+    // TODO: Check this: This method was private and never used locally 
 //    private ActionListener getGotoButtonListener() {
 //        if (gotoButtonListener == null) {
 //            gotoButtonListener = new ActionListener() {

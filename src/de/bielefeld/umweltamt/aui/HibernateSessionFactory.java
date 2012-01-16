@@ -49,7 +49,7 @@ public class HibernateSessionFactory {
         System.getProperty("auik.hibernate.config", "/hibernate.cfg.xml");
 
     /** Holds a single instance of Session */
-    private static final ThreadLocal threadLocal = new ThreadLocal();
+    private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
 
     /** The single instance of hibernate configuration */
     private static /*final*/ Configuration cfg = new Configuration();
@@ -80,13 +80,14 @@ public class HibernateSessionFactory {
      *  @throws HibernateException
      */
     public static Session currentSession() throws HibernateException {
-        Session session = (Session) threadLocal.get();
+        Session session = threadLocal.get();
 
         if (session == null) {
             if (sessionFactory == null) {
                 try {
                     cfg.setProperty("hibernate.connection.username", DB_USER);
                     cfg.setProperty("hibernate.connection.password", DB_PASS);
+                    // TODO: Why do we still have informix stuff in here?
                     cfg.setProperty("hibernate.connection.url", "jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi");
                     cfg.configure(CONFIG_FILE_LOCATION);
                     sessionFactory = cfg.buildSessionFactory();
@@ -109,7 +110,7 @@ public class HibernateSessionFactory {
      *
      */
     public static void closeSession() {//throws HibernateException {
-        Session session = (Session) threadLocal.get();
+        Session session = threadLocal.get();
         threadLocal.set(null);
 
         if (session != null) {
@@ -184,9 +185,8 @@ public class HibernateSessionFactory {
 
         try {
             Session session = currentSession();
-            // TODO: Vielleicht etwas allgemeineren Test finden?
-            List test = session.createSQLQuery(
-                    "select strasse from auik.basis_strassen where id=5"
+            List<?> test = session.createSQLQuery(
+                    "select count(*) from auik.basis_strassen"
             ).list();
 
             tmp = true;
@@ -209,6 +209,7 @@ public class HibernateSessionFactory {
      * Default constructor.
      */
     private HibernateSessionFactory() {
+    	// This place is intentionally left blank.
     }
 
 }

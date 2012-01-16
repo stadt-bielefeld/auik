@@ -216,8 +216,8 @@ public class AUIKataster {
      *
      * @return die Autoren des AUIK als Array.
      */
-    public static final String[] getAuthors() {
-        ArrayList authors = new ArrayList();
+    private static final String[] getAuthors() {
+        ArrayList<String> authors = new ArrayList<String>();
         InputStream    is = null;
         BufferedReader in = null;
 

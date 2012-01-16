@@ -602,8 +602,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 
 
                 File path = new File(basePath, filename);
-                // TODO: Check this!
-                // (path == null) never happens
+                // TODO: Check this: (path == null) never happens
 //                if (path == null) {
 //                    frame.showErrorMessage(
 //                        "Kann die Datei nicht speichern, da der Pfad nicht " +
@@ -673,8 +672,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 vFilename = vFilename.replace("/", "_");
 
                 File path = new File(basePath, filename);
-                // TODO: Check this!
-                // (path == null) never happens
+                // TODO: Check this: (path == null) never happens
 //                if (path == null) {
 //                    frame.showErrorMessage(
 //                        "Kann die Datei nicht speichern, da der Pfad nicht " +
@@ -1771,8 +1769,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     protected void updateRechnungsdatum(AtlProbenahmen probe) {
         Date now   = new Date();
-        // TODO: Check this!
-        // This variable was not used, but should it really not?
+        // TODO: Check this: This variable was not used, but should it really not?
 //        Date datum = DateUtils.getDateOfBill(now);
 
         probe.setBescheid(now);
@@ -1924,8 +1921,7 @@ class ParameterChooser extends OkCancelApplyDialog {
             ergebnisTabelle.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                        // TODO: Check this:
-                        // Nothing happens here
+                        // TODO: Check this: Nothing happens here
 //                        Point origin = e.getPoint();
 //                        int row = ergebnisTabelle.rowAtPoint(origin);
                     }

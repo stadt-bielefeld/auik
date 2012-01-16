@@ -76,11 +76,11 @@ public class ModulManager {
     private class ModulKategorie {
         private String name;
         private JButtonBar buttonBar;
-        private List module;
+        private List<Modul> module;
 
         public ModulKategorie(String name) {
             this.name = name;
-            this.module = new ArrayList();
+            this.module = new ArrayList<Modul>();
             this.buttonBar = new JButtonBar(JButtonBar.VERTICAL);
 
             buttonBar.setBorder(Borders.EMPTY_BORDER);
@@ -95,9 +95,10 @@ public class ModulManager {
             return buttonBar;
         }
 
-        public List getModule() {
-            return module;
-        }
+        // This was not used.
+//        public List<Modul> getModule() {
+//            return module;
+//        }
 
         public Modul getFirstModul() {
             if (module.size() > 0) {
@@ -118,13 +119,13 @@ public class ModulManager {
     private HauptFrame frame;
     private SettingsManager settings;
 
-    private SortedMap categories = null;
-    private Hashtable module = null;
-    private Hashtable modulButtons = null;
+    private SortedMap<String,ModulKategorie> categories = null;
+    private Hashtable<String,Modul> module = null;
+    private Hashtable<String,JToggleButton> modulButtons = null;
 
     private String currentCategory = null;
     private String currentModul = null;
-    private List modulHistory = null;
+    private List<String> modulHistory = null;
     private int currentIndex = 0;
 
     /**
@@ -132,10 +133,10 @@ public class ModulManager {
      * @param frame Das HauptFrame
      */
     public ModulManager(HauptFrame frame, SettingsManager settings) {
-        this.categories = new TreeMap();
-        this.module = new Hashtable();
-        this.modulButtons = new Hashtable();
-        this.modulHistory = new ArrayList(15);
+        this.categories = new TreeMap<String,ModulKategorie>();
+        this.module = new Hashtable<String,Modul>();
+        this.modulButtons = new Hashtable<String,JToggleButton>();
+        this.modulHistory = new ArrayList<String>(15);
         this.frame = frame;
         this.settings = settings;
     }
@@ -252,9 +253,9 @@ public class ModulManager {
 
     private void rebuildMenu() {
         frame.getViewMenu().removeAll();
-        Iterator it = categories.keySet().iterator();
+        Iterator<String> it = categories.keySet().iterator();
         while (it.hasNext()) {
-            String title = (String) it.next();
+            String title = it.next();
             JMenuItem catItem = new JMenuItem(title);
             catItem.setActionCommand(title);
             catItem.addActionListener(new java.awt.event.ActionListener() {
@@ -273,7 +274,7 @@ public class ModulManager {
      */
     private ModulKategorie getCategory(String title) {
         if (categories.containsKey(title)){
-            return ((ModulKategorie) categories.get(title));
+            return categories.get(title);
         } else {
             return null;
         }
@@ -294,13 +295,13 @@ public class ModulManager {
      */
     private void switchModul(String identifier, boolean addToHistory) {
         // Alle vorhandenen Module durchgehen ...
-        for (Enumeration e1 = module.elements(); e1.hasMoreElements(); ) {
-            Modul m = (Modul) e1.nextElement();
+        for (Enumeration<Modul> e1 = module.elements(); e1.hasMoreElements(); ) {
+            Modul m = e1.nextElement();
 
             // ... bis wir das finden, das angezeigt werden soll
             if (m.getIdentifier().equals(identifier)) {
                 // ... den Button dieses Moduls als selektiert markieren
-                JToggleButton button = (JToggleButton) modulButtons.get(identifier);
+                JToggleButton button = modulButtons.get(identifier);
                 button.setSelected(true);
 
                 // ... die rechte Überschrift auf den Titel dieses Moduls setzen
@@ -315,7 +316,7 @@ public class ModulManager {
 
                     String lastModul = "";
                     if (modulHistory.size() > 0) {
-                        lastModul = (String) modulHistory.get(modulHistory.size()-1);
+                        lastModul = modulHistory.get(modulHistory.size()-1);
                     }
 
                     if (!lastModul.equals(currentModul)) {
@@ -333,7 +334,7 @@ public class ModulManager {
                 switchCategory(m.getCategory(), false);
             } else {    // ... bei allen anderen Modulen
                 // ... Button als nicht selektiert markieren
-                JToggleButton button = (JToggleButton) modulButtons.get(m.getIdentifier());
+                JToggleButton button = modulButtons.get(m.getIdentifier());
                 button.setSelected(false);
                 // ... Modulen mitteilen, dass sie nicht (mehr) angezeigt werden
                 m.hide();
@@ -359,7 +360,7 @@ public class ModulManager {
             if (i != 0) {
                 tmpHist += ", ";
             }
-            String mod = (String) modulHistory.get(i);
+            String mod = modulHistory.get(i);
             if (i == currentIndex) {
                 mod = ">" + mod + "<";
             }
@@ -378,7 +379,7 @@ public class ModulManager {
     public void back() {
         if (currentIndex > 0) {
             int lastIndex = currentIndex -1;
-            String lastModul = (String) modulHistory.get(lastIndex);
+            String lastModul = modulHistory.get(lastIndex);
             currentIndex = lastIndex;
             switchModul(lastModul, false);
         }
@@ -387,7 +388,7 @@ public class ModulManager {
     public void forward() {
         if (currentIndex < (modulHistory.size() - 1)) {
             int nextIndex = currentIndex + 1;
-            String nextModul = (String) modulHistory.get(nextIndex);
+            String nextModul = modulHistory.get(nextIndex);
             currentIndex = nextIndex;
             switchModul(nextModul, false);
         }

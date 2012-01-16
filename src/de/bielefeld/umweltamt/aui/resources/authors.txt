@@ -6,3 +6,4 @@ Trygve Isaacson
 David Klotz
 Karsten Lentzsch
 Ingo Weinzierl
+Conny Pearce

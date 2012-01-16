@@ -81,12 +81,12 @@ import java.awt.HeadlessException;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
-import java.awt.Toolkit;
+//import java.awt.Toolkit;
 import java.awt.Window;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
+//import java.awt.datatransfer.Clipboard;
+//import java.awt.datatransfer.DataFlavor;
+//import java.awt.datatransfer.Transferable;
+//import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -130,8 +130,8 @@ import com.jgoodies.plaf.Options;
 import com.jgoodies.uif_lite.component.Factory;
 import com.jgoodies.uif_lite.panel.SimpleInternalFrame;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
+//import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+//import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.GradientPanel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -149,7 +149,8 @@ public class HauptFrame extends JFrame {
     /** Panel-Größe, um ein Layout-Problem zu umgehen, nur in Ausnahmefällen benutzen */
     //public static final Dimension PANEL_SIZE = new Dimension(515, 320);
 
-    /** Die Farbe für Fehlermeldungen */
+	private static final long serialVersionUID = 4233252729652695263L;
+	/** Die Farbe für Fehlermeldungen */
     public static final Color ERROR_COLOR = new Color(200, 0, 0);
     /** Die Farbe für Erfolgsmeldungen */
     public static final Color SUCCESS_COLOR = new Color(0, 128, 0);
@@ -311,7 +312,9 @@ public class HauptFrame extends JFrame {
     public Action getCloseAction() {
         if (closeAction == null) {
             closeAction = new AbstractAction("Beenden", AuikUtils.getIcon(32, "exit.png")) {
-                public void actionPerformed(ActionEvent e) {
+				private static final long serialVersionUID = 2119355762465447730L;
+
+				public void actionPerformed(ActionEvent e) {
                     HauptFrame.this.close();
                 }
             };
@@ -936,7 +939,8 @@ public class HauptFrame extends JFrame {
     }
 
     private final class BenutzerDatenDialog extends JDialog {
-        private JLabel textLabel;
+		private static final long serialVersionUID = 4180635601687537049L;
+		private JLabel textLabel;
         private JTextField benutzerFeld;
         private JPasswordField passwortFeld;
         private JButton loginButton;
@@ -1078,96 +1082,97 @@ public class HauptFrame extends JFrame {
         }
     }
 
-    private void readClipboard() {
-        String tmp = null;
-        Clipboard systemClipboard;
-        systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Transferable transferData = systemClipboard.getContents(null);
-        for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
-            Object content = null;
-            try {
-                content = transferData.getTransferData(dataFlavor);
-            } catch (UnsupportedFlavorException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            if (content instanceof String) {
-
-                tmp = content.toString();
-            }
-
-                if (tmp != null){
-                    int index = tmp.indexOf("bezeichnung");
-
-                    if (index != -1)
-                    {
-                        char leer = 0;
-                        char ersetzen = '"';
-                        String tmp2 = tmp.replace(ersetzen, leer);
-
-                        int indexBez = tmp2.indexOf("bsb");
-
-                        if (indexBez == -1)
-                        {
-                            indexBez = tmp2.indexOf("entgeb");
-                        }
-
-                        String bezeichnung = tmp2.substring(tmp2.indexOf("bezeichnung")+ 13, indexBez-1 );
-
-
-
-                        AtlSielhaut sielhaut = AtlSielhaut.getSielhautByBez(bezeichnung);
-
-                        if ( sielhaut != null)
-                        {
-                            AtlProbepkt probepunkt = AtlProbepkt.getSielhautProbepunkt(sielhaut);
-                            manager.getSettingsManager().setSetting("auik.imc.edit_object", probepunkt.getBasisObjekt().getObjektid(), false);
-
-
-                            manager.switchModul("m_sielhaut1");
-
-
-                            changeStatus("Daten aus Zwischenablage ausgelesen",
-                            HauptFrame.SUCCESS_COLOR);
-                        }
-                        else
-                        {
-                            changeStatus(
-                            "Zwischenablage enthält keine verwertbaren Daten",
-                            HauptFrame.ERROR_COLOR);
-                        }
-
-
-
-
-                }
-                    else
-                    {
-                        changeStatus(
-                        "Zwischenablage enthält keine verwertbaren Daten",
-                        HauptFrame.ERROR_COLOR);
-                    }
-
-                break;
-                }
-
-
-        }
-
-        if (tmp == null)
-        {
-            changeStatus(
-            "Zwischenablage enthält keine verwertbaren Daten",
-            HauptFrame.ERROR_COLOR);
-        }
-
-
-
-    }
+    // This was never used locally.
+//    private void readClipboard() {
+//        String tmp = null;
+//        Clipboard systemClipboard;
+//        systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+//        Transferable transferData = systemClipboard.getContents(null);
+//        for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
+//            Object content = null;
+//            try {
+//                content = transferData.getTransferData(dataFlavor);
+//            } catch (UnsupportedFlavorException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//
+//            if (content instanceof String) {
+//
+//                tmp = content.toString();
+//            }
+//
+//                if (tmp != null){
+//                    int index = tmp.indexOf("bezeichnung");
+//
+//                    if (index != -1)
+//                    {
+//                        char leer = 0;
+//                        char ersetzen = '"';
+//                        String tmp2 = tmp.replace(ersetzen, leer);
+//
+//                        int indexBez = tmp2.indexOf("bsb");
+//
+//                        if (indexBez == -1)
+//                        {
+//                            indexBez = tmp2.indexOf("entgeb");
+//                        }
+//
+//                        String bezeichnung = tmp2.substring(tmp2.indexOf("bezeichnung")+ 13, indexBez-1 );
+//
+//
+//
+//                        AtlSielhaut sielhaut = AtlSielhaut.getSielhautByBez(bezeichnung);
+//
+//                        if ( sielhaut != null)
+//                        {
+//                            AtlProbepkt probepunkt = AtlProbepkt.getSielhautProbepunkt(sielhaut);
+//                            manager.getSettingsManager().setSetting("auik.imc.edit_object", probepunkt.getBasisObjekt().getObjektid(), false);
+//
+//
+//                            manager.switchModul("m_sielhaut1");
+//
+//
+//                            changeStatus("Daten aus Zwischenablage ausgelesen",
+//                            HauptFrame.SUCCESS_COLOR);
+//                        }
+//                        else
+//                        {
+//                            changeStatus(
+//                            "Zwischenablage enthält keine verwertbaren Daten",
+//                            HauptFrame.ERROR_COLOR);
+//                        }
+//
+//
+//
+//
+//                }
+//                    else
+//                    {
+//                        changeStatus(
+//                        "Zwischenablage enthält keine verwertbaren Daten",
+//                        HauptFrame.ERROR_COLOR);
+//                    }
+//
+//                break;
+//                }
+//
+//
+//        }
+//
+//        if (tmp == null)
+//        {
+//            changeStatus(
+//            "Zwischenablage enthält keine verwertbaren Daten",
+//            HauptFrame.ERROR_COLOR);
+//        }
+//
+//
+//
+//    }
 
 
 
