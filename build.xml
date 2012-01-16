@@ -8,7 +8,8 @@
     <property name="src"   location="src"/>
     <property name="reportsrc" location="reports"/>
     <property name="build" location="build"/>
-    <property name="reports" location="build/reports"/>
+    <property name="reports1" location="src/reports"/>
+    <property name="reports2" location="build/reports"/>
     <property name="dist"  location="dist"/>
     <property name="libs"  location="lib"/>
     <property name="doc"   location="doc"/>
@@ -89,7 +90,12 @@
             </src>
             <classpath refid="classpath"/>
         </jrc>
-        <copy todir="${reports}">
+        <copy todir="${reports1}">
+            <fileset dir="${reportsrc}">
+                <include name="**/*.jasper"/>
+            </fileset>
+        </copy>
+        <copy todir="${reports2}">
             <fileset dir="${reportsrc}">
                 <include name="**/*.jasper"/>
             </fileset>
