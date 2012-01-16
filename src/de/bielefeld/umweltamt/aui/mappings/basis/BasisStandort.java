@@ -77,6 +77,26 @@ public class BasisStandort
         }
         return strasse + nr;
     }
+    
+    /**
+     * Liefert die komplette Strasse, wenn vorhanden inklusive der
+     * Hausnummer und deren Zusatz.<br><br>
+     * Formatierung: &quot;&lt;Strasse&gt; &lt;HausNr&gt;&lt;HausNrzus&gt;&quot;<br><br>
+     * Beispiele: &quot;Ravensberger Straße 77&quot;, &quot;Apfelstraße 23b&quot;,
+     * &quot;Jahnplatz 41-42&quot;
+     * @return Komplette, formatierte Strasse inkl. Hausnr
+     */
+    public String getFormatierteStrasse() {
+    	String formatierteStrasse;
+    	formatierteStrasse = this.getStrasse();
+    	if (this.getHausnr() != null) {
+    		formatierteStrasse += (" " + this.getHausnr());
+    	}
+    	if (this.getHausnrzus() != null) {
+    		formatierteStrasse += this.getHausnrzus();
+    	}
+    	return formatierteStrasse;
+    }
 
     /**
      * Liefert einen Standort mit einer bestimmten ID.
