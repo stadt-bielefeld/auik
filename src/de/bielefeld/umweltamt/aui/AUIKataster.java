@@ -70,12 +70,11 @@ public class AUIKataster {
     public static final String SHORT_NAME= "AUI-Kataster";
     /** Der lange Name des Programms */
     public static final String LONG_NAME= "Anlagen- und Indirekteinleiter-Kataster";
-    /** Debug-Ausgaben */
-    public static final boolean DEBUG = true;
 
     private static HauptFrame runningFrame = null;
 
     // TODO: Stop doing the logging over AUIKataster...
+    // TODO: And then add the method in which the log was called to the output...
     /**
      * Gibt Debug-Ausgaben/Fehler auf der Konsole aus.
      * @param msg Die auszugebende Nachricht

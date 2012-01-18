@@ -49,6 +49,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -69,6 +71,7 @@ import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -78,6 +81,9 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * @author David Klotz
  */
 public class ProbepunktPanel extends JPanel {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private String name;
     private BasisObjektBearbeiten hauptModul;
 
@@ -191,7 +197,8 @@ public class ProbepunktPanel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         probepkt = AtlProbepkt.getProbepunktByObjekt(hauptModul.getObjekt());
-        AUIKataster.debugOutput("Probepunkt aus DB geholt: " + probepkt, "ProbepunktPanel.fetchFormData");
+        log.debug("(ProbepunktPanel.fetchFormData) "
+        		+ "Probepunkt aus DB geholt: " + probepkt);
 
         if (probearten == null) {
             probearten = AtlProbeart.getProbearten();
@@ -342,7 +349,8 @@ public class ProbepunktPanel extends JPanel {
 
             // Probepunkt speichern
             if (AtlProbepkt.saveProbepunkt(probepkt)) {
-                AUIKataster.debugOutput("Neuer Probepunkt "+probepkt+" gespeichert.", "BasisObjektBearbeiten.completeObjekt");
+                log.debug("(BasisObjektBearbeiten.completeObjekt) "
+                		+ "Neuer Probepunkt " + probepkt + " gespeichert.");
             }
         }
     }
@@ -437,7 +445,9 @@ public class ProbepunktPanel extends JPanel {
                         int answer = JOptionPane.showConfirmDialog(ProbepunktPanel.this, "Soll die Probenahme "+ probe.getKennummer() +" wirklich inkl. aller Analysen gelöscht werden?", "Löschen bestätigen", JOptionPane.YES_NO_OPTION);
                         if (answer == JOptionPane.YES_OPTION) {
                             probenahmenModel.removeRow(row);
-                            AUIKataster.debugOutput("Probe " + probe.getKennummer() + " wurde gelöscht!", "SchlammPanel.removeAction");
+                            log.debug("(SchlammPanel.removeAction) "
+                            		+ "Probe " + probe.getKennummer()
+                            		+ " wurde gelöscht!");
                         }
                     }
                 }
@@ -641,10 +651,10 @@ public class ProbepunktPanel extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Objekt "
+                                log.debug("(BasisBetreiberSuchen.removeAction) "
+                                		+ "Objekt "
                                         + verknuepfung.getId()
-                                        + " wurde gelöscht!",
-                                        "BasisBetreiberSuchen.removeAction");
+                                        + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(
                                         "Konnte das Objekt nicht löschen!",

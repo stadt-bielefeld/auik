@@ -82,7 +82,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * Diese Klasse verwaltet alle Programm-Einstellungen.
@@ -90,7 +93,10 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
  * @author David Klotz
  */
 public class SettingsManager {
-	private BasisStandort standort;
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
+    private BasisStandort standort;
     private Properties instanceSettings;
     private Properties appSettings;
 
@@ -170,7 +176,8 @@ public class SettingsManager {
             // Bin mir noch nicht ganz sicher, wann das hier
             // auftreten kann und ob uns das interessieren muss.
             // Die Defaults werden ja auch so benutzt...
-            AUIKataster.debugOutput("Fehler beim laden der Benutzer-Einstellungen", "SettingsManager.initAppSettings");
+            log.debug("(SettingsManager.initAppSettings) "
+            		+ "Fehler beim laden der Benutzer-Einstellungen");
             e.printStackTrace();
         }
     }
@@ -184,7 +191,8 @@ public class SettingsManager {
         } catch (IOException e) {
             // Tritt auf, wenn aus irgend einem Grund keine
             // Datei gespeichert werden kann.
-            AUIKataster.debugOutput("Konnte Einstellungen nicht speichern!", "SettingsManager.saveSettings");
+            log.debug("(SettingsManager.saveSettings) "
+            		+ "Konnte Einstellungen nicht speichern!");
             e.printStackTrace();
         }
     }

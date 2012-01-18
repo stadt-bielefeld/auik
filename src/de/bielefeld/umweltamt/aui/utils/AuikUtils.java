@@ -91,7 +91,7 @@ public class AuikUtils {
                         throw new RuntimeException("Konnte den Betrachter für " + f + " nicht starten!", e);
                     }
                 } else {
-                    AUIKataster.debugOutput("Fehler beim spawnFileProg für " + f, "AuikUtils");
+                    log.debug("Fehler beim spawnFileProg für " + f);
                 }
 //            }
 //        });
@@ -342,7 +342,8 @@ public class AuikUtils {
         try {
             formatter = new MaskFormatter(s);
         } catch (java.text.ParseException exc) {
-            AUIKataster.debugOutput("formatter is bad: " + exc.getMessage(), "AuikUtils.createFormatter");
+            log.debug("(AuikUtils.createFormatter) "
+            		+ "formatter is bad: " + exc.getMessage());
         }
         return formatter;
     }
@@ -469,7 +470,7 @@ public class AuikUtils {
         if (iconURL != null) {
             return new ImageIcon(iconURL, description);
         } else {
-            AUIKataster.debugOutput("Konnte Icon "+ iconPath +" nicht finden!", "AuikUtils.getIcon");
+            log.debug("(AuikUtils.getIcon) " + "Konnte Icon "+ iconPath +" nicht finden!");
             return null;
         }
     }

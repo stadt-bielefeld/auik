@@ -119,6 +119,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -132,6 +133,7 @@ import com.jgoodies.uif_lite.panel.SimpleInternalFrame;
 
 //import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 //import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.GradientPanel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -149,6 +151,8 @@ public class HauptFrame extends JFrame {
     /** Panel-Größe, um ein Layout-Problem zu umgehen, nur in Ausnahmefällen benutzen */
     //public static final Dimension PANEL_SIZE = new Dimension(515, 320);
 
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = 4233252729652695263L;
 	/** Die Farbe für Fehlermeldungen */
     public static final Color ERROR_COLOR = new Color(200, 0, 0);
@@ -245,7 +249,7 @@ public class HauptFrame extends JFrame {
             // Erleichert das Finden von manchen Layout-Fehlern
             //ClearLookManager.setMode(ClearLookMode.DEBUG);
         } catch (Exception e) {
-            AUIKataster.debugOutput("Konnte Look & Feel nicht ändern!", "HauptFrame.initialize");
+            log.debug("(HauptFrame.initialize) " + "Konnte Look & Feel nicht ändern!");
         }
 
         this.setJMenuBar(getHauptMenue());
@@ -506,7 +510,7 @@ public class HauptFrame extends JFrame {
         // Alle persistenten Settings speichern
         settings.saveSettings();
 
-        AUIKataster.debugOutput("Programm beendet!", "HauptFrame.close");
+        log.debug("(HauptFrame.close) " + "Programm beendet!");
         System.exit(0);
     }
 
@@ -624,7 +628,11 @@ public class HauptFrame extends JFrame {
                             + "<tr><th align='left'>Copyright:</th><td>2005 - 2011 Umweltamt Bielefeld</td></tr>"
                             + "<tr><th align='left'>Projekthomepage:</th><td><a href='http://auik.wald.intevation.org'>http://auik.wald.intevation.org</a></td></tr>"
                             + "<tr><th align='left'>Datenbank: </th><td>"+ HibernateSessionFactory.getDBUrl() +"</td></tr>"
-                            + "<tr><th align='left'>Debug-Modus: </th><td>"+ ((AUIKataster.DEBUG) ? "An" : "Aus") +"</td></tr>"
+// There is no kind of debug mode - just different levels of verbosity which is
+// Not influenced by this variable any more.
+//                            + "<tr><th align='left'>Debug-Modus: </th><td>"+ ((AUIKataster.DEBUG) ? "An" : "Aus") +"</td></tr>"
+// TODO: Maybe add log level here - but which? We can have different levels all
+// over the place...                            
                             + "<tr><th align='left'>Autoren:</th><td>" + AUIKataster.getAuthorsAsHTML() + "</td></tr>"
                             + "<tr><th align='left'>Weiterentwicklung seit 2011:</th><td>"
                             + "<table valign='top'><tr><td>Intevation GmbH</td><td><img src='" + HauptFrame.class.getResource("icons/intevation-logo-50ppi-nontrans.png") + "'></td></tr></table>"

@@ -61,6 +61,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -74,6 +75,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -87,6 +89,9 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * @author David Klotz
  */
 public class BasisBetreiberNeu extends AbstractModul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private JButton speichernButton;
 
     private JLabel handzeichenLabel;
@@ -348,14 +353,14 @@ public class BasisBetreiberNeu extends AbstractModul {
             namenFeld.requestFocus();
             String nameErr = "Der Name darf nicht leer sein!";
             frame.changeStatus(nameErr, HauptFrame.ERROR_COLOR);
-            AUIKataster.debugOutput(nameErr, "BasisBetreiberNeu.doSave");
+            log.debug("(BasisBetreiberNeu.doSave) " + nameErr);
             // Das Handzeichen darf nicht leer sein
         } else if (handzeichenNeuFeld.getText().equals("")) {
             handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
             handzeichenNeuFeld.requestFocus();
             String handzErr = "Neues Handzeichen erforderlich!";
             frame.changeStatus(handzErr, HauptFrame.ERROR_COLOR);
-            AUIKataster.debugOutput(handzErr, "BasisBetreiberNeu.doSave");
+            log.debug("(BasisBetreiberNeu.doSave) " + handzErr);
         } else {
             // Wenn die Eingaben korrekt sind
 
@@ -523,7 +528,8 @@ public class BasisBetreiberNeu extends AbstractModul {
                 }
             } else {
                 frame.changeStatus("Konnte Betreiber nicht speichern!", Color.RED);
-                AUIKataster.debugOutput("Konnte nicht speichern", "BasisBetreiberNeu.doSave");
+                log.debug("(BasisBetreiberNeu.doSave) "
+                		+ "Konnte nicht speichern");
             }
         }
     }
@@ -580,7 +586,8 @@ public class BasisBetreiberNeu extends AbstractModul {
 
                 setAllEnabled(true);
                 //frame.clearStatus();
-                AUIKataster.debugOutput("Formular zurückgesetzt", getIdentifier()+".clearForm");
+                log.debug("(" + getIdentifier()+".clearForm) "
+                		+ "Formular zurückgesetzt");
             }
         };
         worker.start();
@@ -627,7 +634,8 @@ public class BasisBetreiberNeu extends AbstractModul {
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == speichernButton) {
-                AUIKataster.debugOutput("Speichern gedrückt!", BasisBetreiberNeu.this.getIdentifier());
+                log.debug("(" + BasisBetreiberNeu.this.getIdentifier() + ") "
+                		+ "Speichern gedrückt!");
                 doSave();
             } /*else if (e.getSource() == strassenBox) {
                 // Wenn wir eine Straße auswählen, wird die PLZ upgedatet

@@ -61,6 +61,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -76,6 +77,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
@@ -88,6 +90,9 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * @author David Klotz
  */
 public class BasisStandortNeu extends AbstractModul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private JButton speichernButton;
 
     private JFormattedTextField hausnrEditFeld;
@@ -310,7 +315,7 @@ public class BasisStandortNeu extends AbstractModul {
         if (handzeichenNeuFeld.getText().equals("")) {
             handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
             handzeichenNeuFeld.requestFocus();
-            AUIKataster.debugOutput("Neues Handzeichen erforderlich!", "doSave");
+            log.debug("(doSave) " + "Neues Handzeichen erforderlich!");
         } else {
             // Wenn die Eingaben korrekt sind
 
@@ -412,7 +417,7 @@ public class BasisStandortNeu extends AbstractModul {
                 }
             } else {
                 frame.changeStatus("Konnte Standort nicht speichern!", Color.RED);
-                AUIKataster.debugOutput("Konnte nicht speichern", "BasisStandortNeu.doSave");
+                log.debug("(BasisStandortNeu.doSave) " + "Konnte nicht speichern");
             }
         }
     }
@@ -481,7 +486,7 @@ public class BasisStandortNeu extends AbstractModul {
         };
         worker.start();
 
-        AUIKataster.debugOutput("Formular zurückgesetzt", this.getIdentifier()+".clearForm");
+        log.debug("(" + this.getIdentifier()+".clearForm )" + "Formular zurückgesetzt");
     }
 
     /**
@@ -514,7 +519,8 @@ public class BasisStandortNeu extends AbstractModul {
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == speichernButton) {
-                AUIKataster.debugOutput("Speichern gedrückt!", BasisStandortNeu.this.getIdentifier());
+                log.debug("(" + BasisStandortNeu.this.getIdentifier() + ") "
+                		+ "Speichern gedrückt!");
                 doSave();
             } else if (e.getSource() == strassenBox) {
                 // Wenn wir eine Straße auswählen, wird die PLZ upgedatet

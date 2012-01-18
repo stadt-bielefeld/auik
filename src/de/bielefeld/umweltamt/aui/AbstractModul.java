@@ -27,6 +27,9 @@ package de.bielefeld.umweltamt.aui;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.MD5Password;
 
@@ -41,6 +44,9 @@ import de.bielefeld.umweltamt.aui.utils.MD5Password;
  * @author David Klotz
  */
 public abstract class AbstractModul implements Modul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private String id;
     protected JPanel panel = null;
     protected Icon icon = null;
@@ -97,7 +103,8 @@ public abstract class AbstractModul implements Modul {
                     + getCategory()
                     + System.currentTimeMillis()
             );
-            AUIKataster.debugOutput("ID von " + getName() + ": '" + id + "'", "AbstractModul.getIdentifier()");
+            log.debug("(AbstractModul.getIdentifier()) "
+            		+ "ID von " + getName() + ": '" + id + "'");
         }
         return id;
     }
@@ -107,7 +114,7 @@ public abstract class AbstractModul implements Modul {
      * Wenn diese Methode überschrieben wird, unbedingt super.show() aufrufen.
      */
     public void show() {
-        AUIKataster.debugOutput("shown", this.getIdentifier());
+        log.debug("(" + this.getIdentifier() + ") " + "shown");
         shown = true;
     }
 
@@ -116,7 +123,7 @@ public abstract class AbstractModul implements Modul {
      * Wenn diese Methode überschrieben wird, unbedingt super.hide() aufrufen.
      */
     public void hide() {
-        AUIKataster.debugOutput("hidden", this.getIdentifier());
+        log.debug("(" + this.getIdentifier() + ") " + "hidden");
         shown = false;
     }
 

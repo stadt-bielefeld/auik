@@ -76,6 +76,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -90,6 +92,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisBetreiberModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.NamedObject;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -102,6 +105,9 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  * @author David Klotz
  */
 public class BasisBetreiberSuchen extends AbstractModul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private String iconPath = "filefind32.png";
 
     private JComboBox suchBox;
@@ -283,7 +289,9 @@ public class BasisBetreiberSuchen extends AbstractModul {
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
             BasisBetreiber betr = betreiberModel.getRow(selectedRow);
-            AUIKataster.debugOutput("Betreiber " + betr.getBetrname() + " (ID" + betr.getBetreiberid() + ") angewählt.", "BasisBetreiberSuchen.updateObjekte");
+            log.debug("(BasisBetreiberSuchen.updateObjekte) "
+            		+ "Betreiber " + betr.getBetrname() + " (ID"
+            		+ betr.getBetreiberid() + ") angewählt.");
             searchObjekteByBetreiber(betr);
         }
     }
@@ -384,7 +392,9 @@ public class BasisBetreiberSuchen extends AbstractModul {
                             if (answer == JOptionPane.YES_OPTION) {
                                 if (betreiberModel.removeRow(row)) {
                                     frame.changeStatus("Betreiber gelöscht.", HauptFrame.SUCCESS_COLOR);
-                                    AUIKataster.debugOutput("Betreiber " + betr.getBetreiberid() + " wurde gelöscht!", "BasisBetreiberSuchen.removeAction");
+                                    log.debug("(BasisBetreiberSuchen.removeAction) "
+                                    		+ "Betreiber " + betr.getBetreiberid()
+                                    		+ " wurde gelöscht!");
                                 } else {
                                     frame.changeStatus("Konnte den Betreiber nicht löschen!", HauptFrame.ERROR_COLOR);
                                 }
@@ -457,7 +467,9 @@ public class BasisBetreiberSuchen extends AbstractModul {
                         if (answer == JOptionPane.YES_OPTION) {
                             if (objektModel.removeRow(row)) {
                                 frame.changeStatus("Objekt gelöscht.", HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Objekt " + objekt.getObjektid() + " wurde gelöscht!", "BasisBetreiberSuchen.removeAction");
+                                log.debug("(BasisBetreiberSuchen.removeAction) "
+                                		+ "Objekt " + objekt.getObjektid()
+                                		+ " wurde gelöscht!");
                             } else {
                                 frame.changeStatus("Konnte das Objekt nicht löschen!", HauptFrame.ERROR_COLOR);
                             }
@@ -546,7 +558,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                         int row = getBetreiberTabelle().rowAtPoint(origin);
 
                         BasisBetreiber betr = betreiberModel.getRow(row);
-                        AUIKataster.debugOutput("Doppelklick auf Zeile " + row, "BasisBetreiberSuchen");
+                        log.debug("Doppelklick auf Zeile " + row);
                         editBetreiber(betr);
                     }
                 }

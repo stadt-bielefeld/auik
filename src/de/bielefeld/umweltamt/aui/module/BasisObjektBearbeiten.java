@@ -514,7 +514,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getHeaderLabel().setForeground(Color.RED);
                     getHeaderLabel().setText("Neues Objekt");
                 } else {
-                    AUIKataster.debugOutput("Bearbeite Objekt: " + objekt, "BasisObjektBearbeiten.fillForm");
+                    log.debug("(BasisObjektBearbeiten.fillForm) "
+                    		+ "Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
                     getHeaderLabel().setText(objekt.getBasisStandort()+"; "+objekt.getBasisBetreiber()+"; "+objekt.getBasisObjektarten().getObjektart());
                 }
@@ -658,7 +659,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     }
 
     private void clearAll() {
-        AUIKataster.debugOutput("Leere alle Felder", "BasisObjektBearbeiten.clearAll");
+        log.debug("(BasisObjektBearbeiten.clearAll) " + "Leere alle Felder");
 
         getBasisTab().clearForm();
 

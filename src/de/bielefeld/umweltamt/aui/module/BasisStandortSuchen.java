@@ -113,6 +113,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 
+import org.apache.log4j.Logger;
 import org.eclipse.birt.report.engine.api.EngineException;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -131,6 +132,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandortModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.BasicEntryField;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -142,6 +144,9 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  * @author David Klotz
  */
 public class BasisStandortSuchen extends AbstractModul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private JTextField strassenFeld;
     private JTextField hausnrFeld;
     private JButton submitButton;
@@ -370,7 +375,8 @@ public class BasisStandortSuchen extends AbstractModul {
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
             BasisStandort standort = standortModel.getRow(selectedRow);
-            AUIKataster.debugOutput("Standort " + standort + " angewählt.", "BasisStandortSuchen.updateObjekte");
+            log.debug("(BasisStandortSuchen.updateObjekte) "
+            		+ "Standort " + standort + " angewählt.");
             searchObjekteByStandort(standort);
         }
     }
@@ -523,8 +529,8 @@ public class BasisStandortSuchen extends AbstractModul {
 
 
 
-    AUIKataster
-    .debugOutput(adresse +" mit ID: "+ standortID + " ausgewaehlt", "BasisStandortSuchen.showReportListe");
+    log.debug("(BasisStandortSuchen.showReportListe) "
+    		+ adresse + " mit ID: " + standortID + " ausgewaehlt");
 
     ReportManager.getInstance().startReportWorker("VAwS-StandortListe",adresse, standortID,   reportStandortListeButton);
     //ReportManager.getInstance().startReportWorker("Suev-Kan", standortID, reportStandortListeButton);
@@ -647,10 +653,8 @@ public class BasisStandortSuchen extends AbstractModul {
                         int selectedRow = lsm.getMinSelectionIndex();
                         BasisStandort standort = standortModel
                                 .getRow(selectedRow);
-                        AUIKataster
-                                .debugOutput("Standort " + standort
-                                        + " angewählt.",
-                                        "BasisStandortSuchen.updateObjekte");
+                        log.debug("(BasisStandortSuchen.updateObjekte) "
+                        		+ "Standort " + standort + " angewählt.");
                         searchObjekteByStandort(standort, "360.33", 32);
                     }
                 }
@@ -672,10 +676,8 @@ public class BasisStandortSuchen extends AbstractModul {
                         int selectedRow = lsm.getMinSelectionIndex();
                         BasisStandort standort = standortModel
                                 .getRow(selectedRow);
-                        AUIKataster
-                                .debugOutput("Standort " + standort
-                                        + " angewählt.",
-                                        "BasisStandortSuchen.updateObjekte");
+                        log.debug("(BasisStandortSuchen.updateObjekte) "
+                        		+ "Standort " + standort + " angewählt.");
                         searchObjekteByStandort(standort, "360.34", 32);
                     }
                 }
@@ -697,10 +699,8 @@ public class BasisStandortSuchen extends AbstractModul {
                         int selectedRow = lsm.getMinSelectionIndex();
                         BasisStandort standort = standortModel
                                 .getRow(selectedRow);
-                        AUIKataster
-                                .debugOutput("Standort " + standort
-                                        + " angewählt.",
-                                        "BasisStandortSuchen.updateObjekte");
+                        log.debug("(BasisStandortSuchen.updateObjekte) "
+                        		+ "Standort " + standort + " angewählt.");
                         searchObjekteByStandort(standort, 32);
                     }
                 }
@@ -904,7 +904,9 @@ public class BasisStandortSuchen extends AbstractModul {
                         if (answer == JOptionPane.YES_OPTION) {
                             if (objektModel.removeRow(row)) {
                                 frame.changeStatus("Objekt gelöscht.", HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Objekt " + objekt.getObjektid() + " wurde gelöscht!", "BasisBetreiberSuchen.removeAction");
+                                log.debug("(BasisBetreiberSuchen.removeAction) "
+                                		+ "Objekt " + objekt.getObjektid()
+                                		+ " wurde gelöscht!");
                             } else {
                                 frame.changeStatus("Konnte das Objekt nicht löschen!", HauptFrame.ERROR_COLOR);
                             }

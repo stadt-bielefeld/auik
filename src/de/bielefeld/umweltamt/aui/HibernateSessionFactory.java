@@ -23,9 +23,12 @@ package de.bielefeld.umweltamt.aui;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
+
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * Configures and provides access to Hibernate sessions, tied to the
@@ -34,6 +37,9 @@ import org.hibernate.cfg.Configuration;
  * @see <a href="http://hibernate.org/42.html">hibernate.org/42.html</a>
  */
 public class HibernateSessionFactory {
+
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     /**
      * Location of hibernate.cfg.xml file.
@@ -99,7 +105,7 @@ public class HibernateSessionFactory {
             }
             session = sessionFactory.openSession();
             threadLocal.set(session);
-            AUIKataster.debugOutput("Neue Session begonnen!", "HibernateSessionFactory");
+            log.debug("Neue Session begonnen!");
         }
 
         return session;
@@ -116,7 +122,7 @@ public class HibernateSessionFactory {
         if (session != null) {
             try {
                 session.close();
-                AUIKataster.debugOutput("Session geschlossen!", "HibernateSessionFactory");
+                log.debug("Session geschlossen!");
             } catch (HibernateException e) {
                 AUIKataster.handleDBException(e, "HibernateSessionFactory.closeSession", false);
             }
@@ -190,7 +196,7 @@ public class HibernateSessionFactory {
             ).list();
 
             tmp = true;
-            AUIKataster.debugOutput(test.toString(), "checkCredentials");
+            log.debug("(checkCredentials) " + test.toString());
         } catch (HibernateException e) {
             if (e.getClass().equals(org.hibernate.exception.JDBCConnectionException.class)) {
                 tmp = false;

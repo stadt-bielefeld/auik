@@ -337,9 +337,7 @@ public class AnalyseImport extends AbstractModul {
                         "Ungültige Zeilen im Analyse-Import");
                 }
 
-                AUIKataster.debugOutput(
-                    count + " Zeilen eingelesen.",
-                    getClass().getName());
+                log.debug(count + " Zeilen eingelesen.");
 
                 fireTableDataChanged();
 
@@ -410,9 +408,8 @@ public class AnalyseImport extends AbstractModul {
             try {
                 toImport = f;
 
-                AUIKataster.debugOutput(
-                    "Beginne Analyseergebnisse aus '" + name + "' zu lesen.",
-                    getClass().getName());
+                log.debug(
+                    "Beginne Analyseergebnisse aus '" + name + "' zu lesen.");
 
                 updateList();
                 List data = getList();
@@ -690,9 +687,7 @@ public class AnalyseImport extends AbstractModul {
      * letzlich die Daten auswertet und einer Probenahme zuordnet.
      */
     protected void doSave() {
-        AUIKataster.debugOutput(
-            "Speichere die importieren Daten.",
-            getClass().getName());
+        log.debug("Speichere die importieren Daten.");
 
         List data = importer.getSelectedRows();
         int  size = data.size();

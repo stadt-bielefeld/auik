@@ -44,6 +44,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
@@ -55,6 +57,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -64,6 +67,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class SuevPanel extends JPanel {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private String name;
     private BasisObjektBearbeiten hauptModul;
 
@@ -150,8 +156,7 @@ public class SuevPanel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = AnhSuevFachdaten.getSuevByObjekt(hauptModul.getObjekt());
-        AUIKataster.debugOutput("SuevKan-Verfahren aus DB geholt: " + fachdaten, "SuevPanel.fetchFormData");
-
+        log.debug("(SuevPanel.fetchFormData) " + "SuevKan-Verfahren aus DB geholt: " + fachdaten);
     }
 
 
@@ -346,12 +351,13 @@ public class SuevPanel extends JPanel {
 
         success = AnhSuevFachdaten.saveFachdaten(fachdaten);
         if (success) {
-            AUIKataster.debugOutput("SuevKan Verfahren " + fachdaten.getObjektid() + " gespeichert.",
-            "SuevFachdaten.saveFachdaten");
+            log.debug("(SuevFachdaten.saveFachdaten) "
+            		+ "SuevKan Verfahren " + fachdaten.getObjektid()
+            		+ " gespeichert.");
         } else {
-            AUIKataster.debugOutput("SuevKan Verfahren " + fachdaten
-                    + " konnte nicht gespeichert werden!",
-            "SuevFachdaten.saveFachdaten");
+            log.debug("(SuevFachdaten.saveFachdaten) "
+            		+ "SuevKan Verfahren " + fachdaten
+                    + " konnte nicht gespeichert werden!");
         }
         return success;
     }
@@ -365,7 +371,8 @@ public class SuevPanel extends JPanel {
 
             // SuevKan speichern
             AnhSuevFachdaten.saveFachdaten(fachdaten);
-            AUIKataster.debugOutput("Neues SuevKan Verfahren "+fachdaten+" gespeichert.", "BasisObjektBearbeiten.completeObjekt");
+            log.debug("(BasisObjektBearbeiten.completeObjekt) "
+            		+ "Neues SuevKan Verfahren "+fachdaten+" gespeichert.");
         }
     }
 
@@ -590,10 +597,10 @@ private JTable getObjektverknuepungTabelle() {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Objekt "
+                                log.debug("(BasisBetreiberSuchen.removeAction) "
+                                		+ "Objekt "
                                         + verknuepfung.getId()
-                                        + " wurde gelöscht!",
-                                        "BasisBetreiberSuchen.removeAction");
+                                        + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(
                                         "Konnte das Objekt nicht löschen!",
