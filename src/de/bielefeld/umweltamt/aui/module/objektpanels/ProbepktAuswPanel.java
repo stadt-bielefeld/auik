@@ -65,6 +65,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import org.apache.log4j.Logger;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Minute;
@@ -88,6 +89,7 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 
 
 
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -101,6 +103,8 @@ import de.bielefeld.umweltamt.aui.utils.charts.Charts;
  */
 public class ProbepktAuswPanel extends JPanel {
 
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     private JDateChooser vonDateChooser;
     private JDateChooser bisDateChooser;
@@ -520,11 +524,14 @@ public class ProbepktAuswPanel extends JPanel {
                 }
 
                 if (doIt) {
-                    AUIKataster.debugOutput("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
+                    log.debug("Speichere nach '" + exportDatei.getName()
+                    		+ "' (Ext: '" + ext + "') in '"
+                    		+ exportDatei.getParent() + "' !");
                     if (AuikUtils.exportTableDataToCVS(exportTable, exportDatei)) {
                         owner.showInfoMessage("Speichern der CSV-Datei erfolgreich!", "Speichern erfolgreich");
                     } else {
-                        AUIKataster.debugOutput("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+                        log.debug("Beim Speichern der Datei '" + exportDatei
+                        		+ "' trat ein Fehler auf!");
                         owner.showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
                     }
                 }
@@ -564,7 +571,7 @@ public class ProbepktAuswPanel extends JPanel {
                 try {
                     chartPanel.doSaveAs();
                 } catch (IOException e) {
-                    AUIKataster.debugOutput("Konnte Datei nicht speichern!");
+                    log.debug("Konnte Datei nicht speichern!");
                 }
             } else if (tabbedPane.getSelectedIndex() == 1) {
                 saveTabelle();

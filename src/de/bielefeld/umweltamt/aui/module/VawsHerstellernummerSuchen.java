@@ -38,6 +38,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -46,6 +48,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.HerstellNrSuchenModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -53,6 +56,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Sebastian Geller
  */
 public class VawsHerstellernummerSuchen extends AbstractQueryModul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     /** Das obere Panel mit den Such-Optionen */
     private JPanel queryPanel;
     private String iconPath = "filefind32.png";  //Das Icon für Suchen
@@ -82,18 +88,15 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
     public void SuchStart()
     {
         String herstellnr = herstellFeld.getText();
-        AUIKataster.debugOutput(
-                "(VawsHerstellernummerSuchen):" + " Suche nach Herstellnummer " + herstellnr
-
-        );
+        log.debug("(VawsHerstellernummerSuchen):"
+        		+ " Suche nach Herstellnummer " + herstellnr);
         ((HerstellNrSuchenModel)getTableModel()).setList(
                 VawsFachdaten.findherstellnr(herstellnr));// Aufruf der Suchfunktion. Startet eine Query in der Datenbank
         ((HerstellNrSuchenModel)getTableModel()).fireTableDataChanged();
         frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige über Anzahl der gefundenen Objekte
-        AUIKataster.debugOutput(
-                "(VawsHerstellernummerSuchen): " + getTableModel().getRowCount() + " Objekt(e) mit Herstellnummer "+ herstellnr + " gefunden"
-
-        );
+        log.debug("(VawsHerstellernummerSuchen): "
+        		+ getTableModel().getRowCount()
+        		+ " Objekt(e) mit Herstellnummer " + herstellnr + " gefunden");
     }
 
     /* (non-Javadoc)

@@ -72,6 +72,8 @@ import javax.swing.RowSorter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import org.apache.log4j.Logger;
+
 import junit.runner.Sorter;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -83,6 +85,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49Model;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -92,6 +95,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class EinleiterAnh49Auswertung extends AbstractQueryModul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
 
@@ -320,12 +325,15 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             }
 
             if (doIt) {
-                AUIKataster.debugOutput("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
+                log.debug("Speichere nach '" + exportDatei.getName()
+                		+ "' (Ext: '"+ext+"') in '" + exportDatei.getParent()
+                		+ "' !");
                 if (AuikUtils.exportTableDataToCVS(getResultTable(), exportDatei)) {
-                    AUIKataster.debugOutput("Speichern erfolgreich!");
+                    log.debug("Speichern erfolgreich!");
                 } else {
-                    AUIKataster.debugOutput("Fehler beim Speichern!");
-                    getFrame().showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+                    log.debug("Fehler beim Speichern!");
+                    getFrame().showErrorMessage("Beim Speichern der Datei '"
+                    		+ exportDatei+"' trat ein Fehler auf!");
                 }
             }
         }

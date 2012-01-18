@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -44,6 +45,7 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
@@ -57,6 +59,9 @@ public class AtlProbenahmen
     extends AbstractAtlProbenahmen
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     public static final String[] COLUMNS_AUFTRAG = {
         "auswahl", "Parameter", "Kennzeichnung", "Konservierung", "Zusatz"
     };
@@ -327,7 +332,7 @@ public class AtlProbenahmen
                 //Collection sorted = session.filter(probe.getAtlAnalysepositionen(), "order by this.atlParameter.ordnungsbegriff desc");
                 //AUIKataster.debugOutput("Sorted:\n " + sorted);
                 //probe.setAtlAnalysepositionen(new HashSet(sorted));
-                AUIKataster.debugOutput("APos geladen:\n " + probe.getAtlAnalysepositionen());
+                log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
             }
             HibernateSessionFactory.closeSession();
         } catch (HibernateException e) {
@@ -355,7 +360,7 @@ public class AtlProbenahmen
                 //Collection sorted = session.filter(probe.getAtlAnalysepositionen(), "order by this.atlParameter.ordnungsbegriff desc");
                 //AUIKataster.debugOutput("Sorted:\n " + sorted);
                 //probe.setAtlAnalysepositionen(new HashSet(sorted));
-                AUIKataster.debugOutput("APos geladen:\n " + probe.getAtlAnalysepositionen());
+                log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
             }
             HibernateSessionFactory.closeSession();
         } catch (HibernateException e) {

@@ -27,6 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -34,6 +35,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * Eine Klasse, die eine Zeile der 'BASIS_STANDORT'-Tabelle
@@ -43,6 +45,8 @@ public class BasisStandort
     extends AbstractBasisStandort
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = 2774552431508434460L;
 
 	/**
@@ -70,7 +74,7 @@ public class BasisStandort
      * @see {@link this.getFormatierteStrasse} for the original method. 
      */
     public String toString() {
-    	AUIKataster.debugOutput("If you see this message, something needs to be fixed!");
+    	log.warn("If you see this message, something may need to be fixed!");
         return super.toString();
     }
     

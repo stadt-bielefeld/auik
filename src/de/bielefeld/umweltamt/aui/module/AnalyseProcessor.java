@@ -72,7 +72,7 @@ public class AnalyseProcessor {
             id = Integer.parseInt(einheitId);
         }
 
-        AUIKataster.debugOutput(
+        log.debug(
             "Verarbeite Analyseposition für Parameter: " +
             parameterBezeichnung);
 

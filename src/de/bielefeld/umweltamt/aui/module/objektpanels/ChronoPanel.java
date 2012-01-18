@@ -89,6 +89,8 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -98,6 +100,7 @@ import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
@@ -106,6 +109,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * @author Gerd Genuit
  */
 public class ChronoPanel extends JPanel {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
     private static final long serialVersionUID = 5763325969928267241L;
 	private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -133,7 +138,7 @@ public class ChronoPanel extends JPanel {
     public ChronoPanel(BasisObjektBearbeiten hauptModul) {
         name = "Chronologie";
         this.hauptModul = hauptModul;
-        AUIKataster.debugOutput(hauptModul.getObjekt().toString());
+        log.debug(hauptModul.getObjekt().toString());
         chronoModel = new ChronoModel();
 
 
@@ -395,12 +400,13 @@ public class ChronoPanel extends JPanel {
 
         if (objektid != null && betreiber != null && standort != null && art != null)
         {
-            AUIKataster.debugOutput("Starte Objekt-Chronologie Report für ObjektId = " + objektid);
+            log.debug("Starte Objekt-Chronologie Report für ObjektId = "
+            		+ objektid);
             ReportManager.getInstance().startReportWorker("Objekt-Chronologie", objektid, betreiber, standort, art, reportListeButton);
         }
         else
         {
-            AUIKataster.debugOutput("ObjektID, Betreiber, Standort oder Art == NULL");
+            log.debug("ObjektID, Betreiber, Standort oder Art == NULL");
         }
     }
 

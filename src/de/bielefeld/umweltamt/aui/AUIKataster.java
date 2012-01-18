@@ -79,15 +79,6 @@ public class AUIKataster {
     /**
      * Gibt Debug-Ausgaben/Fehler auf der Konsole aus.
      * @param msg Die auszugebende Nachricht
-     */
-    public static void debugOutput(String msg) {
-        debugOutput(msg, "Unknown");
-    }
-
-    // TODO: Stop doing the logging over AUIKataster...
-    /**
-     * Gibt Debug-Ausgaben/Fehler auf der Konsole aus.
-     * @param msg Die auszugebende Nachricht
      * @param src Wo trat der Fehler auf
      */
     public static void debugOutput(String msg, String src) {

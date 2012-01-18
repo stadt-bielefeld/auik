@@ -85,6 +85,8 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -94,6 +96,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -102,6 +105,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class LaborIcpImport extends AbstractModul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private class FileImporter extends ListTableModel {
         // Die Datei, die Importiert werden soll
         private File importFile = null;
@@ -362,7 +368,8 @@ public class LaborIcpImport extends AbstractModul {
                         // Einwaage
                         if (probe.isKlaerschlammProbe() && (probe.getEinwaage() == null || probe.getEinwaage().floatValue() == 0.0f)) {
                             probe.setEinwaage(new Float(3.0f));
-                            AUIKataster.debugOutput("Einwaage von " + probe + " auf 3g korrigiert.");
+                            log.debug("Einwaage von " + probe
+                            		+ " auf 3g korrigiert.");
                         }
 
                         // Parameter
@@ -391,16 +398,19 @@ public class LaborIcpImport extends AbstractModul {
                         if (sEinheit.equals("mg/L")) {
                             if (probe.isKlaerschlammProbe()) {
                                 Float einwaage = probe.getEinwaage();
-                                AUIKataster.debugOutput("Klärschlamm-Umrechnung nötig, Einwaage: " + einwaage);
+                                log.debug("Klärschlamm-Umrechnung nötig, Einwaage: "
+                                		+ einwaage);
                                 if (einwaage != null) {
                                     BigDecimal rundWert = new BigDecimal((wert.doubleValue() * 100) / einwaage.doubleValue());
                                     rundWert = rundWert.setScale(1, BigDecimal.ROUND_UP);
                                     pos.setWert(new Float(rundWert.floatValue()));
                                     einheit = AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID);
-                                    AUIKataster.debugOutput("Klärschlamm-Umrechnung: (" + wert + " mg/L * 100) / "+einwaage+" = " + pos.getWert() + " mg/KG");
+                                    log.debug("Klärschlamm-Umrechnung: (" + wert
+                                    		+ " mg/L * 100) / "+einwaage+" = "
+                                    		+ pos.getWert() + " mg/KG");
                                 }
                             } else {
-                                AUIKataster.debugOutput("Keine Klärschlamm-Umrechnung nötig.");
+                                log.debug("Keine Klärschlamm-Umrechnung nötig.");
                                 einheit = AtlEinheiten.getEinheit(AtlEinheiten.MG_L_ID);
                             }
                         }
@@ -421,10 +431,10 @@ public class LaborIcpImport extends AbstractModul {
                             date = df.parse(datumAusZeile(current));
                         } catch (ParseException e2) {
                             date = null;
-                            AUIKataster.debugOutput("Konnte ICP-Datum nicht parsen!");
+                            log.debug("Konnte ICP-Datum nicht parsen!");
                         }
                         if (date != null) {
-                            AUIKataster.debugOutput("Setze ICP-Datum auf: " + df.format(date));
+                            log.debug("Setze ICP-Datum auf: " + df.format(date));
                             probe.setDatumIcp(date);
                         }
 
@@ -436,7 +446,7 @@ public class LaborIcpImport extends AbstractModul {
                             // Speichern...
                             if (AtlAnalyseposition.saveAnalyseposition(pos)) {
                                 importCount++;
-                                AUIKataster.debugOutput("Habe " + pos + " gespeichert!");
+                                log.debug("Habe " + pos + " gespeichert!");
                             } else {
                                 throw new Exception("Konnte Analyseposition nicht in der Datenbank speichern!");
                             }

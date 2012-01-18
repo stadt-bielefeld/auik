@@ -89,6 +89,8 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.TableColumn;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -100,6 +102,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -114,6 +117,9 @@ public class Anh49AnalysenPanel extends JPanel{
      * Ein TableModel für eine Tabelle mit Analysen.
      * @author Gerhard Genuit
      */
+
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     private class Anh49AnalysenModel extends EditableListTableModel {
         private Anh49Fachdaten fachdaten;
@@ -480,10 +486,12 @@ public class Anh49AnalysenPanel extends JPanel{
 
                         if (hauptModul.getFrame().showQuestion("Soll die Analyse "+ analyse.getAnalysenid() +" wirklich inkl. aller untersuchten Parameter gelöscht werden?", "Löschen bestätigen")) {
                             analysenModel.removeRow(row);
-                            AUIKataster.debugOutput("Analyse " + analyse.getAnalysenid() + " wurde gelöscht!");
+                            log.debug("Analyse " + analyse.getAnalysenid()
+                            		+ " wurde gelöscht!");
                         }
                         else {
-                            AUIKataster.debugOutput("Löschen von " + analyse.getAnalysenid() + " wurde abgebrochen!");
+                            log.debug("Löschen von " + analyse.getAnalysenid() 
+                            		+ " wurde abgebrochen!");
                         }
                     }
                 }
@@ -535,10 +543,14 @@ public class Anh49AnalysenPanel extends JPanel{
 
                         if (hauptModul.getFrame().showQuestion("Soll die Dichtheitsprüfung vom "+ kontrollen.getPruefdatum() +" wirklich gelöscht werden?", "Löschen bestätigen")) {
                         	kontrollenModel.removeRow(row);
-                            AUIKataster.debugOutput("Dichtheitsprüfung vom " + kontrollen.getPruefdatum() + " wurde gelöscht!");
+                            log.debug("Dichtheitsprüfung vom " 
+                            		+ kontrollen.getPruefdatum() 
+                            		+ " wurde gelöscht!");
                         }
                         else {
-                            AUIKataster.debugOutput("Löschen der Dichtheitsprüfung vom " + kontrollen.getPruefergebnis() + " wurde abgebrochen!");
+                            log.debug("Löschen der Dichtheitsprüfung vom " 
+                            		+ kontrollen.getPruefergebnis() 
+                            		+ " wurde abgebrochen!");
                         }
                     }
                 }

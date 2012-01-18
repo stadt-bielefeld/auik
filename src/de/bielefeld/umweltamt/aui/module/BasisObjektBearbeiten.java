@@ -100,6 +100,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -131,6 +132,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepunktPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SuevPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.UebergabePanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.VawsPanel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 /**
@@ -138,6 +140,9 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * @author David Klotz
  */
 public class BasisObjektBearbeiten extends AbstractModul {
+
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     // Widgets für Registerbereich
     private JPanel topPanel;
@@ -505,7 +510,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 getBasisTab().updateForm();
 
                 if (isNew) {
-                    AUIKataster.debugOutput("Neues Objekt");
+                    log.debug("Neues Objekt");
                     getHeaderLabel().setForeground(Color.RED);
                     getHeaderLabel().setText("Neues Objekt");
                 } else {

@@ -78,6 +78,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
+import org.apache.log4j.Logger;
 import org.eclipse.birt.core.exception.BirtException;
 import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.engine.api.EngineConfig;
@@ -88,6 +89,7 @@ import org.eclipse.birt.report.engine.api.IReportEngineFactory;
 import org.eclipse.birt.report.engine.api.IReportRunnable;
 import org.eclipse.birt.report.engine.api.IRunAndRenderTask;
 
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
@@ -100,6 +102,8 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * based on David Klotz' ReportManager
  */
 public class ReportManager {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
     private static ReportManager _instance;
     private EngineConfig config;
     private IReportEngine engine;
@@ -478,8 +482,7 @@ public class ReportManager {
 
         }
         catch (EngineException e1) {
-                AUIKataster
-                .debugOutput("Fehler: " +  e1);
+            log.debug("Fehler: " +  e1);
         }
 
 
@@ -717,7 +720,7 @@ public class ReportManager {
         if (engine != null) {
 //            AUIKataster.debugOutput("Engine zerstören:");
             engine.destroy();
-            AUIKataster.debugOutput("Engine zerstört!");
+            log.debug("Engine zerstört!");
         }
 
         // Alle Referenzen auf null, damit der GC seine Arbeit machen kann.

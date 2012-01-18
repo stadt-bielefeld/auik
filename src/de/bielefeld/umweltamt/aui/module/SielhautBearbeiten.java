@@ -137,6 +137,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import org.apache.log4j.Logger;
 import org.eclipse.birt.report.engine.api.EngineException;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -168,6 +169,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -187,6 +189,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class SielhautBearbeiten extends AbstractModul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private JTextField punktFeld;
     private JToolBar punktToolBar;
     private JButton punktChooseButton;
@@ -480,10 +485,8 @@ public class SielhautBearbeiten extends AbstractModul {
     public void showReport() throws EngineException {
         if (spunkt.getId() != null || spunkt.getHaltungsnr() != null) {
             ReportManager.getInstance().startReportWorker("SielhautBearbeiten", spunkt.getId(), spunkt.getBezeichnung(), punktPrintButton);
-        }
-        else
-        {
-            AUIKataster.debugOutput("Dem zu druckenden Sielhaut-Probenahmepunkt fehlen Eingaben!");
+        } else {
+            log.debug("Dem zu druckenden Sielhaut-Probenahmepunkt fehlen Eingaben!");
         }
     }
 
@@ -570,11 +573,13 @@ public class SielhautBearbeiten extends AbstractModul {
             }
 
             if (doIt) {
-                AUIKataster.debugOutput("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
+                log.debug("Speichere nach '" + exportDatei.getName()
+                		+ "' (Ext: '"+ext+"') in '" + exportDatei.getParent()
+                		+ "' !");
                 if (AuikUtils.exportTableDataToCVS(getPrTabelle(), exportDatei)) {
-                    AUIKataster.debugOutput("Speichern erfolgreich!");
+                    log.debug("Speichern erfolgreich!");
                 } else {
-                    AUIKataster.debugOutput("Fehler beim Speichern!");
+                    log.debug("Fehler beim Speichern!");
                     getFrame().showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
                 }
             }
@@ -586,12 +591,12 @@ public class SielhautBearbeiten extends AbstractModul {
         SwingWorkerVariant worker = new SwingWorkerVariant(getPrTabelle()) {
             protected void doNonUILogic() throws RuntimeException {
                 probeModel.updateList();
-                AUIKataster.debugOutput("Liste geupdatet!");
+                log.debug("Liste geupdatet!");
             }
 
             protected void doUIUpdateLogic() throws RuntimeException {
                 probeModel.fireTableDataChanged();
-                AUIKataster.debugOutput("Tabelle geupdatet!");
+                log.debug("Tabelle geupdatet!");
             }
         };
         worker.start();
@@ -1430,11 +1435,14 @@ public class SielhautBearbeiten extends AbstractModul {
                 }
 
                 if (doIt) {
-                    AUIKataster.debugOutput("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
+                    log.debug("Speichere nach '" + exportDatei.getName()
+                    		+ "' (Ext: '" + ext + "') in '"
+                    		+ exportDatei.getParent() + "' !");
                     if (AuikUtils.exportTableDataToCVS(exportTable, exportDatei)) {
                         owner.showInfoMessage("Speichern der CSV-Datei erfolgreich!", "Speichern erfolgreich");
                     } else {
-                        AUIKataster.debugOutput("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+                        log.debug("Beim Speichern der Datei '" + exportDatei
+                        		+ "' trat ein Fehler auf!");
                         owner.showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
                     }
                 }
@@ -1476,7 +1484,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 try {
                     chartPanel.doSaveAs();
                 } catch (IOException e) {
-                    AUIKataster.debugOutput("Konnte Datei nicht speichern!");
+                    log.debug("Konnte Datei nicht speichern!");
                 }
             } else if (tabbedPane.getSelectedIndex() == 1) {
                 saveTabelle();

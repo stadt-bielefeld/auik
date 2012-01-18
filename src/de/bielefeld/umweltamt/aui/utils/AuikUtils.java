@@ -43,6 +43,8 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
 
+import org.apache.log4j.Logger;
+
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
@@ -54,6 +56,8 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
  * @author David Klotz
  */
 public class AuikUtils {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
     /** Das Default-Datumsformat für JDateChooser */
     public static final String DATUMSFORMAT = "dd.MM.yy";
     /** Die Datumsformate für TextFieldDateChooser */
@@ -76,9 +80,9 @@ public class AuikUtils {
                 if (f.exists() && f.isFile() && f.canRead()) {
                     //String comspec = System.getenv("COMSPEC");
                     String comspec = "cmd";
-                    if (comspec == null) {
-                        comspec = "cmd";
-                    }
+//                    if (comspec == null) {
+//                        comspec = "cmd";
+//                    }
 
                     try {
 //                        Thread.sleep(500);
@@ -249,11 +253,11 @@ public class AuikUtils {
             }
 
             if (doIt) {
-                AUIKataster.debugOutput("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
+                log.debug("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
                 if (exportTableDataToCVS(tabelle, exportDatei)) {
-                    AUIKataster.debugOutput("Speichern erfolgreich!");
+                    log.debug("Speichern erfolgreich!");
                 } else {
-                    AUIKataster.debugOutput("Fehler beim Speichern!");
+                    log.debug("Fehler beim Speichern!");
                     frame.showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
                 }
             }

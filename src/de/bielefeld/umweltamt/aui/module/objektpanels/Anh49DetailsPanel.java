@@ -127,6 +127,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -139,6 +141,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.AbscheiderEditor;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
@@ -155,6 +158,9 @@ public class Anh49DetailsPanel extends JPanel{
      * Ein TableModel für eine Tabelle mit Abscheider-Details.
      * @author David Klotz, Gerhard Genuit
      */
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private class Anh49AbscheiderModel extends ListTableModel {
         private Anh49Fachdaten fachdaten;
 
@@ -414,9 +420,11 @@ public class Anh49DetailsPanel extends JPanel{
 
                         if (hauptModul.getFrame().showQuestion("Soll der Abscheider "+ abscheider +" wirklich inkl. aller Detailinformationen gelöscht werden?", "Löschen bestätigen")) {
                             abscheiderModel.removeRow(row);
-                            AUIKataster.debugOutput("Abscheider " + abscheider.getLage() + " wurde gelöscht!");
+                            log.debug("Abscheider " + abscheider.getLage() 
+                            		+ " wurde gelöscht!");
                         } else {
-                            AUIKataster.debugOutput("Löschen von " + abscheider.getLage() + " wurde abgebrochen!");
+                            log.debug("Löschen von " + abscheider.getLage() 
+                            		+ " wurde abgebrochen!");
                         }
                     }
                 }
@@ -509,9 +517,11 @@ public class Anh49DetailsPanel extends JPanel{
                         if (ot != null) {
                             if (hauptModul.getFrame().showQuestion("Soll der Ortstermin "+ ot +" gelöscht werden?", "Löschen bestätigen")) {
                                 ortsterminModel.removeRow(row);
-                                AUIKataster.debugOutput("Ortstermin " + ot.getOrtsterminid() + " wurde gelöscht!");
+                                log.debug("Ortstermin " + ot.getOrtsterminid()
+                                		+ " wurde gelöscht!");
                             } else {
-                                AUIKataster.debugOutput("Löschen von " + ot.getOrtsterminid() + " wurde abgebrochen!");
+                                log.debug("Löschen von " + ot.getOrtsterminid()
+                                		+ " wurde abgebrochen!");
                             }
                         }
                     }

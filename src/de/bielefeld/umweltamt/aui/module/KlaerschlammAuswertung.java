@@ -119,6 +119,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import org.apache.log4j.Logger;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Minute;
@@ -141,6 +142,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -153,6 +155,9 @@ import de.bielefeld.umweltamt.aui.utils.charts.Charts;
  * @author David Klotz
  */
 public class KlaerschlammAuswertung extends AbstractModul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private static final String LEFT = "left";
     private static final String RIGHT = "right";
 
@@ -465,11 +470,11 @@ public class KlaerschlammAuswertung extends AbstractModul {
                 }
 
                 if (doIt) {
-                    AUIKataster.debugOutput("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
+                    log.debug("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
                     if (AuikUtils.exportTableDataToCVS(exportTable, exportDatei)) {
-                        AUIKataster.debugOutput("Speichern erfolgreich!");
+                        log.debug("Speichern erfolgreich!");
                     } else {
-                        AUIKataster.debugOutput("Fehler beim Speichern!");
+                        log.debug("Fehler beim Speichern!");
                         owner.showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
                     }
                 }

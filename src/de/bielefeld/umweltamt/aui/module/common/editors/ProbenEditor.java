@@ -1932,6 +1932,8 @@ class ParameterChooser extends OkCancelApplyDialog {
 }
 
 class ParameterAuswahlModel extends ListTableModel {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = -502436804713980533L;
 	protected boolean[] selection;
 
@@ -1995,8 +1997,8 @@ class ParameterAuswahlModel extends ListTableModel {
 
 
     public void setValueAt(Object value, int row, int col) {
-        AUIKataster.debugOutput(
-            "ParameterAuswahlModel - setValueAt(" + row + ", " + col +")");
+        log.debug(
+        		"ParameterAuswahlModel - setValueAt(" + row + ", " + col +")");
 
         if (rowExists(row)) {
             if (col < columns.length) {

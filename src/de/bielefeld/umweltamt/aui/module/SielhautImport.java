@@ -71,6 +71,8 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -80,6 +82,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -88,6 +91,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class SielhautImport extends AbstractModul {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private class FileImporter extends ListTableModel {
         // Die Datei, die Importiert werden soll
         private File importFile = null;
@@ -333,7 +339,7 @@ public class SielhautImport extends AbstractModul {
                             // Speichern...
                             if (AtlAnalyseposition.saveAnalyseposition(pos)) {
                                 importCount++;
-                                AUIKataster.debugOutput("Habe " + pos + " gespeichert!");
+                                log.debug("Habe " + pos + " gespeichert!");
                             } else {
                                 throw new Exception("Konnte Analyseposition nicht in der Datenbank speichern!");
                             }
