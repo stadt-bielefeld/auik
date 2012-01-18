@@ -111,6 +111,8 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import org.apache.log4j.Logger;
+
 import net.sf.jasperreports.engine.JRDataSource;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -131,6 +133,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
@@ -155,6 +158,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class ProbenEditor extends AbstractApplyEditor {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = 5903518104076020136L;
 
 	public interface OKListener {
@@ -636,9 +641,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         "Probenahmeauftrag erfolgreich");
                 }
                 catch (Exception ex) {
-                    AUIKataster.errorOutput(
-                        "Druck schlug fehlt: " + ex.getMessage(),
-                        getClass().getName());
+                    log.error("Druck schlug fehlt: " + ex.getMessage());
 
                     frame.showErrorMessage(
                         "Der Druck des Probenahmeauftrags ist fehlgeschlagen." +
@@ -753,9 +756,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         "Gebührenbescheid erfolgreich");
                 }
                 catch (Exception ex) {
-                    AUIKataster.errorOutput(
-                        "Druck schlug fehlt.",
-                        getClass().getName());
+                    log.error("Druck schlug fehlt.");
 
                     ex.printStackTrace();
 
@@ -1358,9 +1359,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             convertedDate = df.parse(timestring);
             probe.setDatumDerEntnahme(new Timestamp(convertedDate.getTime()));
         } catch (ParseException e) {
-            AUIKataster.errorOutput(
-                "Fehler beim Speichern von 'datumDerEntnahme'.",
-                getClass().getName());
+            log.error("Fehler beim Speichern von 'datumDerEntnahme'.");
         }
 
         // Fahrtzeit
@@ -1375,9 +1374,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             probe.setAnzahlbeteiligte(anzahl);
         }
         catch (NumberFormatException nfe) {
-            AUIKataster.errorOutput(
-                "Fehler beim Speichern von 'beteiligte'.",
-                getClass().getName());
+            log.error("Fehler beim Speichern von 'beteiligte'.");
         }
 
         // Sachbearbeiter
@@ -1722,8 +1719,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         "Parameter " + p.getOrdnungsbegriff() + " ist nicht " +
                         "einzeln prüfbar.";
 
-                    AUIKataster.errorOutput(
-                        msg, getClass().getName());
+                    log.error(msg);
 
                     throw new IllegalArgumentException(msg);
                 }

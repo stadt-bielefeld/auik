@@ -56,6 +56,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 /**
  * Das Anlagen- und Indirekteinleiter-Kataster. Diese Klasse stellt den
  * eigentlichen Einstiegspunkt der Anwendung dar. Die Methode {@link main}
@@ -73,6 +75,7 @@ public class AUIKataster {
 
     private static HauptFrame runningFrame = null;
 
+    // TODO: Stop doing the logging over AUIKataster...
     /**
      * Gibt Debug-Ausgaben/Fehler auf der Konsole aus.
      * @param msg Die auszugebende Nachricht
@@ -81,20 +84,14 @@ public class AUIKataster {
         debugOutput(msg, "Unknown");
     }
 
+    // TODO: Stop doing the logging over AUIKataster...
     /**
      * Gibt Debug-Ausgaben/Fehler auf der Konsole aus.
      * @param msg Die auszugebende Nachricht
      * @param src Wo trat der Fehler auf
      */
     public static void debugOutput(String msg, String src) {
-        if (DEBUG) {
-            System.out.println("DEBUG (" + src + "): " + msg);
-        }
-    }
-
-
-    public static void errorOutput(String msg, String src) {
-        System.err.println("ERROR (" + src + "): " + msg);
+        AuikLogger.getLogger().debug("(" + src + "): " + msg);
     }
 
     /**

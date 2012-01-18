@@ -1,5 +1,5 @@
 /**
- * Copyright 2005-2011, Stadt Bielefeld
+ * Copyright 2005-2042, Stadt Bielefeld
  *
  * This file is part of AUIK (Anlagen- und Indirekteinleiter-Kataster).
  *
@@ -28,12 +28,15 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import org.apache.log4j.Logger;
+
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 
 /**
@@ -43,6 +46,9 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
  * @author <a href="mailto:ingo.weinzierl@intevation.de">Ingo Weinzierl</a>
  */
 public class AnalyseProcessor {
+	
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     /**
      * Diese Funktion verarbeitet eine Zeile eines Analyseergebnis-Imports.
@@ -51,9 +57,7 @@ public class AnalyseProcessor {
      */
     public static boolean process(String[] columns) {
         if (columns == null || columns.length < 8) {
-            AUIKataster.errorOutput(
-                "Analyseimport: AtlAnalyseoption nicht vollständig.",
-                "AnalyseProcessor");
+            log.error("Analyseimport: AtlAnalyseoption nicht vollständig.");
         }
 
         String kennnummer           = unquote(columns[0]);
@@ -75,10 +79,9 @@ public class AnalyseProcessor {
         AtlProbenahmen probe = AtlProbenahmen.getProbenahme(kennnummer, true);
 
         if (probe == null) {
-            AUIKataster.errorOutput(
+            log.error(
                 "Probenahme mit folgender Kennung konnte nicht " +
-                "gefunden werden: " + kennnummer,
-                "AnalyseProcessor");
+                "gefunden werden: " + kennnummer);
 
             return false;
         }

@@ -35,11 +35,14 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -61,6 +64,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class AnalyseImport extends AbstractModul {
 
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     /**
      * Diese Klasse importiert die Laborergebnisse einer Probenahme in Form
      * einer Textdatei und stellt diese als {@link ListTableModel} zur
@@ -69,7 +75,7 @@ public class AnalyseImport extends AbstractModul {
      * @author <a href="mailto:ingo.weinzierl@intevation.de">Ingo Weinzierl</a>
      */
     private class AnalyseImporter extends ListTableModel {
-        protected File      toImport;
+		protected File      toImport;
         protected boolean[] selection;
         protected int[]     status;
 
@@ -303,19 +309,17 @@ public class AnalyseImport extends AbstractModul {
                     String[] columns = line.split("','");
 
                     if (columns == null) {
-                        AUIKataster.errorOutput(
+                        log.error(
                             "Fehler beim Lesen einer Analyse-Zeile: " +
                             "Es konnte keine komma-serparierten Spalten " +
-                            "gefunden werden!",
-                            getClass().getName());
+                            "gefunden werden!");
                             bad++;
                     }
                     else if (columns.length < 9) {
-                        AUIKataster.errorOutput(
+                        log.error(
                             "Fehler beim Lesen einer Analyse-Zeile: " +
                             "Es wurden eine kaputte Analyse-Zeile " +
-                            "gefunden!",
-                            getClass().getName());
+                            "gefunden!");
                             bad++;
                     }
                     else {
@@ -343,10 +347,9 @@ public class AnalyseImport extends AbstractModul {
                 initSelection();
             }
             catch (FileNotFoundException fnfe) {
-                AUIKataster.errorOutput(
+                log.error(
                     "Fehler beim Lesen der Probenahme-Analyseergebnisse: " +
-                    fnfe.getMessage(),
-                    getClass().getName());
+                    fnfe.getMessage());
             }
             finally {
                 try {

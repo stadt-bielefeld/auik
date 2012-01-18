@@ -1,5 +1,5 @@
 /**
- * Copyright 2005-2011, Stadt Bielefeld
+ * Copyright 2005-2042, Stadt Bielefeld
  *
  * This file is part of AUIK (Anlagen- und Indirekteinleiter-Kataster).
  *
@@ -19,9 +19,6 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created on 16.03.2005 by u633z
- */
 package de.bielefeld.umweltamt.aui.utils;
 
 import static org.junit.Assert.assertEquals;
@@ -29,6 +26,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Locale;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,8 +34,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.ibm.icu.text.NumberFormat;
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
 
 /**
  * As this is my first ever JUnit test, I have picked out a simple class, which
@@ -47,6 +43,8 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
  */
 public class KommaDoubleTest {
 
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 	/* Some tool classes */
 	private static Random randomNumberGenerator;
 	private static NumberFormat numberFormatter;
@@ -93,9 +91,7 @@ public class KommaDoubleTest {
 		this.randomNumber *=
 			KommaDoubleTest.randomNumberGenerator.nextBoolean() ? 1.0 : -1.0;
 		this.instance = new KommaDouble(randomNumber);
-		AUIKataster.debugOutput(
-				"Testing with random number: " + this.randomNumber,
-				this.getClass().getSimpleName());
+		log.debug("Testing with random number: " + this.randomNumber);
 	}
 
 	/**
