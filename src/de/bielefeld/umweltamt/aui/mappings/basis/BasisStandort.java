@@ -154,7 +154,8 @@ public class BasisStandort
         String strasse2 = strasse.toLowerCase().trim() + "%";
         Integer hausNummer = new Integer(hausnr);
 
-        AUIKataster.debugOutput("Suche nach '" + strasse2 + "' Nr. " + hausnr, "BasisStandort.findStandorte");
+        log.debug("(BasisStandort.findStandorte) "
+        		+ "Suche nach '" + strasse2 + "' Nr. " + hausnr);
         List<?> standorte;
         try {
             Session session = HibernateSessionFactory.currentSession();
@@ -209,7 +210,8 @@ public class BasisStandort
             tx.commit();
 
             //frame.changeStatus("Neuer Standort "+bsta.getStandortid()+" erfolgreich gespeichert!", HauptFrame.SUCCESS_COLOR);
-            AUIKataster.debugOutput("Neuer Standort "+ bsta +" gespeichert!", "BasisStandort.saveStandort");
+            log.debug("(BasisStandort.saveStandort) "
+            		+ "Neuer Standort "+ bsta +" gespeichert!");
             //manager.getCache().invalidateCache("standorte");
 
             // Formular zurücksetzen

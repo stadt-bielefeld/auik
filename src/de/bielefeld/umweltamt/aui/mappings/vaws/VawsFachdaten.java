@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -32,6 +33,7 @@ import org.hibernate.Transaction;
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'VAWS_FACHDATEN' table.
@@ -42,21 +44,20 @@ public class VawsFachdaten
     extends AbstractVawsFachdaten
     implements Serializable
 {
-
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of VawsFachdaten instances.
      */
-    public VawsFachdaten()
-    {
+    public VawsFachdaten() {
     }
 
     /**
      * Constructor of VawsFachdaten instances given a simple primary key.
      * @param behaelterId
      */
-    public VawsFachdaten(Integer behaelterId)
-    {
+    public VawsFachdaten(Integer behaelterId) {
         super(behaelterId);
     }
 
@@ -88,42 +89,19 @@ public class VawsFachdaten
     // Anlagenart:
 
     public boolean isAbfuellflaeche() {
-        if ("Abfüllfläche".equals(getAnlagenart())) {
-            return true;
-        } else {
-            return false;
-        }
+        return ("Abfüllfläche".equals(getAnlagenart()));
     }
 
-    public boolean isVAWSAbscheider()
-    {
-        if ("VAwS-Abscheider".equals(getAnlagenart()))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    public boolean isVAWSAbscheider() {
+        return ("VAwS-Abscheider".equals(getAnlagenart()));
     }
-
 
     public boolean isLageranlage() {
-        if (isAbfuellflaeche() || isRohrleitung()) {
-            return false;
-        } else {
-            return true;
-        }
+        return (!(isAbfuellflaeche() || isRohrleitung()));
     }
 
-
-
     public boolean isRohrleitung() {
-        if ("Rohrleitung".equals(getAnlagenart())) {
-            return true;
-        } else {
-            return false;
-        }
+        return ("Rohrleitung".equals(getAnlagenart()));
     }
 
     // Boolean <-> Short:
@@ -153,7 +131,8 @@ public class VawsFachdaten
                         .setEntity(0, objekt)
                         .list();
 
-                AUIKataster.debugOutput(vaws.size() + " VawsFachdatensätze für BO " + objekt + " gefunden!", "VawsFachdaten");
+                log.debug(vaws.size() + " VawsFachdatensätze für BO " + objekt
+                		+ " gefunden!");
             } catch (HibernateException e) {
                 throw new RuntimeException("Datenbank-Fehler", e);
             } finally {

@@ -27,6 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -34,6 +35,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'ANH_49_ANALYSEN' table.
@@ -44,6 +46,9 @@ public class Anh49Analysen
     extends AbstractAnh49Analysen
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     /**
      * Simple constructor of Anh49Analysen instances.
      */
@@ -84,7 +89,7 @@ public class Anh49Analysen
                     .setEntity(0, fd)
                     .list();
 
-            AUIKataster.debugOutput("Analysen für " + fd + ", Anzahl: " + analyse.size(), "Anh49Analysen");
+            log.debug("Analysen für " + fd + ", Anzahl: " + analyse.size());
         } catch (HibernateException e) {
             throw new RuntimeException("Datenbank-Fehler", e);
         } finally {

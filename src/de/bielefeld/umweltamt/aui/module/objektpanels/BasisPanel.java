@@ -88,6 +88,8 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -109,6 +111,7 @@ import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisBetreiberModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandortModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
@@ -122,6 +125,8 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  */
 
 public class BasisPanel  extends JPanel {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = 2520878475016486007L;
 
 	private class ChooseDialog extends JDialog {
@@ -659,10 +664,13 @@ public class BasisPanel  extends JPanel {
             hauptModul.setObjekt(tmp);
             hauptModul.completeObjekt();
             success = true;
-            AUIKataster.debugOutput("Objekt "+hauptModul.getObjekt()+" gespeichert.", "BasisObjektBearbeiten.saveObjektDaten");
+            log.debug("(BasisObjektBearbeiten.saveObjektDaten) "
+            		+ "Objekt " + hauptModul.getObjekt() + " gespeichert.");
         } else {
             success = false;
-            AUIKataster.debugOutput("Objekt "+hauptModul.getObjekt()+" konnte nicht gespeichert werden!", "BasisObjektBearbeiten.saveObjektDaten");
+            log.debug("(BasisObjektBearbeiten.saveObjektDaten) "
+            		+ "Objekt " + hauptModul.getObjekt()
+            		+ " konnte nicht gespeichert werden!");
         }
 
         return success;
@@ -1118,10 +1126,9 @@ public class BasisPanel  extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Objekt "
-                                        + verknuepfung.getId()
-                                        + " wurde gelöscht!",
-                                        "BasisBetreiberSuchen.removeAction");
+                                log.debug("(BasisBetreiberSuchen.removeAction) "
+                                		+ "Objekt " + verknuepfung.getId()
+                                        + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(
                                         "Konnte das Objekt nicht löschen!",

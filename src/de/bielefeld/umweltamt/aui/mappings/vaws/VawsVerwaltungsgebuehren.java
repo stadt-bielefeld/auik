@@ -28,12 +28,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'VAWS_VERWALTUNGSGEBUEHREN' table.
@@ -44,6 +46,9 @@ public class VawsVerwaltungsgebuehren
     extends AbstractVawsVerwaltungsgebuehren
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     /**
      * Simple constructor of VawsVerwaltungsgebuehren instances.
      */
@@ -87,7 +92,8 @@ public class VawsVerwaltungsgebuehren
                         .setEntity(0, fachdaten)
                         .list();
 
-                AUIKataster.debugOutput(gebuehren.size() + " Gebühren-Einträge für FD " + fachdaten + " gefunden!", "VawsVerwaltungsgebuehren");
+                log.debug(gebuehren.size() + " Gebühren-Einträge für FD "
+                		+ fachdaten + " gefunden!");
             } catch (HibernateException e) {
                 throw new RuntimeException("Datenbank-Fehler", e);
             } finally {

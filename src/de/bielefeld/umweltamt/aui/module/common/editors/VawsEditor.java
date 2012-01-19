@@ -91,6 +91,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
@@ -114,6 +116,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwmassnahmen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWgk;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
@@ -128,6 +131,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * @author David Klotz
  */
 public class VawsEditor extends AbstractBaseEditor {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private VawsAbfuellflaeche abfuellflaeche;
     private VawsAbscheider abscheider;
 
@@ -1080,10 +1086,10 @@ public class VawsEditor extends AbstractBaseEditor {
         for (Iterator it = anlagenChronoModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && VawsAnlagenchrono.removeAnlagenChrono((VawsAnlagenchrono) it.next());
         }
-        AUIKataster.debugOutput(
-                anlagenChronoModel.getList().size() + " AnlagenChrono-Einträge neu/behalten, " +
-                anlagenChronoModel.getGeloeschte().size()+" Einträge gelöscht.", "VawsEditor"
-        );
+        log.debug(anlagenChronoModel.getList().size()
+                + " AnlagenChrono-Einträge neu/behalten, "
+                + anlagenChronoModel.getGeloeschte().size()
+                + " Einträge gelöscht.");
 
         // Sachverständigenprüfung speichern:
         for (Iterator it = svPruefungModel.getList().iterator(); it.hasNext();) {
@@ -1092,10 +1098,10 @@ public class VawsEditor extends AbstractBaseEditor {
         for (Iterator it = svPruefungModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && VawsKontrollen.removeKontrolle((VawsKontrollen) it.next());
         }
-        AUIKataster.debugOutput(
-                svPruefungModel.getList().size() + " Sachverständigenprüfungs-Einträge neu/behalten, " +
-                svPruefungModel.getGeloeschte().size()+" Einträge gelöscht.", "VawsEditor"
-        );
+        log.debug(svPruefungModel.getList().size()
+        		+ " Sachverständigenprüfungs-Einträge neu/behalten, "
+        		+ svPruefungModel.getGeloeschte().size()
+        		+ " Einträge gelöscht.");
 
         // Verwaltungsverfahren speichern:
         for (Iterator it = verwVerfahrenModel.getList().iterator(); it.hasNext();) {
@@ -1104,10 +1110,10 @@ public class VawsEditor extends AbstractBaseEditor {
         for (Iterator it = verwVerfahrenModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && VawsVerwaltungsverf.removeVerfahren((VawsVerwaltungsverf) it.next());
         }
-        AUIKataster.debugOutput(
-                verwVerfahrenModel.getList().size() + " Verwaltungsverfahren-Einträge neu/behalten, " +
-                verwVerfahrenModel.getGeloeschte().size()+" Einträge gelöscht.", "VawsEditor"
-        );
+        log.debug(verwVerfahrenModel.getList().size()
+        		+ " Verwaltungsverfahren-Einträge neu/behalten, "
+        		+ verwVerfahrenModel.getGeloeschte().size()
+        		+ " Einträge gelöscht.");
 
         // Verwaltunggebühren speichern:
         for (Iterator it = verwGebuehrenModel.getList().iterator(); it.hasNext();) {
@@ -1116,10 +1122,10 @@ public class VawsEditor extends AbstractBaseEditor {
         for (Iterator it = verwGebuehrenModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && VawsVerwaltungsgebuehren.removeGebuehr((VawsVerwaltungsgebuehren) it.next());
         }
-        AUIKataster.debugOutput(
-                verwGebuehrenModel.getList().size() + " Verwaltungsgebühren-Einträge neu/behalten, " +
-                verwGebuehrenModel.getGeloeschte().size()+" Einträge gelöscht.", "VawsEditor"
-        );
+        log.debug(verwGebuehrenModel.getList().size() 
+        		+ " Verwaltungsgebühren-Einträge neu/behalten, " 
+        		+ verwGebuehrenModel.getGeloeschte().size()
+        		+ " Einträge gelöscht.");
 
         return success;
     }

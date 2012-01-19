@@ -42,6 +42,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -55,6 +56,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
@@ -66,6 +68,9 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * @author David Klotz
  */
 public class StandortEditor extends AbstractBaseEditor {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     // Für die Comboboxen beim Bearbeiten
     private static String[] strassen = null;
     private static BasisGemarkung[] gemarkungen = null;
@@ -495,7 +500,7 @@ public class StandortEditor extends AbstractBaseEditor {
         BasisStandort bsta = BasisStandort.saveStandort(getStandort());
         if (bsta != null) {
             setEditedObject(bsta);
-            AUIKataster.debugOutput("Änderungen gespeichert!", "editStandort");
+            log.debug("(editStandort) " + "Änderungen gespeichert!");
             return true;
         } else {
             return false;

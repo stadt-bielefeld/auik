@@ -28,6 +28,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -37,6 +38,7 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 
 /**
@@ -48,6 +50,9 @@ public class Anh49Abscheiderdetails
     extends AbstractAnh49Abscheiderdetails
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     /**
      * Simple constructor of Anh49Abscheiderdetails instances.
      */
@@ -100,7 +105,8 @@ public class Anh49Abscheiderdetails
                     .setEntity(0, fd)
                     .list();
 
-            AUIKataster.debugOutput("Details für " + fd + ", Anzahl: " + details.size(), "Anh49Abscheiderdetails");
+            log.debug("(Anh49Abscheiderdetails) "
+            		+ "Details für " + fd + ", Anzahl: " + details.size());
         } catch (HibernateException e) {
             throw new RuntimeException("Datenbank-Fehler", e);
         } finally {

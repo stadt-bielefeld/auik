@@ -67,6 +67,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -74,6 +76,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -84,6 +87,9 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * @author David Klotz
  */
 public class AbscheiderEditor extends AbstractBaseEditor{
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private JTextField lageFeld;
     private JTextField herstellerFeld;
     private JFormattedTextField nrFeld;
@@ -352,7 +358,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 
         boolean save = Anh49Abscheiderdetails.saveAbscheider(getDetails());
         if (save = true) {
-            AUIKataster.debugOutput("Änderungen gespeichert!", "editStandort");
+            log.debug("(editStandort) " + "Änderungen gespeichert!");
             return true;
         } else {
             return false;

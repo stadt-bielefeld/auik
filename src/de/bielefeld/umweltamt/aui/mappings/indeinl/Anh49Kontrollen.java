@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -31,6 +32,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 
 /**
@@ -42,6 +44,9 @@ public class Anh49Kontrollen
     extends AbstractAnh49Kontrollen
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     /**
      * Simple constructor of Anh49Ortstermine instances.
      */
@@ -82,7 +87,7 @@ public class Anh49Kontrollen
                     .setEntity(0, fd)
                     .list();
 
-            AUIKataster.debugOutput("Kontrollen für " + fd + ", Anzahl: " + ot.size(), "Anh49Kontrollen");
+            log.debug("Kontrollen für " + fd + ", Anzahl: " + ot.size());
         } catch (HibernateException e) {
             throw new RuntimeException("Datenbank-Fehler", e);
         } finally {

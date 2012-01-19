@@ -27,6 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -35,6 +36,7 @@ import org.hibernate.Transaction;
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'ATL_SIELHAUT' table.
@@ -45,6 +47,8 @@ public class AtlSielhaut
     extends AbstractAtlSielhaut
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of AtlSielhaut instances.
@@ -168,7 +172,7 @@ String sucheF = bezeichnung.toLowerCase().trim() + "%";
             tx.commit();
 
             success = true;
-            AUIKataster.debugOutput("Sielhautpunkt " + spunkt + " erfolgreich gespeichert!", "AtlSielhaut");
+            log.debug("Sielhautpunkt " + spunkt + " erfolgreich gespeichert!");
         } catch (HibernateException e) {
             success = false;
             e.printStackTrace();

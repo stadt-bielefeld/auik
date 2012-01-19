@@ -189,7 +189,8 @@ public class AtlProbenahmen
 
     public static List findProbenahmen(String suche, String property) {
         String suche2 = suche.toLowerCase().trim() + "%";
-        AUIKataster.debugOutput("Suche nach '" + suche2 + "' (" + property + ").", "AtlProbenahmen.findProbenahmen");
+        log.debug("(AtlProbenahmen.findProbenahmen) "
+        		+ "Suche nach '" + suche2 + "' (" + property + ").");
         List proben;
         try {
             Session session = HibernateSessionFactory.currentSession();

@@ -45,6 +45,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
@@ -56,6 +58,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -67,6 +70,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class GenehmigungPanel extends JPanel {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private String name;
     private BasisObjektBearbeiten hauptModul;
 
@@ -160,8 +166,8 @@ public class GenehmigungPanel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = IndeinlGenehmigung.getGenByObjekt(hauptModul.getObjekt());
-        AUIKataster.debugOutput("Genehmigung Objekt aus DB geholt: ID"
-                + fachdaten, "GenehmigungPanel.fetchFormData");
+        log.debug("(GenehmigungPanel.fetchFormData) "
+        		+ "Genehmigung Objekt aus DB geholt: ID" + fachdaten);
     }
 
     public void updateForm() throws RuntimeException {
@@ -326,12 +332,13 @@ public class GenehmigungPanel extends JPanel {
 
         success = IndeinlGenehmigung.saveFachdaten(fachdaten);
         if (success) {
-            AUIKataster.debugOutput("Uebergabestelle Objekt " + fachdaten.getObjektid()
-                    + " gespeichert.", "ObjektGenehmigung.saveGenehmigungDaten");
+            log.debug("(ObjektGenehmigung.saveGenehmigungDaten) "
+            		+ "Uebergabestelle Objekt " + fachdaten.getObjektid()
+                    + " gespeichert.");
         } else {
-            AUIKataster.debugOutput("Uebergabestelle Objekt " + fachdaten
-                    + " konnte nicht gespeichert werden!",
-                    "GenehmigungPanel.saveGenehmigungDaten");
+            log.debug("(GenehmigungPanel.saveGenehmigungDaten) "
+            		+ "Uebergabestelle Objekt " + fachdaten
+                    + " konnte nicht gespeichert werden!");
         }
         return success;
     }
@@ -345,8 +352,9 @@ public class GenehmigungPanel extends JPanel {
 
             // Uebergabestelle speichern
             IndeinlGenehmigung.saveFachdaten(fachdaten);
-            AUIKataster.debugOutput("Neues Genehmigung Objekt " + fachdaten
-                    + " gespeichert.", "BasisObjektBearbeiten.completeObjekt");
+            log.debug("(BasisObjektBearbeiten.completeObjekt) "
+            		+ "Neues Genehmigung Objekt " + fachdaten
+            		+ " gespeichert.");
         }
     }
 
@@ -585,10 +593,9 @@ public class GenehmigungPanel extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Objekt "
-                                        + verknuepfung.getId()
-                                        + " wurde gelöscht!",
-                                        "BasisBetreiberSuchen.removeAction");
+                                log.debug("(BasisBetreiberSuchen.removeAction) "
+                                		+ "Objekt " + verknuepfung.getId()
+                                        + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(
                                         "Konnte das Objekt nicht löschen!",

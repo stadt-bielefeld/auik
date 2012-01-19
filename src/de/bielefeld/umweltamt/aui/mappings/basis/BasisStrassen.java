@@ -27,6 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -34,6 +35,7 @@ import org.hibernate.Session;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'BASIS_STRASSEN' table.
@@ -44,6 +46,8 @@ public class BasisStrassen
     extends AbstractBasisStrassen
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of BasisStrassen instances.
@@ -78,7 +82,7 @@ public class BasisStrassen
         BasisStrassen tmp = null;
         if (name != null) {
             String name2 = name.toLowerCase().trim() + "%";
-            AUIKataster.debugOutput("Suche nach: " + name, "getStrasseByName");
+            log.debug("(getStrasseByName) " + "Suche nach: " + name);
             try {
 
                 List list = session.createQuery(
@@ -87,7 +91,8 @@ public class BasisStrassen
                         .list();
 
                 tmp = (BasisStrassen) ((list.size() > 0) ? list.get(0) : null);
-                AUIKataster.debugOutput("Ergebnis: " + tmp, "BasisStrassen.getStrasseByName");
+                log.debug("(BasisStrassen.getStrasseByName) "
+                		+ "Ergebnis: " + tmp);
             } catch (HibernateException e) {
                 tmp = null;
                 //AUIKataster.debugOutput("Strasse nicht gefunden!", "BasisStrassen.getStrasseByName");

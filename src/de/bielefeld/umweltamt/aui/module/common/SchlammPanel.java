@@ -71,6 +71,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -85,6 +87,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -96,6 +99,9 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  * @author David Klotz
  */
 public class SchlammPanel extends JPanel {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private AtlProbeart art;
 
     private HauptFrame frame;
@@ -299,10 +305,9 @@ public class SchlammPanel extends JPanel {
                             if (probeModel.removeRow(row)) {
                                 frame.changeStatus("Probenahme gelöscht!",
                                         HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Probe "
-                                        + probe.getKennummer()
-                                        + " wurde gelöscht!",
-                                        "SchlammPanel.removeAction");
+                                log.debug("(SchlammPanel.removeAction) "
+                                		+ "Probe " + probe.getKennummer()
+                                        + " wurde gelöscht!");
                             } else {
                                 frame.changeStatus(
                                         "Konnte Probenahme nicht löschen!",

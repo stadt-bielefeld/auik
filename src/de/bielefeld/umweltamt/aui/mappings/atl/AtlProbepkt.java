@@ -27,6 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -37,6 +38,7 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'ATL_PROBEPKT' table.
@@ -47,6 +49,9 @@ public class AtlProbepkt
     extends AbstractAtlProbepkt
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     /**
      * Simple constructor of AtlProbepkt instances.
      */
@@ -217,7 +222,8 @@ public class AtlProbepkt
 
             if (pkte.size() > 0) {
                 punkt = (AtlProbepkt) pkte.get(0);
-                AUIKataster.debugOutput("SielhautBearbeiten-Probepunkt " + punkt + " aus DB geholt.", "AtlProbepkt");
+                log.debug("SielhautBearbeiten-Probepunkt " + punkt
+                		+ " aus DB geholt.");
             } else {
                 punkt = null;
             }
@@ -263,7 +269,7 @@ public class AtlProbepkt
             session.saveOrUpdate(punkt);
             tx.commit();
             saved = true;
-            AUIKataster.debugOutput("Probepunkt " + punkt + " gespeichert.", "AtlProbepkt");
+            log.debug("Probepunkt " + punkt + " gespeichert.");
         } catch (HibernateException e) {
             saved = false;
             e.printStackTrace();
@@ -291,10 +297,13 @@ public class AtlProbepkt
             session.saveOrUpdate(punkt);
             tx.commit();
             removed = true;
-            AUIKataster.debugOutput("Probepunkt "+punkt+" gespeichert.", "ProbepunktPanel.saveProbepunktDaten");
+            log.debug("(ProbepunktPanel.saveProbepunktDaten) "
+            		+ "Probepunkt " + punkt + " gespeichert.");
         } catch (HibernateException e) {
             removed = false;
-            AUIKataster.debugOutput("Probepunkt "+punkt+" konnte nicht gespeichert werden!", "ProbepunktPanel.saveProbepunktDaten");
+            log.debug("(ProbepunktPanel.saveProbepunktDaten) "
+            		+ "Probepunkt " + punkt
+            		+ " konnte nicht gespeichert werden!");
             e.printStackTrace();
             if (tx != null) {
                 try {

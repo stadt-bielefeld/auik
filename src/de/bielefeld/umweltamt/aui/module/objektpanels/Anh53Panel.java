@@ -44,6 +44,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
@@ -55,6 +57,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -66,6 +69,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class Anh53Panel extends JPanel {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private String name;
     private BasisObjektBearbeiten hauptModul;
 
@@ -159,8 +165,8 @@ public class Anh53Panel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = Anh53Fachdaten.getAnh53ByObjekt(hauptModul.getObjekt());
-        AUIKataster.debugOutput("Objekt aus DB geholt: " + fachdaten, "Anh53Panel.fetchFormData");
-
+        log.debug("(Anh53Panel.fetchFormData) "
+        		+ "Objekt aus DB geholt: " + fachdaten);
     }
 
 
@@ -242,16 +248,14 @@ public class Anh53Panel extends JPanel {
 
         success = Anh53Fachdaten.saveFachdaten(fachdaten);
         if (success) {
-            AUIKataster.debugOutput("Objekt " + fachdaten.getBasisObjekt().getBasisBetreiber().getBetrname() + " gespeichert.",
-            "Anh53Panel.saveAnh53Daten");
+            log.debug("(Anh53Panel.saveAnh53Daten) " + "Objekt "
+            		+ fachdaten.getBasisObjekt().getBasisBetreiber().getBetrname()
+            		+ " gespeichert.");
         } else {
-            AUIKataster.debugOutput("Objekt " + fachdaten
-                    + " konnte nicht gespeichert werden!",
-            "Anh53Panel.saveAnh53Daten");
-
+            log.debug("(Anh53Panel.saveAnh53Daten) " + "Objekt " + fachdaten
+                    + " konnte nicht gespeichert werden!");
         }
         return success;
-
     }
 
     public void completeObjekt() {
@@ -261,15 +265,12 @@ public class Anh53Panel extends JPanel {
             // Objekt_Id setzen
             fachdaten.setBasisObjekt(hauptModul.getObjekt());
 
-
-
             // Objekt speichern
             Anh53Fachdaten.saveFachdaten(fachdaten);
-            AUIKataster.debugOutput("Neues Objekt "+fachdaten+" gespeichert.", "BasisObjektBearbeiten.completeObjekt");
+            log.debug("(BasisObjektBearbeiten.completeObjekt) "
+            		+ "Neues Objekt " + fachdaten + " gespeichert.");
         }
     }
-
-
 
     private JTextArea getAnh53BemerkungArea() {
         if (anh53BemerkungArea == null) {
@@ -507,10 +508,9 @@ public class Anh53Panel extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Objekt "
-                                        + verknuepfung.getId()
-                                        + " wurde gelöscht!",
-                                        "BasisBetreiberSuchen.removeAction");
+                                log.debug("(BasisBetreiberSuchen.removeAction) "
+                                		+ "Objekt " + verknuepfung.getId()
+                                        + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(
                                         "Konnte das Objekt nicht löschen!",

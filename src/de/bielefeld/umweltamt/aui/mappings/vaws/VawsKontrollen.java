@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -36,6 +37,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'VAWS_KONTROLLEN' table.
@@ -46,21 +48,20 @@ public class VawsKontrollen
     extends AbstractVawsKontrollen
     implements Serializable
 {
-
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of VawsKontrollen instances.
      */
-    public VawsKontrollen()
-    {
+    public VawsKontrollen() {
     }
 
     /**
      * Constructor of VawsKontrollen instances given a simple primary key.
      * @param kontrollid
      */
-    public VawsKontrollen(java.lang.Integer kontrollid)
-    {
+    public VawsKontrollen(java.lang.Integer kontrollid) {
         super(kontrollid);
     }
 
@@ -119,7 +120,8 @@ public class VawsKontrollen
                         .setEntity(0, fachdaten)
                         .list();
 
-                AUIKataster.debugOutput(kontrollen.size() + " Kontrollen-Einträge für FD " + fachdaten + " gefunden!", "VawsKontrollen");
+                log.debug(kontrollen.size() + " Kontrollen-Einträge für FD "
+                		+ fachdaten + " gefunden!");
             } catch (HibernateException e) {
                 throw new RuntimeException("Datenbank-Fehler", e);
             } finally {

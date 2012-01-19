@@ -60,6 +60,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
@@ -71,6 +73,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -81,6 +84,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author u633d
  */
 public class Anh56Panel extends JPanel{
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private String name;
     private BasisObjektBearbeiten hauptModul;
 
@@ -176,7 +182,8 @@ public class Anh56Panel extends JPanel{
 
             // Anhang 56 Objekt speichern
             Anh56Fachdaten.saveFachdaten(fachdaten);
-            AUIKataster.debugOutput("Neues Anh 56 Objekt "+fachdaten+" gespeichert.", "BasisObjektBearbeiten.completeObjekt");
+            log.debug("(BasisObjektBearbeiten.completeObjekt) "
+            		+ "Neues Anh 56 Objekt " + fachdaten + " gespeichert.");
         }
     }
 
@@ -241,12 +248,11 @@ public class Anh56Panel extends JPanel{
 
         success = Anh56Fachdaten.saveFachdaten(fachdaten);
         if (success) {
-            AUIKataster.debugOutput("Anh 56 Objekt " + fachdaten.getObjektid() + " gespeichert.",
-            "Anh56Panel.saveFachdaten");
+            log.debug("(Anh56Panel.saveFachdaten) " + "Anh 56 Objekt "
+            		+ fachdaten.getObjektid() + " gespeichert.");
         } else {
-            AUIKataster.debugOutput("Anh 56 Objekt " + fachdaten
-                    + " konnte nicht gespeichert werden!",
-            "Anh56Panel.saveFachdaten");
+            log.debug("(Anh56Panel.saveFachdaten) " + "Anh 56 Objekt "
+            		+ fachdaten + " konnte nicht gespeichert werden!");
         }
         return success;
     }
@@ -285,60 +291,59 @@ public class Anh56Panel extends JPanel{
 
     public void updateForm() throws RuntimeException {
 
-    if (fachdaten != null) {
-        if (fachdaten.getBemerkungen() != null) {
-            getBemerkungenArea().setText(fachdaten.getBemerkungen());
-        }
-        if (fachdaten.getDruckverfahren() != null) {
-            getDruckverfahrenFeld().setText(fachdaten.getDruckverfahren());
-        }
-        if (fachdaten.getVerbrauch() != null) {
-            getVerbrauchFeld().setText(fachdaten.getVerbrauch());
-        }
-        if (fachdaten.getEntsorgung() != null) {
-            getEntsorgungFeld().setText(fachdaten.getEntsorgung());
-        }
-
-        if (fachdaten.getGen58() != null) {
-            getGen58Datum().setDate(fachdaten.getGen58());
-        }
-        if (fachdaten.getGen59() != null) {
-            getGen59Datum().setDate(fachdaten.getGen59());
-        }
-
-
-        if (fachdaten.getAba() != null) {
-            if (fachdaten.getAba() == true) {
-                getAbaCheck().setSelected(true);
-            }
-            else {
-                getAbaCheck().setSelected(false);
-            }
-        }
-        if (fachdaten.getGenpflicht() != null) {
-            if (fachdaten.getGenpflicht() == true) {
-                getGenpflichtCheck().setSelected(true);
-            }
-            else {
-                getGenpflichtCheck().setSelected(false);
-            }
-        }
-        if (fachdaten.getAbwasseranfall() != null) {
-            if (fachdaten.getAbwasseranfall() == true) {
-                getAbwasseranfallCheck().setSelected(true);
-            }
-            else {
-                getAbwasseranfallCheck().setSelected(false);
-            }
-            objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
-        }
-    }
-
+    	if (fachdaten != null) {
+	        if (fachdaten.getBemerkungen() != null) {
+	            getBemerkungenArea().setText(fachdaten.getBemerkungen());
+	        }
+	        if (fachdaten.getDruckverfahren() != null) {
+	            getDruckverfahrenFeld().setText(fachdaten.getDruckverfahren());
+	        }
+	        if (fachdaten.getVerbrauch() != null) {
+	            getVerbrauchFeld().setText(fachdaten.getVerbrauch());
+	        }
+	        if (fachdaten.getEntsorgung() != null) {
+	            getEntsorgungFeld().setText(fachdaten.getEntsorgung());
+	        }
+	
+	        if (fachdaten.getGen58() != null) {
+	            getGen58Datum().setDate(fachdaten.getGen58());
+	        }
+	        if (fachdaten.getGen59() != null) {
+	            getGen59Datum().setDate(fachdaten.getGen59());
+	        }
+	
+	        if (fachdaten.getAba() != null) {
+	            if (fachdaten.getAba() == true) {
+	                getAbaCheck().setSelected(true);
+	            }
+	            else {
+	                getAbaCheck().setSelected(false);
+	            }
+	        }
+	        if (fachdaten.getGenpflicht() != null) {
+	            if (fachdaten.getGenpflicht() == true) {
+	                getGenpflichtCheck().setSelected(true);
+	            }
+	            else {
+	                getGenpflichtCheck().setSelected(false);
+	            }
+	        }
+	        if (fachdaten.getAbwasseranfall() != null) {
+	            if (fachdaten.getAbwasseranfall() == true) {
+	                getAbwasseranfallCheck().setSelected(true);
+	            }
+	            else {
+	                getAbwasseranfallCheck().setSelected(false);
+	            }
+	            objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
+	        }
+	    }
     }
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = Anh56Fachdaten.getAnh56ByObjekt(hauptModul.getObjekt());
-        AUIKataster.debugOutput("Anhang 56 Objekt aus DB geholt: ID" + fachdaten, "Anh56Panel.fetchFormData");
+        log.debug("(Anh56Panel.fetchFormData) "
+        		+ "Anhang 56 Objekt aus DB geholt: ID" + fachdaten);
     }
 
     private JButton getSaveAnh56Button() {
@@ -543,10 +548,9 @@ private JTable getObjektverknuepungTabelle() {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Objekt "
-                                        + verknuepfung.getId()
-                                        + " wurde gelöscht!",
-                                        "BasisBetreiberSuchen.removeAction");
+                                log.debug("(BasisBetreiberSuchen.removeAction) "
+                                		+ "Objekt " + verknuepfung.getId()
+                                        + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(
                                         "Konnte das Objekt nicht löschen!",

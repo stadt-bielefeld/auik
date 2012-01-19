@@ -46,6 +46,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -58,6 +60,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -69,6 +72,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class BWKPanel extends JPanel {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private String name;
     private BasisObjektBearbeiten hauptModul;
 
@@ -193,7 +199,8 @@ public class BWKPanel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         bwk = AnhBwkFachdaten.getAnhBwkByObjekt(hauptModul.getObjekt());
-        AUIKataster.debugOutput("Brennwertkessel aus DB geholt: " + bwk, "BWKPanel.fetchFormData");
+        log.debug("(BWKPanel.fetchFormData) "
+        		+ "Brennwertkessel aus DB geholt: " + bwk);
     }
 
 
@@ -407,12 +414,12 @@ public class BWKPanel extends JPanel {
         success = AnhBwkFachdaten.saveBwk(bwk);
 
         if (success) {
-            AUIKataster.debugOutput("Brennwertkessel " + bwk + " gespeichert.",
-                    "BWKPanel.saveBwkDaten");
+            log.debug("(BWKPanel.saveBwkDaten) "
+            		+ "Brennwertkessel " + bwk + " gespeichert.");
         } else {
-            AUIKataster.debugOutput("Brennwertkessel " + bwk
-                    + " konnte nicht gespeichert werden!",
-            "BWKPanel.saveBwkDaten");
+            log.debug("(BWKPanel.saveBwkDaten) "
+            		+ "Brennwertkessel " + bwk
+                    + " konnte nicht gespeichert werden!");
         }
 
         return success;
@@ -427,7 +434,8 @@ public class BWKPanel extends JPanel {
 
             // Brennwertkessel speichern
             if (AnhBwkFachdaten.saveBwk(bwk)) {
-                AUIKataster.debugOutput("Neuer Brennwertkessel "+bwk+" gespeichert.", "BasisObjektBearbeiten.completeObjekt");
+                log.debug("(BasisObjektBearbeiten.completeObjekt) "
+                		+ "Neuer Brennwertkessel " + bwk + " gespeichert.");
             }
         }
     }
@@ -667,10 +675,10 @@ public class BWKPanel extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Objekt "
+                                log.debug("(BasisBetreiberSuchen.removeAction) "
+                                		+ "Objekt "
                                         + verknuepfung.getId()
-                                        + " wurde gelöscht!",
-                                        "BasisBetreiberSuchen.removeAction");
+                                        + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(
                                         "Konnte das Objekt nicht löschen!",

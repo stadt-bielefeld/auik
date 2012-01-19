@@ -647,12 +647,13 @@ public class ProbepktAuswPanel extends JPanel {
 
                     dialog.setVisible(true);
                 } else {
-                    AUIKataster.debugOutput("Keine Parameter ausgewählt!" ,"showResultOneAxis");
+                    log.debug("(showResultOneAxis) "
+                    		+ "Keine Parameter ausgewählt!");
                 }
             }
         };
 
-        AUIKataster.debugOutput("Bereite Auswertung vor...", "showResultOneAxis");
+        log.debug("(showResultOneAxis) " + "Bereite Auswertung vor...");
         worker.start();
     }
 
@@ -673,12 +674,13 @@ public class ProbepktAuswPanel extends JPanel {
                     AuswertungsDialog dialog = new AuswertungsDialog("Probenahmen", dataSet1, dataSet2, frame);
                     dialog.setVisible(true);
                 } else {
-                    AUIKataster.debugOutput("Keine Parameter ausgewählt!","showResultDualAxis" );
+                    log.debug("(showResultDualAxis) "
+                    		+ "Keine Parameter ausgewählt!");
                 }
             }
         };
 
-        AUIKataster.debugOutput("Bereite Auswertung vor...", "showResultDualAxis");
+        log.debug("(showResultDualAxis) " + "Bereite Auswertung vor...");
         worker.start();
     }
 

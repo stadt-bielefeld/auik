@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -36,6 +37,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'VAWS_VERWALTUNGSVERF' table.
@@ -46,13 +48,13 @@ public class VawsVerwaltungsverf
     extends AbstractVawsVerwaltungsverf
     implements Serializable
 {
-
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of VawsVerwaltungsverf instances.
      */
-    public VawsVerwaltungsverf()
-    {
+    public VawsVerwaltungsverf() {
     }
 
     /* Add customized code below */
@@ -110,7 +112,8 @@ public class VawsVerwaltungsverf
                         .setEntity(0, fachdaten)
                         .list();
 
-                AUIKataster.debugOutput(verfahren.size() + " Verfahrens-Einträge für FD " + fachdaten + " gefunden!", "VawsVerwaltungsverf");
+                log.debug(verfahren.size() + " Verfahrens-Einträge für FD "
+                		+ fachdaten + " gefunden!");
             } catch (HibernateException e) {
                 throw new RuntimeException("Datenbank-Fehler", e);
             } finally {

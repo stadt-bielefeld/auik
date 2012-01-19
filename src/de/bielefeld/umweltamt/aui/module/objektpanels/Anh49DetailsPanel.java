@@ -602,7 +602,8 @@ public class Anh49DetailsPanel extends JPanel{
 
                         if (row != -1) {
                             Anh49Abscheiderdetails absch = (Anh49Abscheiderdetails) abscheiderModel.getObjectAtRow(row);
-                            AUIKataster.debugOutput("Doppelklick auf: " + absch, "Anh49DetailsPanel.abscheiderTabelle");
+                            log.debug("(Anh49DetailsPanel.abscheiderTabelle) "
+                            		+ "Doppelklick auf: " + absch);
                             editAbscheider(absch);
                         }
                     }

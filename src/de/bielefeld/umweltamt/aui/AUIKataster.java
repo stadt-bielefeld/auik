@@ -73,17 +73,6 @@ public class AUIKataster {
 
     private static HauptFrame runningFrame = null;
 
-    // TODO: Stop doing the logging over AUIKataster...
-    // TODO: And then add the method in which the log was called to the output...
-    /**
-     * Gibt Debug-Ausgaben/Fehler auf der Konsole aus.
-     * @param msg Die auszugebende Nachricht
-     * @param src Wo trat der Fehler auf
-     */
-    public static void debugOutput(String msg, String src) {
-        AuikLogger.getLogger().debug("(" + src + "): " + msg);
-    }
-
     /**
      * Wird benutzt um mit im laufenden Betrieb auftretenden
      * Datenbank-Fehlern umzugehen.

@@ -374,8 +374,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 				break;
 			}
 
-			AUIKataster
-					.debugOutput("EDIT: " + tmp, "ParameterModel.editObject");
+			log.debug("(ParameterModel.editObject) " + "EDIT: " + tmp);
 		}
 
         public Object newObject() {
@@ -401,9 +400,7 @@ public class ProbenEditor extends AbstractApplyEditor {
          */
         public void addParameter(AtlParameter parameter) {
             if (isParameterAlreadyThere(parameter)) {
-                AUIKataster.debugOutput(
-                    getClass().getName(),
-                    "Der Parameter wird bereits geprüft.");
+                log.debug("Der Parameter wird bereits geprüft.");
                 return;
             }
 
@@ -430,9 +427,7 @@ public class ProbenEditor extends AbstractApplyEditor {
          */
         public void addParameter(AtlParameter parameter, AtlEinheiten einheit, String analysevon) {
             if (isParameterAlreadyThere(parameter)) {
-                AUIKataster.debugOutput(
-                    getClass().getName(),
-                    "Der Parameter wird bereits geprüft.");
+                log.debug("Der Parameter wird bereits geprüft.");
                 return;
             }
 
@@ -622,9 +617,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     JRDataSource subdata =
                         AtlProbenahmen.getAuftragDataSource(probe);
 
-                    AUIKataster.debugOutput(
-                        getClass().getName(),
-                        "Fülle Probenahmeauftrag mit " +
+                    log.debug("Fülle Probenahmeauftrag mit " +
                         ((JRMapDataSource) subdata).size() + " Zeilen.");
 
                     PDFExporter.getInstance().exportAuftrag(
@@ -725,9 +718,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         // Status auf "Bescheid gedruckt" erhöht wurde, kann
                         // zwar der Bescheid nochmals gedruckt werden, jedoch
                         // wird keine neue kasse.txt angelegt.
-                        AUIKataster.debugOutput(
-                            getClass().getName(),
-                            "Erstelle kasse.txt für Gebührenbescheid.");
+                        log.debug("Erstelle kasse.txt für Gebührenbescheid.");
                         try {
                             createKasseFile(path.getAbsolutePath());
                         }
@@ -954,9 +945,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         File file = dateiChooser.getSelectedFile();
 
         if (file != null) {
-            AUIKataster.debugOutput(
-                "Speichere Datei unter: " + file.getAbsolutePath(),
-                getClass().getName());
+            log.debug("Speichere Datei unter: " + file.getAbsolutePath());
 
             datei.setText(file.getAbsolutePath());
         }
@@ -1266,9 +1255,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             return;
 
         AtlStatus status = probe.getAtlStatus();
-        AUIKataster.debugOutput(
-            "Aktueller Status: " + status.getBezeichnung(),
-            getClass().getName());
+        log.debug("Aktueller Status: " + status.getBezeichnung());
 
         String bezeichnung = status.getBezeichnung();
 
@@ -1322,9 +1309,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
     protected boolean doSave() {
-        AUIKataster.debugOutput(
-            "Speichere Probenahmedetails",
-            getClass().getName());
+        log.debug("Speichere Probenahmedetails");
 
         AtlProbenahmen probe = getProbe();
 
@@ -1418,8 +1403,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         getProbe().getAtlAnalysepositionen().clear();
         getProbe().getAtlAnalysepositionen().addAll(newPositionen);
         // getProbe().setAtlAnalysepositionen(newPositionen);
-        AUIKataster.debugOutput("Analysepositionen geändert: "
-                + getProbe().getAtlAnalysepositionen(), "ProbenEditor.doSave");
+        log.debug("(ProbenEditor.doSave) " + "Analysepositionen geändert: "
+                + getProbe().getAtlAnalysepositionen());
 
         boolean success;
 
@@ -2035,15 +2020,13 @@ class ParameterAuswahlModel extends ListTableModel {
 
     public void filterList() {
         setList(AtlParameter.getParameter());
-        AUIKataster.debugOutput("Suche nach '"
-                + getList().size() + " Ergebnisse)",
-                "ParameterAuswahlModel.filterList()");
+        log.debug("(ParameterAuswahlModel.filterList()) "
+        		+ "Suche nach '" + getList().size() + " Ergebnisse)");
     }
 
     public void AlleParameter() {
         setList(AtlParameter.getAll());
-        AUIKataster.debugOutput("Suche nach '"
-                + getList().size() + " Ergebnisse)",
-                "ParameterAuswahlModel.filterList()");
+        log.debug("(ParameterAuswahlModel.filterList()) "
+        		+ "Suche nach '" + getList().size() + " Ergebnisse)");
     }
 }

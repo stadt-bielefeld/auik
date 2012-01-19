@@ -57,9 +57,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import org.apache.log4j.Logger;
+
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ModulManager;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelApplyDialog;
 import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
 
@@ -68,6 +71,9 @@ import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
  * @author David Klotz
  */
 public abstract class AbstractApplyEditor extends OkCancelApplyDialog {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     protected Object editedObject;
     protected String objektName;
     protected ModulManager manager;
@@ -96,7 +102,7 @@ public abstract class AbstractApplyEditor extends OkCancelApplyDialog {
             // Sicherheit einerseits für bisher ungespeicherte Dialoge,
             // andererseits damit man das Fenster nie zu klein macht.
             if (x > 10 && y > 10) {
-                AUIKataster.debugOutput("Setze Größe auf " + x + "x" + y, "Editor");
+                log.debug("(Editor) " + "Setze Größe auf " + x + "x" + y);
                 // Ändere die Größe dieses Dialogs.
                 this.setSize(x, y);
             }

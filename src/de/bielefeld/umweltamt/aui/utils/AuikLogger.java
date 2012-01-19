@@ -67,16 +67,16 @@ public final class AuikLogger extends Logger {
     	String user = System.getProperty("user.name");
     	
 		// Set to custom settings
-    	if (user.matches("u633l")) { // Gerd
+    	if (user.matches("u633d")) { // Gerd
     		Logger.getRootLogger().setLevel(Level.FATAL);
     		Logger.getLogger("org.hibernate").setLevel(Level.FATAL);
     		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.FATAL);
     	} else if (user.matches("u633z")) { // Connz
-    		Logger.getRootLogger().setLevel(Level.INFO);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.DEBUG);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.mappings").setLevel(Level.DEBUG);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.module").setLevel(Level.DEBUG);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.utils").setLevel(Level.DEBUG);
+    		Logger.getRootLogger().setLevel(Level.ALL);
+    		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.ALL);
+    		Logger.getLogger("de.bielefeld.umweltamt.aui.mappings").setLevel(Level.ALL);
+    		Logger.getLogger("de.bielefeld.umweltamt.aui.module").setLevel(Level.ALL);
+    		Logger.getLogger("de.bielefeld.umweltamt.aui.utils").setLevel(Level.ALL);
     		Logger.getLogger("org.hibernate").setLevel(Level.INFO);
     	}
     	return;

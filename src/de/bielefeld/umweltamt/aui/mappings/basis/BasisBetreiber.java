@@ -27,6 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -34,6 +35,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * Eine Klasse, die eine Zeile der 'BASIS_BETREIBER'-Tabelle
@@ -43,6 +45,9 @@ public class BasisBetreiber
     extends AbstractBasisBetreiber
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     /** Durchsucht die Tabelle nach dem Betreiber-Namen */
     public static final String PROPERTY_NAME = "name";
     /** Durchsucht die Tabelle nach der Betreiber-Anrede */
@@ -117,7 +122,8 @@ public class BasisBetreiber
      */
     public static List findBetreiber(String suche, String property) {
         String suche2 = suche.toLowerCase().trim() + "%";
-        AUIKataster.debugOutput("Suche nach '" + suche2 + "' (" + property + ").", "BasisBetreiber.findBetreiber");
+        log.debug("(BasisBetreiber.findBetreiber) "
+        		+ "Suche nach '" + suche2 + "' (" + property + ").");
 
         String queryString;
         if(PROPERTY_NAME.equals(property)) {
@@ -190,7 +196,8 @@ public class BasisBetreiber
             betrRet = (BasisBetreiber) session.merge(betr);
             tx.commit();
 
-            AUIKataster.debugOutput("Neuer Betr "+ betr +" gespeichert!", "BasisStandort.saveStandort");
+            log.debug("(BasisStandort.saveStandort) "
+            		+ "Neuer Betr "+ betr +" gespeichert!");
         } catch (HibernateException e) {
             betrRet = null;
             e.printStackTrace();

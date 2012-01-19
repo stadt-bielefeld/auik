@@ -59,6 +59,8 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -66,6 +68,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 /**
@@ -73,6 +76,9 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * @author Gerhard Genuit
  */
 public class EntsorgerEditor extends AbstractBaseEditor {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private JTextField namenFeld;
     private JTextField strassenFeld;
     private JFormattedTextField hausnrFeld;
@@ -229,7 +235,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
 
         if (getEntsorger() != null) {
             success = true;
-            AUIKataster.debugOutput("Änderungen gespeichert!", "editEntsorger");
+            log.debug("(editEntsorger) " + "Änderungen gespeichert!");
         } else {
             success = false;
         }

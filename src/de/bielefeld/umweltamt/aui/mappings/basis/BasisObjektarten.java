@@ -96,6 +96,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -103,6 +104,7 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'BASIS_OBJEKTARTEN' table.
@@ -113,6 +115,9 @@ public class BasisObjektarten
     extends AbstractBasisObjektarten
     implements Serializable
 {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     /** Die ID der Objektart "Probenahmepunkt" */
     public static final int PROBEPUNKT = 32;
     /** Die ID der Objektart "Brennwertkessel" */
@@ -410,7 +415,8 @@ public class BasisObjektarten
             tx.commit();
 
             //frame.changeStatus("Neue Objektart "+art.getObejktartid()+" erfolgreich gespeichert!", HauptFrame.SUCCESS_COLOR);
-            AUIKataster.debugOutput("Neue Objektart "+ art +" gespeichert!", "BasisObjektarten.saveObejktart");
+            log.debug("(BasisObjektarten.saveObejktart) "
+            		+ "Neue Objektart "+ art +" gespeichert!");
             //manager.getCache().invalidateCache("standorte");
 
             // Formular zurücksetzen

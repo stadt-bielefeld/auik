@@ -48,6 +48,8 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
@@ -61,6 +63,7 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.EntsorgerEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -71,6 +74,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class Anh50Panel extends JPanel {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     private String name;
     private BasisObjektBearbeiten hauptModul;
 
@@ -155,7 +161,8 @@ public class Anh50Panel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = Anh50Fachdaten.getAnh50ByObjekt(hauptModul.getObjekt());
-        AUIKataster.debugOutput("Zahnarzt aus DB geholt: " + fachdaten, "Anh50Panel.fetchFormData");
+        log.debug("(Anh50Panel.fetchFormData) "
+        		+ "Zahnarzt aus DB geholt: " + fachdaten);
 
         if (entsorg == null || entsorg.length == 0) {
             entsorg = AnhEntsorger.getEntsorg();
@@ -256,9 +263,8 @@ public class Anh50Panel extends JPanel {
         if (getEntsorgerBox().getSelectedItem() != null) {
             fachdaten.setAnhEntsorger((AnhEntsorger) getEntsorgerBox()
                     .getSelectedItem());
-            AUIKataster.debugOutput("Entsorger "
-                    + fachdaten.getAnhEntsorger() + " zugeordnet.",
-                    "Anh50Panel.saveAnh50Daten");
+            log.debug("(Anh50Panel.saveAnh50Daten) " + "Entsorger "
+                    + fachdaten.getAnhEntsorger() + " zugeordnet.");
         } else
             getEntsorgerBox().setSelectedIndex(1);
             fachdaten.setAnhEntsorger((AnhEntsorger) getEntsorgerBox()
@@ -266,12 +272,12 @@ public class Anh50Panel extends JPanel {
 
         success = Anh50Fachdaten.saveFachdaten(fachdaten);
         if (success) {
-            AUIKataster.debugOutput("Zahnarzt " + fachdaten.getBasisObjekt().getBasisBetreiber().getBetrname() + " gespeichert.",
-            "Anh50Panel.saveAnh50Daten");
+            log.debug("(Anh50Panel.saveAnh50Daten) " + "Zahnarzt "
+            		+ fachdaten.getBasisObjekt().getBasisBetreiber().getBetrname()
+            		+ " gespeichert.");
         } else {
-            AUIKataster.debugOutput("Zahnarzt " + fachdaten
-                    + " konnte nicht gespeichert werden!",
-            "Anh50Panel.saveAnh50Daten");
+            log.debug("(Anh50Panel.saveAnh50Daten) " + "Zahnarzt " + fachdaten
+                    + " konnte nicht gespeichert werden!");
         }
         return success;
     }
@@ -289,7 +295,8 @@ public class Anh50Panel extends JPanel {
 
             // Zahnarzt speichern
             Anh50Fachdaten.saveFachdaten(fachdaten);
-            AUIKataster.debugOutput("Neuer Zahnarzt "+fachdaten+" gespeichert.", "BasisObjektBearbeiten.completeObjekt");
+            log.debug("(BasisObjektBearbeiten.completeObjekt) "
+            		+ "Neuer Zahnarzt " + fachdaten + " gespeichert.");
         }
     }
 
@@ -525,10 +532,9 @@ private JButton getSaveAnh50Button() {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                AUIKataster.debugOutput("Objekt "
-                                        + verknuepfung.getId()
-                                        + " wurde gelöscht!",
-                                        "BasisBetreiberSuchen.removeAction");
+                                log.debug("(BasisBetreiberSuchen.removeAction) "
+                                		+ "Objekt " + verknuepfung.getId()
+                                        + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(
                                         "Konnte das Objekt nicht löschen!",
