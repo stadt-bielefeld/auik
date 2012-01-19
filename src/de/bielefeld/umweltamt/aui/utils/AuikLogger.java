@@ -21,8 +21,10 @@
 
 package de.bielefeld.umweltamt.aui.utils;
 
+import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
 /**
  * Specialized logging class which sets different logging levels for different
@@ -72,7 +74,30 @@ public final class AuikLogger extends Logger {
     		Logger.getLogger("org.hibernate").setLevel(Level.FATAL);
     		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.FATAL);
     	} else if (user.matches("u633z")) { // Connz
-    		Logger.getRootLogger().setLevel(Level.ALL);
+    		Logger rootLogger = Logger.getRootLogger();
+    		rootLogger.setLevel(Level.ALL);
+    		ConsoleAppender appender = (ConsoleAppender) rootLogger.getAppender("stdout");
+    		/* Set the output pattern:
+    		 * %C - complete class name
+    		 * %C{1} - class name
+    		 * %d{dd MMM yyyy HH:mm:ss,SSS}, %d{ABSOLUTE} - the date
+    		 * %l - location (slow)
+    		 * %L - line number (slow)
+    		 * %m - message
+    		 * %M - method (slow)
+    		 * %n - \n
+    		 * %p - priority
+    		 * %r - milliseconds from layout creation
+    		 * %t - thread name
+    		 */
+    		((PatternLayout) rootLogger.getAppender("stdout").getLayout())
+    				// milliseconds [thread] LEVEL class.method - message
+//    				.setConversionPattern("%6r [%16.-16t] %-5p %C{1}.%M - %m%n");
+    				// milliseconds LEVEL class.method - message
+//    				.setConversionPattern("%6r %-5p %C{1}.%M - %m%n");
+					// milliseconds LEVEL - message
+    				// Buuh! Farbe geht nicht unter Windows...
+    				.setConversionPattern("\u001b[2;31m%6r %-5p - %m%n\u001b[m");
     		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.ALL);
     		Logger.getLogger("de.bielefeld.umweltamt.aui.mappings").setLevel(Level.ALL);
     		Logger.getLogger("de.bielefeld.umweltamt.aui.module").setLevel(Level.ALL);
