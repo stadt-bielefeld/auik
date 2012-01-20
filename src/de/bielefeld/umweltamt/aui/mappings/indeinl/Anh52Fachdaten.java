@@ -29,6 +29,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
@@ -41,6 +42,9 @@ public class Anh52Fachdaten
     extends AbstractAnh52Fachdaten
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+
     /**
      * Simple constructor of Anh52Fachdaten instances.
      */
@@ -111,7 +115,7 @@ public class Anh52Fachdaten
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "Anh52Fachdaten.save", false);
+                    dbManager.handleDBException(e1, "Anh52Fachdaten.save", false);
                 }
             }
         } finally {

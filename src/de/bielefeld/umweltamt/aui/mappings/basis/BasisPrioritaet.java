@@ -14,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import static org.hibernate.criterion.Example.create;
 
@@ -25,8 +26,11 @@ import static org.hibernate.criterion.Example.create;
 public class BasisPrioritaet 
 	extends AbstractBasisPrioritaet
 	implements Serializable
-	{
-    Session session = HibernateSessionFactory.currentSession();
+{
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+
+	Session session = HibernateSessionFactory.currentSession();
 
 	public void persist(AbstractBasisPrioritaet transientInstance) {
 
@@ -146,7 +150,7 @@ public class BasisPrioritaet
 					try {
 						tx.rollback();
 					} catch (HibernateException e1) {
-						AUIKataster.handleDBException(e1,
+						dbManager.handleDBException(e1,
 								"BasisPrioritaet.save", false);
 					}
 				}
@@ -183,7 +187,7 @@ public class BasisPrioritaet
 					try {
 						tx.rollback();
 					} catch (HibernateException e1) {
-						AUIKataster.handleDBException(e1,
+						dbManager.handleDBException(e1,
 								"BasisPrioritaet.save", false);
 					}
 				}

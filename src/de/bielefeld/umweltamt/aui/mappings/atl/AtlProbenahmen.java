@@ -42,6 +42,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
@@ -59,6 +60,8 @@ public class AtlProbenahmen
     extends AbstractAtlProbenahmen
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -457,7 +460,7 @@ public class AtlProbenahmen
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "ProbenahmenModel.objectRemoved", false);
+                    dbManager.handleDBException(e1, "ProbenahmenModel.objectRemoved", false);
                 }
             }
         } finally {

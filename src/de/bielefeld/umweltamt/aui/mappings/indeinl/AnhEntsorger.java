@@ -32,6 +32,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
@@ -43,6 +44,9 @@ public class AnhEntsorger
     extends AbstractAnhEntsorger
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+
     /**
      * Simple constructor of Anh50Entsorger instances.
      */
@@ -124,7 +128,7 @@ public class AnhEntsorger
                     tx.rollback();
                 } catch (HibernateException e1) {
                     e1.printStackTrace();
-                    AUIKataster.handleDBException(e1, "EntsorgerEditor.doSpeichern", false);
+                    dbManager.handleDBException(e1, "EntsorgerEditor.doSpeichern", false);
                 }
             }
         } finally {

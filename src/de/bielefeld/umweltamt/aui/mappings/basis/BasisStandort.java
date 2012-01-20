@@ -34,6 +34,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -45,6 +46,8 @@ public class BasisStandort
     extends AbstractBasisStandort
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = 2774552431508434460L;
@@ -298,7 +301,7 @@ public class BasisStandort
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "BasisStandort.removeStandort", false);
+                    dbManager.handleDBException(e1, "BasisStandort.removeStandort", false);
                 }
             }
         } finally {

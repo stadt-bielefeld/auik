@@ -34,6 +34,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -46,6 +47,8 @@ public class VawsVerwaltungsgebuehren
     extends AbstractVawsVerwaltungsgebuehren
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -126,7 +129,7 @@ public class VawsVerwaltungsgebuehren
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "VawsVerwaltungsgebuehren.save", false);
+                    dbManager.handleDBException(e1, "VawsVerwaltungsgebuehren.save", false);
                 }
             }
         } finally {
@@ -162,7 +165,7 @@ public class VawsVerwaltungsgebuehren
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "VawsVerwaltungsgebuehren.remove", false);
+                    dbManager.handleDBException(e1, "VawsVerwaltungsgebuehren.remove", false);
                 }
             }
         } finally {

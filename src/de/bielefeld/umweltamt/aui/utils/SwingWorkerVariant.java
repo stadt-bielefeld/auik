@@ -28,6 +28,7 @@ import javax.swing.SwingUtilities;
 import org.hibernate.HibernateException;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 
 /**
  * This is a variant of the SwingWorker
@@ -44,6 +45,9 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
  */
 public abstract class SwingWorkerVariant
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+
     private Thread thread;
 
     /**
@@ -143,7 +147,7 @@ private void construct()
     catch (RuntimeException e)
     {
         if (e.getCause() instanceof HibernateException) {
-            AUIKataster.handleDBException(e, "SwingWorker.doNonUILogic", fatalError);
+            dbManager.handleDBException(e, "SwingWorker.doNonUILogic", fatalError);
         } else {
             throw new RuntimeException("SwingWorker error in doNonUILogic", e);
         }

@@ -95,6 +95,8 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class SettingsManager {
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
+    /** GUI Manager */
+    private static final GUIManager guiManager = GUIManager.getInstance();
 
     private BasisStandort standort;
     private Properties instanceSettings;
@@ -186,7 +188,7 @@ public class SettingsManager {
      */
     public void saveSettings() {
         try {
-            appSettings.store(new FileOutputStream("auik.properties"), "Allgemeine Einstellungen für " + AUIKataster.SHORT_NAME + " v" + AUIKataster.getVersion());
+            appSettings.store(new FileOutputStream("auik.properties"), "Allgemeine Einstellungen für " + GUIManager.SHORT_NAME + " v" + guiManager.getVersion());
         } catch (IOException e) {
             // Tritt auf, wenn aus irgend einem Grund keine
             // Datei gespeichert werden kann.

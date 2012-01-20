@@ -31,6 +31,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -44,6 +45,8 @@ public class Anh49Kontrollen
     extends AbstractAnh49Kontrollen
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -141,7 +144,7 @@ public class Anh49Kontrollen
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "Anh49Kontrollen.objectRemoved", false);
+                	dbManager.handleDBException(e1, "Anh49Kontrollen.objectRemoved", false);
                 }
             }
         } finally {

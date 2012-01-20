@@ -33,6 +33,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
@@ -45,6 +46,9 @@ public class IndeinlGenehmigung
     extends AbstractIndeinlGenehmigung
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+
     /**
      * Simple constructor of IndeinlGenehmigung instances.
      */
@@ -120,7 +124,7 @@ public class IndeinlGenehmigung
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "GenFachdaten.save", false);
+                    dbManager.handleDBException(e1, "GenFachdaten.save", false);
                 }
             }
         } finally {

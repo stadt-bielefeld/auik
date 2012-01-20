@@ -33,6 +33,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.type.Type;
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
@@ -45,6 +46,9 @@ public class ViewBwk
     extends AbstractViewBwk
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+
     /**
      * Simple constructor of AnhBwk instances.
      */
@@ -123,7 +127,7 @@ public class ViewBwk
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "AnhBwk.save", false);
+                    dbManager.handleDBException(e1, "AnhBwk.save", false);
                 }
             }
         } finally {

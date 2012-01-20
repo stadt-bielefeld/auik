@@ -53,14 +53,14 @@ public final class DatabaseManager {
     /**
      * Wird benutzt um mit im laufenden Betrieb auftretenden
      * Datenbank-Fehlern umzugehen.
-     * TODO: Sort out the handling of the gui (MVC-Pattern)
+     * 
      * @param exception Die aufgetretene Exception
      * @param src Wo trat der Fehler auf
      * @param fatal Soll das Programm beendet werden?
-     * @param runningFrame Aktuelles Fenster 
      */
     public void handleDBException(Throwable exception, String src,
-    		boolean fatal, HauptFrame runningFrame) {
+    		boolean fatal) {
+    	HauptFrame runningFrame = GUIManager.getInstance().getRunningFrame();
         // If we already have a gui, show the error there.
         if (runningFrame != null) {
             runningFrame.changeStatus("Ein Datenbank-Fehler ist aufgetreten!",

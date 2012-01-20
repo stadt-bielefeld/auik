@@ -1,5 +1,5 @@
 /**
- * Copyright 2005-2011, Stadt Bielefeld
+ * Copyright 2005-2042, Stadt Bielefeld
  *
  * This file is part of AUIK (Anlagen- und Indirekteinleiter-Kataster).
  *
@@ -48,193 +48,40 @@
  */
 package de.bielefeld.umweltamt.aui;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * Das Anlagen- und Indirekteinleiter-Kataster. Diese Klasse stellt den
  * eigentlichen Einstiegspunkt der Anwendung dar. Die Methode {@link main}
  * sollte dazu verwendet werden, das Programm zu starten.
+ * 
+ * TODO: Actually this is NOT the class which is started but AUIKSplash which
+ * is my next to fix item...
  *
  * @author David Klotz
  */
 public class AUIKataster {
+
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
-    /** Der kurze Name des Programms */
-    public static final String SHORT_NAME= "AUI-Kataster";
-    /** Der lange Name des Programms */
-    public static final String LONG_NAME= "Anlagen- und Indirekteinleiter-Kataster";
-
-    private static HauptFrame runningFrame = null;
 
     /**
-     * Wird benutzt um mit im laufenden Betrieb auftretenden
-     * Datenbank-Fehlern umzugehen.
-     * @param e Die aufgetretene Exception
-     * @param src Wo trat der Fehler auf
-     * @param fatal Soll das Programm beendet werden?
-     */
-    public static void handleDBException(Throwable e, String src, boolean fatal) {
-    	// TODO: This is just a quick fix. Think about MVC-Pattern...
-    	DatabaseManager.getInstance().handleDBException(e, src, fatal, runningFrame);
-    }
-
-    /**
-     * Die Hauptmethode des AUI-Katasters. Hier wird der {@link SettingsManager}
-     * sowie das {@link HauptFrame} instanziert. Das {@link HauptFrame} bekommt
-     * die Instanz des {@link SettingsManager} als Konstruktor &uuml;bergeben.
+     * Die Hauptmethode des AUI-Katasters. 
      * @param args Kommandozeilenargumente
      */
     public static void main(String[] args) {
-        //long time = System.currentTimeMillis();
-        SettingsManager settings = SettingsManager.getInstance();
-        runningFrame = new HauptFrame(settings);
-        //frame.show();
-        //debugOutput((System.currentTimeMillis() - time) + " ms", "ZeitDif");
-    }
+    	log.debug("Starting everything here.");
+    	
+    	/* Command line arguments */
+    	int i = 0;
+    	for (String arg:args) { /* Nice - for each in Java */
+    		log.debug("args[" + i++ + "]: " + arg);
+    	}
+    	
+    	/* Start the GUI */
+    	GUIManager.getInstance().startGUI();
 
-
-    /**
-     * Diese Methode liefert die aktuelle Version der Software.
-     *
-     * @return die Versionsnummer
-     */
-    public static final String getVersion() {
-        InputStream    is      = null;
-        BufferedReader in      = null;
-        String         version = null;
-
-        try {
-            is      = AUIKataster.class.getResourceAsStream("/de/bielefeld/umweltamt/aui/resources/version.txt");
-            in      = new BufferedReader(new InputStreamReader(is));
-            version = in.readLine();
-        }
-        catch (FileNotFoundException fnfe) {
-            log.error("Could not find version file: 'version.txt'");
-        }
-        catch (NullPointerException npe) {
-            log.error("Could not find version file: 'version.txt'");
-        }
-        catch (IOException ioe) {
-            log.error("Error while reading version file: 'version.txt'");
-        }
-        finally {
-            if (in != null) {
-                try {
-                    in.close();
-                }
-                catch (IOException ioe) { /* do nothing */ }
-            }
-        }
-
-        return version;
-    }
-
-
-    /**
-     * Diese Methode liefert die aktuelle Revision der Software aus dem SCM.
-     */
-    public static final String getRevision() {
-        InputStream    is  = null;
-        BufferedReader in  = null;
-        String         rev = null;
-
-        try {
-            is = AUIKataster.class.getResourceAsStream(
-                "/de/bielefeld/umweltamt/aui/resources/revision.txt");
-            in  = new BufferedReader(new InputStreamReader(is));
-            rev = in.readLine();
-        }
-        catch (FileNotFoundException fnfe) {
-            log.error("Could not find revision file: 'revision.txt'");
-        }
-        catch (NullPointerException npe) {
-            log.error("Could not find revision file: 'revision.txt'");
-        }
-        catch (IOException ioe) {
-            log.error("Error while reading revision file: 'revision.txt'");
-        }
-        finally {
-            if (in != null) {
-                try {
-                    in.close();
-                }
-                catch (IOException ioe) { /* do nothing */ }
-            }
-        }
-
-        return rev;
-    }
-
-
-    /**
-     * Diese Methode liefert eine Liste der Autoren des AUIK.
-     *
-     * @return die Autoren des AUIK als Array.
-     */
-    private static final String[] getAuthors() {
-        ArrayList<String> authors = new ArrayList<String>();
-        InputStream    is = null;
-        BufferedReader in = null;
-
-        try {
-            is = AUIKataster.class.getResourceAsStream(
-                "/de/bielefeld/umweltamt/aui/resources/authors.txt");
-            in = new BufferedReader(new InputStreamReader(is));
-            String line = null;
-
-            while ((line = in.readLine()) != null) {
-                authors.add(line);
-            }
-        }
-        catch (FileNotFoundException fnfe) {
-            log.error("Could not find authors file: 'authors.txt'");
-        }
-        catch (NullPointerException npe) {
-            log.error("Could not find authors file: 'authors.txt'");
-        }
-        catch (IOException ioe) {
-            log.error("Error while reading authors file: 'authors.txt'");
-        }
-        finally {
-            if (in != null) {
-                try {
-                    in.close();
-                }
-                catch (IOException ioe) { /* do nothing */ }
-            }
-        }
-
-        return (String[]) authors.toArray(new String[authors.size()]);
-    }
-
-
-    /**
-     * Diese Methode liefert die Liste der Autoren als HTML Tabelle formatiert.
-     *
-     * @return die Autorenliste als HTML Tabelle.
-     */
-    public static final String getAuthorsAsHTML() {
-        String[] authors = getAuthors();
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("<table>");
-
-        for (String author: authors) {
-            sb.append("<tr><td>");
-            sb.append(author);
-            sb.append("</td></tr>");
-        }
-
-        sb.append("</table>");
-
-        return sb.toString();
+    	// TODO: We leave the program somewhere else - is this bad?
+    	log.debug("Should land here in the end.");
     }
 }

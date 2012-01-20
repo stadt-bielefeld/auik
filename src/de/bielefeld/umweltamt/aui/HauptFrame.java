@@ -145,6 +145,9 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * @author David Klotz
  */
 public class HauptFrame extends JFrame {
+	
+	/** GUI Manager */
+	private static final GUIManager guiManager = GUIManager.getInstance();
 
     /**    Die Standard-Größe für die Kategorie-Buttons */
     //static final Dimension BUTTON_SIZE = new Dimension(70,70);
@@ -154,6 +157,7 @@ public class HauptFrame extends JFrame {
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = 4233252729652695263L;
+	
 	/** Die Farbe für Fehlermeldungen */
     public static final Color ERROR_COLOR = new Color(200, 0, 0);
     /** Die Farbe für Erfolgsmeldungen */
@@ -266,7 +270,7 @@ public class HauptFrame extends JFrame {
         this.setContentPane(getJContentPane());
         ImageIcon icon = (ImageIcon) AuikUtils.getIcon(16, "uaicon16.png", "Umweltamt");
         this.setIconImage(icon.getImage());
-        this.setTitle(AUIKataster.SHORT_NAME);
+        this.setTitle(GUIManager.SHORT_NAME);
 
         // Wird benötigt, um das Fenster mit dem Schließen-Icon zu schließen
         this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -624,21 +628,21 @@ public class HauptFrame extends JFrame {
             aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     showInfoMessage("<html><table valign='top'>"
-                            + "<tr><th align='left'>Version:</th><td>"+AUIKataster.getVersion()+ " " + AUIKataster.getRevision() +"</td>"
+                            + "<tr><th align='left'>Version:</th><td>"+guiManager.getVersion()+ " " + guiManager.getRevision() +"</td>"
                             + "<tr><th align='left'>Copyright:</th><td>2005 - 2011 Umweltamt Bielefeld</td></tr>"
                             + "<tr><th align='left'>Projekthomepage:</th><td><a href='http://auik.wald.intevation.org'>http://auik.wald.intevation.org</a></td></tr>"
                             + "<tr><th align='left'>Datenbank: </th><td>"+ HibernateSessionFactory.getDBUrl() +"</td></tr>"
 // There is no kind of debug mode - just different levels of verbosity which is
-// Not influenced by this variable any more.
+// not influenced by this variable any more.
 //                            + "<tr><th align='left'>Debug-Modus: </th><td>"+ ((AUIKataster.DEBUG) ? "An" : "Aus") +"</td></tr>"
 // TODO: Maybe add log level here - but which? We can have different levels all
 // over the place...                            
-                            + "<tr><th align='left'>Autoren:</th><td>" + AUIKataster.getAuthorsAsHTML() + "</td></tr>"
+                            + "<tr><th align='left'>Autoren:</th><td>" + guiManager.getAuthorsAsHTML() + "</td></tr>"
                             + "<tr><th align='left'>Weiterentwicklung seit 2011:</th><td>"
                             + "<table valign='top'><tr><td>Intevation GmbH</td><td><img src='" + HauptFrame.class.getResource("icons/intevation-logo-50ppi-nontrans.png") + "'></td></tr></table>"
                             + "</td></tr>"
                             + "</table></html>",
-                        "Info über's "+AUIKataster.SHORT_NAME);
+                        "Info über's "+GUIManager.SHORT_NAME);
                 }
             });
         }
@@ -676,8 +680,8 @@ public class HauptFrame extends JFrame {
         if (titlePanel == null) {
             titlePanel = new GradientPanel(new BorderLayout(), Color.WHITE);
             titlePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-            titlePanel.add(new JLabel(AuikUtils.getIcon(32, "uaicon32.png", AUIKataster.SHORT_NAME), JLabel.LEADING), BorderLayout.WEST);
-            JLabel titleLabel = new JLabel(AUIKataster.LONG_NAME, JLabel.TRAILING);
+            titlePanel.add(new JLabel(AuikUtils.getIcon(32, "uaicon32.png", GUIManager.SHORT_NAME), JLabel.LEADING), BorderLayout.WEST);
+            JLabel titleLabel = new JLabel(GUIManager.LONG_NAME, JLabel.TRAILING);
             titleLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
             titlePanel.add(titleLabel, BorderLayout.CENTER);
         }
@@ -961,7 +965,7 @@ public class HauptFrame extends JFrame {
         private boolean busy = false;
 
         public BenutzerDatenDialog(Frame owner) throws HeadlessException {
-            super(owner, "Willkommen im "+AUIKataster.SHORT_NAME, true);
+            super(owner, "Willkommen im " + GUIManager.SHORT_NAME, true);
             this.initialize();
         }
 

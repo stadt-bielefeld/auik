@@ -38,6 +38,8 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  */
 public class HibernateSessionFactory {
 
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -124,7 +126,7 @@ public class HibernateSessionFactory {
                 session.close();
                 log.debug("Session geschlossen!");
             } catch (HibernateException e) {
-                AUIKataster.handleDBException(e, "HibernateSessionFactory.closeSession", false);
+            	dbManager.handleDBException(e, "HibernateSessionFactory.closeSession", false);
             }
         }
     }

@@ -31,6 +31,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -44,6 +45,8 @@ public class VawsFachdaten
     extends AbstractVawsFachdaten
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -188,7 +191,7 @@ public class VawsFachdaten
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "VawsFachdaten.save", false);
+                    dbManager.handleDBException(e1, "VawsFachdaten.save", false);
                 }
             }
         } finally {
@@ -222,7 +225,7 @@ public class VawsFachdaten
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "VawsFachdaten.remove", false);
+                    dbManager.handleDBException(e1, "VawsFachdaten.remove", false);
                 }
             }
         } finally {

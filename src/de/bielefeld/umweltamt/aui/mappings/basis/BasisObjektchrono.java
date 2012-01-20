@@ -32,6 +32,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
@@ -44,6 +45,9 @@ public class BasisObjektchrono
     extends AbstractBasisObjektchrono
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+
     /**
      * Simple constructor of VawsObjektchrono instances.
      */
@@ -113,7 +117,7 @@ public class BasisObjektchrono
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "BasisObjektchrono.save", false);
+                	dbManager.handleDBException(e1, "BasisObjektchrono.save", false);
                 }
             }
         } finally {
@@ -147,7 +151,7 @@ public class BasisObjektchrono
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "BasisObjektchrono.remove", false);
+                	dbManager.handleDBException(e1, "BasisObjektchrono.remove", false);
                 }
             }
         } finally {

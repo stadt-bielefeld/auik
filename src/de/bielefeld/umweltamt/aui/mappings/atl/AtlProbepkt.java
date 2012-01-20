@@ -35,6 +35,7 @@ import org.hibernate.Transaction;
 import org.hibernate.type.Type;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
@@ -49,6 +50,8 @@ public class AtlProbepkt
     extends AbstractAtlProbepkt
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -277,7 +280,7 @@ public class AtlProbepkt
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "AtlProbepkt.save", false);
+                	dbManager.handleDBException(e1, "AtlProbepkt.save", false);
                 }
             }
         } finally {
@@ -307,7 +310,7 @@ public class AtlProbepkt
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "ProbepunktPanel.saveProbepunktDaten", false);
+                	dbManager.handleDBException(e1, "ProbepunktPanel.saveProbepunktDaten", false);
                 }
             }
         } finally {

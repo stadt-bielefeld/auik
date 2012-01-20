@@ -33,6 +33,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
@@ -44,6 +45,9 @@ public class BasisObjekt
     extends AbstractBasisObjekt
     implements Serializable
 {
+    /** Database manager */
+    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+
     private java.lang.Integer prioritaet;
 	
     /**
@@ -284,7 +288,7 @@ public class BasisObjekt
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "BasisObjekt.save", false);
+                	dbManager.handleDBException(e1, "BasisObjekt.save", false);
                 }
             }
         } finally {
@@ -319,7 +323,7 @@ public class BasisObjekt
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "BasisObjekt.save", false);
+                	dbManager.handleDBException(e1, "BasisObjekt.save", false);
                 }
             }
         } finally {
@@ -351,7 +355,7 @@ public class BasisObjekt
                 try {
                     tx.rollback();
                 } catch (HibernateException e1) {
-                    AUIKataster.handleDBException(e1, "BasisObjektModel.objectRemoved", false);
+                	dbManager.handleDBException(e1, "BasisObjektModel.objectRemoved", false);
                 }
             }
         } finally {
