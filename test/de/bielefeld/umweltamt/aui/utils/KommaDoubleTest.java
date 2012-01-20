@@ -26,7 +26,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.Locale;
 import java.util.Random;
 
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,7 +43,7 @@ import com.ibm.icu.text.NumberFormat;
 public class KommaDoubleTest {
 
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 	/* Some tool classes */
 	private static Random randomNumberGenerator;
 	private static NumberFormat numberFormatter;
