@@ -52,7 +52,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -83,7 +83,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  */
 public class UebergabePanel extends JPanel {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -180,8 +180,7 @@ public class UebergabePanel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = IndeinlUebergabestelle.getUebergabeByObjekt(hauptModul.getObjekt());
-        log.debug("(UebergabePanel.fetchFormData) "
-        		+ "Uebergabestelle Objekt aus DB geholt: ID" + fachdaten);
+        log.debug("Uebergabestelle Objekt aus DB geholt: ID" + fachdaten);
     }
 
     public void updateForm() throws RuntimeException {
@@ -303,12 +302,10 @@ public class UebergabePanel extends JPanel {
 
         success = IndeinlUebergabestelle.saveFachdaten(fachdaten);
         if (success) {
-            log.debug("(Anh40Panel.saveAnh40Daten) "
-            		+ "Uebergabestelle Objekt " + fachdaten.getObjektid()
+            log.debug("Uebergabestelle Objekt " + fachdaten.getObjektid()
                     + " gespeichert.");
         } else {
-            log.debug("(Anh40Panel.saveAnh40Daten) "
-            		+ "Uebergabestelle Objekt " + fachdaten
+            log.debug("Uebergabestelle Objekt " + fachdaten
                     + " konnte nicht gespeichert werden!");
         }
         return success;
@@ -323,8 +320,7 @@ public class UebergabePanel extends JPanel {
 
             // Uebergabestelle speichern
             IndeinlUebergabestelle.saveFachdaten(fachdaten);
-            log.debug("(BasisObjektBearbeiten.completeObjekt) "
-            		+ "Neues Uebergabestelle Objekt " + fachdaten
+            log.debug("Neues Uebergabestelle Objekt " + fachdaten
                     + " gespeichert.");
         }
     }
@@ -506,8 +502,7 @@ public class UebergabePanel extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt " + verknuepfung.getId()
+                                log.debug("Objekt " + verknuepfung.getId()
                                         + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(

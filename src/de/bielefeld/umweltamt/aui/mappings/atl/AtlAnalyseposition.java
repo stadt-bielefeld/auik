@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -50,7 +50,7 @@ public class AtlAnalyseposition
     implements Serializable
 {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of AtlAnalyseposition instances.
@@ -379,7 +379,7 @@ public class AtlAnalyseposition
         if (pkt != null) {
             query += "and pos.atlProbenahmen.atlProbepkt.objektid = '" + pkt + "' ";
         } else {
-            log.debug("(getAnalysepos) " + "objektid = null");
+            log.debug("objektid = null");
         }
 
         query += "order by pos.atlProbenahmen.datumDerEntnahme";
@@ -439,13 +439,13 @@ public class AtlAnalyseposition
         if (pkt != null) {
             query += "and pos.atlProbenahmen.atlProbepkt.objektid = '" + pkt + "' ";
         } else {
-            log.debug("(getSielhautpos) " + "objektid = null");
+            log.debug("objektid = null");
         }
 
         if (param != null) {
             query += "and pos.atlParameter.bezeichnung = '" + param + "' ";
         } else {
-            log.debug("(getSielhautpos) " + "param = null");
+            log.debug("param = null");
         }
 
         query += "order by pos.atlProbenahmen.datumDerEntnahme";

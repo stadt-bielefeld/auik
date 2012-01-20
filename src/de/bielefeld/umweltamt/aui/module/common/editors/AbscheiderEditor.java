@@ -67,7 +67,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -88,7 +88,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  */
 public class AbscheiderEditor extends AbstractBaseEditor{
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private JTextField lageFeld;
     private JTextField herstellerFeld;
@@ -358,11 +358,9 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 
         boolean save = Anh49Abscheiderdetails.saveAbscheider(getDetails());
         if (save = true) {
-            log.debug("(editStandort) " + "Änderungen gespeichert!");
-            return true;
-        } else {
-            return false;
+            log.debug("Änderungen gespeichert!");
         }
+        return save;
     }
 
 

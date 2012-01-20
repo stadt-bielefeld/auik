@@ -28,7 +28,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -49,7 +49,7 @@ public class VawsAbfuellflaeche
     implements Serializable
 {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     // Für die Umwandlung von Bool'schen Werten zu Shorts
     private static short fW = 0;
@@ -121,8 +121,7 @@ public class VawsAbfuellflaeche
 
         if (tmp.size() > 0) {
             flaeche = (VawsAbfuellflaeche) tmp.get(0);
-            log.debug("(VawsAbfuellflaeche.getAbfuellflaeche()) "
-            		+ "Fläche '" + flaeche + "' geladen!");
+            log.debug("Fläche '" + flaeche + "' geladen!");
         } else {
             // Bei so ziemlich 95% aller Tankstellen gibts ein VawsFachdaten-
             // Objekt, aber kein VawsAbfuellflaechen-Objekt.
@@ -136,8 +135,7 @@ public class VawsAbfuellflaeche
 
             flaeche = new VawsAbfuellflaeche();
             flaeche.setVawsFachdaten(fachdaten);
-            log.debug("(VawsAbfuellflaeche.getAbfuellflaeche()) "
-            		+ "Neue Fläche für '" + fachdaten + "' erzeugt!");
+            log.debug("Neue Fläche für '" + fachdaten + "' erzeugt!");
         }
 
         return flaeche;

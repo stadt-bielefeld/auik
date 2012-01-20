@@ -59,7 +59,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -82,7 +82,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  */
 public class Anh52Panel extends JPanel{
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -157,8 +157,7 @@ public class Anh52Panel extends JPanel{
 
             // Anhang 52 Objekt speichern
             Anh52Fachdaten.saveFachdaten(fachdaten);
-            log.debug("(BasisObjektBearbeiten.completeObjekt) "
-            		+ "Neues Anh 52 Objekt " + fachdaten + " gespeichert.");
+            log.debug("Neues Anh 52 Objekt " + fachdaten + " gespeichert.");
         }
     }
 
@@ -208,11 +207,11 @@ public class Anh52Panel extends JPanel{
 
         success = Anh52Fachdaten.saveFachdaten(fachdaten);
         if (success) {
-            log.debug("(Anh52Panel.saveFachdaten) " + "Anh 52 Objekt "
-            		+ fachdaten.getObjektid() + " gespeichert.");
+            log.debug("Anh 52 Objekt " + fachdaten.getObjektid()
+            		+ " gespeichert.");
         } else {
-            log.debug("(Anh52Panel.saveFachdaten) " + "Anh 52 Objekt "
-            		+ fachdaten + " konnte nicht gespeichert werden!");
+            log.debug("Anh 52 Objekt " + fachdaten
+            		+ " konnte nicht gespeichert werden!");
         }
         return success;
     }

@@ -27,7 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -46,7 +46,7 @@ public class BasisStandort
     implements Serializable
 {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = 2774552431508434460L;
 
 	/**
@@ -154,8 +154,7 @@ public class BasisStandort
         String strasse2 = strasse.toLowerCase().trim() + "%";
         Integer hausNummer = new Integer(hausnr);
 
-        log.debug("(BasisStandort.findStandorte) "
-        		+ "Suche nach '" + strasse2 + "' Nr. " + hausnr);
+        log.debug("Suche nach '" + strasse2 + "' Nr. " + hausnr);
         List<?> standorte;
         try {
             Session session = HibernateSessionFactory.currentSession();
@@ -210,8 +209,7 @@ public class BasisStandort
             tx.commit();
 
             //frame.changeStatus("Neuer Standort "+bsta.getStandortid()+" erfolgreich gespeichert!", HauptFrame.SUCCESS_COLOR);
-            log.debug("(BasisStandort.saveStandort) "
-            		+ "Neuer Standort "+ bsta +" gespeichert!");
+            log.debug("Neuer Standort "+ bsta +" gespeichert!");
             //manager.getCache().invalidateCache("standorte");
 
             // Formular zurücksetzen

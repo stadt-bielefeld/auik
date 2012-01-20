@@ -91,7 +91,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
@@ -132,7 +132,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  */
 public class VawsEditor extends AbstractBaseEditor {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private VawsAbfuellflaeche abfuellflaeche;
     private VawsAbscheider abscheider;

@@ -25,7 +25,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -45,7 +45,7 @@ public class VawsFachdaten
     implements Serializable
 {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of VawsFachdaten instances.

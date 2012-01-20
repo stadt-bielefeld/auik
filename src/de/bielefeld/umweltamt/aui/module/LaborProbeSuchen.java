@@ -87,7 +87,7 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -113,7 +113,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  */
 public class LaborProbeSuchen extends AbstractModul {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String iconPath = "filefind32.png";
 
@@ -297,7 +297,7 @@ public class LaborProbeSuchen extends AbstractModul {
             probeEditAction = new AbstractAction("Bearbeiten") {
                 public void actionPerformed(ActionEvent e) {
                     int row = getProbeTabelle().getSelectedRow();
-                    log.debug("(probeTabelle) " + "Enter in Zeile " + row);
+                    log.debug("Enter in Zeile " + row);
 
                     // Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
                     if (row != -1) {
@@ -324,8 +324,7 @@ public class LaborProbeSuchen extends AbstractModul {
                         if (answer == JOptionPane.YES_OPTION) {
                             if (probeModel.removeRow(row)) {
                                 frame.changeStatus("Probenahme gelöscht.", HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Probe " + probe + " wurde gelöscht!");
+                                log.debug("Probe " + probe + " wurde gelöscht!");
                             } else {
                                 frame.changeStatus("Konnte die Probenahme nicht löschen!", HauptFrame.ERROR_COLOR);
                             }
@@ -383,8 +382,7 @@ public class LaborProbeSuchen extends AbstractModul {
                         int row = getProbeTabelle().rowAtPoint(origin);
 
                         AtlProbenahmen probe = probeModel.getRow(row);
-                        log.debug("(BasisBetreiberSuchen) "
-                        		+ "Doppelklick auf Zeile " + row);
+                        log.debug("Doppelklick auf Zeile " + row);
                         editProbe(probe);
                     }
                 }

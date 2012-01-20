@@ -89,7 +89,7 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.TableColumn;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -119,7 +119,7 @@ public class Anh49AnalysenPanel extends JPanel{
      */
 
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private class Anh49AnalysenModel extends EditableListTableModel {
         private Anh49Fachdaten fachdaten;

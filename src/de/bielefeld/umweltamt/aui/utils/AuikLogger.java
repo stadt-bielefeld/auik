@@ -21,90 +21,37 @@
 
 package de.bielefeld.umweltamt.aui.utils;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
 
 /**
- * Specialized logging class which sets different logging levels for different
- * users and offers a method for getting the class logger directly. 
+ * Specialized logging class which has different logging levels for different
+ * users and offers a method for getting the class logger directly and
+ * create log entries with an added source field (only for level debug so far). 
  * 
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
-public final class AuikLogger extends Logger {
+public class AuikLogger extends Logger {
 	
-	/** We only need to run the init method once */
-	private static boolean needsToRunInit = true;
-
 	/** Constructor */
 	protected AuikLogger(String name) {
 		super(name);
-		if (AuikLogger.needsToRunInit) init();
 	}
 	
 	/** Get a class specific logger */
-	public static Logger getLogger() {
-		if (AuikLogger.needsToRunInit) init();
-		return AuikLogger.getLogger(AuikLogger.getCallingClassName());
+	public static AuikLogger getLogger() {
+		return (AuikLogger) Logger.getLogger(AuikLogger.getCallingClassName(),
+				new AuikLoggerFactory());
 	}
-	
-	/** Initialize the Logger with user specific log levels */
-	private static void init() {
-		AuikLogger.setSpecialLogLevelsByUser();
-		// If we want to do some global formatting, it would go here.
-		needsToRunInit = false;
-		return;
+
+	/**
+	 * Imitate the old logging with message and source.
+	 * TODO: Do we really still need this?
+	 * @param message The log message
+	 * @param src The source of the log message
+	 */
+	public void debug(Object message, String src) {
+		super.debug("(" + src + ")" + message);
 	}
-	
-    /**
-     * This method sets the log level according to the user. It is meant to be
-     * used by programmers to set their log level individually while
-     * programming. For all other users the log level from the file
-     * log4j.properties is used.
-     * 
-     * TODO: Load the settings from AUIK.properties.
-     */
-    private static void setSpecialLogLevelsByUser() {
-    	String user = System.getProperty("user.name");
-    	
-		// Set to custom settings
-    	if (user.matches("u633d")) { // Gerd
-    		Logger.getRootLogger().setLevel(Level.FATAL);
-    		Logger.getLogger("org.hibernate").setLevel(Level.FATAL);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.FATAL);
-    	} else if (user.matches("u633z")) { // Connz
-    		Logger rootLogger = Logger.getRootLogger();
-    		rootLogger.setLevel(Level.ALL);
-    		/* Set the output pattern:
-    		 * %C - complete class name
-    		 * %C{1} - class name
-    		 * %d{dd MMM yyyy HH:mm:ss,SSS}, %d{ABSOLUTE} - the date
-    		 * %l - location (slow)
-    		 * %L - line number (slow)
-    		 * %m - message
-    		 * %M - method (slow)
-    		 * %n - \n
-    		 * %p - priority
-    		 * %r - milliseconds from layout creation
-    		 * %t - thread name
-    		 */
-    		((PatternLayout) rootLogger.getAppender("stdout").getLayout())
-    				// milliseconds [thread] LEVEL class.method - message
-//    				.setConversionPattern("%6r [%16.-16t] %-5p %C{1}.%M - %m%n");
-    				// milliseconds LEVEL class.method - message
-//    				.setConversionPattern("%6r %-5p %C{1}.%M - %m%n");
-    				// Buuh! Farbe geht nicht unter Windows...
-//    				.setConversionPattern("\u001b[2;31m%6r %-5p - %m%n\u001b[m");
-					// milliseconds LEVEL - message
-    				.setConversionPattern("%6r %-5p - %m%n");
-    		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.ALL);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.mappings").setLevel(Level.ALL);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.module").setLevel(Level.ALL);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.utils").setLevel(Level.ALL);
-    		Logger.getLogger("org.hibernate").setLevel(Level.INFO);
-    	}
-    	return;
-    }
     
     /**
      * Get the class name of the class which called the method / logger<br>

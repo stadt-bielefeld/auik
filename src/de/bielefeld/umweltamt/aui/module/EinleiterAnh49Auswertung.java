@@ -72,7 +72,7 @@ import javax.swing.RowSorter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import org.apache.log4j.Logger;
+
 
 import junit.runner.Sorter;
 
@@ -96,7 +96,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class EinleiterAnh49Auswertung extends AbstractQueryModul {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
 

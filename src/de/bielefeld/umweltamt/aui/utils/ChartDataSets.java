@@ -52,7 +52,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -67,7 +67,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
  */
 public class ChartDataSets {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /*
      * Private, da nie eine Instanz dieser Klasse erzeugt werden soll.
@@ -100,8 +100,7 @@ public class ChartDataSets {
      */
     public static TimeSeries createAnalysePositionenSeries(List list, String name, String einheit) {
         TimeSeries result = new TimeSeries(name, "Datum", "["+einheit+"]", Minute.class);
-        log.debug("(ChartDataSets.createAnalysepositionenSeries) "
-        		+ "Erzeuge TimeSeries: " + name);
+        log.debug("Erzeuge TimeSeries: " + name);
         Calendar cal = GregorianCalendar.getInstance();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {

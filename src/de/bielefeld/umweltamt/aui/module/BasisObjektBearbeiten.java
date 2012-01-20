@@ -100,7 +100,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -142,7 +142,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 public class BasisObjektBearbeiten extends AbstractModul {
 
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     // Widgets für Registerbereich
     private JPanel topPanel;
@@ -514,8 +514,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getHeaderLabel().setForeground(Color.RED);
                     getHeaderLabel().setText("Neues Objekt");
                 } else {
-                    log.debug("(BasisObjektBearbeiten.fillForm) "
-                    		+ "Bearbeite Objekt: " + objekt);
+                    log.debug("Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
                     getHeaderLabel().setText(objekt.getBasisStandort()+"; "+objekt.getBasisBetreiber()+"; "+objekt.getBasisObjektarten().getObjektart());
                 }
@@ -659,7 +658,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     }
 
     private void clearAll() {
-        log.debug("(BasisObjektBearbeiten.clearAll) " + "Leere alle Felder");
+        log.debug("Leere alle Felder");
 
         getBasisTab().clearForm();
 

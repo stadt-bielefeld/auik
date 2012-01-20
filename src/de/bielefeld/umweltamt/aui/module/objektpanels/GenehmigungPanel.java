@@ -45,7 +45,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -71,7 +71,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  */
 public class GenehmigungPanel extends JPanel {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -166,8 +166,7 @@ public class GenehmigungPanel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = IndeinlGenehmigung.getGenByObjekt(hauptModul.getObjekt());
-        log.debug("(GenehmigungPanel.fetchFormData) "
-        		+ "Genehmigung Objekt aus DB geholt: ID" + fachdaten);
+        log.debug("Genehmigung Objekt aus DB geholt: ID" + fachdaten);
     }
 
     public void updateForm() throws RuntimeException {
@@ -332,12 +331,10 @@ public class GenehmigungPanel extends JPanel {
 
         success = IndeinlGenehmigung.saveFachdaten(fachdaten);
         if (success) {
-            log.debug("(ObjektGenehmigung.saveGenehmigungDaten) "
-            		+ "Uebergabestelle Objekt " + fachdaten.getObjektid()
+            log.debug("Uebergabestelle Objekt " + fachdaten.getObjektid()
                     + " gespeichert.");
         } else {
-            log.debug("(GenehmigungPanel.saveGenehmigungDaten) "
-            		+ "Uebergabestelle Objekt " + fachdaten
+            log.debug("Uebergabestelle Objekt " + fachdaten
                     + " konnte nicht gespeichert werden!");
         }
         return success;
@@ -352,8 +349,7 @@ public class GenehmigungPanel extends JPanel {
 
             // Uebergabestelle speichern
             IndeinlGenehmigung.saveFachdaten(fachdaten);
-            log.debug("(BasisObjektBearbeiten.completeObjekt) "
-            		+ "Neues Genehmigung Objekt " + fachdaten
+            log.debug("Neues Genehmigung Objekt " + fachdaten
             		+ " gespeichert.");
         }
     }
@@ -593,8 +589,7 @@ public class GenehmigungPanel extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt " + verknuepfung.getId()
+                                log.debug("Objekt " + verknuepfung.getId()
                                         + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(

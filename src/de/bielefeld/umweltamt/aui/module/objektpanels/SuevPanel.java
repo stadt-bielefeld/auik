@@ -44,7 +44,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -68,7 +68,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  */
 public class SuevPanel extends JPanel {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -156,7 +156,7 @@ public class SuevPanel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = AnhSuevFachdaten.getSuevByObjekt(hauptModul.getObjekt());
-        log.debug("(SuevPanel.fetchFormData) " + "SuevKan-Verfahren aus DB geholt: " + fachdaten);
+        log.debug("SuevKan-Verfahren aus DB geholt: " + fachdaten);
     }
 
 
@@ -351,12 +351,10 @@ public class SuevPanel extends JPanel {
 
         success = AnhSuevFachdaten.saveFachdaten(fachdaten);
         if (success) {
-            log.debug("(SuevFachdaten.saveFachdaten) "
-            		+ "SuevKan Verfahren " + fachdaten.getObjektid()
+            log.debug("SuevKan Verfahren " + fachdaten.getObjektid()
             		+ " gespeichert.");
         } else {
-            log.debug("(SuevFachdaten.saveFachdaten) "
-            		+ "SuevKan Verfahren " + fachdaten
+            log.debug("SuevKan Verfahren " + fachdaten
                     + " konnte nicht gespeichert werden!");
         }
         return success;
@@ -371,8 +369,7 @@ public class SuevPanel extends JPanel {
 
             // SuevKan speichern
             AnhSuevFachdaten.saveFachdaten(fachdaten);
-            log.debug("(BasisObjektBearbeiten.completeObjekt) "
-            		+ "Neues SuevKan Verfahren "+fachdaten+" gespeichert.");
+            log.debug("Neues SuevKan Verfahren "+fachdaten+" gespeichert.");
         }
     }
 
@@ -597,8 +594,7 @@ private JTable getObjektverknuepungTabelle() {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt "
+                                log.debug("Objekt "
                                         + verknuepfung.getId()
                                         + " wurde gelöscht!");
                             } else {

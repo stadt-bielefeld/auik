@@ -28,7 +28,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
-import org.apache.log4j.Logger;
+
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
@@ -48,7 +48,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class AnalyseProcessor {
 	
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Diese Funktion verarbeitet eine Zeile eines Analyseergebnis-Imports.

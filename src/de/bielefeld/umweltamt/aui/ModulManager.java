@@ -64,7 +64,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.factories.Borders;
 import com.l2fprod.common.swing.JButtonBar;
@@ -78,7 +78,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  */
 public class ModulManager {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private class ModulKategorie {
         private String name;
@@ -196,8 +196,7 @@ public class ModulManager {
      * @param m Das neue Modul
      */
     private void addModul(Modul m) {
-        log.debug("(ModulManager.addModul) "
-        		+ "Füge Modul '" + m.getName() + "' (" + m.getIdentifier()
+        log.debug("Füge Modul '" + m.getName() + "' (" + m.getIdentifier()
         		+ ") hinzu...");
         boolean isFirst = false;
 
@@ -362,7 +361,7 @@ public class ModulManager {
             frame.getModulFwdButton().setEnabled(false);
         }
 
-        log.debug("(ModulManager.switchModul) " + "Switched to: " + currentModul + ", Index: " + currentIndex);
+        log.debug("Switched to: " + currentModul + ", Index: " + currentIndex);
 
         String tmpHist = "History: ";
         for (int i = 0; i < modulHistory.size(); i++) {
@@ -376,7 +375,7 @@ public class ModulManager {
             tmpHist += mod;
         }
 
-        log.debug("(ModulManager.switchModul) " + tmpHist);
+        log.debug(tmpHist);
 
         frame.clearStatus();
     }

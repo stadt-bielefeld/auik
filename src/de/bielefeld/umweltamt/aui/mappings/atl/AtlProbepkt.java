@@ -27,7 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -50,7 +50,7 @@ public class AtlProbepkt
     implements Serializable
 {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of AtlProbepkt instances.
@@ -297,12 +297,10 @@ public class AtlProbepkt
             session.saveOrUpdate(punkt);
             tx.commit();
             removed = true;
-            log.debug("(ProbepunktPanel.saveProbepunktDaten) "
-            		+ "Probepunkt " + punkt + " gespeichert.");
+            log.debug("Probepunkt " + punkt + " gespeichert.");
         } catch (HibernateException e) {
             removed = false;
-            log.debug("(ProbepunktPanel.saveProbepunktDaten) "
-            		+ "Probepunkt " + punkt
+            log.debug("Probepunkt " + punkt
             		+ " konnte nicht gespeichert werden!");
             e.printStackTrace();
             if (tx != null) {

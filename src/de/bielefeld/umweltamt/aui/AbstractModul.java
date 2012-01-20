@@ -27,7 +27,7 @@ package de.bielefeld.umweltamt.aui;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
+
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -45,7 +45,7 @@ import de.bielefeld.umweltamt.aui.utils.MD5Password;
  */
 public abstract class AbstractModul implements Modul {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String id;
     protected JPanel panel = null;
@@ -103,8 +103,7 @@ public abstract class AbstractModul implements Modul {
                     + getCategory()
                     + System.currentTimeMillis()
             );
-            log.debug("(AbstractModul.getIdentifier()) "
-            		+ "ID von " + getName() + ": '" + id + "'");
+            log.debug("ID von " + getName() + ": '" + id + "'");
         }
         return id;
     }

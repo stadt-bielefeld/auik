@@ -43,7 +43,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
 
-import org.apache.log4j.Logger;
+
 
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 
@@ -57,7 +57,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
  */
 public class AuikUtils {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
     /** Das Default-Datumsformat für JDateChooser */
     public static final String DATUMSFORMAT = "dd.MM.yy";
     /** Die Datumsformate für TextFieldDateChooser */
@@ -342,8 +342,7 @@ public class AuikUtils {
         try {
             formatter = new MaskFormatter(s);
         } catch (java.text.ParseException exc) {
-            log.debug("(AuikUtils.createFormatter) "
-            		+ "formatter is bad: " + exc.getMessage());
+            log.debug("formatter is bad: " + exc.getMessage());
         }
         return formatter;
     }
@@ -470,7 +469,7 @@ public class AuikUtils {
         if (iconURL != null) {
             return new ImageIcon(iconURL, description);
         } else {
-            log.debug("(AuikUtils.getIcon) " + "Konnte Icon "+ iconPath +" nicht finden!");
+            log.debug("Konnte Icon "+ iconPath +" nicht finden!");
             return null;
         }
     }

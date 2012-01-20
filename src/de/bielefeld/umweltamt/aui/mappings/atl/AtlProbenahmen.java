@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -60,7 +60,7 @@ public class AtlProbenahmen
     implements Serializable
 {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     public static final String[] COLUMNS_AUFTRAG = {
         "auswahl", "Parameter", "Kennzeichnung", "Konservierung", "Zusatz"
@@ -189,8 +189,7 @@ public class AtlProbenahmen
 
     public static List findProbenahmen(String suche, String property) {
         String suche2 = suche.toLowerCase().trim() + "%";
-        log.debug("(AtlProbenahmen.findProbenahmen) "
-        		+ "Suche nach '" + suche2 + "' (" + property + ").");
+        log.debug("Suche nach '" + suche2 + "' (" + property + ").");
         List proben;
         try {
             Session session = HibernateSessionFactory.currentSession();

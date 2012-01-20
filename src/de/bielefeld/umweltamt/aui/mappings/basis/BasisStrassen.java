@@ -27,7 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -47,7 +47,7 @@ public class BasisStrassen
     implements Serializable
 {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of BasisStrassen instances.
@@ -82,7 +82,7 @@ public class BasisStrassen
         BasisStrassen tmp = null;
         if (name != null) {
             String name2 = name.toLowerCase().trim() + "%";
-            log.debug("(getStrasseByName) " + "Suche nach: " + name);
+            log.debug("Suche nach: " + name);
             try {
 
                 List list = session.createQuery(
@@ -91,8 +91,7 @@ public class BasisStrassen
                         .list();
 
                 tmp = (BasisStrassen) ((list.size() > 0) ? list.get(0) : null);
-                log.debug("(BasisStrassen.getStrasseByName) "
-                		+ "Ergebnis: " + tmp);
+                log.debug("Ergebnis: " + tmp);
             } catch (HibernateException e) {
                 tmp = null;
                 //AUIKataster.debugOutput("Strasse nicht gefunden!", "BasisStrassen.getStrasseByName");

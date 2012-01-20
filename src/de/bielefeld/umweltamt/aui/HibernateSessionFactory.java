@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
@@ -39,7 +39,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class HibernateSessionFactory {
 
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Location of hibernate.cfg.xml file.
@@ -196,7 +196,7 @@ public class HibernateSessionFactory {
             ).list();
 
             tmp = true;
-            log.debug("(checkCredentials) " + test.toString());
+            log.debug(test.toString());
         } catch (HibernateException e) {
             if (e.getClass().equals(org.hibernate.exception.JDBCConnectionException.class)) {
                 tmp = false;

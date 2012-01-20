@@ -88,7 +88,7 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -126,7 +126,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 
 public class BasisPanel  extends JPanel {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = 2520878475016486007L;
 
 	private class ChooseDialog extends JDialog {
@@ -664,12 +664,10 @@ public class BasisPanel  extends JPanel {
             hauptModul.setObjekt(tmp);
             hauptModul.completeObjekt();
             success = true;
-            log.debug("(BasisObjektBearbeiten.saveObjektDaten) "
-            		+ "Objekt " + hauptModul.getObjekt() + " gespeichert.");
+            log.debug("Objekt " + hauptModul.getObjekt() + " gespeichert.");
         } else {
             success = false;
-            log.debug("(BasisObjektBearbeiten.saveObjektDaten) "
-            		+ "Objekt " + hauptModul.getObjekt()
+            log.debug("Objekt " + hauptModul.getObjekt()
             		+ " konnte nicht gespeichert werden!");
         }
 
@@ -1126,8 +1124,7 @@ public class BasisPanel  extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt " + verknuepfung.getId()
+                                log.debug("Objekt " + verknuepfung.getId()
                                         + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(

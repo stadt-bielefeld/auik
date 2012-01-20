@@ -60,7 +60,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -85,7 +85,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  */
 public class Anh56Panel extends JPanel{
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -182,8 +182,7 @@ public class Anh56Panel extends JPanel{
 
             // Anhang 56 Objekt speichern
             Anh56Fachdaten.saveFachdaten(fachdaten);
-            log.debug("(BasisObjektBearbeiten.completeObjekt) "
-            		+ "Neues Anh 56 Objekt " + fachdaten + " gespeichert.");
+            log.debug("Neues Anh 56 Objekt " + fachdaten + " gespeichert.");
         }
     }
 
@@ -248,11 +247,11 @@ public class Anh56Panel extends JPanel{
 
         success = Anh56Fachdaten.saveFachdaten(fachdaten);
         if (success) {
-            log.debug("(Anh56Panel.saveFachdaten) " + "Anh 56 Objekt "
-            		+ fachdaten.getObjektid() + " gespeichert.");
+            log.debug("Anh 56 Objekt " + fachdaten.getObjektid()
+            		+ " gespeichert.");
         } else {
-            log.debug("(Anh56Panel.saveFachdaten) " + "Anh 56 Objekt "
-            		+ fachdaten + " konnte nicht gespeichert werden!");
+            log.debug("Anh 56 Objekt " + fachdaten
+            		+ " konnte nicht gespeichert werden!");
         }
         return success;
     }
@@ -342,8 +341,7 @@ public class Anh56Panel extends JPanel{
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = Anh56Fachdaten.getAnh56ByObjekt(hauptModul.getObjekt());
-        log.debug("(Anh56Panel.fetchFormData) "
-        		+ "Anhang 56 Objekt aus DB geholt: ID" + fachdaten);
+        log.debug("Anhang 56 Objekt aus DB geholt: ID" + fachdaten);
     }
 
     private JButton getSaveAnh56Button() {
@@ -548,8 +546,7 @@ private JTable getObjektverknuepungTabelle() {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt " + verknuepfung.getId()
+                                log.debug("Objekt " + verknuepfung.getId()
                                         + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(

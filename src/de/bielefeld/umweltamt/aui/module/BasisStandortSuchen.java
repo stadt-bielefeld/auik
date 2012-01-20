@@ -113,7 +113,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 
-import org.apache.log4j.Logger;
+
 import org.eclipse.birt.report.engine.api.EngineException;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -145,7 +145,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  */
 public class BasisStandortSuchen extends AbstractModul {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private JTextField strassenFeld;
     private JTextField hausnrFeld;
@@ -375,8 +375,7 @@ public class BasisStandortSuchen extends AbstractModul {
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
             BasisStandort standort = standortModel.getRow(selectedRow);
-            log.debug("(BasisStandortSuchen.updateObjekte) "
-            		+ "Standort " + standort + " angewählt.");
+            log.debug("Standort " + standort + " angewählt.");
             searchObjekteByStandort(standort);
         }
     }
@@ -529,8 +528,7 @@ public class BasisStandortSuchen extends AbstractModul {
 
 
 
-    log.debug("(BasisStandortSuchen.showReportListe) "
-    		+ adresse + " mit ID: " + standortID + " ausgewaehlt");
+    log.debug(adresse + " mit ID: " + standortID + " ausgewaehlt");
 
     ReportManager.getInstance().startReportWorker("VAwS-StandortListe",adresse, standortID,   reportStandortListeButton);
     //ReportManager.getInstance().startReportWorker("Suev-Kan", standortID, reportStandortListeButton);
@@ -653,8 +651,7 @@ public class BasisStandortSuchen extends AbstractModul {
                         int selectedRow = lsm.getMinSelectionIndex();
                         BasisStandort standort = standortModel
                                 .getRow(selectedRow);
-                        log.debug("(BasisStandortSuchen.updateObjekte) "
-                        		+ "Standort " + standort + " angewählt.");
+                        log.debug("Standort " + standort + " angewählt.");
                         searchObjekteByStandort(standort, "360.33", 32);
                     }
                 }
@@ -676,8 +673,7 @@ public class BasisStandortSuchen extends AbstractModul {
                         int selectedRow = lsm.getMinSelectionIndex();
                         BasisStandort standort = standortModel
                                 .getRow(selectedRow);
-                        log.debug("(BasisStandortSuchen.updateObjekte) "
-                        		+ "Standort " + standort + " angewählt.");
+                        log.debug("Standort " + standort + " angewählt.");
                         searchObjekteByStandort(standort, "360.34", 32);
                     }
                 }
@@ -699,8 +695,7 @@ public class BasisStandortSuchen extends AbstractModul {
                         int selectedRow = lsm.getMinSelectionIndex();
                         BasisStandort standort = standortModel
                                 .getRow(selectedRow);
-                        log.debug("(BasisStandortSuchen.updateObjekte) "
-                        		+ "Standort " + standort + " angewählt.");
+                        log.debug("Standort " + standort + " angewählt.");
                         searchObjekteByStandort(standort, 32);
                     }
                 }
@@ -904,8 +899,7 @@ public class BasisStandortSuchen extends AbstractModul {
                         if (answer == JOptionPane.YES_OPTION) {
                             if (objektModel.removeRow(row)) {
                                 frame.changeStatus("Objekt gelöscht.", HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt " + objekt.getObjektid()
+                                log.debug("Objekt " + objekt.getObjektid()
                                 		+ " wurde gelöscht!");
                             } else {
                                 frame.changeStatus("Konnte das Objekt nicht löschen!", HauptFrame.ERROR_COLOR);

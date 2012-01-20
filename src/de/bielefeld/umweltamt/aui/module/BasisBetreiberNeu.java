@@ -61,7 +61,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -90,7 +90,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  */
 public class BasisBetreiberNeu extends AbstractModul {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private JButton speichernButton;
 
@@ -353,14 +353,14 @@ public class BasisBetreiberNeu extends AbstractModul {
             namenFeld.requestFocus();
             String nameErr = "Der Name darf nicht leer sein!";
             frame.changeStatus(nameErr, HauptFrame.ERROR_COLOR);
-            log.debug("(BasisBetreiberNeu.doSave) " + nameErr);
+            log.debug(nameErr);
             // Das Handzeichen darf nicht leer sein
         } else if (handzeichenNeuFeld.getText().equals("")) {
             handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
             handzeichenNeuFeld.requestFocus();
             String handzErr = "Neues Handzeichen erforderlich!";
             frame.changeStatus(handzErr, HauptFrame.ERROR_COLOR);
-            log.debug("(BasisBetreiberNeu.doSave) " + handzErr);
+            log.debug(handzErr);
         } else {
             // Wenn die Eingaben korrekt sind
 
@@ -528,8 +528,7 @@ public class BasisBetreiberNeu extends AbstractModul {
                 }
             } else {
                 frame.changeStatus("Konnte Betreiber nicht speichern!", Color.RED);
-                log.debug("(BasisBetreiberNeu.doSave) "
-                		+ "Konnte nicht speichern");
+                log.debug("Konnte nicht speichern");
             }
         }
     }

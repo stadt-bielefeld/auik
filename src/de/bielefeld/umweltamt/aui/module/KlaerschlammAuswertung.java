@@ -119,7 +119,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import org.apache.log4j.Logger;
+
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Minute;
@@ -156,7 +156,7 @@ import de.bielefeld.umweltamt.aui.utils.charts.Charts;
  */
 public class KlaerschlammAuswertung extends AbstractModul {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private static final String LEFT = "left";
     private static final String RIGHT = "right";

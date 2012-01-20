@@ -46,7 +46,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -73,7 +73,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  */
 public class BWKPanel extends JPanel {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -199,8 +199,7 @@ public class BWKPanel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         bwk = AnhBwkFachdaten.getAnhBwkByObjekt(hauptModul.getObjekt());
-        log.debug("(BWKPanel.fetchFormData) "
-        		+ "Brennwertkessel aus DB geholt: " + bwk);
+        log.debug("Brennwertkessel aus DB geholt: " + bwk);
     }
 
 
@@ -414,11 +413,9 @@ public class BWKPanel extends JPanel {
         success = AnhBwkFachdaten.saveBwk(bwk);
 
         if (success) {
-            log.debug("(BWKPanel.saveBwkDaten) "
-            		+ "Brennwertkessel " + bwk + " gespeichert.");
+            log.debug("Brennwertkessel " + bwk + " gespeichert.");
         } else {
-            log.debug("(BWKPanel.saveBwkDaten) "
-            		+ "Brennwertkessel " + bwk
+            log.debug("Brennwertkessel " + bwk
                     + " konnte nicht gespeichert werden!");
         }
 
@@ -434,8 +431,7 @@ public class BWKPanel extends JPanel {
 
             // Brennwertkessel speichern
             if (AnhBwkFachdaten.saveBwk(bwk)) {
-                log.debug("(BasisObjektBearbeiten.completeObjekt) "
-                		+ "Neuer Brennwertkessel " + bwk + " gespeichert.");
+                log.debug("Neuer Brennwertkessel " + bwk + " gespeichert.");
             }
         }
     }
@@ -675,8 +671,7 @@ public class BWKPanel extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt "
+                                log.debug("Objekt "
                                         + verknuepfung.getId()
                                         + " wurde gelöscht!");
                             } else {

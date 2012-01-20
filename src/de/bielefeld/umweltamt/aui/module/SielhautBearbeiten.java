@@ -137,7 +137,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import org.apache.log4j.Logger;
+
 import org.eclipse.birt.report.engine.api.EngineException;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -190,7 +190,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class SielhautBearbeiten extends AbstractModul {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private JTextField punktFeld;
     private JToolBar punktToolBar;
@@ -645,8 +645,7 @@ public class SielhautBearbeiten extends AbstractModul {
                         if (frame.showQuestion("Soll die Probenahme '"+ probe.getKennummer() +"' wirklich inkl. aller Analysen gelöscht werden?", "Löschen bestätigen")) {
                             if (probeModel.removeRow(row)) {
                                 frame.changeStatus("Probenahme gelöscht!", HauptFrame.SUCCESS_COLOR);
-                                log.debug("(SchlammPanel.removeAction) "
-                                		+ "Probe " + probe.getKennummer()
+                                log.debug("Probe " + probe.getKennummer()
                                 		+ " wurde gelöscht!");
                             } else {
                                 frame.changeStatus("Konnte Probenahme nicht löschen!", HauptFrame.ERROR_COLOR);
@@ -1996,7 +1995,7 @@ class SielhautProbeModel extends ListTableModel {
 
 class SielhautChooser extends OkCancelDialog {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private JTextField suchFeld;
     private JButton submitButton;
@@ -2102,7 +2101,8 @@ class SielhautChooser extends OkCancelDialog {
             suchFeld.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
                     String text = suchFeld.getText();
-                    log.debug("(SielhautChooser) " + "keyChar: " + e.getKeyChar() + ", Text: " + text);
+                    log.debug("(SielhautChooser) " + "keyChar: "
+                    		+ e.getKeyChar() + ", Text: " + text);
                     if (Character.isLetterOrDigit(e.getKeyChar())) {
                         text = text + e.getKeyChar();
                     }
@@ -2163,7 +2163,7 @@ class SielhautChooser extends OkCancelDialog {
 
 class SielhautModel extends ListTableModel {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     public SielhautModel() {
         super(new String[]{"Bezeichnung", "Lage", "R", "F", "N"}, false);
@@ -2231,7 +2231,7 @@ class SielhautModel extends ListTableModel {
 
     public void filterList(String suche) {
         setList(AtlSielhaut.findPunkte(suche));
-        log.debug("(SielhautModel.filterList()) " + "Suche nach '" + suche
-        		+ "' (" + getList().size() + " Ergebnisse)");
+        log.debug("Suche nach '" + suche + "' (" + getList().size()
+        		+ " Ergebnisse)");
     }
 }

@@ -37,7 +37,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -63,7 +63,7 @@ import de.bielefeld.umweltamt.aui.utils.TabAction;
  */
 public class BetreiberEditor extends AbstractBaseEditor {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     // Für die Comboboxen beim Bearbeiten
     private static String[] strassen = null;
@@ -362,7 +362,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
             namenFeld.requestFocus();
             String nameErr = "Der Name darf nicht leer sein!";
             frame.changeStatus(nameErr, HauptFrame.ERROR_COLOR);
-            log.debug("(BetreiberEdit.doSave) " + nameErr);
+            log.debug(nameErr);
             return false;
         } else if (handzeichenNeuFeld.getText().equals("")) {
             // Das Handzeichen darf nicht leer sein
@@ -370,7 +370,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
             handzeichenNeuFeld.requestFocus();
             String handzErr = "Neues Handzeichen erforderlich!";
             frame.changeStatus(handzErr, HauptFrame.ERROR_COLOR);
-            log.debug("(BetreiberEdit.doSave) " + handzErr);
+            log.debug(handzErr);
             return false;
         } else {
             // Wenn die Eingaben korrekt sind
@@ -551,7 +551,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
         if (betr != null) {
             setEditedObject(betr);
-            log.debug("(editStandort) " + "Änderungen gespeichert!");
+            log.debug("Änderungen gespeichert!");
             return true;
         } else {
             return false;

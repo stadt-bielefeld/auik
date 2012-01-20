@@ -71,7 +71,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
@@ -100,7 +100,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  */
 public class SchlammPanel extends JPanel {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private AtlProbeart art;
 
@@ -305,8 +305,7 @@ public class SchlammPanel extends JPanel {
                             if (probeModel.removeRow(row)) {
                                 frame.changeStatus("Probenahme gelöscht!",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("(SchlammPanel.removeAction) "
-                                		+ "Probe " + probe.getKennummer()
+                                log.debug("Probe " + probe.getKennummer()
                                         + " wurde gelöscht!");
                             } else {
                                 frame.changeStatus(

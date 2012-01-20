@@ -49,7 +49,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -82,7 +82,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  */
 public class ProbepunktPanel extends JPanel {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -197,8 +197,7 @@ public class ProbepunktPanel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         probepkt = AtlProbepkt.getProbepunktByObjekt(hauptModul.getObjekt());
-        log.debug("(ProbepunktPanel.fetchFormData) "
-        		+ "Probepunkt aus DB geholt: " + probepkt);
+        log.debug("Probepunkt aus DB geholt: " + probepkt);
 
         if (probearten == null) {
             probearten = AtlProbeart.getProbearten();
@@ -349,8 +348,7 @@ public class ProbepunktPanel extends JPanel {
 
             // Probepunkt speichern
             if (AtlProbepkt.saveProbepunkt(probepkt)) {
-                log.debug("(BasisObjektBearbeiten.completeObjekt) "
-                		+ "Neuer Probepunkt " + probepkt + " gespeichert.");
+                log.debug("Neuer Probepunkt " + probepkt + " gespeichert.");
             }
         }
     }
@@ -445,8 +443,7 @@ public class ProbepunktPanel extends JPanel {
                         int answer = JOptionPane.showConfirmDialog(ProbepunktPanel.this, "Soll die Probenahme "+ probe.getKennummer() +" wirklich inkl. aller Analysen gelöscht werden?", "Löschen bestätigen", JOptionPane.YES_NO_OPTION);
                         if (answer == JOptionPane.YES_OPTION) {
                             probenahmenModel.removeRow(row);
-                            log.debug("(SchlammPanel.removeAction) "
-                            		+ "Probe " + probe.getKennummer()
+                            log.debug("Probe " + probe.getKennummer()
                             		+ " wurde gelöscht!");
                         }
                     }
@@ -651,9 +648,7 @@ public class ProbepunktPanel extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt "
-                                        + verknuepfung.getId()
+                                log.debug("Objekt " + verknuepfung.getId()
                                         + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(

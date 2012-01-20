@@ -127,7 +127,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -159,7 +159,7 @@ public class Anh49DetailsPanel extends JPanel{
      * @author David Klotz, Gerhard Genuit
      */
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private class Anh49AbscheiderModel extends ListTableModel {
         private Anh49Fachdaten fachdaten;

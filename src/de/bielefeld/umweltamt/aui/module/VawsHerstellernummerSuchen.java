@@ -38,7 +38,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
@@ -57,7 +57,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class VawsHerstellernummerSuchen extends AbstractQueryModul {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /** Das obere Panel mit den Such-Optionen */
     private JPanel queryPanel;
@@ -88,14 +88,12 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
     public void SuchStart()
     {
         String herstellnr = herstellFeld.getText();
-        log.debug("(VawsHerstellernummerSuchen):"
-        		+ " Suche nach Herstellnummer " + herstellnr);
+        log.debug(" Suche nach Herstellnummer " + herstellnr);
         ((HerstellNrSuchenModel)getTableModel()).setList(
                 VawsFachdaten.findherstellnr(herstellnr));// Aufruf der Suchfunktion. Startet eine Query in der Datenbank
         ((HerstellNrSuchenModel)getTableModel()).fireTableDataChanged();
         frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige über Anzahl der gefundenen Objekte
-        log.debug("(VawsHerstellernummerSuchen): "
-        		+ getTableModel().getRowCount()
+        log.debug(getTableModel().getRowCount()
         		+ " Objekt(e) mit Herstellnummer " + herstellnr + " gefunden");
     }
 

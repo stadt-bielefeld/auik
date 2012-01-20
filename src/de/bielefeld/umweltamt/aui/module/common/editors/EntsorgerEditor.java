@@ -59,7 +59,7 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -77,7 +77,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  */
 public class EntsorgerEditor extends AbstractBaseEditor {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private JTextField namenFeld;
     private JTextField strassenFeld;
@@ -235,7 +235,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
 
         if (getEntsorger() != null) {
             success = true;
-            log.debug("(editEntsorger) " + "Änderungen gespeichert!");
+            log.debug("Änderungen gespeichert!");
         } else {
             success = false;
         }

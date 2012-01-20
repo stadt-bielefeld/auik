@@ -78,7 +78,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
-import org.apache.log4j.Logger;
+
 import org.eclipse.birt.core.exception.BirtException;
 import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.engine.api.EngineConfig;
@@ -103,7 +103,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  */
 public class ReportManager {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
     private static ReportManager _instance;
     private EngineConfig config;
     private IReportEngine engine;

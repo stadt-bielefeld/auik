@@ -41,7 +41,7 @@ import javax.swing.KeyStroke;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
-import org.apache.log4j.Logger;
+
 
 /**
  * Implements a cell editor that uses a formatted text field
@@ -51,7 +51,7 @@ import org.apache.log4j.Logger;
  */
 public class DoubleEditor extends DefaultCellEditor {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     JFormattedTextField ftf;
     NumberFormat doubleFormat;

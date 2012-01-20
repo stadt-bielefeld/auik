@@ -28,7 +28,7 @@ import java.awt.Frame;
 import java.awt.Toolkit;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
+
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -38,7 +38,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 */
 public class AUIKSplash {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Zeigt einen Splashscreen an und l&auml;dt das eigentlich Hauptprogramm.

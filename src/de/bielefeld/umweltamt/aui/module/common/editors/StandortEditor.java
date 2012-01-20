@@ -42,7 +42,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -69,7 +69,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  */
 public class StandortEditor extends AbstractBaseEditor {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     // Für die Comboboxen beim Bearbeiten
     private static String[] strassen = null;
@@ -500,7 +500,7 @@ public class StandortEditor extends AbstractBaseEditor {
         BasisStandort bsta = BasisStandort.saveStandort(getStandort());
         if (bsta != null) {
             setEditedObject(bsta);
-            log.debug("(editStandort) " + "Änderungen gespeichert!");
+            log.debug("Änderungen gespeichert!");
             return true;
         } else {
             return false;

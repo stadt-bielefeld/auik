@@ -55,8 +55,6 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
-
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -68,7 +66,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  */
 public class AUIKataster {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
     /** Der kurze Name des Programms */
     public static final String SHORT_NAME= "AUI-Kataster";
     /** Der lange Name des Programms */

@@ -76,7 +76,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -106,7 +106,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  */
 public class BasisBetreiberSuchen extends AbstractModul {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String iconPath = "filefind32.png";
 
@@ -289,8 +289,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
             BasisBetreiber betr = betreiberModel.getRow(selectedRow);
-            log.debug("(BasisBetreiberSuchen.updateObjekte) "
-            		+ "Betreiber " + betr.getBetrname() + " (ID"
+            log.debug("Betreiber " + betr.getBetrname() + " (ID"
             		+ betr.getBetreiberid() + ") angewählt.");
             searchObjekteByBetreiber(betr);
         }
@@ -392,8 +391,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                             if (answer == JOptionPane.YES_OPTION) {
                                 if (betreiberModel.removeRow(row)) {
                                     frame.changeStatus("Betreiber gelöscht.", HauptFrame.SUCCESS_COLOR);
-                                    log.debug("(BasisBetreiberSuchen.removeAction) "
-                                    		+ "Betreiber " + betr.getBetreiberid()
+                                    log.debug("Betreiber " + betr.getBetreiberid()
                                     		+ " wurde gelöscht!");
                                 } else {
                                     frame.changeStatus("Konnte den Betreiber nicht löschen!", HauptFrame.ERROR_COLOR);
@@ -467,8 +465,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                         if (answer == JOptionPane.YES_OPTION) {
                             if (objektModel.removeRow(row)) {
                                 frame.changeStatus("Objekt gelöscht.", HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt " + objekt.getObjektid()
+                                log.debug("Objekt " + objekt.getObjektid()
                                 		+ " wurde gelöscht!");
                             } else {
                                 frame.changeStatus("Konnte das Objekt nicht löschen!", HauptFrame.ERROR_COLOR);

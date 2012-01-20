@@ -27,7 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -46,7 +46,7 @@ public class BasisBetreiber
     implements Serializable
 {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /** Durchsucht die Tabelle nach dem Betreiber-Namen */
     public static final String PROPERTY_NAME = "name";
@@ -122,8 +122,7 @@ public class BasisBetreiber
      */
     public static List findBetreiber(String suche, String property) {
         String suche2 = suche.toLowerCase().trim() + "%";
-        log.debug("(BasisBetreiber.findBetreiber) "
-        		+ "Suche nach '" + suche2 + "' (" + property + ").");
+        log.debug("Suche nach '" + suche2 + "' (" + property + ").");
 
         String queryString;
         if(PROPERTY_NAME.equals(property)) {
@@ -196,8 +195,7 @@ public class BasisBetreiber
             betrRet = (BasisBetreiber) session.merge(betr);
             tx.commit();
 
-            log.debug("(BasisStandort.saveStandort) "
-            		+ "Neuer Betr "+ betr +" gespeichert!");
+            log.debug("Neuer Betr "+ betr +" gespeichert!");
         } catch (HibernateException e) {
             betrRet = null;
             e.printStackTrace();

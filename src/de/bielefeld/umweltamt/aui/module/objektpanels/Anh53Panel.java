@@ -44,7 +44,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -70,7 +70,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  */
 public class Anh53Panel extends JPanel {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -165,8 +165,7 @@ public class Anh53Panel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = Anh53Fachdaten.getAnh53ByObjekt(hauptModul.getObjekt());
-        log.debug("(Anh53Panel.fetchFormData) "
-        		+ "Objekt aus DB geholt: " + fachdaten);
+        log.debug("Objekt aus DB geholt: " + fachdaten);
     }
 
 
@@ -248,11 +247,11 @@ public class Anh53Panel extends JPanel {
 
         success = Anh53Fachdaten.saveFachdaten(fachdaten);
         if (success) {
-            log.debug("(Anh53Panel.saveAnh53Daten) " + "Objekt "
+            log.debug("Objekt "
             		+ fachdaten.getBasisObjekt().getBasisBetreiber().getBetrname()
             		+ " gespeichert.");
         } else {
-            log.debug("(Anh53Panel.saveAnh53Daten) " + "Objekt " + fachdaten
+            log.debug("Objekt " + fachdaten
                     + " konnte nicht gespeichert werden!");
         }
         return success;
@@ -267,8 +266,7 @@ public class Anh53Panel extends JPanel {
 
             // Objekt speichern
             Anh53Fachdaten.saveFachdaten(fachdaten);
-            log.debug("(BasisObjektBearbeiten.completeObjekt) "
-            		+ "Neues Objekt " + fachdaten + " gespeichert.");
+            log.debug("Neues Objekt " + fachdaten + " gespeichert.");
         }
     }
 
@@ -508,8 +506,7 @@ public class Anh53Panel extends JPanel {
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt " + verknuepfung.getId()
+                                log.debug("Objekt " + verknuepfung.getId()
                                         + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(

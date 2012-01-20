@@ -61,7 +61,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -91,7 +91,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  */
 public class BasisStandortNeu extends AbstractModul {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private JButton speichernButton;
 
@@ -315,7 +315,7 @@ public class BasisStandortNeu extends AbstractModul {
         if (handzeichenNeuFeld.getText().equals("")) {
             handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
             handzeichenNeuFeld.requestFocus();
-            log.debug("(doSave) " + "Neues Handzeichen erforderlich!");
+            log.debug("Neues Handzeichen erforderlich!");
         } else {
             // Wenn die Eingaben korrekt sind
 
@@ -417,7 +417,7 @@ public class BasisStandortNeu extends AbstractModul {
                 }
             } else {
                 frame.changeStatus("Konnte Standort nicht speichern!", Color.RED);
-                log.debug("(BasisStandortNeu.doSave) " + "Konnte nicht speichern");
+                log.debug("Konnte nicht speichern");
             }
         }
     }
@@ -486,7 +486,8 @@ public class BasisStandortNeu extends AbstractModul {
         };
         worker.start();
 
-        log.debug("(" + this.getIdentifier()+".clearForm )" + "Formular zurückgesetzt");
+        log.debug("(" + this.getIdentifier()+".clearForm )"
+        		+ "Formular zurückgesetzt");
     }
 
     /**

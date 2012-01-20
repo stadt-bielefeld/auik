@@ -111,7 +111,7 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import org.apache.log4j.Logger;
+
 
 import net.sf.jasperreports.engine.JRDataSource;
 
@@ -159,7 +159,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class ProbenEditor extends AbstractApplyEditor {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = 5903518104076020136L;
 
 	public interface OKListener {
@@ -374,7 +374,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 				break;
 			}
 
-			log.debug("(ParameterModel.editObject) " + "EDIT: " + tmp);
+			log.debug("EDIT: " + tmp);
 		}
 
         public Object newObject() {
@@ -1403,7 +1403,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         getProbe().getAtlAnalysepositionen().clear();
         getProbe().getAtlAnalysepositionen().addAll(newPositionen);
         // getProbe().setAtlAnalysepositionen(newPositionen);
-        log.debug("(ProbenEditor.doSave) " + "Analysepositionen geändert: "
+        log.debug("Analysepositionen geändert: "
                 + getProbe().getAtlAnalysepositionen());
 
         boolean success;
@@ -1918,7 +1918,7 @@ class ParameterChooser extends OkCancelApplyDialog {
 
 class ParameterAuswahlModel extends ListTableModel {
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 	private static final long serialVersionUID = -502436804713980533L;
 	protected boolean[] selection;
 
@@ -2020,13 +2020,11 @@ class ParameterAuswahlModel extends ListTableModel {
 
     public void filterList() {
         setList(AtlParameter.getParameter());
-        log.debug("(ParameterAuswahlModel.filterList()) "
-        		+ "Suche nach '" + getList().size() + " Ergebnisse)");
+        log.debug("Suche nach '" + getList().size() + " Ergebnisse)");
     }
 
     public void AlleParameter() {
         setList(AtlParameter.getAll());
-        log.debug("(ParameterAuswahlModel.filterList()) "
-        		+ "Suche nach '" + getList().size() + " Ergebnisse)");
+        log.debug("Suche nach '" + getList().size() + " Ergebnisse)");
     }
 }

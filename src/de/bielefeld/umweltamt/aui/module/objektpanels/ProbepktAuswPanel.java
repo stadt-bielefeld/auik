@@ -65,7 +65,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import org.apache.log4j.Logger;
+
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Minute;
@@ -104,7 +104,7 @@ import de.bielefeld.umweltamt.aui.utils.charts.Charts;
 public class ProbepktAuswPanel extends JPanel {
 
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private JDateChooser vonDateChooser;
     private JDateChooser bisDateChooser;
@@ -674,8 +674,7 @@ public class ProbepktAuswPanel extends JPanel {
                     AuswertungsDialog dialog = new AuswertungsDialog("Probenahmen", dataSet1, dataSet2, frame);
                     dialog.setVisible(true);
                 } else {
-                    log.debug("(showResultDualAxis) "
-                    		+ "Keine Parameter ausgewählt!");
+                    log.debug("(showResultDualAxis) " + "Keine Parameter ausgewählt!");
                 }
             }
         };

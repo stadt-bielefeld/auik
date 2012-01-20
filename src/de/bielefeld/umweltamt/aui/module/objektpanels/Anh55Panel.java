@@ -96,7 +96,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -121,7 +121,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  */
 public class Anh55Panel extends JPanel{
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -268,8 +268,7 @@ public class Anh55Panel extends JPanel{
 
             // Anhang 55 Objekt speichern
             Anh55Fachdaten.saveFachdaten(fachdaten);
-            log.debug("(BasisObjektBearbeiten.completeObjekt) "
-            		+ "Neues Anh 55 Objekt " + fachdaten + " gespeichert.");
+            log.debug("Neues Anh 55 Objekt " + fachdaten + " gespeichert.");
         }
     }
 
@@ -437,11 +436,10 @@ public class Anh55Panel extends JPanel{
 
         success = Anh55Fachdaten.saveFachdaten(fachdaten);
         if (success) {
-            log.debug("(Anh55Panel.saveFachdaten) " + "Anh 55 Objekt "
-            		+ fachdaten.getId() + " gespeichert.");
+            log.debug("Anh 55 Objekt " + fachdaten.getId() + " gespeichert.");
         } else {
-            log.debug("(Anh55Panel.saveFachdaten) " + "Anh 55 Objekt "
-            		+ fachdaten + " konnte nicht gespeichert werden!");
+            log.debug("Anh 55 Objekt " + fachdaten
+            		+ " konnte nicht gespeichert werden!");
         }
         return success;
     }
@@ -713,8 +711,7 @@ public class Anh55Panel extends JPanel{
 
     public void fetchFormData() throws RuntimeException {
         fachdaten = Anh55Fachdaten.getAnh55ByObjekt(hauptModul.getObjekt());
-        log.debug("(Anh55Panel.fetchFormData) "
-        		+ "Anhang 55 Objekt aus DB geholt: ID" + fachdaten);
+        log.debug("Anhang 55 Objekt aus DB geholt: ID" + fachdaten);
     }
 
     private JButton getSaveAnh55Button() {
@@ -1029,8 +1026,7 @@ public class Anh55Panel extends JPanel{
                                 hauptModul.getFrame().changeStatus(
                                         "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("(BasisBetreiberSuchen.removeAction) "
-                                		+ "Objekt " + verknuepfung.getId()
+                                log.debug("Objekt " + verknuepfung.getId()
                                         + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(

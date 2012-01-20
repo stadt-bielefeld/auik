@@ -35,7 +35,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import org.apache.log4j.Logger;
+
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
@@ -65,7 +65,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 public class AnalyseImport extends AbstractModul {
 
 	/** Logging */
-    private static final Logger log = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Diese Klasse importiert die Laborergebnisse einer Probenahme in Form
