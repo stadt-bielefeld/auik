@@ -21,7 +21,6 @@
 
 package de.bielefeld.umweltamt.aui.utils;
 
-import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
@@ -76,7 +75,6 @@ public final class AuikLogger extends Logger {
     	} else if (user.matches("u633z")) { // Connz
     		Logger rootLogger = Logger.getRootLogger();
     		rootLogger.setLevel(Level.ALL);
-    		ConsoleAppender appender = (ConsoleAppender) rootLogger.getAppender("stdout");
     		/* Set the output pattern:
     		 * %C - complete class name
     		 * %C{1} - class name
@@ -95,9 +93,10 @@ public final class AuikLogger extends Logger {
 //    				.setConversionPattern("%6r [%16.-16t] %-5p %C{1}.%M - %m%n");
     				// milliseconds LEVEL class.method - message
 //    				.setConversionPattern("%6r %-5p %C{1}.%M - %m%n");
-					// milliseconds LEVEL - message
     				// Buuh! Farbe geht nicht unter Windows...
-    				.setConversionPattern("\u001b[2;31m%6r %-5p - %m%n\u001b[m");
+//    				.setConversionPattern("\u001b[2;31m%6r %-5p - %m%n\u001b[m");
+					// milliseconds LEVEL - message
+    				.setConversionPattern("%6r %-5p - %m%n");
     		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.ALL);
     		Logger.getLogger("de.bielefeld.umweltamt.aui.mappings").setLevel(Level.ALL);
     		Logger.getLogger("de.bielefeld.umweltamt.aui.module").setLevel(Level.ALL);

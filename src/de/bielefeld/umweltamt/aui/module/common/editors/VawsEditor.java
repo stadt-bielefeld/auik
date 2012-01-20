@@ -1162,7 +1162,7 @@ public class VawsEditor extends AbstractBaseEditor {
             tabellenItemLoeschAction = new AbstractAction("Eintrag löschen") {
                 public void actionPerformed(ActionEvent e) {
                     int index = tabbedPane.getSelectedIndex();
-                    System.out.println("index: " + index);
+                    log.debug("index: " + index);
                     if (index == 0) {
                         removeRowFromTable(anlagenChronoTabelle, anlagenChronoModel);
                     } else if (index == (tabbedPane.getTabCount()-3)) {

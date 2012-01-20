@@ -327,7 +327,7 @@ public class VawsPanel extends JPanel {
 //
 //            HashMap scriptables = new HashMap();
 //            List liste = VawsKontrollen.getKontrollen(anlage);
-////            System.out.println("%!%!% liste.size: " + liste.size());
+////            log.debug("%!%!% liste.size: " + liste.size());
 //            scriptables.put("liste", liste);
 //
 ////            ReportManager.getInstance().startReportWorker("vawsanlage", params, scriptables, reportAnlageButton);

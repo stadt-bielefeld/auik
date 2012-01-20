@@ -361,8 +361,8 @@ public class ReportManager {
     public void runReport(File pdffile, String Name) throws EngineException {
         if (Name == null)
         {
-            System.out.println("DEBUG::runReport Error: Id Name oder HaltungsNr nicht gesetzt!\n");
-            System.out.println("\nName: " + Name);
+            log.debug("DEBUG::runReport Error: Id Name oder HaltungsNr nicht gesetzt!\n");
+            log.debug("\nName: " + Name);
         }
 
 
@@ -404,10 +404,10 @@ public class ReportManager {
     public void runReport(File pdffile, String Name, Integer Id, String Bezeichnung) throws EngineException {
         if (Id == null || Name == null || Bezeichnung == null)
         {
-            System.out.println("DEBUG::runReport Error: Id Name oder HaltungsNr nicht gesetzt!\n");
-            System.out.println("Id: " + Id);
-            System.out.println("\nName: " + Name);
-            System.out.println("\nHaltungsNr: " + Bezeichnung);
+            log.debug("DEBUG::runReport Error: Id Name oder HaltungsNr nicht gesetzt!\n");
+            log.debug("Id: " + Id);
+            log.debug("\nName: " + Name);
+            log.debug("\nHaltungsNr: " + Bezeichnung);
         }
 
 

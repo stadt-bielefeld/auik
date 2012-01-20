@@ -41,6 +41,8 @@ import javax.swing.KeyStroke;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
+import org.apache.log4j.Logger;
+
 /**
  * Implements a cell editor that uses a formatted text field
  * to edit Double values.
@@ -48,9 +50,11 @@ import javax.swing.text.NumberFormatter;
  * @see http://java.sun.com/docs/books/tutorial/uiswing/components/table.html#validtext
  */
 public class DoubleEditor extends DefaultCellEditor {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
+
     JFormattedTextField ftf;
     NumberFormat doubleFormat;
-    private boolean DEBUG = false;
 
     public DoubleEditor() {
         super(new JFormattedTextField());
@@ -78,9 +82,7 @@ public class DoubleEditor extends DefaultCellEditor {
             public void actionPerformed(ActionEvent e) {
                 if (!ftf.isEditValid()) { //The text is invalid.
                     setBorderRed();
-                    if (DEBUG) {
-                        System.out.println("check: '" + ftf.getText() + "' is invalid!");
-                    }
+                    log.debug("check: '" + ftf.getText() + "' is invalid!");
                 } else try {              //The text is valid,
                     ftf.commitEdit();     //so use it.
                     setBorderNormal();
@@ -98,9 +100,8 @@ public class DoubleEditor extends DefaultCellEditor {
             (JFormattedTextField)super.getTableCellEditorComponent(
                 table, value, isSelected, row, column);
         ftf.setValue(value);
-        if (DEBUG) {
-            System.out.println("getTableCellEditorComp: " + isSelected + ", " + row + ", " + column);
-        }
+        log.debug("getTableCellEditorComp: " + isSelected + ", " + row + ", "
+        		+ column);
         return ftf;
     }
 
@@ -113,13 +114,11 @@ public class DoubleEditor extends DefaultCellEditor {
         } else if (o instanceof Number) {
             return new Double(((Number)o).doubleValue());
         } else {
-            if (DEBUG) {
-                System.out.println("getCellEditorValue: o isn't a Number");
-            }
+            log.debug("getCellEditorValue: o isn't a Number");
             try {
                 return doubleFormat.parseObject(o.toString());
             } catch (ParseException exc) {
-                System.err.println("getCellEditorValue: can't parse o: " + o);
+                log.error("getCellEditorValue: can't parse o: " + o);
                 return null;
             }
         }
@@ -140,9 +139,7 @@ public class DoubleEditor extends DefaultCellEditor {
 
         } else { //text is invalid
             setBorderRed();
-            if (DEBUG) {
-                System.out.println("stopCellEditing: '" + ftf.getText() + "' is invalid!");
-            }
+            log.debug("stopCellEditing: '" + ftf.getText() + "' is invalid!");
             return false; //don't let the editor go away
         }
         return super.stopCellEditing();

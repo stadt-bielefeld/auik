@@ -99,14 +99,14 @@ public abstract class EditableListTableModel extends ListTableModel {
      */
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         if (rowExists(rowIndex)) {
-            //System.out.println("%%% EDIT LISTE: col: " + columnIndex + ", newValue: " + aValue);
+            //log.debug("%%% EDIT LISTE: col: " + columnIndex + ", newValue: " + aValue);
             editObject(getObjectAtRow(rowIndex), columnIndex, aValue);
         } else {
-            //System.out.println("%%% EDIT NEU! %%%");
+            //log.debug("%%% EDIT NEU! %%%");
             Object tmp = newObject();
             getList().add(tmp);
             editObject(tmp, columnIndex, aValue);
-            //System.out.println("NEU: " + tmp);
+            //log.debug("NEU: " + tmp);
             fireTableRowsInserted(rowIndex + 1, rowIndex + 1);
         }
         fireTableRowsUpdated(rowIndex, rowIndex);
@@ -114,7 +114,7 @@ public abstract class EditableListTableModel extends ListTableModel {
 
         hasChanged = true;
 
-        /*System.out.println("%%% EDIT: row: " + rowIndex + ", " +
+        /*log.debug("%%% EDIT: row: " + rowIndex + ", " +
                 "old.s: " + getList().size() + ", " +
                 "new.s: " + getNewList().size() + ", " +
                 "total.s: " + getTotalRowCount() + " %%%");*/

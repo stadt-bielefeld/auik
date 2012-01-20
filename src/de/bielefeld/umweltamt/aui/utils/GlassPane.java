@@ -109,7 +109,7 @@ public synchronized static GlassPane mount(Component startComponent, boolean cre
             GlassPane aGlassPane = new GlassPane(startComponent);
             aContainer.setGlassPane(aGlassPane);
 
-            //System.out.println("GlassPane mounted on " + aContainer.getClass());
+            //log.debug("GlassPane mounted on " + aContainer.getClass());
             return aGlassPane;
         }
         else

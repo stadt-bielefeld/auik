@@ -54,7 +54,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+
+import org.apache.log4j.Logger;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -66,6 +67,8 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * @author David Klotz
  */
 public class AUIKataster {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
     /** Der kurze Name des Programms */
     public static final String SHORT_NAME= "AUI-Kataster";
     /** Der lange Name des Programms */
@@ -81,22 +84,8 @@ public class AUIKataster {
      * @param fatal Soll das Programm beendet werden?
      */
     public static void handleDBException(Throwable e, String src, boolean fatal) {
-        String errMsg = "%%%% ";
-        errMsg += fatal ? "Fataler " : "";
-        errMsg += "DB-Fehler: " + e.getMessage() + " %%%%";
-        //debugOutput(errMsg, src);
-        //e.printStackTrace();
-        if (runningFrame != null) {
-            runningFrame.changeStatus("Ein Datenbank-Fehler ist aufgetreten!", HauptFrame.ERROR_COLOR);
-            if (fatal) {
-                JOptionPane.showMessageDialog(runningFrame, "Es ist keine Verbindung mit der Datenbank möglich!", "Fehler", JOptionPane.ERROR_MESSAGE);
-                runningFrame.close();
-            }
-        } else if (fatal) {
-            JOptionPane.showMessageDialog(null, "Es ist keine Verbindung mit der Datenbank möglich!", "Fehler", JOptionPane.ERROR_MESSAGE);
-        }
-
-        throw new RuntimeException(errMsg + " ("+src+")", e);
+    	// TODO: This is just a quick fix. Think about MVC-Pattern...
+    	DatabaseManager.getInstance().handleDBException(e, src, fatal, runningFrame);
     }
 
     /**
@@ -130,13 +119,13 @@ public class AUIKataster {
             version = in.readLine();
         }
         catch (FileNotFoundException fnfe) {
-            System.err.println("Could not find version file: 'version.txt'");
+            log.error("Could not find version file: 'version.txt'");
         }
         catch (NullPointerException npe) {
-            System.err.println("Could not find version file: 'version.txt'");
+            log.error("Could not find version file: 'version.txt'");
         }
         catch (IOException ioe) {
-            System.err.println("Error while reading version file: 'version.txt'");
+            log.error("Error while reading version file: 'version.txt'");
         }
         finally {
             if (in != null) {
@@ -166,13 +155,13 @@ public class AUIKataster {
             rev = in.readLine();
         }
         catch (FileNotFoundException fnfe) {
-            System.err.println("Could not find revision file: 'revision.txt'");
+            log.error("Could not find revision file: 'revision.txt'");
         }
         catch (NullPointerException npe) {
-            System.err.println("Could not find revision file: 'revision.txt'");
+            log.error("Could not find revision file: 'revision.txt'");
         }
         catch (IOException ioe) {
-            System.err.println("Error while reading revision file: 'revision.txt'");
+            log.error("Error while reading revision file: 'revision.txt'");
         }
         finally {
             if (in != null) {
@@ -208,13 +197,13 @@ public class AUIKataster {
             }
         }
         catch (FileNotFoundException fnfe) {
-            System.err.println("Could not find authors file: 'authors.txt'");
+            log.error("Could not find authors file: 'authors.txt'");
         }
         catch (NullPointerException npe) {
-            System.err.println("Could not find authors file: 'authors.txt'");
+            log.error("Could not find authors file: 'authors.txt'");
         }
         catch (IOException ioe) {
-            System.err.println("Error while reading authors file: 'authors.txt'");
+            log.error("Error while reading authors file: 'authors.txt'");
         }
         finally {
             if (in != null) {

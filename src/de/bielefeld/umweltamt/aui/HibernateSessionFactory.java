@@ -99,7 +99,7 @@ public class HibernateSessionFactory {
                     sessionFactory = cfg.buildSessionFactory();
                 }
                 catch (Exception e) {
-                    System.err.println("%%%% Error Creating SessionFactory %%%%");
+                    log.error("%%%% Error Creating SessionFactory %%%%");
                     e.printStackTrace();
                 }
             }

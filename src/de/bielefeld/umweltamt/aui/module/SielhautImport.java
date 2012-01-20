@@ -149,7 +149,7 @@ public class SielhautImport extends AbstractModul {
                 if (tmp.length != 6) {
                     throw new IOException("Datei ist beschädigt!");
                 }
-                //System.out.println(count + ": " + line);
+                //log.debug(count + ": " + line);
 
 
                 if (!tmp[0].startsWith("Probenahme-datum"))
@@ -159,7 +159,7 @@ public class SielhautImport extends AbstractModul {
 
                 count++;
             }
-            //System.out.println(getList().size() + " Zeilen gelesen!");
+            //log.debug(getList().size() + " Zeilen gelesen!");
             in.close();
 
             fireTableDataChanged();
@@ -189,7 +189,7 @@ public class SielhautImport extends AbstractModul {
         }
 
         private String wertAusZeile(String[] zeile) {
-            //System.out.println("WERT: '" + zeile[6].trim() + "'");
+            //log.debug("WERT: '" + zeile[6].trim() + "'");
             return zeile[4].trim();
         }
 

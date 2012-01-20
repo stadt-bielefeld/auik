@@ -76,7 +76,7 @@ public class AuikUtils {
 
 //        Thread spawnThread = new Thread(new Runnable() {
 //            public void run() {
-                //System.out.println("Spawning default Editor for: '" +f+ "'");
+                //log.debug("Spawning default Editor for: '" +f+ "'");
                 if (f.exists() && f.isFile() && f.canRead()) {
                     //String comspec = System.getenv("COMSPEC");
                     String comspec = "cmd";
@@ -485,22 +485,22 @@ public class AuikUtils {
         LookAndFeel laf = UIManager.getLookAndFeel();
         if (laf instanceof WindowsLookAndFeel && !(laf.getClass().getName().endsWith("WindowsClassicLookAndFeel"))) {
             if (System.getProperty("swing.noxp") != null) {
-                //System.out.println("Using Classic style (\"swing.noxp\" defined)");
+                //log.debug("Using Classic style (\"swing.noxp\" defined)");
                 tmp = false;
             } else {
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
                 boolean themeActive =
                     Boolean.TRUE.equals(toolkit.getDesktopProperty("win.xpstyle.themeActive"));
                 if (!themeActive) {
-                    //System.out.println("Using Classic style (XP style not enabled on desktop)");
+                    //log.debug("Using Classic style (XP style not enabled on desktop)");
                     tmp = false;
                 } else {
                     /*String dllName   = (String)toolkit.getDesktopProperty("win.xpstyle.dllName");
                     String colorName = (String)toolkit.getDesktopProperty("win.xpstyle.colorName");
                     String sizeName  = (String)toolkit.getDesktopProperty("win.xpstyle.sizeName");
-                    System.out.println("XP Style: " + dllName);
-                    System.out.println("Color scheme: " + colorName);
-                    System.out.println("Font size: " + sizeName);*/
+                    log.debug("XP Style: " + dllName);
+                    log.debug("Color scheme: " + colorName);
+                    log.debug("Font size: " + sizeName);*/
                     tmp = true;
                 }
             }

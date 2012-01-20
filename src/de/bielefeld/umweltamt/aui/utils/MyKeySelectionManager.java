@@ -92,7 +92,7 @@ public class MyKeySelectionManager implements KeySelectionManager {
             }
         }
 
-        //System.out.println("KEYMANAGER - char: '" + aKey + "', keys: \"" + keys + "\", curSel: " + curSelected + ", timeDif: " + timeDif);
+        //log.debug("KEYMANAGER - char: '" + aKey + "', keys: \"" + keys + "\", curSel: " + curSelected + ", timeDif: " + timeDif);
         lastTime = curTime;
         return curSelected;
     }

@@ -169,7 +169,7 @@ public class LaborIcpImport extends AbstractModul {
                 if (!(tmp.length == 18 || tmp.length == 15)) {
                     throw new IOException("Datei ist beschädigt!");
                 }
-                //System.out.println(count + ": " + line);
+                //log.debug(count + ": " + line);
 
                 if (!tmp[0].startsWith("Standard")
                         && tmp[1].equals("Samp")
@@ -179,7 +179,7 @@ public class LaborIcpImport extends AbstractModul {
                 }
                 count++;
             }
-            System.out.println(getList().size() + " Zeilen gelesen!");
+            log.debug(getList().size() + " Zeilen gelesen!");
             in.close();
 
             fireTableDataChanged();

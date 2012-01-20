@@ -1684,7 +1684,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             AtlParameterGruppen g = AtlParameterGruppen.getParameterGroup(gruppe);
 
             if (g == null) {
-                System.out.println("No such group with id: " + gruppe);
+            	log.debug("No such group with id: " + gruppe);
                 return 0;
             }
 

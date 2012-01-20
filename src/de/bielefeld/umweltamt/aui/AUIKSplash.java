@@ -28,11 +28,17 @@ import java.awt.Frame;
 import java.awt.Toolkit;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
+
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 /**
  * Ein Splashscreen, der ein Bild anzeigt und w&auml;hrenddessen das
  * eigentliche Hauptprogramm l&auml;dt.
 */
 public class AUIKSplash {
+	/** Logging */
+    private static final Logger log = AuikLogger.getLogger();
 
     /**
      * Zeigt einen Splashscreen an und l&auml;dt das eigentlich Hauptprogramm.
@@ -49,7 +55,7 @@ public class AUIKSplash {
                 Toolkit.getDefaultToolkit().createImage(imageURL)
             );
         } else {
-            System.err.println("Splash image not found");
+            log.error("Splash image not found");
         }
 
         // Call the main method of the application using Reflection
