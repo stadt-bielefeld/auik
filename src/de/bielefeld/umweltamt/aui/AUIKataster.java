@@ -81,7 +81,6 @@ public class AUIKataster {
     	/* Start the GUI */
     	GUIManager.getInstance().startGUI();
 
-    	// TODO: We leave the program somewhere else - is this bad?
-    	log.debug("Should land here in the end.");
+		return;
     }
 }

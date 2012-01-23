@@ -1,12 +1,16 @@
 package de.bielefeld.umweltamt.aui;
 
+import java.awt.Frame;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Vector;
 
+import de.bielefeld.umweltamt.aui.gui.SplashWindow;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -47,9 +51,9 @@ public final class GUIManager {
     /** Der lange Name des Programms */
     public static final String LONG_NAME = "Anlagen- und Indirekteinleiter-Kataster";
     /** Program version */
-    private static final String VERSION = "v1.1 RC1";
+    private static final String VERSION = null; // = "v1.1 RC1";
     /** Program revision */
-    private static final String REVISION = "rev162";
+    private static final String REVISION = null; // = "rev162";
     /** Program authors */
     private static final Vector<String> AUTHORS = new Vector<String>();
     /** Program authors as a HTML table */
@@ -64,9 +68,11 @@ public final class GUIManager {
 	/** Setting Manager */
     private static SettingsManager settingsManager = null;
 
-	/* Other GUI ralated stuff*/
+	/* Other GUI related stuff*/
     /** Das Hauptfenster bzw. aktive Fenster */
     private HauptFrame runningFrame = null;
+    /** The splash frame */
+    private Frame splashFrame = null;
 
 	/** Private Constructor */
 	private GUIManager() {
@@ -88,15 +94,38 @@ public final class GUIManager {
 	 * {@link SettingsManager} als Konstruktor &uuml;bergeben.
 	 */
 	public void startGUI() {
+		/* Show the splash frame */
+		this.showSplashFrame();
 		/* Initialize the settings */
 		GUIManager.settingsManager = SettingsManager.getInstance();
 		/* Create the main frame */
         this.runningFrame = new HauptFrame(GUIManager.settingsManager);
+		/* Dispose the splash frame */
+		this.disposeSplashFrame();
 	}
 
 	/** Getter */
 	public HauptFrame getRunningFrame() {
 		return this.runningFrame;
+	}
+	
+	/** Show the splash frame */
+	private void showSplashFrame() {
+        URL imageURL = GUIManager.class.getResource(
+        		"/de/bielefeld/umweltamt/aui/resources/splash.png");
+        if (imageURL != null) {
+            splashFrame = SplashWindow.splash(
+                Toolkit.getDefaultToolkit().createImage(imageURL));
+        } else {
+            log.warn("The splash image was not found.");
+        }
+	}
+	
+	/** Dispose the splash frame */
+	private void disposeSplashFrame() {
+        if (this.splashFrame != null) {
+        	this.splashFrame.dispose();
+        }
 	}
 	
     /**
