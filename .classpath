@@ -46,5 +46,7 @@
 	<classpathentry kind="lib" path="lib/jasperreports-fonts-3.7.6.jar"/>
 	<classpathentry kind="lib" path="lib/chartengineapi.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/jaxrpc.jar"/>
+	<classpathentry kind="lib" path="lib/axis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
