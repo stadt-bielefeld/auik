@@ -487,54 +487,66 @@ public class BasisPanel  extends JPanel {
     }
 
     public void updateForm() {
-        boolean neu;
+        boolean neu = false;
         getSachbearbeiterBox().setModel(new DefaultComboBoxModel(sachbearbeiter));
         getSachbearbeiterBox().setSelectedIndex(-1);
 
 
-        try
-        {
-            // Nur wenn Objekte neu angelegt werden stehen alle Objektarten zur Auswahl.
-            // Sobald eine Objet gespeichert wurde ist die Objektart nicht mehr veränderbar
-//            int id  = hauptModul.getObjekt().getObjektid();
-            neu = false;
-        }
-        catch (NullPointerException e)
-        {
-            neu = true;
-        }
+		try {
+			// Nur wenn Objekte neu angelegt werden stehen alle Objektarten zur
+			// Auswahl.
+			// Sobald eine Objet gespeichert wurde ist die Objektart nicht mehr
+			// veränderbar
+			if (hauptModul.getObjekt().getObjektid() == null)
+				neu = true;
+		} catch (NullPointerException e) {
+			neu = true;
+		}
 
-        if (neu == true)
-        {
-            if (objektarten != null && (objektarten.length != getArtBox().getItemCount()))
-            {
-                getArtBox().setModel(new DefaultComboBoxModel(objektarten));
-            }
-            hauptModul.getObjekt().setPrioritaet(0);
-        }
+		if (neu == true) {
+			if (objektarten != null
+					&& (objektarten.length != getArtBox().getItemCount())) {
+				getArtBox().setModel(new DefaultComboBoxModel(objektarten));
+			}
+			hauptModul.getObjekt().setPrioritaet(0);
+		}
 
-        else
-        {
-            getArtBox().removeAllItems();
-            // Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000) und umgekehrt ist weiterhin möglich
-            if (hauptModul.getObjekt().getBasisObjektarten().isAnh53Kl() | hauptModul.getObjekt().getBasisObjektarten().isAnh53Gr())
-            {
-                getArtBox().addItem(BasisObjektarten.getObjektart(17)); //Anhang 53 (<3000) (360.33)
-                getArtBox().addItem(BasisObjektarten.getObjektart(18));    // Anhang 53 (>3000) (360.33)
-            }
-            
-            else if (hauptModul.getObjekt().getBasisObjektarten().isAnh49() || hauptModul.getObjekt().getBasisObjektarten().isFettabscheider() || hauptModul.getObjekt().getBasisObjektarten().isAbscheider())
-            {
-                getArtBox().addItem(BasisObjektarten.getObjektart(14)); // Anhang 49 (360.33)
-                getArtBox().addItem(BasisObjektarten.getObjektart(19)); // Abscheider (360.33)
-                getArtBox().addItem(BasisObjektarten.getObjektart(15)); // Fettabscheider (360.33)
-            }
+		else {
+			getArtBox().removeAllItems();
+			// Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000)
+			// und umgekehrt ist weiterhin möglich
+			if (hauptModul.getObjekt().getBasisObjektarten().isAnh53Kl()
+					| hauptModul.getObjekt().getBasisObjektarten().isAnh53Gr()) {
+				getArtBox().addItem(BasisObjektarten.getObjektart(17)); // Anhang
+																		// 53
+																		// (<3000)
+																		// (360.33)
+				getArtBox().addItem(BasisObjektarten.getObjektart(18)); // Anhang
+																		// 53
+																		// (>3000)
+																		// (360.33)
+			}
+			// Ändern der Objektarten Anhang 49, Abscheider und Fettabscheider
+			// ist ebenfalls möglich
+			else if (hauptModul.getObjekt().getBasisObjektarten().isAnh49()
+					|| hauptModul.getObjekt().getBasisObjektarten()
+							.isFettabscheider()
+					|| hauptModul.getObjekt().getBasisObjektarten()
+							.isAbscheider()) {
+				getArtBox().addItem(BasisObjektarten.getObjektart(14)); // Anhang
+																		// 49
+																		// (360.33)
+				getArtBox().addItem(BasisObjektarten.getObjektart(19)); // Abscheider
+																		// (360.33)
+				getArtBox().addItem(BasisObjektarten.getObjektart(15)); // Fettabscheider
+																		// (360.33)
+			}
 
-            else
-            {
-                getArtBox().addItem(hauptModul.getObjekt().getBasisObjektarten());
-            }
-        }
+			else {
+				getArtBox().addItem(
+						hauptModul.getObjekt().getBasisObjektarten());
+			}
+		}
 
         if (hauptModul.getObjekt() != null) {
             if (hauptModul.getObjekt().getBasisBetreiber() != null) {
