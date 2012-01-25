@@ -67,13 +67,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -87,6 +84,8 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * @author David Klotz
  */
 public class AbscheiderEditor extends AbstractBaseEditor{
+	private static final long serialVersionUID = -6112634548181223631L;
+
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -94,7 +93,6 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     private JTextField herstellerFeld;
     private JFormattedTextField nrFeld;
     private JFormattedTextField vonFeld;
-    private JTextField baujahrFeld;
     private JFormattedTextField ngsfFeld;
     private JFormattedTextField ngbaFeld;
     private JFormattedTextField ngkaFeld;
@@ -186,71 +184,28 @@ public class AbscheiderEditor extends AbstractBaseEditor{
      * @see de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#fillForm()
      */
     protected void fillForm() {
-        getLageFeld().setText(getDetails().getLage());
-        getHerstellerFeld().setText(getDetails().getHersteller());
-        getNrFeld().setValue(getDetails().getAbscheidernr());
-        getVonFeld().setValue(getDetails().getVon());
-        getNgsfFeld().setValue(getDetails().getNgSf());
-        getNgbaFeld().setValue(getDetails().getNgBa());
-        getNgkaFeld().setValue(getDetails().getNgKa());
-        getNgfaFeld().setValue(getDetails().getNenngroesse());
-        getBemerkungsArea().setText(getDetails().getBemerkung());
+    	Anh49Abscheiderdetails details = this.getDetails();
+        getLageFeld().setText(details.getLage());
+        getHerstellerFeld().setText(details.getHersteller());
+        getNrFeld().setValue(details.getAbscheidernr());
+        getVonFeld().setValue(details.getVon());
+        getNgsfFeld().setValue(details.getNgSf());
+        getNgbaFeld().setValue(details.getNgBa());
+        getNgkaFeld().setValue(details.getNgKa());
+        getNgfaFeld().setValue(details.getNenngroesse());
+        // TODO: Do we need this field coming from other views?
+        getNgfaFeld().setEnabled(false);
+        getBemerkungsArea().setText(details.getBemerkung());
 
-        if (getDetails().getTankstelle() == true) {
-            getTankstelleCheck().setSelected(true);
-        }
-        else {
-            getTankstelleCheck().setSelected(false);
-        }
-
-        if (getDetails().getSchlammfang() == true) {
-            getSchlammfangCheck().setSelected(true);
-        }
-        else {
-            getSchlammfangCheck().setSelected(false);
-        }
-
-        if (getDetails().getBenzinOelabscheider() == true) {
-            getBenzinabscheiderCheck().setSelected(true);
-        }
-        else {
-            getBenzinabscheiderCheck().setSelected(false);
-        }
-
-        if (getDetails().getKoaleszenzfilter() == true) {
-            getKoalenszenzfilterCheck().setSelected(true);
-        }
-        else {
-            getKoalenszenzfilterCheck().setSelected(false);
-        }
-
-        if (getDetails().getIntegriert() == true) {
-            getIntegriertCheck().setSelected(true);
-        }
-        else {
-            getIntegriertCheck().setSelected(false);
-        }
-
-        if (getDetails().getEmulsionsspaltanlage() == true) {
-            getEmulsionCheck().setSelected(true);
-        }
-        else {
-            getEmulsionCheck().setSelected(false);
-        }
-
-        if (getDetails().getSchwimmer() == true) {
-            getSchwimmerCheck().setSelected(true);
-        }
-        else {
-            getSchwimmerCheck().setSelected(false);
-        }
-
-        if (getDetails().getWohnhaus() == true) {
-            getWohnhausCheck().setSelected(true);
-        }
-        else {
-            getWohnhausCheck().setSelected(false);
-        }
+        getTankstelleCheck().setSelected(details.getTankstelle());
+        getSchlammfangCheck().setSelected(details.getSchlammfang());
+        getBenzinabscheiderCheck().setSelected(
+        		details.getBenzinOelabscheider());
+        getKoalenszenzfilterCheck().setSelected(details.getKoaleszenzfilter());
+        getIntegriertCheck().setSelected(details.getIntegriert());
+        getEmulsionCheck().setSelected(details.getEmulsionsspaltanlage());
+        getSchwimmerCheck().setSelected(details.getSchwimmer());
+        getWohnhausCheck().setSelected(details.getWohnhaus());
     }
 
     /* (non-Javadoc)
@@ -264,114 +219,78 @@ public class AbscheiderEditor extends AbstractBaseEditor{
      * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
      */
     protected boolean doSave() {
-        // Lage:
-        String lage = (String) lageFeld.getText();
-        getDetails().setLage(lage);
+    	Anh49Abscheiderdetails details = this.getDetails();
+
+    	// Lage:
+        details.setLage(lageFeld.getText());
 
         // Hersteller:
-        String herst = (String) herstellerFeld.getText();
-        getDetails().setHersteller(herst);
+        details.setHersteller(herstellerFeld.getText());
 
+        // TODO: (MVC) We are managing database related formating here in the gui
         // Abscheidernummer:
         Integer nr = ((IntegerField)nrFeld).getIntValue();
-        getDetails().setAbscheidernr(nr);
+        details.setAbscheidernr(nr);
 
         // Von:
         Integer von = ((IntegerField)vonFeld).getIntValue();
-        getDetails().setVon(von);
+        details.setVon(von);
 
         // Nenngroesse Sandfang:
         Integer ngsf = ((IntegerField)ngsfFeld).getIntValue();
-        getDetails().setNgSf(ngsf);
+        details.setNgSf(ngsf);
 
         // Nenngroesse Benzinabscheider:
         Integer ngba = ((IntegerField)ngbaFeld).getIntValue();
-        getDetails().setNgBa(ngba);
+        details.setNgBa(ngba);
 
         // Nenngroesse Koaleszenzabscheider:
         Integer ngka = ((IntegerField)ngkaFeld).getIntValue();
-        getDetails().setNgKa(ngka);
+        details.setNgKa(ngka);
 
         // Nenngroesse Fettabscheider:
         Integer ngfa = ((IntegerField)ngfaFeld).getIntValue();
-        getDetails().setNenngroesse(ngfa);
+        details.setNenngroesse(ngfa);
 
         //Tankstelle ja/nein
-        if (getTankstelleCheck().isSelected())  {
-            getDetails().setTankstelle(true);
-        } else {
-            getDetails().setTankstelle(false);
-        }
+        details.setTankstelle(getTankstelleCheck().isSelected());
 
         //Schlammfang ja/nein
-        if (getSchlammfangCheck().isSelected())  {
-            getDetails().setSchlammfang(true);
-        } else {
-            getDetails().setSchlammfang(false);
-        }
+        details.setSchlammfang(getSchlammfangCheck().isSelected());
 
         //Benzinabscheider ja/nein
-        if (getBenzinabscheiderCheck().isSelected())  {
-            getDetails().setBenzinOelabscheider(true);
-        } else {
-            getDetails().setBenzinOelabscheider(false);
-        }
+        details.setBenzinOelabscheider(getBenzinabscheiderCheck().isSelected());
 
         //Koaleszenzabscheider ja/nein
-        if (getKoalenszenzfilterCheck().isSelected())  {
-            getDetails().setKoaleszenzfilter(true);
-        } else {
-            getDetails().setKoaleszenzfilter(false);
-        }
+        details.setKoaleszenzfilter(getKoalenszenzfilterCheck().isSelected());
 
         //Integriert ja/nein
-        if (getIntegriertCheck().isSelected())  {
-            getDetails().setIntegriert(true);
-        } else {
-            getDetails().setIntegriert(false);
-        }
+        details.setIntegriert(getIntegriertCheck().isSelected());
 
         //Emulsionsspaltung ja/nein
-        if (getEmulsionCheck().isSelected())  {
-            getDetails().setEmulsionsspaltanlage(true);
-        } else {
-            getDetails().setEmulsionsspaltanlage(false);
-        }
+        details.setEmulsionsspaltanlage(getEmulsionCheck().isSelected());
 
         //Schwimmer ja/nein
-        if (getSchwimmerCheck().isSelected())  {
-            getDetails().setSchwimmer(true);
-        } else {
-            getDetails().setSchwimmer(false);
-        }
+        details.setSchwimmer(getSchwimmerCheck().isSelected());
 
         //Wohnhaus ja/nein
-        if (getWohnhausCheck().isSelected())  {
-            getDetails().setWohnhaus(true);
-        } else {
-            getDetails().setWohnhaus(false);
-        }
+        details.setWohnhaus(getWohnhausCheck().isSelected());
 
         // Bemerkungen:
-        String bem = (String) bemerkungsArea.getText();
-        getDetails().setBemerkung(bem);
+        details.setBemerkung(bemerkungsArea.getText());
 
-        boolean save = Anh49Abscheiderdetails.saveAbscheider(getDetails());
-        if (save = true) {
+        boolean save = Anh49Abscheiderdetails.saveAbscheider(details);
+        
+        if (save) { // Args, this was "save = true" FAIL!
             log.debug("Änderungen gespeichert!");
         }
+        
         return save;
     }
 
 
     // Getter für Widgets:
 
-    private JTextField getBaujahrFeld() {
-        if (baujahrFeld == null) {
-            baujahrFeld = new LimitedTextField(50);
-        }
-        return baujahrFeld;
-    }
     private JCheckBox getBenzinabscheiderCheck() {
         if (benzinabscheiderCheck == null) {
             benzinabscheiderCheck = new JCheckBox("Benzinabscheider");
