@@ -262,6 +262,7 @@ public final class GUIManager {
      *
      * @return die Autorenliste als HTML Tabelle.
      */
+    /* For some reason this does not work with line separators. */
     public final String getAuthorsAsHTML() {
     	/* If we already have the authors as HTML table return it */
     	if (GUIManager.AUTHORS_AS_HTML_TABLE != null) {
@@ -271,12 +272,12 @@ public final class GUIManager {
     	Vector<String> authors = this.getAuthors();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("<table>\n");
+        sb.append("<table>");
 
         for (String author: authors) {
-            sb.append("  <tr>\n    <td>\n      ");
+            sb.append("<tr><td>");
             sb.append(author);
-            sb.append("\n    </td>\n  </tr>\n");
+            sb.append("</td></tr>");
         }
 
         sb.append("</table>");
