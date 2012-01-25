@@ -33,7 +33,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -55,8 +54,7 @@ public class BasisStandort
 	/**
      * Simple constructor of BasisStandort instances.
      */
-    public BasisStandort()
-    {
+    public BasisStandort() {
     	// This is intentionally left blank.
     }
 
@@ -64,8 +62,7 @@ public class BasisStandort
      * Constructor of BasisStandort instances given a simple primary key.
      * @param standortid
      */
-    public BasisStandort(java.lang.Integer standortid)
-    {
+    public BasisStandort(java.lang.Integer standortid) {
         super(standortid);
     }
 
@@ -73,12 +70,13 @@ public class BasisStandort
 
     /**
      * @deprecated Somebody was misusing this method...
-     * 
+     * TODO: Find all calls of the toString method and switch them
      * @see {@link this.getFormatierteStrasse} for the original method. 
      */
     public String toString() {
-    	log.warn("If you see this message, something may need to be fixed!");
-        return super.toString();
+//    	log.warn("If you see this message, something may need to be fixed!");
+//        return super.toString();
+    	return this.getFormatierteStrasse();
     }
     
     /**
