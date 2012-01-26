@@ -78,6 +78,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -85,12 +86,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -104,7 +103,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -114,28 +112,25 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "Anhang 49"-Tab des BasisObjektBearbeiten-Moduls.
  * @author Gerd Genuit
  */
-public class Anh49Panel extends JPanel {
+public class Anh49Panel extends AbstractAnhangPanel {
 	private static final long serialVersionUID = 2262140075740338093L;
 
-	/** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-
-    private String name;
-    private BasisObjektBearbeiten hauptModul;
-
-    // Widgets
-    private JTextField sachbearbeiterFeld = null;
-    private JTextField ansprechpartnerFeld = null;
-    private JTextField sachkundelfaFeld = null;
-    private JTextField analyseMonatFeld = null;
-    private TextFieldDateChooser wiedervorlageDatum = null;
-//    private JCheckBox behobenCheck = null;
-    private TextFieldDateChooser genehmigungDatum = null;
-    private TextFieldDateChooser aenderungDatum = null;
-    private JCheckBox abgemeldetCheck = null;
-    private JCheckBox abwasserfreiCheck = null;
-    private JCheckBox eSatzungCheck = null;
-    private JTextArea anh49BemerkungArea = null;
+	/* Widgets - left */
+	private final String sachbearbeiter = "Sachbearbeiter:";
+	private final String ansprechpartner = "Ansprechpartner:";
+	private final String sachkundeLFA = "Sachkunde LFA:";
+	private final String analysemonat = "Analysemonat:";
+	private final String bemerkungen = "Bemerkungen";
+	/* Widgets - right */
+	private final String genehmigungsdatum = "Genehmigungsdatum:";
+	private final String änderungsgenehmigungsdatum =
+		"Änderungsgenehmigungsdatum:";
+	private final String abgemeldet = "abgemeldet";
+	private final String abwasserfrei = "abwasserfrei";
+	private final String eSatzung = "E-Satzung";
+	private final String wiedervorlagedatum = "Wiedervorlagedatum:";
+	private final String speichern = "Speichern";
+	
     private JButton saveAnh49Button = null;
 
     // Daten
@@ -149,93 +144,148 @@ public class Anh49Panel extends JPanel {
     private JPopupMenu verknuepfungPopup;
 
     public Anh49Panel(BasisObjektBearbeiten hauptModul) {
-        name = "Anhang 49";
-        this.hauptModul = hauptModul;
+    	super("Anhang 49", hauptModul);
 
+    	/* Add components to the "Anhang" panel */
+        /* Left column */
+     	super.addComponent(sachbearbeiter, new LimitedTextField(50));
+    	super.addComponent(ansprechpartner, new LimitedTextField(50));
+    	super.addComponent(sachkundeLFA, new LimitedTextField(50));
+    	super.addComponent(analysemonat, new LimitedTextField(50));
+    	JTextArea textArea = new LimitedTextArea(150);
+    	textArea.setLineWrap(true);
+    	textArea.setWrapStyleWord(true);
+    	super.addComponent(bemerkungen, textArea);
+    	
+    	/* Right column */
+    	super.addComponent(genehmigungsdatum,
+    			new TextFieldDateChooser(AuikUtils.DATUMSFORMATE));
+    	super.addComponent(änderungsgenehmigungsdatum,
+    			new TextFieldDateChooser(AuikUtils.DATUMSFORMATE));
+    	super.addComponent(abgemeldet, new JCheckBox(abgemeldet));
+    	super.addComponent(abwasserfrei, new JCheckBox(abwasserfrei));
+    	super.addComponent(eSatzung, new JCheckBox(eSatzung));
+    	super.addComponent(wiedervorlagedatum,
+    			new TextFieldDateChooser(AuikUtils.DATUMSFORMATE));
+    	super.addComponent(speichern, new JButton());
+    	
         FormLayout layout = new FormLayout (
-                "r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 90dlu", // Spalten
-                "pref, " +    //1
-                "3dlu, " +    //2
-                "pref, " +    //3
-                "3dlu, " +    //4
-                "pref, " +    //5
-                "3dlu, " +    //6
-                "pref, " +    //7
-                "3dlu, " +    //8
-                "pref, " +    //9
-                "3dlu, " +    //10
-                "pref, " +    //11
-                "3dlu, " +    //12
-                "pref, " +    //13
-                "3dlu, " +    //14
-                "pref, " +    //15 
-                "3dlu, " +    //16
-                "pref, " +    //17
-                "3dlu, " +    //18
-                "30dlu, " +    //19
-                "3dlu, " +    //20
-//                "pref, " +    //21
-//                "3dlu, " +    //22
-//                "pref, " +    //23
-//                "3dlu, " +    //24
-//                "pref, " +    //25
-//                "3dlu, " +    //26
-                "pref, " +    //27
-                "5dlu, " +    //28
-                "fill:100dlu, " +    //29
-                "5dlu, " +    //30
-                "pref");      //31
+                "pref, 5dlu, pref, 10dlu, pref, 5dlu, pref", // Spalten
+                "pref, " +    // Bearbeitung     | Erfassung
+                "3dlu, " +    //
+                "pref, " +    // Sachbearbeiter  | Genehmigungsdatum
+                "3dlu, " +    //
+                "pref, " +    // Ansprechpartner | Änderungsgenehmigungsdatum
+                "3dlu, " +    //
+                "pref, " +    // Sachkunde LFA   | abgemeldet
+                "3dlu, " +    //
+                "pref, " +    // Analyse         | abwasserfrei
+                "3dlu, " +    //
+                "pref, " +    // Analysemonat   | E-Satzung
+                "3dlu, " +    //
+                "pref, " +    // Bemerkung      | Kontrolle
+                "3dlu, " +    //
+                "pref, " +    // Bemerkung      | Wiedervorlage
+                "30dlu, " +   //
+                "3dlu, " +    //
+                "pref, " +    // Verknüpfte Objekte
+                "5dlu, " +    //
+                "fill:100dlu, " +    // Tabelle
+                "5dlu, " +    //
+                "pref");      // Buttons 
 
         PanelBuilder builder = new PanelBuilder(layout, this);
         builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
 
-        //linke Seite
-        // TODO: Do not use fixed values here...
-        builder.addSeparator("Bearbeitung", cc.xyw( 1, 1, 3));
-        builder.addLabel("Sachbearb.:", cc.xy( 1, 3));
-        builder.add(getSachbearbeiterFeld(), cc.xy( 3, 3));
-        builder.addLabel("Ansprechpar.:", cc.xy( 1, 5));
-        builder.add(getAnsprechpartnerFeld(), cc.xy( 3, 5));
-        builder.addLabel("Sachkde LFA:", cc.xy( 1, 7));
-        builder.add(getSachkundelfaFeld(), cc.xy( 3, 7));
-        builder.addSeparator("Analyse", cc.xyw( 1, 9, 3));
-        builder.addLabel("Analysemonat:", cc.xy( 1, 11));
-        builder.add(getAnalyseMonatFeld(), cc.xy( 3, 11));
-        builder.addSeparator("Bemerkungen", cc.xyw( 1, 13, 3));
-        JScrollPane bemerkungsScroller = new JScrollPane(getAnh49BemerkungArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(bemerkungsScroller, cc.xywh( 1, 15, 3, 5));
+        /* Left column */
+        Integer row = 1;
+        Integer labelCol = 1;
+        Integer fieldCol = 3;
+        Integer colWidth = 3;
+        Integer cols = 7;
         
-        builder.addSeparator("Verknüpfte Objekte", cc.xyw( 1, 21, 7));
-        JScrollPane objektverknuepfungScroller = new JScrollPane(
-                getObjektverknuepungTabelle(),
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        builder.addSeparator("Bearbeitung", cc.xyw(labelCol, row, colWidth));
+        row += 2;
+        builder.addLabel(sachbearbeiter, cc.xy(labelCol, row));
+        builder.add(super.getComponent(sachbearbeiter), cc.xy(fieldCol, row));
+        row += 2;
+        builder.addLabel(ansprechpartner, cc.xy(labelCol, row));
+        builder.add(super.getComponent(ansprechpartner), cc.xy(fieldCol, row));
+        row += 2;
+        builder.addLabel(sachkundeLFA, cc.xy(labelCol, row));
+        builder.add(super.getComponent(sachkundeLFA), cc.xy(fieldCol, row));
+        row += 2;
+        
+        builder.addSeparator("Analyse", cc.xyw(labelCol, row, colWidth));
+        row += 2;
+        builder.addLabel(analysemonat, cc.xy(labelCol, row));
+        builder.add(super.getComponent(analysemonat), cc.xy(fieldCol, row));
+        row += 2;
+        
+        builder.addSeparator("Bemerkungen", cc.xyw(labelCol, row, colWidth));
+        row += 2;
+        builder.add(new JScrollPane(super.getComponent(bemerkungen),
+        		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),
+        		cc.xywh(labelCol, row, colWidth, 2));
+        row += 3;
+
+        /* Bottom */
+        builder.addSeparator("Verknüpfte Objekte", cc.xyw(labelCol, row, cols));
+        row += 2;
+        builder.add(
+        		new JScrollPane(
+        				getObjektverknuepungTabelle(),
+        				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),
+                cc.xyw(labelCol, row, cols));
+        builder.add(
+        		ButtonBarFactory.buildRightAlignedBar(getSelectObjektButton(),
+        				getSaveAnh49Button()),
+				cc.xyw(labelCol, row, cols));
+
+        /* Right column */
+        row = 1;
+        labelCol = 5;
+        fieldCol = 7;
+
         builder.appendRow("fill:100dlu");
-        builder.add(objektverknuepfungScroller, cc.xyw( 1, 23, 7));
 
-        //rechte Seite
-        builder.addSeparator("Erfassung", cc.xyw( 5, 1, 3));
-        builder.addLabel("Genehmigung:", cc.xy( 5, 3));
-        builder.add(getGenehmigungDatum(), cc.xy( 7, 3));
-        builder.addLabel("Änderungsgen.:", cc.xy( 5, 5));
-        builder.add(getAenderungDatum(), cc.xy( 7, 5));
-        builder.add(getAbgemeldetCheck(), cc.xyw( 5, 7, 3, "l,d"));
-        builder.add(getAbwasserfreiCheck(), cc.xyw( 5, 9, 3, "l,d"));
-        builder.add(getESatzungCheck(), cc.xyw( 5, 11, 3, "l,d"));
-
-        builder.addSeparator("Kontrolle (to be renamed)", cc.xyw( 5, 13, 3));
-        builder.addLabel("Wiedervorlage:", cc.xy( 5, 15));
-        builder.add(getWiedervorlageDatum(), cc.xy(7, 15));
+        builder.addSeparator("Erfassung", cc.xyw(labelCol, row, colWidth));
+        row += 2;
+        builder.addLabel(genehmigungsdatum, cc.xy(labelCol, row));
+        builder.add(
+        		super.getComponent(genehmigungsdatum), cc.xy(fieldCol, row));
+        row += 2;
+        builder.addLabel(änderungsgenehmigungsdatum, cc.xy(labelCol, row));
+        builder.add(
+        		super.getComponent(änderungsgenehmigungsdatum),
+        		cc.xy(fieldCol, row));
+        row += 2;
+        builder.add(
+        		super.getComponent(abgemeldet),
+        		cc.xy(fieldCol, row, "l,d"));
+        row += 2;
+        builder.add(
+        		super.getComponent(abwasserfrei),
+        		cc.xy(fieldCol, row, "l,d"));
+        row += 2;
+        builder.add(
+        		super.getComponent(eSatzung),
+        		cc.xy(fieldCol, row, "l,d"));
+        row += 2;
+        
+        builder.addSeparator(
+        		"Kontrolle (to be renamed)", cc.xyw(labelCol, row, colWidth));
+        row += 2;
+        builder.addLabel(wiedervorlagedatum, cc.xy(labelCol, row));
+        builder.add(
+        		super.getComponent(wiedervorlagedatum), cc.xy(fieldCol, row));
 
         builder.nextLine();
-
-        // unten
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(getSelectObjektButton(), getSaveAnh49Button());
-        builder.add(buttonBar, cc.xyw( 1, 25, 7));
-
-
     }
+    
     public void fetchFormData() {
         fachdaten = Anh49Fachdaten.getAnh49ByObjekt(hauptModul.getObjekt());
         log.debug("Anhang 49 Objekt aus DB geholt: " + fachdaten);
@@ -243,39 +293,30 @@ public class Anh49Panel extends JPanel {
 
     public void updateForm() {
         if (fachdaten != null) {
-            if (fachdaten.getAbgemeldet() != null) {
-            	getAbgemeldetCheck().setSelected(fachdaten.getAbgemeldet());
-            }
-            if (fachdaten.getAbwasserfrei() != null) {
-            	getAbwasserfreiCheck().setSelected(fachdaten.getAbwasserfrei());
-            }
-            if (fachdaten.getGenehmigung() != null) {
-                getGenehmigungDatum().setDate(fachdaten.getGenehmigung());
-            }
-            if (fachdaten.getAenderungsgenehmigung() != null) {
-                getAenderungDatum().setDate(fachdaten.getAenderungsgenehmigung());
-            }
-            if (fachdaten.getAnalysemonat() != null) {
-                getAnalyseMonatFeld().setText(fachdaten.getAnalysemonat());
-            }
-            if (fachdaten.getBemerkungen() != null) {
-                getAnh49BemerkungArea().setText(fachdaten.getBemerkungen());
-            }
-            if (fachdaten.getWiedervorlage() != null) {
-                getWiedervorlageDatum().setDate(fachdaten.getWiedervorlage());
-            }
-            if (fachdaten.getAnsprechpartnerIn() != null) {
-                getAnsprechpartnerFeld().setText(fachdaten.getAnsprechpartnerIn().toString());
-            }
-            if (fachdaten.getESatzung() != null) {
-            	getESatzungCheck().setSelected(fachdaten.getESatzung());
-            }
-            if (fachdaten.getSachbearbeiterIn() != null) {
-                getSachbearbeiterFeld().setText(fachdaten.getSachbearbeiterIn());
-            }
-            if (fachdaten.getSachkundelfa() != null) {
-                getSachkundelfaFeld().setText(fachdaten.getSachkundelfa());
-            }
+        	super.setComponentValue(sachbearbeiter,
+        			fachdaten.getSachbearbeiterIn());
+        	super.setComponentValue(ansprechpartner,
+        			fachdaten.getAnsprechpartnerIn());
+        	super.setComponentValue(sachkundeLFA,
+        			fachdaten.getSachkundelfa());
+        	super.setComponentValue(analysemonat,
+        			fachdaten.getAnalysemonat());
+        	super.setComponentValue(bemerkungen,
+        			fachdaten.getBemerkungen());
+        	
+        	super.setComponentValue(genehmigungsdatum,
+        			fachdaten.getGenehmigung());
+        	super.setComponentValue(änderungsgenehmigungsdatum,
+        			fachdaten.getAenderungsgenehmigung());
+        	super.setComponentValue(abgemeldet,
+        			fachdaten.getAbgemeldet());
+        	super.setComponentValue(abwasserfrei,
+        			fachdaten.getAbwasserfrei());
+        	super.setComponentValue(eSatzung,
+        			fachdaten.getESatzung());
+        	super.setComponentValue(wiedervorlagedatum,
+        			fachdaten.getWiedervorlage());
+        	
             objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
         } else {
             enableAll(false);
@@ -286,40 +327,15 @@ public class Anh49Panel extends JPanel {
     }
 
     public void clearForm() {
-        getAbgemeldetCheck().setSelected(false);
-        getAbwasserfreiCheck().setSelected(false);
-        getAenderungDatum().setDate(null);
-        getAnalyseMonatFeld().setText(null);
-        getAnh49BemerkungArea().setText(null);
-        getWiedervorlageDatum().setDate(null);
-        getAnsprechpartnerFeld().setText(null);
-        getESatzungCheck().setSelected(false);
-        getGenehmigungDatum().setDate(null);
-        getSachbearbeiterFeld().setText(null);
-        getSachkundelfaFeld().setText(null);
+    	super.clearAllComponents();
     }
 
     public void enableAll(boolean enabled) {
         // Wenn das Fachdaten-Objekt null ist,
         // können die Elemente nicht wieder aktiviert werden:
         if (!(enabled && (fachdaten == null))) {
-            getAbgemeldetCheck().setEnabled(enabled);
-            getAbwasserfreiCheck().setEnabled(enabled);
-            getAenderungDatum().setEnabled(enabled);
-            getAnalyseMonatFeld().setEnabled(enabled);
-            getAnh49BemerkungArea().setEnabled(enabled);
-            getWiedervorlageDatum().setEnabled(enabled);
-            getAnsprechpartnerFeld().setEnabled(enabled);
-            getESatzungCheck().setEnabled(enabled);
-            getGenehmigungDatum().setEnabled(enabled);
-            getSachbearbeiterFeld().setEnabled(enabled);
-            getSachkundelfaFeld().setEnabled(enabled);
-            getSaveAnh49Button().setEnabled(enabled);
+        	super.setAllComponentsEnabled(enabled);
         }
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Anh49Fachdaten getFachdaten() {
@@ -329,21 +345,30 @@ public class Anh49Panel extends JPanel {
     private boolean saveAnh49Daten() {
         boolean success;
         
-        fachdaten.setAbgemeldet(getAbgemeldetCheck().isSelected());
-        fachdaten.setAbwasserfrei(getAbwasserfreiCheck().isSelected());
-        fachdaten.setAnalysemonat(setBlankToNull(analyseMonatFeld.getText()));
-        fachdaten.setBemerkungen(setBlankToNull(anh49BemerkungArea.getText()));
-        fachdaten.setWiedervorlage(wiedervorlageDatum.getDate());
-        fachdaten.setAnsprechpartnerIn(
-        		setBlankToNull(ansprechpartnerFeld.getText()));
-        fachdaten.setESatzung(getESatzungCheck().isSelected());
-        fachdaten.setGenehmigung(genehmigungDatum.getDate());
-        fachdaten.setAenderungsgenehmigung(aenderungDatum.getDate());
-//        fachdaten.setMaengel(getMangelCheck().isSelected());
         fachdaten.setSachbearbeiterIn(
-        		setBlankToNull(sachbearbeiterFeld.getText()));
-        fachdaten.setSachkundelfa(setBlankToNull(sachkundelfaFeld.getText()));
-
+        		(String)this.getComponentValue(sachbearbeiter));
+        fachdaten.setAnsprechpartnerIn(
+        		(String)this.getComponentValue(ansprechpartner));
+        fachdaten.setSachkundelfa(
+        		(String)this.getComponentValue(sachkundeLFA));
+        fachdaten.setAnalysemonat(
+        		(String)this.getComponentValue(analysemonat));
+        fachdaten.setBemerkungen(
+        		(String)this.getComponentValue(bemerkungen));
+        
+        fachdaten.setGenehmigung(
+        		(Date)this.getComponentValue(genehmigungsdatum));
+        fachdaten.setAenderungsgenehmigung(
+        		(Date)this.getComponentValue(änderungsgenehmigungsdatum));
+        fachdaten.setAbgemeldet(
+        		(Boolean)this.getComponentValue(abgemeldet));
+        fachdaten.setAbwasserfrei(
+        		(Boolean)this.getComponentValue(abwasserfrei));
+        fachdaten.setESatzung(
+        		(Boolean)this.getComponentValue(eSatzung));
+        fachdaten.setWiedervorlage(
+        		(Date)this.getComponentValue(wiedervorlagedatum));
+        
         success = Anh49Fachdaten.saveFachdaten(fachdaten);
 
         if (!success) {
@@ -354,22 +379,6 @@ public class Anh49Panel extends JPanel {
         return success;
     }
 
-    /**
-     * If the given string is "" null is returned otherwise the string itself
-     * 
-     * TODO: This handling of "" values should be shorted out in the database
-     * part and not the gui (MVC and so...)
-     * 
-     * @param string The input string
-     * @return string=="" ? null : string
-     */
-    private String setBlankToNull(String string) {
-    	if ("".equals(string)) {
-    		return null;
-    	}
-    	return string;
-    }
-    
     public void completeObjekt() {
         if (hauptModul.isNew() || fachdaten == null) {
             // Neues Anhang49-Objekt erzeugen
@@ -381,85 +390,6 @@ public class Anh49Panel extends JPanel {
             Anh49Fachdaten.saveFachdaten(fachdaten);
             log.debug("Neues Anh49 Objekt " + fachdaten + " gespeichert.");
         }
-    }
-
-    private JCheckBox getAbgemeldetCheck() {
-        if (abgemeldetCheck == null) {
-            abgemeldetCheck = new JCheckBox("abgemeldet");
-        }
-        return abgemeldetCheck;
-    }
-
-    private JCheckBox getAbwasserfreiCheck() {
-        if (abwasserfreiCheck == null) {
-            abwasserfreiCheck = new JCheckBox("abwasserfrei");
-        }
-        return abwasserfreiCheck;
-    }
-
-    private TextFieldDateChooser getAenderungDatum() {
-        if (aenderungDatum == null) {
-            aenderungDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-        }
-        return aenderungDatum;
-    }
-
-    private JTextField getAnalyseMonatFeld() {
-        if (analyseMonatFeld == null) {
-            analyseMonatFeld = new LimitedTextField(50);
-        }
-        return analyseMonatFeld;
-    }
-
-    private JTextArea getAnh49BemerkungArea() {
-        if (anh49BemerkungArea == null) {
-            anh49BemerkungArea = new LimitedTextArea(150);
-            anh49BemerkungArea.setLineWrap(true);
-            anh49BemerkungArea.setWrapStyleWord(true);
-        }
-        return anh49BemerkungArea;
-    }
-
-    private TextFieldDateChooser getWiedervorlageDatum() {
-        if (wiedervorlageDatum == null) {
-            wiedervorlageDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-        }
-        return wiedervorlageDatum;
-    }
-
-    private JTextField getAnsprechpartnerFeld() {
-        if (ansprechpartnerFeld == null) {
-            ansprechpartnerFeld = new LimitedTextField(50);
-        }
-        return ansprechpartnerFeld;
-    }
-
-    private JCheckBox getESatzungCheck() {
-        if (eSatzungCheck == null) {
-            eSatzungCheck = new JCheckBox("E-Satzung");
-        }
-        return eSatzungCheck;
-    }
-
-    private TextFieldDateChooser getGenehmigungDatum() {
-        if (genehmigungDatum == null) {
-            genehmigungDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-        }
-        return genehmigungDatum;
-    }
-
-    private JTextField getSachbearbeiterFeld() {
-        if (sachbearbeiterFeld == null) {
-            sachbearbeiterFeld = new LimitedTextField(50);
-        }
-        return sachbearbeiterFeld;
-    }
-
-    private JTextField getSachkundelfaFeld() {
-        if (sachkundelfaFeld == null) {
-            sachkundelfaFeld = new LimitedTextField(50);
-        }
-        return sachkundelfaFeld;
     }
 
     private JButton getSaveAnh49Button() {
