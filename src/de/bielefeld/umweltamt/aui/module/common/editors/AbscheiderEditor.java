@@ -193,8 +193,6 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         getNgbaFeld().setValue(details.getNgBa());
         getNgkaFeld().setValue(details.getNgKa());
         getNgfaFeld().setValue(details.getNenngroesse());
-        // TODO: Do we need this field coming from other views?
-        getNgfaFeld().setEnabled(false);
         getBemerkungsArea().setText(details.getBemerkung());
 
         getTankstelleCheck().setSelected(details.getTankstelle());
