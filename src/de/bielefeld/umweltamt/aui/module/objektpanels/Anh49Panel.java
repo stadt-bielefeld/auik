@@ -115,21 +115,23 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 public class Anh49Panel extends AbstractAnhangPanel {
 	private static final long serialVersionUID = 2262140075740338093L;
 
+	/* Note: As these strings are used as keys in the underlying HashMap,     *
+	 * they should be unique.                                                 */
 	/* Widgets - left */
-	private final String sachbearbeiter = "Sachbearbeiter:";
-	private final String ansprechpartner = "Ansprechpartner:";
-	private final String sachkundeLFA = "Sachkunde LFA:";
-	private final String analysemonat = "Analysemonat:";
-	private final String bemerkungen = "Bemerkungen";
+	private final String SACHBEARBEITER              = "Sachbearbeiter:";
+	private final String ANSPRECHPARTNER             = "Ansprechpartner:";
+	private final String SACHKUNDE_LFA               = "Sachkunde LFA:";
+	private final String ANALYSEMONAT                = "Analysemonat:";
+	private final String BEMERKUNGEN                 = "Bemerkungen";
 	/* Widgets - right */
-	private final String genehmigungsdatum = "Genehmigungsdatum:";
-	private final String änderungsgenehmigungsdatum =
-		"Änderungsgenehmigungsdatum:";
-	private final String abgemeldet = "abgemeldet";
-	private final String abwasserfrei = "abwasserfrei";
-	private final String eSatzung = "E-Satzung";
-	private final String wiedervorlagedatum = "Wiedervorlagedatum:";
-	private final String speichern = "Speichern";
+	private final String GENEHMIGUNGSDATUM           = "Genehmigungsdatum:";
+	private final String AENDERUNGSGENEHMIGUNGSDATUM = "Änderungsgen.-datum:";
+	private final String ABGEMELDET                  = "abgemeldet";
+	private final String ABWASSERFREI                = "abwasserfrei";
+	private final String E_SATZUNG                   = "E-Satzung";
+	private final String WIEDERVORLAGEDATUM          = "Wiedervorlagedatum:";
+	/* Widgets - bottom */
+	private final String SPEICHERN                   = "Speichern";
 	
     private JButton saveAnh49Button = null;
 
@@ -148,26 +150,26 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
     	/* Add components to the "Anhang" panel */
         /* Left column */
-     	super.addComponent(sachbearbeiter, new LimitedTextField(50));
-    	super.addComponent(ansprechpartner, new LimitedTextField(50));
-    	super.addComponent(sachkundeLFA, new LimitedTextField(50));
-    	super.addComponent(analysemonat, new LimitedTextField(50));
+     	super.addComponent(SACHBEARBEITER, new LimitedTextField(50));
+    	super.addComponent(ANSPRECHPARTNER, new LimitedTextField(50));
+    	super.addComponent(SACHKUNDE_LFA, new LimitedTextField(50));
+    	super.addComponent(ANALYSEMONAT, new LimitedTextField(50));
     	JTextArea textArea = new LimitedTextArea(150);
     	textArea.setLineWrap(true);
     	textArea.setWrapStyleWord(true);
-    	super.addComponent(bemerkungen, textArea);
+    	super.addComponent(BEMERKUNGEN, textArea);
     	
     	/* Right column */
-    	super.addComponent(genehmigungsdatum,
+    	super.addComponent(GENEHMIGUNGSDATUM,
     			new TextFieldDateChooser(AuikUtils.DATUMSFORMATE));
-    	super.addComponent(änderungsgenehmigungsdatum,
+    	super.addComponent(AENDERUNGSGENEHMIGUNGSDATUM,
     			new TextFieldDateChooser(AuikUtils.DATUMSFORMATE));
-    	super.addComponent(abgemeldet, new JCheckBox(abgemeldet));
-    	super.addComponent(abwasserfrei, new JCheckBox(abwasserfrei));
-    	super.addComponent(eSatzung, new JCheckBox(eSatzung));
-    	super.addComponent(wiedervorlagedatum,
+    	super.addComponent(ABGEMELDET, new JCheckBox(ABGEMELDET));
+    	super.addComponent(ABWASSERFREI, new JCheckBox(ABWASSERFREI));
+    	super.addComponent(E_SATZUNG, new JCheckBox(E_SATZUNG));
+    	super.addComponent(WIEDERVORLAGEDATUM,
     			new TextFieldDateChooser(AuikUtils.DATUMSFORMATE));
-    	super.addComponent(speichern, new JButton());
+    	super.addComponent(SPEICHERN, getSaveAnh49Button());
     	
         FormLayout layout = new FormLayout (
                 "pref, 5dlu, pref, 10dlu, pref, 5dlu, pref", // Spalten
@@ -207,25 +209,25 @@ public class Anh49Panel extends AbstractAnhangPanel {
         
         builder.addSeparator("Bearbeitung", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.addLabel(sachbearbeiter, cc.xy(labelCol, row));
-        builder.add(super.getComponent(sachbearbeiter), cc.xy(fieldCol, row));
+        builder.addLabel(SACHBEARBEITER, cc.xy(labelCol, row));
+        builder.add(super.getComponent(SACHBEARBEITER), cc.xy(fieldCol, row));
         row += 2;
-        builder.addLabel(ansprechpartner, cc.xy(labelCol, row));
-        builder.add(super.getComponent(ansprechpartner), cc.xy(fieldCol, row));
+        builder.addLabel(ANSPRECHPARTNER, cc.xy(labelCol, row));
+        builder.add(super.getComponent(ANSPRECHPARTNER), cc.xy(fieldCol, row));
         row += 2;
-        builder.addLabel(sachkundeLFA, cc.xy(labelCol, row));
-        builder.add(super.getComponent(sachkundeLFA), cc.xy(fieldCol, row));
+        builder.addLabel(SACHKUNDE_LFA, cc.xy(labelCol, row));
+        builder.add(super.getComponent(SACHKUNDE_LFA), cc.xy(fieldCol, row));
         row += 2;
         
         builder.addSeparator("Analyse", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.addLabel(analysemonat, cc.xy(labelCol, row));
-        builder.add(super.getComponent(analysemonat), cc.xy(fieldCol, row));
+        builder.addLabel(ANALYSEMONAT, cc.xy(labelCol, row));
+        builder.add(super.getComponent(ANALYSEMONAT), cc.xy(fieldCol, row));
         row += 2;
         
         builder.addSeparator("Bemerkungen", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.add(new JScrollPane(super.getComponent(bemerkungen),
+        builder.add(new JScrollPane(super.getComponent(BEMERKUNGEN),
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
         		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),
         		cc.xywh(labelCol, row, colWidth, 2));
@@ -240,6 +242,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
         				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),
                 cc.xyw(labelCol, row, cols));
+        row += 2;
         builder.add(
         		ButtonBarFactory.buildRightAlignedBar(getSelectObjektButton(),
         				getSaveAnh49Button()),
@@ -254,34 +257,34 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
         builder.addSeparator("Erfassung", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.addLabel(genehmigungsdatum, cc.xy(labelCol, row));
+        builder.addLabel(GENEHMIGUNGSDATUM, cc.xy(labelCol, row));
         builder.add(
-        		super.getComponent(genehmigungsdatum), cc.xy(fieldCol, row));
+        		super.getComponent(GENEHMIGUNGSDATUM), cc.xy(fieldCol, row));
         row += 2;
-        builder.addLabel(änderungsgenehmigungsdatum, cc.xy(labelCol, row));
+        builder.addLabel(AENDERUNGSGENEHMIGUNGSDATUM, cc.xy(labelCol, row));
         builder.add(
-        		super.getComponent(änderungsgenehmigungsdatum),
+        		super.getComponent(AENDERUNGSGENEHMIGUNGSDATUM),
         		cc.xy(fieldCol, row));
         row += 2;
         builder.add(
-        		super.getComponent(abgemeldet),
+        		super.getComponent(ABGEMELDET),
         		cc.xy(fieldCol, row, "l,d"));
         row += 2;
         builder.add(
-        		super.getComponent(abwasserfrei),
+        		super.getComponent(ABWASSERFREI),
         		cc.xy(fieldCol, row, "l,d"));
         row += 2;
         builder.add(
-        		super.getComponent(eSatzung),
+        		super.getComponent(E_SATZUNG),
         		cc.xy(fieldCol, row, "l,d"));
         row += 2;
         
         builder.addSeparator(
-        		"Kontrolle (to be renamed)", cc.xyw(labelCol, row, colWidth));
+        		"Wiedervorlage", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.addLabel(wiedervorlagedatum, cc.xy(labelCol, row));
+        builder.addLabel(WIEDERVORLAGEDATUM, cc.xy(labelCol, row));
         builder.add(
-        		super.getComponent(wiedervorlagedatum), cc.xy(fieldCol, row));
+        		super.getComponent(WIEDERVORLAGEDATUM), cc.xy(fieldCol, row));
 
         builder.nextLine();
     }
@@ -293,28 +296,28 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
     public void updateForm() {
         if (fachdaten != null) {
-        	super.setComponentValue(sachbearbeiter,
+        	super.setComponentValue(SACHBEARBEITER,
         			fachdaten.getSachbearbeiterIn());
-        	super.setComponentValue(ansprechpartner,
+        	super.setComponentValue(ANSPRECHPARTNER,
         			fachdaten.getAnsprechpartnerIn());
-        	super.setComponentValue(sachkundeLFA,
+        	super.setComponentValue(SACHKUNDE_LFA,
         			fachdaten.getSachkundelfa());
-        	super.setComponentValue(analysemonat,
+        	super.setComponentValue(ANALYSEMONAT,
         			fachdaten.getAnalysemonat());
-        	super.setComponentValue(bemerkungen,
+        	super.setComponentValue(BEMERKUNGEN,
         			fachdaten.getBemerkungen());
         	
-        	super.setComponentValue(genehmigungsdatum,
+        	super.setComponentValue(GENEHMIGUNGSDATUM,
         			fachdaten.getGenehmigung());
-        	super.setComponentValue(änderungsgenehmigungsdatum,
+        	super.setComponentValue(AENDERUNGSGENEHMIGUNGSDATUM,
         			fachdaten.getAenderungsgenehmigung());
-        	super.setComponentValue(abgemeldet,
+        	super.setComponentValue(ABGEMELDET,
         			fachdaten.getAbgemeldet());
-        	super.setComponentValue(abwasserfrei,
+        	super.setComponentValue(ABWASSERFREI,
         			fachdaten.getAbwasserfrei());
-        	super.setComponentValue(eSatzung,
+        	super.setComponentValue(E_SATZUNG,
         			fachdaten.getESatzung());
-        	super.setComponentValue(wiedervorlagedatum,
+        	super.setComponentValue(WIEDERVORLAGEDATUM,
         			fachdaten.getWiedervorlage());
         	
             objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
@@ -346,28 +349,28 @@ public class Anh49Panel extends AbstractAnhangPanel {
         boolean success;
         
         fachdaten.setSachbearbeiterIn(
-        		(String)this.getComponentValue(sachbearbeiter));
+        		(String)super.getComponentValue(SACHBEARBEITER));
         fachdaten.setAnsprechpartnerIn(
-        		(String)this.getComponentValue(ansprechpartner));
+        		(String)super.getComponentValue(ANSPRECHPARTNER));
         fachdaten.setSachkundelfa(
-        		(String)this.getComponentValue(sachkundeLFA));
+        		(String)super.getComponentValue(SACHKUNDE_LFA));
         fachdaten.setAnalysemonat(
-        		(String)this.getComponentValue(analysemonat));
+        		(String)super.getComponentValue(ANALYSEMONAT));
         fachdaten.setBemerkungen(
-        		(String)this.getComponentValue(bemerkungen));
+        		(String)super.getComponentValue(BEMERKUNGEN));
         
         fachdaten.setGenehmigung(
-        		(Date)this.getComponentValue(genehmigungsdatum));
+        		(Date)super.getComponentValue(GENEHMIGUNGSDATUM));
         fachdaten.setAenderungsgenehmigung(
-        		(Date)this.getComponentValue(änderungsgenehmigungsdatum));
+        		(Date)super.getComponentValue(AENDERUNGSGENEHMIGUNGSDATUM));
         fachdaten.setAbgemeldet(
-        		(Boolean)this.getComponentValue(abgemeldet));
+        		(Boolean)super.getComponentValue(ABGEMELDET));
         fachdaten.setAbwasserfrei(
-        		(Boolean)this.getComponentValue(abwasserfrei));
+        		(Boolean)super.getComponentValue(ABWASSERFREI));
         fachdaten.setESatzung(
-        		(Boolean)this.getComponentValue(eSatzung));
+        		(Boolean)super.getComponentValue(E_SATZUNG));
         fachdaten.setWiedervorlage(
-        		(Date)this.getComponentValue(wiedervorlagedatum));
+        		(Date)super.getComponentValue(WIEDERVORLAGEDATUM));
         
         success = Anh49Fachdaten.saveFachdaten(fachdaten);
 

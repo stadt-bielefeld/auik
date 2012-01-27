@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -104,8 +105,10 @@ public abstract class AbstractAnhangPanel extends JPanel {
     			((TextFieldDateChooser) component).setDate(null);
     		} else if (component instanceof JTextArea) {
     			((JTextArea) component).setText(null);
+    		} else if (component instanceof JButton) {
+    			/* This place is intentionally left blank. */
     		} else {
-    			log.warn("Unknown JComponent used.");
+    			log.warn("Unknown JComponent [" + component.getClass().getSimpleName() + "] used.");
     			return false;
     		}
     	}
@@ -139,10 +142,12 @@ public abstract class AbstractAnhangPanel extends JPanel {
 			return ((TextFieldDateChooser) component).getDate();
 		} else if (component instanceof JTextArea) {
 			return setBlankToNull(((JTextArea) component).getText());
+		} else if (component instanceof JButton) {
+			log.warn("Tried to get the value of a JButton.");
 		} else {
-			log.warn("Unknown JComponent used.");
-			return null;
+			log.warn("Unknown JComponent [" + component.getClass() + "] used.");
 		}
+		return null;
     }
     
     /**
@@ -165,8 +170,11 @@ public abstract class AbstractAnhangPanel extends JPanel {
 			((TextFieldDateChooser) component).setDate((Date)value);
 		} else if (component instanceof JTextArea) {
 			((JTextArea) component).setText((String)value);
+		} else if (component instanceof JButton) {
+			log.warn("Tried to set the value of a JButton.");
+			return false;
 		} else {
-			log.warn("Unknown JComponent used.");
+			log.warn("Unknown JComponent [" + component.getClass() + "] used.");
 			return false;
 		}
 		return true;
