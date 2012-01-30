@@ -59,9 +59,9 @@ public class AuikUtils {
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     /** Das Default-Datumsformat für JDateChooser */
-    public static final String DATUMSFORMAT = "dd.MM.yy";
+    public static final String DATUMSFORMAT = "dd.MM.yyyy";
     /** Die Datumsformate für TextFieldDateChooser */
-    public static final String[] DATUMSFORMATE = new String[]{DATUMSFORMAT, "dd.MM.yyyy"};
+    public static final String[] DATUMSFORMATE = new String[]{DATUMSFORMAT, "dd.MM.yy"};
 
     // Für die Datums-Methoden
     private static Calendar cal = null;
@@ -124,6 +124,7 @@ public class AuikUtils {
      */
     public static FileFilter getExtensionFilter(final String extension) {
         FileFilter tmp = new FileFilter() {
+            @Override
             public boolean accept(File f) {
                 if (f.isDirectory()) {
                     return true;
@@ -141,6 +142,7 @@ public class AuikUtils {
                 return false;
             }
 
+            @Override
             public String getDescription() {
                 return getFileDescription(extension);
             }
@@ -157,6 +159,7 @@ public class AuikUtils {
      */
     public static FileFilter getExtensionsFilter(final String[] extensions) {
         FileFilter tmp = new FileFilter() {
+            @Override
             public boolean accept(File f) {
                 if (f.isDirectory()) {
                     return true;
@@ -174,6 +177,7 @@ public class AuikUtils {
                 return false;
             }
 
+            @Override
             public String getDescription() {
                 String desc = "Alle unterstützten Dateitypen";
 
