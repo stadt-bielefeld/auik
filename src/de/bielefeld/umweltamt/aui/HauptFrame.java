@@ -70,7 +70,6 @@
  */
 package de.bielefeld.umweltamt.aui;
 
-
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -119,7 +118,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
-
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -141,30 +139,34 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 /**
  * Das Hauptfenster des AUI-K. Dieses Fenster beinhaltet alle weiteren
  * GUI-Komponenten der Anwendung.
- *
+ * 
  * @author David Klotz
  */
 public class HauptFrame extends JFrame {
-	
-	/** GUI Manager */
-	private static final GUIManager guiManager = GUIManager.getInstance();
 
-    /**    Die Standard-Größe für die Kategorie-Buttons */
-    //static final Dimension BUTTON_SIZE = new Dimension(70,70);
-    /** Panel-Größe, um ein Layout-Problem zu umgehen, nur in Ausnahmefällen benutzen */
-    //public static final Dimension PANEL_SIZE = new Dimension(515, 320);
+    /** GUI Manager */
+    private static final GUIManager guiManager = GUIManager.getInstance();
 
-	/** Logging */
+    /** Die Standard-Größe für die Kategorie-Buttons */
+    // static final Dimension BUTTON_SIZE = new Dimension(70,70);
+    /**
+     * Panel-Größe, um ein Layout-Problem zu umgehen, nur in Ausnahmefällen
+     * benutzen
+     */
+    // public static final Dimension PANEL_SIZE = new Dimension(515, 320);
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
-	private static final long serialVersionUID = 4233252729652695263L;
-	
-	/** Die Farbe für Fehlermeldungen */
+    private static final long serialVersionUID = 4233252729652695263L;
+
+    /** Die Farbe für Fehlermeldungen */
     public static final Color ERROR_COLOR = new Color(200, 0, 0);
     /** Die Farbe für Erfolgsmeldungen */
     public static final Color SUCCESS_COLOR = new Color(0, 128, 0);
-    /** Die Farbe für normale Status-Meldungen.
-     *  Nicht public, für normale Meldungen einfach changeStatus
-     *  ohne Farb-Argument benutzen. */
+    /**
+     * Die Farbe für normale Status-Meldungen. Nicht public, für normale
+     * Meldungen einfach changeStatus ohne Farb-Argument benutzen.
+     */
     protected static final Color NORMAL_COLOR = Color.BLACK;
 
     protected static final int FILE_OPEN = 1;
@@ -183,7 +185,6 @@ public class HauptFrame extends JFrame {
     private JMenu helpMenu = null;
     private JMenuItem aboutMenuItem = null;
     private JMenuItem DokuItem = null;
-
 
     private JPanel titlePanel = null;
 
@@ -208,7 +209,7 @@ public class HauptFrame extends JFrame {
     private JToolBar modulBar = null;
     private JButton modulBackButton = null;
     private JButton modulFwdButton = null;
-//    private JButton qgis = null;
+    // private JButton qgis = null;
 
     private ModulManager manager;
     private SettingsManager settings;
@@ -225,11 +226,12 @@ public class HauptFrame extends JFrame {
 
     /**
      * Diese Meethode initialisiert das Fenster sowie dessen beinhalteten
-     * Komponenten. <br><b>Hinweis:</b> Das Look and Feel der Anwendung wird
-     * ebenfalls an dieser Stelle gesetzt.<br><b>Achtung:</b> Au&szlig;erdem
-     * werden in dieser Methode die Parameter für Datenbankverbindung abgefragt
-     * und an Hibernate &uuml;bergeben. Dies sollte optimalerweise nicht an
-     * dieser Stelle geschehen!
+     * Komponenten. <br>
+     * <b>Hinweis:</b> Das Look and Feel der Anwendung wird ebenfalls an dieser
+     * Stelle gesetzt.<br>
+     * <b>Achtung:</b> Au&szlig;erdem werden in dieser Methode die Parameter für
+     * Datenbankverbindung abgefragt und an Hibernate &uuml;bergeben. Dies
+     * sollte optimalerweise nicht an dieser Stelle geschehen!
      */
     private void initialize() {
         try {
@@ -239,19 +241,20 @@ public class HauptFrame extends JFrame {
             Options.setUseSystemFonts(true);
 
             // Look & Feel umschalten
-            UIManager.setLookAndFeel("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
+            UIManager
+                    .setLookAndFeel("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
 
-
-            /* Falls mal ein Wechsel auf Linux anstehen sollte, wird
-             * der Windows-L'n'F vermutlich nicht mehr funktionieren.
-             * Auch kann es sein, dass man auf allen NT- und
-             * XP-Rechner den selben L'n'F haben möchte.
-             * Dann einfach statt der Zeile oben die folgende nehmen:
+            /*
+             * Falls mal ein Wechsel auf Linux anstehen sollte, wird der
+             * Windows-L'n'F vermutlich nicht mehr funktionieren. Auch kann es
+             * sein, dass man auf allen NT- und XP-Rechner den selben L'n'F
+             * haben möchte. Dann einfach statt der Zeile oben die folgende
+             * nehmen:
              */
-            //UIManager.setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
+            // UIManager.setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
 
             // Erleichert das Finden von manchen Layout-Fehlern
-            //ClearLookManager.setMode(ClearLookMode.DEBUG);
+            // ClearLookManager.setMode(ClearLookMode.DEBUG);
         } catch (Exception e) {
             log.debug("Konnte Look & Feel nicht ändern!");
         }
@@ -259,21 +262,21 @@ public class HauptFrame extends JFrame {
         this.setJMenuBar(getHauptMenue());
 
         // Fenstergröße setzen
-        this.setSize(
-                settings.getIntSetting("auik.prefs.res_x"),
-                settings.getIntSetting("auik.prefs.res_y")
-        );
+        this.setSize(settings.getIntSetting("auik.prefs.res_x"),
+                settings.getIntSetting("auik.prefs.res_y"));
         if (settings.getBoolSetting("auik.prefs.maximized")) {
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }
 
         this.setContentPane(getJContentPane());
-        ImageIcon icon = (ImageIcon) AuikUtils.getIcon(16, "uaicon16.png", "Umweltamt");
+        ImageIcon icon =
+            (ImageIcon) AuikUtils.getIcon(16, "uaicon16.png", "Umweltamt");
         this.setIconImage(icon.getImage());
         this.setTitle(GUIManager.SHORT_NAME);
 
         // Wird benötigt, um das Fenster mit dem Schließen-Icon zu schließen
         this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 HauptFrame.this.close();
             }
@@ -282,11 +285,14 @@ public class HauptFrame extends JFrame {
         // Zentriert das Fenster
         locateOnScreen(this);
 
-        clearStatusTimer = new Timer(settings.getIntSetting("auik.prefs.status_time")*1000, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                clearStatus();
-            }
-        });
+        clearStatusTimer = new Timer(
+                settings.getIntSetting("auik.prefs.status_time") * 1000,
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        clearStatus();
+                    }
+                });
         clearStatusTimer.setRepeats(false);
 
         // Setzt die Datenbank aus einem Property
@@ -296,7 +302,7 @@ public class HauptFrame extends JFrame {
         }
 
         // Fragt die Benutzerdaten ab, wenn die Abfrage erfolgreich war...
-        if(askForDBCredentials()) {
+        if (askForDBCredentials()) {
             // ... Erzeuge den Manager und ...
             this.manager = new ModulManager(this, settings);
             // ... füge Module hinzu
@@ -319,16 +325,21 @@ public class HauptFrame extends JFrame {
 
     public Action getCloseAction() {
         if (closeAction == null) {
-            closeAction = new AbstractAction("Beenden", AuikUtils.getIcon(32, "exit.png")) {
-				private static final long serialVersionUID = 2119355762465447730L;
+            closeAction = new AbstractAction("Beenden",
+                    AuikUtils.getIcon(32, "exit.png")) {
+                private static final long serialVersionUID = 2119355762465447730L;
 
-				public void actionPerformed(ActionEvent e) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
                     HauptFrame.this.close();
                 }
             };
-            closeAction.putValue(Action.SHORT_DESCRIPTION, "Beendet das Programm");
-            closeAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
-            closeAction.putValue(Action.SMALL_ICON, AuikUtils.getIcon(16, "exit.png"));
+            closeAction.putValue(
+                    Action.SHORT_DESCRIPTION, "Beendet das Programm");
+            closeAction.putValue(
+                    Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
+            closeAction.putValue(
+                    Action.SMALL_ICON, AuikUtils.getIcon(16, "exit.png"));
         }
         return closeAction;
     }
@@ -339,6 +350,7 @@ public class HauptFrame extends JFrame {
     protected ActionListener getButtonListener() {
         if (buttonListener == null) {
             buttonListener = new ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     manager.switchModul(e.getActionCommand());
                 }
@@ -376,19 +388,26 @@ public class HauptFrame extends JFrame {
      */
     public JButton getViewMenuButton() {
         if (viewMenuButton == null) {
-            viewMenuButton = new JButton("", AuikUtils.getIcon(16, "view_menu.gif", "Kategorien"));
+            viewMenuButton = new JButton("",
+                    AuikUtils.getIcon(16, "view_menu.gif", "Kategorien"));
 
-            viewMenuButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    Point np = SwingUtilities.convertPoint(getLeftFrame(), 0,0, viewMenuButton);
-                    getViewMenu().show(viewMenuButton, np.x, viewMenuButton.getHeight());
-                }
-            });
+            viewMenuButton
+                    .addActionListener(new java.awt.event.ActionListener() {
+                        @Override
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            Point np = SwingUtilities.convertPoint(
+                                    getLeftFrame(), 0, 0, viewMenuButton);
+                            getViewMenu().show(viewMenuButton, np.x,
+                                    viewMenuButton.getHeight());
+                        }
+                    });
 
-            viewMenuButton.setForeground(getLeftFrame().getTextForeground(true));
+            viewMenuButton
+                    .setForeground(getLeftFrame().getTextForeground(true));
             viewMenuButton.setOpaque(false);
             viewMenuButton.setHorizontalTextPosition(JButton.LEADING);
-            viewMenuButton.setToolTipText("Hier klicken, um die Kategorie zu wechseln");
+            viewMenuButton
+                    .setToolTipText("Hier klicken, um die Kategorie zu wechseln");
         }
         return viewMenuButton;
     }
@@ -402,7 +421,7 @@ public class HauptFrame extends JFrame {
             modulBar.putClientProperty("JToolBar.isRollover", Boolean.TRUE);
             modulBar.setFloatable(false);
             modulBar.setOpaque(false);
-//            modulBar.add(getQgis());
+            // modulBar.add(getQgis());
             modulBar.add(getModulBackButton());
             modulBar.add(getModulFwdButton());
         }
@@ -415,13 +434,16 @@ public class HauptFrame extends JFrame {
     protected JButton getModulBackButton() {
         if (modulBackButton == null) {
             String desc = "Zurück";
-            modulBackButton = new JButton(AuikUtils.getIcon(16, "back.png", desc));
+            modulBackButton =
+                new JButton(AuikUtils.getIcon(16, "back.png", desc));
 
             modulBackButton.setToolTipText(desc);
-            modulBackButton.setForeground(getRightFrame().getTextForeground(true));
+            modulBackButton.setForeground(
+                    getRightFrame().getTextForeground(true));
             modulBackButton.setOpaque(false);
 
             modulBackButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     manager.back();
                 }
@@ -438,13 +460,16 @@ public class HauptFrame extends JFrame {
     protected JButton getModulFwdButton() {
         if (modulFwdButton == null) {
             String desc = "Vor";
-            modulFwdButton = new JButton(AuikUtils.getIcon(16, "forward.png", desc));
+            modulFwdButton =
+                new JButton(AuikUtils.getIcon(16, "forward.png", desc));
 
             modulFwdButton.setToolTipText(desc);
-            modulFwdButton.setForeground(getRightFrame().getTextForeground(true));
+            modulFwdButton.setForeground(
+                    getRightFrame().getTextForeground(true));
             modulFwdButton.setOpaque(false);
 
             modulFwdButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     manager.forward();
                 }
@@ -454,6 +479,7 @@ public class HauptFrame extends JFrame {
         }
         return modulFwdButton;
     }
+
 //    private JButton getQgis() {
 //        if (qgis == null) {
 //
@@ -482,8 +508,8 @@ public class HauptFrame extends JFrame {
         Dimension paneSize   = win.getSize();
         Dimension screenSize = this.getToolkit().getScreenSize();
         win.setLocation(
-            (screenSize.width  - paneSize.width)  / 2,
-            (screenSize.height - paneSize.height) / 2);
+                (screenSize.width  - paneSize.width)  / 2,
+                (screenSize.height - paneSize.height) / 2);
     }
 
     /**
@@ -520,11 +546,11 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes jContentPane
-     *
+     * 
      * @return javax.swing.JPanel
      */
     private javax.swing.JPanel getJContentPane() {
-        if(jContentPane == null) {
+        if (jContentPane == null) {
             jContentPane = new javax.swing.JPanel();
             jContentPane.setLayout(new java.awt.BorderLayout());
 
@@ -537,23 +563,24 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes hauptMenue
-     *
+     * 
      * @return javax.swing.JMenuBar
      */
     private JMenuBar getHauptMenue() {
         if (hauptMenue == null) {
             hauptMenue = new JMenuBar();
             hauptMenue.add(getFileMenu());
-            //hauptMenue.add(Box.createHorizontalGlue());
+            // hauptMenue.add(Box.createHorizontalGlue());
             hauptMenue.add(getHelpMenu());
-            hauptMenue.putClientProperty(Options.HEADER_STYLE_KEY, HeaderStyle.SINGLE);
+            hauptMenue.putClientProperty(
+                    Options.HEADER_STYLE_KEY, HeaderStyle.SINGLE);
         }
         return hauptMenue;
     }
 
     /**
      * This method initializes fileMenu
-     *
+     * 
      * @return javax.swing.JMenu
      */
     private JMenu getFileMenu() {
@@ -561,7 +588,7 @@ public class HauptFrame extends JFrame {
             fileMenu = new JMenu();
             fileMenu.setText("Datei");
             fileMenu.setMnemonic(KeyEvent.VK_D);
-            //fileMenu.putClientProperty(Options.NO_ICONS_KEY, Boolean.TRUE);
+            // fileMenu.putClientProperty(Options.NO_ICONS_KEY, Boolean.TRUE);
             fileMenu.add(getSettingsMenuItem());
             fileMenu.addSeparator();
             fileMenu.add(getExitMenuItem());
@@ -571,7 +598,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes helpMenu
-     *
+     * 
      * @return javax.swing.JMenu
      */
     private JMenu getHelpMenu() {
@@ -588,7 +615,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes settingsMenuItem
-     *
+     * 
      * @return javax.swing.JMenuItem
      */
     private JMenuItem getSettingsMenuItem() {
@@ -604,20 +631,20 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes exitMenuItem
-     *
+     * 
      * @return javax.swing.JMenuItem
      */
     private JMenuItem getExitMenuItem() {
         if (exitMenuItem == null) {
             exitMenuItem = new JMenuItem(getCloseAction());
-            //exitMenuItem.setIcon(AuikUtils.getIcon(16, "exit.png"));
+            // exitMenuItem.setIcon(AuikUtils.getIcon(16, "exit.png"));
         }
         return exitMenuItem;
     }
 
     /**
      * This method initializes aboutMenuItem
-     *
+     * 
      * @return javax.swing.JMenuItem
      */
     private JMenuItem getAboutMenuItem() {
@@ -625,30 +652,44 @@ public class HauptFrame extends JFrame {
             aboutMenuItem = new JMenuItem();
             aboutMenuItem.setText("Info");
             aboutMenuItem.setMnemonic(KeyEvent.VK_O);
-            aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    showInfoMessage("<html><table valign='top'>"
-                            + "<tr><th align='left'>Version:</th><td>"+guiManager.getVersion()+ " " + guiManager.getRevision() +"</td>"
-                            + "<tr><th align='left'>Copyright:</th><td>2005 - 2011 Umweltamt Bielefeld</td></tr>"
-                            + "<tr><th align='left'>Projekthomepage:</th><td><a href='http://auik.wald.intevation.org'>http://auik.wald.intevation.org</a></td></tr>"
-                            + "<tr><th align='left'>Datenbank: </th><td>"+ HibernateSessionFactory.getDBUrl() +"</td></tr>"
+            aboutMenuItem
+                    .addActionListener(new java.awt.event.ActionListener() {
+                        @Override
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            showInfoMessage(
+                                    "<html><table valign='top'>"
+                                    + "<tr><th align='left'>Version:</th><td>"
+                                    + guiManager.getVersion() + " "
+                                    + guiManager.getRevision() + "</td>"
+                                    + "<tr><th align='left'>Copyright:</th>"
+                                    + "<td>2005 - 2011 Umweltamt Bielefeld</td></tr>"
+                                    + "<tr><th align='left'>Projekthomepage:</th>"
+                                    + "<td><a href='http://auik.wald.intevation.org'>http://auik.wald.intevation.org</a></td></tr>"
+                                    + "<tr><th align='left'>Datenbank: </th><td>"
+                                    + HibernateSessionFactory.getDBUrl()
+                                    + "</td></tr>"
 // There is no kind of debug mode - just different levels of verbosity which is
 // not influenced by this variable any more.
-//                            + "<tr><th align='left'>Debug-Modus: </th><td>"+ ((AUIKataster.DEBUG) ? "An" : "Aus") +"</td></tr>"
-// TODO: Maybe add log level here - but which? We can have different levels all
-// over the place...                            
-                            + "<tr><th align='left'>Autoren:</th><td>" + guiManager.getAuthorsAsHTML() + "</td></tr>"
-                            + "<tr><th align='left'>Weiterentwicklung seit 2011:</th><td>"
-                            + "<table valign='top'><tr><td>Intevation GmbH</td><td><img src='" + HauptFrame.class.getResource("icons/intevation-logo-50ppi-nontrans.png") + "'></td></tr></table>"
-                            + "</td></tr>"
-                            + "</table></html>",
-                        "Info über's "+GUIManager.SHORT_NAME);
-                }
-            });
+                                    // + "<tr><th align='left'>Debug-Modus: </th><td>"
+                                    // + ((AUIKataster.DEBUG) ? "An" : "Aus") 
+                                    // + "</td></tr>"
+// TODO: Maybe add log level here -  but which? We can have different levels all
+// over the place...
+                                    + "<tr><th align='left'>Autoren:</th><td>"
+                                    + guiManager.getAuthorsAsHTML()
+                                    + "</td></tr>"
+                                    + "<tr><th align='left'>Weiterentwicklung seit 2011:</th><td>"
+                                    + "<table valign='top'><tr><td>Intevation GmbH</td><td><img src='"
+                                    + HauptFrame.class
+                                            .getResource("icons/intevation-logo-50ppi-nontrans.png")
+                                    + "'></td></tr></table>"
+                                    + "</td></tr>" + "</table></html>",
+                                    "Info über's " + GUIManager.SHORT_NAME);
+                        }
+                    });
         }
         return aboutMenuItem;
     }
-
 
     private JMenuItem getDoku() {
         if (DokuItem == null) {
@@ -657,21 +698,20 @@ public class HauptFrame extends JFrame {
             DokuItem.setMnemonic(KeyEvent.VK_B);
             DokuItem.setEnabled(true);
             DokuItem.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                        try {
-                            String cmdstart[] = { "cmd", "/c", "explorer", "X:\\Orga\\360\\360-3\\360-3-3\\Alle\\Datenbanken\\Bedienungsanleitung AUIK"};
-                            Runtime.getRuntime().exec(cmdstart);
-                        } catch (IOException e1) {
-
-                            e1.printStackTrace();
-
-                        }
+                    try {
+                        String cmdstart[] = { "cmd", "/c", "explorer",
+                                "X:\\Orga\\360\\360-3\\360-3-3\\Alle\\Datenbanken\\Bedienungsanleitung AUIK" };
+                        Runtime.getRuntime().exec(cmdstart);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
                     }
+                }
             });
         }
         return DokuItem;
     }
-
 
     /**
      * @return Returns the titlePanel.
@@ -679,17 +719,22 @@ public class HauptFrame extends JFrame {
     private JPanel getTitlePanel() {
         if (titlePanel == null) {
             titlePanel = new GradientPanel(new BorderLayout(), Color.WHITE);
-            titlePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-            titlePanel.add(new JLabel(AuikUtils.getIcon(32, "uaicon32.png", GUIManager.SHORT_NAME), JLabel.LEADING), BorderLayout.WEST);
-            JLabel titleLabel = new JLabel(GUIManager.LONG_NAME, JLabel.TRAILING);
+            titlePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            titlePanel.add(
+                    new JLabel(AuikUtils.getIcon(32, "uaicon32.png",
+                            GUIManager.SHORT_NAME), JLabel.LEADING),
+                    BorderLayout.WEST);
+            JLabel titleLabel = new JLabel(GUIManager.LONG_NAME,
+                    JLabel.TRAILING);
             titleLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
             titlePanel.add(titleLabel, BorderLayout.CENTER);
         }
         return titlePanel;
     }
+
     /**
      * This method initializes statusPanel
-     *
+     * 
      * @return javax.swing.JPanel
      */
     private JPanel getStatusPanel() {
@@ -699,7 +744,7 @@ public class HauptFrame extends JFrame {
             statusPanel.setLayout(new BorderLayout());
 
             statusLabel.setText("Willkommen im AUI-K");
-            statusLabel.setBorder(BorderFactory.createEmptyBorder(1,5,1,1));
+            statusLabel.setBorder(BorderFactory.createEmptyBorder(1, 5, 1, 1));
 
             statusPanel.add(statusLabel, BorderLayout.CENTER);
         }
@@ -708,26 +753,28 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes splitPane
-     *
+     * 
      * @return javax.swing.JSplitPane
      */
     private JSplitPane getSplitPane() {
         if (splitPane == null) {
-            splitPane = Factory.createStrippedSplitPane(JSplitPane.HORIZONTAL_SPLIT,getLeftFrame(),getRightFrame(),0.08f);
+            splitPane = Factory.createStrippedSplitPane(
+                    JSplitPane.HORIZONTAL_SPLIT, getLeftFrame(),
+                    getRightFrame(), 0.08f);
         }
         return splitPane;
     }
 
     /**
      * This method initializes leftFrame
-     *
+     * 
      * @return com.jgoodies.uif_life.panel.SimpleInternalFrame
      */
     protected SimpleInternalFrame getLeftFrame() {
         if (leftFrame == null) {
             leftFrame = new SimpleInternalFrame(" ");
 
-            leftFrame.setMinimumSize(new Dimension(100,0));
+            leftFrame.setMinimumSize(new Dimension(100, 0));
             leftFrame.setPreferredSize(leftFrame.getMinimumSize());
 
             leftFrame.setToolBar(getViewMenuBar());
@@ -738,14 +785,14 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes rightFrame
-     *
+     * 
      * @return com.jgoodies.uif_life.panel.SimpleInternalFrame
      */
     protected SimpleInternalFrame getRightFrame() {
         if (rightFrame == null) {
             rightFrame = new SimpleInternalFrame(" ");
 
-            rightFrame.setMinimumSize(new Dimension(250,0));
+            rightFrame.setMinimumSize(new Dimension(250, 0));
 
             rightFrame.setToolBar(getModulBar());
             rightFrame.setContent(getRightCardPanel());
@@ -759,18 +806,21 @@ public class HauptFrame extends JFrame {
     protected JPanel getRightCardPanel() {
         if (rightCardPanel == null) {
             rightCardPanel = new JPanel(new CardLayout());
-            //rightCardPanel.setBorder(BorderFactory.createEmptyBorder(5,2,5,2));
+            // rightCardPanel.setBorder(BorderFactory.createEmptyBorder(5,2,5,2));
         }
         return rightCardPanel;
     }
 
     /**
      * This method initializes leftScroller
+     * 
      * @return Returns the leftScroller.
      */
     private JScrollPane getLeftScroller() {
         if (leftScroller == null) {
-            leftScroller = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            leftScroller = new JScrollPane(
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             leftScroller.setBorder(BorderFactory.createEmptyBorder());
             leftScroller.setViewportView(getLeftCardPanel());
         }
@@ -783,13 +833,14 @@ public class HauptFrame extends JFrame {
     protected JPanel getLeftCardPanel() {
         if (leftCardPanel == null) {
             leftCardPanel = new JPanel(new CardLayout());
-            //leftCardPanel.setBorder(BorderFactory.createEmptyBorder(5,2,5,2));
+            // leftCardPanel.setBorder(BorderFactory.createEmptyBorder(5,2,5,2));
         }
         return leftCardPanel;
     }
 
     /**
      * Liefert den aktuellen ModulManager.
+     * 
      * @return Den aktuellen ModulManager.
      */
     public ModulManager getManager() {
@@ -798,6 +849,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * Zeigt Text in der Statuszeile an.
+     * 
      * @param txt Der anzuzeigende Text
      */
     public void changeStatus(String txt) {
@@ -809,9 +861,10 @@ public class HauptFrame extends JFrame {
     }
 
     /**
-     * Zeigt Text in einer bestimmten Farbe in der Statuszeile an.
+     * Zeigt Text in einer bestimmten Farbe in der Statuszeile an.<br>
      * Für Fehler/Erfolgsmeldungen die statischen Konstanten
      * ERROR_COLOR/SUCCESS_COLOR dieser Klasse benutzen.
+     * 
      * @param txt Der anzuzeigende Text
      * @param color Die Textfarbe
      */
@@ -838,6 +891,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * Zeigt eine Fehlermeldung mit dem Titel "Fehler" an.
+     * 
      * @param msg Der Text der Meldung
      */
     public void showErrorMessage(String msg) {
@@ -846,42 +900,50 @@ public class HauptFrame extends JFrame {
 
     /**
      * Zeigt eine Fehlermeldung an.
+     * 
      * @param msg Der Text der Meldung
      * @param title Ein Titel für die Meldung
      */
     public void showErrorMessage(String msg, String title) {
-        JOptionPane.showMessageDialog(getRightFrame(), msg, title, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(
+                getRightFrame(), msg, title, JOptionPane.ERROR_MESSAGE);
     }
 
     /**
      * Zeigt eine Meldung an.
+     * 
      * @param msg Der Text der Meldung
      * @param title Ein Titel für die Meldung
      */
     public void showInfoMessage(String msg, String title) {
-        JOptionPane.showMessageDialog(getRightFrame(), msg, title, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(
+                getRightFrame(), msg, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
      * Stellt dem Benutzer eine Ja/Nein-Frage.
+     * 
      * @param question Die Frage.
-     * @return <code>true</code>, wenn der Benutzer Ja angeklickt hat, sonst <code>false</code>.
+     * @return <code>true</code>, wenn der Benutzer Ja angeklickt hat, sonst
+     *         <code>false</code>.
      */
     public boolean showQuestion(String question) {
         return showQuestion(question, "Frage");
     }
+
     /**
      * Stellt dem Benutzer eine Ja/Nein-Frage.
+     * 
      * @param question Die Frage.
      * @param title Ein Titel für die Meldung
-     * @return <code>true</code>, wenn der Benutzer Ja angeklickt hat, sonst <code>false</code>.
+     * @return <code>true</code>, wenn der Benutzer Ja angeklickt hat, sonst
+     *         <code>false</code>.
      */
     public boolean showQuestion(String question, String title) {
         boolean ret = false;
 
-        int answer = JOptionPane.showConfirmDialog(getRightFrame(),
-                question,
-                title, JOptionPane.YES_NO_OPTION);
+        int answer = JOptionPane.showConfirmDialog(
+                getRightFrame(), question, title, JOptionPane.YES_NO_OPTION);
         if (answer == JOptionPane.YES_OPTION) {
             ret = true;
         }
@@ -904,13 +966,15 @@ public class HauptFrame extends JFrame {
         return openOrSaveFile(null, extensions, FILE_SAVE);
     }
 
-    private File openOrSaveFile(File directory, String[] extensions, int openOrSave) {
+    private File openOrSaveFile(
+            File directory, String[] extensions, int openOrSave) {
         if (fileChooser == null) {
             fileChooser = new JFileChooser();
         }
 
         if (directory == null) {
-            String lastDir = manager.getSettingsManager().getSetting("auik.prefs.last_dir");
+            String lastDir =
+                manager.getSettingsManager().getSetting("auik.prefs.last_dir");
             if (lastDir != null) {
                 File tmp = new File(lastDir);
                 if (tmp.isDirectory()) {
@@ -925,11 +989,13 @@ public class HauptFrame extends JFrame {
 
         if (extensions != null) {
             for (int i = 0; i < extensions.length; i++) {
-                fileChooser.addChoosableFileFilter(AuikUtils.getExtensionFilter(extensions[i]));
+                fileChooser.addChoosableFileFilter(
+                        AuikUtils.getExtensionFilter(extensions[i]));
             }
 
             if (extensions.length > 1) {
-                fileChooser.addChoosableFileFilter(AuikUtils.getExtensionsFilter(extensions));
+                fileChooser.addChoosableFileFilter(
+                        AuikUtils.getExtensionsFilter(extensions));
             }
         }
 
@@ -943,7 +1009,8 @@ public class HauptFrame extends JFrame {
 
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            manager.getSettingsManager().setSetting("auik.prefs.last_dir", file.getParent(), true);
+            manager.getSettingsManager().setSetting(
+                    "auik.prefs.last_dir", file.getParent(), true);
             return file;
         } else {
             return null;
@@ -951,8 +1018,8 @@ public class HauptFrame extends JFrame {
     }
 
     private final class BenutzerDatenDialog extends JDialog {
-		private static final long serialVersionUID = 4180635601687537049L;
-		private JLabel textLabel;
+        private static final long serialVersionUID = 4180635601687537049L;
+        private JLabel textLabel;
         private JTextField benutzerFeld;
         private JPasswordField passwortFeld;
         private JButton loginButton;
@@ -971,6 +1038,7 @@ public class HauptFrame extends JFrame {
 
         private void initialize() {
             escListener = new KeyEventDispatcher() {
+                @Override
                 public boolean dispatchKeyEvent(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                         if (!busy) {
@@ -981,24 +1049,30 @@ public class HauptFrame extends JFrame {
                     return false;
                 }
             };
-            KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(escListener);
-            this.textLabel = new JLabel("<html>Bitte geben Sie ihren Benutzernamen und <br>ihr Passwort ein und klicken Sie auf \"Login\".</html>");
+            KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                    .addKeyEventDispatcher(escListener);
+            this.textLabel = new JLabel(
+                    "<html>Bitte geben Sie ihren Benutzernamen und <br>"
+                    + "ihr Passwort ein und klicken Sie auf \"Login\".</html>");
             this.benutzerFeld = new JTextField(10);
             if (settings.getSetting("auik.prefs.lastuser") == null) {
                 benutzerFeld.setText(System.getProperty("user.name"));
             } else {
-                benutzerFeld.setText(settings.getSetting("auik.prefs.lastuser"));
+                benutzerFeld
+                        .setText(settings.getSetting("auik.prefs.lastuser"));
             }
             this.benutzerFeld.selectAll();
             this.passwortFeld = new JPasswordField(10);
             this.loginButton = new JButton("Login");
 
             this.benutzerFeld.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     passwortFeld.requestFocus();
                 }
             });
             this.passwortFeld.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     loginButton.requestFocus();
                     loginButton.doClick();
@@ -1007,6 +1081,7 @@ public class HauptFrame extends JFrame {
 
             this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
             this.addWindowListener(new WindowAdapter() {
+                @Override
                 public void windowClosing(WindowEvent e) {
                     if (!busy) {
                         success = false;
@@ -1016,6 +1091,7 @@ public class HauptFrame extends JFrame {
             });
 
             loginButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     loginButton.setEnabled(false);
                     benutzerFeld.setEnabled(false);
@@ -1024,70 +1100,83 @@ public class HauptFrame extends JFrame {
 
                     user = benutzerFeld.getText();
                     pw = new String(passwortFeld.getPassword());
-                    SwingWorkerVariant worker = new SwingWorkerVariant(benutzerFeld) {
-                        boolean tmp = false;
-
-                        protected void doNonUILogic()
-                                throws RuntimeException {
-                            try {
-                                tmp = HibernateSessionFactory.checkCredentials(user, pw);
-                            } catch (HibernateException e) {
-                                fatalError = true;
-//                                throw new RuntimeException(e);
+                    SwingWorkerVariant worker =
+                        new SwingWorkerVariant(benutzerFeld) {
+                            boolean tmp = false;
+    
+                            @Override
+                            protected void doNonUILogic() throws RuntimeException {
+                                try {
+                                    tmp = HibernateSessionFactory.checkCredentials(
+                                            user, pw);
+                                } catch (HibernateException e) {
+                                    fatalError = true;
+                                    // throw new RuntimeException(e);
+                                }
                             }
-                        }
-
-                        protected void doUIUpdateLogic()
-                                throws RuntimeException {
-                            if (tmp) {
-                                success = true;
-                                settings.setSetting("auik.prefs.lastuser", user, true);
-                                BenutzerDatenDialog.this.close();
-                            } else {
-                                JOptionPane.showMessageDialog(BenutzerDatenDialog.this,
-                                        "Der eingegebene Benutzername oder das Passwort war falsch (oder es ist aus anderen\n" +
-                                        "Gründen keine Verbindung mit der Datenbank möglich), bitte versuchen Sie es erneut!", "Fehler", JOptionPane.ERROR_MESSAGE);
-                                benutzerFeld.setEnabled(true);
-                                passwortFeld.setEnabled(true);
-                                loginButton.setEnabled(true);
-                                busy = false;
-                                passwortFeld.setText("");
-                                benutzerFeld.setSelectionStart(0);
-                                benutzerFeld.setSelectionEnd(benutzerFeld.getText().length());
+    
+                            @Override
+                            protected void doUIUpdateLogic()
+                                    throws RuntimeException {
+                                if (tmp) {
+                                    success = true;
+                                    settings.setSetting(
+                                            "auik.prefs.lastuser", user, true);
+                                    BenutzerDatenDialog.this.close();
+                                } else {
+                                    JOptionPane.showMessageDialog(
+                                            BenutzerDatenDialog.this,
+                                            "Der eingegebene Benutzername oder das Passwort war falsch (oder es ist aus anderen\n"
+                                            + "Gründen keine Verbindung mit der Datenbank möglich), bitte versuchen Sie es erneut!",
+                                            "Fehler",
+                                            JOptionPane.ERROR_MESSAGE);
+                                    benutzerFeld.setEnabled(true);
+                                    passwortFeld.setEnabled(true);
+                                    loginButton.setEnabled(true);
+                                    busy = false;
+                                    passwortFeld.setText("");
+                                    benutzerFeld.setSelectionStart(0);
+                                    benutzerFeld.setSelectionEnd(
+                                            benutzerFeld.getText().length());
+                                }
                             }
-                        }
-                    };
+                        };
                     worker.start();
                 }
             });
 
             FormLayout layout = new FormLayout(
-                    "right:pref, 4dlu, pref:grow, 4dlu, pref",    // Spalten
-                    "pref:grow, 3dlu, pref, 3dlu, pref, 5dlu:grow"        // Zeilen
-                    );
+                    "right:pref, 4dlu, pref:grow, 4dlu, pref", // Spalten
+                    "pref:grow, 3dlu, pref, 3dlu, pref, 5dlu:grow" // Zeilen
+            );
 
-            layout.setRowGroups(new int[][]{{3,5}});
+            layout.setRowGroups(new int[][]{{3, 5}});
 
             PanelBuilder builder = new PanelBuilder(layout);
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
-            builder.add(textLabel,            cc.xyw(1,1,5));
-            builder.addLabel("Benutzer:",    cc.xy( 1,3));
-            builder.add(benutzerFeld,        cc.xy( 3,3));
-            builder.addLabel("Passwort:",    cc.xy( 1,5));
-            builder.add(passwortFeld,        cc.xy( 3,5));
-            builder.add(loginButton,        cc.xy( 5,5));
+            builder.add(textLabel, cc.xyw(1, 1, 5));
+            builder.addLabel("Benutzer:", cc.xy(1, 3));
+            builder.add(benutzerFeld, cc.xy(3, 3));
+            builder.addLabel("Passwort:", cc.xy(1, 5));
+            builder.add(passwortFeld, cc.xy(3, 5));
+            builder.add(loginButton, cc.xy(5, 5));
 
             this.setContentPane(builder.getPanel());
             this.pack();
+
+            /* Set the focus to the password field */
+            this.passwortFeld.grabFocus();
         }
 
         public void close() {
-            KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(escListener);
+            KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                    .removeKeyEventDispatcher(escListener);
             this.dispose();
 
         }
+
         public boolean loginSuccessful() {
             super.setVisible(true);
             return success;
@@ -1186,6 +1275,4 @@ public class HauptFrame extends JFrame {
 //
 //    }
 
-
-
-}  //  @jve:decl-index=0:visual-constraint="10,10"
+} // @jve:decl-index=0:visual-constraint="10,10"
