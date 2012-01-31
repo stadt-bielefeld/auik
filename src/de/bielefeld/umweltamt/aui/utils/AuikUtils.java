@@ -363,6 +363,9 @@ public class AuikUtils {
     }
 
     /**
+     * TODO: WHY are we doing this by hand??? Switch to DateFormat...
+     * Looks like copied from somewhere anyway ("@param DateFormatter")...
+     *
      * Liefert einen String der Form "dd.mm.JJJJ" für ein
      * gegebenes Datums-Objekt.
      * @param DateFormatter Das Datum

@@ -33,6 +33,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -103,6 +104,25 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
         }
 
         /**
+         * Tell the model which column is of which class type.<br>
+         * (Until we find a way to handle editing of date fields properly, use
+         *  String instead of Date.)
+         * @param columnIndex The index of the requested column
+         */
+        /* Well, well, well, this got lost in the copy-pasting, didn't it... */
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch( columnIndex ){
+                case 0: return String.class; // Date.class;
+                case 1: return String.class;
+                case 2: return String.class;
+                case 3: return String.class; // Date.class;
+                case 4: return Boolean.class;
+                default: return null;
+            }
+        }
+
+        /**
          * Get the value of a cell
          *
          * @param objectAtRow The data object
@@ -115,13 +135,15 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
 
             switch (columnIndex) {
                 case 0:
-                    return verwaltungsverfahren.getDatum();
+                    return AuikUtils.getStringFromDate(
+                            verwaltungsverfahren.getDatum());
                 case 1:
                     return verwaltungsverfahren.getMassnahme();
                 case 2:
                     return verwaltungsverfahren.getSachbearbeiterIn();
                 case 3:
-                    return verwaltungsverfahren.getWiedervorlage();
+                    return AuikUtils.getStringFromDate(
+                            verwaltungsverfahren.getWiedervorlage());
                 case 4:
                     return verwaltungsverfahren.isAbgeschlossen();
                 default:
@@ -155,15 +177,15 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
          * Edit a "Verwaltungsverfahren"
          */
         @Override
-        public void editObject(Object objectAtRow, int columnIndex,
-                Object newValue) {
+        public void editObject(
+                Object objectAtRow, int columnIndex, Object newValue) {
             Anh49Verwaltungsverfahren verwaltungsverfahren = (Anh49Verwaltungsverfahren) objectAtRow;
 
             switch (columnIndex) {
                 case 0:
                     try {
-                        verwaltungsverfahren.setDatum(new SimpleDateFormat(
-                                AuikUtils.DATUMSFORMAT)
+                        verwaltungsverfahren.setDatum(
+                            new SimpleDateFormat(AuikUtils.DATUMSFORMAT)
                                 .parse((String) newValue));
                     } catch (ParseException parseException) {
 //                        parseException.printStackTrace();
@@ -184,7 +206,17 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
                 case 3:
                     // TODO: The parsing to date should go somewhere central
                     // (s.a)
-                    verwaltungsverfahren.setWiedervorlage((Date) newValue);
+                    try {
+                        verwaltungsverfahren.setWiedervorlage(
+                            new SimpleDateFormat(AuikUtils.DATUMSFORMAT)
+                                .parse((String) newValue));
+                    } catch (ParseException parseException) {
+//                        parseException.printStackTrace();
+                        this.hauptModul.getFrame().changeStatus(
+                                "Bitte geben Sie das Datum in der "
+                                        + "Form TT.MM.JJJJ ein!",
+                                HauptFrame.ERROR_COLOR);
+                    }
                     break;
                 case 4:
                     verwaltungsverfahren.setAbgeschlossen((Boolean) newValue);
