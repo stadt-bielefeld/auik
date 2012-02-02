@@ -24,34 +24,36 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-import de.bielefeld.umweltamt.aui.module.common.editors.AbscheiderEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -105,6 +107,7 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
 
         /**
          * Tell the model which column is of which class type.<br>
+         *
          * (Until we find a way to handle editing of date fields properly, use
          *  String instead of Date.)
          * @param columnIndex The index of the requested column
@@ -131,23 +134,18 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
          */
         @Override
         public Object getColumnValue(Object objectAtRow, int columnIndex) {
-            Anh49Verwaltungsverfahren verwaltungsverfahren = (Anh49Verwaltungsverfahren) objectAtRow;
+            Anh49Verwaltungsverfahren verwaltungsverfahren =
+                (Anh49Verwaltungsverfahren) objectAtRow;
 
             switch (columnIndex) {
-                case 0:
-                    return AuikUtils.getStringFromDate(
+                case 0: return AuikUtils.getStringFromDate(
                             verwaltungsverfahren.getDatum());
-                case 1:
-                    return verwaltungsverfahren.getMassnahme();
-                case 2:
-                    return verwaltungsverfahren.getSachbearbeiterIn();
-                case 3:
-                    return AuikUtils.getStringFromDate(
+                case 1: return verwaltungsverfahren.getMassnahme();
+                case 2: return verwaltungsverfahren.getSachbearbeiterIn();
+                case 3: return AuikUtils.getStringFromDate(
                             verwaltungsverfahren.getWiedervorlage());
-                case 4:
-                    return verwaltungsverfahren.isAbgeschlossen();
-                default:
-                    return null;
+                case 4: return verwaltungsverfahren.isAbgeschlossen();
+                default: return null;
             }
         }
 
@@ -159,8 +157,8 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
          */
         @Override
         public boolean objectRemoved(Object objectAtRow) {
-            return Anh49Verwaltungsverfahren
-                    .removeVerwaltungsverfahren((Anh49Verwaltungsverfahren) objectAtRow);
+            return Anh49Verwaltungsverfahren.removeVerwaltungsverfahren(
+                    (Anh49Verwaltungsverfahren) objectAtRow);
         }
 
         /** Update the table and fire a changed event. */
@@ -179,10 +177,12 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
         @Override
         public void editObject(
                 Object objectAtRow, int columnIndex, Object newValue) {
-            Anh49Verwaltungsverfahren verwaltungsverfahren = (Anh49Verwaltungsverfahren) objectAtRow;
+            Anh49Verwaltungsverfahren verwaltungsverfahren =
+                (Anh49Verwaltungsverfahren) objectAtRow;
 
             switch (columnIndex) {
                 case 0:
+                    // TODO: The parsing to date should go somewhere central
                     try {
                         verwaltungsverfahren.setDatum(
                             new SimpleDateFormat(AuikUtils.DATUMSFORMAT)
@@ -204,8 +204,6 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
                     verwaltungsverfahren.setSachbearbeiterIn((String) newValue);
                     break;
                 case 3:
-                    // TODO: The parsing to date should go somewhere central
-                    // (s.a)
                     try {
                         verwaltungsverfahren.setWiedervorlage(
                             new SimpleDateFormat(AuikUtils.DATUMSFORMAT)
@@ -233,8 +231,10 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
          */
         @Override
         public Object newObject() {
-            Anh49Verwaltungsverfahren verwaltungsverfahren = new Anh49Verwaltungsverfahren();
+            Anh49Verwaltungsverfahren verwaltungsverfahren =
+                new Anh49Verwaltungsverfahren();
             verwaltungsverfahren.setAnh49Fachdaten(fachdaten);
+            verwaltungsverfahren.setAbgeschlossen(false);
             return verwaltungsverfahren;
         }
 
@@ -256,8 +256,8 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
 
     private JTable verwaltungsverfahrenTabelle;
 
-    private Action verwaltungsverfahrenNeuAction;
     private Action verwaltungsverfahrenLoeschenAction;
+    private JPopupMenu verwaltungsverfahrenPopup;
 
     private JButton speichernButton;
 
@@ -265,22 +265,23 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
         this.name = "Anschreiben und Verwaltungsverfahren";
         this.hauptModul = hauptModul;
 
-        this.verwaltungsverfahrenModel = new Anh49VerwaltungsverfahrenModel(
-                this.hauptModul);
+        this.verwaltungsverfahrenModel =
+            new Anh49VerwaltungsverfahrenModel(this.hauptModul);
 
-        TableFocusListener tfl = TableFocusListener.getInstance();
-        getVerwaltungsverfahrenTabelle().addFocusListener(tfl);
+        getVerwaltungsverfahrenTabelle()
+                .addFocusListener(TableFocusListener.getInstance());
 
         JScrollPane verwaltungsverfahrenScroller = new JScrollPane(
                 getVerwaltungsverfahrenTabelle(),
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        FormLayout layout = new FormLayout("150dlu:grow, 100dlu", // Spalten
-                "100dlu:grow, 3dlu, pref"); // Zeilen
+        FormLayout layout = new FormLayout("pref:grow, pref", // Spalten
+                "f:100dlu:grow, 3dlu, pref"); // Zeilen
 
         PanelBuilder builder = new PanelBuilder(layout, this);
         builder.setDefaultDialogBorder();
+
         CellConstraints cc = new CellConstraints();
 
         builder.add(verwaltungsverfahrenScroller, cc.xyw(1, 1, 2));
@@ -290,25 +291,29 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
     private Action getVerwaltungsverfahrenLoeschAction() {
         if (verwaltungsverfahrenLoeschenAction == null) {
             verwaltungsverfahrenLoeschenAction = new AbstractAction("Löschen") {
-                private static final long serialVersionUID = -5091242167116909387L;
+                private static final long serialVersionUID =
+                    -5091242167116909387L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int row = getVerwaltungsverfahrenTabelle().getSelectedRow();
-                    if (row != -1
-                            && getVerwaltungsverfahrenTabelle().getEditingRow() == -1) {
-                        Anh49Verwaltungsverfahren verwaltungsverfahren = verwaltungsverfahrenModel
-                                .getRow(row);
+                    int selectedRow =
+                        getVerwaltungsverfahrenTabelle().getSelectedRow();
+                    int editingRow  =
+                        getVerwaltungsverfahrenTabelle().getEditingRow();
+                    if (selectedRow != -1 && editingRow == -1) {
+                        Anh49Verwaltungsverfahren verwaltungsverfahren =
+                            verwaltungsverfahrenModel.getRow(selectedRow);
 
                         if (hauptModul
                                 .getFrame()
                                 .showQuestion(
-                                        "Soll das Verwaltungsverf "
+                                        "Soll das Verwaltungsverfahren "
                                                 + verwaltungsverfahren
-                                                + " wirklich inkl. aller Detailinformationen gelöscht werden?",
+                                                + " wirklich gelöscht werden?",
                                         "Löschen bestätigen")) {
-                            verwaltungsverfahrenModel.removeRow(row);
-                            log.debug("Verwaltungsverf " + verwaltungsverfahren
+                            verwaltungsverfahrenModel.removeRow(selectedRow);
+                            log.debug("Verwaltungsverfahren "
+                                    + verwaltungsverfahren
                                     + " wurde gelöscht!");
                         } else {
                             log.debug("Löschen von " + verwaltungsverfahren
@@ -317,8 +322,8 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
                     }
                 }
             };
-            verwaltungsverfahrenLoeschenAction.putValue(Action.MNEMONIC_KEY,
-                    new Integer(KeyEvent.VK_L));
+            verwaltungsverfahrenLoeschenAction.putValue(
+                    Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
             verwaltungsverfahrenLoeschenAction.putValue(Action.ACCELERATOR_KEY,
                     KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
@@ -326,54 +331,28 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
         return verwaltungsverfahrenLoeschenAction;
     }
 
-    private Action getVerwaltungsverfahrenNeuAction() {
-        if (verwaltungsverfahrenNeuAction == null) {
-            verwaltungsverfahrenNeuAction = new AbstractAction(
-                    "Neues Verwaltungsverf") {
-                private static final long serialVersionUID = 2151766435098484413L;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Anh49Abscheiderdetails neuerAbscheider = new Anh49Abscheiderdetails();
-                    neuerAbscheider.setAnh49Fachdaten(fachdaten);
-                    editVerwaltungsverfahren(neuerAbscheider);
-                }
-            };
-            verwaltungsverfahrenNeuAction.putValue(Action.MNEMONIC_KEY,
-                    new Integer(KeyEvent.VK_N));
-            // abscheiderNeuAction.putValue(Action.ACCELERATOR_KEY,
-            // KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+    private void showVerwaltungsverfahrenPopup (MouseEvent e) {
+        if (verwaltungsverfahrenPopup == null) {
+            verwaltungsverfahrenPopup = new JPopupMenu("Ortstermin");
+            JMenuItem loeschItem = new JMenuItem(
+                    getVerwaltungsverfahrenLoeschAction());
+            verwaltungsverfahrenPopup.add(loeschItem);
         }
 
-        return verwaltungsverfahrenNeuAction;
-    }
+        if (e.isPopupTrigger()) {
+            Point origin = e.getPoint();
+            int row = verwaltungsverfahrenTabelle.rowAtPoint(origin);
 
-    /**
-     * öffnet einen Dialog um einen Abscheider-Datensatz zu bearbeiten.
-     *
-     * @param absch Der Abscheider
-     */
-    public void editVerwaltungsverfahren(Anh49Abscheiderdetails absch) {
-
-        AbscheiderEditor editDialog = new AbscheiderEditor(absch,
-                hauptModul.getFrame());
-        editDialog.setLocationRelativeTo(hauptModul.getFrame());
-
-        editDialog.setVisible(true);
-
-        if (editDialog.wasSaved() && (editDialog.getDetails() != null)) {
-            // Die Liste updaten, damit unsere Änderungen auch angezeigt werden
-            verwaltungsverfahrenModel.updateList();
-
-            // Den bearbeiteten Abscheider wieder in der Tabelle auswählen
-            Anh49Abscheiderdetails details = editDialog.getDetails();
-            int row = verwaltungsverfahrenModel.getList().indexOf(details);
             if (row != -1) {
-                getVerwaltungsverfahrenTabelle().setRowSelectionInterval(row,
-                        row);
-                getVerwaltungsverfahrenTabelle().scrollRectToVisible(
-                        getVerwaltungsverfahrenTabelle().getCellRect(row, 0,
-                                true));
+                verwaltungsverfahrenTabelle.setRowSelectionInterval(row, row);
+                // Die letzte (leere) Zeile kann natürlich nicht gelöscht werden:
+                if (row < verwaltungsverfahrenModel.getList().size()) {
+                    getVerwaltungsverfahrenLoeschAction().setEnabled(true);
+                } else {
+                    getVerwaltungsverfahrenLoeschAction().setEnabled(false);
+                }
+                verwaltungsverfahrenPopup.show(
+                        e.getComponent(), e.getX(), e.getY());
             }
         }
     }
@@ -394,61 +373,82 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
 
             // Mal als Beispiel, wie der Text in einigen Spalten zentriert
             // werden kann
-            DefaultTableCellRenderer centeredRenderer = new DefaultTableCellRenderer();
+            DefaultTableCellRenderer centeredRenderer =
+                new DefaultTableCellRenderer();
             centeredRenderer
                     .setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 
             // Die Tabellen-Spalten werden angepasst
-            TableColumn column = null;
-            for (int i = 0; i < verwaltungsverfahrenTabelle.getColumnCount(); i++) {
-                column = verwaltungsverfahrenTabelle.getColumnModel()
-                        .getColumn(i);
-                if (i == 0) {
-                    // Die erste Spalte soll zentriert sein...
-                    column.setCellRenderer(centeredRenderer);
+            // TODO: Die anderen Panels auch korrigieren...
+            // Eine for-Schleife und darin nach dem Index abfragen...
+            // #facepalm
+//            TableColumn column = null;
+//            for (int i = 0; i < verwaltungsverfahrenTabelle.getColumnCount(); i++) {
+//                column = verwaltungsverfahrenTabelle.getColumnModel()
+//                        .getColumn(i);
+//                if (i == 0) {
+//                    // Die erste Spalte soll zentriert sein...
+//                    column.setCellRenderer(centeredRenderer);
+//
+//                    column.setMaxWidth(100);
+//                    column.setPreferredWidth(75);
+//                } else if (i == 1) {
+//                    // ... die zweite auch
+//                    column.setCellRenderer(centeredRenderer);
+//
+//                    column.setMaxWidth(80);
+//                    column.setPreferredWidth(60);
+//                }
+//            }
+            // Formatting columns
+            TableColumnModel tcm = verwaltungsverfahrenTabelle.getColumnModel();
+            tcm.getColumn(0).setMaxWidth(100);
+            tcm.getColumn(0).setPreferredWidth(80);
 
-                    column.setMaxWidth(100);
-                    column.setPreferredWidth(75);
-                } else if (i == 1) {
-                    // ... die zweite auch
-                    column.setCellRenderer(centeredRenderer);
+            /* Set up the JComboBoxes with the default values */
+            JComboBox defaultMassnahmenBox = new JComboBox();
+            defaultMassnahmenBox.addItem("Anhörung");
+            defaultMassnahmenBox.addItem("Ordnungsverfügung");
+            defaultMassnahmenBox.setEditable(true);
+            defaultMassnahmenBox.setBorder(BorderFactory.createEmptyBorder());
+            tcm.getColumn(1).setCellEditor(
+                    new DefaultCellEditor(defaultMassnahmenBox));
 
-                    column.setMaxWidth(80);
-                    column.setPreferredWidth(60);
-                }
-            }
+            JComboBox defaultSachbearbeiterBox = new JComboBox();
+            defaultSachbearbeiterBox.addItem("360.12");
+            defaultSachbearbeiterBox.addItem("360.33");
+            defaultSachbearbeiterBox.setEditable(true);
+            defaultSachbearbeiterBox.setBorder(
+                    BorderFactory.createEmptyBorder());
+            tcm.getColumn(2).setCellEditor(
+                    new DefaultCellEditor(defaultSachbearbeiterBox));
 
-            // MouseListener für Doppelklick und Rechtsklick
+            tcm.getColumn(3).setMaxWidth(100);
+            tcm.getColumn(3).setPreferredWidth(80);
+            tcm.getColumn(4).setMaxWidth(100);
+            tcm.getColumn(4).setPreferredWidth(80);
+
+            // MouseListener für Rechtsklick
             verwaltungsverfahrenTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
                         @Override
-                        public void mouseClicked(java.awt.event.MouseEvent e) {
-                            if ((e.getClickCount() == 2)
-                                    && (e.getButton() == 1)) {
-                                Point origin = e.getPoint();
-                                int row = verwaltungsverfahrenTabelle
-                                        .rowAtPoint(origin);
-
-                                if (row != -1) {
-                                    Anh49Abscheiderdetails absch = (Anh49Abscheiderdetails) verwaltungsverfahrenModel
-                                            .getObjectAtRow(row);
-                                    log.debug("(Anh49DetailsPanel.abscheiderTabelle) "
-                                            + "Doppelklick auf: " + absch);
-                                    editVerwaltungsverfahren(absch);
-                                }
-                            }
+                        public void mousePressed(MouseEvent e) {
+                            showVerwaltungsverfahrenPopup(e);
+                        }
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            showVerwaltungsverfahrenPopup(e);
                         }
                     });
 
-            verwaltungsverfahrenTabelle.getInputMap()
-                    .put((KeyStroke) getVerwaltungsverfahrenLoeschAction()
+            verwaltungsverfahrenTabelle.getInputMap().put(
+                    (KeyStroke) getVerwaltungsverfahrenLoeschAction()
                             .getValue(Action.ACCELERATOR_KEY),
-                            getVerwaltungsverfahrenLoeschAction().getValue(
-                                    Action.NAME));
-            verwaltungsverfahrenTabelle
-                    .getActionMap()
-                    .put(getVerwaltungsverfahrenLoeschAction().getValue(
-                            Action.NAME), getVerwaltungsverfahrenLoeschAction());
+                    getVerwaltungsverfahrenLoeschAction().getValue(
+                            Action.NAME));
+            verwaltungsverfahrenTabelle.getActionMap().put(
+                    getVerwaltungsverfahrenLoeschAction().getValue(Action.NAME),
+                    getVerwaltungsverfahrenLoeschAction());
         }
         return verwaltungsverfahrenTabelle;
     }
@@ -482,7 +482,6 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
     public void enableAll(boolean enabled) {
         if (!(enabled && (fachdaten == null))) {
             getVerwaltungsverfahrenTabelle().setEnabled(enabled);
-            getVerwaltungsverfahrenNeuAction().setEnabled(enabled);
             getVerwaltungsverfahrenLoeschAction().setEnabled(enabled);
             getSpeichernButton().setEnabled(enabled);
         }
@@ -495,7 +494,7 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
 
     private JButton getSpeichernButton() {
         if (speichernButton == null) {
-            speichernButton = new JButton("Verwaltungsverf speichern");
+            speichernButton = new JButton("Änderungen speichern");
 
             speichernButton.addActionListener(new ActionListener() {
                 @Override

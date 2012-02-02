@@ -31,6 +31,7 @@ import org.hibernate.Transaction;
 import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 
 /**
  * A class that represents a row in the 'ANH_49_VERWALTUNGSVERF' table.
@@ -38,7 +39,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * after being created.
  * <br><br>
  * Well, not really. I just copied this from a generated class and modified it!
- * 
+ *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public class Anh49Verwaltungsverfahren
@@ -64,6 +65,21 @@ public class Anh49Verwaltungsverfahren
      */
     public Anh49Verwaltungsverfahren(java.lang.Integer verwaltungsverfahrenID) {
         super(verwaltungsverfahrenID);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public String toString() {
+        return "[Datum: " + AuikUtils.getStringFromDate(this.getDatum())
+            + ", Maßnahme: " + this.getMassnahme()
+            + " (" + ((this.isAbgeschlossen()!=null && this.isAbgeschlossen())
+                        ?"":"nicht ") + "abgeschlossen)"
+            + ", SachbearbeiterIn: " + this.getSachbearbeiterIn()
+            + (this.getWiedervorlage()==null?"":", Wiedervorlage: "
+            + AuikUtils.getStringFromDate(this.getWiedervorlage()))
+            + "]";
     }
 
     /**
@@ -113,7 +129,7 @@ public class Anh49Verwaltungsverfahren
             tx.commit();
 
         } catch (HibernateException e) {
-            // TODO: This exception handling should be moved into the dbmanager
+            // TODO: This exception "handling" should be moved into the dbmanager
             // Falls während der Änderungen ein Hibernate Fehler auftritt
             if (tx != null) {
                 try {

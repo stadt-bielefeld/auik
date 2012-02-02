@@ -107,7 +107,6 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.plaf.Options;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ModulManager;
@@ -118,6 +117,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49DetailsPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49Panel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49VerwaltungsverfahrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh50Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh52Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh53Panel;
@@ -160,6 +160,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private Anh49Panel anhang49Tab;
     private Anh49DetailsPanel anh49detailTab;
     private Anh49AnalysenPanel anh49analyseTab;
+    private Anh49VerwaltungsverfahrenPanel anh49VerwaltungsverfahrenTab;
     private Anh52Panel anhang52Tab;
     private Anh53Panel anhang53Tab;
     private Anh55Panel anhang55Tab;
@@ -176,6 +177,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getIcon()
      */
+    @Override
     public Icon getIcon() {
         return super.getIcon("edit32.png");
     }
@@ -183,6 +185,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Objekt neu / bearbeiten";
     }
@@ -190,6 +193,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      */
+    @Override
     public String getIdentifier() {
         return "m_objekt_bearbeiten";
     }
@@ -197,6 +201,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "Betriebe";
     }
@@ -204,6 +209,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
             panel = new JPanel(new BorderLayout());
@@ -319,7 +325,13 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return anh49analyseTab;
     }
 
-
+    public Anh49VerwaltungsverfahrenPanel getAnh49VerwaltungsverfahrenTab() {
+        if (anh49VerwaltungsverfahrenTab == null) {
+            anh49VerwaltungsverfahrenTab =
+                new Anh49VerwaltungsverfahrenPanel(this);
+        }
+        return anh49VerwaltungsverfahrenTab;
+    }
 
     public SuevPanel getSuevTab() {
         if (suevTab == null) {
@@ -405,6 +417,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return tabbedPane;
     }
 
+    @Override
     public void show() {
 
         super.show();
@@ -437,6 +450,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
         SwingWorkerVariant worker = new SwingWorkerVariant(getBasisTab()) {
 
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 getBasisTab().fetchFormData();
 
@@ -469,6 +483,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                         {
                             getAnh49AnalyseTab().setFachdaten(getAnhang49Tab().getFachdaten());
                         }
+
+                        getAnh49VerwaltungsverfahrenTab().setFachdaten(getAnhang49Tab().getFachdaten());
 
                     } else if (objekt.getBasisObjektarten().isSuev()) {
                         getChronoTab().fetchFormData();
@@ -506,6 +522,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 }
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 getBasisTab().updateForm();
 
@@ -566,6 +583,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                 getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
                             }
 
+                            getTabbedPane().addTab(getAnh49VerwaltungsverfahrenTab().getName(), getAnh49VerwaltungsverfahrenTab());
+
                             if ( objekt.getBasisObjektarten().isFettabscheider()== true)
                             {
 
@@ -582,6 +601,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             {
                                 getAnh49AnalyseTab().updateForm();
                             }
+                            getAnh49VerwaltungsverfahrenTab().updateForm();
                             getTabbedPane().setSelectedComponent(getAnhang49Tab());
                         } else if (objekt.getBasisObjektarten().isSuev()) {
                             getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
@@ -674,6 +694,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 getAnhang49Tab().clearForm();
                 getAnh49DetailTab().clearForm();
                 getAnh49AnalyseTab().clearForm();
+                getAnh49VerwaltungsverfahrenTab().clearForm();
             } else if (objekt.getBasisObjektarten().isSuev()) {
                 getSuevTab().clearForm();
             } else if (objekt.getBasisObjektarten().isAnh40()) {
@@ -711,6 +732,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 getAnhang49Tab().enableAll(enabled);
                 getAnh49DetailTab().enableAll(enabled);
                 getAnh49AnalyseTab().enableAll(enabled);
+                getAnh49VerwaltungsverfahrenTab().enableAll(enabled);
             } else if (objekt.getBasisObjektarten().isSuev()) {
                 getSuevTab().enableAll(enabled);
             } else if (objekt.getBasisObjektarten().isAnh40()) {

@@ -27,7 +27,7 @@ import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.LoggerFactory;
 
 /**
- * AuikLogger factory which sets different logging levels for different users. 
+ * AuikLogger factory which sets different logging levels for different users.
  *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
@@ -39,7 +39,7 @@ public class AuikLoggerFactory implements LoggerFactory {
 	/**
 	 * Make sure we run {@link AuikLoggerFactory.init} and
 	 * create a new AuikLogger instance
-	 * 
+	 *
 	 * @return The new AuikLogger instance
 	 */
 	@Override
@@ -55,18 +55,18 @@ public class AuikLoggerFactory implements LoggerFactory {
 		needsToRunInit = false;
 		return;
 	}
-	
+
     /**
      * This method sets the log level according to the user. It is meant to be
      * used by programmers to set their log level individually while
      * programming. For all other users the log level from the file
      * log4j.properties is used.
-     * 
+     *
      * TODO: Load the settings from AUIK.properties.
      */
     private static void setSpecialLogLevelsByUser() {
     	String user = System.getProperty("user.name");
-    	
+
 		// Set to custom settings
     	if (user.matches("u633d")) { // Gerd
     		Logger.getRootLogger().setLevel(Level.FATAL);
@@ -92,16 +92,17 @@ public class AuikLoggerFactory implements LoggerFactory {
     				// milliseconds [thread] LEVEL class.method - message
 //    				.setConversionPattern("%6r [%16.-16t] %-5p %C{1}.%M - %m%n");
     				// milliseconds LEVEL class.method - message
-//    				.setConversionPattern("%6r %-5p %C{1}.%M - %m%n");
+    				.setConversionPattern("%6r %-5p %C{1}.%M - %m%n");
     				// Buuh! Farbe geht nicht unter Windows...
 //    				.setConversionPattern("\u001b[2;31m%6r %-5p - %m%n\u001b[m");
 					// milliseconds LEVEL - message
-    				.setConversionPattern("%6r %-5p - %m%n");
-    		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.ALL);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.mappings").setLevel(Level.ALL);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.module").setLevel(Level.ALL);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.utils").setLevel(Level.ALL);
-    		Logger.getLogger("org.hibernate").setLevel(Level.INFO);
+//    				.setConversionPattern("%6r %-5p - %m%n");
+    		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.WARN);
+    		Logger.getLogger("de.bielefeld.umweltamt.aui.mappings").setLevel(Level.WARN);
+    		Logger.getLogger("de.bielefeld.umweltamt.aui.module").setLevel(Level.WARN);
+    		Logger.getLogger("de.bielefeld.umweltamt.aui.utils").setLevel(Level.WARN);
+    		Logger.getLogger("org.hibernate").setLevel(Level.WARN);
+            Logger.getLogger("de.bielefeld.umweltamt.aui.module.objectpanels").setLevel(Level.WARN);
     	}
     	return;
     }
