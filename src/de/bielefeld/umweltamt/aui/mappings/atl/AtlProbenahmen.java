@@ -294,9 +294,7 @@ public class AtlProbenahmen
             .setString(0, kennnummer)
             .list();
 
-            count = ((Integer) session.createQuery("from AtlProbenahmen pn where pn.kennummer = ?")
-                    .setString(0, kennnummer)
-                    .list().size());
+            count = liste.size();
             HibernateSessionFactory.closeSession();
 
 
@@ -477,7 +475,7 @@ public class AtlProbenahmen
             Session session = HibernateSessionFactory.currentSession();
             AtlProbenahmen newProbe = (AtlProbenahmen) session.get(AtlProbenahmen.class, probe.getId());
             //Hibernate.initialize(probe.getAtlAnalysepositionen());
-            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(), 
+            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(),
             		"order by this.atlParameter.reihenfolge")
                 .list();
 
@@ -498,8 +496,8 @@ public class AtlProbenahmen
             Session session = HibernateSessionFactory.currentSession();
             AtlProbenahmen newProbe = (AtlProbenahmen) session.get(AtlProbenahmen.class, probe.getId());
             //Hibernate.initialize(probe.getAtlAnalysepositionen());
-            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(), 
-            		"where this.atlParameter.bezeichnung not like ? " + 
+            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(),
+            		"where this.atlParameter.bezeichnung not like ? " +
             		"order by this.atlParameter.reihenfolge")
             	.setString(0, new String("%bei Probenahme"))
                 .list();
@@ -673,6 +671,7 @@ public class AtlProbenahmen
      * bzw. "[Probe: Kennummer, Probeart, Datum, N/A]" falls die Positionen noch nicht aus
      * der Datenbank geholt wurden.
      */
+    @Override
     public String toString() {
         String tmp = "[Probe: " + getKennummer() + ", " + getProbeArt() + ", " + AuikUtils.getStringFromDate(getDatumDerEntnahme());
 

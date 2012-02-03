@@ -23,25 +23,30 @@ package de.bielefeld.umweltamt.aui;
 
 import javax.swing.JOptionPane;
 
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 /**
  * The DatabaseManager handles all the stuff related to the database.<br>
  * It is a Singleton.<br>
  * <br>
  * TODO: Most of the stuff which should be here is still scattered across the
  * project and should move here bit by bit.
- *  
+ *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public final class DatabaseManager {
-	
+
+    /** Logging */
+    private static final AuikLogger log = AuikLogger.getLogger();
+
 	/** Singleton instance of the DatabaseManager */
 	private static DatabaseManager instance = null;
-	
+
 	/** Private Constructor */
 	private DatabaseManager() {
 		// This is intentionally left blank.
 	}
-	
+
 	/** Get the DatabaseManager instance */
 	public synchronized static DatabaseManager getInstance() {
 		if (instance == null) {
@@ -49,19 +54,21 @@ public final class DatabaseManager {
 		}
 		return instance;
 	}
-	
+
     /**
      * Wird benutzt um mit im laufenden Betrieb auftretenden
      * Datenbank-Fehlern umzugehen.
-     * 
+     *
      * @param exception Die aufgetretene Exception
      * @param src Wo trat der Fehler auf
      * @param fatal Soll das Programm beendet werden?
      */
     public void handleDBException(Throwable exception, String src,
     		boolean fatal) {
-    	HauptFrame runningFrame = GUIManager.getInstance().getRunningFrame();
-        // If we already have a gui, show the error there.
+        HauptFrame runningFrame = GUIManager.getInstance().getRunningFrame();
+        // Close the session as its state may be invalid after an error
+        HibernateSessionFactory.closeSession();
+        // If we already have a GUI, show the error there.
         if (runningFrame != null) {
             runningFrame.changeStatus("Ein Datenbank-Fehler ist aufgetreten!",
             		HauptFrame.ERROR_COLOR);
@@ -77,7 +84,7 @@ public final class DatabaseManager {
             runningFrame.close();
         }
         // Throw an exception with more information.
-        throw new RuntimeException("%%%% " + (fatal ? "Fataler " : "") 
+        throw new RuntimeException("%%%% " + (fatal ? "Fataler " : "")
         		+ "DB-Fehler: " + exception.getMessage() + " %%%%"
         		+ " (" + src + ")", exception);
     }
