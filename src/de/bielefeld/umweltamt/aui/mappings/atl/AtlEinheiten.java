@@ -29,10 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the 'ATL_EINHEITEN' table.
@@ -43,6 +40,7 @@ public class AtlEinheiten
     extends AbstractAtlEinheiten
     implements Serializable
 {
+    private static final long serialVersionUID = 866939599579322354L;
     /** Die ID der Einheit "mg/l" */
     final public static Integer MG_L_ID = new Integer(42);
     /** Die ID der Einheit "mg/kg" */
@@ -58,21 +56,17 @@ public class AtlEinheiten
      * jeweiligen Schlüsseln der Einheiten-Tabelle.
      * Sie wird in initMap() gefüllt.
      */
-    private static Map sEinheiten = null;
+    private static Map<String,Integer> sEinheiten = null;
 
-    /**
-     * Simple constructor of AtlEinheiten instances.
-     */
-    public AtlEinheiten()
-    {
+    /** Simple constructor of AtlEinheiten instances. */
+    public AtlEinheiten() {
     }
 
     /**
      * Constructor of AtlEinheiten instances given a simple primary key.
      * @param id
      */
-    public AtlEinheiten(java.lang.Integer id)
-    {
+    public AtlEinheiten(java.lang.Integer id) {
         super(id);
     }
 
@@ -81,6 +75,7 @@ public class AtlEinheiten
     /**
      * @return Der Name der Einheit.
      */
+    @Override
     public String toString() {
         String tmp = getBezeichnung();
         if (tmp != null) {
@@ -96,7 +91,7 @@ public class AtlEinheiten
      */
     private static void initMap() {
         if (sEinheiten == null) {
-            sEinheiten = new HashMap();
+            sEinheiten = new HashMap<String,Integer>();
 
             // SielhautBearbeiten:
             sEinheiten.put("mg/kg TS", AtlEinheiten.MG_KG_ID);
@@ -123,7 +118,7 @@ public class AtlEinheiten
      */
     public static Integer getID(String name) {
         initMap();
-        return (Integer) sEinheiten.get(name);
+        return sEinheiten.get(name);
     }
 
     /**
@@ -131,20 +126,16 @@ public class AtlEinheiten
      * @return Ein Array mit allen Einheiten
      */
     public static AtlEinheiten[] getEinheiten() {
-        AtlEinheiten[] tmp;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            List einheiten = session.createQuery("from AtlEinheiten as einheit").list();
+        AtlEinheiten[] einheiten;
+        List<?> result = null;
 
-            tmp = new AtlEinheiten[einheiten.size()];
-            tmp = (AtlEinheiten[]) einheiten.toArray(tmp);
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        result = new DatabaseAccess()
+                .createQuery("from AtlEinheiten as einheit")
+                .list();
+        einheiten = new AtlEinheiten[result.size()];
+        einheiten = (AtlEinheiten[]) result.toArray(einheiten);
 
-        return tmp;
+        return einheiten;
     }
 
     /**
@@ -153,21 +144,10 @@ public class AtlEinheiten
      * @return Die Einheit mit der gegebenen ID oder <code>null</code> falls diese nicht existiert
      */
     public static AtlEinheiten getEinheit(Integer id) {
-        AtlEinheiten einheit;
+        AtlEinheiten einheit = null;
 
-        if (id != null) {
-            try {
-                Session session = HibernateSessionFactory.currentSession();
-                einheit = (AtlEinheiten) session.get(AtlEinheiten.class, id);
-            } catch (HibernateException e) {
-                e.printStackTrace();
-                einheit = null;
-            } finally {
-                HibernateSessionFactory.closeSession();
-            }
-        } else {
-            einheit = null;
-        }
+        einheit = (AtlEinheiten) new DatabaseAccess()
+                .get(AtlEinheiten.class, id);
 
         return einheit;
     }

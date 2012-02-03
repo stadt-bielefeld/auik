@@ -31,11 +31,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * Diese Klasse representiert eine Parametergruppe.
@@ -43,18 +39,18 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
  * @author <a href="mailto:ingo.weinzierl@intevation.de">Ingo Weinzierl</a>
  */
 public class AtlParameterGruppen
-extends      AbstractAtlParameterGruppen
-implements   Serializable
+    extends      AbstractAtlParameterGruppen
+    implements   Serializable
 {
+    private static final long serialVersionUID = 2622823822795338854L;
+
     public AtlParameterGruppen() {
         super();
     }
 
-
     public AtlParameterGruppen(String name, Double preisfueranalyse) {
         super(name, preisfueranalyse);
     }
-
 
     /**
      * Diese Funktion liefert ein {@link AtlParameterGruppen} Objekt anhand
@@ -65,18 +61,12 @@ implements   Serializable
      * @return die Parametergruppe mit der ID <i>id</i>.
      */
     public static AtlParameterGruppen getParameterGroup(int id) {
-        try {
-            Session s = HibernateSessionFactory.currentSession();
-            return (AtlParameterGruppen) s.get(AtlParameterGruppen.class, id);
-        }
-        catch (HibernateException e) {
-            e.printStackTrace();
-        }
-        finally {
-            HibernateSessionFactory.closeSession();
-        }
+        AtlParameterGruppen result = null;
 
-        return null;
+        result = (AtlParameterGruppen) new DatabaseAccess()
+                .get(AtlParameterGruppen.class, id);
+
+        return result;
     }
 
 
@@ -90,7 +80,7 @@ implements   Serializable
      * @return true, wenn alle Parameter der Gruppen enthalten sind, sonst
      * false.
      */
-    public static boolean isGroupComplete(int id, List group) {
+    public static boolean isGroupComplete(int id, List<?> group) {
         AtlParameter[] complete = AtlParameter.getParameterGroup(id);
 
         int completeSize = complete.length;
@@ -100,7 +90,7 @@ implements   Serializable
             return false;
         }
 
-        int contains = 0;
+//        int contains = 0;
 
         for (AtlParameter parameter: complete) {
             String  paramId  = parameter.getOrdnungsbegriff();

@@ -27,10 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the 'ATL_PROBEART' table.
@@ -41,6 +38,7 @@ public class AtlProbeart
     extends AbstractAtlProbeart
     implements Serializable
 {
+    private static final long serialVersionUID = -4946349358783685742L;
     /** Die ID von Abwasser-Proben */
     final public static Integer ABWASSER = new Integer(1);
     /** Die ID von UWB Abwasser-Proben */
@@ -63,109 +61,51 @@ public class AtlProbeart
     /**
      * Simple constructor of AtlProbeart instances.
      */
-    public AtlProbeart()
-    {
+    public AtlProbeart(){
+        // This place is intentionally left blank.
     }
 
     /**
      * Constructor of AtlProbeart instances given a simple primary key.
      * @param artId
      */
-    public AtlProbeart(java.lang.Integer artId)
-    {
+    public AtlProbeart(java.lang.Integer artId) {
         super(artId);
     }
 
     /* Add customized code below */
 
+    @Override
     public String toString() {
         return getArt();
     }
 
     public boolean isAbwasser() {
-        if (ABWASSER.equals(this.getArtId())) {
-            return true;
-        } else {
-            return false;
-        }
+        return ABWASSER.equals(this.getArtId());
     }
     public boolean isAbwasserUWB() {
-        if (ABWASSER_UWB.equals(this.getArtId())) {
-            return true;
-        } else {
-            return false;
-        }
+        return ABWASSER_UWB.equals(this.getArtId());
     }
     public boolean isAbwasserES() {
-        if (ABWASSER_ES.equals(this.getArtId())) {
-            return true;
-        } else {
-            return false;
-        }
+        return ABWASSER_ES.equals(this.getArtId());
     }
     public boolean isAnlieferung() {
-        if (ANLIEFERUNG.equals(this.getArtId())) {
-            return true;
-        } else {
-            return false;
-        }
+        return ANLIEFERUNG.equals(this.getArtId());
     }
     public boolean isFaulschlamm() {
-        if (FAULSCHLAMM.equals(this.getArtId())) {
-            return true;
-        } else {
-            return false;
-        }
+        return FAULSCHLAMM.equals(this.getArtId());
     }
     public boolean isRohschlamm() {
-        if (ROHSCHLAMM.equals(this.getArtId())) {
-            return true;
-        } else {
-            return false;
-        }
+        return ROHSCHLAMM.equals(this.getArtId());
     }
     public boolean isSielhaut() {
-        if (SIELHAUT.equals(this.getArtId())) {
-            return true;
-        } else {
-            return false;
-        }
+        return SIELHAUT.equals(this.getArtId());
     }
     public boolean isSonstige() {
-        if (SONSTIGE.equals(this.getArtId())) {
-            return true;
-        } else {
-            return false;
-        }
+        return SONSTIGE.equals(this.getArtId());
     }
     public boolean isZulauf() {
-        if (ZULAUF.equals(this.getArtId())) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Liefert alle vorhandenen Probearten.
-     * @param session Eine Hibernate-Session
-     * @return Alle vorhandenen Probearten
-     * @throws HibernateException Wenn ein Datenbank-Fehler auftritt
-     */
-    public static AtlProbeart[] getProbearten(Session session) throws HibernateException {
-        List list = null;
-
-        String suchString = "from AtlProbeart art order by art.artId";
-
-        Query query = session.createQuery(suchString);
-        query.setCacheable(true);
-        query.setCacheRegion("probeartliste");
-        list = query.list();
-
-        AtlProbeart[] tmp = new AtlProbeart[list.size()];
-        tmp = (AtlProbeart[]) list.toArray(tmp);
-
-        return tmp;
+        return ZULAUF.equals(this.getArtId());
     }
 
     /**
@@ -174,16 +114,21 @@ public class AtlProbeart
      * @return Alle vorhandenen Probearten
      */
     public static AtlProbeart[] getProbearten() {
-        AtlProbeart[] tmp = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tmp = getProbearten(session);
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-        return tmp;
+        List<?> list = null;
+        AtlProbeart[] result = null;
+
+        String suchString = "from AtlProbeart art order by art.artId";
+
+        // TODO: Clear what to do with setCacheable and stuff
+        list = new DatabaseAccess().createQuery(suchString)
+//                .setCacheable(true);
+//                .setCacheRegion("probeartliste");
+                .list();
+
+        result = new AtlProbeart[list.size()];
+        result = (AtlProbeart[]) list.toArray(result);
+
+        return result;
     }
 
     /**
@@ -192,17 +137,8 @@ public class AtlProbeart
      * @return Die Probeart mit der gegebenen ID oder <code>null</code> falls diese nicht existiert
      */
     public static AtlProbeart getProbeart(Integer id) {
-        AtlProbeart art;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            art = (AtlProbeart) session.get(AtlProbeart.class, id);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            art = null;
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        AtlProbeart art = null;
+        art = (AtlProbeart) new DatabaseAccess().get(AtlProbeart.class, id);
         return art;
     }
 }

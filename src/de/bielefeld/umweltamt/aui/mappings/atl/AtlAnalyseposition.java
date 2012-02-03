@@ -30,16 +30,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-
 import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the 'ATL_ANALYSEPOSITION' table.
@@ -50,14 +44,11 @@ public class AtlAnalyseposition
     extends AbstractAtlAnalyseposition
     implements Serializable
 {
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
-	/** Logging */
+    private static final long serialVersionUID = 8611630449814009888L;
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    /**
-     * Simple constructor of AtlAnalyseposition instances.
-     */
+    /** Simple constructor of AtlAnalyseposition instances. */
     public AtlAnalyseposition() {
         this(new Float(0.0));
     }
@@ -96,6 +87,7 @@ public class AtlAnalyseposition
      * @param rhs
      * @return boolean
      */
+    @Override
     public boolean equals(Object rhs) {
         // Wenn das andere Objekt null ist, sind wir nicht gleich
         if (rhs == null) {
@@ -189,6 +181,7 @@ public class AtlAnalyseposition
      * auf Basis von von Wert, Parameter, Einheit und "Analyse von".
      * @return int
      */
+    @Override
     public int hashCode()
     {
         if (this.hashValue == 0)
@@ -218,6 +211,7 @@ public class AtlAnalyseposition
     /**
      * @return Einen String der Form "[Position: Parameter: Wert Einheit, Analyse_Von, [Probenahme], ID:Id]"
      */
+    @Override
     public String toString() {
         String tmp = "[Position: "+ getAtlParameter() +": "+ getWert() +" "+ getAtlEinheiten() +", "+ getAnalyseVon() +", ";
         if (getAtlProbenahmen() != null) {
@@ -234,14 +228,10 @@ public class AtlAnalyseposition
 
     // Liefert einObjekt vom Typ Analysepositionen mit einer gegebenen ID
     public static AtlAnalyseposition getAnalysepositionObjekt (Integer id) {
-        AtlAnalyseposition objekt;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            objekt = (AtlAnalyseposition) session.get(AtlAnalyseposition.class, id);
-            HibernateSessionFactory.closeSession();
-        } catch (HibernateException e) {
-            objekt = null;
-        }
+        AtlAnalyseposition objekt = null;
+
+        objekt = (AtlAnalyseposition)
+                new DatabaseAccess().get(AtlAnalyseposition.class, id);
 
         return objekt;
     }
@@ -254,7 +244,7 @@ public class AtlAnalyseposition
      * @param param Der Parameter.
      * @return Eine Liste mit <code>AtlAnalyseposition</code>en.
      */
-    public static List getAnalysepositionen(AtlProbenahmen probe, AtlParameter param) {
+    public static List<?> getAnalysepositionen(AtlProbenahmen probe, AtlParameter param) {
         // TODO: Evtl. mit komplizierterem HQL gleich beim Laden der Proben lösen?
         // select probe.name, probe.pos....
 //        String query =
@@ -263,6 +253,7 @@ public class AtlAnalyseposition
 //            "and pos.atlProbenahmen = ? " +
 //            "order by pos.atlProbenahmen.datumDerEntnahme";
 
+        // TODO: Take a look at this Hibernate initializing stuff...
         if (!Hibernate.isInitialized(probe.getAtlAnalysepositionen())) {
         }
 
@@ -310,61 +301,48 @@ public class AtlAnalyseposition
      * @param analyseVon Wo wurde analysiert?
      * @return Eine Liste mit <code>AtlAnalyseposition</code>en
      */
-    public static List getAnalysepositionen(AtlParameter param, AtlEinheiten einh, AtlProbepkt pkt, Date beginDate, Date endDate, String analyseVon) {
+    public static List<?> getAnalysepositionen(AtlParameter param, AtlEinheiten einh, AtlProbepkt pkt, Date beginDate, Date endDate, String analyseVon) {
         log.debug("Suche (HQL): p:" + param+ ", e:" + einh + ", pkt:" + pkt
         		+ ", bD:" + beginDate + ", eD:" + endDate
         		+ ", aV:'" + analyseVon + "'");
 
-        String paramID = param.getOrdnungsbegriff();
-        Integer einhID = einh.getId();
-        Integer pktID = pkt.getObjektid();
+//        String paramID = param.getOrdnungsbegriff();
+//        Integer einhID = einh.getId();
+//        Integer pktID = pkt.getObjektid();
 
         String query =
             "from AtlAnalyseposition pos " +
-            "where pos.atlParameter = ? " +
-            "and pos.atlEinheiten = ? " +
-            "and pos.atlProbenahmen.atlProbepkt = ? " +
-            "and pos.atlProbenahmen.datumDerEntnahme >= ? " +
-            "and pos.atlProbenahmen.datumDerEntnahme <= ? ";
+            "where pos.atlParameter = :param " +
+            "and pos.atlEinheiten = :einh " +
+            "and pos.atlProbenahmen.atlProbepkt = :pkt " +
+            "and pos.atlProbenahmen.datumDerEntnahme >= :beginDate " +
+            "and pos.atlProbenahmen.datumDerEntnahme <= :endDate ";
 
         if (analyseVon != null && !analyseVon.equals("")) {
-            query += "and pos.analyseVon like ? ";
+            query += "and pos.analyseVon like :analyseVon ";
         }
 
         query += "order by pos.atlProbenahmen.datumDerEntnahme";
 
-        List proben;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
+        List<?> proben = null;
 
-            if (analyseVon != null && !analyseVon.equals("")) {
-            proben = session.createQuery(
-                    query)
-                    .setEntity(0, param)
-                    .setEntity(1, einh)
-                    .setEntity(2, pkt)
-                    .setDate(3, beginDate)
-                    .setDate(4, endDate)
-                    .setString(5, analyseVon)
+        if (analyseVon != null && !analyseVon.equals("")) {
+            proben = new DatabaseAccess().createQuery(query)
+                    .setEntity(":param", param)
+                    .setEntity(":einh", einh)
+                    .setEntity(":pkt", pkt)
+                    .setDate(":beginDate", beginDate)
+                    .setDate(":endDate", endDate)
+                    .setString(":analyseVon", analyseVon)
                     .list();
-
-            } else {
-                proben = session.createQuery(
-                    query)
-                    .setEntity(0, param)
-                    .setEntity(1, einh)
-                    .setEntity(2, pkt)
-                    .setDate(3, beginDate)
-                    .setDate(4, endDate)
+        } else {
+            proben = new DatabaseAccess().createQuery(query)
+                    .setEntity(":param", param)
+                    .setEntity(":einh", einh)
+                    .setEntity(":pkt", pkt)
+                    .setDate(":beginDate", beginDate)
+                    .setDate(":endDate", endDate)
                     .list();
-
-            }
-
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
         }
 
         return proben;
@@ -372,12 +350,12 @@ public class AtlAnalyseposition
 
     // Liefert eine Liste der Analysepositionen mit einem gegebenen
     // Parameter, an einem bestimmten Probepunkt.
-    public static List getAnalysepos(AtlParameter param,  Integer pkt) {
+    public static List<?> getAnalysepos(AtlParameter param,  Integer pkt) {
         log.debug("Suche (HQL): p:" + param+ " pkt:" + pkt);
 
         String query =
             "from AtlAnalyseposition as pos " +
-            "where pos.atlParameter = ? " ;
+            "where pos.atlParameter = :param " ;
 
         if (pkt != null) {
             query += "and pos.atlProbenahmen.atlProbepkt.objektid = '" + pkt + "' ";
@@ -387,57 +365,38 @@ public class AtlAnalyseposition
 
         query += "order by pos.atlProbenahmen.datumDerEntnahme";
 
-        List proben;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
+        List<?> proben = null;
 
-            proben = session.createQuery(query)
-                    .setEntity(0, param)
-                    .list();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        proben = new DatabaseAccess().createQuery(query)
+                .setEntity("param", param)
+                .list();
 
         return proben;
     }
 
-
     // Liefert eine Liste der Parameter, die immer bestimmt werden.
-	public static List getVorOrtParameter() {
-	
+	public static List<?> getVorOrtParameter() {
+
 	    String query =
 	        "from AtlAnalyseposition as pos " +
 	        "where pos.atlParameter.ordnungsbegriff = 'L10821' " ;
-	
-	        List param;
-        try {
-	        Session session = HibernateSessionFactory.currentSession();
-	
-	        param = session.createQuery(query)
-	                .list();
-	
-	    } catch (HibernateException e) {
-	        throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
-	    } finally {
-	        HibernateSessionFactory.closeSession();
-	    }
-	
+
+        List<?> param = null;
+
+        param = new DatabaseAccess().createQuery(query).list();
+
 	    return param;
 	}
 
-	public static List getSielhautpos(String param,  Integer pkt, Date anfang, Date ende) {
+	public static List<?> getSielhautpos(String param,  Integer pkt, Date anfang, Date ende) {
         log.debug("Suche (HQL): p:" + param+ ", pkt:" + pkt + ", bD:"
         		+ anfang + ", eD:" + ende + ", aV:'");
-        List proben;
-        proben = null;
+        List<?> proben = null;
 
         String query =
             "from AtlAnalyseposition pos " +
-            "where pos.atlProbenahmen.datumDerEntnahme >= ? " +
-            "and pos.atlProbenahmen.datumDerEntnahme <= ? ";
+            "where pos.atlProbenahmen.datumDerEntnahme >= :anfang " +
+            "and pos.atlProbenahmen.datumDerEntnahme <= :ende ";
 
         if (pkt != null) {
             query += "and pos.atlProbenahmen.atlProbepkt.objektid = '" + pkt + "' ";
@@ -453,19 +412,10 @@ public class AtlAnalyseposition
 
         query += "order by pos.atlProbenahmen.datumDerEntnahme";
 
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-
-            proben = session.createQuery(query)
-                    .setDate(0, anfang)
-                    .setDate(1, ende)
-                    .list();
-
-	    } catch (HibernateException e) {
-	        throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
-	    } finally {
-	        HibernateSessionFactory.closeSession();
-	    }
+        proben = new DatabaseAccess().createQuery(query)
+                .setDate("anfang", anfang)
+                .setDate("ende", ende)
+                .list();
 
         return proben;
     }
@@ -473,82 +423,24 @@ public class AtlAnalyseposition
     // Liefert eine Liste der Analyseinstitute.
     public static String[]  getAnalysierer() {
 
-        List proben = null;
+        List<?> proben = null;
         String query =
-            "select distinct analyseVon from AtlAnalyseposition as ap " + 
+            "select distinct analyseVon from AtlAnalyseposition as ap " +
             "order by ap.analyseVon";
 
-         try {
-            Session session = HibernateSessionFactory.currentSession();
+        proben = new DatabaseAccess().createQuery(query).list();
 
-            proben = session.createQuery(
-                    query)
-                    .list();
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
         String[] tmp = new String[proben.size()];
         tmp = (String[]) proben.toArray(tmp);
 
         return tmp;
     }
 
-
-
     public static boolean saveAnalyseposition(AtlAnalyseposition pos) {
-        boolean saved;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.saveOrUpdate(pos);
-//            session.update(pos.getAtlProbenahmen());
-            tx.commit();
-            saved = true;
-        } catch (HibernateException e) {
-            saved = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "AtlAnalyseposition.saveAnalyseposition", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(pos);
     }
 
     public static boolean removeAnalyseposition(AtlAnalyseposition pos) {
-        boolean success;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(pos);
-            tx.commit();
-            success = true;
-        } catch (HibernateException e) {
-            success = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "Analyseposition.objectRemoved", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
-        return success;
+        return new DatabaseAccess().delete(pos);
     }
 }

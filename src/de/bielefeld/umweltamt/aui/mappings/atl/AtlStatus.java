@@ -27,10 +27,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the 'ATL_STATUS' table.
@@ -41,21 +38,19 @@ public class AtlStatus
     extends AbstractAtlEinheiten
     implements Serializable
 {
-
+    private static final long serialVersionUID = 8102132119175012262L;
 
     /**
      * Simple constructor of AtlStatus instances.
      */
-    public AtlStatus()
-    {
+    public AtlStatus() {
     }
 
     /**
      * Constructor of AtlStatus instances given a simple primary key.
      * @param id
      */
-    public AtlStatus(java.lang.Integer id)
-    {
+    public AtlStatus(java.lang.Integer id) {
         super(id);
     }
 
@@ -64,6 +59,7 @@ public class AtlStatus
     /**
      * @return Der Name der Einheit.
      */
+    @Override
     public String toString() {
         String tmp = getBezeichnung();
         if (tmp != null) {
@@ -72,26 +68,19 @@ public class AtlStatus
         return tmp;
     }
 
-
     /**
      * Liefert alle in der Einheiten-Tabelle gespeicherten Einheiten.
      * @return Ein Array mit allen Einheiten
      */
     public static AtlStatus[] getStatus() {
-        AtlStatus[] tmp;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            List einheiten = session.createQuery("from AtlStatus as status").list();
-
-            tmp = new AtlStatus[einheiten.size()];
-            tmp = (AtlStatus[]) einheiten.toArray(tmp);
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
-        return tmp;
+        List<?> result = null;
+        AtlStatus[] einheiten = null;
+        result = new DatabaseAccess().createQuery(
+                "from AtlStatus as status")
+                .list();
+        einheiten = new AtlStatus[result.size()];
+        einheiten = (AtlStatus[]) result.toArray(einheiten);
+        return einheiten;
     }
 
     /**
@@ -102,64 +91,31 @@ public class AtlStatus
      */
     public static AtlStatus getStatus(String bezeichnung) {
         AtlStatus[] status = getStatus();
-
         for (AtlStatus s: status) {
             if (bezeichnung.equals(s.getBezeichnung())) {
                 return s;
             }
         }
-
         return null;
     }
 
-
     public static AtlStatus getStatus(int id) {
         AtlStatus[] status = getStatus();
-
         for (AtlStatus s: status) {
             if (id == s.getId()) {
                 return s;
             }
         }
-
         return null;
     }
-
 
     public static String[] getStatusAsString() {
         AtlStatus[] status = getStatus();
         String[]    str    = new String[status.length];
-
         int idx = 0;
         for (AtlStatus s: status) {
             str[idx++] = s.getBezeichnung();
         }
-
         return str;
-    }
-
-    /**
-     * Liefert einen bestimmten Status.
-     * @param id Die ID des Statuses
-     * @return Der Status mit der gegebenen ID oder <code>null</code> falls diese nicht existiert
-     */
-    public static AtlStatus getEinheit(Integer id) {
-        AtlStatus status;
-
-        if (id != null) {
-            try {
-                Session session = HibernateSessionFactory.currentSession();
-                status = (AtlStatus) session.get(AtlStatus.class, id);
-            } catch (HibernateException e) {
-                e.printStackTrace();
-                status = null;
-            } finally {
-                HibernateSessionFactory.closeSession();
-            }
-        } else {
-            status = null;
-        }
-
-        return status;
     }
 }

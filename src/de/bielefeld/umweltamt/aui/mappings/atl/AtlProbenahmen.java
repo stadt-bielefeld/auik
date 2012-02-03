@@ -26,7 +26,6 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,20 +33,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 
@@ -60,8 +57,7 @@ public class AtlProbenahmen
     extends AbstractAtlProbenahmen
     implements Serializable
 {
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+    private static final long serialVersionUID = 950596109574293371L;
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -75,20 +71,18 @@ public class AtlProbenahmen
         "inGruppe"
     };
 
-
     /**
      * Simple constructor of AtlProbenahmen instances.
      */
-    public AtlProbenahmen()
-    {
+    public AtlProbenahmen() {
+        // This is intentionally left blank.
     }
 
     /**
      * Constructor of AtlProbenahmen instances given a simple primary key.
      * @param kennummer
      */
-    public AtlProbenahmen(java.lang.Integer id)
-    {
+    public AtlProbenahmen(java.lang.Integer id) {
         super(id);
     }
 
@@ -98,24 +92,17 @@ public class AtlProbenahmen
      * Liefert alle Probenahmen einer bestimmten Art von einer
      * bestimmten Kläranlage.
      */
-    public static List getKSProbenahmen(AtlProbeart art, AtlKlaeranlagen ka) {
-        // Evtl. Version mit gegebener Session bauen?
-        List proben;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            proben = session.createQuery(
-                    "from AtlProbenahmen as probenahme where " +
-                    "probenahme.atlProbepkt.atlProbeart = ? " +
-                    "and probenahme.atlProbepkt.atlKlaeranlagen = ? " +
-                    "order by probenahme.datumDerEntnahme desc, probenahme.kennummer desc")
-                    .setEntity(0, art)
-                    .setEntity(1, ka)
-                    .list();
-
-            HibernateSessionFactory.closeSession();
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        }
+    public static List<?> getKSProbenahmen(
+            AtlProbeart art, AtlKlaeranlagen ka) {
+        List<?> proben = null;
+        proben = new DatabaseAccess().createQuery(
+                "from AtlProbenahmen as probenahme where " +
+                "probenahme.atlProbepkt.atlProbeart = :art " +
+                "and probenahme.atlProbepkt.atlKlaeranlagen = :ka " +
+                "order by probenahme.datumDerEntnahme desc, probenahme.kennummer desc")
+                .setEntity("art", art)
+                .setEntity("ka", ka)
+                .list();
         return proben;
     }
 
@@ -190,91 +177,56 @@ public class AtlProbenahmen
 //        return proben;
 //    }
 
-    public static List findProbenahmen(String suche, String property) {
+    public static List<?> findProbenahmen(String suche, String property) {
         String suche2 = suche.toLowerCase().trim() + "%";
         log.debug("Suche nach '" + suche2 + "' (" + property + ").");
-        List proben;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            proben = session.createQuery(
-                    "from AtlProbenahmen as probenahme where " +
-                    "lower(probenahme."+property+") like ? " +
-                    "order by probenahme.datumDerEntnahme desc, probenahme.kennummer desc")
-                    .setString(0, suche2)
-                    .list();
-            HibernateSessionFactory.closeSession();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        }
+        List<?> proben = null;
+        proben = new DatabaseAccess().createQuery(
+                "from AtlProbenahmen as probenahme where " +
+                "lower(probenahme."+property+") like :suche " +
+                "order by probenahme.datumDerEntnahme desc, probenahme.kennummer desc")
+                .setString("suche", suche2)
+                .list();
         return proben;
     }
 
-    public static List findBescheiddruck() {
-        List proben;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            proben = session.createQuery(
-                    "from AtlProbenahmen as pn where " +
-                    "pn.atlStatus.id = 11 " +
-                    "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-                    .list();
-            HibernateSessionFactory.closeSession();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        }
+    public static List<?> findBescheiddruck() {
+        List<?> proben = null;
+        proben = new DatabaseAccess().createQuery(
+                "from AtlProbenahmen as pn where " +
+                "pn.atlStatus.id = 11 " +
+                "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+                .list();
         return proben;
     }
 
-    public static List findEingetragen() {
-        List proben;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            proben = session.createQuery(
-                    "from AtlProbenahmen as pn where " +
-                    "pn.atlStatus.id = 10 " +
-                    "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-                    .list();
-            HibernateSessionFactory.closeSession();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        }
+    public static List<?> findEingetragen() {
+        List<?> proben = null;
+        proben = new DatabaseAccess().createQuery(
+                "from AtlProbenahmen as pn where " +
+                "pn.atlStatus.id = 10 " +
+                "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+                .list();
         return proben;
     }
 
-    public static List findErgaenzt() {
-        List proben;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            proben = session.createQuery(
-                    "from AtlProbenahmen as pn where " +
-                    "pn.atlStatus.id = 9 " +
-                    "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-                    .list();
-            HibernateSessionFactory.closeSession();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        }
+    public static List<?> findErgaenzt() {
+        List<?> proben = null;
+        proben = new DatabaseAccess().createQuery(
+                "from AtlProbenahmen as pn where " +
+                "pn.atlStatus.id = 9 " +
+                "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+                .list();
         return proben;
     }
 
-    public static List findAngelegt() {
-        List proben;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            proben = session.createQuery(
-                    "from AtlProbenahmen as pn where " +
-                    "pn.atlStatus.id = 8 " +
-                    "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-                    .list();
-            HibernateSessionFactory.closeSession();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        }
+    public static List<?> findAngelegt() {
+        List<?> proben = null;
+        proben = new DatabaseAccess().createQuery(
+                "from AtlProbenahmen as pn where " +
+                "pn.atlStatus.id = 8 " +
+                "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+                .list();
         return proben;
     }
 
@@ -284,28 +236,14 @@ public class AtlProbenahmen
      * @return <code>true</code>, falls bereits eine Probenahme mit dieser Kennung existiert, sonst <code>false</code>.
      */
     public static boolean probenahmeExists(String kennnummer) {
-        String Kennummer = kennnummer;
         int count;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-
-            List liste;
-            liste = session.createQuery("from AtlProbenahmen pn where pn.kennummer = ?")
-            .setString(0, kennnummer)
-            .list();
-
+            List<?> liste = null;
+            liste = new DatabaseAccess().createQuery(
+                    "from AtlProbenahmen pn where pn.kennummer = :kn")
+                    .setString("kn", kennnummer)
+                    .list();
             count = liste.size();
-            HibernateSessionFactory.closeSession();
-
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        }
-
         return (count >= 1);
-
-
-
     }
 
     /**
@@ -407,64 +345,14 @@ public class AtlProbenahmen
     }
 
     public static boolean updateProbenahme(AtlProbenahmen probe) {
-        boolean success;
-
-        Transaction tx = null;
-
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-
-            tx = session.beginTransaction();
-
-            session.saveOrUpdate(probe);
-
-            tx.commit();
-
-            success = true;
-
-        } catch (HibernateException e) {
-            success = false;
-            e.printStackTrace();
-            // Falls während der Änderungen ein Hibernate Fehler auftritt
-            if (tx != null) {
-                try {
-                    // Alle Änderungen rückgängig machen
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    throw new RuntimeException("Datenbank-Fehler (Anh49Ortstermine)", e);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean success = false;
+        success = new DatabaseAccess().saveOrUpdate(probe);
         return success;
     }
 
     public static boolean removeProbenahme(AtlProbenahmen probe) {
-        boolean success;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(probe);
-            tx.commit();
-            success = true;
-        } catch (HibernateException e) {
-            success = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "ProbenahmenModel.objectRemoved", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean success = false;
+        success = new DatabaseAccess().delete(probe);
         return success;
     }
 
@@ -701,13 +589,8 @@ public class AtlProbenahmen
      * @return <code>true</code>, wenn die Probeart des Probepunktes dieser Probe Rohschlamm oder Faulschlamm ist, sonst <code>false</code>
      */
     public boolean isKlaerschlammProbe() {
-        if (this.getProbeArt().isFaulschlamm()) {
-            return true;
-        } else if (this.getProbeArt().isRohschlamm()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (this.getProbeArt().isFaulschlamm() ||
+                this.getProbeArt().isRohschlamm());
     }
 
     public boolean isAnalysepositionenInitialized() {

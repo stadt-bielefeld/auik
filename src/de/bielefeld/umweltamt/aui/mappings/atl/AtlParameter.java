@@ -29,9 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the 'ATL_PARAMETER' table.
@@ -42,6 +40,7 @@ public class AtlParameter
     extends AbstractAtlParameter
     implements Serializable
 {
+    private static final long serialVersionUID = 2852105702010364133L;
     /** Die ID des Parameters "AOX" */
     final public static String AOX_ID = "L13430";
     /** Die ID des Parameters "Silber (Ag)" */
@@ -106,7 +105,7 @@ public class AtlParameter
      * Parameter-Tabelle.
      * Sie wird in initMap() gefüllt.
      */
-    private static Map sParams = null;
+    private static Map<String,String> sParams = null;
 
     /**
      * Simple constructor of AtlParameter instances.
@@ -129,6 +128,7 @@ public class AtlParameter
     /**
      * @return Der Name des Parameters.
      */
+    @Override
     public String toString() {
         String tmp = getBezeichnung();
         if (tmp != null) {
@@ -144,7 +144,7 @@ public class AtlParameter
      */
     public static String getOrdnungsbegriff(String name) {
         initMap();
-        return (String) sParams.get(name);
+        return sParams.get(name);
     }
 
     /**
@@ -155,7 +155,7 @@ public class AtlParameter
      */
     private static void initMap() {
         if (sParams == null) {
-            sParams = new HashMap();
+            sParams = new HashMap<String,String>();
 
             // SielhautBearbeiten:
             sParams.put("Blei", AtlParameter.BLEI_ID);
@@ -174,7 +174,7 @@ public class AtlParameter
             sParams.put("Au", AtlParameter.GOLD_ID);
             sParams.put("Al", AtlParameter.ALUMINIUM_ID);
             sParams.put("As", AtlParameter.ARSEN_ID);
-            sParams.put("B", AtlParameter.BOR_ID);
+            sParams.put("B",  AtlParameter.BOR_ID);
             sParams.put("Ba", AtlParameter.BARIUM_ID);
             sParams.put("Ca", AtlParameter.CALCIUM_ID);
             sParams.put("Cd", AtlParameter.CADMIUM_ID);
@@ -183,7 +183,7 @@ public class AtlParameter
             sParams.put("Cu", AtlParameter.KUPFER_ID);
             sParams.put("Fe", AtlParameter.EISEN_ID);
             sParams.put("Hg", AtlParameter.QUECKSILBER_ID);
-            sParams.put("K", AtlParameter.KALIUM_ID);
+            sParams.put("K",  AtlParameter.KALIUM_ID);
             sParams.put("Mg", AtlParameter.MAGNESIUM_ID);
             sParams.put("Mn", AtlParameter.MANGAN_ID);
             sParams.put("Na", AtlParameter.NATRIUM_ID);
@@ -211,20 +211,10 @@ public class AtlParameter
      * @return Der Parameter mit der gegebenen ID oder <code>null</code> falls dieser nicht existiert
      */
     public static AtlParameter getParameter(String id) {
-        AtlParameter parameter;
-        if (id != null) {
-            try {
-                Session session = HibernateSessionFactory.currentSession();
-                parameter = (AtlParameter) session.get(AtlParameter.class, id);
-            } catch (HibernateException e) {
-                e.printStackTrace();
-                parameter = null;
-            } finally {
-                HibernateSessionFactory.closeSession();
-            }
-        } else {
-            parameter = null;
-        }
+        AtlParameter parameter = null;
+
+        parameter = (AtlParameter) new DatabaseAccess()
+                .get(AtlParameter.class, id);
 
         return parameter;
     }
@@ -253,41 +243,28 @@ public class AtlParameter
      * Liefert alle Parameter, die für SielhautBearbeiten-Probenahmen relevant sind.
      * D.h. alle, deren SielhautBearbeiten-Grenzwert nicht <code>NULL</code> ist.
      * @return Ein Array mit allen für SielhautBearbeiten-Probenahmen relevanten Parametern
-     * @throws HibernateException
      */
-    public static List getParameter() throws HibernateException {
+    public static List<?> getParameter() {
+        List<?> parameter = null;
 
-        List parameter = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            parameter = session.createQuery(
-                    "from AtlParameter as param "
-            				+ "where param.atlParameterGruppe.id = 1"
-            				+ "or param.atlParameterGruppe.id = 2"
-            				+ "or param.atlParameterGruppe.id = 3"
-                            + "order by param.reihenfolge").list();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        parameter = new DatabaseAccess().createQuery(
+                "from AtlParameter as param "
+                + "where param.atlParameterGruppe.id = 1"
+                + "or param.atlParameterGruppe.id = 2"
+                + "or param.atlParameterGruppe.id = 3"
+                + "order by param.reihenfolge")
+                .list();
 
         return parameter;
     }
-    
-    public static List getAll() throws HibernateException {
 
-        List parameter = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            parameter = session.createQuery(
+    public static List<?> getAll() {
+        List<?> parameter = null;
+
+        parameter = new DatabaseAccess().createQuery(
                     "from AtlParameter as param "
-                            + "order by param.bezeichnung").list();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+                    + "order by param.bezeichnung")
+                    .list();
 
         return parameter;
     }
@@ -299,44 +276,36 @@ public class AtlParameter
      * @return Ein Array mit allen für Probenahmen relevanten Parametern
      */
     public static AtlParameter[] getRelevanteParameter() {
-        AtlParameter[] tmp = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            List parameter = session.createQuery(
+        List<?> list = null;
+        AtlParameter[] result = null;
+
+        list = new DatabaseAccess().createQuery(
                     "from AtlParameter as param "
     				+ "where param.atlParameterGruppe.id = 1"
     				+ "or param.atlParameterGruppe.id = 2"
     				+ "or param.atlParameterGruppe.id = 3"
-                    + "order by param.reihenfolge").list();
+                    + "order by param.reihenfolge")
+                    .list();
 
-            tmp = new AtlParameter[parameter.size()];
-            tmp = (AtlParameter[]) parameter.toArray(tmp);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        result = new AtlParameter[list.size()];
+        result = (AtlParameter[]) list.toArray(result);
 
-        return tmp;
+        return result;
     }
 
 
     public static AtlParameter[] getParameterGroup(int id) {
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            List p = session.createQuery(
+        List<?> list = null;
+        AtlParameter[] result = null;
+
+        list = new DatabaseAccess().createQuery(
                 "from AtlParameter as param where " +
-                "param.atlParameterGruppe.id = " + id).list();
+                "param.atlParameterGruppe.id = " + id)
+                .list();
 
-            return (AtlParameter[]) p.toArray(new AtlParameter[p.size()]);
-        }
-        catch (HibernateException e) {
-            e.printStackTrace();
-        }
-        finally {
-            HibernateSessionFactory.closeSession();
-        }
+        result = new AtlParameter[list.size()];
+        result = (AtlParameter[]) list.toArray(result);
 
-        return null;
+        return result;
     }
 }
