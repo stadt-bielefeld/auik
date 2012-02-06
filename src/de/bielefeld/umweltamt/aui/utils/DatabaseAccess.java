@@ -193,6 +193,12 @@ public class DatabaseAccess {
         this.query.setString(name, val);
         return this;
     }
+    /* More query configuration */
+    // TODO: Do we really need this?
+    public DatabaseAccess uniqueResult() {
+        this.query.uniqueResult();
+        return this;
+    }
 
     /**
      * Execute the query and get the result as a List<?>

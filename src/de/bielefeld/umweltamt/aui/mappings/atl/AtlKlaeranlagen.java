@@ -19,9 +19,6 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Wed Feb 16 15:12:01 CET 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
@@ -30,14 +27,11 @@ import java.util.List;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ATL_KLAERANLAGEN' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ATL_KLAERANLAGEN' table. This class may
+ * be customized as it is never re-generated after being created.
  */
-public class AtlKlaeranlagen
-    extends AbstractAtlKlaeranlagen
-    implements Serializable
-{
+public class AtlKlaeranlagen extends AbstractAtlKlaeranlagen implements
+        Serializable {
     private static final long serialVersionUID = 4476838822557197680L;
     /** Die ID der KA Brake */
     final public static Integer BRAKE = new Integer(1);

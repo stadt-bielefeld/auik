@@ -19,9 +19,6 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Wed Feb 16 15:12:02 CET 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
@@ -33,11 +30,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+// TODO: Get rid of these imports...
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
@@ -49,27 +45,21 @@ import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 
 /**
- * A class that represents a row in the 'ATL_PROBENAHMEN' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ATL_PROBENAHMEN' table. This class may
+ * be customized as it is never re-generated after being created.
  */
-public class AtlProbenahmen
-    extends AbstractAtlProbenahmen
-    implements Serializable
-{
+public class AtlProbenahmen extends AbstractAtlProbenahmen implements
+    Serializable {
     private static final long serialVersionUID = 950596109574293371L;
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    public static final String[] COLUMNS_AUFTRAG = {
-        "auswahl", "Parameter", "Kennzeichnung", "Konservierung", "Zusatz"
-    };
+    public static final String[] COLUMNS_AUFTRAG = {"auswahl", "Parameter",
+            "Kennzeichnung", "Konservierung", "Zusatz"};
 
-    public static final String[] COLUMNS_BESCHEID = {
-        "Pos", "Parameter", "Grenzwert_Wert", "Grenzwert_Einheit",
-        "Ergebnis_Wert", "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett",
-        "inGruppe"
-    };
+    public static final String[] COLUMNS_BESCHEID = {"Pos", "Parameter",
+            "Grenzwert_Wert", "Grenzwert_Einheit", "Ergebnis_Wert",
+            "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett", "inGruppe"};
 
     /**
      * Simple constructor of AtlProbenahmen instances.
@@ -89,20 +79,21 @@ public class AtlProbenahmen
     /* Add customized code below */
 
     /**
-     * Liefert alle Probenahmen einer bestimmten Art von einer
-     * bestimmten Kläranlage.
+     * Liefert alle Probenahmen einer bestimmten Art von einer bestimmten
+     * Kläranlage.
      */
-    public static List<?> getKSProbenahmen(
-            AtlProbeart art, AtlKlaeranlagen ka) {
+    public static List<?> getKSProbenahmen(AtlProbeart art, AtlKlaeranlagen ka) {
         List<?> proben = null;
-        proben = new DatabaseAccess().createQuery(
-                "from AtlProbenahmen as probenahme where " +
-                "probenahme.atlProbepkt.atlProbeart = :art " +
-                "and probenahme.atlProbepkt.atlKlaeranlagen = :ka " +
-                "order by probenahme.datumDerEntnahme desc, probenahme.kennummer desc")
-                .setEntity("art", art)
-                .setEntity("ka", ka)
-                .list();
+        proben = new DatabaseAccess()
+            .createQuery(
+                "from AtlProbenahmen as probenahme where "
+                    + "probenahme.atlProbepkt.atlProbeart = :art "
+                    + "and probenahme.atlProbepkt.atlKlaeranlagen = :ka "
+                    + "order by probenahme.datumDerEntnahme desc, "
+                    + "probenahme.kennummer desc")
+            .setEntity("art", art)
+            .setEntity("ka", ka)
+            .list();
         return proben;
     }
 
@@ -111,38 +102,25 @@ public class AtlProbenahmen
      * @param pkt Der Probepunkt.
      * @param loadPos Sollen die Analysepositionen auch geholt werden?
      */
-    public static List getProbenahmen(AtlProbepkt pkt, boolean loadPos, int limit) {
-        List proben;
-        if (pkt.getObjektid() != null) {
-            try {
-                Session session = HibernateSessionFactory.currentSession();
-                Query query = session.createQuery("from AtlProbenahmen as probenahme where " +
-                        "probenahme.atlProbepkt = ? " +
-                        "order by probenahme.datumDerEntnahme desc, probenahme.kennummer desc");
-                query.setParameter(0, pkt, Hibernate.entity(AtlProbepkt.class));
-                if (limit != -1) {
-                    query.setMaxResults(5);
-                }
-                proben = query.list();
-//                proben = session.find(
-//                        ,
-//                        pkt,
-//                        Hibernate.entity(AtlProbepkt.class)
-//                );
-
-                if (loadPos) {
-                    for (int i = 0; i < proben.size(); i++) {
-                        AtlProbenahmen probe = (AtlProbenahmen)proben.get(i);
-                        Hibernate.initialize(probe.getAtlAnalysepositionen());
-                    }
-                }
-            } catch (HibernateException e) {
-                throw new RuntimeException("Datenbank-Fehler", e);
-            } finally {
-                HibernateSessionFactory.closeSession();
+    public static List<?> getProbenahmen(AtlProbepkt pkt, boolean loadPos,
+        int limit) {
+        if (pkt.getObjektid() == null) {
+            return new ArrayList<AtlProbenahmen>();
+        }
+        List<?> proben = null;
+        proben = new DatabaseAccess()
+            .createQuery(
+                "from AtlProbenahmen as probenahme where "
+                    + "probenahme.atlProbepkt = ? "
+                    + "order by probenahme.datumDerEntnahme desc, "
+                    + "probenahme.kennummer desc"
+                    + ((limit != -1) ? " LIMIT 5" : "")).setEntity("pkt", pkt)
+            .list();
+        if (loadPos) {
+            for (int i = 0; i < proben.size(); i++) {
+                AtlProbenahmen probe = (AtlProbenahmen) proben.get(i);
+                Hibernate.initialize(probe.getAtlAnalysepositionen());
             }
-        } else {
-            proben = new ArrayList();
         }
 
         return proben;
@@ -181,75 +159,75 @@ public class AtlProbenahmen
         String suche2 = suche.toLowerCase().trim() + "%";
         log.debug("Suche nach '" + suche2 + "' (" + property + ").");
         List<?> proben = null;
-        proben = new DatabaseAccess().createQuery(
-                "from AtlProbenahmen as probenahme where " +
-                "lower(probenahme."+property+") like :suche " +
-                "order by probenahme.datumDerEntnahme desc, probenahme.kennummer desc")
-                .setString("suche", suche2)
-                .list();
+        proben = new DatabaseAccess()
+            .createQuery(
+                "from AtlProbenahmen as probenahme where "
+                    + "lower(probenahme." + property + ") like :suche "
+                    + "order by probenahme.datumDerEntnahme desc, "
+                    + "probenahme.kennummer desc")
+            .setString("suche", suche2)
+            .list();
         return proben;
     }
 
     public static List<?> findBescheiddruck() {
         List<?> proben = null;
         proben = new DatabaseAccess().createQuery(
-                "from AtlProbenahmen as pn where " +
-                "pn.atlStatus.id = 11 " +
-                "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-                .list();
+            "from AtlProbenahmen as pn where " + "pn.atlStatus.id = 11 "
+                + "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+            .list();
         return proben;
     }
 
     public static List<?> findEingetragen() {
         List<?> proben = null;
         proben = new DatabaseAccess().createQuery(
-                "from AtlProbenahmen as pn where " +
-                "pn.atlStatus.id = 10 " +
-                "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-                .list();
+            "from AtlProbenahmen as pn where " + "pn.atlStatus.id = 10 "
+                + "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+            .list();
         return proben;
     }
 
     public static List<?> findErgaenzt() {
         List<?> proben = null;
         proben = new DatabaseAccess().createQuery(
-                "from AtlProbenahmen as pn where " +
-                "pn.atlStatus.id = 9 " +
-                "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-                .list();
+            "from AtlProbenahmen as pn where " + "pn.atlStatus.id = 9 "
+                + "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+            .list();
         return proben;
     }
 
     public static List<?> findAngelegt() {
         List<?> proben = null;
         proben = new DatabaseAccess().createQuery(
-                "from AtlProbenahmen as pn where " +
-                "pn.atlStatus.id = 8 " +
-                "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-                .list();
+            "from AtlProbenahmen as pn where " + "pn.atlStatus.id = 8 "
+                + "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+            .list();
         return proben;
     }
 
     /**
      * überprüft ob eine Probenahme mit einer bestimmten Kennnummer existiert.
      * @param kennnummer Die Kennnummer.
-     * @return <code>true</code>, falls bereits eine Probenahme mit dieser Kennung existiert, sonst <code>false</code>.
+     * @return <code>true</code>, falls bereits eine Probenahme mit dieser
+     *         Kennung existiert, sonst <code>false</code>.
      */
     public static boolean probenahmeExists(String kennnummer) {
         int count;
-            List<?> liste = null;
-            liste = new DatabaseAccess().createQuery(
-                    "from AtlProbenahmen pn where pn.kennummer = :kn")
-                    .setString("kn", kennnummer)
-                    .list();
-            count = liste.size();
+        List<?> liste = null;
+        liste = new DatabaseAccess()
+            .createQuery("from AtlProbenahmen pn where pn.kennummer = :kn")
+            .setString("kn", kennnummer)
+            .list();
+        count = liste.size();
         return (count >= 1);
     }
 
     /**
      * Liefert eine bestimmte Probenahme.
      * @param id Die ID der Probenahme
-     * @return Die Probe mit der gegebenen ID oder <code>null</code> falls diese nicht existiert
+     * @return Die Probe mit der gegebenen ID oder <code>null</code> falls diese
+     *         nicht existiert
      */
     public static AtlProbenahmen getProbenahme(Integer id) {
         return getProbenahme(id, false);
@@ -259,23 +237,22 @@ public class AtlProbenahmen
      * Liefert eine bestimmte Probenahme.
      * @param id Die ID der Probenahme
      * @param loadPos Sollen die Analysepositionen auch geholt werden?
-     * @return Die Probe mit der gegebenen ID oder <code>null</code> falls diese nicht existiert
+     * @return Die Probe mit der gegebenen ID oder <code>null</code> falls diese
+     *         nicht existiert
      */
     public static AtlProbenahmen getProbenahme(Integer id, boolean loadPos) {
-        AtlProbenahmen probe;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            probe = (AtlProbenahmen) session.get(AtlProbenahmen.class, id);
-            if (loadPos && probe != null) {
-                Hibernate.initialize(probe.getAtlAnalysepositionen());
-                //Collection sorted = session.filter(probe.getAtlAnalysepositionen(), "order by this.atlParameter.ordnungsbegriff desc");
-                //AUIKataster.debugOutput("Sorted:\n " + sorted);
-                //probe.setAtlAnalysepositionen(new HashSet(sorted));
-                log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
-            }
-            HibernateSessionFactory.closeSession();
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler (AtlProbenahmen)", e);
+        AtlProbenahmen probe = null;
+        probe = (AtlProbenahmen) new DatabaseAccess()
+            .get(AtlProbenahmen.class, id);
+
+        if (loadPos && probe != null) {
+            Hibernate.initialize(probe.getAtlAnalysepositionen());
+            // Collection sorted =
+            // session.filter(probe.getAtlAnalysepositionen(),
+            // "order by this.atlParameter.ordnungsbegriff desc");
+            // AUIKataster.debugOutput("Sorted:\n " + sorted);
+            // probe.setAtlAnalysepositionen(new HashSet(sorted));
+            log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
         }
 
         return probe;
@@ -285,25 +262,25 @@ public class AtlProbenahmen
      * Liefert eine bestimmte Probenahme.
      * @param kennummer Die Kennummer der Probenahme
      * @param loadPos Sollen die Analysepositionen auch geholt werden?
-     * @return Die Probe mit der gegebenen ID oder <code>null</code> falls diese nicht existiert
+     * @return Die Probe mit der gegebenen ID oder <code>null</code> falls diese
+     *         nicht existiert
      */
     public static AtlProbenahmen getProbenahme(String kennummer, boolean loadPos) {
-        AtlProbenahmen probe;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            probe = (AtlProbenahmen) session.createQuery("from AtlProbenahmen where kennummer = ?")
-                .setString(0, kennummer)
-                .uniqueResult();
-            if (loadPos && probe != null) {
-                Hibernate.initialize(probe.getAtlAnalysepositionen());
-                //Collection sorted = session.filter(probe.getAtlAnalysepositionen(), "order by this.atlParameter.ordnungsbegriff desc");
-                //AUIKataster.debugOutput("Sorted:\n " + sorted);
-                //probe.setAtlAnalysepositionen(new HashSet(sorted));
-                log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
-            }
-            HibernateSessionFactory.closeSession();
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler (AtlProbenahmen)", e);
+        AtlProbenahmen probe = null;
+
+        probe = (AtlProbenahmen) new DatabaseAccess()
+            .createQuery("from AtlProbenahmen where kennummer = :kennnummer")
+            .setString("kennnummer", kennummer)
+            .uniqueResult()
+            .list();
+        if (loadPos && probe != null) {
+            Hibernate.initialize(probe.getAtlAnalysepositionen());
+            // Collection sorted =
+            // session.filter(probe.getAtlAnalysepositionen(),
+            // "order by this.atlParameter.ordnungsbegriff desc");
+            // AUIKataster.debugOutput("Sorted:\n " + sorted);
+            // probe.setAtlAnalysepositionen(new HashSet(sorted));
+            log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
         }
 
         return probe;
@@ -311,63 +288,35 @@ public class AtlProbenahmen
 
     public static boolean saveProbenahme(AtlProbenahmen probe) {
         boolean success;
-
-        Transaction tx = null;
-
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-
-            tx = session.beginTransaction();
-
-            session.save(probe);
-
-            tx.commit();
-
-            success = true;
-
-        } catch (HibernateException e) {
-            success = false;
-            e.printStackTrace();
-            // Falls während der Änderungen ein Hibernate Fehler auftritt
-            if (tx != null) {
-                try {
-                    // Alle Ünderungen rückgängig machen
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    throw new RuntimeException("Datenbank-Fehler (Anh49Ortstermine)", e);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
-        return success;
-    }
-
-    public static boolean updateProbenahme(AtlProbenahmen probe) {
-        boolean success = false;
+        // TODO: This was just session.save(probe) before - saveOrUpdate should
+        // be just as fine.
         success = new DatabaseAccess().saveOrUpdate(probe);
         return success;
     }
 
+    public static boolean updateProbenahme(AtlProbenahmen probe) {
+        return new DatabaseAccess().saveOrUpdate(probe);
+    }
+
     public static boolean removeProbenahme(AtlProbenahmen probe) {
-        boolean success = false;
-        success = new DatabaseAccess().delete(probe);
-        return success;
+        return new DatabaseAccess().delete(probe);
     }
 
-    public static List sortAnalysepositionen(AtlProbenahmen probe) {
-        List sortedPositionen;
+    public static List<?> sortAnalysepositionen(AtlProbenahmen probe) {
+        List<?> sortedPositionen;
 
         try {
             Session session = HibernateSessionFactory.currentSession();
-            AtlProbenahmen newProbe = (AtlProbenahmen) session.get(AtlProbenahmen.class, probe.getId());
-            //Hibernate.initialize(probe.getAtlAnalysepositionen());
-            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(),
-            		"order by this.atlParameter.reihenfolge")
+            AtlProbenahmen newProbe = (AtlProbenahmen) session
+                .get(AtlProbenahmen.class, probe.getId());
+            // Hibernate.initialize(probe.getAtlAnalysepositionen());
+            sortedPositionen = session.createFilter(
+                newProbe.getAtlAnalysepositionen(),
+                "order by this.atlParameter.reihenfolge")
                 .list();
 
-            //AUIKataster.debugOutput("Sorted (Klasse: "+sortedPositionen.getClass()+"):\n " + sortedPositionen);
+            // AUIKataster.debugOutput("Sorted (Klasse: "+sortedPositionen.getClass()+"):\n "
+            // + sortedPositionen);
         } catch (HibernateException e) {
             throw new RuntimeException("Datenbank-Fehler (AtlAnalysepos.)", e);
         } finally {
@@ -377,20 +326,24 @@ public class AtlProbenahmen
         return sortedPositionen;
     }
 
-    public static List sortExterneAnalysepositionen(AtlProbenahmen probe) {
-        List sortedPositionen;
+    public static List<?> sortExterneAnalysepositionen(AtlProbenahmen probe) {
+        List<?> sortedPositionen;
 
         try {
             Session session = HibernateSessionFactory.currentSession();
-            AtlProbenahmen newProbe = (AtlProbenahmen) session.get(AtlProbenahmen.class, probe.getId());
-            //Hibernate.initialize(probe.getAtlAnalysepositionen());
-            sortedPositionen = session.createFilter(newProbe.getAtlAnalysepositionen(),
-            		"where this.atlParameter.bezeichnung not like ? " +
-            		"order by this.atlParameter.reihenfolge")
-            	.setString(0, new String("%bei Probenahme"))
+            AtlProbenahmen newProbe = (AtlProbenahmen) session.get(
+                AtlProbenahmen.class, probe.getId());
+            // Hibernate.initialize(probe.getAtlAnalysepositionen());
+            sortedPositionen = session
+                .createFilter(
+                    newProbe.getAtlAnalysepositionen(),
+                    "where this.atlParameter.bezeichnung not like ? "
+                        + "order by this.atlParameter.reihenfolge")
+                .setString(0, new String("%bei Probenahme"))
                 .list();
 
-            //AUIKataster.debugOutput("Sorted (Klasse: "+sortedPositionen.getClass()+"):\n " + sortedPositionen);
+            // AUIKataster.debugOutput("Sorted (Klasse: "+sortedPositionen.getClass()+"):\n "
+            // + sortedPositionen);
         } catch (HibernateException e) {
             throw new RuntimeException("Datenbank-Fehler (AtlAnalysepos.)", e);
         } finally {
@@ -399,24 +352,23 @@ public class AtlProbenahmen
 
         return sortedPositionen;
     }
-
 
     public static JRMapDataSource getAuftragDataSource(AtlProbenahmen probe) {
-        List sorted   = sortExterneAnalysepositionen(probe);
-        int  elements = sorted.size();
+        List<?> sorted = sortExterneAnalysepositionen(probe);
+        int elements = sorted.size();
 
-        Object[][] values  = new Object[elements][];
-        Object[]   columns;
+        Object[][] values = new Object[elements][];
+        Object[] columns;
 
         for (int i = 0; i < elements; i++) {
             columns = new Object[5];
 
-            AtlAnalyseposition pos   = (AtlAnalyseposition) sorted.get(i);
-            AtlParameter parameter   = pos.getAtlParameter();
-            String       bezeichnung = parameter.getBezeichnung();
-            String       kennzeichnung = parameter.getKennzeichnung();
-            String       konservierung = parameter.getKonservierung();
-            String       zusatz = parameter.getAnalyseverfahren();
+            AtlAnalyseposition pos = (AtlAnalyseposition) sorted.get(i);
+            AtlParameter parameter = pos.getAtlParameter();
+            String bezeichnung = parameter.getBezeichnung();
+            String kennzeichnung = parameter.getKennzeichnung();
+            String konservierung = parameter.getKonservierung();
+            String zusatz = parameter.getAnalyseverfahren();
 
             columns[0] = true; // this value is always true
             columns[1] = bezeichnung;
@@ -430,66 +382,68 @@ public class AtlProbenahmen
         return new JRMapDataSource(COLUMNS_AUFTRAG, values);
     }
 
-
     public static JRMapDataSource getBescheidDataSource(AtlProbenahmen probe) {
-        List sorted   = sortAnalysepositionen(probe);
-        List params   = probe.getAtlParameter();
-        int  elements = sorted.size();
+        List<?> sorted = sortAnalysepositionen(probe);
+        List<?> params = probe.getAtlParameter();
+        int elements = sorted.size();
 
-        Object[][] values  = new Object[elements][];
-        Object[]   columns;
+        Object[][] values = new Object[elements][];
+        Object[] columns;
 
+        // TODO: This map is basically never used...
         Map groups = new HashMap(1);
 
         for (int i = 0; i < elements; i++) {
             columns = new Object[COLUMNS_BESCHEID.length];
 
-            AtlAnalyseposition pos  = (AtlAnalyseposition) sorted.get(i);
-            AtlParameter parameter  = pos.getAtlParameter();
-            String einheit          = pos.getAtlEinheiten().getBezeichnung();
-            String grenzwert        = "";
-            if (parameter.getGrenzwert() != null && parameter.getGrenzwert() <= 10){
-                grenzwert = parameter.getGrenzwert().toString().replace(".", ",");
-            }
-            else if (parameter.getGrenzwert() != null && parameter.getGrenzwert() > 10){
-                grenzwert = parameter.getGrenzwert().toString().replace(".0", "");
+            AtlAnalyseposition pos = (AtlAnalyseposition) sorted.get(i);
+            AtlParameter parameter = pos.getAtlParameter();
+//            String einheit          = pos.getAtlEinheiten().getBezeichnung();
+            String grenzwert = "";
+            if (parameter.getGrenzwert() != null
+                && parameter.getGrenzwert() <= 10) {
+                grenzwert = parameter.getGrenzwert().toString()
+                    .replace(".", ",");
+            } else if (parameter.getGrenzwert() != null
+                && parameter.getGrenzwert() > 10) {
+                grenzwert = parameter.getGrenzwert().toString()
+                    .replace(".0", "");
             }
             String wert = "";
-            if (pos.getWert() == 0.0){
-            	wert = pos.getWert().toString().replace(".", ",");
-            }
-            else if (pos.getWert() < 0.009){
-            	wert = pos.getWert().toString().substring(0, 5);
+            if (pos.getWert() == 0.0) {
+                wert = pos.getWert().toString().replace(".", ",");
+            } else if (pos.getWert() < 0.009) {
+                wert = pos.getWert().toString().substring(0, 5);
                 wert = wert.replace(".", ",");
-            }
-            else if (pos.getWert() < 100){
-            	wert = pos.getWert().toString().replace(".", ",");
-            }
-            else {
+            } else if (pos.getWert() < 100) {
+                wert = pos.getWert().toString().replace(".", ",");
+            } else {
                 wert = pos.getWert().toString().replace(".0", "");
             }
             Boolean fett = false;
-            if (pos.getWert() != null && parameter.getGrenzwert() != null && pos.getWert() > parameter.getGrenzwert()){
+            if (pos.getWert() != null && parameter.getGrenzwert() != null
+                && pos.getWert() > parameter.getGrenzwert()) {
                 fett = true;
             }
-            String gebuehr    = "0,00 €";
-            if (parameter.getPreisfueranalyse() != 0 )
-                gebuehr = new GermanDouble(
-                        parameter.getPreisfueranalyse()).toString() + " €";
+            String gebuehr = "0,00 €";
+            if (parameter.getPreisfueranalyse() != 0)
+                gebuehr = new GermanDouble(parameter.getPreisfueranalyse())
+                    .toString() + " €";
 
             AtlParameterGruppen gr = parameter.getAtlParameterGruppe();
-            int groupId            = gr != null ? gr.getId() : -1;
-            boolean inGroup = AtlParameterGruppen.isGroupComplete(groupId, params);
+            int groupId = gr != null ? gr.getId() : -1;
+            boolean inGroup = AtlParameterGruppen.isGroupComplete(groupId,
+                params);
 
 //            if (inGroup) {
 //                groups.put(groupId, gr);
 //            }
             String einh = "";
-            if (!pos.getAtlEinheiten().getBezeichnung().equals("ohne")){
-            	einh = pos.getAtlEinheiten().getBezeichnung();
+            if (!pos.getAtlEinheiten().getBezeichnung().equals("ohne")) {
+                einh = pos.getAtlEinheiten().getBezeichnung();
             }
 
-            columns[0] = i+1;
+            columns[0] = i + 1;
             columns[1] = parameter.getBezeichnung();
             columns[2] = grenzwert;
             columns[3] = einh;
@@ -508,7 +462,7 @@ public class AtlProbenahmen
             return new JRMapDataSource(COLUMNS_BESCHEID, values);
         }
 
-        Object[][] newValues = new Object[elements+numGroups][];
+        Object[][] newValues = new Object[elements + numGroups][];
         int i;
 
         for (i = 0; i < elements; i++) {
@@ -516,14 +470,14 @@ public class AtlProbenahmen
         }
 
         Collection theGroups = groups.values();
-        for (Object obj: theGroups) {
+        for (Object obj : theGroups) {
             AtlParameterGruppen apg = (AtlParameterGruppen) obj;
 
-            String gebuehr = new GermanDouble(
-                apg.getPreisfueranalyse()).toString() + " €";
+            String gebuehr = new GermanDouble(apg.getPreisfueranalyse())
+                .toString() + " €";
 
             columns = new Object[COLUMNS_BESCHEID.length];
-            columns[0] = i+1;
+            columns[0] = i + 1;
             columns[1] = apg.getName();
             columns[2] = "";
             columns[3] = "";
@@ -539,13 +493,12 @@ public class AtlProbenahmen
         return new JRMapDataSource(COLUMNS_BESCHEID, newValues);
     }
 
-
-    public List getAtlParameter() {
-        List sorted = sortAnalysepositionen(this);
+    public List<?> getAtlParameter() {
+        List<?> sorted = sortAnalysepositionen(this);
 
         int num = sorted != null ? sorted.size() : 0;
 
-        List params = new ArrayList(num);
+        List<AtlParameter> params = new ArrayList<AtlParameter>(num);
 
         for (int i = 0; i < num; i++) {
             params.add(((AtlAnalyseposition) sorted.get(i)).getAtlParameter());
@@ -555,13 +508,15 @@ public class AtlProbenahmen
     }
 
     /**
-     * @return Einen String der Form "[Probe: Kennummer, Probeart, Datum, Anz.Positionen]"
-     * bzw. "[Probe: Kennummer, Probeart, Datum, N/A]" falls die Positionen noch nicht aus
-     * der Datenbank geholt wurden.
+     * @return Einen String der Form
+     *         "[Probe: Kennummer, Probeart, Datum, Anz.Positionen]" bzw.
+     *         "[Probe: Kennummer, Probeart, Datum, N/A]" falls die Positionen
+     *         noch nicht aus der Datenbank geholt wurden.
      */
     @Override
     public String toString() {
-        String tmp = "[Probe: " + getKennummer() + ", " + getProbeArt() + ", " + AuikUtils.getStringFromDate(getDatumDerEntnahme());
+        String tmp = "[Probe: " + getKennummer() + ", " + getProbeArt() + ", "
+            + AuikUtils.getStringFromDate(getDatumDerEntnahme());
 
         if (getZeitDerEntnahmen() != null) {
             tmp += " " + getZeitDerEntnahmen();
@@ -574,7 +529,7 @@ public class AtlProbenahmen
             tmp += "N/A";
         }
 
-        tmp +=  "]";
+        tmp += "]";
         return tmp;
     }
 
@@ -586,7 +541,8 @@ public class AtlProbenahmen
     }
 
     /**
-     * @return <code>true</code>, wenn die Probeart des Probepunktes dieser Probe Rohschlamm oder Faulschlamm ist, sonst <code>false</code>
+     * @return <code>true</code>, wenn die Probeart des Probepunktes dieser
+     *         Probe Rohschlamm oder Faulschlamm ist, sonst <code>false</code>
      */
     public boolean isKlaerschlammProbe() {
         return (this.getProbeArt().isFaulschlamm() ||
@@ -598,8 +554,8 @@ public class AtlProbenahmen
     }
 
     /**
-     * Fügt dieser Probenahme eine Analyseposition hinzu (und sorgt
-     * für die richtigen Fremdschlüssel in den Tabellen).
+     * Fügt dieser Probenahme eine Analyseposition hinzu (und sorgt für die
+     * richtigen Fremdschlüssel in den Tabellen).
      * @param pos Die neue Analyseposition
      */
     public void addAnalyseposition(AtlAnalyseposition pos) {
@@ -607,27 +563,24 @@ public class AtlProbenahmen
         this.getAtlAnalysepositionen().add(pos);
     }
 
-
     /**
      * Suche eine bestimmte AtlAnalyseposition anhand des Ordnungsbegriffs eines
      * Parameters.
-     *
      * @param ordnungsbegriff Der Ordnungsbegriff eines AtlParameter der zu der
-     * AtlAnalyseposition geh&ouml;rt.
-     *
+     *            AtlAnalyseposition geh&ouml;rt.
      * @return eine bereits existente {@link AtlAnalyseposition} oder eine neue
-     * {@link AtlAnalyseposition}.
+     *         {@link AtlAnalyseposition}.
      */
-    public AtlAnalyseposition findAtlAnalyseposition(
-        AtlParameter parameter, AtlEinheiten einheit, boolean createNew)
-    {
+    public AtlAnalyseposition findAtlAnalyseposition(AtlParameter parameter,
+        AtlEinheiten einheit, boolean createNew) {
         String ordnungsbegriff = parameter.getOrdnungsbegriff();
-        Set positionen         = getAtlAnalysepositionen();
-        Iterator iter          = positionen.iterator();
+        Set<AtlAnalyseposition> positionen =
+            (Set<AtlAnalyseposition>) getAtlAnalysepositionen();
+        Iterator<AtlAnalyseposition> iter = positionen.iterator();
 
         while (iter.hasNext()) {
             AtlAnalyseposition tmp = (AtlAnalyseposition) iter.next();
-            AtlParameter     param = tmp.getAtlParameter();
+            AtlParameter param = tmp.getAtlParameter();
 
             if (ordnungsbegriff.equals(param.getOrdnungsbegriff())) {
                 return tmp;
@@ -647,25 +600,21 @@ public class AtlProbenahmen
         return neu;
     }
 
-
     /**
      * Diese Methode ruft {@link findAtlAnalyseposition(AtlParameter,
      * AtlEinheiten, boolean)} mit einem gesetzten <code>createNew</code>
      * Parameter auf.
      */
     public AtlAnalyseposition findAtlAnalyseposition(
-        AtlParameter parameter, AtlEinheiten einheit)
-    {
+        AtlParameter parameter, AtlEinheiten einheit) {
         return findAtlAnalyseposition(parameter, einheit, true);
     }
-
 
     public BasisBetreiber getBasisBetreiber() {
         AtlProbepkt pkt = getAtlProbepkt();
 
         return pkt != null ? pkt.getBasisBetreiber() : null;
     }
-
 
     public BasisObjekt getBasisObjekt() {
         AtlProbepkt pkt = getAtlProbepkt();

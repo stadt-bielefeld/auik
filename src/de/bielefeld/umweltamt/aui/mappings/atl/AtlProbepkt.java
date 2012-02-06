@@ -19,9 +19,6 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Wed Feb 16 15:12:03 CET 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
@@ -33,16 +30,12 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ATL_PROBEPKT' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ATL_PROBEPKT' table. This class may be
+ * customized as it is never re-generated after being created.
  */
-public class AtlProbepkt
-    extends AbstractAtlProbepkt
-    implements Serializable
-{
+public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
     private static final long serialVersionUID = -3901033252297978991L;
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
@@ -63,24 +56,29 @@ public class AtlProbepkt
 
     @Override
     public String toString() {
-        return "[Probepunkt:"+getObjektid()+", Art:"+getAtlProbeart()+", Nr:"+getNummer()+"]";
+        return "[Probepunkt:" + getObjektid() + ", Art:" + getAtlProbeart()
+                + ", Nr:" + getNummer() + "]";
     }
 
     /**
      * Liefert den ersten Probepunkt einer bestimmten Art und Kläranlage.
-     * @return Den Probepunkt oder <code>null</code>, falls kein Probepunkt dieser Art mit dieser Kläranlage existiert.
+     * @return Den Probepunkt oder <code>null</code>, falls kein Probepunkt
+     *         dieser Art mit dieser Kläranlage existiert.
      */
-    public static AtlProbepkt getKlaerschlammProbepunkt(AtlProbeart art, AtlKlaeranlagen ka) {
+    public static AtlProbepkt getKlaerschlammProbepunkt(
+            AtlProbeart art, AtlKlaeranlagen ka) {
         List<?> pkte = null;
-        pkte = new DatabaseAccess().createQuery(
-                "from AtlProbepkt as probepkt where " +
-                "probepkt.atlProbeart = :art " +
-                "and probepkt.atlKlaeranlagen = :ka " +
-                "order by probepkt.objektid asc")
+        pkte = new DatabaseAccess()
+            .createQuery(
+                "from AtlProbepkt as probepkt where "
+                    + "probepkt.atlProbeart = :art "
+                    + "and probepkt.atlKlaeranlagen = :ka "
+                    + "order by probepkt.objektid asc")
                 .setEntity("art", art)
                 .setEntity("ka", ka)
                 .list();
         AtlProbepkt tmp = null;
+        // TODO: Maybe use LIMIT instead?
         if (pkte.size() > 0) {
             tmp = (AtlProbepkt) pkte.get(0);
         }
@@ -121,9 +119,10 @@ public class AtlProbepkt
     public static AtlProbepkt getProbepunkt(Integer id) {
         List<?> pkte = null;
         AtlProbepkt pkt = null;
-        pkte = new DatabaseAccess().createQuery(
-                "from AtlProbepkt as probepkt where " +
-                "probepkt.objektid = :id")
+        pkte = new DatabaseAccess()
+            .createQuery(
+                "from AtlProbepkt as probepkt where "
+                    + "probepkt.objektid = :id")
                 .setInteger("id", id)
                 .list();
         if (pkte.size() > 0) {
@@ -136,9 +135,10 @@ public class AtlProbepkt
         List<?> pkte = null;
         AtlProbepkt punkt = null;
         if (objekt != null) {
-            pkte = new DatabaseAccess().createQuery(
-                    "from AtlProbepkt as probepkt where " +
-                    "probepkt.basisObjekt = :objekt")
+            pkte = new DatabaseAccess()
+                .createQuery(
+                    "from AtlProbepkt as probepkt where "
+                        + "probepkt.basisObjekt = :objekt")
                     .setEntity("objekt", objekt)
                     .list();
             if (pkte.size() > 0) {
@@ -151,9 +151,10 @@ public class AtlProbepkt
     public static AtlProbepkt getSielhautProbepunkt(AtlSielhaut siel) {
         List<?> pkte = null;
         AtlProbepkt punkt = null;
-        pkte = new DatabaseAccess().createQuery(
-                "from AtlProbepkt as probepkt where " +
-                "probepkt.atlSielhaut = :siel")
+        pkte = new DatabaseAccess()
+            .createQuery(
+                "from AtlProbepkt as probepkt where "
+                    + "probepkt.atlSielhaut = :siel")
                 .setEntity("siel", siel)
                 .list();
         if (pkte.size() > 0) {
@@ -167,11 +168,11 @@ public class AtlProbepkt
     public static List<?> getProbenehmerpunkte() {
         List<?> pkte = null;
         pkte = new DatabaseAccess().createQuery(
-                "select distinct pk from AtlProbepkt as pk " +
-                "inner join pk.atlProbenahmen as pn " +
-                "where pn.kennummer like '3%' " +
-                "and pk.basisObjekt.inaktiv = false ")
-                .list();
+            "select distinct pk from AtlProbepkt as pk "
+                + "inner join pk.atlProbenahmen as pn "
+                + "where pn.kennummer like '3%' "
+                + "and pk.basisObjekt.inaktiv = false ")
+            .list();
         return pkte;
     }
 
@@ -193,12 +194,10 @@ public class AtlProbepkt
         if (removed) {
             log.debug("Probepunkt " + punkt + " gelöscht.");
         } else {
-            log.debug("Probepunkt " + punkt
-                    + " konnte nicht gelöscht werden!");
+            log.debug("Probepunkt " + punkt + " konnte nicht gelöscht werden!");
         }
         return removed;
     }
-
 
     public BasisBetreiber getBasisBetreiber() {
         BasisObjekt basisObj = getBasisObjekt();
@@ -206,35 +205,33 @@ public class AtlProbepkt
         return basisObj != null ? basisObj.getBasisBetreiber() : null;
     }
 
-	public static List<?> getESatzung() {
+    public static List<?> getESatzung() {
         List<?> pkt = null;
         pkt = new DatabaseAccess().createQuery(
-                "from AtlProbepkt as pk where " +
-                "pk.atlProbeart.id = 3 " +
-                "and pk.basisObjekt.inaktiv = false " +
-                "order by pk.basisObjekt.basisStandort")
-                .list();
-		return pkt;
-	}
+            "from AtlProbepkt as pk where " + "pk.atlProbeart.id = 3 "
+                + "and pk.basisObjekt.inaktiv = false "
+                + "order by pk.basisObjekt.basisStandort")
+            .list();
+        return pkt;
+    }
 
-	public static List<?> getUWB() {
+    public static List<?> getUWB() {
         List<?> pkt = null;
         pkt = new DatabaseAccess().createQuery(
-                "from AtlProbepkt as pk where " +
-                "pk.atlProbeart.id = 2 " +
-                "and pk.basisObjekt.inaktiv = false " +
-                "order by pk.basisObjekt.basisStandort")
-                .list();
-		return pkt;
-	}
+            "from AtlProbepkt as pk where " + "pk.atlProbeart.id = 2 "
+                + "and pk.basisObjekt.inaktiv = false "
+                + "order by pk.basisObjekt.basisStandort")
+            .list();
+        return pkt;
+    }
 
-	public static List<?> getInaktiv() {
+    public static List<?> getInaktiv() {
         List<?> pkt = null;
         pkt = new DatabaseAccess().createQuery(
-                "from AtlProbepkt as pk where " +
-                "pk.basisObjekt.inaktiv = true " +
-                "order by pk.basisObjekt.basisStandort")
-                .list();
-		return pkt;
-	}
+            "from AtlProbepkt as pk where "
+                + "pk.basisObjekt.inaktiv = true "
+                + "order by pk.basisObjekt.basisStandort")
+            .list();
+        return pkt;
+    }
 }

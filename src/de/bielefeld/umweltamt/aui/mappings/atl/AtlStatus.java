@@ -19,9 +19,6 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Wed Feb 16 15:12:00 CET 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
@@ -30,14 +27,10 @@ import java.util.List;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ATL_STATUS' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ATL_STATUS' table. This class may be
+ * customized as it is never re-generated after being created.
  */
-public class AtlStatus
-    extends AbstractAtlEinheiten
-    implements Serializable
-{
+public class AtlStatus extends AbstractAtlEinheiten implements Serializable {
     private static final long serialVersionUID = 8102132119175012262L;
 
     /**
@@ -72,11 +65,11 @@ public class AtlStatus
      * Liefert alle in der Einheiten-Tabelle gespeicherten Einheiten.
      * @return Ein Array mit allen Einheiten
      */
-    public static AtlStatus[] getStatus() {
+    private static AtlStatus[] getStatus() {
         List<?> result = null;
         AtlStatus[] einheiten = null;
-        result = new DatabaseAccess().createQuery(
-                "from AtlStatus as status")
+        result = new DatabaseAccess()
+                .createQuery("from AtlStatus as status")
                 .list();
         einheiten = new AtlStatus[result.size()];
         einheiten = (AtlStatus[]) result.toArray(einheiten);
@@ -85,13 +78,12 @@ public class AtlStatus
 
     /**
      * Liefert das AtlStatus Objekt mit der passenden Bezeichnung.
-     *
      * @return das Objekt passend zu <i>bezeichnung</i>, oder <i>null</i> falls
-     * kein Objekt mit dieser Bezeichnung existiert.
+     *         kein Objekt mit dieser Bezeichnung existiert.
      */
     public static AtlStatus getStatus(String bezeichnung) {
         AtlStatus[] status = getStatus();
-        for (AtlStatus s: status) {
+        for (AtlStatus s : status) {
             if (bezeichnung.equals(s.getBezeichnung())) {
                 return s;
             }
@@ -101,7 +93,7 @@ public class AtlStatus
 
     public static AtlStatus getStatus(int id) {
         AtlStatus[] status = getStatus();
-        for (AtlStatus s: status) {
+        for (AtlStatus s : status) {
             if (id == s.getId()) {
                 return s;
             }
@@ -111,9 +103,9 @@ public class AtlStatus
 
     public static String[] getStatusAsString() {
         AtlStatus[] status = getStatus();
-        String[]    str    = new String[status.length];
+        String[] str = new String[status.length];
         int idx = 0;
-        for (AtlStatus s: status) {
+        for (AtlStatus s : status) {
             str[idx++] = s.getBezeichnung();
         }
         return str;

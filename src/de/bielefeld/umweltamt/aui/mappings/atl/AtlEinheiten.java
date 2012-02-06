@@ -19,9 +19,6 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Wed Feb 16 15:12:00 CET 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
@@ -32,14 +29,10 @@ import java.util.Map;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ATL_EINHEITEN' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ATL_EINHEITEN' table. This class may be
+ * customized as it is never re-generated after being created.
  */
-public class AtlEinheiten
-    extends AbstractAtlEinheiten
-    implements Serializable
-{
+public class AtlEinheiten extends AbstractAtlEinheiten implements Serializable {
     private static final long serialVersionUID = 866939599579322354L;
     /** Die ID der Einheit "mg/l" */
     final public static Integer MG_L_ID = new Integer(42);
@@ -51,12 +44,11 @@ public class AtlEinheiten
     final public static Integer DEFAULT_ID = MG_L_ID;
 
     /**
-     * Die Map für die beim Import unterstützten Einheiten.
-     * Sie enthält eine Zuordnung von Einheitennamen zu den
-     * jeweiligen Schlüsseln der Einheiten-Tabelle.
-     * Sie wird in initMap() gefüllt.
+     * Die Map für die beim Import unterstützten Einheiten. Sie enthält eine
+     * Zuordnung von Einheitennamen zu den jeweiligen Schlüsseln der
+     * Einheiten-Tabelle. Sie wird in initMap() gefüllt.
      */
-    private static Map<String,Integer> sEinheiten = null;
+    private static Map<String, Integer> sEinheiten = null;
 
     /** Simple constructor of AtlEinheiten instances. */
     public AtlEinheiten() {
@@ -85,13 +77,13 @@ public class AtlEinheiten
     }
 
     /**
-     * Initialisiert die Map für die beim Import unterstützten
-     * Einheiten. Sie enthält eine Zuordnung von Einheitennamen
-     * zu den jeweiligen Schlüsseln der Einheiten-Tabelle.
+     * Initialisiert die Map für die beim Import unterstützten Einheiten. Sie
+     * enthält eine Zuordnung von Einheitennamen zu den jeweiligen Schlüsseln
+     * der Einheiten-Tabelle.
      */
     private static void initMap() {
         if (sEinheiten == null) {
-            sEinheiten = new HashMap<String,Integer>();
+            sEinheiten = new HashMap<String, Integer>();
 
             // SielhautBearbeiten:
             sEinheiten.put("mg/kg TS", AtlEinheiten.MG_KG_ID);
@@ -104,7 +96,8 @@ public class AtlEinheiten
     /**
      * überprüft ob ein entsprechender Parameter importierbar ist.
      * @param name Der Einheiten-Name (bspw. "%").
-     * @return <code>true</code>, wenn eine entsprechende Einheit bekannt ist, sonst <code>false</code>.
+     * @return <code>true</code>, wenn eine entsprechende Einheit bekannt ist,
+     *         sonst <code>false</code>.
      */
     public static boolean isEinheitSupported(String name) {
         initMap();
@@ -114,7 +107,8 @@ public class AtlEinheiten
     /**
      * Liefert den Schlüssel für eine Einheit.
      * @param name Der Einheiten-Name (bspw. "%").
-     * @return Den Schlüssel der Einheit oder <code>null</code>, falls die Einheit nicht unterstützt wird.
+     * @return Den Schlüssel der Einheit oder <code>null</code>, falls die
+     *         Einheit nicht unterstützt wird.
      */
     public static Integer getID(String name) {
         initMap();
@@ -141,7 +135,8 @@ public class AtlEinheiten
     /**
      * Liefert eine bestimmte Einheit.
      * @param id Die ID der Einheit
-     * @return Die Einheit mit der gegebenen ID oder <code>null</code> falls diese nicht existiert
+     * @return Die Einheit mit der gegebenen ID oder <code>null</code> falls
+     *         diese nicht existiert
      */
     public static AtlEinheiten getEinheit(Integer id) {
         AtlEinheiten einheit = null;

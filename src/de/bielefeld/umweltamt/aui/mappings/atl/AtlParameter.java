@@ -19,9 +19,6 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Wed Feb 16 15:12:01 CET 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
@@ -32,14 +29,10 @@ import java.util.Map;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ATL_PARAMETER' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ATL_PARAMETER' table. This class may be
+ * customized as it is never re-generated after being created.
  */
-public class AtlParameter
-    extends AbstractAtlParameter
-    implements Serializable
-{
+public class AtlParameter extends AbstractAtlParameter implements Serializable {
     private static final long serialVersionUID = 2852105702010364133L;
     /** Die ID des Parameters "AOX" */
     final public static String AOX_ID = "L13430";
@@ -99,27 +92,23 @@ public class AtlParameter
     final public static String DEFAULT_ID = BLEI_ID;
 
     /**
-     * Die Map für die beim Import unterstützten Parameter.
-     * Sie enthält eine Zuordnung von Element- oder
-     * Parameternamen zu den jeweiligen Ordnungsbegriffen der
-     * Parameter-Tabelle.
-     * Sie wird in initMap() gefüllt.
+     * Die Map für die beim Import unterstützten Parameter. Sie enthält eine
+     * Zuordnung von Element- oder Parameternamen zu den jeweiligen
+     * Ordnungsbegriffen der Parameter-Tabelle. Sie wird in initMap() gefüllt.
      */
-    private static Map<String,String> sParams = null;
+    private static Map<String, String> sParams = null;
 
     /**
      * Simple constructor of AtlParameter instances.
      */
-    public AtlParameter()
-    {
+    public AtlParameter() {
     }
 
     /**
      * Constructor of AtlParameter instances given a simple primary key.
      * @param ordnungsbegriff
      */
-    public AtlParameter(java.lang.String ordnungsbegriff)
-    {
+    public AtlParameter(java.lang.String ordnungsbegriff) {
         super(ordnungsbegriff);
     }
 
@@ -139,8 +128,10 @@ public class AtlParameter
 
     /**
      * Liefert den Ordnungsbegriff für einen Parameter.
-     * @param name Die chemische Kurzbezeichnung des Elements oder der Parameter-Name (bspw. "Cu" oder "Kupfer").
-     * @return Den Ordnungsbegriff des Parameters oder <code>null</code>, falls der Parameter nicht unterstützt wird.
+     * @param name Die chemische Kurzbezeichnung des Elements oder der
+     *            Parameter-Name (bspw. "Cu" oder "Kupfer").
+     * @return Den Ordnungsbegriff des Parameters oder <code>null</code>, falls
+     *         der Parameter nicht unterstützt wird.
      */
     public static String getOrdnungsbegriff(String name) {
         initMap();
@@ -148,14 +139,13 @@ public class AtlParameter
     }
 
     /**
-     * Initialisiert die Map für die beim Import unterstützten
-     * Parameter. Sie enthält eine Zuordnung von Element- oder
-     * Parameternamen zu den jeweiligen Ordnungsbegriffen der
-     * Parameter-Tabelle.
+     * Initialisiert die Map für die beim Import unterstützten Parameter. Sie
+     * enthält eine Zuordnung von Element- oder Parameternamen zu den jeweiligen
+     * Ordnungsbegriffen der Parameter-Tabelle.
      */
     private static void initMap() {
         if (sParams == null) {
-            sParams = new HashMap<String,String>();
+            sParams = new HashMap<String, String>();
 
             // SielhautBearbeiten:
             sParams.put("Blei", AtlParameter.BLEI_ID);
@@ -197,8 +187,10 @@ public class AtlParameter
 
     /**
      * überprüft ob ein entsprechender Parameter importierbar ist.
-     * @param name Die chemische Kurzbezeichnung des Elements oder der Parameter-Name
-     * @return <code>true</code>, wenn ein entsprechender Parameter bekannt ist, sonst <code>false</code>.
+     * @param name Die chemische Kurzbezeichnung des Elements oder der
+     *            Parameter-Name
+     * @return <code>true</code>, wenn ein entsprechender Parameter bekannt ist,
+     *         sonst <code>false</code>.
      */
     public static boolean isParameterSupported(String name) {
         initMap();
@@ -208,7 +200,8 @@ public class AtlParameter
     /**
      * Liefert einen bestimmten Parameter.
      * @param id Die ID des Parameters
-     * @return Der Parameter mit der gegebenen ID oder <code>null</code> falls dieser nicht existiert
+     * @return Der Parameter mit der gegebenen ID oder <code>null</code> falls
+     *         dieser nicht existiert
      */
     public static AtlParameter getParameter(String id) {
         AtlParameter parameter = null;
@@ -240,9 +233,11 @@ public class AtlParameter
     }*/
 
     /*
-     * Liefert alle Parameter, die für SielhautBearbeiten-Probenahmen relevant sind.
-     * D.h. alle, deren SielhautBearbeiten-Grenzwert nicht <code>NULL</code> ist.
-     * @return Ein Array mit allen für SielhautBearbeiten-Probenahmen relevanten Parametern
+     * Liefert alle Parameter, die für SielhautBearbeiten-Probenahmen relevant
+     * sind. D.h. alle, deren SielhautBearbeiten-Grenzwert nicht
+     * <code>NULL</code> ist.
+     * @return Ein Array mit allen für SielhautBearbeiten-Probenahmen relevanten
+     * Parametern
      */
     public static List<?> getParameter() {
         List<?> parameter = null;
@@ -262,16 +257,15 @@ public class AtlParameter
         List<?> parameter = null;
 
         parameter = new DatabaseAccess().createQuery(
-                    "from AtlParameter as param "
-                    + "order by param.bezeichnung")
-                    .list();
+                "from AtlParameter as param order by param.bezeichnung")
+                .list();
 
         return parameter;
     }
 
     /**
-     * Liefert alle Parameter, die für Probenahmen relevant sind.
-     * D.h. alle, deren SielhautBearbeiten- oder Klärschlamm-Grenzwert nicht
+     * Liefert alle Parameter, die für Probenahmen relevant sind. D.h. alle,
+     * deren SielhautBearbeiten- oder Klärschlamm-Grenzwert nicht
      * <code>NULL</code> ist.
      * @return Ein Array mit allen für Probenahmen relevanten Parametern
      */
@@ -280,12 +274,12 @@ public class AtlParameter
         AtlParameter[] result = null;
 
         list = new DatabaseAccess().createQuery(
-                    "from AtlParameter as param "
-    				+ "where param.atlParameterGruppe.id = 1"
-    				+ "or param.atlParameterGruppe.id = 2"
-    				+ "or param.atlParameterGruppe.id = 3"
-                    + "order by param.reihenfolge")
-                    .list();
+                "from AtlParameter as param "
+                + "where param.atlParameterGruppe.id = 1"
+                + "or param.atlParameterGruppe.id = 2"
+                + "or param.atlParameterGruppe.id = 3"
+                + "order by param.reihenfolge")
+                .list();
 
         result = new AtlParameter[list.size()];
         result = (AtlParameter[]) list.toArray(result);
@@ -293,14 +287,13 @@ public class AtlParameter
         return result;
     }
 
-
     public static AtlParameter[] getParameterGroup(int id) {
         List<?> list = null;
         AtlParameter[] result = null;
 
         list = new DatabaseAccess().createQuery(
-                "from AtlParameter as param where " +
-                "param.atlParameterGruppe.id = " + id)
+                "from AtlParameter as param where "
+                + "param.atlParameterGruppe.id = " + id)
                 .list();
 
         result = new AtlParameter[list.size()];

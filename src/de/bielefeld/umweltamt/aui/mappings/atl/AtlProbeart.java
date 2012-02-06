@@ -19,9 +19,6 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Wed Feb 16 15:12:02 CET 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
@@ -30,14 +27,10 @@ import java.util.List;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ATL_PROBEART' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ATL_PROBEART' table. This class may be
+ * customized as it is never re-generated after being created.
  */
-public class AtlProbeart
-    extends AbstractAtlProbeart
-    implements Serializable
-{
+public class AtlProbeart extends AbstractAtlProbeart implements Serializable {
     private static final long serialVersionUID = -4946349358783685742L;
     /** Die ID von Abwasser-Proben */
     final public static Integer ABWASSER = new Integer(1);
@@ -61,7 +54,7 @@ public class AtlProbeart
     /**
      * Simple constructor of AtlProbeart instances.
      */
-    public AtlProbeart(){
+    public AtlProbeart() {
         // This place is intentionally left blank.
     }
 
@@ -83,34 +76,41 @@ public class AtlProbeart
     public boolean isAbwasser() {
         return ABWASSER.equals(this.getArtId());
     }
+
     public boolean isAbwasserUWB() {
         return ABWASSER_UWB.equals(this.getArtId());
     }
+
     public boolean isAbwasserES() {
         return ABWASSER_ES.equals(this.getArtId());
     }
+
     public boolean isAnlieferung() {
         return ANLIEFERUNG.equals(this.getArtId());
     }
+
     public boolean isFaulschlamm() {
         return FAULSCHLAMM.equals(this.getArtId());
     }
+
     public boolean isRohschlamm() {
         return ROHSCHLAMM.equals(this.getArtId());
     }
+
     public boolean isSielhaut() {
         return SIELHAUT.equals(this.getArtId());
     }
+
     public boolean isSonstige() {
         return SONSTIGE.equals(this.getArtId());
     }
+
     public boolean isZulauf() {
         return ZULAUF.equals(this.getArtId());
     }
 
     /**
      * Liefert alle vorhandenen Probearten.
-     * öffnet eine neue Hibernate-Session und schließt sie wieder.
      * @return Alle vorhandenen Probearten
      */
     public static AtlProbeart[] getProbearten() {
@@ -134,7 +134,8 @@ public class AtlProbeart
     /**
      * Liefert eine bestimmte Probeart.
      * @param id Die ID der Probeart
-     * @return Die Probeart mit der gegebenen ID oder <code>null</code> falls diese nicht existiert
+     * @return Die Probeart mit der gegebenen ID oder <code>null</code> falls
+     *         diese nicht existiert
      */
     public static AtlProbeart getProbeart(Integer id) {
         AtlProbeart art = null;

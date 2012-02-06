@@ -19,9 +19,6 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Wed Feb 16 15:12:03 CET 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
@@ -31,14 +28,10 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ATL_SIELHAUT' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ATL_SIELHAUT' table. This class may be
+ * customized as it is never re-generated after being created.
  */
-public class AtlSielhaut
-    extends AbstractAtlSielhaut
-    implements Serializable
-{
+public class AtlSielhaut extends AbstractAtlSielhaut implements Serializable {
     private static final long serialVersionUID = 7832720588085682797L;
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -47,7 +40,8 @@ public class AtlSielhaut
      * Simple constructor of AtlSielhaut instances.
      */
     public AtlSielhaut() {
-        //AUIKataster.debugOutput("Neues SielhautBearbeiten-Objekt", "AtlSielhaut");
+        // AUIKataster.debugOutput("Neues SielhautBearbeiten-Objekt",
+        // "AtlSielhaut");
 
 //        setSielhaut(true);
 //        setAlarmplan(false);
@@ -71,18 +65,20 @@ public class AtlSielhaut
 
     @Override
     public String toString() {
-        return "[SielhautBearbeiten:"+getId()+", " + getBezeichnung()+"]";
+        return "[SielhautBearbeiten:" + getId() + ", " + getBezeichnung() + "]";
     }
 
     public static List<?> findPunkte(String suche) {
         String sucheF = suche.toLowerCase().trim() + "%";
         List<?> punkte;
-        punkte = new DatabaseAccess().createQuery(
-                "from AtlSielhaut as sp where " +
-                "lower(sp.bezeichnung) like :suche " +
-                "order by sp.psielhaut desc, sp.pfirmenprobe desc, sp.bezeichnung")
-                .setString("suche", sucheF)
-                .list();
+        punkte = new DatabaseAccess()
+            .createQuery(
+                "from AtlSielhaut as sp where "
+                    + "lower(sp.bezeichnung) like :suche "
+                    + "order by sp.psielhaut desc, "
+                    + "sp.pfirmenprobe desc, sp.bezeichnung")
+            .setString("suche", sucheF)
+            .list();
         return punkte;
     }
 
@@ -90,12 +86,14 @@ public class AtlSielhaut
         AtlSielhaut sielhaut = null;
         String sucheF = bezeichnung.toLowerCase().trim() + "%";
         List<?> punkte;
-        punkte = new DatabaseAccess().createQuery(
-                "from AtlSielhaut as sp where " +
-                "lower(sp.bezeichnung) like :suche " +
-                "order by sp.psielhaut desc, sp.pfirmenprobe desc, sp.bezeichnung")
-                .setString("suche", sucheF)
-                .list();
+        punkte = new DatabaseAccess()
+            .createQuery(
+                "from AtlSielhaut as sp where "
+                    + "lower(sp.bezeichnung) like :suche "
+                    + "order by sp.psielhaut desc, "
+                    + "sp.pfirmenprobe desc, sp.bezeichnung")
+            .setString("suche", sucheF)
+            .list();
         if (punkte.size() > 0) {
             sielhaut = (AtlSielhaut) punkte.get(0);
         }
@@ -105,8 +103,8 @@ public class AtlSielhaut
     /**
      * Lädt ein Objekt aus der Datenbank.
      * @param id Der Primärschlüssel des zu ladenden Objekts.
-     * @return  Das BasisObjekt mit dem Primärschlüssel oder <code>null</code>,
-     *             falls ein solches nicht gefunden wurde.
+     * @return Das BasisObjekt mit dem Primärschlüssel oder <code>null</code>,
+     *         falls ein solches nicht gefunden wurde.
      */
     public static AtlSielhaut getSielhaut(Integer id) {
         AtlSielhaut sielhaut = null;
