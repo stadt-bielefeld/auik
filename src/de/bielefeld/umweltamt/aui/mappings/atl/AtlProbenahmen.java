@@ -391,7 +391,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         Object[] columns;
 
         // TODO: This map is basically never used...
-        Map groups = new HashMap(1);
+        Map<Integer,AtlParameterGruppen> groups =
+            new HashMap<Integer,AtlParameterGruppen>(1);
 
         for (int i = 0; i < elements; i++) {
             columns = new Object[COLUMNS_BESCHEID.length];
@@ -469,7 +470,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             newValues[i] = values[i];
         }
 
-        Collection theGroups = groups.values();
+        Collection<?> theGroups = groups.values();
         for (Object obj : theGroups) {
             AtlParameterGruppen apg = (AtlParameterGruppen) obj;
 
