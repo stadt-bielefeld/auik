@@ -27,35 +27,23 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
-
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * Eine Klasse, die eine Zeile der 'BASIS_STANDORT'-Tabelle
- * repräsentiert.
+ * Eine Klasse, die eine Zeile der 'BASIS_STANDORT'-Tabelle repräsentiert.
  */
-public class BasisStandort
-    extends AbstractBasisStandort
-    implements Serializable
-{
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
-	/** Logging */
+public class BasisStandort extends AbstractBasisStandort implements
+    Serializable {
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
-	private static final long serialVersionUID = 2774552431508434460L;
+    private static final long serialVersionUID = 2774552431508434460L;
 
-	/**
+    /**
      * Simple constructor of BasisStandort instances.
      */
     public BasisStandort() {
-    	// This is intentionally left blank.
+        // This is intentionally left blank.
     }
 
     /**
@@ -69,86 +57,73 @@ public class BasisStandort
     /* Add customized code below */
 
     /**
-     * @deprecated Somebody was misusing this method...
      * TODO: Find all calls of the toString method and switch them
-     * @see {@link this.getFormatierteStrasse} for the original method. 
+     * @see {@link this.getFormatierteStrasse} for the original method.
      */
+    @Override
     public String toString() {
-//    	log.warn("If you see this message, something may need to be fixed!");
-//        return super.toString();
-    	return this.getFormatierteStrasse();
+        return this.getFormatierteStrasse();
     }
-    
+
     /**
-     * Liefert die komplette Strasse, wenn vorhanden inklusive der
-     * Hausnummer und deren Zusatz.<br><br>
-     * Formatierung: &quot;&lt;Strasse&gt; &lt;HausNr&gt;&lt;HausNrzus&gt;&quot;<br><br>
-     * Beispiele: &quot;Ravensberger Straße 77&quot;, &quot;Apfelstraße 23b&quot;,
-     * &quot;Jahnplatz 41-42&quot;
+     * Liefert die komplette Strasse, wenn vorhanden inklusive der Hausnummer
+     * und deren Zusatz.<br>
+     * <br>
+     * Formatierung: &quot;&lt;Strasse&gt; &lt;HausNr&gt;&lt;HausNrzus&gt;&quot;<br>
+     * <br>
+     * Beispiele: &quot;Ravensberger Straße 77&quot;, &quot;Apfelstraße
+     * 23b&quot;, &quot;Jahnplatz 41-42&quot;
      * @return Komplette, formatierte Strasse inkl. Hausnr
      */
     public String getFormatierteStrasse() {
-    	String formatierteStrasse;
-    	formatierteStrasse = this.getStrasse();
-    	if (this.getHausnr() != null) {
-    		formatierteStrasse += (" " + this.getHausnr());
-    	}
-    	if (this.getHausnrzus() != null) {
-    		formatierteStrasse += this.getHausnrzus();
-    	}
-    	return formatierteStrasse;
+        String formatierteStrasse;
+        formatierteStrasse = this.getStrasse();
+        if (this.getHausnr() != null) {
+            formatierteStrasse += (" " + this.getHausnr());
+        }
+        if (this.getHausnrzus() != null) {
+            formatierteStrasse += this.getHausnrzus();
+        }
+        return formatierteStrasse;
     }
 
     /**
      * Liefert einen Standort mit einer bestimmten ID.
      * @param id Die ID (der Primärschlüssel) des Standorts.
-     * @return Den gesuchten Standort oder <code>null</code>,
-     * falls kein Standort mit dieser ID existiert.
+     * @return Den gesuchten Standort oder <code>null</code>, falls kein
+     *         Standort mit dieser ID existiert.
      */
     public static BasisStandort getStandort(Integer id) {
-        BasisStandort standort;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            standort = (BasisStandort) session.get(BasisStandort.class, id);
-            HibernateSessionFactory.closeSession();
-        } catch (HibernateException e) {
-            standort = null;
-        }
-
+        BasisStandort standort = null;
+        standort = (BasisStandort) new DatabaseAccess()
+            .get(BasisStandort.class, id);
         return standort;
     }
 
     /**
      * Liefert einen Standort mit einer bestimmten ID.
      * @param id Die ID (der Primärschlüssel) des Standorts.
-     * @return Den gesuchten Standort oder <code>null</code>,
-     * falls kein Standort mit dieser ID existiert.
+     * @return Den gesuchten Standort oder <code>null</code>, falls kein
+     *         Standort mit dieser ID existiert.
      */
     public static List<?> getStandortList(Integer id) {
-		List<?> standort;
-		try {
-			Session session = HibernateSessionFactory.currentSession();
-			standort = session.createQuery(
-					"from BasisStandort as bsta where "
-							+ "bsta.standortid = ? ")
-							.setInteger(0, id)
-							.list();
-
-		} catch (HibernateException e) {
-			throw new RuntimeException("Datenbank-Fehler", e);
-		} finally {
-			HibernateSessionFactory.closeSession();
-		}
-		return standort;
-	}
+        List<?> standort = null;
+        standort = new DatabaseAccess()
+            .createQuery(
+                "from BasisStandort as bsta where "
+                    + "bsta.standortid = :id ")
+            .setInteger("id", id)
+            .list();
+        return standort;
+    }
 
     /**
-     * Durchsucht die Standort-Tabelle nach Straße und Hausnummer..
-     * Bei der Straße wird Groß-/Kleinschreibung ignoriert und automatisch ein
-     * '%' angehängt.
-     * Wenn die Hausnummer -1 ist, wird nur nach der Straße gesucht.
+     * Durchsucht die Standort-Tabelle nach Straße und Hausnummer.. Bei der
+     * Straße wird Groß-/Kleinschreibung ignoriert und automatisch ein '%'
+     * angehängt. Wenn die Hausnummer -1 ist, wird nur nach der Straße gesucht.
      * @param strasse Der Straßenname (oder sein Anfang).
-     * @param hausnr Die Hausnummer (oder -1, falls nicht nach einer bestimmten Hausnummer gesucht werden soll)
+     * @param hausnr Die Hausnummer (oder -1, falls nicht nach einer bestimmten
+     *            Hausnummer gesucht werden soll)
      * @return Eine Liste mit allen gefundenen Standorten.
      */
     public static List<?> findStandorte(String strasse, int hausnr) {
@@ -156,164 +131,87 @@ public class BasisStandort
         Integer hausNummer = new Integer(hausnr);
 
         log.debug("Suche nach '" + strasse2 + "' Nr. " + hausnr);
-        List<?> standorte;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            if (hausnr != -1) {
-                standorte = session.createQuery(
-                        "from BasisStandort as bsta where " +
-                        "lower(bsta.strasse) like ? " +
-                        "and bsta.hausnr = ? " +
-                        "order by bsta.strasse, bsta.hausnr")
-                        .setString(0, strasse2)
-                        .setInteger(1, hausNummer)
-                        .list();
+        List<?> standorte = null;
 
-            } else {
-                standorte = session.createQuery(
-                        "from BasisStandort as bsta where " +
-                        "lower(bsta.strasse) like ? " +
-                        "order by bsta.strasse, bsta.hausnr")
-                        .setString(0, strasse2)
-                        .list();
-
-            }
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
+        String query = "from BasisStandort as bsta where "
+            + "lower(bsta.strasse) like :strasse ";
+        if (hausnr != -1) {
+            query += "and bsta.hausnr = :hausnr ";
         }
+        query += "order by bsta.strasse, bsta.hausnr";
+
+        // TODO: Test if it leads to errors if we set a named variable which is
+        // not there
+        if (hausnr != -1) {
+            standorte = new DatabaseAccess()
+                .createQuery(query)
+                .setString("strasse", strasse2)
+                .setInteger("hausnr", hausNummer)
+                .list();
+        } else {
+            standorte = new DatabaseAccess()
+                .createQuery(query)
+                .setString("strasse", strasse2)
+                .list();
+        }
+
         return standorte;
     }
 
     /**
-     * Speichert einen Standort in die Datenbank, bzw. updatet einen
-     * schon vorhandenen Standort mit neuen Werten.
+     * Speichert einen Standort in die Datenbank, bzw. updatet einen schon
+     * vorhandenen Standort mit neuen Werten.
      * @param bsta Der Standort, der gespeichert werden soll.
-     * @return Der gespeicherte Standort, oder <code>null</code>, falls beim Speichern ein Fehler auftrat.
+     * @return Der gespeicherte Standort, oder <code>null</code>, falls beim
+     *         Speichern ein Fehler auftrat.
      */
     public static BasisStandort saveStandort(BasisStandort bsta) {
-        BasisStandort bstaRet;
-
-        Transaction tx = null;
-        try {
-            // Neue Session beginnen
-            Session session = HibernateSessionFactory.currentSession();
-
-            // Alle Änderungen in einer Transaktion zusammenfassen
-            tx = session.beginTransaction();
-
-            // Speichern / Transaktion durchführen
-            session.saveOrUpdate(bsta);
+        boolean success = false;
+        BasisStandort bstaRet = null;
+        success = new DatabaseAccess().saveOrUpdate(bsta);
+        if (success) {
             bstaRet = bsta;
-
-            tx.commit();
-
-            //frame.changeStatus("Neuer Standort "+bsta.getStandortid()+" erfolgreich gespeichert!", HauptFrame.SUCCESS_COLOR);
-            log.debug("Neuer Standort "+ bsta +" gespeichert!");
-            //manager.getCache().invalidateCache("standorte");
-
-            // Formular zurücksetzen
-            //clearForm();
-        } catch (HibernateException e) {
-            bstaRet = null;
-            e.printStackTrace();
-            // Falls während der Änderungen ein Hibernate Fehler auftritt
-            if (tx != null) {
-                try {
-                    // Alle Änderungen rückgängig machen
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    throw new RuntimeException("Datenbank-Fehler (BasisStandort)", e);
-                }
-            }
-        } finally {
-            // Am Ende (egal ob erfolgreich oder nicht) die Session schließen
-            HibernateSessionFactory.closeSession();
+            log.debug("Neuer Standort " + bsta + " gespeichert!");
         }
-
         return bstaRet;
     }
 
     /**
-     * Liefert alle in der Tabelle benutzten Entwässerungsgebiete als Strings.
-     * <br><b>ACHTUNG:</b> Diese Methode liefert <b>nicht</b> alle
-     * Standorte, sondern alle in der Spalte ENTWGEB benutzten Werte!
-     * @param session Eine Hibernate-Session
-     * @return Alle zur Zeit benutzten Entwässerungsgebiete
-     * @throws HibernateException Wenn ein Datenbank-Fehler auftritt
-     */
-    private static String[] getEntwGebiete(Session session) throws HibernateException {
-        List<?> list = null;
-        String suchString = "SELECT DISTINCT sta.entgebid FROM de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort sta";
-        Query query = session.createQuery(suchString);
-        query.setCacheable(true);
-        query.setCacheRegion("ezgbliste");
-        list = query.list();
-        String[] tmp = new String[list.size()];
-        tmp = (String[]) list.toArray(tmp);
-        return tmp;
-    }
-
-    /**
-     * Liefert alle in der Tabelle benutzten Entwässerungsgebiete als Strings.
-     * <br><b>ACHTUNG:</b> Diese Methode liefert <b>nicht</b> alle
-     * Standorte, sondern alle in der Spalte ENTWGEB benutzten Werte!
+     * Liefert alle in der Tabelle benutzten Entwässerungsgebiete als Strings. <br>
+     * <b>ACHTUNG:</b> Diese Methode liefert <b>nicht</b> alle Standorte,
+     * sondern alle in der Spalte ENTWGEB benutzten Werte!
      * @return Alle zur Zeit benutzten Entwässerungsgebiete
      */
     public static String[] getEntwGebiete() {
-        String[] tmp;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tmp = getEntwGebiete(session);
-            HibernateSessionFactory.closeSession();
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler (BasisStandort)", e);
-        }
-
-        return tmp;
+        List<?> list = null;
+        String suchString = "SELECT DISTINCT sta.entgebid " +
+        		"FROM de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort sta";
+        list = new DatabaseAccess().createQuery(suchString)
+            .setCacheable(true)
+            .setCacheRegion("ezgbliste")
+            .list();
+        String[] result = new String[list.size()];
+        result = (String[]) list.toArray(result);
+        return result;
     }
-
 
     /**
      * Löscht einen vorhandenen Standort aus der Datenbank.
      * @param standort Der Standort, der gelöscht werden soll.
      * @return <code>true</code>, wenn der Betreiber gelöscht wurde oder
-     * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Standort
-     * nicht in der Datenbank existiert).
+     *         <code>false</code> falls dabei ein Fehler auftrat (z.B. der
+     *         Standort nicht in der Datenbank existiert).
      */
     public static boolean removeStandort(BasisStandort standort) {
-        boolean removed;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(standort);
-            tx.commit();
-            removed = true;
-        } catch (HibernateException e) {
-            removed = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "BasisStandort.removeStandort", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean removed = false;
+        removed = new DatabaseAccess().delete(standort);
         return removed;
     }
-    
 
     public String getAdresse() {
-        String  strasse    = getStrasse();
-        Integer hausnr     = getHausnr();
-        String  hausnrZus = getHausnrzus();
+        String strasse = getStrasse();
+        Integer hausnr = getHausnr();
+        String hausnrZus = getHausnrzus();
 
         StringBuilder sb = new StringBuilder(strasse);
 

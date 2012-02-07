@@ -124,7 +124,7 @@ public class VawsFachdaten
      */
     public static List getVawsByObjekt(BasisObjekt objekt) {
         List vaws;
-        if (objekt.getBasisObjektarten().abteilungIs34()) {
+        if (objekt.getBasisObjektarten().isAbteilung34()) {
             try {
                 Session session = HibernateSessionFactory.currentSession();
                 vaws = session.createQuery(

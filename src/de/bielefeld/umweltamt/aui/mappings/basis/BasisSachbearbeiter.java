@@ -77,77 +77,59 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'BasisSachbearbeiter' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'BasisSachbearbeiter' table. This class
+ * may be customized as it is never re-generated after being created.
  */
-public class BasisSachbearbeiter
-    extends AbstractBasisSachbearbeiter
-    implements Serializable
-{
+public class BasisSachbearbeiter extends AbstractBasisSachbearbeiter implements
+    Serializable {
+    private static final long serialVersionUID = 7587341236085960792L;
 
     /**
      * Simple constructor of BasisSachbearbeiter instances.
      */
-    public BasisSachbearbeiter()
-    {
+    public BasisSachbearbeiter() {
     }
 
     /**
      * Constructor of BasisObjektarten instances given a simple primary key.
      * @param kennummer
      */
-    public BasisSachbearbeiter(java.lang.String kennummer)
-    {
+    public BasisSachbearbeiter(java.lang.String kennummer) {
         super(kennummer);
     }
 
     /* Add customized code below */
 
     /** Liefert den Namen dieses Sachbearbeiters */
+    @Override
     public String toString() {
         String sachbearbeiter = getName();
-        String kennnummer     = getKennummer();
+        String kennnummer = getKennummer();
 
-        return sachbearbeiter != null
-            ? sachbearbeiter + " (" + kennnummer + ")"
-            : kennnummer;
+        return ((sachbearbeiter != null) ?
+            sachbearbeiter + " (" + kennnummer + ")" : kennnummer);
     }
-
 
     public static BasisSachbearbeiter[] getSachbearbeiter() {
-        try {
-            Session s = HibernateSessionFactory.currentSession();
+        BasisSachbearbeiter[] result = null;
+        List<?> list = null;
+        list = new DatabaseAccess().createQuery(
+            "from BasisSachbearbeiter as sachbearbeiter "
+                + "order by sachbearbeiter.name").list();
 
-            List bearbeiter =
-                s.createQuery("from BasisSachbearbeiter as sachbearbeiter order by sachbearbeiter.name").list();
+        result = new BasisSachbearbeiter[list.size()];
+        result = (BasisSachbearbeiter[]) list.toArray(result);
 
-            return (BasisSachbearbeiter[]) bearbeiter.toArray(
-                new BasisSachbearbeiter[bearbeiter.size()]);
-        }
-        catch (HibernateException he) {
-            throw new RuntimeException("Datenbank-Fehler", he);
-        }
-        finally {
-            HibernateSessionFactory.closeSession();
-        }
+        return result;
     }
 
-
     public static BasisSachbearbeiter getSachbearbeiter(String kennummer) {
-    	BasisSachbearbeiter[] sachbearbeiter = getSachbearbeiter();
+        BasisSachbearbeiter[] sachbearbeiter = getSachbearbeiter();
 
-        for (BasisSachbearbeiter s: sachbearbeiter) {
+        for (BasisSachbearbeiter s : sachbearbeiter) {
             if (kennummer.equals(s.getKennummer())) {
                 return s;
             }

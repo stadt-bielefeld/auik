@@ -326,20 +326,20 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
 
         if (analyseVon != null && !analyseVon.equals("")) {
             proben = new DatabaseAccess().createQuery(query)
-                    .setEntity(":param", param)
-                    .setEntity(":einh", einh)
-                    .setEntity(":pkt", pkt)
-                    .setDate(":beginDate", beginDate)
-                    .setDate(":endDate", endDate)
-                    .setString(":analyseVon", analyseVon)
+                    .setEntity("param", param)
+                    .setEntity("einh", einh)
+                    .setEntity("pkt", pkt)
+                    .setDate("beginDate", beginDate)
+                    .setDate("endDate", endDate)
+                    .setString("analyseVon", analyseVon)
                     .list();
         } else {
             proben = new DatabaseAccess().createQuery(query)
-                    .setEntity(":param", param)
-                    .setEntity(":einh", einh)
-                    .setEntity(":pkt", pkt)
-                    .setDate(":beginDate", beginDate)
-                    .setDate(":endDate", endDate)
+                    .setEntity("param", param)
+                    .setEntity("einh", einh)
+                    .setEntity("pkt", pkt)
+                    .setDate("beginDate", beginDate)
+                    .setDate("endDate", endDate)
                     .list();
         }
 

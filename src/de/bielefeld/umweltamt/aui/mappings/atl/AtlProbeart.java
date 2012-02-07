@@ -119,10 +119,9 @@ public class AtlProbeart extends AbstractAtlProbeart implements Serializable {
 
         String suchString = "from AtlProbeart art order by art.artId";
 
-        // TODO: Clear what to do with setCacheable and stuff
         list = new DatabaseAccess().createQuery(suchString)
-//                .setCacheable(true);
-//                .setCacheRegion("probeartliste");
+                .setCacheable(true)
+                .setCacheRegion("probeartliste")
                 .list();
 
         result = new AtlProbeart[list.size()];

@@ -96,29 +96,17 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
-
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'BASIS_OBJEKTARTEN' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'BASIS_OBJEKTARTEN' table. This class
+ * may be customized as it is never re-generated after being created.
  */
-public class BasisObjektarten
-    extends AbstractBasisObjektarten
-    implements Serializable
-{
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
-	/** Logging */
+public class BasisObjektarten extends AbstractBasisObjektarten implements
+    Serializable {
+    private static final long serialVersionUID = -6919909308275509008L;
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /** Die ID der Objektart "Probenahmepunkt" */
@@ -157,22 +145,21 @@ public class BasisObjektarten
     /**
      * Simple constructor of BasisObjektarten instances.
      */
-    public BasisObjektarten()
-    {
+    public BasisObjektarten() {
     }
 
     /**
      * Constructor of BasisObjektarten instances given a simple primary key.
      * @param objektartid
      */
-    public BasisObjektarten(java.lang.Integer objektartid)
-    {
+    public BasisObjektarten(java.lang.Integer objektartid) {
         super(objektartid);
     }
 
     /* Add customized code below */
 
     /** Liefert den Namen dieser Objektart */
+    @Override
     public String toString() {
         String abteilung = "";
         if (getAbteilung() != null) {
@@ -181,171 +168,132 @@ public class BasisObjektarten
         return getObjektart() + abteilung;
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Probepunkt" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart "Probepunkt" ist
+     */
     public boolean isProbepunkt() {
-        if (PROBEPUNKT == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (PROBEPUNKT == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Anhang 40" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart "Anhang 40" ist
+     */
     public boolean isAnh40() {
-        if (ANHANG_40 == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (ANHANG_40 == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Brennwertkessel" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart "Brennwertkessel"
+     *         ist
+     */
     public boolean isBWK() {
-        if (BWK == this.getObjektartid().intValue()) {
-            return true;
-        } else if (BHKW == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return ((BWK == this.getObjektartid().intValue())
+            || (BHKW == this.getObjektartid().intValue()));
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Zahnarzt" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart "Zahnarzt" ist
+     */
     public boolean isAnh50() {
-        if (ANHANG_50 == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (ANHANG_50 == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart
-     * "Anhang 49", "Abscheider" oder "Fettabscheider" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart "Anhang 49",
+     *         "Abscheider" oder "Fettabscheider" ist
+     */
     public boolean isAnh49() {
-        if (ANHANG_49 == this.getObjektartid().intValue()) {
-            return true;
-        } else if (ABSCHEIDER == this.getObjektartid().intValue()) {
-            return true;
-        } else if (FETTABSCHEIDER == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return ((ANHANG_49 == this.getObjektartid().intValue())
+            || (ABSCHEIDER == this.getObjektartid().intValue())
+            || (FETTABSCHEIDER == this.getObjektartid().intValue()));
     }
 
-    public boolean isFettabscheider()
-    {
-        if (FETTABSCHEIDER == this.getObjektartid().intValue())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    public boolean isFettabscheider() {
+        return (FETTABSCHEIDER == this.getObjektartid().intValue());
     }
 
-    public boolean isAbscheider()
-    {
-        if (ABSCHEIDER == this.getObjektartid().intValue())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    public boolean isAbscheider() {
+        return (ABSCHEIDER == this.getObjektartid().intValue());
     }
 
-
-    /** Liefert <code>true</code>, wenn diese Objektart "Chemische Wäscherei" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart
+     *         "Chemische Wäscherei" ist
+     */
     public boolean isAnh52() {
-        if (ANHANG_52 == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (ANHANG_52 == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Anhang 53 (< 3000)" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart
+     *         "Anhang 53 (< 3000)" ist
+     */
     public boolean isAnh53Kl() {
-        if (ANHANG_53_KLEIN == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (ANHANG_53_KLEIN == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Anhang 53 (< 3000)" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart
+     *         "Anhang 53 (< 3000)" ist
+     */
     public boolean isAnh53Gr() {
-        if (ANHANG_53_GROSS == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (ANHANG_53_GROSS == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Wäscherei" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart "Wäscherei" ist
+     */
     public boolean isAnh55() {
-        if (ANHANG_55 == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (ANHANG_55 == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Druckerei" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart "Druckerei" ist
+     */
     public boolean isAnh56() {
-        if (ANHANG_56 == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (ANHANG_56 == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Suev-Kan Verfahren" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart
+     *         "Suev-Kan Verfahren" ist
+     */
     public boolean isSuev() {
-        if (SUEV == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (SUEV == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Uebergabestelle" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart "Uebergabestelle"
+     *         ist
+     */
     public boolean isUebergabestelle() {
-        if (UEBERGABESTELLE == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (UEBERGABESTELLE == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart "Suev-Kan Verfahren" ist */
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart
+     *         "Suev-Kan Verfahren" ist
+     */
     public boolean isGenehmigung() {
-        if (GENEHMIGUNG == this.getObjektartid().intValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (GENEHMIGUNG == this.getObjektartid().intValue());
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart vom Abschnitt 360.33 bearbeitet wird */
-    public boolean abteilungIs33() {
-        String abteilung = getAbteilung();
-        if (abteilung != null) {
-            abteilung = abteilung.trim();
-        }
-        return ("360.33".equals(abteilung));
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart vom Abschnitt
+     *         360.33 bearbeitet wird
+     */
+    /* Deleted the .trim(), because we do not seam to need it. */
+    public boolean isAbteilung33() {
+        return ("360.33".equals(getAbteilung()));
     }
 
-    /** Liefert <code>true</code>, wenn diese Objektart vom Abschnitt 360.34 bearbeitet wird */
-    public boolean abteilungIs34() {
-        String abteilung = getAbteilung();
-        if (abteilung != null) {
-            abteilung = abteilung.trim();
-        }
-        return ("360.34".equals(abteilung));
+    /**
+     * @return Liefert <code>true</code>, wenn diese Objektart vom Abschnitt
+     *         360.34 bearbeitet wird
+     */
+    /* Deleted the .trim(), because we do not seam to need it. */
+    public boolean isAbteilung34() {
+        return ("360.34".equals(getAbteilung()));
     }
 
     /**
@@ -353,21 +301,13 @@ public class BasisObjektarten
      * @return Alle vorhandenen Objektarten
      */
     public static BasisObjektarten[] getObjektarten() {
-        List list;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            // order by objektart / objektartid?
-            String suchString = "from BasisObjektarten bo order by bo.objektart";
+        List<?> list = null;
+        String suchString = "from BasisObjektarten bo order by bo.objektart";
 
-            Query query = session.createQuery(suchString);
-            query.setCacheable(true);
-            query.setCacheRegion("objartliste");
-            list = query.list();
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        list = new DatabaseAccess().createQuery(suchString)
+            .setCacheable(true)
+            .setCacheRegion("objartliste")
+            .list();
 
         BasisObjektarten[] tmp = new BasisObjektarten[list.size()];
         tmp = (BasisObjektarten[]) list.toArray(tmp);
@@ -378,103 +318,46 @@ public class BasisObjektarten
     /**
      * Liefert eine Objektart mit einer bestimmten ID.
      * @param id Die ID (der Primärschlüssel) des Standorts.
-     * @return Den gesuchten Standort oder <code>null</code>,
-     * falls kein Standort mit dieser ID existiert.
+     * @return Den gesuchten Standort oder <code>null</code>, falls kein
+     *         Standort mit dieser ID existiert.
      */
     public static BasisObjektarten getObjektart(Integer id) {
-        BasisObjektarten art;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            art = (BasisObjektarten) session.get(BasisObjektarten.class, id);
-            HibernateSessionFactory.closeSession();
-        } catch (HibernateException e) {
-            art = null;
-        }
-
+        BasisObjektarten art = null;
+        art = (BasisObjektarten) new DatabaseAccess()
+            .get(BasisObjektarten.class, id);
         return art;
     }
 
     /**
-     * Speichert eine Objektart in die Datenbank, bzw. updatet eine
-     * schon vorhandene Objektart mit neuen Werten.
+     * Speichert eine Objektart in die Datenbank, bzw. updatet eine schon
+     * vorhandene Objektart mit neuen Werten.
      * @param art Die Objektart, die gespeichert werden soll.
-     * @return Die gespeicherte Objektart, oder <code>null</code>, falls beim Speichern ein Fehler auftrat.
+     * @return Die gespeicherte Objektart, oder <code>null</code>, falls beim
+     *         Speichern ein Fehler auftrat.
      */
     public static BasisObjektarten saveObjektart(BasisObjektarten art) {
-        BasisObjektarten artRet;
+        boolean success = false;
+        BasisObjektarten artRet = null;
 
-        Transaction tx = null;
-        try {
-            // Neue Session beginnen
-            Session session = HibernateSessionFactory.currentSession();
-
-            // Alle Änderungen in einer Transaktion zusammenfassen
-            tx = session.beginTransaction();
-
-            // Speichern / Transaktion durchführen
-            session.saveOrUpdate(art);
+        success = new DatabaseAccess().saveOrUpdate(art);
+        if (success) {
             artRet = art;
-
-            tx.commit();
-
-            //frame.changeStatus("Neue Objektart "+art.getObejktartid()+" erfolgreich gespeichert!", HauptFrame.SUCCESS_COLOR);
-            log.debug("Neue Objektart "+ art +" gespeichert!");
-            //manager.getCache().invalidateCache("standorte");
-
-            // Formular zurücksetzen
-            //clearForm();
-        } catch (HibernateException e) {
-            artRet = null;
-            e.printStackTrace();
-            // Falls während der Änderungen ein Hibernate Fehler auftritt
-            if (tx != null) {
-                try {
-                    // Alle Änderungen rückgängig machen
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    throw new RuntimeException("Datenbank-Fehler (BasisStandort)", e);
-                }
-            }
-        } finally {
-            // Am Ende (egal ob erfolgreich oder nicht) die Session schließen
-            HibernateSessionFactory.closeSession();
+            log.debug("Neue Objektart " + art + " gespeichert!");
         }
 
         return artRet;
     }
 
-
     /**
      * Löscht eine vorhandene Objektart aus der Datenbank.
      * @param standort Die Objektart, der gelöscht werden soll.
      * @return <code>true</code>, wenn die Objektart gelöscht wurde oder
-     * <code>false</code> falls dabei ein Fehler auftrat (z.B. die Objektart
-     * nicht in der Datenbank existiert).
+     *         <code>false</code> falls dabei ein Fehler auftrat (z.B. die
+     *         Objektart nicht in der Datenbank existiert).
      */
     public static boolean removeObjektart(BasisObjektarten objektart) {
-        boolean removed;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(objektart);
-            tx.commit();
-            removed = true;
-        } catch (HibernateException e) {
-            removed = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "BasisObjektarten.removeObjektart", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean removed = false;
+        removed = new DatabaseAccess().delete(objektart);
         return removed;
     }
 }

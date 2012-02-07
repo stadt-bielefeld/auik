@@ -19,50 +19,34 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Wed Jan 19 10:44:46 CET 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'BASIS_OBJEKT' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'BASIS_OBJEKT' table. This class may be
+ * customized as it is never re-generated after being created.
  */
-public class BasisObjekt
-    extends AbstractBasisObjekt
-    implements Serializable
-{
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
+    private static final long serialVersionUID = -5770125513608713721L;
 
+    // TODO: Why do we do this priority stuff this strange way?
     private java.lang.Integer prioritaet;
-	
+
     /**
      * Simple constructor of BasisObjekt instances.
      */
-    public BasisObjekt()
-    {
+    public BasisObjekt() {
     }
 
     /**
      * Constructor of BasisObjekt instances given a simple primary key.
      * @param objektid
      */
-    public BasisObjekt(java.lang.Integer objektid)
-    {
+    public BasisObjekt(java.lang.Integer objektid) {
         super(objektid);
     }
 
@@ -70,61 +54,61 @@ public class BasisObjekt
 
     /**
      * Liefert einen String, der dieses BasisObjekt beschreibt.
-     * @return Einen String in der Form "[ID:Objekt-ID, Betr.:BasisBetreiber, Stdort:BasisStandort, Art:BasisObjektart]"
+     * @return Einen String in der Form
+     *         "[ID:Objekt-ID, Betr.:BasisBetreiber, Stdort:BasisStandort, Art:BasisObjektart]"
      */
+    @Override
     public String toString() {
-        return "[ID:" + this.getObjektid() + ", Betr.:" + this.getBasisBetreiber() + ", Stdort:" + this.getBasisStandort() + ", Art:" + this.getBasisObjektarten() + "]";
+        return "[ID:" + this.getObjektid() + ", Betr.:"
+            + this.getBasisBetreiber() + ", Stdort:" + this.getBasisStandort()
+            + ", Art:" + this.getBasisObjektarten() + "]";
     }
 
     /**
-     * Liefert eine Liste von Objekten, die einem bestimmten Betreiber zugeordnet sind.
+     * Liefert eine Liste von Objekten, die einem bestimmten Betreiber
+     * zugeordnet sind.
      * @param betr Der Betreiber.
-     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll, sonst <code>null</code>.
+     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll,
+     *            sonst <code>null</code>.
      * @return Eine Liste von BasisObjekten dieses Betreibers.
      */
-    public static List getObjekteByBetreiber(BasisBetreiber betr, String abteilung) {
-        List objekte;
+    public static List<?> getObjekteByBetreiber(
+            BasisBetreiber betr, String abteilung) {
+        List<?> objekte;
 
-        String query =
-            "from BasisObjekt as bo " +
-            "where bo.basisBetreiber = ?";
+        String query = "from BasisObjekt as bo "
+            + "where bo.basisBetreiber = :betreiber";
 
         if (abteilung != null) {
             query += "and bo.basisObjektarten.abteilung = '" + abteilung + "' ";
         }
 
-        query += "order by bo.inaktiv, bo.basisStandort.strasse, bo.basisStandort.hausnr, bo.basisObjektarten.objektart";
+        query += "order by bo.inaktiv, bo.basisStandort.strasse, " +
+        		"bo.basisStandort.hausnr, bo.basisObjektarten.objektart";
 
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            objekte = session.createQuery(
-                    query)
-                    .setEntity(0, betr)
-                    .list();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        objekte = new DatabaseAccess().createQuery(query)
+            .setEntity("betreiber", betr)
+            .list();
 
         return objekte;
     }
 
     /**
-     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet sind.
+     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet
+     * sind.
      * @param betr Der Standort.
-     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll, sonst <code>null</code>.
+     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll,
+     *            sonst <code>null</code>.
      * @param nichtartid Die Objektart, die nicht dargestellt werden soll.
      * @return Eine Liste von BasisObjekten an diesem Standort.
      */
-    public static List getObjekteByStandort(BasisStandort standort, String abteilung, Integer nichtartid) {
-        List objekte;
+    public static List<?> getObjekteByStandort(
+            BasisStandort standort, String abteilung, Integer nichtartid) {
+        List<?> objekte;
 
-        String query =
-            "from BasisObjekt as bo " +
-            "where bo.basisStandort = ? "; // +
-//            "and bo.inaktiv = ? ";
+        String query = "from BasisObjekt as bo "
+            + "where bo.basisStandort = :standort "; // +
+//            "and bo.inaktiv = :f ";
 
         if (abteilung != null) {
             query += "and bo.basisObjektarten.abteilung = '" + abteilung + "' ";
@@ -134,109 +118,81 @@ public class BasisObjekt
             query += "and bo.basisObjektarten.objektartid != " + nichtartid;
         }
 
-        query += "order by bo.inaktiv, bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
+        query += "order by bo.inaktiv, bo.basisBetreiber.betrname, " +
+        		"bo.basisObjektarten.objektart";
 
-        try {
-        Session session = HibernateSessionFactory.currentSession();
-        objekte = session.createQuery(
-                query)
-                .setEntity(0, standort)
-//                .setString(1, "f")
-                .list();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        objekte = new DatabaseAccess().createQuery(query)
+            .setEntity("standort", standort)
+//            .setString("f", "f")
+            .list();
 
         return objekte;
     }
 
     /**
-     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet sind.
+     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet
+     * sind.
      * @param betr Der Standort.
-     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll, sonst <code>null</code>.
+     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll,
+     *            sonst <code>null</code>.
      * @param nichtartid Die Objektart, die nicht dargestellt werden soll.
      * @return Eine Liste von BasisObjekten an diesem Standort.
      */
-    public static List getObjekteByStandort(BasisStandort standort, Integer istartid) {
-        List objekte;
+    public static List<?> getObjekteByStandort(
+            BasisStandort standort, Integer istartid) {
+        List<?> objekte;
 
-        String query =
-            "from BasisObjekt as bo " +
-            "where bo.basisStandort = ? ";
+        String query = "from BasisObjekt as bo "
+            + "where bo.basisStandort = :standort ";
 
         if (istartid != null) {
-            query += "and bo.basisObjektarten.objektartid = ?";
+            query += "and bo.basisObjektarten.objektartid = :objektartid";
         }
 
-        query += "order by bo.inaktiv, bo.basisBetreiber.betrname, bo.basisObjektarten.objektart";
+        query += "order by bo.inaktiv, bo.basisBetreiber.betrname, " +
+        		"bo.basisObjektarten.objektart";
 
-        try {
-        Session session = HibernateSessionFactory.currentSession();
-        objekte = session.createQuery(
-                query)
-                .setEntity(0, standort)
-                .setInteger(1, 32)
-                .list();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        objekte = new DatabaseAccess().createQuery(query)
+            .setEntity("standort", standort)
+            .setInteger("objektartid", 32)
+            .list();
 
         return objekte;
     }
 
     /**
-     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet sind.
+     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet
+     * sind.
      * @param betr Der Standort.
-     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll, sonst <code>null</code>.
+     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll,
+     *            sonst <code>null</code>.
      * @param nichtartid Die Objektart, die nicht dargestellt werden soll.
      * @return Eine Liste von BasisObjekten an diesem Standort.
      */
-    public static List getObjekteMitPrioritaet() {
-    	ArrayList objekte;
+    public static List<?> getObjekteMitPrioritaet() {
+        List<?> objekte;
 
-        String query =
-            "select distinct bo.basisStandort, bo.basisBetreiber, bp.prioritaet, bo.basisSachbearbeiter " +
-        	"from BasisObjekt as bo, BasisPrioritaet as bp  " +
-            "where bo.basisStandort = bp.basisStandort and bo.basisBetreiber = bp.basisBetreiber " +
-        	"order by bo.basisStandort.strasse";
+        String query = "select distinct bo.basisStandort, bo.basisBetreiber, "
+            + "bp.prioritaet, bo.basisSachbearbeiter "
+            + "from BasisObjekt as bo, BasisPrioritaet as bp  "
+            + "where bo.basisStandort = bp.basisStandort and "
+    		+ "bo.basisBetreiber = bp.basisBetreiber "
+            + "order by bo.basisStandort.strasse";
 
-        try {
-        Session session = HibernateSessionFactory.currentSession();
-        objekte = (ArrayList) session.createQuery(
-                query)
-                .list();
+        objekte = new DatabaseAccess().createQuery(query).list();
 
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-        
         return objekte;
     }
 
     /**
      * Lädt ein Objekt aus der Datenbank.
      * @param id Der Primärschlüssel des zu ladenden Objekts.
-     * @return  Das BasisObjekt mit dem Primärschlüssel oder <code>null</code>,
-     *             falls ein solches nicht gefunden wurde.
+     * @return Das BasisObjekt mit dem Primärschlüssel oder <code>null</code>,
+     *         falls ein solches nicht gefunden wurde.
      */
     public static BasisObjekt getObjekt(Integer id) {
-        BasisObjekt objekt;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            objekt = (BasisObjekt) session.get(BasisObjekt.class, id);
-            HibernateSessionFactory.closeSession();
-        } catch (HibernateException e) {
-            objekt = null;
-        }
-
+        BasisObjekt objekt = null;
+        objekt = (BasisObjekt) new DatabaseAccess().get(BasisObjekt.class, id);
         return objekt;
     }
 
@@ -244,24 +200,21 @@ public class BasisObjekt
      * Gibt den Wert für die Priorität des Objektes zurück.
      * @return java.lang.Integer
      */
-    public java.lang.Integer getPrioritaet()
-    {
-    	Integer prioritaet = null;
-        
-    	if (BasisPrioritaet.getPrioritaet(this) != null){
-    		prioritaet = BasisPrioritaet.getPrioritaet(this).getPrioritaet();
-    	}
-    	
+    public java.lang.Integer getPrioritaet() {
+        Integer prioritaet = null;
 
-    	return prioritaet;
+        if (BasisPrioritaet.getPrioritaet(this) != null) {
+            prioritaet = BasisPrioritaet.getPrioritaet(this).getPrioritaet();
+        }
+
+        return prioritaet;
     }
 
     /**
      * Setzt den Wert für die Priorität des Objektes.
      * @param uschistdid
      */
-    public void setPrioritaet(java.lang.Integer prioritaet)
-    {
+    public void setPrioritaet(java.lang.Integer prioritaet) {
         this.prioritaet = prioritaet;
     }
 
@@ -271,30 +224,13 @@ public class BasisObjekt
      * @return Das gespeicherte Objekt.
      */
     public static BasisObjekt saveBasisObjekt(BasisObjekt obj) {
-        BasisObjekt saved;
+        boolean success = false;
+        BasisObjekt saved = null;
 
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.saveOrUpdate(obj);
-            saved = obj;
-
-            tx.commit();
-        } catch (HibernateException e) {
-            saved = null;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                	dbManager.handleDBException(e1, "BasisObjekt.save", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
+        success = new DatabaseAccess().saveOrUpdate(obj);
+        if (success) {
+            saved = obj; // TODO: Check if this is really nessessary
         }
-
         return saved;
     }
 
@@ -305,63 +241,19 @@ public class BasisObjekt
      * @return Das gespeicherte Objekt.
      */
     public static BasisObjekt saveBasisObjekt(BasisObjekt obj, Integer prio) {
-        BasisObjekt saved;
-
         BasisPrioritaet.saveBasisPrioritaet(obj, prio);
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.saveOrUpdate(obj);
-            saved = obj;
-
-            tx.commit();
-        } catch (HibernateException e) {
-            saved = null;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                	dbManager.handleDBException(e1, "BasisObjekt.save", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
-        return saved;
+        return BasisObjekt.saveBasisObjekt(obj);
     }
 
     /**
      * Löscht ein Objekt aus der Datenbank.
      * @param obj Das zu löschende Objekt.
-     * @return <code>true</code>, wenn das Objekt gelöscht wurde, sonst <code>false</code>.
+     * @return <code>true</code>, wenn das Objekt gelöscht wurde, sonst
+     *         <code>false</code>.
      */
     public static boolean removeBasisObjekt(BasisObjekt obj) {
-        boolean removed;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(obj);
-            tx.commit();
-            removed = true;
-        } catch (HibernateException e) {
-            removed = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                	dbManager.handleDBException(e1, "BasisObjektModel.objectRemoved", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean removed = false;
+        removed = new DatabaseAccess().delete(obj);
         return removed;
     }
 }

@@ -19,139 +19,85 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Tue Sep 06 14:47:25 CEST 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the 'VAWS_BasisObjektverknuepfung' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * This class may be customized as it is never re-generated after being created.
  */
-public class BasisObjektverknuepfung
-    extends AbstractBasisObjektverknuepfung
-    implements Serializable
-{
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+public class BasisObjektverknuepfung extends AbstractBasisObjektverknuepfung
+    implements Serializable {
+    private static final long serialVersionUID = 6989843733536180737L;
 
     /**
      * Simple constructor of VawsObjektchrono instances.
      */
-    public BasisObjektverknuepfung()
-    {
+    public BasisObjektverknuepfung() {
     }
 
     /**
      * Constructor of VawsObjektchrono instances given a simple primary key.
      * @param id
      */
-    public BasisObjektverknuepfung(java.lang.Integer id)
-    {
+    public BasisObjektverknuepfung(java.lang.Integer id) {
         super(id);
     }
 
     /* Add customized code below */
 
-
     // Statischer Teil:
-
 
     /**
      * Liefert alle verknuepften Objekte zu einem bestimmten BasisObjekt.
      * @param objekt Das BasisObjekt.
      * @return Eine Liste mit Objekten.
      */
-    public static List getVerknuepfungByObjekt(BasisObjekt objekt) {
-        List verknuepf;
-
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            verknuepf = session.createQuery(
-                    "from BasisObjektverknuepfung ov where " +
-                    "ov.basisObjektByObjekt = ? " +
-                    "or ov.basisObjektByIstVerknuepftMit = ? ")
-                    .setEntity(0, objekt)
-                    .setEntity(1, objekt)
-                    .list();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+    public static List<?> getVerknuepfungByObjekt(BasisObjekt objekt) {
+        List<?> verknuepf;
+        verknuepf = new DatabaseAccess()
+            .createQuery(
+                "from BasisObjektverknuepfung ov where "
+                    + "ov.basisObjektByObjekt = :objekt "
+                    + "or ov.basisObjektByIstVerknuepftMit = :objekt ")
+            .setEntity("objekt", objekt)
+            .list();
         return verknuepf;
     }
 
     /**
-     * Liefert alle verknuepften Sielhautmessstellen zu einem bestimmten BasisObjekt.
+     * Liefert alle verknuepften Sielhautmessstellen zu einem bestimmten
+     * BasisObjekt.
      * @param objekt Das BasisObjekt.
      * @return Eine Liste mit Objekten.
      */
-    public static List getVerknuepfungSielhaut(BasisObjekt objekt) {
-        List verknuepf;
-
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            verknuepf = session.createQuery(
-                    "from BasisObjektverknuepfung ov where " +
-                    "ov.basisObjektByObjekt = ? " +
-                    "and ov.basisObjektByIstVerknuepftMit.basisObjektarten.objektart like 'Sielhautmessstelle' ")
-                    .setEntity(0, objekt)
-                    .list();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+    public static List<?> getVerknuepfungSielhaut(BasisObjekt objekt) {
+        List<?> verknuepf;
+        verknuepf = new DatabaseAccess()
+            .createQuery(
+                "from BasisObjektverknuepfung ov where "
+                    + "ov.basisObjektByObjekt = :objekt "
+                    + "and ov.basisObjektByIstVerknuepftMit.basisObjektarten.objektart like 'Sielhautmessstelle' ")
+            .setEntity("objekt", objekt)
+            .list();
         return verknuepf;
     }
 
     /**
      * Speichert einen Objektverknuepfungs-Eintrag in der Datenbank.
      * @param verknuepf Der zu speichernde Datensatz.
-     * @return <code>true</code>, falls beim Speichern kein Fehler auftritt, sonst <code>false</code>.
+     * @return <code>true</code>, falls beim Speichern kein Fehler auftritt,
+     *         sonst <code>false</code>.
      */
-    public static boolean saveObjektVerknuepfung(BasisObjektverknuepfung verknuepf) {
-        boolean saved;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.saveOrUpdate(verknuepf);
-            tx.commit();
-            saved = true;
-        } catch (HibernateException e) {
-            saved = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "BasisObjektverknuepfung.save", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+    public static boolean saveObjektVerknuepfung(
+        BasisObjektverknuepfung verknuepf) {
+        boolean saved = false;
+        saved = new DatabaseAccess().saveOrUpdate(verknuepf);
         return saved;
     }
 
@@ -159,48 +105,22 @@ public class BasisObjektverknuepfung
      * Löscht einen vorhandenen Datensatz aus der Datenbank.
      * @param verknuepf Der Datensatz, der gelöscht werden soll.
      * @return <code>true</code>, wenn der Datensatz gelöscht wurde oder
-     * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Datensatz
-     * nicht in der Datenbank existiert).
+     *         <code>false</code> falls dabei ein Fehler auftrat (z.B. der
+     *         Datensatz nicht in der Datenbank existiert).
      */
-    public static boolean removeObjektVerknuepfung(BasisObjektverknuepfung verknuepf) {
-        boolean removed;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(verknuepf);
-            tx.commit();
-            removed = true;
-        } catch (HibernateException e) {
-            removed = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "BasisObjektverknuepfung.remove", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+    public static boolean removeObjektVerknuepfung(
+        BasisObjektverknuepfung verknuepf) {
+        boolean removed = false;
+        removed = new DatabaseAccess().delete(verknuepf);
         return removed;
     }
 
     /**
      * Liefert einen String mit der ID.
      */
+    @Override
     public String toString() {
         String tmp = getId() + ": ";
         return tmp;
-    }
-
-    public static List getObjekte() {
-
-
-
-        return null;
     }
 }

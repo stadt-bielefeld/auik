@@ -50,7 +50,7 @@ public class DatabaseAccess {
         DatabaseManager.getInstance();
 
 //    public enum DatabaseAccessType {
-//        GET, SAVEORUPDATE, DELETE, QUERY
+//        GET, SAVEORUPDATE, MERGE, DELETE, QUERY
 //    }
 //    /** Type of the DatabaseAccess */
 //    private DatabaseAccessType type = null;
@@ -91,7 +91,7 @@ public class DatabaseAccess {
     /**
      * Save or update an Object from the database (within a Transaction)<br>
      * Usage:<pre>
-     * boolean success = new DatabaseAccess().delete(myToModifyObject);
+     * boolean success = new DatabaseAccess().saveOrUpdate(myToModifyObject);
      * </pre>
      * @param object The Object to save or update
      * @return boolean True, if everything went as planned, false otherwise
@@ -110,6 +110,33 @@ public class DatabaseAccess {
             } catch (HibernateException he) {
                 dbManager.handleDBException(
                         he, "DatabaseAccess.saveOrUpdate()", true);
+            }
+        }
+        return success;
+    }
+
+    /**
+     * Merge an Object from the database (within a Transaction)<br>
+     * Usage:<pre>
+     * boolean success = new DatabaseAccess().merge(myToModifyObject);
+     * </pre>
+     * @param object The Object to merge
+     * @return boolean True, if everything went as planned, false otherwise
+     */
+    public boolean merge(Object object) {
+        boolean success = false;
+        /* Begin a new Transaction */
+        if (this.beginTransaction()) {
+            try {
+                /* Save or update the object */
+                this.session.merge(object);
+                /* Commit the transaction */
+                if (this.commitTransaction()) {
+                    success = true;
+                }
+            } catch (HibernateException he) {
+                dbManager.handleDBException(
+                        he, "DatabaseAccess.merge()", true);
             }
         }
         return success;
@@ -197,6 +224,16 @@ public class DatabaseAccess {
     // TODO: Do we really need this?
     public DatabaseAccess uniqueResult() {
         this.query.uniqueResult();
+        return this;
+    }
+    // TODO: Do we really need this? (Cache needs to be set in config as well)
+    public DatabaseAccess setCacheable(boolean cacheable) {
+        this.query.setCacheable(cacheable);
+        return this;
+    }
+    // TODO: Do we really need this?
+    public DatabaseAccess setCacheRegion(String cacheRegion)  {
+        this.query.setCacheRegion(cacheRegion);
         return this;
     }
 

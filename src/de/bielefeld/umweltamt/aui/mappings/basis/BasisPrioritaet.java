@@ -1,123 +1,100 @@
-package de.bielefeld.umweltamt.aui.mappings.basis;
+/**
+ * Copyright 2005-2011, Stadt Bielefeld
+ *
+ * This file is part of AUIK (Anlagen- und Indirekteinleiter-Kataster).
+ *
+ * AUIK is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * AUIK is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with AUIK. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
+ */
 
-// Generated 21.11.2011 10:56:36 by Hibernate Tools 3.4.0.CR1
+package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.naming.InitialContext;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.hibernate.HibernateException;
-import org.hibernate.LockMode;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-import static org.hibernate.criterion.Example.create;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * Home object for domain model class BasisPrioritaet.
  * @see AbstractBasisPrioritaet.BasisPrioritaet
  * @author Hibernate Tools
  */
-public class BasisPrioritaet 
-	extends AbstractBasisPrioritaet
-	implements Serializable
-{
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+public class BasisPrioritaet extends AbstractBasisPrioritaet implements
+    Serializable {
+    private static final long serialVersionUID = 7751778530285997527L;
 
-	Session session = HibernateSessionFactory.currentSession();
+// This was not used anywhere and why the hell was it here anyway???
+//    Session session = HibernateSessionFactory.currentSession();
+//
+//    public void persist(AbstractBasisPrioritaet transientInstance) {
+//        try {
+//            session.persist(transientInstance);
+//        } catch (RuntimeException re) {
+//            throw re;
+//        }
+//    }
+//
+//    public void attachDirty(AbstractBasisPrioritaet instance) {
+//        try {
+//            session.saveOrUpdate(instance);
+//        } catch (RuntimeException re) {
+//            throw re;
+//        }
+//    }
+//
+//    public void attachClean(AbstractBasisPrioritaet instance) {
+//        try {
+//            session.lock(instance, LockMode.NONE);
+//        } catch (RuntimeException re) {
+//            throw re;
+//        }
+//    }
+//
+//    public void delete(AbstractBasisPrioritaet persistentInstance) {
+//        try {
+//            session.delete(persistentInstance);
+//        } catch (RuntimeException re) {
+//            throw re;
+//        }
+//    }
 
-	public void persist(AbstractBasisPrioritaet transientInstance) {
-
-		try {
-			session.persist(transientInstance);
-
-		} catch (RuntimeException re) {
-
-			throw re;
-		}
-	}
-
-	public void attachDirty(AbstractBasisPrioritaet instance) {
-
-		try {
-			session.saveOrUpdate(instance);
-
-		} catch (RuntimeException re) {
-
-			throw re;
-		}
-	}
-
-	public void attachClean(AbstractBasisPrioritaet instance) {
-
-		try {
-			session.lock(instance, LockMode.NONE);
-
-		} catch (RuntimeException re) {
-
-			throw re;
-		}
-	}
-
-	public void delete(AbstractBasisPrioritaet persistentInstance) {
-
-		try {
-			session.delete(persistentInstance);
-
-		} catch (RuntimeException re) {
-
-			throw re;
-		}
-	}
-	
+    @Override
     public String toString() {
         return super.getPrioritaet().toString();
     }
 
-	public static BasisPrioritaet getPrioritaet(BasisObjekt basisObjekt) {
-	
-		BasisPrioritaet prioritaet = null; 
-		
-    	String query =
-        	"from BasisPrioritaet as bp " +
-        	"where bp.basisStandort.standortid = ? " +
-        	"and bp.basisBetreiber.betreiberid = ?";
+    public static BasisPrioritaet getPrioritaet(BasisObjekt basisObjekt) {
+        BasisPrioritaet prioritaet = null;
+        List<?> result = null;
 
-        try {
-        Session session = HibernateSessionFactory.currentSession();
-			if ((Integer) session
-					.createQuery(query)
-					.setInteger(0,
-							basisObjekt.getBasisStandort().getStandortid())
-					.setInteger(1,
-							basisObjekt.getBasisBetreiber().getBetreiberid())
-					.list().size() > 0) {
+        String query = "from BasisPrioritaet as bp "
+            + "where bp.basisStandort.standortid = :standortid "
+            + "and bp.basisBetreiber.betreiberid = :betreiberid";
 
-				prioritaet = (BasisPrioritaet) session
-						.createQuery(query)
-						.setInteger(0,
-								basisObjekt.getBasisStandort().getStandortid())
-						.setInteger(
-								1,
-								basisObjekt.getBasisBetreiber()
-										.getBetreiberid()).list().get(0);
-
-			}
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
+        result = new DatabaseAccess().createQuery(query)
+                .setInteger("standortid",
+                    basisObjekt.getBasisStandort().getStandortid())
+                .setInteger("betreiberid",
+                    basisObjekt.getBasisBetreiber().getBetreiberid())
+                .list();
+        if (result.size() > 0) {
+            prioritaet = (BasisPrioritaet) result.get(0);
         }
 
         return prioritaet;
-		
-	}
+    }
 
     /**
      * Speichert eine Priorität in der Datenbank.
@@ -125,77 +102,34 @@ public class BasisPrioritaet
      * @param prio Die zu speichernde Priorität
      * @return Das gespeicherte Prioritätsobjekt.
      */
-	public static BasisPrioritaet saveBasisPrioritaet(BasisObjekt obj,
-			Integer prio) {
-		BasisPrioritaet prioritaet;
-		BasisPrioritaet saved;
-		BasisPrioritaetId prioId;
+    public static BasisPrioritaet saveBasisPrioritaet(
+            BasisObjekt obj, Integer prio) {
+        BasisPrioritaet prioritaet = null;
+        BasisPrioritaet saved = null;
+        BasisPrioritaetId prioId = null;
+        boolean success = false;
 
-		if (getPrioritaet(obj) != null) {
-			prioritaet = getPrioritaet(obj);
-			prioritaet.setPrioritaet(prio);
+        if (getPrioritaet(obj) != null) {
+            prioritaet = getPrioritaet(obj);
+            prioritaet.setPrioritaet(prio);
+        } else {
+            prioritaet = new BasisPrioritaet();
+            prioId = new BasisPrioritaetId();
 
-			Transaction tx = null;
-			try {
-				Session session = HibernateSessionFactory.currentSession();
-				tx = session.beginTransaction();
-				session.saveOrUpdate(prioritaet);
-				saved = prioritaet;
+            prioId.setStandortId(obj.getBasisStandort().getStandortid());
+            prioId.setBetreiberId(obj.getBasisBetreiber().getBetreiberid());
+            prioritaet.setId(prioId);
 
-				tx.commit();
-			} catch (HibernateException e) {
-				saved = null;
-				e.printStackTrace();
-				if (tx != null) {
-					try {
-						tx.rollback();
-					} catch (HibernateException e1) {
-						dbManager.handleDBException(e1,
-								"BasisPrioritaet.save", false);
-					}
-				}
-			} finally {
-				HibernateSessionFactory.closeSession();
-			}
-		}
+            prioritaet.setBasisBetreiber(obj.getBasisBetreiber());
+            prioritaet.setBasisStandort(obj.getBasisStandort());
+            prioritaet.setPrioritaet(prio);
+        }
 
-		else {
-			
-			prioritaet = new BasisPrioritaet();
-			prioId = new BasisPrioritaetId();
-			
-			prioId.setStandortId(obj.getBasisStandort().getStandortid());
-			prioId.setBetreiberId(obj.getBasisBetreiber().getBetreiberid());
-			prioritaet.setId(prioId);
-			
-			prioritaet.setBasisBetreiber(obj.getBasisBetreiber());
-			prioritaet.setBasisStandort(obj.getBasisStandort());
-			prioritaet.setPrioritaet(prio);
+        success = new DatabaseAccess().saveOrUpdate(prioritaet);
+        if (success) {
+            saved = prioritaet;
+        }
 
-			Transaction tx = null;
-			try {
-				Session session = HibernateSessionFactory.currentSession();
-				tx = session.beginTransaction();
-				session.saveOrUpdate(prioritaet);
-				saved = prioritaet;
-
-				tx.commit();
-			} catch (HibernateException e) {
-				saved = null;
-				e.printStackTrace();
-				if (tx != null) {
-					try {
-						tx.rollback();
-					} catch (HibernateException e1) {
-						dbManager.handleDBException(e1,
-								"BasisPrioritaet.save", false);
-					}
-				}
-			} finally {
-				HibernateSessionFactory.closeSession();
-			}
-		}
-
-		return saved;
-	}
+        return saved;
+    }
 }

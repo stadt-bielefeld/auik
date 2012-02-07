@@ -91,29 +91,14 @@ public class AtlKlaeranlagen extends AbstractAtlKlaeranlagen implements
 
         String suchString = "from AtlKlaeranlagen ka order by ka.kaId";
 
-        // TODO: setCacheable gut und schön, aber ohne die Einstellungen in der
-        // config tut das auch nüx...
         list = new DatabaseAccess().createQuery(suchString)
-//                .setCacheable(true);
-//                .setCacheRegion("kaliste");
+                .setCacheable(true)
+                .setCacheRegion("kaliste")
                 .list();
 
         result = new AtlKlaeranlagen[list.size()];
         result = (AtlKlaeranlagen[]) list.toArray(result);
 
-//        try {
-//            Session session = HibernateSessionFactory.currentSession();
-//            Query query = session.createQuery(suchString);
-//            query.setCacheable(true);
-//            query.setCacheRegion("kaliste");
-//            list = query.list();
-//            result = new AtlKlaeranlagen[list.size()];
-//            result = (AtlKlaeranlagen[]) list.toArray(result);
-//        } catch (HibernateException e) {
-//            throw new RuntimeException("Datenbank-Fehler", e);
-//        } finally {
-//            HibernateSessionFactory.closeSession();
-//        }
         return result;
     }
 }

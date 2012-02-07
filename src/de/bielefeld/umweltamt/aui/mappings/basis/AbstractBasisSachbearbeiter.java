@@ -19,15 +19,17 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
-public abstract class AbstractBasisSachbearbeiter
-    implements Serializable
-{
-    /** The cached hash code value for this instance.  Settting to 0 triggers re-calculation. */
+public abstract class AbstractBasisSachbearbeiter implements Serializable {
+    private static final long serialVersionUID = 5350350541608539779L;
+
+    /**
+     * The cached hash code value for this instance. Setting to 0 triggers
+     * re-calculation.
+     */
     private int hashValue = 0;
 
     /** The composite primary key value. */
@@ -63,16 +65,15 @@ public abstract class AbstractBasisSachbearbeiter
     /**
      * Simple constructor of AbstractBasisSachbearbeiter instances.
      */
-    public AbstractBasisSachbearbeiter()
-    {
+    public AbstractBasisSachbearbeiter() {
     }
 
     /**
-     * Constructor of AbstractBasisSachbearbeiter instances given a simple primary key.
+     * Constructor of AbstractBasisSachbearbeiter instances given a simple
+     * primary key.
      * @param kennummer
      */
-    public AbstractBasisSachbearbeiter(java.lang.String kennummer)
-    {
+    public AbstractBasisSachbearbeiter(java.lang.String kennummer) {
         this.setKennummer(kennummer);
     }
 
@@ -80,8 +81,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the simple primary key value that identifies this object.
      * @return java.lang.Integer
      */
-    public java.lang.String getKennummer()
-    {
+    public java.lang.String getKennummer() {
         return kennummer;
     }
 
@@ -89,8 +89,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Set the simple primary key value that identifies this object.
      * @param kennummer
      */
-    public void setKennummer(java.lang.String kennummer)
-    {
+    public void setKennummer(java.lang.String kennummer) {
         this.hashValue = 0;
         this.kennummer = kennummer;
     }
@@ -99,8 +98,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the value of the Name column.
      * @return java.lang.String
      */
-    public java.lang.String getName()
-    {
+    public java.lang.String getName() {
         return this.name;
     }
 
@@ -108,8 +106,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Set the value of the Name column.
      * @param name
      */
-    public void setName(java.lang.String name)
-    {
+    public void setName(java.lang.String name) {
         this.name = name;
     }
 
@@ -117,8 +114,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the value of the Zeichen column.
      * @return java.lang.String
      */
-    public java.lang.String getZeichen()
-    {
+    public java.lang.String getZeichen() {
         return this.zeichen;
     }
 
@@ -126,8 +122,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Set the value of the Zeichen column.
      * @param zeichen
      */
-    public void setZeichen(java.lang.String zeichen)
-    {
+    public void setZeichen(java.lang.String zeichen) {
         this.zeichen = zeichen;
     }
 
@@ -135,8 +130,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the value of the Zimmer column.
      * @return java.lang.String
      */
-    public java.lang.String getZimmer()
-    {
+    public java.lang.String getZimmer() {
         return this.zimmer;
     }
 
@@ -144,8 +138,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Set the value of the Zimmer column.
      * @param zimmer
      */
-    public void setZimmer(java.lang.String zimmer)
-    {
+    public void setZimmer(java.lang.String zimmer) {
         this.zimmer = zimmer;
     }
 
@@ -153,17 +146,15 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the value of the Telefon column.
      * @return java.lang.String
      */
-    public java.lang.String getTelefon()
-    {
-        return this.telefon;        
+    public java.lang.String getTelefon() {
+        return this.telefon;
     }
 
     /**
      * Set the value of the Telefon column.
      * @param telefon
      */
-    public void setTelefon(java.lang.String telefon)
-    {
+    public void setTelefon(java.lang.String telefon) {
         this.telefon = telefon;
     }
 
@@ -171,8 +162,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the value of the Telefax column.
      * @return java.lang.String
      */
-    public java.lang.String getTelefax()
-    {
+    public java.lang.String getTelefax() {
         return this.telefax;
     }
 
@@ -180,8 +170,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Set the value of the Telefax column.
      * @param telefax
      */
-    public void setTelefax(java.lang.String telefax)
-    {
+    public void setTelefax(java.lang.String telefax) {
         this.telefax = telefax;
     }
 
@@ -189,8 +178,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the value of the EMail column.
      * @return java.lang.String
      */
-    public java.lang.String getEmail()
-    {
+    public java.lang.String getEmail() {
         return this.email;
     }
 
@@ -198,8 +186,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Set the value of the EMail column.
      * @param email
      */
-    public void setEmail(java.lang.String email)
-    {
+    public void setEmail(java.lang.String email) {
         this.email = email;
     }
 
@@ -207,8 +194,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the value of the Istadministrator column.
      * @return java.lang.Boolean
      */
-    public java.lang.Boolean getIstadministrator()
-    {
+    public java.lang.Boolean getIstadministrator() {
         return this.istadminstrator;
     }
 
@@ -216,8 +202,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Set the value of the Istadministrator column.
      * @param istadminstrator
      */
-    public void setIstadministrator(java.lang.Boolean istadminstrator)
-    {
+    public void setIstadministrator(java.lang.Boolean istadminstrator) {
         this.istadminstrator = istadminstrator;
     }
 
@@ -225,8 +210,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the value of the Pfadspeichern column.
      * @return java.lang.String
      */
-    public java.lang.String getPfadspeichern()
-    {
+    public java.lang.String getPfadspeichern() {
         return this.pfadspeichern;
     }
 
@@ -234,8 +218,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Set the value of the EMail column.
      * @param pfadspeichern
      */
-    public void setPfadspeichern(java.lang.String pfadspeichern)
-    {
+    public void setPfadspeichern(java.lang.String pfadspeichern) {
         this.pfadspeichern = pfadspeichern;
     }
 
@@ -243,8 +226,7 @@ public abstract class AbstractBasisSachbearbeiter
      * Return the value of the Gehoertzuarbeitsgr column.
      * @return java.lang.Integer
      */
-    public java.lang.String getGehoertzuarbeitsgr()
-    {
+    public java.lang.String getGehoertzuarbeitsgr() {
         return this.gehoertzuarbeitsgr;
     }
 
@@ -252,27 +234,25 @@ public abstract class AbstractBasisSachbearbeiter
      * Set the value of the Istadministrator column.
      * @param gehoertzuarbeitsgr
      */
-    public void setGehoertzuarbeitsgr(java.lang.String gehoertzuarbeitsgr)
-    {
+    public void setGehoertzuarbeitsgr(java.lang.String gehoertzuarbeitsgr) {
         this.gehoertzuarbeitsgr = gehoertzuarbeitsgr;
     }
 
     /**
-     * Implementation of the equals comparison on the basis of equality of the primary key values.
+     * Implementation of the equals comparison on the basis of equality of the
+     * primary key values.
      * @param rhs
      * @return boolean
      */
-    public boolean equals(Object rhs)
-    {
+    @Override
+    public boolean equals(Object rhs) {
         if (rhs == null)
             return false;
-        if (! (rhs instanceof BasisSachbearbeiter))
+        if (!(rhs instanceof BasisSachbearbeiter))
             return false;
         BasisSachbearbeiter that = (BasisSachbearbeiter) rhs;
-        if (this.getKennummer() != null && that.getKennummer() != null)
-        {
-            if (! this.getKennummer().equals(that.getKennummer()))
-            {
+        if (this.getKennummer() != null && that.getKennummer() != null) {
+            if (!this.getKennummer().equals(that.getKennummer())) {
                 return false;
             }
         }
@@ -280,16 +260,17 @@ public abstract class AbstractBasisSachbearbeiter
     }
 
     /**
-     * Implementation of the hashCode method conforming to the Bloch pattern with
-     * the exception of array properties (these are very unlikely primary key types).
+     * Implementation of the hashCode method conforming to the Bloch pattern
+     * with the exception of array properties (these are very unlikely primary
+     * key types).
      * @return int
      */
-    public int hashCode()
-    {
-        if (this.hashValue == 0)
-        {
+    @Override
+    public int hashCode() {
+        if (this.hashValue == 0) {
             int result = 17;
-            int kennummerValue = this.getKennummer() == null ? 0 : this.getKennummer().hashCode();
+            int kennummerValue = this.getKennummer() == null ? 0 : this
+                .getKennummer().hashCode();
             result = result * 37 + kennummerValue;
             this.hashValue = result;
         }

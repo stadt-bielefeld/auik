@@ -513,10 +513,10 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     } else if (objekt.getBasisObjektarten().isGenehmigung()) {
                         getChronoTab().fetchFormData();
                         getGenehmigungTab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().abteilungIs34()) {
+                    } else if (objekt.getBasisObjektarten().isAbteilung34()) {
                         getChronoTab().fetchFormData();
                         getVawsTab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().abteilungIs33()) {
+                    } else if (objekt.getBasisObjektarten().isAbteilung33()) {
                         getChronoTab().fetchFormData();
                     }
                 }
@@ -657,13 +657,13 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             getChronoTab().updateForm();
                             getGenehmigungTab().updateForm();
                             getTabbedPane().setSelectedComponent(getGenehmigungTab());
-                        } else if (objekt.getBasisObjektarten().abteilungIs34()) {
+                        } else if (objekt.getBasisObjektarten().isAbteilung34()) {
                             getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                             getTabbedPane().addTab(getVawsTab().getName(), getVawsTab());
                             getChronoTab().updateForm();
                             getVawsTab().updateForm();
                             getTabbedPane().setSelectedComponent(getVawsTab());
-                        } else if (objekt.getBasisObjektarten().abteilungIs33()) {
+                        } else if (objekt.getBasisObjektarten().isAbteilung33()) {
                             getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                             getChronoTab().updateForm();
                             getTabbedPane().setSelectedComponent(getBasisTab());
