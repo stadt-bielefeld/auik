@@ -19,52 +19,30 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Thu May 19 07:47:27 CEST 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 import java.util.List;
 
-
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ANH_49_ABSCHEIDERDETAILS' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ANH_49_ABSCHEIDERDETAILS' table. This
+ * class may be customized as it is never re-generated after being created.
  */
-public class Anh49Abscheiderdetails
-    extends AbstractAnh49Abscheiderdetails
-    implements Serializable
-{
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
-	/** Logging */
+public class Anh49Abscheiderdetails extends AbstractAnh49Abscheiderdetails
+    implements Serializable {
+    private static final long serialVersionUID = -7129534671978623498L;
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of Anh49Abscheiderdetails instances.
      */
-    public Anh49Abscheiderdetails()
-    {
+    public Anh49Abscheiderdetails() {
         // Die Bool-Werte sind standardmäßig false
-        short fW = 0;
-        Short f = new Short(fW);
-
         setTankstelle(false);
         setSchlammfang(false);
         setBenzinOelabscheider(false);
@@ -76,11 +54,11 @@ public class Anh49Abscheiderdetails
     }
 
     /**
-     * Constructor of Anh49Abscheiderdetails instances given a simple primary key.
+     * Constructor of Anh49Abscheiderdetails instances given a simple primary
+     * key.
      * @param abscheiderid
      */
-    public Anh49Abscheiderdetails(java.lang.Integer abscheiderid)
-    {
+    public Anh49Abscheiderdetails(java.lang.Integer abscheiderid) {
         super(abscheiderid);
     }
 
@@ -90,132 +68,91 @@ public class Anh49Abscheiderdetails
      * Liefert einen String der Form "[ID:ID, NR von VON, LAGE]".
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
-        return "[ID:"+ getAbscheiderid() +", "+ getAbscheidernr() +" von "+ getVon() +", "+ getLage() +"]";
+        return "[ID:" + getAbscheiderid() + ", " + getAbscheidernr() + " von "
+            + getVon() + ", " + getLage() + "]";
     }
 
     /**
      * Liefert alle Abscheiderdetails eines bestimmten Fachdatenobjekts.
      */
-    public static List getAbscheiderDetails(Anh49Fachdaten fd) {
-        List details;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            details = session.createQuery(
-                    "from Anh49Abscheiderdetails as details where " +
-                    "details.Anh49Fachdaten = ? " +
-                    "order by details.abscheidernr asc")
-                    .setEntity(0, fd)
-                    .list();
+    public static List<?> getAbscheiderDetails(Anh49Fachdaten fd) {
+        List<?> details;
+        details = new DatabaseAccess()
+            .createQuery(
+                "from Anh49Abscheiderdetails as details "
+                    + "where details.Anh49Fachdaten = :fd "
+                    + "order by details.abscheidernr asc")
+            .setEntity("fd", fd)
+            .list();
 
-            log.debug("Details für " + fd + ", Anzahl: " + details.size());
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        log.debug("Details für " + fd + ", Anzahl: " + details.size());
         return details;
     }
 
-    public static List getFettabschListe() {
+    /*
+     * TODO: This has some problems!
+     *
+     * fettabsch is a List of Anh49Abscheiderdetails
+     * fettabsch2 is a List of Anh49Fachdaten
+     *
+     * we iterate over fettabsch2
+     *      get the Anh49Abscheiderdetails for the Anh49Fachdaten
+     *      and if the Anh49Abscheiderdetails is an empty list
+     *          we add the Anh49Fachdaten to fettabsch
+     *          but that is a List of Anh49Abscheiderdetails!
+     */
+    public static List<?> getFettabschListe() {
 
-        List fettabsch;   // Liste für Fettabscheider aus Anh49Abscheiderdetails
-        List fettabsch2; //  Liste für Fettabscheider aus Anh49Fachdaten
+        // Liste für Fettabscheider aus Anh49Abscheiderdetails
+        List fettabsch;
+        // Liste für Fettabscheider aus Anh49Fachdaten
+        List<?> fettabsch2;
         Anh49Fachdaten item;
 
-        String query = "from Anh49Abscheiderdetails details where details.Anh49Fachdaten.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
-            //+"order by details.nenngroesse desc";
-              +"order by details.Anh49Fachdaten.basisObjekt.inaktiv, details.Anh49Fachdaten.basisObjekt.basisBetreiber.betrname";
-        Session session = HibernateSessionFactory.currentSession();
-        fettabsch = session.createQuery(query).list();
-        HibernateSessionFactory.closeSession();
+        String query = "from Anh49Abscheiderdetails details "
+            + "where details.Anh49Fachdaten.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
+            // +"order by details.nenngroesse desc";
+            + "order by details.Anh49Fachdaten.basisObjekt.inaktiv, "
+            + "details.Anh49Fachdaten.basisObjekt.basisBetreiber.betrname";
+        fettabsch = new DatabaseAccess().createQuery(query).list();
 
-        String query2 = "from Anh49Fachdaten anh49"+
-                        " where anh49.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
-                         +"order by anh49.basisObjekt.inaktiv, anh49.basisObjekt.basisBetreiber.betrname";
-        session = HibernateSessionFactory.currentSession();
-        fettabsch2 = session.createQuery(query2).list();
-        HibernateSessionFactory.closeSession();
+        String query2 = "from Anh49Fachdaten anh49"
+            + " where anh49.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
+            + "order by anh49.basisObjekt.inaktiv, "
+            + "anh49.basisObjekt.basisBetreiber.betrname";
+        fettabsch2 = new DatabaseAccess().createQuery(query2).list();
 
-    //Es können auch Abscheider eingepflegt sein zu denen keien Details vorhanden sind
-    // Diese Abscheider werden hier zur Liste fettabsch hinzugefügt
+        // Es können auch Abscheider eingepflegt sein zu denen keien Details
+        // vorhanden sind
+        // Diese Abscheider werden hier zur Liste fettabsch hinzugefügt
         for (int j = 0; j < fettabsch2.size(); j++) {
             item = (Anh49Fachdaten) fettabsch2.get(j);
 
-            if (getAbscheiderDetails(item).size() == 0 )
-            {
+            if (getAbscheiderDetails(item).size() == 0) {
                 fettabsch.add(item);
-
             }
-
         }
 
         return fettabsch;
-
     }
 
-
     public static boolean saveAbscheider(Anh49Abscheiderdetails absch) {
-        boolean saved;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.saveOrUpdate(absch);
-            tx.commit();
-            saved = true;
-        } catch (HibernateException e) {
-            saved = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                	dbManager.handleDBException(e1, "Anh49Abscheider.save", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean saved = false;
+        saved = new DatabaseAccess().saveOrUpdate(absch);
         return saved;
     }
 
     public static boolean removeAbscheider(Anh49Abscheiderdetails abscheider) {
-        boolean removed;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(abscheider);
-            tx.commit();
-            removed = true;
-        } catch (HibernateException e) {
-            removed = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                	dbManager.handleDBException(e1, "Anh49AbscheiderModel.objectRemoved", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean removed = false;
+        removed = new DatabaseAccess().delete(abscheider);
         return removed;
     }
-
 
     public BasisObjekt getBasisObjekt() {
         Anh49Fachdaten fd = getAnh49Fachdaten();
 
         return fd != null ? fd.getBasisObjekt() : null;
     }
-
-
 }

@@ -27,45 +27,31 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 import java.io.Serializable;
 import java.util.List;
 
-
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ANH_49_ORTSTERMINE' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ANH_49_ORTSTERMINE' table. This class
+ * may be customized as it is never re-generated after being created.
  */
-public class Anh49Ortstermine
-    extends AbstractAnh49Ortstermine
-    implements Serializable
-{
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
-	/** Logging */
+public class Anh49Ortstermine extends AbstractAnh49Ortstermine implements
+    Serializable {
+    private static final long serialVersionUID = -5694754322859087778L;
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of Anh49Ortstermine instances.
      */
-    public Anh49Ortstermine()
-    {
+    public Anh49Ortstermine() {
     }
 
     /**
      * Constructor of Anh49Ortstermine instances given a simple primary key.
      * @param ortsterminid
      */
-    public Anh49Ortstermine(java.lang.Integer ortsterminid)
-    {
+    public Anh49Ortstermine(java.lang.Integer ortsterminid) {
         super(ortsterminid);
     }
 
@@ -75,85 +61,37 @@ public class Anh49Ortstermine
      * Liefert einen String der Form "[Datum: DATUM und SACHBEARBEITER]".
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
-        return "[Datum: "+ AuikUtils.getStringFromDate(getDatum()) +", SachbearbeiterIn: "+ getSachbearbeiterIn() +"]";
+        return "[Datum: " + AuikUtils.getStringFromDate(getDatum())
+            + ", SachbearbeiterIn: " + getSachbearbeiterIn() + "]";
     }
 
     /**
      * Liefert alle Ortstermine eines bestimmten Fachdatenobjekts.
      */
-    public static List getOrtstermine(Anh49Fachdaten fd) {
-        List ot;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            ot = session.createQuery(
-                    "from Anh49Ortstermine as ot where " +
-                    "ot.anh49Fachdaten = ? " +
-                    "order by ot.datum")
-                    .setEntity(0, fd)
-                    .list();
-
-            log.debug("Ortstermine für " + fd + ", Anzahl: " + ot.size());
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
-        return ot;
+    public static List<?> getOrtstermine(Anh49Fachdaten fd) {
+        List<?> list;
+        list = new DatabaseAccess()
+            .createQuery(
+                "from Anh49Ortstermine as ot "
+                    + "where ot.anh49Fachdaten = :fd "
+                    + "order by ot.datum")
+            .setEntity("fd", fd)
+            .list();
+        log.debug("Ortstermine für " + fd + ", Anzahl: " + list.size());
+        return list;
     }
 
-    public static void saveOrUpdateOrtstermin(Anh49Ortstermine ot) {
-        Transaction tx = null;
-
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-
-            tx = session.beginTransaction();
-
-            session.saveOrUpdate(ot);
-
-            tx.commit();
-
-        } catch (HibernateException e) {
-            // Falls während der Änderungen ein Hibernate Fehler auftritt
-            if (tx != null) {
-                try {
-                    // Alle Änderungen rückgängig machen
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    throw new RuntimeException("Datenbank-Fehler (Anh49Ortstermine)", e);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+    public static boolean saveOrUpdateOrtstermin(Anh49Ortstermine ot) {
+        boolean success = false;
+        success = new DatabaseAccess().saveOrUpdate(ot);
+        return success;
     }
 
     public static boolean removeOrtstermin(Anh49Ortstermine ot) {
-        boolean removed;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(ot);
-            tx.commit();
-            removed = true;
-        } catch (HibernateException e) {
-            removed = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "Anh49Ortstermin.objectRemoved", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean removed = false;
+        removed = new DatabaseAccess().delete(ot);
         return removed;
     }
 }

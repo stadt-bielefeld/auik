@@ -26,13 +26,17 @@ import java.io.Serializable;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
- * A class that represents a row in the ANH_52_FACHDATEN table.
- * You can customize the behavior of this class by editing the class, {@link Anh52Fachdaten()}.
+ * A class that represents a row in the ANH_52_FACHDATEN table. You can
+ * customize the behavior of this class by editing the class, {@link
+ * Anh52Fachdaten()}.
  */
-public abstract class AbstractAnh52Fachdaten
-    implements Serializable
-{
-    /** The cached hash code value for this instance.  Settting to 0 triggers re-calculation. */
+public abstract class AbstractAnh52Fachdaten implements Serializable {
+    private static final long serialVersionUID = 5476172214727919450L;
+
+    /**
+     * The cached hash code value for this instance. Settting to 0 triggers
+     * re-calculation.
+     */
     private int hashValue = 0;
 
     /** The composite primary key value. */
@@ -53,16 +57,15 @@ public abstract class AbstractAnh52Fachdaten
     /**
      * Simple constructor of AbstractAnh52Fachdaten instances.
      */
-    public AbstractAnh52Fachdaten()
-    {
+    public AbstractAnh52Fachdaten() {
     }
 
     /**
-     * Constructor of AbstractAnh52Fachdaten instances given a simple primary key.
+     * Constructor of AbstractAnh52Fachdaten instances given a simple primary
+     * key.
      * @param id
      */
-    public AbstractAnh52Fachdaten(java.lang.Integer objektid)
-    {
+    public AbstractAnh52Fachdaten(java.lang.Integer objektid) {
         this.setObjektid(objektid);
     }
 
@@ -70,8 +73,7 @@ public abstract class AbstractAnh52Fachdaten
      * Return the simple primary key value that identifies this object.
      * @return java.lang.Integer
      */
-    public java.lang.Integer getObjektid()
-    {
+    public java.lang.Integer getObjektid() {
         return objektid;
     }
 
@@ -79,8 +81,7 @@ public abstract class AbstractAnh52Fachdaten
      * Set the simple primary key value that identifies this object.
      * @param id
      */
-    public void setObjektid(java.lang.Integer objektid)
-    {
+    public void setObjektid(java.lang.Integer objektid) {
         this.hashValue = 0;
         this.objektid = objektid;
     }
@@ -89,8 +90,7 @@ public abstract class AbstractAnh52Fachdaten
      * Return the value of the OBJID column.
      * @return BasisObjekt
      */
-    public BasisObjekt getBasisObjekt()
-    {
+    public BasisObjekt getBasisObjekt() {
         return this.basisObjekt;
     }
 
@@ -98,8 +98,7 @@ public abstract class AbstractAnh52Fachdaten
      * Set the value of the OBJID column.
      * @param basisObjekt
      */
-    public void setBasisObjekt(BasisObjekt basisObjekt)
-    {
+    public void setBasisObjekt(BasisObjekt basisObjekt) {
         this.basisObjekt = basisObjekt;
     }
 
@@ -152,21 +151,20 @@ public abstract class AbstractAnh52Fachdaten
     }
 
     /**
-     * Implementation of the equals comparison on the basis of equality of the primary key values.
+     * Implementation of the equals comparison on the basis of equality of the
+     * primary key values.
      * @param rhs
      * @return boolean
      */
-    public boolean equals(Object rhs)
-    {
+    @Override
+    public boolean equals(Object rhs) {
         if (rhs == null)
             return false;
-        if (! (rhs instanceof Anh52Fachdaten))
+        if (!(rhs instanceof Anh52Fachdaten))
             return false;
         Anh52Fachdaten that = (Anh52Fachdaten) rhs;
-        if (this.getObjektid() != null && that.getObjektid() != null)
-        {
-            if (! this.getObjektid().equals(that.getObjektid()))
-            {
+        if (this.getObjektid() != null && that.getObjektid() != null) {
+            if (!this.getObjektid().equals(that.getObjektid())) {
                 return false;
             }
         }
@@ -174,16 +172,17 @@ public abstract class AbstractAnh52Fachdaten
     }
 
     /**
-     * Implementation of the hashCode method conforming to the Bloch pattern with
-     * the exception of array properties (these are very unlikely primary key types).
+     * Implementation of the hashCode method conforming to the Bloch pattern
+     * with the exception of array properties (these are very unlikely primary
+     * key types).
      * @return int
      */
-    public int hashCode()
-    {
-        if (this.hashValue == 0)
-        {
+    @Override
+    public int hashCode() {
+        if (this.hashValue == 0) {
             int result = 17;
-            int idValue = this.getObjektid() == null ? 0 : this.getObjektid().hashCode();
+            int idValue = this.getObjektid() == null ? 0 : this.getObjektid()
+                .hashCode();
             result = result * 37 + idValue;
             this.hashValue = result;
         }

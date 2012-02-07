@@ -29,31 +29,27 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ANH_49_VERWALTUNGSVERF' table.
- * This class may be customized as it is never re-generated
- * after being created.
- * <br><br>
+ * A class that represents a row in the 'ANH_49_VERWALTUNGSVERF' table. This
+ * class may be customized as it is never re-generated after being created. <br>
+ * <br>
  * Well, not really. I just copied this from a generated class and modified it!
- *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
-public class Anh49Verwaltungsverfahren
-    extends AbstractAnh49Verwaltungsverfahren
-    implements Serializable
-{
-	private static final long serialVersionUID = 7696154300748058009L;
+public class Anh49Verwaltungsverfahren extends
+    AbstractAnh49Verwaltungsverfahren implements Serializable {
+    private static final long serialVersionUID = 7696154300748058009L;
 
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /** Simple constructor of Anh49Verwaltungsverfahren instances. */
     public Anh49Verwaltungsverfahren() {
-    	super();
+        super();
     }
 
     /**
-     * Constructor of Anh49Verwaltungsverfahren instances given a simple
-     * primary key.
+     * Constructor of Anh49Verwaltungsverfahren instances given a simple primary
+     * key.
      * @param verwaltungsverfahrenID
      */
     public Anh49Verwaltungsverfahren(java.lang.Integer verwaltungsverfahrenID) {
@@ -63,13 +59,12 @@ public class Anh49Verwaltungsverfahren
     @Override
     public String toString() {
         return "[Datum: " + AuikUtils.getStringFromDate(this.getDatum())
-            + ", Maßnahme: " + this.getMassnahme()
-            + " (" + ((this.isAbgeschlossen()!=null && this.isAbgeschlossen())
-                        ?"":"nicht ") + "abgeschlossen)"
+            + ", Maßnahme: " + this.getMassnahme() + " ("
+            + ((this.isAbgeschlossen() != null && this.isAbgeschlossen()) ? ""
+                : "nicht ") + "abgeschlossen)"
             + ", SachbearbeiterIn: " + this.getSachbearbeiterIn()
-            + (this.getWiedervorlage()==null?"":", Wiedervorlage: "
-            + AuikUtils.getStringFromDate(this.getWiedervorlage()))
-            + "]";
+            + (this.getWiedervorlage() == null ? "" : ", Wiedervorlage: "
+            + AuikUtils.getStringFromDate(this.getWiedervorlage())) + "]";
     }
 
     /**
@@ -77,35 +72,35 @@ public class Anh49Verwaltungsverfahren
      * @param fachdaten The "Anhang 49" object
      * @return List<Anh49Verwaltungsverfahren>
      */
-    public static List<Anh49Verwaltungsverfahren>
-    		getVerwaltungsverfahren(Anh49Fachdaten fachdaten) {
-        List<Anh49Verwaltungsverfahren> verwaltungsverfahrensListe = null;
-        verwaltungsverfahrensListe = (List<Anh49Verwaltungsverfahren>)
-            new DatabaseAccess().createQuery(
-                    "from Anh49Verwaltungsverfahren as verfahren where " +
-                    "verfahren.anh49Fachdaten = :fachdaten " +
-                    "order by verfahren.datum")
-                .setEntity("fachdaten", fachdaten)
-                .list();
-        log.debug("Verwaltungsverfahren für " + fachdaten
-                + ", Anzahl: " + verwaltungsverfahrensListe.size());
-        return verwaltungsverfahrensListe;
+    public static List<?> getVerwaltungsverfahren(Anh49Fachdaten fachdaten) {
+        List<?> liste = null;
+        liste = new DatabaseAccess()
+            .createQuery(
+                "from Anh49Verwaltungsverfahren as verfahren "
+                    + "where verfahren.anh49Fachdaten = :fachdaten "
+                    + "order by verfahren.datum")
+            .setEntity("fachdaten", fachdaten)
+            .list();
+        log.debug("Verwaltungsverfahren für " + fachdaten + ", Anzahl: "
+            + liste.size());
+        return liste;
     }
 
-    public static void saveOrUpdateVerwaltungsverfahren(
-            Anh49Verwaltungsverfahren verwaltungsverfahren) {
+    public static boolean saveOrUpdateVerwaltungsverfahren(
+        Anh49Verwaltungsverfahren verwaltungsverfahren) {
         boolean success = false;
         success = new DatabaseAccess().saveOrUpdate(verwaltungsverfahren);
         log.debug("SaveOrUpdate on " + verwaltungsverfahren
-                + (success ? "" : "un") + "successful.");
+            + (success ? "" : "un") + "successful.");
+        return success;
     }
 
     public static boolean removeVerwaltungsverfahren(
-            Anh49Verwaltungsverfahren verwaltungsverfahren) {
+        Anh49Verwaltungsverfahren verwaltungsverfahren) {
         boolean success;
         success = new DatabaseAccess().delete(verwaltungsverfahren);
-        log.debug("Delete on " + verwaltungsverfahren
-                + (success ? "" : "un") + "successful.");
+        log.debug("Delete on " + verwaltungsverfahren + (success ? "" : "un")
+            + "successful.");
         return success;
     }
 }

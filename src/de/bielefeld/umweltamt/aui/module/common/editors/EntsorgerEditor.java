@@ -59,13 +59,10 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 
-
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -76,7 +73,9 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * @author Gerhard Genuit
  */
 public class EntsorgerEditor extends AbstractBaseEditor {
-	/** Logging */
+    private static final long serialVersionUID = -225497689116093559L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private JTextField namenFeld;
@@ -94,6 +93,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
         super("Entsorger ("+ entsorg.getEntsorger() +")", entsorg, owner);
     }
 
+    @Override
     protected JComponent buildContentArea() {
         namenFeld = new LimitedTextField(100, "");
         strassenFeld = new LimitedTextField(100, "");
@@ -106,6 +106,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
         // Der folgende KeyListener wird benutzt um mit Escape
         // das Bearbeiten abzubrechen.
         KeyListener escListener = new KeyAdapter() {
+            @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     doCancel();
@@ -165,6 +166,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
 
 
 
+    @Override
     protected void fillForm() {
         namenFeld.setText(getEntsorger().getEntsorger());
         strassenFeld.setText(getEntsorger().getStrasse());
@@ -175,6 +177,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
         telefonFeld.setText(getEntsorger().getTelefon());
     }
 
+    @Override
     protected boolean canSave() {
         return true;
     }
@@ -182,6 +185,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
     /**
      * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
      */
+    @Override
     protected boolean doSave() {
 
         // Name
@@ -230,14 +234,11 @@ public class EntsorgerEditor extends AbstractBaseEditor {
         }
 
         boolean success;
+        success = AnhEntsorger.saveEntsorger(getEntsorger());
 
-        setEditedObject(AnhEntsorger.saveEntsorger(getEntsorger()));
-
-        if (getEntsorger() != null) {
-            success = true;
+        if (success) {
+            setEditedObject(getEntsorger());
             log.debug("Änderungen gespeichert!");
-        } else {
-            success = false;
         }
 
         return success;

@@ -24,45 +24,31 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 import java.io.Serializable;
 import java.util.List;
 
-
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'ANH_49_KONTROLLEN' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'ANH_49_KONTROLLEN' table. This class
+ * may be customized as it is never re-generated after being created.
  */
-public class Anh49Kontrollen
-    extends AbstractAnh49Kontrollen
-    implements Serializable
-{
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
-	/** Logging */
+public class Anh49Kontrollen extends AbstractAnh49Kontrollen implements
+    Serializable {
+    private static final long serialVersionUID = 6385012584069870464L;
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of Anh49Ortstermine instances.
      */
-    public Anh49Kontrollen()
-    {
+    public Anh49Kontrollen() {
     }
 
     /**
      * Constructor of Anh49Ortstermine instances given a simple primary key.
      * @param ortsterminid
      */
-    public Anh49Kontrollen(java.lang.Integer Id)
-    {
+    public Anh49Kontrollen(java.lang.Integer Id) {
         super(Id);
     }
 
@@ -72,113 +58,43 @@ public class Anh49Kontrollen
      * Liefert einen String der Form "[Datum: Prüfdatum und Pruefergebnis]".
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
-        return "[Prüfdatum: "+ AuikUtils.getStringFromDate(getPruefdatum()) +", Ergebnis: "+ getPruefergebnis() +"]";
+        return "[Prüfdatum: " + AuikUtils.getStringFromDate(getPruefdatum())
+            + ", Ergebnis: " + getPruefergebnis() + "]";
     }
 
     /**
      * Liefert alle Kontrollen eines bestimmten Fachdatenobjekts.
      */
-    public static List getKontrollen(Anh49Fachdaten fd) {
-        List ot;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            ot = session.createQuery(
-                    "from Anh49Kontrollen as kt where " +
-                    "kt.anh49Fachdaten = ? " +
-                    "order by kt.pruefdatum")
-                    .setEntity(0, fd)
-                    .list();
-
-            log.debug("Kontrollen für " + fd + ", Anzahl: " + ot.size());
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
-        return ot;
+    public static List<?> getKontrollen(Anh49Fachdaten fd) {
+        List<?> list = null;
+        list = new DatabaseAccess()
+            .createQuery(
+                "from Anh49Kontrollen as kt "
+                    + "where kt.anh49Fachdaten = :fd "
+                    + "order by kt.pruefdatum")
+            .setEntity("fd", fd)
+            .list();
+        log.debug("Kontrollen für " + fd + ", Anzahl: " + list.size());
+        return list;
     }
 
-    public static void saveOrUpdateOrtstermin(Anh49Kontrollen kt) {
-        Transaction tx = null;
-
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-
-            tx = session.beginTransaction();
-
-            session.saveOrUpdate(kt);
-
-            tx.commit();
-
-        } catch (HibernateException e) {
-            // Falls während der Änderungen ein Hibernate Fehler auftritt
-            if (tx != null) {
-                try {
-                    // Alle Änderungen rückgängig machen
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    throw new RuntimeException("Datenbank-Fehler (Anh49Kontrollen)", e);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+    public static boolean saveOrUpdateOrtstermin(Anh49Kontrollen kt) {
+        boolean success = false;
+        success = new DatabaseAccess().saveOrUpdate(kt);
+        return success;
     }
 
     public static boolean removeOrtstermin(Anh49Kontrollen kt) {
-        boolean removed;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(kt);
-            tx.commit();
-            removed = true;
-        } catch (HibernateException e) {
-            removed = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                	dbManager.handleDBException(e1, "Anh49Kontrollen.objectRemoved", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean removed = false;
+        removed = new DatabaseAccess().delete(kt);
         return removed;
     }
 
-	public static void saveOrUpdateAnalyse(Anh49Kontrollen kontrolle) {
-        Transaction tx = null;
-
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-
-            tx = session.beginTransaction();
-
-            session.saveOrUpdate(kontrolle);
-
-            tx.commit();
-
-        } catch (HibernateException e) {
-            // Falls während der Änderungen ein Hibernate Fehler auftritt
-            if (tx != null) {
-                try {
-                    // Alle Änderungen rückgängig machen
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    throw new RuntimeException("Datenbank-Fehler (Anh49Kontrollen)", e);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-		
-	}
+    public static boolean saveOrUpdateAnalyse(Anh49Kontrollen kontrolle) {
+        boolean success = false;
+        success = new DatabaseAccess().saveOrUpdate(kontrolle);
+        return success;
+    }
 }
