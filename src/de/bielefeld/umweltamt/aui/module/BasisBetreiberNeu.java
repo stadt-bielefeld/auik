@@ -128,6 +128,7 @@ public class BasisBetreiberNeu extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Neuer Betreiber";
     }
@@ -135,6 +136,7 @@ public class BasisBetreiberNeu extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      */
+    @Override
     public String getIdentifier() {
         return "m_betreiber_neu";
     }
@@ -142,6 +144,7 @@ public class BasisBetreiberNeu extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "Betriebe";
     }
@@ -149,6 +152,7 @@ public class BasisBetreiberNeu extends AbstractModul {
     /**
      * @see de.bielefeld.umweltamt.aui.Modul#getIcon()
      */
+    @Override
     public Icon getIcon() {
         return super.getIcon("filenew32.png");
     }
@@ -156,6 +160,7 @@ public class BasisBetreiberNeu extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
             speichernButton = new JButton("Speichern");
@@ -202,6 +207,7 @@ public class BasisBetreiberNeu extends AbstractModul {
             // im Handzeichen-Feld (wenn das Feld nicht leer ist)
             // zum Speichern-Button zu springen.
             handzeichenNeuFeld.addKeyListener(new KeyAdapter() {
+                @Override
                 public void keyPressed(KeyEvent e) {
                     if (e.getSource().equals(handzeichenNeuFeld)) {
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -335,6 +341,7 @@ public class BasisBetreiberNeu extends AbstractModul {
         return panel;
     }
 
+    @Override
     public void show() {
         super.show();
         clearForm();
@@ -512,8 +519,9 @@ public class BasisBetreiberNeu extends AbstractModul {
             betrn.setRevidatum(Calendar.getInstance().getTime());
             betrn.setRevihandz(handzeichenNeuFeld.getText().trim());
 
-            betrn = BasisBetreiber.saveBetreiber(betrn);
-            if (betrn != null) {
+            boolean success = false;
+            success = BasisBetreiber.saveBetreiber(betrn);
+            if (success) {
                 frame.changeStatus("Neuer Betreiber "+betrn.getBetreiberid()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
 
                 // Wenn wir vom Objekt anlegen kommen,
@@ -539,6 +547,7 @@ public class BasisBetreiberNeu extends AbstractModul {
 
         SwingWorkerVariant worker = new SwingWorkerVariant(anredeFeld) {
 
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 try {
                     if (strassen == null) {
@@ -552,6 +561,7 @@ public class BasisBetreiberNeu extends AbstractModul {
                 }
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 if (strassen != null) {
                     strassenBox.setModel(new DefaultComboBoxModel(strassen));
@@ -631,6 +641,7 @@ public class BasisBetreiberNeu extends AbstractModul {
      */
     private final class BetreiberNeuListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == speichernButton) {
                 log.debug("(" + BasisBetreiberNeu.this.getIdentifier() + ") "

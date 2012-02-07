@@ -43,6 +43,7 @@ public class _TabellenErstellenTest extends TestCase {
     private static final String ObjArt = "Testart";
     private int _idO;
 
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
 
@@ -54,6 +55,7 @@ public class _TabellenErstellenTest extends TestCase {
 
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
 
@@ -132,7 +134,7 @@ public class _TabellenErstellenTest extends TestCase {
 
         try {
 
-            betreiber = BasisBetreiber.saveBetreiber(betreiber);
+            BasisBetreiber.saveBetreiber(betreiber);
 
         } catch (HibernateException e) {
 

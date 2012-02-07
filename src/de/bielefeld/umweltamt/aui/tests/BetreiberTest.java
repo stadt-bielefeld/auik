@@ -62,11 +62,13 @@ public class BetreiberTest extends TestCase {
     /**
      * Starten einer SessionFactory und erzeugen schon mal einens neuen Betreibers.
      */
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
 
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
     }
@@ -161,7 +163,7 @@ public void testErzeugen()
 
         try {
 
-            betreiber = BasisBetreiber.saveBetreiber(betreiber);
+            BasisBetreiber.saveBetreiber(betreiber);
 
         }
         catch (HibernateException e) {

@@ -88,15 +88,12 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
@@ -246,10 +243,12 @@ public class BasisPanel  extends JPanel {
 
             if (betreiber != null) {
                 SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
+                    @Override
                     protected void doNonUILogic() throws RuntimeException {
                         betreiberModel.filterList(suche, null);
                     }
 
+                    @Override
                     protected void doUIUpdateLogic() throws RuntimeException {
                         betreiberModel.fireTableDataChanged();
                     }
@@ -257,6 +256,7 @@ public class BasisPanel  extends JPanel {
                 worker.start();
             } else if (standort != null) {
                 SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
+                    @Override
                     protected void doNonUILogic() throws RuntimeException {
                         String[] test = suche.split(" ");
                         String last = test[test.length-1];
@@ -273,6 +273,7 @@ public class BasisPanel  extends JPanel {
                         standortModel.filterList(first, nr);
                     }
 
+                    @Override
                     protected void doUIUpdateLogic() throws RuntimeException {
                         standortModel.fireTableDataChanged();
                     }
@@ -285,6 +286,7 @@ public class BasisPanel  extends JPanel {
             if (suchFeld == null) {
                 suchFeld = new JTextField();
                 suchFeld.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         doSearch();
                     }
@@ -299,6 +301,7 @@ public class BasisPanel  extends JPanel {
                 submitButton = new JButton(AuikUtils.getIcon(16, "key_enter.png"));
                 submitButton.setToolTipText("Suche starten");
                 submitButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         doSearch();
                     }
@@ -319,6 +322,7 @@ public class BasisPanel  extends JPanel {
 
                 ergebnisTabelle.addFocusListener(TableFocusListener.getInstance());
                 ergebnisTabelle.addMouseListener(new MouseAdapter() {
+                    @Override
                     public void mouseClicked(java.awt.event.MouseEvent e) {
                         if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                             Point origin = e.getPoint();
@@ -339,6 +343,7 @@ public class BasisPanel  extends JPanel {
             if (okButton == null) {
                 okButton = new JButton("Ok");
                 okButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         int row = getErgebnisTabelle().getSelectedRow();
 
@@ -354,6 +359,7 @@ public class BasisPanel  extends JPanel {
             if (abbrechenButton == null) {
                 abbrechenButton = new JButton("Abbrechen");
                 abbrechenButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         dispose();
                     }
@@ -398,7 +404,7 @@ public class BasisPanel  extends JPanel {
 
     // Fachdaten
     private BasisObjektarten[] objektarten;
-    
+
     //Sachbearbeiter
     private BasisSachbearbeiter[] sachbearbeiter;
 
@@ -508,7 +514,7 @@ public class BasisPanel  extends JPanel {
 					&& (objektarten.length != getArtBox().getItemCount())) {
 				getArtBox().setModel(new DefaultComboBoxModel(objektarten));
 			}
-			hauptModul.getObjekt().setPrioritaet(0);
+			// hauptModul.getObjekt().setPrioritaet(0);
 		}
 
 		else {
@@ -607,7 +613,7 @@ public class BasisPanel  extends JPanel {
 							hauptModul.getObjekt().getPrioritaet().toString());
 				}
 			}
-			
+
 
             if (hauptModul.getObjekt().getBeschreibung() != null) {
                 getBeschreibungsArea().setText(hauptModul.getObjekt().getBeschreibung());
@@ -648,6 +654,7 @@ public class BasisPanel  extends JPanel {
         getBeschreibungsArea().setEnabled(enabled);
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -656,18 +663,18 @@ public class BasisPanel  extends JPanel {
         boolean success;
 
         Integer prio = null;
-        
+
         if (!getPrioritaetFeld().getText().equals("")){
         	prio = Integer.parseInt(getPrioritaetFeld().getText());
         }
-        
+
         // Eingegebene Daten für das Objekt übernehmen
         // Betreiber / Standort werden schon nach der Auswahl durch die chooseButtons gesetzt
         hauptModul.getObjekt().setBasisObjektarten((BasisObjektarten)getArtBox().getSelectedItem());
         hauptModul.getObjekt().setBeschreibung(getBeschreibungsArea().getText());
         hauptModul.getObjekt().setBasisSachbearbeiter((BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
         hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
-        
+
 
         BasisObjekt tmp = BasisObjekt.saveBasisObjekt(hauptModul.getObjekt(),
         		prio);
@@ -689,6 +696,7 @@ public class BasisPanel  extends JPanel {
     private ActionListener getEditButtonListener() {
         if (editButtonListener == null) {
             editButtonListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String action = e.getActionCommand();
 
@@ -719,7 +727,7 @@ public class BasisPanel  extends JPanel {
         return editButtonListener;
     }
 
-    // TODO: Check this: This method was private and never used locally 
+    // TODO: Check this: This method was private and never used locally
 //    private ActionListener getGotoButtonListener() {
 //        if (gotoButtonListener == null) {
 //            gotoButtonListener = new ActionListener() {
@@ -776,6 +784,7 @@ public class BasisPanel  extends JPanel {
             betreiberChooseButton.setToolTipText("Betreiber auswählen");
 
             betreiberChooseButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     BasisBetreiber betreiber = hauptModul.getObjekt().getBasisBetreiber();
                     if (betreiber == null) {
@@ -826,6 +835,7 @@ public class BasisPanel  extends JPanel {
             betreiberNewButton.setToolTipText("Neuen Betreiber anlegen");
 
             betreiberNewButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     hauptModul.getManager().getSettingsManager().setSetting("auik.imc.return_to_objekt", true, false);
                     if (hauptModul.getObjekt().getBasisBetreiber() != null) {
@@ -875,6 +885,7 @@ public class BasisPanel  extends JPanel {
             standortChooseButton.setToolTipText("Standort auswählen");
 
             standortChooseButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     BasisStandort standort = hauptModul.getObjekt().getBasisStandort();
                     if (standort == null) {
@@ -926,6 +937,7 @@ public class BasisPanel  extends JPanel {
             standortNewButton.setToolTipText("Neuen Standort anlegen");
 
             standortNewButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     hauptModul.getManager().getSettingsManager().setSetting("auik.imc.return_to_objekt", true, false);
 
@@ -994,6 +1006,7 @@ public class BasisPanel  extends JPanel {
         if (saveButton == null) {
             saveButton = new JButton("Objekt speichern");
             saveButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if ((hauptModul.getObjekt().getBasisBetreiber() != null) && (hauptModul.getObjekt().getBasisStandort() != null)) {
                         enableAll(false);
@@ -1034,6 +1047,7 @@ public class BasisPanel  extends JPanel {
 
             objektverknuepfungTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
                         public void mouseClicked(java.awt.event.MouseEvent e) {
                             if ((e.getClickCount() == 2)
                                     && (e.getButton() == 1)) {
@@ -1073,10 +1087,12 @@ public class BasisPanel  extends JPanel {
                             }
                         }
 
+                        @Override
                         public void mousePressed(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
 
+                        @Override
                         public void mouseReleased(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
@@ -1118,7 +1134,8 @@ public class BasisPanel  extends JPanel {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
 				private static final long serialVersionUID = 1214869561793347819L;
 
-				public void actionPerformed(ActionEvent e) {
+				@Override
+                public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                             && getObjektverknuepungTabelle().getEditingRow() == -1) {
@@ -1161,6 +1178,7 @@ public class BasisPanel  extends JPanel {
             selectObjektButton = new JButton("Objekt auswählen");
 
             selectObjektButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(hauptModul
                             .getFrame(), hauptModul.getObjekt(),

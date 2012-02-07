@@ -24,11 +24,6 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -145,45 +140,17 @@ public class BasisBetreiber extends AbstractBasisBetreiber implements
      * @return Der gespeicherte Betreiber, oder <code>null</code>, falls beim
      *         Speichern ein Fehler auftrat.
      */
-    public static BasisBetreiber saveBetreiber(BasisBetreiber betr) {
-        BasisBetreiber betrRet = null;
+    public static boolean saveBetreiber(BasisBetreiber betr) {
         // TODO: Do we really need the returned object?
-        if (false) { int x = 42; } // Yes, this is dead code. I wanted a warning...
-//        boolean success = false;
-//        success = new DatabaseAccess().merge(betr);
-
-        Transaction tx = null;
-        try {
-            // Neue Session beginnen
-            Session session = HibernateSessionFactory.currentSession();
-
-            // Alle Änderungen in einer Transaktion zusammenfassen
-            tx = session.beginTransaction();
-
-            // Speichern / Transaktion durchführen
-            betrRet = (BasisBetreiber) session.merge(betr);
-            tx.commit();
-
+//      BasisBetreiber betrRet = null;
+//      betrRet = (BasisBetreiber) session.merge(betr);
+        boolean success = false;
+        success = new DatabaseAccess().merge(betr);
+        if (success) {
             log.debug("Neuer Betr " + betr + " gespeichert!");
-        } catch (HibernateException e) {
-            betrRet = null;
-            e.printStackTrace();
-            // Falls während der Änderungen ein Hibernate Fehler auftritt
-            if (tx != null) {
-                try {
-                    // Alle Änderungen rückgängig machen
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    throw new RuntimeException(
-                        "Datenbank-Fehler (BasisBetreiber)", e);
-                }
-            }
-        } finally {
-            // Am Ende (egal ob erfolgreich oder nicht) die Session schließen
-            HibernateSessionFactory.closeSession();
         }
-
-        return betrRet;
+//        return betrRet;
+        return success;
     }
 
     /**

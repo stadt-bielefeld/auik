@@ -104,6 +104,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
         super("Betreiber ("+ betr.getBetreiberid()+")", betr, owner);
     }
 
+    @Override
     protected JComponent buildContentArea() {
         anredeFeld = new LimitedTextField(100);
         vornamenFeld = new LimitedTextField(100);
@@ -149,6 +150,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
         // Handzeichen-Feld (wenn das Feld nicht leer ist) zum
         // Speichern-Button zu springen.
         KeyListener escEnterListener = new KeyAdapter() {
+            @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getSource().equals(handzeichenNeuFeld)) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -294,9 +296,11 @@ public class BetreiberEditor extends AbstractBaseEditor {
         return builder.getPanel();
     }
 
+    @Override
     protected void fillForm() {
         SwingWorkerVariant worker = new SwingWorkerVariant(this) {
 
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 try {
                     if (strassen == null) {
@@ -310,6 +314,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
                 }
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 if (strassen != null) {
                     strassenBox.setModel(new DefaultComboBoxModel(strassen));
@@ -354,6 +359,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
         worker.start();
     }
 
+    @Override
     protected boolean canSave() {
         // Eingaben überprüfen:
         if (namenFeld.getText().equals("")) {
@@ -382,6 +388,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
      * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
      * @throws HibernateException Wenn beim Speichern ein Fehler auftritt
      */
+    @Override
     protected boolean doSave() {
         // Anrede
         String anrede = anredeFeld.getText();
@@ -547,10 +554,12 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
         //frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
 
-        BasisBetreiber betr = BasisBetreiber.saveBetreiber(getBetreiber());
+        // TODO: Here we used the returned object further on, but changed it
+        // to this instead. Check if this is really the same.
+        boolean success = BasisBetreiber.saveBetreiber(getBetreiber());
 
-        if (betr != null) {
-            setEditedObject(betr);
+        if (success) {
+            setEditedObject(getBetreiber());
             log.debug("Änderungen gespeichert!");
             return true;
         } else {

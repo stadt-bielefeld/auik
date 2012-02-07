@@ -33,9 +33,6 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
     private static final long serialVersionUID = -5770125513608713721L;
 
-    // TODO: Why do we do this priority stuff this strange way?
-    private java.lang.Integer prioritaet;
-
     /**
      * Simple constructor of BasisObjekt instances.
      */
@@ -208,14 +205,6 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
         }
 
         return prioritaet;
-    }
-
-    /**
-     * Setzt den Wert für die Priorität des Objektes.
-     * @param uschistdid
-     */
-    public void setPrioritaet(java.lang.Integer prioritaet) {
-        this.prioritaet = prioritaet;
     }
 
     /**
