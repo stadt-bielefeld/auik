@@ -19,46 +19,38 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Tue Sep 06 14:46:36 CEST 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'VAWS_GEBUEHRENARTEN' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'VAWS_GEBUEHRENARTEN' table. This class
+ * may be customized as it is never re-generated after being created.
  */
-public class VawsGebuehrenarten
-    extends AbstractVawsGebuehrenarten
-    implements Serializable
-{
+public class VawsGebuehrenarten extends AbstractVawsGebuehrenarten implements
+    Serializable {
+    private static final long serialVersionUID = -4661287242692895282L;
+
     /**
      * Simple constructor of VawsGebuehrenarten instances.
      */
-    public VawsGebuehrenarten()
-    {
+    public VawsGebuehrenarten() {
     }
 
     /**
      * Constructor of VawsGebuehrenarten instances given a simple primary key.
      * @param id
      */
-    public VawsGebuehrenarten(java.lang.Integer id)
-    {
+    public VawsGebuehrenarten(java.lang.Integer id) {
         super(id);
     }
 
     /* Add customized code below */
 
+    @Override
     public String toString() {
         return getGebuehrenart();
     }
@@ -68,24 +60,17 @@ public class VawsGebuehrenarten
      * @return Ein Array mit den Namen aller möglichen Gebührenarten.
      */
     public static VawsGebuehrenarten[] getAllGebuehrenarten() {
-        List list;
-        String suchString = "from VawsGebuehrenarten vga " +
-                "order by vga.id";
-        VawsGebuehrenarten[] tmp;
+        String suchString = "from VawsGebuehrenarten vga " + "order by vga.id";
 
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            Query query = session.createQuery(suchString);
-            query.setCacheable(true);
-            query.setCacheRegion("vawsvgaliste");
-            list = query.list();
-            tmp = new VawsGebuehrenarten[list.size()];
-            tmp = (VawsGebuehrenarten[]) list.toArray(tmp);
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        List<?> list;
+        list = new DatabaseAccess().createQuery(suchString)
+            .setCacheable(true)
+            .setCacheRegion("vawsvgaliste")
+            .list();
+
+        VawsGebuehrenarten[] tmp;
+        tmp = new VawsGebuehrenarten[list.size()];
+        tmp = (VawsGebuehrenarten[]) list.toArray(tmp);
 
         return tmp;
     }

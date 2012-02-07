@@ -19,9 +19,6 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Tue Sep 06 14:47:00 CEST 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
@@ -29,29 +26,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'VAWS_KONTROLLEN' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'VAWS_KONTROLLEN' table. This class may
+ * be customized as it is never re-generated after being created.
  */
-public class VawsKontrollen
-    extends AbstractVawsKontrollen
-    implements Serializable
-{
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
-	/** Logging */
+public class VawsKontrollen extends AbstractVawsKontrollen implements
+    Serializable {
+    private static final long serialVersionUID = 7151680384864528912L;
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
@@ -71,65 +56,47 @@ public class VawsKontrollen
     // Statischer Teil:
 
     /**
-     * Liefert alle Kontroll-Einträge deren "Nächste Prüfung" in der Vergangenheit
-     * liegt und die nicht abgeschlossen sind.
+     * Liefert alle Kontroll-Einträge deren "Nächste Prüfung" in der
+     * Vergangenheit liegt und die nicht abgeschlossen sind.
      * @return Eine Liste mit VawsKontrollen-Objekten.
      */
-    public static List getAuswertung() {
-        List kontrollen;
-        String query = "from VawsKontrollen vk where " +
-                "vk.naechstepruefung < ? " +
-                "and vk.pruefungabgeschlossen = ? " +
-                "order by vk.naechstepruefung, vk.vawsFachdaten";
+    public static List<?> getAuswertung() {
+        List<?> kontrollen;
+        String query = "from VawsKontrollen vk "
+            + "where vk.naechstepruefung < :today "
+            + "and vk.pruefungabgeschlossen = FALSE "
+            + "order by vk.naechstepruefung, vk.vawsFachdaten";
 
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            kontrollen = session.createQuery(
-                    query)
-                    .setDate(0, new Date())
-                    .setBoolean(1, false)
-//                    .setCacheable(true)
-                    .list();
-
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        kontrollen = new DatabaseAccess().createQuery(query)
+            .setDate("today", new Date())
+//            .setCacheable(true)
+            .list();
 
         return kontrollen;
     }
 
     /**
-     * Liefert alle Kontroll-Einträge zu einem bestimmten
-     * VawsFachdatensatz.
+     * Liefert alle Kontroll-Einträge zu einem bestimmten VawsFachdatensatz.
      * @param fachdaten Der Fachdatensatz.
      * @return Eine Liste mit VawsKontrollen-Objekten.
      */
-    public static List getKontrollen(VawsFachdaten fachdaten) {
-        List kontrollen;
+    public static List<?> getKontrollen(VawsFachdaten fachdaten) {
+        List<?> kontrollen;
 
-        if (fachdaten.getBehaelterId() == null)
-        {
-            kontrollen = new ArrayList();
+        if (fachdaten.getBehaelterId() == null) {
+            kontrollen = new ArrayList<VawsKontrollen>();
         } else {
-            try {
-                Session session = HibernateSessionFactory.currentSession();
+            kontrollen = new DatabaseAccess()
+                .createQuery(
+                    "from VawsKontrollen vk where "
+                        + "vk.vawsFachdaten = :fachdaten "
+                        + "order by vk.pruefungabgeschlossen desc, "
+                        + "vk.pruefdatum, vk.naechstepruefung")
+                .setEntity("fachdaten", fachdaten)
+                .list();
 
-                kontrollen = session.createQuery(
-                        "from VawsKontrollen vk where " +
-                        "vk.vawsFachdaten = ? " +
-                        "order by vk.pruefungabgeschlossen desc, vk.pruefdatum, vk.naechstepruefung")
-                        .setEntity(0, fachdaten)
-                        .list();
-
-                log.debug(kontrollen.size() + " Kontrollen-Einträge für FD "
-                		+ fachdaten + " gefunden!");
-            } catch (HibernateException e) {
-                throw new RuntimeException("Datenbank-Fehler", e);
-            } finally {
-                HibernateSessionFactory.closeSession();
-            }
+            log.debug(kontrollen.size() + " Kontrollen-Einträge für FD "
+                + fachdaten + " gefunden!");
         }
 
         return kontrollen;
@@ -138,32 +105,12 @@ public class VawsKontrollen
     /**
      * Speichert einen VAWS-Kontrollen-Eintrag in der Datenbank.
      * @param kontrolle Der zu speichernde Datensatz.
-     * @return <code>true</code>, falls beim Speichern kein Fehler auftritt, sonst <code>false</code>.
+     * @return <code>true</code>, falls beim Speichern kein Fehler auftritt,
+     *         sonst <code>false</code>.
      */
     public static boolean saveKontrolle(VawsKontrollen kontrolle) {
-        boolean saved;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.saveOrUpdate(kontrolle);
-            tx.commit();
-            saved = true;
-        } catch (HibernateException e) {
-            saved = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "VawsKontrollen.save", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean saved = false;
+        saved = new DatabaseAccess().saveOrUpdate(kontrolle);
         return saved;
     }
 
@@ -171,33 +118,12 @@ public class VawsKontrollen
      * Löscht einen vorhandenen Datensatz aus der Datenbank.
      * @param kontrolle Der Datensatz, der gelöscht werden soll.
      * @return <code>true</code>, wenn der Datensatz gelöscht wurde oder
-     * <code>false</code> falls dabei ein Fehler auftrat (z.B. der Datensatz
-     * nicht in der Datenbank existiert).
+     *         <code>false</code> falls dabei ein Fehler auftrat (z.B. der
+     *         Datensatz nicht in der Datenbank existiert).
      */
     public static boolean removeKontrolle(VawsKontrollen kontrolle) {
-        boolean removed;
-
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(kontrolle);
-            tx.commit();
-            removed = true;
-        } catch (HibernateException e) {
-            removed = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "VawsKontrollen.remove", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean removed = false;
+        removed = new DatabaseAccess().delete(kontrolle);
         return removed;
     }
 }

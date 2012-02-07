@@ -19,112 +19,72 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Tue Sep 06 14:44:16 CEST 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
-import de.bielefeld.umweltamt.aui.DatabaseManager;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'VAWS_ABFUELLFLAECHE' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'VAWS_ABFUELLFLAECHE' table. This class
+ * may be customized as it is never re-generated after being created.
  */
-public class VawsAbfuellflaeche
-    extends AbstractVawsAbfuellflaeche
-    implements Serializable
-{
-    /** Database manager */
-    private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+public class VawsAbfuellflaeche extends AbstractVawsAbfuellflaeche implements
+    Serializable {
+    private static final long serialVersionUID = -6210315335073840383L;
 
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
-
-    // Für die Umwandlung von Bool'schen Werten zu Shorts
-    private static short fW = 0;
-    private static short tW = -1;
-
-    /** Für die Umwandlung von Bool'schen Werten zu Shorts */
-    public static Short FALSE = new Short(fW);
-    /** Für die Umwandlung von Bool'schen Werten zu Shorts */
-    public static Short TRUE = new Short(tW);
 
     /**
      * Simple constructor of VawsAbfuellflaeche instances.
      */
-    public VawsAbfuellflaeche()
-    {
+    public VawsAbfuellflaeche() {
     }
 
     /**
      * Constructor of VawsAbfuellflaeche instances given a simple primary key.
      * @param id
      */
-    public VawsAbfuellflaeche(java.lang.Integer id)
-    {
+    public VawsAbfuellflaeche(java.lang.Integer id) {
         super(id);
     }
 
     /* Add customized code below */
 
+    @Override
     public String toString() {
-        return "[VawsAbfuellflaeche: " + getBehaelterid() + ", FD:"+getVawsFachdaten()+"]";
+        return "[VawsAbfuellflaeche: " + getBehaelterid() + ", FD:"
+            + getVawsFachdaten() + "]";
     }
 
-    // Boolean <-> Short:
-
-    // TRUE und FALSE sind in dieser Klasse definierte
-    // Short-Konstanten.
-
-    // Der Grund, warum ich nicht einfach TRUE.equals(getXyz()) o.Ä.
-    // zurück liefere ist, dass eigentlich nur festgelegt ist,
-    // dass 0 == false ist. Deshalb ist alles ausser 0 und NULL
-    // bei mir true.
-
-    public static VawsAbfuellflaeche getAbfuellflaeche(VawsFachdaten fachdaten) {
+    public static VawsAbfuellflaeche getAbfuellflaeche(VawsFachdaten fachdaten)
+        throws IllegalArgumentException {
         VawsAbfuellflaeche flaeche;
-        List tmp;
+        List<?> list;
 
-        if (fachdaten == null || !fachdaten.getAnlagenart().equals("Abfüllfläche")) {
-            throw new IllegalArgumentException("Fachdaten-Objekt ist keine Abfüllfläche!");
+        if (fachdaten == null
+            || !fachdaten.getAnlagenart().equals("Abfüllfläche")) {
+            throw new IllegalArgumentException(
+                "Fachdaten-Objekt ist keine Abfüllfläche!");
         }
 
         if (fachdaten.getBehaelterId() == null) {
-            tmp = new ArrayList();
+            list = new ArrayList<VawsAbfuellflaeche>();
         } else {
-            try {
-                Session session = HibernateSessionFactory.currentSession();
-
-                tmp = session.createQuery(
-                        "from VawsAbfuellflaeche abff " +
-                        "where abff.vawsFachdaten = ? ")
-                        .setEntity(0, fachdaten)
-                        .list();
-
-            } catch (HibernateException e) {
-                throw new RuntimeException("Datenbank-Fehler", e);
-            } finally {
-                HibernateSessionFactory.closeSession();
-            }
+            list = new DatabaseAccess()
+                .createQuery(
+                    "from VawsAbfuellflaeche abff "
+                        + "where abff.vawsFachdaten = :fachdaten ")
+                .setEntity("fachdaten", fachdaten)
+                .list();
         }
 
-        if (tmp.size() > 0) {
-            flaeche = (VawsAbfuellflaeche) tmp.get(0);
+        if (list.size() > 0) {
+            flaeche = (VawsAbfuellflaeche) list.get(0);
             log.debug("Fläche '" + flaeche + "' geladen!");
         } else {
             // Bei so ziemlich 95% aller Tankstellen gibts ein VawsFachdaten-
@@ -148,98 +108,70 @@ public class VawsAbfuellflaeche
     /**
      * Speichert einen VAWS-Abfüllflächen-Datensatz in der Datenbank.
      * @param flaeche Der zu speichernde Datensatz.
-     * @return <code>true</code>, falls beim Speichern kein Fehler auftritt, sonst <code>false</code>.
+     * @return <code>true</code>, falls beim Speichern kein Fehler auftritt,
+     *         sonst <code>false</code>.
      */
-    public static boolean saveAbfuellflaeche(VawsAbfuellflaeche flaeche) {
-        boolean saved;
+    public static boolean saveAbfuellflaeche(VawsAbfuellflaeche flaeche)
+        throws IllegalArgumentException {
 
         if (flaeche.getVawsFachdaten() == null) {
-            throw new IllegalArgumentException("Die VawsAbfuellflaeche muss einem VawsFachdaten-Objekt zugeordnet sein!");
+            throw new IllegalArgumentException(
+                "Die VawsAbfuellflaeche muss einem VawsFachdaten-Objekt "
+                + "zugeordnet sein!");
         }
 
-        Transaction tx = null;
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.saveOrUpdate(flaeche);
-            tx.commit();
-            saved = true;
-        } catch (HibernateException e) {
-            saved = false;
-            e.printStackTrace();
-            if (tx != null) {
-                try {
-                    tx.rollback();
-                } catch (HibernateException e1) {
-                    dbManager.handleDBException(e1, "VawsAbfuellflaeche.save", false);
-                }
-            }
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
-
+        boolean saved = false;
+        saved = new DatabaseAccess().saveOrUpdate(flaeche);
         return saved;
     }
 
     /**
-     * Liefert alle Bodenflächen-Ausführungen.
-     * <br><b>ACHTUNG:</b> Liefert nicht alle VawsAbfuellflaechen,
-     * sondern alle in der Spalte "BODENFLAECHENAUSF" benutzten Werte!
+     * Liefert alle Bodenflächen-Ausführungen. <br>
+     * <b>ACHTUNG:</b> Liefert nicht alle VawsAbfuellflaechen, sondern alle in
+     * der Spalte "BODENFLAECHENAUSF" benutzten Werte!
      * @return Ein Array mit den Namen aller Ausführungen.
      */
     public static String[] getBodenflaechenausfArray() {
-        //FIXME: select distinct nicht die beste Lösung
-        List list;
-        String suchString = "select distinct vabf.bodenflaechenausf " +
-                "from VawsAbfuellflaeche vabf " +
-                "order by vabf.bodenflaechenausf";
-        String[] tmp;
+        // FIXME: select distinct nicht die beste Lösung
+        List<?> list;
+        String suchString = "select distinct vabf.bodenflaechenausf "
+            + "from VawsAbfuellflaeche vabf "
+            + "order by vabf.bodenflaechenausf";
 
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            Query query = session.createQuery(suchString);
-            query.setCacheable(true);
-            query.setCacheRegion("vawsabausfliste");
-            list = query.list();
-            tmp = new String[list.size()];
-            tmp = (String[]) list.toArray(tmp);
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        list = new DatabaseAccess().createQuery(suchString)
+            .setCacheable(true)
+            .setCacheRegion("vawsabausfliste")
+            .list();
 
-        return tmp;
+        String[] result;
+        result = new String[list.size()];
+        result = (String[]) list.toArray(result);
+
+        return result;
     }
 
     /**
-     * Liefert alle Bodenflächen-Ausführungen.
-     * <br><b>ACHTUNG:</b> Liefert nicht alle VawsAbfuellflaechen,
-     * sondern alle in der Spalte "BODENFLAECHENAUSF" benutzten Werte!
+     * Liefert alle Bodenflächen-Ausführungen. <br>
+     * <b>ACHTUNG:</b> Liefert nicht alle VawsAbfuellflaechen, sondern alle in
+     * der Spalte "BODENFLAECHENAUSF" benutzten Werte!
      * @return Ein Array mit den Namen aller Ausführungen.
      */
     public static String[] getNiederschlagschutzArray() {
-        //FIXME: select distinct nicht die beste Lösung
-        List list;
-        String suchString = "select distinct vabf.niederschlagschutz " +
-                "from VawsAbfuellflaeche vabf " +
-                "order by vabf.niederschlagschutz";
-        String[] tmp;
+        // FIXME: select distinct nicht die beste Lösung
+        List<?> list;
+        String suchString = "select distinct vabf.niederschlagschutz "
+            + "from VawsAbfuellflaeche vabf "
+            + "order by vabf.niederschlagschutz";
 
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            Query query = session.createQuery(suchString);
-            query.setCacheable(true);
-            query.setCacheRegion("vawsabnieliste");
-            list = query.list();
-            tmp = new String[list.size()];
-            tmp = (String[]) list.toArray(tmp);
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        list = new DatabaseAccess().createQuery(suchString)
+            .setCacheable(true)
+            .setCacheRegion("vawsabnieliste")
+            .list();
 
-        return tmp;
+        String[] result;
+        result = new String[list.size()];
+        result = (String[]) list.toArray(result);
+
+        return result;
     }
 }

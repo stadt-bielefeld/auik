@@ -19,37 +19,30 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-/*
- * Created Tue Sep 06 14:45:58 CEST 2005 by MyEclipse Hibernate Tool.
- */
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * A class that represents a row in the 'VAWS_BEHAELTERART' table.
- * This class may be customized as it is never re-generated
- * after being created.
+ * A class that represents a row in the 'VAWS_BEHAELTERART' table. This class
+ * may be customized as it is never re-generated after being created.
  */
-public class VawsBehaelterart
-    extends AbstractVawsBehaelterart
-    implements Serializable
-{
+public class VawsBehaelterart extends AbstractVawsBehaelterart implements
+    Serializable {
+    private static final long serialVersionUID = 600389197074444085L;
+
     /**
      * Simple constructor of VawsBehaelterart instances.
      */
-    public VawsBehaelterart()
-    {
+    public VawsBehaelterart() {
     }
 
     /* Add customized code below */
 
+    @Override
     public String toString() {
         return super.getBehaelterart();
     }
@@ -59,26 +52,19 @@ public class VawsBehaelterart
      * @return Ein Array mit den Namen aller Behälterarten.
      */
     public static String[] getBehaelterarten() {
-        List list;
-        String suchString = "select bha.behaelterart " +
-                "from VawsBehaelterart bha " +
-                "order by bha.id";
-        String[] tmp;
+        List<?> list;
+        String suchString = "select bha.behaelterart "
+            + "from VawsBehaelterart bha " + "order by bha.id";
 
-        try {
-            Session session = HibernateSessionFactory.currentSession();
-            Query query = session.createQuery(suchString);
-            query.setCacheable(true);
-            query.setCacheRegion("vawsbhaliste");
-            list = query.list();
-            tmp = new String[list.size()];
-            tmp = (String[]) list.toArray(tmp);
-        } catch (HibernateException e) {
-            throw new RuntimeException("Datenbank-Fehler (VawsBehaelterart)", e);
-        } finally {
-            HibernateSessionFactory.closeSession();
-        }
+        list = new DatabaseAccess().createQuery(suchString)
+            .setCacheable(true)
+            .setCacheRegion("vawsbhaliste")
+            .list();
 
-        return tmp;
+        String[] result;
+        result = new String[list.size()];
+        result = (String[]) list.toArray(result);
+
+        return result;
     }
 }
