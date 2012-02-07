@@ -51,6 +51,7 @@ public final class DatabaseManager {
 	public synchronized static DatabaseManager getInstance() {
 		if (instance == null) {
 			instance = new DatabaseManager();
+			log.debug("Instanciated the DatabaseManager.");
 		}
 		return instance;
 	}

@@ -78,7 +78,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
-
 import org.eclipse.birt.core.exception.BirtException;
 import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.engine.api.EngineConfig;
@@ -93,16 +92,14 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
-
 /**
- * Eine Klasse um die Erzeugung von PDF-Reports mit BIRT zu steuern.
- * Diese Klasse ist ein Singleton, d.h. von ihr kann maximal eine einzige
- * Instanz pro Programm erzeugt werden.
- * @author Colin Atkins
- * based on David Klotz' ReportManager
+ * Eine Klasse um die Erzeugung von PDF-Reports mit BIRT zu steuern. Diese
+ * Klasse ist ein Singleton, d.h. von ihr kann maximal eine einzige Instanz pro
+ * Programm erzeugt werden.
+ * @author Colin Atkins based on David Klotz' ReportManager
  */
 public class ReportManager {
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     private static ReportManager _instance;
     private EngineConfig config;
@@ -113,12 +110,12 @@ public class ReportManager {
     private String fotoPath;
     private String mapPath;
 
-
-    private ReportManager(String engineHome, String reportHome, String fotoPath, String mapPath) {
+    private ReportManager(String engineHome, String reportHome,
+        String fotoPath, String mapPath) {
         this.engineHome = engineHome;
         this.reportHome = reportHome;
-        this.fotoPath   = fotoPath;
-        this.mapPath    = mapPath;
+        this.fotoPath = fotoPath;
+        this.mapPath = mapPath;
 //        this.Name       = Name;
 //        this.Id         = Id;
 //        if (EntGeb != null)
@@ -131,7 +128,8 @@ public class ReportManager {
         try {
             pdfFile = File.createTempFile(Name, ".pdf");
         } catch (IOException e) {
-            throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+            throw new RuntimeException(
+                "Konnte temporäre PDF-Datei nicht speichern!", e);
         }
         pdfFile.deleteOnExit();
 
@@ -140,12 +138,14 @@ public class ReportManager {
         return pdfFile;
     }
 
-    public File runReport(String Name, Integer Id, String Bezeichnung) throws EngineException {
+    public File runReport(String Name, Integer Id, String Bezeichnung)
+        throws EngineException {
         File pdfFile;
         try {
             pdfFile = File.createTempFile(Name + Id, ".pdf");
         } catch (IOException e) {
-            throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+            throw new RuntimeException(
+                "Konnte temporäre PDF-Datei nicht speichern!", e);
         }
         pdfFile.deleteOnExit();
 
@@ -154,12 +154,14 @@ public class ReportManager {
         return pdfFile;
     }
 
-    public File runReport(String Name, Integer ObjektId, String Betreiber, String Standort, String Art) throws EngineException {
+    public File runReport(String Name, Integer ObjektId, String Betreiber,
+        String Standort, String Art) throws EngineException {
         File pdfFile;
         try {
             pdfFile = File.createTempFile(Name + ObjektId, ".pdf");
         } catch (IOException e) {
-            throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+            throw new RuntimeException(
+                "Konnte temporäre PDF-Datei nicht speichern!", e);
         }
         pdfFile.deleteOnExit();
 
@@ -168,12 +170,14 @@ public class ReportManager {
         return pdfFile;
     }
 
-    public File runReport(String Name,String art, Integer BehaelterId, String Betreiber, String Standort) throws EngineException {
+    public File runReport(String Name, String art, Integer BehaelterId,
+        String Betreiber, String Standort) throws EngineException {
         File pdfFile;
         try {
             pdfFile = File.createTempFile(Name + BehaelterId, ".pdf");
         } catch (IOException e) {
-            throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+            throw new RuntimeException(
+                "Konnte temporäre PDF-Datei nicht speichern!", e);
         }
         pdfFile.deleteOnExit();
 
@@ -182,67 +186,61 @@ public class ReportManager {
         return pdfFile;
     }
 
-
-
-
-
-    public File runReport( Integer StandortId, String Standort, String Name) throws EngineException {
+    public File runReport(Integer StandortId, String Standort, String Name)
+        throws EngineException {
         File pdfFile;
         try {
 
             pdfFile = File.createTempFile(Name + StandortId, ".pdf");
 
         } catch (IOException e) {
-            throw new RuntimeException("Konnte temporäre PDF-Datei nicht speichern!", e);
+            throw new RuntimeException(
+                "Konnte temporäre PDF-Datei nicht speichern!", e);
         }
         pdfFile.deleteOnExit();
 
-        runReport(pdfFile, StandortId, Standort,Name);
+        runReport(pdfFile, StandortId, Standort, Name);
 
         return pdfFile;
     }
 
-
-
-
-    protected void initBirt()
-    {
+    protected void initBirt() {
         config = null;
         engine = null;
         try {
 
-            //Configure the Engine and start the Platform
+            // Configure the Engine and start the Platform
             config = new EngineConfig();
             config.setEngineHome(engineHome);
             config.setLogConfig(null, Level.OFF);
 
-
-        } catch( Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         try {
-            Platform.startup( config );
+            Platform.startup(config);
         } catch (BirtException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
 
-
         }
-            IReportEngineFactory factory = (IReportEngineFactory) Platform
-            .createFactoryObject( IReportEngineFactory.EXTENSION_REPORT_ENGINE_FACTORY );
-        engine = factory.createReportEngine( config );
+        IReportEngineFactory factory = (IReportEngineFactory) Platform
+            .createFactoryObject(IReportEngineFactory.EXTENSION_REPORT_ENGINE_FACTORY);
+        engine = factory.createReportEngine(config);
 
-
-
-        engine.changeLogLevel( Level.OFF );
+        engine.changeLogLevel(Level.OFF);
     }
 
-    public void startReportWorker(final String Name, Component focusComp) throws EngineException {
+    public void startReportWorker(final String Name, Component focusComp)
+        throws EngineException {
         SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
             File pdfFile;
+
+            @Override
             protected void doNonUILogic() throws RuntimeException {
-                //File report = new File(reportHome + reportname + ".rptdesign");
+                // File report = new File(reportHome + reportname +
+                // ".rptdesign");
                 try {
                     pdfFile = runReport(Name);
                 } catch (EngineException e) {
@@ -251,6 +249,7 @@ public class ReportManager {
                 }
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 AuikUtils.spawnFileProg(pdfFile);
             }
@@ -259,11 +258,15 @@ public class ReportManager {
         worker.start();
     }
 
-    public void startReportWorker(final String Name, final Integer Id, final String HaltungsNr, Component focusComp) throws EngineException {
+    public void startReportWorker(final String Name, final Integer Id,
+        final String HaltungsNr, Component focusComp) throws EngineException {
         SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
             File pdfFile;
+
+            @Override
             protected void doNonUILogic() throws RuntimeException {
-                //File report = new File(reportHome + reportname + ".rptdesign");
+                // File report = new File(reportHome + reportname +
+                // ".rptdesign");
                 try {
                     pdfFile = runReport(Name, Id, HaltungsNr);
                 } catch (EngineException e) {
@@ -272,6 +275,7 @@ public class ReportManager {
                 }
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 AuikUtils.spawnFileProg(pdfFile);
             }
@@ -286,19 +290,26 @@ public class ReportManager {
 //        }
     }
 
-    public void startReportWorker(final String Name, final Integer ObjektId, final String Betreiber, final String Standort, final String Art, Component focusComp) {
+    public void startReportWorker(final String Name, final Integer ObjektId,
+        final String Betreiber, final String Standort, final String Art,
+        Component focusComp) {
         SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
             File pdfFile;
+
+            @Override
             protected void doNonUILogic() throws RuntimeException {
-                //File report = new File(reportHome + reportname + ".rptdesign");
+                // File report = new File(reportHome + reportname +
+                // ".rptdesign");
                 try {
-                    pdfFile = runReport(Name, ObjektId, Betreiber, Standort, Art);
+                    pdfFile = runReport(Name, ObjektId, Betreiber, Standort,
+                        Art);
                 } catch (EngineException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 AuikUtils.spawnFileProg(pdfFile);
             }
@@ -307,22 +318,25 @@ public class ReportManager {
         worker.start();
     }
 
-
-
-    public void startReportWorker(final String Name, final String Standort, final Integer StandortId,  Component focusComp ) {
+    public void startReportWorker(final String Name, final String Standort,
+        final Integer StandortId, Component focusComp) {
         SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
             File pdfFile;
+
+            @Override
             protected void doNonUILogic() throws RuntimeException {
-                //File report = new File(reportHome + reportname + ".rptdesign");
+                // File report = new File(reportHome + reportname +
+                // ".rptdesign");
                 try {
 
-                    pdfFile = runReport (StandortId, Standort,Name);
+                    pdfFile = runReport(StandortId, Standort, Name);
                 } catch (EngineException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 AuikUtils.spawnFileProg(pdfFile);
             }
@@ -331,25 +345,26 @@ public class ReportManager {
         worker.start();
     }
 
-
-
-
-
-
-
-    public void startReportWorker(final String Name, final Integer BehaelterId, final String Betreiber, final String Standort, Component focusComp, final String art) {
+    public void startReportWorker(final String Name, final Integer BehaelterId,
+        final String Betreiber, final String Standort, Component focusComp,
+        final String art) {
         SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
             File pdfFile;
+
+            @Override
             protected void doNonUILogic() throws RuntimeException {
-                //File report = new File(reportHome + reportname + ".rptdesign");
+                // File report = new File(reportHome + reportname +
+                // ".rptdesign");
                 try {
-                    pdfFile = runReport(Name, art, BehaelterId, Betreiber, Standort);
+                    pdfFile = runReport(Name, art, BehaelterId, Betreiber,
+                        Standort);
                 } catch (EngineException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 AuikUtils.spawnFileProg(pdfFile);
             }
@@ -359,134 +374,138 @@ public class ReportManager {
     }
 
     public void runReport(File pdffile, String Name) throws EngineException {
-        if (Name == null)
-        {
+        if (Name == null) {
             log.debug("DEBUG::runReport Error: Id Name oder HaltungsNr nicht gesetzt!\n");
             log.debug("\nName: " + Name);
         }
 
-
         if (config == null || engine == null || options == null)
             initBirt();
 
-
         IReportRunnable design = null;
-        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); //reportHome + Name + ".rptdesign"
+        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); // reportHome
+                                                                            // +
+                                                                            // Name
+                                                                            // +
+                                                                            // ".rptdesign"
 
-        //Create task to run and render the report,
+        // Create task to run and render the report,
         IRunAndRenderTask task = engine.createRunAndRenderTask(design);
 
         task.validateParameters();
         options = new HTMLRenderOption();
 
-        //Remove HTML and Body tags
+        // Remove HTML and Body tags
         options.setEmbeddable(true);
 
-        //Set ouptut location
+        // Set ouptut location
         options.setOutputFileName(pdffile.getAbsolutePath());
 
-        //Set output format
+        // Set output format
         options.setOutputFormat("pdf");
         task.setRenderOption(options);
 
-        //run the report and destroy the engine
-        //Note - If the program stays resident do not shutdown the Platform or the Engine
-        //Den Report endgültig erzeugen
+        // run the report and destroy the engine
+        // Note - If the program stays resident do not shutdown the Platform or
+        // the Engine
+        // Den Report endgültig erzeugen
         try {
             task.run();
 
             shutdownBirt();
         } catch (EngineException e1) {
-            throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+            throw new RuntimeException(
+                "Fehler beim Durchführen des BIRT-Reports!", e1);
         }
     }
 
-    public void runReport(File pdffile, String Name, Integer Id, String Bezeichnung) throws EngineException {
-        if (Id == null || Name == null || Bezeichnung == null)
-        {
+    public void runReport(File pdffile, String Name, Integer Id,
+        String Bezeichnung) throws EngineException {
+        if (Id == null || Name == null || Bezeichnung == null) {
             log.debug("DEBUG::runReport Error: Id Name oder HaltungsNr nicht gesetzt!\n");
             log.debug("Id: " + Id);
             log.debug("\nName: " + Name);
             log.debug("\nHaltungsNr: " + Bezeichnung);
         }
 
-
         if (config == null || engine == null || options == null)
             initBirt();
 
-
         IReportRunnable design = null;
-        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); //reportHome + Name + ".rptdesign"
+        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); // reportHome
+                                                                            // +
+                                                                            // Name
+                                                                            // +
+                                                                            // ".rptdesign"
 
-        //Create task to run and render the report,
+        // Create task to run and render the report,
         IRunAndRenderTask task = engine.createRunAndRenderTask(design);
 
         task.setParameterValue("id", Id);
-        if (Bezeichnung != null && new File(fotoPath + Bezeichnung + ".jpg").canRead()) {
-            task.setParameterValue("foto", new String(fotoPath + Bezeichnung + ".jpg"));
-        }
-        else
-        {
-            task.setParameterValue("foto", new String(fotoPath + "kein_foto.jpg"));
+        if (Bezeichnung != null
+            && new File(fotoPath + Bezeichnung + ".jpg").canRead()) {
+            task.setParameterValue("foto", new String(fotoPath + Bezeichnung
+                + ".jpg"));
+        } else {
+            task.setParameterValue("foto", new String(fotoPath
+                + "kein_foto.jpg"));
         }
 
-        if (Bezeichnung != null && new File(mapPath + Bezeichnung + ".jpg").canRead()) {
-            task.setParameterValue("karte", new String(mapPath + Bezeichnung + ".jpg"));
-        }
-        else
-        {
-            task.setParameterValue("karte", new String(mapPath + "keine_karte.jpg"));
+        if (Bezeichnung != null
+            && new File(mapPath + Bezeichnung + ".jpg").canRead()) {
+            task.setParameterValue("karte", new String(mapPath + Bezeichnung
+                + ".jpg"));
+        } else {
+            task.setParameterValue("karte", new String(mapPath
+                + "keine_karte.jpg"));
         }
         task.validateParameters();
         options = new HTMLRenderOption();
 
-        //Remove HTML and Body tags
+        // Remove HTML and Body tags
         options.setEmbeddable(true);
 
-        //Set ouptut location
+        // Set ouptut location
         options.setOutputFileName(pdffile.getAbsolutePath());
 
-        //Set output format
+        // Set output format
         options.setOutputFormat("pdf");
         task.setRenderOption(options);
 
-        //run the report and destroy the engine
-        //Note - If the program stays resident do not shutdown the Platform or the Engine
-        //Den Report endgültig erzeugen
+        // run the report and destroy the engine
+        // Note - If the program stays resident do not shutdown the Platform or
+        // the Engine
+        // Den Report endgültig erzeugen
         try {
             task.run();
 
             shutdownBirt();
         } catch (EngineException e1) {
-            throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+            throw new RuntimeException(
+                "Fehler beim Durchführen des BIRT-Reports!", e1);
         }
     }
 
-
-
-
-
-
-
-    public void runReport(File pdffile, Integer StandortId, String Standort, String Name)  throws EngineException {
-
+    public void runReport(File pdffile, Integer StandortId, String Standort,
+        String Name) throws EngineException {
 
         if (config == null || engine == null || options == null)
             initBirt();
 
         IReportRunnable design = null;
 
+        try {
+            design = engine.openReportDesign(reportHome + Name + ".rptdesign"); // reportHome
+                                                                                // +
+                                                                                // Name
+                                                                                // +
+                                                                                // ".rptdesign"
 
-        try{
-            design = engine.openReportDesign(reportHome + Name + ".rptdesign"); //reportHome + Name + ".rptdesign"
-
+        } catch (EngineException e1) {
+            log.debug("Fehler: " + e1);
         }
-        catch (EngineException e1) {
-            log.debug("Fehler: " +  e1);
-        }
 
-
-        //Create task to run and render the report,
+        // Create task to run and render the report,
         IRunAndRenderTask task = engine.createRunAndRenderTask(design);
 
         task.setParameterValue("StandortID", StandortId);
@@ -494,40 +513,28 @@ public class ReportManager {
         task.validateParameters();
         HTMLRenderOption options = new HTMLRenderOption();
 
-        //Remove HTML and Body tags
+        // Remove HTML and Body tags
         options.setEmbeddable(true);
 
-        //Set ouptut location
+        // Set ouptut location
         options.setOutputFileName(pdffile.getAbsolutePath());
 
-
-        //Set output format
+        // Set output format
         options.setOutputFormat("pdf");
         task.setRenderOption(options);
-
 
         try {
             task.run();
 
             shutdownBirt();
         } catch (EngineException e1) {
-            throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+            throw new RuntimeException(
+                "Fehler beim Durchführen des BIRT-Reports!", e1);
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    public void runReport(File pdffile, String Name, Integer ObjektId, String Betreiber, String Standort, String Art) throws EngineException {
+    public void runReport(File pdffile, String Name, Integer ObjektId,
+        String Betreiber, String Standort, String Art) throws EngineException {
 //        EngineConfig config = null;
 //        IReportEngine engine = null;
 //        try {
@@ -557,14 +564,13 @@ public class ReportManager {
 
         IReportRunnable design = null;
 
+        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); // reportHome
+                                                                            // +
+                                                                            // Name
+                                                                            // +
+                                                                            // ".rptdesign"
 
-
-        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); //reportHome + Name + ".rptdesign"
-
-
-
-
-        //Create task to run and render the report,
+        // Create task to run and render the report,
         IRunAndRenderTask task = engine.createRunAndRenderTask(design);
 
         task.setParameterValue("ObjektId", ObjektId);
@@ -574,18 +580,19 @@ public class ReportManager {
         task.validateParameters();
         HTMLRenderOption options = new HTMLRenderOption();
 
-        //Remove HTML and Body tags
+        // Remove HTML and Body tags
         options.setEmbeddable(true);
 
-        //Set ouptut location
+        // Set ouptut location
         options.setOutputFileName(pdffile.getAbsolutePath());
 
-        //Set output format
+        // Set output format
         options.setOutputFormat("pdf");
         task.setRenderOption(options);
 
-        //run the report and destroy the engine
-        //Note - If the program stays resident do not shutdown the Platform or the Engine
+        // run the report and destroy the engine
+        // Note - If the program stays resident do not shutdown the Platform or
+        // the Engine
 //        task.run();
 //        task.close();
 //        engine.shutdown();
@@ -595,19 +602,23 @@ public class ReportManager {
 //        config = null;
 //        options = null;
 //        Runtime.getRuntime().gc();
-        //run the report and destroy the engine
-        //Note - If the program stays resident do not shutdown the Platform or the Engine
-        //Den Report endgültig erzeugen
+        // run the report and destroy the engine
+        // Note - If the program stays resident do not shutdown the Platform or
+        // the Engine
+        // Den Report endgültig erzeugen
         try {
             task.run();
 
             shutdownBirt();
         } catch (EngineException e1) {
-            throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+            throw new RuntimeException(
+                "Fehler beim Durchführen des BIRT-Reports!", e1);
         }
     }
 
-    public void runReport(File pdffile, String art, String Name, Integer BehaelterId, String Betreiber, String Standort) throws EngineException {
+    public void runReport(File pdffile, String art, String Name,
+        Integer BehaelterId, String Betreiber, String Standort)
+        throws EngineException {
 //        EngineConfig config = null;
 //        IReportEngine engine = null;
 //        try {
@@ -636,30 +647,35 @@ public class ReportManager {
             initBirt();
 
         IReportRunnable design = null;
-        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); //reportHome + Name + ".rptdesign"
+        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); // reportHome
+                                                                            // +
+                                                                            // Name
+                                                                            // +
+                                                                            // ".rptdesign"
 
-        //Create task to run and render the report,
+        // Create task to run and render the report,
         IRunAndRenderTask task = engine.createRunAndRenderTask(design);
 
         task.setParameterValue("BehaelterId", BehaelterId);
         task.setParameterValue("Betreiber", Betreiber);
         task.setParameterValue("Standort", Standort);
-        task.setParameterValue("Objektart",art);
+        task.setParameterValue("Objektart", art);
         task.validateParameters();
         HTMLRenderOption options = new HTMLRenderOption();
 
-        //Remove HTML and Body tags
+        // Remove HTML and Body tags
         options.setEmbeddable(true);
 
-        //Set ouptut location
+        // Set ouptut location
         options.setOutputFileName(pdffile.getAbsolutePath());
 
-        //Set output format
+        // Set output format
         options.setOutputFormat("pdf");
         task.setRenderOption(options);
 
-        //run the report and destroy the engine
-        //Note - If the program stays resident do not shutdown the Platform or the Engine
+        // run the report and destroy the engine
+        // Note - If the program stays resident do not shutdown the Platform or
+        // the Engine
 //        task.run();
 //        task.close();
 //        engine.shutdown();
@@ -669,26 +685,33 @@ public class ReportManager {
 //        config = null;
 //        options = null;
 //        Runtime.getRuntime().gc();
-        //run the report and destroy the engine
-        //Note - If the program stays resident do not shutdown the Platform or the Engine
-        //Den Report endgültig erzeugen
+        // run the report and destroy the engine
+        // Note - If the program stays resident do not shutdown the Platform or
+        // the Engine
+        // Den Report endgültig erzeugen
         try {
             task.run();
 
             shutdownBirt();
         } catch (EngineException e1) {
-            throw new RuntimeException("Fehler beim Durchführen des BIRT-Reports!", e1);
+            throw new RuntimeException(
+                "Fehler beim Durchführen des BIRT-Reports!", e1);
         }
     }
 
     public static synchronized ReportManager getInstance() {
         if (_instance == null) {
-            String engineHome = SettingsManager.getInstance().getSetting("auik.birt.enginepath");
-            String reportHome = SettingsManager.getInstance().getSetting("auik.birt.reportpath");
-            String fotoPath   = SettingsManager.getInstance().getSetting("auik.system.spath_fotos");
-            String mapPath    = SettingsManager.getInstance().getSetting("auik.system.spath_karten");
+            String engineHome = SettingsManager.getInstance().getSetting(
+                "auik.birt.enginepath");
+            String reportHome = SettingsManager.getInstance().getSetting(
+                "auik.birt.reportpath");
+            String fotoPath = SettingsManager.getInstance().getSetting(
+                "auik.system.spath_fotos");
+            String mapPath = SettingsManager.getInstance().getSetting(
+                "auik.system.spath_karten");
 
-            _instance = new ReportManager(engineHome, reportHome, fotoPath, mapPath);
+            _instance = new ReportManager(engineHome, reportHome, fotoPath,
+                mapPath);
         }
         return _instance;
     }
@@ -733,6 +756,7 @@ public class ReportManager {
         Runtime.getRuntime().gc();
     }
 
+    @Override
     protected void finalize() {
         shutdownBirt();
     }
