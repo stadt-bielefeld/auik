@@ -111,10 +111,11 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         proben = new DatabaseAccess()
             .createQuery(
                 "from AtlProbenahmen as probenahme where "
-                    + "probenahme.atlProbepkt = ? "
+                    + "probenahme.atlProbepkt = :pkt "
                     + "order by probenahme.datumDerEntnahme desc, "
                     + "probenahme.kennummer desc"
-                    + ((limit != -1) ? " LIMIT 5" : "")).setEntity("pkt", pkt)
+                    + ((limit != -1) ? " LIMIT 5" : ""))
+            .setEntity("pkt", pkt)
             .list();
         if (loadPos) {
             for (int i = 0; i < proben.size(); i++) {
