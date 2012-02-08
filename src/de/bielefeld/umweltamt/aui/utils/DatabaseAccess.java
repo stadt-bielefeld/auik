@@ -26,34 +26,39 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.DatabaseManager;
+import de.bielefeld.umweltamt.aui.GUIManager;
+import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
  * A wrapper class for all access to the database, which only allows certain
- * functionality to the user/programmer, handles database exceptions and
- * makes sure modifying access is run within a transaction.
- *
+ * functionality to the user/programmer, handles database exceptions and makes
+ * sure modifying access is run within a transaction.
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public class DatabaseAccess {
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
-    /** Database manager */
-    private static final DatabaseManager dbManager =
-        DatabaseManager.getInstance();
 
-//    public enum DatabaseAccessType {
-//        GET, SAVEORUPDATE, MERGE, DELETE, QUERY
-//    }
-//    /** Type of the DatabaseAccess */
-//    private DatabaseAccessType type = null;
+    /** The type of the DatabaseAccess */
+    public enum DatabaseAccessType {
+        /* Database access */
+        INITIALIZE, GET_SESSION, BEGIN_TRANSACTION, COMMIT, ROLLBACK,
+        /* Operations on entitys */
+        GET, SAVEORUPDATE, MERGE, DELETE,
+        /* Querys */
+        CREATE_QUERY, CREATE_FILTER, LIST, ITERATE
+    }
 
     /** The session of the localThread */
     private Session session = null;
@@ -71,6 +76,36 @@ public class DatabaseAccess {
     }
 
     /**
+     * Force initialization of a proxy or persistent collection.<br>
+     * <br>
+     * Note: This only ensures intialization of a proxy object or collection; it
+     * is not guaranteed that the elements INSIDE the collection will be
+     * initialized/materialized.
+     * @param proxy a persistable object, proxy, persistent collection or
+     *            <code>null</code>
+     */
+    public void initialize(Object proxy) {
+        try {
+            Hibernate.initialize(proxy);
+        } catch (HibernateException he) {
+            this.handleDBException(he, DatabaseAccessType.INITIALIZE, false);
+        } finally {
+            // This place is intentionally left blank.
+        }
+    }
+
+    /**
+     * Check if the proxy or persistent collection is initialized.
+     * @param proxy a persistable object, proxy, persistent collection or
+     *            <code>null</code>
+     * @return <code>true</code> if the argument is already initialized, or is
+     *         not a proxy or collection
+     */
+    public boolean isInitialized(Object proxy) {
+        return Hibernate.isInitialized(proxy);
+    }
+
+    /**
      * Get the entity of clazz with the id
      * @param clazz The requested Class
      * @param id The requested id
@@ -81,7 +116,7 @@ public class DatabaseAccess {
         try {
             result = this.getSession().get(clazz, id);
         } catch (HibernateException he) {
-            dbManager.handleDBException(he, "get", true);
+            this.handleDBException(he, DatabaseAccessType.GET, false);
         } finally {
             // This place is intentionally left blank.
         }
@@ -90,9 +125,10 @@ public class DatabaseAccess {
 
     /**
      * Save or update an Object from the database (within a Transaction)<br>
-     * Usage:<pre>
+     * Usage:<br>
+     * <code>
      * boolean success = new DatabaseAccess().saveOrUpdate(myToModifyObject);
-     * </pre>
+     * </code>
      * @param object The Object to save or update
      * @return boolean True, if everything went as planned, false otherwise
      */
@@ -108,8 +144,8 @@ public class DatabaseAccess {
                     success = true;
                 }
             } catch (HibernateException he) {
-                dbManager.handleDBException(
-                        he, "DatabaseAccess.saveOrUpdate()", true);
+                this.handleDBException(
+                    he, DatabaseAccessType.SAVEORUPDATE, true);
             }
         }
         return success;
@@ -117,9 +153,10 @@ public class DatabaseAccess {
 
     /**
      * Merge an Object from the database (within a Transaction)<br>
-     * Usage:<pre>
+     * Usage:<br>
+     * <code>
      * boolean success = new DatabaseAccess().merge(myToModifyObject);
-     * </pre>
+     * </code>
      * @param object The Object to merge
      * @return boolean True, if everything went as planned, false otherwise
      */
@@ -135,8 +172,7 @@ public class DatabaseAccess {
                     success = true;
                 }
             } catch (HibernateException he) {
-                dbManager.handleDBException(
-                        he, "DatabaseAccess.merge()", true);
+                this.handleDBException(he, DatabaseAccessType.MERGE, true);
             }
         }
         return success;
@@ -144,9 +180,10 @@ public class DatabaseAccess {
 
     /**
      * Delete an Object from the database (within a Transaction)<br>
-     * Usage: <pre>
+     * Usage:<br>
+     * <code>
      * boolean success = new DatabaseAccess().delete(myToDeleteObject);
-     * </pre>
+     * </code>
      * @param object The Object to delete
      * @return boolean True, if everything went as planned, false otherwise
      */
@@ -162,27 +199,57 @@ public class DatabaseAccess {
                     success = true;
                 }
             } catch (HibernateException he) {
-                dbManager.handleDBException(
-                        he, "DatabaseAccess.delete()", true);
+                this.handleDBException(he, DatabaseAccessType.DELETE, true);
             }
         }
         return success;
     }
 
     /**
-     * Create a query with the given String<br>
-     * Usage:
-     * <pre>List<?> result = new DatabaseAccess().createQuery(
-     *          "from Anh49Verwaltungsverfahren as verfahren where " +
-     *          "verfahren.anh49Fachdaten = :fachdaten " +
-     *          "order by verfahren.datum")
-     *          .setEntity("fachdaten", fachdaten)
-     *          .list();</pre>
-     * @param queryString The Query String
+     * Create a new instance of Query for the given query String<br>
+     * Usage:<br>
+     * <code><pre>
+     * List<?> result = new DatabaseAccess().createQuery(
+     *     "from Anh49Verwaltungsverfahren as verfahren "
+     *         + "where verfahren.anh49Fachdaten = :fachdaten "
+     *         + "order by verfahren.datum")
+     *     .setEntity("fachdaten", fachdaten)
+     *     .list();</pre></code>
+     * @param queryString The query String
      * @return DatabaseAccess this
      */
     public DatabaseAccess createQuery(String queryString) {
-        this.query = getSession().createQuery(queryString);
+        try {
+            this.query = getSession().createQuery(queryString);
+        } catch (HibernateException he) {
+            this.handleDBException(he, DatabaseAccessType.CREATE_QUERY, false);
+        } finally {
+            // This place is intentionally left blank.
+        }
+        return this;
+    }
+
+    /**
+     * Create a new instance of Query for the given Collection and filter
+     * String.<br>
+     * Usage:<br>
+     * <code><pre>
+     * List<?> result = new DatabaseAccess().createFilter(
+     *     newProbe.getAtlAnalysepositionen(),
+     *     "order by this.atlParameter.reihenfolge")
+     *     .list();</pre></code>
+     * @param collection The Collection
+     * @param filterString The filter String
+     * @return DatabaseAccess this
+     */
+    public DatabaseAccess createFilter(Object collection, String filterString) {
+        try {
+            this.query = getSession().createFilter(collection, filterString);
+        } catch (HibernateException he) {
+            this.handleDBException(he, DatabaseAccessType.CREATE_FILTER, false);
+        } finally {
+            // This place is intentionally left blank.
+        }
         return this;
     }
 
@@ -191,22 +258,27 @@ public class DatabaseAccess {
         this.query.setBoolean(name, val);
         return this;
     }
+
     public DatabaseAccess setDate(String name, Date date) {
         this.query.setDate(name, date);
         return this;
     }
+
     public DatabaseAccess setDouble(String name, double val) {
         this.query.setDouble(name, val);
         return this;
     }
+
     public DatabaseAccess setEntity(String name, Object val) {
         this.query.setEntity(name, val);
         return this;
     }
+
     public DatabaseAccess setFloat(String name, float val) {
         this.query.setFloat(name, val);
         return this;
     }
+
     public DatabaseAccess setInteger(String name, int val) {
         this.query.setInteger(name, val);
         return this;
@@ -216,23 +288,27 @@ public class DatabaseAccess {
         this.query.setLong(name, val);
         return this;
     }
+
     public DatabaseAccess setString(String name, String val) {
         this.query.setString(name, val);
         return this;
     }
+
     /* More query configuration */
     // TODO: Do we really need this?
     public DatabaseAccess uniqueResult() {
         this.query.uniqueResult();
         return this;
     }
+
     // TODO: Do we really need this? (Cache needs to be set in config as well)
     public DatabaseAccess setCacheable(boolean cacheable) {
         this.query.setCacheable(cacheable);
         return this;
     }
+
     // TODO: Do we really need this?
-    public DatabaseAccess setCacheRegion(String cacheRegion)  {
+    public DatabaseAccess setCacheRegion(String cacheRegion) {
         this.query.setCacheRegion(cacheRegion);
         return this;
     }
@@ -247,7 +323,7 @@ public class DatabaseAccess {
         try {
             result = this.query.list();
         } catch (HibernateException he) {
-            dbManager.handleDBException(he, "list", true);
+            this.handleDBException(he, DatabaseAccessType.LIST, false);
         } finally {
             // This place is intentionally left blank.
         }
@@ -264,7 +340,7 @@ public class DatabaseAccess {
         try {
             result = this.query.iterate();
         } catch (HibernateException he) {
-            dbManager.handleDBException(he, "iterate", true);
+            this.handleDBException(he, DatabaseAccessType.ITERATE, false);
         } finally {
             // This place is intentionally left blank.
         }
@@ -277,7 +353,7 @@ public class DatabaseAccess {
             try {
                 this.session = HibernateSessionFactory.currentSession();
             } catch (HibernateException he) {
-                dbManager.handleDBException(he, "getSession", true);
+                this.handleDBException(he, DatabaseAccessType.GET_SESSION, true);
             } finally {
                 // This place is intentionally left blank.
             }
@@ -297,7 +373,8 @@ public class DatabaseAccess {
             this.transaction = this.getSession().beginTransaction();
             success = true;
         } catch (HibernateException he) {
-            dbManager.handleDBException(he, "beginTransaction", true);
+            this.handleDBException(
+                he, DatabaseAccessType.BEGIN_TRANSACTION, true);
         } finally {
             // This place is intentionally left blank.
         }
@@ -314,19 +391,52 @@ public class DatabaseAccess {
             this.transaction.commit();
             success = this.transaction.wasCommitted();
         } catch (HibernateException he) {
-            dbManager.handleDBException(he, "commitTransaction", true);
+            this.handleDBException(he, DatabaseAccessType.COMMIT, true);
         } finally {
             if (!success) {
                 log.warn("Commit did not throw an Exception, but the "
-                        + "Transaction was not committed for some reason.");
+                    + "Transaction was not committed for some reason.");
                 try {
                     this.transaction.rollback();
                 } catch (HibernateException he) {
-                    dbManager.handleDBException(he, "ROLLBACK", true);
+                    this.handleDBException(
+                        he, DatabaseAccessType.ROLLBACK, true);
                 }
             }
             this.transaction = null;
         }
         return success;
+    }
+
+    /**
+     * Make sure we always pass on the type of the failed database access
+     * @param exception The occurred Exception
+     * @param type The type of the DatabaseAccess
+     * @param fatal <code>true</code> if the error was fatal, <code>false</code>
+     *            otherwise
+     */
+    private void handleDBException(Throwable exception,
+        DatabaseAccessType type, boolean fatal) {
+
+        /* For testing talk with the user... */
+        String message = "TESTPHASE: Hier /könnte/ etwas schief gegangen sein. "
+            + "Wenn sich das AUIK ab jetzt anders als sonst verhält, "
+            + "bitte die Stelle im Programm notieren und bei mir (Conny) "
+            + "oder Gerd melden! Danke!";
+
+        /* via GUI */
+        HauptFrame runningFrame = GUIManager.getInstance().getRunningFrame();
+        if (runningFrame != null) {
+            runningFrame.changeStatus(message, HauptFrame.ERROR_COLOR);
+        }
+        /* via message dialog */
+        JOptionPane.showMessageDialog(runningFrame, message, "Fehler",
+            JOptionPane.ERROR_MESSAGE);
+        /* via stdout */
+        log.error(message);
+
+        /* Hand the exception to the DatabaseManager */
+        DatabaseManager.getInstance().handleDBException(exception,
+            "DatabaseAccess." + type, fatal);
     }
 }
