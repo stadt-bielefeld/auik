@@ -38,11 +38,17 @@ import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 
 /**
  * A wrapper class for all access to the database, which only allows certain
  * functionality to the user/programmer, handles database exceptions and makes
- * sure modifying access is run within a transaction.
+ * sure modifying access is run within a transaction.<br>
+ * <br>
+ * TODO: Let the DatabaseAccess only work on Subclasses of
+ * AbstractVirtuallyDeletableDatabaseTable to ensure that we do not really
+ * delete anything in the database.
+ *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public class DatabaseAccess {
@@ -120,6 +126,17 @@ public class DatabaseAccess {
         } finally {
             // This place is intentionally left blank.
         }
+
+        /* If the object is virtual deletable and virtual deleted,
+         * return null */
+        AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
+        if (result instanceof AbstractVirtuallyDeletableDatabaseTable) {
+            virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) result;
+            if (virtDelObjekt.is_deleted()) {
+                return null;
+            }
+        }
+
         return result;
     }
 
@@ -188,6 +205,16 @@ public class DatabaseAccess {
      * @return boolean True, if everything went as planned, false otherwise
      */
     public boolean delete(Object object) {
+
+        /* If the object is virtual deletable, just delete it virtually */
+        AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
+        if (object instanceof AbstractVirtuallyDeletableDatabaseTable) {
+            virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) object;
+            virtDelObjekt.set_deleted(true);
+            return this.saveOrUpdate(virtDelObjekt);
+        }
+
+        /* Really delete the object */
         boolean success = false;
         /* Begin a new Transaction */
         if (this.beginTransaction()) {
@@ -327,6 +354,23 @@ public class DatabaseAccess {
         } finally {
             // This place is intentionally left blank.
         }
+
+        // TODO: This is the most dirty solution...
+        // Add the "where xyz._deleted = FALSE" to all the querys?
+        // Can we let the database do that? Maybe with an Index? Or many...
+        AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
+        for (Object object : result) {
+            /* If the object is virtual deletable and virtual deleted,
+             * remove it from the result list */
+            if (object instanceof AbstractVirtuallyDeletableDatabaseTable) {
+                virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) object;
+                if (virtDelObjekt.is_deleted()) {
+                    result.remove(object);
+                }
+
+            }
+        }
+
         return result;
     }
 
@@ -335,7 +379,9 @@ public class DatabaseAccess {
      * @return Iterator<?> The result of the Query
      */
     /* Note: The result of the query only lives as long as the session! */
-    public Iterator<?> iterate() {
+    // Yes, this is unused. So it is intended at the moment.
+    @SuppressWarnings("unused")
+    private Iterator<?> iterate() {
         Iterator<?> result = null;
         try {
             result = this.query.iterate();

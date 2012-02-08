@@ -138,15 +138,40 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
                 (Anh49Verwaltungsverfahren) objectAtRow;
 
             switch (columnIndex) {
-                case 0: return AuikUtils.getStringFromDate(
-                            verwaltungsverfahren.getDatum());
-                case 1: return verwaltungsverfahren.getMassnahme();
-                case 2: return verwaltungsverfahren.getSachbearbeiterIn();
-                case 3: return AuikUtils.getStringFromDate(
-                            verwaltungsverfahren.getWiedervorlage());
+                case 0:
+                    return (verwaltungsverfahren.is_active() ?
+                        AuikUtils.getStringFromDate(
+                            verwaltungsverfahren.getDatum()) :
+                        this.setStrike(AuikUtils.getStringFromDate(
+                            verwaltungsverfahren.getDatum())));
+                case 1:
+                    return (verwaltungsverfahren.is_active() ?
+                        verwaltungsverfahren.getMassnahme() :
+                        this.setStrike(verwaltungsverfahren.getMassnahme()));
+                case 2:
+                    return (verwaltungsverfahren.is_active() ?
+                        verwaltungsverfahren.getSachbearbeiterIn() :
+                        this.setStrike(
+                            verwaltungsverfahren.getSachbearbeiterIn()));
+                case 3:
+                    return (verwaltungsverfahren.is_active() ?
+                        AuikUtils.getStringFromDate(
+                            verwaltungsverfahren.getWiedervorlage()) :
+                        this.setStrike(AuikUtils.getStringFromDate(
+                            verwaltungsverfahren.getWiedervorlage())));
                 case 4: return verwaltungsverfahren.isAbgeschlossen();
                 default: return null;
             }
+        }
+
+        /**
+         * Little helper method to set a strike through the text via HTML.<br>
+         * TODO: This wants to move to a util class
+         * @param text
+         * @return String The text with HTML formatting for a strike
+         */
+        private String setStrike(String text) {
+            return ("<html><strike>" + text + "</strike></html>");
         }
 
         /**
@@ -454,12 +479,11 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
     }
 
     public void speichernVerwaltungsverfahren() {
-        List<Anh49Verwaltungsverfahren> verwaltungsverfahrenListe =
-            (List<Anh49Verwaltungsverfahren>) verwaltungsverfahrenModel.getList();
-        for (Anh49Verwaltungsverfahren verwaltungsverfahren :
-                verwaltungsverfahrenListe) {
+        List<?> liste = verwaltungsverfahrenModel.getList();
+        for (Object verwaltungsverfahren : liste) {
             Anh49Verwaltungsverfahren
-                    .saveOrUpdateVerwaltungsverfahren(verwaltungsverfahren);
+                    .saveOrUpdateVerwaltungsverfahren(
+                        (Anh49Verwaltungsverfahren)verwaltungsverfahren);
         }
         verwaltungsverfahrenModel.updateList();
     }

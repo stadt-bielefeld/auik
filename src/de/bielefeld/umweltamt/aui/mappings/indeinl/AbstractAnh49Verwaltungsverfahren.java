@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 
 /**
  * A class that represents a row in the ANH_49_VERWALTUNGSVERF table. You can
@@ -35,7 +35,8 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
  * Well, not really. I just copied this from a generated class and modified it!
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
-public abstract class AbstractAnh49Verwaltungsverfahren implements Serializable {
+public abstract class AbstractAnh49Verwaltungsverfahren extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 6965756804975056383L;
 
     /**
@@ -67,7 +68,7 @@ public abstract class AbstractAnh49Verwaltungsverfahren implements Serializable 
 
     /** Simple constructor of AbstractAnh49Analysen instances. */
     public AbstractAnh49Verwaltungsverfahren() {
-        // This is intentionally left blank.
+        // This place is intentionally left blank.
     }
 
     /**
