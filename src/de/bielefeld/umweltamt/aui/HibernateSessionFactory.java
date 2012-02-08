@@ -96,7 +96,7 @@ public class HibernateSessionFactory {
                     cfg.setProperty("hibernate.connection.username", DB_USER);
                     cfg.setProperty("hibernate.connection.password", DB_PASS);
                     // TODO: Why do we still have informix stuff in here?
-                    cfg.setProperty("hibernate.connection.url", "jdbc:informix-sqli://recos14:1534/auik_ibb:INFORMIXSERVER=uschi");
+                    cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://172.20.70.24/fisumwelt");
                     cfg.configure(CONFIG_FILE_LOCATION);
                     sessionFactory = cfg.buildSessionFactory();
                 }

@@ -107,21 +107,21 @@ public class BasisBetreiber extends AbstractBasisBetreiber implements
         String queryString;
         if (PROPERTY_NAME.equals(property)) {
             queryString = "from BasisBetreiber as betr where "
-                + "lower(betr.betrname) like :suche"
+                + "lower(betr.betrname) like :suche "
                 + "order by betr.betrname, betr.betrnamezus";
         } else if (PROPERTY_ANREDE.equals(property)) {
             queryString = "from BasisBetreiber as betr where "
-                + "lower(betr.betranrede) like :suche"
+                + "lower(betr.betranrede) like :suche "
                 + "order by betr.betrname, betr.betrnamezus";
         } else if (PROPERTY_ZUSATZ.equals(property)) {
             queryString = "from BasisBetreiber as betr where "
-                + "lower(betr.betrnamezus) like :suche"
+                + "lower(betr.betrnamezus) like :suche "
                 + "order by betr.betrname, betr.betrnamezus";
         } else {
             queryString = "from BasisBetreiber as betr where "
-                + "lower(betr.betrname) like :suche"
-                + "or lower(betr.betranrede) like :suche"
-                + "or lower(betr.betrnamezus) like :suche"
+                + "lower(betr.betrname) like :suche "
+                + "or lower(betr.betranrede) like :suche "
+                + "or lower(betr.betrnamezus) like :suche "
                 + "order by betr.betrname, betr.betrnamezus";
         }
 

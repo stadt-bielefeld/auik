@@ -107,33 +107,13 @@ public class Anh49Abscheiderdetails extends AbstractAnh49Abscheiderdetails
 
         // Liste für Fettabscheider aus Anh49Abscheiderdetails
         List fettabsch;
-        // Liste für Fettabscheider aus Anh49Fachdaten
-        List<?> fettabsch2;
-        Anh49Fachdaten item;
 
         String query = "from Anh49Abscheiderdetails details "
             + "where details.Anh49Fachdaten.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
-            // +"order by details.nenngroesse desc";
             + "order by details.Anh49Fachdaten.basisObjekt.inaktiv, "
             + "details.Anh49Fachdaten.basisObjekt.basisBetreiber.betrname";
         fettabsch = new DatabaseAccess().createQuery(query).list();
 
-        String query2 = "from Anh49Fachdaten anh49"
-            + " where anh49.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
-            + "order by anh49.basisObjekt.inaktiv, "
-            + "anh49.basisObjekt.basisBetreiber.betrname";
-        fettabsch2 = new DatabaseAccess().createQuery(query2).list();
-
-        // Es können auch Abscheider eingepflegt sein zu denen keien Details
-        // vorhanden sind
-        // Diese Abscheider werden hier zur Liste fettabsch hinzugefügt
-        for (int j = 0; j < fettabsch2.size(); j++) {
-            item = (Anh49Fachdaten) fettabsch2.get(j);
-
-            if (getAbscheiderDetails(item).size() == 0) {
-                fettabsch.add(item);
-            }
-        }
 
         return fettabsch;
     }

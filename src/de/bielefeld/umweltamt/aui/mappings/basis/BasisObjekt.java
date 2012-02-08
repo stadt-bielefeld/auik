@@ -74,7 +74,7 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
         List<?> objekte;
 
         String query = "from BasisObjekt as bo "
-            + "where bo.basisBetreiber = :betreiber";
+            + "where bo.basisBetreiber = :betreiber ";
 
         if (abteilung != null) {
             query += "and bo.basisObjektarten.abteilung = '" + abteilung + "' ";
