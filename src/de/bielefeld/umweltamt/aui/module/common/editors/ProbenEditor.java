@@ -558,6 +558,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         
         if (isNew){
         sachbearbeiterBox.setSelectedItem(BasisSachbearbeiter.getSachbearbeiter(SettingsManager.getInstance().getSetting("auik.prefs.lastuser")));
+        uhrzeitVon.setText("");
+        uhrzeitBis.setText("");
         }
 
         parameterModel = new ParameterModel(getProbe(), isNew, isSchlamm);
@@ -848,10 +850,10 @@ public class ProbenEditor extends AbstractApplyEditor {
             JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         FormLayout layout = new FormLayout(
-            "70dlu, 50dlu, 30dlu, 5dlu, 30dlu, 5dlu, 60dlu, 5dlu, 60dlu, 50dlu, 5dlu, 50dlu",
+            "70dlu, 60dlu, 40dlu, 5dlu, 30dlu, 5dlu, 60dlu, 5dlu, 30dlu, 50dlu, 5dlu, 50dlu",
             "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu," +
-            "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, " +
-            "pref, 16dlu,pref, 16dlu, pref, 16dlu, pref, 8dlu, 150dlu");
+            "pref, 8dlu, pref, 8dlu, pref, 8dlu, " +
+            "pref, 16dlu,pref, 16dlu, pref, 16dlu, pref, 8dlu, 250dlu");
 
         PanelBuilder builder = new PanelBuilder(layout);
         CellConstraints cc = new CellConstraints();
@@ -909,16 +911,6 @@ public class ProbenEditor extends AbstractApplyEditor {
         builder.addLabel("Rechnungsbetrag:", cc.xyw(4, row, 4, CellConstraints.RIGHT, CellConstraints.CENTER));
         builder.addLabel("", cc.xyw(8, row, 1)); // just to create a small gap
         builder.add(rechnungsBetrag, cc.xyw(9, row, 1));
-
-        row += 2;
-        builder.addSeparator("ICP", cc.xyw(1, row, 12));
-
-        row += 2;
-        builder.addLabel("Einwaage:", cc.xyw(1, row, 1));
-        builder.add(icpEinwaageFeld, cc.xyw(2, row, 1));
-        builder.addLabel("Datum:", cc.xyw(3, row, 5, CellConstraints.RIGHT, CellConstraints.CENTER));
-        builder.addLabel("", cc.xyw(8, row, 1)); // just to create a small gap
-        builder.add(icpDatum, cc.xyw(9, row, 1));
 
         row += 2;
         builder.addSeparator("Bemerkung", cc.xyw(1, row, 12));

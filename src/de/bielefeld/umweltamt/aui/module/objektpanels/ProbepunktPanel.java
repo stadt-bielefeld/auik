@@ -122,7 +122,7 @@ public class ProbepunktPanel extends JPanel {
         this.probenahmenModel = new ProbenahmenModel();
 
         FormLayout layout = new FormLayout (
-                "r:50dlu, 5dlu, 150dlu, r:45dlu, 5dlu, 25dlu", // Spalten
+                "r:50dlu, 5dlu, 250dlu, r:45dlu, 5dlu, 25dlu", // Spalten
                 "pref, " +    //1
                 "3dlu, " +    //2
                 "pref, " +    //3
@@ -400,6 +400,11 @@ public class ProbepunktPanel extends JPanel {
         if (probenahmeTabelle == null) {
             probenahmeTabelle = new JTable(probenahmenModel);
             //probenahmeTabelle.setBackground(Color.BLUE);
+            probenahmeTabelle.getColumnModel().getColumn(0).setMaxWidth(75);
+            probenahmeTabelle.getColumnModel().getColumn(1).setMaxWidth(70);
+            probenahmeTabelle.getColumnModel().getColumn(2).setMaxWidth(60);
+            probenahmeTabelle.getColumnModel().getColumn(3).setPreferredWidth(100);
+            probenahmeTabelle.getColumnModel().getColumn(4).setPreferredWidth(100);
             probenahmeTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             probenahmeTabelle.setColumnSelectionAllowed(false);
             probenahmeTabelle.setRowSelectionAllowed(true);

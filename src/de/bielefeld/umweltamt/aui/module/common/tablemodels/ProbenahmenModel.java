@@ -50,6 +50,7 @@ public class ProbenahmenModel extends ListTableModel {
     public ProbenahmenModel() {
         super(new String[]{
                 "Kennnummer",
+                "Wochentag",
                 "Datum",
                 "Status",
                 "Bemerkung"}, false, true);
@@ -84,15 +85,18 @@ public class ProbenahmenModel extends ListTableModel {
                     value = probe.getKennummer();
                     break;
                 case 1:
-                    value = AuikUtils.getStringFromDate(probe.getDatumDerEntnahme());
+                    value = AuikUtils.getDayOfWeekFromDate(probe.getDatumDerEntnahme());
                     break;
                 case 2:
+                    value = AuikUtils.getStringFromDate(probe.getDatumDerEntnahme());
+                    break;
+                case 3:
                 	if (probe.getAtlStatus() != null)
                 		value = probe.getAtlStatus().getBezeichnung();
                 	else
                 		value = "";
                     break;
-                case 3:
+                case 4:
                     value = probe.getBemerkung();
                     break;
                 default:

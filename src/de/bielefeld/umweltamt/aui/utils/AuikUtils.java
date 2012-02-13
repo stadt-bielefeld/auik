@@ -389,6 +389,47 @@ public class AuikUtils {
     }
 
     /**
+     * Liefert einen String der Form "dd.mm.JJJJ" für ein
+     * gegebenes Datums-Objekt.
+     * @param Das Datum
+     * @return Einen String der Form "dd.mm.JJJJ" oder <code>null</code>, falls DateFormatter <code>null</code> ist
+     */
+    public static String getDayOfWeekFromDate(Date date) {
+        if (date != null) {
+            Calendar cal = new GregorianCalendar();
+            cal.setTime(date);
+
+            int day = cal.get(Calendar.DAY_OF_WEEK);
+            String dayString = null;
+            if (day == 1){
+            	dayString = "Sonntag";
+            }
+            else if (day == 2){
+            	dayString = "Montag";
+            }
+            else if (day == 3){
+            	dayString = "Dienstag";
+            }
+            else if (day == 4){
+            	dayString = "Mittwoch";
+            }
+            else if (day == 5){
+            	dayString = "Donnerstag";
+            }
+            else if (day == 6){
+            	dayString = "Freitag";
+            }
+            else if (day == 7){
+            	dayString = "Samstag";
+            }
+
+            return  dayString;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Liefert einen String der Form "dd.mm.JJJJ" für das
      * aktuelle Datum.
      * @return Einen String der Form "dd.mm.JJJJ"
