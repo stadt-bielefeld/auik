@@ -389,10 +389,9 @@ public class AuikUtils {
     }
 
     /**
-     * Liefert einen String der Form "dd.mm.JJJJ" für ein
-     * gegebenes Datums-Objekt.
+     * Liefert den Wochentag eines gegebenen Datum-Objektes.
      * @param Das Datum
-     * @return Einen String der Form "dd.mm.JJJJ" oder <code>null</code>, falls DateFormatter <code>null</code> ist
+     * @return Den Wochentag als String
      */
     public static String getDayOfWeekFromDate(Date date) {
         if (date != null) {
