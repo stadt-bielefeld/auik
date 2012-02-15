@@ -155,7 +155,7 @@ public class DatabaseAccess {
         if (this.beginTransaction()) {
             try {
                 /* Save or update the object */
-                this.session.saveOrUpdate(object);
+                this.session.merge(object);
                 /* Commit the transaction */
                 if (this.commitTransaction()) {
                     success = true;

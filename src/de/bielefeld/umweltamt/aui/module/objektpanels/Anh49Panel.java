@@ -172,7 +172,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
     	super.addComponent(SPEICHERN, getSaveAnh49Button());
     	
         FormLayout layout = new FormLayout (
-                "pref, 5dlu, pref, 10dlu, pref, 5dlu, pref", // Spalten
+                "pref, 5dlu, 100dlu, 10dlu, pref, 5dlu, 100dlu", // Spalten
                 "pref, " +    // Bearbeitung     | Erfassung
                 "3dlu, " +    //
                 "pref, " +    // Sachbearbeiter  | Genehmigungsdatum
