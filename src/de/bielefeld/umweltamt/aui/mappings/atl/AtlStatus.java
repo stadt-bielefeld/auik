@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -66,14 +65,9 @@ public class AtlStatus extends AbstractAtlEinheiten implements Serializable {
      * @return Ein Array mit allen Einheiten
      */
     private static AtlStatus[] getStatus() {
-        List<?> result = null;
-        AtlStatus[] einheiten = null;
-        result = new DatabaseAccess()
-                .createQuery("from AtlStatus as status")
-                .list();
-        einheiten = new AtlStatus[result.size()];
-        einheiten = (AtlStatus[]) result.toArray(einheiten);
-        return einheiten;
+        return (AtlStatus[]) new DatabaseAccess()
+                .createQuery("FROM AtlStatus as status")
+                .array(new AtlStatus[0]);
     }
 
     /**

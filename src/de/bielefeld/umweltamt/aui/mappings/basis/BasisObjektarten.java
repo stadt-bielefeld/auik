@@ -94,7 +94,6 @@
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
@@ -301,18 +300,11 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
      * @return Alle vorhandenen Objektarten
      */
     public static BasisObjektarten[] getObjektarten() {
-        List<?> list = null;
-        String suchString = "from BasisObjektarten bo order by bo.objektart";
-
-        list = new DatabaseAccess().createQuery(suchString)
+        return (BasisObjektarten[]) new DatabaseAccess().createQuery(
+            "FROM BasisObjektarten bo ORDER BY bo.objektart")
             .setCacheable(true)
             .setCacheRegion("objartliste")
-            .list();
-
-        BasisObjektarten[] tmp = new BasisObjektarten[list.size()];
-        tmp = (BasisObjektarten[]) list.toArray(tmp);
-
-        return tmp;
+            .array(new BasisObjektarten[0]);
     }
 
     /**
@@ -356,8 +348,6 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
      *         Objektart nicht in der Datenbank existiert).
      */
     public static boolean removeObjektart(BasisObjektarten objektart) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(objektart);
-        return removed;
+        return new DatabaseAccess().delete(objektart);
     }
 }

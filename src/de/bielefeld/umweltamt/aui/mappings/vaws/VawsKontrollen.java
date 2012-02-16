@@ -61,18 +61,15 @@ public class VawsKontrollen extends AbstractVawsKontrollen implements
      * @return Eine Liste mit VawsKontrollen-Objekten.
      */
     public static List<?> getAuswertung() {
-        List<?> kontrollen;
-        String query = "from VawsKontrollen vk "
-            + "where vk.naechstepruefung < :today "
+        String query = "FROM VawsKontrollen vk "
+            + "WHERE vk.naechstepruefung < :today "
             + "and vk.pruefungabgeschlossen = FALSE "
-            + "order by vk.naechstepruefung, vk.vawsFachdaten";
+            + "ORDER BY vk.naechstepruefung, vk.vawsFachdaten";
 
-        kontrollen = new DatabaseAccess().createQuery(query)
+        return new DatabaseAccess().createQuery(query)
             .setDate("today", new Date())
 //            .setCacheable(true)
             .list();
-
-        return kontrollen;
     }
 
     /**
@@ -88,9 +85,9 @@ public class VawsKontrollen extends AbstractVawsKontrollen implements
         } else {
             kontrollen = new DatabaseAccess()
                 .createQuery(
-                    "from VawsKontrollen vk where "
+                    "FROM VawsKontrollen vk WHERE "
                         + "vk.vawsFachdaten = :fachdaten "
-                        + "order by vk.pruefungabgeschlossen desc, "
+                        + "ORDER BY vk.pruefungabgeschlossen desc, "
                         + "vk.pruefdatum, vk.naechstepruefung")
                 .setEntity("fachdaten", fachdaten)
                 .list();

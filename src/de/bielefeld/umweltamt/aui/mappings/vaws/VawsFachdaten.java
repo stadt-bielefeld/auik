@@ -113,9 +113,9 @@ public class VawsFachdaten extends AbstractVawsFachdaten implements
         List<?> vaws;
         vaws = new DatabaseAccess()
             .createQuery(
-                "from VawsFachdaten as v "
-                    + "where v.basisObjekt = :objekt "
-                    + "order by v.stillegungsdatum desc, v.anlagenart asc, "
+                "FROM VawsFachdaten as v "
+                    + "WHERE v.basisObjekt = :objekt "
+                    + "ORDER BY v.stillegungsdatum desc, v.anlagenart asc, "
                     + "v.herstellnr asc")
             .setEntity("objekt", objekt)
             .list();
@@ -145,9 +145,7 @@ public class VawsFachdaten extends AbstractVawsFachdaten implements
      *         sonst <code>false</code>.
      */
     public static boolean saveFachdaten(VawsFachdaten fachdaten) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(fachdaten);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
     /**
@@ -158,9 +156,7 @@ public class VawsFachdaten extends AbstractVawsFachdaten implements
      *         Datensatz nicht in der Datenbank existiert).
      */
     public static boolean removeFachdaten(VawsFachdaten fachdaten) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(fachdaten);
-        return removed;
+        return new DatabaseAccess().delete(fachdaten);
     }
 
     /**
@@ -170,35 +166,25 @@ public class VawsFachdaten extends AbstractVawsFachdaten implements
      * @return Ein Array mit den Namen aller Ausführungen.
      */
     public static String[] getAusfuehrungen() {
-        // FIXME: select distinct nicht die beste Lösung
-        String suchString = "select distinct fd.ausfuehrung "
-            + "from VawsFachdaten fd " + "order by fd.ausfuehrung";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        // FIXME: SELECT distinct nicht die beste Lösung
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT distinct fd.ausfuehrung "
+                + "FROM VawsFachdaten fd "
+                + "ORDER BY fd.ausfuehrung")
             .setCacheable(true)
             .setCacheRegion("vawsausfliste")
-            .list();
-
-        String[] result;
-        result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-
-        return result;
+            .array(new String[0]);
     }
 
     /* Durchsucht VawsFachdaten nach einer bestimmten Herstellnummer und gibt
      * das Ergebnis als List zurück */
     public static List<?> findherstellnr(String herstellnr) {
-        List<?> vaws;
-
-        String query = "from VawsFachdaten vaws "
-            + "where vaws.herstellnr like :herstellnr";
-
-        vaws = new DatabaseAccess().createQuery(query)
+        return new DatabaseAccess()
+            .createQuery(
+                "FROM VawsFachdaten vaws "
+                + "WHERE vaws.herstellnr like :herstellnr")
             .setString("herstellnr", herstellnr)
             .list();
-
-        return vaws;
     }
 }

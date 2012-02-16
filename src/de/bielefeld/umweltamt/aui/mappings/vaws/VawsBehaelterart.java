@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -52,19 +51,13 @@ public class VawsBehaelterart extends AbstractVawsBehaelterart implements
      * @return Ein Array mit den Namen aller Behälterarten.
      */
     public static String[] getBehaelterarten() {
-        List<?> list;
-        String suchString = "select bha.behaelterart "
-            + "from VawsBehaelterart bha " + "order by bha.id";
-
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT bha.behaelterart "
+                + "FROM VawsBehaelterart bha "
+                + "ORDER BY bha.id")
             .setCacheable(true)
             .setCacheRegion("vawsbhaliste")
-            .list();
-
-        String[] result;
-        result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-
-        return result;
+            .array(new String[0]);
     }
 }

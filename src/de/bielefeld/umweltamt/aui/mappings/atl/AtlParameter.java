@@ -221,9 +221,9 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
     /*public static List getKlaerschlammParameter() throws HibernateException {
         Session session = HibernateSessionFactory.currentSession();
         List parameter = session.find(
-                "from AtlParameter as param where " +
+                "FROM AtlParameter as param WHERE " +
                 "param.klaerschlammGw is not null " +
-                "order by param.bezeichnung");
+                "ORDER BY param.bezeichnung");
         HibernateSessionFactory.closeSession();
 
         //AtlParameter[] tmp = new AtlParameter[]{};
@@ -240,27 +240,19 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
      * Parametern
      */
     public static List<?> getParameter() {
-        List<?> parameter = null;
-
-        parameter = new DatabaseAccess().createQuery(
-                "from AtlParameter as param "
-                + "where param.atlParameterGruppe.id = 1"
+        return new DatabaseAccess().createQuery(
+                "FROM AtlParameter as param "
+                + "WHERE param.atlParameterGruppe.id = 1"
                 + "or param.atlParameterGruppe.id = 2"
                 + "or param.atlParameterGruppe.id = 3"
-                + "order by param.reihenfolge")
+                + "ORDER BY param.reihenfolge")
                 .list();
-
-        return parameter;
     }
 
     public static List<?> getAll() {
-        List<?> parameter = null;
-
-        parameter = new DatabaseAccess().createQuery(
-                "from AtlParameter as param order by param.bezeichnung")
-                .list();
-
-        return parameter;
+        return new DatabaseAccess().createQuery(
+            "FROM AtlParameter as param ORDER BY param.bezeichnung")
+            .list();
     }
 
     /**
@@ -270,35 +262,19 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
      * @return Ein Array mit allen für Probenahmen relevanten Parametern
      */
     public static AtlParameter[] getRelevanteParameter() {
-        List<?> list = null;
-        AtlParameter[] result = null;
-
-        list = new DatabaseAccess().createQuery(
-                "from AtlParameter as param "
-                + "where param.atlParameterGruppe.id = 1"
+        return (AtlParameter[]) new DatabaseAccess().createQuery(
+                "FROM AtlParameter as param "
+                + "WHERE param.atlParameterGruppe.id = 1"
                 + "or param.atlParameterGruppe.id = 2"
                 + "or param.atlParameterGruppe.id = 3"
-                + "order by param.reihenfolge")
-                .list();
-
-        result = new AtlParameter[list.size()];
-        result = (AtlParameter[]) list.toArray(result);
-
-        return result;
+                + "ORDER BY param.reihenfolge")
+                .array(new AtlParameter[0]);
     }
 
     public static AtlParameter[] getParameterGroup(int id) {
-        List<?> list = null;
-        AtlParameter[] result = null;
-
-        list = new DatabaseAccess().createQuery(
-                "from AtlParameter as param where "
+        return (AtlParameter[]) new DatabaseAccess().createQuery(
+                "FROM AtlParameter as param WHERE "
                 + "param.atlParameterGruppe.id = " + id)
-                .list();
-
-        result = new AtlParameter[list.size()];
-        result = (AtlParameter[]) list.toArray(result);
-
-        return result;
+                .array(new AtlParameter[0]);
     }
 }

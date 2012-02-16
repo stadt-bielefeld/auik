@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -52,20 +51,13 @@ public class VawsGefaehrdungsstufen extends AbstractVawsGefaehrdungsstufen
      * @return Ein Array mit den Namen aller Gefährdungsstufen.
      */
     public static String[] getVbfeinstufungen() {
-        String suchString = "select gef.gefaehrdungsstufen "
-            + "from VawsGefaehrdungsstufen gef "
-            + "order by gef.gefaehrdungsstufen";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT gef.gefaehrdungsstufen "
+                + "FROM VawsGefaehrdungsstufen gef "
+                + "ORDER BY gef.gefaehrdungsstufen")
             .setCacheable(true)
             .setCacheRegion("vawsgefliste")
-            .list();
-
-        String[] tmp;
-        tmp = new String[list.size()];
-        tmp = (String[]) list.toArray(tmp);
-
-        return tmp;
+            .array(new String[0]);
     }
 }

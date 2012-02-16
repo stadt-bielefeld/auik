@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -51,19 +50,13 @@ public class VawsWgk extends AbstractVawsWgk implements Serializable {
      * @return Ein Array mit den Namen aller WGK.
      */
     public static Integer[] getWgk() {
-        String suchString = "select wgk.wassergef " + "from VawsWgk wgk "
-            + "order by wgk.wassergef";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (Integer[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT wgk.wassergef "
+                + "FROM VawsWgk wgk "
+                + "ORDER BY wgk.wassergef")
             .setCacheable(true)
             .setCacheRegion("vawswgkliste")
-            .list();
-
-        Integer[] result;
-        result = new Integer[list.size()];
-        result = (Integer[]) list.toArray(result);
-
-        return result;
+            .array(new Integer[0]);
     }
 }

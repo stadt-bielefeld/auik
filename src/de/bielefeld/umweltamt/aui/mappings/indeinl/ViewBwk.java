@@ -58,20 +58,15 @@ public class ViewBwk extends AbstractViewBwk implements Serializable {
     }
 
     public static ViewBwk getAnhBwkByObjekt(BasisObjekt objekt) {
-        ViewBwk bwk = null;
         if (objekt.getBasisObjektarten().isBWK()) {
-            List<?> brennwert = new DatabaseAccess()
+            return (ViewBwk) new DatabaseAccess()
                 .createQuery(
-                    "from ViewBwk as brennwert where "
+                    "FROM ViewBwk as brennwert WHERE "
                         + "brennwert.basisObjekt = :objekt")
                 .setEntity("objekt", objekt)
-                .list();
-
-            if (brennwert.size() > 0) {
-                bwk = (ViewBwk) brennwert.get(0);
-            }
+                .uniqueResult();
         }
-        return bwk;
+        return null;
     }
 
     /**
@@ -81,9 +76,7 @@ public class ViewBwk extends AbstractViewBwk implements Serializable {
      *         <code>false</code>.
      */
     public static boolean saveBwk(ViewBwk bwk) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(bwk);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(bwk);
     }
 
     /**
@@ -94,9 +87,7 @@ public class ViewBwk extends AbstractViewBwk implements Serializable {
      * @return Eine Liste aus AnhBwk-Objekten.
      */
     public static List<?> findByErfassungsjahr(int jahr) {
-        List<?> liste;
-
-        String query = "from ViewBwk as bwk ";
+        String query = "FROM ViewBwk as bwk ";
 
         // TODO: No more comment here ;-)
         if (jahr != -1) {
@@ -107,17 +98,15 @@ public class ViewBwk extends AbstractViewBwk implements Serializable {
                     jahr = jahr + 1900;
                 }
             }
-            query += "where bwk.erfassung = :jahr ";
+            query += "WHERE bwk.erfassung = :jahr ";
         }
 
         if (jahr != -1) {
-            liste = new DatabaseAccess().createQuery(query)
+            return new DatabaseAccess().createQuery(query)
                 .setInteger("jahr", jahr)
                 .list();
         } else {
-            liste = new DatabaseAccess().createQuery(query).list();
+            return new DatabaseAccess().createQuery(query).list();
         }
-
-        return liste;
     }
 }

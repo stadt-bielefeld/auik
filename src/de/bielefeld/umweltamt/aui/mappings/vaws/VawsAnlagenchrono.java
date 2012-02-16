@@ -68,9 +68,9 @@ public class VawsAnlagenchrono extends AbstractVawsAnlagenchrono implements
         } else {
             chrono = new DatabaseAccess()
                 .createQuery(
-                    "from VawsAnlagenchrono as vac where "
+                    "FROM VawsAnlagenchrono as vac WHERE "
                         + "vac.vawsFachdaten = :fachdaten "
-                        + "order by vac.datum, vac.wv")
+                        + "ORDER BY vac.datum, vac.wv")
                 .setEntity("fachdaten", fachdaten)
                 .list();
 
@@ -88,9 +88,7 @@ public class VawsAnlagenchrono extends AbstractVawsAnlagenchrono implements
      *         sonst <code>false</code>.
      */
     public static boolean saveAnlagenChrono(VawsAnlagenchrono chrono) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(chrono);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(chrono);
     }
 
     /**
@@ -101,8 +99,6 @@ public class VawsAnlagenchrono extends AbstractVawsAnlagenchrono implements
      *         Datensatz nicht in der Datenbank existiert).
      */
     public static boolean removeAnlagenChrono(VawsAnlagenchrono chrono) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(chrono);
-        return removed;
+        return new DatabaseAccess().delete(chrono);
     }
 }

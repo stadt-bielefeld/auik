@@ -59,13 +59,11 @@ public class Anh56Fachdaten extends AbstractAnh56Fachdaten implements
      * @return Eine Liste aus Anh56Fachdaten.
      */
     public static List<?> getAuswertungsListe() {
-        List<?> liste = null;
-        String query = "from Anh56Fachdaten as anh56 "
-            + "order by anh56.basisObjekt.inaktiv, "
+        String query = "FROM Anh56Fachdaten as anh56 "
+            + "ORDER BY anh56.basisObjekt.inaktiv, "
             + "anh56.basisObjekt.basisStandort.strasse, "
             + "anh56.basisObjekt.basisStandort.hausnr";
-        liste = new DatabaseAccess().createQuery(query).list();
-        return liste;
+        return new DatabaseAccess().createQuery(query).list();
     }
 
     /**
@@ -73,14 +71,12 @@ public class Anh56Fachdaten extends AbstractAnh56Fachdaten implements
      * @return Eine Liste aus Anh56Fachdaten.
      */
     public static List<?> getAbwasserListe() {
-        List<?> liste = null;
-        String query = "from Anh56Fachdaten as anh56 "
-            + "where anh56.abwasseranfall = TRUE "
-            + "order by anh56.basisObjekt.inaktiv, "
+        String query = "FROM Anh56Fachdaten as anh56 "
+            + "WHERE anh56.abwasseranfall = TRUE "
+            + "ORDER BY anh56.basisObjekt.inaktiv, "
             + "anh56.basisObjekt.basisStandort.strasse, "
             + "anh56.basisObjekt.basisStandort.hausnr";
-        liste = new DatabaseAccess().createQuery(query).list();
-        return liste;
+        return new DatabaseAccess().createQuery(query).list();
     }
 
     /**
@@ -88,35 +84,27 @@ public class Anh56Fachdaten extends AbstractAnh56Fachdaten implements
      * @return Eine Liste aus Anh56Fachdaten.
      */
     public static List<?> getGenehmigungListe() {
-        List<?> liste;
-        String query = "from Anh56Fachdaten as anh56 "
-            + "where anh56.genpflicht = TRUE "
-            + "order by anh56.basisObjekt.inaktiv, "
+        String query = "FROM Anh56Fachdaten as anh56 "
+            + "WHERE anh56.genpflicht = TRUE "
+            + "ORDER BY anh56.basisObjekt.inaktiv, "
             + "anh56.basisObjekt.basisStandort.strasse, "
             + "anh56.basisObjekt.basisStandort.hausnr";
-        liste = new DatabaseAccess().createQuery(query).list();
-        return liste;
+        return new DatabaseAccess().createQuery(query).list();
     }
 
     public static Anh56Fachdaten getAnh56ByObjekt(BasisObjekt objekt) {
-        Anh56Fachdaten fachdaten = null;
-        if (objekt.getBasisObjektarten().isAnh56()) {
-            List<?> anhang56 = new DatabaseAccess()
-                .createQuery(
-                    "from Anh56Fachdaten as anhang56 where "
-                        + "anhang56 = :objekt")
-                .setEntity("objekt", objekt)
-                .list();
-            if (anhang56.size() > 0) {
-                fachdaten = (Anh56Fachdaten) anhang56.get(0);
-            }
+        if (!objekt.getBasisObjektarten().isAnh56()) {
+            return null;
         }
-        return fachdaten;
+        return (Anh56Fachdaten) new DatabaseAccess()
+            .createQuery(
+                "FROM Anh56Fachdaten as anhang56 WHERE "
+                    + "anhang56 = :objekt")
+            .setEntity("objekt", objekt)
+            .uniqueResult();
     }
 
     public static boolean saveFachdaten(Anh56Fachdaten fachdaten) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(fachdaten);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 }

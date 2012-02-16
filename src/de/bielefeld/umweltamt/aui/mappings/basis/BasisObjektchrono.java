@@ -24,7 +24,6 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -59,17 +58,13 @@ public class BasisObjektchrono extends AbstractBasisObjektchrono implements
      * @return Eine Liste mit VawsFachdaten.
      */
     public static List<?> getChronoByObjekt(BasisObjekt objekt) {
-        List<?> chrono = null;
-
-        chrono = new DatabaseAccess()
+        return new DatabaseAccess()
             .createQuery(
-                "from BasisObjektchrono oc where "
+                "FROM BasisObjektchrono oc WHERE "
                 + "oc.basisObjekt = :objekt "
-                + "order by oc.datum, oc.wv")
+                + "ORDER BY oc.datum, oc.wv")
             .setEntity("objekt", objekt)
             .list();
-
-        return chrono;
     }
 
     /**
@@ -79,9 +74,7 @@ public class BasisObjektchrono extends AbstractBasisObjektchrono implements
      *         sonst <code>false</code>.
      */
     public static boolean saveObjektChrono(BasisObjektchrono chrono) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(chrono);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(chrono);
     }
 
     /**
@@ -92,9 +85,7 @@ public class BasisObjektchrono extends AbstractBasisObjektchrono implements
      *         Datensatz nicht in der Datenbank existiert).
      */
     public static boolean removeObjektChrono(BasisObjektchrono chrono) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(chrono);
-        return removed;
+        return new DatabaseAccess().delete(chrono);
     }
 
     /**

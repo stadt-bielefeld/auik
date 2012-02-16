@@ -53,17 +53,14 @@ public class VawsVerwaltungsverf extends AbstractVawsVerwaltungsverf implements
      * @return Eine Liste mit VawsVerwaltungsverf-Objekten.
      */
     public static List<?> getAuswertung() {
-        List<?> kontrollen;
-        String query = "from VawsVerwaltungsverf vf where "
+        String query = "FROM VawsVerwaltungsverf vf WHERE "
             + "vf.wiedervorlage < :today " + "and "
             + "(vf.wvverwverf = FALSE or vf.wvverwverf is NULL) "
-            + "order by vf.wiedervorlage, vf.vawsFachdaten";
+            + "ORDER BY vf.wiedervorlage, vf.vawsFachdaten";
 
-        kontrollen = new DatabaseAccess().createQuery(query)
+        return new DatabaseAccess().createQuery(query)
             .setDate("today", new Date())
             .list();
-
-        return kontrollen;
     }
 
     /**
@@ -80,9 +77,9 @@ public class VawsVerwaltungsverf extends AbstractVawsVerwaltungsverf implements
         } else {
             verfahren = new DatabaseAccess()
                 .createQuery(
-                    "from VawsVerwaltungsverf vvf where "
+                    "FROM VawsVerwaltungsverf vvf WHERE "
                         + "vvf.vawsFachdaten = :fachdaten "
-                        + "order by vvf.wvverwverf desc, vvf.datum, "
+                        + "ORDER BY vvf.wvverwverf desc, vvf.datum, "
                         + "vvf.wiedervorlage")
                 .setEntity("fachdaten", fachdaten)
                 .list();

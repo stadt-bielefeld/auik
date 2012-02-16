@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -60,18 +59,12 @@ public class VawsGebuehrenarten extends AbstractVawsGebuehrenarten implements
      * @return Ein Array mit den Namen aller möglichen Gebührenarten.
      */
     public static VawsGebuehrenarten[] getAllGebuehrenarten() {
-        String suchString = "from VawsGebuehrenarten vga " + "order by vga.id";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (VawsGebuehrenarten[]) new DatabaseAccess()
+            .createQuery(
+                "FROM VawsGebuehrenarten vga "
+                + "ORDER BY vga.id")
             .setCacheable(true)
             .setCacheRegion("vawsvgaliste")
-            .list();
-
-        VawsGebuehrenarten[] tmp;
-        tmp = new VawsGebuehrenarten[list.size()];
-        tmp = (VawsGebuehrenarten[]) list.toArray(tmp);
-
-        return tmp;
+            .array(new VawsGebuehrenarten[0]);
     }
 }

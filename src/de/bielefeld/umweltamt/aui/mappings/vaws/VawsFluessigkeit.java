@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -52,20 +51,13 @@ public class VawsFluessigkeit extends AbstractVawsFluessigkeit implements
      * @return Ein Array mit allen Flüssigkeiten.
      */
     public static String[] getFluessigkeiten() {
-        String suchString = "select fl.fluessigkeit "
-            + "from VawsFluessigkeit fl "
-            + "order by fl.fluessigkeit";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT fl.fluessigkeit "
+                + "FROM VawsFluessigkeit fl "
+                + "ORDER BY fl.fluessigkeit")
             .setCacheable(true)
             .setCacheRegion("vawsflliste")
-            .list();
-
-        String[] result;
-        result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-
-        return result;
+            .array(new String[0]);
     }
 }

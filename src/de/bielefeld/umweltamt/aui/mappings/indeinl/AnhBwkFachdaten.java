@@ -24,7 +24,6 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 import java.io.Serializable;
 import java.util.List;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AbstractAnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -60,20 +59,15 @@ public class AnhBwkFachdaten extends AbstractAnhBwkFachdaten implements
     }
 
     public static AnhBwkFachdaten getAnhBwkByObjekt(BasisObjekt objekt) {
-        AnhBwkFachdaten bwk = null;
-        if (objekt.getBasisObjektarten().isBWK()) {
-            List<?> brennwert = new DatabaseAccess()
-                .createQuery(
-                    "from AnhBwkFachdaten as brennwert "
-                        + "where brennwert.basisObjekt = :objekt")
-                .setEntity("objekt", objekt)
-                .list();
-
-            if (brennwert.size() > 0) {
-                bwk = (AnhBwkFachdaten) brennwert.get(0);
-            }
+        if (!objekt.getBasisObjektarten().isBWK()) {
+            return null;
         }
-        return bwk;
+        return (AnhBwkFachdaten) new DatabaseAccess()
+            .createQuery(
+                "FROM AnhBwkFachdaten as brennwert "
+                    + "WHERE brennwert.basisObjekt = :objekt")
+            .setEntity("objekt", objekt)
+            .uniqueResult();
     }
 
     /**
@@ -83,9 +77,7 @@ public class AnhBwkFachdaten extends AbstractAnhBwkFachdaten implements
      *         <code>false</code>.
      */
     public static boolean saveBwk(AnhBwkFachdaten bwk) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(bwk);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(bwk);
     }
 
     /**
@@ -96,9 +88,7 @@ public class AnhBwkFachdaten extends AbstractAnhBwkFachdaten implements
      * @return Eine Liste aus AnhBwk-Objekten.
      */
     public static List<?> findByErfassungsjahr(int jahr) {
-        List<?> liste;
-
-        String query = "from AnhBwkFachdaten as bwk ";
+        String query = "FROM AnhBwkFachdaten as bwk ";
 
         // TODO: LOL Year 2030 Bug? ...
         if (jahr != -1) {
@@ -109,23 +99,21 @@ public class AnhBwkFachdaten extends AbstractAnhBwkFachdaten implements
                     jahr = jahr + 1900;
                 }
             }
-            query += "where bwk.erfassung = :jahr ";
+            query += "WHERE bwk.erfassung = :jahr ";
         }
 
-        query += "order by bwk.basisObjekt.inaktiv, bwk.erfassung, "
+        query += "ORDER BY bwk.basisObjekt.inaktiv, bwk.erfassung, "
             + "bwk.basisObjekt.basisBetreiber.betrname, "
             + "bwk.basisObjekt.basisBetreiber.betrnamezus, "
             + "bwk.basisObjekt.basisStandort.strasse, "
             + "bwk.basisObjekt.basisStandort.hausnr";
 
         if (jahr != -1) {
-            liste = new DatabaseAccess().createQuery(query)
+            return new DatabaseAccess().createQuery(query)
                 .setInteger("jahr", jahr)
                 .list();
         } else {
-            liste = new DatabaseAccess().createQuery(query).list();
+            return new DatabaseAccess().createQuery(query).list();
         }
-
-        return liste;
     }
 }

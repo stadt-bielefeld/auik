@@ -55,26 +55,20 @@ public class Anh53Fachdaten extends AbstractAnh53Fachdaten implements
     }
 
     public static Anh53Fachdaten getAnh53ByObjekt(BasisObjekt objekt) {
-        Anh53Fachdaten fachdaten = null;
-        if (objekt.getBasisObjektarten().isAnh53Gr()
-            || objekt.getBasisObjektarten().isAnh53Kl()) {
-            List<?> anhang53 = new DatabaseAccess()
-                .createQuery(
-                    "from Anh53Fachdaten as anhang53 where "
-                        + "anhang53.basisObjekt = :objekt")
-                .setEntity("objekt", objekt)
-                .list();
-            if (anhang53.size() > 0) {
-                fachdaten = (Anh53Fachdaten) anhang53.get(0);
-            }
+        if (!(objekt.getBasisObjektarten().isAnh53Gr()
+            || objekt.getBasisObjektarten().isAnh53Kl())) {
+            return null;
         }
-        return fachdaten;
+        return (Anh53Fachdaten) new DatabaseAccess()
+            .createQuery(
+                "FROM Anh53Fachdaten as anhang53 WHERE "
+                    + "anhang53.basisObjekt = :objekt")
+            .setEntity("objekt", objekt)
+            .uniqueResult();
     }
 
     public static boolean saveFachdaten(Anh53Fachdaten fachdaten) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(fachdaten);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
     /**
@@ -82,13 +76,11 @@ public class Anh53Fachdaten extends AbstractAnh53Fachdaten implements
      * @return Eine Liste aus Anh53Fachdaten.
      */
     public static List<?> getAuswertungsListe() {
-        List<?> liste;
-        String query = "from Anh53Fachdaten as anh53 "
-            + "order by anh53.basisObjekt.inaktiv, "
+        String query = "FROM Anh53Fachdaten as anh53 "
+            + "ORDER BY anh53.basisObjekt.inaktiv, "
             + "anh53.basisObjekt.basisObjektarten.objektartid, "
             + "anh53.basisObjekt.basisStandort.strasse, "
             + "anh53.basisObjekt.basisStandort.hausnr";
-        liste = new DatabaseAccess().createQuery(query).list();
-        return liste;
+        return new DatabaseAccess().createQuery(query).list();
     }
 }

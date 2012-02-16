@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -52,19 +51,13 @@ public class VawsVbfeinstufung extends AbstractVawsVbfeinstufung implements
      * @return Ein Array mit den Namen aller VBF-Einstufungen.
      */
     public static String[] getVbfeinstufungen() {
-        String suchString = "select vbf.vbfeinstufung "
-            + "from VawsVbfeinstufung vbf " + "order by vbf.vbfeinstufung";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT vbf.vbfeinstufung "
+                + "FROM VawsVbfeinstufung vbf "
+                + "ORDER BY vbf.vbfeinstufung")
             .setCacheable(true)
             .setCacheRegion("vawsvbfliste")
-            .list();
-
-        String[] result;
-        result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-
-        return result;
+            .array(new String[0]);
     }
 }

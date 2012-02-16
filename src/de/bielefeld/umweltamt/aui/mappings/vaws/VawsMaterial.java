@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -51,20 +50,13 @@ public class VawsMaterial extends AbstractVawsMaterial implements Serializable {
      * @return Ein Array mit den Namen aller Materialien.
      */
     public static String[] getMaterialien() {
-        String suchString = "select mat.material "
-            + "from VawsMaterial mat "
-            + "order by mat.material";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT mat.material "
+                + "FROM VawsMaterial mat "
+                + "ORDER BY mat.material")
             .setCacheable(true)
             .setCacheRegion("vawsmatliste")
-            .list();
-
-        String[] result;
-        result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-
-        return result;
+            .array(new String[0]);
     }
 }

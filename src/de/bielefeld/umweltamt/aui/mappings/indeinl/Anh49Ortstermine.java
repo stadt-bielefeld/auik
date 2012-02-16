@@ -74,9 +74,9 @@ public class Anh49Ortstermine extends AbstractAnh49Ortstermine implements
         List<?> list;
         list = new DatabaseAccess()
             .createQuery(
-                "from Anh49Ortstermine as ot "
-                    + "where ot.anh49Fachdaten = :fd "
-                    + "order by ot.datum")
+                "FROM Anh49Ortstermine as ot "
+                    + "WHERE ot.anh49Fachdaten = :fd "
+                    + "ORDER BY ot.datum")
             .setEntity("fd", fd)
             .list();
         log.debug("Ortstermine für " + fd + ", Anzahl: " + list.size());
@@ -84,14 +84,10 @@ public class Anh49Ortstermine extends AbstractAnh49Ortstermine implements
     }
 
     public static boolean saveOrUpdateOrtstermin(Anh49Ortstermine ot) {
-        boolean success = false;
-        success = new DatabaseAccess().saveOrUpdate(ot);
-        return success;
+        return new DatabaseAccess().saveOrUpdate(ot);
     }
 
     public static boolean removeOrtstermin(Anh49Ortstermine ot) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(ot);
-        return removed;
+        return new DatabaseAccess().delete(ot);
     }
 }

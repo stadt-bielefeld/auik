@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -76,24 +75,16 @@ public class BasisPrioritaet extends AbstractBasisPrioritaet implements
     }
 
     public static BasisPrioritaet getPrioritaet(BasisObjekt basisObjekt) {
-        BasisPrioritaet prioritaet = null;
-        List<?> result = null;
-
-        String query = "from BasisPrioritaet as bp "
-            + "where bp.basisStandort.standortid = :standortid "
+        String query = "FROM BasisPrioritaet as bp "
+            + "WHERE bp.basisStandort.standortid = :standortid "
             + "and bp.basisBetreiber.betreiberid = :betreiberid";
 
-        result = new DatabaseAccess().createQuery(query)
+        return (BasisPrioritaet) new DatabaseAccess().createQuery(query)
                 .setInteger("standortid",
                     basisObjekt.getBasisStandort().getStandortid())
                 .setInteger("betreiberid",
                     basisObjekt.getBasisBetreiber().getBetreiberid())
-                .list();
-        if (result.size() > 0) {
-            prioritaet = (BasisPrioritaet) result.get(0);
-        }
-
-        return prioritaet;
+                .uniqueResult();
     }
 
     /**

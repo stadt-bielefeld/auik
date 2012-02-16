@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -64,18 +63,12 @@ public class VawsWirtschaftszweige extends AbstractVawsWirtschaftszweige
      * @return Alle vorhandenen Wirtschaftszweige
      */
     public static VawsWirtschaftszweige[] getWirtschaftszweige() {
-        String suchString = "FROM VawsWirtschaftszweige wizw "
-            + "ORDER BY wizw.wirtschaftszweigid";
-
-        List<?> list = null;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (VawsWirtschaftszweige[]) new DatabaseAccess()
+            .createQuery(
+                "FROM VawsWirtschaftszweige wizw "
+                + "ORDER BY wizw.wirtschaftszweigid")
             .setCacheable(true)
             .setCacheRegion("wizwliste")
-            .list();
-
-        VawsWirtschaftszweige[] result;
-        result = new VawsWirtschaftszweige[list.size()];
-        result = (VawsWirtschaftszweige[]) list.toArray(result);
-        return result;
+            .array(new VawsWirtschaftszweige[0]);
     }
 }

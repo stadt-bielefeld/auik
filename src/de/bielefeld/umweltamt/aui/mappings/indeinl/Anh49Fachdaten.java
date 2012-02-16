@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -52,25 +51,21 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
     // es werden alle Datensätze aus Anh49Fachdaten ausser Fettabscheidern
     // ausgewählt
     public static List<?> findAlle() {
-        List<?> anhang49;
-        String query = "from Anh49Fachdaten anh49 "
-            + "where anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "
+        String query = "FROM Anh49Fachdaten anh49 "
+            + "WHERE anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "
             + "and anh49.basisObjekt.inaktiv = false "
-            + "order by anh49.sachbearbeiterIn";
-        anhang49 = new DatabaseAccess().createQuery(query).list();
-        return anhang49;
+            + "ORDER BY anh49.sachbearbeiterIn";
+        return new DatabaseAccess().createQuery(query).list();
     }
 
     // es werden alle Datensätze aus Anh49Fachdaten ausser Fettabscheidern
     // ausgewählt
     public static List<?> findInaktive() {
-        List<?> anhang49;
-        String query = "from Anh49Fachdaten anh49 "
-            + "where anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "
+        String query = "FROM Anh49Fachdaten anh49 "
+            + "WHERE anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "
             + "and anh49.basisObjekt.inaktiv = true "
-            + "order by anh49.sachbearbeiterIn";
-        anhang49 = new DatabaseAccess().createQuery(query).list();
-        return anhang49;
+            + "ORDER BY anh49.sachbearbeiterIn";
+        return new DatabaseAccess().createQuery(query).list();
     }
 
     /**
@@ -85,24 +80,21 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
      */
     public static List<?> findAuswertung(Boolean abgemeldet, String abgerissen,
         Boolean abwasserfrei, boolean nurWiedervorlageAbgelaufen) {
-        List<?> anhang49;
-
         String abgr = abgerissen.toLowerCase().trim() + "%";
 
-        String query = "from Anh49Fachdaten ah49 where "
+        String query = "FROM Anh49Fachdaten ah49 WHERE "
             + "ah49.abgemeldet = :abgemeldet and "
             + "lower(ah49.sonstigestechnik) like :abgr and "
-            + "ah49.abwasserfrei = :abwasserfrei "
-            + "and ah49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' ";
+            + "ah49.abwasserfrei = :abwasserfrei and "
+            + "ah49.basisObjekt.basisObjektarten.objektart "
+            + "not like 'Fettabscheider' ";
 
-        // TODO: Herausfinden, ob es schaden würde benannte Parameter zu setzen,
-        // die gar nicht im QueryString vorkommen.
         if (nurWiedervorlageAbgelaufen) {
             query += "and ah49.wiedervorlage <= :today "
                 + "and ah49.basisObjekt.inaktiv = false "
-                + "order by ah49.sachbearbeiterIn, "
+                + "ORDER BY ah49.sachbearbeiterIn, "
                 + "ah49.basisObjekt.basisBetreiber.betrname ";
-            anhang49 = new DatabaseAccess().createQuery(query)
+            return new DatabaseAccess().createQuery(query)
                 .setBoolean("abgemeldet", abgemeldet)
                 .setString("abgr", abgr)
                 .setBoolean("abwasserfrei", abwasserfrei)
@@ -110,91 +102,74 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
                 .list();
         } else {
             query += "and ah49.basisObjekt.inaktiv = false "
-                + "order by ah49.sachbearbeiterIn, "
+                + "ORDER BY ah49.sachbearbeiterIn, "
                 + "ah49.basisObjekt.basisBetreiber.betrname";
-            anhang49 = new DatabaseAccess().createQuery(query)
+            return new DatabaseAccess().createQuery(query)
                 .setBoolean("abgemeldet", abgemeldet)
                 .setString("abgr", abgr)
                 .setBoolean("abwasserfrei", abwasserfrei)
                 .list();
         }
-
-        return anhang49;
     }
 
     public static Anh49Fachdaten getAnh49ByObjekt(BasisObjekt objekt) {
-        Anh49Fachdaten fachdaten = null;
-        if (objekt.getBasisObjektarten().isAnh49()) {
-            List<?> anhang49 = new DatabaseAccess().createQuery(
-                "from Anh49Fachdaten as ah49 where "
-                    + "ah49.basisObjekt = :objekt")
-                .setEntity("objekt", objekt)
-                .list();
-
-            if (anhang49.size() > 0) {
-                fachdaten = (Anh49Fachdaten) anhang49.get(0);
-            }
+        if (!objekt.getBasisObjektarten().isAnh49()) {
+            return null;
         }
-        return fachdaten;
+        return (Anh49Fachdaten) new DatabaseAccess()
+            .createQuery(
+                "FROM Anh49Fachdaten as ah49 WHERE "
+                    + "ah49.basisObjekt = :objekt")
+            .setEntity("objekt", objekt)
+            .uniqueResult();
     }
 
     public static boolean saveFachdaten(Anh49Fachdaten fachdaten) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(fachdaten);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
     public static List<?> findTuev(Integer tuev) {
-        List<?> anhang49 = null;
-        String query = "from Anh49Fachdaten anh49 "
-            + "where anh49.dekraTuevTermin = :tuev "
-            + "and anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "
+        String query = "FROM Anh49Fachdaten anh49 "
+            + "WHERE anh49.dekraTuevTermin = :tuev "
+            + "and anh49.basisObjekt.basisObjektarten.objektart "
+            + "not like 'Fettabscheider' "
             + "and anh49.basisObjekt.inaktiv = false "
-            + "order by anh49.sachbearbeiterIn";
-        anhang49 = new DatabaseAccess().createQuery(query)
+            + "ORDER BY anh49.sachbearbeiterIn";
+        return new DatabaseAccess().createQuery(query)
             .setInteger("tuev", tuev)
             .list();
-        return anhang49;
     }
 
     public static List<?> findSachbearbeiter(String sachbearb) {
-        List<?> anhang49;
-        String query = "from Anh49Fachdaten anh49 "
-            + "where anh49.sachbearbeiterIn = :sachbearb "
-            + "and anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "
+        String query = "FROM Anh49Fachdaten anh49 "
+            + "WHERE anh49.sachbearbeiterIn = :sachbearb "
+            + "and anh49.basisObjekt.basisObjektarten.objektart "
+            + "not like 'Fettabscheider' "
             + "and anh49.basisObjekt.inaktiv = false";
-        anhang49 = new DatabaseAccess().createQuery(query)
+        return new DatabaseAccess().createQuery(query)
             .setString("sachbearb", sachbearb)
             .list();
-        return anhang49;
     }
 
     public static String[] getSachbearbeiter() {
-        List<?> list = null;
-        String suchString = "SELECT DISTINCT fd.sachbearbeiterIn FROM de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten fd "
-            + "where fd.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider'";
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT DISTINCT fd.sachbearbeiterIn "
+                + "FROM Anh49Fachdaten fd "
+                + "WHERE fd.basisObjekt.basisObjektarten.objektart "
+                + "not like 'Fettabscheider'")
             .setCacheable(true)
             .setCacheRegion("sachbearbeiter")
-            .list();
-        String[] result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-        return result;
+            .array(new String[0]);
     }
 
     public Date getLetzteAnalyse(Anh49Fachdaten fd) {
-        Date la = null;
-        List<?> list = null;
-        String suchstring = "select max(fd.anh49Analysen.datum) "
-            + "from de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten fd "
-            + "where fd = :fd";
-        list = new DatabaseAccess().createQuery(suchstring)
+        return (Date) new DatabaseAccess()
+            .createQuery(
+                "SELECT max(fd.anh49Analysen.datum) "
+                    + "FROM Anh49Fachdaten fd "
+                    + "WHERE fd = :fd")
             .setEntity("fd", fd)
-            .list();
-        Timestamp ta = (Timestamp) list.get(0);
-        if (ta != null) {
-            la = ta;
-        }
-        return la;
+            .uniqueResult();
     }
 }

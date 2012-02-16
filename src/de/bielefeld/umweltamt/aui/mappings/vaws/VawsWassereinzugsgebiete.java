@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -64,19 +63,12 @@ public class VawsWassereinzugsgebiete extends AbstractVawsWassereinzugsgebiete
      * @return Alle vorhandenen Wassereinzugsgebiete
      */
     public static VawsWassereinzugsgebiete[] getWEinzugsgebiete() {
-        String suchString = "FROM VawsWassereinzugsgebiete vwezg "
-            + "ORDER BY vwezg.wasserezgbid";
-
-        List<?> list = null;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (VawsWassereinzugsgebiete[]) new DatabaseAccess()
+            .createQuery(
+                "FROM VawsWassereinzugsgebiete vwezg "
+                + "ORDER BY vwezg.wasserezgbid")
             .setCacheable(true)
             .setCacheRegion("wezgbliste")
-            .list();
-
-        VawsWassereinzugsgebiete[] result;
-        result = new VawsWassereinzugsgebiete[list.size()];
-        result = (VawsWassereinzugsgebiete[]) list.toArray(result);
-
-        return result;
+            .array(new VawsWassereinzugsgebiete[0]);
     }
 }

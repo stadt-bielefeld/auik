@@ -75,7 +75,6 @@
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -114,16 +113,10 @@ public class BasisSachbearbeiter extends AbstractBasisSachbearbeiter implements
     }
 
     public static BasisSachbearbeiter[] getSachbearbeiter() {
-        BasisSachbearbeiter[] result = null;
-        List<?> list = null;
-        list = new DatabaseAccess().createQuery(
-            "from BasisSachbearbeiter as sachbearbeiter "
-                + "order by sachbearbeiter.name").list();
-
-        result = new BasisSachbearbeiter[list.size()];
-        result = (BasisSachbearbeiter[]) list.toArray(result);
-
-        return result;
+        return (BasisSachbearbeiter[]) new DatabaseAccess().createQuery(
+            "FROM BasisSachbearbeiter as sachbearbeiter "
+                + "ORDER BY sachbearbeiter.name")
+            .array(new BasisSachbearbeiter[0]);
     }
 
     public static BasisSachbearbeiter getSachbearbeiter(String kennummer) {

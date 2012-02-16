@@ -71,23 +71,19 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      */
     public static List<?> getObjekteByBetreiber(
             BasisBetreiber betr, String abteilung) {
-        List<?> objekte;
-
-        String query = "from BasisObjekt as bo "
-            + "where bo.basisBetreiber = :betreiber ";
+        String query = "FROM BasisObjekt as bo "
+            + "WHERE bo.basisBetreiber = :betreiber ";
 
         if (abteilung != null) {
             query += "and bo.basisObjektarten.abteilung = '" + abteilung + "' ";
         }
 
-        query += "order by bo.inaktiv, bo.basisStandort.strasse, " +
+        query += "ORDER BY bo.inaktiv, bo.basisStandort.strasse, " +
         		"bo.basisStandort.hausnr, bo.basisObjektarten.objektart";
 
-        objekte = new DatabaseAccess().createQuery(query)
+        return new DatabaseAccess().createQuery(query)
             .setEntity("betreiber", betr)
             .list();
-
-        return objekte;
     }
 
     /**
@@ -101,10 +97,8 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      */
     public static List<?> getObjekteByStandort(
             BasisStandort standort, String abteilung, Integer nichtartid) {
-        List<?> objekte;
-
-        String query = "from BasisObjekt as bo "
-            + "where bo.basisStandort = :standort "; // +
+        String query = "FROM BasisObjekt as bo "
+            + "WHERE bo.basisStandort = :standort "; // +
 //            "and bo.inaktiv = :f ";
 
         if (abteilung != null) {
@@ -115,15 +109,13 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
             query += "and bo.basisObjektarten.objektartid != " + nichtartid;
         }
 
-        query += "order by bo.inaktiv, bo.basisBetreiber.betrname, " +
+        query += "ORDER BY bo.inaktiv, bo.basisBetreiber.betrname, " +
         		"bo.basisObjektarten.objektart";
 
-        objekte = new DatabaseAccess().createQuery(query)
+        return new DatabaseAccess().createQuery(query)
             .setEntity("standort", standort)
 //            .setString("f", "f")
             .list();
-
-        return objekte;
     }
 
     /**
@@ -137,24 +129,20 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      */
     public static List<?> getObjekteByStandort(
             BasisStandort standort, Integer istartid) {
-        List<?> objekte;
-
-        String query = "from BasisObjekt as bo "
-            + "where bo.basisStandort = :standort ";
+        String query = "FROM BasisObjekt as bo "
+            + "WHERE bo.basisStandort = :standort ";
 
         if (istartid != null) {
             query += "and bo.basisObjektarten.objektartid = :objektartid";
         }
 
-        query += "order by bo.inaktiv, bo.basisBetreiber.betrname, " +
+        query += "ORDER BY bo.inaktiv, bo.basisBetreiber.betrname, " +
         		"bo.basisObjektarten.objektart";
 
-        objekte = new DatabaseAccess().createQuery(query)
+        return new DatabaseAccess().createQuery(query)
             .setEntity("standort", standort)
             .setInteger("objektartid", 32)
             .list();
-
-        return objekte;
     }
 
     /**
@@ -167,18 +155,14 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      * @return Eine Liste von BasisObjekten an diesem Standort.
      */
     public static List<?> getObjekteMitPrioritaet() {
-        List<?> objekte;
-
-        String query = "select distinct bo.basisStandort, bo.basisBetreiber, "
+        String query = "SELECT distinct bo.basisStandort, bo.basisBetreiber, "
             + "bp.prioritaet, bo.basisSachbearbeiter "
-            + "from BasisObjekt as bo, BasisPrioritaet as bp  "
-            + "where bo.basisStandort = bp.basisStandort and "
+            + "FROM BasisObjekt as bo, BasisPrioritaet as bp  "
+            + "WHERE bo.basisStandort = bp.basisStandort and "
     		+ "bo.basisBetreiber = bp.basisBetreiber "
-            + "order by bo.basisStandort.strasse";
+            + "ORDER BY bo.basisStandort.strasse";
 
-        objekte = new DatabaseAccess().createQuery(query).list();
-
-        return objekte;
+        return new DatabaseAccess().createQuery(query).list();
     }
 
     /**
@@ -241,8 +225,6 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      *         <code>false</code>.
      */
     public static boolean removeBasisObjekt(BasisObjekt obj) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(obj);
-        return removed;
+        return new DatabaseAccess().delete(obj);
     }
 }

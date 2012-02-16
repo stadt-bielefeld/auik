@@ -58,20 +58,15 @@ public class IndeinlUebergabestelle extends AbstractIndeinlUebergabestelle
     }
 
     public static IndeinlUebergabestelle getUebergabeByObjekt(BasisObjekt objekt) {
-        IndeinlUebergabestelle fachdaten = null;
         if (objekt.getBasisObjektarten().isUebergabestelle()) {
-            List<?> stelle = new DatabaseAccess()
+            return (IndeinlUebergabestelle) new DatabaseAccess()
                 .createQuery(
-                    "from IndeinlUebergabestelle as stelle where "
+                    "FROM IndeinlUebergabestelle as stelle WHERE "
                         + "stelle.basisObjekt = :objekt")
                 .setEntity("objekt", objekt)
-                .list();
-
-            if (stelle.size() > 0) {
-                fachdaten = (IndeinlUebergabestelle) stelle.get(0);
-            }
+                .uniqueResult();
         }
-        return fachdaten;
+        return null;
     }
 
     /**
@@ -81,9 +76,7 @@ public class IndeinlUebergabestelle extends AbstractIndeinlUebergabestelle
      *         <code>false</code>.
      */
     public static boolean saveFachdaten(IndeinlUebergabestelle fachdaten) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(fachdaten);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
     /**
@@ -91,10 +84,8 @@ public class IndeinlUebergabestelle extends AbstractIndeinlUebergabestelle
      * @return Eine Liste aus SuevFachdaten.
      */
     public static List<?> getAuswertungsListe() {
-        List<?> liste;
-        String query = "from IndeinlUebergabestelle as stelle "
-            + "order by stelle.objektid";
-        liste = new DatabaseAccess().createQuery(query).list();
-        return liste;
+        return new DatabaseAccess().createQuery(
+            "FROM IndeinlUebergabestelle as stelle ORDER BY stelle.objektid")
+            .list();
     }
 }

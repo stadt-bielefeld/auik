@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -61,19 +60,12 @@ public class VawsStandortgghwsg extends AbstractVawsStandortgghwsg implements
      * @return Alle vorhandenen VawsStandortgghwsg
      */
     public static VawsStandortgghwsg[] getStandortGg() {
-        String suchString = "FROM VawsStandortgghwsg vsgg "
-            + "ORDER BY vsgg.standortggid";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (VawsStandortgghwsg[]) new DatabaseAccess()
+            .createQuery(
+                "FROM VawsStandortgghwsg vsgg "
+                    + "ORDER BY vsgg.standortggid")
             .setCacheable(true)
             .setCacheRegion("standortggliste")
-            .list();
-
-        VawsStandortgghwsg[] result;
-        result = new VawsStandortgghwsg[list.size()];
-        result = (VawsStandortgghwsg[]) list.toArray(result);
-
-        return result;
+            .array(new VawsStandortgghwsg[0]);
     }
 }

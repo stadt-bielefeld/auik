@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -114,20 +113,12 @@ public class AtlProbeart extends AbstractAtlProbeart implements Serializable {
      * @return Alle vorhandenen Probearten
      */
     public static AtlProbeart[] getProbearten() {
-        List<?> list = null;
-        AtlProbeart[] result = null;
+        String suchString = "FROM AtlProbeart art ORDER BY art.artId";
 
-        String suchString = "from AtlProbeart art order by art.artId";
-
-        list = new DatabaseAccess().createQuery(suchString)
+        return (AtlProbeart[]) new DatabaseAccess().createQuery(suchString)
                 .setCacheable(true)
                 .setCacheRegion("probeartliste")
-                .list();
-
-        result = new AtlProbeart[list.size()];
-        result = (AtlProbeart[]) list.toArray(result);
-
-        return result;
+                .array(new AtlProbeart[0]);
     }
 
     /**
@@ -137,8 +128,6 @@ public class AtlProbeart extends AbstractAtlProbeart implements Serializable {
      *         diese nicht existiert
      */
     public static AtlProbeart getProbeart(Integer id) {
-        AtlProbeart art = null;
-        art = (AtlProbeart) new DatabaseAccess().get(AtlProbeart.class, id);
-        return art;
+        return (AtlProbeart) new DatabaseAccess().get(AtlProbeart.class, id);
     }
 }

@@ -107,14 +107,12 @@ public class BasisStandort extends AbstractBasisStandort implements
      *         Standort mit dieser ID existiert.
      */
     public static List<?> getStandortList(Integer id) {
-        List<?> standort = null;
-        standort = new DatabaseAccess()
+        return new DatabaseAccess()
             .createQuery(
-                "from BasisStandort as bsta where "
+                "FROM BasisStandort as bsta WHERE "
                     + "bsta.standortid = :id ")
             .setInteger("id", id)
             .list();
-        return standort;
     }
 
     /**
@@ -133,12 +131,12 @@ public class BasisStandort extends AbstractBasisStandort implements
         log.debug("Suche nach '" + strasse2 + "' Nr. " + hausnr);
         List<?> standorte = null;
 
-        String query = "from BasisStandort as bsta where "
+        String query = "FROM BasisStandort as bsta WHERE "
             + "lower(bsta.strasse) like :strasse ";
         if (hausnr != -1) {
             query += "and bsta.hausnr = :hausnr ";
         }
-        query += "order by bsta.strasse, bsta.hausnr";
+        query += "ORDER BY bsta.strasse, bsta.hausnr";
 
         // TODO: Test if it leads to errors if we set a named variable which is
         // not there
@@ -183,16 +181,12 @@ public class BasisStandort extends AbstractBasisStandort implements
      * @return Alle zur Zeit benutzten Entwässerungsgebiete
      */
     public static String[] getEntwGebiete() {
-        List<?> list = null;
-        String suchString = "SELECT DISTINCT sta.entgebid " +
-        		"FROM de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort sta";
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess().createQuery(
+            "SELECT DISTINCT sta.entgebid "
+                + "FROM de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort sta")
             .setCacheable(true)
             .setCacheRegion("ezgbliste")
-            .list();
-        String[] result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-        return result;
+            .array(new String[0]);
     }
 
     /**

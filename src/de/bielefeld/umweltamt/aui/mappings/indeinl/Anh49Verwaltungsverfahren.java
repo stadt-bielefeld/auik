@@ -76,9 +76,9 @@ public class Anh49Verwaltungsverfahren extends
         List<?> liste = null;
         liste = new DatabaseAccess()
             .createQuery(
-                "from Anh49Verwaltungsverfahren as verfahren "
-                    + "where verfahren.anh49Fachdaten = :fachdaten "
-                    + "order by verfahren.datum")
+                "FROM Anh49Verwaltungsverfahren as verfahren "
+                    + "WHERE verfahren.anh49Fachdaten = :fachdaten "
+                    + "ORDER BY verfahren.datum")
             .setEntity("fachdaten", fachdaten)
             .list();
         log.debug("Verwaltungsverfahren für " + fachdaten + ", Anzahl: "

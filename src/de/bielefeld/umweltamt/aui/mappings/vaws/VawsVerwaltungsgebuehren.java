@@ -71,9 +71,9 @@ public class VawsVerwaltungsgebuehren extends AbstractVawsVerwaltungsgebuehren
         } else {
             gebuehren = new DatabaseAccess()
                 .createQuery(
-                    "from VawsVerwaltungsgebuehren vgb where "
+                    "FROM VawsVerwaltungsgebuehren vgb WHERE "
                         + "vgb.vawsFachdaten = :fachdaten "
-                        + "order by vgb.datum, vgb.abschnitt, vgb.betrag")
+                        + "ORDER BY vgb.datum, vgb.abschnitt, vgb.betrag")
                 .setEntity("fachdaten", fachdaten)
                 .list();
 

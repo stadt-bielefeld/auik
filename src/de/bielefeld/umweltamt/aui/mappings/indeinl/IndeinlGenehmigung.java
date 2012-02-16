@@ -58,20 +58,15 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
     }
 
     public static IndeinlGenehmigung getGenByObjekt(BasisObjekt objekt) {
-        IndeinlGenehmigung fachdaten = null;
         if (objekt.getBasisObjektarten().isGenehmigung()) {
-            List<?> gen = new DatabaseAccess()
+            return (IndeinlGenehmigung) new DatabaseAccess()
                 .createQuery(
-                    "from IndeinlGenehmigung as gen where "
+                    "FROM IndeinlGenehmigung as gen WHERE "
                         + "gen.basisObjekt = :objekt")
                 .setEntity("objekt", objekt)
-                .list();
-
-            if (gen.size() > 0) {
-                fachdaten = (IndeinlGenehmigung) gen.get(0);
-            }
+                .uniqueResult();
         }
-        return fachdaten;
+        return null;
     }
 
     /**
@@ -81,9 +76,7 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
      *         <code>false</code>.
      */
     public static boolean saveFachdaten(IndeinlGenehmigung fachdaten) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(fachdaten);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
     /**
@@ -91,22 +84,18 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
      * @return Eine Liste aus IndeinlGenehmigungen.
      */
     public static List<?> getAuswertungsListe(Boolean gen58, Boolean gen59) {
-        List<?> liste = null;
-
-        String query = "from IndeinlGenehmigung as gen "
+        String query = "FROM IndeinlGenehmigung as gen "
             // TODO: AND has a higher priority than OR. I do not think we wanted
             // what we had here before, but this should be checked!
-//            + "where gen.gen58 = :gen58 or gen.gen59 = :gen59 and gen.basisObjekt.inaktiv = 'false'"
-            + "where (gen.gen58 = :gen58 or gen.gen59 = :gen59) "
+//            + "WHERE gen.gen58 = :gen58 or gen.gen59 = :gen59 and gen.basisObjekt.inaktiv = 'false'"
+            + "WHERE (gen.gen58 = :gen58 or gen.gen59 = :gen59) "
     		+ "and gen.basisObjekt.inaktiv = 'false' "
-            + "order by gen.basisObjekt.basisBetreiber.betrname";
+            + "ORDER BY gen.basisObjekt.basisBetreiber.betrname";
 
-        liste = new DatabaseAccess().createQuery(query)
+        return new DatabaseAccess().createQuery(query)
             .setBoolean("gen58", gen58)
             .setBoolean("gen59", gen59)
             .list();
-
-        return liste;
     }
 
     /**
@@ -114,20 +103,7 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
     public static List<?> getAnh40Liste(Boolean gen58, Boolean gen59) {
-        List<?> liste = null;
-
-        String query = "from IndeinlGenehmigung as gen "
-            + "where gen.anhang = 40 "
-            + "and (gen.gen58 = :gen58 or gen.gen59 = :gen59) "
-            + "order by gen.basisObjekt.inaktiv, "
-            + "gen.basisObjekt.basisBetreiber.betrname";
-
-        liste = new DatabaseAccess().createQuery(query)
-            .setBoolean("gen58", gen58)
-            .setBoolean("gen59", gen59)
-            .list();
-
-        return liste;
+        return IndeinlGenehmigung.getAnhListe(40, gen58, gen59);
     }
 
     /**
@@ -135,20 +111,7 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
     public static List<?> getAnh49Liste(Boolean gen58, Boolean gen59) {
-        List<?> liste = null;
-
-        String query = "from IndeinlGenehmigung as gen "
-            + "where gen.anhang = 49 "
-            + "and (gen.gen58 = :gen58 or gen.gen59 = :gen59) "
-            + "order by gen.basisObjekt.inaktiv, "
-            + "gen.basisObjekt.basisBetreiber.betrname";
-
-        liste = new DatabaseAccess().createQuery(query)
-            .setBoolean("gen58", gen58)
-            .setBoolean("gen59", gen59)
-            .list();
-
-        return liste;
+        return IndeinlGenehmigung.getAnhListe(49, gen58, gen59);
     }
 
     /**
@@ -156,20 +119,7 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
     public static List<?> getAnh50Liste(Boolean gen58, Boolean gen59) {
-        List<?> liste = null;
-
-        String query = "from IndeinlGenehmigung as gen "
-            + "where gen.anhang = 50 "
-            + "and (gen.gen58 = :gen58 or gen.gen59 = :gen59) "
-            + "order by gen.basisObjekt.inaktiv, "
-            + "gen.basisObjekt.basisBetreiber.betrname";
-
-        liste = new DatabaseAccess().createQuery(query)
-            .setBoolean("gen58", gen58)
-            .setBoolean("gen59", gen59)
-            .list();
-
-        return liste;
+        return IndeinlGenehmigung.getAnhListe(50, gen58, gen59);
     }
 
     /**
@@ -177,20 +127,24 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
     public static List<?> getAnh53Liste(Boolean gen58, Boolean gen59) {
-        List<?> liste = null;
+        return IndeinlGenehmigung.getAnhListe(53, gen58, gen59);
+    }
 
-        String query = "from IndeinlGenehmigung as gen "
-            + "where gen.anhang = 53 "
+    /**
+     * Little helper method for the four methods above
+     */
+    private static List<?> getAnhListe(int anhang, Boolean gen58, Boolean gen59) {
+        String query = "FROM IndeinlGenehmigung as gen "
+            + "WHERE gen.anhang = :anhang "
             + "and (gen.gen58 = :gen58 or gen.gen59 = :gen59) "
-            + "order by gen.basisObjekt.inaktiv, "
+            + "ORDER BY gen.basisObjekt.inaktiv, "
             + "gen.basisObjekt.basisBetreiber.betrname";
 
-        liste = new DatabaseAccess().createQuery(query)
+        return new DatabaseAccess().createQuery(query)
+            .setInteger("anhang", anhang)
             .setBoolean("gen58", gen58)
             .setBoolean("gen59", gen59)
             .list();
-
-        return liste;
     }
 
     /**
@@ -198,20 +152,16 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
      * @return Eine Liste aus Genehmigungsfachdaten.
      */
     public static List<?> getBwkListe(Boolean gen58, Boolean gen59) {
-        List<?> liste;
-
-        String query = "from IndeinlGenehmigung as gen "
-            + "where gen.anhang Is Null "
+        String query = "FROM IndeinlGenehmigung as gen "
+            + "WHERE gen.anhang Is Null "
             + "and (gen.gen58 = :gen58 or gen.gen59 = :gen59) "
-            + "order by gen.basisObjekt.inaktiv, "
+            + "ORDER BY gen.basisObjekt.inaktiv, "
             + "gen.basisObjekt.basisStandort.strasse, "
             + "gen.basisObjekt.basisStandort.hausnr";
 
-        liste = new DatabaseAccess().createQuery(query)
+        return new DatabaseAccess().createQuery(query)
             .setBoolean("gen58", gen58)
             .setBoolean("gen59", gen59)
             .list();
-
-        return liste;
     }
 }

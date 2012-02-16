@@ -23,7 +23,6 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
@@ -120,16 +119,9 @@ public class AtlEinheiten extends AbstractAtlEinheiten implements Serializable {
      * @return Ein Array mit allen Einheiten
      */
     public static AtlEinheiten[] getEinheiten() {
-        AtlEinheiten[] einheiten;
-        List<?> result = null;
-
-        result = new DatabaseAccess()
-                .createQuery("from AtlEinheiten as einheit")
-                .list();
-        einheiten = new AtlEinheiten[result.size()];
-        einheiten = (AtlEinheiten[]) result.toArray(einheiten);
-
-        return einheiten;
+        return (AtlEinheiten[]) new DatabaseAccess()
+            .createQuery("FROM AtlEinheiten as einheit")
+            .array(new AtlEinheiten[0]);
     }
 
     /**

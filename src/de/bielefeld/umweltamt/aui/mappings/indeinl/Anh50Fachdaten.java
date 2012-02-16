@@ -63,51 +63,43 @@ public class Anh50Fachdaten extends AbstractAnh50Fachdaten implements
      * @return Eine Liste mit den entstprechenden Anh50Fachdaten.
      */
     public static List<?> findByWiedervorlage(boolean nurWiedervorlageAbgelaufen) {
-        List<?> anhang50;
         if (nurWiedervorlageAbgelaufen) {
-            anhang50 = new DatabaseAccess()
+            return new DatabaseAccess()
                 .createQuery(
-                    "from Anh50Fachdaten as anh50 "
-                        + "where anh50.wiedervorlage <= :today "
+                    "FROM Anh50Fachdaten as anh50 "
+                        + "WHERE anh50.wiedervorlage <= :today "
                         + "and anh50.erloschen = 'f' "
                         + "and anh50.basisObjekt.inaktiv = 'f' "
-                        + "order by anh50.wiedervorlage, "
+                        + "ORDER BY anh50.wiedervorlage, "
                         + "anh50.basisObjekt.basisBetreiber.betrname")
                 .setDate("today", new Date())
                 .list();
 
         } else {
-            anhang50 = new DatabaseAccess()
+            return new DatabaseAccess()
                 .createQuery(
-                    "from Anh50Fachdaten as anh50 where "
+                    "FROM Anh50Fachdaten as anh50 WHERE "
                         + "anh50.erloschen = 'f' "
                         + "and anh50.basisObjekt.inaktiv = 'f' "
-                        + "order by anh50.wiedervorlage, "
+                        + "ORDER BY anh50.wiedervorlage, "
                         + "anh50.basisObjekt.basisBetreiber.betrname")
                 .list();
         }
-        return anhang50;
     }
 
     public static Anh50Fachdaten getAnh50ByObjekt(BasisObjekt objekt) {
-        Anh50Fachdaten fachdaten = null;
-        if (objekt.getBasisObjektarten().isAnh50()) {
-            List<?> anhang50 = new DatabaseAccess()
-                .createQuery(
-                    "from Anh50Fachdaten as anhang50 where "
-                        + "anhang50.objektid = :objekt ")
-                .setEntity("objekt", objekt)
-                .list();
-            if (anhang50.size() > 0) {
-                fachdaten = (Anh50Fachdaten) anhang50.get(0);
-            }
+        if (!objekt.getBasisObjektarten().isAnh50()) {
+            return null;
         }
-        return fachdaten;
+        return (Anh50Fachdaten) new DatabaseAccess()
+            .createQuery(
+                "FROM Anh50Fachdaten as anhang50 WHERE "
+                    + "anhang50.objektid = :objekt ")
+            .setEntity("objekt", objekt)
+            .uniqueResult();
     }
 
     public static boolean saveFachdaten(Anh50Fachdaten fachdaten) {
-        boolean saved = false;;
-        saved = new DatabaseAccess().saveOrUpdate(fachdaten);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 }

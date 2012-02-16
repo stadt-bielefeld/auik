@@ -77,16 +77,16 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      * Kläranlage.
      */
     public static List<?> getKSProbenahmen(AtlProbeart art, AtlKlaeranlagen ka) {
-        List<?> proben = null;
-        proben = new DatabaseAccess()
+        return new DatabaseAccess()
             .createQuery(
-                "from AtlProbenahmen as probenahme where "
+                "FROM AtlProbenahmen as probenahme WHERE "
                     + "probenahme.atlProbepkt.atlProbeart = :art "
                     + "and probenahme.atlProbepkt.atlKlaeranlagen = :ka "
-                    + "order by probenahme.datumDerEntnahme desc, "
-                    + "probenahme.kennummer desc").setEntity("art", art)
-            .setEntity("ka", ka).list();
-        return proben;
+                    + "ORDER BY probenahme.datumDerEntnahme desc, "
+                    + "probenahme.kennummer desc")
+            .setEntity("art", art)
+            .setEntity("ka", ka)
+            .list();
     }
 
     /**
@@ -102,9 +102,9 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         List<?> proben = null;
         proben = new DatabaseAccess()
             .createQuery(
-                "from AtlProbenahmen as probenahme where "
+                "FROM AtlProbenahmen as probenahme WHERE "
                     + "probenahme.atlProbepkt = :pkt "
-                    + "order by probenahme.datumDerEntnahme desc, "
+                    + "ORDER BY probenahme.datumDerEntnahme desc, "
                     + "probenahme.kennummer desc"
                     + ((limit != -1) ? " LIMIT 5" : "")).setEntity("pkt", pkt)
             .list();
@@ -130,9 +130,9 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
 //            try {
 //                Session session = HibernateSessionFactory.currentSession();
 //                proben = session.find(
-//                        "from AtlProbenahmen as probenahme where " +
+//                        "FROM AtlProbenahmen as probenahme WHERE " +
 //                        "probenahme.atlProbepkt = ? " +
-//                        "order by probenahme.datumDerEntnahme desc, probenahme.kennummer desc",
+//                        "ORDER BY probenahme.datumDerEntnahme desc, probenahme.kennummer desc",
 //                        pkt,
 //                        Hibernate.entity(AtlProbepkt.class)
 //                );
@@ -151,51 +151,38 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     public static List<?> findProbenahmen(String suche, String property) {
         String suche2 = suche.toLowerCase().trim() + "%";
         log.debug("Suche nach '" + suche2 + "' (" + property + ").");
-        List<?> proben = null;
-        proben = new DatabaseAccess()
+        return new DatabaseAccess()
             .createQuery(
-                "from AtlProbenahmen as probenahme where "
+                "FROM AtlProbenahmen as probenahme WHERE "
                     + "lower(probenahme." + property + ") like :suche "
-                    + "order by probenahme.datumDerEntnahme desc, "
+                    + "ORDER BY probenahme.datumDerEntnahme desc, "
                     + "probenahme.kennummer desc").setString("suche", suche2)
             .list();
-        return proben;
     }
 
     public static List<?> findBescheiddruck() {
-        List<?> proben = null;
-        proben = new DatabaseAccess().createQuery(
-            "from AtlProbenahmen as pn where " + "pn.atlStatus.id = 11 "
-                + "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-            .list();
-        return proben;
+        return AtlProbenahmen.findAtlStatus(11);
     }
 
     public static List<?> findEingetragen() {
-        List<?> proben = null;
-        proben = new DatabaseAccess().createQuery(
-            "from AtlProbenahmen as pn where " + "pn.atlStatus.id = 10 "
-                + "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-            .list();
-        return proben;
+        return AtlProbenahmen.findAtlStatus(10);
     }
 
     public static List<?> findErgaenzt() {
-        List<?> proben = null;
-        proben = new DatabaseAccess().createQuery(
-            "from AtlProbenahmen as pn where " + "pn.atlStatus.id = 9 "
-                + "order by pn.datumDerEntnahme desc, pn.kennummer desc")
-            .list();
-        return proben;
+        return AtlProbenahmen.findAtlStatus(9);
     }
 
     public static List<?> findAngelegt() {
-        List<?> proben = null;
-        proben = new DatabaseAccess().createQuery(
-            "from AtlProbenahmen as pn where " + "pn.atlStatus.id = 8 "
-                + "order by pn.datumDerEntnahme desc, pn.kennummer desc")
+        return AtlProbenahmen.findAtlStatus(8);
+    }
+
+    private static List<?> findAtlStatus(int id) {
+        return new DatabaseAccess().createQuery(
+            "FROM AtlProbenahmen as pn WHERE "
+                + "pn.atlStatus.id = :id "
+                + "ORDER BY pn.datumDerEntnahme desc, pn.kennummer desc")
+            .setInteger("id", id)
             .list();
-        return proben;
     }
 
     /**
@@ -208,8 +195,9 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         int count;
         List<?> liste = null;
         liste = new DatabaseAccess()
-            .createQuery("from AtlProbenahmen pn where pn.kennummer = :kn")
-            .setString("kn", kennnummer).list();
+            .createQuery("FROM AtlProbenahmen pn WHERE pn.kennummer = :kn")
+            .setString("kn", kennnummer)
+            .list();
         count = liste.size();
         return (count >= 1);
     }
@@ -233,14 +221,14 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      */
     public static AtlProbenahmen getProbenahme(Integer id, boolean loadPos) {
         AtlProbenahmen probe = null;
-        probe = (AtlProbenahmen) new DatabaseAccess().get(AtlProbenahmen.class,
-            id);
+        probe = (AtlProbenahmen) new DatabaseAccess()
+            .get(AtlProbenahmen.class, id);
 
         if (loadPos && probe != null) {
             new DatabaseAccess().initialize(probe.getAtlAnalysepositionen());
             // Collection sorted =
             // session.filter(probe.getAtlAnalysepositionen(),
-            // "order by this.atlParameter.ordnungsbegriff desc");
+            // "ORDER BY this.atlParameter.ordnungsbegriff desc");
             // AUIKataster.debugOutput("Sorted:\n " + sorted);
             // probe.setAtlAnalysepositionen(new HashSet(sorted));
             log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
@@ -260,14 +248,14 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         AtlProbenahmen probe = null;
 
         probe = (AtlProbenahmen) new DatabaseAccess()
-            .createQuery("from AtlProbenahmen where kennummer = :kennnummer")
+            .createQuery("FROM AtlProbenahmen WHERE kennummer = :kennnummer")
             .setString("kennnummer", kennummer)
             .uniqueResult();
         if (loadPos && probe != null) {
             new DatabaseAccess().initialize(probe.getAtlAnalysepositionen());
             // Collection sorted =
             // session.filter(probe.getAtlAnalysepositionen(),
-            // "order by this.atlParameter.ordnungsbegriff desc");
+            // "ORDER BY this.atlParameter.ordnungsbegriff desc");
             // AUIKataster.debugOutput("Sorted:\n " + sorted);
             // probe.setAtlAnalysepositionen(new HashSet(sorted));
             log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
@@ -277,11 +265,9 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     }
 
     public static boolean saveProbenahme(AtlProbenahmen probe) {
-        boolean success;
         // TODO: This was just session.save(probe) before - saveOrUpdate should
         // be just as fine.
-        success = new DatabaseAccess().saveOrUpdate(probe);
-        return success;
+        return new DatabaseAccess().saveOrUpdate(probe);
     }
 
     public static boolean updateProbenahme(AtlProbenahmen probe) {
@@ -300,7 +286,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         List<?> sortedPositionen = null;
         sortedPositionen = new DatabaseAccess().createFilter(
             newProbe.getAtlAnalysepositionen(),
-            "order by this.atlParameter.reihenfolge").list();
+            "ORDER BY this.atlParameter.reihenfolge")
+            .list();
         return sortedPositionen;
     }
 
@@ -313,8 +300,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         sortedPositionen = new DatabaseAccess()
             .createFilter(
                 newProbe.getAtlAnalysepositionen(),
-                "where this.atlParameter.bezeichnung not like :str "
-                    + "order by this.atlParameter.reihenfolge")
+                "WHERE this.atlParameter.bezeichnung not like :str "
+                    + "ORDER BY this.atlParameter.reihenfolge")
             .setString("str", new String("%bei Probenahme"))
             // I do not need to understand this, do I? ^^
             .list();

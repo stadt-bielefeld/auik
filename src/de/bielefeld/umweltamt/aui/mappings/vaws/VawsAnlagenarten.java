@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -52,19 +51,13 @@ public class VawsAnlagenarten extends AbstractVawsAnlagenarten implements
      * @return Ein Array mit den Namen aller Anlagenarten.
      */
     public static String[] getAnlagenarten() {
-        List<?> list;
-        String suchString = "select ala.anlagenart "
-            + "from VawsAnlagenarten ala " + "order by ala.id";
-
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT ala.anlagenart "
+                + "FROM VawsAnlagenarten ala "
+                + "ORDER BY ala.id")
             .setCacheable(true)
             .setCacheRegion("vawsalaliste")
-            .list();
-
-        String[] result;
-        result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-
-        return result;
+            .array(new String[0]);
     }
 }

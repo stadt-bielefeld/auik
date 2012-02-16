@@ -77,8 +77,8 @@ public class VawsAbfuellflaeche extends AbstractVawsAbfuellflaeche implements
         } else {
             list = new DatabaseAccess()
                 .createQuery(
-                    "from VawsAbfuellflaeche abff "
-                        + "where abff.vawsFachdaten = :fachdaten ")
+                    "FROM VawsAbfuellflaeche abff "
+                        + "WHERE abff.vawsFachdaten = :fachdaten ")
                 .setEntity("fachdaten", fachdaten)
                 .list();
         }
@@ -132,22 +132,15 @@ public class VawsAbfuellflaeche extends AbstractVawsAbfuellflaeche implements
      * @return Ein Array mit den Namen aller Ausführungen.
      */
     public static String[] getBodenflaechenausfArray() {
-        // FIXME: select distinct nicht die beste Lösung
-        List<?> list;
-        String suchString = "select distinct vabf.bodenflaechenausf "
-            + "from VawsAbfuellflaeche vabf "
-            + "order by vabf.bodenflaechenausf";
-
-        list = new DatabaseAccess().createQuery(suchString)
+        // FIXME: SELECT distinct nicht die beste Lösung
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT distinct vabf.bodenflaechenausf "
+                + "FROM VawsAbfuellflaeche vabf "
+                + "ORDER BY vabf.bodenflaechenausf")
             .setCacheable(true)
             .setCacheRegion("vawsabausfliste")
-            .list();
-
-        String[] result;
-        result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-
-        return result;
+            .array(new String[0]);
     }
 
     /**
@@ -157,21 +150,14 @@ public class VawsAbfuellflaeche extends AbstractVawsAbfuellflaeche implements
      * @return Ein Array mit den Namen aller Ausführungen.
      */
     public static String[] getNiederschlagschutzArray() {
-        // FIXME: select distinct nicht die beste Lösung
-        List<?> list;
-        String suchString = "select distinct vabf.niederschlagschutz "
-            + "from VawsAbfuellflaeche vabf "
-            + "order by vabf.niederschlagschutz";
-
-        list = new DatabaseAccess().createQuery(suchString)
+        // FIXME: SELECT distinct nicht die beste Lösung
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT distinct vabf.niederschlagschutz "
+                + "FROM VawsAbfuellflaeche vabf "
+                + "ORDER BY vabf.niederschlagschutz")
             .setCacheable(true)
             .setCacheRegion("vawsabnieliste")
-            .list();
-
-        String[] result;
-        result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-
-        return result;
+            .array(new String[0]);
     }
 }

@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -47,19 +46,13 @@ public class VawsVerwmassnahmen extends AbstractVawsVerwmassnahmen implements
      * @return Ein Array mit den Namen aller möglichen Massnahmen.
      */
     public static String[] getAllMassnahmen() {
-        String suchString = "select vwm.massnahmen "
-            + "from VawsVerwmassnahmen vwm " + "order by vwm.massnahmen";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT vwm.massnahmen "
+                + "FROM VawsVerwmassnahmen vwm "
+                + "ORDER BY vwm.massnahmen")
             .setCacheable(true)
             .setCacheRegion("vawsvwmliste")
-            .list();
-
-        String[] result;
-        result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-
-        return result;
+            .array(new String[0]);
     }
 }

@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -57,19 +56,12 @@ public class AnhEntsorger extends AbstractAnhEntsorger implements Serializable {
      * @return Alle vorhandenen Entsorger
      */
     public static AnhEntsorger[] getEntsorg() {
-        List<?> list = null;
-
-        String suchString = "from AnhEntsorger ahe order by ahe.entsorgerid";
-
-        list = new DatabaseAccess().createQuery(suchString)
+        return (AnhEntsorger[]) new DatabaseAccess().createQuery(
+            "FROM AnhEntsorger ahe "
+                + "ORDER BY ahe.entsorgerid")
             .setCacheable(true)
             .setCacheRegion("entsorgerliste")
-            .list();
-
-        AnhEntsorger[] result = new AnhEntsorger[list.size()];
-        result = (AnhEntsorger[]) list.toArray(result);
-
-        return result;
+            .array(new AnhEntsorger[0]);
     }
 
     public static boolean saveEntsorger(AnhEntsorger ents) {

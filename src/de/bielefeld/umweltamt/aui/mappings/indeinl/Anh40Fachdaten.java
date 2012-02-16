@@ -54,30 +54,22 @@ public class Anh40Fachdaten extends AbstractAnh40Fachdaten implements
      * @return Eine Liste aus Anh40Fachdaten.
      */
     public static List<?> getAuswertungsListe() {
-        List<?> liste;
-        String query = "from Anh40Fachdaten as anh40 "
-            + "order by anh40.basisObjekt.inaktiv, anh40.id";
-        liste = new DatabaseAccess().createQuery(query).list();
-        return liste;
+        return new DatabaseAccess()
+            .createQuery(
+                "FROM Anh40Fachdaten as anh40 "
+                + "ORDER BY anh40.basisObjekt.inaktiv, anh40.id")
+            .list();
     }
 
     public static Anh40Fachdaten getAnh40ByObjekt(BasisObjekt objekt) {
-        Anh40Fachdaten fachdaten = null;
-        List<?> liste = null;
-        liste = new DatabaseAccess()
+        return (Anh40Fachdaten) new DatabaseAccess()
             .createQuery(
-                "from Anh40Fachdaten as ah40 where ah40.basisObjekt = :objekt")
+                "FROM Anh40Fachdaten as ah40 WHERE ah40.basisObjekt = :objekt")
             .setEntity("objekt", objekt)
-            .list();
-        if (liste.size() > 0) {
-            fachdaten = (Anh40Fachdaten) liste.get(0);
-        }
-        return fachdaten;
+            .uniqueResult();
     }
 
     public static boolean saveAnh40(Anh40Fachdaten anh40) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(anh40);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(anh40);
     }
 }

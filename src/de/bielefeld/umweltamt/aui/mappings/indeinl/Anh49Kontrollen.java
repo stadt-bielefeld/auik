@@ -71,9 +71,9 @@ public class Anh49Kontrollen extends AbstractAnh49Kontrollen implements
         List<?> list = null;
         list = new DatabaseAccess()
             .createQuery(
-                "from Anh49Kontrollen as kt "
-                    + "where kt.anh49Fachdaten = :fd "
-                    + "order by kt.pruefdatum")
+                "FROM Anh49Kontrollen as kt "
+                    + "WHERE kt.anh49Fachdaten = :fd "
+                    + "ORDER BY kt.pruefdatum")
             .setEntity("fd", fd)
             .list();
         log.debug("Kontrollen für " + fd + ", Anzahl: " + list.size());
@@ -81,20 +81,14 @@ public class Anh49Kontrollen extends AbstractAnh49Kontrollen implements
     }
 
     public static boolean saveOrUpdateOrtstermin(Anh49Kontrollen kt) {
-        boolean success = false;
-        success = new DatabaseAccess().saveOrUpdate(kt);
-        return success;
+        return new DatabaseAccess().saveOrUpdate(kt);
     }
 
     public static boolean removeOrtstermin(Anh49Kontrollen kt) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(kt);
-        return removed;
+        return new DatabaseAccess().delete(kt);
     }
 
     public static boolean saveOrUpdateAnalyse(Anh49Kontrollen kontrolle) {
-        boolean success = false;
-        success = new DatabaseAccess().saveOrUpdate(kontrolle);
-        return success;
+        return new DatabaseAccess().saveOrUpdate(kontrolle);
     }
 }

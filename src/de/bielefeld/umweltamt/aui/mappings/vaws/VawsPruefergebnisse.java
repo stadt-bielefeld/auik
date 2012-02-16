@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -47,20 +46,13 @@ public class VawsPruefergebnisse extends AbstractVawsPruefergebnisse implements
      * @return Ein Array mit den Namen aller möglichen Prüfergebnisse.
      */
     public static String[] getAllPruefergebnisse() {
-        String suchString = "select prferg.pruefergebnis "
-            + "from VawsPruefergebnisse prferg "
-            + "order by prferg.pruefergebnis";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT prferg.pruefergebnis "
+                    + "FROM VawsPruefergebnisse prferg "
+                    + "ORDER BY prferg.pruefergebnis")
             .setCacheable(true)
             .setCacheRegion("vawsprfergliste")
-            .list();
-
-        String[] tmp;
-        tmp = new String[list.size()];
-        tmp = (String[]) list.toArray(tmp);
-
-        return tmp;
+            .array(new String[0]);
     }
 }

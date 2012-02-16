@@ -24,8 +24,8 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -67,31 +67,24 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
      */
     public static AtlProbepkt getKlaerschlammProbepunkt(
             AtlProbeart art, AtlKlaeranlagen ka) {
-        List<?> pkte = null;
-        pkte = new DatabaseAccess()
+        return (AtlProbepkt) new DatabaseAccess()
             .createQuery(
-                "from AtlProbepkt as probepkt where "
+                "FROM AtlProbepkt as probepkt WHERE "
                     + "probepkt.atlProbeart = :art "
                     + "and probepkt.atlKlaeranlagen = :ka "
-                    + "order by probepkt.objektid asc")
+                    + "ORDER BY probepkt.objektid asc")
                 .setEntity("art", art)
                 .setEntity("ka", ka)
-                .list();
-        AtlProbepkt tmp = null;
-        // TODO: Maybe use LIMIT instead?
-        if (pkte.size() > 0) {
-            tmp = (AtlProbepkt) pkte.get(0);
-        }
-        return tmp;
+                .uniqueResult();
     }
 
     /*public static List getFirmenProbepunkte() throws HibernateException {
         Session session = HibernateSessionFactory.currentSession();
         List pkte = session.find(
-                "from AtlProbepkt as probepkt where " +
+                "FROM AtlProbepkt as probepkt WHERE " +
                 "probepkt.atlProbeart.artId = ? " +
                 "or probepkt.atlProbeart.artId = ? " +
-                "order by probepkt.pktId asc",
+                "ORDER BY probepkt.pktId asc",
                 new Object[]{    AtlProbeart.ABWASSER_ES,
                                 AtlProbeart.ABWASSER_UWB},
                 new Type[]{    Hibernate.INTEGER,
@@ -105,9 +98,9 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
     public static List getFirmenProbepunkte(AtlFirmen firma) throws HibernateException {
         Session session = HibernateSessionFactory.currentSession();
         List pkte = session.find(
-                "from AtlProbepkt as probepkt where " +
+                "FROM AtlProbepkt as probepkt WHERE " +
                 "probepkt.atlFirmen = ? " +
-                "order by probepkt.pktId asc",
+                "ORDER BY probepkt.pktId asc",
                 new Object[]{firma},
                 new Type[]{    Hibernate.entity(AtlFirmen.class)}
             );
@@ -117,63 +110,46 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
     }*/
 
     public static AtlProbepkt getProbepunkt(Integer id) {
-        List<?> pkte = null;
-        AtlProbepkt pkt = null;
-        pkte = new DatabaseAccess()
+        return (AtlProbepkt) new DatabaseAccess()
             .createQuery(
-                "from AtlProbepkt as probepkt where "
+                "FROM AtlProbepkt as probepkt WHERE "
                     + "probepkt.objektid = :id")
                 .setInteger("id", id)
-                .list();
-        if (pkte.size() > 0) {
-            pkt = (AtlProbepkt) pkte.get(0);
-        }
-        return pkt;
+                .uniqueResult();
     }
 
     public static AtlProbepkt getProbepunktByObjekt(BasisObjekt objekt) {
-        List<?> pkte = null;
-        AtlProbepkt punkt = null;
-        if (objekt != null) {
-            pkte = new DatabaseAccess()
-                .createQuery(
-                    "from AtlProbepkt as probepkt where "
-                        + "probepkt.basisObjekt = :objekt")
-                    .setEntity("objekt", objekt)
-                    .list();
-            if (pkte.size() > 0) {
-                punkt = (AtlProbepkt) pkte.get(0);
-            }
+        if (objekt == null) {
+            return null;
         }
-        return punkt;
+        return (AtlProbepkt) new DatabaseAccess()
+            .createQuery(
+                "FROM AtlProbepkt as probepkt WHERE "
+                    + "probepkt.basisObjekt = :objekt")
+                .setEntity("objekt", objekt)
+                .uniqueResult();
     }
 
     public static AtlProbepkt getSielhautProbepunkt(AtlSielhaut siel) {
-        List<?> pkte = null;
         AtlProbepkt punkt = null;
-        pkte = new DatabaseAccess()
+        punkt = (AtlProbepkt) new DatabaseAccess()
             .createQuery(
-                "from AtlProbepkt as probepkt where "
+                "FROM AtlProbepkt as probepkt WHERE "
                     + "probepkt.atlSielhaut = :siel")
                 .setEntity("siel", siel)
-                .list();
-        if (pkte.size() > 0) {
-            punkt = (AtlProbepkt) pkte.get(0);
-            log.debug("SielhautBearbeiten-Probepunkt " + punkt
-                    + " aus DB geholt.");
-        }
+                .uniqueResult();
+        log.debug("SielhautBearbeiten-Probepunkt " + punkt
+                + " aus DB geholt.");
         return punkt;
     }
 
     public static List<?> getProbenehmerpunkte() {
-        List<?> pkte = null;
-        pkte = new DatabaseAccess().createQuery(
-            "select distinct pk from AtlProbepkt as pk "
+        return new DatabaseAccess().createQuery(
+            "SELECT distinct pk FROM AtlProbepkt as pk "
                 + "inner join pk.atlProbenahmen as pn "
-                + "where pn.kennummer like '3%' "
+                + "WHERE pn.kennummer like '3%' "
                 + "and pk.basisObjekt.inaktiv = false ")
             .list();
-        return pkte;
     }
 
     public static boolean saveProbepunkt(AtlProbepkt punkt) {
@@ -206,32 +182,26 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
     }
 
     public static List<?> getESatzung() {
-        List<?> pkt = null;
-        pkt = new DatabaseAccess().createQuery(
-            "from AtlProbepkt as pk where " + "pk.atlProbeart.id = 3 "
+        return new DatabaseAccess().createQuery(
+            "FROM AtlProbepkt as pk WHERE " + "pk.atlProbeart.id = 3 "
                 + "and pk.basisObjekt.inaktiv = false "
-                + "order by pk.basisObjekt.basisStandort")
+                + "ORDER BY pk.basisObjekt.basisStandort")
             .list();
-        return pkt;
     }
 
     public static List<?> getUWB() {
-        List<?> pkt = null;
-        pkt = new DatabaseAccess().createQuery(
-            "from AtlProbepkt as pk where " + "pk.atlProbeart.id = 2 "
+        return new DatabaseAccess().createQuery(
+            "FROM AtlProbepkt as pk WHERE " + "pk.atlProbeart.id = 2 "
                 + "and pk.basisObjekt.inaktiv = false "
-                + "order by pk.basisObjekt.basisStandort")
+                + "ORDER BY pk.basisObjekt.basisStandort")
             .list();
-        return pkt;
     }
 
     public static List<?> getInaktiv() {
-        List<?> pkt = null;
-        pkt = new DatabaseAccess().createQuery(
-            "from AtlProbepkt as pk where "
+        return new DatabaseAccess().createQuery(
+            "FROM AtlProbepkt as pk WHERE "
                 + "pk.basisObjekt.inaktiv = true "
-                + "order by pk.basisObjekt.basisStandort")
+                + "ORDER BY pk.basisObjekt.basisStandort")
             .list();
-        return pkt;
     }
 }

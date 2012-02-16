@@ -106,31 +106,28 @@ public class BasisBetreiber extends AbstractBasisBetreiber implements
 
         String queryString;
         if (PROPERTY_NAME.equals(property)) {
-            queryString = "from BasisBetreiber as betr where "
+            queryString = "FROM BasisBetreiber as betr WHERE "
                 + "lower(betr.betrname) like :suche "
-                + "order by betr.betrname, betr.betrnamezus";
+                + "ORDER BY betr.betrname, betr.betrnamezus";
         } else if (PROPERTY_ANREDE.equals(property)) {
-            queryString = "from BasisBetreiber as betr where "
+            queryString = "FROM BasisBetreiber as betr WHERE "
                 + "lower(betr.betranrede) like :suche "
-                + "order by betr.betrname, betr.betrnamezus";
+                + "ORDER BY betr.betrname, betr.betrnamezus";
         } else if (PROPERTY_ZUSATZ.equals(property)) {
-            queryString = "from BasisBetreiber as betr where "
+            queryString = "FROM BasisBetreiber as betr WHERE "
                 + "lower(betr.betrnamezus) like :suche "
-                + "order by betr.betrname, betr.betrnamezus";
+                + "ORDER BY betr.betrname, betr.betrnamezus";
         } else {
-            queryString = "from BasisBetreiber as betr where "
+            queryString = "FROM BasisBetreiber as betr WHERE "
                 + "lower(betr.betrname) like :suche "
                 + "or lower(betr.betranrede) like :suche "
                 + "or lower(betr.betrnamezus) like :suche "
-                + "order by betr.betrname, betr.betrnamezus";
+                + "ORDER BY betr.betrname, betr.betrnamezus";
         }
 
-        List<?> betreiber;
-        betreiber = new DatabaseAccess().createQuery(queryString)
+        return new DatabaseAccess().createQuery(queryString)
             .setString("suche", suche2)
             .list();
-
-        return betreiber;
     }
 
     /**
@@ -161,9 +158,7 @@ public class BasisBetreiber extends AbstractBasisBetreiber implements
      *         Betreiber nicht in der Datenbank existiert).
      */
     public static boolean removeBetreiber(BasisBetreiber betreiber) {
-        boolean removed;
-        removed = new DatabaseAccess().delete(betreiber);
-        return removed;
+        return new DatabaseAccess().delete(betreiber);
     }
 
     public String getBetriebsgrundstueck() {

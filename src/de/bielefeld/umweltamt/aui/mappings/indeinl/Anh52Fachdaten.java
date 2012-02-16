@@ -55,26 +55,19 @@ public class Anh52Fachdaten extends AbstractAnh52Fachdaten implements
     }
 
     public static Anh52Fachdaten getAnh52ByObjekt(BasisObjekt objekt) {
-        Anh52Fachdaten fachdaten = null;
-        if (objekt.getBasisObjektarten().isAnh52()) {
-            List<?> anhang52 = new DatabaseAccess()
-                .createQuery(
-                    "from Anh52Fachdaten as anhang52 "
-                        + "where anhang52.basisObjekt = :objekt")
-                .setEntity("objekt", objekt)
-                .list();
-
-            if (anhang52.size() > 0) {
-                fachdaten = (Anh52Fachdaten) anhang52.get(0);
-            }
+        if (!objekt.getBasisObjektarten().isAnh52()) {
+            return null;
         }
-        return fachdaten;
+        return (Anh52Fachdaten) new DatabaseAccess()
+            .createQuery(
+                "FROM Anh52Fachdaten as anhang52 "
+                    + "WHERE anhang52.basisObjekt = :objekt")
+            .setEntity("objekt", objekt)
+            .uniqueResult();
     }
 
     public static boolean saveFachdaten(Anh52Fachdaten fachdaten) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(fachdaten);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
     /**
@@ -82,10 +75,10 @@ public class Anh52Fachdaten extends AbstractAnh52Fachdaten implements
      * @return Eine Liste aus Anh52Fachdaten.
      */
     public static List<?> getAuswertungsListe() {
-        List<?> liste;
-        String query = "from Anh52Fachdaten as anh52 "
-            + "order by anh52.basisObjekt.inaktiv, anh52.id";
-        liste = new DatabaseAccess().createQuery(query).list();
-        return liste;
+        return new DatabaseAccess()
+            .createQuery(
+                "FROM Anh52Fachdaten as anh52 "
+                    + "ORDER BY anh52.basisObjekt.inaktiv, anh52.id")
+            .list();
     }
 }

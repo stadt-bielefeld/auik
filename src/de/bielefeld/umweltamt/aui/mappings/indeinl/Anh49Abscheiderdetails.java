@@ -81,9 +81,9 @@ public class Anh49Abscheiderdetails extends AbstractAnh49Abscheiderdetails
         List<?> details;
         details = new DatabaseAccess()
             .createQuery(
-                "from Anh49Abscheiderdetails as details "
-                    + "where details.Anh49Fachdaten = :fd "
-                    + "order by details.abscheidernr asc")
+                "FROM Anh49Abscheiderdetails as details "
+                    + "WHERE details.Anh49Fachdaten = :fd "
+                    + "ORDER BY details.abscheidernr asc")
             .setEntity("fd", fd)
             .list();
 
@@ -91,43 +91,21 @@ public class Anh49Abscheiderdetails extends AbstractAnh49Abscheiderdetails
         return details;
     }
 
-    /*
-     * TODO: This has some problems!
-     *
-     * fettabsch is a List of Anh49Abscheiderdetails
-     * fettabsch2 is a List of Anh49Fachdaten
-     *
-     * we iterate over fettabsch2
-     *      get the Anh49Abscheiderdetails for the Anh49Fachdaten
-     *      and if the Anh49Abscheiderdetails is an empty list
-     *          we add the Anh49Fachdaten to fettabsch
-     *          but that is a List of Anh49Abscheiderdetails!
-     */
     public static List<?> getFettabschListe() {
-
         // Liste für Fettabscheider aus Anh49Abscheiderdetails
-        List fettabsch;
-
-        String query = "from Anh49Abscheiderdetails details "
-            + "where details.Anh49Fachdaten.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
-            + "order by details.Anh49Fachdaten.basisObjekt.inaktiv, "
+        String query = "FROM Anh49Abscheiderdetails details "
+            + "WHERE details.Anh49Fachdaten.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
+            + "ORDER BY details.Anh49Fachdaten.basisObjekt.inaktiv, "
             + "details.Anh49Fachdaten.basisObjekt.basisBetreiber.betrname";
-        fettabsch = new DatabaseAccess().createQuery(query).list();
-
-
-        return fettabsch;
+        return new DatabaseAccess().createQuery(query).list();
     }
 
     public static boolean saveAbscheider(Anh49Abscheiderdetails absch) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(absch);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(absch);
     }
 
     public static boolean removeAbscheider(Anh49Abscheiderdetails abscheider) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(abscheider);
-        return removed;
+        return new DatabaseAccess().delete(abscheider);
     }
 
     public BasisObjekt getBasisObjekt() {

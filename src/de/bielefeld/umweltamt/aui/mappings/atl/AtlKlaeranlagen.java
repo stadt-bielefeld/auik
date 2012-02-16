@@ -22,7 +22,8 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
-import java.util.List;
+
+import org.hibernate.HibernateException;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -86,19 +87,10 @@ public class AtlKlaeranlagen extends AbstractAtlKlaeranlagen implements
      * @throws HibernateException Falls ein Datenbank-Fehler auftritt
      */
     public static AtlKlaeranlagen[] getKlaeranlagen() {
-        List<?> list = null;
-        AtlKlaeranlagen[] result = null;
-
-        String suchString = "from AtlKlaeranlagen ka order by ka.kaId";
-
-        list = new DatabaseAccess().createQuery(suchString)
+        String suchString = "FROM AtlKlaeranlagen ka ORDER BY ka.kaId";
+        return (AtlKlaeranlagen[]) new DatabaseAccess().createQuery(suchString)
                 .setCacheable(true)
                 .setCacheRegion("kaliste")
-                .list();
-
-        result = new AtlKlaeranlagen[list.size()];
-        result = (AtlKlaeranlagen[]) list.toArray(result);
-
-        return result;
+                .array(new AtlKlaeranlagen[0]);
     }
 }

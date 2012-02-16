@@ -67,9 +67,9 @@ public class Anh49Analysen extends AbstractAnh49Analysen implements
     public static List<?> getAnalyse(Anh49Fachdaten fd) {
         List<?> analyse = null;
         analyse = new DatabaseAccess().createQuery(
-            "from Anh49Analysen as analyse where "
+            "FROM Anh49Analysen as analyse WHERE "
                 + "analyse.anh49Fachdaten = :fd "
-                + "order by analyse.datum")
+                + "ORDER BY analyse.datum")
             .setEntity("fd", fd)
             .list();
         log.debug("Analysen für " + fd + ", Anzahl: " + analyse.size());
@@ -77,14 +77,10 @@ public class Anh49Analysen extends AbstractAnh49Analysen implements
     }
 
     public static boolean saveOrUpdateAnalyse(Anh49Analysen analyse) {
-        boolean success = false;
-        success = new DatabaseAccess().saveOrUpdate(analyse);
-        return success;
+        return new DatabaseAccess().saveOrUpdate(analyse);
     }
 
     public static boolean removeAnalyse(Anh49Analysen analyse) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(analyse);
-        return removed;
+        return new DatabaseAccess().delete(analyse);
     }
 }

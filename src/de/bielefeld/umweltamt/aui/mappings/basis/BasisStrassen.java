@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
@@ -68,19 +67,19 @@ public class BasisStrassen extends AbstractBasisStrassen implements
      *         keins diesen Namens gefunden wird.
      */
     public static BasisStrassen getStrasseByName(String name) {
-        BasisStrassen result = null;
-        if (name != null) {
-            String name2 = name.toLowerCase().trim() + "%";
-            log.debug("Suche nach: " + name);
-            List<?> list = new DatabaseAccess()
-                .createQuery(
-                    "from BasisStrassen str where lower(str.strasse) like :name")
-                .setString("name", name2)
-                .list();
-            // TODO: Maybe user LIMIT 1 here instead of this:
-            result = (BasisStrassen) ((list.size() > 0) ? list.get(0) : null);
-            log.debug("Ergebnis: " + result);
+        if (name == null) {
+            return null;
         }
+
+        String name2 = name.toLowerCase().trim() + "%";
+        log.debug("Suche nach: " + name);
+        BasisStrassen result = (BasisStrassen) new DatabaseAccess()
+            .createQuery(
+                "FROM BasisStrassen str WHERE lower(str.strasse) like :name")
+            .setString("name", name2)
+            .uniqueResult();
+        log.debug("Ergebnis: " + result);
+
         return result;
     }
 
@@ -89,16 +88,12 @@ public class BasisStrassen extends AbstractBasisStrassen implements
      * @return Alle vorhandenen Straßennamen
      */
     public static String[] getStrassen() {
-        List<?> list = null;
-        String suchString = "SELECT strassen.strasse "
-            + "FROM BasisStrassen strassen "
-            + "ORDER BY strassen.strasse";
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess().createQuery(
+            "SELECT strassen.strasse "
+                + "FROM BasisStrassen strassen "
+                + "ORDER BY strassen.strasse")
             .setCacheable(true)
             .setCacheRegion("strassenliste")
-            .list();
-        String[] result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-        return result;
+            .array(new String[0]);
     }
 }

@@ -58,20 +58,15 @@ public class AnhSuevFachdaten extends AbstractAnhSuevFachdaten implements
     }
 
     public static AnhSuevFachdaten getSuevByObjekt(BasisObjekt objekt) {
-        AnhSuevFachdaten fachdaten = null;
-        if (objekt.getBasisObjektarten().isSuev()) {
-            List<?> suev = new DatabaseAccess()
-                .createQuery(
-                    "from AnhSuevFachdaten as suev "
-                        + "where suev.basisObjekt = :objekt")
-                .setEntity("objekt", objekt)
-                .list();
-
-            if (suev.size() > 0) {
-                fachdaten = (AnhSuevFachdaten) suev.get(0);
-            }
+        if (!objekt.getBasisObjektarten().isSuev()) {
+            return null;
         }
-        return fachdaten;
+        return (AnhSuevFachdaten) new DatabaseAccess()
+            .createQuery(
+                "FROM AnhSuevFachdaten as suev "
+                    + "WHERE suev.basisObjekt = :objekt")
+            .setEntity("objekt", objekt)
+            .uniqueResult();
     }
 
     /**
@@ -81,9 +76,7 @@ public class AnhSuevFachdaten extends AbstractAnhSuevFachdaten implements
      *         <code>false</code>.
      */
     public static boolean saveFachdaten(AnhSuevFachdaten fachdaten) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(fachdaten);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
     /**
@@ -91,10 +84,9 @@ public class AnhSuevFachdaten extends AbstractAnhSuevFachdaten implements
      * @return Eine Liste aus SuevFachdaten.
      */
     public static List<?> getAuswertungsListe() {
-        List<?> liste;
-        String query = "from AnhSuevFachdaten as sv "
-            + "order by sv.basisObjekt.inaktiv, sv.objektid";
-        liste = new DatabaseAccess().createQuery(query).list();
-        return liste;
+        return new DatabaseAccess().createQuery(
+            "FROM AnhSuevFachdaten as sv "
+                + "ORDER BY sv.basisObjekt.inaktiv, sv.objektid")
+            .list();
     }
 }

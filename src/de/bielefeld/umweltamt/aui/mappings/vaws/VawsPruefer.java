@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -46,19 +45,13 @@ public class VawsPruefer extends AbstractVawsPruefer implements Serializable {
      * @return Ein Array mit den Namen aller Prüfer.
      */
     public static String[] getAllPruefer() {
-        String suchString = "select prf.pruefer " + "from VawsPruefer prf "
-            + "order by prf.pruefer";
-
-        List<?> list;
-        list = new DatabaseAccess().createQuery(suchString)
+        return (String[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT prf.pruefer "
+                + "FROM VawsPruefer prf "
+                + "ORDER BY prf.pruefer")
             .setCacheable(true)
             .setCacheRegion("vawsprfliste")
-            .list();
-
-        String[] result;
-        result = new String[list.size()];
-        result = (String[]) list.toArray(result);
-
-        return result;
+            .array(new String[0]);
     }
 }

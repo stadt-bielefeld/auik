@@ -78,11 +78,14 @@ public class VawsAbscheider extends AbstractVawsAbscheider implements
         } else {
             list = new DatabaseAccess()
                 .createQuery(
-                    "from VawsAbscheider abff "
-                        + "where abff.vawsFachdaten = :fachdaten ")
+                    "FROM VawsAbscheider abff "
+                        + "WHERE abff.vawsFachdaten = :fachdaten ")
                 .setEntity("fachdaten", fachdaten)
                 .list();
         }
+
+        // TODO: Here we also could use uniqueResult instead of list, but I am
+        // not to sure about the logic here...
 
         if (list.size() > 0) {
             abscheider = (VawsAbscheider) list.get(0);

@@ -385,6 +385,14 @@ public class DatabaseAccess {
     }
 
     /**
+     * Execute the query and get the result as an array
+     * @return Object[] The result of the Query
+     */
+    public <T> T[] array(T[] arrayType) {
+        return this.list().toArray(arrayType);
+    }
+
+    /**
      * Convenience method to return a single instance that matches the query, or
      * null if the query returns no results.
      * @return The single result or <code>null</code>

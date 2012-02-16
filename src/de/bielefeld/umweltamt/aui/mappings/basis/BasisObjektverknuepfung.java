@@ -24,7 +24,6 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -59,15 +58,13 @@ public class BasisObjektverknuepfung extends AbstractBasisObjektverknuepfung
      * @return Eine Liste mit Objekten.
      */
     public static List<?> getVerknuepfungByObjekt(BasisObjekt objekt) {
-        List<?> verknuepf;
-        verknuepf = new DatabaseAccess()
+        return new DatabaseAccess()
             .createQuery(
-                "from BasisObjektverknuepfung ov where "
+                "FROM BasisObjektverknuepfung ov WHERE "
                     + "ov.basisObjektByObjekt = :objekt "
                     + "or ov.basisObjektByIstVerknuepftMit = :objekt ")
             .setEntity("objekt", objekt)
             .list();
-        return verknuepf;
     }
 
     /**
@@ -77,15 +74,13 @@ public class BasisObjektverknuepfung extends AbstractBasisObjektverknuepfung
      * @return Eine Liste mit Objekten.
      */
     public static List<?> getVerknuepfungSielhaut(BasisObjekt objekt) {
-        List<?> verknuepf;
-        verknuepf = new DatabaseAccess()
+        return new DatabaseAccess()
             .createQuery(
-                "from BasisObjektverknuepfung ov where "
+                "FROM BasisObjektverknuepfung ov WHERE "
                     + "ov.basisObjektByObjekt = :objekt "
                     + "and ov.basisObjektByIstVerknuepftMit.basisObjektarten.objektart like 'Sielhautmessstelle' ")
             .setEntity("objekt", objekt)
             .list();
-        return verknuepf;
     }
 
     /**

@@ -70,34 +70,26 @@ public class AtlSielhaut extends AbstractAtlSielhaut implements Serializable {
 
     public static List<?> findPunkte(String suche) {
         String sucheF = suche.toLowerCase().trim() + "%";
-        List<?> punkte;
-        punkte = new DatabaseAccess()
+        return new DatabaseAccess()
             .createQuery(
-                "from AtlSielhaut as sp where "
+                "FROM AtlSielhaut as sp WHERE "
                     + "lower(sp.bezeichnung) like :suche "
-                    + "order by sp.psielhaut desc, "
+                    + "ORDER BY sp.psielhaut desc, "
                     + "sp.pfirmenprobe desc, sp.bezeichnung")
             .setString("suche", sucheF)
             .list();
-        return punkte;
     }
 
     public static AtlSielhaut getSielhautByBez(String bezeichnung) {
-        AtlSielhaut sielhaut = null;
         String sucheF = bezeichnung.toLowerCase().trim() + "%";
-        List<?> punkte;
-        punkte = new DatabaseAccess()
+        return (AtlSielhaut) new DatabaseAccess()
             .createQuery(
-                "from AtlSielhaut as sp where "
+                "FROM AtlSielhaut as sp WHERE "
                     + "lower(sp.bezeichnung) like :suche "
-                    + "order by sp.psielhaut desc, "
+                    + "ORDER BY sp.psielhaut desc, "
                     + "sp.pfirmenprobe desc, sp.bezeichnung")
             .setString("suche", sucheF)
-            .list();
-        if (punkte.size() > 0) {
-            sielhaut = (AtlSielhaut) punkte.get(0);
-        }
-        return sielhaut;
+            .uniqueResult();
     }
 
     /**
