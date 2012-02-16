@@ -63,7 +63,7 @@ public class DatabaseAccess {
         /* Operations on entitys */
         GET, SAVEORUPDATE, MERGE, DELETE,
         /* Querys */
-        CREATE_QUERY, CREATE_FILTER, LIST, ITERATE
+        CREATE_QUERY, CREATE_FILTER, LIST, UNIQUE_RESULT, ITERATE
     }
 
     /** The session of the localThread */
@@ -124,7 +124,7 @@ public class DatabaseAccess {
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.GET, false);
         } finally {
-            // This place is intentionally left blank.
+            this.closeSession();
         }
 
         /* If the object is virtual deletable and virtual deleted,
@@ -155,7 +155,7 @@ public class DatabaseAccess {
         if (this.beginTransaction()) {
             try {
                 /* Save or update the object */
-                this.session.merge(object);
+                this.session.saveOrUpdate(object);
                 /* Commit the transaction */
                 if (this.commitTransaction()) {
                     success = true;
@@ -163,6 +163,8 @@ public class DatabaseAccess {
             } catch (HibernateException he) {
                 this.handleDBException(
                     he, DatabaseAccessType.SAVEORUPDATE, true);
+            } finally {
+                this.closeSession();
             }
         }
         return success;
@@ -190,6 +192,8 @@ public class DatabaseAccess {
                 }
             } catch (HibernateException he) {
                 this.handleDBException(he, DatabaseAccessType.MERGE, true);
+            } finally {
+                this.closeSession();
             }
         }
         return success;
@@ -227,6 +231,8 @@ public class DatabaseAccess {
                 }
             } catch (HibernateException he) {
                 this.handleDBException(he, DatabaseAccessType.DELETE, true);
+            } finally {
+                this.closeSession();
             }
         }
         return success;
@@ -322,9 +328,14 @@ public class DatabaseAccess {
     }
 
     /* More query configuration */
-    // TODO: Do we really need this?
-    public DatabaseAccess uniqueResult() {
-        this.query.uniqueResult();
+    /**
+     * Set the maximum number of rows to retrieve. If not set, there is no limit
+     * to the number of rows retrieved.
+     * @param maxResults the maximum number of rows
+     * @return DatabaseAccess this
+     */
+    public DatabaseAccess setMaxResults(int maxResults) {
+        this.query.setMaxResults(maxResults);
         return this;
     }
 
@@ -352,7 +363,7 @@ public class DatabaseAccess {
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.LIST, false);
         } finally {
-            // This place is intentionally left blank.
+            this.closeSession();
         }
 
         // TODO: This is the most dirty solution...
@@ -367,7 +378,6 @@ public class DatabaseAccess {
                 if (virtDelObjekt.is_deleted()) {
                     result.remove(object);
                 }
-
             }
         }
 
@@ -375,25 +385,58 @@ public class DatabaseAccess {
     }
 
     /**
-     * Execute the query and get the result as an Iterator<?>
-     * @return Iterator<?> The result of the Query
+     * Convenience method to return a single instance that matches the query, or
+     * null if the query returns no results.
+     * @return The single result or <code>null</code>
      */
-    /* Note: The result of the query only lives as long as the session! */
-    // Yes, this is unused. So it is intended at the moment.
-    @SuppressWarnings("unused")
-    private Iterator<?> iterate() {
+    // TODO: There are a lot of querys where we should use this but are still
+    // using the first object of the list.
+    public Object uniqueResult() {
+        Object result = null;
+        try {
+            result = this.query.uniqueResult();
+        } catch (HibernateException he) {
+            this.handleDBException(he, DatabaseAccessType.UNIQUE_RESULT, false);
+        } finally {
+            this.closeSession();
+        }
+
+        // TODO: This is the most dirty solution...
+        // Add the "where xyz._deleted = FALSE" to all the querys?
+        // Can we let the database do that? Maybe with an Index? Or many...
+        AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
+        if (result instanceof AbstractVirtuallyDeletableDatabaseTable) {
+            virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) result;
+            if (virtDelObjekt.is_deleted()) {
+                result = null;
+            }
+        }
+
+        return result;
+    }
+
+    /*
+     * Are you thinking about using this? Don't.
+     * Don't think about it and don't use it.
+     * It only makes sense if the instances are already in the session or
+     * in the cache and we should only think about such stuff if performance
+     * becomes an issue.
+     */
+    public Iterator<?> iterate() {
         Iterator<?> result = null;
+        /*
         try {
             result = this.query.iterate();
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.ITERATE, false);
         } finally {
-            // This place is intentionally left blank.
+            this.closeSession();
         }
+        */
         return result;
     }
 
-    /** Get the current Session */
+    /** Get the (current) Session */
     private Session getSession() {
         if (this.session == null) {
             try {
@@ -405,6 +448,15 @@ public class DatabaseAccess {
             }
         }
         return this.session;
+    }
+
+    /** Close the Session */
+    private void closeSession() {
+        if (this.session == null) {
+            log.error("Trying to close a session we do not have.");
+            return;
+        }
+        HibernateSessionFactory.closeSession();
     }
 
     /** Get a new Transaction */

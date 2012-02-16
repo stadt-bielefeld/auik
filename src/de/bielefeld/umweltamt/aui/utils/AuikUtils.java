@@ -399,6 +399,18 @@ public class AuikUtils {
         Calendar cal = new GregorianCalendar();
         cal.setTime(date);
 
+        switch (cal.get(Calendar.DAY_OF_WEEK)) {
+            case 1: return "Sonntag";
+            case 2: return "Montag";
+            case 3: return "Dienstag";
+            case 4: return "Mittwoch";
+            case 5: return "Donnerstag";
+            case 6: return "Freitag";
+            case 7: return "Samstag";
+            default: return null;
+        }
+
+        /* Old version:
         int day = cal.get(Calendar.DAY_OF_WEEK);
         String dayString = null;
         switch (day) {
@@ -426,20 +438,7 @@ public class AuikUtils {
             default:
                 dayString = "Strange things happend here...";
         }
-
         return  dayString;
-
-        /*
-        switch (cal.get(Calendar.DAY_OF_WEEK)) {
-            case 1: return "Sonntag";
-            case 2: return "Montag";
-            case 3: return "Dienstag";
-            case 4: return "Mittwoch";
-            case 5: return "Donnerstag";
-            case 6: return "Freitag";
-            case 7: return "Samstag";
-            default: return null;
-        }
         */
     }
 

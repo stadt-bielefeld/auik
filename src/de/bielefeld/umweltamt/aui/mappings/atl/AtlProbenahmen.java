@@ -261,7 +261,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
 
         probe = (AtlProbenahmen) new DatabaseAccess()
             .createQuery("from AtlProbenahmen where kennummer = :kennnummer")
-            .setString("kennnummer", kennummer).uniqueResult().list();
+            .setString("kennnummer", kennummer)
+            .uniqueResult();
         if (loadPos && probe != null) {
             new DatabaseAccess().initialize(probe.getAtlAnalysepositionen());
             // Collection sorted =
