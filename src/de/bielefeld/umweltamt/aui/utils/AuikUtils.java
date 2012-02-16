@@ -43,8 +43,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
 
-
-
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
@@ -394,38 +392,55 @@ public class AuikUtils {
      * @return Den Wochentag als String
      */
     public static String getDayOfWeekFromDate(Date date) {
-        if (date != null) {
-            Calendar cal = new GregorianCalendar();
-            cal.setTime(date);
-
-            int day = cal.get(Calendar.DAY_OF_WEEK);
-            String dayString = null;
-            if (day == 1){
-            	dayString = "Sonntag";
-            }
-            else if (day == 2){
-            	dayString = "Montag";
-            }
-            else if (day == 3){
-            	dayString = "Dienstag";
-            }
-            else if (day == 4){
-            	dayString = "Mittwoch";
-            }
-            else if (day == 5){
-            	dayString = "Donnerstag";
-            }
-            else if (day == 6){
-            	dayString = "Freitag";
-            }
-            else if (day == 7){
-            	dayString = "Samstag";
-            }
-
-            return  dayString;
-        } else {
+        if (date == null) {
             return null;
         }
+
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(date);
+
+        int day = cal.get(Calendar.DAY_OF_WEEK);
+        String dayString = null;
+        switch (day) {
+            case 1:
+                dayString = "Sonntag";
+                break;
+            case 2:
+                dayString = "Montag";
+                break;
+            case 3:
+                dayString = "Dienstag";
+                break;
+            case 4:
+                dayString = "Mittwoch";
+                break;
+            case 5:
+                dayString = "Donnerstag";
+                break;
+            case 6:
+                dayString = "Freitag";
+                break;
+            case 7:
+                dayString = "Samstag";
+                break;
+            default:
+                dayString = "Strange things happend here...";
+        }
+
+        return  dayString;
+
+        /*
+        switch (cal.get(Calendar.DAY_OF_WEEK)) {
+            case 1: return "Sonntag";
+            case 2: return "Montag";
+            case 3: return "Dienstag";
+            case 4: return "Mittwoch";
+            case 5: return "Donnerstag";
+            case 6: return "Freitag";
+            case 7: return "Samstag";
+            default: return null;
+        }
+        */
     }
 
     /**
