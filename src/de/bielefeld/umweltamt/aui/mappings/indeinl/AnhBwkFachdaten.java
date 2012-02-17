@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
@@ -87,33 +86,34 @@ public class AnhBwkFachdaten extends AbstractAnhBwkFachdaten implements
      *            werden sollen).
      * @return Eine Liste aus AnhBwk-Objekten.
      */
-    public static List<?> findByErfassungsjahr(int jahr) {
-        String query = "FROM AnhBwkFachdaten as bwk ";
-
-        // TODO: LOL Year 2030 Bug? ...
-        if (jahr != -1) {
-            if (jahr > 0 && jahr < 100) {
-                if (jahr <= 30) {
-                    jahr = jahr + 2000;
-                } else {
-                    jahr = jahr + 1900;
-                }
-            }
-            query += "WHERE bwk.erfassung = :jahr ";
-        }
-
-        query += "ORDER BY bwk.basisObjekt.inaktiv, bwk.erfassung, "
-            + "bwk.basisObjekt.basisBetreiber.betrname, "
-            + "bwk.basisObjekt.basisBetreiber.betrnamezus, "
-            + "bwk.basisObjekt.basisStandort.strasse, "
-            + "bwk.basisObjekt.basisStandort.hausnr";
-
-        if (jahr != -1) {
-            return new DatabaseAccess().createQuery(query)
-                .setInteger("jahr", jahr)
-                .list();
-        } else {
-            return new DatabaseAccess().createQuery(query).list();
-        }
-    }
+    /* This was not used anywhere... */
+//    private static List<?> findByErfassungsjahr(int jahr) {
+//        String query = "FROM AnhBwkFachdaten as bwk ";
+//
+//        // TODO: LOL Year 2030 Bug? ...
+//        if (jahr != -1) {
+//            if (jahr > 0 && jahr < 100) {
+//                if (jahr <= 30) {
+//                    jahr = jahr + 2000;
+//                } else {
+//                    jahr = jahr + 1900;
+//                }
+//            }
+//            query += "WHERE bwk.erfassung = :jahr ";
+//        }
+//
+//        query += "ORDER BY bwk.basisObjekt.inaktiv, bwk.erfassung, "
+//            + "bwk.basisObjekt.basisBetreiber.betrname, "
+//            + "bwk.basisObjekt.basisBetreiber.betrnamezus, "
+//            + "bwk.basisObjekt.basisStandort.strasse, "
+//            + "bwk.basisObjekt.basisStandort.hausnr";
+//
+//        if (jahr != -1) {
+//            return new DatabaseAccess().createQuery(query)
+//                .setInteger("jahr", jahr)
+//                .list();
+//        } else {
+//            return new DatabaseAccess().createQuery(query).list();
+//        }
+//    }
 }
