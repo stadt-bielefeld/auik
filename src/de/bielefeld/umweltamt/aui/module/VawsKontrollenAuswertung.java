@@ -48,7 +48,7 @@ package de.bielefeld.umweltamt.aui.module;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
@@ -68,6 +68,7 @@ public class VawsKontrollenAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#editObject(int)
      */
+    @Override
     protected void editObject(int row) {
         if (row != -1) {
             VawsFachdaten fd = ((VawsKontrollen)model.getObjectAtRow(row)).getVawsFachdaten();
@@ -87,6 +88,7 @@ public class VawsKontrollenAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         return new JPanel();
     }
@@ -94,6 +96,7 @@ public class VawsKontrollenAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
+    @Override
     public ListTableModel getTableModel() {
         if (model == null) {
             model = new WiedervorlageSVModel();
@@ -103,10 +106,12 @@ public class VawsKontrollenAuswertung extends AbstractQueryModul {
 
     public void updateListe() {
         SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(10, 10, 15, 250, 250)) {
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 ((WiedervorlageSVModel)getTableModel()).updateList();
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 getTableModel().fireTableDataChanged();
                 frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
@@ -120,28 +125,19 @@ public class VawsKontrollenAuswertung extends AbstractQueryModul {
         JTable resultTable = getResultTable();
 
         resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-        TableColumn column = null;
 
-        for (int i = 0; i < 5; i++) {
-            column = resultTable.getColumnModel().getColumn(i);
-
-            if (i == 0) {
-                column.setPreferredWidth(a);
-            } else if (i == 1) {
-                column.setPreferredWidth(b);
-            } else if (i == 2) {
-                column.setPreferredWidth(c);
-            } else if (i == 3) {
-                column.setPreferredWidth(d);
-            } else if (i == 4) {
-                column.setPreferredWidth(e);
-            }
-        }
+        TableColumnModel model = resultTable.getColumnModel();
+        model.getColumn(0).setPreferredWidth(a);
+        model.getColumn(1).setPreferredWidth(b);
+        model.getColumn(2).setPreferredWidth(c);
+        model.getColumn(3).setPreferredWidth(d);
+        model.getColumn(4).setPreferredWidth(e);
 
         return resultTable;
     }
 
 
+    @Override
     public void show() {
         super.show();
 
@@ -150,6 +146,7 @@ public class VawsKontrollenAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Wiedervorlage Sachverständigen - Prüfung";
     }
@@ -157,12 +154,15 @@ public class VawsKontrollenAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "VAwS";
     }
 }
 
 class WiedervorlageSVModel extends ListTableModel {
+    private static final long serialVersionUID = 8869570451383123968L;
+
     public WiedervorlageSVModel() {
         super(
                 new String[]{
@@ -176,35 +176,37 @@ class WiedervorlageSVModel extends ListTableModel {
         );
     }
 
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object tmp;
         VawsKontrollen vk = (VawsKontrollen) objectAtRow;
 
         switch (columnIndex) {
-        case 0:
-            tmp = vk.getVawsFachdaten().getBehaelterId();
-            break;
-        case 1:
-            tmp = AuikUtils.getStringFromDate(vk.getNaechstepruefung());
-            break;
-        case 2:
-            tmp = vk.getVawsFachdaten().getAnlagenart();
-            break;
-        case 3:
-            tmp = vk.getVawsFachdaten().getBasisObjekt().getBasisBetreiber();
-            break;
-        case 4:
-            tmp = vk.getVawsFachdaten().getBasisObjekt().getBasisStandort();
-            break;
+            case 0:
+                tmp = vk.getVawsFachdaten().getBehaelterId();
+                break;
+            case 1:
+                tmp = AuikUtils.getStringFromDate(vk.getNaechstepruefung());
+                break;
+            case 2:
+                tmp = vk.getVawsFachdaten().getAnlagenart();
+                break;
+            case 3:
+                tmp = vk.getVawsFachdaten().getBasisObjekt().getBasisBetreiber();
+                break;
+            case 4:
+                tmp = vk.getVawsFachdaten().getBasisObjekt().getBasisStandort();
+                break;
 
-        default:
-            tmp = "FEHLER!";
-            break;
+            default:
+                tmp = "FEHLER!";
+                break;
         }
 
         return tmp;
     }
 
+    @Override
     public void updateList() {
         setList(VawsKontrollen.getAuswertung());
 //        HibernateSessionFactory.closeSession();

@@ -55,6 +55,8 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
  * @author David Klotz
  */
 public abstract class OkCancelDialog extends SimpleDialog {
+    private static final long serialVersionUID = -1999038310745668506L;
+
     public OkCancelDialog(HauptFrame frame) {
         this(null, frame);
     }
@@ -63,16 +65,24 @@ public abstract class OkCancelDialog extends SimpleDialog {
         super(title, frame);
     }
 
+    @Override
     public Action getFirstButtonAction() {
         return new AbstractAction(getOkButtonText()) {
+            private static final long serialVersionUID = -1692485695423564992L;
+
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doOk();
             }
         };
     }
 
+    @Override
     public Action getSecondButtonAction() {
         return new AbstractAction("Abbrechen") {
+            private static final long serialVersionUID = 5622759498378816883L;
+
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doCancel();
             }

@@ -89,14 +89,11 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.TableColumn;
 
-
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.uif_lite.component.Factory;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -118,10 +115,13 @@ public class Anh49AnalysenPanel extends JPanel{
      * @author Gerhard Genuit
      */
 
-	/** Logging */
+    private static final long serialVersionUID = 8803365595755140899L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private class Anh49AnalysenModel extends EditableListTableModel {
+        private static final long serialVersionUID = 7176011901204094377L;
         private Anh49Fachdaten fachdaten;
 
         /**
@@ -141,6 +141,7 @@ public class Anh49AnalysenPanel extends JPanel{
             updateList();
         }
 
+        @Override
         public boolean objectRemoved(Object objectAtRow) {
             Anh49Analysen removedAna = (Anh49Analysen) objectAtRow;
             boolean removed;
@@ -154,56 +155,49 @@ public class Anh49AnalysenPanel extends JPanel{
             return removed;
         }
 
+        @Override
         public Object getColumnValue(Object objectAtRow, int columnIndex) {
             Anh49Analysen analysen = (Anh49Analysen) objectAtRow;
 
             Object tmp;
 
             switch (columnIndex) {
-            case 0:
-                tmp = AuikUtils.getStringFromDate(analysen.getDatum());
-                break;
-
-            case 1:
-                tmp = analysen.getInstitut();
-                break;
-
-            case 2:
-                tmp = analysen.getCsbWert();
-                break;
-
-            case 3:
-                tmp = analysen.getPhWert();
-                break;
-
-            case 4:
-                tmp = analysen.getKwWert();
-                break;
-
-            case 5:
-                tmp = analysen.getZinkWert();
-                break;
-
-            case 6:
-                tmp = analysen.getBsb5Wert();
-                break;
-
-            case 7:
-                tmp = analysen.getBikWert();
-                break;
-
-            case 8:
-                tmp = analysen.getBemerkungen();
-                break;
-
-            default:
-                tmp = null;
-            break;
+                case 0:
+                    tmp = AuikUtils.getStringFromDate(analysen.getDatum());
+                    break;
+                case 1:
+                    tmp = analysen.getInstitut();
+                    break;
+                case 2:
+                    tmp = analysen.getCsbWert();
+                    break;
+                case 3:
+                    tmp = analysen.getPhWert();
+                    break;
+                case 4:
+                    tmp = analysen.getKwWert();
+                    break;
+                case 5:
+                    tmp = analysen.getZinkWert();
+                    break;
+                case 6:
+                    tmp = analysen.getBsb5Wert();
+                    break;
+                case 7:
+                    tmp = analysen.getBikWert();
+                    break;
+                case 8:
+                    tmp = analysen.getBemerkungen();
+                    break;
+                default:
+                    tmp = null;
+                    break;
             }
 
             return tmp;
         }
 
+        @Override
         public void updateList() {
             if (fachdaten != null) {
                 setList(Anh49Analysen.getAnalyse(fachdaten));
@@ -214,93 +208,94 @@ public class Anh49AnalysenPanel extends JPanel{
         /* (non-Javadoc)
          * @see de.bielefeld.umweltamt.aui.utils.EditableListTableModel#editObject(java.lang.Object, int, java.lang.Object)
          */
+        @Override
         public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
             Anh49Analysen analyse = (Anh49Analysen) objectAtRow;
 
             switch (columnIndex) {
-            case 0:
-                DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
-                try {
-                    Date tmpDate = format.parse((String) newValue);
-                    analyse.setDatum(tmpDate);
-                } catch (ParseException e) {
-                    hauptModul.getFrame().changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
-                }
-                break;
-            case 1:
-                String tmpInst = (String)newValue;
-                // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
-                if (tmpInst.length() > 50) {
-                    tmpInst = tmpInst.substring(0,50);
-                }
-                analyse.setInstitut(tmpInst);
-                break;
-            case 2:
-                String tmpCsb = (String)newValue;
-                // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
-                if (tmpCsb.length() > 50) {
-                    tmpCsb = tmpCsb.substring(0,50);
-                }
-                analyse.setCsbWert(tmpCsb);
-                break;
-            case 3:
-                String tmpPh = (String)newValue;
-                // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
-                if (tmpPh.length() > 50) {
-                    tmpPh = tmpPh.substring(0,50);
-                }
-                analyse.setPhWert(tmpPh);
-                break;
-            case 4:
-                String tmpKw = (String)newValue;
-                // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
-                if (tmpKw.length() > 50) {
-                    tmpKw = tmpKw.substring(0,50);
-                }
-                analyse.setKwWert(tmpKw);
-                break;
-            case 5:
-                String tmpZn = (String)newValue;
-                // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
-                if (tmpZn.length() > 50) {
-                    tmpZn = tmpZn.substring(0,50);
-                }
-                analyse.setZinkWert(tmpZn);
-                break;
-            case 6:
-                String tmpBSB = (String)newValue;
-                // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
-                if (tmpBSB.length() > 50) {
-                    tmpBSB = tmpBSB.substring(0,50);
-                }
-                analyse.setBsb5Wert(tmpBSB);
-                break;
-            case 7:
-                String tmpBik = (String)newValue;
-                // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
-                if (tmpBik.length() > 50) {
-                    tmpBik = tmpBik.substring(0,50);
-                }
-                analyse.setBikWert(tmpBik);
-                break;
-            case 8:
-                String tmpBem = (String) newValue;
-                // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
-                if (tmpBem.length() > 255) {
-                    tmpBem = tmpBem.substring(0,255);
-                }
-                analyse.setBemerkungen(tmpBem);
-                break;
+                case 0:
+                    DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+                    try {
+                        Date tmpDate = format.parse((String) newValue);
+                        analyse.setDatum(tmpDate);
+                    } catch (ParseException e) {
+                        hauptModul.getFrame().changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
+                    }
+                    break;
+                case 1:
+                    String tmpInst = (String)newValue;
+                    // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+                    if (tmpInst.length() > 50) {
+                        tmpInst = tmpInst.substring(0,50);
+                    }
+                    analyse.setInstitut(tmpInst);
+                    break;
+                case 2:
+                    String tmpCsb = (String)newValue;
+                    // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+                    if (tmpCsb.length() > 50) {
+                        tmpCsb = tmpCsb.substring(0,50);
+                    }
+                    analyse.setCsbWert(tmpCsb);
+                    break;
+                case 3:
+                    String tmpPh = (String)newValue;
+                    // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+                    if (tmpPh.length() > 50) {
+                        tmpPh = tmpPh.substring(0,50);
+                    }
+                    analyse.setPhWert(tmpPh);
+                    break;
+                case 4:
+                    String tmpKw = (String)newValue;
+                    // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+                    if (tmpKw.length() > 50) {
+                        tmpKw = tmpKw.substring(0,50);
+                    }
+                    analyse.setKwWert(tmpKw);
+                    break;
+                case 5:
+                    String tmpZn = (String)newValue;
+                    // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+                    if (tmpZn.length() > 50) {
+                        tmpZn = tmpZn.substring(0,50);
+                    }
+                    analyse.setZinkWert(tmpZn);
+                    break;
+                case 6:
+                    String tmpBSB = (String)newValue;
+                    // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+                    if (tmpBSB.length() > 50) {
+                        tmpBSB = tmpBSB.substring(0,50);
+                    }
+                    analyse.setBsb5Wert(tmpBSB);
+                    break;
+                case 7:
+                    String tmpBik = (String)newValue;
+                    // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+                    if (tmpBik.length() > 50) {
+                        tmpBik = tmpBik.substring(0,50);
+                    }
+                    analyse.setBikWert(tmpBik);
+                    break;
+                case 8:
+                    String tmpBem = (String) newValue;
+                    // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+                    if (tmpBem.length() > 255) {
+                        tmpBem = tmpBem.substring(0,255);
+                    }
+                    analyse.setBemerkungen(tmpBem);
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
-
         }
 
         /* (non-Javadoc)
          * @see de.bielefeld.umweltamt.aui.utils.EditableListTableModel#newObject()
          */
+        @Override
         public Object newObject() {
             Anh49Analysen ana = new Anh49Analysen();
             ana.setAnh49Fachdaten(fachdaten);
@@ -312,12 +307,12 @@ public class Anh49AnalysenPanel extends JPanel{
         }
     }
 
-
     /**
      * Ein TableModel für eine Tabelle mit Abscheider-Kontrollen.
      * @author Gerhard Genuit
      */
     private class Anh49KontrollenModel extends EditableListTableModel {
+        private static final long serialVersionUID = -1286333922211056915L;
         private Anh49Fachdaten fachdaten;
 
         /**
@@ -337,32 +332,30 @@ public class Anh49AnalysenPanel extends JPanel{
             updateList();
         }
 
+        @Override
         public Object getColumnValue(Object objectAtRow, int columnIndex) {
             Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
 
             Object tmp;
 
             switch (columnIndex) {
-            case 0:
-                tmp = AuikUtils.getStringFromDate(kt.getPruefdatum());
-                break;
-
-            case 1:
-                tmp = kt.getPruefergebnis();
-                break;
-
-            case 2:
-                tmp = AuikUtils.getStringFromDate(kt.getNaechstepruefung());
-                break;
-
-            default:
-                tmp = null;
-            break;
+                case 0:
+                    tmp = AuikUtils.getStringFromDate(kt.getPruefdatum());
+                    break;
+                case 1:
+                    tmp = kt.getPruefergebnis();
+                    break;
+                case 2:
+                    tmp = AuikUtils.getStringFromDate(kt.getNaechstepruefung());
+                    break;
+                default:
+                    tmp = null;
             }
 
             return tmp;
         }
 
+        @Override
         public boolean objectRemoved(Object objectAtRow) {
         	Anh49Kontrollen removedOt = (Anh49Kontrollen) objectAtRow;
             boolean removed;
@@ -376,12 +369,14 @@ public class Anh49AnalysenPanel extends JPanel{
             return removed;
         }
 
+        @Override
         public void updateList() {
             if (fachdaten != null) {
                 setList(Anh49Kontrollen.getKontrollen(fachdaten));
             }
             fireTableDataChanged();
         }
+        @Override
         public void editObject(Object objectAtRow, int columnIndex,
                 Object newValue) {
         	Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
@@ -389,46 +384,50 @@ public class Anh49AnalysenPanel extends JPanel{
             String tmp = (String) newValue;
 
             switch (columnIndex) {
-            case 0:
-                DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
-                try {
-                    Date tmpDate = format.parse(tmp);
-                    kt.setPruefdatum(tmpDate);
-                } catch (ParseException e) {
-                    hauptModul.getFrame().changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
-                }
-                break;
-            case 1:
-                // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
-                if (tmp.length() > 255) {
-                    tmp = tmp.substring(0,255);
-                }
-                kt.setPruefergebnis(tmp);
-                break;
-            case 2:
-                DateFormat formatNp = DateFormat.getDateInstance(DateFormat.SHORT);
-                try {
-                    Date tmpDate = formatNp.parse(tmp);
-                    kt.setNaechstepruefung(tmpDate);
-                } catch (ParseException e) {
-                    hauptModul.getFrame().changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
-                }
-                break;
+                case 0:
+                    DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+                    try {
+                        Date tmpDate = format.parse(tmp);
+                        kt.setPruefdatum(tmpDate);
+                    } catch (ParseException e) {
+                        hauptModul.getFrame().changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
+                    }
+                    break;
+                case 1:
+                    // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+                    if (tmp.length() > 255) {
+                        tmp = tmp.substring(0,255);
+                    }
+                    kt.setPruefergebnis(tmp);
+                    break;
+                case 2:
+                    DateFormat formatNp = DateFormat.getDateInstance(DateFormat.SHORT);
+                    try {
+                        Date tmpDate = formatNp.parse(tmp);
+                        kt.setNaechstepruefung(tmpDate);
+                    } catch (ParseException e) {
+                        hauptModul.getFrame().changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
+                    }
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
         }
+
+        @Override
         public Object newObject() {
             Anh49Kontrollen kt = new Anh49Kontrollen();
             kt.setAnh49Fachdaten(fachdaten);
             kt.setPruefdatum(new Date());
             return kt;
         }
+
         public Anh49Kontrollen getRow(int rowIndex) {
             return (Anh49Kontrollen) getObjectAtRow(rowIndex);
         }
     }
+
     private String name;
 
     private BasisObjektBearbeiten hauptModul;
@@ -453,7 +452,7 @@ public class Anh49AnalysenPanel extends JPanel{
 
         JScrollPane analysenScroller = new JScrollPane(getAnalysenTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollPane kontrollenScroller = new JScrollPane(getKontrollenTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
+
         JSplitPane tabellenSplit = Factory.createStrippedSplitPane(JSplitPane.VERTICAL_SPLIT, analysenScroller, kontrollenScroller, 0.5);
 
         FormLayout layout = new FormLayout(
@@ -479,6 +478,9 @@ public class Anh49AnalysenPanel extends JPanel{
             KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false);
             analysenTabelle.getInputMap().put(deleteKeyStroke, "DEL");
             Action anaRemoveAction = new AbstractAction() {
+                private static final long serialVersionUID = 4468129060263777129L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = analysenTabelle.getSelectedRow();
                     if (row != -1 && analysenTabelle.getEditingRow() == -1) {
@@ -490,14 +492,13 @@ public class Anh49AnalysenPanel extends JPanel{
                             		+ " wurde gelöscht!");
                         }
                         else {
-                            log.debug("Löschen von " + analyse.getAnalysenid() 
+                            log.debug("Löschen von " + analyse.getAnalysenid()
                             		+ " wurde abgebrochen!");
                         }
                     }
                 }
             };
             analysenTabelle.getActionMap().put("DEL", anaRemoveAction);
-
 
             // Die Größen der Spalten werden angepasst
             TableColumn column = null;
@@ -506,16 +507,13 @@ public class Anh49AnalysenPanel extends JPanel{
                 if (i == 0) {
                     column.setMaxWidth(100);
                     column.setPreferredWidth(75);
-                }
-                else if (i == 1) {
+                } else if (i == 1) {
                     column.setMaxWidth(250);
                     column.setPreferredWidth(150);
-                }
-                else if (i == 8) {
+                } else if (i == 8) {
                     column.setMaxWidth(400);
                     column.setPreferredWidth(300);
-                }
-                else  {
+                } else {
                     column.setMaxWidth(80);
                     column.setPreferredWidth(50);
                 }
@@ -536,6 +534,9 @@ public class Anh49AnalysenPanel extends JPanel{
             KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false);
             kontrollenTabelle.getInputMap().put(deleteKeyStroke, "DEL");
             Action konRemoveAction = new AbstractAction() {
+                private static final long serialVersionUID = -5878075809427207699L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = kontrollenTabelle.getSelectedRow();
                     if (row != -1 && kontrollenTabelle.getEditingRow() == -1) {
@@ -543,13 +544,13 @@ public class Anh49AnalysenPanel extends JPanel{
 
                         if (hauptModul.getFrame().showQuestion("Soll die Dichtheitsprüfung vom "+ kontrollen.getPruefdatum() +" wirklich gelöscht werden?", "Löschen bestätigen")) {
                         	kontrollenModel.removeRow(row);
-                            log.debug("Dichtheitsprüfung vom " 
-                            		+ kontrollen.getPruefdatum() 
+                            log.debug("Dichtheitsprüfung vom "
+                            		+ kontrollen.getPruefdatum()
                             		+ " wurde gelöscht!");
                         }
                         else {
-                            log.debug("Löschen der Dichtheitsprüfung vom " 
-                            		+ kontrollen.getPruefergebnis() 
+                            log.debug("Löschen der Dichtheitsprüfung vom "
+                            		+ kontrollen.getPruefergebnis()
                             		+ " wurde abgebrochen!");
                         }
                     }
@@ -565,23 +566,20 @@ public class Anh49AnalysenPanel extends JPanel{
                 if (i == 0) {
                     column.setMaxWidth(100);
                     column.setPreferredWidth(75);
-                }
-                else if (i == 1) {
+                } else if (i == 1) {
                     column.setMaxWidth(980);
                     column.setPreferredWidth(780);
-                }
-                else if (i == 2) {
+                } else if (i == 2) {
                     column.setMaxWidth(100);
                     column.setPreferredWidth(75);
                 }
-
             }
         }
         return kontrollenTabelle;
     }
 
     public void speichernAnalyse() {
-        List anaListe = analysenModel.getList();
+        List<?> anaListe = analysenModel.getList();
         for (int i = 0; i < anaListe.size(); i++) {
             Anh49Analysen analyse = (Anh49Analysen) anaListe.get(i);
             Anh49Analysen.saveOrUpdateAnalyse(analyse);
@@ -590,7 +588,7 @@ public class Anh49AnalysenPanel extends JPanel{
     }
 
     public void speichernKontrollen() {
-        List konListe = kontrollenModel.getList();
+        List<?> konListe = kontrollenModel.getList();
         for (int i = 0; i < konListe.size(); i++) {
             Anh49Kontrollen kontrolle = (Anh49Kontrollen) konListe.get(i);
             Anh49Kontrollen.saveOrUpdateAnalyse(kontrolle);
@@ -625,6 +623,7 @@ public class Anh49AnalysenPanel extends JPanel{
         }
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -634,6 +633,7 @@ public class Anh49AnalysenPanel extends JPanel{
             speichernButton = new JButton("Analysen und Kontrollen speichern");
 
             speichernButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     speichernAnalyse();
                     speichernKontrollen();

@@ -40,7 +40,8 @@ import javax.swing.KeyStroke;
  * @author David Klotz
  */
 public class TabAction extends AbstractAction {
-    private Vector components = new Vector();
+    private static final long serialVersionUID = -6468801224958103704L;
+    private Vector<JComponent> components = new Vector<JComponent>();
     private int currentComp = 0;
     private KeyStroke tabKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0, false);
 
@@ -70,6 +71,7 @@ public class TabAction extends AbstractAction {
      * Springt zur nächsten Komponente in der Liste.
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         // Natürlich können wir nur wechseln, wenn wir mindestens zwei Komponenten haben
         if (components.size() > 1) {
@@ -92,7 +94,7 @@ public class TabAction extends AbstractAction {
             }
 
             // Den Fokus zur jetzt aktuellen Komponente wechseln.
-            JComponent cur = (JComponent) components.get(currentComp);
+            JComponent cur = components.get(currentComp);
             //AUIKataster.debugOutput("Component " + cur + "has Focus!", "TabAction");
             // Textfelder machen das schon von selber richtig
             if (!(src instanceof JTextField)) {

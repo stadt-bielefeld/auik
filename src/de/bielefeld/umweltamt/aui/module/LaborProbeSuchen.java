@@ -87,13 +87,10 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
-
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
@@ -105,7 +102,6 @@ import de.bielefeld.umweltamt.aui.utils.NamedObject;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
-;
 
 /**
  * Ein Modul zum Suchen und Bearbeiten eines Betreibers.
@@ -135,6 +131,7 @@ public class LaborProbeSuchen extends AbstractModul {
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Probenahme suchen";
     }
@@ -143,6 +140,7 @@ public class LaborProbeSuchen extends AbstractModul {
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      * @return "m_probe_suchen"
      */
+    @Override
     public String getIdentifier() {
         return "m_probe_suchen";
     }
@@ -150,6 +148,7 @@ public class LaborProbeSuchen extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "Labor";
     }
@@ -158,6 +157,7 @@ public class LaborProbeSuchen extends AbstractModul {
      * @see de.bielefeld.umweltamt.aui.Modul#getIcon()
      * @see de.bielefeld.umweltamt.aui.AbstractModul#getIcon(String)
      */
+    @Override
     public Icon getIcon() {
         return super.getIcon(iconPath);
     }
@@ -165,6 +165,7 @@ public class LaborProbeSuchen extends AbstractModul {
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
             probeModel = new ProbenahmenModel("Art");
@@ -207,6 +208,7 @@ public class LaborProbeSuchen extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#show()
      */
+    @Override
     public void show() {
         super.show();
 
@@ -255,12 +257,14 @@ public class LaborProbeSuchen extends AbstractModul {
      */
     public void filterProbeListe(final String suche, final String column) {
             SwingWorkerVariant worker = new SwingWorkerVariant(getProbeTabelle()) {
+                @Override
                 protected void doNonUILogic() throws RuntimeException {
                     probeModel.findByProperty(suche, column);
                     lastSuche = suche;
                     lastProperty = column;
                 }
 
+                @Override
                 protected void doUIUpdateLogic() throws RuntimeException {
                     getProbeTabelle().clearSelection();
 
@@ -295,6 +299,9 @@ public class LaborProbeSuchen extends AbstractModul {
     private Action getProbeEditAction() {
         if (probeEditAction == null) {
             probeEditAction = new AbstractAction("Bearbeiten") {
+                private static final long serialVersionUID = 5010453878974070301L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getProbeTabelle().getSelectedRow();
                     log.debug("Enter in Zeile " + row);
@@ -316,6 +323,9 @@ public class LaborProbeSuchen extends AbstractModul {
     private Action getProbeLoeschAction() {
         if (probeLoeschAction == null) {
             probeLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = -5527830509453388049L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getProbeTabelle().getSelectedRow();
                     if (row != -1 && getProbeTabelle().getEditingRow() == -1) {
@@ -376,6 +386,7 @@ public class LaborProbeSuchen extends AbstractModul {
             probeTabelle.setRowSelectionAllowed(true);
 
             probeTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
@@ -387,10 +398,12 @@ public class LaborProbeSuchen extends AbstractModul {
                     }
                 }
 
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showProbePopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showProbePopup(e);
                 }
@@ -421,6 +434,7 @@ public class LaborProbeSuchen extends AbstractModul {
             suchFeld = new JTextField("");
 
             suchFeld.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String suche = getSuchFeld().getText();
                     String spalte = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();
@@ -431,6 +445,7 @@ public class LaborProbeSuchen extends AbstractModul {
             suchFeld.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
 
             suchFeld.addKeyListener(new KeyAdapter() {
+                @Override
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_TAB) {
                         String suche = getSuchFeld().getText();
@@ -448,6 +463,7 @@ public class LaborProbeSuchen extends AbstractModul {
             submitButton = new JButton(AuikUtils.getIcon(16, "key_enter.png"));
             submitButton.setToolTipText("Suche starten");
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String suche = getSuchFeld().getText();
                     String spalte = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();

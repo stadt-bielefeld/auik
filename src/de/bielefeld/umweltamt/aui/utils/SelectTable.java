@@ -53,6 +53,8 @@ import javax.swing.text.JTextComponent;
  * @author David Klotz
  */
 public class SelectTable extends JTable {
+    private static final long serialVersionUID = 138172835260226476L;
+
     public SelectTable() {
         this(null);
     }
@@ -70,6 +72,7 @@ public class SelectTable extends JTable {
         this.setSurrendersFocusOnKeystroke(true);
     }
 
+    @Override
     public Component prepareEditor(
     TableCellEditor editor, int row, int column)
     {

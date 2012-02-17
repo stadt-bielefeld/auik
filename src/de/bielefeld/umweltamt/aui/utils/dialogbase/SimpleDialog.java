@@ -71,7 +71,9 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
  * @author David Klotz
  */
 public abstract class SimpleDialog extends JDialog {
+    private static final long serialVersionUID = 3545077484554473729L;
     private class SimpleDialogListener extends WindowAdapter {
+        @Override
         public void windowClosing(WindowEvent e) {
             close();
         }

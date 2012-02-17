@@ -32,6 +32,7 @@ package de.bielefeld.umweltamt.aui.utils.tablemodelbase;
  * @author David Klotz
  */
 public abstract class EditableListTableModel extends ListTableModel {
+    private static final long serialVersionUID = 5771782454750103490L;
     private boolean hasChanged;
 
     public EditableListTableModel(String[] columns, boolean updateAtInit) {
@@ -50,6 +51,7 @@ public abstract class EditableListTableModel extends ListTableModel {
      * @return Das Objekt in der Zelle (rowIndex, columnIndex) der Liste
      * oder <code>null</code>, falls es die Zeile oder Spalte nicht gibt
      */
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object value = null;
         if (getList() != null && rowIndex < getList().size()) {
@@ -67,6 +69,7 @@ public abstract class EditableListTableModel extends ListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt in der Zeile rowIndex oder <code>null</code>, falls die Zeile nicht existiert
      */
+    @Override
     public Object getObjectAtRow(int rowIndex) {
         if (rowExists(rowIndex)) {
             return super.getObjectAtRow(rowIndex);
@@ -81,6 +84,7 @@ public abstract class EditableListTableModel extends ListTableModel {
      * einer neuen Zeile zur Verfügung steht.
      * @return Die Anzahlt der Zeilen + 1
      */
+    @Override
     public int getRowCount() {
         return super.getRowCount() + 1;
     }
@@ -88,6 +92,7 @@ public abstract class EditableListTableModel extends ListTableModel {
     /**
      * @return <code>true</code>
      */
+    @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return true;
     }
@@ -97,6 +102,7 @@ public abstract class EditableListTableModel extends ListTableModel {
      * weiter, bzw. erzeugt zu erst ein neues Objekt (wenn die Leerzeile
      * bearbeitet wird).
      */
+    @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         if (rowExists(rowIndex)) {
             //log.debug("%%% EDIT LISTE: col: " + columnIndex + ", newValue: " + aValue);
@@ -128,6 +134,7 @@ public abstract class EditableListTableModel extends ListTableModel {
      * <code>false</code>, falls dabei ein Fehler auftrat oder es aus anderen Gründen
      * nicht möglich war
      */
+    @Override
     public boolean removeRow(int rowIndex) {
         boolean tmp = super.removeRow(rowIndex);
 

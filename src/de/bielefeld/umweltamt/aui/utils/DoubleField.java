@@ -35,6 +35,8 @@ import javax.swing.text.NumberFormatter;
  * @author David Klotz
  */
 public class DoubleField extends BasicFormattedField {
+    private static final long serialVersionUID = 5923571677035538028L;
+
     /**
      * Erzeugt ein neues formatiertes Textfeld zum Bearbeiten von Doubles.
      * Zum Abfragen des aktuellen Wertes getDoubleValue() benutzen.

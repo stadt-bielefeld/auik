@@ -45,13 +45,10 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
@@ -70,7 +67,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class GenehmigungPanel extends JPanel {
-	/** Logging */
+    private static final long serialVersionUID = -1132786436313164359L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
@@ -359,6 +358,7 @@ public class GenehmigungPanel extends JPanel {
             saveGenehmigungButton = new JButton("Speichern");
 
             saveGenehmigungButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveGenehmigungDaten()) {
@@ -379,6 +379,7 @@ public class GenehmigungPanel extends JPanel {
         return saveGenehmigungButton;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -489,6 +490,7 @@ public class GenehmigungPanel extends JPanel {
 
             objektverknuepfungTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
                         public void mouseClicked(java.awt.event.MouseEvent e) {
                             if ((e.getClickCount() == 2)
                                     && (e.getButton() == 1)) {
@@ -528,10 +530,12 @@ public class GenehmigungPanel extends JPanel {
                             }
                         }
 
+                        @Override
                         public void mousePressed(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
 
+                        @Override
                         public void mouseReleased(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
@@ -571,6 +575,9 @@ public class GenehmigungPanel extends JPanel {
     private Action getVerknuepfungLoeschAction() {
         if (verknuepfungLoeschAction == null) {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = -3396930685747369346L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
@@ -614,6 +621,7 @@ public class GenehmigungPanel extends JPanel {
             selectObjektButton = new JButton("Objekt auswählen");
 
             selectObjektButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(hauptModul
                             .getFrame(), fachdaten.getBasisObjekt(),

@@ -33,12 +33,14 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author David Klotz
  */
 public class DoubleRenderer extends DefaultTableCellRenderer {
+    private static final long serialVersionUID = 5376104341629890780L;
     private NumberFormat formatter;
 
     public DoubleRenderer() {
         super();
     }
 
+    @Override
     public void setValue(Object value) {
         setText((value == null) ? "" : formatObject(value));
     }

@@ -113,18 +113,17 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 
-
 import org.eclipse.birt.report.engine.api.EngineException;
-import de.bielefeld.umweltamt.aui.ReportManager;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.uif_lite.component.Factory;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
@@ -183,6 +182,7 @@ public class BasisStandortSuchen extends AbstractModul {
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Standort suchen";
     }
@@ -191,6 +191,7 @@ public class BasisStandortSuchen extends AbstractModul {
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      * @return "m_standort_suchen"
      */
+    @Override
     public String getIdentifier() {
         return "m_standort_suchen";
     }
@@ -198,6 +199,7 @@ public class BasisStandortSuchen extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "Betriebe";
     }
@@ -205,6 +207,7 @@ public class BasisStandortSuchen extends AbstractModul {
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getIcon()
      */
+    @Override
     public Icon getIcon() {
         return super.getIcon("filefind32.png");
     }
@@ -212,6 +215,7 @@ public class BasisStandortSuchen extends AbstractModul {
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
             standortModel = new BasisStandortModel();
@@ -296,6 +300,7 @@ public class BasisStandortSuchen extends AbstractModul {
 
 
 
+    @Override
     public void show() {
         super.show();
 
@@ -313,6 +318,7 @@ public class BasisStandortSuchen extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#hide()
      */
+    @Override
     public void hide() {
         super.hide();
         if (suchTimer != null) {
@@ -331,16 +337,18 @@ public class BasisStandortSuchen extends AbstractModul {
 
     public void updateStandortListe() {
         SwingWorkerVariant worker = new SwingWorkerVariant(getStrassenFeld()) {
+            @Override
             protected void doNonUILogic() {
                 standortModel.updateList();
             }
 
+            @Override
             protected void doUIUpdateLogic() {
                 standortModel.fireTableDataChanged();
 
                 if (SettingsManager.getInstance().getStandort() != null){
                 	filterStandortListe(getStandortTabelle());
-                }                
+                }
                 else if (lastStandort != null) {
                     // Wenn der Standort noch in der Liste ist, wird er ausgewählt.
                     int row = standortModel.getList().indexOf(lastStandort);
@@ -409,10 +417,12 @@ public class BasisStandortSuchen extends AbstractModul {
 
         // ... siehe show()
         SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle()) {
+            @Override
             protected void doNonUILogic() {
                 objektModel.searchByStandort(standort,abteilung, nichtartid);
             }
 
+            @Override
             protected void doUIUpdateLogic() {
                 objektModel.fireTableDataChanged();
             }
@@ -428,10 +438,12 @@ public class BasisStandortSuchen extends AbstractModul {
 
         // ... siehe show()
         SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle()) {
+            @Override
             protected void doNonUILogic() {
                 objektModel.searchByStandort(standort);
             }
 
+            @Override
             protected void doUIUpdateLogic() {
                 objektModel.fireTableDataChanged();
             }
@@ -447,10 +459,12 @@ public class BasisStandortSuchen extends AbstractModul {
 
         // ... siehe show()
         SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle()) {
+            @Override
             protected void doNonUILogic() {
                 objektModel.searchByStandort(standort, istartid);
             }
 
+            @Override
             protected void doUIUpdateLogic() {
                 objektModel.fireTableDataChanged();
             }
@@ -473,7 +487,8 @@ public class BasisStandortSuchen extends AbstractModul {
 
         SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
 
-			protected void doNonUILogic() {
+			@Override
+            protected void doNonUILogic() {
 				if (SettingsManager.getInstance().getStandort() == null) {
 					standortModel.filterList(getStrassenFeld().getText(),
 							fhausnr);
@@ -486,6 +501,7 @@ public class BasisStandortSuchen extends AbstractModul {
 				}
 			}
 
+            @Override
             protected void doUIUpdateLogic() {
                 getStandortTabelle().clearSelection();
 
@@ -538,6 +554,7 @@ public class BasisStandortSuchen extends AbstractModul {
     private Timer getSuchTimer() {
         if (suchTimer == null) {
             suchTimer = new Timer(900, new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
 
                     // Was diese ganze "SwingWorkerVariant"-Geschichte
@@ -547,6 +564,7 @@ public class BasisStandortSuchen extends AbstractModul {
                         protected String oldText = "";
                         private String newText = "";
 
+                        @Override
                         protected void doNonUILogic() {
                             oldText = getStrassenFeld().getText();
                             if (oldText.equals("")) {
@@ -563,6 +581,7 @@ public class BasisStandortSuchen extends AbstractModul {
                             }
                         }
 
+                        @Override
                         protected void doUIUpdateLogic() {
                             getStrassenFeld().setText(newText);
                             getStrassenFeld().setSelectionStart(oldText.length());
@@ -584,6 +603,7 @@ public class BasisStandortSuchen extends AbstractModul {
             strassenFeld.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
 
             strassenFeld.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     getSuchTimer().stop();
                     filterStandortListe(getStandortTabelle());
@@ -591,6 +611,7 @@ public class BasisStandortSuchen extends AbstractModul {
             });
 
             strassenFeld.addKeyListener(new KeyAdapter() {
+                @Override
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_TAB) {
                         getSuchTimer().stop();
@@ -598,6 +619,7 @@ public class BasisStandortSuchen extends AbstractModul {
                     }
                 }
 
+                @Override
                 public void keyTyped(KeyEvent e) {
                     if (Character.isLetterOrDigit(e.getKeyChar())) {
                         if (getSuchTimer().isRunning()) {
@@ -616,6 +638,7 @@ public class BasisStandortSuchen extends AbstractModul {
             hausnrFeld = new BasicEntryField();
 
             hausnrFeld.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     filterStandortListe(getStandortTabelle());
                 }
@@ -629,6 +652,7 @@ public class BasisStandortSuchen extends AbstractModul {
             submitButton = new JButton(AuikUtils.getIcon(16, "key_enter.png"));
             submitButton.setToolTipText("Suche starten");
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     getSuchTimer().stop();
                     filterStandortListe(getStandortTabelle());
@@ -644,6 +668,7 @@ public class BasisStandortSuchen extends AbstractModul {
             dreiButton = new JButton("360.33");
             dreiButton.setToolTipText("nur 33er Objekt");
             dreiButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ListSelectionModel lsm = getStandortTabelle()
                             .getSelectionModel();
@@ -666,6 +691,7 @@ public class BasisStandortSuchen extends AbstractModul {
             vierButton = new JButton("360.34");
             vierButton.setToolTipText("nur 34er Objekte");
             vierButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ListSelectionModel lsm = getStandortTabelle()
                             .getSelectionModel();
@@ -688,6 +714,7 @@ public class BasisStandortSuchen extends AbstractModul {
             probepktButton = new JButton("Probepunkte");
             probepktButton.setToolTipText("nur die Probenahmepunkte anzeigen");
             probepktButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ListSelectionModel lsm = getStandortTabelle()
                             .getSelectionModel();
@@ -712,6 +739,7 @@ public class BasisStandortSuchen extends AbstractModul {
         reportStandortListeButton.setToolTipText("Liste der VAwS-Objekte am Standort");
         reportStandortListeButton.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     showReportListe();
@@ -734,6 +762,7 @@ public class BasisStandortSuchen extends AbstractModul {
             // Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
             ListSelectionModel rowSM = standortTabelle.getSelectionModel();
             rowSM.addListSelectionListener(new ListSelectionListener() {
+                @Override
                 public void valueChanged(ListSelectionEvent e) {
                     // überzählige Events ignorieren
                     if (e.getValueIsAdjusting()) {
@@ -771,6 +800,7 @@ public class BasisStandortSuchen extends AbstractModul {
             standortTabelle.setRowSelectionAllowed(true);
 
             standortTabelle.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseClicked(MouseEvent e) {
                     Point origin = e.getPoint();
                     int row = standortTabelle.rowAtPoint(origin);
@@ -783,10 +813,12 @@ public class BasisStandortSuchen extends AbstractModul {
                     }
                 }
 
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showStandortPopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showStandortPopup(e);
                 }
@@ -802,6 +834,9 @@ public class BasisStandortSuchen extends AbstractModul {
     private Action getStandortEditAction() {
         if (standortEditAction == null) {
             standortEditAction = new AbstractAction("Bearbeiten") {
+                private static final long serialVersionUID = 535733777827052581L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = standortTabelle.getSelectedRow();
 
@@ -822,6 +857,9 @@ public class BasisStandortSuchen extends AbstractModul {
     private Action getObjektNeuAction() {
         if (objektNeuAction == null) {
             objektNeuAction = new AbstractAction("Neues Objekt") {
+                private static final long serialVersionUID = 7043267119780363332L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = standortTabelle.getSelectedRow();
 
@@ -863,6 +901,9 @@ public class BasisStandortSuchen extends AbstractModul {
     private Action getObjektEditAction() {
         if (objektEditAction == null) {
             objektEditAction = new AbstractAction("Bearbeiten") {
+                private static final long serialVersionUID = -3064610048336306709L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = objektTabelle.getSelectedRow();
                     BasisObjekt obj = objektModel.getRow(row);
@@ -887,6 +928,9 @@ public class BasisStandortSuchen extends AbstractModul {
     private Action getObjektLoeschAction() {
         if (objektLoeschAction == null) {
             objektLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 2332382771711375896L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektTabelle().getSelectedRow();
                     if (row != -1 && getObjektTabelle().getEditingRow() == -1) {
@@ -923,6 +967,7 @@ public class BasisStandortSuchen extends AbstractModul {
             this.is = is;
         }
 
+        @Override
         public void run() {
             try {
                 InputStreamReader isr = new InputStreamReader(is);
@@ -942,7 +987,9 @@ public class BasisStandortSuchen extends AbstractModul {
 
             gisAction = new AbstractAction("GIS öffnen") {
 
+                private static final long serialVersionUID = 9117497990586218808L;
 
+                @Override
                 public void actionPerformed(ActionEvent e) {
 
                     String prog = manager.getSettingsManager().getSetting("auik.gis.programmpath");
@@ -1006,6 +1053,7 @@ public class BasisStandortSuchen extends AbstractModul {
             column.setPreferredWidth(column.getMaxWidth()-10);
 
             objektTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
@@ -1022,10 +1070,12 @@ public class BasisStandortSuchen extends AbstractModul {
                     }
                 }
 
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showObjektPopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showObjektPopup(e);
                 }

@@ -67,12 +67,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -109,44 +107,46 @@ public class ChartDataSets {
      * @return Eine Analysepositionen-Datenreihe
      */
     // Bei der Auswertung der SielhautBearbeiten werden statt der Messwerte, die Normwerte ausgegeben
-    public static TimeSeries createAnalysePositionenSeries(List list, String name, String einheit) {
+    public static TimeSeries createAnalysePositionenSeries(List<AtlAnalyseposition> list, String name, String einheit) {
         TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
         log.debug("Erzeuge TimeSeries: " + name);
 
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i) instanceof AtlAnalyseposition) {
-                    AtlAnalyseposition pos = (AtlAnalyseposition) list.get(i);
-
-                    APosDataItem item = new APosDataItem(pos);
-
-                    addPosToMinuteSeries(result, item);
-                }
+//                if (list.get(i) instanceof AtlAnalyseposition) {
+//                    AtlAnalyseposition pos = (AtlAnalyseposition) list.get(i);
+//
+//                    APosDataItem item = new APosDataItem(pos);
+//
+//                    addPosToMinuteSeries(result, item);
+//                }
+                addPosToMinuteSeries(result, new APosDataItem(list.get(i)));
             }
         }
 
         return result;
     }
 
-    public static TimeSeries createAnalysePositionenSielhautSeries(List list, String name, String einheit) {
+    public static TimeSeries createAnalysePositionenSielhautSeries(List<AtlAnalyseposition> list, String name, String einheit) {
         TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
         log.debug("Erzeuge TimeSeries: " + name);
 
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i) instanceof AtlAnalyseposition) {
-                    AtlAnalyseposition pos = (AtlAnalyseposition) list.get(i);
-
-                    APosDataItem item = new APosDataItem("Normwert", pos);
-
-                    addPosToMinuteSielhautSeries(result, item);
-                }
+//                if (list.get(i) instanceof AtlAnalyseposition) {
+//                    AtlAnalyseposition pos = (AtlAnalyseposition) list.get(i);
+//
+//                    APosDataItem item = new APosDataItem("Normwert", pos);
+//
+//                    addPosToMinuteSielhautSeries(result, item);
+//                }
+                addPosToMinuteSielhautSeries(
+                    result, new APosDataItem("Normwert", list.get(i)));
             }
         }
 
         return result;
     }
-
 
     /**
      * Fügt den Wert einer AtlAnalyseposition zu einer TimeSeries an
@@ -173,7 +173,6 @@ public class ChartDataSets {
         }
     }
 
-
     private static void addPosToMinuteSielhautSeries(TimeSeries series, APosDataItem item/*Minute minute, AtlAnalyseposition pos*/) {
         if (series.getDataItem(item.getPeriod()) == null) {
             //AUIKataster.debugOutput("  |- Füge " + pos + " bei " + minute + " hinzu.", "ChartDataSets.createAnalysepositionenSeries");
@@ -189,7 +188,6 @@ public class ChartDataSets {
             addPosToMinuteSielhautSeries(series, item2);
         }
     }
-
 
     /*
      * Private, da nie eine Instanz dieser Klasse erzeugt werden soll.

@@ -99,9 +99,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -137,7 +137,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-
 import org.eclipse.birt.report.engine.api.EngineException;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -154,7 +153,6 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
@@ -266,6 +264,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 
 
+    @Override
     public void show() {
         super.show();
 
@@ -508,7 +507,8 @@ public class SielhautBearbeiten extends AbstractModul {
                     AtlProbenahmen probe = new AtlProbenahmen();
                     probe.setKennummer(kennNummer);
                     probe.setDatumDerEntnahme((Timestamp) datum);
-                    probe.setAtlAnalysepositionen(new HashSet());
+                    probe.setAtlAnalysepositionen(
+                        new HashSet<AtlAnalyseposition>());
                     probe.setAtlProbepkt(sprobePkt);
                     probe.setArt("Sielhaut");
 
@@ -589,11 +589,13 @@ public class SielhautBearbeiten extends AbstractModul {
 
     private void updateProbeListe() {
         SwingWorkerVariant worker = new SwingWorkerVariant(getPrTabelle()) {
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 probeModel.updateList();
                 log.debug("Liste geupdatet!");
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 probeModel.fireTableDataChanged();
                 log.debug("Tabelle geupdatet!");
@@ -605,6 +607,9 @@ public class SielhautBearbeiten extends AbstractModul {
     private Action getProbeEditAction() {
         if (probeEditAction == null) {
             probeEditAction = new AbstractAction("Bearbeiten") {
+                private static final long serialVersionUID = -4363530282004004696L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getPrTabelle().getSelectedRow();
                     // Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
@@ -624,6 +629,9 @@ public class SielhautBearbeiten extends AbstractModul {
     private Action getProbeSaveAction() {
         if (probeEditAction == null) {
             probeEditAction = new AbstractAction("Speichern") {
+                private static final long serialVersionUID = 6708317220554908069L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     saveTabelle();
                 }
@@ -638,6 +646,9 @@ public class SielhautBearbeiten extends AbstractModul {
     private Action getProbeLoeschAction() {
         if (probeLoeschAction == null) {
             probeLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = -3208582919995701684L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getPrTabelle().getSelectedRow();
                     if (row != -1 && getPrTabelle().getEditingRow() == -1) {
@@ -684,6 +695,7 @@ public class SielhautBearbeiten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Sielhautpunkte";
     }
@@ -691,6 +703,7 @@ public class SielhautBearbeiten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      */
+    @Override
     public String getIdentifier() {
         return "m_sielhaut1";
     }
@@ -698,6 +711,7 @@ public class SielhautBearbeiten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "Sielhaut";
     }
@@ -709,6 +723,7 @@ public class SielhautBearbeiten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
             probeModel = new SielhautProbeModel();
@@ -773,6 +788,7 @@ public class SielhautBearbeiten extends AbstractModul {
             punktChooseButton.setToolTipText("Messpunkt auswählen");
 
             punktChooseButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     SielhautChooser chooser = new SielhautChooser(frame);
                     chooser.setVisible(true);
@@ -795,9 +811,9 @@ public class SielhautBearbeiten extends AbstractModul {
             punktEditButton.setEnabled(false);
 
             punktEditButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
-                    AtlProbepkt probepkt = new AtlProbepkt();
-                    AtlProbepkt sielprobepkt  = probepkt.getSielhautProbepunkt(spunkt);
+                    AtlProbepkt sielprobepkt = AtlProbepkt.getSielhautProbepunkt(spunkt);
                     manager.getSettingsManager().setSetting("auik.imc.edit_object", sielprobepkt.getObjektid().intValue(), false);
                     manager.switchModul("m_objekt_bearbeiten");
                 }
@@ -814,6 +830,7 @@ public class SielhautBearbeiten extends AbstractModul {
             punktPrintButton.setEnabled(false);
 
             punktPrintButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
                         showReport();
@@ -833,6 +850,7 @@ public class SielhautBearbeiten extends AbstractModul {
             //punktNeuButton.setHorizontalAlignment(JButton.CENTER);
             punktNeuButton.setToolTipText("Neuer Messpunkt");
             punktNeuButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     neuerSielhautPunkt();
                 }
@@ -848,6 +866,7 @@ public class SielhautBearbeiten extends AbstractModul {
             punktSaveButton.setToolTipText("Speichern");
             punktSaveButton.setEnabled(false);
             punktSaveButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (spunkt != null) {
                         saveSielhautPunkt();
@@ -884,26 +903,26 @@ public class SielhautBearbeiten extends AbstractModul {
             CellConstraints cc = new CellConstraints();
             JScrollPane bemerkungsScroller = new JScrollPane(getSpBemerkungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-            builder.addLabel("<html><b>Name:</b></html>",     cc.xy(  1, 1 ));
-            builder.add(getSpNamenFeld(),                    cc.xy(  3, 1 ));
-            builder.addLabel("Entwässerungsgebiet:",        cc.xy(  1, 3 ));
-            builder.add(getSpEntgebFeld(),                    cc.xy(  3, 3 ));
-            builder.addLabel("Lage:",                        cc.xy(  1, 5 ));
-            builder.add(getSpLageFeld(),                    cc.xy(  3, 5 ));
-            builder.addLabel("Bemerkungen:",                cc.xy(  1, 7 ));
-            builder.add(bemerkungsScroller,                    cc.xyw(  3, 7, 5 ));
-            builder.addLabel("Rechtswert:",                    cc.xy(  1, 9 ));
-            builder.add(getSpRechtsWertFeld(),                cc.xy(  3, 9 ));
-            builder.add(getAusAblageButton(),                cc.xywh(  5, 9, 1, 3 ));
-            builder.add(getSpSielhautCheck(),                cc.xy(  7, 9 ));
-            builder.addLabel("Hochwert:",                    cc.xy(  1, 11 ));
-            builder.add(getSpHochWertFeld(),                cc.xy(  3, 11 ));
-            builder.add(getSpFirmenprobeCheck(),            cc.xy(  7, 11 ));
-            builder.addLabel("Schacht-Nr.:",                cc.xy(  1, 13 ));
-            builder.add(getSpHaltungsnrFeld(),                cc.xyw(  3, 13, 3 ));
-            builder.add(getSpNachprobeCheck(),                cc.xy(  7, 13 ));
-            builder.addLabel("Alarmplan-Nr.:",                cc.xy(  1, 15 ));
-            builder.add(getSpAlarmplannrFeld(),                cc.xyw(  3, 15, 3 ));
+            builder.addLabel("<html><b>Name:</b></html>", cc.xy(  1, 1 ));
+            builder.add(getSpNamenFeld(),                 cc.xy(  3, 1 ));
+            builder.addLabel("Entwässerungsgebiet:",      cc.xy(  1, 3 ));
+            builder.add(getSpEntgebFeld(),                cc.xy(  3, 3 ));
+            builder.addLabel("Lage:",                     cc.xy(  1, 5 ));
+            builder.add(getSpLageFeld(),                  cc.xy(  3, 5 ));
+            builder.addLabel("Bemerkungen:",              cc.xy(  1, 7 ));
+            builder.add(bemerkungsScroller,               cc.xyw(  3, 7, 5 ));
+            builder.addLabel("Rechtswert:",               cc.xy(  1, 9 ));
+            builder.add(getSpRechtsWertFeld(),            cc.xy(  3, 9 ));
+            builder.add(getAusAblageButton(),             cc.xywh(  5, 9, 1, 3 ));
+            builder.add(getSpSielhautCheck(),             cc.xy(  7, 9 ));
+            builder.addLabel("Hochwert:",                 cc.xy(  1, 11 ));
+            builder.add(getSpHochWertFeld(),              cc.xy(  3, 11 ));
+            builder.add(getSpFirmenprobeCheck(),          cc.xy(  7, 11 ));
+            builder.addLabel("Schacht-Nr.:",              cc.xy(  1, 13 ));
+            builder.add(getSpHaltungsnrFeld(),            cc.xyw(  3, 13, 3 ));
+            builder.add(getSpNachprobeCheck(),            cc.xy(  7, 13 ));
+            builder.addLabel("Alarmplan-Nr.:",            cc.xy(  1, 15 ));
+            builder.add(getSpAlarmplannrFeld(),           cc.xyw(  3, 15, 3 ));
 
 
             //builder.getPanel().setBackground(Color.WHITE);
@@ -991,11 +1010,8 @@ public class SielhautBearbeiten extends AbstractModul {
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             builder.setDefaultDialogBorder();
 
-
-
             builder.appendRow("f:65dlu:g");
             builder.append(new JScrollPane(getPrTabelle()), 11);
-
 
             builder.appendSeparator("Neue Probenahme");
             builder.append(getNeuProbPanel());
@@ -1012,15 +1028,19 @@ public class SielhautBearbeiten extends AbstractModul {
             JPanel probenPanel = builder.getPanel();
             probenRtPanel = new RetractablePanel(
                     DefaultComponentFactory.getInstance()
-                    .createSeparator("Probenahmen"),
+                        .createSeparator("Probenahmen"),
                     probenPanel, false, null) {
+                private static final long serialVersionUID = -6231371376662899465L;
 
+                @Override
                 public void opening() {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getSpNamenFeld()) {
+                        @Override
                         protected void doNonUILogic() throws RuntimeException {
                             probeModel.updateList();
                         }
 
+                        @Override
                         protected void doUIUpdateLogic() throws RuntimeException {
                             probeModel.fireTableDataChanged();
 
@@ -1076,22 +1096,19 @@ public class SielhautBearbeiten extends AbstractModul {
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             builder.setDefaultDialogBorder();
 
-
-
-
-            builder.add(new JLabel("Von:"),        cc.xy(  1, 1),
-                    getVonDateChooser(),        cc2.xy( 3, 1));
-            builder.add(new JLabel("Bis:"),        cc.xy(  5, 1),
-                    getBisDateChooser(),        cc2.xy( 7, 1));
+            builder.add(new JLabel("Von:"),    cc.xy(  1, 1),
+                    getVonDateChooser(),       cc2.xy( 3, 1));
+            builder.add(new JLabel("Bis:"),    cc.xy(  5, 1),
+                    getBisDateChooser(),       cc2.xy( 7, 1));
 
             builder.add(getBleiCheck(),        cc.xy( 11, 1));
-            builder.add(getCadmiumCheck(),        cc.xy( 13, 1));
-            builder.add(getChromCheck(),        cc.xy( 15, 1));
-            builder.add(getKupferCheck(),            cc.xy( 17, 1));
-            builder.add(getNickelCheck(),            cc.xy( 19, 1));
-            builder.add(getQuecksilberCheck(),        cc.xy( 21, 1));
-            builder.add(getZinkCheck(),  cc.xy( 23, 1));
-            builder.add(getSubmitButton(),      cc.xy( 27, 1));
+            builder.add(getCadmiumCheck(),     cc.xy( 13, 1));
+            builder.add(getChromCheck(),       cc.xy( 15, 1));
+            builder.add(getKupferCheck(),      cc.xy( 17, 1));
+            builder.add(getNickelCheck(),      cc.xy( 19, 1));
+            builder.add(getQuecksilberCheck(), cc.xy( 21, 1));
+            builder.add(getZinkCheck(),        cc.xy( 23, 1));
+            builder.add(getSubmitButton(),     cc.xy( 27, 1));
 
                 auswertungPanel = builder.getPanel();
 
@@ -1114,6 +1131,7 @@ public class SielhautBearbeiten extends AbstractModul {
             prTabelle.getActionMap().put(getProbeLoeschAction().getValue(Action.NAME), getProbeLoeschAction());
 
             prTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
@@ -1124,10 +1142,12 @@ public class SielhautBearbeiten extends AbstractModul {
                     }
                 }
 
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showProbePopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showProbePopup(e);
                 }
@@ -1142,11 +1162,9 @@ public class SielhautBearbeiten extends AbstractModul {
             submitButton = new JButton("Abschicken");
 
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
-
-
-                        showResultOneAxis();
-
+                    showResultOneAxis();
                 }
             });
         }
@@ -1156,11 +1174,14 @@ public class SielhautBearbeiten extends AbstractModul {
 
 
     private class AuswertungsDialog extends JDialog {
+        private static final long serialVersionUID = 3892351392140673333L;
+
         /**
          * Ein Listener für die Events des Dialogs.
          * @author David Klotz
          */
         private class DialogListener extends WindowAdapter implements ActionListener {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == abbrechenButton) {
                     doAbbrechen();
@@ -1169,6 +1190,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 }
             }
 
+            @Override
             public void windowClosing(WindowEvent e) {
                 // Wenn der Dialog geschlossen wird, wird das Bearbeiten abgebrochen
                 frame.clearStatus();
@@ -1181,13 +1203,14 @@ public class SielhautBearbeiten extends AbstractModul {
          * @author David Klotz
          */
         private class ExportTableModel extends AbstractTableModel {
+            private static final long serialVersionUID = -2296763811705380082L;
             private TimeSeriesCollection col1, col2;
-            private List dateList;
+            private List<Minute> dateList;
 
             public ExportTableModel(TimeSeriesCollection col1, TimeSeriesCollection col2) {
                 this.col1 = col1;
                 this.col2 = col2;
-                dateList = new ArrayList();
+                dateList = new ArrayList<Minute>();
 
                 initializeData();
             }
@@ -1223,14 +1246,17 @@ public class SielhautBearbeiten extends AbstractModul {
                 Collections.sort(dateList);
             }
 
+            @Override
             public int getColumnCount() {
                 return col1.getSeriesCount() + ((col2 != null) ? col2.getSeriesCount() : 0) + 1;//2;
             }
 
+            @Override
             public int getRowCount() {
                 return dateList.size();// + 1;
             }
 
+            @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 String tmp = "!OOB!";
 
@@ -1242,8 +1268,8 @@ public class SielhautBearbeiten extends AbstractModul {
                 int series2Index = seriesIndex - col1.getSeriesCount();
                 int itemIndex = rowIndex;// - 1;
 
-                Minute min = (Minute) dateList.get(itemIndex);
-             if (columnIndex == 0) {
+                Minute min = dateList.get(itemIndex);
+                if (columnIndex == 0) {
                     Date date = new Date(min.getFirstMillisecond());
                     tmp = AuikUtils.getStringFromDate(date);
                 } else {
@@ -1263,10 +1289,12 @@ public class SielhautBearbeiten extends AbstractModul {
                 return tmp;
             }
 
-            public Class getColumnClass(int columnIndex) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
                 return String.class;
             }
 
+            @Override
             public String getColumnName(int column) {
                 String tmp = "!OOB!";
 
@@ -1296,14 +1324,12 @@ public class SielhautBearbeiten extends AbstractModul {
         private JTabbedPane tabbedPane;
         private ChartPanel chartPanel;
 
-
         private DialogListener listener;
         private String title;
 
         private TimeSeriesCollection leftDataset;
         private TimeSeriesCollection rightDataset;
         private HauptFrame owner;
-
 
         public AuswertungsDialog  (String title, TimeSeriesCollection leftDataset, TimeSeriesCollection rightDataset, HauptFrame owner)  {
             super( owner, title + "-Auswertung", true);
@@ -1366,10 +1392,12 @@ public class SielhautBearbeiten extends AbstractModul {
             exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
             exportTable.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showTabellenPopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showTabellenPopup(e);
                 }
@@ -1403,11 +1431,10 @@ public class SielhautBearbeiten extends AbstractModul {
 
         public void saveTabelle() {
             frame.clearStatus();
-        File exportDatei;
-        String[] csv = new String []{"csv"};
+            File exportDatei;
+            String[] csv = new String []{"csv"};
 
-
-         exportDatei = owner.saveFile(csv);
+            exportDatei = owner.saveFile(csv);
 
 
             if (exportDatei != null) {
@@ -1454,6 +1481,9 @@ public class SielhautBearbeiten extends AbstractModul {
             if (tabellenMenu == null) {
                 tabellenMenu = new JPopupMenu("Tabelle");
                 JMenuItem speichernItem = new JMenuItem(new AbstractAction("Speichern") {
+                    private static final long serialVersionUID = 2096747421254651035L;
+
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         saveTabelle();
                     }
@@ -1498,10 +1528,12 @@ public class SielhautBearbeiten extends AbstractModul {
 
     public void showResultOneAxis() {
         SwingWorkerVariant worker = new SwingWorkerVariant(getSubmitButton()) {
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 dataSet1 = createDataset();
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
 
                 if (dataSet1.getSeriesCount() > 0) {
@@ -1531,54 +1563,43 @@ public class SielhautBearbeiten extends AbstractModul {
         Date bis = getBisDateChooser().getDate();
         DefaultListModel leftModel = (DefaultListModel) getAuswahlList().getModel();
 
-
-
-        if (getBleiCheck().isSelected())
-        {
+        if (getBleiCheck().isSelected()) {
             leftModel.addElement("Blei (Pb)");
         }
-        if (getCadmiumCheck().isSelected())
-        {
+        if (getCadmiumCheck().isSelected()) {
             leftModel.addElement("Cadmium (Cd)");
         }
-        if (getChromCheck().isSelected())
-        {
+        if (getChromCheck().isSelected()) {
             leftModel.addElement("Chrom (Cr)");
         }
-        if (getKupferCheck().isSelected())
-        {
+        if (getKupferCheck().isSelected()) {
             leftModel.addElement("Kupfer (Cu)");
         }
-        if (getNickelCheck().isSelected())
-        {
+        if (getNickelCheck().isSelected()) {
             leftModel.addElement("Nickel (Ni)");
         }
-        if (getQuecksilberCheck().isSelected())
-        {
+        if (getQuecksilberCheck().isSelected()) {
             leftModel.addElement("Quecksilber (Hg)");
         }
-        if (getZinkCheck().isSelected())
-        {
+        if (getZinkCheck().isSelected()) {
             leftModel.addElement("Zink (Zn)");
         }
         paramList = getAuswahlList();
 
+        pkt = sprobePkt.getObjektid();
+        parameterAnzahl = getAuswahlList().getModel().getSize();
 
-              pkt = sprobePkt.getObjektid();
-              parameterAnzahl = getAuswahlList().getModel().getSize();
+        // Wenn keine Check Box angeklickt wurde sollen alle Paramater berücksichtig werden
 
-      // Wenn keine Check Box angeklickt wurde sollen alle Paramater berücksichtig werden
-
-      if (parameterAnzahl == 0)
-      {
-          leftModel.addElement("Blei (Pb)");
-          leftModel.addElement("Cadmium (Cd)");
-          leftModel.addElement("Chrom (Cr)");
-          leftModel.addElement("Kupfer (Cu)");
-          leftModel.addElement("Nickel (Ni)");
-          leftModel.addElement("Quecksilber (Hg)");
-          leftModel.addElement("Zink (Zn)");
-      }
+        if (parameterAnzahl == 0) {
+            leftModel.addElement("Blei (Pb)");
+            leftModel.addElement("Cadmium (Cd)");
+            leftModel.addElement("Chrom (Cr)");
+            leftModel.addElement("Kupfer (Cu)");
+            leftModel.addElement("Nickel (Ni)");
+            leftModel.addElement("Quecksilber (Hg)");
+            leftModel.addElement("Zink (Zn)");
+        }
 
         createSeries(paramList, pkt , von, bis, col);
         leftModel.clear();
@@ -1600,25 +1621,23 @@ public class SielhautBearbeiten extends AbstractModul {
 
 
 
-    private void createSeries( JList paramList, Integer pkt, Date von, Date bis,TimeSeriesCollection col)
-    {
+    private void createSeries( JList paramList, Integer pkt, Date von, Date bis,
+        TimeSeriesCollection col) {
         String einheit;
 
         if (pkt != null) {
 
             for (int i = 0; i < paramList.getModel().getSize(); i++) {
 
-
                 String p =(String) paramList.getModel().getElementAt(i);
 
 
-                AtlAnalyseposition position;
-                position = AtlAnalyseposition.getAnalysepositionObjekt(pkt);
+//                AtlAnalyseposition position;
+//                position = AtlAnalyseposition.getAnalysepositionObjekt(pkt);
                 einheit =  "Verhältnis zum Hintergrundwert";
 
 
-                List list = AtlAnalyseposition.getSielhautpos(p,
-                        pkt, von, bis);
+                List list = AtlAnalyseposition.getSielhautpos(p, pkt, von, bis);
 
 
                 TimeSeries series = ChartDataSets
@@ -1715,6 +1734,7 @@ public class SielhautBearbeiten extends AbstractModul {
             prAnlegenButton.setEnabled(false);
 
             prAnlegenButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     neueProbenahme();
                 }
@@ -1730,6 +1750,7 @@ public class SielhautBearbeiten extends AbstractModul {
             tabelleExportButton.setEnabled(false);
 
             tabelleExportButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     saveTabelle();
                 }
@@ -1749,8 +1770,11 @@ public class SielhautBearbeiten extends AbstractModul {
             fotoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             fotoRtPanel = new RetractablePanel(
                     DefaultComponentFactory.getInstance()
-                    .createSeparator("Foto"),
+                        .createSeparator("Foto"),
                     fotoPanel, false, null) {
+                private static final long serialVersionUID = 6505102322099919490L;
+
+                @Override
                 public void opening() {
                     if (spunkt != null && spunkt.getId() != null) {
                         String imgPath = manager.getSettingsManager().getSetting("auik.system.spath_fotos") + spunkt.getBezeichnung() + ".jpg";
@@ -1793,8 +1817,11 @@ public class SielhautBearbeiten extends AbstractModul {
 
             kartenRtPanel = new RetractablePanel(
                     DefaultComponentFactory.getInstance()
-                    .createSeparator("Kartenausschnitt"),
+                        .createSeparator("Kartenausschnitt"),
                     kartenPanel, false, null) {
+                private static final long serialVersionUID = 1276454146798307743L;
+
+                @Override
                 public void opening() {
                     if (spunkt != null && spunkt.getId() != null) {
                         String imgPath = manager.getSettingsManager().getSetting("auik.system.spath_karten") + spunkt.getBezeichnung() + ".jpg";
@@ -1826,8 +1853,6 @@ public class SielhautBearbeiten extends AbstractModul {
 
         return kartenLabel;
     }
-
-
 
     private void readClipboard() {
 
@@ -1871,6 +1896,7 @@ public class SielhautBearbeiten extends AbstractModul {
             ausAblageButton = new JButton("aus QGis");
             ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
             ausAblageButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     readClipboard();
                 }
@@ -1886,6 +1912,7 @@ public class SielhautBearbeiten extends AbstractModul {
  * @author David Klotz
  */
 class SielhautProbeModel extends ListTableModel {
+    private static final long serialVersionUID = -7308141358160583962L;
     private AtlProbepkt probepkt;
     private Map wertMap;
     private AtlParameter[] params;
@@ -1920,6 +1947,7 @@ class SielhautProbeModel extends ListTableModel {
         this.probepkt = probepkt;
     }
 
+    @Override
     public void updateList() {
         if (probepkt != null) {
             setList(AtlProbenahmen.getProbenahmen(probepkt, true, -1));
@@ -1948,6 +1976,7 @@ class SielhautProbeModel extends ListTableModel {
         }
     }
 
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
         AtlProbenahmen probe = (AtlProbenahmen) objectAtRow;
@@ -1970,6 +1999,7 @@ class SielhautProbeModel extends ListTableModel {
         return value;
     }
 
+    @Override
     public boolean objectRemoved(Object objectAtRow) {
         AtlProbenahmen removedProbe = (AtlProbenahmen) objectAtRow;
         boolean removed;
@@ -1994,7 +2024,9 @@ class SielhautProbeModel extends ListTableModel {
 }
 
 class SielhautChooser extends OkCancelDialog {
-	/** Logging */
+    private static final long serialVersionUID = -8611205076943773598L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private JTextField suchFeld;
@@ -2009,6 +2041,7 @@ class SielhautChooser extends OkCancelDialog {
 
         sielhautModel = new SielhautModel();
         getErgebnisTabelle().setModel(sielhautModel);
+
 
         ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(80);
         ergebnisTabelle.getColumnModel().getColumn(1).setPreferredWidth(230);
@@ -2025,6 +2058,7 @@ class SielhautChooser extends OkCancelDialog {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog#doOk()
      */
+    @Override
     protected void doOk() {
         int row = getErgebnisTabelle().getSelectedRow();
         choose(row);
@@ -2034,10 +2068,12 @@ class SielhautChooser extends OkCancelDialog {
         final String suche = getSuchFeld().getText();
 
         SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 sielhautModel.filterList(suche);
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 sielhautModel.fireTableDataChanged();
             }
@@ -2060,6 +2096,7 @@ class SielhautChooser extends OkCancelDialog {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog#buildContentArea()
      */
+    @Override
     protected JComponent buildContentArea() {
         JScrollPane tabellenScroller = new JScrollPane(
                 getErgebnisTabelle(),
@@ -2093,12 +2130,14 @@ class SielhautChooser extends OkCancelDialog {
             suchFeld = new JTextField();
 
             suchFeld.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     doSearch();
                 }
             });
 
             suchFeld.addKeyListener(new KeyAdapter() {
+                @Override
                 public void keyTyped(KeyEvent e) {
                     String text = suchFeld.getText();
                     log.debug("(SielhautChooser) " + "keyChar: "
@@ -2120,6 +2159,7 @@ class SielhautChooser extends OkCancelDialog {
             submitButton = new JButton(AuikUtils.getIcon(16, "key_enter.png"));
             submitButton.setToolTipText("Suche starten");
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     doSearch();
                 }
@@ -2133,8 +2173,10 @@ class SielhautChooser extends OkCancelDialog {
         if (ergebnisTabelle == null) {
             ergebnisTabelle = new JTable();
 
-
             Action submitAction = new AbstractAction("Auswählen") {
+                private static final long serialVersionUID = 5609569229635452436L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     doOk();
                 }
@@ -2146,6 +2188,7 @@ class SielhautChooser extends OkCancelDialog {
 
             ergebnisTabelle.addFocusListener(TableFocusListener.getInstance());
             ergebnisTabelle.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
@@ -2162,7 +2205,8 @@ class SielhautChooser extends OkCancelDialog {
 }
 
 class SielhautModel extends ListTableModel {
-	/** Logging */
+    private static final long serialVersionUID = -5313844117284881446L;
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     public SielhautModel() {
@@ -2172,6 +2216,7 @@ class SielhautModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         AtlSielhaut spunkt = (AtlSielhaut) objectAtRow;
         Object tmp;
@@ -2186,25 +2231,23 @@ class SielhautModel extends ListTableModel {
         case 2:
             if (spunkt.getPsielhaut() == null) {
                 tmp = new Boolean(false);
+            } else {
+                tmp = new Boolean(spunkt.getPsielhaut());
             }
-            else
-
-            tmp = new Boolean(spunkt.getPsielhaut());
             break;
         case 3:
             if (spunkt.getPfirmenprobe() == null) {
                 tmp = new Boolean(false);
+            } else {
+                tmp = new Boolean(spunkt.getPfirmenprobe());
             }
-            else
-            tmp = new Boolean(spunkt.getPfirmenprobe());
             break;
         case 4:
             if (spunkt.getPnachprobe() == null) {
                 tmp = new Boolean(false);
+            } else {
+                tmp = new Boolean(spunkt.getPnachprobe());
             }
-            else
-
-            tmp = new Boolean(spunkt.getPnachprobe());
             break;
 
         default:
@@ -2215,17 +2258,19 @@ class SielhautModel extends ListTableModel {
         return tmp;
     }
 
-
-    public Class getColumnClass(int columnIndex) {
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex > 1) {
             return Boolean.class;
         } else {
             return super.getColumnClass(columnIndex);
         }
     }
+
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#updateList()
      */
+    @Override
     public void updateList() {
     }
 

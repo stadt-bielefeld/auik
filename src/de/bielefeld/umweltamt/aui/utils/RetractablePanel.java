@@ -44,6 +44,7 @@ import javax.swing.JPanel;
  * @author David Klotz
  */
 public class RetractablePanel extends JPanel {
+    private static final long serialVersionUID = -748833286012300255L;
     private JLabel iconLabel = null;
     private JPanel topPanel = null;
     private JPanel panel = null;
@@ -111,6 +112,7 @@ public class RetractablePanel extends JPanel {
 
         Cursor handCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
         MouseListener ml = new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == 1) {
                     toggleOpen();

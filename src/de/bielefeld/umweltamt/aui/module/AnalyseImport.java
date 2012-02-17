@@ -24,24 +24,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.Icon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
-
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -75,7 +73,8 @@ public class AnalyseImport extends AbstractModul {
      * @author <a href="mailto:ingo.weinzierl@intevation.de">Ingo Weinzierl</a>
      */
     private class AnalyseImporter extends ListTableModel {
-		protected File      toImport;
+        private static final long serialVersionUID = 5564507170122427828L;
+        protected File      toImport;
         protected boolean[] selection;
         protected int[]     status;
 
@@ -101,7 +100,7 @@ public class AnalyseImport extends AbstractModul {
             }
 
             String[] columns = (String[]) getObjectAtRow(row);
-            List     data    = getList();
+//            List<?>  data    = getList();
 
             int status = getRowStatus(row);
 
@@ -231,6 +230,7 @@ public class AnalyseImport extends AbstractModul {
          *
          * @return <i>null</i>.
          */
+        @Override
         public Object getColumnValue(Object row, int col) {
             return null;
         }
@@ -241,8 +241,8 @@ public class AnalyseImport extends AbstractModul {
          *
          * @return Liste mit allen selektierten Zeilen.
          */
-        public List getSelectedRows() {
-            List selected = new ArrayList();
+        public List<String[]> getSelectedRows() {
+            List<String[]> selected = new ArrayList<String[]>();
 
             for (int i = 0; i < selection.length; i++) {
                 boolean s = Boolean.TRUE.equals(getValueAt(i, 6));
@@ -264,7 +264,8 @@ public class AnalyseImport extends AbstractModul {
          * @return <code>Boolean.class</code> falls <i>col</i>==6 , sonst
          * <code>String.class</code>
          */
-        public Class getColumnClass(int col) {
+        @Override
+        public Class<?> getColumnClass(int col) {
             return col == 6 ? Boolean.class : String.class;
         }
 
@@ -279,6 +280,7 @@ public class AnalyseImport extends AbstractModul {
          *
          * @return True, wenn <i>col</i> == 6 and getRowStatus(row) == 1 | 2 sonst False.
          */
+        @Override
         public boolean isCellEditable(int row, int col) {
             return (col == 6 && getRowStatus(row) > 0) ? true : false;
         }
@@ -291,6 +293,7 @@ public class AnalyseImport extends AbstractModul {
          * Werten gef&uuml;llt, bevor ein {@link fireTableDataChanged()}
          * geworfen wird.
          */
+        @Override
         public void updateList() throws Exception {
             BufferedReader in = null;
 
@@ -479,6 +482,7 @@ public class AnalyseImport extends AbstractModul {
         activateImport(false, false);
 
         dateiButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 File file = frame.openFile(new String[]{"txt"});
 
@@ -490,6 +494,7 @@ public class AnalyseImport extends AbstractModul {
 
 
         importButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doSave();
             }
@@ -497,21 +502,25 @@ public class AnalyseImport extends AbstractModul {
     }
 
 
+    @Override
     public String getName() {
         return "Import Analyseergebnisse";
     }
 
 
+    @Override
     public String getIdentifier() {
         return "atl_analyse_import";
     }
 
 
+    @Override
     public String getCategory() {
         return "Labor";
     }
 
 
+    @Override
     public Icon getIcon() {
         return super.getIcon("ksysguard.png");
     }
@@ -527,6 +536,7 @@ public class AnalyseImport extends AbstractModul {
      * <li>Knopf zum Importieren/Persistieren der Daten</li>
      * </ul>
      */
+    @Override
     public JPanel getPanel() {
         if (panel != null) {
             return panel;

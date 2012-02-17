@@ -45,6 +45,8 @@ import javax.swing.text.AbstractDocument;
  * @author David Klotz
  */
 public class LimitedTextField extends BasicEntryField {
+    private static final long serialVersionUID = -8246192299263666306L;
+
     public LimitedTextField(int maxLength) {
         this(maxLength, null);
     }

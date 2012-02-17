@@ -52,14 +52,11 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
@@ -82,13 +79,15 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class UebergabePanel extends JPanel {
-	/** Logging */
+    private static final long serialVersionUID = -3459571889270154870L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
 
-    private IndeinlUebergabestelle upunkt;
+//    private IndeinlUebergabestelle upunkt;
     private RetractablePanel fotoRtPanel;
     // Widgets
 
@@ -105,7 +104,7 @@ public class UebergabePanel extends JPanel {
     // Daten
 
     private IndeinlUebergabestelle fachdaten = null;
-    private AtlKlaeranlagen[] klaeranlagen = null;
+//    private AtlKlaeranlagen[] klaeranlagen = null;
 
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
@@ -117,13 +116,9 @@ public class UebergabePanel extends JPanel {
     // Widgets für Fotopanel
     private JLabel fotoLabel;
 
-
-
     public UebergabePanel(BasisObjektBearbeiten hauptModul) {
         name = "Übergabestelle";
         this.hauptModul = hauptModul;
-
-
 
         FormLayout layout = new FormLayout(
                 "r:80dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 80dlu, 100dlu:g", // Spalten
@@ -330,6 +325,7 @@ public class UebergabePanel extends JPanel {
             saveUebergabeButton = new JButton("Speichern");
 
             saveUebergabeButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveUebergabestelleDaten()) {
@@ -350,6 +346,7 @@ public class UebergabePanel extends JPanel {
         return saveUebergabeButton;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -402,6 +399,7 @@ public class UebergabePanel extends JPanel {
 
             objektverknuepfungTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
                         public void mouseClicked(java.awt.event.MouseEvent e) {
                             if ((e.getClickCount() == 2)
                                     && (e.getButton() == 1)) {
@@ -441,10 +439,12 @@ public class UebergabePanel extends JPanel {
                             }
                         }
 
+                        @Override
                         public void mousePressed(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
 
+                        @Override
                         public void mouseReleased(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
@@ -484,6 +484,9 @@ public class UebergabePanel extends JPanel {
     private Action getVerknuepfungLoeschAction() {
         if (verknuepfungLoeschAction == null) {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 2126946472021932438L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
@@ -527,6 +530,7 @@ public class UebergabePanel extends JPanel {
             selectObjektButton = new JButton("Objekt auswählen");
 
             selectObjektButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(hauptModul
                             .getFrame(), fachdaten.getBasisObjekt(),
@@ -574,9 +578,12 @@ public class UebergabePanel extends JPanel {
             fotoPanel.add(getFotoLabel());
             fotoPanel.setBackground(Color.WHITE);
             fotoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            fotoRtPanel = new RetractablePanel(DefaultComponentFactory.getInstance()
-                    .createSeparator("Foto"),
-                    fotoPanel, false, null) {
+            fotoRtPanel = new RetractablePanel(
+                DefaultComponentFactory.getInstance().createSeparator("Foto"),
+                fotoPanel, false, null) {
+                private static final long serialVersionUID = 8307814053644083855L;
+
+                @Override
                 public void opening()  {
                 // Aufruf wenn FotoPanel geöffnet wird
                 // Die Bezeichnung einer verknüpften Sielhautmesstelle wird ausgelesen
@@ -586,26 +593,20 @@ public class UebergabePanel extends JPanel {
                     String messstelleBez;
                     int id;
 
-                    List messstelle = BasisObjektverknuepfung.getVerknuepfungSielhaut(bo);
+                    List<?> messstelle = BasisObjektverknuepfung.getVerknuepfungSielhaut(bo);
 
-                    if (messstelle.size()  == 1)
-                    {
+                    if (messstelle.size() == 1) {
                         for (int j = 0; j < messstelle.size(); j++) {
                             obj = (BasisObjektverknuepfung) messstelle.get(j);
                         }
 
                         id  = obj.getBasisObjektByIstVerknuepftMit().getObjektid();
                         messstelleBez= AtlProbepkt.getProbepunkt(id).getAtlSielhaut().getBezeichnung();
-                    }
-                    else if (messstelle.size() > 1)
-                    {
+                    } else if (messstelle.size() > 1) {
                         messstelleBez = "Nur eine verknüpfte Sielhautmessstelle zulässig";
-                    }
-                    else
-                    {
+                    } else {
                         messstelleBez = "Keine Sielhautmessstelle verknüpft";
                     }
-
 
                     // Foto wird geladen
                     if (messstelleBez != null) {
@@ -623,13 +624,10 @@ public class UebergabePanel extends JPanel {
                             getFotoLabel().setIcon(imgIcon);
                             getFotoLabel().setText(null);
                         } else {
-                            if (messstelleBez == "Keine Sielhautmessstelle verknüpft" || messstelleBez == "Nur eine verknüpfte Sielhautmessstelle zulässig")
-                            {
+                            if (messstelleBez == "Keine Sielhautmessstelle verknüpft" || messstelleBez == "Nur eine verknüpfte Sielhautmessstelle zulässig") {
                                 getFotoLabel().setIcon(null);
                                 getFotoLabel().setText("<html><b>-  Fehler: "+ messstelleBez +" -</b></html>");
-                            }
-                            else
-                            {
+                            } else {
                                 getFotoLabel().setIcon(null);
                                 getFotoLabel().setText("<html><b>-  Foto "+ messstelleBez +".jpg nicht gefunden!  -</b></html>");
                             }
@@ -641,7 +639,6 @@ public class UebergabePanel extends JPanel {
         return fotoRtPanel;
     }
 
-
     private JLabel getFotoLabel() {
         if (fotoLabel == null) {
             fotoLabel = new JLabel("<html><b>- Kein Foto verfügbar! -</b></html>");
@@ -649,6 +646,4 @@ public class UebergabePanel extends JPanel {
 
         return fotoLabel;
     }
-
-
 }

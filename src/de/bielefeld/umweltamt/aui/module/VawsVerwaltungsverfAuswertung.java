@@ -48,9 +48,8 @@ package de.bielefeld.umweltamt.aui.module;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
@@ -69,6 +68,7 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getBasisObjektFromFachdaten(Object)
      */
+    @Override
     protected void editObject(int row) {
         if (row != -1) {
             VawsFachdaten fd = ((VawsVerwaltungsverf)model.getObjectAtRow(row)).getVawsFachdaten();
@@ -88,6 +88,7 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         return new JPanel();
     }
@@ -95,6 +96,7 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
+    @Override
     public ListTableModel getTableModel() {
         if (model == null) {
             model = new WiedervorlageVVModel();
@@ -103,11 +105,14 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
     }
 
     public void updateListe() {
-        SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(10, 250, 150, 25, 250)) {
+        SwingWorkerVariant worker = new SwingWorkerVariant(
+            getResultTable(10, 250, 150, 25, 250)) {
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 ((WiedervorlageVVModel)getTableModel()).updateList();
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 getTableModel().fireTableDataChanged();
                 frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
@@ -121,27 +126,18 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
         JTable resultTable = getResultTable();
 
         resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-        TableColumn column = null;
 
-        for (int i = 0; i < 5; i++) {
-            column = resultTable.getColumnModel().getColumn(i);
-
-            if (i == 0) {
-                column.setPreferredWidth(a);
-            } else if (i == 1) {
-                column.setPreferredWidth(b);
-            } else if (i == 2) {
-                column.setPreferredWidth(c);
-            } else if (i == 3) {
-                column.setPreferredWidth(d);
-            } else if (i == 4) {
-                column.setPreferredWidth(e);
-            }
-        }
+        TableColumnModel model = resultTable.getColumnModel();
+        model.getColumn(0).setPreferredWidth(a);
+        model.getColumn(1).setPreferredWidth(b);
+        model.getColumn(2).setPreferredWidth(c);
+        model.getColumn(3).setPreferredWidth(d);
+        model.getColumn(4).setPreferredWidth(e);
 
         return resultTable;
     }
 
+    @Override
     public void show() {
         super.show();
 
@@ -150,6 +146,7 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Wiedervorlage Verwaltungs - Verfahren";
     }
@@ -157,12 +154,15 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "VAwS";
     }
 }
 
 class WiedervorlageVVModel extends ListTableModel {
+    private static final long serialVersionUID = -325284569406149762L;
+
     public WiedervorlageVVModel() {
         super(
                 new String[]{
@@ -176,6 +176,7 @@ class WiedervorlageVVModel extends ListTableModel {
         );
     }
 
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object tmp;
         VawsVerwaltungsverf vf = (VawsVerwaltungsverf) objectAtRow;
@@ -206,6 +207,7 @@ class WiedervorlageVVModel extends ListTableModel {
     }
 
 
+    @Override
     public void updateList() {
         setList(VawsVerwaltungsverf.getAuswertung());
 //        HibernateSessionFactory.closeSession();

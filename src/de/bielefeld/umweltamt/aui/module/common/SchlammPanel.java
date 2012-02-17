@@ -71,16 +71,14 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
@@ -99,7 +97,9 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  * @author David Klotz
  */
 public class SchlammPanel extends JPanel {
-	/** Logging */
+    private static final long serialVersionUID = 6795302933676350143L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private AtlProbeart art;
@@ -174,10 +174,12 @@ public class SchlammPanel extends JPanel {
 
     public void setKlaeranlage(final AtlKlaeranlagen ka, final AtlProbeart art) {
         SwingWorkerVariant worker = new SwingWorkerVariant(getProbeTabelle()) {
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 probeModel.findByKA(art, ka);
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 probeModel.fireTableDataChanged();
 
@@ -231,7 +233,7 @@ public class SchlammPanel extends JPanel {
             AtlProbenahmen probe = new AtlProbenahmen();
             probe.setKennummer(kennNummer);
             probe.setDatumDerEntnahme(datum);
-            probe.setAtlAnalysepositionen(new HashSet());
+            probe.setAtlAnalysepositionen(new HashSet<AtlAnalyseposition>());
             AtlProbepkt pkt;
             AtlKlaeranlagen ka = (AtlKlaeranlagen) getAnlageBox()
                     .getSelectedItem();
@@ -270,6 +272,9 @@ public class SchlammPanel extends JPanel {
     private Action getProbeEditAction() {
         if (probeEditAction == null) {
             probeEditAction = new AbstractAction("Bearbeiten") {
+                private static final long serialVersionUID = -996074533227856766L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getProbeTabelle().getSelectedRow();
                     // Natürlich nur editieren, wenn wirklich eine Zeile
@@ -292,6 +297,9 @@ public class SchlammPanel extends JPanel {
     private Action getProbeLoeschAction() {
         if (probeLoeschAction == null) {
             probeLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = -6546427791592931772L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getProbeTabelle().getSelectedRow();
                     if (row != -1 && getProbeTabelle().getEditingRow() == -1) {
@@ -350,6 +358,7 @@ public class SchlammPanel extends JPanel {
             anlageBox = new JComboBox(AtlKlaeranlagen.getKlaeranlagen());
 
             anlageBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     lastProbe = null;
 
@@ -391,6 +400,7 @@ public class SchlammPanel extends JPanel {
                     getProbeLoeschAction());
 
             probeTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
@@ -401,10 +411,12 @@ public class SchlammPanel extends JPanel {
                     }
                 }
 
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showProbePopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showProbePopup(e);
                 }
@@ -435,6 +447,7 @@ public class SchlammPanel extends JPanel {
             anlegenButton = new JButton("Anlegen");
 
             anlegenButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (getKennummerFeld().getText().trim().equals("")) {
                         getKennummerFeld().requestFocus();

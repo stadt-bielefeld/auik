@@ -46,14 +46,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
@@ -72,7 +69,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class BWKPanel extends JPanel {
-	/** Logging */
+    private static final long serialVersionUID = -6831726331391740934L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
@@ -96,7 +95,6 @@ public class BWKPanel extends JPanel {
     private JTextArea bwkBeschreibungsArea = null;
     private JButton saveBwkButton = null;
 
-
     // Daten
     private AnhBwkFachdaten bwk = null;
 
@@ -106,7 +104,6 @@ public class BWKPanel extends JPanel {
     private JButton selectObjektButton = null;
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
-
 
     public BWKPanel(BasisObjektBearbeiten hauptModul) {
         name = "Brennwertkessel";
@@ -306,6 +303,7 @@ public class BWKPanel extends JPanel {
     }
 
 
+    @Override
     public String getName() {
         return name;
     }
@@ -534,6 +532,7 @@ public class BWKPanel extends JPanel {
             saveBwkButton = new JButton("Speichern");
 
             saveBwkButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveBwkDaten()) {
@@ -569,6 +568,7 @@ public class BWKPanel extends JPanel {
 
             objektverknuepfungTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
                         public void mouseClicked(java.awt.event.MouseEvent e) {
                             if ((e.getClickCount() == 2)
                                     && (e.getButton() == 1)) {
@@ -610,10 +610,12 @@ public class BWKPanel extends JPanel {
                             }
                         }
 
+                        @Override
                         public void mousePressed(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
 
+                        @Override
                         public void mouseReleased(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
@@ -653,6 +655,9 @@ public class BWKPanel extends JPanel {
     private Action getVerknuepfungLoeschAction() {
         if (verknuepfungLoeschAction == null) {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = -7075711379257351951L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
@@ -697,6 +702,7 @@ public class BWKPanel extends JPanel {
             selectObjektButton = new JButton("Objekt auswählen");
 
             selectObjektButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(hauptModul
                             .getFrame(), bwk.getBasisObjekt(),

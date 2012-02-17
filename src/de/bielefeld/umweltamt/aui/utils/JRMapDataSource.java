@@ -35,9 +35,6 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
-
-
 /**
  * Diese Klasse stellt ein {@link JRDataSource} dar. Die Werte, die von
  * {@link getFieldValue(JRField)} geliefert werden, kommen aus einem Object[][],
@@ -49,11 +46,11 @@ public class JRMapDataSource implements JRDataSource {
 
     protected int index;
 
-    protected String[] columns;
-    protected Map      indexBuffer;
+    protected String[]            columns;
+    protected Map<String,Integer> indexBuffer;
 
-    protected Object[]   current;
-    protected Object[][] values;
+    protected Object[]            current;
+    protected Object[][]          values;
 
     /**
      * Dieser Konstruktor erstellt ein leeres JRMapDataSource ohne Inhalt und
@@ -62,7 +59,7 @@ public class JRMapDataSource implements JRDataSource {
      */
     protected JRMapDataSource() {
         this.index       = 0;
-        this.indexBuffer = new HashMap();
+        this.indexBuffer = new HashMap<String,Integer>();
         this.current     = null;
     }
 
@@ -99,6 +96,7 @@ public class JRMapDataSource implements JRDataSource {
      *
      * @throws NullPointerException if no values have been filled in.
      */
+    @Override
     public boolean next() {
         index++;
 
@@ -121,6 +119,7 @@ public class JRMapDataSource implements JRDataSource {
      * @return ein Objekt aus {@link values} falls existent, falls kein Element
      * existiert, wird <i>null</i> zur&uuml;ckgegeben.
      */
+    @Override
     public Object getFieldValue(JRField field) throws JRException {
         String col = field.getName();
         int idx    = getIndexOf(col);
@@ -138,7 +137,7 @@ public class JRMapDataSource implements JRDataSource {
      */
     public int getIndexOf(String col) {
         if (indexBuffer == null) {
-            indexBuffer = new HashMap();
+            indexBuffer = new HashMap<String,Integer>();
         }
 
         Object ib = indexBuffer.get(col);

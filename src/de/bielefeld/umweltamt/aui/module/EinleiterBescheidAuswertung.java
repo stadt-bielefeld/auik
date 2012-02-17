@@ -55,16 +55,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.eclipse.birt.chart.computation.withaxes.AllAxes;
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BescheidModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbepunktModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -89,6 +85,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "E-Satzung";
     }
@@ -97,6 +94,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      * @return "m_auswertung_anh40"
      */
+    @Override
     public String getIdentifier() {
         return "m_auswertung_bescheid";
     }
@@ -104,6 +102,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren
@@ -115,12 +114,15 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
         	bescheidButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        @Override
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findBescheiddruck());
                         }
 
+                        @Override
                         protected void doUIUpdateLogic(){
                             ((BescheidModel)getTableModel()).fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
@@ -129,14 +131,17 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     worker.start();
                 }
             });
-        	
+
         	eingetragenButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        @Override
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findEingetragen());
                         }
 
+                        @Override
                         protected void doUIUpdateLogic(){
                             ((BescheidModel)getTableModel()).fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
@@ -145,14 +150,17 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     worker.start();
                 }
             });
-        	
+
         	ergaenztButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        @Override
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findErgaenzt());
                         }
 
+                        @Override
                         protected void doUIUpdateLogic(){
                             ((BescheidModel)getTableModel()).fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
@@ -161,14 +169,17 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     worker.start();
                 }
             });
-        	
+
         	angelegtButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        @Override
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findAngelegt());
                         }
 
+                        @Override
                         protected void doUIUpdateLogic(){
                             ((BescheidModel)getTableModel()).fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
@@ -193,6 +204,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
+    @Override
     public ListTableModel getTableModel() {
         if (tmodel == null) {
             tmodel = new BescheidModel();

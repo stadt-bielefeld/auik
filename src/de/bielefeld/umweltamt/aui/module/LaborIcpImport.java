@@ -77,7 +77,6 @@ import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -85,12 +84,9 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
@@ -109,17 +105,20 @@ public class LaborIcpImport extends AbstractModul {
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private class FileImporter extends ListTableModel {
+        private static final long serialVersionUID = 5922903505083012587L;
+
         // Die Datei, die Importiert werden soll
         private File importFile = null;
 
         // Als Cache
-        private Map perfectRows = null;
-        private Map importableRows = null;
+        private Map<String[],Boolean> perfectRows = null;
+        private Map<String[],Boolean> importableRows = null;
 
         public FileImporter() {
             super(new String[]{"Probe", "Parameter", "Wert", "Einheit", "Flags"}, false);
         }
 
+        @Override
         public Object getColumnValue(Object objectAtRow, int columnIndex) {
             String[] tmpArr = (String[]) objectAtRow;
             Object value;
@@ -157,6 +156,7 @@ public class LaborIcpImport extends AbstractModul {
             return value;
         }
 
+        @Override
         public void updateList() throws Exception {
             BufferedReader in = new BufferedReader(new FileReader(importFile));
             String line;
@@ -247,7 +247,7 @@ public class LaborIcpImport extends AbstractModul {
 
         private boolean isPositionPerfect(String[] pos) {
             if (perfectRows == null) {
-                perfectRows = new HashMap(getList().size());
+                perfectRows = new HashMap<String[],Boolean>(getList().size());
             }
 
             if (!perfectRows.containsKey(pos)) {
@@ -286,7 +286,7 @@ public class LaborIcpImport extends AbstractModul {
 
         private boolean isPositionImportable(String[] pos) {
             if (importableRows == null) {
-                importableRows = new HashMap(getList().size());
+                importableRows = new HashMap<String[],Boolean>(getList().size());
             }
 
             if (!importableRows.containsKey(pos)) {
@@ -463,7 +463,7 @@ public class LaborIcpImport extends AbstractModul {
         }
     }
 
-    private JFileChooser fc = null;
+//    private JFileChooser fc = null;
 
     private JLabel stepOneLabel = null;
     private JLabel stepTwoLabel = null;
@@ -476,7 +476,7 @@ public class LaborIcpImport extends AbstractModul {
     private Icon stepTwoG;
     private Icon stepTwoGrey;
     private Icon stepThreeW;
-    private Icon stepThreeG;
+//    private Icon stepThreeG;
     private Icon stepThreeGrey;
 
     private JButton dateiButton, importButton;
@@ -492,6 +492,7 @@ public class LaborIcpImport extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "ICP Import";
     }
@@ -499,6 +500,7 @@ public class LaborIcpImport extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      */
+    @Override
     public String getIdentifier() {
         return "atl_icp_import";
     }
@@ -506,10 +508,12 @@ public class LaborIcpImport extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "Labor";
     }
 
+    @Override
     public Icon getIcon() {
         //return super.getIcon("1leftarrow.png");
         return super.getIcon("ksysguard.png");
@@ -517,6 +521,7 @@ public class LaborIcpImport extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
             initIcons();
@@ -550,6 +555,7 @@ public class LaborIcpImport extends AbstractModul {
         return panel;
     }
 
+    @Override
     public void show() {
         super.show();
         switchToStep(1);
@@ -563,7 +569,7 @@ public class LaborIcpImport extends AbstractModul {
         stepTwoG = AuikUtils.getIcon("step2_g.png", "Schritt Zwei");
         stepTwoGrey = AuikUtils.getIcon("step2_grey.png", "Schritt Zwei");
         stepThreeW = AuikUtils.getIcon("step3_w.png", "Schritt Drei");
-        stepThreeG = AuikUtils.getIcon("step3_g.png", "Schritt Drei");
+//        stepThreeG = AuikUtils.getIcon("step3_g.png", "Schritt Drei");
         stepThreeGrey = AuikUtils.getIcon("step3_grey.png", "Schritt Drei");
     }
 
@@ -593,6 +599,7 @@ public class LaborIcpImport extends AbstractModul {
             dateiButton = new JButton("Datei wählen");
             dateiButton.setToolTipText("Wählt eine Datei zum Importieren aus");
             dateiButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     File file = frame.openFile(new String[]{"txt"});
                     if (file != null) {
@@ -617,6 +624,7 @@ public class LaborIcpImport extends AbstractModul {
             importButton = new JButton("Importieren");
             importButton.setToolTipText("Importiert die gewählten Analysepositionen");
             importButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
                         fileImporter.doImport();
@@ -649,6 +657,7 @@ public class LaborIcpImport extends AbstractModul {
             importTabelle = new JTable(fileImporter);
             // Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
             importTabelle.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
                 public void valueChanged(ListSelectionEvent e) {
                     // überzählige Events ignorieren
                     if (e.getValueIsAdjusting()) {

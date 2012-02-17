@@ -41,8 +41,6 @@ import javax.swing.KeyStroke;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
-
-
 /**
  * Implements a cell editor that uses a formatted text field
  * to edit Double values.
@@ -50,7 +48,9 @@ import javax.swing.text.NumberFormatter;
  * @see http://java.sun.com/docs/books/tutorial/uiswing/components/table.html#validtext
  */
 public class DoubleEditor extends DefaultCellEditor {
-	/** Logging */
+    private static final long serialVersionUID = 2337124735564019506L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     JFormattedTextField ftf;
@@ -79,6 +79,9 @@ public class DoubleEditor extends DefaultCellEditor {
                                         KeyEvent.VK_ENTER, 0),
                                         "check");
         ftf.getActionMap().put("check", new AbstractAction() {
+            private static final long serialVersionUID = -1520747042294917946L;
+
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (!ftf.isEditValid()) { //The text is invalid.
                     setBorderRed();
@@ -93,6 +96,7 @@ public class DoubleEditor extends DefaultCellEditor {
     }
 
     //Override to invoke setValue on the formatted text field.
+    @Override
     public Component getTableCellEditorComponent(JTable table,
             Object value, boolean isSelected,
             int row, int column) {
@@ -106,6 +110,7 @@ public class DoubleEditor extends DefaultCellEditor {
     }
 
     //Override to ensure that the value remains a Double.
+    @Override
     public Object getCellEditorValue() {
         JFormattedTextField ftf = (JFormattedTextField)getComponent();
         Object o = ftf.getValue();
@@ -129,6 +134,7 @@ public class DoubleEditor extends DefaultCellEditor {
     //it isn't.  If it's OK for the editor to go
     //away, we need to invoke the superclass's version
     //of this method so that everything gets cleaned up.
+    @Override
     public boolean stopCellEditing() {
         JFormattedTextField ftf = (JFormattedTextField)getComponent();
         if (ftf.isEditValid()) {

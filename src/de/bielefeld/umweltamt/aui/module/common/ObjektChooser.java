@@ -21,10 +21,8 @@
 
 package de.bielefeld.umweltamt.aui.module.common;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -52,6 +50,7 @@ import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
  * @author Gerhard Genuit
  */
 public class ObjektChooser extends OkCancelDialog {
+    private static final long serialVersionUID = -6670451852911477811L;
 
     private JTable ergebnisTabelle;
 
@@ -85,6 +84,7 @@ public class ObjektChooser extends OkCancelDialog {
      *
      * @see de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog#doOk()
      */
+    @Override
     protected void doOk() {
         int row = getErgebnisTabelle().getSelectedRow();
         choose(row, objekt, objektVerknuepfungModel);
@@ -111,6 +111,7 @@ public class ObjektChooser extends OkCancelDialog {
      *
      * @see de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog#buildContentArea()
      */
+    @Override
     protected JComponent buildContentArea() {
         JScrollPane tabellenScroller = new JScrollPane(getErgebnisTabelle(),
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -133,6 +134,9 @@ public class ObjektChooser extends OkCancelDialog {
             ergebnisTabelle = new JTable();
 
             Action submitAction = new AbstractAction() {
+                private static final long serialVersionUID = -3180857351247221404L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     doOk();
                 }

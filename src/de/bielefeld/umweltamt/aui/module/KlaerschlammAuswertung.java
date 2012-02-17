@@ -119,7 +119,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Minute;
@@ -133,7 +132,6 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
@@ -166,11 +164,14 @@ public class KlaerschlammAuswertung extends AbstractModul {
      * @author David Klotz
      */
     private class AuswertungsDialog extends JDialog {
+        private static final long serialVersionUID = -4324618249094497981L;
+
         /**
          * Ein Listener für die Events des Dialogs.
          * @author David Klotz
          */
         private class DialogListener extends WindowAdapter implements ActionListener {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == abbrechenButton) {
                     doAbbrechen();
@@ -179,6 +180,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
                 }
             }
 
+            @Override
             public void windowClosing(WindowEvent e) {
                 // Wenn der Dialog geschlossen wird, wird das Bearbeiten abgebrochen
                 doAbbrechen();
@@ -189,6 +191,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
          * @author David Klotz
          */
         private class ExportTableModel extends AbstractTableModel {
+            private static final long serialVersionUID = 4165282695596298199L;
             private TimeSeriesCollection col1, col2;
             private List dateList;
 
@@ -231,14 +234,17 @@ public class KlaerschlammAuswertung extends AbstractModul {
                 Collections.sort(dateList);
             }
 
+            @Override
             public int getColumnCount() {
                 return col1.getSeriesCount() + ((col2 != null) ? col2.getSeriesCount() : 0) + 1;//2;
             }
 
+            @Override
             public int getRowCount() {
                 return dateList.size();// + 1;
             }
 
+            @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 String tmp = "!OOB!";
 
@@ -292,10 +298,12 @@ public class KlaerschlammAuswertung extends AbstractModul {
                 return tmp;
             }
 
-            public Class getColumnClass(int columnIndex) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
                 return String.class;
             }
 
+            @Override
             public String getColumnName(int column) {
                 String tmp = "!OOB!";
 
@@ -395,10 +403,12 @@ public class KlaerschlammAuswertung extends AbstractModul {
             exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
             exportTable.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showTabellenPopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showTabellenPopup(e);
                 }
@@ -485,6 +495,9 @@ public class KlaerschlammAuswertung extends AbstractModul {
             if (tabellenMenu == null) {
                 tabellenMenu = new JPopupMenu("Tabelle");
                 JMenuItem speichernItem = new JMenuItem(new AbstractAction("Speichern") {
+                    private static final long serialVersionUID = 3729886517838248066L;
+
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         saveTabelle();
                     }
@@ -553,6 +566,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Auswertung Klärschlamm";
     }
@@ -560,10 +574,12 @@ public class KlaerschlammAuswertung extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      */
+    @Override
     public String getIdentifier() {
         return "m_schlaemme_auswertung";
     }
 
+    @Override
     public Icon getIcon() {
         return super.getIcon("log.png");
     }
@@ -571,6 +587,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "Klärschlamm";
     }
@@ -578,6 +595,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
             einheiten = AtlEinheiten.getEinheiten();
@@ -628,10 +646,12 @@ public class KlaerschlammAuswertung extends AbstractModul {
 
     public void showResultOneAxis(final String axis) {
         SwingWorkerVariant worker = new SwingWorkerVariant(getSubmitButton()) {
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 dataSet1 = createDataset(axis);
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 if (dataSet1.getSeriesCount() > 0) {
                     frame.clearStatus();
@@ -651,6 +671,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
         SwingWorkerVariant worker = new SwingWorkerVariant(getSubmitButton()) {
             private int seriesCount = 0;
 
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 dataSet1 = createDataset(LEFT);
                 dataSet2 = createDataset(RIGHT);
@@ -658,6 +679,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
                 seriesCount = dataSet1.getSeriesCount() + dataSet2.getSeriesCount();
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 if (seriesCount > 0) {
                     frame.clearStatus();
@@ -676,17 +698,17 @@ public class KlaerschlammAuswertung extends AbstractModul {
     private TimeSeriesCollection createDataset(String axis) {
         TimeSeriesCollection col = new TimeSeriesCollection();
 
-        int parameterAnzahl;
+//        int parameterAnzahl;
         AtlEinheiten einheit;
         JList paramList;
         String analyseVon;
         if (axis.equals(LEFT)) {
-            parameterAnzahl = getLeftList().getModel().getSize();
+//            parameterAnzahl = getLeftList().getModel().getSize();
             einheit = (AtlEinheiten) getLeftEinheitenBox().getSelectedItem();
             paramList = getLeftList();
             analyseVon = getLeftAnalyseFeld().getText().toLowerCase().trim();
         } else {
-            parameterAnzahl = getRightList().getModel().getSize();
+//            parameterAnzahl = getRightList().getModel().getSize();
             einheit = (AtlEinheiten) getRightEinheitenBox().getSelectedItem();
             paramList = getRightList();
             analyseVon = getRightAnalyseFeld().getText().toLowerCase().trim();
@@ -807,6 +829,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
             submitButton = new JButton("Abschicken");
 
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (getRightList().getModel().getSize() == 0) {
                         showResultOneAxis(LEFT);
@@ -946,6 +969,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
             leftDeleteButton.setEnabled(false);
 
             leftDeleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int index = getLeftList().getSelectedIndex();
                     DefaultListModel leftModel = ((DefaultListModel)getLeftList().getModel());
@@ -979,6 +1003,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
             rightDeleteButton.setEnabled(false);
 
             rightDeleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int index = getRightList().getSelectedIndex();
                     DefaultListModel rightModel = ((DefaultListModel)getRightList().getModel());
@@ -1070,6 +1095,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
     private ActionListener getRLButtonListener() {
         if (rlButtonListener == null) {
             rlButtonListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String direction = e.getActionCommand().replaceFirst("_.*", "");
                     String paramId = e.getActionCommand().replaceFirst(".*_", "");

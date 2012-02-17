@@ -33,6 +33,8 @@ import javax.swing.text.AbstractDocument;
  * @author David Klotz
  */
 public class LimitedTextArea extends JTextArea {
+    private static final long serialVersionUID = 618412051183740489L;
+
     public LimitedTextArea(int maxLength) {
         this(maxLength, null);
     }

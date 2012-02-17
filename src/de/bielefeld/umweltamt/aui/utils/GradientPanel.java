@@ -31,18 +31,19 @@ import java.awt.Paint;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-
 /**
  * A panel with a horizontal gradient background.
  * @author Karsten Lentzsch
  */
 public class GradientPanel extends JPanel {
+    private static final long serialVersionUID = -3777558294138807738L;
 
     public GradientPanel(LayoutManager lm, Color background) {
         super(lm);
         setBackground(background);
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (!isOpaque()) {

@@ -96,13 +96,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
@@ -120,7 +117,9 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * @author u633d
  */
 public class Anh55Panel extends JPanel{
-	/** Logging */
+    private static final long serialVersionUID = 3345458422378912073L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
@@ -162,18 +161,12 @@ public class Anh55Panel extends JPanel{
     // Daten
     private Anh55Fachdaten fachdaten = null;
 
-
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
     private JTable objektverknuepfungTabelle = null;
     private JButton selectObjektButton = null;
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
-
-
-
-    //Listener
-    private ActionListener editButtonListener;
 
     public Anh55Panel(BasisObjektBearbeiten hauptModul) {
         name = "Wäscherei";
@@ -182,7 +175,6 @@ public class Anh55Panel extends JPanel{
         FormLayout layout = new FormLayout (
                 "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
                 "");
-
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
         builder.setDefaultDialogBorder();
@@ -719,6 +711,7 @@ public class Anh55Panel extends JPanel{
             saveAnh55Button = new JButton("Speichern");
 
             saveAnh55Button.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveAnh55Daten()) {
@@ -734,6 +727,7 @@ public class Anh55Panel extends JPanel{
         return saveAnh55Button;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -926,6 +920,7 @@ public class Anh55Panel extends JPanel{
 
             objektverknuepfungTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
                         public void mouseClicked(java.awt.event.MouseEvent e) {
                             if ((e.getClickCount() == 2)
                                     && (e.getButton() == 1)) {
@@ -965,10 +960,12 @@ public class Anh55Panel extends JPanel{
                             }
                         }
 
+                        @Override
                         public void mousePressed(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
 
+                        @Override
                         public void mouseReleased(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
@@ -1008,6 +1005,9 @@ public class Anh55Panel extends JPanel{
     private Action getVerknuepfungLoeschAction() {
         if (verknuepfungLoeschAction == null) {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 221954190162076661L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
@@ -1051,6 +1051,7 @@ public class Anh55Panel extends JPanel{
             selectObjektButton = new JButton("Objekt auswählen");
 
             selectObjektButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(hauptModul
                             .getFrame(), fachdaten.getBasisObjekt(),

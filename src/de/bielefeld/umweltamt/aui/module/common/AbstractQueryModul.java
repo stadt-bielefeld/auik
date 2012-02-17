@@ -60,7 +60,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 
 import javax.swing.AbstractAction;
@@ -71,22 +70,14 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
-import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-
-import org.jfree.ui.DateCellRenderer;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -103,9 +94,9 @@ public abstract class AbstractQueryModul extends AbstractModul {
     private Action objektEditAction;
     private Action saveAction;
     private JPopupMenu resultPopup;
-    private RowSorter sorter;
-   
-    
+//    private RowSorter<?> sorter;
+
+
 
     /**
      * Liefert die Kategorie des Moduls.
@@ -114,6 +105,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
      * überschrieben werden.
      * @return "Auswertung"
      */
+    @Override
     public String getCategory() {
         return "Auswertung";
     }
@@ -121,6 +113,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
             FormLayout layout = new FormLayout(
@@ -181,9 +174,12 @@ public abstract class AbstractQueryModul extends AbstractModul {
 
         return tmp;
     }
-    
+
 	public class CellRenderer extends DefaultTableCellRenderer {
-		public Component getTableCellRendererComponent(JTable table,
+        private static final long serialVersionUID = -8050656734831160106L;
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table,
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
 			super.getTableCellRendererComponent(table, value, isSelected,
@@ -197,7 +193,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
 				// need to worry
 				// about the renderer's display value.
 				this.setText(strDate);
-			}	
+			}
 
 			return this;
 		}
@@ -213,6 +209,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
             resultTable.setDefaultRenderer(Object.class, new CellRenderer());
 
             resultTable.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
@@ -221,10 +218,12 @@ public abstract class AbstractQueryModul extends AbstractModul {
                     }
                 }
 
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showResultPopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showResultPopup(e);
                 }
@@ -253,6 +252,9 @@ public abstract class AbstractQueryModul extends AbstractModul {
     protected Action getObjektEditAction() {
         if (objektEditAction == null) {
             objektEditAction = new AbstractAction("Bearbeiten") {
+                private static final long serialVersionUID = 8024855364512340721L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getResultTable().getSelectedRow();
                     editObject(row);
@@ -271,6 +273,9 @@ public abstract class AbstractQueryModul extends AbstractModul {
     protected Action getSaveAction() {
         if (saveAction == null) {
             saveAction = new AbstractAction("Tabelle exportieren") {
+                private static final long serialVersionUID = 6018882173470934635L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     AuikUtils.saveTabelle(getResultTable(), frame);
                 }

@@ -37,15 +37,13 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTabbedPane;
-import javax.swing.AbstractAction;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -58,13 +56,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -79,16 +77,12 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-
-
-
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
@@ -102,8 +96,9 @@ import de.bielefeld.umweltamt.aui.utils.charts.Charts;
  * @author Sebastian Geller
  */
 public class ProbepktAuswPanel extends JPanel {
+    private static final long serialVersionUID = -6939004829737520612L;
 
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private JDateChooser vonDateChooser;
@@ -114,8 +109,8 @@ public class ProbepktAuswPanel extends JPanel {
     private BasisObjektBearbeiten hauptModul;
     private static final String LEFT = "left";
     private static final String RIGHT = "right";
-    // Widgets
 
+    // Widgets
     private JList leftList;
     private JList rightList;
     private JButton submitButton;
@@ -127,28 +122,19 @@ public class ProbepktAuswPanel extends JPanel {
     private ActionListener rlButtonListener;
     private AtlEinheiten[] einheiten;
 
-
     // Daten
     private AtlProbepkt pkt;
     private JComboBox parameterBox;
     private JComboBox leftEinheitenBox;
     private JComboBox rightEinheitenBox;
 
-
-
-
     private HauptFrame frame;
-
-
-
 
     public ProbepktAuswPanel(BasisObjektBearbeiten hauptModul) {
         name = "Auswertung";
 
-
         einheiten = AtlEinheiten.getEinheiten();
         this.hauptModul = hauptModul;
-
 
         FormLayout layout = new FormLayout (
                 "20dlu, 5dlu, 70dlu, 5dlu, 20dlu, 5dlu, 140dlu, 5dlu, r:16px, 5dlu, c:70dlu:g(0.1), 5dlu, l:16px, 10dlu, 300dlu", // Spalten
@@ -184,7 +170,6 @@ public class ProbepktAuswPanel extends JPanel {
         builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
         CellConstraints cc2 = (CellConstraints) cc.clone();
-
 
         builder.addSeparator("Zeitraum",    cc.xyw( 1, 1, 11));
         builder.addSeparator("Analyse von...",    cc.xyw( 13, 1, 3));
@@ -247,11 +232,14 @@ public class ProbepktAuswPanel extends JPanel {
     }
 
     private class AuswertungsDialog extends JDialog {
+        private static final long serialVersionUID = -4652005913711822389L;
+
         /**
          * Ein Listener für die Events des Dialogs.
          * @author David Klotz
          */
         private class DialogListener extends WindowAdapter implements ActionListener {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == abbrechenButton) {
                     doAbbrechen();
@@ -260,6 +248,7 @@ public class ProbepktAuswPanel extends JPanel {
                 }
             }
 
+            @Override
             public void windowClosing(WindowEvent e) {
                 // Wenn der Dialog geschlossen wird, wird das Bearbeiten abgebrochen
                 doAbbrechen();
@@ -270,13 +259,14 @@ public class ProbepktAuswPanel extends JPanel {
          * @author David Klotz
          */
         private class ExportTableModel extends AbstractTableModel {
+            private static final long serialVersionUID = -7115812453677348579L;
             private TimeSeriesCollection col1, col2;
-            private List dateList;
+            private List<Minute> dateList;
 
             public ExportTableModel(TimeSeriesCollection col1, TimeSeriesCollection col2) {
                 this.col1 = col1;
                 this.col2 = col2;
-                dateList = new ArrayList();
+                dateList = new ArrayList<Minute>();
 
                 initializeData();
             }
@@ -312,14 +302,17 @@ public class ProbepktAuswPanel extends JPanel {
                 Collections.sort(dateList);
             }
 
+            @Override
             public int getColumnCount() {
                 return col1.getSeriesCount() + ((col2 != null) ? col2.getSeriesCount() : 0) + 1;//2;
             }
 
+            @Override
             public int getRowCount() {
                 return dateList.size();// + 1;
             }
 
+            @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 String tmp = "!OOB!";
 
@@ -352,10 +345,12 @@ public class ProbepktAuswPanel extends JPanel {
                 return tmp;
             }
 
-            public Class getColumnClass(int columnIndex) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
                 return String.class;
             }
 
+            @Override
             public String getColumnName(int column) {
                 String tmp = "!OOB!";
 
@@ -364,15 +359,15 @@ public class ProbepktAuswPanel extends JPanel {
 
                  if (column == 0) {
                     tmp = "Datum";
-                } else {
+                 } else {
                     if (seriesIndex < col1.getSeriesCount()) {
                         tmp = col1.getSeriesName(seriesIndex) + ", " + col1.getSeries(seriesIndex).getRangeDescription();
                     } else if (col2 != null) {
                         tmp = col2.getSeriesName(series2Index) + ", " + col2.getSeries(series2Index).getRangeDescription();
                     }
-                }
+                 }
 
-                return tmp;
+                 return tmp;
             }
         }
 
@@ -385,14 +380,12 @@ public class ProbepktAuswPanel extends JPanel {
         private JTabbedPane tabbedPane;
         private ChartPanel chartPanel;
 
-
         private DialogListener listener;
         private String title;
 
         private TimeSeriesCollection leftDataset;
         private TimeSeriesCollection rightDataset;
         private HauptFrame owner;
-
 
         public AuswertungsDialog  (String title, TimeSeriesCollection leftDataset, TimeSeriesCollection rightDataset, HauptFrame owner)  {
             super( owner, title + "-Auswertung", true);
@@ -455,10 +448,12 @@ public class ProbepktAuswPanel extends JPanel {
             exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
             exportTable.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showTabellenPopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showTabellenPopup(e);
                 }
@@ -491,12 +486,11 @@ public class ProbepktAuswPanel extends JPanel {
         }
 
         public void saveTabelle() {
-        File exportDatei;
-        String[] csv = new String []{"csv"};
-        owner = hauptModul.getFrame();
+            File exportDatei;
+            String[] csv = new String []{"csv"};
+            owner = hauptModul.getFrame();
 
-         exportDatei = owner.saveFile(csv);
-
+            exportDatei = owner.saveFile(csv);
 
             if (exportDatei != null) {
                 String ext = AuikUtils.getExtension(exportDatei);
@@ -542,6 +536,9 @@ public class ProbepktAuswPanel extends JPanel {
             if (tabellenMenu == null) {
                 tabellenMenu = new JPopupMenu("Tabelle");
                 JMenuItem speichernItem = new JMenuItem(new AbstractAction("Speichern") {
+                    private static final long serialVersionUID = -6201611660887956188L;
+
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         saveTabelle();
                     }
@@ -579,9 +576,6 @@ public class ProbepktAuswPanel extends JPanel {
         }
     }
 
-
-
-
     private JComboBox getParameterBox() {
         if (parameterBox == null) {
             parameterBox = new SearchBox(AtlParameter.getRelevanteParameter());
@@ -590,12 +584,12 @@ public class ProbepktAuswPanel extends JPanel {
         return parameterBox;
     }
 
-
     private JButton getSubmitButton() {
         if (submitButton == null) {
             submitButton = new JButton("Abschicken");
 
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
 
 
@@ -631,15 +625,14 @@ public class ProbepktAuswPanel extends JPanel {
         return rightEinheitenBox;
     }
 
-
-
-
     public void showResultOneAxis(final String axis) {
         SwingWorkerVariant worker = new SwingWorkerVariant(getSubmitButton()) {
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 dataSet1 = createDataset(axis);
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 if (dataSet1.getSeriesCount() > 0) {
 
@@ -661,6 +654,7 @@ public class ProbepktAuswPanel extends JPanel {
         SwingWorkerVariant worker = new SwingWorkerVariant(getSubmitButton()) {
             private int seriesCount = 0;
 
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 dataSet1 = createDataset(LEFT);
                 dataSet2 = createDataset(RIGHT);
@@ -668,6 +662,7 @@ public class ProbepktAuswPanel extends JPanel {
                 seriesCount = dataSet1.getSeriesCount() + dataSet2.getSeriesCount();
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 if (seriesCount > 0) {
 
@@ -686,16 +681,16 @@ public class ProbepktAuswPanel extends JPanel {
     private TimeSeriesCollection createDataset(String axis) {
         TimeSeriesCollection col = new TimeSeriesCollection();
 
-        int parameterAnzahl;
+//        int parameterAnzahl;
         AtlEinheiten einheit;
         JList paramList;
         if (axis.equals(LEFT)) {
-            parameterAnzahl = getLeftList().getModel().getSize();
+//            parameterAnzahl = getLeftList().getModel().getSize();
             einheit = (AtlEinheiten) getLeftEinheitenBox().getSelectedItem();
             paramList = getLeftList();
 
         } else {
-            parameterAnzahl = getRightList().getModel().getSize();
+//            parameterAnzahl = getRightList().getModel().getSize();
             einheit = (AtlEinheiten) getRightEinheitenBox().getSelectedItem();
             paramList = getRightList();
 
@@ -708,26 +703,17 @@ public class ProbepktAuswPanel extends JPanel {
         	analyeVon = analyseVonBox.getSelectedItem().toString();
         }
 
-
         pkt = AtlProbepkt.getProbepunktByObjekt(hauptModul.getObjekt());
-
-
 
         createSeries(paramList, pkt, einheit, vonDate, bisDate, analyeVon, col);
 
         return col;
     }
 
-
-
-
-
-
     private void createSeries(
             JList paramList, AtlProbepkt pkt, AtlEinheiten einheit,
             Date vonDate, Date bisDate, String analyseVon,
             TimeSeriesCollection col){
-
 
         if (pkt != null) {
 
@@ -735,12 +721,8 @@ public class ProbepktAuswPanel extends JPanel {
                 AtlParameter p = (AtlParameter) paramList.getModel()
                         .getElementAt(i);
 
-
                 List list = AtlAnalyseposition.getAnalysepositionen(p,
                         einheit, pkt, vonDate, bisDate, analyseVon);
-
-
-
 
                 TimeSeries series = ChartDataSets
                         .createAnalysePositionenSeries(list, p+ " ",einheit.toString());
@@ -777,7 +759,6 @@ public class ProbepktAuswPanel extends JPanel {
 
         return analyseVonBox;
     }
-
 
     private JList getLeftList() {
         if (leftList == null) {
@@ -827,14 +808,13 @@ public class ProbepktAuswPanel extends JPanel {
         return button;
     }
 
-
-
     private JButton getLeftDeleteButton() {
         if (leftDeleteButton == null) {
             leftDeleteButton = new JButton("Löschen");
             leftDeleteButton.setEnabled(false);
 
             leftDeleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int index = getLeftList().getSelectedIndex();
                     DefaultListModel leftModel = ((DefaultListModel)getLeftList().getModel());
@@ -868,6 +848,7 @@ public class ProbepktAuswPanel extends JPanel {
             rightDeleteButton.setEnabled(false);
 
             rightDeleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int index = getRightList().getSelectedIndex();
                     DefaultListModel rightModel = ((DefaultListModel)getRightList().getModel());
@@ -900,6 +881,7 @@ public class ProbepktAuswPanel extends JPanel {
     private ActionListener getRLButtonListener() {
         if (rlButtonListener == null) {
             rlButtonListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String direction = e.getActionCommand().replaceFirst("_.*", "");
                     String paramId = e.getActionCommand().replaceFirst(".*_", "");
@@ -949,26 +931,19 @@ public class ProbepktAuswPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-
     }
 
     public void updateForm() throws RuntimeException {
-
     }
 
     public void clearForm() {
-
-
     }
 
     public void enableAll(boolean enabled) {
-
     }
 
-
+    @Override
     public String getName() {
         return name;
     }
-
-
 }

@@ -49,8 +49,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -58,7 +56,6 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
@@ -81,7 +78,9 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * @author David Klotz
  */
 public class ProbepunktPanel extends JPanel {
-	/** Logging */
+    private static final long serialVersionUID = 3663375435585578751L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
@@ -263,6 +262,7 @@ public class ProbepunktPanel extends JPanel {
     }
 
 
+    @Override
     public String getName() {
         return name;
     }
@@ -409,6 +409,7 @@ public class ProbepunktPanel extends JPanel {
             probenahmeTabelle.setColumnSelectionAllowed(false);
             probenahmeTabelle.setRowSelectionAllowed(true);
             probenahmeTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
@@ -426,6 +427,9 @@ public class ProbepunktPanel extends JPanel {
             probenahmeTabelle.getInputMap().put(enterKeyStroke, "ENTER");
             // Eine neue Action fürs editieren erzeugen
             Action editAction = new AbstractAction() {
+                private static final long serialVersionUID = -7537228135751378632L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = probenahmeTabelle.getSelectedRow();
                     // Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
@@ -441,6 +445,9 @@ public class ProbepunktPanel extends JPanel {
             KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false);
             probenahmeTabelle.getInputMap().put(deleteKeyStroke, "DEL");
             Action removeAction = new AbstractAction() {
+                private static final long serialVersionUID = -4910733866626541511L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = probenahmeTabelle.getSelectedRow();
                     if (row != -1 && probenahmeTabelle.getEditingRow() == -1) {
@@ -496,6 +503,7 @@ public class ProbepunktPanel extends JPanel {
             anlegenButton = new JButton("Anlegen");
 
             anlegenButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (getKennummerFeld().getText().trim().equals("")) {
                         getKennummerFeld().requestFocus();
@@ -516,6 +524,7 @@ public class ProbepunktPanel extends JPanel {
             savePktButton = new JButton("Probepunkt speichern");
 
             savePktButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveProbepunktDaten()) {
@@ -553,6 +562,7 @@ public class ProbepunktPanel extends JPanel {
 
             objektverknuepfungTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
                         public void mouseClicked(java.awt.event.MouseEvent e) {
                             if ((e.getClickCount() == 2)
                                     && (e.getButton() == 1)) {
@@ -592,10 +602,12 @@ public class ProbepunktPanel extends JPanel {
                             }
                         }
 
+                        @Override
                         public void mousePressed(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
 
+                        @Override
                         public void mouseReleased(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
@@ -635,6 +647,9 @@ public class ProbepunktPanel extends JPanel {
     private Action getVerknuepfungLoeschAction() {
         if (verknuepfungLoeschAction == null) {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 2362803114601855889L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
@@ -678,6 +693,7 @@ public class ProbepunktPanel extends JPanel {
             selectObjektButton = new JButton("Objekt auswählen");
 
             selectObjektButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(hauptModul
                             .getFrame(), probepkt.getBasisObjekt(),

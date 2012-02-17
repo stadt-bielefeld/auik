@@ -90,7 +90,7 @@ public class PDFExporter {
      * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
     protected static JasperPrint export(
-        Map fields, InputStream reportFile, String dest)
+        Map<?,?> fields, InputStream reportFile, String dest)
     throws Exception
     {
         JasperPrint print = JasperFillManager.fillReport(

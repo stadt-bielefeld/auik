@@ -60,6 +60,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
  * @author David Klotz
  */
 public class APosDataItem extends TimeSeriesDataItem {
+    private static final long serialVersionUID = -8582014620416975204L;
     private AtlAnalyseposition pos;
 
     public APosDataItem(AtlAnalyseposition pos) {

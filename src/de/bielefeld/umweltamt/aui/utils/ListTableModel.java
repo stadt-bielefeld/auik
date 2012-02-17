@@ -33,7 +33,8 @@ import java.util.List;
  * @author David Klotz
  */
 public abstract class ListTableModel extends BasicTableModel {
-    private List dataList = null;
+    private static final long serialVersionUID = 4451832362240102803L;
+    private List<?> dataList = null;
     private boolean removeAllowed;
 
     /**
@@ -71,7 +72,7 @@ public abstract class ListTableModel extends BasicTableModel {
      * @param columns Ein String-Array mit den Namen der Spalten der Tabelle
      * @param liste Die anfängliche Liste
      */
-    public ListTableModel(String[] columns, List liste, boolean removeAllowed) {
+    public ListTableModel(String[] columns, List<?> liste, boolean removeAllowed) {
         super(columns);
 
         this.removeAllowed = removeAllowed;
@@ -88,6 +89,7 @@ public abstract class ListTableModel extends BasicTableModel {
      * Liefert die Anzahl der Zeilen in dieser Tabelle.
      * @see javax.swing.table.TableModel#getRowCount()
      */
+    @Override
     public int getRowCount() {
         return (dataList != null) ? dataList.size() : 0;
     }
@@ -112,6 +114,7 @@ public abstract class ListTableModel extends BasicTableModel {
      * @return Das Objekt in der Zelle (rowIndex, columnIndex) der Liste
      * oder <code>null</code>, falls es die Zeile oder Spalte nicht gibt
      */
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object value = null;
         if (getList() != null && rowIndex < getList().size()) {
@@ -169,7 +172,7 @@ public abstract class ListTableModel extends BasicTableModel {
      * Setzt die Liste mit dem Tabellen-Inhalt.
      * @param newList Die neue Liste
      */
-    public void setList(List newList) {
+    public void setList(List<?> newList) {
         this.dataList = newList;
     }
 

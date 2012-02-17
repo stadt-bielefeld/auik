@@ -52,12 +52,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 
 /**
@@ -98,7 +96,7 @@ public class ChartDataSets {
      * @param einheit Der Name der Einheit (für die Achsenbeschriftung des Diagramms)
      * @return Eine Analysepositionen-Datenreihe
      */
-    public static TimeSeries createAnalysePositionenSeries(List list, String name, String einheit) {
+    public static TimeSeries createAnalysePositionenSeries(List<?> list, String name, String einheit) {
         TimeSeries result = new TimeSeries(name, "Datum", "["+einheit+"]", Minute.class);
         log.debug("Erzeuge TimeSeries: " + name);
         Calendar cal = GregorianCalendar.getInstance();

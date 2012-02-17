@@ -44,13 +44,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
@@ -67,7 +64,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class SuevPanel extends JPanel {
-	/** Logging */
+    private static final long serialVersionUID = -6379153046356849276L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
@@ -98,10 +97,6 @@ public class SuevPanel extends JPanel {
 
     // Daten
     private AnhSuevFachdaten fachdaten = null;
-
-    //Listener
-    private ActionListener editButtonListener;
-
 
     public SuevPanel(BasisObjektBearbeiten hauptModul) {
         name = "Suev-Kan Verfahren";
@@ -273,6 +268,7 @@ public class SuevPanel extends JPanel {
     }
 
 
+    @Override
     public String getName() {
         return name;
     }
@@ -458,6 +454,7 @@ public class SuevPanel extends JPanel {
             saveSuevButton = new JButton("Speichern");
 
             saveSuevButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveSuevDaten()) {
@@ -494,6 +491,7 @@ private JTable getObjektverknuepungTabelle() {
 
             objektverknuepfungTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
                         public void mouseClicked(java.awt.event.MouseEvent e) {
                             if ((e.getClickCount() == 2)
                                     && (e.getButton() == 1)) {
@@ -533,10 +531,12 @@ private JTable getObjektverknuepungTabelle() {
                             }
                         }
 
+                        @Override
                         public void mousePressed(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
 
+                        @Override
                         public void mouseReleased(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
@@ -576,6 +576,9 @@ private JTable getObjektverknuepungTabelle() {
     private Action getVerknuepfungLoeschAction() {
         if (verknuepfungLoeschAction == null) {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 5629438504708021409L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
@@ -620,6 +623,7 @@ private JTable getObjektverknuepungTabelle() {
             selectObjektButton = new JButton("Objekt auswählen");
 
             selectObjektButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(hauptModul
                             .getFrame(), fachdaten.getBasisObjekt(),

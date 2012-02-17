@@ -28,22 +28,19 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
@@ -73,20 +70,22 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
     // Der Name mit dem das Modul im AUIK angezeigt wird
+    @Override
     public String getName() {
         return "Herstellnr. suchen";
     }
     // Legt fest in welchen Menü das Modul im AUIK zu finden ist
+    @Override
     public String getCategory() {
         return "VAwS";
     }
 
+    @Override
     public Icon getIcon() {
         return super.getIcon(iconPath);
     }
     //Aufruf der eigentlichen Suchfunktion in VawsFachdaten
-    public void SuchStart()
-    {
+    public void SuchStart() {
         String herstellnr = herstellFeld.getText();
         log.debug(" Suche nach Herstellnummer " + herstellnr);
         ((HerstellNrSuchenModel)getTableModel()).setList(
@@ -100,26 +99,24 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
             herstellFeld = new JTextField("", 12);
 
-
             suchenButton = new JButton("Suchen");
             suchenButton.setToolTipText("Herstellnummer suchen");
-
 
 //             Ein KeyListener für das Textfeld(herstellFeld),
             // der die eigentliche Suche auslöst:
 
             herstellFeld.addKeyListener(new KeyAdapter() {
                 // Suche wird mit Return oder Enter ausgelöst
+                @Override
                 public void keyPressed(KeyEvent e) {
-
                     if (e.getKeyCode() == 10) {
                         SuchStart();
-
                     }
                 }
             });
@@ -127,12 +124,11 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
             // Ein ActionListener für den Button(suchenButton),
             // der die eigentliche Suche auslöst:
             suchenButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
-
                     SuchStart();
                 }
             });
-
 
             // Noch etwas Layout...
             FormLayout layout = new FormLayout(
@@ -145,7 +141,6 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
             builder.nextLine();
             builder.append("");
 
-
             queryPanel = builder.getPanel();
         }
 
@@ -153,6 +148,7 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
     }
 
     // Öffnet durch Aufruf des VawsEditors ein Fenster um ein Objekt bearbeiten zu können
+    @Override
     protected void editObject(int row) {
         if (row != -1) {
             VawsFachdaten fachdaten = ((VawsFachdaten)ergebnisModel.getObjectAtRow(row));
@@ -160,11 +156,11 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
             VawsEditor editor = new VawsEditor(fachdaten, frame, "Herstellnummer");
 
             editor.setVisible(true);
-
         }
     }
 
     //Aufruf des Modells für die Ergebnis-Tabelle
+    @Override
     public ListTableModel getTableModel() {
         if (ergebnisModel == null) {
             ergebnisModel = new HerstellNrSuchenModel();

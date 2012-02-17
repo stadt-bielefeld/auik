@@ -35,6 +35,8 @@ import javax.swing.JFormattedTextField;
  * @author David Klotz
  */
 public class BasicFormattedField extends JFormattedTextField {
+    private static final long serialVersionUID = 4569009650348515402L;
+
     public BasicFormattedField() {
         super();
     }
@@ -60,6 +62,7 @@ public class BasicFormattedField extends JFormattedTextField {
         super(factory, currentValue);
     }
 
+    @Override
     protected void processFocusEvent(FocusEvent e)
     {
         super.processFocusEvent(e);

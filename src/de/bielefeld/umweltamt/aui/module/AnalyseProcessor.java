@@ -28,9 +28,6 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
-
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -46,7 +43,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * @author <a href="mailto:ingo.weinzierl@intevation.de">Ingo Weinzierl</a>
  */
 public class AnalyseProcessor {
-	
+
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -92,7 +89,7 @@ public class AnalyseProcessor {
             parameter, einheit);
 
         if (pos != null) {
-        	
+
             pos.setWert(Float.parseFloat(wert));
             pos.setGrkl(grkl);
             pos.setAtlEinheiten(einheit);

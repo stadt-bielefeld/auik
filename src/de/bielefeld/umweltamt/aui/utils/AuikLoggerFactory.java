@@ -102,7 +102,7 @@ public class AuikLoggerFactory implements LoggerFactory {
     		Logger.getLogger("de.bielefeld.umweltamt.aui.module").setLevel(Level.WARN);
     		Logger.getLogger("de.bielefeld.umweltamt.aui.utils").setLevel(Level.WARN);
     		Logger.getLogger("org.hibernate").setLevel(Level.WARN);
-            Logger.getLogger("de.bielefeld.umweltamt.aui.module.objectpanels").setLevel(Level.WARN);
+            Logger.getLogger("de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk").setLevel(Level.ALL);
     	}
     	return;
     }

@@ -50,8 +50,9 @@ import com.toedter.calendar.JCalendar;
  * different Formats.
  */
 public class TextFieldDateChooser extends JPanel
-implements ActionListener, FocusListener, PropertyChangeListener {
+    implements ActionListener, FocusListener, PropertyChangeListener {
 
+    private static final long serialVersionUID = 1175337073259784374L;
     protected String[] patterns = null;
     protected SimpleDateFormat dateFormat = null;
     protected JTextField textField = null;
@@ -125,13 +126,18 @@ implements ActionListener, FocusListener, PropertyChangeListener {
         super.add(calendarButton, BorderLayout.LINE_END);
 
         popup = new JPopupMenu() {
+            private static final long serialVersionUID = -3561295085015326259L;
+
+            @Override
             public void setVisible(boolean b) {
                 Boolean isCanceled = (Boolean)
-                getClientProperty("JPopupMenu.firePopupMenuCanceled");
+                    getClientProperty("JPopupMenu.firePopupMenuCanceled");
 
-                if (b || (!b && dateSelected)
-                        || ((isCanceled != null)
-                                && !b && isCanceled.booleanValue())) {
+                /* Now this is/was an interesting logical expression... ;-) */
+//                if (b || (!b && dateSelected)
+//                        || ((isCanceled != null)
+//                                && !b && isCanceled.booleanValue())) {
+                if (b || dateSelected || ((isCanceled != null) && isCanceled)) {
                     super.setVisible(b);
                 }
             }
@@ -191,6 +197,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
     /**
      * Called when the calendar button is pressed.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         int x = calendarButton.getWidth()
         - (int) popup.getPreferredSize().getWidth();
@@ -203,6 +210,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
     /**
      * Called when JCalendar's DateFormatter is changed.
      */
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (!ignorePropertyChangeEvent && evt.getPropertyName().equals("day")) {
             dateSelected = true;
@@ -218,6 +226,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
      * Formats the text of the text field or displays an error if the
      * text can't be formatted.
      */
+    @Override
     public void focusLost(FocusEvent evt) {
         // Ignore temporary events.
         if (evt.isTemporary()) {
@@ -286,6 +295,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
     /**
      * Updates the UI of itself and the popup.
      */
+    @Override
     public void updateUI() {
         super.updateUI();
 
@@ -294,6 +304,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
         }
     }
 
+    @Override
     public void setEnabled(boolean enabled) {
         getTextField().setEnabled(enabled);
         getCalendarButton().setEnabled(enabled);
@@ -301,6 +312,7 @@ implements ActionListener, FocusListener, PropertyChangeListener {
     }
 
     /** Not used. */
+    @Override
     public void focusGained(FocusEvent e) {
     }
 }

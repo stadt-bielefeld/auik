@@ -37,6 +37,8 @@ import javax.swing.table.TableCellRenderer;
  * @author David Klotz
  */
 public class ComboBoxRenderer extends JComboBox implements TableCellRenderer {
+    private static final long serialVersionUID = -6998892781329673586L;
+
     public ComboBoxRenderer() {
         super();
         this.setBorder(BorderFactory.createEmptyBorder());
@@ -45,6 +47,7 @@ public class ComboBoxRenderer extends JComboBox implements TableCellRenderer {
     /* (non-Javadoc)
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
      */
+    @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
         removeAllItems();

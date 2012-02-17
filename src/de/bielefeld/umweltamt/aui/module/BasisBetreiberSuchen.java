@@ -76,14 +76,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.uif_lite.component.Factory;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
@@ -98,7 +95,6 @@ import de.bielefeld.umweltamt.aui.utils.NamedObject;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
-;
 
 /**
  * Ein Modul zum Suchen und Bearbeiten eines Betreibers.
@@ -136,6 +132,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Betreiber suchen";
     }
@@ -144,6 +141,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      * @return "m_betreiber_suchen"
      */
+    @Override
     public String getIdentifier() {
         return "m_betreiber_suchen";
     }
@@ -151,6 +149,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "Betriebe";
     }
@@ -159,6 +158,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
      * @see de.bielefeld.umweltamt.aui.Modul#getIcon()
      * @see de.bielefeld.umweltamt.aui.AbstractModul#getIcon(String)
      */
+    @Override
     public Icon getIcon() {
         return super.getIcon(iconPath);
     }
@@ -166,6 +166,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
             betreiberModel = new BasisBetreiberModel();
@@ -220,6 +221,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#show()
      */
+    @Override
     public void show() {
         super.show();
 
@@ -236,6 +238,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#hide()
      */
+    @Override
     public void hide() {
         super.hide();
 
@@ -250,10 +253,12 @@ public class BasisBetreiberSuchen extends AbstractModul {
 
     public void updateBetreiberListe() {
         SwingWorkerVariant worker = new SwingWorkerVariant(getSuchFeld()) {
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 betreiberModel.updateList();
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 betreiberModel.fireTableDataChanged();
 
@@ -318,10 +323,12 @@ public class BasisBetreiberSuchen extends AbstractModul {
     public void searchObjekteByBetreiber(final BasisBetreiber betreiber) {
         // ... siehe show()
         SwingWorkerVariant worker = new SwingWorkerVariant(getBetreiberTabelle()) {
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 objektModel.searchByBetreiber(betreiber);
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 objektModel.fireTableDataChanged();
             }
@@ -336,10 +343,12 @@ public class BasisBetreiberSuchen extends AbstractModul {
      */
     public void filterBetreiberListe(final String suche, final String column) {
             SwingWorkerVariant worker = new SwingWorkerVariant(getBetreiberTabelle()) {
+                @Override
                 protected void doNonUILogic() throws RuntimeException {
                     betreiberModel.filterList(suche, column);
                 }
 
+                @Override
                 protected void doUIUpdateLogic() throws RuntimeException {
                     getBetreiberTabelle().clearSelection();
 
@@ -360,6 +369,9 @@ public class BasisBetreiberSuchen extends AbstractModul {
     private Action getBetreiberEditAction() {
         if (betreiberEditAction == null) {
             betreiberEditAction = new AbstractAction("Bearbeiten") {
+                private static final long serialVersionUID = 5689189314194296978L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getBetreiberTabelle().getSelectedRow();
 
@@ -380,6 +392,9 @@ public class BasisBetreiberSuchen extends AbstractModul {
     private Action getBetreiberLoeschAction() {
         if (betreiberLoeschAction == null) {
             betreiberLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 6709934716520847123L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getBetreiberTabelle().getSelectedRow();
                     if (row != -1 && getBetreiberTabelle().getEditingRow() == -1) {
@@ -411,6 +426,9 @@ public class BasisBetreiberSuchen extends AbstractModul {
     private Action getObjektNeuAction() {
         if (objektNeuAction == null) {
             objektNeuAction = new AbstractAction("Neues Objekt") {
+                private static final long serialVersionUID = 1922038365500278302L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = betreiberTabelle.getSelectedRow();
 
@@ -430,6 +448,9 @@ public class BasisBetreiberSuchen extends AbstractModul {
     private Action getObjektEditAction() {
         if (objektEditAction == null) {
             objektEditAction = new AbstractAction("Bearbeiten") {
+                private static final long serialVersionUID = 374432667200396085L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = objektTabelle.getSelectedRow();
                     BasisObjekt obj = objektModel.getRow(row);
@@ -453,6 +474,9 @@ public class BasisBetreiberSuchen extends AbstractModul {
     private Action getObjektLoeschAction() {
         if (objektLoeschAction == null) {
             objektLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 5285618973743780113L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektTabelle().getSelectedRow();
                     if (row != -1 && getObjektTabelle().getEditingRow() == -1) {
@@ -530,6 +554,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
             // Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
             ListSelectionModel rowSM = betreiberTabelle.getSelectionModel();
             rowSM.addListSelectionListener(new ListSelectionListener() {
+                @Override
                 public void valueChanged(ListSelectionEvent e) {
                     // überzählige Events ignorieren
                     if (e.getValueIsAdjusting()) {
@@ -549,6 +574,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
             betreiberTabelle.setRowSelectionAllowed(true);
 
             betreiberTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
@@ -560,10 +586,12 @@ public class BasisBetreiberSuchen extends AbstractModul {
                     }
                 }
 
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showBetreiberPopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showBetreiberPopup(e);
                 }
@@ -596,6 +624,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
             objektTabelle.getColumnModel().getColumn(0).setPreferredWidth(objektTabelle.getColumnModel().getColumn(0).getMaxWidth()-10);
 
             objektTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
@@ -612,10 +641,12 @@ public class BasisBetreiberSuchen extends AbstractModul {
                     }
                 }
 
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showObjektPopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showObjektPopup(e);
                 }
@@ -640,6 +671,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
             suchFeld = new JTextField();
 
             suchFeld.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String suche = getSuchFeld().getText();
                     String spalte = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();
@@ -649,6 +681,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
             suchFeld.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
 
             suchFeld.addKeyListener(new KeyAdapter() {
+                @Override
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_TAB) {
                         String suche = getSuchFeld().getText();
@@ -666,6 +699,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
             submitButton = new JButton(AuikUtils.getIcon(16, "key_enter.png"));
             submitButton.setToolTipText("Suche starten");
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String suche = getSuchFeld().getText();
                     String spalte = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();

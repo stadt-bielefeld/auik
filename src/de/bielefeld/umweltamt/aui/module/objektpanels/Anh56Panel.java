@@ -60,13 +60,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
@@ -84,14 +81,15 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author u633d
  */
 public class Anh56Panel extends JPanel{
-	/** Logging */
+    private static final long serialVersionUID = -6981678796941528077L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
 
     // Widgets
-
     private JTextField druckverfahrenFeld = null;
     private JTextField verbrauchFeld = null;
     private JTextField entsorgungFeld = null;
@@ -107,17 +105,12 @@ public class Anh56Panel extends JPanel{
     // Daten
     private Anh56Fachdaten fachdaten = null;
 
-
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
     private JTable objektverknuepfungTabelle = null;
     private JButton selectObjektButton = null;
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
-
-
-    //Listener
-    private ActionListener editButtonListener;
 
     public Anh56Panel(BasisObjektBearbeiten hauptModul) {
         name = "Druckerei";
@@ -303,14 +296,14 @@ public class Anh56Panel extends JPanel{
 	        if (fachdaten.getEntsorgung() != null) {
 	            getEntsorgungFeld().setText(fachdaten.getEntsorgung());
 	        }
-	
+
 	        if (fachdaten.getGen58() != null) {
 	            getGen58Datum().setDate(fachdaten.getGen58());
 	        }
 	        if (fachdaten.getGen59() != null) {
 	            getGen59Datum().setDate(fachdaten.getGen59());
 	        }
-	
+
 	        if (fachdaten.getAba() != null) {
 	            if (fachdaten.getAba() == true) {
 	                getAbaCheck().setSelected(true);
@@ -349,6 +342,7 @@ public class Anh56Panel extends JPanel{
             saveAnh56Button = new JButton("Speichern");
 
             saveAnh56Button.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveAnh56Daten()) {
@@ -364,6 +358,7 @@ public class Anh56Panel extends JPanel{
         return saveAnh56Button;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -446,6 +441,7 @@ private JTable getObjektverknuepungTabelle() {
 
             objektverknuepfungTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
                         public void mouseClicked(java.awt.event.MouseEvent e) {
                             if ((e.getClickCount() == 2)
                                     && (e.getButton() == 1)) {
@@ -485,10 +481,12 @@ private JTable getObjektverknuepungTabelle() {
                             }
                         }
 
+                        @Override
                         public void mousePressed(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
 
+                        @Override
                         public void mouseReleased(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
@@ -528,6 +526,9 @@ private JTable getObjektverknuepungTabelle() {
     private Action getVerknuepfungLoeschAction() {
         if (verknuepfungLoeschAction == null) {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = -7858293832318327844L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
@@ -571,6 +572,7 @@ private JTable getObjektverknuepungTabelle() {
             selectObjektButton = new JButton("Objekt auswählen");
 
             selectObjektButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(hauptModul
                             .getFrame(), fachdaten.getBasisObjekt(),

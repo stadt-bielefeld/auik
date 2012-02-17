@@ -59,13 +59,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -81,7 +78,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author u633d
  */
 public class Anh52Panel extends JPanel{
-	/** Logging */
+    private static final long serialVersionUID = -1240254202213465142L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
@@ -101,9 +100,6 @@ public class Anh52Panel extends JPanel{
     // Daten
     private Anh52Fachdaten fachdaten = null;
 
-    //Listener
-    private ActionListener editButtonListener;
-
     public Anh52Panel(BasisObjektBearbeiten hauptModul) {
         name = "Chemische Wäscherei";
         this.hauptModul = hauptModul;
@@ -111,7 +107,6 @@ public class Anh52Panel extends JPanel{
         FormLayout layout = new FormLayout (
                 "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
                 "");
-
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
         builder.setDefaultDialogBorder();
@@ -279,6 +274,7 @@ public class Anh52Panel extends JPanel{
         		+ "Anhang 52 Objekt aus DB geholt: ID" + fachdaten);
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -288,6 +284,7 @@ public class Anh52Panel extends JPanel{
             saveAnh52Button = new JButton("Speichern");
 
             saveAnh52Button.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveAnh52Daten()) {

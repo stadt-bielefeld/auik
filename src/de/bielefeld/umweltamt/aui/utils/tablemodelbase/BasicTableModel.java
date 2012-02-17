@@ -32,6 +32,7 @@ import javax.swing.table.AbstractTableModel;
  * @author David Klotz
  */
 public abstract class BasicTableModel extends AbstractTableModel {
+    private static final long serialVersionUID = 4900667181862129165L;
     protected String[] columns;
 
     /**
@@ -47,6 +48,7 @@ public abstract class BasicTableModel extends AbstractTableModel {
      * Liefert den Namen der jeweiligen Tabellen-Spalte.
      * @see javax.swing.table.TableModel#getColumnName(int)
      */
+    @Override
     public String getColumnName(int column) {
         if (column < columns.length) {
             return columns[column];
@@ -59,6 +61,7 @@ public abstract class BasicTableModel extends AbstractTableModel {
      * Liefert die Anzahl der Spalten dieser Tabelle.
      * @see javax.swing.table.TableModel#getColumnCount()
      */
+    @Override
     public int getColumnCount() {
         return columns.length;
     }

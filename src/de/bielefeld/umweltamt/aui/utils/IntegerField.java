@@ -35,6 +35,8 @@ import javax.swing.text.NumberFormatter;
  * @author David Klotz
  */
 public class IntegerField extends BasicFormattedField {
+    private static final long serialVersionUID = -3196396811481389378L;
+
     /**
      * Erzeugt ein neues formatiertes Textfeld zum Bearbeiten von Integern.
      * Zum Abfragen des aktuellen Wertes getIntValue() benutzen.
@@ -42,7 +44,8 @@ public class IntegerField extends BasicFormattedField {
     public IntegerField() {
         NumberFormat intFormat = NumberFormat.getIntegerInstance();
         intFormat.setGroupingUsed(false);
-        setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(intFormat)));
+        setFormatterFactory(
+            new DefaultFormatterFactory(new NumberFormatter(intFormat)));
     }
 
     public Integer getIntValue() {

@@ -34,6 +34,8 @@ import javax.swing.JTextField;
  * @author David Klotz
  */
 public class BasicEntryField extends JTextField {
+    private static final long serialVersionUID = 4428876583427331046L;
+
     public BasicEntryField() {
         super();
     }
@@ -41,6 +43,7 @@ public class BasicEntryField extends JTextField {
         super(text);
     }
 
+    @Override
     protected void processFocusEvent(FocusEvent e)
     {
         super.processFocusEvent(e);

@@ -48,24 +48,17 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.AnhBwkModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.PrioritaetModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -86,7 +79,7 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private PrioritaetModel tmodel;
-    
+
     @Override
     protected JTable getResultTable() {
         if (resultTable == null) {
@@ -98,6 +91,7 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Priorität";
     }
@@ -105,6 +99,7 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
@@ -120,13 +115,16 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
 
                 	SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        @Override
                         protected void doNonUILogic() {
                             ((PrioritaetModel)getTableModel()).setList(BasisObjekt.getObjekteMitPrioritaet());
                         }
 
+                        @Override
                         protected void doUIUpdateLogic(){
                             ((PrioritaetModel)getTableModel()).fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
@@ -152,6 +150,7 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
+    @Override
     public ListTableModel getTableModel() {
         if (tmodel == null) {
             tmodel = new PrioritaetModel();
@@ -162,22 +161,23 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
 	/**
 	 * Schaltet zum "Standort suchen"-Modul um, wenn zu einer Zeile in der
 	 * Ergebnis-Tabelle ein BasisStandort vorhanden ist.
-	 * 
+	 *
 	 * @param row
 	 *            Die Zeile der Tabelle.
 	 */
-	protected void editObject(int row) {
-	
+	@Override
+    protected void editObject(int row) {
+
 	        if (row != -1) {
 	            Object obj = getTableModel().getObjectAtRow(row);
             	Object[] fd = (Object[])obj;
             	Object standort = fd[0];
-	
+
 	            if (standort != null) {
 	            	manager.getSettingsManager().setStandort((BasisStandort)standort);
 	                manager.switchModul("m_standort_suchen");
 	            }
-	
+
 	        }
 	    }
 }

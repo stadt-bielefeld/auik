@@ -48,17 +48,14 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.EntsorgerEditor;
@@ -74,7 +71,9 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class Anh50Panel extends JPanel {
-	/** Logging */
+    private static final long serialVersionUID = 7997458251785488488L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
@@ -92,8 +91,6 @@ public class Anh50Panel extends JPanel {
     private JButton saveAnh50Button = null;
     private JComboBox entsorgerBox = null;
 
-
-
     // Daten
     private Anh50Fachdaten fachdaten = null;
     private AnhEntsorger[] entsorg = null;
@@ -108,7 +105,6 @@ public class Anh50Panel extends JPanel {
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
 
-
     public Anh50Panel(BasisObjektBearbeiten hauptModul) {
         name = "Zahnarzt";
         this.hauptModul = hauptModul;
@@ -116,7 +112,6 @@ public class Anh50Panel extends JPanel {
         FormLayout layout = new FormLayout (
                 "r:70dlu, 5dlu, 90dlu, r:90dlu, 5dlu, 20dlu", // Spalten
                 "");
-
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
         builder.setDefaultDialogBorder();
@@ -168,7 +163,6 @@ public class Anh50Panel extends JPanel {
         }
     }
 
-
     public void updateForm() throws RuntimeException {
         if (entsorg != null) {
             getEntsorgerBox().setModel(new DefaultComboBoxModel(entsorg));
@@ -204,25 +198,21 @@ public class Anh50Panel extends JPanel {
             objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
         }
 
-        }
-
+    }
 
     public void clearForm() {
-
         getGefaehrdungsklasseFeld().setText(null);
         getAnh50BemerkungArea().setText(null);
         getAntragDatum().setDate(null);
         getGenehmigungDatum().setDate(null);
         getWiedervorlageDatum().setDate(null);
         getErloschenCheck().setSelected(false);
-
     }
 
     public void enableAll(boolean enabled) {
-
     }
 
-
+    @Override
     public String getName() {
         return name;
     }
@@ -298,8 +288,6 @@ public class Anh50Panel extends JPanel {
         }
     }
 
-
-
     private JTextArea getAnh50BemerkungArea() {
         if (anh50BemerkungArea == null) {
             anh50BemerkungArea = new LimitedTextArea(255);
@@ -344,11 +332,12 @@ public class Anh50Panel extends JPanel {
         }
         return entsorgerBox;
     }
-private JButton getSaveAnh50Button() {
+    private JButton getSaveAnh50Button() {
         if (saveAnh50Button == null) {
             saveAnh50Button = new JButton("Speichern");
 
             saveAnh50Button.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveAnh50Daten()) {
@@ -389,6 +378,7 @@ private JButton getSaveAnh50Button() {
     private ActionListener getEditButtonListener() {
         if (editButtonListener == null) {
             editButtonListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String action = e.getActionCommand();
 
@@ -430,6 +420,7 @@ private JButton getSaveAnh50Button() {
 
             objektverknuepfungTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
                         public void mouseClicked(java.awt.event.MouseEvent e) {
                             if ((e.getClickCount() == 2)
                                     && (e.getButton() == 1)) {
@@ -469,10 +460,12 @@ private JButton getSaveAnh50Button() {
                             }
                         }
 
+                        @Override
                         public void mousePressed(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
 
+                        @Override
                         public void mouseReleased(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
@@ -512,6 +505,9 @@ private JButton getSaveAnh50Button() {
     private Action getVerknuepfungLoeschAction() {
         if (verknuepfungLoeschAction == null) {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 2886609709202711593L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
@@ -555,6 +551,7 @@ private JButton getSaveAnh50Button() {
             selectObjektButton = new JButton("Objekt auswählen");
 
             selectObjektButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(hauptModul
                             .getFrame(), fachdaten.getBasisObjekt(),

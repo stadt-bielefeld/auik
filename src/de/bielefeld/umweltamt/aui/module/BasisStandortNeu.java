@@ -61,7 +61,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -69,7 +68,6 @@ import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
@@ -105,8 +103,6 @@ public class BasisStandortNeu extends AbstractModul {
     private JTextField datumFeld;
     private JLabel handzeichenLabel;
     private JTextField handzeichenNeuFeld;
-    private JTextField sachbe33ravFeld;
-    private JTextField sachbe33heeFeld;
 
     private JComboBox strassenBox;
     private JComboBox gemarkungBox;
@@ -123,6 +119,7 @@ public class BasisStandortNeu extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Neuer Standort";
     }
@@ -130,6 +127,7 @@ public class BasisStandortNeu extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      */
+    @Override
     public String getIdentifier() {
         return "m_standort_neu";
     }
@@ -137,6 +135,7 @@ public class BasisStandortNeu extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "Betriebe";
     }
@@ -144,6 +143,7 @@ public class BasisStandortNeu extends AbstractModul {
     /**
      * @see de.bielefeld.umweltamt.aui.Modul#getIcon()
      */
+    @Override
     public Icon getIcon() {
         return super.getIcon("filenew32.png");
     }
@@ -151,6 +151,7 @@ public class BasisStandortNeu extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
             speichernButton = new JButton("Speichern");
@@ -165,8 +166,6 @@ public class BasisStandortNeu extends AbstractModul {
             plzFeld = new LimitedTextField(10);
             flurFeld = new LimitedTextField(50);
             flurStkFeld = new LimitedTextField(50);
-            sachbe33ravFeld = new LimitedTextField(50);
-            sachbe33heeFeld = new LimitedTextField(50);
 
             rechtsWFeld = new DoubleField(1);
             rechtsWFeld.setValue(new Float(0.0f));
@@ -194,6 +193,7 @@ public class BasisStandortNeu extends AbstractModul {
             // Enter im Handzeichen-Feld (wenn das Feld nicht
             // leer ist) zum Speichern-Button zu springen.
             handzeichenNeuFeld.addKeyListener(new KeyAdapter() {
+                @Override
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         if (handzeichenNeuFeld.getText().equals("")) {
@@ -300,6 +300,7 @@ public class BasisStandortNeu extends AbstractModul {
         return panel;
     }
 
+    @Override
     public void show() {
         super.show();
         clearForm();
@@ -428,6 +429,7 @@ public class BasisStandortNeu extends AbstractModul {
 
         SwingWorkerVariant worker = new SwingWorkerVariant(strassenBox) {
 
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 try {
                     if (strassen == null) {
@@ -450,6 +452,7 @@ public class BasisStandortNeu extends AbstractModul {
                 }
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 if (strassen != null) {
                     //strassenBox = new SearchBox(strassen);
@@ -518,6 +521,7 @@ public class BasisStandortNeu extends AbstractModul {
      */
     private final class StandortNeuListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == speichernButton) {
                 log.debug("(" + BasisStandortNeu.this.getIdentifier() + ") "
