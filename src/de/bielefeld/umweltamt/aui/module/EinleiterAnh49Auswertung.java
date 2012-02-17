@@ -58,30 +58,17 @@ package de.bielefeld.umweltamt.aui.module;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.RowSorter;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-
-
-
-import junit.runner.Sorter;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49Model;
@@ -107,24 +94,23 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     private JCheckBox abgerissenCheck;
     private JCheckBox abwasserfreiCheck;
     private JCheckBox wiedervorlageCheck;
-    private JButton submitButton;
-    private JButton tuevButton;
-    private JButton sachbearbeiterButton;
-    private JButton alleButton;
-    private JButton inaktiveButton;
+    private JCheckBox aktivCheck;
+    private JButton auswahlButton;
     private JButton tabelleExportButton;
-    
+
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private Anh49Model tmodel;
-    
+
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Anhang 49";
     }
 
+    @Override
     public String getIdentifier() {
         return "m_auswertung_anh49";
     }
@@ -135,131 +121,60 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
+            abgemeldetCheck = new JCheckBox("Abgemeldet");
+            abgerissenCheck = new JCheckBox("Nur abgerissene");
+            abwasserfreiCheck = new JCheckBox("Abwasserfrei");
+            wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage");
+            aktivCheck = new JCheckBox("Aktiv");
+            aktivCheck.setSelected(true);
             sachbBox = new JComboBox();
-            
+            sachbBox.setModel(new DefaultComboBoxModel(
+                Anh49Fachdaten.getSachbearbeiter()));
             dekraTuevFeld = new IntegerField();
 
-            abgemeldetCheck = new JCheckBox("Abgemeldet");
+            auswahlButton = new JButton("Auswahl anwenden");
 
-            abgerissenCheck = new JCheckBox("Abgerissen");
-
-            abwasserfreiCheck = new JCheckBox("Abwasserfrei");
-
-            wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage");
-
-            submitButton = new JButton("Suchen");
-
-            alleButton = new JButton("Alle aktiven");
-
-            inaktiveButton = new JButton("Alle inaktiven");
-
-            tuevButton = new JButton("Suchen");
-            tuevButton.setToolTipText("Tuev/Dekra suchen");
-
-            sachbearbeiterButton = new JButton("Suchen");
-            sachbearbeiterButton.setToolTipText("SachbearbeiterIn anzeigen");
-            
-            String[] sachbearbeiter =
-                Anh49Fachdaten.getSachbearbeiter();
-            sachbBox.setModel(new DefaultComboBoxModel(sachbearbeiter));
-            
-
-            // Ein ActionListener für den Button,
-            // der die eigentliche Suche auslöst:
-            submitButton.addActionListener(new ActionListener() {
+            auswahlButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
-                    boolean abgem;
-                    if (abgemeldetCheck.isSelected()) {
-                        abgem = true;
-                    } else {
-                        abgem = false;
-                    }
-
-                    String abgerissen;
-                    if (abgerissenCheck.isSelected()) {
-                        abgerissen = "%abgerissen";
-                    } else {
-                        abgerissen = "";
-                    }
-
-                    boolean abwfrei;
-                    if (abwasserfreiCheck.isSelected()) {
-                        abwfrei = true;
-                    } else {
-                        abwfrei = false;
-                    }
-
-                    ((Anh49Model)getTableModel()).setList(
-                            Anh49Fachdaten.findAuswertung(
-                                    abgem,
-                                    abgerissen,
-                                    abwfrei,
-                                    wiedervorlageCheck.isSelected()));
-                    ((Anh49Model)getTableModel()).fireTableDataChanged();
-                    frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-                }
-            });
-
-            alleButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-
-                    ((Anh49Model)getTableModel()).setList(
-                            Anh49Fachdaten.findAlle());
-                    ((Anh49Model)getTableModel()).fireTableDataChanged();
-                    frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-                }
-            });
-
-            inaktiveButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-
-                    ((Anh49Model)getTableModel()).setList(
-                            Anh49Fachdaten.findInaktive());
-                    ((Anh49Model)getTableModel()).fireTableDataChanged();
-                    frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-                }
-            });
-
-            tuevButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-
-                    Integer tuev = dekraTuevFeld.getIntValue();
-
-                    ((Anh49Model)getTableModel()).setList(
-                            Anh49Fachdaten.findTuev(tuev));
-                    ((Anh49Model)getTableModel()).fireTableDataChanged();
-                    frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-                }
-            });
-
-            sachbearbeiterButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-
-                    String sachbearb = sachbBox.getSelectedItem().toString();
-
-                    ((Anh49Model)getTableModel()).setList(
-                            Anh49Fachdaten.findSachbearbeiter(sachbearb));
-                    ((Anh49Model)getTableModel()).fireTableDataChanged();
-                    frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                    Anh49Model model = (Anh49Model) getTableModel();
+                    model.setList(
+                        Anh49Fachdaten.getAuswahlList(
+                            abgemeldetCheck.isSelected(),
+                            abwasserfreiCheck.isSelected(),
+                            wiedervorlageCheck.isSelected(),
+                            abgerissenCheck.isSelected(),
+                            ((sachbBox.getSelectedItem() != null) ?
+                                sachbBox.getSelectedItem().toString() : null),
+                            dekraTuevFeld.getIntValue(),
+                            aktivCheck.isSelected()));
+                    model.fireTableDataChanged();
+                    frame.changeStatus(
+                        "" + model.getRowCount() + " Objekte gefunden");
                 }
             });
 
             // Noch etwas Layout...
             FormLayout layout = new FormLayout(
-                    "pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 20dlu, pref, 20dlu, pref"
+                    "pref, 3dlu, pref, 20dlu, pref, 3dlu, pref"
                     );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(abgemeldetCheck, abwasserfreiCheck);
-            builder.append("");
-            builder.append("SachbearbeiterIn:", sachbBox, sachbearbeiterButton);
+            builder.append(abgemeldetCheck);
+            builder.append(wiedervorlageCheck);
+            builder.append("SachbearbeiterIn:", sachbBox);
             builder.nextLine();
-            builder.append(wiedervorlageCheck, abgerissenCheck);
-            builder.append(submitButton);
-            builder.append("Dekra-TÜV-T.:", dekraTuevFeld, tuevButton, alleButton, inaktiveButton);
+            builder.append(abwasserfreiCheck);
+            builder.append(aktivCheck);
+            builder.append("Dekra-TÜV-T.:", dekraTuevFeld);
+            builder.nextLine();
+            builder.append(abgerissenCheck);
+            builder.append("");
+            builder.append(auswahlButton);
             builder.append(getTabelleExportButton());
 
             queryPanel = builder.getPanel();
@@ -271,6 +186,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
+    @Override
     public ListTableModel getTableModel() {
         if (tmodel == null) {
             tmodel = new Anh49Model();
@@ -284,6 +200,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             tabelleExportButton.setEnabled(true);
 
             tabelleExportButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     saveTabelle();
                 }

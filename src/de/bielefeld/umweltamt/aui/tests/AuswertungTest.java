@@ -49,10 +49,6 @@ package de.bielefeld.umweltamt.aui.tests;
 
 import java.util.List;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.*;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.*;
-import de.bielefeld.umweltamt.aui.mappings.atl.*;
-import de.bielefeld.umweltamt.aui.mappings.vaws.*;
 import junit.framework.TestCase;
 
 import org.hibernate.HibernateException;
@@ -60,11 +56,25 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlUebergabestelle;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
+
 
 public class AuswertungTest extends TestCase {
     /**
      * Starten einer SessionFactory
      */
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         Configuration configuration =
@@ -77,6 +87,7 @@ public class AuswertungTest extends TestCase {
 
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         _sessionFactory.close();
@@ -120,7 +131,7 @@ public class AuswertungTest extends TestCase {
        try {
            session = _sessionFactory.openSession();
 
-           List list = Anh49Fachdaten.findAlle();
+           List list = null; //Anh49Fachdaten.findAlle();
 
 
         List listquery;

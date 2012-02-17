@@ -22,6 +22,7 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -48,70 +49,6 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         return tmp;
     }
 
-    // es werden alle Datensätze aus Anh49Fachdaten ausser Fettabscheidern
-    // ausgewählt
-    public static List<?> findAlle() {
-        String query = "FROM Anh49Fachdaten anh49 "
-            + "WHERE anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "
-            + "and anh49.basisObjekt.inaktiv = false "
-            + "ORDER BY anh49.sachbearbeiterIn";
-        return new DatabaseAccess().createQuery(query).list();
-    }
-
-    // es werden alle Datensätze aus Anh49Fachdaten ausser Fettabscheidern
-    // ausgewählt
-    public static List<?> findInaktive() {
-        String query = "FROM Anh49Fachdaten anh49 "
-            + "WHERE anh49.basisObjekt.basisObjektarten.objektart not like 'Fettabscheider' "
-            + "and anh49.basisObjekt.inaktiv = true "
-            + "ORDER BY anh49.sachbearbeiterIn";
-        return new DatabaseAccess().createQuery(query).list();
-    }
-
-    /**
-     * Sucht Anhang49-Fachdatensätze nach bestimmten Kriterien.
-     * @param sachbearbeiter Welche(r) SachbearbeiterIn (oder "")?
-     * @param abgemeldet param abgerissen
-     * @param abwasserfrei
-     * @param dekratuev
-     * @param nurWiedervorlageAbgelaufen Sollen nur Datensätze angezeigt werden,
-     *            deren Wiedervorlage in der Vergangenheit liegt?
-     * @return Eine Liste mit den entstprechenden Anh49Fachdaten.
-     */
-    public static List<?> findAuswertung(Boolean abgemeldet, String abgerissen,
-        Boolean abwasserfrei, boolean nurWiedervorlageAbgelaufen) {
-        String abgr = abgerissen.toLowerCase().trim() + "%";
-
-        String query = "FROM Anh49Fachdaten ah49 WHERE "
-            + "ah49.abgemeldet = :abgemeldet and "
-            + "lower(ah49.sonstigestechnik) like :abgr and "
-            + "ah49.abwasserfrei = :abwasserfrei and "
-            + "ah49.basisObjekt.basisObjektarten.objektart "
-            + "not like 'Fettabscheider' ";
-
-        if (nurWiedervorlageAbgelaufen) {
-            query += "and ah49.wiedervorlage <= :today "
-                + "and ah49.basisObjekt.inaktiv = false "
-                + "ORDER BY ah49.sachbearbeiterIn, "
-                + "ah49.basisObjekt.basisBetreiber.betrname ";
-            return new DatabaseAccess().createQuery(query)
-                .setBoolean("abgemeldet", abgemeldet)
-                .setString("abgr", abgr)
-                .setBoolean("abwasserfrei", abwasserfrei)
-                .setDate("today", new Date())
-                .list();
-        } else {
-            query += "and ah49.basisObjekt.inaktiv = false "
-                + "ORDER BY ah49.sachbearbeiterIn, "
-                + "ah49.basisObjekt.basisBetreiber.betrname";
-            return new DatabaseAccess().createQuery(query)
-                .setBoolean("abgemeldet", abgemeldet)
-                .setString("abgr", abgr)
-                .setBoolean("abwasserfrei", abwasserfrei)
-                .list();
-        }
-    }
-
     public static Anh49Fachdaten getAnh49ByObjekt(BasisObjekt objekt) {
         if (!objekt.getBasisObjektarten().isAnh49()) {
             return null;
@@ -128,36 +65,13 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
-    public static List<?> findTuev(Integer tuev) {
-        String query = "FROM Anh49Fachdaten anh49 "
-            + "WHERE anh49.dekraTuevTermin = :tuev "
-            + "and anh49.basisObjekt.basisObjektarten.objektart "
-            + "not like 'Fettabscheider' "
-            + "and anh49.basisObjekt.inaktiv = false "
-            + "ORDER BY anh49.sachbearbeiterIn";
-        return new DatabaseAccess().createQuery(query)
-            .setInteger("tuev", tuev)
-            .list();
-    }
-
-    public static List<?> findSachbearbeiter(String sachbearb) {
-        String query = "FROM Anh49Fachdaten anh49 "
-            + "WHERE anh49.sachbearbeiterIn = :sachbearb "
-            + "and anh49.basisObjekt.basisObjektarten.objektart "
-            + "not like 'Fettabscheider' "
-            + "and anh49.basisObjekt.inaktiv = false";
-        return new DatabaseAccess().createQuery(query)
-            .setString("sachbearb", sachbearb)
-            .list();
-    }
-
     public static String[] getSachbearbeiter() {
         return (String[]) new DatabaseAccess()
             .createQuery(
                 "SELECT DISTINCT fd.sachbearbeiterIn "
                 + "FROM Anh49Fachdaten fd "
                 + "WHERE fd.basisObjekt.basisObjektarten.objektart "
-                + "not like 'Fettabscheider'")
+                + "NOT LIKE 'Fettabscheider'")
             .setCacheable(true)
             .setCacheRegion("sachbearbeiter")
             .array(new String[0]);
@@ -171,5 +85,56 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
                     + "WHERE fd = :fd")
             .setEntity("fd", fd)
             .uniqueResult();
+    }
+
+    /**
+     * Anhang 49 Fachdaten nach Kriterien auswählen
+     * TODO: Eine Variante einbauen, die für die ganzen Booleans auch "egal"
+     * erlaubt.
+     * @param abgemeldet
+     * @param abwasserfrei
+     * @param abgelWdrVorlage Liegt das Wiedervorlagedatum hinter dem aktuellen
+     * @param abgerissen
+     * @param sachbearbeiter
+     * @param tuev
+     * @param aktiv
+     * @return List<?>
+     */
+    public static List<?> getAuswahlList (
+        Boolean abgemeldet, Boolean abwasserfrei, Boolean abgelWdrVorlage,
+        Boolean abgerissen, String sachbearbeiter, Integer tuev,
+        Boolean aktiv) {
+
+        String query = "FROM Anh49Fachdaten anh49 "
+            + "WHERE anh49.abgemeldet = :abgemeldet "
+            + "AND anh49.abwasserfrei = :abwasserfrei "
+            + "AND anh49.wiedervorlage <= :today "
+            + (abgerissen ?
+                "AND lower(anh49.sonstigestechnik) LIKE '%abgerissen%' " : "")
+            + "AND anh49.sachbearbeiterIn LIKE :sachbearbeiter "
+            + "AND anh49.dekraTuevTermin BETWEEN :tuev0 AND :tuev1 "
+            + "AND anh49.basisObjekt.inaktiv = :inaktiv "
+            /* For a strange reason we do not want the Fettabscheider... */
+            + "AND anh49.basisObjekt.basisObjektarten.objektart "
+            + "NOT LIKE 'Fettabscheider' "
+            + "ORDER BY anh49.sachbearbeiterIn";
+
+        if (!abgelWdrVorlage) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(3000,1,1); // Yes, this is a little bit dirty...
+        }
+        Integer tuev0 = ((tuev != null) ? tuev :    0);
+        Integer tuev1 = ((tuev != null) ? tuev : 3000);
+
+        return new DatabaseAccess().createQuery(query)
+            .setBoolean("abgemeldet", abgemeldet)
+            .setBoolean("abwasserfrei", abwasserfrei)
+            .setDate("today", new Date())
+            .setString("sachbearbeiter",
+                ((sachbearbeiter != null) ? sachbearbeiter : "%"))
+            .setInteger("tuev0", tuev0)
+            .setInteger("tuev1", tuev1)
+            .setBoolean("inaktiv", !aktiv)
+            .list();
     }
 }
