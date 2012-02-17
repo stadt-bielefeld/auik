@@ -86,27 +86,32 @@ public class ViewBwk extends AbstractViewBwk implements Serializable {
      *            werden sollen).
      * @return Eine Liste aus AnhBwk-Objekten.
      */
-    public static List<?> findByErfassungsjahr(int jahr) {
-        String query = "FROM ViewBwk as bwk ";
+    public static List<?> findByErfassungsjahr(Integer jahr) {
+        String query = "FROM ViewBwk AS bwk ";
 
-        // TODO: No more comment here ;-)
-        if (jahr != -1) {
-            if (jahr > 0 && jahr < 100) {
-                if (jahr <= 30) {
-                    jahr = jahr + 2000;
-                } else {
-                    jahr = jahr + 1900;
-                }
-            }
+        if (jahr == null) {
+            query += "WHERE bwk.erfassung IS NULL ";
+            return new DatabaseAccess()
+                .createQuery(query)
+                .list();
+        } else if (jahr != -1) {
             query += "WHERE bwk.erfassung = :jahr ";
-        }
-
-        if (jahr != -1) {
-            return new DatabaseAccess().createQuery(query)
+            return new DatabaseAccess()
+                .createQuery(query)
                 .setInteger("jahr", jahr)
                 .list();
         } else {
             return new DatabaseAccess().createQuery(query).list();
         }
+    }
+
+    public static Integer[] getErfassungsjahre() {
+        Integer[] iJahre = null;
+        iJahre = new DatabaseAccess()
+            .createQuery(
+                "SELECT DISTINCT bwk.erfassung "
+                    + "FROM ViewBwk AS bwk")
+            .array(new Integer[0]);
+        return iJahre;
     }
 }

@@ -79,7 +79,7 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private AnhBwkModel tmodel;
-    
+
     @Override
     protected JTable getResultTable() {
         if (resultTable == null) {
@@ -91,6 +91,7 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "BWK";
     }
@@ -98,43 +99,55 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
 
-            // Die jahrBox wird mit Werten von thisYear - range bis
-            // thisYear + range gefüllt:
-            int range = 15;
-            Calendar cal = Calendar.getInstance();
-            int thisYear = cal.get(Calendar.YEAR);
-            String[] years = new String[2*range + 1];
-            for (int i = 0; i < years.length; i++) {
-                int y = thisYear + (i-range);
-                years[i] = Integer.toString(y);
+            // Die jahrBox mit "Alle", allen existierenden Werten
+            // und "keine Angabe" füllen
+            Integer[] iJahre = ViewBwk.getErfassungsjahre();
+            String[] jahrBoxValues = new String[iJahre.length+1];
+            jahrBoxValues[0] = "Alle";
+            for (int i = 0; i < iJahre.length; i++) {
+                jahrBoxValues[i+1] =
+                    (iJahre[i] != null? iJahre[i].toString() : "keine Angabe");
             }
-            jahrBox = new JComboBox(years);
-            jahrBox.setSelectedItem(Integer.toString(thisYear));
-            jahrBox.setEditable(true);
+            jahrBox = new JComboBox(jahrBoxValues);
+            jahrBox.setSelectedItem(
+                Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
+//            jahrBox.setEditable(true);
 
             submitButton = new JButton("Suchen");
 
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
-                    int jahrTMP;
-                    try {
-                        jahrTMP = Integer.parseInt((String)jahrBox.getSelectedItem());
-                    } catch (NumberFormatException e1) {
-                        jahrTMP = -1;
+                    String value = (String)jahrBox.getSelectedItem();
+                    Integer jahr = null;
+                    if ("Alle".equals(value)) {
+                        jahr = -1;
+                    } else if ("keine Angabe".equals(value)) {
+                        jahr = null;
+                    } else {
+                        try {
+                            jahr = Integer.parseInt(value);
+                        } catch (NumberFormatException e1) {
+                            jahr = -1;
+                        }
                     }
-                    final int jahr = jahrTMP;
+
+                    final Integer fJahr = jahr;
 
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        @Override
                         protected void doNonUILogic() {
-                            ((AnhBwkModel)getTableModel()).setList(ViewBwk.findByErfassungsjahr(jahr));
+                            ((AnhBwkModel)getTableModel()).setList(ViewBwk.findByErfassungsjahr(fJahr));
                         }
 
+                        @Override
                         protected void doUIUpdateLogic(){
                             ((AnhBwkModel)getTableModel()).fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
@@ -159,6 +172,7 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
+    @Override
     public ListTableModel getTableModel() {
         if (tmodel == null) {
             tmodel = new AnhBwkModel();

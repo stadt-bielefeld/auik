@@ -46,7 +46,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -55,27 +54,18 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class AnhBwkModel extends ListTableModel {
     /**
-     * Erzeugt ein einfaches TableModel für
-     * Brennwertkessel-Fachdaten.
+     * Erzeugt ein einfaches TableModel für Brennwertkessel-Fachdaten.
      */
     public AnhBwkModel() {
-        super(new String[]{
-                "Betreiber",
-                "Standort",
-                "Hersteller",
-                "Brennmittel",
-                "Leistung",
-                "Erfassung",
-                "Anschreiben",
-                "Genehmigung",
-                "Beschreibung"
-        },
-        false);
+        super(new String[] {"Betreiber", "Standort", "Hersteller",
+                "Brennmittel", "Leistung", "Erfassung", "Anschreiben",
+                "Genehmigung", "Beschreibung"}, false);
     }
 
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         ViewBwk fd = (ViewBwk) objectAtRow;
         Object tmp;
@@ -83,86 +73,87 @@ public class AnhBwkModel extends ListTableModel {
         String hausnr;
         String hausnrzus;
 
-        if (fd.getBetranrede()!= null){
-            anrede = fd.getBetranrede()+ " ";
-        }
-        else {
+        if (fd.getBetranrede() != null) {
+            anrede = fd.getBetranrede() + " ";
+        } else {
             anrede = "";
         }
 
-        if (fd.getHausnr()!= null){
+        if (fd.getHausnr() != null) {
             hausnr = fd.getHausnr().toString();
-        }
-        else {
+        } else {
             hausnr = "";
         }
 
-        if (fd.getHausnrzus()!= null){
+        if (fd.getHausnrzus() != null) {
             hausnrzus = fd.getHausnrzus();
-        }
-        else {
+        } else {
             hausnrzus = "";
         }
 
         switch (columnIndex) {
-        case 0:
-            tmp = anrede + fd.getBetrname();
-            break;
-        case 1:
-            tmp = fd.getStrasse()+" "+hausnr+hausnrzus;
-            break;
-        case 2:
-            tmp = fd.getKHersteller();
-            break;
-        case 3:
-            tmp = fd.getKBrennmittel();
-            break;
-        case 4:
-            tmp = fd.getKLeistung();
-            break;
-        case 5:
-            tmp = fd.getErfassung();
-            break;
-        case 6:
-            tmp = fd.getAnschreiben();
-            break;
-        case 7:
-            tmp = fd.getDatumG();
-            break;
-        case 8:
-            tmp = fd.getBasisObjekt().getBeschreibung();
-            break;
+            case 0:
+                tmp = anrede + fd.getBetrname();
+                break;
+            case 1:
+                tmp = fd.getStrasse() + " " + hausnr + hausnrzus;
+                break;
+            case 2:
+                tmp = fd.getKHersteller();
+                break;
+            case 3:
+                tmp = fd.getKBrennmittel();
+                break;
+            case 4:
+                tmp = fd.getKLeistung();
+                break;
+            case 5:
+                tmp = fd.getErfassung();
+                break;
+            case 6:
+                tmp = fd.getAnschreiben();
+                break;
+            case 7:
+                tmp = fd.getDatumG();
+                break;
+            case 8:
+                tmp = fd.getBasisObjekt().getBeschreibung();
+                break;
 
-        default:
-            tmp = "ERROR";
-            break;
+            default:
+                tmp = "ERROR";
+                break;
         }
-        if (fd.getBasisObjekt().getInaktiv() == true)
-        {
+        /* Do not try to paint a strike throw a date field... */
+        if (columnIndex == 6 || columnIndex == 7) {
+            return tmp;
+        }
+        if (fd.getBasisObjekt().getInaktiv() == true) {
             tmp = "<html><strike>" + tmp + "</strike></html>";
         }
         return tmp;
     }
-    
-	  @Override
-  	public Class<?> getColumnClass( int columnIndex ){
-  		switch( columnIndex ){
-  			case 0: return String.class;
-  			case 1: return String.class;
-  			case 2: return String.class;
-  			case 3: return String.class;
-  			case 4: return Integer.class;
-  			case 5: return Integer.class;
-  			case 6: return Date.class;
-  			case 7: return Date.class;
-  			case 8: return String.class;
-  			default: return null;
-  		}
-  	}
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 0: return String.class;
+            case 1: return String.class;
+            case 2: return String.class;
+            case 3: return String.class;
+            case 4: return Integer.class;
+            case 5: return Integer.class;
+            case 6: return Date.class;
+            case 7: return Date.class;
+            case 8: return String.class;
+            default: return null;
+        }
+    }
 
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }
