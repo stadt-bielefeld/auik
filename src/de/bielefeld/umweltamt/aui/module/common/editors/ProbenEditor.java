@@ -773,7 +773,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         SimpleDateFormat f  = new SimpleDateFormat ("HH:mm");
 
         entnahmepunkt    = new JLabel();
-        datum            = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        datum            = new TextFieldDateChooser();
         rechnungsDatum   = new JLabel();
         uhrzeitVon       = new JFormattedTextField(f);
         uhrzeitBis       = new JFormattedTextField(f);
@@ -786,7 +786,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         statusHoch       = new JButton("erhöhen");
         sachbearbeiterBox   = new JComboBox();
         icpEinwaageFeld  = new DoubleField(0);
-        icpDatum         = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        icpDatum         = new TextFieldDateChooser();
         bemerkungsArea   = new LimitedTextArea(255);
         betrieb          = new JLabel();
         parameterTabelle = new SelectTable();

@@ -373,13 +373,13 @@ public class SuevPanel extends JPanel {
 
     private TextFieldDateChooser getDatAnschreibenDatum() {
         if (datAnschreibenDatum == null) {
-            datAnschreibenDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            datAnschreibenDatum = new TextFieldDateChooser();
         }
         return datAnschreibenDatum;
     }
     private TextFieldDateChooser getDatAnzeige58Datum() {
         if (datAnzeige58Datum == null) {
-            datAnzeige58Datum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            datAnzeige58Datum = new TextFieldDateChooser();
         }
         return datAnzeige58Datum;
     }

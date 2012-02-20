@@ -461,7 +461,7 @@ public class BWKPanel extends JPanel {
     }
     private TextFieldDateChooser getAnschreibenFeld() {
         if (anschreibenFeld == null) {
-            anschreibenFeld = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            anschreibenFeld = new TextFieldDateChooser();
         }
         return anschreibenFeld;
     }
@@ -487,7 +487,7 @@ public class BWKPanel extends JPanel {
     }
     private TextFieldDateChooser getGenehmigungDatum() {
         if (genehmigungDatum == null) {
-            genehmigungDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            genehmigungDatum = new TextFieldDateChooser();
         }
         return genehmigungDatum;
     }

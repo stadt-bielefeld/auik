@@ -453,14 +453,14 @@ public class Anh40Panel extends JPanel {
 
     private TextFieldDateChooser getGen58Datum() {
         if (gen58Datum == null) {
-            gen58Datum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            gen58Datum = new TextFieldDateChooser();
         }
         return gen58Datum;
     }
 
     private TextFieldDateChooser getGen59Datum() {
         if (gen59Datum == null) {
-            gen59Datum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            gen59Datum = new TextFieldDateChooser();
         }
         return gen59Datum;
     }

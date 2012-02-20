@@ -99,9 +99,7 @@ public class TextFieldDateChooser extends JPanel
         this.patterns = patterns;
 
         if (this.patterns == null) {
-            this.patterns = new String[] { "dd-MMM-yyyy", "MM/dd/yyyy",
-                    "MM-dd-yyyy", "MMddyyyy", "ddMMMyyyy", "yyyyMMdd",
-                    "yyyy/MM/dd", "yyyy-mm-dd" };
+            this.patterns = new String[] { FormattedDate.DEFAULT };
         }
 
         dateFormat = new SimpleDateFormat(this.patterns[0]);

@@ -67,7 +67,6 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.RetractablePanel;
@@ -353,14 +352,14 @@ public class UebergabePanel extends JPanel {
 
     private TextFieldDateChooser getErfassungsDatum() {
         if (erfassungsDatum == null) {
-            erfassungsDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            erfassungsDatum = new TextFieldDateChooser();
         }
         return erfassungsDatum;
     }
 
     private TextFieldDateChooser getAenderungsDatum() {
         if (aenderungsDatum == null) {
-            aenderungsDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            aenderungsDatum = new TextFieldDateChooser();
         }
         return aenderungsDatum;
     }

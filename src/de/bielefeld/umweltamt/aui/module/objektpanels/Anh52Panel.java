@@ -338,7 +338,7 @@ public class Anh52Panel extends JPanel{
 
     private TextFieldDateChooser getGenehmigungDatum() {
         if (datumGenChooser == null) {
-            datumGenChooser = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            datumGenChooser = new TextFieldDateChooser();
         }
         return datumGenChooser;
     }

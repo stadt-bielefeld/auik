@@ -161,14 +161,14 @@ public class Anh49Panel extends AbstractAnhangPanel {
     	
     	/* Right column */
     	super.addComponent(GENEHMIGUNGSDATUM,
-    			new TextFieldDateChooser(AuikUtils.DATUMSFORMATE));
+    			new TextFieldDateChooser());
     	super.addComponent(AENDERUNGSGENEHMIGUNGSDATUM,
-    			new TextFieldDateChooser(AuikUtils.DATUMSFORMATE));
+    			new TextFieldDateChooser());
     	super.addComponent(ABGEMELDET, new JCheckBox(ABGEMELDET));
     	super.addComponent(ABWASSERFREI, new JCheckBox(ABWASSERFREI));
     	super.addComponent(E_SATZUNG, new JCheckBox(E_SATZUNG));
     	super.addComponent(WIEDERVORLAGEDATUM,
-    			new TextFieldDateChooser(AuikUtils.DATUMSFORMATE));
+    			new TextFieldDateChooser());
     	super.addComponent(SPEICHERN, getSaveAnh49Button());
     	
         FormLayout layout = new FormLayout (

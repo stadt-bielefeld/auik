@@ -386,28 +386,28 @@ public class GenehmigungPanel extends JPanel {
 
     private TextFieldDateChooser getAntragsDatum() {
         if (antragsDatum == null) {
-            antragsDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            antragsDatum = new TextFieldDateChooser();
         }
         return antragsDatum;
     }
 
     private TextFieldDateChooser getAenderungsDatum() {
         if (aenderungsDatum == null) {
-            aenderungsDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            aenderungsDatum = new TextFieldDateChooser();
         }
         return aenderungsDatum;
     }
 
     private TextFieldDateChooser getGenehmigungsDatum() {
         if (genehmigungsDatum == null) {
-            genehmigungsDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            genehmigungsDatum = new TextFieldDateChooser();
         }
         return genehmigungsDatum;
     }
 
     private TextFieldDateChooser getBefristetDatum() {
         if (befristetbisDatum == null) {
-            befristetbisDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            befristetbisDatum = new TextFieldDateChooser();
         }
         return befristetbisDatum;
     }

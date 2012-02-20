@@ -328,7 +328,7 @@ public class Anh53Panel extends JPanel {
     }
     private TextFieldDateChooser getBagatellDatum() {
         if (bagatellDatum == null) {
-            bagatellDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            bagatellDatum = new TextFieldDateChooser();
         }
         return bagatellDatum;
     }

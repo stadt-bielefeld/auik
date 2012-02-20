@@ -397,10 +397,10 @@ public class VawsEditor extends AbstractBaseEditor {
 
         // Widgets für alle Daten-Tabs:
         baujahrFeld = new IntegerField();
-        inbetriebnahmeChooser = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-        genehmigungChooser = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-        erfassungChooser = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
-        stillegungChooser = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+        inbetriebnahmeChooser = new TextFieldDateChooser();
+        genehmigungChooser = new TextFieldDateChooser();
+        erfassungChooser = new TextFieldDateChooser();
+        stillegungChooser = new TextFieldDateChooser();
         pruefTurnusFeld = new DoubleField(0);
 
         behaelterArtBox = new JComboBox(VawsBehaelterart.getBehaelterarten());

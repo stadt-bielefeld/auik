@@ -58,8 +58,6 @@ public class AuikUtils {
     private static final AuikLogger log = AuikLogger.getLogger();
     /** Das Default-Datumsformat für JDateChooser */
     public static final String DATUMSFORMAT = "dd.MM.yyyy";
-    /** Die Datumsformate für TextFieldDateChooser */
-    public static final String[] DATUMSFORMATE = new String[]{DATUMSFORMAT, "dd.MM.yy"};
 
     // Für die Datums-Methoden
     private static Calendar cal = null;

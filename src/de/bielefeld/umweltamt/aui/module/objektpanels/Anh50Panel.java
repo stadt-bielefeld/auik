@@ -298,7 +298,7 @@ public class Anh50Panel extends JPanel {
     }
     private TextFieldDateChooser getAntragDatum() {
         if (antragDatum == null) {
-            antragDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            antragDatum = new TextFieldDateChooser();
         }
         return antragDatum;
     }
@@ -316,13 +316,13 @@ public class Anh50Panel extends JPanel {
     }
     private TextFieldDateChooser getGenehmigungDatum() {
         if (genehmigungDatum == null) {
-            genehmigungDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            genehmigungDatum = new TextFieldDateChooser();
         }
         return genehmigungDatum;
     }
     private TextFieldDateChooser getWiedervorlageDatum() {
         if (wiedervorlageDatum == null) {
-            wiedervorlageDatum = new TextFieldDateChooser(AuikUtils.DATUMSFORMATE);
+            wiedervorlageDatum = new TextFieldDateChooser();
         }
         return wiedervorlageDatum;
     }
