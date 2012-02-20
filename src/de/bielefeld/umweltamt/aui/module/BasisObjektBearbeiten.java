@@ -100,7 +100,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
-
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -113,9 +112,9 @@ import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49DetailsPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49VerwaltungsverfahrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh50Panel;
@@ -328,7 +327,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh49VerwaltungsverfahrenPanel getAnh49VerwaltungsverfahrenTab() {
         if (anh49VerwaltungsverfahrenTab == null) {
             anh49VerwaltungsverfahrenTab =
-                new Anh49VerwaltungsverfahrenPanel(this);
+                new Anh49VerwaltungsverfahrenPanel();
         }
         return anh49VerwaltungsverfahrenTab;
     }

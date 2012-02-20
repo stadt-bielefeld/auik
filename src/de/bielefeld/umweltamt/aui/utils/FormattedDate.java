@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * An extension to Date which makes sure we use a valid format for our date.
@@ -72,6 +73,26 @@ public class FormattedDate extends Date {
     }
 
     /**
+     * Constructor which copies a given date
+     * @param date The date to copy
+     */
+    public FormattedDate(Date date) {
+        this();
+        if (date != null) {
+            this.setTime(date.getTime());
+        }
+    }
+
+    /**
+     * Constructor which copies a given date
+     * @param date The date to copy
+     */
+    public FormattedDate(String date) {
+        this();
+        this.setDate(date);
+    }
+
+    /**
      * Set the format which should be used
      * @param format The format to use
      */
@@ -114,5 +135,10 @@ public class FormattedDate extends Date {
     // TODO: Move this into a more global scope
     public String toStrikedString() {
         return "<html><strike>" + sdf.format(this) + "</strike></html>";
+    }
+
+    public static String getToday() {
+        return new SimpleDateFormat(FormattedDate.DEFAULT)
+            .format(new GregorianCalendar().getTime());
     }
 }

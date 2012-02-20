@@ -29,11 +29,11 @@ package de.bielefeld.umweltamt.aui.mappings;
 public abstract class AbstractVirtuallyDeletableDatabaseTable {
 
     /**
-     * The value of the simple _active property.<br>
-     * If a data record is _active, it can come up in the views, but will be
+     * The value of the simple _enabled property.<br>
+     * If a data record is _enabled, it can come up in the views, but will be
      * marked as being not active.
      */
-    private java.lang.Boolean _active = true;
+    private java.lang.Boolean _enabled = true;
 
     /**
      * The value of the simple _deleted property.<br>
@@ -43,19 +43,19 @@ public abstract class AbstractVirtuallyDeletableDatabaseTable {
     private java.lang.Boolean _deleted = false;
 
     /**
-     * Return the value of the _ACTIVE column.
+     * Return the value of the _ENABLED column.
      * @return java.lang.Boolean
      */
-    public java.lang.Boolean is_active() {
-        return _active;
+    public java.lang.Boolean is_enabled() {
+        return _enabled;
     }
 
     /**
-     * Set the value of the _ACTIVE column.
-     * @param _active the _active to set
+     * Set the value of the _ENABLED column.
+     * @param _enabled the _enabled to set
      */
-    public void set_active(java.lang.Boolean _active) {
-        this._active = _active;
+    public void set_enabled(java.lang.Boolean _enabled) {
+        this._enabled = _enabled;
     }
 
     /**

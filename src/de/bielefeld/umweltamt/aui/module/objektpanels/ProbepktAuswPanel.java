@@ -85,6 +85,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.FormattedDate;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.charts.APosDataItem;
@@ -733,7 +734,7 @@ public class ProbepktAuswPanel extends JPanel {
 
     private JDateChooser getVonDateChooser() {
         if (vonDateChooser == null) {
-            vonDateChooser = new JDateChooser(AuikUtils.DATUMSFORMAT, false);
+            vonDateChooser = new JDateChooser(FormattedDate.DEFAULT, false);
         }
 
         return vonDateChooser;
@@ -741,7 +742,7 @@ public class ProbepktAuswPanel extends JPanel {
 
     private JDateChooser getBisDateChooser() {
         if (bisDateChooser == null) {
-            bisDateChooser = new JDateChooser(AuikUtils.DATUMSFORMAT, false);
+            bisDateChooser = new JDateChooser(FormattedDate.DEFAULT, false);
         }
 
         return bisDateChooser;

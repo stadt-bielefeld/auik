@@ -22,6 +22,7 @@
 package de.bielefeld.umweltamt.aui.utils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -357,31 +358,40 @@ public class DatabaseAccess {
      */
     /* Note: The result of the query only lives as long as the session! */
     public List<?> list() {
-        List<?> result = null;
+        List<?> queryResult = null;
+        List<Object> virtDelResult = new ArrayList<Object>();
+
         try {
-            result = this.query.list();
+            queryResult = this.query.list();
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.LIST, false);
         } finally {
             this.closeSession();
         }
 
+        // No results? Return empty list
+        if (queryResult.isEmpty()) {
+            return queryResult;
+        }
+
+        // Not a VirtDelDBTable? Return queryResult
+        Object firstObject = queryResult.get(0);
+        if (!(firstObject instanceof AbstractVirtuallyDeletableDatabaseTable)) {
+            return queryResult;
+        }
+
+        // VirtDelDBTable? Build a new result with just the not deleted rows
         // TODO: This is the most dirty solution...
         // Add the "where xyz._deleted = FALSE" to all the querys?
         // Can we let the database do that? Maybe with an Index? Or many...
         AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
-        for (Object object : result) {
-            /* If the object is virtual deletable and virtual deleted,
-             * remove it from the result list */
-            if (object instanceof AbstractVirtuallyDeletableDatabaseTable) {
-                virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) object;
-                if (virtDelObjekt.is_deleted()) {
-                    result.remove(object);
-                }
+        for (Object object : queryResult) {
+            virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) object;
+            if (!virtDelObjekt.is_deleted()) {
+                virtDelResult.add(object);
             }
         }
-
-        return result;
+        return virtDelResult;
     }
 
     /**

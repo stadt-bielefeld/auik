@@ -74,7 +74,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.FormattedDate;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -587,7 +587,7 @@ public class BasisBetreiberNeu extends AbstractModul {
                 betrBeaufVornameFeld.setText("");
                 bemerkungsArea.setText("");
 
-                revdatumsFeld.setText(AuikUtils.getStringFromCurrentDate());
+                revdatumsFeld.setText(FormattedDate.getToday());
                 handzeichenNeuFeld.setText("");
                 handzeichenLabel.setForeground(panel.getForeground());
 

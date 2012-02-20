@@ -25,8 +25,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,14 +48,12 @@ import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
-import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.module.objektpanels.models.Anh49VerwaltungsverfahrenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
-import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
  * A panel for "Anhang 49" with "Anschreiben und Verwaltungsverfahren"
@@ -70,212 +66,7 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
     /** Logging */
     protected final AuikLogger log = AuikLogger.getLogger();
 
-    /**
-     * Ein TableModel für eine Tabelle mit Abscheider-Ortsterminen.
-     *
-     * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce
-     *         (u633z)</a>
-     */
-    private class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
-        private static final long serialVersionUID = -7162535797673486082L;
-
-        /** The viewing frame */
-        private BasisObjektBearbeiten hauptModul;
-        /** The underlying data */
-        private Anh49Fachdaten fachdaten;
-
-        /**
-         * The underlying model for the table in the panel with the colunms
-         * "Datum", "Maßnahme", "SachbearbeiterIn", "Wiedervorlage" and
-         * "abgeschlossen".
-         */
-        public Anh49VerwaltungsverfahrenModel(BasisObjektBearbeiten hauptModul) {
-            super(new String[] {"Datum", "Maßnahme", "SachbearbeiterIn",
-                    "Wiedervorlage", "abgeschlossen"}, false, true);
-            this.hauptModul = hauptModul;
-        }
-
-        /**
-         * Set the data object and update the list
-         *
-         * @param fachdaten The data object
-         */
-        private void setFachdaten(Anh49Fachdaten fachdaten) {
-            this.fachdaten = fachdaten;
-            updateList();
-        }
-
-        /**
-         * Tell the model which column is of which class type.<br>
-         *
-         * (Until we find a way to handle editing of date fields properly, use
-         *  String instead of Date.)
-         * @param columnIndex The index of the requested column
-         */
-        /* Well, well, well, this got lost in the copy-pasting, didn't it... */
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            switch( columnIndex ){
-                case 0: return String.class; // Date.class;
-                case 1: return String.class;
-                case 2: return String.class;
-                case 3: return String.class; // Date.class;
-                case 4: return Boolean.class;
-                default: return null;
-            }
-        }
-
-        /**
-         * Get the value of a cell
-         *
-         * @param objectAtRow The data object
-         * @param columnIndex The requested column
-         * @return The value of the cell
-         */
-        @Override
-        public Object getColumnValue(Object objectAtRow, int columnIndex) {
-            Anh49Verwaltungsverfahren verwaltungsverfahren =
-                (Anh49Verwaltungsverfahren) objectAtRow;
-
-            switch (columnIndex) {
-                case 0:
-                    return (verwaltungsverfahren.is_active() ?
-                        AuikUtils.getStringFromDate(
-                            verwaltungsverfahren.getDatum()) :
-                        this.setStrike(AuikUtils.getStringFromDate(
-                            verwaltungsverfahren.getDatum())));
-                case 1:
-                    return (verwaltungsverfahren.is_active() ?
-                        verwaltungsverfahren.getMassnahme() :
-                        this.setStrike(verwaltungsverfahren.getMassnahme()));
-                case 2:
-                    return (verwaltungsverfahren.is_active() ?
-                        verwaltungsverfahren.getSachbearbeiterIn() :
-                        this.setStrike(
-                            verwaltungsverfahren.getSachbearbeiterIn()));
-                case 3:
-                    return (verwaltungsverfahren.is_active() ?
-                        AuikUtils.getStringFromDate(
-                            verwaltungsverfahren.getWiedervorlage()) :
-                        this.setStrike(AuikUtils.getStringFromDate(
-                            verwaltungsverfahren.getWiedervorlage())));
-                case 4: return verwaltungsverfahren.isAbgeschlossen();
-                default: return null;
-            }
-        }
-
-        /**
-         * Little helper method to set a strike through the text via HTML.<br>
-         * TODO: This wants to move to a util class
-         * @param text
-         * @return String The text with HTML formatting for a strike
-         */
-        private String setStrike(String text) {
-            return ("<html><strike>" + text + "</strike></html>");
-        }
-
-        /**
-         * When a row is removed in the view, remove it from the model/database
-         *
-         * @param The row which was removed
-         * @return If the data was removed
-         */
-        @Override
-        public boolean objectRemoved(Object objectAtRow) {
-            return Anh49Verwaltungsverfahren.removeVerwaltungsverfahren(
-                    (Anh49Verwaltungsverfahren) objectAtRow);
-        }
-
-        /** Update the table and fire a changed event. */
-        @Override
-        public void updateList() {
-            if (fachdaten != null) {
-                setList(Anh49Verwaltungsverfahren
-                        .getVerwaltungsverfahren(fachdaten));
-            }
-            fireTableDataChanged();
-        }
-
-        /**
-         * Edit a "Verwaltungsverfahren"
-         */
-        @Override
-        public void editObject(
-                Object objectAtRow, int columnIndex, Object newValue) {
-            Anh49Verwaltungsverfahren verwaltungsverfahren =
-                (Anh49Verwaltungsverfahren) objectAtRow;
-
-            switch (columnIndex) {
-                case 0:
-                    // TODO: The parsing to date should go somewhere central
-                    try {
-                        verwaltungsverfahren.setDatum(
-                            new SimpleDateFormat(AuikUtils.DATUMSFORMAT)
-                                .parse((String) newValue));
-                    } catch (ParseException parseException) {
-//                        parseException.printStackTrace();
-                        this.hauptModul.getFrame().changeStatus(
-                                "Bitte geben Sie das Datum in der "
-                                        + "Form TT.MM.JJJJ ein!",
-                                HauptFrame.ERROR_COLOR);
-                    }
-                    break;
-                case 1:
-                    // TODO: This shall be a dropdown thingy
-                    verwaltungsverfahren.setMassnahme((String) newValue);
-                    break;
-                case 2:
-                    // TODO: This shall be a dropdown thingy
-                    verwaltungsverfahren.setSachbearbeiterIn((String) newValue);
-                    break;
-                case 3:
-                    try {
-                        verwaltungsverfahren.setWiedervorlage(
-                            new SimpleDateFormat(AuikUtils.DATUMSFORMAT)
-                                .parse((String) newValue));
-                    } catch (ParseException parseException) {
-//                        parseException.printStackTrace();
-                        this.hauptModul.getFrame().changeStatus(
-                                "Bitte geben Sie das Datum in der "
-                                        + "Form TT.MM.JJJJ ein!",
-                                HauptFrame.ERROR_COLOR);
-                    }
-                    break;
-                case 4:
-                    verwaltungsverfahren.setAbgeschlossen((Boolean) newValue);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        /**
-         * Create a new "Verwaltungsverfahren"
-         *
-         * @return The new "Verwaltungsverfahren" object
-         */
-        @Override
-        public Object newObject() {
-            Anh49Verwaltungsverfahren verwaltungsverfahren =
-                new Anh49Verwaltungsverfahren();
-            verwaltungsverfahren.setAnh49Fachdaten(fachdaten);
-            verwaltungsverfahren.setAbgeschlossen(false);
-            return verwaltungsverfahren;
-        }
-
-        /**
-         * Get the "Verwaltungsverfahren" at row rowIndex
-         *
-         * @param rowIndex The index of the row
-         * @return The "Verwaltungsverfahren" at the given row index
-         */
-        public Anh49Verwaltungsverfahren getRow(int rowIndex) {
-            return (Anh49Verwaltungsverfahren) getObjectAtRow(rowIndex);
-        }
-    }
-
     private String name;
-    private BasisObjektBearbeiten hauptModul;
     private Anh49Fachdaten fachdaten;
     private Anh49VerwaltungsverfahrenModel verwaltungsverfahrenModel;
 
@@ -286,12 +77,11 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
 
     private JButton speichernButton;
 
-    public Anh49VerwaltungsverfahrenPanel(BasisObjektBearbeiten hauptModul) {
+    public Anh49VerwaltungsverfahrenPanel() {
         this.name = "Anschreiben und Verwaltungsverfahren";
-        this.hauptModul = hauptModul;
 
         this.verwaltungsverfahrenModel =
-            new Anh49VerwaltungsverfahrenModel(this.hauptModul);
+            new Anh49VerwaltungsverfahrenModel();
 
         getVerwaltungsverfahrenTabelle()
                 .addFocusListener(TableFocusListener.getInstance());
@@ -329,13 +119,11 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
                         Anh49Verwaltungsverfahren verwaltungsverfahren =
                             verwaltungsverfahrenModel.getRow(selectedRow);
 
-                        if (hauptModul
-                                .getFrame()
-                                .showQuestion(
-                                        "Soll das Verwaltungsverfahren "
-                                                + verwaltungsverfahren
-                                                + " wirklich gelöscht werden?",
-                                        "Löschen bestätigen")) {
+                        if (GUIManager.getInstance().showQuestion(
+                                "Soll das Verwaltungsverfahren "
+                                    + verwaltungsverfahren
+                                    + " wirklich gelöscht werden?",
+                                "Löschen bestätigen")) {
                             verwaltungsverfahrenModel.removeRow(selectedRow);
                             log.debug("Verwaltungsverfahren "
                                     + verwaltungsverfahren
@@ -358,7 +146,7 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
 
     private void showVerwaltungsverfahrenPopup (MouseEvent e) {
         if (verwaltungsverfahrenPopup == null) {
-            verwaltungsverfahrenPopup = new JPopupMenu("Ortstermin");
+            verwaltungsverfahrenPopup = new JPopupMenu();
             JMenuItem loeschItem = new JMenuItem(
                     getVerwaltungsverfahrenLoeschAction());
             verwaltungsverfahrenPopup.add(loeschItem);

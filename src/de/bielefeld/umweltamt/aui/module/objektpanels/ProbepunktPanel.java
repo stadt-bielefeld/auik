@@ -69,7 +69,7 @@ import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.FormattedDate;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 
@@ -493,7 +493,7 @@ public class ProbepunktPanel extends JPanel {
     }
     private JDateChooser getDatumsChooser() {
         if (datumsChooser == null) {
-            datumsChooser = new JDateChooser(AuikUtils.DATUMSFORMAT, false);
+            datumsChooser = new JDateChooser(FormattedDate.DEFAULT, false);
         }
 
         return datumsChooser;

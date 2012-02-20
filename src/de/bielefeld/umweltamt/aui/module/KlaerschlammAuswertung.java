@@ -142,6 +142,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.FormattedDate;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.charts.APosDataItem;
@@ -764,7 +765,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
 
     private JDateChooser getVonDateChooser() {
         if (vonDateChooser == null) {
-            vonDateChooser = new JDateChooser(AuikUtils.DATUMSFORMAT, false);
+            vonDateChooser = new JDateChooser(FormattedDate.DEFAULT, false);
         }
 
         return vonDateChooser;
@@ -772,7 +773,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
 
     private JDateChooser getBisDateChooser() {
         if (bisDateChooser == null) {
-            bisDateChooser = new JDateChooser(AuikUtils.DATUMSFORMAT, false);
+            bisDateChooser = new JDateChooser(FormattedDate.DEFAULT, false);
         }
 
         return bisDateChooser;

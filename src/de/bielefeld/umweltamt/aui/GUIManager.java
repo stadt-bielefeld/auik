@@ -1,5 +1,6 @@
 package de.bielefeld.umweltamt.aui;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
@@ -40,12 +41,12 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * <br>
  * TODO: Most of the stuff which should be here is still scattered across the
  * project and should move here bit by bit.
- *  
+ *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public final class GUIManager {
 
-	/* Constant values */ 
+	/* Constant values */
     /** Der kurze Name des Programms */
     public static final String SHORT_NAME = "AUI-Kataster";
     /** Der lange Name des Programms */
@@ -78,7 +79,7 @@ public final class GUIManager {
 	private GUIManager() {
 		// This is intentionally left blank.
 	}
-	
+
 	/** Get the GUIManager instance */
 	public synchronized static GUIManager getInstance() {
 		if (instance == null) {
@@ -86,9 +87,9 @@ public final class GUIManager {
 		}
 		return instance;
 	}
-	
-	/** 
-	 * Initialize and start everything<br> 
+
+	/**
+	 * Initialize and start everything<br>
 	 * Hier wird der {@link SettingsManager} sowie das {@link HauptFrame}
 	 * instanziert. Das {@link HauptFrame} bekommt die Instanz des
 	 * {@link SettingsManager} als Konstruktor &uuml;bergeben.
@@ -108,7 +109,7 @@ public final class GUIManager {
 	public HauptFrame getRunningFrame() {
 		return this.runningFrame;
 	}
-	
+
 	/** Show the splash frame */
 	private void showSplashFrame() {
         URL imageURL = GUIManager.class.getResource(
@@ -120,14 +121,24 @@ public final class GUIManager {
             log.warn("The splash image was not found.");
         }
 	}
-	
+
 	/** Dispose the splash frame */
 	private void disposeSplashFrame() {
         if (this.splashFrame != null) {
         	this.splashFrame.dispose();
         }
 	}
-	
+
+	/** Follow the MCV pattern a little bit */
+	public void changeStatus(String txt, Color color) {
+	    this.getRunningFrame().changeStatus(txt, color);
+	}
+
+    /** Follow the MCV pattern a little bit */
+	public boolean showQuestion(String question, String title) {
+	    return this.getRunningFrame().showQuestion(question, title);
+	}
+
     /**
      * Diese Methode liefert die aktuelle Version der Software.
      *
@@ -138,7 +149,7 @@ public final class GUIManager {
     	if (GUIManager.VERSION != null) {
     		return GUIManager.VERSION;
     	}
-    	
+
         InputStream    is      = null;
         BufferedReader in      = null;
         String         version = null;

@@ -56,11 +56,6 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 public class AuikUtils {
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
-    /** Das Default-Datumsformat für JDateChooser */
-    public static final String DATUMSFORMAT = "dd.MM.yyyy";
-
-    // Für die Datums-Methoden
-    private static Calendar cal = null;
 
     /**
      * Startet den Standard-Betrachter / -Editor, der vom Betriebssystem
@@ -438,28 +433,6 @@ public class AuikUtils {
         }
         return  dayString;
         */
-    }
-
-    /**
-     * Liefert einen String der Form "dd.mm.JJJJ" für das
-     * aktuelle Datum.
-     * @return Einen String der Form "dd.mm.JJJJ"
-     */
-    public static String getStringFromCurrentDate() {
-        return getStringFromDate(getCurrentDate());
-    }
-
-    /**
-     * Liefert das aktuelle Datum / die aktuelle Uhrzeit.
-     * @return Das aktuelle Date-Objekt
-     */
-    public static Date getCurrentDate() {
-        if (cal == null) {
-            cal = GregorianCalendar.getInstance();
-        } else {
-            cal.setTimeInMillis(System.currentTimeMillis());
-        }
-        return cal.getTime();
     }
 
     /**
