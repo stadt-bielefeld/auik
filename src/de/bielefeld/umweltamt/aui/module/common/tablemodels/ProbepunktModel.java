@@ -46,8 +46,8 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -55,6 +55,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class ProbepunktModel extends ListTableModel {
+    private static final long serialVersionUID = -6195343069784409388L;
+
     public ProbepunktModel() {
         super(new String[]{
                 "ObjektID",
@@ -68,6 +70,7 @@ public class ProbepunktModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         AtlProbepkt pkt = (AtlProbepkt) objectAtRow;
         Object tmp;
@@ -90,9 +93,8 @@ public class ProbepunktModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (pkt.getBasisObjekt().getInaktiv() == true)
-        {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
+        if (pkt.getBasisObjekt().getInaktiv()) {
+            tmp = StringUtils.setStrike((String)tmp);
         }
         return tmp;
     }
@@ -100,6 +102,7 @@ public class ProbepunktModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }

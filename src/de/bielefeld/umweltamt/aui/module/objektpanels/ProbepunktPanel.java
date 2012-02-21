@@ -57,6 +57,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
@@ -69,7 +70,7 @@ import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.FormattedDate;
+import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 
@@ -289,7 +290,7 @@ public class ProbepunktPanel extends JPanel {
                 AtlProbenahmen probe = new AtlProbenahmen();
                 probe.setKennummer(kennNummer);
                 probe.setDatumDerEntnahme(datum);
-                probe.setAtlAnalysepositionen(new HashSet());
+                probe.setAtlAnalysepositionen(new HashSet<AtlAnalyseposition>());
                 probe.setAtlProbepkt(probepkt);
 
                 ProbenEditor editDialog = new ProbenEditor(probe, hauptModul.getFrame(), true);
@@ -493,7 +494,7 @@ public class ProbepunktPanel extends JPanel {
     }
     private JDateChooser getDatumsChooser() {
         if (datumsChooser == null) {
-            datumsChooser = new JDateChooser(FormattedDate.DEFAULT, false);
+            datumsChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
         }
 
         return datumsChooser;

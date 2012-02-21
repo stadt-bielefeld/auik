@@ -50,6 +50,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -57,6 +58,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class VawsModel extends ListTableModel {
+    private static final long serialVersionUID = -2723711304275935781L;
+
     /**
      * Erzeugt ein einfaches TableModel für Vaws-Fachdaten.
      */
@@ -74,6 +77,7 @@ public class VawsModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         VawsFachdaten fd = (VawsFachdaten) objectAtRow;
         Object tmp;
@@ -110,7 +114,7 @@ public class VawsModel extends ListTableModel {
         }
 
         if ((fd.getStillegungsdatum() != null) && (tmp != null)) {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
+            tmp = StringUtils.setStrike((String)tmp);
         }
 
         return tmp;
@@ -129,6 +133,7 @@ public class VawsModel extends ListTableModel {
      * Leer, da kein Updaten der Liste nötig/möglich.
      * Die Liste wird direkt mittels setList "befüllt".
      */
+    @Override
     public void updateList() {
     }
 }

@@ -28,10 +28,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class BasisBetreiberModel extends ListTableModel {
+    private static final long serialVersionUID = -1943023265274962194L;
     private String lastSuchWort = null;
     private String lastProperty = null;
-
-    private boolean zeigeAdresse;
 
     public BasisBetreiberModel() {
         this(true);
@@ -42,8 +41,6 @@ public class BasisBetreiberModel extends ListTableModel {
                 "Name",
                 "Anrede",
                 "Zusatz"}, false, true);
-
-        this.zeigeAdresse = zeigeAdresse;
 
         if (zeigeAdresse) {
             columns = new String[]{
@@ -59,6 +56,7 @@ public class BasisBetreiberModel extends ListTableModel {
     /**
      * Aktualisiert die aktuell angezeigte Liste in dem die letzte Suche wiederholt wird.
      */
+    @Override
     public void updateList() {
         if (lastSuchWort != null) {
             filterList(lastSuchWort, lastProperty);
@@ -71,6 +69,7 @@ public class BasisBetreiberModel extends ListTableModel {
      * @param columnIndex Die Spalte der Tabelle
      * @return Den Wert der Zelle oder null (falls die Zelle nicht existiert)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
 
@@ -112,6 +111,7 @@ public class BasisBetreiberModel extends ListTableModel {
         return (BasisBetreiber) super.getObjectAtRow(rowIndex);
     }
 
+    @Override
     public boolean objectRemoved(Object objectAtRow) {
         BasisBetreiber removedBetreiber = (BasisBetreiber) objectAtRow;
         return BasisBetreiber.removeBetreiber(removedBetreiber);

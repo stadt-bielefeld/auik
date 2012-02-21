@@ -41,6 +41,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -48,6 +49,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class SuevModel extends ListTableModel {
+    private static final long serialVersionUID = -9088369986542868203L;
+
     /**
      * Erzeugt ein einfaches TableModel für
      * SUEV-Fachdaten.
@@ -64,6 +67,7 @@ public class SuevModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         AnhSuevFachdaten fd = (AnhSuevFachdaten) objectAtRow;
         Object tmp;
@@ -91,9 +95,8 @@ public class SuevModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getBasisObjekt().getInaktiv() == true)
-        {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
+        if (fd.getBasisObjekt().getInaktiv()) {
+            tmp = StringUtils.setStrike((String)tmp);
         }
         return tmp;
     }
@@ -101,6 +104,7 @@ public class SuevModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }

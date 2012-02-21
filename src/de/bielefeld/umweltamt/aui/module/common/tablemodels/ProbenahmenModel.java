@@ -33,6 +33,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class ProbenahmenModel extends ListTableModel {
+    private static final long serialVersionUID = 5732041657532396538L;
     private AtlProbepkt probepkt = null;
     private String secondColumn = null;
 
@@ -60,6 +61,7 @@ public class ProbenahmenModel extends ListTableModel {
         this.probepkt = probepkt;
     }
 
+    @Override
     public void updateList() {
         if (probepkt != null) {
             setList(AtlProbenahmen.getProbenahmen(probepkt, false, -1));
@@ -76,6 +78,7 @@ public class ProbenahmenModel extends ListTableModel {
         setList(AtlProbenahmen.getKSProbenahmen(art, ka));
     }
 
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
         AtlProbenahmen probe = (AtlProbenahmen) objectAtRow;
@@ -138,6 +141,7 @@ public class ProbenahmenModel extends ListTableModel {
         return value;
     }
 
+    @Override
     public boolean objectRemoved(Object objectAtRow) {
         AtlProbenahmen removedProbe = (AtlProbenahmen) objectAtRow;
         boolean removed;

@@ -47,6 +47,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -54,6 +55,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class BescheidModel extends ListTableModel {
+    private static final long serialVersionUID = -6486584306405464222L;
+
     public BescheidModel() {
         super(new String[]{
                 "Kennummer",
@@ -68,6 +71,7 @@ public class BescheidModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         AtlProbenahmen fd = (AtlProbenahmen) objectAtRow;
         Object tmp;
@@ -93,9 +97,8 @@ public class BescheidModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getAtlProbepkt().getBasisObjekt().getInaktiv() == true)
-        {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
+        if (fd.getAtlProbepkt().getBasisObjekt().getInaktiv()) {
+            tmp = StringUtils.setStrike((String)tmp);
         }
         return tmp;
     }
@@ -103,6 +106,7 @@ public class BescheidModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }

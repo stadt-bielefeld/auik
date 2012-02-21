@@ -57,6 +57,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class ProbepunkteModel extends ListTableModel {
+    private static final long serialVersionUID = 8683461766128779141L;
+
     public ProbepunkteModel() {
         super(new String[]{
                 "Standort",
@@ -73,6 +75,7 @@ public class ProbepunkteModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         AtlProbepkt fd = (AtlProbepkt) objectAtRow;
         Object tmp;
@@ -109,6 +112,7 @@ public class ProbepunkteModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }

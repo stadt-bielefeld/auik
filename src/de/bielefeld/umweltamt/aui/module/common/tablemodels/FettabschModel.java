@@ -22,12 +22,15 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 /**
  * Ein einfaches TableModel für Fettabscheider.
  * @author Sebastian Geller
  */
 public class FettabschModel extends ListTableModel {
+    private static final long serialVersionUID = 6474195217246081874L;
+
     public FettabschModel() {
         super(new String[]{
                 "Betreiber",
@@ -41,7 +44,8 @@ public class FettabschModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	@Override
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
 		Anh49Abscheiderdetails ad = (Anh49Abscheiderdetails) objectAtRow;
 
 		Object tmp;
@@ -71,9 +75,8 @@ public class FettabschModel extends ListTableModel {
 			break;
 		}
 
-		if (ad.getAnh49Fachdaten().getBasisObjekt().getInaktiv() == true) {
-			tmp = "<html><strike>" + tmp + "</strike></html>";
-
+		if (ad.getAnh49Fachdaten().getBasisObjekt().getInaktiv()) {
+            tmp = StringUtils.setStrike((String)tmp);
 		}
 		return tmp;
 	}
@@ -81,10 +84,8 @@ public class FettabschModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
-    public void updateList()
-    {
+    @Override
+    public void updateList() {
 
     }
-
-
 }

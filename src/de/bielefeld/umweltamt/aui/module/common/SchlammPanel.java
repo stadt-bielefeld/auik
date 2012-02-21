@@ -86,7 +86,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.FormattedDate;
+import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -436,7 +436,7 @@ public class SchlammPanel extends JPanel {
 
     private JDateChooser getDatumsChooser() {
         if (datumsChooser == null) {
-            datumsChooser = new JDateChooser(FormattedDate.DEFAULT, false);
+            datumsChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
         }
 
         return datumsChooser;

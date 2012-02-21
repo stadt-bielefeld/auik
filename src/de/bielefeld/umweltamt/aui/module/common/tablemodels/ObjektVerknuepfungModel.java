@@ -31,6 +31,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerhard Genuit
  */
 public class ObjektVerknuepfungModel extends ListTableModel {
+    private static final long serialVersionUID = 3217003188537219019L;
     private BasisObjekt objekt;
 
     /**
@@ -60,6 +61,7 @@ public class ObjektVerknuepfungModel extends ListTableModel {
      * @param columnIndex
      *            Index der Spalte
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         BasisObjektverknuepfung objektverk = (BasisObjektverknuepfung) objectAtRow;
 
@@ -102,6 +104,7 @@ public class ObjektVerknuepfungModel extends ListTableModel {
         return tmp;
     }
 
+    @Override
     public boolean objectRemoved(Object objectAtRow) {
         BasisObjektverknuepfung removedObjekt = (BasisObjektverknuepfung) objectAtRow;
         boolean removed;
@@ -116,6 +119,7 @@ public class ObjektVerknuepfungModel extends ListTableModel {
         return removed;
     }
 
+    @Override
     public void updateList() {
         setList(BasisObjektverknuepfung.getVerknuepfungByObjekt(objekt));
         fireTableDataChanged();

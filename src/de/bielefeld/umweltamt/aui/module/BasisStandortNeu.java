@@ -76,8 +76,8 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
-import de.bielefeld.umweltamt.aui.utils.FormattedDate;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
@@ -480,7 +480,7 @@ public class BasisStandortNeu extends AbstractModul {
                 flurStkFeld.setText("");
                 rechtsWFeld.setValue(new Float(0.0f));
                 hochWFeld.setValue(new Float(0.0f));
-                datumFeld.setText(FormattedDate.getToday());
+                datumFeld.setText(DateUtils.getCurrentDateString());
                 handzeichenNeuFeld.setText("");
                 handzeichenLabel.setForeground(panel.getForeground());
 

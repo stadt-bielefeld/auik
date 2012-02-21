@@ -20,11 +20,14 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels.models;
 
+import java.util.Date;
+
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
-import de.bielefeld.umweltamt.aui.utils.FormattedDate;
+import de.bielefeld.umweltamt.aui.utils.DateUtils;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -88,7 +91,9 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
         String result = null;
         switch (columnIndex) {
             case 0:
-                result = new FormattedDate(verwaltungsverfahren.getDatum()).toString();
+                result = DateUtils.format(
+                    verwaltungsverfahren.getDatum(),
+                    DateUtils.FORMAT_DEFAULT);
                 break;
             case 1:
                 result = verwaltungsverfahren.getMassnahme();
@@ -97,29 +102,22 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
                 result = verwaltungsverfahren.getSachbearbeiterIn();
                 break;
             case 3:
-                result = new FormattedDate(verwaltungsverfahren.getWiedervorlage()).toString();
+                result = DateUtils.format(
+                    verwaltungsverfahren.getWiedervorlage(),
+                    DateUtils.FORMAT_DEFAULT);
                 break;
             case 4:
+                // As we can not set a strike through a Boolean, return directly
                 return verwaltungsverfahren.isAbgeschlossen();
             default:
                 return null;
         }
 
         if (!(verwaltungsverfahren.is_enabled())) {
-            result = this.setStrike(result);
+            result = StringUtils.setStrike(result);
         }
 
         return result;
-    }
-
-    /**
-     * Little helper method to set a strike through the text via HTML.<br>
-     * TODO: This wants to move to a util class
-     * @param text
-     * @return String The text with HTML formatting for a strike
-     */
-    private String setStrike(String text) {
-        return ("<html><strike>" + text + "</strike></html>");
     }
 
     /**
@@ -150,19 +148,19 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
         Anh49Verwaltungsverfahren verwaltungsverfahren =
             (Anh49Verwaltungsverfahren) objectAtRow;
 
-        FormattedDate fDate = null;
-        boolean success = false;
+        Date date = null;
 
         switch (columnIndex) {
             case 0:
-                fDate = new FormattedDate();
-                success = fDate.setDate((String)newValue);
-                if (success) {
-                    verwaltungsverfahren.setDatum(fDate);
+                date = DateUtils.tryParse(
+                    (String) newValue, DateUtils.FORMAT_DEFAULT);
+                if (date != null) {
+                    verwaltungsverfahren.setDatum(date);
                 } else {
                     GUIManager.getInstance().changeStatus(
-                        "Bitte geben Sie das Datum in der "
-                            + "Form TT.MM.JJJJ ein!", HauptFrame.ERROR_COLOR);
+                        "Bitte geben Sie das Datum in der Form "
+                            + DateUtils.FORMAT_DEFAULT
+                            + " ein!", HauptFrame.ERROR_COLOR);
                 }
                 break;
             case 1:
@@ -172,14 +170,15 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
                 verwaltungsverfahren.setSachbearbeiterIn((String) newValue);
                 break;
             case 3:
-                fDate = new FormattedDate();
-                success = fDate.setDate((String)newValue);
-                if (success) {
-                    verwaltungsverfahren.setWiedervorlage(fDate);
+                date = DateUtils.tryParse(
+                    (String) newValue, DateUtils.FORMAT_DEFAULT);
+                if (date != null) {
+                    verwaltungsverfahren.setWiedervorlage(date);
                 } else {
                     GUIManager.getInstance().changeStatus(
-                        "Bitte geben Sie das Datum in der "
-                            + "Form TT.MM.JJJJ ein!", HauptFrame.ERROR_COLOR);
+                        "Bitte geben Sie das Datum in der Form "
+                            + DateUtils.FORMAT_DEFAULT
+                            + " ein!", HauptFrame.ERROR_COLOR);
                 }
                 break;
             case 4:

@@ -27,6 +27,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -35,6 +36,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 
 public class HerstellNrSuchenModel extends ListTableModel {
+    private static final long serialVersionUID = 6569821882974750867L;
+
     /**
      * Das TableModel für die Ergebnisse der Suche nach Herstellnr.
      */
@@ -55,6 +58,7 @@ public class HerstellNrSuchenModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     // Die einzelnen Spalten werden mit Daten befüllt
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         VawsFachdaten fachdaten = (VawsFachdaten) objectAtRow;
         Object tmp;
@@ -100,7 +104,7 @@ public class HerstellNrSuchenModel extends ListTableModel {
         }
         // Wenn ein Objekt stillgelegt ist, wird es durchgestrichen
         if ((fachdaten.getStillegungsdatum() != null) && (tmp != null)) {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
+            tmp = StringUtils.setStrike((String)tmp);
         }
 
         return tmp;
@@ -119,6 +123,7 @@ public class HerstellNrSuchenModel extends ListTableModel {
      * Leer, da kein Updaten der Liste nötig/möglich.
      * Die Liste wird direkt mittels setList "befüllt".
      */
+    @Override
     public void updateList() {
     }
 

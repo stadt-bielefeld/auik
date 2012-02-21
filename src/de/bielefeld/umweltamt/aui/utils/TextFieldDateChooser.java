@@ -99,7 +99,7 @@ public class TextFieldDateChooser extends JPanel
         this.patterns = patterns;
 
         if (this.patterns == null) {
-            this.patterns = new String[] { FormattedDate.DEFAULT };
+            this.patterns = new String[] { DateUtils.FORMAT_DEFAULT };
         }
 
         dateFormat = new SimpleDateFormat(this.patterns[0]);

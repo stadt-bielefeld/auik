@@ -46,6 +46,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -53,6 +54,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class AnhBwkModel extends ListTableModel {
+    private static final long serialVersionUID = -1745320863047939661L;
+
     /**
      * Erzeugt ein einfaches TableModel für Brennwertkessel-Fachdaten.
      */
@@ -128,8 +131,8 @@ public class AnhBwkModel extends ListTableModel {
         if (columnIndex == 6 || columnIndex == 7) {
             return tmp;
         }
-        if (fd.getBasisObjekt().getInaktiv() == true) {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
+        if (fd.getBasisObjekt().getInaktiv()) {
+            tmp = StringUtils.setStrike((String)tmp);
         }
         return tmp;
     }

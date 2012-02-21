@@ -44,6 +44,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -51,6 +52,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class Anh56Model extends ListTableModel {
+    private static final long serialVersionUID = 1491247140968806565L;
+
     public Anh56Model() {
         super(new String[]{
                 "Betreiber",
@@ -64,6 +67,7 @@ public class Anh56Model extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Anh56Fachdaten fd = (Anh56Fachdaten) objectAtRow;
         Object tmp;
@@ -86,9 +90,8 @@ public class Anh56Model extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getBasisObjekt().getInaktiv() == true)
-        {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
+        if (fd.getBasisObjekt().getInaktiv() == true) {
+            tmp = StringUtils.setStrike((String)tmp);
         }
         return tmp;
     }
@@ -96,6 +99,7 @@ public class Anh56Model extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }

@@ -43,10 +43,6 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.sql.Array;
-import java.util.ArrayList;
-
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -54,6 +50,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class PrioritaetModel extends ListTableModel {
+    private static final long serialVersionUID = 5055568231368291920L;
+
     public PrioritaetModel() {
         super(new String[]{
                 "Standort",
@@ -67,6 +65,7 @@ public class PrioritaetModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
     	Object[] fd = (Object[])objectAtRow;
         Object tmp;
@@ -95,6 +94,7 @@ public class PrioritaetModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }

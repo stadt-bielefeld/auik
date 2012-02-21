@@ -25,12 +25,15 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+
 /**
  * Ein TableModel für die Basis-Objektdaten bei der Betreiber/Standort-Suche.
  * @author David Klotz
  */
 public class BasisObjektModel extends ListTableModel {
+    private static final long serialVersionUID = -4928147488267472682L;
     private String secondColumn;
     private String abteilung;
 
@@ -54,6 +57,7 @@ public class BasisObjektModel extends ListTableModel {
         this.abteilung = abteilung;
     }
 
+    @Override
     public void updateList() throws Exception {
     }
 
@@ -63,6 +67,7 @@ public class BasisObjektModel extends ListTableModel {
      * @param objectAtRow Das Objekt in dieser Zeile
      * @param columnIndex Die Spalte der Tabelle
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object tmp;
 
@@ -79,12 +84,10 @@ public class BasisObjektModel extends ListTableModel {
                 } else {
                     tmp = secondColumn;
                 }
-
                 break;
             case 2:
                 BasisObjektarten boa = bo.getBasisObjektarten();
                 tmp = boa;
-
                 break;
             case 3:
                 tmp = bo.getBeschreibung();
@@ -93,14 +96,14 @@ public class BasisObjektModel extends ListTableModel {
                 tmp = null;
         }
 
-    if (tmp != bo.getBeschreibung() && bo.getInaktiv().booleanValue() != false  )
-        {
-                tmp = "<html><strike>" + tmp + "</strike></html>";
+        if (tmp != bo.getBeschreibung() && bo.getInaktiv().booleanValue()) {
+            tmp = StringUtils.setStrike((String)tmp);
         }
 
         return tmp;
     }
 
+    @Override
     public boolean objectRemoved(Object objectAtRow) {
         BasisObjekt removedObjekt = (BasisObjekt) objectAtRow;
         boolean removed;

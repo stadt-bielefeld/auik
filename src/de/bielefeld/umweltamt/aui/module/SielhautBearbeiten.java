@@ -169,8 +169,8 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
-import de.bielefeld.umweltamt.aui.utils.FormattedDate;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.RetractablePanel;
@@ -1651,7 +1651,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
     private JDateChooser getVonDateChooser() {
         if (vonDateChooser == null) {
-            vonDateChooser = new JDateChooser(FormattedDate.DEFAULT, false);
+            vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
         }
 
         return vonDateChooser;
@@ -1660,7 +1660,7 @@ public class SielhautBearbeiten extends AbstractModul {
     private JDateChooser getBisDateChooser() {
 
         if (bisDateChooser == null) {
-            bisDateChooser = new JDateChooser(FormattedDate.DEFAULT, false);
+            bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
         }
 
         return bisDateChooser;
@@ -1724,7 +1724,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
     private JDateChooser getPrDateChooser() {
         if (prDateChooser == null) {
-            prDateChooser = new JDateChooser(FormattedDate.DEFAULT, false);
+            prDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
         }
         return prDateChooser;
     }

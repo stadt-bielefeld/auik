@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 /**
@@ -31,6 +32,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class BasisStandortModel extends ListTableModel {
+    private static final long serialVersionUID = 3532697905957103920L;
     private String lastStrasse = null;
     private int lastHausNr = -1;
 
@@ -50,6 +52,7 @@ public class BasisStandortModel extends ListTableModel {
      * ersten 30 Einträge angezeigt.
      * @throws HibernateException
      */
+    @Override
     public void updateList() {
         if (lastStrasse != null) {
             filterList(lastStrasse, lastHausNr);
@@ -81,7 +84,7 @@ public class BasisStandortModel extends ListTableModel {
      * @param std BasisStandort
      */
     public void filterList(BasisStandort std) {
-        setList((List)BasisStandort.getStandortList(std.getStandortid()));
+        setList((List<?>)BasisStandort.getStandortList(std.getStandortid()));
     }
 
     /**
@@ -91,6 +94,7 @@ public class BasisStandortModel extends ListTableModel {
      * @param columnIndex Die Spalte der Tabelle
      * @return Den Wert der Zelle oder null (falls die Zelle nicht existiert)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
         BasisStandort bsta = (BasisStandort) objectAtRow;

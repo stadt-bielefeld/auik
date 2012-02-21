@@ -46,7 +46,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -54,6 +53,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class Anh49Model extends ListTableModel {
+    private static final long serialVersionUID = 8257489172665257052L;
+
     public Anh49Model() {
         super(new String[]{
                 "Betreiber",
@@ -69,6 +70,7 @@ public class Anh49Model extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Anh49Fachdaten fd = (Anh49Fachdaten) objectAtRow;
         Object tmp;
@@ -103,7 +105,7 @@ public class Anh49Model extends ListTableModel {
 //        }
         return tmp;
     }
-    
+
 	  @Override
 	public Class<?> getColumnClass( int columnIndex ){
 		switch( columnIndex ){
@@ -120,6 +122,7 @@ public class Anh49Model extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }

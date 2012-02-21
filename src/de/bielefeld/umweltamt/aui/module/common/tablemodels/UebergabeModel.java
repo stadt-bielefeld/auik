@@ -54,6 +54,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlUebergabestelle;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -61,6 +62,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Sebastian Geller
  */
 public class UebergabeModel extends ListTableModel {
+    private static final long serialVersionUID = -2565477065368044441L;
+
     public UebergabeModel() {
         super(new String[]{
                 "Betreiber",
@@ -73,6 +76,7 @@ public class UebergabeModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         IndeinlUebergabestelle iu = (IndeinlUebergabestelle) objectAtRow;
         Object tmp;
@@ -92,9 +96,8 @@ public class UebergabeModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (iu.getBasisObjekt().getInaktiv() == true)
-        {
-            tmp = "<html><strike>" + tmp + "</strike></html>";
+        if (iu.getBasisObjekt().getInaktiv()) {
+            tmp = StringUtils.setStrike((String)tmp);
         }
         return tmp;
     }
@@ -102,6 +105,7 @@ public class UebergabeModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }
