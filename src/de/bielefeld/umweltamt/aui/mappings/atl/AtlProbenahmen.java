@@ -102,19 +102,21 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         List<?> proben = null;
         proben = new DatabaseAccess()
             .createQuery(
-                "FROM AtlProbenahmen as probenahme WHERE "
-                    + "probenahme.atlProbepkt = :pkt "
+                "FROM AtlProbenahmen as probenahme "
+                    + "WHERE probenahme.atlProbepkt = :pkt "
                     + "ORDER BY probenahme.datumDerEntnahme desc, "
                     + "probenahme.kennummer desc"
-                    + ((limit != -1) ? " LIMIT 5" : "")).setEntity("pkt", pkt)
+                    + ((limit != -1) ? " LIMIT 5" : ""))
+            .setEntity("pkt", pkt)
             .list();
-        if (loadPos) {
-            for (int i = 0; i < proben.size(); i++) {
-                AtlProbenahmen probe = (AtlProbenahmen) proben.get(i);
-                new DatabaseAccess()
-                    .initialize(probe.getAtlAnalysepositionen());
-            }
-        }
+        // Bugfix: This is done within the query...
+//        if (loadPos) {
+//            for (int i = 0; i < proben.size(); i++) {
+//                AtlProbenahmen probe = (AtlProbenahmen) proben.get(i);
+//                new DatabaseAccess()
+//                    .initialize(probe.getAtlAnalysepositionen());
+//            }
+//        }
 
         return proben;
     }
@@ -224,15 +226,16 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         probe = (AtlProbenahmen) new DatabaseAccess()
             .get(AtlProbenahmen.class, id);
 
-        if (loadPos && probe != null) {
-            new DatabaseAccess().initialize(probe.getAtlAnalysepositionen());
-            // Collection sorted =
-            // session.filter(probe.getAtlAnalysepositionen(),
-            // "ORDER BY this.atlParameter.ordnungsbegriff desc");
-            // AUIKataster.debugOutput("Sorted:\n " + sorted);
-            // probe.setAtlAnalysepositionen(new HashSet(sorted));
-            log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
-        }
+        // Bugfix: This is done within the query...
+//        if (loadPos && probe != null) {
+//            new DatabaseAccess().initialize(probe.getAtlAnalysepositionen());
+//            // Collection sorted =
+//            // session.filter(probe.getAtlAnalysepositionen(),
+//            // "ORDER BY this.atlParameter.ordnungsbegriff desc");
+//            // AUIKataster.debugOutput("Sorted:\n " + sorted);
+//            // probe.setAtlAnalysepositionen(new HashSet(sorted));
+//            log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
+//        }
 
         return probe;
     }
@@ -251,15 +254,17 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             .createQuery("FROM AtlProbenahmen WHERE kennummer = :kennnummer")
             .setString("kennnummer", kennummer)
             .uniqueResult();
-        if (loadPos && probe != null) {
-            new DatabaseAccess().initialize(probe.getAtlAnalysepositionen());
-            // Collection sorted =
-            // session.filter(probe.getAtlAnalysepositionen(),
-            // "ORDER BY this.atlParameter.ordnungsbegriff desc");
-            // AUIKataster.debugOutput("Sorted:\n " + sorted);
-            // probe.setAtlAnalysepositionen(new HashSet(sorted));
-            log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
-        }
+
+        // Bugfix: This is done within the query...
+//        if (loadPos && probe != null) {
+//            new DatabaseAccess().initialize(probe.getAtlAnalysepositionen());
+//            // Collection sorted =
+//            // session.filter(probe.getAtlAnalysepositionen(),
+//            // "ORDER BY this.atlParameter.ordnungsbegriff desc");
+//            // AUIKataster.debugOutput("Sorted:\n " + sorted);
+//            // probe.setAtlAnalysepositionen(new HashSet(sorted));
+//            log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
+//        }
 
         return probe;
     }
@@ -284,10 +289,18 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             AtlProbenahmen.class, probe.getId());
 
         List<?> sortedPositionen = null;
-        sortedPositionen = new DatabaseAccess().createFilter(
-            newProbe.getAtlAnalysepositionen(),
-            "ORDER BY this.atlParameter.reihenfolge")
+//        sortedPositionen = new DatabaseAccess().createFilter(
+//            newProbe.getAtlAnalysepositionen(),
+//            "ORDER BY this.atlParameter.reihenfolge")
+//            .list();
+        sortedPositionen = new DatabaseAccess()
+            .createQuery(
+                "FROM AtlAnalyseposition "
+                    + "WHERE atlProbenahmen = :probe "
+                    + "ORDER BY atlParameter.reihenfolge")
+            .setEntity("probe", newProbe)
             .list();
+
         return sortedPositionen;
     }
 

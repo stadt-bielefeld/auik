@@ -261,24 +261,16 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
             }
         }
 
-//        try {
-//            Session session = HibernateSessionFactory.currentSession();
-//
-//            proben = session.find(
-//                    query,
-//                    new Object[]{param, probe},
-//                    new Type[]{
-//                            Hibernate.entity(AtlParameter.class),
-//                            Hibernate.entity(AtlProbenahmen.class)}
-//            );
-//        } catch (HibernateException e) {
-//            throw new RuntimeException("Datenbank-Fehler (AtlAnalysepositionen)", e);
-//        } finally {
-//            HibernateSessionFactory.closeSession();
-//        }
-
-        // AUIKataster.debugOutput(proben.size() + " Analysepos. gefunden.",
-        // "AtlAnalyseposition");
+        // TODO: Maybe better use something like this?
+//        List<?> result = null;
+//        result = new DatabaseAccess()
+//            .createQuery(
+//                "FROM AtlAnalyseposition "
+//                    + "WHERE AtlProbenahmen = :probe "
+//                    + "AND AtlParameter.ordnungsbegriff = :param")
+//            .setEntity("probe", probe)
+//            .setString("param", param.getOrdnungsbegriff())
+//            .list();
 
         return proben;
     }

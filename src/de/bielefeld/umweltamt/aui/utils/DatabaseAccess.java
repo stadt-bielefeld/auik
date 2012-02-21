@@ -40,6 +40,7 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 
 /**
  * A wrapper class for all access to the database, which only allows certain
@@ -91,7 +92,7 @@ public class DatabaseAccess {
      * @param proxy a persistable object, proxy, persistent collection or
      *            <code>null</code>
      */
-    public void initialize(Object proxy) {
+    private void initialize(Object proxy) {
         try {
             Hibernate.initialize(proxy);
         } catch (HibernateException he) {
@@ -122,6 +123,13 @@ public class DatabaseAccess {
         Object result = null;
         try {
             result = this.getSession().get(clazz, id);
+
+            // TODO: This is just a bugfix...
+            if (result instanceof AtlProbenahmen) {
+                AtlProbenahmen probe = (AtlProbenahmen) result;
+                this.initialize(probe.getAtlAnalysepositionen());
+            }
+
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.GET, false);
         } finally {
@@ -278,7 +286,8 @@ public class DatabaseAccess {
      */
     public DatabaseAccess createFilter(Object collection, String filterString) {
         try {
-            this.query = getSession().createFilter(collection, filterString);
+            this.query = this.getSession()
+                .createFilter(collection, filterString);
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.CREATE_FILTER, false);
         } finally {
@@ -363,6 +372,16 @@ public class DatabaseAccess {
 
         try {
             queryResult = this.query.list();
+
+            // TODO: This is just a bugfix...
+            AtlProbenahmen probe = null;
+            if (!queryResult.isEmpty() && queryResult.get(0) instanceof AtlProbenahmen) {
+                for (Object result : queryResult) {
+                    probe = (AtlProbenahmen) result;
+                    this.initialize(probe.getAtlAnalysepositionen());
+                }
+            }
+
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.LIST, false);
         } finally {
