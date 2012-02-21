@@ -65,6 +65,7 @@ public class Anh50Model extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Anh50Fachdaten fd = (Anh50Fachdaten) objectAtRow;
         Object tmp;
@@ -87,13 +88,12 @@ public class Anh50Model extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-//        if (fd.getBasisObjekt().getInaktiv() == true)
-//        {
-//            tmp = "<html><strike>" + tmp + "</strike></html>";
+//        if (fd.getBasisObjekt().getInaktiv() == true) {
+//            tmp = StringUtils.setStrike(tmp.toString());
 //        }
         return tmp;
     }
-    
+
 	  @Override
 	public Class<?> getColumnClass( int columnIndex ){
 		switch( columnIndex ){
@@ -108,6 +108,7 @@ public class Anh50Model extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     	// This is intentionally left blank.
     }

@@ -97,7 +97,7 @@ public class UebergabeModel extends ListTableModel {
             break;
         }
         if (iu.getBasisObjekt().getInaktiv()) {
-            tmp = StringUtils.setStrike((String)tmp);
+            tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;
     }

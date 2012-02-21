@@ -71,7 +71,7 @@ public class Anh53Model extends ListTableModel {
             break;
         }
         if (fd.getBasisObjekt().getInaktiv()) {
-            tmp = StringUtils.setStrike((String)tmp);
+            tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;
     }

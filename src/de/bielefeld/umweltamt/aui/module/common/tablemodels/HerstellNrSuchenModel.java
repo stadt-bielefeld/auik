@@ -104,7 +104,7 @@ public class HerstellNrSuchenModel extends ListTableModel {
         }
         // Wenn ein Objekt stillgelegt ist, wird es durchgestrichen
         if ((fachdaten.getStillegungsdatum() != null) && (tmp != null)) {
-            tmp = StringUtils.setStrike((String)tmp);
+            tmp = StringUtils.setStrike(tmp.toString());
         }
 
         return tmp;

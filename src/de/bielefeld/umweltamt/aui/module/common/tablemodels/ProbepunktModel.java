@@ -94,7 +94,7 @@ public class ProbepunktModel extends ListTableModel {
             break;
         }
         if (pkt.getBasisObjekt().getInaktiv()) {
-            tmp = StringUtils.setStrike((String)tmp);
+            tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;
     }

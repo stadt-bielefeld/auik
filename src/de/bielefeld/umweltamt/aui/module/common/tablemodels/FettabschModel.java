@@ -76,7 +76,7 @@ public class FettabschModel extends ListTableModel {
 		}
 
 		if (ad.getAnh49Fachdaten().getBasisObjekt().getInaktiv()) {
-            tmp = StringUtils.setStrike((String)tmp);
+            tmp = StringUtils.setStrike(tmp.toString());
 		}
 		return tmp;
 	}

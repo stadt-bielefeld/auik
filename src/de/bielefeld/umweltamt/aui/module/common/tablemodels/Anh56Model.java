@@ -91,7 +91,7 @@ public class Anh56Model extends ListTableModel {
             break;
         }
         if (fd.getBasisObjekt().getInaktiv() == true) {
-            tmp = StringUtils.setStrike((String)tmp);
+            tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;
     }

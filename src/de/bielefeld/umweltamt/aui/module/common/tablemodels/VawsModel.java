@@ -114,7 +114,7 @@ public class VawsModel extends ListTableModel {
         }
 
         if ((fd.getStillegungsdatum() != null) && (tmp != null)) {
-            tmp = StringUtils.setStrike((String)tmp);
+            tmp = StringUtils.setStrike(tmp.toString());
         }
 
         return tmp;

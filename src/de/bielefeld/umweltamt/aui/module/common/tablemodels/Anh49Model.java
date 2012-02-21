@@ -99,9 +99,8 @@ public class Anh49Model extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-//        if (fd.getBasisObjekt().getInaktiv() == true)
-//        {
-//            tmp = "<html><strike>" + tmp + "</strike></html>";
+//        if (fd.getBasisObjekt().getInaktiv() == true) {
+//            tmp = StringUtils.setStrike(tmp.toString());
 //        }
         return tmp;
     }
