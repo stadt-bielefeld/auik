@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21.02.2012 09:47:52 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetrieb" table="inka_betrieb" schema="tipi">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetriebId">
+            <key-property name="betriebNr" type="java.lang.Integer">
+                <column name="betrieb_nr" />
+            </key-property>
+        </composite-id>
+        <property name="adresseStandNr" type="java.lang.Integer">
+            <column name="adresse_stand_nr" />
+        </property>
+        <property name="adresseEinleitNr" type="java.lang.Integer">
+            <column name="adresse_einleit_nr" />
+        </property>
+        <property name="gemeindekennzahl" type="java.lang.String">
+            <column name="gemeindekennzahl" />
+        </property>
+    </class>
+</hibernate-mapping>

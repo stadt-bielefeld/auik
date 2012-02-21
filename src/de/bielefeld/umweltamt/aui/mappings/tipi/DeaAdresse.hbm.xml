@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.tipi.DeaAdresse" table="dea_adresse" schema="tipi">
+
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.tipi.DeaAdresseId">
+            <key-property name="adresseNr" type="java.lang.Integer">
+                <column name="adresse_nr" />
+            </key-property>
+        </composite-id>
+            <property name="name1" type="java.lang.String" >
+                <column name="name1" />
+            </property>
+            <property name="name2" type="java.lang.String">
+                <column name="name2" not-null="false"/>
+            </property>
+            <property name="strasse" type="java.lang.String">
+                <column name="strasse" not-null="false"/>
+            </property>
+            <property name="hausnr" type="java.lang.String">
+                <column name="hausnr" not-null="false"/>
+            </property>
+            <property name="plz" type="java.lang.String">
+                <column name="plz" not-null="false"/>
+            </property>
+            <property name="ort" type="java.lang.String">
+                <column name="ort" length="0" not-null="false"/>
+            </property>
+            <property name="staatskennung" type="java.lang.String">
+                <column name="staatskennung" length="0" not-null="false"/>
+            </property>
+    </class>
+</hibernate-mapping>

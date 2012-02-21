@@ -1,3 +1,42 @@
+2012-02-21  Raimund Renkert <raimund.renkert@intevation.de>
+
+	Added module to synchronize the local database with an external service.
+
+	* src/de/bielefeld/umweltamt/aui/tipi/ServiceManager.java:
+	  New. Managing connections to external services.
+
+	* src/de/bielefeld/umweltamt/aui/module/DBSyncModul.java:
+	  New. Module to handle user input and show database tables and data from
+	  external service.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/tipi,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetriebseinrichtungId.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetrieb.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/DeaAdresse.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaGenehmigung.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetriebseinrichtung.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetrieb.hbm.xml,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/DeaAdresse.hbm.xml,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaGenehmigung.hbm.xml,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetriebseinrichtung.hbm.xml,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetriebId.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/DeaAdresseId.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaGenehmigungId.java:
+	  New. Hibernate dataabse mappings.
+
+	* src/hibernate.cfg.xml:
+	  Added mappings for database.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/tablemodels/InkaBetriebModel.java,
+	  src/de/bielefeld/umweltamt/aui/module/common/tablemodels/InkaGenehmigungModel.java,
+	  src/de/bielefeld/umweltamt/aui/module/common/tablemodels/DeaAdresseModel.java,
+	  src/de/bielefeld/umweltamt/aui/module/common/tablemodels/InkaBetriebseinrichtungModel.java:
+	  New. Tablemodels for displaying database tables.
+
+	* auik.properties:
+	  Added new property for syncable database tables.
+	  Added new module.
+
 2011-08-18  Ingo Weinzierl <ingo@intevation.de>
 
 	* src/de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.java: Im
