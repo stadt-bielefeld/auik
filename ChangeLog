@@ -1,5 +1,12 @@
 2012-02-21  Raimund Renkert <raimund.renkert@intevation.de>
 
+	Added missing jar file.
+
+	* lib/commons-discovery-0.5.jar:
+	  New. Component to discover implementations for interfaces.
+
+2012-02-21  Raimund Renkert <raimund.renkert@intevation.de>
+
 	Added module to synchronize the local database with an external service.
 
 	* src/de/bielefeld/umweltamt/aui/tipi/ServiceManager.java:
