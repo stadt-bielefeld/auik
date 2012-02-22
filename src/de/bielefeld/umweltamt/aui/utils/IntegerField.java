@@ -49,7 +49,7 @@ public class IntegerField extends BasicFormattedField {
     }
 
     public Integer getIntValue() {
-        Integer nummer;
+        Integer nummer = null;
         try {
             commitEdit();
             if (getValue() instanceof Long) {

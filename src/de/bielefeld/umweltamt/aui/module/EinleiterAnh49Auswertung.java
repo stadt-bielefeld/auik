@@ -90,9 +90,9 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     // Widgets für die Abfrage
     private JComboBox sachbBox;
     private IntegerField dekraTuevFeld;
-    private JCheckBox abgemeldetCheck;
-    private JCheckBox abgerissenCheck;
-    private JCheckBox abwasserfreiCheck;
+//    private JCheckBox abgemeldetCheck;
+//    private JCheckBox abgerissenCheck;
+//    private JCheckBox abwasserfreiCheck;
     private JCheckBox wiedervorlageCheck;
     private JCheckBox aktivCheck;
     private JButton auswahlButton;
@@ -125,9 +125,9 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
-            abgemeldetCheck = new JCheckBox("Abgemeldet");
-            abgerissenCheck = new JCheckBox("Nur abgerissene");
-            abwasserfreiCheck = new JCheckBox("Abwasserfrei");
+//            abgemeldetCheck = new JCheckBox("Abgemeldet");
+//            abgerissenCheck = new JCheckBox("Nur abgerissene");
+//            abwasserfreiCheck = new JCheckBox("Abwasserfrei");
             wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage");
             aktivCheck = new JCheckBox("Aktiv");
             aktivCheck.setSelected(true);
@@ -144,10 +144,10 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                     Anh49Model model = (Anh49Model) getTableModel();
                     model.setList(
                         Anh49Fachdaten.getAuswahlList(
-                            abgemeldetCheck.isSelected(),
-                            abwasserfreiCheck.isSelected(),
+//                            abgemeldetCheck.isSelected(),
+//                            abwasserfreiCheck.isSelected(),
                             wiedervorlageCheck.isSelected(),
-                            abgerissenCheck.isSelected(),
+//                            abgerissenCheck.isSelected(),
                             ((sachbBox.getSelectedItem() != null) ?
                                 sachbBox.getSelectedItem().toString() : null),
                             dekraTuevFeld.getIntValue(),
@@ -160,21 +160,21 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
 
             // Noch etwas Layout...
             FormLayout layout = new FormLayout(
-                    "pref, 3dlu, pref, 20dlu, pref, 3dlu, pref"
+                    "pref, 20dlu, pref, 3dlu, pref, 20dlu, pref"
                     );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(abgemeldetCheck);
-            builder.append(wiedervorlageCheck);
-            builder.append("SachbearbeiterIn:", sachbBox);
-            builder.nextLine();
-            builder.append(abwasserfreiCheck);
+//            builder.append(abgemeldetCheck);
             builder.append(aktivCheck);
-            builder.append("Dekra-TÜV-T.:", dekraTuevFeld);
-            builder.nextLine();
-            builder.append(abgerissenCheck);
-            builder.append("");
+            builder.append("SachbearbeiterIn:", sachbBox);
             builder.append(auswahlButton);
+            builder.nextLine();
+//            builder.append(abwasserfreiCheck);
+            builder.append(wiedervorlageCheck);
+            builder.append("Dekra-TÜV-T.:", dekraTuevFeld);
+//            builder.nextLine();
+//            builder.append(abgerissenCheck);
+//            builder.append("");
             builder.append(getTabelleExportButton());
 
             queryPanel = builder.getPanel();

@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -91,50 +90,53 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
      * Anhang 49 Fachdaten nach Kriterien auswählen
      * TODO: Eine Variante einbauen, die für die ganzen Booleans auch "egal"
      * erlaubt.
-     * @param abgemeldet
-     * @param abwasserfrei
+//     * @param abgemeldet
+//     * @param abwasserfrei
      * @param abgelWdrVorlage Liegt das Wiedervorlagedatum hinter dem aktuellen
-     * @param abgerissen
+//     * @param abgerissen
      * @param sachbearbeiter
      * @param tuev
      * @param aktiv
      * @return List<?>
      */
     public static List<?> getAuswahlList (
-        Boolean abgemeldet, Boolean abwasserfrei, Boolean abgelWdrVorlage,
-        Boolean abgerissen, String sachbearbeiter, Integer tuev,
+        /*Boolean abgemeldet, Boolean abwasserfrei,*/ Boolean abgelWdrVorlage,
+        /*Boolean abgerissen,*/ String sachbearbeiter, Integer tuev,
         Boolean aktiv) {
 
         String query = "FROM Anh49Fachdaten anh49 "
-            + "WHERE anh49.abgemeldet = :abgemeldet "
-            + "AND anh49.abwasserfrei = :abwasserfrei "
-            + "AND anh49.wiedervorlage <= :today "
-            + (abgerissen ?
-                "AND lower(anh49.sonstigestechnik) LIKE '%abgerissen%' " : "")
-            + "AND anh49.sachbearbeiterIn LIKE :sachbearbeiter "
-            + "AND anh49.dekraTuevTermin BETWEEN :tuev0 AND :tuev1 "
+            + "WHERE "
+//            + "anh49.abgemeldet = :abgemeldet "
+//            + "AND anh49.abwasserfrei = :abwasserfrei "
+//            + (abgerissen ?
+//                "AND lower(anh49.sonstigestechnik) LIKE '%abgerissen%' " : "")
+            + "anh49.sachbearbeiterIn LIKE :sachbearbeiter "
+            + "AND " + (abgelWdrVorlage ?
+                "anh49.wiedervorlage <= :today " : "42 = 42 " )
+            + "AND " + (tuev == null ?
+                "anh49.dekraTuevTermin IS NULL " :
+                "anh49.dekraTuevTermin = :tuev ")
             + "AND anh49.basisObjekt.inaktiv = :inaktiv "
             /* For a strange reason we do not want the Fettabscheider... */
             + "AND anh49.basisObjekt.basisObjektarten.objektart "
             + "NOT LIKE 'Fettabscheider' "
             + "ORDER BY anh49.sachbearbeiterIn";
 
-        if (!abgelWdrVorlage) {
-            Calendar cal = Calendar.getInstance();
-            cal.set(3000,1,1); // Yes, this is a little bit dirty...
-        }
-        Integer tuev0 = ((tuev != null) ? tuev :    0);
-        Integer tuev1 = ((tuev != null) ? tuev : 3000);
-
-        return new DatabaseAccess().createQuery(query)
-            .setBoolean("abgemeldet", abgemeldet)
-            .setBoolean("abwasserfrei", abwasserfrei)
-            .setDate("today", new Date())
+        DatabaseAccess da = new DatabaseAccess()
+            .createQuery(query)
             .setString("sachbearbeiter",
                 ((sachbearbeiter != null) ? sachbearbeiter : "%"))
-            .setInteger("tuev0", tuev0)
-            .setInteger("tuev1", tuev1)
-            .setBoolean("inaktiv", !aktiv)
-            .list();
+//            .setBoolean("abgemeldet", abgemeldet)
+//            .setBoolean("abwasserfrei", abwasserfrei)
+            .setBoolean("inaktiv", !aktiv);
+
+        if (abgelWdrVorlage) {
+            da.setDate("today", new Date());
+        }
+        if (tuev != null) {
+            da.setInteger("tuev", tuev);
+        }
+
+        return da.list();
     }
 }
