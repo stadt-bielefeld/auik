@@ -37,14 +37,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
@@ -56,13 +54,15 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.LongNameComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
-import de.bielefeld.umweltamt.aui.utils.TabAction;
+
 /**
  * Ein Dialog zum Bearbeiten eines Betreibers.
  * @author David Klotz
  */
 public class BetreiberEditor extends AbstractBaseEditor {
-	/** Logging */
+    private static final long serialVersionUID = -7058333439142990179L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     // Für die Comboboxen beim Bearbeiten
@@ -126,14 +126,16 @@ public class BetreiberEditor extends AbstractBaseEditor {
         revdatumsFeld = new JTextField();
         revdatumsFeld.setEditable(false);
         revdatumsFeld.setFocusable(false);
-        revdatumsFeld.setToolTipText("Wird bei Änderungen automatisch aktualisiert.");
+        revdatumsFeld
+            .setToolTipText("Wird bei Änderungen automatisch aktualisiert.");
 
         handzeichenAltFeld = new JTextField();
         handzeichenAltFeld.setEditable(false);
         handzeichenAltFeld.setFocusable(false);
         handzeichenAltFeld.setToolTipText("Handzeichen der letzten Revision");
         handzeichenNeuFeld = new LimitedTextField(10, "");
-        handzeichenNeuFeld.setToolTipText("Neues Handzeichen bei Änderungen obligatorisch!");
+        handzeichenNeuFeld
+            .setToolTipText("Neues Handzeichen bei Änderungen obligatorisch!");
 
         bemerkungsArea = new LimitedTextArea(2000);
         bemerkungsArea.setLineWrap(true);
@@ -192,7 +194,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
         // Ermögliche TAB aus dem Bemerkungs-Feld zu springen
         bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
         bemerkungsScroller.getHorizontalScrollBar().setFocusable(false);
-        TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
+//        TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
 
         String columnString = "right:pref, 3dlu, 20dlu, 40dlu:grow(1.0), 5dlu, right:pref, 3dlu, 27dlu:grow(1.0), 3dlu, 30dlu:grow(1.0)";
         FormLayout layout = new FormLayout(
@@ -246,7 +248,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
         // Adresse --------------------------------------
         builder.addSeparator("Adresse", cc.xyw(1,15,10));
         // Straße
-        builder.addLabel("Straße:",    cc.xy( 1,17));
+        builder.addLabel("Straße:", cc.xy(1, 17));
         builder.add(strassenBox,     cc.xyw(3,17,4));
         builder.add(hausnrFeld,     cc.xy( 8,17));
         builder.add(hausnrZusFeld,     cc.xy(10,17));
@@ -552,7 +554,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
         getBetreiber().setRevidatum(Calendar.getInstance().getTime());
 
-        //frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
+        // frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
 
         // TODO: Here we used the returned object further on, but changed it
         // to this instead. Check if this is really the same.

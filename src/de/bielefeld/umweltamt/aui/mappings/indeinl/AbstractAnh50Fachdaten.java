@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
@@ -30,7 +31,8 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
  * customize the behavior of this class by editing the class,
  * {@link Anh50Fachdaten}.
  */
-public abstract class AbstractAnh50Fachdaten implements Serializable {
+public abstract class AbstractAnh50Fachdaten extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 2707557881532673898L;
 
     /**

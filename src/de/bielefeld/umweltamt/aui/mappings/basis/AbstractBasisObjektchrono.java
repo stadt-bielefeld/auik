@@ -23,14 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 
 /**
  * A class that represents a row in the VAWS_OBJEKTCHRONO table. You can
  * customize the behavior of this class by editing the class, {@link
  * VawsObjektchrono()}.
  */
-public abstract class AbstractBasisObjektchrono implements Serializable {
+public abstract class AbstractBasisObjektchrono extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 3677261760395223211L;
 
     /**

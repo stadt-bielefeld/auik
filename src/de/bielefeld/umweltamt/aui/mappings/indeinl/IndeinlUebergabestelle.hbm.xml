@@ -30,6 +30,8 @@
         <property name="hochwert" type="java.lang.Integer">
             <column name="hochwert" />
         </property>
+        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
 
         <many-to-one name="atlKlaeranlagen" column="klaeranlage" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen" />
         

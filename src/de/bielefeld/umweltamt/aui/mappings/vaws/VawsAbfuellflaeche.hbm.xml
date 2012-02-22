@@ -26,6 +26,9 @@
         <property name="niederschlagschutz" column="niederschlagschutz" type="java.lang.String" />
         <property name="abscheidervorh" column="abscheidervorh" type="java.lang.Boolean" />
         <property name="beschableitung" column="beschableitung" type="java.lang.String" />
+        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
+
     </class>
 
 </hibernate-mapping>

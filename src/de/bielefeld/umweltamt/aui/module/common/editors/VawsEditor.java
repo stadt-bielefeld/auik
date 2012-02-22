@@ -91,13 +91,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
-
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
@@ -131,7 +128,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * @author David Klotz
  */
 public class VawsEditor extends AbstractBaseEditor {
-	/** Logging */
+    private static final long serialVersionUID = -6239513794286892981L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private VawsAbfuellflaeche abfuellflaeche;
@@ -217,7 +216,6 @@ public class VawsEditor extends AbstractBaseEditor {
     private JCheckBox hochCheck;
     private JCheckBox belueftCheck;
     private JCheckBox rueckCheck;
-    private LimitedTextArea bemerkArea;
     // Schutzvorkehrungen TAB ### END
     // Beschreibung für die Felder bei VAwS-Abscheider ### END
     // Daten (Lageranlagen)
@@ -322,6 +320,7 @@ public class VawsEditor extends AbstractBaseEditor {
      *
      * @see de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#getEditedClassName()
      */
+    @Override
     protected String getEditedClassName() {
         String className = super.getEditedClassName();
 
@@ -365,6 +364,7 @@ public class VawsEditor extends AbstractBaseEditor {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog#buildContentArea()
      */
+    @Override
     protected JComponent buildContentArea() {
         // Widgets initialisieren:
         // Top-Panel
@@ -419,10 +419,12 @@ public class VawsEditor extends AbstractBaseEditor {
         anlagenChronoTabelle.getColumnModel().getColumn(2).setPreferredWidth(50);
 
         anlagenChronoTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 showTabellenPopup(e);
             }
 
+            @Override
             public void mouseReleased(MouseEvent e) {
                 showTabellenPopup(e);
             }
@@ -501,7 +503,6 @@ public class VawsEditor extends AbstractBaseEditor {
         hochCheck = new JCheckBox("Hochleistungszapfanlage?");
         belueftCheck = new JCheckBox("Befüllung von Lagerbehältern?");
         rueckCheck = new JCheckBox("Rückhaltevermögen ausreichend?");
-        bemerkArea = new LimitedTextArea(255);
 
         // Ausführung (VAwS-Abscheider)
         schlammBeschField = new LimitedTextField(25);
@@ -540,6 +541,7 @@ public class VawsEditor extends AbstractBaseEditor {
         prueferBox = new JComboBox(VawsPruefer.getAllPruefer());
         prueferBox.setEditable(false);
         prueferBox.addFocusListener(new FocusAdapter() {
+            @Override
             public void focusGained(FocusEvent e) {
                 prueferBox.showPopup();
             }
@@ -551,6 +553,7 @@ public class VawsEditor extends AbstractBaseEditor {
         pruefergebnisBox = new JComboBox(VawsPruefergebnisse.getAllPruefergebnisse());
         pruefergebnisBox.setEditable(false);
         pruefergebnisBox.addFocusListener(new FocusAdapter() {
+            @Override
             public void focusGained(FocusEvent e) {
                 pruefergebnisBox.showPopup();
             }
@@ -560,10 +563,12 @@ public class VawsEditor extends AbstractBaseEditor {
 
 
         svPruefungTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 showTabellenPopup(e);
             }
 
+            @Override
             public void mouseReleased(MouseEvent e) {
                 showTabellenPopup(e);
             }
@@ -590,6 +595,7 @@ public class VawsEditor extends AbstractBaseEditor {
         massnahmenBox = new JComboBox(VawsVerwmassnahmen.getAllMassnahmen());
         massnahmenBox.setEditable(true);
         massnahmenBox.addFocusListener(new FocusAdapter() {
+            @Override
             public void focusGained(FocusEvent e) {
                 massnahmenBox.showPopup();
             }
@@ -598,10 +604,12 @@ public class VawsEditor extends AbstractBaseEditor {
         verwVerfahrenTabelle.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(massnahmenBox));
 
         verwVerfahrenTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 showTabellenPopup(e);
             }
 
+            @Override
             public void mouseReleased(MouseEvent e) {
                 showTabellenPopup(e);
             }
@@ -623,6 +631,7 @@ public class VawsEditor extends AbstractBaseEditor {
         gebArtenBox = new JComboBox(VawsGebuehrenarten.getAllGebuehrenarten());
         gebArtenBox.setEditable(false);
         gebArtenBox.addFocusListener(new FocusAdapter() {
+            @Override
             public void focusGained(FocusEvent e) {
                 gebArtenBox.showPopup();
             }
@@ -631,10 +640,12 @@ public class VawsEditor extends AbstractBaseEditor {
         verwGebuehrenTabelle.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(gebArtenBox));
 
         verwGebuehrenTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 showTabellenPopup(e);
             }
 
+            @Override
             public void mouseReleased(MouseEvent e) {
                 showTabellenPopup(e);
             }
@@ -675,6 +686,7 @@ public class VawsEditor extends AbstractBaseEditor {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#fillForm()
      */
+    @Override
     protected void fillForm() {
         header.setText(getFachdaten().getAnlagenart());
 //        subHeader.setText("bei: " + getFachdaten().getBasisObjekt().getBasisBetreiber() + "; " + getFachdaten().getBasisObjekt().getBasisObjektarten().getObjektart());
@@ -929,6 +941,7 @@ public class VawsEditor extends AbstractBaseEditor {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#canSave()
      */
+    @Override
     protected boolean canSave() {
         // TODO: Irgendwelche Überprüfungen nötig?
 //        String hnr = hnrFeld.getText();
@@ -945,6 +958,7 @@ public class VawsEditor extends AbstractBaseEditor {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#doSave()
      */
+    @Override
     protected boolean doSave() {
 
         if (svPruefungTabelle.getCellEditor() != null) {
@@ -1080,10 +1094,10 @@ public class VawsEditor extends AbstractBaseEditor {
 
         }
         // Anlagenchronologie speichern:
-        for (Iterator it = anlagenChronoModel.getList().iterator(); it.hasNext();) {
+        for (Iterator<?> it = anlagenChronoModel.getList().iterator(); it.hasNext();) {
             success = success && VawsAnlagenchrono.saveAnlagenChrono((VawsAnlagenchrono) it.next());
         }
-        for (Iterator it = anlagenChronoModel.getGeloeschte().iterator(); it.hasNext();) {
+        for (Iterator<?> it = anlagenChronoModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && VawsAnlagenchrono.removeAnlagenChrono((VawsAnlagenchrono) it.next());
         }
         log.debug(anlagenChronoModel.getList().size()
@@ -1092,10 +1106,10 @@ public class VawsEditor extends AbstractBaseEditor {
                 + " Einträge gelöscht.");
 
         // Sachverständigenprüfung speichern:
-        for (Iterator it = svPruefungModel.getList().iterator(); it.hasNext();) {
+        for (Iterator<?> it = svPruefungModel.getList().iterator(); it.hasNext();) {
             success = success && VawsKontrollen.saveKontrolle((VawsKontrollen) it.next());
         }
-        for (Iterator it = svPruefungModel.getGeloeschte().iterator(); it.hasNext();) {
+        for (Iterator<?> it = svPruefungModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && VawsKontrollen.removeKontrolle((VawsKontrollen) it.next());
         }
         log.debug(svPruefungModel.getList().size()
@@ -1104,10 +1118,10 @@ public class VawsEditor extends AbstractBaseEditor {
         		+ " Einträge gelöscht.");
 
         // Verwaltungsverfahren speichern:
-        for (Iterator it = verwVerfahrenModel.getList().iterator(); it.hasNext();) {
+        for (Iterator<?> it = verwVerfahrenModel.getList().iterator(); it.hasNext();) {
             success = success && VawsVerwaltungsverf.saveVerfahren((VawsVerwaltungsverf) it.next());
         }
-        for (Iterator it = verwVerfahrenModel.getGeloeschte().iterator(); it.hasNext();) {
+        for (Iterator<?> it = verwVerfahrenModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && VawsVerwaltungsverf.removeVerfahren((VawsVerwaltungsverf) it.next());
         }
         log.debug(verwVerfahrenModel.getList().size()
@@ -1116,14 +1130,14 @@ public class VawsEditor extends AbstractBaseEditor {
         		+ " Einträge gelöscht.");
 
         // Verwaltunggebühren speichern:
-        for (Iterator it = verwGebuehrenModel.getList().iterator(); it.hasNext();) {
+        for (Iterator<?> it = verwGebuehrenModel.getList().iterator(); it.hasNext();) {
             success = success && VawsVerwaltungsgebuehren.saveGebuehr((VawsVerwaltungsgebuehren) it.next());
         }
-        for (Iterator it = verwGebuehrenModel.getGeloeschte().iterator(); it.hasNext();) {
+        for (Iterator<?> it = verwGebuehrenModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && VawsVerwaltungsgebuehren.removeGebuehr((VawsVerwaltungsgebuehren) it.next());
         }
-        log.debug(verwGebuehrenModel.getList().size() 
-        		+ " Verwaltungsgebühren-Einträge neu/behalten, " 
+        log.debug(verwGebuehrenModel.getList().size()
+        		+ " Verwaltungsgebühren-Einträge neu/behalten, "
         		+ verwGebuehrenModel.getGeloeschte().size()
         		+ " Einträge gelöscht.");
 
@@ -1160,6 +1174,9 @@ public class VawsEditor extends AbstractBaseEditor {
     private Action getTabellenItemLoeschAction() {
         if (tabellenItemLoeschAction == null) {
             tabellenItemLoeschAction = new AbstractAction("Eintrag löschen") {
+                private static final long serialVersionUID = 2465229964078090463L;
+
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int index = tabbedPane.getSelectedIndex();
                     log.debug("index: " + index);
@@ -1618,6 +1635,7 @@ public class VawsEditor extends AbstractBaseEditor {
  * @author David Klotz
  */
 class VawsAnlagenChronoModel extends EditableListTableModel {
+    private static final long serialVersionUID = -2520120636324926275L;
     private List geloeschte;
     private VawsFachdaten fachdaten;
 
@@ -1647,6 +1665,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
         }
     }
 
+    @Override
     public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
         VawsAnlagenchrono chrono = (VawsAnlagenchrono) objectAtRow;
         String tmp = (String) newValue;
@@ -1687,6 +1706,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
         }
     }
 
+    @Override
     public Object newObject() {
         VawsAnlagenchrono chr = new VawsAnlagenchrono();
         chr.setVawsFachdaten(fachdaten);
@@ -1694,6 +1714,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
         return chr;
     }
 
+    @Override
     public boolean objectRemoved(Object objectAtRow) {
         VawsAnlagenchrono chrono = (VawsAnlagenchrono) objectAtRow;
         if (chrono.getId() != null) {
@@ -1709,6 +1730,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         VawsAnlagenchrono ac = (VawsAnlagenchrono) objectAtRow;
         Object tmp;
@@ -1749,6 +1771,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
      * Leer, da kein Updaten der Liste nötig/möglich.
      * Die Liste wird direkt mittels setList "befüllt".
      */
+    @Override
     public void updateList() {
     }
 }
@@ -1759,6 +1782,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
  * @author David Klotz
  */
 class VawsKontrollenModel extends EditableListTableModel {
+    private static final long serialVersionUID = 1747805482011126348L;
     private List geloeschte;
     private VawsFachdaten fachdaten;
 
@@ -1790,6 +1814,7 @@ class VawsKontrollenModel extends EditableListTableModel {
         }
     }
 
+    @Override
     public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
         VawsKontrollen ktrl = (VawsKontrollen) objectAtRow;
         String tmp = "";
@@ -1836,6 +1861,7 @@ class VawsKontrollenModel extends EditableListTableModel {
         }
     }
 
+    @Override
     public Object newObject() {
         VawsKontrollen ktr = new VawsKontrollen();
         ktr.setVawsFachdaten(fachdaten);
@@ -1844,6 +1870,7 @@ class VawsKontrollenModel extends EditableListTableModel {
         return ktr;
     }
 
+    @Override
     public boolean objectRemoved(Object objectAtRow) {
         VawsKontrollen ktr = (VawsKontrollen) objectAtRow;
         if (ktr.getId() != null) {
@@ -1859,6 +1886,7 @@ class VawsKontrollenModel extends EditableListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         VawsKontrollen ac = (VawsKontrollen) objectAtRow;
         Object tmp;
@@ -1894,7 +1922,8 @@ class VawsKontrollenModel extends EditableListTableModel {
         return tmp;
     }
 
-    public Class getColumnClass(int columnIndex) {
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex == 4) {
             return Boolean.class;
         } else {
@@ -1915,26 +1944,17 @@ class VawsKontrollenModel extends EditableListTableModel {
      * Leer, da kein Updaten der Liste nötig/möglich.
      * Die Liste wird direkt mittels setList "befüllt".
      */
+    @Override
     public void updateList() {
     }
 }
-
-
-
-
-
-
-
-
 
 /**
  * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
  * @author David Klotz
  */
-
-
-
 class VerwVerfahrenModel extends EditableListTableModel {
+    private static final long serialVersionUID = -7932308301889587228L;
     private List geloeschte;
     private VawsFachdaten fachdaten;
 
@@ -1965,6 +1985,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
         }
     }
 
+    @Override
     public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
         VawsVerwaltungsverf verf = (VawsVerwaltungsverf) objectAtRow;
         String tmp = "";
@@ -2008,6 +2029,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
         }
     }
 
+    @Override
     public Object newObject() {
         VawsVerwaltungsverf verf = new VawsVerwaltungsverf();
         verf.setVawsFachdaten(fachdaten);
@@ -2016,6 +2038,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
         return verf;
     }
 
+    @Override
     public boolean objectRemoved(Object objectAtRow) {
         VawsVerwaltungsverf verf = (VawsVerwaltungsverf) objectAtRow;
         if (verf.getId() != null) {
@@ -2031,6 +2054,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         VawsVerwaltungsverf verf = (VawsVerwaltungsverf) objectAtRow;
         Object tmp;
@@ -2062,7 +2086,8 @@ class VerwVerfahrenModel extends EditableListTableModel {
         return tmp;
     }
 
-    public Class getColumnClass(int columnIndex) {
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex == 3) {
             return Boolean.class;
         } else {
@@ -2083,6 +2108,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
      * Leer, da kein Updaten der Liste nötig/möglich.
      * Die Liste wird direkt mittels setList "befüllt".
      */
+    @Override
     public void updateList() {
     }
 }
@@ -2092,6 +2118,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
  * @author David Klotz
  */
 class VerwGebuehrenModel extends EditableListTableModel {
+    private static final long serialVersionUID = 8662150283828728780L;
     private List geloeschte;
     private VawsFachdaten fachdaten;
 
@@ -2123,6 +2150,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
         }
     }
 
+    @Override
     public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
         VawsVerwaltungsgebuehren gebuehr = (VawsVerwaltungsgebuehren) objectAtRow;
         String tmp = "";
@@ -2165,6 +2193,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
         }
     }
 
+    @Override
     public Object newObject() {
         VawsVerwaltungsgebuehren gebuehr = new VawsVerwaltungsgebuehren();
         gebuehr.setVawsFachdaten(fachdaten);
@@ -2172,6 +2201,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
         return gebuehr;
     }
 
+    @Override
     public boolean objectRemoved(Object objectAtRow) {
         VawsVerwaltungsgebuehren gebuehr = (VawsVerwaltungsgebuehren) objectAtRow;
         if (gebuehr.getId() != null) {
@@ -2187,6 +2217,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         VawsVerwaltungsgebuehren gebuehr = (VawsVerwaltungsgebuehren) objectAtRow;
         Object tmp;
@@ -2222,7 +2253,8 @@ class VerwGebuehrenModel extends EditableListTableModel {
         return tmp;
     }
 
-    public Class getColumnClass(int columnIndex) {
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex == 1) {
             return VawsGebuehrenarten.class;
         } else if (columnIndex == 2) {
@@ -2245,6 +2277,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
      * Leer, da kein Updaten der Liste nötig/möglich.
      * Die Liste wird direkt mittels setList "befüllt".
      */
+    @Override
     public void updateList() {
     }
 }

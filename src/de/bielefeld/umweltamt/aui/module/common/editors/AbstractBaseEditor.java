@@ -54,9 +54,6 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
-
-
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -67,7 +64,9 @@ import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
  * @author David Klotz
  */
 public abstract class AbstractBaseEditor extends OkCancelDialog {
-	/** Logging */
+    private static final long serialVersionUID = 373303069489061014L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     protected Object editedObject;
@@ -106,8 +105,8 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
     }
 
     /**
-     * Liefert eine Kurzform des Klassennamens der bearbeiteten Klasse.
-     * Ab Java 1.5 können wir das auch einfacher mit Class.getSimpleName() haben.
+     * Liefert eine Kurzform des Klassennamens der bearbeiteten Klasse. Ab Java
+     * 1.5 können wir das auch einfacher mit Class.getSimpleName() haben.
      * @return Der Klassenname der bearbeiteten Klasse, ohne Package.
      */
     protected String getEditedClassName() {
@@ -134,6 +133,7 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog#getOkButtonText()
      */
+    @Override
     protected String getOkButtonText() {
         return "Speichern";
     }
@@ -141,6 +141,7 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog#doOk()
      */
+    @Override
     protected void doOk() {
         if (canSave()) {
             if (doSave()) {
@@ -153,7 +154,8 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
 
             saveDialogSize();
 
-            // Hier natürlich nicht die close() dieser Klasse aufrufen, da dort wieder saved=false gesetzt wird etc.
+            // Hier natürlich nicht die close() dieser Klasse aufrufen, da dort
+            // wieder saved=false gesetzt wird etc.
             super.close();
         }
     }
@@ -162,6 +164,7 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
      * Wird aufgerufen, wenn der Benutzen auf "Abbrechen" geklickt hat.
      * Oder wenn das Fenster geschlossen wurde.
      */
+    @Override
     public void close() {
         saved = false;
         frame.changeStatus("Bearbeiten abgebrochen.");
@@ -187,7 +190,8 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
 
     /**
      * Überprüft, ob das bearbeitete Objekt gespeichert wurde.
-     * @return <code>true</code>, wenn das Objekt erfolgreich gespeichert wurde, sonst <code>false</code>.
+     * @return <code>true</code>, wenn das Objekt erfolgreich gespeichert wurde,
+     *         sonst <code>false</code>.
      */
     public boolean wasSaved() {
         return saved;
@@ -202,7 +206,8 @@ public abstract class AbstractBaseEditor extends OkCancelDialog {
 
     /**
      * Überprüft, ob gespeichert werden kann/darf.
-     * @return <code>true</code>, wenn alle nötigen Eingaben da sind, also gespeichert werden kann. Sonst <code>false</code>.
+     * @return <code>true</code>, wenn alle nötigen Eingaben da sind, also
+     *         gespeichert werden kann. Sonst <code>false</code>.
      */
     protected abstract boolean canSave();
 

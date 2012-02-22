@@ -21,7 +21,10 @@
 
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
-public class AbstractAtlParameter implements java.io.Serializable {
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+
+public class AbstractAtlParameter extends
+    AbstractVirtuallyDeletableDatabaseTable implements java.io.Serializable {
 
     private static final long serialVersionUID = 2105646109272626998L;
     private String ordnungsbegriff;

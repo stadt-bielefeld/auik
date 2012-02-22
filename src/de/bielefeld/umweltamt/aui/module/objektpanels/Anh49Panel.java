@@ -103,7 +103,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -125,14 +124,14 @@ public class Anh49Panel extends AbstractAnhangPanel {
 	private final String BEMERKUNGEN                 = "Bemerkungen";
 	/* Widgets - right */
 	private final String GENEHMIGUNGSDATUM           = "Genehmigungsdatum:";
-	private final String AENDERUNGSGENEHMIGUNGSDATUM = "Änderungsgen.-datum:";
+    private final String AENDERUNGSGENEHMIGUNGSDATUM = "Änderungsgen.-datum:";
 	private final String ABGEMELDET                  = "abgemeldet";
 	private final String ABWASSERFREI                = "abwasserfrei";
 	private final String E_SATZUNG                   = "E-Satzung";
 	private final String WIEDERVORLAGEDATUM          = "Wiedervorlagedatum:";
 	/* Widgets - bottom */
 	private final String SPEICHERN                   = "Speichern";
-	
+
     private JButton saveAnh49Button = null;
 
     // Daten
@@ -158,7 +157,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
     	textArea.setLineWrap(true);
     	textArea.setWrapStyleWord(true);
     	super.addComponent(BEMERKUNGEN, textArea);
-    	
+
     	/* Right column */
     	super.addComponent(GENEHMIGUNGSDATUM,
     			new TextFieldDateChooser());
@@ -170,14 +169,14 @@ public class Anh49Panel extends AbstractAnhangPanel {
     	super.addComponent(WIEDERVORLAGEDATUM,
     			new TextFieldDateChooser());
     	super.addComponent(SPEICHERN, getSaveAnh49Button());
-    	
+
         FormLayout layout = new FormLayout (
                 "pref, 5dlu, 100dlu, 10dlu, pref, 5dlu, 100dlu", // Spalten
                 "pref, " +    // Bearbeitung     | Erfassung
                 "3dlu, " +    //
                 "pref, " +    // Sachbearbeiter  | Genehmigungsdatum
                 "3dlu, " +    //
-                "pref, " +    // Ansprechpartner | Änderungsgenehmigungsdatum
+                "pref, " + // Ansprechpartner | Änderungsgenehmigungsdatum
                 "3dlu, " +    //
                 "pref, " +    // Sachkunde LFA   | abgemeldet
                 "3dlu, " +    //
@@ -190,11 +189,11 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 "pref, " +    // Bemerkung      | Wiedervorlage
                 "30dlu, " +   //
                 "3dlu, " +    //
-                "pref, " +    // Verknüpfte Objekte
+                "pref, " + // Verknüpfte Objekte
                 "5dlu, " +    //
                 "fill:100dlu, " +    // Tabelle
                 "5dlu, " +    //
-                "pref");      // Buttons 
+                "pref");      // Buttons
 
         PanelBuilder builder = new PanelBuilder(layout, this);
         builder.setDefaultDialogBorder();
@@ -206,7 +205,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         Integer fieldCol = 3;
         Integer colWidth = 3;
         Integer cols = 7;
-        
+
         builder.addSeparator("Bearbeitung", cc.xyw(labelCol, row, colWidth));
         row += 2;
         builder.addLabel(SACHBEARBEITER, cc.xy(labelCol, row));
@@ -218,13 +217,13 @@ public class Anh49Panel extends AbstractAnhangPanel {
         builder.addLabel(SACHKUNDE_LFA, cc.xy(labelCol, row));
         builder.add(super.getComponent(SACHKUNDE_LFA), cc.xy(fieldCol, row));
         row += 2;
-        
+
         builder.addSeparator("Analyse", cc.xyw(labelCol, row, colWidth));
         row += 2;
         builder.addLabel(ANALYSEMONAT, cc.xy(labelCol, row));
         builder.add(super.getComponent(ANALYSEMONAT), cc.xy(fieldCol, row));
         row += 2;
-        
+
         builder.addSeparator("Bemerkungen", cc.xyw(labelCol, row, colWidth));
         row += 2;
         builder.add(new JScrollPane(super.getComponent(BEMERKUNGEN),
@@ -278,7 +277,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         		super.getComponent(E_SATZUNG),
         		cc.xy(fieldCol, row, "l,d"));
         row += 2;
-        
+
         builder.addSeparator(
         		"Wiedervorlage", cc.xyw(labelCol, row, colWidth));
         row += 2;
@@ -288,7 +287,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
         builder.nextLine();
     }
-    
+
     public void fetchFormData() {
         fachdaten = Anh49Fachdaten.getAnh49ByObjekt(hauptModul.getObjekt());
         log.debug("Anhang 49 Objekt aus DB geholt: " + fachdaten);
@@ -306,7 +305,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         			fachdaten.getAnalysemonat());
         	super.setComponentValue(BEMERKUNGEN,
         			fachdaten.getBemerkungen());
-        	
+
         	super.setComponentValue(GENEHMIGUNGSDATUM,
         			fachdaten.getGenehmigung());
         	super.setComponentValue(AENDERUNGSGENEHMIGUNGSDATUM,
@@ -319,7 +318,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         			fachdaten.getESatzung());
         	super.setComponentValue(WIEDERVORLAGEDATUM,
         			fachdaten.getWiedervorlage());
-        	
+
             objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
         } else {
             enableAll(false);
@@ -347,7 +346,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
     private boolean saveAnh49Daten() {
         boolean success;
-        
+
         fachdaten.setSachbearbeiterIn(
         		(String)super.getComponentValue(SACHBEARBEITER));
         fachdaten.setAnsprechpartnerIn(
@@ -358,7 +357,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         		(String)super.getComponentValue(ANALYSEMONAT));
         fachdaten.setBemerkungen(
         		(String)super.getComponentValue(BEMERKUNGEN));
-        
+
         fachdaten.setGenehmigung(
         		(Date)super.getComponentValue(GENEHMIGUNGSDATUM));
         fachdaten.setAenderungsgenehmigung(
@@ -371,7 +370,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         		(Boolean)super.getComponentValue(E_SATZUNG));
         fachdaten.setWiedervorlage(
         		(Date)super.getComponentValue(WIEDERVORLAGEDATUM));
-        
+
         success = Anh49Fachdaten.saveFachdaten(fachdaten);
 
         if (!success) {
@@ -400,6 +399,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
             saveAnh49Button = new JButton("Speichern");
 
             saveAnh49Button.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveAnh49Daten()) {
@@ -435,6 +435,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
             objektverknuepfungTabelle
                     .addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
                         public void mouseClicked(java.awt.event.MouseEvent e) {
                             if ((e.getClickCount() == 2)
                                     && (e.getButton() == 1)) {
@@ -476,10 +477,12 @@ public class Anh49Panel extends AbstractAnhangPanel {
                             }
                         }
 
+                        @Override
                         public void mousePressed(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
 
+                        @Override
                         public void mouseReleased(MouseEvent e) {
                             showVerknuepfungPopup(e);
                         }
@@ -521,7 +524,8 @@ public class Anh49Panel extends AbstractAnhangPanel {
             verknuepfungLoeschAction = new AbstractAction("Löschen") {
 				private static final long serialVersionUID = 3694639072102209194L;
 
-				public void actionPerformed(ActionEvent e) {
+				@Override
+                public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                             && getObjektverknuepungTabelle().getEditingRow() == -1) {
@@ -530,20 +534,20 @@ public class Anh49Panel extends AbstractAnhangPanel {
                         int answer = JOptionPane
                                 .showConfirmDialog(
                                         hauptModul.getPanel(),
-                                        "Soll die Verknüpfung wirklich gelöscht werden?\n"
-                                                + "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
-                                        "Löschen bestätigen",
+                                "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                    + "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
+                                "Löschen bestätigen",
                                         JOptionPane.YES_NO_OPTION);
                         if (answer == JOptionPane.YES_OPTION) {
                             if (objektVerknuepfungModel.removeRow(row)) {
                                 hauptModul.getFrame().changeStatus(
-                                        "Objekt gelöscht.",
+                                    "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
                                 log.debug("Objekt " + verknuepfung.getId()
-                                        + " wurde gelöscht!");
+                                    + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(
-                                        "Konnte das Objekt nicht löschen!",
+                                    "Konnte das Objekt nicht löschen!",
                                         HauptFrame.ERROR_COLOR);
                             }
                         }
@@ -564,6 +568,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
             selectObjektButton = new JButton("Objekt auswählen");
 
             selectObjektButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(hauptModul
                             .getFrame(), fachdaten.getBasisObjekt(),

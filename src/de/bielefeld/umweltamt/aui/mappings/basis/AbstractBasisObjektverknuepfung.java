@@ -21,7 +21,10 @@
 
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
-public class AbstractBasisObjektverknuepfung implements java.io.Serializable {
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+
+public class AbstractBasisObjektverknuepfung extends
+    AbstractVirtuallyDeletableDatabaseTable implements java.io.Serializable {
     private static final long serialVersionUID = 7508674418350138126L;
 
     /**

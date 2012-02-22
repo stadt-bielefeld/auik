@@ -51,6 +51,8 @@
         <property name="frist" column="frist" type="java.util.Date" />
         <property name="durchgefuehrt" column="durchgefuehrt" type="java.lang.Integer" />
         <property name="dekraTuevDatum" column="dekra_tuev_datum" type="java.util.Date" />
+        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
         
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
         

@@ -23,12 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+
 /**
  * A class that represents a row in the ANH_49_ORTSTERMINE table. You can
  * customize the behavior of this class by editing the class, {@link
  * Anh49Ortstermine()}.
  */
-public abstract class AbstractAnh49Ortstermine implements Serializable {
+public abstract class AbstractAnh49Ortstermine extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 1533446851683277791L;
 
     /**

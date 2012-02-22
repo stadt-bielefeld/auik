@@ -20,14 +20,11 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaGenehmigung;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-
+import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class InkaGenehmigungModel extends ListTableModel {
-    /** Logging */
-    private static final AuikLogger logger = AuikLogger.getLogger();
+    private static final long serialVersionUID = 6175204065592185842L;
 
     public InkaGenehmigungModel() {
         super(new String[]{
@@ -43,6 +40,7 @@ public class InkaGenehmigungModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         if(objectAtRow == null) {
             return "error";
@@ -76,6 +74,7 @@ public class InkaGenehmigungModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }

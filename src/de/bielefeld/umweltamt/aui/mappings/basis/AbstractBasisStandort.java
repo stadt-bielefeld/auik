@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 
@@ -30,7 +31,8 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
  * A class that represents a row in the BASIS_STANDORT table. You can customize
  * the behavior of this class by editing the class, {@link BasisStandort}.
  */
-public abstract class AbstractBasisStandort implements Serializable {
+public abstract class AbstractBasisStandort extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = -3432191385268283675L;
 
     /**

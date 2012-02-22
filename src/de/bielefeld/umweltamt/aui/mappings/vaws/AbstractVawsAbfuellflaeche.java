@@ -23,12 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+
 /**
  * A class that represents a row in the VAWS_ABFUELLFLAECHE table. You can
  * customize the behavior of this class by editing the class, {@link
  * VawsAbfuellflaeche()}.
  */
-public abstract class AbstractVawsAbfuellflaeche implements Serializable {
+public abstract class AbstractVawsAbfuellflaeche extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 902670291995436106L;
 
     /**

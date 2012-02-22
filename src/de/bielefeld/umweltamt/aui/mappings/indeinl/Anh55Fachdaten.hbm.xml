@@ -37,6 +37,8 @@
         <property name="ansprechpartner" column="ansprechpartner" type="java.lang.String" />
         <property name="branche" column="branche" type="java.lang.String" />
         <property name="loesungsmittel" column="loesungsmittel" type="java.lang.Boolean" />
+        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
 
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" cascade="all"/>
     </class>

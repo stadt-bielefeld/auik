@@ -24,13 +24,15 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.Set;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 
 /**
  * A class that represents a row in the ATL_PROBENAHMEN table. You can customize
  * the behavior of this class by editing the class, {@link AtlProbenahmen}.
  */
-public abstract class AbstractAtlProbenahmen implements Serializable {
+public abstract class AbstractAtlProbenahmen extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = -8219312709181534758L;
 
     /**
@@ -241,7 +243,7 @@ public abstract class AbstractAtlProbenahmen implements Serializable {
      * @param atlAnalysepositionen
      */
     public void setAtlAnalysepositionen(
-            Set<AtlAnalyseposition> atlAnalysepositionen) {
+        Set<AtlAnalyseposition> atlAnalysepositionen) {
         this.atlAnalysepositionen = atlAnalysepositionen;
     }
 

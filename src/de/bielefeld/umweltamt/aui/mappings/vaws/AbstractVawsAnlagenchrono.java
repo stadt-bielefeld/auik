@@ -23,12 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+
 /**
  * A class that represents a row in the VAWS_ANLAGENCHRONO table. You can
  * customize the behavior of this class by editing the class, {@link
  * VawsAnlagenchrono()}.
  */
-public abstract class AbstractVawsAnlagenchrono implements Serializable {
+public abstract class AbstractVawsAnlagenchrono extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 5035322014513478680L;
 
     /**

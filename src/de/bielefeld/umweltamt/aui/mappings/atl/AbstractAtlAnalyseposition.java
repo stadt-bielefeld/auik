@@ -23,12 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+
 /**
  * A class that represents a row in the ATL_ANALYSEPOSITION table. You can
  * customize the behavior of this class by editing the class,
  * {@link AtlAnalyseposition}.
  */
-public abstract class AbstractAtlAnalyseposition implements Serializable {
+public abstract class AbstractAtlAnalyseposition extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 6961908351671157496L;
 
     /**

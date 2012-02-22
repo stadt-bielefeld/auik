@@ -23,13 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 
 /**
  * A class that represents a row in the BASIS_BETREIBER table. You can customize
  * the behavior of this class by editing the class, {@link BasisBetreiber}.
  */
-public abstract class AbstractBasisBetreiber implements Serializable {
+public abstract class AbstractBasisBetreiber extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 7619136552719221885L;
 
     /**

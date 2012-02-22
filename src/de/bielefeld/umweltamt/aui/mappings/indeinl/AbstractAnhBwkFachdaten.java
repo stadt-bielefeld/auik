@@ -23,13 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the ANH_BWK table. You can customize the
  * behavior of this class by editing the class, {@link AnhBwkFachdaten}.
  */
-public abstract class AbstractAnhBwkFachdaten implements Serializable {
+public abstract class AbstractAnhBwkFachdaten extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = -2823984723872643513L;
 
     /**

@@ -54,6 +54,9 @@
         <property name="ausfuehrung" column="ausfuehrung" type="java.lang.String" />
         <property name="pruefumfang" column="pruefumfang" type="java.lang.String" />
         <property name="verwendung" column="verwendung" type="java.lang.String" />
+        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
+
     </class>
 
 </hibernate-mapping>

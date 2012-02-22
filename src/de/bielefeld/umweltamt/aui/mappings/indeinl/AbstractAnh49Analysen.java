@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 
 ;
 
@@ -31,7 +31,8 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
  * A class that represents a row in the ANH_49_ANALYSEN table. You can customize
  * the behavior of this class by editing the class, {@link Anh49Analysen()}.
  */
-public abstract class AbstractAnh49Analysen implements Serializable {
+public abstract class AbstractAnh49Analysen extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 8031636263522077374L;
 
     /**

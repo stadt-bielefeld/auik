@@ -42,14 +42,12 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
@@ -63,12 +61,15 @@ import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
+
 /**
  * Ein Dialog zum Bearbeiten eines Standorts.
  * @author David Klotz
  */
 public class StandortEditor extends AbstractBaseEditor {
-	/** Logging */
+    private static final long serialVersionUID = 2023212804506559226L;
+
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     // Für die Comboboxen beim Bearbeiten
@@ -107,6 +108,7 @@ public class StandortEditor extends AbstractBaseEditor {
         super("Standort ("+ bsta.getStandortid() +")", bsta, owner);
     }
 
+    @Override
     protected JComponent buildContentArea() {
         strassenBox = new SearchBox();
 
@@ -147,6 +149,7 @@ public class StandortEditor extends AbstractBaseEditor {
         // Handzeichen-Feld (wenn das Feld nicht leer ist) zum
         // Speichern-Button zu springen.
         KeyListener escEnterListener = new KeyAdapter() {
+            @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getSource().equals(handzeichenNeuFeld)) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -276,6 +279,7 @@ public class StandortEditor extends AbstractBaseEditor {
         strassenBox.addActionListener(new ActionListener() {
             private int strassenCounter = 0;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == strassenBox) {
                     if (plzFeld.getText().equals("") || strassenCounter > 0) {
@@ -301,11 +305,13 @@ public class StandortEditor extends AbstractBaseEditor {
         return builder.getPanel();
     }
 
+    @Override
     protected void fillForm() {
         frame.changeStatus("Beschäftigt...");
 
         SwingWorkerVariant worker = new SwingWorkerVariant(this) {
 
+            @Override
             protected void doNonUILogic() throws RuntimeException {
                 try {
                     if (strassen == null) {
@@ -328,6 +334,7 @@ public class StandortEditor extends AbstractBaseEditor {
                 }
             }
 
+            @Override
             protected void doUIUpdateLogic() throws RuntimeException {
                 if (strassen != null) {
                     strassenBox.setModel(new DefaultComboBoxModel(strassen));
@@ -374,6 +381,7 @@ public class StandortEditor extends AbstractBaseEditor {
         worker.start();
     }
 
+    @Override
     protected boolean canSave() {
         // Eingaben überprüfen:
         // Das Handzeichen darf nicht leer sein
@@ -391,6 +399,7 @@ public class StandortEditor extends AbstractBaseEditor {
     /**
      * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
      */
+    @Override
     protected boolean doSave() {
         // Straße:
         String stra = (String) strassenBox.getSelectedItem();
@@ -553,6 +562,7 @@ public class StandortEditor extends AbstractBaseEditor {
             ausAblageButton = new JButton("aus QGis");
             ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
             ausAblageButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     readClipboard();
                 }

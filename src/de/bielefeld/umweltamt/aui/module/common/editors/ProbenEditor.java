@@ -62,7 +62,6 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.Dimension;
-//import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -111,8 +110,6 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-
-
 import net.sf.jasperreports.engine.JRDataSource;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -120,7 +117,6 @@ import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
@@ -134,7 +130,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -201,6 +196,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             updateList();
         }
 
+        @Override
         public void updateList() {
             //Set positionen;
             if (!isNew) {
@@ -234,6 +230,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             fireTableDataChanged();
         }
 
+        @Override
         public Object getColumnValue(Object objectAtRow, int columnIndex) {
             Object value;
             AtlAnalyseposition pos = (AtlAnalyseposition) objectAtRow;
@@ -308,6 +305,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             return value;
         }
 
+        @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             if (columnIndex == 5 || columnIndex == 6) {
                 return false;
@@ -316,7 +314,8 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
         }
 
-		public void editObject(Object objectAtRow, int columnIndex,
+		@Override
+        public void editObject(Object objectAtRow, int columnIndex,
 				Object newValue) {
 			AtlAnalyseposition tmp = (AtlAnalyseposition) objectAtRow;
 
@@ -377,6 +376,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 			log.debug("EDIT: " + tmp);
 		}
 
+        @Override
         public Object newObject() {
             AtlAnalyseposition tmp = new AtlAnalyseposition(probe);
             if (probe.isKlaerschlammProbe() || probe.getProbeArt().isSielhaut()) {
@@ -390,12 +390,10 @@ public class ProbenEditor extends AbstractApplyEditor {
             return tmp;
         }
 
-
         /**
          * Diese Methode fügt dem Model einen neuen Parameter hinzu. Falls
          * dieser jedoch schon enthalten ist, wird er verworfen - es kommen also
          * keine doppelten Parameter vor.
-         *
          * @param parameter Ein neuer Parameter.
          */
         public void addParameter(AtlParameter parameter) {
@@ -413,16 +411,14 @@ public class ProbenEditor extends AbstractApplyEditor {
 //            getList().add(pos);
             List<AtlAnalyseposition> list = (List<AtlAnalyseposition>) getList();
             list.add(pos);
-            
+
             fireTableDataChanged();
         }
-
 
         /**
          * Diese Methode fügt dem Model einen neuen Parameter hinzu. Falls
          * dieser jedoch schon enthalten ist, wird er verworfen - es kommen also
          * keine doppelten Parameter vor.
-         *
          * @param parameter Ein neuer Parameter.
          */
         public void addParameter(AtlParameter parameter, AtlEinheiten einheit, String analysevon) {
@@ -444,24 +440,21 @@ public class ProbenEditor extends AbstractApplyEditor {
             fireTableDataChanged();
         }
 
-
         /**
          * Diese Methode prüft, ob ein Parameter bereits zur Prüfung vorgemerkt
          * ist - also bereits im ParameterModel enthalten ist.
-         *
          * @param newParam Ein neu zu probender Parameter.
-         *
          * @return true, wenn der Parameter bereits im Model enthalten ist,
-         * andernfalls false.
+         *         andernfalls false.
          */
         public boolean isParameterAlreadyThere(AtlParameter newParam) {
-            List<AtlAnalyseposition> data = (List<AtlAnalyseposition>) getList();
+            List<?> data = getList();
             int size  = data.size();
 
             String newOrdnungsbegriff = newParam.getOrdnungsbegriff();
 
             for (int i = 0; i < size; i++) {
-                AtlAnalyseposition pos = data.get(i);
+                AtlAnalyseposition pos = (AtlAnalyseposition) data.get(i);
                 AtlParameter     param = pos.getAtlParameter();
 
                 if (param.getOrdnungsbegriff().equals(newOrdnungsbegriff)) {
@@ -472,6 +465,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             return false;
         }
 
+        @Override
         public boolean objectRemoved(Object objectAtRow) {
             //AtlAnalyseposition tmp = (AtlAnalyseposition) objectAtRow;
             //getList().remove(tmp);
@@ -479,6 +473,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             return true;//probe.getAtlAnalysepositionen().remove(tmp);
         }
 
+        @Override
         public Class<?> getColumnClass(int columnIndex) {
             Class<?> tmp;
             switch (columnIndex) {
@@ -547,7 +542,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         super("Probenahme " + probe.getKennummer(), probe, owner);
         this.isNew = isNew;
         isSchlamm = false;
-        
+
         if (probe.isKlaerschlammProbe()){
         	isSchlamm = true;
         }
@@ -555,7 +550,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         if (!isNew /*probe.isAnalysepositionenInitialized()*/) {
             setEditedObject(AtlProbenahmen.getProbenahme(probe.getId(), true));
         }
-        
+
         if (isNew){
         sachbearbeiterBox.setSelectedItem(BasisSachbearbeiter.getSachbearbeiter(SettingsManager.getInstance().getSetting("auik.prefs.lastuser")));
         uhrzeitVon.setText("");
@@ -584,6 +579,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         // triggert das Erzeugen eines PDFs und einen Druck-Job an
         auftragDrucken.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 AtlProbenahmen probe = getProbe();
 
@@ -601,7 +597,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 }
 
                 filename = filename.replace("/", "_");
-                
+
 
                 File path = new File(basePath, filename);
                 // TODO: Check this: (path == null) never happens
@@ -619,7 +615,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                     JRDataSource subdata =
                         AtlProbenahmen.getAuftragDataSource(probe);
 
-                    log.debug("Fülle Probenahmeauftrag mit " +
+                    log.debug("Fülle Probenahmeauftrag mit "
+                        +
                         ((JRMapDataSource) subdata).size() + " Zeilen.");
 
                     PDFExporter.getInstance().exportAuftrag(
@@ -648,6 +645,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         // trigger das Erzeugen eines PDFs und einen Druck-Job an
         bescheidDrucken.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 AtlProbenahmen probe = getProbe();
 
@@ -728,9 +726,10 @@ public class ProbenEditor extends AbstractApplyEditor {
                                 pe.printStackTrace();
 
                             frame.showErrorMessage(
-                                "Der Druck des Gebührenbescheids ist fehlgeschlagen." +
+                                    "Der Druck des Gebührenbescheids ist fehlgeschlagen."
+                                        +
                                 "Die Datei kasse.txt konnte nicht erstellt werden.",
-                                "Gebührenbescheid-Druck fehlgeschlagen");
+                                    "Gebührenbescheid-Druck fehlgeschlagen");
 
                             return;
                         }
@@ -744,7 +743,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                     AtlProbenahmen.updateProbenahme(probe);
 
                     frame.showInfoMessage(
-                        "Der Gebührenbescheid wurde erfolgreich unter ' " +
+                        "Der Gebührenbescheid wurde erfolgreich unter ' "
+                            +
                         path.getAbsolutePath() + "' gespeichert.",
                         "Gebührenbescheid erfolgreich");
                 }
@@ -754,7 +754,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                     ex.printStackTrace();
 
                     frame.showErrorMessage(
-                        "Der Druck des Gebührenbescheids ist fehlgeschlagen." +
+                        "Der Druck des Gebührenbescheids ist fehlgeschlagen."
+                            +
                         "\n" + ex.getLocalizedMessage(),
                         "Gebührenbescheid-Druck fehlgeschlagen");
                 }
@@ -768,6 +769,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
+    @Override
     protected JComponent buildContentArea() {
 //        NumberFormat     nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         SimpleDateFormat f  = new SimpleDateFormat ("HH:mm");
@@ -783,7 +785,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         beteiligte       = new JTextField();
         probenummer      = new JTextField();
         vorgangsstatus   = new JComboBox();
-        statusHoch       = new JButton("erhöhen");
+        statusHoch = new JButton("erhöhen");
         sachbearbeiterBox   = new JComboBox();
         icpEinwaageFeld  = new DoubleField(0);
         icpDatum         = new TextFieldDateChooser();
@@ -804,6 +806,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         sachbearbeiterBox.setModel(sachbearbeiterModel);
 
         statusHoch.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 AtlStatus current = getVorgangsstatus();
                 if (current == null) return;
@@ -825,7 +828,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         Action aposRemoveAction = new AbstractAction("Analyseposition löschen") {
 			private static final long serialVersionUID = -5755536713201543469L;
-			public void actionPerformed(ActionEvent e) {
+			@Override
+            public void actionPerformed(ActionEvent e) {
                 int row = parameterTabelle.getSelectedRow();
                 if (row != -1 && parameterTabelle.getEditingRow() == -1) {
                     parameterModel.removeRow(row);
@@ -943,26 +947,15 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
     }
 
-
     /**
-     * Diese Methode erzeugt neben dem PDF des Geb&uuml;hrenbescheids eine
-     * Datei namens kasse.txt, die Informationen &uuml;ber den Betreiber sowie
-     * die H&ouml;he des Rechnungsbetrags und des Rechnungsdatums enth&auml;lt.
-     * 
-     * Eine Zeile in dieser Datei entspricht einem Bescheid und hat folgendes Format:
-     * 
-     * Feldname                             Länge
-	 * 
-	 * Kassenzeichen                          12        ohne Punkte
-	 * Ansprechpartner Name                   28
-	 * Ansprechpartner Vorname                28
-	 * Ansprechpartner Straße, Hausnummer     28
-	 * PLZ                                    05
-	 * Ort                                    23
-	 * Kommentar                              28
-	 * Fälligkeitsdatum                       08
-	 * Betrag                                 11        ohne Tausender oder Cent Trennzeichen mit führenden Nullen
-     *
+     * Diese Methode erzeugt neben dem PDF des Geb&uuml;hrenbescheids eine Datei
+     * namens kasse.txt, die Informationen &uuml;ber den Betreiber sowie die
+     * H&ouml;he des Rechnungsbetrags und des Rechnungsdatums enth&auml;lt. Eine
+     * Zeile in dieser Datei entspricht einem Bescheid und hat folgendes Format:
+     * Feldname Länge Kassenzeichen 12 ohne Punkte Ansprechpartner Name 28
+     * Ansprechpartner Vorname 28 Ansprechpartner Straße, Hausnummer 28 PLZ 05
+     * Ort 23 Kommentar 28 Fälligkeitsdatum 08 Betrag 11 ohne Tausender oder
+     * Cent Trennzeichen mit führenden Nullen
      * @param bescheid Der Pfad, an dem das PDF gespeichert wurde.
      */
     protected void createKasseFile(String bescheid)
@@ -978,12 +971,12 @@ public class ProbenEditor extends AbstractApplyEditor {
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
         CurrencyDouble cd   = new CurrencyDouble(
             getRechnungsbetrag(probe), Locale.GERMANY);
-        
+
         String kassenzeichen   = basisBetr.getKassenzeichen().toString();
         kassenzeichen		   = kassenzeichen.replace(".", "");
 
         String rechnungsbetrag = cd.toString();
-        rechnungsbetrag        = rechnungsbetrag.replace("€", "");
+        rechnungsbetrag = rechnungsbetrag.replace("€", "");
         rechnungsbetrag        = rechnungsbetrag.replace(",", "");
         rechnungsbetrag        = rechnungsbetrag.trim();
 
@@ -1002,35 +995,35 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
         else
         	sb.append(basisBetr.getBetrname());
-        
+
         for (int i = 1; i <= 28 - basisBetr.getBetrname().length(); i++) {
             sb.append(" ");
         }
-        
+
         int anrede = 0;
         if (basisBetr.getBetranrede() != null){
         	sb.append(basisBetr.getBetranrede());
         	anrede = basisBetr.getBetranrede().length();
         }
-        
+
         for (int i = 1; i <= 28 - anrede; i++) {
             sb.append(" ");
         }
 
         sb.append(basisBetr.getBetriebsgrundstueck());
-        
+
         for (int i = 1; i <= 28 - basisBetr.getBetriebsgrundstueck().length(); i++) {
             sb.append(" ");
         }
-       
+
         sb.append(basisBetr.getPlz().toString());
         sb.append(basisBetr.getOrt().toString());
 
-        
+
         for (int i = 1; i <= 23 - basisBetr.getOrt().length(); i++) {
             sb.append(" ");
         }
-        
+
         sb.append("Gebühr für Abwasserunters.  ");
         sb.append(kasseDatum);
 
@@ -1073,11 +1066,13 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
+    @Override
     protected void fillForm() {
 //        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         this.minimumSize = new Dimension(this.getSize());
 
         this.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
             public void componentResized(ComponentEvent event) {
                 ProbenEditor.this.setSize(
                         Math.max(minimumSize.width, ProbenEditor.this.getWidth()),
@@ -1093,21 +1088,21 @@ public class ProbenEditor extends AbstractApplyEditor {
             probe.getAtlProbepkt().getBasisObjekt().getBeschreibung());
         Date entnahmeDatum = probe.getDatumDerEntnahme();
         datum.setDate(entnahmeDatum);
-        
+
         if (probe.getUhrzeitbeginn() != null) {
         	uhrzeitVon.setText(probe.getUhrzeitbeginn());
         }
         else {
         	uhrzeitVon.setText("00:00");
         }
-        
+
         if (probe.getUhrzeitende() != null) {
         	uhrzeitBis.setText(probe.getUhrzeitende());
         }
         else {
         	uhrzeitBis.setText("00:00");
         }
-        
+
         if (probe.getFahrtzeit() != null) {
         	fahrtzeit.setText(probe.getFahrtzeit());
         }
@@ -1180,7 +1175,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         // Messwert... (alle Doubles)
         parameterTabelle.setDefaultRenderer(Double.class, new DoubleRenderer());
         parameterTabelle.setDefaultRenderer(KommaDouble.class, new DoubleRenderer());
-        
+
         // Parameter
         TableColumn parameterColumn = parameterTabelle.getColumnModel().getColumn(0);
         parameterColumn.setPreferredWidth(150);
@@ -1195,6 +1190,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         //AutoCompletion.enable(parameterBox);
         //parameterBox.setBorder(BorderFactory.createEmptyBorder());
         parameterBox.addFocusListener(new FocusAdapter() {
+            @Override
             public void focusGained(FocusEvent e) {
                 parameterBox.showPopup();
             }
@@ -1212,6 +1208,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         einheitenBox = new JComboBox(einheiten);
         einheitenBox.setEditable(false);
         einheitenBox.addFocusListener(new FocusAdapter() {
+            @Override
             public void focusGained(FocusEvent e) {
                 einheitenBox.showPopup();
             }
@@ -1296,10 +1293,12 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
+    @Override
     protected boolean canSave() {
         return true;
     }
 
+    @Override
     protected boolean doSave() {
         log.debug("Speichere Probenahmedetails");
 
@@ -1372,12 +1371,12 @@ public class ProbenEditor extends AbstractApplyEditor {
         if (icpDate != null) {
             probe.setDatumIcp(icpDate);
         }
-        
+
         Double einwaage = icpEinwaageFeld.getDoubleValue();
         if (einwaage != null) {
             probe.setEinwaage(new Float(einwaage));
         }
-        
+
         // Bemerkung
         String newBemerkung = bemerkungsArea.getText();
         if (newBemerkung != null) {
@@ -1411,11 +1410,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         return success;
     }
 
-
     /**
      * Diese Methode liefert die Parameter-Map für den Druck/Export eines
      * Probenahmeauftrages.
-     *
      * @return die Variablen für den Probenahmeauftrag als Map.
      */
     public Map<String,String> getAuftragDruckMap(AtlProbenahmen probe) {
@@ -1464,11 +1461,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         return params;
     }
 
-
     /**
      * Diese Methode liefert eine Map, mit allen Variablen, die für den
      * Druck/Export des Geb&uuml;hrenbescheid notwendig sind.
-     *
      * @return die Variablen des Geb&uuml;hrenbescheids als Map.
      */
     public Map<String,String> getBescheidDruckMap(AtlProbenahmen probe)
@@ -1536,11 +1531,12 @@ public class ProbenEditor extends AbstractApplyEditor {
             double kosten = Math.round((getSachUndPersonalkosten()) * 100) / 100.0;
             double gesamt = Math.round((kosten + getAnalysekosten(probe)) * 100) / 100.0;
 
-            params.put("personalsachkosten", nf.format(kosten) +" €");
+            params.put("personalsachkosten", nf.format(kosten) + " €");
             params.put("analysekosten",
-                nf.format(getAnalysekosten(probe)) +" €");
+ nf.format(getAnalysekosten(probe))
+                + " €");
             params.put("gesamtkosten",
-            	nf.format(gesamt) + " €");
+ nf.format(gesamt) + " €");
 
             params.put("dauer", dauer);
         }
@@ -1577,11 +1573,9 @@ public class ProbenEditor extends AbstractApplyEditor {
     /**
      * Diese Funktion liefert die Anzahl der beteiligten Probenehmer.
      */
-    protected Integer getAnzahl()
-    throws ParseException
-    {
+    protected Integer getAnzahl() {
         Integer anzahl = new Integer(beteiligte.getText());
-    	
+
         return anzahl;
     }
 
@@ -1606,13 +1600,13 @@ public class ProbenEditor extends AbstractApplyEditor {
     public double getAnalysekosten(AtlProbenahmen probe)
     throws IllegalArgumentException
     {
-        List<AtlAnalyseposition> sorted = (List<AtlAnalyseposition>) AtlProbenahmen.sortAnalysepositionen(probe);
+        List<?> sorted = AtlProbenahmen.sortAnalysepositionen(probe);
         HashMap<Integer,List<AtlParameter>> gruppen = new HashMap<Integer,List<AtlParameter>>();
         double single = 0d;
         double group  = 0d;
 
         for (int i = 0; i < sorted.size(); i++) {
-            AtlAnalyseposition  pos    = sorted.get(i);
+            AtlAnalyseposition  pos    = (AtlAnalyseposition) sorted.get(i);
             AtlParameter        para   = pos.getAtlParameter();
             AtlParameterGruppen gruppe = para.getAtlParameterGruppe();
 
@@ -1694,7 +1688,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 else {
                     String msg =
                         "Parameter " + p.getOrdnungsbegriff() + " ist nicht " +
-                        "einzeln prüfbar.";
+ "einzeln prüfbar.";
 
                     log.error(msg);
 
@@ -1751,9 +1745,11 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
 
+    @Override
     protected void doApply() {
         ParameterChooser chooser = new ParameterChooser(frame);
         chooser.addOKListener(new OKListener() {
+            @Override
             public void onOK(AtlParameter[] params) {
                 for (AtlParameter param: params) {
                     parameterModel.addParameter(param);
@@ -1794,19 +1790,23 @@ class ParameterChooser extends OkCancelApplyDialog {
         parameterAuswahlModel.fireTableDataChanged();
     }
 
+    @Override
     public Action getSecondButtonAction() {
         return new AbstractAction("Alle Parameter zeigen") {
 			private static final long serialVersionUID = 5342325510907705899L;
-			public void actionPerformed(ActionEvent e) {
+			@Override
+            public void actionPerformed(ActionEvent e) {
                 doApply();
             }
         };
     }
 
+    @Override
     public Action getThirdButtonAction() {
         return new AbstractAction("Abbrechen") {
 			private static final long serialVersionUID = -5702077878210981297L;
-			public void actionPerformed(ActionEvent e) {
+			@Override
+            public void actionPerformed(ActionEvent e) {
                 doCancel();
             }
         };
@@ -1821,6 +1821,7 @@ class ParameterChooser extends OkCancelApplyDialog {
      *
      * @see de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog#doOk()
      */
+    @Override
     protected void doOk() {
         AtlParameter[] selected = parameterAuswahlModel.getSelectedParameter();
         fireOKEvent(selected);
@@ -1828,6 +1829,7 @@ class ParameterChooser extends OkCancelApplyDialog {
         dispose();
     }
 
+    @Override
     protected void doApply() {
 
         parameterAuswahlModel.AlleParameter();
@@ -1854,6 +1856,7 @@ class ParameterChooser extends OkCancelApplyDialog {
      * de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog#buildContentArea
      * ()
      */
+    @Override
     protected JComponent buildContentArea() {
         JScrollPane tabellenScroller = new JScrollPane(getErgebnisTabelle(),
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -1877,7 +1880,8 @@ class ParameterChooser extends OkCancelApplyDialog {
 
             Action submitAction = new AbstractAction("Auswählen") {
 				private static final long serialVersionUID = -6645922378885851686L;
-				public void actionPerformed(ActionEvent e) {
+				@Override
+                public void actionPerformed(ActionEvent e) {
                     doOk();
                 }
             };
@@ -1892,6 +1896,7 @@ class ParameterChooser extends OkCancelApplyDialog {
 
             ergebnisTabelle.addFocusListener(TableFocusListener.getInstance());
             ergebnisTabelle.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         // TODO: Check this: Nothing happens here
@@ -1915,10 +1920,11 @@ class ParameterAuswahlModel extends ListTableModel {
 	protected boolean[] selection;
 
     public ParameterAuswahlModel() {
-        super(new String[] { "wählen", "Parameter" }, false);
+        super(new String[] {"wählen", "Parameter"}, false);
     }
 
-    public void setList(List newList) {
+    @Override
+    public void setList(List<?> newList) {
         super.setList(newList);
 
         selection = new boolean[newList.size()];
@@ -1928,12 +1934,12 @@ class ParameterAuswahlModel extends ListTableModel {
 
     public AtlParameter[] getSelectedParameter() {
         List<AtlParameter> params = new ArrayList<AtlParameter>();
-        List<AtlParameter> data   = (List<AtlParameter>) getList();
+        List<?> data   = getList();
         int  rows   = getRowCount();
 
         for (int idx = 0; idx < rows; idx++) {
             if (selection[idx]) {
-                params.add(data.get(idx));
+                params.add((AtlParameter) data.get(idx));
             }
         }
 
@@ -1947,12 +1953,14 @@ class ParameterAuswahlModel extends ListTableModel {
      * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue
      * (java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         // we don't need this method
         return null;
     }
 
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (rowExists(row)) {
             if (col < columns.length) {
@@ -1973,6 +1981,7 @@ class ParameterAuswahlModel extends ListTableModel {
     }
 
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         log.debug(
         		"ParameterAuswahlModel - setValueAt(" + row + ", " + col +")");
@@ -1988,6 +1997,7 @@ class ParameterAuswahlModel extends ListTableModel {
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex == 0) {
             return Boolean.class;
@@ -1996,6 +2006,7 @@ class ParameterAuswahlModel extends ListTableModel {
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         return col == 0 ? true : false;
     }
@@ -2007,6 +2018,7 @@ class ParameterAuswahlModel extends ListTableModel {
      * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#updateList
      * ()
      */
+    @Override
     public void updateList() {
     }
 

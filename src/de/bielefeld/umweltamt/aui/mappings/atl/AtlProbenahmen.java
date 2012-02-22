@@ -589,4 +589,23 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
 
         return pkt != null ? pkt.getBasisObjekt() : null;
     }
+
+    /**
+     * Return the AtlAnalysepositionen
+     * @return Set
+     */
+//    public Set<?> getAtlAnalysepositionen() {
+//        Set resultSet = new HashSet();
+//        List<?> result = null;
+//        result = new DatabaseAccess()
+//            .createQuery(
+//                "FROM Analyseposition "
+//                    + "WHERE atlProbenahmen = :probe")
+//            .setEntity("probe", this)
+//            .list();
+//        for (Object pos : result) {
+//            resultSet.add(pos);
+//        }
+//        return resultSet;
+//    }
 }

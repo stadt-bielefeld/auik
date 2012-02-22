@@ -23,9 +23,11 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.util.Date;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
-public class AbstractIndeinlGenehmigung implements java.io.Serializable {
+public class AbstractIndeinlGenehmigung extends
+    AbstractVirtuallyDeletableDatabaseTable implements java.io.Serializable {
 
     // Fields
 

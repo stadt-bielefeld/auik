@@ -31,6 +31,8 @@
         <property name="revidatum" column="revidatum" type="java.util.Date" />
         <property name="revihandz" column="revihandz" type="java.lang.String" />
         <property name="kassenzeichen" column="kassenzeichen" type="java.lang.String" />
+        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
 
         <many-to-one name="vawsWirtschaftszweige" column="wirtschaftszweigid" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige" />
     </class>

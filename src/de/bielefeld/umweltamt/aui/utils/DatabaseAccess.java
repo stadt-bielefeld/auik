@@ -92,6 +92,7 @@ public class DatabaseAccess {
      * @param proxy a persistable object, proxy, persistent collection or
      *            <code>null</code>
      */
+    // Private just for the bugfix
     private void initialize(Object proxy) {
         try {
             Hibernate.initialize(proxy);

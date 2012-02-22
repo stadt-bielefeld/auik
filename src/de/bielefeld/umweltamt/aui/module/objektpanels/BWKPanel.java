@@ -58,7 +58,6 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -179,7 +178,7 @@ public class BWKPanel extends JPanel {
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh( 5, 15, 3, 5));
 
-        builder.addSeparator("Verknüpfte Objekte", cc.xyw( 1, 21, 7));
+        builder.addSeparator("Verknüpfte Objekte", cc.xyw(1, 21, 7));
         JScrollPane objektverknuepfungScroller = new JScrollPane(
                 getObjektverknuepungTabelle(),
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -667,21 +666,21 @@ public class BWKPanel extends JPanel {
                         int answer = JOptionPane
                                 .showConfirmDialog(
                                         hauptModul.getPanel(),
-                                        "Soll die Verknüpfung wirklich gelöscht werden?\n"
-                                                + "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
-                                        "Löschen bestätigen",
+                                "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                    + "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
+                                "Löschen bestätigen",
                                         JOptionPane.YES_NO_OPTION);
                         if (answer == JOptionPane.YES_OPTION) {
                             if (objektVerknuepfungModel.removeRow(row)) {
                                 hauptModul.getFrame().changeStatus(
-                                        "Objekt gelöscht.",
+                                    "Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
                                 log.debug("Objekt "
                                         + verknuepfung.getId()
-                                        + " wurde gelöscht!");
+                                    + " wurde gelöscht!");
                             } else {
                                 hauptModul.getFrame().changeStatus(
-                                        "Konnte das Objekt nicht löschen!",
+                                    "Konnte das Objekt nicht löschen!",
                                         HauptFrame.ERROR_COLOR);
                             }
                         }

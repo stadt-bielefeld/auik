@@ -29,6 +29,9 @@
         <property name="pnachprobe" column="p_nachprobe" type="java.lang.Boolean" />
         <property name="schlammprobe" column="schlammprobe" type="java.lang.Boolean" />
         <property name="pfirmenprobe" column="p_firmenprobe" type="java.lang.Boolean" />
+        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
+
     </class>
 
 </hibernate-mapping>

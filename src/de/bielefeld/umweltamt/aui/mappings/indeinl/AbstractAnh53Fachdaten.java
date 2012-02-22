@@ -23,13 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the Anh53Fachdaten table. You can customize
  * the behavior of this class by editing the class, {@link Anh50Fachdaten}.
  */
-public abstract class AbstractAnh53Fachdaten implements Serializable {
+public abstract class AbstractAnh53Fachdaten extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 2936138294926146485L;
 
     /**

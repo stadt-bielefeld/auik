@@ -29,7 +29,8 @@
         <property name="bikWert" column="bik_wert" type="java.lang.String" />
         <property name="phWert" column="ph_wert" type="java.lang.String" />
         <property name="phGrenzwert" column="ph_grenzwert" type="java.lang.String" />
-
+        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
  		
         <many-to-one name="anh49Fachdaten" column="anh49id" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" />
 
