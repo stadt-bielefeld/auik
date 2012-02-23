@@ -43,7 +43,7 @@
         <many-to-one name="atlStatus" column="status" class="AtlStatus" />
         <many-to-one name="basisSachbearbeiter" column="sachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" />
 
-        <set name="atlAnalysepositionen" lazy="true" inverse="true" cascade="all-delete-orphan">
+        <set name="atlAnalysepositionen" lazy="false" inverse="true" cascade="all-delete-orphan">
         	<key column="probenahme_id"/>
         	<one-to-many class="AtlAnalyseposition"/>
     	</set>

@@ -230,6 +230,9 @@ public class VawsEditor extends AbstractBaseEditor {
     private JCheckBox grenzWertGeberCheck;
     private JCheckBox kellerLagerungCheck;
     private JCheckBox innenBeschichtungCheck;
+    private JCheckBox schutzSensorCheck;
+    private JCheckBox schutzFolieCheck;
+    private JCheckBox schutzAntiheberCheck;
     private LimitedTextArea beschreibungAFeld;
     private LimitedTextArea beschreibungSFeld;
     // Leitungen (Lageranlagen)
@@ -241,6 +244,8 @@ public class VawsEditor extends AbstractBaseEditor {
     private JCheckBox ausKupferCheck;
     private JCheckBox ausStahlCheck;
     private JCheckBox schutzrohrCheck;
+    private JCheckBox ausHdpeCheck;
+    private JCheckBox druckleitungCheck;
     private LimitedTextArea beschreibungRFeld;
 
     // Daten (Rohrleitungen)
@@ -462,6 +467,9 @@ public class VawsEditor extends AbstractBaseEditor {
         grenzWertGeberCheck = new JCheckBox("Grenzwertgeber");
         kellerLagerungCheck = new JCheckBox("Kellerlagerung");
         innenBeschichtungCheck = new JCheckBox("Innenbeschichtung");
+        schutzSensorCheck = new JCheckBox("Sensor");
+        schutzFolieCheck = new JCheckBox("Folie");
+        schutzAntiheberCheck = new JCheckBox("Antihebersicherung");
         beschreibungAFeld = new LimitedTextArea(255);
         beschreibungSFeld = new LimitedTextArea(255);
 
@@ -473,6 +481,8 @@ public class VawsEditor extends AbstractBaseEditor {
         ausKupferCheck = new JCheckBox("Aus Kupfer");
         ausStahlCheck = new JCheckBox("Aus Stahl");
         schutzrohrCheck = new JCheckBox("Mit Schutzrohr");
+        ausHdpeCheck = new JCheckBox("Aus HDPE");
+        druckleitungCheck = new JCheckBox("Druckleitung");
         beschreibungRFeld = new LimitedTextArea(255);
 
         // Ausführung (Abfüllflächen)
@@ -841,6 +851,21 @@ public class VawsEditor extends AbstractBaseEditor {
             else
                 innenBeschichtungCheck.setSelected(false);
 
+            if(getFachdaten().getSchutzSensor()!=null)
+                schutzSensorCheck.setSelected(getFachdaten().getSchutzSensor());
+            else
+                schutzSensorCheck.setSelected(false);
+
+            if(getFachdaten().getSchutzFolie()!=null)
+                schutzFolieCheck.setSelected(getFachdaten().getSchutzFolie());
+            else
+                schutzFolieCheck.setSelected(false);
+
+            if(getFachdaten().getSchutzAntiheber()!=null)
+                schutzAntiheberCheck.setSelected(getFachdaten().getSchutzAntiheber());
+            else
+                schutzAntiheberCheck.setSelected(false);
+
             beschreibungAFeld.setText(getFachdaten().getBeschreibung_a());
             beschreibungSFeld.setText(getFachdaten().getBeschreibung_s());
 
@@ -878,6 +903,16 @@ public class VawsEditor extends AbstractBaseEditor {
                 schutzrohrCheck.setSelected(getFachdaten().getMitSchutzrohr());
             else
                 schutzrohrCheck.setSelected(false);
+
+            if(getFachdaten().getAusHdpe()!=null)
+                ausHdpeCheck.setSelected(getFachdaten().getAusHdpe());
+            else
+                ausHdpeCheck.setSelected(false);
+
+            if(getFachdaten().getDruckleitung()!=null)
+                druckleitungCheck.setSelected(getFachdaten().getDruckleitung());
+            else
+                druckleitungCheck.setSelected(false);
 
             beschreibungRFeld.setText(getFachdaten().getBeschreibung_r());
 
@@ -1012,6 +1047,9 @@ public class VawsEditor extends AbstractBaseEditor {
             getFachdaten().setGrenzwertgeber(grenzWertGeberCheck.isSelected());
             getFachdaten().setKellerlagerung(kellerLagerungCheck.isSelected());
             getFachdaten().setInnenbeschichtung(innenBeschichtungCheck.isSelected());
+            getFachdaten().setSchutzSensor(schutzSensorCheck.isSelected());
+            getFachdaten().setSchutzFolie(schutzFolieCheck.isSelected());
+            getFachdaten().setSchutzAntiheber(schutzAntiheberCheck.isSelected());
             getFachdaten().setBeschreibung_a(beschreibungAFeld.getText());
             getFachdaten().setBeschreibung_s(beschreibungSFeld.getText());
 
@@ -1022,6 +1060,8 @@ public class VawsEditor extends AbstractBaseEditor {
             getFachdaten().setAusKupfer(ausKupferCheck.isSelected());
             getFachdaten().setAusStahl(ausStahlCheck.isSelected());
             getFachdaten().setMitSchutzrohr(schutzrohrCheck.isSelected());
+            getFachdaten().setAusHdpe(ausHdpeCheck.isSelected());
+            getFachdaten().setDruckleitung(druckleitungCheck.isSelected());
             getFachdaten().setBeschreibung_r(beschreibungRFeld.getText());
 
         } else if (getFachdaten().isRohrleitung()) {
@@ -1394,27 +1434,31 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getSchutzLageranlagenTab() {
         if (schutzLageranlagenTab == null) {
-            FormLayout layout = new FormLayout("p, 3dlu:g, p, 3dlu:g, p");
-            layout.setColumnGroups(new int[][]{{1,3,5}});
+            FormLayout layout = new FormLayout("p, 3dlu:g, p, 3dlu:g, p, 3dlu:g, p");
+            layout.setColumnGroups(new int[][]{{1,3,5,7}});
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             builder.setDefaultDialogBorder();
 
-            builder.append(doppelWandigCheck, leckAnzeigeCheck, leckSchutzAuskleidungCheck);
-            builder.append(auffangRaumCheck, kellerLagerungCheck, innenBeschichtungCheck);
-            builder.append(grenzWertGeberCheck);
+            builder.append(doppelWandigCheck, leckAnzeigeCheck);
+            builder.append(leckSchutzAuskleidungCheck, schutzSensorCheck);
+            builder.nextLine();
+            builder.append(auffangRaumCheck, kellerLagerungCheck);
+            builder.append(innenBeschichtungCheck, schutzFolieCheck);
+            builder.nextLine();
+            builder.append(grenzWertGeberCheck, schutzAntiheberCheck);
             builder.nextLine();
 
             builder.appendSeparator("Beschreibung: Schutzvorkehrungen");
             builder.appendRow("3dlu");
             builder.appendRow("fill:25dlu:grow");
             builder.nextLine(2);
-            builder.append(new JScrollPane(beschreibungSFeld), 5);
+            builder.append(new JScrollPane(beschreibungSFeld), 7);
 
             builder.appendSeparator("Beschreibung: Auffangraum");
             builder.appendRow("3dlu");
             builder.appendRow("fill:25dlu");
             builder.nextLine(2);
-            builder.append(new JScrollPane(beschreibungAFeld), 5);
+            builder.append(new JScrollPane(beschreibungAFeld), 7);
 
             schutzLageranlagenTab = builder.getPanel();
         }
@@ -1430,7 +1474,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
             builder.append(oberIrdischCheck, ausKupferCheck, saugLeitungCheck);
             builder.append(unterIrdischCheck, ausStahlCheck, rohrKathSchCheck);
-            builder.append(schutzrohrCheck);
+            builder.append(schutzrohrCheck, ausHdpeCheck, druckleitungCheck);
             builder.nextLine();
 
             builder.appendSeparator("Beschreibung: Rohrleitung");

@@ -88,6 +88,11 @@ public abstract class AbstractVawsFachdaten extends
     private java.lang.String ausfuehrung;
     private java.lang.String pruefumfang;
     private java.lang.String verwendung;
+    private java.lang.Boolean ausHdpe;
+    private java.lang.Boolean druckleitung;
+    private java.lang.Boolean schutzSensor;
+    private java.lang.Boolean schutzFolie;
+    private java.lang.Boolean schutzAntiheber;
 
     /**
      * Simple constructor of AbstractVawsFachdaten instances.
@@ -723,6 +728,76 @@ public abstract class AbstractVawsFachdaten extends
      */
     public void setWiedervorlage(java.util.Date wiedervorlage) {
         this.wiedervorlage = wiedervorlage;
+    }
+
+    /**
+     * @return Returns the ausHdpe.
+     */
+    public java.lang.Boolean getAusHdpe() {
+        return ausHdpe;
+    }
+
+    /**
+     * @param ausHdpe The ausHdpe to set.
+     */
+    public void setAusHdpe(java.lang.Boolean ausHdpe) {
+        this.ausHdpe = ausHdpe;
+    }
+
+    /**
+     * @return Returns the druckleitung.
+     */
+    public java.lang.Boolean getDruckleitung() {
+        return druckleitung;
+    }
+
+    /**
+     * @param druckleitung The druckleitung to set.
+     */
+    public void setDruckleitung(java.lang.Boolean druckleitung) {
+        this.druckleitung = druckleitung;
+    }
+
+    /**
+     * @return Returns the schutzSensor.
+     */
+    public java.lang.Boolean getSchutzSensor() {
+        return schutzSensor;
+    }
+
+    /**
+     * @param schutzSensor The schutzSensor to set.
+     */
+    public void setSchutzSensor(java.lang.Boolean schutzSensor) {
+        this.schutzSensor = schutzSensor;
+    }
+
+    /**
+     * @return Returns the schutzFolie.
+     */
+    public java.lang.Boolean getSchutzFolie() {
+        return schutzFolie;
+    }
+
+    /**
+     * @param schutzFolie The schutzFolie to set.
+     */
+    public void setSchutzFolie(java.lang.Boolean schutzFolie) {
+        this.schutzFolie = schutzFolie;
+    }
+
+    /**
+     * @return Returns the schutzAntiheber.
+     */
+    public java.lang.Boolean getSchutzAntiheber() {
+        return schutzAntiheber;
+    }
+
+    /**
+     * @param schutzAntiheber The schutzAntiheber to set.
+     */
+    public void setSchutzAntiheber(java.lang.Boolean schutzAntiheber) {
+        this.schutzAntiheber = schutzAntiheber;
     }
 
     /**
