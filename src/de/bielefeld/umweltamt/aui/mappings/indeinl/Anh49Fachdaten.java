@@ -121,11 +121,11 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         }
 
         if (tuev == null || tuev == -1) {
-            query += "AND anh49.dekraTuevTermin IS NULL ";
+            query += "AND anh49.dekraTuevDatum IS NULL ";
         } else if (tuev == -2) { // All
             // This place is intentionally left blank.
         } else {
-            query += "AND anh49.dekraTuevTermin = :tuev ";
+            query += "AND date_part('year', anh49.dekraTuevDatum) = :tuev ";
         }
 
         /* For a strange reason we do not want the Fettabscheider... */
@@ -134,7 +134,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
             + "ORDER BY anh49.sachbearbeiterIn";
 
         if (tuev != null && tuev == -2) {
-            query += " , anh49.dekraTuevTermin";
+            query += " , anh49.dekraTuevDatum";
         }
 
         log.debug(query);

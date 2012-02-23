@@ -90,9 +90,6 @@ public abstract class AbstractAnh49Fachdaten extends
     /** The value of the simple abwasserfrei property. */
     private java.lang.Boolean abwasserfrei;
 
-    /** The value of the simple dekraTuevTermin property. */
-    private java.lang.Integer dekraTuevTermin;
-
     /** The value of the simple anredeantragst property. */
     private java.lang.String anredeantragst;
 
@@ -476,22 +473,6 @@ public abstract class AbstractAnh49Fachdaten extends
      */
     public void setAbwasserfrei(java.lang.Boolean abwasserfrei) {
         this.abwasserfrei = abwasserfrei;
-    }
-
-    /**
-     * Return the value of the DEKRA_TUEV_TERMIN column.
-     * @return java.lang.Integer
-     */
-    public java.lang.Integer getDekraTuevTermin() {
-        return this.dekraTuevTermin;
-    }
-
-    /**
-     * Set the value of the DEKRA_TUEV_TERMIN column.
-     * @param dekraTuevTermin
-     */
-    public void setDekraTuevTermin(java.lang.Integer dekraTuevTermin) {
-        this.dekraTuevTermin = dekraTuevTermin;
     }
 
     /**

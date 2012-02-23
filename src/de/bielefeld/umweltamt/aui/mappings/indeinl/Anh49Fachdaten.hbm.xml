@@ -25,7 +25,6 @@
         <property name="sonstiges" column="sonstiges" type="java.lang.String" />
         <property name="analysemonat" column="analysemonat" type="java.lang.String" />
         <property name="abwasserfrei" column="abwasserfrei" type="java.lang.Boolean" />
-        <property name="dekraTuevTermin" column="dekra_tuev_termin" type="java.lang.Integer" />
         <property name="anredeantragst" column="anredeantragst" type="java.lang.String" />
         <property name="nameantragst" column="nameantragst" type="java.lang.String" />
         <property name="zusantragst" column="zusantragst" type="java.lang.String" />
