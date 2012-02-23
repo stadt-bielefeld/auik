@@ -135,6 +135,11 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             sachbBox.setModel(new DefaultComboBoxModel(
                 Anh49Fachdaten.getSachbearbeiter()));
             dekraTuevFeld = new IntegerField();
+            dekraTuevFeld.setToolTipText(
+                "<html>"
+                    + "-1 für keine Angabe<br>"
+                    + "-2 für alle"
+                + "</html>");
 
             auswahlButton = new JButton("Auswahl anwenden");
 
@@ -171,7 +176,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             builder.nextLine();
 //            builder.append(abwasserfreiCheck);
             builder.append(wiedervorlageCheck);
-            builder.append("Dekra-TÜV-T.:", dekraTuevFeld);
+            builder.append("TÜV/DEKRA Termin:", dekraTuevFeld);
 //            builder.nextLine();
 //            builder.append(abgerissenCheck);
 //            builder.append("");

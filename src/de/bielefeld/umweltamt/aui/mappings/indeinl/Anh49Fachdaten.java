@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -35,6 +36,8 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
     Serializable {
     private static final long serialVersionUID = 1996484061739446871L;
+    /** Logging */
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of Anh49Fachdaten instances.
@@ -111,16 +114,30 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 //            + (abgerissen ?
 //                "AND lower(anh49.sonstigestechnik) LIKE '%abgerissen%' " : "")
             + "anh49.sachbearbeiterIn LIKE :sachbearbeiter "
-            + "AND " + (abgelWdrVorlage ?
-                "anh49.wiedervorlage <= :today " : "42 = 42 " )
-            + "AND " + (tuev == null ?
-                "anh49.dekraTuevTermin IS NULL " :
-                "anh49.dekraTuevTermin = :tuev ")
-            + "AND anh49.basisObjekt.inaktiv = :inaktiv "
-            /* For a strange reason we do not want the Fettabscheider... */
-            + "AND anh49.basisObjekt.basisObjektarten.objektart "
+            + "AND anh49.basisObjekt.inaktiv = :inaktiv ";
+
+        if (abgelWdrVorlage) {
+            query += "AND anh49.wiedervorlage <= :today ";
+        }
+
+        if (tuev == null || tuev == -1) {
+            query += "AND anh49.dekraTuevTermin IS NULL ";
+        } else if (tuev == -2) { // All
+            // This place is intentionally left blank.
+        } else {
+            query += "AND anh49.dekraTuevTermin = :tuev ";
+        }
+
+        /* For a strange reason we do not want the Fettabscheider... */
+        query += "AND anh49.basisObjekt.basisObjektarten.objektart "
             + "NOT LIKE 'Fettabscheider' "
             + "ORDER BY anh49.sachbearbeiterIn";
+
+        if (tuev != null && tuev == -2) {
+            query += " , anh49.dekraTuevTermin";
+        }
+
+        log.debug(query);
 
         DatabaseAccess da = new DatabaseAccess()
             .createQuery(query)
@@ -133,7 +150,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         if (abgelWdrVorlage) {
             da.setDate("today", new Date());
         }
-        if (tuev != null) {
+        if (! (tuev == null || tuev == -1 || tuev == -2)) {
             da.setInteger("tuev", tuev);
         }
 

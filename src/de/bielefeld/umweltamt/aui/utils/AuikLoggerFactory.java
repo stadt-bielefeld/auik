@@ -97,10 +97,11 @@ public class AuikLoggerFactory implements LoggerFactory {
 //    				.setConversionPattern("\u001b[2;31m%6r %-5p - %m%n\u001b[m");
 					// milliseconds LEVEL - message
 //    				.setConversionPattern("%6r %-5p - %m%n");
-    		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(Level.WARN);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.mappings").setLevel(Level.WARN);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.module").setLevel(Level.WARN);
-    		Logger.getLogger("de.bielefeld.umweltamt.aui.utils").setLevel(Level.WARN);
+    		Level level = Level.DEBUG;
+    		Logger.getLogger("de.bielefeld.umweltamt.aui").setLevel(level);
+    		Logger.getLogger("de.bielefeld.umweltamt.aui.mappings").setLevel(level);
+    		Logger.getLogger("de.bielefeld.umweltamt.aui.module").setLevel(level);
+    		Logger.getLogger("de.bielefeld.umweltamt.aui.utils").setLevel(level);
     		Logger.getLogger("org.hibernate").setLevel(Level.WARN);
             Logger.getLogger("de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk").setLevel(Level.ALL);
     	}
