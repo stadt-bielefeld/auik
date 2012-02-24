@@ -1,5 +1,34 @@
 2012-02-21  Raimund Renkert <raimund.renkert@intevation.de>
 
+	Implemented database and service sync.
+
+	* src/de/bielefeld/umweltamt/aui/module/DBSyncModul.java:
+	  This module can now sync the local database with the external service.
+
+	* src/de/bielefeld/umweltamt/aui/tipi/ServiceManager.java:
+	  Added setter for data tables and user/password.
+
+	* src/de/bielefeld/umweltamt/aui/tipi/CredentialsDialog.java:
+	  New. Dialog requesting url, username and password for the external service.
+
+	* src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetrieb.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/DeaAdresse.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaGenehmigung.java,
+	  src/de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetriebseinrichtung.java:
+	  Added method to convert to service compatible datatype.
+
+	* src/de/bielefeld/umweltamt/aui/module/common/tablemodels/InkaBetriebModel.java,
+	  src/de/bielefeld/umweltamt/aui/module/common/tablemodels/InkaGenehmigungModel.java,
+	  src/de/bielefeld/umweltamt/aui/module/common/tablemodels/DeaAdresseModel.java,
+	  src/de/bielefeld/umweltamt/aui/module/common/tablemodels/InkaBetriebseinrichtungModel.java:
+	  The models now take both, the local database datatypes and the service datatypes.
+
+	* lib/axis-wsdl4j-1.5.1.jar,
+	  .classpath:
+	  Added new library used to transfer data to the service.
+
+2012-02-21  Raimund Renkert <raimund.renkert@intevation.de>
+
 	Added missing jar file.
 
 	* lib/commons-discovery-0.5.jar:

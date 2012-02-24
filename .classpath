@@ -52,5 +52,6 @@
 	<classpathentry kind="lib" path="lib/iText-2.1.7.jar"/>
 	<classpathentry kind="lib" path="lib/groovy-all-1.7.5.jar"/>
 	<classpathentry kind="lib" path="lib/commons-discovery-0.5.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="lib/axis-wsdl4j-1.5.1.jar"/>
+  <classpathentry kind="output" path="bin"/>
 </classpath>

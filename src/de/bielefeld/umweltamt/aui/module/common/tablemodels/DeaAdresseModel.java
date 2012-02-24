@@ -20,11 +20,16 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.tipi.DeaAdresse;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+import de.bielefeld.umweltamt.aui.mappings.tipi.DeaAdresse;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import de.nrw.lds.tipi.inka.Dea_Adresse;
 
 public class DeaAdresseModel extends ListTableModel {
-    private static final long serialVersionUID = -5801347083826842883L;
+    /** Logging */
+    private static final AuikLogger logger = AuikLogger.getLogger();
+
 
     public DeaAdresseModel() {
         super(new String[]{
@@ -42,15 +47,62 @@ public class DeaAdresseModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
-    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         if(objectAtRow == null) {
             return "error";
         }
-        DeaAdresse fd = (DeaAdresse) objectAtRow;
+
+        if (objectAtRow instanceof DeaAdresse) {
+            return getDeaAdresseFromDB (objectAtRow, columnIndex);
+        }
+        else if (objectAtRow instanceof Dea_Adresse) {
+            return getDeaAdresseFromService (objectAtRow, columnIndex);
+        }
+        else {
+            return "Error";
+        }
+    }
+
+    public Object getDeaAdresseFromDB (Object obj, int ndx) {
+        DeaAdresse fd = (DeaAdresse) obj;
         Object tmp;
 
-        switch (columnIndex) {
+        switch (ndx) {
+        case 0:
+            tmp = fd.getName1();
+            break;
+        case 1:
+            tmp = fd.getName2();
+            break;
+        case 2:
+            tmp = fd.getStrasse();
+            break;
+        case 3:
+            tmp = fd.getHausnr();
+            break;
+        case 4:
+            tmp = fd.getPlz();
+            break;
+        case 5:
+            tmp = fd.getOrt();
+            break;
+        case 6:
+            tmp = fd.getStaatskennung();
+            break;
+
+        default:
+            tmp = "ERROR";
+            break;
+        }
+        return tmp;
+    }
+
+
+    public Object getDeaAdresseFromService (Object obj, int ndx) {
+        Dea_Adresse fd = (Dea_Adresse) obj;
+        Object tmp;
+
+        switch (ndx) {
         case 0:
             tmp = fd.getName1();
             break;
@@ -83,7 +135,6 @@ public class DeaAdresseModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
-    @Override
     public void updateList() {
     }
 }

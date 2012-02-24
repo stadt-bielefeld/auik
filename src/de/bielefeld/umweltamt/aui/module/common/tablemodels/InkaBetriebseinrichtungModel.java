@@ -20,11 +20,15 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetriebseinrichtung;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetriebseinrichtung;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import de.nrw.lds.tipi.inka.Inka_Betriebseinrichtung;
 
 public class InkaBetriebseinrichtungModel extends ListTableModel {
-    private static final long serialVersionUID = -5829829297562338542L;
+    /** Logging */
+    private static final AuikLogger logger = AuikLogger.getLogger();
 
     public InkaBetriebseinrichtungModel() {
         super(new String[]{
@@ -39,15 +43,27 @@ public class InkaBetriebseinrichtungModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
-    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        if(objectAtRow == null) {
+        if (objectAtRow == null) {
             return "error";
         }
-        InkaBetriebseinrichtung fd = (InkaBetriebseinrichtung) objectAtRow;
+        if (objectAtRow instanceof InkaBetriebseinrichtung) {
+            return getInkaBetriebseinrichtungFromDB(objectAtRow, columnIndex);
+        }
+        else if (objectAtRow instanceof Inka_Betriebseinrichtung) {
+            return getInkaBetriebseinrichtungFromService(objectAtRow,
+                                                         columnIndex);
+        }
+        else {
+            return "Error";
+        }
+    }
+
+    public Object getInkaBetriebseinrichtungFromDB (Object obj, int ndx) {
+        InkaBetriebseinrichtung fd = (InkaBetriebseinrichtung) obj;
         Object tmp;
 
-        switch (columnIndex) {
+        switch (ndx) {
         case 0:
             tmp = fd.getId().getBetriebseinrichtungNr();
             break;
@@ -68,10 +84,36 @@ public class InkaBetriebseinrichtungModel extends ListTableModel {
         return tmp;
     }
 
+
+    public Object getInkaBetriebseinrichtungFromService (Object obj, int ndx) {
+        Inka_Betriebseinrichtung fd = (Inka_Betriebseinrichtung) obj;
+        Object tmp;
+
+        switch (ndx) {
+        case 0:
+            tmp = fd.getBetriebseinrichtung_nr();
+            break;
+        case 1:
+            tmp = fd.getBetrieb_nr();
+            break;
+        case 2:
+            tmp = fd.getAdresse_betreib_nr();
+            break;
+        case 3:
+            tmp = fd.getGenehmigung_nr();
+            break;
+
+        default:
+            tmp = "ERROR";
+            break;
+        }
+        return tmp;
+    }
+
+
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
-    @Override
     public void updateList() {
     }
 }

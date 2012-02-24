@@ -20,11 +20,15 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetrieb;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetrieb;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import de.nrw.lds.tipi.inka.Inka_Betrieb;
 
 public class InkaBetriebModel extends ListTableModel {
-    private static final long serialVersionUID = -6281268783454593284L;
+    /** Logging */
+    private static final AuikLogger logger = AuikLogger.getLogger();
 
     public InkaBetriebModel() {
         super(new String[]{
@@ -39,15 +43,26 @@ public class InkaBetriebModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
-    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        if(objectAtRow == null) {
+        if (objectAtRow == null) {
             return "error";
         }
-        InkaBetrieb fd = (InkaBetrieb) objectAtRow;
+        if (objectAtRow instanceof InkaBetrieb) {
+            return getInkaBetriebFromDB(objectAtRow, columnIndex);
+        }
+        else if (objectAtRow instanceof Inka_Betrieb) {
+            return getInkaBetriebFromService(objectAtRow, columnIndex);
+        }
+        else {
+            return "Error";
+        }
+    }
+
+    public Object getInkaBetriebFromDB(Object obj, int ndx) {
+        InkaBetrieb fd = (InkaBetrieb) obj;
         Object tmp;
 
-        switch (columnIndex) {
+        switch (ndx) {
         case 0:
             tmp = fd.getId().getBetriebNr();
         case 1:
@@ -67,10 +82,35 @@ public class InkaBetriebModel extends ListTableModel {
         return tmp;
     }
 
+
+    public Object getInkaBetriebFromService(Object obj, int ndx) {
+        Inka_Betrieb fd = (Inka_Betrieb) obj;
+        Object tmp;
+
+        switch (ndx) {
+        case 0:
+            tmp = fd.getBetrieb_nr();
+        case 1:
+            tmp = fd.getAdresse_stand_nr();
+            break;
+        case 2:
+            tmp = fd.getAdresse_einleit_nr();
+            break;
+        case 3:
+            tmp = fd.getGemeindekennzahl();
+            break;
+
+        default:
+            tmp = "ERROR";
+            break;
+        }
+        return tmp;
+    }
+
+
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
-    @Override
     public void updateList() {
     }
 }
