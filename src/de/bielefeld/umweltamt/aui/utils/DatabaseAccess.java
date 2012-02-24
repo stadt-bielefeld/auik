@@ -46,10 +46,6 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
  * A wrapper class for all access to the database, which only allows certain
  * functionality to the user/programmer, handles database exceptions and makes
  * sure modifying access is run within a transaction.<br>
- * <br>
- * TODO: Let the DatabaseAccess only work on Subclasses of
- * AbstractVirtuallyDeletableDatabaseTable to ensure that we do not really
- * delete anything in the database.
  *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
@@ -427,8 +423,6 @@ public class DatabaseAccess {
      * null if the query returns no results.
      * @return The single result or <code>null</code>
      */
-    // TODO: There are a lot of querys where we should use this but are still
-    // using the first object of the list.
     public Object uniqueResult() {
         Object result = null;
         try {

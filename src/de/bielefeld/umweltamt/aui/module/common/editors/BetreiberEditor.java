@@ -37,8 +37,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.hibernate.HibernateException;
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -304,15 +302,11 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                try {
-                    if (strassen == null) {
-                        strassen = BasisStrassen.getStrassen();
-                    }
-                    if (wirtschaftszweige == null) {
-                        wirtschaftszweige = VawsWirtschaftszweige.getWirtschaftszweige();
-                    }
-                } catch (HibernateException e) {
-                    throw new RuntimeException(e);
+                if (strassen == null) {
+                    strassen = BasisStrassen.getStrassen();
+                }
+                if (wirtschaftszweige == null) {
+                    wirtschaftszweige = VawsWirtschaftszweige.getWirtschaftszweige();
                 }
             }
 
@@ -388,7 +382,6 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
     /**
      * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
-     * @throws HibernateException Wenn beim Speichern ein Fehler auftritt
      */
     @Override
     protected boolean doSave() {

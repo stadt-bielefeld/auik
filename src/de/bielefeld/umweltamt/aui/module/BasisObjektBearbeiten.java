@@ -100,8 +100,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
-import org.hibernate.HibernateException;
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.plaf.Options;
@@ -758,7 +756,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
      * Wird benutzt, um bestimmte Objektarten beim Speichern besonders zu behandeln.
      * Wird aufgerufen, wenn das Objekt bereits gespeichert wurde.
      * @param session Die Hibernate-Session.
-     * @throws HibernateException Wenn ein Fehler auftritt,
      * der einen kompletten Rollback der Speicher-Transaktion erfordert.
      */
     public void completeObjekt() {

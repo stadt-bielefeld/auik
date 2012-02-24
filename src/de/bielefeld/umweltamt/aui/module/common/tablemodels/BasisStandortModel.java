@@ -23,10 +23,9 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.List;
 
-import org.hibernate.HibernateException;
-
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+
 /**
  * Ein TableModel für die Basis-Standortdaten.
  * @author David Klotz
@@ -50,7 +49,6 @@ public class BasisStandortModel extends ListTableModel {
      * Aktualisiert die aktuell angezeigte Liste.
      * Falls noch keine Suche durchgeführt wurde, werden die
      * ersten 30 Einträge angezeigt.
-     * @throws HibernateException
      */
     @Override
     public void updateList() {

@@ -42,8 +42,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import org.hibernate.HibernateException;
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -313,24 +311,20 @@ public class StandortEditor extends AbstractBaseEditor {
 
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                try {
-                    if (strassen == null) {
-                        strassen = BasisStrassen.getStrassen();
-                    }
-                    if (gemarkungen == null) {
-                        gemarkungen = BasisGemarkung.getGemarkungen();
-                    }
-                    if (standortggs == null) {
-                        standortggs = VawsStandortgghwsg.getStandortGg();
-                    }
-                    if (entwgebiete == null) {
-                        entwgebiete = BasisStandort.getEntwGebiete();
-                    }
-                    if (wEinzugsgebiete == null) {
-                        wEinzugsgebiete = VawsWassereinzugsgebiete.getWEinzugsgebiete();
-                    }
-                } catch (HibernateException e) {
-                    throw new RuntimeException(e);
+                if (strassen == null) {
+                    strassen = BasisStrassen.getStrassen();
+                }
+                if (gemarkungen == null) {
+                    gemarkungen = BasisGemarkung.getGemarkungen();
+                }
+                if (standortggs == null) {
+                    standortggs = VawsStandortgghwsg.getStandortGg();
+                }
+                if (entwgebiete == null) {
+                    entwgebiete = BasisStandort.getEntwGebiete();
+                }
+                if (wEinzugsgebiete == null) {
+                    wEinzugsgebiete = VawsWassereinzugsgebiete.getWEinzugsgebiete();
                 }
             }
 

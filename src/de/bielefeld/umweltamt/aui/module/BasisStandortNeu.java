@@ -61,8 +61,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.hibernate.HibernateException;
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -308,7 +306,6 @@ public class BasisStandortNeu extends AbstractModul {
     /**
      * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
      * Speichern die Werte des Formulars in einen neuen Standort.
-     * @throws HibernateException Wenn beim Speichern ein Fehler auftritt
      */
     private void doSave() {
         // Eingaben überprüfen:
@@ -431,24 +428,20 @@ public class BasisStandortNeu extends AbstractModul {
 
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                try {
-                    if (strassen == null) {
-                        strassen = BasisStrassen.getStrassen();
-                    }
-                    if (gemarkungen == null) {
-                        gemarkungen = BasisGemarkung.getGemarkungen();
-                    }
-                    if (standortggs == null) {
-                        standortggs = VawsStandortgghwsg.getStandortGg();
-                    }
-                    if (entwgebiete == null) {
-                        entwgebiete = BasisStandort.getEntwGebiete();
-                    }
-                    if (wEinzugsgebiete == null) {
-                        wEinzugsgebiete = VawsWassereinzugsgebiete.getWEinzugsgebiete();
-                    }
-                } catch (HibernateException e) {
-                    throw new RuntimeException(e);
+                if (strassen == null) {
+                    strassen = BasisStrassen.getStrassen();
+                }
+                if (gemarkungen == null) {
+                    gemarkungen = BasisGemarkung.getGemarkungen();
+                }
+                if (standortggs == null) {
+                    standortggs = VawsStandortgghwsg.getStandortGg();
+                }
+                if (entwgebiete == null) {
+                    entwgebiete = BasisStandort.getEntwGebiete();
+                }
+                if (wEinzugsgebiete == null) {
+                    wEinzugsgebiete = VawsWassereinzugsgebiete.getWEinzugsgebiete();
                 }
             }
 

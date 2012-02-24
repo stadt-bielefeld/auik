@@ -61,8 +61,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.hibernate.HibernateException;
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -348,7 +346,6 @@ public class BasisBetreiberNeu extends AbstractModul {
     /**
      * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
      * Speichern die Werte des Formulars in einen neuen Standort.
-     * @throws HibernateException Wenn beim Speichern ein Fehler auftritt
      */
     private void doSave() {
         // Eingaben überprüfen:
@@ -547,15 +544,11 @@ public class BasisBetreiberNeu extends AbstractModul {
 
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                try {
-                    if (strassen == null) {
-                        strassen = BasisStrassen.getStrassen();
-                    }
-                    if (wirtschaftszweige == null) {
-                        wirtschaftszweige = VawsWirtschaftszweige.getWirtschaftszweige();
-                    }
-                } catch (HibernateException e) {
-                    throw new RuntimeException(e);
+                if (strassen == null) {
+                    strassen = BasisStrassen.getStrassen();
+                }
+                if (wirtschaftszweige == null) {
+                    wirtschaftszweige = VawsWirtschaftszweige.getWirtschaftszweige();
                 }
             }
 
