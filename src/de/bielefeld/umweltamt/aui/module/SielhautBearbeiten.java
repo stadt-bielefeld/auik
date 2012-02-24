@@ -230,7 +230,6 @@ public class SielhautBearbeiten extends AbstractModul {
     private JPopupMenu probePopup;
     private Action probeEditAction;
     private Action probeLoeschAction;
-    private Action probeSaveAction;
 
     // Widgets für Fotopanel
     private JLabel fotoLabel;
@@ -625,23 +624,6 @@ public class SielhautBearbeiten extends AbstractModul {
         }
 
         return probeEditAction;
-    }
-
-    private Action getProbeSaveAction() {
-        if (probeEditAction == null) {
-            probeEditAction = new AbstractAction("Speichern") {
-                private static final long serialVersionUID = 6708317220554908069L;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    saveTabelle();
-                }
-            };
-            probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
-            probeEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
-        }
-
-        return probeSaveAction;
     }
 
     private Action getProbeLoeschAction() {
@@ -1637,9 +1619,7 @@ public class SielhautBearbeiten extends AbstractModul {
 //                position = AtlAnalyseposition.getAnalysepositionObjekt(pkt);
                 einheit =  "Verhältnis zum Hintergrundwert";
 
-
-                List list = AtlAnalyseposition.getSielhautpos(p, pkt, von, bis);
-
+                List<?> list = AtlAnalyseposition.getSielhautpos(p, pkt, von, bis);
 
                 TimeSeries series = ChartDataSets
                         .createAnalysePositionenSielhautSeries(list, p+ " ",einheit);
@@ -1915,7 +1895,7 @@ public class SielhautBearbeiten extends AbstractModul {
 class SielhautProbeModel extends ListTableModel {
     private static final long serialVersionUID = -7308141358160583962L;
     private AtlProbepkt probepkt;
-    private Map wertMap;
+    private Map<AtlProbenahmen,List<AtlAnalyseposition>> wertMap;
     private AtlParameter[] params;
 
     public SielhautProbeModel() {
@@ -1941,7 +1921,7 @@ class SielhautProbeModel extends ListTableModel {
             }
         }
 
-        wertMap = new HashMap();
+        wertMap = new HashMap<AtlProbenahmen,List<AtlAnalyseposition>>();
     }
 
     public void setProbepunkt(AtlProbepkt probepkt) {
@@ -1956,11 +1936,12 @@ class SielhautProbeModel extends ListTableModel {
             wertMap.clear();
             for (int i = 0; i < getList().size(); i++) {
                 AtlProbenahmen probe = getRow(i);
-                List wertList = new ArrayList(params.length);
+                List<AtlAnalyseposition> wertList =
+                    new ArrayList<AtlAnalyseposition>(params.length);
 
                 for (int j = 0; j < params.length; j++) {
                     AtlParameter param = params[j];
-                    List posList = AtlAnalyseposition.getAnalysepositionen(probe, param);
+                    List<?> posList = AtlAnalyseposition.getAnalysepositionen(probe, param);
                     AtlAnalyseposition pos;
                     if (posList.size() > 0) {
                         pos = (AtlAnalyseposition) posList.get(0);
@@ -1970,7 +1951,7 @@ class SielhautProbeModel extends ListTableModel {
                     wertList.add(j, pos);
                 }
 
-                wertMap.put(getList().get(i), wertList);
+                wertMap.put((AtlProbenahmen)getList().get(i), wertList);
             }
 
             //fireTableDataChanged();
@@ -1987,8 +1968,8 @@ class SielhautProbeModel extends ListTableModel {
         } else if (columnIndex == 1) {
             value = AuikUtils.getStringFromDate(probe.getDatumDerEntnahme());
         } else {
-            List wertList = (List) wertMap.get(probe);
-            AtlAnalyseposition pos = (AtlAnalyseposition) wertList.get(columnIndex-2);
+            List<AtlAnalyseposition> wertList = wertMap.get(probe);
+            AtlAnalyseposition pos = wertList.get(columnIndex-2);
             if (pos != null) {
                 String tmp = pos.getWert().toString().replace(".", ",");
                 value = tmp;

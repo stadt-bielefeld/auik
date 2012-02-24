@@ -107,7 +107,7 @@ public class ChartDataSets {
      * @return Eine Analysepositionen-Datenreihe
      */
     // Bei der Auswertung der SielhautBearbeiten werden statt der Messwerte, die Normwerte ausgegeben
-    public static TimeSeries createAnalysePositionenSeries(List<AtlAnalyseposition> list, String name, String einheit) {
+    public static TimeSeries createAnalysePositionenSeries(List<?> list, String name, String einheit) {
         TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
         log.debug("Erzeuge TimeSeries: " + name);
 
@@ -120,14 +120,14 @@ public class ChartDataSets {
 //
 //                    addPosToMinuteSeries(result, item);
 //                }
-                addPosToMinuteSeries(result, new APosDataItem(list.get(i)));
+                addPosToMinuteSeries(result, new APosDataItem((AtlAnalyseposition) list.get(i)));
             }
         }
 
         return result;
     }
 
-    public static TimeSeries createAnalysePositionenSielhautSeries(List<AtlAnalyseposition> list, String name, String einheit) {
+    public static TimeSeries createAnalysePositionenSielhautSeries(List<?> list, String name, String einheit) {
         TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
         log.debug("Erzeuge TimeSeries: " + name);
 
@@ -141,7 +141,8 @@ public class ChartDataSets {
 //                    addPosToMinuteSielhautSeries(result, item);
 //                }
                 addPosToMinuteSielhautSeries(
-                    result, new APosDataItem("Normwert", list.get(i)));
+                    result, new APosDataItem("Normwert",
+                        (AtlAnalyseposition) list.get(i)));
             }
         }
 

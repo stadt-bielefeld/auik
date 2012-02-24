@@ -141,7 +141,7 @@ public class DateUtils {
 
         long duration = (end.getTime() - start.getTime()) / 1000;
 
-        int seconds = getSeconds(duration);
+//        int seconds = getSeconds(duration);
         int minutes = getMinutes(duration);
         int hours = getHours(duration);
 
@@ -166,7 +166,7 @@ public class DateUtils {
 
         long duration = ((one.getTime() + 3600000) + (two.getTime() + 3600000)) / 1000;
 
-        int seconds = getSeconds(duration);
+//        int seconds = getSeconds(duration);
         int minutes = getMinutes(duration);
         int hours = getHours(duration);
 

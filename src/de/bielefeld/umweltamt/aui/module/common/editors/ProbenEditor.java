@@ -585,7 +585,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                 doSave();
 
-                Map<String,String> params = (Map<String,String>) getAuftragDruckMap(probe);
+                Map<String,Object> params = getAuftragDruckMap(probe);
 
                 String basePath = SettingsManager.getInstance().getSetting(
                     "auik.probenahme.auftraege");
@@ -686,7 +686,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     updateRechnungsbetrag(probe);
 
-                    Map<String,String> params = getBescheidDruckMap(probe);
+                    Map<String,Object> params = getBescheidDruckMap(probe);
 
                     JRDataSource subdata =
                         AtlProbenahmen.getBescheidDataSource(probe);
@@ -1415,12 +1415,12 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Probenahmeauftrages.
      * @return die Variablen für den Probenahmeauftrag als Map.
      */
-    public Map<String,String> getAuftragDruckMap(AtlProbenahmen probe) {
+    public Map<String,Object> getAuftragDruckMap(AtlProbenahmen probe) {
         BasisBetreiber betr = probe.getBasisBetreiber();
         BasisStandort  std  = probe.getBasisObjekt().getBasisStandort();
         AtlProbeart    art  = probe.getAtlProbepkt().getAtlProbeart();
 
-        HashMap<String,String> params = new HashMap<String,String>();
+        HashMap<String,Object> params = new HashMap<String,Object>();
         params.put("kennnummer", probenummer.getText());
         params.put("name", betr.toString());
         params.put("art", art.getArt());
@@ -1466,13 +1466,13 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Druck/Export des Geb&uuml;hrenbescheid notwendig sind.
      * @return die Variablen des Geb&uuml;hrenbescheids als Map.
      */
-    public Map<String,String> getBescheidDruckMap(AtlProbenahmen probe)
+    public Map<String,Object> getBescheidDruckMap(AtlProbenahmen probe)
     throws IllegalArgumentException
     {
         BasisBetreiber betr = probe.getBasisBetreiber();
         BasisStandort basisStandort = probe.getBasisObjekt().getBasisStandort();
 
-        HashMap<String,String> params = new HashMap<String,String>();
+        HashMap<String,Object> params = new HashMap<String,Object>();
 
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMAN);
         nf.setMinimumFractionDigits(2);

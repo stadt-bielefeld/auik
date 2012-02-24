@@ -1680,7 +1680,7 @@ public class VawsEditor extends AbstractBaseEditor {
  */
 class VawsAnlagenChronoModel extends EditableListTableModel {
     private static final long serialVersionUID = -2520120636324926275L;
-    private List geloeschte;
+    private List<VawsAnlagenchrono> geloeschte;
     private VawsFachdaten fachdaten;
 
     /**
@@ -1693,7 +1693,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
                 "Wiedervorlage"
         },
         false, true);
-        geloeschte = new ArrayList();
+        geloeschte = new ArrayList<VawsAnlagenchrono>();
     }
 
     /**
@@ -1767,7 +1767,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
         return true;
     }
 
-    public List getGeloeschte() {
+    public List<?> getGeloeschte() {
         return geloeschte;
     }
 
@@ -1827,7 +1827,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
  */
 class VawsKontrollenModel extends EditableListTableModel {
     private static final long serialVersionUID = 1747805482011126348L;
-    private List geloeschte;
+    private List<VawsKontrollen> geloeschte;
     private VawsFachdaten fachdaten;
 
     /**
@@ -1842,7 +1842,7 @@ class VawsKontrollenModel extends EditableListTableModel {
                 "Prfg. abgeschl."
         },
         false, true);
-        geloeschte = new ArrayList();
+        geloeschte = new ArrayList<VawsKontrollen>();
     }
 
     /**
@@ -1923,7 +1923,7 @@ class VawsKontrollenModel extends EditableListTableModel {
         return true;
     }
 
-    public List getGeloeschte() {
+    public List<?> getGeloeschte() {
         return geloeschte;
     }
 
@@ -1999,7 +1999,7 @@ class VawsKontrollenModel extends EditableListTableModel {
  */
 class VerwVerfahrenModel extends EditableListTableModel {
     private static final long serialVersionUID = -7932308301889587228L;
-    private List geloeschte;
+    private List<VawsVerwaltungsverf> geloeschte;
     private VawsFachdaten fachdaten;
 
     /**
@@ -2013,7 +2013,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
                 "abgeschl."
         },
         false, true);
-        geloeschte = new ArrayList();
+        geloeschte = new ArrayList<VawsVerwaltungsverf>();
     }
 
     /**
@@ -2091,7 +2091,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
         return true;
     }
 
-    public List getGeloeschte() {
+    public List<?> getGeloeschte() {
         return geloeschte;
     }
 
@@ -2163,7 +2163,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
  */
 class VerwGebuehrenModel extends EditableListTableModel {
     private static final long serialVersionUID = 8662150283828728780L;
-    private List geloeschte;
+    private List<VawsVerwaltungsgebuehren> geloeschte;
     private VawsFachdaten fachdaten;
 
     /**
@@ -2178,7 +2178,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
                 "Kassenzeichen"
         },
         false, true);
-        geloeschte = new ArrayList();
+        geloeschte = new ArrayList<VawsVerwaltungsgebuehren>();
     }
 
     /**
@@ -2254,7 +2254,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
         return true;
     }
 
-    public List getGeloeschte() {
+    public List<?> getGeloeschte() {
         return geloeschte;
     }
 

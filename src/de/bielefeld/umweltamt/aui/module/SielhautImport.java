@@ -164,7 +164,7 @@ public class SielhautImport extends AbstractModul {
         }
 
         public void reset() {
-            setList(new ArrayList());
+            setList(new ArrayList<String[]>());
             importFile = null;
             importableRows = null;
             fireTableDataChanged();

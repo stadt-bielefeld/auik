@@ -23,59 +23,50 @@
  * Created on 12.01.2005
  */
 package de.bielefeld.umweltamt.aui.module;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Calendar;
 
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JOptionPane;
-import javax.swing.JLabel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.nrw.lds.tipi.inka.Dea_Adresse;
-import de.nrw.lds.tipi.inka.Inka_Betrieb;
-import de.nrw.lds.tipi.inka.Inka_Betriebseinrichtung;
-import de.nrw.lds.tipi.inka.Inka_Genehmigung;
-
-import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.AbstractModul;
-
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
-import de.bielefeld.umweltamt.aui.tipi.ServiceManager;
-import de.bielefeld.umweltamt.aui.tipi.CredentialsDialog;
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.tipi.DeaAdresse;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetrieb;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetriebseinrichtung;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaGenehmigung;
-
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.DeaAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaBetriebModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaBetriebseinrichtungModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaGenehmigungModel;
+import de.bielefeld.umweltamt.aui.tipi.CredentialsDialog;
+import de.bielefeld.umweltamt.aui.tipi.ServiceManager;
+import de.nrw.lds.tipi.inka.Dea_Adresse;
+import de.nrw.lds.tipi.inka.Inka_Betrieb;
+import de.nrw.lds.tipi.inka.Inka_Betriebseinrichtung;
+import de.nrw.lds.tipi.inka.Inka_Genehmigung;
 
 /**
  * Modul zum Synchronisieren der lokalen Datenbank mit einem entfernten Service.
  */
 public class DBSyncModul extends AbstractModul {
 
-    /** Logging */
-    private static final AuikLogger logger = AuikLogger.getLogger();
-
     private JPanel panel;
 
     // Model fürDatensätze aus der Datenbank
-    private DeaAdresseModel addrDBModel;    
+    private DeaAdresseModel addrDBModel;
     private InkaBetriebModel betriebDBModel;
     private InkaBetriebseinrichtungModel betriebseinrDBModel;
     private InkaGenehmigungModel genehmigungDBModel;
@@ -157,6 +148,7 @@ public class DBSyncModul extends AbstractModul {
                 }
             }
             selection.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String item = (String) selection.getSelectedItem();
                     if (item.equals("dea_adresse")) {
@@ -179,6 +171,7 @@ public class DBSyncModul extends AbstractModul {
             compare.addItem("lokale Datenbank");
             compare.addItem("entferner Dienst");
             compare.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String item = (String) compare.getSelectedItem();
                     String sel = (String) selection.getSelectedItem();
@@ -217,15 +210,17 @@ public class DBSyncModul extends AbstractModul {
 
             JButton get = new JButton("Daten von ext. Dienst holen");
             get.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent ae) {
                     CredentialsDialog dialog =
                         new CredentialsDialog(DBSyncModul.this);
-                    dialog.show();
+                    dialog.setVisible(true);
                 }
             });
 
             JButton set = new JButton("Alle Daten übertragen");
             set.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent ae) {
                     if(url != null && user != null && password != null) {
                         dbToService();
@@ -374,22 +369,22 @@ public class DBSyncModul extends AbstractModul {
      */
     private void dbToService() {
         sendAddr.clear();
-        List<DeaAdresse> list1 = addrDBModel.getList();
+        List<?> list1 = addrDBModel.getList();
         for (int i = 0; i < list1.size(); i++) {
-            sendAddr.add(list1.get(i).toServiceType());
+            sendAddr.add(((DeaAdresse)list1.get(i)).toServiceType());
         }
-        List<InkaBetrieb> list2 = betriebDBModel.getList();
+        List<?> list2 = betriebDBModel.getList();
         for (int i = 0; i < list2.size(); i++) {
-            sendBetrieb.add(list2.get(i).toServiceType());
+            sendBetrieb.add(((InkaBetrieb)list2.get(i)).toServiceType());
         }
 // Elements cannot be send to the server, we do not have to convert them.
 //        List<InkaBetriebseinrichtung> list3 = betriebseinrDBModel.getList();
 //        for (int i = 0; i < list3.size(); i++) {
 //            sendBetriebseinr.add(list3.get(i).toServiceType());
 //        }
-        List<InkaGenehmigung> list4 = genehmigungDBModel.getList();
+        List<?> list4 = genehmigungDBModel.getList();
         for (int i = 0; i < list4.size(); i++) {
-            sendGenehm.add(list4.get(i).toServiceType());
+            sendGenehm.add(((InkaGenehmigung)list4.get(i)).toServiceType());
         }
     }
 }

@@ -23,8 +23,6 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 
-import org.hibernate.HibernateException;
-
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -84,7 +82,6 @@ public class AtlKlaeranlagen extends AbstractAtlKlaeranlagen implements
     /**
      * Liefert alle vorhandenen Kläranlagen.
      * @return Alle vorhandenen Kläranlagen
-     * @throws HibernateException Falls ein Datenbank-Fehler auftritt
      */
     public static AtlKlaeranlagen[] getKlaeranlagen() {
         String suchString = "FROM AtlKlaeranlagen ka ORDER BY ka.kaId";

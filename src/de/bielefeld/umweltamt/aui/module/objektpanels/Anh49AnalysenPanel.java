@@ -611,8 +611,8 @@ public class Anh49AnalysenPanel extends JPanel{
 
     public void clearForm() {
         // Hier füllen wir das Analysen-TableModel mit einer leeren Liste
-        analysenModel.setList(new ArrayList());
-        kontrollenModel.setList(new ArrayList());
+        analysenModel.setList(new ArrayList<Anh49Analysen>());
+        kontrollenModel.setList(new ArrayList<Anh49Kontrollen>());
     }
 
     public void enableAll(boolean enabled) {

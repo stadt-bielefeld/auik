@@ -20,15 +20,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetrieb;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-
+import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.nrw.lds.tipi.inka.Inka_Betrieb;
 
 public class InkaBetriebModel extends ListTableModel {
-    /** Logging */
-    private static final AuikLogger logger = AuikLogger.getLogger();
+    private static final long serialVersionUID = 3913291284739009733L;
 
     public InkaBetriebModel() {
         super(new String[]{
@@ -43,6 +40,7 @@ public class InkaBetriebModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         if (objectAtRow == null) {
             return "error";
@@ -111,6 +109,7 @@ public class InkaBetriebModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     }
 }

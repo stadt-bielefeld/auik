@@ -24,13 +24,13 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Map;
 
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRException;
 
 
 /**
@@ -90,8 +90,8 @@ public class PDFExporter {
      * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
     protected static JasperPrint export(
-        Map<?,?> fields, InputStream reportFile, String dest)
-    throws Exception
+        Map<String,Object> fields, InputStream reportFile, String dest)
+    throws JRException
     {
         JasperPrint print = JasperFillManager.fillReport(
             reportFile,
@@ -121,7 +121,7 @@ public class PDFExporter {
      * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
     public JasperPrint exportAuftrag(
-        Map fields, JRDataSource subdata, String dest, boolean printPDF)
+        Map<String,Object> fields, JRDataSource subdata, String dest, boolean printPDF)
     throws Exception
     {
         InputStream inputStream = getClass().getResourceAsStream(
@@ -167,11 +167,11 @@ public class PDFExporter {
      * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
      */
     public JasperPrint exportBescheid(
-        Map          fields,
-        JRDataSource subdata,
-        String       report,
-        String       dest,
-        boolean printPDF)
+        Map<String,Object> fields,
+        JRDataSource       subdata,
+        String             report,
+        String             dest,
+        boolean            printPDF)
     throws Exception
     {
         InputStream inputStream = getClass().getResourceAsStream(report);
@@ -209,7 +209,7 @@ public class PDFExporter {
      * exportBescheid(Map,String,boolean)} zurückgeliefert wird.
      */
     public static void print(JasperPrint jprint)
-    throws Exception
+    throws JRException
     {
         JasperPrintManager.printReport(jprint, true);
     }

@@ -116,10 +116,6 @@ public class ReportManager {
         this.reportHome = reportHome;
         this.fotoPath = fotoPath;
         this.mapPath = mapPath;
-//        this.Name       = Name;
-//        this.Id         = Id;
-//        if (EntGeb != null)
-//            this.EntGeb = EntGeb;
         initBirt();
     }
 
@@ -186,13 +182,10 @@ public class ReportManager {
         return pdfFile;
     }
 
-    public File runReport(Integer StandortId, String Standort, String Name)
-        throws EngineException {
+    public File runReport(Integer StandortId, String Standort, String Name) {
         File pdfFile;
         try {
-
             pdfFile = File.createTempFile(Name + StandortId, ".pdf");
-
         } catch (IOException e) {
             throw new RuntimeException(
                 "Konnte temporäre PDF-Datei nicht speichern!", e);
@@ -208,12 +201,10 @@ public class ReportManager {
         config = null;
         engine = null;
         try {
-
             // Configure the Engine and start the Platform
             config = new EngineConfig();
             config.setEngineHome(engineHome);
             config.setLogConfig(null, Level.OFF);
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -223,7 +214,6 @@ public class ReportManager {
         } catch (BirtException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-
         }
         IReportEngineFactory factory = (IReportEngineFactory) Platform
             .createFactoryObject(IReportEngineFactory.EXTENSION_REPORT_ENGINE_FACTORY);
@@ -232,8 +222,7 @@ public class ReportManager {
         engine.changeLogLevel(Level.OFF);
     }
 
-    public void startReportWorker(final String Name, Component focusComp)
-        throws EngineException {
+    public void startReportWorker(final String Name, Component focusComp) {
         SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
             File pdfFile;
 
@@ -259,7 +248,7 @@ public class ReportManager {
     }
 
     public void startReportWorker(final String Name, final Integer Id,
-        final String HaltungsNr, Component focusComp) throws EngineException {
+        final String HaltungsNr, Component focusComp) {
         SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
             File pdfFile;
 
@@ -282,12 +271,7 @@ public class ReportManager {
         };
 
         worker.start();
-//        try {
-//            prepareReport(Name, Id, EntGeb);
-//        } catch (EngineException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
+//        prepareReport(Name, Id, EntGeb);
     }
 
     public void startReportWorker(final String Name, final Integer ObjektId,
@@ -327,13 +311,7 @@ public class ReportManager {
             protected void doNonUILogic() throws RuntimeException {
                 // File report = new File(reportHome + reportname +
                 // ".rptdesign");
-                try {
-
-                    pdfFile = runReport(StandortId, Standort, Name);
-                } catch (EngineException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                pdfFile = runReport(StandortId, Standort, Name);
             }
 
             @Override
@@ -383,11 +361,7 @@ public class ReportManager {
             initBirt();
 
         IReportRunnable design = null;
-        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); // reportHome
-                                                                            // +
-                                                                            // Name
-                                                                            // +
-                                                                            // ".rptdesign"
+        design = engine.openReportDesign(reportHome + Name + ".rptdesign");
 
         // Create task to run and render the report,
         IRunAndRenderTask task = engine.createRunAndRenderTask(design);
@@ -411,7 +385,6 @@ public class ReportManager {
         // Den Report endgültig erzeugen
         try {
             task.run();
-
             shutdownBirt();
         } catch (EngineException e1) {
             throw new RuntimeException(
@@ -432,11 +405,7 @@ public class ReportManager {
             initBirt();
 
         IReportRunnable design = null;
-        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); // reportHome
-                                                                            // +
-                                                                            // Name
-                                                                            // +
-                                                                            // ".rptdesign"
+        design = engine.openReportDesign(reportHome + Name + ".rptdesign");
 
         // Create task to run and render the report,
         IRunAndRenderTask task = engine.createRunAndRenderTask(design);
@@ -478,7 +447,6 @@ public class ReportManager {
         // Den Report endgültig erzeugen
         try {
             task.run();
-
             shutdownBirt();
         } catch (EngineException e1) {
             throw new RuntimeException(
@@ -487,7 +455,7 @@ public class ReportManager {
     }
 
     public void runReport(File pdffile, Integer StandortId, String Standort,
-        String Name) throws EngineException {
+        String Name) {
 
         if (config == null || engine == null || options == null)
             initBirt();
@@ -495,11 +463,7 @@ public class ReportManager {
         IReportRunnable design = null;
 
         try {
-            design = engine.openReportDesign(reportHome + Name + ".rptdesign"); // reportHome
-                                                                                // +
-                                                                                // Name
-                                                                                // +
-                                                                                // ".rptdesign"
+            design = engine.openReportDesign(reportHome + Name + ".rptdesign");
 
         } catch (EngineException e1) {
             log.debug("Fehler: " + e1);
@@ -525,7 +489,6 @@ public class ReportManager {
 
         try {
             task.run();
-
             shutdownBirt();
         } catch (EngineException e1) {
             throw new RuntimeException(
@@ -535,40 +498,13 @@ public class ReportManager {
 
     public void runReport(File pdffile, String Name, Integer ObjektId,
         String Betreiber, String Standort, String Art) throws EngineException {
-//        EngineConfig config = null;
-//        IReportEngine engine = null;
-//        try {
-//
-//            //Configure the Engine and start the Platform
-//            config = new EngineConfig();
-//            config.setEngineHome(engineHome);
-//            config.setLogConfig(null, Level.FINE);
-//
-//        } catch( Exception ex) {
-//            ex.printStackTrace();
-//        }
-//
-//        try {
-//            Platform.startup( config );
-//        } catch (BirtException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        IReportEngineFactory factory = (IReportEngineFactory) Platform
-//            .createFactoryObject( IReportEngineFactory.EXTENSION_REPORT_ENGINE_FACTORY );
-//        engine = factory.createReportEngine( config );
-//        engine.changeLogLevel( Level.WARNING );
 
         if (config == null || engine == null || options == null)
             initBirt();
 
         IReportRunnable design = null;
 
-        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); // reportHome
-                                                                            // +
-                                                                            // Name
-                                                                            // +
-                                                                            // ".rptdesign"
+        design = engine.openReportDesign(reportHome + Name + ".rptdesign");
 
         // Create task to run and render the report,
         IRunAndRenderTask task = engine.createRunAndRenderTask(design);
@@ -593,18 +529,6 @@ public class ReportManager {
         // run the report and destroy the engine
         // Note - If the program stays resident do not shutdown the Platform or
         // the Engine
-//        task.run();
-//        task.close();
-//        engine.shutdown();
-//        engine.destroy();
-//        Platform.shutdown();
-//        engine = null;
-//        config = null;
-//        options = null;
-//        Runtime.getRuntime().gc();
-        // run the report and destroy the engine
-        // Note - If the program stays resident do not shutdown the Platform or
-        // the Engine
         // Den Report endgültig erzeugen
         try {
             task.run();
@@ -619,39 +543,12 @@ public class ReportManager {
     public void runReport(File pdffile, String art, String Name,
         Integer BehaelterId, String Betreiber, String Standort)
         throws EngineException {
-//        EngineConfig config = null;
-//        IReportEngine engine = null;
-//        try {
-//
-//            //Configure the Engine and start the Platform
-//            config = new EngineConfig();
-//            config.setEngineHome(engineHome);
-//            config.setLogConfig(null, Level.FINE);
-//
-//        } catch( Exception ex) {
-//            ex.printStackTrace();
-//        }
-//
-//        try {
-//            Platform.startup( config );
-//        } catch (BirtException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        IReportEngineFactory factory = (IReportEngineFactory) Platform
-//            .createFactoryObject( IReportEngineFactory.EXTENSION_REPORT_ENGINE_FACTORY );
-//        engine = factory.createReportEngine( config );
-//        engine.changeLogLevel( Level.WARNING );
 
         if (config == null || engine == null || options == null)
             initBirt();
 
         IReportRunnable design = null;
-        design = engine.openReportDesign(reportHome + Name + ".rptdesign"); // reportHome
-                                                                            // +
-                                                                            // Name
-                                                                            // +
-                                                                            // ".rptdesign"
+        design = engine.openReportDesign(reportHome + Name + ".rptdesign");
 
         // Create task to run and render the report,
         IRunAndRenderTask task = engine.createRunAndRenderTask(design);
@@ -676,22 +573,9 @@ public class ReportManager {
         // run the report and destroy the engine
         // Note - If the program stays resident do not shutdown the Platform or
         // the Engine
-//        task.run();
-//        task.close();
-//        engine.shutdown();
-//        engine.destroy();
-//        Platform.shutdown();
-//        engine = null;
-//        config = null;
-//        options = null;
-//        Runtime.getRuntime().gc();
-        // run the report and destroy the engine
-        // Note - If the program stays resident do not shutdown the Platform or
-        // the Engine
         // Den Report endgültig erzeugen
         try {
             task.run();
-
             shutdownBirt();
         } catch (EngineException e1) {
             throw new RuntimeException(
@@ -716,32 +600,9 @@ public class ReportManager {
         return _instance;
     }
 
-//    public void startReportWorker(final String Name, final Integer Id, final String EntGeb) {
-//    }
-
-//    public void startReportWorker(final String Name, final Integer Id) {
-//    }
-
-//    public void startReportWorker(final String reportname, final Integer id, final String fotopath, final String mappath, Component focusComp, boolean withoutparams, final String entgeb) {
-//        withoutparams = true;
-//        SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
-//            File pdfFile;
-//            protected void doNonUILogic() throws RuntimeException {
-//                File report = new File(reportHome + reportname + ".rptdesign");
-//            }
-//
-//            protected void doUIUpdateLogic() throws RuntimeException {
-//                AuikUtils.spawnFileProg(pdfFile);
-//            }
-//        };
-//
-//        worker.start();
-//    }
-
     public void shutdownBirt() {
         // Wenn die Engine noch existiert, wird sie geschlossen.
         if (engine != null) {
-//            AUIKataster.debugOutput("Engine zerstören:");
             engine.destroy();
             log.debug("Engine zerstört!");
         }

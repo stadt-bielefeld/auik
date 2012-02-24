@@ -194,12 +194,12 @@ public class KlaerschlammAuswertung extends AbstractModul {
         private class ExportTableModel extends AbstractTableModel {
             private static final long serialVersionUID = 4165282695596298199L;
             private TimeSeriesCollection col1, col2;
-            private List dateList;
+            private List<Minute> dateList;
 
             public ExportTableModel(TimeSeriesCollection col1, TimeSeriesCollection col2) {
                 this.col1 = col1;
                 this.col2 = col2;
-                dateList = new ArrayList();
+                dateList = new ArrayList<Minute>();
 
                 initializeData();
             }

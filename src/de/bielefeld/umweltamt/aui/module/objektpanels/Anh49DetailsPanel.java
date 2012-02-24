@@ -700,8 +700,8 @@ public class Anh49DetailsPanel extends JPanel{
 
     public void clearForm() {
         // Hier füllen wir das Abscheider-TableModel mit einer leeren Liste
-        abscheiderModel.setList(new ArrayList());
-        ortsterminModel.setList(new ArrayList());
+        abscheiderModel.setList(new ArrayList<Anh49Abscheiderdetails>());
+        ortsterminModel.setList(new ArrayList<Anh49Ortstermine>());
     }
 
     public void enableAll(boolean enabled) {

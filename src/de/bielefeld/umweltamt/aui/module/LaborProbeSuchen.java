@@ -69,7 +69,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -219,7 +218,7 @@ public class LaborProbeSuchen extends AbstractModul {
      * Leert die Ergebnis-Liste und wählt allen Text (falls vorhanden) im Suchfeld aus.
      */
     public void clearForm() {
-        probeModel.setList(new ArrayList());
+        probeModel.setList(new ArrayList<AtlProbenahmen>());
         probeModel.fireTableDataChanged();
 
         getSuchFeld().selectAll();
@@ -442,7 +441,7 @@ public class LaborProbeSuchen extends AbstractModul {
                     filterProbeListe(suche, spalte);
                 }
             });
-            suchFeld.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+            suchFeld.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null);
 
             suchFeld.addKeyListener(new KeyAdapter() {
                 @Override

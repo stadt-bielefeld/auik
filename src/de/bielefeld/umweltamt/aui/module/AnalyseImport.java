@@ -380,7 +380,7 @@ public class AnalyseImport extends AbstractModul {
          * AnalyseImporter}s.
          */
         public void reset() {
-            setList(new ArrayList());
+            setList(new ArrayList<String[]>());
             toImport = null;
 
             activateFileChooser(true, false);
@@ -415,7 +415,7 @@ public class AnalyseImport extends AbstractModul {
                     "Beginne Analyseergebnisse aus '" + name + "' zu lesen.");
 
                 updateList();
-                List data = getList();
+                List<?> data = getList();
 
                 if (data.size() > 0) {
                     getDateiLabel().setText("Datei: " + name);
@@ -699,7 +699,7 @@ public class AnalyseImport extends AbstractModul {
     protected void doSave() {
         log.debug("Speichere die importieren Daten.");
 
-        List data = importer.getSelectedRows();
+        List<?> data = importer.getSelectedRows();
         int  size = data.size();
         int count = 0;
 

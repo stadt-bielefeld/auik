@@ -722,7 +722,7 @@ public class ProbepktAuswPanel extends JPanel {
                 AtlParameter p = (AtlParameter) paramList.getModel()
                         .getElementAt(i);
 
-                List list = AtlAnalyseposition.getAnalysepositionen(p,
+                List<?> list = AtlAnalyseposition.getAnalysepositionen(p,
                         einheit, pkt, vonDate, bisDate, analyseVon);
 
                 TimeSeries series = ChartDataSets

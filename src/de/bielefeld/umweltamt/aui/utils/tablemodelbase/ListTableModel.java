@@ -56,7 +56,7 @@ public abstract class ListTableModel extends BasicTableModel {
         super(columns);
         this.removeAllowed = removeAllowed;
 
-        dataList = new ArrayList();
+        dataList = new ArrayList<String[]>();
 
         if (updateAtInit) {
             try {

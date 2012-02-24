@@ -55,7 +55,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Collections;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -678,7 +677,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                     filterBetreiberListe(suche, spalte);
                 }
             });
-            suchFeld.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+            suchFeld.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null);
 
             suchFeld.addKeyListener(new KeyAdapter() {
                 @Override

@@ -52,8 +52,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.eclipse.birt.report.engine.api.EngineException;
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -82,6 +80,7 @@ public class EinleiterSuevkanAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "SUEV-KAN";
     }
@@ -89,6 +88,7 @@ public class EinleiterSuevkanAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren
@@ -98,15 +98,23 @@ public class EinleiterSuevkanAuswertung extends AbstractQueryModul {
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(
+                        getResultTable()) {
+                        @Override
                         protected void doNonUILogic() {
-                            ((SuevModel)getTableModel()).setList(AnhSuevFachdaten.getAuswertungsListe());
+                            ((SuevModel) getTableModel())
+                                .setList(AnhSuevFachdaten.getAuswertungsListe());
                         }
 
-                        protected void doUIUpdateLogic(){
-                            ((SuevModel)getTableModel()).fireTableDataChanged();
-                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        @Override
+                        protected void doUIUpdateLogic() {
+                            ((SuevModel) getTableModel())
+                                .fireTableDataChanged();
+                            frame.changeStatus(""
+                                + getTableModel().getRowCount()
+                                + " Objekte gefunden");
                         }
                     };
                     worker.start();
@@ -114,6 +122,7 @@ public class EinleiterSuevkanAuswertung extends AbstractQueryModul {
             });
 
             printButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     showReportListe();
                 }
@@ -131,21 +140,14 @@ public class EinleiterSuevkanAuswertung extends AbstractQueryModul {
         return queryPanel;
     }
 
-
     public void showReportListe() {
-
-            try {
-                ReportManager.getInstance().startReportWorker("Suev-Kan", printButton);
-            } catch (EngineException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
+        ReportManager.getInstance().startReportWorker("Suev-Kan", printButton);
     }
 
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
+    @Override
     public ListTableModel getTableModel() {
         if (tmodel == null) {
             tmodel = new SuevModel();
