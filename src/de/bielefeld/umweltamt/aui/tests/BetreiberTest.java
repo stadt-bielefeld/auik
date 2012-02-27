@@ -48,140 +48,96 @@ POSSIBILITY OF SUCH DAMAGE.
 package de.bielefeld.umweltamt.aui.tests;
 
 import java.util.List;
-import de.bielefeld.umweltamt.aui.mappings.basis.*;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.*;
-import de.bielefeld.umweltamt.aui.mappings.atl.*;
-import de.bielefeld.umweltamt.aui.mappings.vaws.*;
+
 import junit.framework.TestCase;
-
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 
 public class BetreiberTest extends TestCase {
+
+    private static final String Name = "Betreibertest";
+    private static final String Handz = "Junit";
+    private int _id;
+
     /**
-     * Starten einer SessionFactory und erzeugen schon mal einens neuen Betreibers.
+     * Starten einer SessionFactory und erzeugen schon mal einens neuen
+     * Betreibers.
      */
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-
     }
 
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
     }
-public void testErzeugen()
-{
-    String id = "leer";
-    _id = erzeugeBetreiber(Name, Handz);
-    if(_id != 0)
-    {
-        id = "vorhanden";
-    }
-    assertEquals(id,"vorhanden");
 
-}
-     /**
+    public void testErzeugen() {
+        String id = "leer";
+        _id = erzeugeBetreiber(Name, Handz);
+        if (_id != 0) {
+            id = "vorhanden";
+        }
+        assertEquals(id, "vorhanden");
+    }
+
+    /**
      * Und hier versuchen wir ihn über eine Datenbankabfrage zu finden.
      */
-   private BasisBetreiber testQuery() {
+    private BasisBetreiber testQuery() {
+        BasisBetreiber betreiber;
 
-       BasisBetreiber betreiber;
+        List<?> result = BasisBetreiber.findBetreiber(Name, "name");
 
-              List result = BasisBetreiber.findBetreiber(Name,"name");
+        betreiber = (BasisBetreiber) result.get(0);
 
+        assertEquals(Name, betreiber.getBetrname());
 
-            betreiber = (BasisBetreiber) result.get(0);
-
-            assertEquals(Name, betreiber.getBetrname());
-
-
-      return betreiber;
+        return betreiber;
     }
 
     /**
      * Hier wird getestet ob der Betreiber verändert werden kann
      */
     public void testUpdate() {
+        BasisBetreiber betreiber = testQuery();
 
-        try {
+        betreiber.setBetranrede("neue");
+        BasisBetreiber.saveBetreiber(betreiber);
 
-
-            BasisBetreiber betreiber =  testQuery();
-
-            betreiber.setBetranrede("neue");
-            BasisBetreiber.saveBetreiber(betreiber);
-
-
-            betreiber =  testQuery();
-            assertEquals(Name, betreiber.getBetrname());
-            assertEquals("neue", betreiber.getBetranrede());
-        }
-        finally {
-
-        }
+        betreiber = testQuery();
+        assertEquals(Name, betreiber.getBetrname());
+        assertEquals("neue", betreiber.getBetranrede());
     }
 
     /**
      * Testet ob der Betreiber gelöscht werden kann
      */
     public void testDelete() {
+        BasisBetreiber betreiber = testQuery();
 
-        try {
+        // session.delete(betreiber);
+        BasisBetreiber.removeBetreiber(betreiber);
 
+        List<?> result = BasisBetreiber.findBetreiber(Name, "name");
 
-
-            BasisBetreiber betreiber =  testQuery();
-
-            //session.delete(betreiber);
-            BasisBetreiber.removeBetreiber(betreiber);
-
-
-            List result = BasisBetreiber.findBetreiber(Name,"name");
-
-            assertEquals(0, result.size());
-        }
-        finally {
-
-        }
+        assertEquals(0, result.size());
     }
 
     /**
-     * Kleine Hilfsmethode, mit der ein Betreiber erzeugt und in der Datenbank gesichert wird.
-     *
+     * Kleine Hilfsmethode, mit der ein Betreiber erzeugt und in der Datenbank
+     * gesichert wird.
      * @param name Der Name des zu erzeugenden Betreibers.
      * @param handz Das Handzeichen
      * @return Gibt die ID des erzeugten Betreibers zurück.
      */
-    private int erzeugeBetreiber(
-            String name, String handz) {
+    private int erzeugeBetreiber(String name, String handz) {
         BasisBetreiber betreiber = new BasisBetreiber();
         betreiber.setBetrname(name);
         betreiber.setRevihandz(handz);
 
-        try {
-
-            BasisBetreiber.saveBetreiber(betreiber);
-
-        }
-        catch (HibernateException e) {
-
-                throw e;
-
-        }
-
-
-        finally {
-
-        }
+        BasisBetreiber.saveBetreiber(betreiber);
 
         return betreiber.getBetreiberid();
     }
-
-
-    private static final String Name = "Betreibertest";
-    private static final String Handz = "Junit";
-    private int _id;
 }

@@ -50,10 +50,6 @@ package de.bielefeld.umweltamt.aui.tests;
 import java.util.Date;
 import java.util.List;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.*;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.*;
-import de.bielefeld.umweltamt.aui.mappings.atl.*;
-import de.bielefeld.umweltamt.aui.mappings.vaws.*;
 import junit.framework.TestCase;
 
 import org.hibernate.HibernateException;
@@ -61,21 +57,25 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 
 public class WiedervorlageVawsTest extends TestCase {
+
+    private SessionFactory _sessionFactory;
+
     /**
      * Starten einer SessionFactory
      */
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
-        Configuration configuration =
-                new Configuration().configure();
-        _sessionFactory =
-                configuration.buildSessionFactory();
-
-
+        Configuration configuration = new Configuration().configure();
+        _sessionFactory = configuration.buildSessionFactory();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         _sessionFactory.close();
@@ -84,110 +84,82 @@ public class WiedervorlageVawsTest extends TestCase {
     /**
      * Testen ob Wiedervorlage Sachverständigenprüfung fehlerfrei funktioniert
      */
-   public void testWiederSach() {
+    public void testWiederSach() {
         Session session = null;
+        session = _sessionFactory.openSession();
+
+        List<?> list = VawsKontrollen.getAuswertung();
+
+        List<?> listquery;
+        String query = "from VawsKontrollen vk where "
+            + "vk.naechstepruefung < ? "
+            + "and vk.pruefungabgeschlossen = ? "
+            + "order by vk.naechstepruefung, vk.vawsFachdaten";
+
         try {
-            session = _sessionFactory.openSession();
-
-            List list = VawsKontrollen.getAuswertung();
-
-
-         List listquery;
-            String query = "from VawsKontrollen vk where " +
-            "vk.naechstepruefung < ? " +
-            "and vk.pruefungabgeschlossen = ? " +
-            "order by vk.naechstepruefung, vk.vawsFachdaten";
-
-    try {
-        listquery = session.createQuery(
-                query)
-                .setDate(0, new Date())
-                .setBoolean(1, false)
-                .list();
-    } catch (HibernateException e) {
-        throw new RuntimeException(e);
+            listquery = session.createQuery(query).setDate(0, new Date())
+                .setBoolean(1, false).list();
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
         }
 
-         assertEquals(list.size(), listquery.size());
-        }
-        finally {
-            if (session != null &&
-                    session.isConnected()) {
-                session.close();
-            }
+        assertEquals(list.size(), listquery.size());
+
+        if (session != null && session.isConnected()) {
+            session.close();
         }
     }
-   /**
-    * Testen ob Wiedervorlage Verwaltungsverfahren fehlerfrei funktioniert
-    */
-   public void testWiederVerwalt() {
-       Session session = null;
-       try {
-           session = _sessionFactory.openSession();
 
-           List list = VawsVerwaltungsverf.getAuswertung();
+    /**
+     * Testen ob Wiedervorlage Verwaltungsverfahren fehlerfrei funktioniert
+     */
+    public void testWiederVerwalt() {
+        Session session = null;
+        session = _sessionFactory.openSession();
 
+        List<?> list = VawsVerwaltungsverf.getAuswertung();
 
-        List listquery;
-        String query = "from VawsVerwaltungsverf vf where " +
-        "vf.wiedervorlage < ? " +
-        "and " +
-        "(vf.wvverwverf = ? or vf.wvverwverf is NULL) " +
-        "order by vf.wiedervorlage, vf.vawsFachdaten";
+        List<?> listquery;
+        String query = "from VawsVerwaltungsverf vf where "
+            + "vf.wiedervorlage < ? " + "and "
+            + "(vf.wvverwverf = ? or vf.wvverwverf is NULL) "
+            + "order by vf.wiedervorlage, vf.vawsFachdaten";
 
-    try {
-        listquery = session.createQuery(
-                query)
-                .setDate(0, new Date())
-                .setBoolean(1, false)
-                .list();
-    } catch (HibernateException e) {
-        throw new RuntimeException(e);
-       }
+        try {
+            listquery = session.createQuery(query).setDate(0, new Date())
+                .setBoolean(1, false).list();
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        }
 
-         assertEquals(list.size(), listquery.size());
-       }
-       finally {
-           if (session != null &&
-                   session.isConnected()) {
-               session.close();
-           }
-       }
-   }
-   /**
-    * Testen ob die Suche nach Herstellnr fehlerfrei funktioniert
-    */
-   public void testHerstelnr() {
-       Session session = null;
-       try {
-           session = _sessionFactory.openSession();
+        assertEquals(list.size(), listquery.size());
+        if (session != null && session.isConnected()) {
+            session.close();
+        }
+    }
 
-           List list = VawsFachdaten.findherstellnr("");
+    /**
+     * Testen ob die Suche nach Herstellnr fehlerfrei funktioniert
+     */
+    public void testHerstelnr() {
+        Session session = null;
+        session = _sessionFactory.openSession();
 
+        List<?> list = VawsFachdaten.findherstellnr("");
 
-        List listquery;
-        String query = "from VawsFachdaten vaws "+
-        "where vaws.herstellnr like ''";
+        List<?> listquery;
+        String query = "from VawsFachdaten vaws "
+            + "where vaws.herstellnr like ''";
 
-    try {
-        listquery = session.createQuery(query).list();
-    } catch (HibernateException e) {
-        throw new RuntimeException(e);
-       }
+        try {
+            listquery = session.createQuery(query).list();
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        }
 
-         assertEquals(list.size(), listquery.size());
-       }
-       finally {
-           if (session != null &&
-                   session.isConnected()) {
-               session.close();
-           }
-       }
-   }
-   private SessionFactory _sessionFactory;
-
-
-
-
-
+        assertEquals(list.size(), listquery.size());
+        if (session != null && session.isConnected()) {
+            session.close();
+        }
+    }
 }

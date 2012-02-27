@@ -49,110 +49,90 @@ package de.bielefeld.umweltamt.aui.tests;
 
 import java.util.List;
 
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-import de.bielefeld.umweltamt.aui.mappings.basis.*;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.*;
-import de.bielefeld.umweltamt.aui.mappings.atl.*;
-import de.bielefeld.umweltamt.aui.mappings.vaws.*;
 import junit.framework.TestCase;
 
 import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 
 public class StandortTest extends TestCase {
+
+    private static final String Strasse = "Standorttest";
+    private static final int Hausnr = 10;
+    private int _id;
+
     /**
-     * Starten einer SessionFactory und erzeugen schon mal einens neuen Standorts.
+     * Starten einer SessionFactory und erzeugen schon mal einens neuen
+     * Standorts.
      */
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
 
     }
-    public void testErzeugen()
-    {
+
+    public void testErzeugen() {
         String id = "leer";
         _id = erzeugeStandort(Strasse, Hausnr);
-        if(_id != 0)
-        {
+        if (_id != 0) {
             id = "vorhanden";
         }
-        assertEquals(id,"vorhanden");
+        assertEquals(id, "vorhanden");
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-
     }
 
     /**
      * Und hier versuchen wir ihn über eine Datenbankabfrage zu finden.
      */
-       public BasisStandort testQuery() {
+    public BasisStandort testQuery() {
+        List<?> result = BasisStandort.findStandorte(Strasse, Hausnr);
 
-        try {
+        assertEquals(1, result.size());
 
-            List result = BasisStandort.findStandorte(Strasse, Hausnr);
+        BasisStandort standort = (BasisStandort) result.get(0);
 
-            assertEquals(1, result.size());
-
-            BasisStandort standort = (BasisStandort) result.get(0);
-
-            assertEquals(Strasse, standort.getStrasse());
-          return standort;
-        }
-        finally {
-
-        }
+        assertEquals(Strasse, standort.getStrasse());
+        return standort;
     }
 
     /**
      * Hier wird getestet ob der Standort verändert werden kann
      */
     public void testUpdate() {
+        BasisStandort standort = testQuery();
 
-        try {
+        standort.setPlz("neue");
+        BasisStandort.saveStandort(standort);
 
-            BasisStandort standort = testQuery();
+        standort = testQuery();
 
-            standort.setPlz("neue");
-            BasisStandort.saveStandort(standort);
-
-            standort = testQuery();
-
-            assertEquals(Strasse, standort.getStrasse());
-            assertEquals("neue", standort.getPlz());
-            Delete(standort);
-        }
-        finally {
-
-        }
+        assertEquals(Strasse, standort.getStrasse());
+        assertEquals("neue", standort.getPlz());
+        delete(standort);
     }
 
     /**
-     *  der Standort wird gelöscht
+     * der Standort wird gelöscht
      */
-    public void Delete(BasisStandort standort) {
-
+    public void delete(BasisStandort standort) {
         Transaction tx = null;
-        try {
-
-            Session session = HibernateSessionFactory.currentSession();
-            tx = session.beginTransaction();
-            session.delete(standort);
-            tx.commit();
-
-
-        }
-        finally {
-            HibernateSessionFactory.closeSession();
-        }
+        Session session = HibernateSessionFactory.currentSession();
+        tx = session.beginTransaction();
+        session.delete(standort);
+        tx.commit();
+        HibernateSessionFactory.closeSession();
     }
 
     /**
-     * Kleine Hilfsmethode, mit der ein Standort erzeugt und in der Datenbank gesichert wird.
-     *
+     * Kleine Hilfsmethode, mit der ein Standort erzeugt und in der Datenbank
+     * gesichert wird.
      * @param Strasse
      * @param Hausnr Die Hausnummer
      * @return Gibt die ID des erzeugten Standorts zurück.
@@ -161,21 +141,12 @@ public class StandortTest extends TestCase {
         BasisStandort standort = new BasisStandort();
         standort.setStrasse(Strasse);
         standort.setHausnr(Hausnr);
-
         try {
-
             standort = BasisStandort.saveStandort(standort);
-
         } catch (HibernateException e) {
-
             throw e;
-
         }
 
         return standort.getStandortid();
     }
-
-    private static final String Strasse = "Standorttest";
-    private static final int Hausnr = 10;
-    private int _id;
 }

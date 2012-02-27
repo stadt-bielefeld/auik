@@ -23,7 +23,6 @@ package de.bielefeld.umweltamt.aui.tests;
 
 import junit.framework.TestCase;
 
-import org.hibernate.HibernateException;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
@@ -52,13 +51,11 @@ public class _TabellenErstellenTest extends TestCase {
         export.create(false, true);
         testErzeugeDaten();
         tearDown();
-
     }
 
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-
     }
 
     public void testErzeugeDaten() {
@@ -86,17 +83,13 @@ public class _TabellenErstellenTest extends TestCase {
         BasisBetreiber.removeBetreiber(BasisBetreiber.getBetreiber(_idB));
         BasisStandort.removeStandort(BasisStandort.getStandort(_idS));
         BasisObjektarten.removeObjektart(BasisObjektarten.getObjektart(_idO));
-
-
     }
 
     /**
      * Kleine Hilfsmethode, mit der ein Standort erzeugt und in der Datenbank
      * gesichert wird.
-     *
      * @param Strasse
-     * @param Hausnr
-     *            Die Hausnummer
+     * @param Hausnr Die Hausnummer
      * @return Gibt die ID des erzeugten Standorts zurück.
      */
     private int erzeugeStandort(String Strasse, int Hausnr) {
@@ -104,15 +97,7 @@ public class _TabellenErstellenTest extends TestCase {
         standort.setStrasse(Strasse);
         standort.setHausnr(Hausnr);
 
-        try {
-
-            standort = BasisStandort.saveStandort(standort);
-
-        } catch (HibernateException e) {
-
-            throw e;
-
-        }
+        standort = BasisStandort.saveStandort(standort);
 
         return standort.getStandortid();
     }
@@ -120,11 +105,8 @@ public class _TabellenErstellenTest extends TestCase {
     /**
      * Kleine Hilfsmethode, mit der ein Betreiber erzeugt und in der Datenbank
      * gesichert wird.
-     *
-     * @param name
-     *            Der Name des zu erzeugenden Betreibers.
-     * @param handz
-     *            Das Handzeichen
+     * @param name Der Name des zu erzeugenden Betreibers.
+     * @param handz Das Handzeichen
      * @return Gibt die ID des erzeugten Betreibers zurück.
      */
     private int erzeugeBetreiber(String name, String handz) {
@@ -132,16 +114,7 @@ public class _TabellenErstellenTest extends TestCase {
         betreiber.setBetrname(name);
         betreiber.setRevihandz(handz);
 
-        try {
-
-            BasisBetreiber.saveBetreiber(betreiber);
-
-        } catch (HibernateException e) {
-
-                throw e;
-
-        }
-
+        BasisBetreiber.saveBetreiber(betreiber);
 
         return betreiber.getBetreiberid();
     }
@@ -149,11 +122,8 @@ public class _TabellenErstellenTest extends TestCase {
     /**
      * Kleine Hilfsmethode, mit der eine Objektart erzeugt und in der Datenbank
      * gesichert wird.
-     *
-     * @param name
-     *            Der Name des zu erzeugenden Betreibers.
-     * @param handz
-     *            Das Handzeichen
+     * @param name Der Name des zu erzeugenden Betreibers.
+     * @param handz Das Handzeichen
      * @return Gibt die ID des erzeugten Betreibers zurück.
      */
     private int erzeugeObjektart(int ID, String ObjArt) {
@@ -161,18 +131,8 @@ public class _TabellenErstellenTest extends TestCase {
         art.setObjektartid(ID);
         art.setObjektart(ObjArt);
 
-        try {
-
-            art = BasisObjektarten.saveObjektart(art);
-
-        } catch (HibernateException e) {
-
-                throw e;
-
-        }
-
+        art = BasisObjektarten.saveObjektart(art);
 
         return art.getObjektartid();
     }
-
 }

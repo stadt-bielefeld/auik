@@ -48,10 +48,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package de.bielefeld.umweltamt.aui.tests;
 
 import java.util.List;
-import de.bielefeld.umweltamt.aui.mappings.basis.*;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.*;
-import de.bielefeld.umweltamt.aui.mappings.atl.*;
-import de.bielefeld.umweltamt.aui.mappings.vaws.*;
+
 import junit.framework.TestCase;
 
 import org.hibernate.HibernateException;
@@ -60,61 +57,62 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 
 public class SielhautTest extends TestCase {
+
+    private SessionFactory _sessionFactory;
+    private static final String Messstelle = "JUnit";
+    private int _id;
+
     /**
-     * Starten einer SessionFactory und erzeugen schon mal einens neues Sielhaupunkt.
+     * Starten einer SessionFactory und erzeugen schon mal einens neues
+     * Sielhaupunkt.
      */
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
-        Configuration configuration =
-                new Configuration().configure();
+        Configuration configuration = new Configuration().configure();
 
-        _sessionFactory =
-                configuration.buildSessionFactory();
-
-
+        _sessionFactory = configuration.buildSessionFactory();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         _sessionFactory.close();
     }
-    public void testErzeugen()
-    {
+
+    public void testErzeugen() {
         String id = "leer";
         _id = erzeugeSielhaut(Messstelle);
-        if (_id != 0)
-        {
+        if (_id != 0) {
             id = "vorhanden";
         }
-        assertEquals(id,"vorhanden");
+        assertEquals(id, "vorhanden");
     }
 
     /**
      * Und hier versuchen wir ihn über eine Datenbankabfrage zu finden.
      */
-       private AtlSielhaut testQuery() {
+    private AtlSielhaut testQuery() {
         Session session = null;
 
-    try{
+        try {
             session = _sessionFactory.openSession();
 
-
-              List result = AtlSielhaut.findPunkte(Messstelle);
+            List<?> result = AtlSielhaut.findPunkte(Messstelle);
 
             AtlSielhaut sielhaut = (AtlSielhaut) result.get(0);
 
             assertEquals(Messstelle, sielhaut.getBezeichnung());
 
-
-      return sielhaut;
-    }
-      finally {
-          if (session != null && session.isConnected()) {
-              session.close();
-          }
-      }
+            return sielhaut; // Hier return und darunter finally? Strange...
+        } finally {
+            if (session != null && session.isConnected()) {
+                session.close();
+            }
+        }
     }
 
     /**
@@ -122,95 +120,75 @@ public class SielhautTest extends TestCase {
      */
     public void testUpdate() {
         Session session = null;
-        try {
-            session = _sessionFactory.openSession();
-            AtlSielhaut sielhaut = testQuery();
-            Transaction transaction = session.beginTransaction();
-            sielhaut.setBemerkungen("neue");
-            AtlSielhaut.saveSielhautPunkt(sielhaut);
-            transaction.commit();
+
+        session = _sessionFactory.openSession();
+        AtlSielhaut sielhaut = testQuery();
+        Transaction transaction = session.beginTransaction();
+        sielhaut.setBemerkungen("neue");
+        AtlSielhaut.saveSielhautPunkt(sielhaut);
+        transaction.commit();
+        session.close();
+        session = _sessionFactory.openSession();
+
+        sielhaut = testQuery();
+
+        assertEquals(Messstelle, sielhaut.getBezeichnung());
+        assertEquals("neue", sielhaut.getBemerkungen());
+        delete();
+
+        if (session != null && session.isConnected()) {
             session.close();
-            session = _sessionFactory.openSession();
-
-           sielhaut = testQuery();
-
-            assertEquals(Messstelle, sielhaut.getBezeichnung());
-            assertEquals("neue", sielhaut.getBemerkungen());
-            Delete();
-        }
-        finally {
-            if (session != null && session.isConnected()) {
-                session.close();
-            }
         }
     }
 
     /**
      * der Sielhutpunkt wird gelöscht
      */
-    public void Delete() {
+    public void delete() {
         Session session = null;
-        try {
-            session = _sessionFactory.openSession();
+        session = _sessionFactory.openSession();
 
-            AtlSielhaut sielhaut = testQuery();
-            Transaction transaction = session.beginTransaction();
-            session.delete(sielhaut);
-            transaction.commit();
+        AtlSielhaut sielhaut = testQuery();
+        Transaction transaction = session.beginTransaction();
+        session.delete(sielhaut);
+        transaction.commit();
+        session.close();
+        session = _sessionFactory.openSession();
+
+        if (session != null && session.isConnected()) {
             session.close();
-            session = _sessionFactory.openSession();
-
-
-        }
-        finally {
-            if (session != null && session.isConnected()) {
-                session.close();
-            }
         }
     }
 
     /**
-     * Kleine Hilfsmethode, mit der ein Sielhautpunkt erzeugt und in der Datenbank gesichert wird.
-     *
+     * Kleine Hilfsmethode, mit der ein Sielhautpunkt erzeugt und in der
+     * Datenbank gesichert wird.
      * @param messtelle Messtellenbezeichnung
      * @return Gibt die ID des Sielhautpunktes zurück.
      */
-    private int erzeugeSielhaut(
-            String messstelle) {
+    private int erzeugeSielhaut(String messstelle) {
         AtlSielhaut sielhaut = new AtlSielhaut();
         sielhaut.setBezeichnung(messstelle);
-
-
 
         Session session = null;
         Transaction transaction = null;
         try {
             session = _sessionFactory.openSession();
-            transaction =
-                    session.beginTransaction();
+            transaction = session.beginTransaction();
 
             AtlSielhaut.saveSielhautPunkt(sielhaut);
             transaction.commit();
-        }
-        catch (HibernateException e) {
+        } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
                 throw e;
             }
-        }
-
-
-        finally {
+        } finally {
             if (session != null) {
                 session.close();
             }
-
         }
 
         return sielhaut.getId();
     }
-
-    private SessionFactory _sessionFactory;
-    private static final String Messstelle = "JUnit";
-    private int _id;
 }

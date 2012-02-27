@@ -48,190 +48,149 @@ POSSIBILITY OF SUCH DAMAGE.
 package de.bielefeld.umweltamt.aui.tests;
 
 import java.util.List;
-import de.bielefeld.umweltamt.aui.mappings.basis.*;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.*;
-import de.bielefeld.umweltamt.aui.mappings.atl.*;
-import de.bielefeld.umweltamt.aui.mappings.vaws.*;
+
 import junit.framework.TestCase;
-
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
-
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 public class ObjektTest extends TestCase {
+
+    /** Logging */
+    private static final AuikLogger log = AuikLogger.getLogger();
+
+    private int _id;
+    private int chronoid;
+    private BasisStandort standort;
+    private BasisBetreiber betreiber;
+    private BasisObjektarten objektart;
+
     /**
      * Starten einer SessionFactory und erzeugen schon mal einens neues Objekt.
      */
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
 
         betreiber = findeBetreiber();
         standort = findeStandort();
         objektart = findeObjektart();
-
-
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
     }
 
-    public void testErzeugen()
-    {
-         String id = "leer";
-         _id = erzeugeObjekt(betreiber, standort, objektart);
-         if(_id != 0)
-         {
-             id = "vorhanden";
-         }
-         assertEquals(id,"vorhanden");
+    public void testErzeugen() {
+        String id = "leer";
+        _id = erzeugeObjekt(betreiber, standort, objektart);
+        if (_id != 0) {
+            id = "vorhanden";
+        }
+        assertEquals(id, "vorhanden");
     }
 
     /**
      * Das erstellet Objekt wird in der Datenbank gesucht
      */
-       public BasisObjekt testQuery() {
-        Session session = null;
+    public BasisObjekt testQuery() {
+        List<?> result = BasisObjekt.getObjekteByStandort(
+            standort, null, 16);
 
-        try {
+        BasisObjekt objekt = (BasisObjekt) result.get(0);
 
-            List result = BasisObjekt.getObjekteByStandort(standort, null, 16);
-
-
-            BasisObjekt objekt = (BasisObjekt) result.get(0);
-
-            assertEquals(betreiber, objekt.getBasisBetreiber());
-            return objekt;
-        }
-        finally {
-
-        }
-
+        assertEquals(betreiber, objekt.getBasisBetreiber());
+        return objekt;
     }
 
     /**
      * Hier wird getestet ob das Objekt verändert werden kann
      */
     public void testUpdate() {
+        BasisObjekt objekt = testQuery();
 
-        try {
+        objekt.setBeschreibung("neue");
+        BasisObjekt.saveBasisObjekt(objekt);
 
-            BasisObjekt objekt = testQuery();
+        objekt = testQuery();
 
-            objekt.setBeschreibung("neue");
-            BasisObjekt.saveBasisObjekt(objekt);
-
-            objekt = testQuery();
-
-            assertEquals(betreiber, objekt.getBasisBetreiber());
-            assertEquals("neue", objekt.getBeschreibung());
-        }
-        finally {
-
-        }
+        assertEquals(betreiber, objekt.getBasisBetreiber());
+        assertEquals("neue", objekt.getBeschreibung());
     }
+
     /**
      * Testet ob die Objektchronologie vorhanden ist
      */
     public void testChrono() {
+        BasisObjekt objekt = testQuery();
+        List<?> chronolist = BasisObjektchrono.getChronoByObjekt(objekt);
 
-        try {
+        BasisObjektchrono chrono = (BasisObjektchrono) chronolist.get(0);
 
-            BasisObjekt objekt = testQuery();
-            List chronolist =  BasisObjektchrono.getChronoByObjekt(objekt);
+        assertEquals(1, chronolist.size());
 
-            BasisObjektchrono chrono = (BasisObjektchrono) chronolist.get(0);
-
-           assertEquals(1, chronolist.size());
-
-           assertEquals("JUNIT", chrono.getSachbearbeiter());
-
-        }
-        finally {
-
-        }
+        assertEquals("JUNIT", chrono.getSachbearbeiter());
     }
+
     /**
      * Testet ob das Objekt und die Objektchrono gelöscht werden kann
      */
     public void testDelete() {
+        BasisObjekt objekt = testQuery();
+        List<?> chronolist = BasisObjektchrono.getChronoByObjekt(objekt);
 
-        try {
+        BasisObjektchrono chrono = (BasisObjektchrono) chronolist.get(0);
 
-            BasisObjekt objekt = testQuery();
-            List chronolist =  BasisObjektchrono.getChronoByObjekt(objekt);
+        BasisObjektchrono.removeObjektChrono(chrono);
+        BasisObjekt.removeBasisObjekt(objekt);
 
-            BasisObjektchrono chrono = (BasisObjektchrono) chronolist.get(0);
+        List<?> result = BasisObjekt.getObjekteByStandort(standort, 1);
 
-            BasisObjektchrono.removeObjektChrono(chrono);
-            BasisObjekt.removeBasisObjekt(objekt);
-
-            List result = BasisObjekt.getObjekteByStandort(standort, 1);
-
-
-            assertEquals(0, result.size());
-        }
-        finally {
-
-        }
+        assertEquals(0, result.size());
     }
 
     /**
-     * Kleine Hilfsmethode, mit der ein Objekt mit Objektchronologie erzeugt und in der Datenbank gesichert wird.
-     *
+     * Kleine Hilfsmethode, mit der ein Objekt mit Objektchronologie erzeugt und
+     * in der Datenbank gesichert wird.
      * @param betreiber Betreiber des Objekts.
      * @param standort Standort des Objekts
      * @param objektart Objektart des Objekts
      * @return Gibt die ID des erzeugten Objekts zurück.
      */
-    private int erzeugeObjekt(
-        BasisBetreiber betreiber, BasisStandort standort, BasisObjektarten objektart) {
+    private int erzeugeObjekt(BasisBetreiber betreiber, BasisStandort standort,
+        BasisObjektarten objektart) {
         BasisObjekt objekt = new BasisObjekt();
         objekt.setBasisBetreiber(betreiber);
         objekt.setBasisObjektarten(objektart);
         objekt.setBasisStandort(standort);
         BasisObjektchrono chrono = new BasisObjektchrono();
 
-        try {
-
-            objekt = BasisObjekt.saveBasisObjekt(objekt);
-            chrono.setBasisObjekt(objekt);
-            chrono.setSachbearbeiter("JUNIT");
-            chrono.saveObjektChrono(chrono);
-            chronoid = chrono.getId();
-        }
-        catch (HibernateException e) {
-
-                throw e;
-
-        }
-
-
-        finally {
-
-        }
+        objekt = BasisObjekt.saveBasisObjekt(objekt);
+        chrono.setBasisObjekt(objekt);
+        chrono.setSachbearbeiter("JUNIT");
+        BasisObjektchrono.saveObjektChrono(chrono);
+        this.chronoid = chrono.getId();
+        log.debug("ChronoID: " + this.chronoid);
 
         return objekt.getObjektid();
     }
-    private BasisStandort findeStandort()
-    {
-       BasisStandort standort = BasisStandort.getStandort(1);
-       return standort;
+
+    private BasisStandort findeStandort() {
+        BasisStandort standort = BasisStandort.getStandort(1);
+        return standort;
     }
-    private BasisBetreiber findeBetreiber()
-    {
-       BasisBetreiber betreiber = BasisBetreiber.getBetreiber(1);
-       return betreiber;
+
+    private BasisBetreiber findeBetreiber() {
+        BasisBetreiber betreiber = BasisBetreiber.getBetreiber(1);
+        return betreiber;
     }
-    private BasisObjektarten findeObjektart()
-    {
+
+    private BasisObjektarten findeObjektart() {
         BasisObjektarten objektart = BasisObjektarten.getObjektart(1);
         return objektart;
     }
-    private int _id;
-    private int chronoid;
-    private BasisStandort standort;
-    private BasisBetreiber betreiber;
-    private BasisObjektarten objektart;
 }
