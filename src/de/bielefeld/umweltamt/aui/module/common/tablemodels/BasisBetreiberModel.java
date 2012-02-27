@@ -40,7 +40,8 @@ public class BasisBetreiberModel extends ListTableModel {
         super(new String[]{
                 "Name",
                 "Anrede",
-                "Zusatz"}, false, true);
+                "Zusatz",
+                "Straße"}, false, true);
 
         if (zeigeAdresse) {
             columns = new String[]{

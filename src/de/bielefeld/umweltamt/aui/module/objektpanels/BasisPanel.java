@@ -171,7 +171,7 @@ public class BasisPanel  extends JPanel {
             setContentPane(initializeContentPane());
 
             pack();
-            setResizable(false);
+            setResizable(true);
             setLocationRelativeTo(this.frame);
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         }
@@ -213,16 +213,16 @@ public class BasisPanel  extends JPanel {
             submitToolBar.add(getSubmitButton());
 
             FormLayout layout = new FormLayout(
-                    "200dlu, 3dlu, min(16dlu;p)",        // spalten
-                    "pref, 3dlu, 100dlu, 3dlu, pref");     // zeilen
+                    "700dlu:g, 3dlu, min(16dlu;p)",        // spalten
+                    "pref, 3dlu, 320dlu:g, 3dlu, 3dlu, pref");     // zeilen
             PanelBuilder builder = new PanelBuilder(layout);
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
             builder.add(getSuchFeld(),        cc.xy(1, 1));
             builder.add(submitToolBar,        cc.xy(3, 1));
-            builder.add(tabellenScroller,    cc.xyw(1, 3, 3));
-            builder.add(buttonBar,             cc.xyw(1, 5, 3));
+            builder.add(tabellenScroller,    cc.xywh(1, 3, 3, 2));
+            builder.add(buttonBar,             cc.xyw(1, 6, 3));
 
             return(builder.getPanel());
         }

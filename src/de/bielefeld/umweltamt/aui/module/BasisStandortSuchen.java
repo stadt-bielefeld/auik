@@ -90,6 +90,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.Map;
 
 import javax.swing.AbstractAction;
@@ -604,7 +605,7 @@ public class BasisStandortSuchen extends AbstractModul {
             strassenFeld = new JTextField("");
             strassenFeld.setFocusTraversalKeys(
                 KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-                null);
+                Collections.EMPTY_SET);
 
             strassenFeld.addActionListener(new ActionListener() {
                 @Override

@@ -77,7 +77,7 @@ public class BasisStrassen extends AbstractBasisStrassen implements
             .createQuery(
                 "FROM BasisStrassen str WHERE lower(str.strasse) like :name")
             .setString("name", name2)
-            .uniqueResult();
+            .setMaxResults(1).uniqueResult();
         log.debug("Ergebnis: " + result);
 
         return result;
