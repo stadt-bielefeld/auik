@@ -157,8 +157,8 @@ public abstract class AbstractQueryModul extends AbstractModul {
         // nach ihrem Namen gesucht. Sollte keine Methode
         // diesen Namens existieren, wird null zurück geliefert.
         try {
-            Method getBO = fachdaten.getClass().getMethod("getBasisObjekt", (Class<?>) null);
-            tmp = (BasisObjekt) getBO.invoke(fachdaten, (Class<?>) null);
+            Method getBO = fachdaten.getClass().getMethod("getBasisObjekt");
+            tmp = (BasisObjekt) getBO.invoke(fachdaten);
         } catch (Exception e) {
             //e.printStackTrace();
             tmp = null;
