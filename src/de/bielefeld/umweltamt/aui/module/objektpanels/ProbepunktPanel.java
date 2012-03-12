@@ -331,7 +331,7 @@ public class ProbepunktPanel extends JPanel {
                 probepkt.setNummer(((IntegerField) getProbePktNrFeld()).getIntValue());
             }
 
-            success = AtlProbepkt.removeProbepunkt(probepkt);
+            success = AtlProbepkt.saveProbepunkt(probepkt);
 
         } else {
             success = false;
