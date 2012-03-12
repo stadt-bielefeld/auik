@@ -123,8 +123,6 @@ public class VawsAbscheider extends AbstractVawsAbscheider implements
                 "Die VawsAbscheider muss einem VawsFachdaten-Objekt zugeordnet sein!");
         }
 
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(abscheider);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(abscheider);
     }
 }

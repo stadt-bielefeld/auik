@@ -549,12 +549,11 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
         // frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
 
-        // TODO: Here we used the returned object further on, but changed it
-        // to this instead. Check if this is really the same.
-        boolean success = BasisBetreiber.saveBetreiber(getBetreiber());
+        BasisBetreiber persistentBetreiber = null;
+        persistentBetreiber = BasisBetreiber.saveBetreiber(getBetreiber());
 
-        if (success) {
-            setEditedObject(getBetreiber());
+        if (persistentBetreiber != null) {
+            setEditedObject(persistentBetreiber);
             log.debug("Änderungen gespeichert!");
             return true;
         } else {

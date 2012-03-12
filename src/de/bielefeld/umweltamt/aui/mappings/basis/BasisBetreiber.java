@@ -137,17 +137,14 @@ public class BasisBetreiber extends AbstractBasisBetreiber implements
      * @return Der gespeicherte Betreiber, oder <code>null</code>, falls beim
      *         Speichern ein Fehler auftrat.
      */
-    public static boolean saveBetreiber(BasisBetreiber betr) {
-        // TODO: Do we really need the returned object?
-//      BasisBetreiber betrRet = null;
-//      betrRet = (BasisBetreiber) session.merge(betr);
-        boolean success = false;
-        success = new DatabaseAccess().merge(betr);
-        if (success) {
-            log.debug("Neuer Betr " + betr + " gespeichert!");
+    public static BasisBetreiber saveBetreiber(BasisBetreiber betr) {
+        BasisBetreiber betrRet = null;
+        betrRet = (BasisBetreiber) new DatabaseAccess().merge(betr);
+        if (betrRet != null) {
+            log.debug("Neuer Betr " + betr + " (" + betr.getBetreiberid() + ")"
+                + " gespeichert!");
         }
-//        return betrRet;
-        return success;
+        return betrRet;
     }
 
     /**

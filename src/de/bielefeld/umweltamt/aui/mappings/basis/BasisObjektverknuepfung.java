@@ -91,9 +91,7 @@ public class BasisObjektverknuepfung extends AbstractBasisObjektverknuepfung
      */
     public static boolean saveObjektVerknuepfung(
         BasisObjektverknuepfung verknuepf) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(verknuepf);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(verknuepf);
     }
 
     /**
@@ -105,9 +103,7 @@ public class BasisObjektverknuepfung extends AbstractBasisObjektverknuepfung
      */
     public static boolean removeObjektVerknuepfung(
         BasisObjektverknuepfung verknuepf) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(verknuepf);
-        return removed;
+        return new DatabaseAccess().delete(verknuepf);
     }
 
     /**

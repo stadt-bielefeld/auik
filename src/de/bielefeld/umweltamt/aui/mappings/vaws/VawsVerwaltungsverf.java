@@ -98,9 +98,7 @@ public class VawsVerwaltungsverf extends AbstractVawsVerwaltungsverf implements
      *         sonst <code>false</code>.
      */
     public static boolean saveVerfahren(VawsVerwaltungsverf verfahren) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(verfahren);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(verfahren);
     }
 
     /**
@@ -111,8 +109,6 @@ public class VawsVerwaltungsverf extends AbstractVawsVerwaltungsverf implements
      *         Datensatz nicht in der Datenbank existiert).
      */
     public static boolean removeVerfahren(VawsVerwaltungsverf verfahren) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(verfahren);
-        return removed;
+        return new DatabaseAccess().delete(verfahren);
     }
 }

@@ -180,18 +180,20 @@ public class DatabaseAccess {
      * Merge an Object from the database (within a Transaction)<br>
      * Usage:<br>
      * <code>
-     * boolean success = new DatabaseAccess().merge(myToModifyObject);
+     * MyObject myMergedObject = new DatabaseAccess().merge(myToModifyObject);
      * </code>
      * @param object The Object to merge
-     * @return boolean True, if everything went as planned, false otherwise
+     * @return Object the new Object, if everything went as planned,
+     *      null otherwise
      */
-    public boolean merge(Object object) {
+    public Object merge(Object object) {
         boolean success = false;
+        Object persistent = null;
         /* Begin a new Transaction */
         if (this.beginTransaction()) {
             try {
-                /* Save or update the object */
-                this.session.merge(object);
+                /* Merge the object and set it to the persistent version */
+                persistent = this.session.merge(object);
                 /* Commit the transaction */
                 if (this.commitTransaction()) {
                     success = true;
@@ -202,7 +204,7 @@ public class DatabaseAccess {
                 this.closeSession();
             }
         }
-        return success;
+        return success ? persistent : null;
     }
 
     /**

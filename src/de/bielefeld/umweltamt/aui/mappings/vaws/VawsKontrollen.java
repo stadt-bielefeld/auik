@@ -106,9 +106,7 @@ public class VawsKontrollen extends AbstractVawsKontrollen implements
      *         sonst <code>false</code>.
      */
     public static boolean saveKontrolle(VawsKontrollen kontrolle) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(kontrolle);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(kontrolle);
     }
 
     /**
@@ -119,8 +117,6 @@ public class VawsKontrollen extends AbstractVawsKontrollen implements
      *         Datensatz nicht in der Datenbank existiert).
      */
     public static boolean removeKontrolle(VawsKontrollen kontrolle) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(kontrolle);
-        return removed;
+        return new DatabaseAccess().delete(kontrolle);
     }
 }

@@ -64,14 +64,7 @@ public class AnhEntsorger extends AbstractAnhEntsorger implements Serializable {
             .array(new AnhEntsorger[0]);
     }
 
-    public static boolean saveEntsorger(AnhEntsorger ents) {
-        boolean success = false;
-//        AnhEntsorger entsRet = null;
-        success = new DatabaseAccess().merge(ents);
-//        if (success) { // TODO: Do we really need this?
-//            entsRet = ents;
-//        }
-//        return entsRet;
-        return success;
+    public static AnhEntsorger saveEntsorger(AnhEntsorger ents) {
+        return (AnhEntsorger) new DatabaseAccess().merge(ents);
     }
 }

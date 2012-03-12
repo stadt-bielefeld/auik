@@ -96,9 +96,7 @@ public class BasisPrioritaet extends AbstractBasisPrioritaet implements
     public static BasisPrioritaet saveBasisPrioritaet(
             BasisObjekt obj, Integer prio) {
         BasisPrioritaet prioritaet = null;
-        BasisPrioritaet saved = null;
         BasisPrioritaetId prioId = null;
-        boolean success = false;
 
         if (getPrioritaet(obj) != null) {
             prioritaet = getPrioritaet(obj);
@@ -116,11 +114,6 @@ public class BasisPrioritaet extends AbstractBasisPrioritaet implements
             prioritaet.setPrioritaet(prio);
         }
 
-        success = new DatabaseAccess().saveOrUpdate(prioritaet);
-        if (success) {
-            saved = prioritaet;
-        }
-
-        return saved;
+        return (BasisPrioritaet) new DatabaseAccess().merge(prioritaet);
     }
 }

@@ -91,9 +91,7 @@ public class VawsVerwaltungsgebuehren extends AbstractVawsVerwaltungsgebuehren
      *         sonst <code>false</code>.
      */
     public static boolean saveGebuehr(VawsVerwaltungsgebuehren gebuehr) {
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(gebuehr);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(gebuehr);
     }
 
     // TODO: Typische DB-Operationen (Löschen...) kapseln, evtl. Vererbung
@@ -107,8 +105,6 @@ public class VawsVerwaltungsgebuehren extends AbstractVawsVerwaltungsgebuehren
      *         Datensatz nicht in der Datenbank existiert).
      */
     public static boolean removeGebuehr(VawsVerwaltungsgebuehren gebuehr) {
-        boolean removed = false;
-        removed = new DatabaseAccess().delete(gebuehr);
-        return removed;
+        return new DatabaseAccess().delete(gebuehr);
     }
 }

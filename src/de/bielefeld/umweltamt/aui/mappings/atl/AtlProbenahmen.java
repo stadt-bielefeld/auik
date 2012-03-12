@@ -270,8 +270,6 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     }
 
     public static boolean saveProbenahme(AtlProbenahmen probe) {
-        // TODO: This was just session.save(probe) before - saveOrUpdate should
-        // be just as fine.
         return new DatabaseAccess().saveOrUpdate(probe);
     }
 

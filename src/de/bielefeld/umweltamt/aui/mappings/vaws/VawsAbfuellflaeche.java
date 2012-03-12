@@ -120,9 +120,7 @@ public class VawsAbfuellflaeche extends AbstractVawsAbfuellflaeche implements
                 + "zugeordnet sein!");
         }
 
-        boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(flaeche);
-        return saved;
+        return new DatabaseAccess().saveOrUpdate(flaeche);
     }
 
     /**

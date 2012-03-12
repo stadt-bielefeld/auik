@@ -197,14 +197,7 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      * @return Das gespeicherte Objekt.
      */
     public static BasisObjekt saveBasisObjekt(BasisObjekt obj) {
-        boolean success = false;
-        BasisObjekt saved = null;
-
-        success = new DatabaseAccess().saveOrUpdate(obj);
-        if (success) {
-            saved = obj; // TODO: Check if this is really nessessary
-        }
-        return saved;
+        return (BasisObjekt) new DatabaseAccess().merge(obj);
     }
 
     /**

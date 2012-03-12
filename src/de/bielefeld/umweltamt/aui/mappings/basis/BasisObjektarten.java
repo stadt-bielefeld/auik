@@ -328,15 +328,11 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
      *         Speichern ein Fehler auftrat.
      */
     public static BasisObjektarten saveObjektart(BasisObjektarten art) {
-        boolean success = false;
         BasisObjektarten artRet = null;
-
-        success = new DatabaseAccess().saveOrUpdate(art);
-        if (success) {
-            artRet = art;
-            log.debug("Neue Objektart " + art + " gespeichert!");
+        artRet = (BasisObjektarten) new DatabaseAccess().merge(art);
+        if (artRet != null) {
+            log.debug("Neue Objektart " + artRet + " gespeichert!");
         }
-
         return artRet;
     }
 

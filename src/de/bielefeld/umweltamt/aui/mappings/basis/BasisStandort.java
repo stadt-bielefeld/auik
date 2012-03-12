@@ -164,12 +164,10 @@ public class BasisStandort extends AbstractBasisStandort implements
      *         Speichern ein Fehler auftrat.
      */
     public static BasisStandort saveStandort(BasisStandort bsta) {
-        boolean success = false;
         BasisStandort bstaRet = null;
-        success = new DatabaseAccess().saveOrUpdate(bsta);
-        if (success) {
-            bstaRet = bsta;
-            log.debug("Neuer Standort " + bsta + " gespeichert!");
+        bstaRet = (BasisStandort) new DatabaseAccess().merge(bsta);
+        if (bstaRet != null) {
+            log.debug("Neuer Standort " + bstaRet + " gespeichert!");
         }
         return bstaRet;
     }

@@ -233,11 +233,12 @@ public class EntsorgerEditor extends AbstractBaseEditor {
             }
         }
 
-        boolean success;
-        success = AnhEntsorger.saveEntsorger(getEntsorger());
+        AnhEntsorger persistentEntsorger = null;
+        persistentEntsorger = AnhEntsorger.saveEntsorger(getEntsorger());
+        boolean success = (persistentEntsorger != null);
 
         if (success) {
-            setEditedObject(getEntsorger());
+            setEditedObject(persistentEntsorger);
             log.debug("Änderungen gespeichert!");
         }
 
