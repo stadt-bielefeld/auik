@@ -133,7 +133,7 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
             + "WHERE bo.basisStandort = :standort ";
 
         if (istartid != null) {
-            query += "and bo.basisObjektarten.objektartid = :objektartid";
+            query += "and bo.basisObjektarten.objektartid = :objektartid ";
         }
 
         query += "ORDER BY bo.inaktiv, bo.basisBetreiber.betrname, " +
