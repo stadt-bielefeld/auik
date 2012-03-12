@@ -284,7 +284,7 @@ public class VawsPanel extends JPanel {
             //scriptables.put("liste", vawsModel.getList());
             if (betreiber != null || standort != null || behaelterid != null)
             {
-                ReportManager.getInstance().startReportWorker("VAwS-Anlage", behaelterid, betreiber, standort, art,  reportListeButton );
+                ReportManager.getInstance().startReportWorker("VAwS-Anlage", behaelterid, betreiber, standort, reportAnlageButton, art );
             }
 //        int row = getVawsTable().getSelectedRow();
 //        if (row != -1) {

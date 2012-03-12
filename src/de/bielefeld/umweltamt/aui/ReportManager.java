@@ -448,7 +448,7 @@ public class ReportManager {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 pdfFile = runReport(
-                    name, art, behaelterId, betreiber, standort);
+                		art, name, behaelterId, betreiber, standort);
             }
 
             @Override
