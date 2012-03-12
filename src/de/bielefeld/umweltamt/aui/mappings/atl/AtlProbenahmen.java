@@ -305,14 +305,15 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     }
 
     public static List<?> sortExterneAnalysepositionen(AtlProbenahmen probe) {
-        AtlProbenahmen newProbe = null;
-        newProbe = (AtlProbenahmen) new DatabaseAccess().get(
-            AtlProbenahmen.class, probe.getId());
+//        AtlProbenahmen newProbe = null;
+//        newProbe = (AtlProbenahmen) new DatabaseAccess().get(
+//            AtlProbenahmen.class, probe.getId());
 
         List<?> sortedPositionen = null;
         sortedPositionen = new DatabaseAccess()
-            .createFilter(
-                newProbe.getAtlAnalysepositionen(),
+            .getSortedAtlAnalysepositionen(
+//                newProbe.getAtlAnalysepositionen(),
+                probe,
                 "WHERE this.atlParameter.bezeichnung not like :str "
                     + "ORDER BY this.atlParameter.reihenfolge")
             .setString("str", new String("%bei Probenahme"))

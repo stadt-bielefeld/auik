@@ -281,10 +281,18 @@ public class DatabaseAccess {
      * @param filterString The filter String
      * @return DatabaseAccess this
      */
-    public DatabaseAccess createFilter(Object collection, String filterString) {
+    // Bugfix: This was createFilter, but we only use it with the Set of
+    // AtlAnalyseposition
+    public DatabaseAccess getSortedAtlAnalysepositionen(
+        AtlProbenahmen probe, String filterString) {
+        AtlProbenahmen persistentProbe = null;
         try {
+            persistentProbe = (AtlProbenahmen) this.getSession().get(AtlProbenahmen.class, probe.getId());
+            this.initialize(persistentProbe.getAtlAnalysepositionen());
+
             this.query = this.getSession()
-                .createFilter(collection, filterString);
+                .createFilter(persistentProbe.getAtlAnalysepositionen(),
+                    filterString);
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.CREATE_FILTER, false);
         } finally {
