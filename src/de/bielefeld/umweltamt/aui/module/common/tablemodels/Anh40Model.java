@@ -82,8 +82,11 @@ public class Anh40Model extends ListTableModel {
             tmp = fd.getBasisObjekt().getBasisStandort();
             break;
         case 2:
-            tmp = fd.getBemerkungen();
-            break;
+			tmp = "";
+			if (fd.getBemerkungen() != null) {
+				tmp = fd.getBemerkungen();
+			}
+			break;
 
         default:
             tmp = "ERROR";
