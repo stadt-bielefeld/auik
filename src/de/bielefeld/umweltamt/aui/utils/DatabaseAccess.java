@@ -89,7 +89,7 @@ public class DatabaseAccess {
      *            <code>null</code>
      */
     // Private just for the bugfix
-    private void initialize(Object proxy) {
+    public void initialize(Object proxy) {
         try {
             Hibernate.initialize(proxy);
         } catch (HibernateException he) {
@@ -378,16 +378,18 @@ public class DatabaseAccess {
         List<Object> virtDelResult = new ArrayList<Object>();
 
         try {
+//            log.debug("Start query.list()");
             queryResult = this.query.list();
+//            log.debug("End query.list() - list.size(): " + queryResult.size());
 
             // TODO: This is just a bugfix...
-            AtlProbenahmen probe = null;
-            if (!queryResult.isEmpty() && queryResult.get(0) instanceof AtlProbenahmen) {
-                for (Object result : queryResult) {
-                    probe = (AtlProbenahmen) result;
-                    this.initialize(probe.getAtlAnalysepositionen());
-                }
-            }
+//            AtlProbenahmen probe = null;
+//            if (!queryResult.isEmpty() && queryResult.get(0) instanceof AtlProbenahmen) {
+//                for (Object result : queryResult) {
+//                    probe = (AtlProbenahmen) result;
+//                    this.initialize(probe.getAtlAnalysepositionen());
+//                }
+//            }
 
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.LIST, false);

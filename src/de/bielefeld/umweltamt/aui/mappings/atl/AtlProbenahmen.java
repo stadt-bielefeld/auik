@@ -593,7 +593,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      * Return the AtlAnalysepositionen
      * @return Set
      */
-//    public Set<?> getAtlAnalysepositionen() {
+    @Override
+    public Set<AtlAnalyseposition> getAtlAnalysepositionen() {
 //        Set resultSet = new HashSet();
 //        List<?> result = null;
 //        result = new DatabaseAccess()
@@ -606,5 +607,9 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
 //            resultSet.add(pos);
 //        }
 //        return resultSet;
-//    }
+        if (!new DatabaseAccess().isInitialized(super.getAtlAnalysepositionen())) {
+            new DatabaseAccess().initialize(super.getAtlAnalysepositionen());
+        }
+        return super.getAtlAnalysepositionen();
+    }
 }
