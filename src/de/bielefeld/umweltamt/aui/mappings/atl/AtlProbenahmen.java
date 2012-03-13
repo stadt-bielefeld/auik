@@ -55,6 +55,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             "Grenzwert_Wert", "Grenzwert_Einheit", "Ergebnis_Wert",
             "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett", "inGruppe"};
 
+    private boolean loadedAtlAnalysepositionen = false;
+
     /**
      * Simple constructor of AtlProbenahmen instances.
      */
@@ -109,14 +111,6 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
                     + ((limit != -1) ? " LIMIT 5" : ""))
             .setEntity("pkt", pkt)
             .list();
-        // Bugfix: This is done within the query...
-//        if (loadPos) {
-//            for (int i = 0; i < proben.size(); i++) {
-//                AtlProbenahmen probe = (AtlProbenahmen) proben.get(i);
-//                new DatabaseAccess()
-//                    .initialize(probe.getAtlAnalysepositionen());
-//            }
-//        }
 
         return proben;
     }
@@ -222,22 +216,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      *         nicht existiert
      */
     public static AtlProbenahmen getProbenahme(Integer id, boolean loadPos) {
-        AtlProbenahmen probe = null;
-        probe = (AtlProbenahmen) new DatabaseAccess()
+        return (AtlProbenahmen) new DatabaseAccess()
             .get(AtlProbenahmen.class, id);
-
-        // Bugfix: This is done within the query...
-//        if (loadPos && probe != null) {
-//            new DatabaseAccess().initialize(probe.getAtlAnalysepositionen());
-//            // Collection sorted =
-//            // session.filter(probe.getAtlAnalysepositionen(),
-//            // "ORDER BY this.atlParameter.ordnungsbegriff desc");
-//            // AUIKataster.debugOutput("Sorted:\n " + sorted);
-//            // probe.setAtlAnalysepositionen(new HashSet(sorted));
-//            log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
-//        }
-
-        return probe;
     }
 
     /**
@@ -248,32 +228,15 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      *         nicht existiert
      */
     public static AtlProbenahmen getProbenahme(String kennummer, boolean loadPos) {
-        AtlProbenahmen probe = null;
-
-        probe = (AtlProbenahmen) new DatabaseAccess()
-            .createQuery("FROM AtlProbenahmen WHERE kennummer = :kennnummer")
+        return (AtlProbenahmen) new DatabaseAccess()
+            .createQuery(
+                "FROM AtlProbenahmen " +
+                "WHERE kennummer = :kennnummer")
             .setString("kennnummer", kennummer)
             .uniqueResult();
-
-        // Bugfix: This is done within the query...
-//        if (loadPos && probe != null) {
-//            new DatabaseAccess().initialize(probe.getAtlAnalysepositionen());
-//            // Collection sorted =
-//            // session.filter(probe.getAtlAnalysepositionen(),
-//            // "ORDER BY this.atlParameter.ordnungsbegriff desc");
-//            // AUIKataster.debugOutput("Sorted:\n " + sorted);
-//            // probe.setAtlAnalysepositionen(new HashSet(sorted));
-//            log.debug("APos geladen:\n " + probe.getAtlAnalysepositionen());
-//        }
-
-        return probe;
     }
 
-    public static boolean saveProbenahme(AtlProbenahmen probe) {
-        return new DatabaseAccess().saveOrUpdate(probe);
-    }
-
-    public static boolean updateProbenahme(AtlProbenahmen probe) {
+    public static boolean saveOrUpdateProbenahme(AtlProbenahmen probe) {
         return new DatabaseAccess().saveOrUpdate(probe);
     }
 
@@ -607,8 +570,15 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
 //            resultSet.add(pos);
 //        }
 //        return resultSet;
-        if (!new DatabaseAccess().isInitialized(super.getAtlAnalysepositionen())) {
-            new DatabaseAccess().initialize(super.getAtlAnalysepositionen());
+//        if (!new DatabaseAccess().isInitialized(super.getAtlAnalysepositionen())) {
+//            new DatabaseAccess().initialize(this, super.getAtlAnalysepositionen());
+//        }
+//        return super.getAtlAnalysepositionen();
+        // TODO: This is not an optimal solution...
+        if (!loadedAtlAnalysepositionen) {
+            super.setAtlAnalysepositionen(
+                AtlAnalyseposition.getAnalysepositionen(this));
+            loadedAtlAnalysepositionen = true;
         }
         return super.getAtlAnalysepositionen();
     }

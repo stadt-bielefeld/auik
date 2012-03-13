@@ -89,7 +89,7 @@ public class DatabaseAccess {
      *            <code>null</code>
      */
     // Private just for the bugfix
-    public void initialize(Object proxy) {
+    private void initialize(Object proxy) {
         try {
             Hibernate.initialize(proxy);
         } catch (HibernateException he) {
@@ -161,7 +161,7 @@ public class DatabaseAccess {
         if (this.beginTransaction()) {
             try {
                 /* Save or update the object */
-                this.session.saveOrUpdate(object);
+                this.getSession().saveOrUpdate(object);
                 /* Commit the transaction */
                 if (this.commitTransaction()) {
                     success = true;
@@ -193,7 +193,7 @@ public class DatabaseAccess {
         if (this.beginTransaction()) {
             try {
                 /* Merge the object and set it to the persistent version */
-                persistent = this.session.merge(object);
+                persistent = this.getSession().merge(object);
                 /* Commit the transaction */
                 if (this.commitTransaction()) {
                     success = true;
@@ -232,7 +232,7 @@ public class DatabaseAccess {
         if (this.beginTransaction()) {
             try {
                 /* Delete the object */
-                this.session.delete(object);
+                this.getSession().delete(object);
                 /* Commit the transaction */
                 if (this.commitTransaction()) {
                     success = true;
@@ -261,7 +261,7 @@ public class DatabaseAccess {
      */
     public DatabaseAccess createQuery(String queryString) {
         try {
-            this.query = getSession().createQuery(queryString);
+            this.query = this.getSession().createQuery(queryString);
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.CREATE_QUERY, false);
         } finally {
@@ -575,7 +575,7 @@ public class DatabaseAccess {
         JOptionPane.showMessageDialog(runningFrame, message, "Fehler",
             JOptionPane.ERROR_MESSAGE);
         /* via stdout */
-        log.error(message);
+        log.error(message + "\n" + exception.getMessage());
 
         /* Hand the exception to the DatabaseManager */
         DatabaseManager.getInstance().handleDBException(exception,

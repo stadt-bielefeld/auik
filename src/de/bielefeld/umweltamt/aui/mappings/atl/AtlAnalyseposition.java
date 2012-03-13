@@ -24,8 +24,10 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
@@ -404,6 +406,24 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
                     + "FROM AtlAnalyseposition as ap "
                     + "ORDER BY ap.analyseVon")
             .array(new String[0]);
+    }
+
+    public static Set<AtlAnalyseposition> getAnalysepositionen(
+        AtlProbenahmen probe) {
+        Set<AtlAnalyseposition> resultSet = new HashSet<AtlAnalyseposition>();
+        List<?> result = null;
+        result = new DatabaseAccess()
+            .createQuery(
+                "FROM AtlAnalyseposition "
+                    + "WHERE atlProbenahmen = :probe")
+            .setEntity("probe", probe)
+            .list();
+        AtlAnalyseposition position = null;
+        for (Object object : result) {
+            position = (AtlAnalyseposition) object;
+            resultSet.add(position);
+        }
+        return resultSet;
     }
 
     public static boolean saveAnalyseposition(AtlAnalyseposition pos) {

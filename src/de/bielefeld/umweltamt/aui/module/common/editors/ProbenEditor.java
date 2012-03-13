@@ -625,7 +625,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         "Probenahmeauftrag gedruckt");
 
                     probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
-                    AtlProbenahmen.updateProbenahme(probe);
+                    AtlProbenahmen.saveOrUpdateProbenahme(probe);
 
                     frame.showInfoMessage(
                         "Der Probenahmeauftrag wurde erfolgreich unter '" +
@@ -740,7 +740,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
 
-                    AtlProbenahmen.updateProbenahme(probe);
+                    AtlProbenahmen.saveOrUpdateProbenahme(probe);
 
                     frame.showInfoMessage(
                         "Der Gebührenbescheid wurde erfolgreich unter ' "
@@ -1311,14 +1311,20 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         // Von
+        // TODO: This does not seem to make sense...
+//        String uhrzeitVonVal = uhrzeitVon.getText();
+//        if (probe.getUhrzeitbeginn() != null || probe.getUhrzeitbeginn() != "") {
+//            probe.setUhrzeitbeginn(uhrzeitVonVal);
+//        }
+//        else {
+//        	uhrzeitVonVal = "00:00";
+//        	probe.setUhrzeitbeginn(uhrzeitVonVal);
+//        }
         String uhrzeitVonVal = uhrzeitVon.getText();
-        if (probe.getUhrzeitbeginn() != null || probe.getUhrzeitbeginn() != "") {
-            probe.setUhrzeitbeginn(uhrzeitVonVal);
+        if (uhrzeitVonVal == null || uhrzeitVonVal.equals("")) {
+            uhrzeitVonVal = "00:00";
         }
-        else {
-        	uhrzeitVonVal = "00:00";
-        	probe.setUhrzeitbeginn(uhrzeitVonVal);
-        }
+        probe.setUhrzeitbeginn(uhrzeitVonVal);
 
         // Bis
         String uhrzeitBisVal = uhrzeitBis.getText();
@@ -1329,7 +1335,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         // Datum der Entnahme
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         String datumVal      = df.format(datum.getDate());
-        String timestring    = (String) datumVal.subSequence(0, 11) + uhrzeitVonVal;
+        String timestring    = (String) datumVal.subSequence(0, 11) + " "
+                                + uhrzeitVonVal;
         Date convertedDate   = new Date();
         try {
             convertedDate = df.parse(timestring);
@@ -1390,7 +1397,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         // Analysepositionen
-        Set newPositionen = new HashSet(parameterModel.getList());
+        Set<AtlAnalyseposition> newPositionen =
+            new HashSet<AtlAnalyseposition>(parameterModel.getList());
         getProbe().getAtlAnalysepositionen().clear();
         getProbe().getAtlAnalysepositionen().addAll(newPositionen);
         // getProbe().setAtlAnalysepositionen(newPositionen);
@@ -1401,11 +1409,9 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         if (isNew) {
             isNew = false;
-            success = AtlProbenahmen.saveProbenahme(probe);
         }
-        else {
-            success = AtlProbenahmen.updateProbenahme(probe);
-        }
+
+        success = AtlProbenahmen.saveOrUpdateProbenahme(probe);
 
         return success;
     }

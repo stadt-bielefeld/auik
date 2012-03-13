@@ -105,7 +105,8 @@ public class DateUtils {
             return null;
         }
 
-        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+//        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat df = new SimpleDateFormat(format);
         return df.parse(date);
     }
 
