@@ -575,11 +575,13 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
 //        }
 //        return super.getAtlAnalysepositionen();
         // TODO: This is not an optimal solution...
-        if (!loadedAtlAnalysepositionen) {
-            super.setAtlAnalysepositionen(
-                AtlAnalyseposition.getAnalysepositionen(this));
-            loadedAtlAnalysepositionen = true;
-        }
+        // If the Probenahme is not saved,
+        // we can not access the Analysepositions
+//        if (!loadedAtlAnalysepositionen) {
+//            super.setAtlAnalysepositionen(
+//                AtlAnalyseposition.getAnalysepositionen(this));
+//            loadedAtlAnalysepositionen = true;
+//        }
         return super.getAtlAnalysepositionen();
     }
 }

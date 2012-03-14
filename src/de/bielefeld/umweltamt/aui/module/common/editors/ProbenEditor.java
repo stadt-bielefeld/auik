@@ -552,9 +552,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         if (isNew){
-        sachbearbeiterBox.setSelectedItem(BasisSachbearbeiter.getSachbearbeiter(SettingsManager.getInstance().getSetting("auik.prefs.lastuser")));
-        uhrzeitVon.setText("");
-        uhrzeitBis.setText("");
+            sachbearbeiterBox.setSelectedItem(BasisSachbearbeiter.getSachbearbeiter(SettingsManager.getInstance().getSetting("auik.prefs.lastuser")));
+            uhrzeitVon.setText("");
+            uhrzeitBis.setText("");
         }
 
         parameterModel = new ParameterModel(getProbe(), isNew, isSchlamm);
@@ -1406,12 +1406,10 @@ public class ProbenEditor extends AbstractApplyEditor {
                 + getProbe().getAtlAnalysepositionen());
 
         boolean success;
-
         if (isNew) {
             isNew = false;
         }
-
-        success = AtlProbenahmen.saveOrUpdateProbenahme(probe);
+        success = AtlProbenahmen.saveOrUpdateProbenahme(getProbe());
 
         return success;
     }
