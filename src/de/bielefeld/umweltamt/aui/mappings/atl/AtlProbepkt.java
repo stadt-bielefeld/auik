@@ -75,6 +75,7 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
                     + "ORDER BY probepkt.objektid asc")
                 .setEntity("art", art)
                 .setEntity("ka", ka)
+                .setMaxResults(1)
                 .uniqueResult();
     }
 
