@@ -505,7 +505,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     public AtlAnalyseposition findAtlAnalyseposition(AtlParameter parameter,
         AtlEinheiten einheit, boolean createNew) {
         String ordnungsbegriff = parameter.getOrdnungsbegriff();
-        Set<AtlAnalyseposition> positionen = (Set<AtlAnalyseposition>) getAtlAnalysepositionen();
+        Set<AtlAnalyseposition> positionen =
+            (Set<AtlAnalyseposition>) loadAtlAnalysepositionen();
         Iterator<AtlAnalyseposition> iter = positionen.iterator();
 
         while (iter.hasNext()) {
@@ -584,4 +585,23 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
 //        }
         return super.getAtlAnalysepositionen();
     }
+
+    /**
+     * Load and return AtlAnalysepositionen<br>
+     * Will only work on a saved AtlProbenahme.
+     * @return
+     */
+    private Set<AtlAnalyseposition> loadAtlAnalysepositionen() {
+      // TODO: This is not an optimal solution...
+      // If the Probenahme is not saved,
+      // we can not access the Analysepositions
+//      if (!loadedAtlAnalysepositionen) {
+//          super.setAtlAnalysepositionen(
+//              AtlAnalyseposition.getAnalysepositionen(this));
+//          loadedAtlAnalysepositionen = true;
+//      }
+      super.setAtlAnalysepositionen(
+          AtlAnalyseposition.getAnalysepositionen(this));
+      return super.getAtlAnalysepositionen();
+  }
 }
