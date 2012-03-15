@@ -236,7 +236,7 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
      * @param param Der Parameter.
      * @return Eine Liste mit <code>AtlAnalyseposition</code>en.
      */
-    public static List<AtlAnalyseposition> getAnalysepositionen(
+    public static List<?> getAnalysepositionen(
             AtlProbenahmen probe, AtlParameter param) {
         // TODO: Evtl. mit komplizierterem HQL gleich beim Laden der Proben
         // lösen?
@@ -254,7 +254,7 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
         List<AtlAnalyseposition> proben = new ArrayList<AtlAnalyseposition>();
 
         Iterator<AtlAnalyseposition> it =
-            probe.getAtlAnalysepositionen().iterator();
+            probe.loadAtlAnalysepositionen().iterator();
         for (; it.hasNext();) {
             AtlAnalyseposition pos = it.next();
             if ((pos.getAtlParameter().getOrdnungsbegriff().equals(param
@@ -263,18 +263,20 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
             }
         }
 
+        return proben;
+
         // TODO: Maybe better use something like this?
 //        List<?> result = null;
 //        result = new DatabaseAccess()
 //            .createQuery(
 //                "FROM AtlAnalyseposition "
-//                    + "WHERE AtlProbenahmen = :probe "
-//                    + "AND AtlParameter.ordnungsbegriff = :param")
+//                    + "WHERE atlProbenahmen = :probe "
+//                    + "AND atlParameter.ordnungsbegriff = :param")
 //            .setEntity("probe", probe)
 //            .setString("param", param.getOrdnungsbegriff())
 //            .list();
-
-        return proben;
+//
+//        return result;
     }
 
     /**

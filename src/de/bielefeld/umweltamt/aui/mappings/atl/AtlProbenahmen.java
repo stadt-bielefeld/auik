@@ -553,7 +553,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      * Will only work on a saved AtlProbenahme.
      * @return
      */
-    private Set<AtlAnalyseposition> loadAtlAnalysepositionen() {
+    public Set<AtlAnalyseposition> loadAtlAnalysepositionen() {
       // TODO: This is not an optimal solution...
       // If the Probenahme is not saved,
       // we can not access the Analysepositions
