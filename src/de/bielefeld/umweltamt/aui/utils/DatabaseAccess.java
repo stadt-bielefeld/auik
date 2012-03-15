@@ -23,9 +23,11 @@ package de.bielefeld.umweltamt.aui.utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
@@ -40,7 +42,7 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseTableWithCollection;
 
 /**
  * A wrapper class for all access to the database, which only allows certain
@@ -57,7 +59,7 @@ public class DatabaseAccess {
     /** The type of the DatabaseAccess */
     public enum DatabaseAccessType {
         /* Database access */
-        INITIALIZE, GET_SESSION, BEGIN_TRANSACTION, COMMIT, ROLLBACK,
+        GET_SESSION, BEGIN_TRANSACTION, COMMIT, ROLLBACK,
         /* Operations on entitys */
         GET, SAVEORUPDATE, MERGE, DELETE,
         /* Querys */
@@ -80,26 +82,6 @@ public class DatabaseAccess {
     }
 
     /**
-     * Force initialization of a proxy or persistent collection.<br>
-     * <br>
-     * Note: This only ensures intialization of a proxy object or collection; it
-     * is not guaranteed that the elements INSIDE the collection will be
-     * initialized/materialized.
-     * @param proxy a persistable object, proxy, persistent collection or
-     *            <code>null</code>
-     */
-    // Private just for the bugfix
-    private void initialize(Object proxy) {
-        try {
-            Hibernate.initialize(proxy);
-        } catch (HibernateException he) {
-            this.handleDBException(he, DatabaseAccessType.INITIALIZE, false);
-        } finally {
-            // This place is intentionally left blank.
-        }
-    }
-
-    /**
      * Check if the proxy or persistent collection is initialized.
      * @param proxy a persistable object, proxy, persistent collection or
      *            <code>null</code>
@@ -117,16 +99,38 @@ public class DatabaseAccess {
      * @return Object The requested object
      */
     public Object get(Class<?> clazz, Serializable id) {
+        return this.get(clazz, id, false);
+    }
+
+    /**
+     * Get the entity of clazz with the id and initialize all Collections
+     * @param clazz The requested Class
+     * @param id The requested id
+     * @return Object The requested object
+     */
+    public Object getAndInitCollections(Class<?> clazz, Serializable id) {
+        return this.get(clazz, id, true);
+    }
+
+    /**
+     * Get the entity of clazz with the id (and initialize all Collections)
+     * @param clazz The requested Class
+     * @param id The requested id
+     * @param init boolean Initialize the Collections of the Class
+     * @return Object The requested object
+     */
+    private Object get(Class<?> clazz, Serializable id, boolean init) {
         Object result = null;
         try {
             result = this.getSession().get(clazz, id);
 
-            // TODO: This is just a bugfix...
-            if (result instanceof AtlProbenahmen) {
-                AtlProbenahmen probe = (AtlProbenahmen) result;
-                this.initialize(probe.getAtlAnalysepositionen());
+            if (init) {
+                Vector<Collection<?>> collections =
+                    ((DatabaseTableWithCollection) result).getToInitCollections();
+                for (Collection<?> collection : collections) {
+                    Hibernate.initialize(collection);
+                }
             }
-
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.GET, false);
         } finally {
@@ -283,18 +287,19 @@ public class DatabaseAccess {
      * @param filterString The filter String
      * @return DatabaseAccess this
      */
-    // Bugfix: This was createFilter, but we only use it with the Set of
-    // AtlAnalyseposition
-    public DatabaseAccess getSortedAtlAnalysepositionen(
-        AtlProbenahmen probe, String filterString) {
-        AtlProbenahmen persistentProbe = null;
+    public DatabaseAccess createFilter(
+        Class<?> clazz, Serializable id, int collnr, String filterString) {
+        DatabaseTableWithCollection persistent_object = null;
+        Collection<?> persistent_coll = null;
         try {
-            persistentProbe = (AtlProbenahmen) this.getSession().get(AtlProbenahmen.class, probe.getId());
-            this.initialize(persistentProbe.getAtlAnalysepositionen());
+            persistent_object =
+                (DatabaseTableWithCollection) this.getSession().get(clazz, id);
+            persistent_coll =
+                persistent_object.getToInitCollections().get(collnr);
+            Hibernate.initialize(persistent_coll);
 
             this.query = this.getSession()
-                .createFilter(persistentProbe.getAtlAnalysepositionen(),
-                    filterString);
+                .createFilter(persistent_coll, filterString);
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.CREATE_FILTER, false);
         } finally {
@@ -378,19 +383,7 @@ public class DatabaseAccess {
         List<Object> virtDelResult = new ArrayList<Object>();
 
         try {
-//            log.debug("Start query.list()");
             queryResult = this.query.list();
-//            log.debug("End query.list() - list.size(): " + queryResult.size());
-
-            // TODO: This is just a bugfix...
-//            AtlProbenahmen probe = null;
-//            if (!queryResult.isEmpty() && queryResult.get(0) instanceof AtlProbenahmen) {
-//                for (Object result : queryResult) {
-//                    probe = (AtlProbenahmen) result;
-//                    this.initialize(probe.getAtlAnalysepositionen());
-//                }
-//            }
-
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.LIST, false);
         } finally {
@@ -575,7 +568,7 @@ public class DatabaseAccess {
         JOptionPane.showMessageDialog(runningFrame, message, "Fehler",
             JOptionPane.ERROR_MESSAGE);
         /* via stdout */
-        log.error(message + "\n" + exception.getMessage());
+        log.error(message); // + "\n" + exception.getMessage());
 
         /* Hand the exception to the DatabaseManager */
         DatabaseManager.getInstance().handleDBException(exception,

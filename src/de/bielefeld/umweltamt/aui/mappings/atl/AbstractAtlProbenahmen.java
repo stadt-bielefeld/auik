@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseTableWithCollection;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 
 /**
@@ -32,7 +33,8 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
  * the behavior of this class by editing the class, {@link AtlProbenahmen}.
  */
 public abstract class AbstractAtlProbenahmen extends
-    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable,
+    DatabaseTableWithCollection {
     private static final long serialVersionUID = -8219312709181534758L;
 
     /**

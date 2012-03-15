@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
@@ -54,8 +55,6 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     public static final String[] COLUMNS_BESCHEID = {"Pos", "Parameter",
             "Grenzwert_Wert", "Grenzwert_Einheit", "Ergebnis_Wert",
             "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett", "inGruppe"};
-
-    private boolean loadedAtlAnalysepositionen = false;
 
     /**
      * Simple constructor of AtlProbenahmen instances.
@@ -216,8 +215,13 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      *         nicht existiert
      */
     public static AtlProbenahmen getProbenahme(Integer id, boolean loadPos) {
-        return (AtlProbenahmen) new DatabaseAccess()
-            .get(AtlProbenahmen.class, id);
+        if (loadPos) {
+            return (AtlProbenahmen) new DatabaseAccess()
+                .getAndInitCollections(AtlProbenahmen.class, id);
+        } else {
+            return (AtlProbenahmen) new DatabaseAccess()
+                .get(AtlProbenahmen.class, id);
+        }
     }
 
     /**
@@ -266,15 +270,9 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     }
 
     public static List<?> sortExterneAnalysepositionen(AtlProbenahmen probe) {
-//        AtlProbenahmen newProbe = null;
-//        newProbe = (AtlProbenahmen) new DatabaseAccess().get(
-//            AtlProbenahmen.class, probe.getId());
-
         List<?> sortedPositionen = null;
         sortedPositionen = new DatabaseAccess()
-            .getSortedAtlAnalysepositionen(
-//                newProbe.getAtlAnalysepositionen(),
-                probe,
+            .createFilter(AtlProbenahmen.class, probe.getId(), 0,
                 "WHERE this.atlParameter.bezeichnung not like :str "
                     + "ORDER BY this.atlParameter.reihenfolge")
             .setString("str", new String("%bei Probenahme"))
@@ -480,10 +478,6 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             .isRohschlamm());
     }
 
-    public boolean isAnalysepositionenInitialized() {
-        return new DatabaseAccess().isInitialized(getAtlAnalysepositionen());
-    }
-
     /**
      * Fügt dieser Probenahme eine Analyseposition hinzu (und sorgt für die
      * richtigen Fremdschlüssel in den Tabellen).
@@ -509,6 +503,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             (Set<AtlAnalyseposition>) loadAtlAnalysepositionen();
         Iterator<AtlAnalyseposition> iter = positionen.iterator();
 
+        // TODO: Why don't we use a query here?
         while (iter.hasNext()) {
             AtlAnalyseposition tmp = (AtlAnalyseposition) iter.next();
             AtlParameter param = tmp.getAtlParameter();
@@ -554,39 +549,6 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     }
 
     /**
-     * Return the AtlAnalysepositionen
-     * @return Set
-     */
-    @Override
-    public Set<AtlAnalyseposition> getAtlAnalysepositionen() {
-//        Set resultSet = new HashSet();
-//        List<?> result = null;
-//        result = new DatabaseAccess()
-//            .createQuery(
-//                "FROM Analyseposition "
-//                    + "WHERE atlProbenahmen = :probe")
-//            .setEntity("probe", this)
-//            .list();
-//        for (Object pos : result) {
-//            resultSet.add(pos);
-//        }
-//        return resultSet;
-//        if (!new DatabaseAccess().isInitialized(super.getAtlAnalysepositionen())) {
-//            new DatabaseAccess().initialize(this, super.getAtlAnalysepositionen());
-//        }
-//        return super.getAtlAnalysepositionen();
-        // TODO: This is not an optimal solution...
-        // If the Probenahme is not saved,
-        // we can not access the Analysepositions
-//        if (!loadedAtlAnalysepositionen) {
-//            super.setAtlAnalysepositionen(
-//                AtlAnalyseposition.getAnalysepositionen(this));
-//            loadedAtlAnalysepositionen = true;
-//        }
-        return super.getAtlAnalysepositionen();
-    }
-
-    /**
      * Load and return AtlAnalysepositionen<br>
      * Will only work on a saved AtlProbenahme.
      * @return
@@ -603,5 +565,16 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
       super.setAtlAnalysepositionen(
           AtlAnalyseposition.getAnalysepositionen(this));
       return super.getAtlAnalysepositionen();
-  }
+    }
+
+    /**
+     * Return all Collections which need to be initialized.
+     * @return An array of all Collections
+     */
+    @Override
+    public Vector<Collection<?>> getToInitCollections() {
+        Vector<Collection<?>> collections = new Vector<Collection<?>>();
+        collections.add(getAtlAnalysepositionen());
+        return collections;
+    }
 }
