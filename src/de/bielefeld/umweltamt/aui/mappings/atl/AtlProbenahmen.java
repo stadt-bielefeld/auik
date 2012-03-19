@@ -56,6 +56,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             "Grenzwert_Wert", "Grenzwert_Einheit", "Ergebnis_Wert",
             "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett", "inGruppe"};
 
+    private boolean loadedAtlAnalysepositionen = false;
+
     /**
      * Simple constructor of AtlProbenahmen instances.
      */
@@ -485,7 +487,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      */
     public void addAnalyseposition(AtlAnalyseposition pos) {
         pos.setAtlProbenahmen(this);
-        this.getAtlAnalysepositionen().add(pos);
+        this.loadAtlAnalysepositionen().add(pos);
     }
 
     /**
@@ -555,15 +557,13 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      */
     public Set<AtlAnalyseposition> loadAtlAnalysepositionen() {
       // TODO: This is not an optimal solution...
-      // If the Probenahme is not saved,
-      // we can not access the Analysepositions
-//      if (!loadedAtlAnalysepositionen) {
-//          super.setAtlAnalysepositionen(
-//              AtlAnalyseposition.getAnalysepositionen(this));
-//          loadedAtlAnalysepositionen = true;
-//      }
-      super.setAtlAnalysepositionen(
-          AtlAnalyseposition.getAnalysepositionen(this));
+      if (!loadedAtlAnalysepositionen) {
+          super.setAtlAnalysepositionen(
+              AtlAnalyseposition.getAnalysepositionen(this));
+          loadedAtlAnalysepositionen = true;
+      }
+//      super.setAtlAnalysepositionen(
+//          AtlAnalyseposition.getAnalysepositionen(this));
       return super.getAtlAnalysepositionen();
     }
 
