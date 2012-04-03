@@ -599,7 +599,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
     @Override
     public JPanel getPanel() {
         if (panel == null) {
-            einheiten = AtlEinheiten.getEinheiten();
+            einheiten = AtlEinheiten.getKlaerschlammEinheiten();
 
             String spaltenTeil = "pref, 5dlu, pref:g";
             String zeileLuecke = "pref, 3dlu";
