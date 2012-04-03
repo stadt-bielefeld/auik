@@ -1180,7 +1180,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         TableColumn parameterColumn = parameterTabelle.getColumnModel().getColumn(0);
         parameterColumn.setPreferredWidth(150);
 
-        AtlParameter[] parameter = AtlParameter.getRelevanteParameter();
+        AtlParameter[] parameter = AtlParameter.getGroupedParameter();
 
         parameterBox = new JComboBox(parameter);
         parameterBox.setEditable(false);
@@ -2027,7 +2027,7 @@ class ParameterAuswahlModel extends ListTableModel {
     }
 
     public void filterList() {
-        setList(AtlParameter.getParameter());
+        setList(AtlParameter.getGroupedParameterAsList());
         log.debug("Suche nach '" + getList().size() + " Ergebnisse)");
     }
 

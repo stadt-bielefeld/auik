@@ -34,6 +34,10 @@ public class AbstractAtlParameter extends
     private Double grenzwert;
     private String grenzwertname;
     private Double sielhautGw;
+    /* The threshold for the Klärschlamm was not used anywhere, but the
+     * existing values where a convenient method for selecting parameters for
+     * the Klärschlamm analysis, so I misuse it for that now ;-)
+     */
     private Double klaerschlammGw;
     private Double preisfueranalyse;
     private Boolean einzelnBeauftragbar;
@@ -49,6 +53,9 @@ public class AbstractAtlParameter extends
         this.ordnungsbegriff = ordnungsbegriff;
     }
 
+    /*
+     * This was not used anywhere...
+     *
     public AbstractAtlParameter(String ordnungsbegriff,
             String analyseverfahren, String bezeichnung,
             Integer wirdgemessenineinheit, Double grenzwert,
@@ -71,6 +78,7 @@ public class AbstractAtlParameter extends
         this.konservierung = konservierung;
         this.reihenfolge = reihenfolge;
     }
+     */
 
     public String getOrdnungsbegriff() {
         return this.ordnungsbegriff;

@@ -753,7 +753,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
 
                 frame.changeStatus("Erzeuge Datenreihe für " + p + ", " + ka);
 
-                List list = AtlAnalyseposition.getAnalysepositionen(p, einheit,
+                List<?> list = AtlAnalyseposition.getAnalysepositionen(p, einheit,
                         pkt, vonDate, bisDate, analyseVon);
                 TimeSeries series = ChartDataSets
                         .createAnalysePositionenSeries(list, p + ", " + ka,
@@ -958,7 +958,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
 
     private JComboBox getParameterBox() {
         if (parameterBox == null) {
-            parameterBox = new SearchBox(AtlParameter.getRelevanteParameter());
+            parameterBox = new SearchBox(AtlParameter.getKlaerschlammParameter());
         }
 
         return parameterBox;

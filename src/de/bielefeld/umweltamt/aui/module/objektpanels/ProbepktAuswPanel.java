@@ -579,7 +579,7 @@ public class ProbepktAuswPanel extends JPanel {
 
     private JComboBox getParameterBox() {
         if (parameterBox == null) {
-            parameterBox = new SearchBox(AtlParameter.getRelevanteParameter());
+            parameterBox = new SearchBox(AtlParameter.getGroupedParameter());
         }
 
         return parameterBox;

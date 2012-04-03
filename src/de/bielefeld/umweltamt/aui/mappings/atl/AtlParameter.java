@@ -216,30 +216,23 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
      * Liefert alle Parameter, die für Klärschlamm-Probenahmen relevant sind.
      * D.h. alle, deren Klärschlamm-Grenzwert nicht <code>NULL</code> ist.
      * @return Ein Array mit allen für Klärschlamm-Probenahmen relevanten Parametern
-     * @throws HibernateException
      */
-    /*public static List getKlaerschlammParameter() throws HibernateException {
-        Session session = HibernateSessionFactory.currentSession();
-        List parameter = session.find(
+    public static AtlParameter[] getKlaerschlammParameter() {
+        return (AtlParameter[]) new DatabaseAccess().createQuery(
                 "FROM AtlParameter as param WHERE " +
                 "param.klaerschlammGw is not null " +
-                "ORDER BY param.bezeichnung");
-        HibernateSessionFactory.closeSession();
+                "ORDER BY param.bezeichnung")
+                .array(new AtlParameter[0]);
+    }
 
-        //AtlParameter[] tmp = new AtlParameter[]{};
-        //tmp = (AtlParameter[]) parameter.toArray(tmp);
-
-        return parameter;
-    }*/
-
-    /*
+    /**
      * Liefert alle Parameter, die für SielhautBearbeiten-Probenahmen relevant
      * sind. D.h. alle, deren SielhautBearbeiten-Grenzwert nicht
      * <code>NULL</code> ist.
      * @return Ein Array mit allen für SielhautBearbeiten-Probenahmen relevanten
      * Parametern
      */
-    public static List<?> getParameter() {
+    public static List<?> getGroupedParameterAsList() {
         return new DatabaseAccess().createQuery(
                 "FROM AtlParameter as param "
                 + "WHERE param.atlParameterGruppe.id = 1"
@@ -248,27 +241,20 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
                 + "ORDER BY param.reihenfolge")
                 .list();
     }
+    /**
+     * AtlParameter.getGroupedParameterAsList als Array
+     *
+     * @return Ein Array mit allen für Probenahmen relevanten Parametern
+     */
+    public static AtlParameter[] getGroupedParameter() {
+        return (AtlParameter[])
+            AtlParameter.getGroupedParameterAsList().toArray(new AtlParameter[0]);
+    }
 
     public static List<?> getAll() {
         return new DatabaseAccess().createQuery(
             "FROM AtlParameter as param ORDER BY param.bezeichnung")
             .list();
-    }
-
-    /**
-     * Liefert alle Parameter, die für Probenahmen relevant sind. D.h. alle,
-     * deren SielhautBearbeiten- oder Klärschlamm-Grenzwert nicht
-     * <code>NULL</code> ist.
-     * @return Ein Array mit allen für Probenahmen relevanten Parametern
-     */
-    public static AtlParameter[] getRelevanteParameter() {
-        return (AtlParameter[]) new DatabaseAccess().createQuery(
-                "FROM AtlParameter as param "
-                + "WHERE param.atlParameterGruppe.id = 1"
-                + "or param.atlParameterGruppe.id = 2"
-                + "or param.atlParameterGruppe.id = 3"
-                + "ORDER BY param.reihenfolge")
-                .array(new AtlParameter[0]);
     }
 
     public static AtlParameter[] getParameterGroup(int id) {
