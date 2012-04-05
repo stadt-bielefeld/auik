@@ -430,25 +430,29 @@ public class DatabaseAccess {
      */
     public Object uniqueResult() {
         Object result = null;
+        List<?> queryResult = null;
         try {
-            result = this.query.uniqueResult();
+            // Can't use this:
+            // result = this.query.uniqueResult();
+            // because of the virt. deleted objects
+
+            // Get filtered results (no virt.deleted objects)
+            queryResult = this.list();
+            // If there is one result, return it
+            // If there is none, return null
+            // If there are more, throw an Exception
+            switch (queryResult.size()) {
+                case 1: result = queryResult.get(0);  break;
+                case 0: result = null;                break;
+                default:
+                    throw new HibernateException(
+                        "More than one result in unique request!");
+            }
         } catch (HibernateException he) {
             this.handleDBException(he, DatabaseAccessType.UNIQUE_RESULT, false);
         } finally {
             this.closeSession();
         }
-
-        // TODO: This is the most dirty solution...
-        // Add the "where xyz._deleted = FALSE" to all the querys?
-        // Can we let the database do that? Maybe with an Index? Or many...
-        AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
-        if (result instanceof AbstractVirtuallyDeletableDatabaseTable) {
-            virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) result;
-            if (virtDelObjekt.is_deleted()) {
-                result = null;
-            }
-        }
-
         return result;
     }
 
