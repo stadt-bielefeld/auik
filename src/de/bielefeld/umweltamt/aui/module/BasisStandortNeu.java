@@ -51,6 +51,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -74,6 +75,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
@@ -509,6 +511,44 @@ public class BasisStandortNeu extends AbstractModul {
     }
 
     /**
+     * Check if a location already exists
+     * @return true, if the given location exists, false otherwise
+     */
+    private boolean standortExists() {
+        boolean exists = true;
+        List<?> result = null;
+        String strasse = (String) strassenBox.getSelectedItem();
+        Integer hausnr = ((IntegerField)hausnrEditFeld).getIntValue();
+        String zusatz  = hausnrZusFeld.getText();
+        if (zusatz.equals("")) {
+            result = new DatabaseAccess()
+            .createQuery(
+                "FROM BasisStandort " +
+                "WHERE strasse = :strasse " +
+                    "AND hausnr = :hausnr ")
+            .setString("strasse", strasse)
+            .setInteger("hausnr", hausnr)
+            .list();
+        } else {
+            result = new DatabaseAccess()
+            .createQuery(
+                "FROM BasisStandort " +
+                "WHERE strasse = :strasse " +
+                    "AND hausnr = :hausnr " +
+                    "AND hausnrzus = :zusatz ")
+            .setString("strasse", strasse)
+            .setInteger("hausnr", hausnr)
+            .setString("zusatz", zusatz)
+            .list();
+        }
+        log.debug(result);
+        if (result.isEmpty()) {
+            exists = false;
+        }
+        return exists;
+    }
+
+    /**
      * Ein Listener für die Events des "Neuer Standort"-Moduls.
      * @author David Klotz
      */
@@ -519,7 +559,13 @@ public class BasisStandortNeu extends AbstractModul {
             if (e.getSource() == speichernButton) {
                 log.debug("(" + BasisStandortNeu.this.getIdentifier() + ") "
                 		+ "Speichern gedrückt!");
-                doSave();
+                // Check if we already have this location
+                if (standortExists()) {
+                    frame.changeStatus("Standort existiert bereits!", Color.RED);
+                    log.debug("Standort existiert bereits und wurde nicht gespeichert.");
+                } else {
+                    doSave();
+                }
             } else if (e.getSource() == strassenBox) {
                 // Wenn wir eine Straße auswählen, wird die PLZ upgedatet
                 BasisStrassen stra = BasisStrassen.getStrasseByName((String) strassenBox.getSelectedItem());
