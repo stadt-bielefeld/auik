@@ -126,18 +126,6 @@ public class AtlEinheiten extends AbstractAtlEinheiten implements Serializable {
             .array(new AtlEinheiten[0]);
     }
 
-    public static AtlEinheiten[] getKlaerschlammEinheiten() {
-        return (AtlEinheiten[]) new DatabaseAccess()
-            .createQuery(
-                "SELECT DISTINCT einheit " +
-                "FROM AtlEinheiten AS einheit, AtlParameter AS param " +
-                "WHERE param.wirdgemessenineinheit = einheit.id " +
-                "AND param.klaerschlammGw is not null " +
-                "ORDER BY einheit.bezeichnung"
-                )
-            .array(new AtlEinheiten[0]);
-    }
-
     /**
      * Liefert eine bestimmte Einheit.
      * @param id Die ID der Einheit
