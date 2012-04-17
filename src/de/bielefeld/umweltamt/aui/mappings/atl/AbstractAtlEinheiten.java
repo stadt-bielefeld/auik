@@ -23,11 +23,14 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+
 /**
  * A class that represents a row in the ATL_EINHEITEN table. You can customize
  * the behavior of this class by editing the class, {@link AtlEinheiten}.
  */
-public abstract class AbstractAtlEinheiten implements Serializable {
+public abstract class AbstractAtlEinheiten extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = -8571057960382496668L;
 
     /**

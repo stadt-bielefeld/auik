@@ -120,7 +120,9 @@ public class AtlEinheiten extends AbstractAtlEinheiten implements Serializable {
      */
     public static AtlEinheiten[] getEinheiten() {
         return (AtlEinheiten[]) new DatabaseAccess()
-            .createQuery("FROM AtlEinheiten as einheit")
+            .createQuery(
+                "FROM AtlEinheiten as einheit " +
+                "ORDER BY einheit.bezeichnung")
             .array(new AtlEinheiten[0]);
     }
 
