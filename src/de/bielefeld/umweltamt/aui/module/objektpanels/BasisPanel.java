@@ -1182,7 +1182,8 @@ public class BasisPanel  extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     // Save the objekt bevor we can link it to another
                     if (hauptModul.getObjekt().getObjektid() == null) {
-                        hauptModul.getFrame().changeStatus("Das neue Objekt muss erst gespeichert werden, bevor es mit anderen verknüpft werden kann.", HauptFrame.ERROR_COLOR);                    } else {
+                        hauptModul.getFrame().changeStatus("Das neue Objekt muss erst gespeichert werden, bevor es mit anderen verknüpft werden kann.", HauptFrame.ERROR_COLOR);
+                    } else {
                         ObjektChooser chooser = new ObjektChooser(hauptModul
                                 .getFrame(), hauptModul.getObjekt(),
                                 objektVerknuepfungModel);
