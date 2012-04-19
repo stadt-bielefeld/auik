@@ -1180,10 +1180,14 @@ public class BasisPanel  extends JPanel {
             selectObjektButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ObjektChooser chooser = new ObjektChooser(hauptModul
-                            .getFrame(), hauptModul.getObjekt(),
-                            objektVerknuepfungModel);
-                    chooser.setVisible(true);
+                    // Save the objekt bevor we can link it to another
+                    if (hauptModul.getObjekt().getObjektid() == null) {
+                        hauptModul.getFrame().changeStatus("Das neue Objekt muss erst gespeichert werden, bevor es mit anderen verknüpft werden kann.", HauptFrame.ERROR_COLOR);                    } else {
+                        ObjektChooser chooser = new ObjektChooser(hauptModul
+                                .getFrame(), hauptModul.getObjekt(),
+                                objektVerknuepfungModel);
+                        chooser.setVisible(true);
+                    }
                 }
             });
         }
