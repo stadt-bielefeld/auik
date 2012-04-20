@@ -132,7 +132,9 @@ public class AnhBwkModel extends ListTableModel {
             return tmp;
         }
         if (fd.getBasisObjekt().getInaktiv()) {
-            tmp = StringUtils.setStrike(tmp.toString());
+            if (tmp != null) {
+                tmp = StringUtils.setStrike(tmp.toString());
+            }
         }
         return tmp;
     }
