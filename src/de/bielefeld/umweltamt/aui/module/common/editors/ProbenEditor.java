@@ -208,25 +208,36 @@ public class ProbenEditor extends AbstractApplyEditor {
                 //positionen = probe.getAtlAnalysepositionen();
                 probe = AtlProbenahmen.getProbenahme(probe.getId(), true);
                 setList(AtlProbenahmen.sortAnalysepositionen(probe));
-            } else if (isNew && !isSchlamm) {
-                //AUIKataster.debugOutput("Bearbeite neue Probe! Positionen leer.");
-                //positionen = new HashSet();
-            	setList(new ArrayList<Object>());
-            	addParameter(AtlParameter.getParameter("L10821"));
-            	addParameter(AtlParameter.getParameter("B00600"));
-            	addParameter(AtlParameter.getParameter("L10111"));
-            } else {
-            	setList(new ArrayList<Object>());
-            	addParameter(AtlParameter.getParameter("L11380"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
-            	addParameter(AtlParameter.getParameter("L11650"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
-            	addParameter(AtlParameter.getParameter("L11510"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
-            	addParameter(AtlParameter.getParameter("L11610"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
-            	addParameter(AtlParameter.getParameter("L11880"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
-            	addParameter(AtlParameter.getParameter("L11660"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
-            	addParameter(AtlParameter.getParameter("L11640"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
-            	addParameter(AtlParameter.getParameter("L13430"), AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID), "AGROLAB");
+            } else { // isNew
+                if (!isSchlamm) {
+                    String[] params_ordn = {"L10821", "B00600", "L10111"};
+                    String analyse_von = "360.33";
+                    setList(new ArrayList<Object>());
+                    AtlParameter param = null;
+                    for (String param_ordn : params_ordn) {
+                        param = AtlParameter.getParameter(param_ordn);
+                        addParameter(
+                            param,
+                            AtlEinheiten.getEinheit(
+                                param.getWirdgemessenineinheit()),
+                            analyse_von);
+                    }
+                } else {
+                    String[] params_ordn = {
+                        "L11380", "L11650", "L11510", "L11610",
+                        "L11880", "L11660", "L11640", "L13430"};
+                    String analyse_von = "AGROLAB";
+                    setList(new ArrayList<Object>());
+                    AtlParameter param = null;
+                    for (String param_ordn : params_ordn) {
+                        param = AtlParameter.getParameter(param_ordn);
+                        addParameter(
+                            param,
+                            AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID),
+                            analyse_von);
+                    }
+                }
             }
-
             fireTableDataChanged();
         }
 
@@ -532,6 +543,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     private JComboBox            parameterBox;
     private JComboBox            einheitenBox;
+    private JComboBox            analysevonBox;
 
     private ParameterModel       parameterModel;
     private boolean isNew;
@@ -1221,6 +1233,22 @@ public class ProbenEditor extends AbstractApplyEditor {
         // Analyse von
         TableColumn analyseColumn = parameterTabelle.getColumnModel().getColumn(4);
         analyseColumn.setPreferredWidth(100);
+
+        String[] analyse_von_auswahl = {
+            "700.44", "360.33", "AGROLAB", "Schwarze vdH"};
+
+        analysevonBox = new JComboBox(analyse_von_auswahl);
+        analysevonBox.setEditable(true);
+        analysevonBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                analysevonBox.showPopup();
+            }
+        });
+        analysevonBox.setBorder(BorderFactory.createEmptyBorder());
+
+        analyseColumn.setCellEditor(new DefaultCellEditor(analysevonBox));
+        analyseColumn.setCellRenderer(new ComboBoxRenderer());
 
         // Normwert
         TableColumn normwertColumn = parameterTabelle.getColumnModel().getColumn(6);
