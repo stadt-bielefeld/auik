@@ -82,8 +82,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-
-
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -156,7 +154,7 @@ public class SettingsManager {
         );
 
         defaults.setProperty("auik.prefs.status_time", "40");
-        defaults.setProperty("auik.prefs.sielhaut_labor", "HBICON");
+        defaults.setProperty("auik.prefs.sielhaut_labor", "OWL");
 
         defaults.setProperty("auik.birt.enginepath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\birt-runtime-2_3_2\\ReportEngine\\");
         defaults.setProperty("auik.birt.reportpath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\designs\\");
@@ -294,7 +292,7 @@ public class SettingsManager {
     public BasisStandort getStandort() {
 
             return standort;
-        
+
     }
 
     /**
