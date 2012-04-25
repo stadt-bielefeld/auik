@@ -380,6 +380,38 @@ public class AuikUtils {
     }
 
     /**
+     * TODO: WHY are we doing this by hand??? Switch to DateFormat...
+     * Looks like copied from somewhere anyway ("@param DateFormatter")...
+     *
+     * Liefert einen String der Form "dd.mm.JJJJ" für ein
+     * gegebenes Datums-Objekt.
+     * @param DateFormatter Das Datum
+     * @return Einen String der Form "dd.mm.JJJJ" oder <code>null</code>, falls DateFormatter <code>null</code> ist
+     */
+    public static String getDayTimeStringFromDate(Date date) {
+        if (date != null) {
+            Calendar cal = new GregorianCalendar();
+            cal.setTime(date);
+
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            String dayString = (day < 10) ? ("0"+day) : (""+day);
+
+            int month = cal.get(Calendar.MONTH) + 1;
+            String monthString = (month < 10) ? ("0"+month) : (""+month);
+
+            int hour = cal.get(Calendar.HOUR_OF_DAY);
+            String hourString = (hour < 10) ? ("0"+hour) : (""+hour);
+
+            int minute = cal.get(Calendar.MINUTE);
+            String minuteString = (minute < 10) ? ("0"+minute) : (""+minute);
+
+            return  dayString + "." + monthString + "." + cal.get(Calendar.YEAR) + " " + hourString + ":" + minuteString;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Liefert den Wochentag eines gegebenen Datum-Objektes.
      * @param Das Datum
      * @return Den Wochentag als String

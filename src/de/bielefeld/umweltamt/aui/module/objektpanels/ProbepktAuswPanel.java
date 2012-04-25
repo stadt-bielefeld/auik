@@ -328,7 +328,7 @@ public class ProbepktAuswPanel extends JPanel {
                 Minute min = (Minute) dateList.get(itemIndex);
              if (columnIndex == 0) {
                     Date date = new Date(min.getFirstMillisecond());
-                    tmp = AuikUtils.getStringFromDate(date);
+                    tmp = AuikUtils.getDayTimeStringFromDate(date);
                 } else {
                     APosDataItem item = null;
                     if (seriesIndex < col1.getSeriesCount()) {
@@ -471,7 +471,7 @@ public class ProbepktAuswPanel extends JPanel {
                 column = exportTable.getColumnModel().getColumn(i);
                 if (i == 0 ) {//|| i == 1) {
                     column.setCellRenderer(zentrierterRenderer);
-                    column.setPreferredWidth(75);
+                    column.setPreferredWidth(100);
                 } else {
                     column.setCellRenderer(rechtsBuendigRenderer);
                     column.setPreferredWidth(90);

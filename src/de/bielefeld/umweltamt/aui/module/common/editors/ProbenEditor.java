@@ -1096,6 +1096,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         BasisBetreiber basisBetr = probe.getBasisBetreiber();
 
         probenummer.setText(probe.getKennummer());
+        probenummer.setEnabled(false);
         entnahmepunkt.setText(
             probe.getAtlProbepkt().getBasisObjekt().getBeschreibung());
         Date entnahmeDatum = probe.getDatumDerEntnahme();
