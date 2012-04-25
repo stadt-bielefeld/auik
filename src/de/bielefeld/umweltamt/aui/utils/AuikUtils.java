@@ -380,13 +380,10 @@ public class AuikUtils {
     }
 
     /**
-     * TODO: WHY are we doing this by hand??? Switch to DateFormat...
-     * Looks like copied from somewhere anyway ("@param DateFormatter")...
-     *
-     * Liefert einen String der Form "dd.mm.JJJJ" für ein
+     * Liefert einen String der Form "dd.mm.JJJJ hh:mm" für ein
      * gegebenes Datums-Objekt.
      * @param DateFormatter Das Datum
-     * @return Einen String der Form "dd.mm.JJJJ" oder <code>null</code>, falls DateFormatter <code>null</code> ist
+     * @return Einen String der Form "dd.mm.JJJJ hh:mm" oder <code>null</code>, falls DateFormatter <code>null</code> ist
      */
     public static String getDayTimeStringFromDate(Date date) {
         if (date != null) {
