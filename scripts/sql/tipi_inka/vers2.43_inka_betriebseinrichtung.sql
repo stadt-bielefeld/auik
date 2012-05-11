@@ -33,7 +33,9 @@
   NULL::integer			AS arbeitsstaette_ver,
   -- Foreign Key: dea_wz_code
   NULL::character varying(7)	AS wz_code,
-  NULL::integer			AS wz_code_ver
+  NULL::integer			AS wz_code_ver,
+  false::boolean		AS stilllegung_jn,	-- NOT NULL
+  NULL::date			AS stilllegung_datum
 
 FROM auik.indeinl_genehmigung
   LEFT OUTER JOIN auik.basis_objekt

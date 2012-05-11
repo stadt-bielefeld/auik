@@ -31,7 +31,7 @@
   NULL::integer					AS adresse_anspr_ver,
   -- Foreign Key: dea_gemeinde
   '05711000'::character varying(8)		AS gemeindekennzahl,	-- NOT NULL
-  1::integer					AS gemeinde_vers	-- NOT NULL
+  1::integer					AS gemeinde_ver		-- NOT NULL
 
 FROM auik.indeinl_genehmigung
   LEFT OUTER JOIN auik.basis_objekt
