@@ -1,15 +1,15 @@
 ﻿SELECT DISTINCT
   -- Primary Key
-  basis_standort.id::integer			AS adresse_nr,
-  1::integer					AS adresse_version,
-  '~~There be dragons~~'::character varying(20)	AS herkunft,
+  basis_standort.id::integer	AS adresse_nr,
+  1::integer			AS adresse_ver,
 
   -- Historisierung
-  '1970-01-01'::date	AS inka_gueltig_von,	-- NOT NULL
-  NULL::date		AS inka_gueltig_bis,
-  1::integer		AS ist_aktuell_tog, 	-- NOT NULL
-  '1970-01-01'::date	AS erfassungs_datum,	-- NOT NULL
-  NULL::date		AS aenderungs_datum,
+  '1970-01-01'::date					AS gueltig_von, 	-- NOT NULL
+  NULL::date 						AS gueltig_bis,
+  NULL::timestamp without time zone			AS aenderungs_datum,
+  '1970-01-01 00:00:00'::timestamp without time zone	AS erfassungs_datum,	-- NOT NULL
+  1::integer 						AS historien_nr,	-- NOT NULL
+  true::boolean						AS ist_aktuell_jn, 	-- NOT NULL
 
   -- Daten
   '<< nur Standort >>'::character varying(40)	AS name1,	-- NOT NULL
@@ -25,17 +25,7 @@
   NULL::character varying(30)			AS telefon,
   NULL::character varying(30)			AS telefon_mobil,
   NULL::character varying(30)			AS fax,
-  NULL::character varying(255)			AS email,
-
-  -- (some more...) Historisierung
-  1::integer 		AS zustands_nr,	-- NOT NULL
-  '1970-01-01'::date 	AS gueltig_von, -- NOT NULL
-  NULL::date 		AS ig_stichtag,
-  NULL::date 		AS gueltig_bis,
-  '1970-01-01'::date	AS erstell_dat,	-- NOT NULL
-  '1970-01-01'::date 	AS aktual_dat,	-- NOT NULL
-  1::integer 		AS versionsnr,	-- NOT NULL
-  NULL::timestamp 	AS zeitstempel
+  NULL::character varying(255)			AS email
 
 FROM 
   auik.indeinl_genehmigung
@@ -61,16 +51,16 @@ UNION
 
 SELECT DISTINCT
   -- Primary Key
-  (basis_betreiber.id << 16)::integer		AS adresse_nr, 
-  1::integer					AS adresse_version, 
-  '~~There be dragons~~'::character varying(20)	AS herkunft,
+  (basis_betreiber.id << 16)::integer	AS adresse_nr, 
+  1::integer				AS adresse_ver, 
 
   -- Historisierung
-  '1970-01-01'::date	AS inka_gueltig_von,	-- NOT NULL
-  NULL::date		AS inka_gueltig_bis,
-  1::integer		AS ist_aktuell_tog, 	-- NOT NULL
-  '1970-01-01'::date	AS erfassungs_datum,	-- NOT NULL
-  NULL::date		AS aenderungs_datum,
+  '1970-01-01'::date					AS gueltig_von, 	-- NOT NULL
+  NULL::date 						AS gueltig_bis,
+  NULL::timestamp without time zone			AS aenderungs_datum,
+  '1970-01-01 00:00:00'::timestamp without time zone	AS erfassungs_datum,	-- NOT NULL
+  1::integer 						AS historien_nr,	-- NOT NULL
+  true::boolean						AS ist_aktuell_jn, 	-- NOT NULL
 
   -- Daten
   basis_betreiber.betrname::character varying(40)	AS name1,	-- NOT NULL
@@ -86,18 +76,8 @@ SELECT DISTINCT
   NULL::character varying(30)				AS telefon,
   NULL::character varying(30)				AS telefon_mobil,
   NULL::character varying(30)				AS fax,
-  NULL::character varying(255)				AS email,
+  NULL::character varying(255)				AS email
 
-  -- (some more...) Historisierung
-  1::integer 		AS zustands_nr,	-- NOT NULL
-  '1970-01-01'::date 	AS gueltig_von, -- NOT NULL
-  NULL::date 		AS ig_stichtag,
-  NULL::date 		AS gueltig_bis,
-  '1970-01-01'::date	AS erstell_dat,	-- NOT NULL
-  '1970-01-01'::date 	AS aktual_dat,	-- NOT NULL
-  1::integer 		AS versionsnr,	-- NOT NULL
-  NULL::timestamp 	AS zeitstempel
-  
 FROM 
   auik.indeinl_genehmigung
     LEFT OUTER JOIN auik.basis_objekt
