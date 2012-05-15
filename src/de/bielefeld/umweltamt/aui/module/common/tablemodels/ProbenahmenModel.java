@@ -42,6 +42,7 @@ public class ProbenahmenModel extends ListTableModel {
                 "Kennnummer",
                 secondColumn,
                 "Datum",
+                "Uhrzeit",
                 "Status",
                 "Firma",
                 "Bemerkung"}, false, true);
@@ -53,6 +54,7 @@ public class ProbenahmenModel extends ListTableModel {
                 "Kennnummer",
                 "Wochentag",
                 "Datum",
+                "Uhrzeit",
                 "Status",
                 "Bemerkung"}, false, true);
     }
@@ -94,12 +96,15 @@ public class ProbenahmenModel extends ListTableModel {
                     value = AuikUtils.getStringFromDate(probe.getDatumDerEntnahme());
                     break;
                 case 3:
+                    value = probe.getUhrzeitbeginn() + " - " + probe.getUhrzeitende();
+                    break;
+                case 4:
                 	if (probe.getAtlStatus() != null)
                 		value = probe.getAtlStatus().getBezeichnung();
                 	else
                 		value = "";
                     break;
-                case 4:
+                case 5:
                     value = probe.getBemerkung();
                     break;
                 default:
@@ -123,15 +128,18 @@ public class ProbenahmenModel extends ListTableModel {
                     value = AuikUtils.getStringFromDate(probe.getDatumDerEntnahme());
                     break;
                 case 3:
+                    value = probe.getUhrzeitbeginn() + " - " + probe.getUhrzeitende();
+                    break;
+                case 4:
                 	if (probe.getAtlStatus() != null)
                 		value = probe.getAtlStatus().getBezeichnung();
                 	else
                 		value = "";
                     break;
-                case 4:
+                case 5:
                     value = probe.getBasisObjekt().getBasisBetreiber();
                     break;
-                case 5:
+                case 6:
                     value = probe.getBemerkung();
                     break;
                 default:
