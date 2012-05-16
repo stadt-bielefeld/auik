@@ -46,5 +46,6 @@ WHERE
   basis_objekt._deleted = false AND
   basis_standort._deleted = false AND
   basis_betreiber._deleted = false AND
-  indeinl_genehmigung._deleted = false;
+  indeinl_genehmigung._deleted = false AND
+  basis_objekt.inaktiv = FALSE;
   

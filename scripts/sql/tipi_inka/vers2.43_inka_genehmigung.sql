@@ -1,4 +1,4 @@
-﻿SELECT
+﻿SELECT distinct
   -- Primary Key
   indeinl_genehmigung.objektid::integer	AS genehmigung_nr,
   1::integer				AS genehmigung_ver,
@@ -28,4 +28,5 @@ FROM auik.indeinl_genehmigung
 WHERE 
   indeinl_genehmigung.anhang IS NOT NULL AND 
   basis_objekt._deleted = FALSE AND 
-  indeinl_genehmigung._deleted = FALSE;
+  indeinl_genehmigung._deleted = FALSE AND
+  basis_objekt.inaktiv = FALSE;

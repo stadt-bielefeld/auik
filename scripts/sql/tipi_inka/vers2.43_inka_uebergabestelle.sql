@@ -48,4 +48,5 @@ FROM auik.indeinl_uebergabestelle
 
 WHERE 
   indeinl_uebergabestelle._deleted = FALSE AND
-  basis_objekt._deleted = FALSE;
+  basis_objekt._deleted = FALSE AND
+  basis_objekt.inaktiv = FALSE;

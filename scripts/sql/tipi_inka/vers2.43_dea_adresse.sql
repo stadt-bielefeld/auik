@@ -42,6 +42,7 @@ WHERE
   basis_objekt._deleted = FALSE AND 
   basis_standort._deleted = FALSE AND
   basis_betreiber._deleted = FALSE AND
+  basis_objekt.inaktiv = FALSE AND
   NOT (basis_standort.strasse = basis_betreiber.strasse AND
        basis_standort.hausnr = basis_betreiber.hausnr AND
        basis_standort.hausnrzus IS NOT DISTINCT FROM basis_betreiber.hausnrzus AND
@@ -89,5 +90,6 @@ WHERE
   indeinl_genehmigung.anhang IS NOT NULL AND 
   indeinl_genehmigung._deleted = FALSE AND 
   basis_objekt._deleted = FALSE AND 
-  basis_betreiber._deleted = FALSE;
+  basis_betreiber._deleted = FALSE AND
+  basis_objekt.inaktiv = FALSE;
   
