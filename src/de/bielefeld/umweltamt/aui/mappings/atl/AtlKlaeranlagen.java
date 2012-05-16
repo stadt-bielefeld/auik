@@ -32,16 +32,21 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 public class AtlKlaeranlagen extends AbstractAtlKlaeranlagen implements
         Serializable {
     private static final long serialVersionUID = 4476838822557197680L;
+
+    /*
+     * Warum haben wir überhaupt die Tabelle. wenn hier eh alle Werte stehen?
+     */
+
     /** Die ID der KA Brake */
-    final public static Integer BRAKE = new Integer(1);
+    final public static Integer BRAKE = new Integer(4);
     /** Die ID der KA Heepen */
-    final public static Integer HEEPEN = new Integer(2);
+    final public static Integer HEEPEN = new Integer(1);
     /** Die ID der KA Sennestadt */
-    final public static Integer SENNESTADT = new Integer(3);
+    final public static Integer SENNESTADT = new Integer(8);
     /** Die ID der KA O.Lutter */
-    final public static Integer OBERE_LUTTER = new Integer(4);
+    final public static Integer OBERE_LUTTER = new Integer(5);
     /** Die ID der KA Verl-Sende */
-    final public static Integer VERL_SENDE = new Integer(5);
+    final public static Integer VERL_SENDE = new Integer(9);
 
     /** Simple constructor of AtlKlaeranlagen instances. */
     public AtlKlaeranlagen() {
@@ -84,10 +89,13 @@ public class AtlKlaeranlagen extends AbstractAtlKlaeranlagen implements
      * @return Alle vorhandenen Kläranlagen
      */
     public static AtlKlaeranlagen[] getKlaeranlagen() {
-        String suchString = "FROM AtlKlaeranlagen ka ORDER BY ka.kaId";
-        return (AtlKlaeranlagen[]) new DatabaseAccess().createQuery(suchString)
-                .setCacheable(true)
-                .setCacheRegion("kaliste")
-                .array(new AtlKlaeranlagen[0]);
+        return (AtlKlaeranlagen[]) new DatabaseAccess().createQuery(
+            "FROM AtlKlaeranlagen ka " +
+            "WHERE ka.kaId!=7 " + // Well yes, this is not the best way...
+            "ORDER BY ka.kaId"
+        )
+        .setCacheable(true)
+        .setCacheRegion("kaliste")
+        .array(new AtlKlaeranlagen[0]);
     }
 }
