@@ -36,6 +36,7 @@ public class InkaBetriebseinrichtung  implements java.io.Serializable {
     private Integer betriebNr;
     private Integer adresseBetreibNr;
     private Integer genehmigungNr;
+    private String wzCode;
 
     public InkaBetriebseinrichtung() {
     }
@@ -44,11 +45,12 @@ public class InkaBetriebseinrichtung  implements java.io.Serializable {
         this.id = id;
     }
 
-    public InkaBetriebseinrichtung(InkaBetriebseinrichtungId id, Integer betriebNr, Integer adresseBetreibNr, Integer genehmigungNr) {
+    public InkaBetriebseinrichtung(InkaBetriebseinrichtungId id, Integer betriebNr, Integer adresseBetreibNr, Integer genehmigungNr,String wzCode) {
        this.id = id;
        this.betriebNr = betriebNr;
        this.adresseBetreibNr = adresseBetreibNr;
        this.genehmigungNr = genehmigungNr;
+       this.wzCode = wzCode;
     }
 
     public InkaBetriebseinrichtungId getId() {
@@ -83,6 +85,14 @@ public class InkaBetriebseinrichtung  implements java.io.Serializable {
         this.genehmigungNr = genehmigungNr;
     }
 
+    public String getWzCode() {
+        return this.wzCode;
+    }
+
+    public void setWzCode(String wzCode) {
+        this.wzCode = wzCode;
+    }
+
     public static List<?> getInkaBetriebseinrichtungen() {
         String query = "FROM InkaBetriebseinrichtung";
         return new DatabaseAccess().createQuery(query).list();
@@ -110,7 +120,7 @@ public class InkaBetriebseinrichtung  implements java.io.Serializable {
             this.getAdresseBetreibNr(),
             1,  // Default Wert für nicht vohandenes Feld 'adresse_betreib_ver'.
             null, // Default Wert für nicht vohandenes Feld 'arbeitsstaette_seq_nr'.
-            1, // Default Wert für nicht vohandenes Feld 'arbeitsstaette_ver'.
+            null, // Default Wert für nicht vohandenes Feld 'arbeitsstaette_ver'.
             this.getBetriebNr(),
             1, // Default Wert für nicht vohandenes Feld 'betrieb_nr'.
             this.getId().getBetriebseinrichtungNr(),
@@ -119,8 +129,8 @@ public class InkaBetriebseinrichtung  implements java.io.Serializable {
             1, // Default Wert für nicht vohandenes Feld 'genehmigung_ver'.
             null, // kein Datum, da stilllegung_jn = false.
             false, // Default für 'stillegung_jn'.
-            "test", // Default für 'wz_code'.
-            1 // Default für wz_code_ver.
+            null, // kein wzCode
+            null // Default für wz_code_ver.
         );
         return item;
     }

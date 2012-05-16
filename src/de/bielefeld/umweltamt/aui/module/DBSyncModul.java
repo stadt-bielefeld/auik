@@ -239,11 +239,7 @@ public class DBSyncModul extends AbstractModul {
                         service.setDea_Adressen(user, password, addr);
                         service.setInka_Betriebe(user, password, betr);
                         service.setInka_Genehmigungen(user, password, genehm);
-// Elements cannot be send to the server since there is a missing field: 'wz_code'.
-//                        service.setInka_Betriebseinrichtungen(
-//                            user,
-//                            password,
-//                            betreinr);
+                        service.setInka_Betriebseinrichtungen(user, password, betreinr);
                     }
                     else {
                         JOptionPane.showMessageDialog(null, "Bitte holen Sie zuerst Daten ab!");
@@ -377,11 +373,10 @@ public class DBSyncModul extends AbstractModul {
         for (int i = 0; i < list2.size(); i++) {
             sendBetrieb.add(((InkaBetrieb)list2.get(i)).toServiceType());
         }
-// Elements cannot be send to the server, we do not have to convert them.
-//        List<InkaBetriebseinrichtung> list3 = betriebseinrDBModel.getList();
-//        for (int i = 0; i < list3.size(); i++) {
-//            sendBetriebseinr.add(list3.get(i).toServiceType());
-//        }
+        List<?> list3 = betriebseinrDBModel.getList();
+        for (int i = 0; i < list3.size(); i++) {
+            sendBetriebseinr.add(((InkaBetriebseinrichtung)list3.get(i)).toServiceType());
+        }
         List<?> list4 = genehmigungDBModel.getList();
         for (int i = 0; i < list4.size(); i++) {
             sendGenehm.add(((InkaGenehmigung)list4.get(i)).toServiceType());
