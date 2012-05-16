@@ -76,7 +76,7 @@ public class InkaGenehmigungModel extends ListTableModel {
             tmp = fd.getGenehmigungDatum();
             break;
         case 4:
-            tmp = fd.getBefristetIn();
+            tmp = fd.getBefristetJn();
             break;
 
         default:

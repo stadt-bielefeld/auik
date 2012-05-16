@@ -229,7 +229,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         builder.add(new JScrollPane(super.getComponent(BEMERKUNGEN),
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
         		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),
-        		cc.xywh(labelCol, row, colWidth, 2));
+        		cc.xywh(labelCol, row, cols, 2));
         row += 3;
 
         /* Bottom */
@@ -256,26 +256,17 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
         builder.addSeparator("Erfassung", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.addLabel(GENEHMIGUNGSDATUM, cc.xy(labelCol, row));
-        builder.add(
-        		super.getComponent(GENEHMIGUNGSDATUM), cc.xy(fieldCol, row));
-        row += 2;
-        builder.addLabel(AENDERUNGSGENEHMIGUNGSDATUM, cc.xy(labelCol, row));
-        builder.add(
-        		super.getComponent(AENDERUNGSGENEHMIGUNGSDATUM),
-        		cc.xy(fieldCol, row));
-        row += 2;
         builder.add(
         		super.getComponent(ABGEMELDET),
-        		cc.xy(fieldCol, row, "l,d"));
+        		cc.xy(labelCol, row, "l,d"));
         row += 2;
         builder.add(
         		super.getComponent(ABWASSERFREI),
-        		cc.xy(fieldCol, row, "l,d"));
+        		cc.xy(labelCol, row, "l,d"));
         row += 2;
         builder.add(
         		super.getComponent(E_SATZUNG),
-        		cc.xy(fieldCol, row, "l,d"));
+        		cc.xy(labelCol, row, "l,d"));
         row += 2;
 
         builder.addSeparator(

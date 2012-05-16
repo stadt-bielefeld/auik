@@ -18,8 +18,8 @@
         <property name="genehmigungDatum" type="date">
             <column name="genehmigung_datum" length="4" />
         </property>
-        <property name="befristetIn" type="java.lang.String">
-            <column name="befristet_in" />
+        <property name="befristetJn" type="java.lang.String">
+            <column name="befristet_jn" />
         </property>
     </class>
 </hibernate-mapping>

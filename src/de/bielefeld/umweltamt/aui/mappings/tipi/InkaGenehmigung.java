@@ -37,7 +37,7 @@ public class InkaGenehmigung  implements java.io.Serializable {
     private Integer betriebNr;
     private String behoerdenId;
     private Date genehmigungDatum;
-    private String befristetIn;
+    private String befristetJn;
 
     public InkaGenehmigung() {
     }
@@ -46,12 +46,12 @@ public class InkaGenehmigung  implements java.io.Serializable {
         this.id = id;
     }
 
-    public InkaGenehmigung(InkaGenehmigungId id, Integer betriebNr, String behoerdenId, Date genehmigungDatum, String befristetIn) {
+    public InkaGenehmigung(InkaGenehmigungId id, Integer betriebNr, String behoerdenId, Date genehmigungDatum, String befristetJn) {
        this.id = id;
        this.betriebNr = betriebNr;
        this.behoerdenId = behoerdenId;
        this.genehmigungDatum = genehmigungDatum;
-       this.befristetIn = befristetIn;
+       this.befristetJn = befristetJn;
     }
 
     public InkaGenehmigungId getId() {
@@ -86,12 +86,12 @@ public class InkaGenehmigung  implements java.io.Serializable {
         this.genehmigungDatum = genehmigungDatum;
     }
 
-    public String getBefristetIn() {
-        return this.befristetIn;
+    public String getBefristetJn() {
+        return this.befristetJn;
     }
 
-    public void setBefristetIn(String befristetIn) {
-        this.befristetIn = befristetIn;
+    public void setBefristetJn(String befristetIn) {
+        this.befristetJn = befristetIn;
     }
 
     public static List<?> getInkaGenehmigungen() {
