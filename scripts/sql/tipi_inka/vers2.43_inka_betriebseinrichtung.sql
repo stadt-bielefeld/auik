@@ -47,6 +47,7 @@ FROM auik.indeinl_genehmigung
     
 WHERE
   indeinl_genehmigung.anhang IS NOT NULL AND
+  indeinl_genehmigung.gen59 AND 
   indeinl_genehmigung._deleted = false AND
   basis_objekt._deleted = false AND
   basis_standort._deleted = false AND
