@@ -5,7 +5,7 @@
   indeinl_genehmigung.objektid::integer	AS uebergabestelle_lfd_nr,
   1::integer				AS uebergabestelle_ver,
   -- Primary Key
-  indeinl_genehmigung.objektid::integer	AS messstelle_lfd_nr,
+  atl_probepkt.objektid::integer	AS messstelle_lfd_nr,
   1::integer				AS messstelle_ver,
 
   -- Historisierung
@@ -25,12 +25,16 @@
   false::boolean				AS relevant_sum_fracht_jn	-- NOT NULL
 
 FROM auik.indeinl_genehmigung
-  LEFT OUTER JOIN auik.basis_objekt
-    ON indeinl_genehmigung.objektid = basis_objekt.objektid
+  LEFT OUTER JOIN auik.basis_objektverknuepfung
+    ON (indeinl_genehmigung.objektid = basis_objektverknuepfung.ist_verknuepft_mit
+      OR indeinl_genehmigung.objektid = basis_objektverknuepfung.objekt)
+  LEFT OUTER JOIN auik.atl_probepkt
+    ON (atl_probepkt.objektid = basis_objektverknuepfung.ist_verknuepft_mit
+      OR atl_probepkt.objektid = basis_objektverknuepfung.objekt)
 
 WHERE 
   indeinl_genehmigung.anhang IS NOT NULL AND 
   indeinl_genehmigung.gen59 AND 
-  indeinl_genehmigung._deleted = FALSE AND
-  basis_objekt._deleted = FALSE AND
-  basis_objekt.inaktiv = FALSE;
+  indeinl_genehmigung._deleted = FALSE; -- AND
+--  basis_objekt._deleted = FALSE AND
+--  basis_objekt.inaktiv = FALSE;
