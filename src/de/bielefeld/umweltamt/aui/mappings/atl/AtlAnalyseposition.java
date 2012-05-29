@@ -306,6 +306,7 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
 //        Integer pktID = pkt.getObjektid();
 
         String query = "FROM AtlAnalyseposition pos "
+//        String query = "FROM ViewAtlAnalysepositionAll pos "
                 + "WHERE pos.atlParameter = :param "
                 + "and pos.atlEinheiten = :einh "
                 + "and pos.atlProbenahmen.atlProbepkt = :pkt "

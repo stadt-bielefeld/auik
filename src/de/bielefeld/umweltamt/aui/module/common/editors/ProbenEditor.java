@@ -2061,7 +2061,7 @@ class ParameterAuswahlModel extends ListTableModel {
     }
 
     public void AlleParameter() {
-        setList(AtlParameter.getAll());
+        setList(AtlParameter.getAllAsList());
         log.debug("Suche nach '" + getList().size() + " Ergebnisse)");
     }
 }

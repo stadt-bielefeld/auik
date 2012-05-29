@@ -251,10 +251,15 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
             AtlParameter.getGroupedParameterAsList().toArray(new AtlParameter[0]);
     }
 
-    public static List<?> getAll() {
+    public static List<?> getAllAsList() {
         return new DatabaseAccess().createQuery(
             "FROM AtlParameter as param ORDER BY param.bezeichnung")
             .list();
+    }
+    public static AtlParameter[] getAllAsArray() {
+        return new DatabaseAccess().createQuery(
+            "FROM AtlParameter as param ORDER BY param.bezeichnung")
+            .array(new AtlParameter[0]);
     }
 
     public static AtlParameter[] getParameterGroup(int id) {
