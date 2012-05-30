@@ -543,9 +543,11 @@ public class BasisPanel  extends JPanel {
 																		// 49
 																		// (360.33)
 				getArtBox().addItem(BasisObjektarten.getObjektart(19)); // Abscheider
-																		// (360.33)
+																		// (360.32)
 				getArtBox().addItem(BasisObjektarten.getObjektart(15)); // Fettabscheider
 																		// (360.33)
+				getArtBox().addItem(BasisObjektarten.getObjektart(58)); // Abscheider
+																		// (360.34)
 			}
 
 			else {

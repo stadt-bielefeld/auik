@@ -120,6 +120,8 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
     public static final int ANHANG_49 = 14;
     /** Die ID der Objektart "Abscheider" */
     public static final int ABSCHEIDER = 19;
+    /** Die ID der Objektart "Abscheider34" */
+    public static final int ABSCHEIDER34 = 58;
     /** Die ID der Objektart "Fettabscheider" */
     public static final int FETTABSCHEIDER = 15;
     /** Die ID der Objektart "Zahnarzt" */
@@ -199,12 +201,13 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
 
     /**
      * @return Liefert <code>true</code>, wenn diese Objektart "Anhang 49",
-     *         "Abscheider" oder "Fettabscheider" ist
+     *         "Abscheider" oder "Fettabscheider" oder "Abscheider34" ist
      */
     public boolean isAnh49() {
         return ((ANHANG_49 == this.getObjektartid().intValue())
             || (ABSCHEIDER == this.getObjektartid().intValue())
-            || (FETTABSCHEIDER == this.getObjektartid().intValue()));
+            || (FETTABSCHEIDER == this.getObjektartid().intValue())
+            || (ABSCHEIDER34 == this.getObjektartid().intValue()));
     }
 
     public boolean isFettabscheider() {

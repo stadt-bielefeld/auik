@@ -163,7 +163,11 @@ public class BasisBetreiber extends AbstractBasisBetreiber implements
         Integer hausnr = getHausnr();
         String hausnrZus = getHausnrzus();
 
-        StringBuilder sb = new StringBuilder(strasse);
+        StringBuilder sb = new StringBuilder();
+
+        if (strasse != null) {
+            sb.append(strasse);
+        }
 
         if (hausnr != null) {
             sb.append(" ");
