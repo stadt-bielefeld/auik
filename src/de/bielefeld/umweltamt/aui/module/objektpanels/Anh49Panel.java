@@ -117,7 +117,6 @@ public class Anh49Panel extends AbstractAnhangPanel {
 	/* Note: As these strings are used as keys in the underlying HashMap,     *
 	 * they should be unique.                                                 */
 	/* Widgets - left */
-	private final String SACHBEARBEITER              = "Sachbearbeiter:";
 	private final String ANSPRECHPARTNER             = "Ansprechpartner:";
 	private final String SACHKUNDE_LFA               = "Sachkunde LFA:";
 	private final String ANALYSEMONAT                = "Analysemonat:";
@@ -149,7 +148,6 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
     	/* Add components to the "Anhang" panel */
         /* Left column */
-     	super.addComponent(SACHBEARBEITER, new LimitedTextField(50));
     	super.addComponent(ANSPRECHPARTNER, new LimitedTextField(50));
     	super.addComponent(SACHKUNDE_LFA, new LimitedTextField(50));
     	super.addComponent(ANALYSEMONAT, new LimitedTextField(50));
@@ -208,9 +206,6 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
         builder.addSeparator("Bearbeitung", cc.xyw(labelCol, row, colWidth));
         row += 2;
-//        builder.addLabel(SACHBEARBEITER, cc.xy(labelCol, row));
-//        builder.add(super.getComponent(SACHBEARBEITER), cc.xy(fieldCol, row));
-//        row += 2;
         builder.addLabel(ANSPRECHPARTNER, cc.xy(labelCol, row));
         builder.add(super.getComponent(ANSPRECHPARTNER), cc.xy(fieldCol, row));
         row += 2;
@@ -285,8 +280,6 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
     public void updateForm() {
         if (fachdaten != null) {
-        	super.setComponentValue(SACHBEARBEITER,
-        			fachdaten.getSachbearbeiterIn());
         	super.setComponentValue(ANSPRECHPARTNER,
         			fachdaten.getAnsprechpartnerIn());
         	super.setComponentValue(SACHKUNDE_LFA,
@@ -337,8 +330,6 @@ public class Anh49Panel extends AbstractAnhangPanel {
     private boolean saveAnh49Daten() {
         boolean success;
 
-        fachdaten.setSachbearbeiterIn(
-        		(String)super.getComponentValue(SACHBEARBEITER));
         fachdaten.setAnsprechpartnerIn(
         		(String)super.getComponentValue(ANSPRECHPARTNER));
         fachdaten.setSachkundelfa(
