@@ -176,7 +176,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 "3dlu, " +    //
                 "pref, " +    // Sachbearbeiter  | Genehmigungsdatum
                 "3dlu, " +    //
-                "pref, " + // Ansprechpartner | Änderungsgenehmigungsdatum
+                "pref, " +    // Ansprechpartner | Änderungsgenehmigungsdatum
                 "3dlu, " +    //
                 "pref, " +    // Sachkunde LFA   | abgemeldet
                 "3dlu, " +    //
@@ -208,9 +208,9 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
         builder.addSeparator("Bearbeitung", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.addLabel(SACHBEARBEITER, cc.xy(labelCol, row));
-        builder.add(super.getComponent(SACHBEARBEITER), cc.xy(fieldCol, row));
-        row += 2;
+//        builder.addLabel(SACHBEARBEITER, cc.xy(labelCol, row));
+//        builder.add(super.getComponent(SACHBEARBEITER), cc.xy(fieldCol, row));
+//        row += 2;
         builder.addLabel(ANSPRECHPARTNER, cc.xy(labelCol, row));
         builder.add(super.getComponent(ANSPRECHPARTNER), cc.xy(fieldCol, row));
         row += 2;
@@ -224,13 +224,13 @@ public class Anh49Panel extends AbstractAnhangPanel {
         builder.add(super.getComponent(ANALYSEMONAT), cc.xy(fieldCol, row));
         row += 2;
 
-        builder.addSeparator("Bemerkungen", cc.xyw(labelCol, row, colWidth));
+        builder.addSeparator("Bemerkungen", cc.xyw(labelCol, row, cols));
         row += 2;
         builder.add(new JScrollPane(super.getComponent(BEMERKUNGEN),
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
         		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),
-        		cc.xywh(labelCol, row, cols, 2));
-        row += 3;
+        		cc.xywh(labelCol, row, cols, 4));
+        row += 5;
 
         /* Bottom */
         builder.addSeparator("Verknüpfte Objekte", cc.xyw(labelCol, row, cols));
@@ -259,13 +259,12 @@ public class Anh49Panel extends AbstractAnhangPanel {
         builder.add(
         		super.getComponent(ABGEMELDET),
         		cc.xy(labelCol, row, "l,d"));
+        builder.add(
+            super.getComponent(E_SATZUNG),
+            cc.xy(fieldCol, row, "l,d"));
         row += 2;
         builder.add(
         		super.getComponent(ABWASSERFREI),
-        		cc.xy(labelCol, row, "l,d"));
-        row += 2;
-        builder.add(
-        		super.getComponent(E_SATZUNG),
         		cc.xy(labelCol, row, "l,d"));
         row += 2;
 
