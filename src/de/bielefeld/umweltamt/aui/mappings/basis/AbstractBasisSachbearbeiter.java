@@ -23,6 +23,9 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
+/*
+ * Hier sind einige Felder private. Die sollen später aus dem Datenbank raus.
+ */
 public abstract class AbstractBasisSachbearbeiter implements Serializable {
     private static final long serialVersionUID = 5350350541608539779L;
 
@@ -114,7 +117,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Return the value of the Zeichen column.
      * @return java.lang.String
      */
-    public java.lang.String getZeichen() {
+    private java.lang.String getZeichen() {
         return this.zeichen;
     }
 
@@ -122,7 +125,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Set the value of the Zeichen column.
      * @param zeichen
      */
-    public void setZeichen(java.lang.String zeichen) {
+    private void setZeichen(java.lang.String zeichen) {
         this.zeichen = zeichen;
     }
 
@@ -130,7 +133,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Return the value of the Zimmer column.
      * @return java.lang.String
      */
-    public java.lang.String getZimmer() {
+    private java.lang.String getZimmer() {
         return this.zimmer;
     }
 
@@ -138,7 +141,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Set the value of the Zimmer column.
      * @param zimmer
      */
-    public void setZimmer(java.lang.String zimmer) {
+    private void setZimmer(java.lang.String zimmer) {
         this.zimmer = zimmer;
     }
 
@@ -154,7 +157,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Set the value of the Telefon column.
      * @param telefon
      */
-    public void setTelefon(java.lang.String telefon) {
+    private void setTelefon(java.lang.String telefon) {
         this.telefon = telefon;
     }
 
@@ -162,7 +165,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Return the value of the Telefax column.
      * @return java.lang.String
      */
-    public java.lang.String getTelefax() {
+    private java.lang.String getTelefax() {
         return this.telefax;
     }
 
@@ -170,7 +173,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Set the value of the Telefax column.
      * @param telefax
      */
-    public void setTelefax(java.lang.String telefax) {
+    private void setTelefax(java.lang.String telefax) {
         this.telefax = telefax;
     }
 
@@ -178,7 +181,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Return the value of the EMail column.
      * @return java.lang.String
      */
-    public java.lang.String getEmail() {
+    private java.lang.String getEmail() {
         return this.email;
     }
 
@@ -186,7 +189,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Set the value of the EMail column.
      * @param email
      */
-    public void setEmail(java.lang.String email) {
+    private void setEmail(java.lang.String email) {
         this.email = email;
     }
 
@@ -194,7 +197,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Return the value of the Istadministrator column.
      * @return java.lang.Boolean
      */
-    public java.lang.Boolean getIstadministrator() {
+    private java.lang.Boolean getIstadministrator() {
         return this.istadminstrator;
     }
 
@@ -202,7 +205,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Set the value of the Istadministrator column.
      * @param istadminstrator
      */
-    public void setIstadministrator(java.lang.Boolean istadminstrator) {
+    private void setIstadministrator(java.lang.Boolean istadminstrator) {
         this.istadminstrator = istadminstrator;
     }
 
@@ -210,7 +213,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Return the value of the Pfadspeichern column.
      * @return java.lang.String
      */
-    public java.lang.String getPfadspeichern() {
+    private java.lang.String getPfadspeichern() {
         return this.pfadspeichern;
     }
 
@@ -218,7 +221,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Set the value of the EMail column.
      * @param pfadspeichern
      */
-    public void setPfadspeichern(java.lang.String pfadspeichern) {
+    private void setPfadspeichern(java.lang.String pfadspeichern) {
         this.pfadspeichern = pfadspeichern;
     }
 
@@ -234,7 +237,7 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      * Set the value of the Istadministrator column.
      * @param gehoertzuarbeitsgr
      */
-    public void setGehoertzuarbeitsgr(java.lang.String gehoertzuarbeitsgr) {
+    private void setGehoertzuarbeitsgr(java.lang.String gehoertzuarbeitsgr) {
         this.gehoertzuarbeitsgr = gehoertzuarbeitsgr;
     }
 
