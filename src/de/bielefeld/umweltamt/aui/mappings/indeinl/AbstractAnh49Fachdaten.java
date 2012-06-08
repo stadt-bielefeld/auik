@@ -164,6 +164,7 @@ public abstract class AbstractAnh49Fachdaten extends
 
     /** The value of the simple antragvom property. */
     private java.util.Date dekraTuevDatum;
+
     /** The value of the Anh49Analyse association. */
     private Set<?> anh49Analysen;
 
@@ -607,7 +608,7 @@ public abstract class AbstractAnh49Fachdaten extends
      * Return the value of the SACHBEARBEITER_IN column.
      * @return java.lang.String
      */
-    public java.lang.String getSachbearbeiterIn() {
+    private java.lang.String getSachbearbeiterIn() {
         return this.sachbearbeiterIn;
     }
 
@@ -615,7 +616,7 @@ public abstract class AbstractAnh49Fachdaten extends
      * Set the value of the SACHBEARBEITER_IN column.
      * @param sachbearbeiterIn
      */
-    public void setSachbearbeiterIn(java.lang.String sachbearbeiterIn) {
+    private void setSachbearbeiterIn(java.lang.String sachbearbeiterIn) {
         this.sachbearbeiterIn = sachbearbeiterIn;
     }
 

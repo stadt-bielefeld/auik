@@ -67,16 +67,43 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
-    public static String[] getSachbearbeiter() {
+    public static String[] getAllSachbearbeiter() {
         return (String[]) new DatabaseAccess()
             .createQuery(
-                "SELECT DISTINCT fd.sachbearbeiterIn "
-                + "FROM Anh49Fachdaten fd "
-                + "WHERE fd.basisObjekt.basisObjektarten.objektart "
-                + "NOT LIKE 'Fettabscheider'")
+//                "SELECT DISTINCT fd.sachbearbeiterIn "
+//                + "FROM Anh49Fachdaten fd "
+//                + "WHERE fd.basisObjekt.basisObjektarten.objektart "
+//                + "NOT LIKE 'Fettabscheider'")
+                "SELECT DISTINCT sb.name "
+                + "FROM "
+                + "  Anh49Fachdaten AS fd, "
+                + "  BasisObjekt AS obj, "
+                + "  BasisSachbearbeiter AS sb, "
+                + "  BasisObjektarten AS art "
+                + "WHERE "
+                + "  fd.objektid = obj.objektid AND "
+                + "  obj.basisObjektarten = art.id AND "
+                + "  sb.kennummer = obj.basisSachbearbeiter AND "
+                + "  art.objektart NOT LIKE 'Fettabscheider'")
             .setCacheable(true)
             .setCacheRegion("sachbearbeiter")
             .array(new String[0]);
+    }
+
+    public String getSachbearbeiter() {
+        return (String) new DatabaseAccess()
+            .createQuery(
+                "SELECT sb.name "
+                + "FROM "
+                + "  Anh49Fachdaten AS fd, "
+                + "  BasisObjekt AS obj, "
+                + "  BasisSachbearbeiter AS sb "
+                + "WHERE "
+                + "  fd = :fachdaten AND "
+                + "  fd.objektid = obj.objektid AND "
+                + "  sb.kennummer = obj.basisSachbearbeiter")
+            .setEntity("fachdaten", this)
+            .uniqueResult();
     }
 
     public Date getLetzteAnalyse(Anh49Fachdaten fd) {
@@ -93,28 +120,21 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
      * Anhang 49 Fachdaten nach Kriterien auswählen
      * TODO: Eine Variante einbauen, die für die ganzen Booleans auch "egal"
      * erlaubt.
-//     * @param abgemeldet
-//     * @param abwasserfrei
      * @param abgelWdrVorlage Liegt das Wiedervorlagedatum hinter dem aktuellen
-//     * @param abgerissen
      * @param sachbearbeiter
      * @param tuev
      * @param aktiv
      * @return List<?>
      */
     public static List<?> getAuswahlList (
-        /*Boolean abgemeldet, Boolean abwasserfrei,*/ Boolean abgelWdrVorlage,
-        /*Boolean abgerissen,*/ String sachbearbeiter, Integer tuev,
+        Boolean abgelWdrVorlage, String sachbearbeiter, Integer tuev,
         Boolean aktiv) {
 
-        String query = "FROM Anh49Fachdaten anh49 "
+        String query = "FROM Anh49Fachdaten AS anh49 "
             + "WHERE "
-//            + "anh49.abgemeldet = :abgemeldet "
-//            + "AND anh49.abwasserfrei = :abwasserfrei "
-//            + (abgerissen ?
-//                "AND lower(anh49.sonstigestechnik) LIKE '%abgerissen%' " : "")
-            + "anh49.sachbearbeiterIn LIKE :sachbearbeiter "
-            + "AND anh49.basisObjekt.inaktiv = :inaktiv ";
+            + "anh49.basisObjekt.basisSachbearbeiter.name "
+            		+ "LIKE :sachbearbeiter AND "
+            + "anh49.basisObjekt.inaktiv = :inaktiv ";
 
         if (abgelWdrVorlage) {
             query += "AND anh49.wiedervorlage <= :today ";
@@ -143,8 +163,6 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
             .createQuery(query)
             .setString("sachbearbeiter",
                 ((sachbearbeiter != null) ? sachbearbeiter : "%"))
-//            .setBoolean("abgemeldet", abgemeldet)
-//            .setBoolean("abwasserfrei", abwasserfrei)
             .setBoolean("inaktiv", !aktiv);
 
         if (abgelWdrVorlage) {

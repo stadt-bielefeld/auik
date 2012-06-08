@@ -92,7 +92,7 @@ public class Anh49Model extends ListTableModel {
             tmp = fd.getSonstigestechnik();
             break;
         case 5:
-            tmp = fd.getSachbearbeiterIn();
+            tmp = fd.getSachbearbeiter();
             break;
 
         default:

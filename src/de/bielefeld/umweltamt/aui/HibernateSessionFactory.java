@@ -23,7 +23,6 @@ package de.bielefeld.umweltamt.aui;
 
 import java.util.List;
 
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
@@ -95,7 +94,6 @@ public class HibernateSessionFactory {
                 try {
                     cfg.setProperty("hibernate.connection.username", DB_USER);
                     cfg.setProperty("hibernate.connection.password", DB_PASS);
-                    // TODO: Why do we still have informix stuff in here?
                     cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://172.20.70.24/fisumwelt");
                     cfg.configure(CONFIG_FILE_LOCATION);
                     sessionFactory = cfg.buildSessionFactory();

@@ -133,7 +133,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             aktivCheck.setSelected(true);
             sachbBox = new JComboBox();
             sachbBox.setModel(new DefaultComboBoxModel(
-                Anh49Fachdaten.getSachbearbeiter()));
+                Anh49Fachdaten.getAllSachbearbeiter()));
             dekraTuevFeld = new IntegerField();
             dekraTuevFeld.setToolTipText(
                 "<html>"
