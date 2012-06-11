@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-name="vaws_abfuellflaeche"></table-filter>
+	<table-filter match-name="vaws_abscheider"></table-filter>
+	<table-filter match-name="vaws_anlagenarten"></table-filter>
+	<table-filter match-name="vaws_anlagenchrono"></table-filter>
+	<table-filter match-name="vaws_behaelterart"></table-filter>
+	<table-filter match-name="vaws_fachdaten"></table-filter>
+	<table-filter match-name="vaws_fluessigkeit"></table-filter>
+	<table-filter match-name="vaws_gebuehrenarten"></table-filter>
+	<table-filter match-name="vaws_gefaehrdungsstufen"></table-filter>
+	<table-filter match-name="vaws_kontrollen"></table-filter>
+	<table-filter match-name="vaws_material"></table-filter>
+	<table-filter match-name="vaws_pruefer"></table-filter>
+	<table-filter match-name="vaws_pruefergebnisse"></table-filter>
+	<table-filter match-name="vaws_standortgghwsg"></table-filter>
+	<table-filter match-name="vaws_vbfeinstufung"></table-filter>
+	<table-filter match-name="vaws_verwaltungsgebuehren"></table-filter>
+	<table-filter match-name="vaws_verwaltungsverf"></table-filter>
+	<table-filter match-name="vaws_verwmassnahmen"></table-filter>
+	<table-filter match-name="vaws_wassereinzugsgebiete"></table-filter>
+	<table-filter match-name="vaws_wgk"></table-filter>
+	<table-filter match-name="vaws_wirtschaftszweige"></table-filter>
+</hibernate-reverse-engineering>

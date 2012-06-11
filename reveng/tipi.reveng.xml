@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-name="dea_adresse" match-schema="tipi"></table-filter>
+	<table-filter match-name="inka_anfallstelle" match-schema="tipi"></table-filter>
+	<table-filter match-name="inka_betrieb" match-schema="tipi"></table-filter>
+	<table-filter match-name="inka_betriebseinrichtung"
+		match-schema="tipi">
+	</table-filter>
+	<table-filter match-name="inka_genehmigung" match-schema="tipi"></table-filter>
+	<table-filter match-name="inka_messstelle" match-schema="tipi"></table-filter>
+	<table-filter match-name="inka_uebergabestelle"
+		match-schema="tipi">
+	</table-filter>
+</hibernate-reverse-engineering>

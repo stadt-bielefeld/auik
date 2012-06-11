@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-name="view_atl_analyseposition_all"
+		match-schema="auik">
+	</table-filter>
+	<table-filter match-name="view_basis_standort"
+		match-schema="auik">
+	</table-filter>
+	<table-filter match-name="view_betriebe" match-schema="auik"></table-filter>
+	<table-filter match-name="view_bwk" match-schema="auik"></table-filter>
+	<table-filter match-name="view_siehautqb_probenahmen"
+		match-schema="auik">
+	</table-filter>
+	<table-filter match-name="view_sielhautqb_kreuztabelle"
+		match-schema="auik">
+	</table-filter>
+</hibernate-reverse-engineering>
