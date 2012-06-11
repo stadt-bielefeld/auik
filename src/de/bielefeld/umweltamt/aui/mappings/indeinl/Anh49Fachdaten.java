@@ -57,8 +57,8 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         }
         return (Anh49Fachdaten) new DatabaseAccess()
             .createQuery(
-                "FROM Anh49Fachdaten as ah49 WHERE "
-                    + "ah49.basisObjekt = :objekt")
+                "FROM Anh49Fachdaten as ah49 "
+                + "WHERE ah49.basisObjekt = :objekt")
             .setEntity("objekt", objekt)
             .uniqueResult();
     }
