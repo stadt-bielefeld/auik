@@ -70,21 +70,10 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
     public static String[] getAllSachbearbeiter() {
         return (String[]) new DatabaseAccess()
             .createQuery(
-//                "SELECT DISTINCT fd.sachbearbeiterIn "
-//                + "FROM Anh49Fachdaten fd "
-//                + "WHERE fd.basisObjekt.basisObjektarten.objektart "
-//                + "NOT LIKE 'Fettabscheider'")
-                "SELECT DISTINCT sb.name "
-                + "FROM "
-                + "  Anh49Fachdaten AS fd, "
-                + "  BasisObjekt AS obj, "
-                + "  BasisSachbearbeiter AS sb, "
-                + "  BasisObjektarten AS art "
-                + "WHERE "
-                + "  fd.objektid = obj.objektid AND "
-                + "  obj.basisObjektarten = art.id AND "
-                + "  sb.kennummer = obj.basisSachbearbeiter AND "
-                + "  art.objektart NOT LIKE 'Fettabscheider'")
+                "SELECT DISTINCT fd.basisObjekt.basisSachbearbeiter.name "
+                + "FROM Anh49Fachdaten AS fd "
+                + "WHERE fd.basisObjekt.basisObjektarten.objektart "
+                    + "NOT LIKE 'Fettabscheider'")
             .setCacheable(true)
             .setCacheRegion("sachbearbeiter")
             .array(new String[0]);
@@ -93,15 +82,9 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
     public String getSachbearbeiter() {
         return (String) new DatabaseAccess()
             .createQuery(
-                "SELECT sb.name "
-                + "FROM "
-                + "  Anh49Fachdaten AS fd, "
-                + "  BasisObjekt AS obj, "
-                + "  BasisSachbearbeiter AS sb "
-                + "WHERE "
-                + "  fd = :fachdaten AND "
-                + "  fd.objektid = obj.objektid AND "
-                + "  sb.kennummer = obj.basisSachbearbeiter")
+                "SELECT fd.basisObjekt.basisSachbearbeiter.name "
+                + "FROM Anh49Fachdaten AS fd "
+                + "WHERE fd = :fachdaten")
             .setEntity("fachdaten", this)
             .uniqueResult();
     }
@@ -130,6 +113,9 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         Boolean abgelWdrVorlage, String sachbearbeiter, Integer tuev,
         Boolean aktiv) {
 
+        // Also search for partial results
+        sachbearbeiter = "%" + sachbearbeiter + "%";
+
         String query = "FROM Anh49Fachdaten AS anh49 "
             + "WHERE "
             + "anh49.basisObjekt.basisSachbearbeiter.name "
@@ -151,7 +137,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         /* For a strange reason we do not want the Fettabscheider... */
         query += "AND anh49.basisObjekt.basisObjektarten.objektart "
             + "NOT LIKE 'Fettabscheider' "
-            + "ORDER BY anh49.sachbearbeiterIn";
+            + "ORDER BY anh49.basisObjekt.basisSachbearbeiter.name";
 
         if (tuev != null && tuev == -2) {
             query += " , anh49.dekraTuevDatum";

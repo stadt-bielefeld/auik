@@ -90,9 +90,6 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     // Widgets für die Abfrage
     private JComboBox sachbBox;
     private IntegerField dekraTuevFeld;
-//    private JCheckBox abgemeldetCheck;
-//    private JCheckBox abgerissenCheck;
-//    private JCheckBox abwasserfreiCheck;
     private JCheckBox wiedervorlageCheck;
     private JCheckBox aktivCheck;
     private JButton auswahlButton;
@@ -125,15 +122,13 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
-//            abgemeldetCheck = new JCheckBox("Abgemeldet");
-//            abgerissenCheck = new JCheckBox("Nur abgerissene");
-//            abwasserfreiCheck = new JCheckBox("Abwasserfrei");
             wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage");
             aktivCheck = new JCheckBox("Aktiv");
             aktivCheck.setSelected(true);
             sachbBox = new JComboBox();
             sachbBox.setModel(new DefaultComboBoxModel(
                 Anh49Fachdaten.getAllSachbearbeiter()));
+            sachbBox.setEditable(true);
             dekraTuevFeld = new IntegerField();
             dekraTuevFeld.setToolTipText(
                 "<html>"
