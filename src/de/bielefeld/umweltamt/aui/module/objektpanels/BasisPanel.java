@@ -510,6 +510,10 @@ public class BasisPanel  extends JPanel {
 		}
 
 		if (neu == true) {
+		    // Preset the Sachbearbeiter
+		    getSachbearbeiterBox().setSelectedItem(
+		        BasisSachbearbeiter.getCurrentSachbearbeiter());
+
 			if (objektarten != null
 					&& (objektarten.length != getArtBox().getItemCount())) {
 				getArtBox().setModel(new DefaultComboBoxModel(objektarten));

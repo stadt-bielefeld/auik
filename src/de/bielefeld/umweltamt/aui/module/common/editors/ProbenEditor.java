@@ -564,7 +564,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         if (isNew){
-            sachbearbeiterBox.setSelectedItem(BasisSachbearbeiter.getSachbearbeiter(SettingsManager.getInstance().getSetting("auik.prefs.lastuser")));
+            sachbearbeiterBox.setSelectedItem(
+                BasisSachbearbeiter.getCurrentSachbearbeiter());
             uhrzeitVon.setText("");
             uhrzeitBis.setText("");
         }

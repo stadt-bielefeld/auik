@@ -76,6 +76,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -113,21 +114,26 @@ public class BasisSachbearbeiter extends AbstractBasisSachbearbeiter implements
     }
 
     public static BasisSachbearbeiter[] getSachbearbeiter() {
-        return (BasisSachbearbeiter[]) new DatabaseAccess().createQuery(
-            "FROM BasisSachbearbeiter as sachbearbeiter "
-                + "ORDER BY sachbearbeiter.name")
+        return (BasisSachbearbeiter[])
+            new DatabaseAccess().createQuery(
+                "FROM BasisSachbearbeiter AS sachbearbeiter "
+                    + "ORDER BY sachbearbeiter._enabled DESC, "
+                    + "sachbearbeiter.name ASC")
             .array(new BasisSachbearbeiter[0]);
     }
 
-    public static BasisSachbearbeiter getSachbearbeiter(String kennummer) {
-        BasisSachbearbeiter[] sachbearbeiter = getSachbearbeiter();
+    public static BasisSachbearbeiter getCurrentSachbearbeiter() {
+        return (BasisSachbearbeiter)
+            new DatabaseAccess().get(BasisSachbearbeiter.class,
+                SettingsManager.getInstance().getSetting("auik.prefs.lastuser"));
+    }
 
-        for (BasisSachbearbeiter s : sachbearbeiter) {
-            if (kennummer.equals(s.getKennummer())) {
-                return s;
-            }
-        }
-
-        return null;
+    public static BasisSachbearbeiter[] getAllEnabledSachbearbeiter() {
+        return (BasisSachbearbeiter[])
+            new DatabaseAccess().createQuery(
+                "FROM BasisSachbearbeiter AS sachbearbeiter "
+                    + "WHERE sachbearbeiter.enabled = true "
+                    + "ORDER BY sachbearbeiter.name ASC")
+            .array(new BasisSachbearbeiter[0]);
     }
 }

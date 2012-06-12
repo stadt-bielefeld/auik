@@ -69,12 +69,12 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49Model;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
-import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -88,10 +88,10 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     private JPanel queryPanel;
 
     // Widgets für die Abfrage
-    private JComboBox sachbBox;
-    private IntegerField dekraTuevFeld;
-    private JCheckBox wiedervorlageCheck;
     private JCheckBox aktivCheck;
+    private JCheckBox wiedervorlageCheck;
+    private JComboBox sachbBox;
+    private JComboBox dekraTuevBox;
     private JButton auswahlButton;
     private JButton tabelleExportButton;
 
@@ -129,12 +129,12 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             sachbBox.setModel(new DefaultComboBoxModel(
                 Anh49Fachdaten.getAllSachbearbeiter()));
             sachbBox.setEditable(true);
-            dekraTuevFeld = new IntegerField();
-            dekraTuevFeld.setToolTipText(
-                "<html>"
-                    + "-1 für keine Angabe<br>"
-                    + "-2 für alle"
-                + "</html>");
+            sachbBox.setSelectedItem(
+                BasisSachbearbeiter.getCurrentSachbearbeiter());
+            dekraTuevBox = new JComboBox();
+            dekraTuevBox.setModel(new DefaultComboBoxModel(
+                Anh49Fachdaten.getAllDekraTuevYears()));
+            dekraTuevBox.setSelectedIndex(dekraTuevBox.getModel().getSize()-1);
 
             auswahlButton = new JButton("Auswahl anwenden");
 
@@ -144,13 +144,10 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                     Anh49Model model = (Anh49Model) getTableModel();
                     model.setList(
                         Anh49Fachdaten.getAuswahlList(
-//                            abgemeldetCheck.isSelected(),
-//                            abwasserfreiCheck.isSelected(),
                             wiedervorlageCheck.isSelected(),
-//                            abgerissenCheck.isSelected(),
                             ((sachbBox.getSelectedItem() != null) ?
                                 sachbBox.getSelectedItem().toString() : null),
-                            dekraTuevFeld.getIntValue(),
+                            (Integer)dekraTuevBox.getSelectedItem(),
                             aktivCheck.isSelected()));
                     model.fireTableDataChanged();
                     frame.changeStatus(
@@ -164,17 +161,12 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                     );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-//            builder.append(abgemeldetCheck);
             builder.append(aktivCheck);
             builder.append("SachbearbeiterIn:", sachbBox);
             builder.append(auswahlButton);
             builder.nextLine();
-//            builder.append(abwasserfreiCheck);
             builder.append(wiedervorlageCheck);
-            builder.append("TÜV/DEKRA Termin:", dekraTuevFeld);
-//            builder.nextLine();
-//            builder.append(abgerissenCheck);
-//            builder.append("");
+            builder.append("TÜV/DEKRA Termin:", dekraTuevBox);
             builder.append(getTabelleExportButton());
 
             queryPanel = builder.getPanel();

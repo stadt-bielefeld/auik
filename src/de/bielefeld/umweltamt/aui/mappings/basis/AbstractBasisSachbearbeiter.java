@@ -23,10 +23,10 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
-/*
- * Hier sind einige Felder private. Die sollen später aus dem Datenbank raus.
- */
-public abstract class AbstractBasisSachbearbeiter implements Serializable {
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+
+public abstract class AbstractBasisSachbearbeiter extends
+AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 5350350541608539779L;
 
     /**
@@ -41,26 +41,8 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
     /** The value of the simple name property. */
     private java.lang.String name;
 
-    /** The value of the simple zeichen property. */
-    private java.lang.String zeichen;
-
-    /** The value of the simple zimmer property. */
-    private java.lang.String zimmer;
-
     /** The value of the simple telefon property. */
     private java.lang.String telefon;
-
-    /** The value of the simple telefax property. */
-    private java.lang.String telefax;
-
-    /** The value of the simple email property. */
-    private java.lang.String email;
-
-    /** The value of the simple istadminstrator property. */
-    private java.lang.Boolean istadminstrator;
-
-    /** The value of the simple pfadspeichern property. */
-    private java.lang.String pfadspeichern;
 
     /** The value of the simple gehoertzuarbeitsgr property. */
     private java.lang.String gehoertzuarbeitsgr;
@@ -114,38 +96,6 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
     }
 
     /**
-     * Return the value of the Zeichen column.
-     * @return java.lang.String
-     */
-    private java.lang.String getZeichen() {
-        return this.zeichen;
-    }
-
-    /**
-     * Set the value of the Zeichen column.
-     * @param zeichen
-     */
-    private void setZeichen(java.lang.String zeichen) {
-        this.zeichen = zeichen;
-    }
-
-    /**
-     * Return the value of the Zimmer column.
-     * @return java.lang.String
-     */
-    private java.lang.String getZimmer() {
-        return this.zimmer;
-    }
-
-    /**
-     * Set the value of the Zimmer column.
-     * @param zimmer
-     */
-    private void setZimmer(java.lang.String zimmer) {
-        this.zimmer = zimmer;
-    }
-
-    /**
      * Return the value of the Telefon column.
      * @return java.lang.String
      */
@@ -159,70 +109,6 @@ public abstract class AbstractBasisSachbearbeiter implements Serializable {
      */
     private void setTelefon(java.lang.String telefon) {
         this.telefon = telefon;
-    }
-
-    /**
-     * Return the value of the Telefax column.
-     * @return java.lang.String
-     */
-    private java.lang.String getTelefax() {
-        return this.telefax;
-    }
-
-    /**
-     * Set the value of the Telefax column.
-     * @param telefax
-     */
-    private void setTelefax(java.lang.String telefax) {
-        this.telefax = telefax;
-    }
-
-    /**
-     * Return the value of the EMail column.
-     * @return java.lang.String
-     */
-    private java.lang.String getEmail() {
-        return this.email;
-    }
-
-    /**
-     * Set the value of the EMail column.
-     * @param email
-     */
-    private void setEmail(java.lang.String email) {
-        this.email = email;
-    }
-
-    /**
-     * Return the value of the Istadministrator column.
-     * @return java.lang.Boolean
-     */
-    private java.lang.Boolean getIstadministrator() {
-        return this.istadminstrator;
-    }
-
-    /**
-     * Set the value of the Istadministrator column.
-     * @param istadminstrator
-     */
-    private void setIstadministrator(java.lang.Boolean istadminstrator) {
-        this.istadminstrator = istadminstrator;
-    }
-
-    /**
-     * Return the value of the Pfadspeichern column.
-     * @return java.lang.String
-     */
-    private java.lang.String getPfadspeichern() {
-        return this.pfadspeichern;
-    }
-
-    /**
-     * Set the value of the EMail column.
-     * @param pfadspeichern
-     */
-    private void setPfadspeichern(java.lang.String pfadspeichern) {
-        this.pfadspeichern = pfadspeichern;
     }
 
     /**

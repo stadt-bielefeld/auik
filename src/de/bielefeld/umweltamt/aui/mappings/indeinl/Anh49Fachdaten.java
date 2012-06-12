@@ -79,6 +79,18 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
             .array(new String[0]);
     }
 
+    public static Integer[] getAllDekraTuevYears() {
+        return (Integer[]) new DatabaseAccess()
+            .createQuery(
+                "SELECT DISTINCT year(fd.dekraTuevDatum) "
+                + "FROM Anh49Fachdaten AS fd "
+                + "WHERE fd.basisObjekt.basisObjektarten.objektart "
+                    + "NOT LIKE 'Fettabscheider'"
+                // TODO: This is rather tricky and should not be here at all...
+                + "AND fd._deleted = false")
+            .array(new Integer[0]);
+    }
+
     public String getSachbearbeiter() {
         return (String) new DatabaseAccess()
             .createQuery(
@@ -126,12 +138,12 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
             query += "AND anh49.wiedervorlage <= :today ";
         }
 
-        if (tuev == null || tuev == -1) {
-            query += "AND anh49.dekraTuevDatum IS NULL ";
-        } else if (tuev == -2) { // All
+        if (tuev == null) {
             // This place is intentionally left blank.
+//            query += "AND anh49.dekraTuevDatum IS NULL ";
         } else {
-            query += "AND date_part('year', anh49.dekraTuevDatum) = :tuev ";
+//            query += "AND date_part('year', anh49.dekraTuevDatum) = :tuev ";
+            query += "AND year(anh49.dekraTuevDatum) = :tuev ";
         }
 
         /* For a strange reason we do not want the Fettabscheider... */
@@ -139,7 +151,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
             + "NOT LIKE 'Fettabscheider' "
             + "ORDER BY anh49.basisObjekt.basisSachbearbeiter.name";
 
-        if (tuev != null && tuev == -2) {
+        if (tuev == null) {
             query += " , anh49.dekraTuevDatum";
         }
 
@@ -154,7 +166,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         if (abgelWdrVorlage) {
             da.setDate("today", new Date());
         }
-        if (! (tuev == null || tuev == -1 || tuev == -2)) {
+        if (tuev != null) {
             da.setInteger("tuev", tuev);
         }
 
