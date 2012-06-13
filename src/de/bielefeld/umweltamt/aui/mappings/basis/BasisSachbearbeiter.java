@@ -128,11 +128,11 @@ public class BasisSachbearbeiter extends AbstractBasisSachbearbeiter implements
                 SettingsManager.getInstance().getSetting("auik.prefs.lastuser"));
     }
 
-    public static BasisSachbearbeiter[] getAllEnabledSachbearbeiter() {
+    public static BasisSachbearbeiter[] getEnabledSachbearbeiter() {
         return (BasisSachbearbeiter[])
             new DatabaseAccess().createQuery(
                 "FROM BasisSachbearbeiter AS sachbearbeiter "
-                    + "WHERE sachbearbeiter.enabled = true "
+                    + "WHERE sachbearbeiter._enabled = true "
                     + "ORDER BY sachbearbeiter.name ASC")
             .array(new BasisSachbearbeiter[0]);
     }

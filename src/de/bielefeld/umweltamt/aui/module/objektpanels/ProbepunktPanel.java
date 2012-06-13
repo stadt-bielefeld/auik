@@ -206,7 +206,7 @@ public class ProbepunktPanel extends JPanel {
             klaeranlagen = AtlKlaeranlagen.getKlaeranlagen();
         }
         if (sachbearbeiter == null) {
-        	sachbearbeiter = BasisSachbearbeiter.getSachbearbeiter();
+        	sachbearbeiter = BasisSachbearbeiter.getEnabledSachbearbeiter();
         }
     }
 
@@ -218,20 +218,24 @@ public class ProbepunktPanel extends JPanel {
             getProbeKABox().setModel(new DefaultComboBoxModel(klaeranlagen));
         }
         if (sachbearbeiter != null) {
-            getSachbearbeiterBox().setModel(new DefaultComboBoxModel(sachbearbeiter));
+            getSachbearbeiterBox().setModel(
+                new DefaultComboBoxModel(sachbearbeiter));
+            getSachbearbeiterBox().setEditable(true);
         }
 
         if (probepkt != null) {
             getProbePktArtBox().setSelectedItem(probepkt.getAtlProbeart());
             getProbeKABox().setSelectedItem(probepkt.getAtlKlaeranlagen());
-            getSachbearbeiterBox().setSelectedItem(probepkt.getBasisSachbearbeiter());
+            getSachbearbeiterBox().setSelectedItem(
+                probepkt.getBasisSachbearbeiter());
 
             if (probepkt.getNummer() != null) {
                 getProbePktNrFeld().setValue(probepkt.getNummer());
             }
 
             getBrancheFeld().setText(probepkt.getBranche());
-            getProbePktBeschreibungsArea().setText(hauptModul.getObjekt().getBeschreibung());
+            getProbePktBeschreibungsArea().setText(
+                hauptModul.getObjekt().getBeschreibung());
 
             probenahmenModel.setProbepunkt(probepkt);
             probenahmenModel.updateList();

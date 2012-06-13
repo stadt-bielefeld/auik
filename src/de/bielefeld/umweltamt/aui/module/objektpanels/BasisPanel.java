@@ -405,9 +405,6 @@ public class BasisPanel  extends JPanel {
     // Fachdaten
     private BasisObjektarten[] objektarten;
 
-    //Sachbearbeiter
-    private BasisSachbearbeiter[] sachbearbeiter;
-
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
     private JTable objektverknuepfungTabelle = null;
@@ -481,36 +478,27 @@ public class BasisPanel  extends JPanel {
 
 
     public void fetchFormData() {
-        if (objektarten == null)
-        {
+        if (objektarten == null) {
             objektarten = BasisObjektarten.getObjektarten();
-        }
-
-        if (sachbearbeiter == null)
-        {
-        	sachbearbeiter = BasisSachbearbeiter.getSachbearbeiter();
         }
     }
 
     public void updateForm() {
         boolean neu = false;
-        getSachbearbeiterBox().setModel(new DefaultComboBoxModel(sachbearbeiter));
-        getSachbearbeiterBox().setSelectedIndex(-1);
 
-
-		try {
-			// Nur wenn Objekte neu angelegt werden stehen alle Objektarten zur
-			// Auswahl.
-			// Sobald eine Objet gespeichert wurde ist die Objektart nicht mehr
-			// veränderbar
-			if (hauptModul.getObjekt().getObjektid() == null)
-				neu = true;
-		} catch (NullPointerException e) {
-			neu = true;
-		}
+        // Is this a new object?
+        if (hauptModul.getObjekt() == null ||
+            hauptModul.getObjekt().getObjektid() == null) {
+            neu = true;
+        }
 
 		if (neu == true) {
-		    // Preset the Sachbearbeiter
+	        // Create a new object
+		    // Only load enabled Sachbearbeiter
+		    getSachbearbeiterBox().setModel(
+		        new DefaultComboBoxModel(
+		            BasisSachbearbeiter.getEnabledSachbearbeiter()));
+		    // Preset the current Sachbearbeiter
 		    getSachbearbeiterBox().setSelectedItem(
 		        BasisSachbearbeiter.getCurrentSachbearbeiter());
 
@@ -519,22 +507,22 @@ public class BasisPanel  extends JPanel {
 				getArtBox().setModel(new DefaultComboBoxModel(objektarten));
 			}
 			// hauptModul.getObjekt().setPrioritaet(0);
-		}
+		} else {
+		    // Show / edit an existing object
+	        getSachbearbeiterBox().setModel(
+	            new DefaultComboBoxModel(
+	                BasisSachbearbeiter.getEnabledSachbearbeiter()));
+	        getSachbearbeiterBox().setEditable(true);
 
-		else {
-			getArtBox().removeAllItems();
+		    getArtBox().removeAllItems();
 			// Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000)
 			// und umgekehrt ist weiterhin möglich
 			if (hauptModul.getObjekt().getBasisObjektarten().isAnh53Kl()
 					| hauptModul.getObjekt().getBasisObjektarten().isAnh53Gr()) {
-				getArtBox().addItem(BasisObjektarten.getObjektart(17)); // Anhang
-																		// 53
-																		// (<3000)
-																		// (360.33)
-				getArtBox().addItem(BasisObjektarten.getObjektart(18)); // Anhang
-																		// 53
-																		// (>3000)
-																		// (360.33)
+                // Anhang 53 (<3000) (360.33)
+				getArtBox().addItem(BasisObjektarten.getObjektart(17));
+                // Anhang 53 (>3000) (360.33)
+				getArtBox().addItem(BasisObjektarten.getObjektart(18));
 			}
 			// Ändern der Objektarten Anhang 49, Abscheider und Fettabscheider
 			// ist ebenfalls möglich
@@ -543,17 +531,16 @@ public class BasisPanel  extends JPanel {
 							.isFettabscheider()
 					|| hauptModul.getObjekt().getBasisObjektarten()
 							.isAbscheider()) {
-				getArtBox().addItem(BasisObjektarten.getObjektart(14)); // Anhang
-																		// 49
-																		// (360.33)
-				getArtBox().addItem(BasisObjektarten.getObjektart(19)); // Abscheider
-																		// (360.32)
-				getArtBox().addItem(BasisObjektarten.getObjektart(15)); // Fettabscheider
-																		// (360.33)
-				getArtBox().addItem(BasisObjektarten.getObjektart(58)); // Abscheider
-																		// (360.34)
+                // Anhang 49 (360.33)
+				getArtBox().addItem(BasisObjektarten.getObjektart(14));
+                // Abscheider (360.32)
+				getArtBox().addItem(BasisObjektarten.getObjektart(19));
+                // Fettabscheider (360.33)
+				getArtBox().addItem(BasisObjektarten.getObjektart(15));
+                // Abscheider (360.34)
+				getArtBox().addItem(BasisObjektarten.getObjektart(58));
 			}
-
+			// Objektart als einziges in die Liste eintragen
 			else {
 				getArtBox().addItem(
 						hauptModul.getObjekt().getBasisObjektarten());
@@ -678,6 +665,7 @@ public class BasisPanel  extends JPanel {
         // Betreiber / Standort werden schon nach der Auswahl durch die chooseButtons gesetzt
         hauptModul.getObjekt().setBasisObjektarten((BasisObjektarten)getArtBox().getSelectedItem());
         hauptModul.getObjekt().setBeschreibung(getBeschreibungsArea().getText());
+        // TODO: This can produce a class cast exception!
         hauptModul.getObjekt().setBasisSachbearbeiter((BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
         hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
 

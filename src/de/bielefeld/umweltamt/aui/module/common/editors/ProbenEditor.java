@@ -787,36 +787,36 @@ public class ProbenEditor extends AbstractApplyEditor {
 //        NumberFormat     nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         SimpleDateFormat f  = new SimpleDateFormat ("HH:mm");
 
-        entnahmepunkt    = new JLabel();
-        datum            = new TextFieldDateChooser();
-        rechnungsDatum   = new JLabel();
-        uhrzeitVon       = new JFormattedTextField(f);
-        uhrzeitBis       = new JFormattedTextField(f);
-        fahrtzeit        = new JFormattedTextField(f);
-        rechnungsBetrag  = new JLabel();
-        bezug            = new JTextField();
-        beteiligte       = new JTextField();
-        probenummer      = new JTextField();
-        vorgangsstatus   = new JComboBox();
-        statusHoch = new JButton("erhöhen");
-        sachbearbeiterBox   = new JComboBox();
-        icpEinwaageFeld  = new DoubleField(0);
-        icpDatum         = new TextFieldDateChooser();
-        bemerkungsArea   = new LimitedTextArea(255);
-        betrieb          = new JLabel();
-        parameterTabelle = new SelectTable();
+        entnahmepunkt     = new JLabel();
+        datum             = new TextFieldDateChooser();
+        rechnungsDatum    = new JLabel();
+        uhrzeitVon        = new JFormattedTextField(f);
+        uhrzeitBis        = new JFormattedTextField(f);
+        fahrtzeit         = new JFormattedTextField(f);
+        rechnungsBetrag   = new JLabel();
+        bezug             = new JTextField();
+        beteiligte        = new JTextField();
+        probenummer       = new JTextField();
+        vorgangsstatus    = new JComboBox();
+        statusHoch        = new JButton("erhöhen");
+        sachbearbeiterBox = new JComboBox();
+        icpEinwaageFeld   = new DoubleField(0);
+        icpDatum          = new TextFieldDateChooser();
+        bemerkungsArea    = new LimitedTextArea(255);
+        betrieb           = new JLabel();
+        parameterTabelle  = new SelectTable();
 
         // wir nehmen hier nur die Strings um die ComboBox zu füllen, da die Box
         // nicht mehr auf Änderungen reagiert, wenn man sie mit AtlStatus
         // Objekten befüllt
-        String[] bezeichnungen   = AtlStatus.getStatusAsString();
-        ComboBoxModel comboModel = new DefaultComboBoxModel(bezeichnungen);
-        vorgangsstatus.setModel(comboModel);
+        vorgangsstatus.setModel(
+            new DefaultComboBoxModel(
+                AtlStatus.getStatusAsString()));
 
-        BasisSachbearbeiter[] bSachbearbeiter =
-            BasisSachbearbeiter.getSachbearbeiter();
-        ComboBoxModel sachbearbeiterModel = (new DefaultComboBoxModel(bSachbearbeiter));
-        sachbearbeiterBox.setModel(sachbearbeiterModel);
+        sachbearbeiterBox.setModel(
+            new DefaultComboBoxModel(
+                BasisSachbearbeiter.getEnabledSachbearbeiter()));
+        sachbearbeiterBox.setEditable(true);
 
         statusHoch.addActionListener(new ActionListener() {
             @Override
@@ -1394,7 +1394,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         BasisSachbearbeiter b = (BasisSachbearbeiter)
             sachbearbeiterBox.getSelectedItem();
         if (b != null) {
-            probe.setBasisSachbearbeiter(b);;
+            probe.setBasisSachbearbeiter(b);
         }
 
         // Kennnummer
