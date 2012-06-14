@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="probenahmeauftrag" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="50" rightMargin="30" topMargin="20" bottomMargin="20">
 	<property name="ireport.scriptlethandling" value="2"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.3636363636363658"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="160"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -25,6 +25,7 @@
 	</parameter>
 	<parameter name="SUBDATA" class="net.sf.jasperreports.engine.JRDataSource" isForPrompting="false"/>
 	<parameter name="bemerkungen" class="java.lang.String"/>
+	<parameter name="branche" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -159,10 +160,10 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{betriebsgrundstueck}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-3" x="176" y="105" width="339" height="1"/>
+				<reportElement key="line-3" x="0" y="105" width="515" height="1"/>
 			</line>
 			<line>
-				<reportElement key="line-4" x="515" y="76" width="1" height="29"/>
+				<reportElement key="line-4" x="514" y="76" width="1" height="29"/>
 			</line>
 			<line>
 				<reportElement key="line-5" x="176" y="76" width="1" height="29"/>
@@ -904,6 +905,35 @@
 				<reportElement x="6" y="455" width="508" height="114"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{bemerkungen}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-5" x="0" y="76" width="1" height="29"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-7" x="6" y="78" width="83" height="11"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Branche]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-4" x="6" y="89" width="168" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{branche}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="196">

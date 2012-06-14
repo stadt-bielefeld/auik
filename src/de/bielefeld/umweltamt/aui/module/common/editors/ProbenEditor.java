@@ -1492,6 +1492,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         // TODO fill in the correct values if they exist
         params.put("anzahlEntnahmestellen", "1");
 
+        params.put("branche", probe.getAtlProbepkt().getBranche());
+
         return params;
     }
 
