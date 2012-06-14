@@ -114,9 +114,6 @@ public abstract class AbstractAnh49Fachdaten extends
     /** The value of the simple ortantragst property. */
     private java.lang.String ortantragst;
 
-    /** The value of the simple sachbearbeiterIn property. */
-    private java.lang.String sachbearbeiterIn;
-
     /** The value of the simple ansprechpartnerIn property. */
     private java.lang.String ansprechpartnerIn;
 
@@ -602,22 +599,6 @@ public abstract class AbstractAnh49Fachdaten extends
      */
     public void setOrtantragst(java.lang.String ortantragst) {
         this.ortantragst = ortantragst;
-    }
-
-    /**
-     * Return the value of the SACHBEARBEITER_IN column.
-     * @return java.lang.String
-     */
-    private java.lang.String getSachbearbeiterIn() {
-        return this.sachbearbeiterIn;
-    }
-
-    /**
-     * Set the value of the SACHBEARBEITER_IN column.
-     * @param sachbearbeiterIn
-     */
-    private void setSachbearbeiterIn(java.lang.String sachbearbeiterIn) {
-        this.sachbearbeiterIn = sachbearbeiterIn;
     }
 
     /**

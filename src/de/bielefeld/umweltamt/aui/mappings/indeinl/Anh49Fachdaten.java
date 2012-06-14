@@ -152,7 +152,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
             + "ORDER BY anh49.basisObjekt.basisSachbearbeiter.name";
 
         if (tuev == null) {
-            query += " , anh49.dekraTuevDatum";
+            query += ", anh49.dekraTuevDatum";
         }
 
         log.debug(query);

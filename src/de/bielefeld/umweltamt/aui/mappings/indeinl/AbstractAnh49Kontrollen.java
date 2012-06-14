@@ -145,7 +145,7 @@ public abstract class AbstractAnh49Kontrollen extends
 
     /**
      * Set the value of the pruefergebnis column.
-     * @param sachbearbeiterIn
+     * @param pruefergebnis
      */
     public void setPruefergebnis(java.lang.String pruefergebnis) {
         this.pruefergebnis = pruefergebnis;

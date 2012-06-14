@@ -33,7 +33,6 @@
         <property name="hausnrzusantragst" column="hausnrzusantragst" type="java.lang.String" />
         <property name="plzantragst" column="plzantragst" type="java.lang.String" />
         <property name="ortantragst" column="ortantragst" type="java.lang.String" />
-        <property name="sachbearbeiterIn" column="sachbearbeiter_in" type="java.lang.String" />
         <property name="ansprechpartnerIn" column="ansprechpartner_in" type="java.lang.String" />
         <property name="antragvom" column="antragvom" type="java.util.Date" />
         <property name="genehmigung" column="genehmigung" type="java.util.Date" />
