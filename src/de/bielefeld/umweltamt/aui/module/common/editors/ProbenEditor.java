@@ -210,7 +210,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 setList(AtlProbenahmen.sortAnalysepositionen(probe));
             } else { // isNew
                 if (!isSchlamm) {
-                    String[] params_ordn = {"L10821", "B00600", "L10111"};
+                    String[] params_ordn = {"L10111", "B00600", "L10821"};
                     String analyse_von = "360.33";
                     setList(new ArrayList<Object>());
                     AtlParameter param = null;
