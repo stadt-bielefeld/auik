@@ -52,9 +52,7 @@ public final class GUIManager {
     /** Der lange Name des Programms */
     public static final String LONG_NAME = "Anlagen- und Indirekteinleiter-Kataster";
     /** Program version */
-    private static final String VERSION = null; // = "v1.1 RC1";
-    /** Program revision */
-    private static final String REVISION = null; // = "rev162";
+    private static final String VERSION = null;
     /** Program authors */
     private static final Vector<String> AUTHORS = new Vector<String>();
     /** Program authors as a HTML table */
@@ -178,47 +176,6 @@ public final class GUIManager {
         }
 
         return version;
-    }
-
-
-    /**
-     * Diese Methode liefert die aktuelle Revision der Software aus dem SCM.
-     */
-    public final String getRevision() {
-    	/* If we already have the revision return it */
-    	if (GUIManager.REVISION != null) {
-    		return GUIManager.REVISION;
-    	}
-
-    	InputStream    is  = null;
-        BufferedReader in  = null;
-        String         rev = null;
-
-        try {
-            is = AUIKataster.class.getResourceAsStream(
-                "/de/bielefeld/umweltamt/aui/resources/revision.txt");
-            in  = new BufferedReader(new InputStreamReader(is));
-            rev = in.readLine();
-        }
-        catch (FileNotFoundException fnfe) {
-            log.error("Could not find revision file: 'revision.txt'");
-        }
-        catch (NullPointerException npe) {
-            log.error("Could not find revision file: 'revision.txt'");
-        }
-        catch (IOException ioe) {
-            log.error("Error while reading revision file: 'revision.txt'");
-        }
-        finally {
-            if (in != null) {
-                try {
-                    in.close();
-                }
-                catch (IOException ioe) { /* do nothing */ }
-            }
-        }
-
-        return rev;
     }
 
     /**

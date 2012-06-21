@@ -29,13 +29,13 @@ import org.junit.Test;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
-/** 
+/**
  * Unit test for the GUI Manager
- * 
+ *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public class GUIManagerTest {
-	
+
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 	/** GUI Manager */
@@ -64,11 +64,6 @@ public class GUIManagerTest {
 	@Test
 	public void testGetVersion() {
 		log.debug(guiManager.getVersion());
-	}
-
-	@Test
-	public void testGetRevision() {
-		log.debug(guiManager.getRevision());
 	}
 
 	@Test

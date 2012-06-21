@@ -80,12 +80,7 @@ import java.awt.HeadlessException;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
-//import java.awt.Toolkit;
 import java.awt.Window;
-//import java.awt.datatransfer.Clipboard;
-//import java.awt.datatransfer.DataFlavor;
-//import java.awt.datatransfer.Transferable;
-//import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -129,8 +124,6 @@ import com.jgoodies.plaf.Options;
 import com.jgoodies.uif_lite.component.Factory;
 import com.jgoodies.uif_lite.panel.SimpleInternalFrame;
 
-//import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
-//import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.GradientPanel;
@@ -139,7 +132,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 /**
  * Das Hauptfenster des AUI-K. Dieses Fenster beinhaltet alle weiteren
  * GUI-Komponenten der Anwendung.
- * 
+ *
  * @author David Klotz
  */
 public class HauptFrame extends JFrame {
@@ -546,7 +539,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes jContentPane
-     * 
+     *
      * @return javax.swing.JPanel
      */
     private javax.swing.JPanel getJContentPane() {
@@ -563,7 +556,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes hauptMenue
-     * 
+     *
      * @return javax.swing.JMenuBar
      */
     private JMenuBar getHauptMenue() {
@@ -580,7 +573,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes fileMenu
-     * 
+     *
      * @return javax.swing.JMenu
      */
     private JMenu getFileMenu() {
@@ -598,7 +591,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes helpMenu
-     * 
+     *
      * @return javax.swing.JMenu
      */
     private JMenu getHelpMenu() {
@@ -615,7 +608,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes settingsMenuItem
-     * 
+     *
      * @return javax.swing.JMenuItem
      */
     private JMenuItem getSettingsMenuItem() {
@@ -631,7 +624,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes exitMenuItem
-     * 
+     *
      * @return javax.swing.JMenuItem
      */
     private JMenuItem getExitMenuItem() {
@@ -644,7 +637,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes aboutMenuItem
-     * 
+     *
      * @return javax.swing.JMenuItem
      */
     private JMenuItem getAboutMenuItem() {
@@ -659,8 +652,7 @@ public class HauptFrame extends JFrame {
                             showInfoMessage(
                                     "<html><table valign='top'>"
                                     + "<tr><th align='left'>Version:</th><td>"
-                                    + guiManager.getVersion() + " "
-                                    + guiManager.getRevision() + "</td>"
+                                    + guiManager.getVersion() + "</td>"
                                     + "<tr><th align='left'>Copyright:</th>"
                                     + "<td>2005 - 2011 Umweltamt Bielefeld</td></tr>"
                                     + "<tr><th align='left'>Projekthomepage:</th>"
@@ -671,7 +663,7 @@ public class HauptFrame extends JFrame {
 // There is no kind of debug mode - just different levels of verbosity which is
 // not influenced by this variable any more.
                                     // + "<tr><th align='left'>Debug-Modus: </th><td>"
-                                    // + ((AUIKataster.DEBUG) ? "An" : "Aus") 
+                                    // + ((AUIKataster.DEBUG) ? "An" : "Aus")
                                     // + "</td></tr>"
 // TODO: Maybe add log level here -  but which? We can have different levels all
 // over the place...
@@ -734,7 +726,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes statusPanel
-     * 
+     *
      * @return javax.swing.JPanel
      */
     private JPanel getStatusPanel() {
@@ -753,7 +745,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes splitPane
-     * 
+     *
      * @return javax.swing.JSplitPane
      */
     private JSplitPane getSplitPane() {
@@ -767,7 +759,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes leftFrame
-     * 
+     *
      * @return com.jgoodies.uif_life.panel.SimpleInternalFrame
      */
     protected SimpleInternalFrame getLeftFrame() {
@@ -785,7 +777,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes rightFrame
-     * 
+     *
      * @return com.jgoodies.uif_life.panel.SimpleInternalFrame
      */
     protected SimpleInternalFrame getRightFrame() {
@@ -813,7 +805,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * This method initializes leftScroller
-     * 
+     *
      * @return Returns the leftScroller.
      */
     private JScrollPane getLeftScroller() {
@@ -840,7 +832,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * Liefert den aktuellen ModulManager.
-     * 
+     *
      * @return Den aktuellen ModulManager.
      */
     public ModulManager getManager() {
@@ -849,7 +841,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * Zeigt Text in der Statuszeile an.
-     * 
+     *
      * @param txt Der anzuzeigende Text
      */
     public void changeStatus(String txt) {
@@ -864,7 +856,7 @@ public class HauptFrame extends JFrame {
      * Zeigt Text in einer bestimmten Farbe in der Statuszeile an.<br>
      * Für Fehler/Erfolgsmeldungen die statischen Konstanten
      * ERROR_COLOR/SUCCESS_COLOR dieser Klasse benutzen.
-     * 
+     *
      * @param txt Der anzuzeigende Text
      * @param color Die Textfarbe
      */
@@ -891,7 +883,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * Zeigt eine Fehlermeldung mit dem Titel "Fehler" an.
-     * 
+     *
      * @param msg Der Text der Meldung
      */
     public void showErrorMessage(String msg) {
@@ -900,7 +892,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * Zeigt eine Fehlermeldung an.
-     * 
+     *
      * @param msg Der Text der Meldung
      * @param title Ein Titel für die Meldung
      */
@@ -911,7 +903,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * Zeigt eine Meldung an.
-     * 
+     *
      * @param msg Der Text der Meldung
      * @param title Ein Titel für die Meldung
      */
@@ -922,7 +914,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * Stellt dem Benutzer eine Ja/Nein-Frage.
-     * 
+     *
      * @param question Die Frage.
      * @return <code>true</code>, wenn der Benutzer Ja angeklickt hat, sonst
      *         <code>false</code>.
@@ -933,7 +925,7 @@ public class HauptFrame extends JFrame {
 
     /**
      * Stellt dem Benutzer eine Ja/Nein-Frage.
-     * 
+     *
      * @param question Die Frage.
      * @param title Ein Titel für die Meldung
      * @return <code>true</code>, wenn der Benutzer Ja angeklickt hat, sonst
@@ -1103,7 +1095,7 @@ public class HauptFrame extends JFrame {
                     SwingWorkerVariant worker =
                         new SwingWorkerVariant(benutzerFeld) {
                             boolean tmp = false;
-    
+
                             @Override
                             protected void doNonUILogic() throws RuntimeException {
                                 try {
@@ -1114,7 +1106,7 @@ public class HauptFrame extends JFrame {
                                     // throw new RuntimeException(e);
                                 }
                             }
-    
+
                             @Override
                             protected void doUIUpdateLogic()
                                     throws RuntimeException {

@@ -55,9 +55,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * eigentlichen Einstiegspunkt der Anwendung dar. Die Methode {@link main}
  * sollte dazu verwendet werden, das Programm zu starten.
  *
- * TODO: Actually this is NOT the class which is started but AUIKSplash which
- * is my next to fix item...
- *
  * @author David Klotz
  */
 public class AUIKataster {
