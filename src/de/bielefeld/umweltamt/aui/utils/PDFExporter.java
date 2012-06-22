@@ -46,12 +46,16 @@ public class PDFExporter {
      */
     private static PDFExporter INSTANCE;
 
+    private static final String PATHTOJASPER
+        = "/src/de/bielefeld/umweltamt/aui/resources/reports/";
 
     /** Die Gebührenbescheid.*/
-    public static final String BESCHEID = "/reports/gebuehrenbescheid.jasper";
+    public static final String BESCHEID
+        = PATHTOJASPER + "gebuehrenbescheid.jasper";
 
     /** Die Verfügung.*/
-    public static final String VFG = "/reports/verfuegung.jasper";
+    public static final String VFG
+        = PATHTOJASPER + "verfuegung.jasper";
 
 
     /**
@@ -125,7 +129,7 @@ public class PDFExporter {
     throws Exception
     {
         InputStream inputStream = getClass().getResourceAsStream(
-            "/reports/probenahmeauftrag.jasper");
+            PATHTOJASPER + "probenahmeauftrag.jasper");
 
         if (inputStream == null) {
             throw new Exception(
