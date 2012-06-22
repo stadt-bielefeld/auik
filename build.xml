@@ -6,16 +6,15 @@
 
     <!-- Some properties for necessary path definitions -->
     <property name="src"		location="src"/>
-    <property name="reportsrc"	location="reports"/>
-    <property name="build" 		location="build"/>
-    <property name="reports1"	location="src/reports"/>
-    <property name="reports2"	location="build/reports"/>
-    <property name="dist"		location="dist"/>
     <property name="libs"		location="lib"/>
+    <property name="build" 		location="build"/>
+    <property name="dist"		location="dist"/>
     <property name="doc"		location="doc"/>
     <property name="test"		location="test"/>
-    <property name="resources"  
-        location="${src}/de/bielefeld/umweltamt/aui/resources"/>
+    
+    <property name="resources" 
+        value="/de/bielefeld/umweltamt/aui/resources"/>
+    <property name="reports"	value="${resources}/reports"/>
 
     <path id="hibernate-tools">
         <fileset dir="lib">
@@ -75,31 +74,25 @@
         </copy>
     </target>
 
-    <target name="jasper">
-        <mkdir dir="${reports1}"/>
-        <mkdir dir="${reports2}"/>
+    <target name="jasper" depends="compile">
         <taskdef name="jrc"
             classname="net.sf.jasperreports.ant.JRAntCompileTask">
             <classpath refid="classpath"/>
         </taskdef>
         <jrc
-            destdir="${reportsrc}"
-            tempdir="${reportsrc}"
+            destdir="${src}/${reports}"
+            tempdir="${src}/${reports}"
             keepjava="false">
             <src>
-                <fileset dir="${reportsrc}">
+                <fileset dir="${src}/${reports}">
                     <include name="**/*.jrxml"/>
                 </fileset>
             </src>
             <classpath refid="classpath"/>
         </jrc>
-        <copy todir="${reports1}">
-            <fileset dir="${reportsrc}">
-                <include name="**/*.jasper"/>
-            </fileset>
-        </copy>
-        <copy todir="${reports2}">
-            <fileset dir="${reportsrc}">
+        <mkdir dir="${build}/${reports}"/>
+        <copy todir="${build}/${reports}">
+            <fileset dir="${src}/${reports}">
                 <include name="**/*.jasper"/>
             </fileset>
         </copy>
@@ -114,7 +107,8 @@
         <mkdir dir="${dist}"/>
         <!-- Set some properties for the manifest -->
         <tstamp><format property="TODAY" pattern="yyyy-MM-dd"/></tstamp>
-        <loadfile property="auik.authors" srcfile="${resources}/authors.txt"/>
+        <loadfile property="auik.authors" srcfile="${src}/${resources}/authors.txt"/>
+        <echo message="${auik.authors}"/>
         <jar
             destfile="${dist}/AUIK.jar"
             basedir="${build}"
@@ -149,7 +143,11 @@
                     name="Implementation-URL"
                     value="http://wald.intevation.org/projects/auik/"/>
             </manifest>
-            <!-- TODO -->
+            <!-- TODO: Something more like this, but still with extracting jars
+            <fileset dir="${libs}">
+                <include name="**/*.jar"/>
+            </fileset>
+            -->            
             <zipfileset excludes="META-INF/*.SF" src="${libs}/c3p0-0.9.0.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${libs}/commons-codec-1.3.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${libs}/commons-collections-2.1.1.jar"/>
@@ -199,11 +197,6 @@
             <zipfileset excludes="META-INF/*.SF" src="${libs}/commons-discovery-0.5.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${libs}/axis-wsdl4j-1.5.1.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${libs}/junit-4.10.jar"/>
-<!--
-            <fileset dir="${libs}">
-                <include name="**/*.jar"/>
-            </fileset>
--->            
     	</jar>
         <copy file="${dist}/AUIK.jar" tofile="${dist}/${TODAY} AUIK.jar"/>
     </target>
@@ -214,14 +207,16 @@
         <delete dir="${build}"/>
         <delete file="${dist}/AUIK.jar"/>
         <delete file="${dist}/auik.properties"/>
-        <delete>
-            <fileset dir="${reportsrc}" includes="**/*.jasper"/>
-        </delete>
     </target>
 
     <target name="cleanall" depends="clean" description="Clean up everything">
         <delete dir="${dist}"/>
         <delete dir="${doc}"/>
+<!--
+        <delete>
+            <fileset dir="${src}/${reports}" includes="**/*.jasper"/>
+        </delete>
+-->
     </target>
 
     <target name="run" depends="compile,jasper"
