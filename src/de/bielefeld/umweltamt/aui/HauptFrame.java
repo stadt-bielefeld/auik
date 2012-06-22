@@ -656,6 +656,7 @@ public class HauptFrame extends JFrame {
                                     + "<tr><th align='left'>Copyright:</th>"
                                     + "<td>2005 - 2011 Umweltamt Bielefeld</td></tr>"
                                     + "<tr><th align='left'>Projekthomepage:</th>"
+// TODO: Get the URL (and other stuff) from the Manifest
                                     + "<td><a href='http://auik.wald.intevation.org'>http://auik.wald.intevation.org</a></td></tr>"
                                     + "<tr><th align='left'>Datenbank: </th><td>"
                                     + HibernateSessionFactory.getDBUrl()

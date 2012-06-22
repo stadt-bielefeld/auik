@@ -13,7 +13,6 @@
     <property name="dist"		location="dist"/>
     <property name="libs"		location="lib"/>
     <property name="doc"		location="doc"/>
-    <property name="icons"		location="/de/bielefeld/umweltamt/aui/icons"/>
     <property name="test"		location="test"/>
     <property name="resources"  
         location="${src}/de/bielefeld/umweltamt/aui/resources"/>
@@ -106,45 +105,51 @@
         </copy>
     </target>
 
-    <!-- TODO add the timestamp to the name of the jar archive -->
-    <target name="dist" depends="compile,jasper,version"
+    
+	<!-- =================================================================== -->    
+	<!-- Create a jar archive and fill its manifest                          -->    
+	<!-- =================================================================== -->    
+    <target name="dist" depends="compile,version"
         description="Create a jar archive">
         <mkdir dir="${dist}"/>
         <!-- Set some properties for the manifest -->
-        <loadfile property="auik.version"  srcfile="${resources}/version.txt"/>
-        <loadfile property="auik.authors"  srcfile="${resources}/authors.txt"/>
+        <tstamp><format property="TODAY" pattern="yyyy-MM-dd"/></tstamp>
+        <loadfile property="auik.authors" srcfile="${resources}/authors.txt"/>
         <jar
             destfile="${dist}/AUIK.jar"
             basedir="${build}"
-            filesetmanifest="mergewithoutmain"
-            update="yes">
+            filesetmanifest="skip">
+		<!-- filesetmanifest="mergewithoutmain" -->
             <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-Date" value="${TODAY}"/>
                 <attribute
                     name="Main-Class"
                     value="de.bielefeld.umweltamt.aui.AUIKataster"/>
-                <section name="de/bielefeld/umweltamt/aui">
-                    <attribute
-                        name="Specification-Title"
-                    	value="Anlagen- und Indirekteinleiter Kataster"/>
-                    <attribute
-                        name="Specification-Version"
-                        value="0.0"/>
-                    <!-- Do we even have an official specification? -->
-                    <attribute
-                        name="Specification-Vendor"
-                        value="Stadt Bielefeld, Umweltamt"/>
-                    <attribute
-                        name="Implementation-Title"
-                    	value="Anlagen- und Indirekteinleiter Kataster"/>
-                    <attribute
-                        name="Implementation-Version"
-                        value="Version ${auik.version}"/> 
-                    <attribute
-                        name="Implementation-Vendor"
-                        value="Stadt Bielefeld und Intevation GmbH"/>
-                </section>
-                <attribute name="Built-By" value="kev"/>
+                <attribute
+                    name="Specification-Title"
+                	value="Anlagen- und Indirekteinleiter Kataster"/>
+                <attribute
+                    name="Specification-Version"
+                    value="0.0"/>
+                <!-- Do we even have an official specification? -->
+                <attribute
+                    name="Specification-Vendor"
+                    value="Stadt Bielefeld, Umweltamt"/>
+                <attribute
+                    name="Implementation-Title"
+                	value="Anlagen- und Indirekteinleiter Kataster"/>
+                <attribute
+                    name="Implementation-Version"
+                    value="Version ${auik.version}"/> 
+                <attribute
+                    name="Implementation-Vendor"
+                    value="Stadt Bielefeld und Intevation GmbH"/>
+                <attribute
+                    name="Implementation-URL"
+                    value="http://wald.intevation.org/projects/auik/"/>
             </manifest>
+            <!-- TODO -->
             <zipfileset excludes="META-INF/*.SF" src="${libs}/c3p0-0.9.0.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${libs}/commons-codec-1.3.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${libs}/commons-collections-2.1.1.jar"/>
@@ -194,20 +199,28 @@
             <zipfileset excludes="META-INF/*.SF" src="${libs}/commons-discovery-0.5.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${libs}/axis-wsdl4j-1.5.1.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${libs}/junit-4.10.jar"/>
+<!--
+            <fileset dir="${libs}">
+                <include name="**/*.jar"/>
+            </fileset>
+-->            
     	</jar>
+        <copy file="${dist}/AUIK.jar" tofile="${dist}/${TODAY} AUIK.jar"/>
     </target>
     
     <target name="clean"
     	description="Clean up everything but the directory that contains the
-        	documentation">
+        	documentation and the previous 'yyyy-MM-dd AUIK.jar's">
         <delete dir="${build}"/>
-        <delete dir="${dist}"/>
+        <delete file="${dist}/AUIK.jar"/>
+        <delete file="${dist}/auik.properties"/>
         <delete>
             <fileset dir="${reportsrc}" includes="**/*.jasper"/>
         </delete>
     </target>
 
     <target name="cleanall" depends="clean" description="Clean up everything">
+        <delete dir="${dist}"/>
         <delete dir="${doc}"/>
     </target>
 
@@ -230,44 +243,42 @@
         </javadoc>
     </target>
 
-<!-- ======================================================================= -->    
-<!-- Get the latest tag and revision from the SVN and build the version      -->    
-<!-- number from them: <version> = <tag>-rev<revision>                       -->    
-<!-- ======================================================================= -->    
+	<!-- =================================================================== -->    
+	<!-- Get the latest tag and revision from the SVN and build the version  -->    
+	<!-- number from them: <version> = <tag>-rev<revision>                   -->    
+	<!-- =================================================================== -->    
 	<target name="version"
 		description="Get the current tag and revision from the SVN and save it
 	    	to the version number.">
 	    <exec
 	    	executable="C:\appz\cygwin\bin\bash.exe"
-	        outputproperty="temp.tag"
+	        outputproperty="auik.tag"
 	        osfamily="windows">
 	        <arg value="--login"/>
 	        <arg value="/cygdrive/d/Data/workspace/auik_pg/scripts/shell/getLatestTag.sh"/>
 	    </exec>
 	    <exec
 	        executable="./scripts/shell/getLatestTag.sh"
-	        outputproperty="temp.tag"
+	        outputproperty="auik.tag"
 	        osfamily="unix">
 	    </exec>
 	    <exec
 	        executable="C:\appz\cygwin\bin\svnversion.exe"
-	        outputproperty="temp.revision"
+	        outputproperty="auik.revision"
 	        osfamily="windows"
 	    />
 	    <exec
 	        executable="svnversion"
-	        outputproperty="temp.revision"
+	        outputproperty="auik.revision"
 	        osfamily="unix"
 	    />
-	    <echo message="${temp.tag}-rev${temp.revision}"
-	        file="${resources}/version.txt"/>
-	    <echo message="Version was set to '${temp.tag}-rev${temp.revision}'."/>
+	    <property name="auik.version" value="${auik.tag}-rev${auik.revision}"/>
+	    <echo message="Version was set to '${auik.version}'." level="info"/>
 	</target>
     
-<!-- ======================================================================= -->    
-<!-- This is just me testing and lerning ant here!                           -->
-<!-- ======================================================================= -->    
-	
+	<!-- =================================================================== -->    
+	<!-- This is just me testing and lerning ant here!                       -->
+	<!-- =================================================================== -->    
 	<target name="Connz Target"
 		description="Testing Tasks">
 		<echo message="error"	level="error"/>
@@ -290,9 +301,6 @@
 	            <pathelement path="bin"/>
             </classpath>
 	        <formatter type="plain"/>
-<!--
-	        <test name="de.bielefeld.umweltamt.aui.utils.AntTestCase"/>
--->
 	        <test name="de.bielefeld.umweltamt.aui.utils.KommaDoubleTest"/>
 	    </junit>
 	</target>

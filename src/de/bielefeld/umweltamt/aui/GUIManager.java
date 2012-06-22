@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Vector;
+import java.util.jar.JarFile;
 
 import de.bielefeld.umweltamt.aui.gui.SplashWindow;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -148,31 +150,20 @@ public final class GUIManager {
     		return GUIManager.VERSION;
     	}
 
-        InputStream    is      = null;
-        BufferedReader in      = null;
-        String         version = null;
-
-        try {
-            is      = AUIKataster.class.getResourceAsStream("/de/bielefeld/umweltamt/aui/resources/version.txt");
-            in      = new BufferedReader(new InputStreamReader(is));
-            version = in.readLine();
-        }
-        catch (FileNotFoundException fnfe) {
-            log.error("Could not find version file: 'version.txt'");
+        String version = null;
+    	try {
+            version = new JarFile(new File("AUIK.jar"))
+                .getManifest()
+                .getMainAttributes()
+                .getValue("Implementation-Version");
+    	}
+        catch (IOException ioe) {
+            log.debug("Could not find <AUIK.jar>. " +
+                "Probably running AUIK from eclipse... ;-)");
         }
         catch (NullPointerException npe) {
-            log.error("Could not find version file: 'version.txt'");
-        }
-        catch (IOException ioe) {
-            log.error("Error while reading version file: 'version.txt'");
-        }
-        finally {
-            if (in != null) {
-                try {
-                    in.close();
-                }
-                catch (IOException ioe) { /* do nothing */ }
-            }
+            log.debug("Could not find <AUIK.jar>. " +
+                "Probably running AUIK from eclipse... ;-)");
         }
 
         return version;
