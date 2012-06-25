@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Vector;
 import java.util.jar.JarFile;
@@ -150,20 +151,42 @@ public final class GUIManager {
     		return GUIManager.VERSION;
     	}
 
-        String version = null;
-    	try {
-            version = new JarFile(new File("AUIK.jar"))
-                .getManifest()
-                .getMainAttributes()
-                .getValue("Implementation-Version");
-    	}
-        catch (IOException ioe) {
-            log.debug("Could not find <AUIK.jar>. " +
-                "Probably running AUIK from eclipse... ;-)");
-        }
-        catch (NullPointerException npe) {
-            log.debug("Could not find <AUIK.jar>. " +
-                "Probably running AUIK from eclipse... ;-)");
+        String version = "there be dragons";
+
+        // Get an url to an arbitrary class
+        String urlToClass = this.getClass().getResource(
+            "/" + this.getClass().getName().replaceAll("\\.", "/")
+            + ".class").toString();
+        // Get the type of the url (file or jar)
+        String type = urlToClass.substring(0, urlToClass.indexOf(":"));
+
+        if (type.equals("file")) {
+            log.debug("Could not get the version, because AUIK was not run "
+                + "from the jar file.");
+            version = "unknown";
+        } else if (type.equals("jar")) {
+            try {
+                version =
+                    new JarFile(new File(new URL(
+                        urlToClass.substring(
+                            urlToClass.indexOf(":")+1,
+                            urlToClass.indexOf("!")))
+                        .toURI()))
+                    .getManifest()
+                    .getMainAttributes()
+                    .getValue("Implementation-Version");
+            }
+            catch (URISyntaxException use) {
+                log.debug("This (URISyntaxException) should never happen.");
+            }
+            catch (IOException ioe) {
+                log.debug("This (IOException) should never happen.");
+            }
+            catch (NullPointerException npe) {
+                log.debug("This (NullPointerException) should never happen.");
+            }
+        } else { // neither file nor jar...
+            log.debug("This should never happen.");
         }
 
         return version;

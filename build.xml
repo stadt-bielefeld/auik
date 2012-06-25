@@ -7,7 +7,7 @@
     <!-- Some properties for necessary path definitions -->
     <property name="src"		location="src"/>
     <property name="libs"		location="lib"/>
-    <property name="build" 		location="build"/>
+    <property name="build" 		location="bin"/>
     <property name="dist"		location="dist"/>
     <property name="doc"		location="doc"/>
     <property name="test"		location="test"/>
@@ -15,21 +15,8 @@
     <property name="resources" 
         value="/de/bielefeld/umweltamt/aui/resources"/>
     <property name="reports"	value="${resources}/reports"/>
-
-    <path id="hibernate-tools">
-        <fileset dir="lib">
-            <include name="**/*.jar"/>
-        </fileset>
-    </path>
-
-    <taskdef name="hibernatetool"
-             classname="org.hibernate.tool.ant.HibernateToolTask"
-             classpathref="hibernate-tools" />
-
-    <!-- Some properties for SystemProperties -->
-    <property name="auik.hibernate.config" value="hibernate.cfg.xml"/>
-    <property name="auik.hibernate.mappings"
-        value="${src}/de/bielefeld/umweltamt/aui/mappings/atl"/>
+    <property name="mappings" 
+        value="/de/bielefeld/umweltamt/aui/mappings"/>
 
     <!-- The classpath that includes the necessary external libs and AUIK -->
     <path id="classpath">
@@ -38,20 +25,51 @@
         </fileset>
         <path location="${build}"/>
     </path>
-
-    <path id="hibernate-classpath">
-        <path location="${src}"/>
-    </path>
+    
+	<!-- =================================================================== -->    
+	<!-- Generate hibernate classes                                          -->    
+	<!-- =================================================================== -->    
+    <taskdef name="hibernatetool"
+             classname="org.hibernate.tool.ant.HibernateToolTask"
+             classpathref="classpath" />
 
     <target name="hbmmappings"
         description="Create java classes from hibernate configuration">
-        <hibernatetool destdir="${auik.hibernate.mappings}">
-            <classpath refid="hibernate-classpath"/>
-            <configuration configurationfile="${src}/${auik.hibernate.config}"/>
-            <hbm2java/>
+        <hibernatetool
+            destdir="${test}"
+            templatepath="">
+            <configuration propertyfile="hibernate.properties"/>
+            <!--configuration configurationfile="${src}/hibernate.cfg.xml"/-->
+            <hbm2cfgxml/>
+            <!--hbm2ddl/-->
+            <!--hbm2dao/-->
+            <!--hbm2java/-->
         </hibernatetool>
     </target>
 
+    <target name="db2hbm"
+        description="Generate hibernate file from database via reverse 
+        	engineering">
+        <hibernatetool>
+            <jdbcconfiguration
+                packagename="de.bielefeld.umweltamt.aui.mappings.atl"
+                propertyfile="hibernate.properties">
+                <fileset dir="reveng">
+                    <include name="atl.reveng.xml"/>
+                    <exclude name="basis.reveng.xml"/>
+                    <exclude name="indeinl.reveng.xml"/>
+	                <exclude name="tipi.reveng.xml"/>
+	                <exclude name="vaws.reveng.xml"/>
+	                <exclude name="views.reveng.xml"/>
+                </fileset>
+            </jdbcconfiguration>
+            <hbm2hbmxml destdir="${test}"/>
+        </hibernatetool>
+    </target>
+    
+	<!-- =================================================================== -->    
+	<!-- Compile the source                                                  -->    
+	<!-- =================================================================== -->    
     <target name="compile" description="Compile the source">
         <mkdir dir="${build}"/>
         <javac srcdir="${src}" destdir="${build}" debug="on"
@@ -74,6 +92,9 @@
         </copy>
     </target>
 
+	<!-- =================================================================== -->    
+	<!-- Compile the jasper reports                                          -->    
+	<!-- =================================================================== -->    
     <target name="jasper" depends="compile">
         <taskdef name="jrc"
             classname="net.sf.jasperreports.ant.JRAntCompileTask">
@@ -108,11 +129,12 @@
         <!-- Set some properties for the manifest -->
         <tstamp><format property="TODAY" pattern="yyyy-MM-dd"/></tstamp>
         <loadfile property="auik.authors" srcfile="${src}/${resources}/authors.txt"/>
-        <echo message="${auik.authors}"/>
+        <!-- echo message="${auik.authors}"/ -->
         <jar
             destfile="${dist}/AUIK.jar"
             basedir="${build}"
-            filesetmanifest="skip">
+            filesetmanifest="skip"
+            update="true">
 		<!-- filesetmanifest="mergewithoutmain" -->
             <manifest>
                 <attribute name="Built-By" value="${user.name}"/>
@@ -201,6 +223,9 @@
         <copy file="${dist}/AUIK.jar" tofile="${dist}/${TODAY} AUIK.jar"/>
     </target>
     
+	<!-- =================================================================== -->    
+	<!-- Clean up (${build}, ${dist})                                        -->    
+	<!-- =================================================================== -->    
     <target name="clean"
     	description="Clean up everything but the directory that contains the
         	documentation and the previous 'yyyy-MM-dd AUIK.jar's">
@@ -209,29 +234,46 @@
         <delete file="${dist}/auik.properties"/>
     </target>
 
+	<!-- =================================================================== -->    
+	<!-- Clean up everything                                                 -->    
+	<!-- =================================================================== -->    
     <target name="cleanall" depends="clean" description="Clean up everything">
         <delete dir="${dist}"/>
         <delete dir="${doc}"/>
-<!--
-        <delete>
+<!--    <delete>
             <fileset dir="${src}/${reports}" includes="**/*.jasper"/>
-        </delete>
--->
+        </delete>-->
     </target>
 
+	<!-- =================================================================== -->    
+	<!-- Run the application                                                 -->    
+	<!-- =================================================================== -->    
     <target name="run" depends="compile,jasper"
         description="Run the application">
-        <java fork="true" classname="de.bielefeld.umweltamt.aui.AUIKataster">
-            <classpath refid="classpath"/>
-            <sysproperty key="auik.hibernate.config"
-                         value="${auik.hibernate.config}"/>
-        </java>
+        <java
+            classname="de.bielefeld.umweltamt.aui.AUIKataster"
+            classpathref="classpath"
+            fork="true"
+        />
     </target>
 
-    <target name="javadoc" depends="dist"
+	<!-- =================================================================== -->    
+	<!-- Run the application from the jar archive                            -->    
+	<!-- =================================================================== -->    
+    <target name="runjar" depends="dist"
+        description="Run the application from the jar archive">
+        <java jar="${dist}/AUIK.jar" fork="true"/>
+    </target>
+    
+	<!-- =================================================================== -->    
+	<!-- Generate javadoc                                                    -->    
+	<!-- =================================================================== -->    
+    <target name="javadoc" depends="compile"
     	description="Creates JavaDoc for this application">
         <mkdir dir="${doc}"/>
         <javadoc destdir="${doc}" author="true" version="true" use="true">
+            <!-- TODO: Get this to work under windows... -->
+            <!-- executable="C:\Programme\Java\jdk1.6.0_33\bin\javac.exe" -->
             <fileset dir="${src}">
                 <include name="**/*.java"/>
             </fileset>
