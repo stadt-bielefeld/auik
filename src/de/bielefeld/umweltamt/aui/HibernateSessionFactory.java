@@ -92,10 +92,11 @@ public class HibernateSessionFactory {
         if (session == null) {
             if (sessionFactory == null) {
                 try {
+                    // First load the config file
+                    cfg.configure(CONFIG_FILE_LOCATION);
+                    // Then overwrite the user / password property
                     cfg.setProperty("hibernate.connection.username", DB_USER);
                     cfg.setProperty("hibernate.connection.password", DB_PASS);
-                    cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://172.20.70.24/fisumwelt");
-                    cfg.configure(CONFIG_FILE_LOCATION);
                     sessionFactory = cfg.buildSessionFactory();
                 }
                 catch (Exception e) {
