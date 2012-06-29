@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.Anh50Fachdaten" table="anh_50_fachdaten" schema="auik">
+        <id name="objektid" type="int">
+            <column name="objektid" />
+            <generator class="foreign">
+                <param name="property">basisObjekt</param>
+            </generator>
+        </id>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjekt" constrained="true"></one-to-one>
+        <many-to-one name="anhEntsorger" class="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.AnhEntsorger" fetch="select">
+            <column name="entsorgerid" />
+        </many-to-one>
+        <property name="telefon" type="string">
+            <column name="telefon" />
+        </property>
+        <property name="erloschen" type="java.lang.Boolean">
+            <column name="erloschen" />
+        </property>
+        <property name="datumantrag" type="timestamp">
+            <column name="datumantrag" length="8" />
+        </property>
+        <property name="bemerkungen" type="string">
+            <column name="bemerkungen" />
+        </property>
+        <property name="genehmigung" type="timestamp">
+            <column name="genehmigung" length="8" />
+        </property>
+        <property name="wiedervorlage" type="timestamp">
+            <column name="wiedervorlage" length="8" />
+        </property>
+        <property name="gefaehrdungsklasse" type="string">
+            <column name="gefaehrdungsklasse" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

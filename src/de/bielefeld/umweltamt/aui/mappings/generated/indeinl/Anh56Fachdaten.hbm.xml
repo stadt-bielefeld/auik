@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.Anh56Fachdaten" table="anh_56_fachdaten" schema="auik">
+        <id name="objektid" type="int">
+            <column name="objektid" />
+            <generator class="foreign">
+                <param name="property">basisObjekt</param>
+            </generator>
+        </id>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjekt" constrained="true"></one-to-one>
+        <property name="druckverfahren" type="string">
+            <column name="druckverfahren" />
+        </property>
+        <property name="verbrauch" type="string">
+            <column name="verbrauch" />
+        </property>
+        <property name="sachbearbeiterrav" type="string">
+            <column name="sachbearbeiterrav" />
+        </property>
+        <property name="sachbearbeiterheepen" type="string">
+            <column name="sachbearbeiterheepen" />
+        </property>
+        <property name="entsorgung" type="string">
+            <column name="entsorgung" />
+        </property>
+        <property name="abwasseranfall" type="java.lang.Boolean">
+            <column name="abwasseranfall" />
+        </property>
+        <property name="genpflicht" type="java.lang.Boolean">
+            <column name="genpflicht" />
+        </property>
+        <property name="aba" type="java.lang.Boolean">
+            <column name="aba" />
+        </property>
+        <property name="gen58" type="timestamp">
+            <column name="gen_58" length="8" />
+        </property>
+        <property name="gen59" type="timestamp">
+            <column name="gen_59" length="8" />
+        </property>
+        <property name="bemerkungen" type="string">
+            <column name="bemerkungen" />
+        </property>
+        <property name="abfallrechtlentsorg" type="java.lang.Boolean">
+            <column name="abfallrechtlentsorg" />
+        </property>
+        <property name="spuelwasser" type="java.lang.Boolean">
+            <column name="spuelwasser" />
+        </property>
+        <property name="leimabwasser" type="java.lang.Boolean">
+            <column name="leimabwasser" />
+        </property>
+        <property name="erfasstam" type="timestamp">
+            <column name="erfasstam" length="8" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

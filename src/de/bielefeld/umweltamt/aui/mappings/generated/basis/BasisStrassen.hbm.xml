@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisStrassen" table="basis_strassen" schema="auik">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="strasse" type="string">
+            <column name="strasse" />
+        </property>
+        <property name="plz" type="string">
+            <column name="plz" />
+        </property>
+    </class>
+</hibernate-mapping>

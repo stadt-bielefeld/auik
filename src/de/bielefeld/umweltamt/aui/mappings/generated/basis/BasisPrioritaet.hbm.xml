@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisPrioritaet" table="basis_prioritaet" schema="auik">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisPrioritaetId">
+            <key-property name="standortId" type="int">
+                <column name="standort_id" />
+            </key-property>
+            <key-property name="betreiberId" type="int">
+                <column name="betreiber_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="basisStandort" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisStandort" update="false" insert="false" fetch="select">
+            <column name="standort_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="basisBetreiber" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisBetreiber" update="false" insert="false" fetch="select">
+            <column name="betreiber_id" not-null="true" />
+        </many-to-one>
+        <property name="prioritaet" type="java.lang.Integer">
+            <column name="prioritaet" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

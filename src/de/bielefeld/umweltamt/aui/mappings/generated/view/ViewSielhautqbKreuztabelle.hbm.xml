@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.view.ViewSielhautqbKreuztabelle" table="view_sielhautqb_kreuztabelle" schema="auik">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.view.ViewSielhautqbKreuztabelleId">
+            <key-property name="bezeichnung" type="string">
+                <column name="bezeichnung" />
+            </key-property>
+            <key-property name="datumDerEntnahme" type="timestamp">
+                <column name="datum_der_entnahme" length="8" />
+            </key-property>
+            <key-property name="blei" type="java.lang.Double">
+                <column name="Blei" precision="8" scale="0" />
+            </key-property>
+            <key-property name="cadmium" type="java.lang.Double">
+                <column name="Cadmium" precision="8" scale="0" />
+            </key-property>
+            <key-property name="chrom" type="java.lang.Double">
+                <column name="Chrom" precision="8" scale="0" />
+            </key-property>
+            <key-property name="kupfer" type="java.lang.Double">
+                <column name="Kupfer" precision="8" scale="0" />
+            </key-property>
+            <key-property name="nickel" type="java.lang.Double">
+                <column name="Nickel" precision="8" scale="0" />
+            </key-property>
+            <key-property name="quecksilber" type="java.lang.Double">
+                <column name="Quecksilber" precision="8" scale="0" />
+            </key-property>
+            <key-property name="zink" type="java.lang.Double">
+                <column name="Zink" precision="8" scale="0" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

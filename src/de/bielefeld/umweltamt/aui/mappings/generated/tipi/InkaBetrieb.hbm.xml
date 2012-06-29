@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaBetrieb" table="inka_betrieb" schema="tipi">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaBetriebId">
+            <key-property name="betriebNr" type="java.lang.Integer">
+                <column name="betrieb_nr" />
+            </key-property>
+            <key-property name="betriebVer" type="java.lang.Integer">
+                <column name="betrieb_ver" />
+            </key-property>
+            <key-property name="gueltigVon" type="date">
+                <column name="gueltig_von" length="4" />
+            </key-property>
+            <key-property name="gueltigBis" type="date">
+                <column name="gueltig_bis" length="4" />
+            </key-property>
+            <key-property name="aenderungsDatum" type="timestamp">
+                <column name="aenderungs_datum" length="8" />
+            </key-property>
+            <key-property name="erfassungsDatum" type="timestamp">
+                <column name="erfassungs_datum" length="8" />
+            </key-property>
+            <key-property name="historienNr" type="java.lang.Integer">
+                <column name="historien_nr" />
+            </key-property>
+            <key-property name="istAktuellJn" type="java.lang.Boolean">
+                <column name="ist_aktuell_jn" />
+            </key-property>
+            <key-property name="adresseStandNr" type="java.lang.Integer">
+                <column name="adresse_stand_nr" />
+            </key-property>
+            <key-property name="adresseStandVer" type="java.lang.Integer">
+                <column name="adresse_stand_ver" />
+            </key-property>
+            <key-property name="adresseEinleitNr" type="java.lang.Integer">
+                <column name="adresse_einleit_nr" />
+            </key-property>
+            <key-property name="adresseEinleitVer" type="java.lang.Integer">
+                <column name="adresse_einleit_ver" />
+            </key-property>
+            <key-property name="adresseAnsprNr" type="java.lang.Integer">
+                <column name="adresse_anspr_nr" />
+            </key-property>
+            <key-property name="adresseAnsprVer" type="java.lang.Integer">
+                <column name="adresse_anspr_ver" />
+            </key-property>
+            <key-property name="gemeindekennzahl" type="string">
+                <column name="gemeindekennzahl" length="8" />
+            </key-property>
+            <key-property name="gemeindeVer" type="java.lang.Integer">
+                <column name="gemeinde_ver" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.atl.AtlProbenahmen" table="atl_probenahmen" schema="auik">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="atlStatus" class="de.bielefeld.umweltamt.aui.mappings.generated.atl.AtlStatus" fetch="select">
+            <column name="status" />
+        </many-to-one>
+        <many-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.generated.atl.AtlProbepkt" fetch="select">
+            <column name="objektid" />
+        </many-to-one>
+        <many-to-one name="basisSachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisSachbearbeiter" fetch="select">
+            <column name="sachbearbeiter" />
+        </many-to-one>
+        <property name="kennummer" type="string">
+            <column name="kennummer" />
+        </property>
+        <property name="art" type="string">
+            <column name="art" />
+        </property>
+        <property name="datumDerEntnahme" type="timestamp">
+            <column name="datum_der_entnahme" length="8" />
+        </property>
+        <property name="zeitAnfang" type="time">
+            <column name="zeit_anfang" length="8" />
+        </property>
+        <property name="bisDatum" type="timestamp">
+            <column name="bis_datum" length="8" />
+        </property>
+        <property name="zeitDerEntnahmen" type="string">
+            <column name="zeit_der_entnahmen" />
+        </property>
+        <property name="einwaage" type="java.lang.Float">
+            <column name="einwaage" precision="4" scale="0" />
+        </property>
+        <property name="VM3" type="string">
+            <column name="v_m3" />
+        </property>
+        <property name="fahrer" type="string">
+            <column name="fahrer" />
+        </property>
+        <property name="objektNr" type="string">
+            <column name="objekt_nr" />
+        </property>
+        <property name="datumIcp" type="timestamp">
+            <column name="datum_icp" length="8" />
+        </property>
+        <property name="sonderparameter" type="string">
+            <column name="sonderparameter" />
+        </property>
+        <property name="bemerkung" type="string">
+            <column name="bemerkung" />
+        </property>
+        <property name="an360x11" type="timestamp">
+            <column name="an_360x11" length="8" />
+        </property>
+        <property name="ueberschreitung" type="string">
+            <column name="ueberschreitung" />
+        </property>
+        <property name="anzahlbeteiligte" type="java.lang.Integer">
+            <column name="anzahlbeteiligte" />
+        </property>
+        <property name="uhrzeitbeginn" type="string">
+            <column name="uhrzeitbeginn" />
+        </property>
+        <property name="uhrzeitende" type="string">
+            <column name="uhrzeitende" />
+        </property>
+        <property name="fahrtzeit" type="string">
+            <column name="fahrtzeit" />
+        </property>
+        <property name="bescheid" type="timestamp">
+            <column name="bescheid" length="8" />
+        </property>
+        <property name="kosten" type="java.lang.Double">
+            <column name="kosten" precision="8" scale="0" />
+        </property>
+        <property name="massnahmen" type="string">
+            <column name="massnahmen" />
+        </property>
+        <property name="bezeichnung" type="string">
+            <column name="bezeichnung" />
+        </property>
+        <property name="uschivorg" type="java.lang.Integer">
+            <column name="uschivorg" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="atlAnalysepositions" table="atl_analyseposition" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="probenahme_id" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.generated.atl.AtlAnalyseposition" />
+        </set>
+    </class>
+</hibernate-mapping>

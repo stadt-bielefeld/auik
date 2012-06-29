@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.atl.AtlEinheiten" table="atl_einheiten" schema="auik">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="bezeichnung" type="string">
+            <column name="bezeichnung" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="deaEinheitenMasseinheitenNr" type="int">
+            <column name="dea_einheiten_masseinheiten_nr" not-null="true" />
+        </property>
+        <set name="atlAnalysepositions" table="atl_analyseposition" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="einheiten_id" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.generated.atl.AtlAnalyseposition" />
+        </set>
+    </class>
+</hibernate-mapping>

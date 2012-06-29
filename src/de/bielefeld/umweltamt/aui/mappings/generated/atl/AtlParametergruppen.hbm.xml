@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.atl.AtlParametergruppen" table="atl_parametergruppen" schema="auik">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="preisfueranalyse" type="java.lang.Double">
+            <column name="preisfueranalyse" precision="8" scale="0" />
+        </property>
+        <set name="atlParameters" table="atl_parameter" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="parametergruppe_id" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.generated.atl.AtlParameter" />
+        </set>
+    </class>
+</hibernate-mapping>

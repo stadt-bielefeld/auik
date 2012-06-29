@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.ViewBwk" table="view_bwk" schema="auik">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.ViewBwkId">
+            <key-property name="objektid" type="java.lang.Integer">
+                <column name="objektid" />
+            </key-property>
+            <key-property name="betranrede" type="string">
+                <column name="betranrede" />
+            </key-property>
+            <key-property name="betrname" type="string">
+                <column name="betrname" />
+            </key-property>
+            <key-property name="betrnamezus" type="string">
+                <column name="betrnamezus" />
+            </key-property>
+            <key-property name="strasse" type="string">
+                <column name="strasse" />
+            </key-property>
+            <key-property name="hausnr" type="java.lang.Integer">
+                <column name="hausnr" />
+            </key-property>
+            <key-property name="hausnrzus" type="string">
+                <column name="hausnrzus" />
+            </key-property>
+            <key-property name="branche" type="string">
+                <column name="branche" />
+            </key-property>
+            <key-property name="KHersteller" type="string">
+                <column name="k_hersteller" />
+            </key-property>
+            <key-property name="KTyp" type="string">
+                <column name="k_typ" />
+            </key-property>
+            <key-property name="KBrennmittel" type="string">
+                <column name="k_brennmittel" />
+            </key-property>
+            <key-property name="KLeistung" type="java.lang.Integer">
+                <column name="k_leistung" />
+            </key-property>
+            <key-property name="datumG" type="timestamp">
+                <column name="datum_g" length="8" />
+            </key-property>
+            <key-property name="aba" type="java.lang.Boolean">
+                <column name="aba" />
+            </key-property>
+            <key-property name="WBrenner" type="string">
+                <column name="w_brenner" />
+            </key-property>
+            <key-property name="WWaermetauscher" type="string">
+                <column name="w_waermetauscher" />
+            </key-property>
+            <key-property name="WAbgasleitung" type="string">
+                <column name="w_abgasleitung" />
+            </key-property>
+            <key-property name="WKondensableitung" type="string">
+                <column name="w_kondensableitung" />
+            </key-property>
+            <key-property name="abnahme" type="string">
+                <column name="abnahme" />
+            </key-property>
+            <key-property name="bemerkungen" type="string">
+                <column name="bemerkungen" />
+            </key-property>
+            <key-property name="anschreiben" type="timestamp">
+                <column name="anschreiben" length="8" />
+            </key-property>
+            <key-property name="erfassung" type="java.lang.Integer">
+                <column name="erfassung" />
+            </key-property>
+            <key-property name="genehmigung" type="java.lang.Boolean">
+                <column name="genehmigung" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

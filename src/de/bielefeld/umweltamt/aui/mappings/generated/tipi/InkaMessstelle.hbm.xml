@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaMessstelle" table="inka_messstelle" schema="tipi">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaMessstelleId">
+            <key-property name="gemeindekennzahl" type="string">
+                <column name="gemeindekennzahl" length="8" />
+            </key-property>
+            <key-property name="gemeindeVer" type="java.lang.Integer">
+                <column name="gemeinde_ver" />
+            </key-property>
+            <key-property name="uebergabestelleLfdNr" type="java.lang.Integer">
+                <column name="uebergabestelle_lfd_nr" />
+            </key-property>
+            <key-property name="uebergabestelleVer" type="java.lang.Integer">
+                <column name="uebergabestelle_ver" />
+            </key-property>
+            <key-property name="messstelleLfdNr" type="java.lang.Integer">
+                <column name="messstelle_lfd_nr" />
+            </key-property>
+            <key-property name="messstelleVer" type="java.lang.Integer">
+                <column name="messstelle_ver" />
+            </key-property>
+            <key-property name="gueltigVon" type="date">
+                <column name="gueltig_von" length="4" />
+            </key-property>
+            <key-property name="gueltigBis" type="date">
+                <column name="gueltig_bis" length="4" />
+            </key-property>
+            <key-property name="aenderungsDatum" type="timestamp">
+                <column name="aenderungs_datum" length="8" />
+            </key-property>
+            <key-property name="erfassungsDatum" type="timestamp">
+                <column name="erfassungs_datum" length="8" />
+            </key-property>
+            <key-property name="historienNr" type="java.lang.Integer">
+                <column name="historien_nr" />
+            </key-property>
+            <key-property name="istAktuellJn" type="java.lang.Boolean">
+                <column name="ist_aktuell_jn" />
+            </key-property>
+            <key-property name="genehmigungNr" type="java.lang.Integer">
+                <column name="genehmigung_nr" />
+            </key-property>
+            <key-property name="genehmigungVer" type="java.lang.Integer">
+                <column name="genehmigung_ver" />
+            </key-property>
+            <key-property name="messstelleTyp" type="java.lang.Integer">
+                <column name="messstelle_typ" />
+            </key-property>
+            <key-property name="beschrMesspunkt" type="string">
+                <column name="beschr_messpunkt" length="50" />
+            </key-property>
+            <key-property name="relevantSumFrachtJn" type="java.lang.Boolean">
+                <column name="relevant_sum_fracht_jn" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

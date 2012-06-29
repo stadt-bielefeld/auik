@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.view.ViewBasisStandort" table="view_basis_standort" schema="auik">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.view.ViewBasisStandortId">
+            <key-property name="id" type="java.lang.Integer">
+                <column name="id" />
+            </key-property>
+            <key-property name="adresse" type="string">
+                <column name="adresse" />
+            </key-property>
+            <key-property name="strasse" type="string">
+                <column name="strasse" />
+            </key-property>
+            <key-property name="hausnr" type="java.lang.Integer">
+                <column name="hausnr" />
+            </key-property>
+            <key-property name="hausnrzus" type="string">
+                <column name="hausnrzus" />
+            </key-property>
+            <key-property name="rechtswert" type="java.lang.Float">
+                <column name="rechtswert" precision="4" scale="0" />
+            </key-property>
+            <key-property name="hochwert" type="java.lang.Float">
+                <column name="hochwert" precision="4" scale="0" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

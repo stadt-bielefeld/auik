@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisStandort" table="basis_standort" schema="auik">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="basisGemarkung" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisGemarkung" fetch="select">
+            <column name="gemarkungid" />
+        </many-to-one>
+        <many-to-one name="vawsWassereinzugsgebiete" class="de.bielefeld.umweltamt.aui.mappings.generated.vaws.VawsWassereinzugsgebiete" fetch="select">
+            <column name="wassereinzgebid" />
+        </many-to-one>
+        <many-to-one name="vawsStandortgghwsg" class="de.bielefeld.umweltamt.aui.mappings.generated.vaws.VawsStandortgghwsg" fetch="select">
+            <column name="standortgegebid" />
+        </many-to-one>
+        <property name="strasse" type="string">
+            <column name="strasse" />
+        </property>
+        <property name="hausnr" type="java.lang.Integer">
+            <column name="hausnr" />
+        </property>
+        <property name="hausnrzus" type="string">
+            <column name="hausnrzus" />
+        </property>
+        <property name="plz" type="string">
+            <column name="plz" />
+        </property>
+        <property name="rechtswert" type="java.lang.Float">
+            <column name="rechtswert" precision="4" scale="0" />
+        </property>
+        <property name="hochwert" type="java.lang.Float">
+            <column name="hochwert" precision="4" scale="0" />
+        </property>
+        <property name="flur" type="string">
+            <column name="flur" />
+        </property>
+        <property name="flurstueck" type="string">
+            <column name="flurstueck" />
+        </property>
+        <property name="entgebid" type="string">
+            <column name="entgebid" />
+        </property>
+        <property name="vornameeigent" type="string">
+            <column name="vornameeigent" />
+        </property>
+        <property name="nameeigent" type="string">
+            <column name="nameeigent" />
+        </property>
+        <property name="strasseeigent" type="string">
+            <column name="strasseeigent" />
+        </property>
+        <property name="hausnreigent" type="java.lang.Integer">
+            <column name="hausnreigent" />
+        </property>
+        <property name="hausnrzuseigent" type="string">
+            <column name="hausnrzuseigent" />
+        </property>
+        <property name="revidatum" type="timestamp">
+            <column name="revidatum" length="8" />
+        </property>
+        <property name="revihandz" type="string">
+            <column name="revihandz" />
+        </property>
+        <property name="wassermenge" type="java.lang.Integer">
+            <column name="wassermenge" />
+        </property>
+        <property name="sachbe33rav" type="string">
+            <column name="sachbe33rav" />
+        </property>
+        <property name="sachbe33hee" type="string">
+            <column name="sachbe33hee" />
+        </property>
+        <property name="theGeom" type="serializable">
+            <column name="the_geom" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="basisPrioritaets" table="basis_prioritaet" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="standort_id" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisPrioritaet" />
+        </set>
+        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="standortid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjekt" />
+        </set>
+    </class>
+</hibernate-mapping>

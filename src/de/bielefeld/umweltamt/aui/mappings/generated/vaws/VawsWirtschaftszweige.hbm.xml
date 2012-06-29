@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.vaws.VawsWirtschaftszweige" table="vaws_wirtschaftszweige" schema="auik">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="wirtschaftszweig" type="string">
+            <column name="wirtschaftszweig" />
+        </property>
+        <set name="basisBetreibers" table="basis_betreiber" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="wirtschaftszweigid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisBetreiber" />
+        </set>
+    </class>
+</hibernate-mapping>

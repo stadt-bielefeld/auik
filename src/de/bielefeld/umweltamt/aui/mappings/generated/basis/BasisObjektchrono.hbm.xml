@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjektchrono" table="basis_objektchrono" schema="auik">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjekt" fetch="select">
+            <column name="objektid" />
+        </many-to-one>
+        <property name="datum" type="timestamp">
+            <column name="datum" length="8" />
+        </property>
+        <property name="sachverhalt" type="string">
+            <column name="sachverhalt" />
+        </property>
+        <property name="wv" type="timestamp">
+            <column name="wv" length="8" />
+        </property>
+        <property name="sachbearbeiter" type="string">
+            <column name="sachbearbeiter" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

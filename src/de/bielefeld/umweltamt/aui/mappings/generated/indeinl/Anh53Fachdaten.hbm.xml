@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.Anh53Fachdaten" table="anh_53_fachdaten" schema="auik">
+        <id name="objektid" type="int">
+            <column name="objektid" />
+            <generator class="foreign">
+                <param name="property">basisObjekt</param>
+            </generator>
+        </id>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjekt" constrained="true"></one-to-one>
+        <property name="branche" type="string">
+            <column name="branche" />
+        </property>
+        <property name="verfahren" type="string">
+            <column name="verfahren" />
+        </property>
+        <property name="antragsdatum" type="timestamp">
+            <column name="antragsdatum" length="8" />
+        </property>
+        <property name="bagatell" type="java.lang.Boolean">
+            <column name="bagatell" />
+        </property>
+        <property name="bagatelldatum" type="timestamp">
+            <column name="bagatelldatum" length="8" />
+        </property>
+        <property name="genehmigungsdatum" type="timestamp">
+            <column name="genehmigungsdatum" length="8" />
+        </property>
+        <property name="genehmigungaufgehoben" type="timestamp">
+            <column name="genehmigungaufgehoben" length="8" />
+        </property>
+        <property name="abnahmedatum" type="timestamp">
+            <column name="abnahmedatum" length="8" />
+        </property>
+        <property name="genehmigungstitel" type="string">
+            <column name="genehmigungstitel" />
+        </property>
+        <property name="genehmigung" type="java.lang.Boolean">
+            <column name="genehmigung" />
+        </property>
+        <property name="durchsatz" type="java.lang.Integer">
+            <column name="durchsatz" />
+        </property>
+        <property name="gesamtmengeEb" type="java.lang.Integer">
+            <column name="gesamtmenge_eb" />
+        </property>
+        <property name="onlineentsilberung" type="java.lang.Boolean">
+            <column name="onlineentsilberung" />
+        </property>
+        <property name="abwasser" type="java.lang.Boolean">
+            <column name="abwasser" />
+        </property>
+        <property name="abwasserfrei" type="timestamp">
+            <column name="abwasserfrei" length="8" />
+        </property>
+        <property name="kleiner200qm" type="timestamp">
+            <column name="kleiner200qm" length="8" />
+        </property>
+        <property name="betriebAbgemeldet" type="java.lang.Boolean">
+            <column name="betrieb_abgemeldet" />
+        </property>
+        <property name="bemerkungen" type="string">
+            <column name="bemerkungen" />
+        </property>
+        <property name="betriebstagebuch" type="java.lang.Boolean">
+            <column name="betriebstagebuch" />
+        </property>
+        <property name="wasseruhr" type="java.lang.Boolean">
+            <column name="wasseruhr" />
+        </property>
+        <property name="spuelwassermenge" type="java.lang.Integer">
+            <column name="spuelwassermenge" />
+        </property>
+        <property name="spuelwasserverbrauch" type="java.lang.Integer">
+            <column name="spuelwasserverbrauch" />
+        </property>
+        <property name="wartungsvertrag" type="java.lang.Boolean">
+            <column name="wartungsvertrag" />
+        </property>
+        <property name="grgen" type="java.lang.Boolean">
+            <column name="grgen" />
+        </property>
+        <property name="genart" type="string">
+            <column name="genart" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

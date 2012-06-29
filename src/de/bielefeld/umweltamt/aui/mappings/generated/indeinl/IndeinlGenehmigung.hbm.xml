@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.IndeinlGenehmigung" table="indeinl_genehmigung" schema="auik">
+        <id name="objektid" type="int">
+            <column name="objektid" />
+            <generator class="foreign">
+                <param name="property">basisObjekt</param>
+            </generator>
+        </id>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjekt" constrained="true"></one-to-one>
+        <property name="bemerkungen" type="string">
+            <column name="bemerkungen" />
+        </property>
+        <property name="erstellungsDatum" type="date">
+            <column name="erstellungs_datum" length="4" />
+        </property>
+        <property name="aenderungsDatum" type="date">
+            <column name="aenderungs_datum" length="4" />
+        </property>
+        <property name="antragDatum" type="date">
+            <column name="antrag_datum" length="4" />
+        </property>
+        <property name="befristet" type="java.lang.Boolean">
+            <column name="befristet" />
+        </property>
+        <property name="befristetBis" type="date">
+            <column name="befristet_bis" length="4" />
+        </property>
+        <property name="anhang" type="java.lang.Integer">
+            <column name="anhang" />
+        </property>
+        <property name="genMenge" type="java.lang.Integer">
+            <column name="gen_menge" />
+        </property>
+        <property name="gen58" type="java.lang.Boolean">
+            <column name="gen58" />
+        </property>
+        <property name="gen59" type="java.lang.Boolean">
+            <column name="gen59" />
+        </property>
+        <property name="selbstueberw" type="java.lang.Boolean">
+            <column name="selbstueberw" />
+        </property>
+        <property name="ESatzung" type="java.lang.Boolean">
+            <column name="e_satzung" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

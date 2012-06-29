@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaAnfallstelle" table="inka_anfallstelle" schema="tipi">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaAnfallstelleId">
+            <key-property name="anfallstelleNr" type="java.lang.Integer">
+                <column name="anfallstelle_nr" />
+            </key-property>
+            <key-property name="anfallstelleVer" type="java.lang.Integer">
+                <column name="anfallstelle_ver" />
+            </key-property>
+            <key-property name="gueltigVon" type="date">
+                <column name="gueltig_von" length="4" />
+            </key-property>
+            <key-property name="gueltigBis" type="date">
+                <column name="gueltig_bis" length="4" />
+            </key-property>
+            <key-property name="aenderungsDatum" type="timestamp">
+                <column name="aenderungs_datum" length="8" />
+            </key-property>
+            <key-property name="erfassungsDatum" type="timestamp">
+                <column name="erfassungs_datum" length="8" />
+            </key-property>
+            <key-property name="historienNr" type="java.lang.Integer">
+                <column name="historien_nr" />
+            </key-property>
+            <key-property name="istAktuellJn" type="java.lang.Boolean">
+                <column name="ist_aktuell_jn" />
+            </key-property>
+            <key-property name="betriebseinrichtungNr" type="java.lang.Integer">
+                <column name="betriebseinrichtung_nr" />
+            </key-property>
+            <key-property name="betriebseinrichtungVer" type="java.lang.Integer">
+                <column name="betriebseinrichtung_ver" />
+            </key-property>
+            <key-property name="gemeindekennzahl" type="string">
+                <column name="gemeindekennzahl" length="8" />
+            </key-property>
+            <key-property name="gemeindeVer" type="java.lang.Integer">
+                <column name="gemeinde_ver" />
+            </key-property>
+            <key-property name="uebergabestelleLfdNr" type="java.lang.Integer">
+                <column name="uebergabestelle_lfd_nr" />
+            </key-property>
+            <key-property name="uebergabestelleVer" type="java.lang.Integer">
+                <column name="uebergabestelle_ver" />
+            </key-property>
+            <key-property name="genehmigungNr" type="java.lang.Integer">
+                <column name="genehmigung_nr" />
+            </key-property>
+            <key-property name="genehmigungVer" type="java.lang.Integer">
+                <column name="genehmigung_ver" />
+            </key-property>
+            <key-property name="anhId" type="string">
+                <column name="anh_id" length="20" />
+            </key-property>
+            <key-property name="anhVer" type="java.lang.Integer">
+                <column name="anh_ver" />
+            </key-property>
+            <key-property name="beschreibung" type="string">
+                <column name="beschreibung" length="30" />
+            </key-property>
+            <key-property name="maxVolTag" type="java.lang.Double">
+                <column name="max_vol_tag" precision="8" scale="0" />
+            </key-property>
+            <key-property name="volJahr" type="java.lang.Integer">
+                <column name="vol_jahr" />
+            </key-property>
+            <key-property name="dauerbetriebJn" type="java.lang.Boolean">
+                <column name="dauerbetrieb_jn" />
+            </key-property>
+            <key-property name="chargenbetriebJn" type="java.lang.Boolean">
+                <column name="chargenbetrieb_jn" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

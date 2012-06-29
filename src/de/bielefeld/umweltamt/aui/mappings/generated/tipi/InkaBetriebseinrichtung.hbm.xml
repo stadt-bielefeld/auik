@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaBetriebseinrichtung" table="inka_betriebseinrichtung" schema="tipi">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaBetriebseinrichtungId">
+            <key-property name="betriebseinrichtungNr" type="java.lang.Integer">
+                <column name="betriebseinrichtung_nr" />
+            </key-property>
+            <key-property name="betriebseinrichtungVer" type="java.lang.Integer">
+                <column name="betriebseinrichtung_ver" />
+            </key-property>
+            <key-property name="gueltigVon" type="date">
+                <column name="gueltig_von" length="4" />
+            </key-property>
+            <key-property name="gueltigBis" type="date">
+                <column name="gueltig_bis" length="4" />
+            </key-property>
+            <key-property name="aenderungsDatum" type="timestamp">
+                <column name="aenderungs_datum" length="8" />
+            </key-property>
+            <key-property name="erfassungsDatum" type="timestamp">
+                <column name="erfassungs_datum" length="8" />
+            </key-property>
+            <key-property name="historienNr" type="java.lang.Integer">
+                <column name="historien_nr" />
+            </key-property>
+            <key-property name="istAktuellJn" type="java.lang.Boolean">
+                <column name="ist_aktuell_jn" />
+            </key-property>
+            <key-property name="betriebNr" type="java.lang.Integer">
+                <column name="betrieb_nr" />
+            </key-property>
+            <key-property name="betriebVer" type="java.lang.Integer">
+                <column name="betrieb_ver" />
+            </key-property>
+            <key-property name="adresseBetreibNr" type="java.lang.Integer">
+                <column name="adresse_betreib_nr" />
+            </key-property>
+            <key-property name="adresseBetreibVer" type="java.lang.Integer">
+                <column name="adresse_betreib_ver" />
+            </key-property>
+            <key-property name="adresseAnsprNr" type="java.lang.Integer">
+                <column name="adresse_anspr_nr" />
+            </key-property>
+            <key-property name="adresseAnsprVer" type="java.lang.Integer">
+                <column name="adresse_anspr_ver" />
+            </key-property>
+            <key-property name="genehmigungNr" type="java.lang.Integer">
+                <column name="genehmigung_nr" />
+            </key-property>
+            <key-property name="genehmigungVer" type="java.lang.Integer">
+                <column name="genehmigung_ver" />
+            </key-property>
+            <key-property name="gaaNr" type="string">
+                <column name="gaa_nr" length="2" />
+            </key-property>
+            <key-property name="astnr" type="string">
+                <column name="astnr" length="30" />
+            </key-property>
+            <key-property name="zusatz1" type="string">
+                <column name="zusatz1" length="1" />
+            </key-property>
+            <key-property name="zusatz2" type="string">
+                <column name="zusatz2" length="3" />
+            </key-property>
+            <key-property name="arbeitsstaetteVer" type="java.lang.Integer">
+                <column name="arbeitsstaette_ver" />
+            </key-property>
+            <key-property name="wzCode" type="string">
+                <column name="wz_code" length="7" />
+            </key-property>
+            <key-property name="wzCodeVer" type="java.lang.Integer">
+                <column name="wz_code_ver" />
+            </key-property>
+            <key-property name="stilllegungJn" type="java.lang.Boolean">
+                <column name="stilllegung_jn" />
+            </key-property>
+            <key-property name="stilllegungDatum" type="date">
+                <column name="stilllegung_datum" length="4" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

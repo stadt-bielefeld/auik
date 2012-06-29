@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.DeaAdresse" table="dea_adresse" schema="tipi">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.tipi.DeaAdresseId">
+            <key-property name="adresseNr" type="java.lang.Integer">
+                <column name="adresse_nr" />
+            </key-property>
+            <key-property name="adresseVer" type="java.lang.Integer">
+                <column name="adresse_ver" />
+            </key-property>
+            <key-property name="gueltigVon" type="date">
+                <column name="gueltig_von" length="4" />
+            </key-property>
+            <key-property name="gueltigBis" type="date">
+                <column name="gueltig_bis" length="4" />
+            </key-property>
+            <key-property name="aenderungsDatum" type="timestamp">
+                <column name="aenderungs_datum" length="8" />
+            </key-property>
+            <key-property name="erfassungsDatum" type="timestamp">
+                <column name="erfassungs_datum" length="8" />
+            </key-property>
+            <key-property name="historienNr" type="java.lang.Integer">
+                <column name="historien_nr" />
+            </key-property>
+            <key-property name="istAktuellJn" type="java.lang.Boolean">
+                <column name="ist_aktuell_jn" />
+            </key-property>
+            <key-property name="name1" type="string">
+                <column name="name1" length="40" />
+            </key-property>
+            <key-property name="name2" type="string">
+                <column name="name2" length="40" />
+            </key-property>
+            <key-property name="strasse" type="string">
+                <column name="strasse" length="40" />
+            </key-property>
+            <key-property name="hausnr" type="string">
+                <column name="hausnr" length="15" />
+            </key-property>
+            <key-property name="plz" type="string">
+                <column name="plz" length="10" />
+            </key-property>
+            <key-property name="ort" type="string">
+                <column name="ort" length="40" />
+            </key-property>
+            <key-property name="staatskennung" type="string">
+                <column name="staatskennung" length="3" />
+            </key-property>
+            <key-property name="telefon" type="string">
+                <column name="telefon" length="30" />
+            </key-property>
+            <key-property name="telefonMobil" type="string">
+                <column name="telefon_mobil" length="30" />
+            </key-property>
+            <key-property name="fax" type="string">
+                <column name="fax" length="30" />
+            </key-property>
+            <key-property name="email" type="string">
+                <column name="email" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

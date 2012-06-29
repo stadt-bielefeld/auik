@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.06.2012 16:14:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjektarten" table="basis_objektarten" schema="auik">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="objektart" type="string">
+            <column name="objektart" />
+        </property>
+        <property name="abteilung" type="string">
+            <column name="abteilung" />
+        </property>
+        <property name="kategorie" type="string">
+            <column name="kategorie" />
+        </property>
+        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektartid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjekt" />
+        </set>
+    </class>
+</hibernate-mapping>
