@@ -12,6 +12,7 @@
     <property name="dist"		location="dist" />
     <property name="javadoc"	location="javadoc" />
     <property name="test"		location="test" />
+    <property name="data"		location="data" />
 	
     <property name="resources"
         value="${src}/de/bielefeld/umweltamt/aui/resources" />
