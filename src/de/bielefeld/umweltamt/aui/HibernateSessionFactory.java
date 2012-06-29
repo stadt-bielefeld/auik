@@ -53,7 +53,8 @@ public class HibernateSessionFactory {
      * CONFIG_FILE_LOCATION = "/com/foo/bar/myhiberstuff.conf.xml".</code>
      */
     private static String CONFIG_FILE_LOCATION =
-        System.getProperty("auik.hibernate.config", "/hibernate.cfg.xml");
+        System.getProperty("auik.hibernate.config",
+            "resources/config/hibernate.cfg.xml");
 
     /** Holds a single instance of Session */
     private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
@@ -93,7 +94,8 @@ public class HibernateSessionFactory {
             if (sessionFactory == null) {
                 try {
                     // First load the config file
-                    cfg.configure(CONFIG_FILE_LOCATION);
+                    cfg.configure(
+                        AUIKataster.class.getResource(CONFIG_FILE_LOCATION));
                     // Then overwrite the user / password property
                     cfg.setProperty("hibernate.connection.username", DB_USER);
                     cfg.setProperty("hibernate.connection.password", DB_PASS);

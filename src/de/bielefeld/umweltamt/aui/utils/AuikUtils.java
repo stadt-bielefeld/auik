@@ -525,7 +525,7 @@ public class AuikUtils {
         } else {
             sSize = size + "/";
         }
-        String iconPath = "icons/" + sSize + filename;
+        String iconPath = "gui/images/icons/" + sSize + filename;
         URL iconURL = AUIKataster.class.getResource(iconPath);
         if (iconURL != null) {
             return new ImageIcon(iconURL, description);

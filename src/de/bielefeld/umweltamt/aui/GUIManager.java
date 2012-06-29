@@ -60,6 +60,7 @@ public final class GUIManager {
     private static final Vector<String> AUTHORS = new Vector<String>();
     /** Program authors as a HTML table */
     private static final String AUTHORS_AS_HTML_TABLE = null;
+    private static final String SPLASH_IMAGE = "gui/images/splash.png";
 
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -113,14 +114,9 @@ public final class GUIManager {
 
 	/** Show the splash frame */
 	private void showSplashFrame() {
-        URL imageURL = GUIManager.class.getResource(
-        		"/de/bielefeld/umweltamt/aui/resources/splash.png");
-        if (imageURL != null) {
-            splashFrame = SplashWindow.splash(
-                Toolkit.getDefaultToolkit().createImage(imageURL));
-        } else {
-            log.warn("The splash image was not found.");
-        }
+        splashFrame = SplashWindow.splash(
+            Toolkit.getDefaultToolkit().createImage(
+                AUIKataster.class.getResource(SPLASH_IMAGE)));
 	}
 
 	/** Dispose the splash frame */

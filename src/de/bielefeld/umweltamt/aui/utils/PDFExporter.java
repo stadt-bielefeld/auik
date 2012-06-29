@@ -31,6 +31,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
+import de.bielefeld.umweltamt.aui.AUIKataster;
 
 
 /**
@@ -46,8 +47,7 @@ public class PDFExporter {
      */
     private static PDFExporter INSTANCE;
 
-    private static final String PATHTOJASPER
-        = "/src/de/bielefeld/umweltamt/aui/resources/reports/";
+    private static final String PATHTOJASPER = "resources/reports/";
 
     /** Die Gebührenbescheid.*/
     public static final String BESCHEID
@@ -57,6 +57,8 @@ public class PDFExporter {
     public static final String VFG
         = PATHTOJASPER + "verfuegung.jasper";
 
+    /** Logging */
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Dieser Konstruktor soll nicht aufgerufen werden, um zu verhindern, dass
@@ -128,7 +130,7 @@ public class PDFExporter {
         Map<String,Object> fields, JRDataSource subdata, String dest, boolean printPDF)
     throws Exception
     {
-        InputStream inputStream = getClass().getResourceAsStream(
+        InputStream inputStream = AUIKataster.class.getResourceAsStream(
             PATHTOJASPER + "probenahmeauftrag.jasper");
 
         if (inputStream == null) {
@@ -178,7 +180,8 @@ public class PDFExporter {
         boolean            printPDF)
     throws Exception
     {
-        InputStream inputStream = getClass().getResourceAsStream(report);
+        InputStream inputStream = AUIKataster.class.getResourceAsStream(
+            PATHTOJASPER + report);
 
         if (inputStream == null) {
             throw new Exception(

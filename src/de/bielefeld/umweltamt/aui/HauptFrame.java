@@ -673,8 +673,7 @@ public class HauptFrame extends JFrame {
                                     + "</td></tr>"
                                     + "<tr><th align='left'>Weiterentwicklung seit 2011:</th><td>"
                                     + "<table valign='top'><tr><td>Intevation GmbH</td><td><img src='"
-                                    + HauptFrame.class
-                                            .getResource("icons/intevation-logo-50ppi-nontrans.png")
+                                    + HauptFrame.class.getResource("gui/images/icons/intevation-logo-50ppi-nontrans.png")
                                     + "'></td></tr></table>"
                                     + "</td></tr>" + "</table></html>",
                                     "Info über's " + GUIManager.SHORT_NAME);

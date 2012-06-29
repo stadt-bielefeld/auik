@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering SYSTEM
+	"http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-schema="auik" match-name="atl_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.atl" />
+		
+	<table-filter match-schema="auik" match-name="basis_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.basis" />
+		
+	<table-filter match-schema="auik" match-name="indeinl_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.indeinl" />
+	<table-filter match-schema="auik" match-name="anh_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.indeinl" />
+	<table-filter match-schema="auik" match-name="view_bwk"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.indeinl" />
+		
+	<table-filter match-schema="auik" match-name="vaws_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.vaws" />
+		
+	<table-filter match-schema="auik" match-name="view_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.view" />
+		
+	<table-filter match-schema="tipi" match-name="dea_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.tipi" />
+	<table-filter match-schema="tipi" match-name="inka_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.tipi" />
+</hibernate-reverse-engineering>

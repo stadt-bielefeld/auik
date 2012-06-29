@@ -65,9 +65,4 @@ public class GUIManagerTest {
 	public void testGetVersion() {
 		log.debug(guiManager.getVersion());
 	}
-
-	@Test
-	public void testGetAuthorsAsHTML() {
-		log.debug(guiManager.getAuthorsAsHTML());
-	}
 }
