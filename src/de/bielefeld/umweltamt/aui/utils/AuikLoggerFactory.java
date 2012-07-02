@@ -24,7 +24,10 @@ package de.bielefeld.umweltamt.aui.utils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.spi.LoggerFactory;
+
+import de.bielefeld.umweltamt.aui.AUIKataster;
 
 /**
  * AuikLogger factory which sets different logging levels for different users.
@@ -50,6 +53,8 @@ public class AuikLoggerFactory implements LoggerFactory {
 
 	/** Initialize the Logger with user specific log levels */
 	private static void init() {
+	    PropertyConfigurator.configure(
+	        AUIKataster.class.getResource("resources/config/log4j.properties"));
 		AuikLoggerFactory.setSpecialLogLevelsByUser();
 		// If we want to do some global formatting, it would go here.
 		needsToRunInit = false;
