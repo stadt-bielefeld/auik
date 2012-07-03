@@ -27,6 +27,7 @@
             <include name="**/*.jar" />
         </fileset>
         <path location="${bin}" />
+        <path location="${config}" /> <!-- Add config path for log4j -->
     </path>
 
 	<!-- =================================================================== -->    
