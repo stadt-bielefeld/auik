@@ -591,7 +591,11 @@ public class BasisPanel  extends JPanel {
 
             if (hauptModul.getObjekt().getBasisSachbearbeiter() != null) {
                 getSachbearbeiterBox().setSelectedItem(hauptModul.getObjekt().getBasisSachbearbeiter());
+            } else {
+                getSachbearbeiterBox().setSelectedItem(
+                    BasisSachbearbeiter.getCurrentSachbearbeiter());
             }
+
             if (hauptModul.getObjekt().getInaktiv() != null) {
                 if (hauptModul.getObjekt().getInaktiv() == true) {
                     getInaktivBox().setSelected(true);
@@ -629,7 +633,8 @@ public class BasisPanel  extends JPanel {
             getArtBox().setSelectedIndex(0);
         }
         if (getSachbearbeiterBox().getItemCount() > 0) {
-            getSachbearbeiterBox().setSelectedIndex(0);
+            getSachbearbeiterBox().setSelectedItem(
+                BasisSachbearbeiter.getCurrentSachbearbeiter());
         }
         getInaktivBox().setSelected(false);
         getPrioritaetFeld().setText("");
