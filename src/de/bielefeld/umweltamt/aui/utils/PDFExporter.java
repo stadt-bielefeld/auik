@@ -51,11 +51,11 @@ public class PDFExporter {
 
     /** Die Gebührenbescheid.*/
     public static final String BESCHEID
-        = PATHTOJASPER + "gebuehrenbescheid.jasper";
+        = "gebuehrenbescheid.jasper";
 
     /** Die Verfügung.*/
     public static final String VFG
-        = PATHTOJASPER + "verfuegung.jasper";
+        = "verfuegung.jasper";
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();

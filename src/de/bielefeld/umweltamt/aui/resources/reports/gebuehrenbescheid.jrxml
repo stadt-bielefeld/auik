@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="764"/>
+	<property name="ireport.y" value="144"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -189,7 +189,7 @@
 			</rectangle>
 			<image>
 				<reportElement x="146" y="1" width="185" height="65"/>
-				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/gui/images/icons/gebuehrenbescheid.png"]]></imageExpression>
 			</image>
 			<rectangle>
 				<reportElement x="-13" y="118" width="9" height="6" backcolor="#000000"/>
@@ -203,7 +203,7 @@
 			</staticText>
 			<image>
 				<reportElement x="399" y="176" width="75" height="101"/>
-				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["de/bielefeld/umweltamt/aui/gui/images/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
 			</image>
 			<frame>
 				<reportElement x="1" y="117" width="331" height="65" forecolor="#FFFFFF"/>
@@ -288,9 +288,9 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{personalsachkosten}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="54">
-			<textField>
-				<reportElement x="20" y="42" width="400" height="12"/>
+		<band height="54" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement stretchType="RelativeToBandHeight" x="20" y="42" width="400" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
@@ -336,7 +336,7 @@
 			<subreport>
 				<reportElement x="1" y="0" width="482" height="55"/>
 				<dataSourceExpression><![CDATA[$P{SUBDATA}]]></dataSourceExpression>
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("/reports/gebuehren_parameterliste.jasper"))]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("de/bielefeld/umweltamt/aui/resources/reports/gebuehren_parameterliste.jasper"))]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="45">
@@ -377,7 +377,7 @@
 		</band>
 		<band height="40">
 			<textField pattern="">
-				<reportElement x="0" y="0" width="483" height="34"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="483" height="34"/>
 				<textElement markup="styled">
 					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
