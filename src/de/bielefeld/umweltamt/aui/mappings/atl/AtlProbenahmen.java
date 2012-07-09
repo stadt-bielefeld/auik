@@ -481,6 +481,14 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     }
 
     /**
+     * @return <code>true</code>, wenn die Probeart des Probepunktes dieser
+     *         Probe Rohschlamm oder Faulschlamm ist, sonst <code>false</code>
+     */
+    public boolean isSielhautProbe() {
+        return (this.getProbeArt().isSielhaut());
+    }
+
+    /**
      * Fügt dieser Probenahme eine Analyseposition hinzu (und sorgt für die
      * richtigen Fremdschlüssel in den Tabellen).
      * @param pos Die neue Analyseposition

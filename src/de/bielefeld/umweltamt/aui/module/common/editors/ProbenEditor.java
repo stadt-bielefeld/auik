@@ -179,8 +179,9 @@ public class ProbenEditor extends AbstractApplyEditor {
 		private AtlProbenahmen probe;
         private boolean isNew;
         private boolean isSchlamm;
+        private boolean isSielhaut;
 
-        public ParameterModel(AtlProbenahmen probe, boolean isNew, boolean isSchlamm) {
+        public ParameterModel(AtlProbenahmen probe, boolean isNew, boolean isSchlamm, boolean isSielhaut) {
             super(new String[]{
                     "Parameter",
                     "GrKl",
@@ -192,6 +193,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             this.probe = probe;
             this.isNew = isNew;
             this.isSchlamm = isSchlamm;
+            this.isSielhaut = isSielhaut;
 
             updateList();
         }
@@ -209,34 +211,31 @@ public class ProbenEditor extends AbstractApplyEditor {
                 probe = AtlProbenahmen.getProbenahme(probe.getId(), true);
                 setList(AtlProbenahmen.sortAnalysepositionen(probe));
             } else { // isNew
-                if (!isSchlamm) {
-                    String[] params_ordn = {"L10111", "B00600", "L10821"};
-                    String analyse_von = "360.33";
-                    setList(new ArrayList<Object>());
-                    AtlParameter param = null;
-                    for (String param_ordn : params_ordn) {
-                        param = AtlParameter.getParameter(param_ordn);
-                        addParameter(
-                            param,
-                            AtlEinheiten.getEinheit(
-                                param.getWirdgemessenineinheit()),
-                            analyse_von);
-                    }
-                } else {
+                if (isSchlamm) {
                     String[] params_ordn = {
-                        "L11380", "L11650", "L11510", "L11610",
-                        "L11880", "L11660", "L11640", "L13430"};
-                    String analyse_von = "AGROLAB";
-                    setList(new ArrayList<Object>());
-                    AtlParameter param = null;
-                    for (String param_ordn : params_ordn) {
-                        param = AtlParameter.getParameter(param_ordn);
-                        addParameter(
-                            param,
-                            AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID),
-                            analyse_von);
-                    }
-                }
+                            "L11380", "L11650", "L11510", "L11610",
+                            "L11880", "L11660", "L11640", "L13430"};
+                        String analyse_von = "AGROLAB";
+                        setList(new ArrayList<Object>());
+                        AtlParameter param = null;
+                        for (String param_ordn : params_ordn) {
+                            param = AtlParameter.getParameter(param_ordn);
+                            addParameter(
+                                param,
+                                AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID),
+                                analyse_von);
+                        }
+				} else if (!isSielhaut) {
+					String[] params_ordn = { "L10111", "B00600", "L10821" };
+					String analyse_von = "360.33";
+					setList(new ArrayList<Object>());
+					AtlParameter param = null;
+					for (String param_ordn : params_ordn) {
+						param = AtlParameter.getParameter(param_ordn);
+						addParameter(param, AtlEinheiten.getEinheit(param
+								.getWirdgemessenineinheit()), analyse_von);
+					}					
+				}
             }
             fireTableDataChanged();
         }
@@ -548,15 +547,21 @@ public class ProbenEditor extends AbstractApplyEditor {
     private ParameterModel       parameterModel;
     private boolean isNew;
     private boolean isSchlamm;
+    private boolean isSielhaut;
 
 
     public ProbenEditor(AtlProbenahmen probe, HauptFrame owner, boolean isNew) {
         super("Probenahme " + probe.getKennummer(), probe, owner);
         this.isNew = isNew;
         isSchlamm = false;
+        isSielhaut = false;
 
         if (probe.isKlaerschlammProbe()){
         	isSchlamm = true;
+        }
+
+        if (probe.isSielhautProbe()){
+        	isSielhaut = true;
         }
 
         if (!isNew /*probe.isAnalysepositionenInitialized()*/) {
@@ -570,7 +575,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             uhrzeitBis.setText("");
         }
 
-        parameterModel = new ParameterModel(getProbe(), isNew, isSchlamm);
+        parameterModel = new ParameterModel(getProbe(), isNew, isSchlamm, isSielhaut);
         parameterTabelle.setModel(parameterModel);
 
         initColumns();

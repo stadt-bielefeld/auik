@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.3636363636363658"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="886"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -952,7 +952,7 @@
 					<subreportParameterExpression><![CDATA[$P{entnahmeDatum}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[$P{SUBDATA}]]></dataSourceExpression>
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("/reports/ParameterReport.jasper"))]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("de/bielefeld/umweltamt/aui/resources/reports/ParameterReport.jasper"))]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement key="staticText-1" x="0" y="0" width="77" height="26"/>
