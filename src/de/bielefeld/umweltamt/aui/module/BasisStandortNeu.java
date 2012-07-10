@@ -520,16 +520,6 @@ public class BasisStandortNeu extends AbstractModul {
         String strasse = (String) strassenBox.getSelectedItem();
         Integer hausnr = ((IntegerField)hausnrEditFeld).getIntValue();
         String zusatz  = hausnrZusFeld.getText();
-        if (zusatz.equals("")) {
-            result = new DatabaseAccess()
-            .createQuery(
-                "FROM BasisStandort " +
-                "WHERE strasse = :strasse " +
-                    "AND hausnr = :hausnr ")
-            .setString("strasse", strasse)
-            .setInteger("hausnr", hausnr)
-            .list();
-        } else {
             result = new DatabaseAccess()
             .createQuery(
                 "FROM BasisStandort " +
@@ -540,7 +530,6 @@ public class BasisStandortNeu extends AbstractModul {
             .setInteger("hausnr", hausnr)
             .setString("zusatz", zusatz)
             .list();
-        }
         log.debug(result);
         if (result.isEmpty()) {
             exists = false;
