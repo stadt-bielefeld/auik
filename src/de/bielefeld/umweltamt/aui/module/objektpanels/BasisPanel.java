@@ -60,6 +60,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -395,6 +396,11 @@ public class BasisPanel  extends JPanel {
     private JTextArea beschreibungsArea;
     private JButton saveButton;
 
+    // Normaler und kursiver Font für die Sachbearbeiter ComboBox
+    // Normal: gespeichert, kursiv: nur angezeigt
+    private Font normalFont;
+    private Font italicFont;
+
     private ActionListener editButtonListener;
 //    private ActionListener gotoButtonListener;
 
@@ -501,6 +507,7 @@ public class BasisPanel  extends JPanel {
 		    // Preset the current Sachbearbeiter
 		    getSachbearbeiterBox().setSelectedItem(
 		        BasisSachbearbeiter.getCurrentSachbearbeiter());
+            getSachbearbeiterBox().setFont(italicFont);
 
 			if (objektarten != null
 					&& (objektarten.length != getArtBox().getItemCount())) {
@@ -590,9 +597,11 @@ public class BasisPanel  extends JPanel {
 
             if (hauptModul.getObjekt().getBasisSachbearbeiter() != null) {
                 getSachbearbeiterBox().setSelectedItem(hauptModul.getObjekt().getBasisSachbearbeiter());
+                getSachbearbeiterBox().setFont(normalFont);
             } else {
                 getSachbearbeiterBox().setSelectedItem(
                     BasisSachbearbeiter.getCurrentSachbearbeiter());
+                getSachbearbeiterBox().setFont(italicFont);
             }
 
             if (hauptModul.getObjekt().getInaktiv() != null) {
@@ -634,6 +643,7 @@ public class BasisPanel  extends JPanel {
         if (getSachbearbeiterBox().getItemCount() > 0) {
             getSachbearbeiterBox().setSelectedItem(
                 BasisSachbearbeiter.getCurrentSachbearbeiter());
+            getSachbearbeiterBox().setFont(italicFont);
         }
         getInaktivBox().setSelected(false);
         getPrioritaetFeld().setText("");
@@ -669,7 +679,6 @@ public class BasisPanel  extends JPanel {
         // Betreiber / Standort werden schon nach der Auswahl durch die chooseButtons gesetzt
         hauptModul.getObjekt().setBasisObjektarten((BasisObjektarten)getArtBox().getSelectedItem());
         hauptModul.getObjekt().setBeschreibung(getBeschreibungsArea().getText());
-        // TODO: This can produce a class cast exception!
         hauptModul.getObjekt().setBasisSachbearbeiter((BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
         hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
 
@@ -972,6 +981,10 @@ public class BasisPanel  extends JPanel {
 
         	sachbearbeiterBox = new JComboBox();
         	sachbearbeiterBox.setKeySelectionManager(new MyKeySelectionManager());
+
+            normalFont = getSachbearbeiterBox().getFont();
+            italicFont = new Font(
+                normalFont.getName(), Font.ITALIC, normalFont.getSize());
 
         }
         return sachbearbeiterBox;
