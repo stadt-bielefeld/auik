@@ -512,7 +512,6 @@ public class BasisPanel  extends JPanel {
 	        getSachbearbeiterBox().setModel(
 	            new DefaultComboBoxModel(
 	                BasisSachbearbeiter.getEnabledSachbearbeiter()));
-	        getSachbearbeiterBox().setEditable(true);
 
 		    getArtBox().removeAllItems();
 			// Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000)
