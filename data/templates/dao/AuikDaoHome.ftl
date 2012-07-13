@@ -164,65 +164,6 @@ public class ${declarationName} extends Abstract${declarationName} {
     }
 </#if>
     
-<#if clazz.hasNaturalId()>
-    public ${declarationName} findByNaturalId(${c2j.asNaturalIdParameterList(clazz)}) {
-        log.debug("getting ${declarationName} instance by natural id");
-        try {
-            ${declarationName} instance = (${declarationName}) sessionFactory.getCurrentSession()
-                    .createCriteria("${clazz.entityName}")
-<#if jdk5>
-                    .add( ${pojo.staticImport("org.hibernate.criterion.Restrictions", "naturalId")}()
-<#else>
-                   .add( ${pojo.importType("org.hibernate.criterion.Restrictions")}.naturalId()
-</#if>                    
-<#foreach property in pojo.getAllPropertiesIterator()>
-<#if property.isNaturalIdentifier()>
-                            .set("${property.name}", ${property.name})
-</#if>
-</#foreach>
-                        )
-                    .uniqueResult();
-            if (instance==null) {
-                log.debug("get successful, no instance found");
-            }
-            else {
-                log.debug("get successful, instance found");
-            }
-            return instance;
-        }
-        catch (RuntimeException re) {
-            log.error("query failed", re);
-            throw re;
-        }
-    }
-</#if>    
-<#if jdk5>
-    public ${pojo.importType("java.util.List")}<${declarationName}> findByExample(${declarationName} instance) {
-<#else>
-    public ${pojo.importType("java.util.List")} findByExample(${declarationName} instance) {
-</#if>
-        log.debug("finding ${declarationName} instance by example");
-        try {
-<#if jdk5>
-            ${pojo.importType("java.util.List")}<${declarationName}> results = (List<${declarationName}>) sessionFactory.getCurrentSession()
-<#else>
-            ${pojo.importType("java.util.List")} results = sessionFactory.getCurrentSession()
-</#if>
-                    .createCriteria("${clazz.entityName}")
-<#if jdk5>
-                    .add( ${pojo.staticImport("org.hibernate.criterion.Example", "create")}(instance) )
-<#else>
-                    .add(${pojo.importType("org.hibernate.criterion.Example")}.create(instance))
-</#if>
-            .list();
-            log.debug("find by example successful, result size: " + results.size());
-            return results;
-        }
-        catch (RuntimeException re) {
-            log.error("find by example failed", re);
-            throw re;
-        }
-    } 
 <#foreach queryName in cfg.namedQueries.keySet()>
 <#if queryName.startsWith(clazz.entityName + ".")>
 <#assign methname = c2j.unqualify(queryName)>
