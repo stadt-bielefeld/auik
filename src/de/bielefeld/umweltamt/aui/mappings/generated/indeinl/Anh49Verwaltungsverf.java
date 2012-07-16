@@ -1,5 +1,5 @@
 package de.bielefeld.umweltamt.aui.mappings.generated.indeinl;
-// Generated 13.07.2012 16:41:06 by Hibernate Tools 3.3.0.GA
+// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
 import javax.naming.InitialContext;
@@ -91,7 +91,7 @@ public class Anh49Verwaltungsverf extends AbstractAnh49Verwaltungsverf {
         }
     }
     
-    public Anh49Verwaltungsverf findById( int id) {
+    public Anh49Verwaltungsverf findById( java.lang.Integer id) {
         log.debug("getting Anh49Verwaltungsverf instance with id: " + id);
         try {
             Anh49Verwaltungsverf instance = (Anh49Verwaltungsverf) sessionFactory.getCurrentSession()

@@ -1,5 +1,5 @@
 package de.bielefeld.umweltamt.aui.mappings.generated.vaws;
-// Generated 13.07.2012 16:41:06 by Hibernate Tools 3.3.0.GA
+// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
 import javax.naming.InitialContext;
@@ -91,7 +91,7 @@ public class VawsVerwaltungsgebuehren extends AbstractVawsVerwaltungsgebuehren {
         }
     }
     
-    public VawsVerwaltungsgebuehren findById( int id) {
+    public VawsVerwaltungsgebuehren findById( java.lang.Integer id) {
         log.debug("getting VawsVerwaltungsgebuehren instance with id: " + id);
         try {
             VawsVerwaltungsgebuehren instance = (VawsVerwaltungsgebuehren) sessionFactory.getCurrentSession()

@@ -3,7 +3,10 @@
 	"http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
+	<!-- Table filters ===================================================== -->
 	<table-filter match-schema="auik" match-name="atl_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.atl" />
+	<table-filter match-schema="auik" match-name="view_atl_analyseposition_all"
 		package="de.bielefeld.umweltamt.aui.mappings.generated.atl" />
 		
 	<table-filter match-schema="auik" match-name="basis_.*"
@@ -19,11 +22,185 @@
 	<table-filter match-schema="auik" match-name="vaws_.*"
 		package="de.bielefeld.umweltamt.aui.mappings.generated.vaws" />
 		
-	<table-filter match-schema="auik" match-name="view_.*"
-		package="de.bielefeld.umweltamt.aui.mappings.generated.view" />
-		
 	<table-filter match-schema="tipi" match-name="dea_.*"
 		package="de.bielefeld.umweltamt.aui.mappings.generated.tipi" />
 	<table-filter match-schema="tipi" match-name="inka_.*"
 		package="de.bielefeld.umweltamt.aui.mappings.generated.tipi" />
+		
+	<!-- Sequences ========================================================= -->
+	<table schema="auik" name="anh_49_abscheiderdetails">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">anh_49_abscheiderdetails_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="anh_49_analysen">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">anh_49_analysen_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="anh_49_kontrollen">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">anh_49_kontrollen_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="anh_49_ortstermine">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">anh_49_ortstermine_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="anh_49_verwaltungsverf">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">anh_49_verwaltungsverf_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="atl_analyseposition">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">atl_analyseposition_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="atl_probenahmen">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">atl_probenahmen_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="atl_sielhaut">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">atl_sielhaut_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="basis_betreiber">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">basis_betreiber_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="basis_objekt">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">basis_objekt_objektid_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="basis_objektchrono">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">basis_objektchrono_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="basis_objektverknuepfung">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">basis_objektverknuepfung_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="basis_standort">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">basis_standort_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="vaws_anlagenchrono">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">vaws_anlagenchrono_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="vaws_fachdaten">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">vaws_fachdaten_behaelterid_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="vaws_kontrollen">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">vaws_kontrollen_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="vaws_verwaltungsgebuehren">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">vaws_verwaltungsgebuehren_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	<table schema="auik" name="vaws_verwaltungsverf">
+		<primary-key>
+            <generator class="native">
+                <param name="sequence">vaws_verwaltungsverf_id_seq</param>
+        	</generator>
+		</primary-key>
+	</table>
+	
+	<!-- Primary keys for views ============================================ -->
+	<table schema="auik" name="view_atl_analyseposition_all">
+		<primary-key>
+            <key-column name="id" />
+		</primary-key>
+	</table>
+	<table schema="auik" name="view_bwk">
+		<primary-key>
+            <key-column name="objektid" />
+		</primary-key>
+	</table>
+
+	<table schema="tipi" name="dea_adresse">
+		<primary-key>
+            <key-column name="adresse_nr" />
+		</primary-key>
+	</table>
+	<table schema="tipi" name="inka_anfallstelle">
+		<primary-key>
+            <key-column name="anfallstelle_nr" />
+		</primary-key>
+	</table>
+	<table schema="tipi" name="inka_betrieb">
+		<primary-key>
+            <key-column name="betrieb_nr" />
+		</primary-key>
+	</table>
+	<table schema="tipi" name="inka_betriebseinrichtung">
+		<primary-key>
+            <key-column name="betriebseinrichtung_nr" />
+		</primary-key>
+	</table>
+	<table schema="tipi" name="inka_genehmigung">
+		<primary-key>
+            <key-column name="genehmigung_nr" />
+		</primary-key>
+	</table>
+	<table schema="tipi" name="inka_messstelle">
+		<primary-key>
+            <key-column name="messstelle_lfd_nr" />
+		</primary-key>
+	</table>
+	<table schema="tipi" name="inka_uebergabestelle">
+		<primary-key>
+            <key-column name="uebergabestelle_lfd_nr" />
+		</primary-key>
+	</table>
+
 </hibernate-reverse-engineering>

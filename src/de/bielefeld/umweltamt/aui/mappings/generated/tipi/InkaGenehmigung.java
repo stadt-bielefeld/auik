@@ -1,5 +1,5 @@
 package de.bielefeld.umweltamt.aui.mappings.generated.tipi;
-// Generated 13.07.2012 16:41:06 by Hibernate Tools 3.3.0.GA
+// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
 import javax.naming.InitialContext;
@@ -91,7 +91,7 @@ public class InkaGenehmigung extends AbstractInkaGenehmigung {
         }
     }
     
-    public InkaGenehmigung findById( de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaGenehmigungId id) {
+    public InkaGenehmigung findById( java.lang.Integer id) {
         log.debug("getting InkaGenehmigung instance with id: " + id);
         try {
             InkaGenehmigung instance = (InkaGenehmigung) sessionFactory.getCurrentSession()

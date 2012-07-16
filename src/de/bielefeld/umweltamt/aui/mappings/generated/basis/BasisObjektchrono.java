@@ -1,5 +1,5 @@
 package de.bielefeld.umweltamt.aui.mappings.generated.basis;
-// Generated 13.07.2012 16:41:06 by Hibernate Tools 3.3.0.GA
+// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
 import javax.naming.InitialContext;
@@ -91,7 +91,7 @@ public class BasisObjektchrono extends AbstractBasisObjektchrono {
         }
     }
     
-    public BasisObjektchrono findById( int id) {
+    public BasisObjektchrono findById( java.lang.Integer id) {
         log.debug("getting BasisObjektchrono instance with id: " + id);
         try {
             BasisObjektchrono instance = (BasisObjektchrono) sessionFactory.getCurrentSession()

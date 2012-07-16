@@ -28,44 +28,41 @@ package de.bielefeld.umweltamt.aui.mappings.generated.atl;
 /**
  * A class that represents a row in a database table.
  * You can customize the behavior of this class by editing the class,
- * {@link AtlAnalyseposition}.
+ * {@link ViewAtlAnalysepositionAll}.
  */
-public abstract class AbstractAtlAnalyseposition  implements java.io.Serializable {
+public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Serializable {
 
      private Integer id;
-     private AtlParameter atlParameter;
-     private AtlProbenahmen atlProbenahmen;
-     private AtlEinheiten atlEinheiten;
      private String grkl;
-     private float wert;
+     private Float wert;
      private String analyseVon;
      private String bericht;
      private Double normwert;
-     private boolean enabled;
-     private boolean deleted;
+     private Integer einheitenId;
+     private String parameterId;
+     private Integer probenahmeId;
+     private Boolean enabled;
+     private Boolean deleted;
 
-    public AbstractAtlAnalyseposition() {
+    public AbstractViewAtlAnalysepositionAll() {
     }
 
-    public AbstractAtlAnalyseposition(
-    	AtlParameter atlParameter, AtlProbenahmen atlProbenahmen, float wert, boolean enabled, boolean deleted) {
-        this.atlParameter = atlParameter;
-        this.atlProbenahmen = atlProbenahmen;
-        this.wert = wert;
-        this.enabled = enabled;
-        this.deleted = deleted;
+    public AbstractViewAtlAnalysepositionAll(
+    	Integer id) {
+        this.id = id;
     }
 
-    public AbstractAtlAnalyseposition(
-    	AtlParameter atlParameter, AtlProbenahmen atlProbenahmen, AtlEinheiten atlEinheiten, String grkl, float wert, String analyseVon, String bericht, Double normwert, boolean enabled, boolean deleted) {
-        this.atlParameter = atlParameter;
-        this.atlProbenahmen = atlProbenahmen;
-        this.atlEinheiten = atlEinheiten;
+    public AbstractViewAtlAnalysepositionAll(
+    	Integer id, String grkl, Float wert, String analyseVon, String bericht, Double normwert, Integer einheitenId, String parameterId, Integer probenahmeId, Boolean enabled, Boolean deleted) {
+        this.id = id;
         this.grkl = grkl;
         this.wert = wert;
         this.analyseVon = analyseVon;
         this.bericht = bericht;
         this.normwert = normwert;
+        this.einheitenId = einheitenId;
+        this.parameterId = parameterId;
+        this.probenahmeId = probenahmeId;
         this.enabled = enabled;
         this.deleted = deleted;
     }
@@ -77,27 +74,6 @@ public abstract class AbstractAtlAnalyseposition  implements java.io.Serializabl
         this.id = id;
     }
 
-    public AtlParameter getAtlParameter() {
-        return this.atlParameter;
-    }
-    public void setAtlParameter(AtlParameter atlParameter) {
-        this.atlParameter = atlParameter;
-    }
-
-    public AtlProbenahmen getAtlProbenahmen() {
-        return this.atlProbenahmen;
-    }
-    public void setAtlProbenahmen(AtlProbenahmen atlProbenahmen) {
-        this.atlProbenahmen = atlProbenahmen;
-    }
-
-    public AtlEinheiten getAtlEinheiten() {
-        return this.atlEinheiten;
-    }
-    public void setAtlEinheiten(AtlEinheiten atlEinheiten) {
-        this.atlEinheiten = atlEinheiten;
-    }
-
     public String getGrkl() {
         return this.grkl;
     }
@@ -105,10 +81,10 @@ public abstract class AbstractAtlAnalyseposition  implements java.io.Serializabl
         this.grkl = grkl;
     }
 
-    public float getWert() {
+    public Float getWert() {
         return this.wert;
     }
-    public void setWert(float wert) {
+    public void setWert(Float wert) {
         this.wert = wert;
     }
 
@@ -133,17 +109,38 @@ public abstract class AbstractAtlAnalyseposition  implements java.io.Serializabl
         this.normwert = normwert;
     }
 
-    public boolean isEnabled() {
+    public Integer getEinheitenId() {
+        return this.einheitenId;
+    }
+    public void setEinheitenId(Integer einheitenId) {
+        this.einheitenId = einheitenId;
+    }
+
+    public String getParameterId() {
+        return this.parameterId;
+    }
+    public void setParameterId(String parameterId) {
+        this.parameterId = parameterId;
+    }
+
+    public Integer getProbenahmeId() {
+        return this.probenahmeId;
+    }
+    public void setProbenahmeId(Integer probenahmeId) {
+        this.probenahmeId = probenahmeId;
+    }
+
+    public Boolean getEnabled() {
         return this.enabled;
     }
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
-    public boolean isDeleted() {
+    public Boolean getDeleted() {
         return this.deleted;
     }
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 

@@ -1,5 +1,5 @@
 package de.bielefeld.umweltamt.aui.mappings.generated.atl;
-// Generated 13.07.2012 16:41:06 by Hibernate Tools 3.3.0.GA
+// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
 import javax.naming.InitialContext;
@@ -91,7 +91,7 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition {
         }
     }
     
-    public AtlAnalyseposition findById( int id) {
+    public AtlAnalyseposition findById( java.lang.Integer id) {
         log.debug("getting AtlAnalyseposition instance with id: " + id);
         try {
             AtlAnalyseposition instance = (AtlAnalyseposition) sessionFactory.getCurrentSession()

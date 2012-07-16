@@ -1,5 +1,5 @@
 package de.bielefeld.umweltamt.aui.mappings.generated.vaws;
-// Generated 13.07.2012 16:41:06 by Hibernate Tools 3.3.0.GA
+// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
 import javax.naming.InitialContext;
@@ -91,7 +91,7 @@ public class VawsAnlagenchrono extends AbstractVawsAnlagenchrono {
         }
     }
     
-    public VawsAnlagenchrono findById( int id) {
+    public VawsAnlagenchrono findById( java.lang.Integer id) {
         log.debug("getting VawsAnlagenchrono instance with id: " + id);
         try {
             VawsAnlagenchrono instance = (VawsAnlagenchrono) sessionFactory.getCurrentSession()

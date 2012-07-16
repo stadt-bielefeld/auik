@@ -1,5 +1,5 @@
 package de.bielefeld.umweltamt.aui.mappings.generated.tipi;
-// Generated 13.07.2012 16:41:06 by Hibernate Tools 3.3.0.GA
+// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
 import javax.naming.InitialContext;
@@ -91,7 +91,7 @@ public class InkaBetrieb extends AbstractInkaBetrieb {
         }
     }
     
-    public InkaBetrieb findById( de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaBetriebId id) {
+    public InkaBetrieb findById( java.lang.Integer id) {
         log.debug("getting InkaBetrieb instance with id: " + id);
         try {
             InkaBetrieb instance = (InkaBetrieb) sessionFactory.getCurrentSession()

@@ -1,5 +1,5 @@
 package de.bielefeld.umweltamt.aui.mappings.generated.tipi;
-// Generated 13.07.2012 16:41:06 by Hibernate Tools 3.3.0.GA
+// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
 import javax.naming.InitialContext;
@@ -91,7 +91,7 @@ public class InkaUebergabestelle extends AbstractInkaUebergabestelle {
         }
     }
     
-    public InkaUebergabestelle findById( de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaUebergabestelleId id) {
+    public InkaUebergabestelle findById( java.lang.Integer id) {
         log.debug("getting InkaUebergabestelle instance with id: " + id);
         try {
             InkaUebergabestelle instance = (InkaUebergabestelle) sessionFactory.getCurrentSession()

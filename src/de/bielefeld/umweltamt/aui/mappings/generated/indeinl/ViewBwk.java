@@ -1,5 +1,5 @@
 package de.bielefeld.umweltamt.aui.mappings.generated.indeinl;
-// Generated 13.07.2012 16:41:06 by Hibernate Tools 3.3.0.GA
+// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
 import javax.naming.InitialContext;
@@ -91,7 +91,7 @@ public class ViewBwk extends AbstractViewBwk {
         }
     }
     
-    public ViewBwk findById( de.bielefeld.umweltamt.aui.mappings.generated.indeinl.ViewBwkId id) {
+    public ViewBwk findById( java.lang.Integer id) {
         log.debug("getting ViewBwk instance with id: " + id);
         try {
             ViewBwk instance = (ViewBwk) sessionFactory.getCurrentSession()

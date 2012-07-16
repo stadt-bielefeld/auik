@@ -1,5 +1,5 @@
 package de.bielefeld.umweltamt.aui.mappings.generated.indeinl;
-// Generated 13.07.2012 16:41:06 by Hibernate Tools 3.3.0.GA
+// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
 import javax.naming.InitialContext;
@@ -91,7 +91,7 @@ public class Anh49Kontrollen extends AbstractAnh49Kontrollen {
         }
     }
     
-    public Anh49Kontrollen findById( int id) {
+    public Anh49Kontrollen findById( java.lang.Integer id) {
         log.debug("getting Anh49Kontrollen instance with id: " + id);
         try {
             Anh49Kontrollen instance = (Anh49Kontrollen) sessionFactory.getCurrentSession()

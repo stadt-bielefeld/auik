@@ -1,73 +1,72 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 13.07.2012 16:41:05 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 16.07.2012 17:29:06 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaUebergabestelle" table="inka_uebergabestelle" schema="tipi">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaUebergabestelleId">
-            <key-property name="gemeindekennzahl" type="string">
-                <column name="gemeindekennzahl" length="8" />
-            </key-property>
-            <key-property name="gemeindeVer" type="java.lang.Integer">
-                <column name="gemeinde_ver" />
-            </key-property>
-            <key-property name="uebergabestelleLfdNr" type="java.lang.Integer">
-                <column name="uebergabestelle_lfd_nr" />
-            </key-property>
-            <key-property name="uebergabestelleVer" type="java.lang.Integer">
-                <column name="uebergabestelle_ver" />
-            </key-property>
-            <key-property name="gueltigVon" type="date">
-                <column name="gueltig_von" length="4" />
-            </key-property>
-            <key-property name="gueltigBis" type="date">
-                <column name="gueltig_bis" length="4" />
-            </key-property>
-            <key-property name="aenderungsDatum" type="timestamp">
-                <column name="aenderungs_datum" length="8" />
-            </key-property>
-            <key-property name="erfassungsDatum" type="timestamp">
-                <column name="erfassungs_datum" length="8" />
-            </key-property>
-            <key-property name="historienNr" type="java.lang.Integer">
-                <column name="historien_nr" />
-            </key-property>
-            <key-property name="istAktuellJn" type="java.lang.Boolean">
-                <column name="ist_aktuell_jn" />
-            </key-property>
-            <key-property name="betriebNr" type="java.lang.Integer">
-                <column name="betrieb_nr" />
-            </key-property>
-            <key-property name="betriebVer" type="java.lang.Integer">
-                <column name="betrieb_ver" />
-            </key-property>
-            <key-property name="genehmigungNr" type="java.lang.Integer">
-                <column name="genehmigung_nr" />
-            </key-property>
-            <key-property name="genehmigungVer" type="java.lang.Integer">
-                <column name="genehmigung_ver" />
-            </key-property>
-            <key-property name="anlagenNr" type="java.lang.Integer">
-                <column name="anlagen_nr" />
-            </key-property>
-            <key-property name="klaeranlagenVer" type="java.lang.Integer">
-                <column name="klaeranlagen_ver" />
-            </key-property>
-            <key-property name="kartennummer" type="java.lang.Integer">
-                <column name="kartennummer" />
-            </key-property>
-            <key-property name="tk25Ver" type="java.lang.Integer">
-                <column name="tk25_ver" />
-            </key-property>
-            <key-property name="kanalArt" type="java.lang.Integer">
-                <column name="kanal_art" />
-            </key-property>
-            <key-property name="rechtswert" type="java.lang.Integer">
-                <column name="rechtswert" />
-            </key-property>
-            <key-property name="hochwert" type="java.lang.Integer">
-                <column name="hochwert" />
-            </key-property>
-        </composite-id>
+        <id name="uebergabestelleLfdNr" type="java.lang.Integer">
+            <column name="uebergabestelle_lfd_nr" />
+            <generator class="assigned" />
+        </id>
+        <property name="gemeindekennzahl" type="string">
+            <column name="gemeindekennzahl" length="8" />
+        </property>
+        <property name="gemeindeVer" type="java.lang.Integer">
+            <column name="gemeinde_ver" />
+        </property>
+        <property name="uebergabestelleVer" type="java.lang.Integer">
+            <column name="uebergabestelle_ver" />
+        </property>
+        <property name="gueltigVon" type="date">
+            <column name="gueltig_von" length="4" />
+        </property>
+        <property name="gueltigBis" type="date">
+            <column name="gueltig_bis" length="4" />
+        </property>
+        <property name="aenderungsDatum" type="timestamp">
+            <column name="aenderungs_datum" length="8" />
+        </property>
+        <property name="erfassungsDatum" type="timestamp">
+            <column name="erfassungs_datum" length="8" />
+        </property>
+        <property name="historienNr" type="java.lang.Integer">
+            <column name="historien_nr" />
+        </property>
+        <property name="istAktuellJn" type="java.lang.Boolean">
+            <column name="ist_aktuell_jn" />
+        </property>
+        <property name="betriebNr" type="java.lang.Integer">
+            <column name="betrieb_nr" />
+        </property>
+        <property name="betriebVer" type="java.lang.Integer">
+            <column name="betrieb_ver" />
+        </property>
+        <property name="genehmigungNr" type="java.lang.Integer">
+            <column name="genehmigung_nr" />
+        </property>
+        <property name="genehmigungVer" type="java.lang.Integer">
+            <column name="genehmigung_ver" />
+        </property>
+        <property name="anlagenNr" type="java.lang.Integer">
+            <column name="anlagen_nr" />
+        </property>
+        <property name="klaeranlagenVer" type="java.lang.Integer">
+            <column name="klaeranlagen_ver" />
+        </property>
+        <property name="kartennummer" type="java.lang.Integer">
+            <column name="kartennummer" />
+        </property>
+        <property name="tk25Ver" type="java.lang.Integer">
+            <column name="tk25_ver" />
+        </property>
+        <property name="kanalArt" type="java.lang.Integer">
+            <column name="kanal_art" />
+        </property>
+        <property name="rechtswert" type="java.lang.Integer">
+            <column name="rechtswert" />
+        </property>
+        <property name="hochwert" type="java.lang.Integer">
+            <column name="hochwert" />
+        </property>
     </class>
 </hibernate-mapping>

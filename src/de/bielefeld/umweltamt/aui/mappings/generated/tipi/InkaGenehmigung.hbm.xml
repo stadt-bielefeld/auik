@@ -1,55 +1,54 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 13.07.2012 16:41:05 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 16.07.2012 17:29:06 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaGenehmigung" table="inka_genehmigung" schema="tipi">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaGenehmigungId">
-            <key-property name="genehmigungNr" type="java.lang.Integer">
-                <column name="genehmigung_nr" />
-            </key-property>
-            <key-property name="genehmigungVer" type="java.lang.Integer">
-                <column name="genehmigung_ver" />
-            </key-property>
-            <key-property name="gueltigVon" type="date">
-                <column name="gueltig_von" length="4" />
-            </key-property>
-            <key-property name="gueltigBis" type="date">
-                <column name="gueltig_bis" length="4" />
-            </key-property>
-            <key-property name="aenderungsDatum" type="timestamp">
-                <column name="aenderungs_datum" length="8" />
-            </key-property>
-            <key-property name="erfassungsDatum" type="timestamp">
-                <column name="erfassungs_datum" length="8" />
-            </key-property>
-            <key-property name="historienNr" type="java.lang.Integer">
-                <column name="historien_nr" />
-            </key-property>
-            <key-property name="istAktuellJn" type="java.lang.Boolean">
-                <column name="ist_aktuell_jn" />
-            </key-property>
-            <key-property name="betriebNr" type="java.lang.Integer">
-                <column name="betrieb_nr" />
-            </key-property>
-            <key-property name="betriebVer" type="java.lang.Integer">
-                <column name="betrieb_ver" />
-            </key-property>
-            <key-property name="behoerdenId" type="string">
-                <column name="behoerden_id" length="5" />
-            </key-property>
-            <key-property name="behoerdenVer" type="java.lang.Integer">
-                <column name="behoerden_ver" />
-            </key-property>
-            <key-property name="genehmigungDatum" type="date">
-                <column name="genehmigung_datum" length="4" />
-            </key-property>
-            <key-property name="befristetJn" type="java.lang.Boolean">
-                <column name="befristet_jn" />
-            </key-property>
-            <key-property name="befristetBis" type="date">
-                <column name="befristet_bis" length="4" />
-            </key-property>
-        </composite-id>
+        <id name="genehmigungNr" type="java.lang.Integer">
+            <column name="genehmigung_nr" />
+            <generator class="assigned" />
+        </id>
+        <property name="genehmigungVer" type="java.lang.Integer">
+            <column name="genehmigung_ver" />
+        </property>
+        <property name="gueltigVon" type="date">
+            <column name="gueltig_von" length="4" />
+        </property>
+        <property name="gueltigBis" type="date">
+            <column name="gueltig_bis" length="4" />
+        </property>
+        <property name="aenderungsDatum" type="timestamp">
+            <column name="aenderungs_datum" length="8" />
+        </property>
+        <property name="erfassungsDatum" type="timestamp">
+            <column name="erfassungs_datum" length="8" />
+        </property>
+        <property name="historienNr" type="java.lang.Integer">
+            <column name="historien_nr" />
+        </property>
+        <property name="istAktuellJn" type="java.lang.Boolean">
+            <column name="ist_aktuell_jn" />
+        </property>
+        <property name="betriebNr" type="java.lang.Integer">
+            <column name="betrieb_nr" />
+        </property>
+        <property name="betriebVer" type="java.lang.Integer">
+            <column name="betrieb_ver" />
+        </property>
+        <property name="behoerdenId" type="string">
+            <column name="behoerden_id" length="5" />
+        </property>
+        <property name="behoerdenVer" type="java.lang.Integer">
+            <column name="behoerden_ver" />
+        </property>
+        <property name="genehmigungDatum" type="date">
+            <column name="genehmigung_datum" length="4" />
+        </property>
+        <property name="befristetJn" type="java.lang.Boolean">
+            <column name="befristet_jn" />
+        </property>
+        <property name="befristetBis" type="date">
+            <column name="befristet_bis" length="4" />
+        </property>
     </class>
 </hibernate-mapping>

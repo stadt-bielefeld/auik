@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 13.07.2012 16:41:05 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 16.07.2012 17:29:06 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjekt" table="basis_objekt" schema="auik">
-        <id name="objektid" type="int">
+        <id name="objektid" type="java.lang.Integer">
             <column name="objektid" />
-            <generator class="assigned" />
+            <generator class="native">
+                <param name="sequence">basis_objekt_objektid_seq</param>
+            </generator>
         </id>
         <many-to-one name="basisBetreiber" class="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisBetreiber" fetch="select">
             <column name="betreiberid" />

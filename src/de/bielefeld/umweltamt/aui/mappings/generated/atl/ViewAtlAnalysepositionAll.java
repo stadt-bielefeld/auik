@@ -1,4 +1,4 @@
-package de.bielefeld.umweltamt.aui.mappings.generated.indeinl;
+package de.bielefeld.umweltamt.aui.mappings.generated.atl;
 // Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
 
 
@@ -9,13 +9,13 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
 /**
- * Home object for domain model class Anh55Fachdaten.
- * @see de.bielefeld.umweltamt.aui.mappings.generated.indeinl.Anh55Fachdaten
+ * Home object for domain model class ViewAtlAnalysepositionAll.
+ * @see de.bielefeld.umweltamt.aui.mappings.generated.atl.ViewAtlAnalysepositionAll
  * @author Hibernate Tools
  */
-public class Anh55Fachdaten extends AbstractAnh55Fachdaten {
+public class ViewAtlAnalysepositionAll extends AbstractViewAtlAnalysepositionAll {
 
-    private static final Log log = LogFactory.getLog(Anh55Fachdaten.class);
+    private static final Log log = LogFactory.getLog(ViewAtlAnalysepositionAll.class);
 
     private final SessionFactory sessionFactory = getSessionFactory();
     
@@ -29,8 +29,8 @@ public class Anh55Fachdaten extends AbstractAnh55Fachdaten {
         }
     }
     
-    public void persist(Anh55Fachdaten transientInstance) {
-        log.debug("persisting Anh55Fachdaten instance");
+    public void persist(ViewAtlAnalysepositionAll transientInstance) {
+        log.debug("persisting ViewAtlAnalysepositionAll instance");
         try {
             sessionFactory.getCurrentSession().persist(transientInstance);
             log.debug("persist successful");
@@ -41,8 +41,8 @@ public class Anh55Fachdaten extends AbstractAnh55Fachdaten {
         }
     }
     
-    public void attachDirty(Anh55Fachdaten instance) {
-        log.debug("attaching dirty Anh55Fachdaten instance");
+    public void attachDirty(ViewAtlAnalysepositionAll instance) {
+        log.debug("attaching dirty ViewAtlAnalysepositionAll instance");
         try {
             sessionFactory.getCurrentSession().saveOrUpdate(instance);
             log.debug("attach successful");
@@ -53,8 +53,8 @@ public class Anh55Fachdaten extends AbstractAnh55Fachdaten {
         }
     }
     
-    public void attachClean(Anh55Fachdaten instance) {
-        log.debug("attaching clean Anh55Fachdaten instance");
+    public void attachClean(ViewAtlAnalysepositionAll instance) {
+        log.debug("attaching clean ViewAtlAnalysepositionAll instance");
         try {
             sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
             log.debug("attach successful");
@@ -65,8 +65,8 @@ public class Anh55Fachdaten extends AbstractAnh55Fachdaten {
         }
     }
     
-    public void delete(Anh55Fachdaten persistentInstance) {
-        log.debug("deleting Anh55Fachdaten instance");
+    public void delete(ViewAtlAnalysepositionAll persistentInstance) {
+        log.debug("deleting ViewAtlAnalysepositionAll instance");
         try {
             sessionFactory.getCurrentSession().delete(persistentInstance);
             log.debug("delete successful");
@@ -77,10 +77,10 @@ public class Anh55Fachdaten extends AbstractAnh55Fachdaten {
         }
     }
     
-    public Anh55Fachdaten merge(Anh55Fachdaten detachedInstance) {
-        log.debug("merging Anh55Fachdaten instance");
+    public ViewAtlAnalysepositionAll merge(ViewAtlAnalysepositionAll detachedInstance) {
+        log.debug("merging ViewAtlAnalysepositionAll instance");
         try {
-            Anh55Fachdaten result = (Anh55Fachdaten) sessionFactory.getCurrentSession()
+            ViewAtlAnalysepositionAll result = (ViewAtlAnalysepositionAll) sessionFactory.getCurrentSession()
                     .merge(detachedInstance);
             log.debug("merge successful");
             return result;
@@ -91,11 +91,11 @@ public class Anh55Fachdaten extends AbstractAnh55Fachdaten {
         }
     }
     
-    public Anh55Fachdaten findById( int id) {
-        log.debug("getting Anh55Fachdaten instance with id: " + id);
+    public ViewAtlAnalysepositionAll findById( java.lang.Integer id) {
+        log.debug("getting ViewAtlAnalysepositionAll instance with id: " + id);
         try {
-            Anh55Fachdaten instance = (Anh55Fachdaten) sessionFactory.getCurrentSession()
-                    .get("de.bielefeld.umweltamt.aui.mappings.generated.indeinl.Anh55Fachdaten", id);
+            ViewAtlAnalysepositionAll instance = (ViewAtlAnalysepositionAll) sessionFactory.getCurrentSession()
+                    .get("de.bielefeld.umweltamt.aui.mappings.generated.atl.ViewAtlAnalysepositionAll", id);
             if (instance==null) {
                 log.debug("get successful, no instance found");
             }
