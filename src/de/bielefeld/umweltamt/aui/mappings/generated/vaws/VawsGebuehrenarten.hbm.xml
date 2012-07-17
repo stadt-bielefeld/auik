@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 16.07.2012 17:29:06 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.vaws.VawsGebuehrenarten" table="vaws_gebuehrenarten" schema="auik">
         <id name="id" type="int">

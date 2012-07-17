@@ -21,39 +21,40 @@
 
 // Generated 17.07.2012 18:33:28 by Hibernate Tools 3.3.0.GA
 
-package de.bielefeld.umweltamt.aui.mappings.generated.atl;
-
-
+package de.bielefeld.umweltamt.aui.mappings.atl;
 
 /**
- * A class that represents a row in a database table.
- * You can customize the behavior of this class by editing the class,
+ * A class that represents a row in a database table. You can customize the
+ * behavior of this class by editing the class,
  * {@link ViewAtlAnalysepositionAll}.
  */
-public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Serializable {
+public abstract class AbstractViewAtlAnalysepositionAll implements
+    java.io.Serializable {
 
-     private Integer id;
-     private String grkl;
-     private Float wert;
-     private String analyseVon;
-     private String bericht;
-     private Double normwert;
-     private Integer einheitenId;
-     private String parameterId;
-     private Integer probenahmeId;
-     private Boolean enabled;
-     private Boolean deleted;
+    private static final long serialVersionUID = 5460050854531729219L;
+    private Integer id;
+    private String grkl;
+    private Float wert;
+    private String analyseVon;
+    private String bericht;
+    private Double normwert;
+    private Integer einheitenId;
+    private String parameterId;
+    private Integer probenahmeId;
+    private Boolean enabled;
+    private Boolean deleted;
 
     public AbstractViewAtlAnalysepositionAll() {
     }
 
-    public AbstractViewAtlAnalysepositionAll(
-    	Integer id) {
+    public AbstractViewAtlAnalysepositionAll(Integer id) {
         this.id = id;
     }
 
-    public AbstractViewAtlAnalysepositionAll(
-    	Integer id, String grkl, Float wert, String analyseVon, String bericht, Double normwert, Integer einheitenId, String parameterId, Integer probenahmeId, Boolean enabled, Boolean deleted) {
+    public AbstractViewAtlAnalysepositionAll(Integer id, String grkl,
+        Float wert, String analyseVon, String bericht, Double normwert,
+        Integer einheitenId, String parameterId, Integer probenahmeId,
+        Boolean enabled, Boolean deleted) {
         this.id = id;
         this.grkl = grkl;
         this.wert = wert;
@@ -70,6 +71,7 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public Integer getId() {
         return this.id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -77,6 +79,7 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public String getGrkl() {
         return this.grkl;
     }
+
     public void setGrkl(String grkl) {
         this.grkl = grkl;
     }
@@ -84,6 +87,7 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public Float getWert() {
         return this.wert;
     }
+
     public void setWert(Float wert) {
         this.wert = wert;
     }
@@ -91,6 +95,7 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public String getAnalyseVon() {
         return this.analyseVon;
     }
+
     public void setAnalyseVon(String analyseVon) {
         this.analyseVon = analyseVon;
     }
@@ -98,6 +103,7 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public String getBericht() {
         return this.bericht;
     }
+
     public void setBericht(String bericht) {
         this.bericht = bericht;
     }
@@ -105,6 +111,7 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public Double getNormwert() {
         return this.normwert;
     }
+
     public void setNormwert(Double normwert) {
         this.normwert = normwert;
     }
@@ -112,6 +119,7 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public Integer getEinheitenId() {
         return this.einheitenId;
     }
+
     public void setEinheitenId(Integer einheitenId) {
         this.einheitenId = einheitenId;
     }
@@ -119,6 +127,7 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public String getParameterId() {
         return this.parameterId;
     }
+
     public void setParameterId(String parameterId) {
         this.parameterId = parameterId;
     }
@@ -126,6 +135,7 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public Integer getProbenahmeId() {
         return this.probenahmeId;
     }
+
     public void setProbenahmeId(Integer probenahmeId) {
         this.probenahmeId = probenahmeId;
     }
@@ -133,6 +143,7 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public Boolean getEnabled() {
         return this.enabled;
     }
+
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
@@ -140,9 +151,8 @@ public abstract class AbstractViewAtlAnalysepositionAll  implements java.io.Seri
     public Boolean getDeleted() {
         return this.deleted;
     }
+
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
-
 }
-

@@ -21,38 +21,45 @@
 
 // Generated 17.07.2012 18:33:28 by Hibernate Tools 3.3.0.GA
 
-package de.bielefeld.umweltamt.aui.mappings.generated.basis;
+package de.bielefeld.umweltamt.aui.mappings.atl;
+
+import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import java.util.List;
 
 /**
- * Home object for domain model class BasisBetreiber.
- * @see de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisBetreiber
+ * Home object for domain model class ViewAtlAnalysepositionAll.
+ * @see de.bielefeld.umweltamt.aui.mappings.generated.atl.ViewAtlAnalysepositionAll
  * @author Hibernate Tools
  */
-public class BasisBetreiber extends AbstractBasisBetreiber {
+public class ViewAtlAnalysepositionAll extends
+    AbstractViewAtlAnalysepositionAll {
+
+    private static final long serialVersionUID = 7628595838089115005L;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    public static boolean saveOrUpdate(BasisBetreiber detachedInstance) {
+    public static boolean saveOrUpdate(
+        ViewAtlAnalysepositionAll detachedInstance) {
         return new DatabaseAccess().saveOrUpdate(detachedInstance);
     }
 
-    public static BasisBetreiber merge(BasisBetreiber detachedInstance) {
-        return (BasisBetreiber) new DatabaseAccess().merge(detachedInstance);
+    public static ViewAtlAnalysepositionAll merge(
+        ViewAtlAnalysepositionAll detachedInstance) {
+        return (ViewAtlAnalysepositionAll) new DatabaseAccess()
+            .merge(detachedInstance);
     }
 
-    public static boolean delete(BasisBetreiber detachedInstance) {
+    public static boolean delete(ViewAtlAnalysepositionAll detachedInstance) {
         return new DatabaseAccess().delete(detachedInstance);
     }
-    
-    public BasisBetreiber findById( java.lang.Integer id) {
-        log.debug("getting BasisBetreiber instance with id: " + id);
-        BasisBetreiber instance = (BasisBetreiber)
-        	new DatabaseAccess().get(BasisBetreiber.class, id);
+
+    public ViewAtlAnalysepositionAll findById(java.lang.Integer id) {
+        log.debug("getting ViewAtlAnalysepositionAll instance with id: " + id);
+        ViewAtlAnalysepositionAll instance = (ViewAtlAnalysepositionAll)
+            new DatabaseAccess().get(ViewAtlAnalysepositionAll.class, id);
         if (instance == null) {
             log.debug("get successful, no instance found");
         } else {
@@ -62,9 +69,7 @@ public class BasisBetreiber extends AbstractBasisBetreiber {
     }
 
     public static List<?> getAll() {
-        String query = "FROM BasisBetreiber";
+        String query = "FROM ViewAtlAnalysepositionAll";
         return new DatabaseAccess().createQuery(query).list();
     }
-
 }
-

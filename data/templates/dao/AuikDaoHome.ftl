@@ -1,5 +1,27 @@
-${pojo.getPackageDeclaration()}
+/**
+ * Copyright 2005-2011, Stadt Bielefeld
+ *
+ * This file is part of AUIK (Anlagen- und Indirekteinleiter-Kataster).
+ *
+ * AUIK is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * AUIK is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with AUIK. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
+ */
+
 // Generated ${date} by Hibernate Tools ${version}
+
+${pojo.getPackageDeclaration()}
 
 <#assign classbody>
 <#assign declarationName = pojo.importType(pojo.getDeclarationName())>/**
@@ -12,7 +34,8 @@ ${pojo.getPackageDeclaration()}
 </#if>
 public class ${declarationName} extends Abstract${declarationName} {
 
-    private static final ${pojo.importType("org.apache.commons.logging.Log")} log = ${pojo.importType("org.apache.commons.logging.LogFactory")}.getLog(${pojo.getDeclarationName()}.class);
+    /** Logging */
+    private static final ${pojo.importType("de.bielefeld.umweltamt.aui.utils.AuikLogger")} log = ${pojo.importType("de.bielefeld.umweltamt.aui.utils.AuikLogger")}.getLogger();
 
 <#if ejb3>
     @${pojo.importType("javax.persistence.PersistenceContext")} private ${pojo.importType("javax.persistence.EntityManager")} entityManager;
@@ -69,101 +92,53 @@ public class ${declarationName} extends Abstract${declarationName} {
     }
 </#if>
 <#else>    
-    private final ${pojo.importType("org.hibernate.SessionFactory")} sessionFactory = getSessionFactory();
-    
-    protected ${pojo.importType("org.hibernate.SessionFactory")} getSessionFactory() {
-        try {
-            return (${pojo.importType("org.hibernate.SessionFactory")}) new ${pojo.importType("javax.naming.InitialContext")}().lookup("${sessionFactoryName}");
-        }
-        catch (Exception e) {
-            log.error("Could not locate SessionFactory in JNDI", e);
-            throw new IllegalStateException("Could not locate SessionFactory in JNDI");
-        }
+    public static boolean saveOrUpdate(${declarationName} detachedInstance) {
+        return new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().saveOrUpdate(detachedInstance);
     }
-    
-    public void persist(${declarationName} transientInstance) {
-        log.debug("persisting ${declarationName} instance");
-        try {
-            sessionFactory.getCurrentSession().persist(transientInstance);
-            log.debug("persist successful");
-        }
-        catch (RuntimeException re) {
-            log.error("persist failed", re);
-            throw re;
-        }
+
+    public static ${declarationName} merge(${declarationName} detachedInstance) {
+        return (${declarationName}) new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().merge(detachedInstance);
     }
-    
-    public void attachDirty(${declarationName} instance) {
-        log.debug("attaching dirty ${declarationName} instance");
-        try {
-            sessionFactory.getCurrentSession().saveOrUpdate(instance);
-            log.debug("attach successful");
-        }
-        catch (RuntimeException re) {
-            log.error("attach failed", re);
-            throw re;
-        }
-    }
-    
-    public void attachClean(${declarationName} instance) {
-        log.debug("attaching clean ${declarationName} instance");
-        try {
-            sessionFactory.getCurrentSession().lock(instance, ${pojo.importType("org.hibernate.LockMode")}.NONE);
-            log.debug("attach successful");
-        }
-        catch (RuntimeException re) {
-            log.error("attach failed", re);
-            throw re;
-        }
-    }
-    
-    public void delete(${declarationName} persistentInstance) {
-        log.debug("deleting ${declarationName} instance");
-        try {
-            sessionFactory.getCurrentSession().delete(persistentInstance);
-            log.debug("delete successful");
-        }
-        catch (RuntimeException re) {
-            log.error("delete failed", re);
-            throw re;
-        }
-    }
-    
-    public ${declarationName} merge(${declarationName} detachedInstance) {
-        log.debug("merging ${declarationName} instance");
-        try {
-            ${declarationName} result = (${declarationName}) sessionFactory.getCurrentSession()
-                    .merge(detachedInstance);
-            log.debug("merge successful");
-            return result;
-        }
-        catch (RuntimeException re) {
-            log.error("merge failed", re);
-            throw re;
-        }
+
+    public static boolean delete(${declarationName} detachedInstance) {
+        return new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().delete(detachedInstance);
     }
     
 <#if clazz.identifierProperty?has_content>
     public ${declarationName} findById( ${c2j.getJavaTypeName(clazz.identifierProperty, jdk5)} id) {
         log.debug("getting ${declarationName} instance with id: " + id);
-        try {
-            ${declarationName} instance = (${declarationName}) sessionFactory.getCurrentSession()
-                    .get("${clazz.entityName}", id);
-            if (instance==null) {
-                log.debug("get successful, no instance found");
-            }
-            else {
-                log.debug("get successful, instance found");
-            }
-            return instance;
+        ${declarationName} instance = (${declarationName})
+        	new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().get(${declarationName}.class, id);
+        if (instance == null) {
+            log.debug("get successful, no instance found");
+        } else {
+            log.debug("get successful, instance found");
         }
-        catch (RuntimeException re) {
-            log.error("get failed", re);
-            throw re;
-        }
+        return instance;
     }
 </#if>
-    
+
+    public static ${pojo.importType("java.util.List")}<?> getAll() {
+        String query = "FROM ${declarationName}";
+        return new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().createQuery(query).list();
+    }
+
+<#if false>
+	// TODO: Fix this! This is generated - costumize!
+	// TODO: Add some "_" into the return type!
+    public ${declarationName} toServiceType() {
+		// TODO: Add some "_" into the type!
+        ${declarationName} serviceInstance = new ${declarationName}(
+        	// TODO: Resort the fields to fit the service class!
+        	// TODO: Change the first character of each field to upper case!
+<#foreach field in pojo.getPropertiesForFullConstructor()> 
+        	this.get${field.name}(),
+</#foreach>
+			// TODO: Remove the stupid last ","!
+        );
+        return serviceInstance;
+	}
+</#if>	    
 <#foreach queryName in cfg.namedQueries.keySet()>
 <#if queryName.startsWith(clazz.entityName + ".")>
 <#assign methname = c2j.unqualify(queryName)>
@@ -198,6 +173,5 @@ public class ${declarationName} extends Abstract${declarationName} {
 </#foreach></#if>
 }
 </#assign>
-
 ${pojo.generateImports()}
 ${classbody}

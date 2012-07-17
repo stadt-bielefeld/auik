@@ -19,7 +19,7 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-// Generated 16.07.2012 17:29:07 by Hibernate Tools 3.3.0.GA
+// Generated 17.07.2012 18:33:28 by Hibernate Tools 3.3.0.GA
 
 package de.bielefeld.umweltamt.aui.mappings.generated.basis;
 
