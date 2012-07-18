@@ -128,7 +128,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             sachbBox = new JComboBox();
             sachbBox.setModel(new DefaultComboBoxModel(
                 Anh49Fachdaten.getAllSachbearbeiter()));
-            sachbBox.setEditable(true);
+//            sachbBox.setEditable(true);
             sachbBox.setSelectedItem(
                 BasisSachbearbeiter.getCurrentSachbearbeiter());
             dekraTuevBox = new JComboBox();
@@ -145,8 +145,9 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                     model.setList(
                         Anh49Fachdaten.getAuswahlList(
                             wiedervorlageCheck.isSelected(),
-                            ((sachbBox.getSelectedItem() != null) ?
-                                sachbBox.getSelectedItem().toString() : null),
+                            (BasisSachbearbeiter)
+                                ((sachbBox.getSelectedItem() != null) ?
+                                sachbBox.getSelectedItem() : null),
                             (Integer)dekraTuevBox.getSelectedItem(),
                             aktivCheck.isSelected()));
                     model.fireTableDataChanged();

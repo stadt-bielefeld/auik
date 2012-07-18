@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -67,16 +68,16 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
-    public static String[] getAllSachbearbeiter() {
-        return (String[]) new DatabaseAccess()
+    public static BasisSachbearbeiter[] getAllSachbearbeiter() {
+        return (BasisSachbearbeiter[]) new DatabaseAccess()
             .createQuery(
-                "SELECT DISTINCT fd.basisObjekt.basisSachbearbeiter.name "
+                "SELECT DISTINCT fd.basisObjekt.basisSachbearbeiter "
                 + "FROM Anh49Fachdaten AS fd "
                 + "WHERE fd.basisObjekt.basisObjektarten.objektart "
                     + "NOT LIKE 'Fettabscheider'")
             .setCacheable(true)
             .setCacheRegion("sachbearbeiter")
-            .array(new String[0]);
+            .array(new BasisSachbearbeiter[0]);
     }
 
     public static Integer[] getAllDekraTuevYears() {
@@ -89,16 +90,6 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
                 // TODO: This is rather tricky and should not be here at all...
                 + "AND fd._deleted = false")
             .array(new Integer[0]);
-    }
-
-    public String getSachbearbeiter() {
-        return (String) new DatabaseAccess()
-            .createQuery(
-                "SELECT fd.basisObjekt.basisSachbearbeiter.name "
-                + "FROM Anh49Fachdaten AS fd "
-                + "WHERE fd = :fachdaten")
-            .setEntity("fachdaten", this)
-            .uniqueResult();
     }
 
     public Date getLetzteAnalyse(Anh49Fachdaten fd) {
@@ -122,17 +113,13 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
      * @return List<?>
      */
     public static List<?> getAuswahlList (
-        Boolean abgelWdrVorlage, String sachbearbeiter, Integer tuev,
-        Boolean aktiv) {
-
-        // Also search for partial results
-        sachbearbeiter = "%" + sachbearbeiter + "%";
+        Boolean abgelWdrVorlage, BasisSachbearbeiter sachbearbeiter,
+        Integer tuev, Boolean aktiv) {
 
         String query = "FROM Anh49Fachdaten AS anh49 "
             + "WHERE "
-            + "anh49.basisObjekt.basisSachbearbeiter.name "
-            		+ "LIKE :sachbearbeiter AND "
-            + "anh49.basisObjekt.inaktiv = :inaktiv ";
+            + "anh49.basisObjekt.basisSachbearbeiter = :sachbearbeiter "
+            + "AND anh49.basisObjekt.inaktiv = :inaktiv ";
 
         if (abgelWdrVorlage) {
             query += "AND anh49.wiedervorlage <= :today ";
@@ -149,7 +136,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         /* For a strange reason we do not want the Fettabscheider... */
         query += "AND anh49.basisObjekt.basisObjektarten.objektart "
             + "NOT LIKE 'Fettabscheider' "
-            + "ORDER BY anh49.basisObjekt.basisSachbearbeiter.name";
+            + "ORDER BY anh49.basisObjekt.basisSachbearbeiter";
 
         if (tuev == null) {
             query += ", anh49.dekraTuevDatum";
@@ -159,8 +146,8 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
 
         DatabaseAccess da = new DatabaseAccess()
             .createQuery(query)
-            .setString("sachbearbeiter",
-                ((sachbearbeiter != null) ? sachbearbeiter : "%"))
+            .setEntity("sachbearbeiter", sachbearbeiter)
+//                ((sachbearbeiter != null) ? sachbearbeiter : "%"))
             .setBoolean("inaktiv", !aktiv);
 
         if (abgelWdrVorlage) {
