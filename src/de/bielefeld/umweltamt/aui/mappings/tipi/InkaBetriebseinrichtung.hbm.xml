@@ -1,22 +1,84 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 21.02.2012 09:47:52 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 18.07.2012 17:02:11 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetriebseinrichtung" table="inka_betriebseinrichtung" schema="tipi">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetriebseinrichtungId">
-            <key-property name="betriebseinrichtungNr" type="java.lang.Integer">
-                <column name="betriebseinrichtung_nr" />
-            </key-property>
-        </composite-id>
+        <id name="betriebseinrichtungNr" type="java.lang.Integer">
+            <column name="betriebseinrichtung_nr" />
+            <generator class="assigned" />
+        </id>
+        <property name="betriebseinrichtungVer" type="java.lang.Integer">
+            <column name="betriebseinrichtung_ver" />
+        </property>
+        <property name="gueltigVon" type="java.util.Calendar">
+            <column name="gueltig_von" length="4" />
+        </property>
+        <property name="gueltigBis" type="java.util.Calendar">
+            <column name="gueltig_bis" length="4" />
+        </property>
+        <property name="aenderungsDatum" type="java.util.Calendar">
+            <column name="aenderungs_datum" length="8" />
+        </property>
+        <property name="erfassungsDatum" type="java.util.Calendar">
+            <column name="erfassungs_datum" length="8" />
+        </property>
+        <property name="historienNr" type="java.lang.Integer">
+            <column name="historien_nr" />
+        </property>
+        <property name="istAktuellJn" type="java.lang.Boolean">
+            <column name="ist_aktuell_jn" />
+        </property>
         <property name="betriebNr" type="java.lang.Integer">
             <column name="betrieb_nr" />
+        </property>
+        <property name="betriebVer" type="java.lang.Integer">
+            <column name="betrieb_ver" />
         </property>
         <property name="adresseBetreibNr" type="java.lang.Integer">
             <column name="adresse_betreib_nr" />
         </property>
+        <property name="adresseBetreibVer" type="java.lang.Integer">
+            <column name="adresse_betreib_ver" />
+        </property>
+        <property name="adresseAnsprNr" type="java.lang.Integer">
+            <column name="adresse_anspr_nr" />
+        </property>
+        <property name="adresseAnsprVer" type="java.lang.Integer">
+            <column name="adresse_anspr_ver" />
+        </property>
         <property name="genehmigungNr" type="java.lang.Integer">
             <column name="genehmigung_nr" />
+        </property>
+        <property name="genehmigungVer" type="java.lang.Integer">
+            <column name="genehmigung_ver" />
+        </property>
+        <property name="gaaNr" type="string">
+            <column name="gaa_nr" length="2" />
+        </property>
+        <property name="astnr" type="string">
+            <column name="astnr" length="30" />
+        </property>
+        <property name="zusatz1" type="string">
+            <column name="zusatz1" length="1" />
+        </property>
+        <property name="zusatz2" type="string">
+            <column name="zusatz2" length="3" />
+        </property>
+        <property name="arbeitsstaetteVer" type="java.lang.Integer">
+            <column name="arbeitsstaette_ver" />
+        </property>
+        <property name="wzCode" type="string">
+            <column name="wz_code" length="7" />
+        </property>
+        <property name="wzCodeVer" type="java.lang.Integer">
+            <column name="wz_code_ver" />
+        </property>
+        <property name="stilllegungJn" type="java.lang.Boolean">
+            <column name="stilllegung_jn" />
+        </property>
+        <property name="stilllegungDatum" type="java.util.Calendar">
+            <column name="stilllegung_datum" length="4" />
         </property>
     </class>
 </hibernate-mapping>

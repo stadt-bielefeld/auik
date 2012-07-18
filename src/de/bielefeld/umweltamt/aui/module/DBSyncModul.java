@@ -286,18 +286,18 @@ public class DBSyncModul extends AbstractModul {
             for (int i = 0; i < entities.length; i++) {
                 entities[i] = entities[i].trim();
                 if (entities[i].equals("dea_adresse")) {
-                    addrDBModel.setList(DeaAdresse.getDeaAdressen());
+                    addrDBModel.setList(DeaAdresse.getAll());
                 }
                 if (entities[i].equals("inka_betrieb")) {
-                    betriebDBModel.setList(InkaBetrieb.getInkaBetriebe());
+                    betriebDBModel.setList(InkaBetrieb.getAll());
                 }
                 if (entities[i].equals("inka_betriebseinrichtung")) {
                     betriebseinrDBModel.setList
-                        (InkaBetriebseinrichtung.getInkaBetriebseinrichtungen());
+                        (InkaBetriebseinrichtung.getAll());
                 }
                 if (entities[i].equals("inka_genehmigung")) {
                     genehmigungDBModel.setList
-                        (InkaGenehmigung.getInkaGenehmigungen());
+                        (InkaGenehmigung.getAll());
                 }
             }
             return entities;

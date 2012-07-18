@@ -28,31 +28,31 @@ import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Dea_Adresse;
+import de.nrw.lds.tipi.inka.Inka_Messstelle;
 
 /**
- * Home object for domain model class DeaAdresse.
- * @see de.bielefeld.umweltamt.aui.mappings.tipi.DeaAdresse
+ * Home object for domain model class InkaMessstelle.
+ * @see de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaMessstelle
  * @author Hibernate Tools
  */
-public class DeaAdresse extends AbstractDeaAdresse {
+public class InkaMessstelle extends AbstractInkaMessstelle {
 
-    private static final long serialVersionUID = 3461645403869356500L;
+    private static final long serialVersionUID = 372501824975808090L;
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    public static DeaAdresse merge(DeaAdresse detachedInstance) {
-        return (DeaAdresse) new DatabaseAccess().merge(detachedInstance);
+    public static InkaMessstelle merge(InkaMessstelle detachedInstance) {
+        return (InkaMessstelle) new DatabaseAccess().merge(detachedInstance);
     }
 
-    public static boolean delete(DeaAdresse detachedInstance) {
+    public static boolean delete(InkaMessstelle detachedInstance) {
         return new DatabaseAccess().delete(detachedInstance);
     }
 
-    public DeaAdresse findById(java.lang.Integer id) {
-        log.debug("getting DeaAdresse instance with id: " + id);
-        DeaAdresse instance = (DeaAdresse) new DatabaseAccess().get(
-            DeaAdresse.class, id);
+    public InkaMessstelle findById(java.lang.Integer id) {
+        log.debug("getting InkaMessstelle instance with id: " + id);
+        InkaMessstelle instance = (InkaMessstelle) new DatabaseAccess().get(
+            InkaMessstelle.class, id);
         if (instance == null) {
             log.debug("get successful, no instance found");
         } else {
@@ -61,38 +61,42 @@ public class DeaAdresse extends AbstractDeaAdresse {
         return instance;
     }
 
-    public static List<DeaAdresse> getAll() {
-        String query = "FROM DeaAdresse";
+    public static List<InkaMessstelle> getAll() {
+        String query = "FROM InkaMessstelle";
         List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<DeaAdresse> resultList = new ArrayList<DeaAdresse>();
-        DeaAdresse result = null;
+        List<InkaMessstelle> resultList = new ArrayList<InkaMessstelle>();
+        InkaMessstelle result = null;
         for (Object object : objectList) {
-            result = (DeaAdresse) object;
+            result = (InkaMessstelle) object;
             resultList.add(result);
         }
         return resultList;
     }
 
-    public Dea_Adresse toServiceType() {
-        Dea_Adresse serviceInstance = new Dea_Adresse(
-            this.getAenderungsDatum(), this.getErfassungsDatum(),
+    // TODO: Fix this! This is generated - costumize!
+    // TODO: Add some "_" into the return type!
+    public Inka_Messstelle toServiceType() {
+		// TODO: Add some "_" into the type!
+        Inka_Messstelle serviceInstance = new Inka_Messstelle(
+        	// TODO: Resort the fields to fit the service class!
+            this.getAenderungsDatum(),
+            this.getErfassungsDatum(),
             this.getGueltigVon(),
             this.getGueltigBis(),
             this.getIstAktuellJn(),
 //            this.getHistorienNr(),
-            this.getAdresseNr(),
-            this.getAdresseVer(),
-            this.getEmail(),
-            this.getFax(),
-            this.getHausnr(),
-            this.getName1(),
-            this.getName2(),
-            this.getOrt(),
-            this.getPlz(),
-            this.getStaatskennung(),
-            this.getStrasse(),
-            this.getTelefon(),
-            this.getTelefonMobil());
+            this.getBeschrMesspunkt(),
+            this.getGemeindeVer(),
+            this.getGemeindekennzahl(),
+            this.getGenehmigungNr(),
+            this.getGenehmigungVer(),
+            this.getMessstelleLfdNr(),
+            this.getMessstelleTyp(),
+            this.getMessstelleVer(),
+            this.getRelevantSumFrachtJn(),
+        	this.getUebergabestelleLfdNr(),
+        	this.getUebergabestelleVer()
+        );
         return serviceInstance;
-    }
+	}
 }

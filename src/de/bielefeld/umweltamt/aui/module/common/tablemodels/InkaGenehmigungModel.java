@@ -65,7 +65,7 @@ public class InkaGenehmigungModel extends ListTableModel {
 
         switch (ndx) {
         case 0:
-            tmp = fd.getId().getGenehmigungNr();
+            tmp = fd.getGenehmigungNr();
         case 1:
             tmp = fd.getBetriebNr();
             break;

@@ -92,10 +92,6 @@ public class ${declarationName} extends Abstract${declarationName} {
     }
 </#if>
 <#else>    
-    public static boolean saveOrUpdate(${declarationName} detachedInstance) {
-        return new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().saveOrUpdate(detachedInstance);
-    }
-
     public static ${declarationName} merge(${declarationName} detachedInstance) {
         return (${declarationName}) new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().merge(detachedInstance);
     }
@@ -118,9 +114,16 @@ public class ${declarationName} extends Abstract${declarationName} {
     }
 </#if>
 
-    public static ${pojo.importType("java.util.List")}<?> getAll() {
+    public static ${pojo.importType("java.util.List")}<${declarationName}> getAll() {
         String query = "FROM ${declarationName}";
-        return new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().createQuery(query).list();
+        ${pojo.importType("java.util.List")}<?> objectList = new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().createQuery(query).list(); 
+        ${pojo.importType("java.util.List")}<${declarationName}> resultList = new ${pojo.importType("java.util.ArrayList")}<${declarationName}>();
+        ${declarationName} result = null;
+        for (Object object : objectList) {
+        	result = (${declarationName}) object;
+        	resultList.add(result); 
+        }
+        return resultList;
     }
 
 <#if false>

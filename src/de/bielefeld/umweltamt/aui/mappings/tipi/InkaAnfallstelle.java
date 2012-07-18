@@ -28,31 +28,31 @@ import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Betrieb;
+import de.nrw.lds.tipi.inka.Inka_Anfallstelle;
 
 /**
- * Home object for domain model class InkaBetrieb.
- * @see de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetrieb
+ * Home object for domain model class InkaAnfallstelle.
+ * @see de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstelle
  * @author Hibernate Tools
  */
-public class InkaBetrieb extends AbstractInkaBetrieb {
+public class InkaAnfallstelle extends AbstractInkaAnfallstelle {
 
-    private static final long serialVersionUID = 3698871024772693854L;
+    private static final long serialVersionUID = -4040286360315789465L;
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    public static InkaBetrieb merge(InkaBetrieb detachedInstance) {
-        return (InkaBetrieb) new DatabaseAccess().merge(detachedInstance);
+    public static InkaAnfallstelle merge(InkaAnfallstelle detachedInstance) {
+        return (InkaAnfallstelle) new DatabaseAccess().merge(detachedInstance);
     }
 
-    public static boolean delete(InkaBetrieb detachedInstance) {
+    public static boolean delete(InkaAnfallstelle detachedInstance) {
         return new DatabaseAccess().delete(detachedInstance);
     }
 
-    public InkaBetrieb findById( java.lang.Integer id) {
-        log.debug("getting InkaBetrieb instance with id: " + id);
-        InkaBetrieb instance = (InkaBetrieb)
-        	new DatabaseAccess().get(InkaBetrieb.class, id);
+    public InkaAnfallstelle findById(java.lang.Integer id) {
+        log.debug("getting InkaAnfallstelle instance with id: " + id);
+        InkaAnfallstelle instance = (InkaAnfallstelle) new DatabaseAccess()
+            .get(InkaAnfallstelle.class, id);
         if (instance == null) {
             log.debug("get successful, no instance found");
         } else {
@@ -61,38 +61,44 @@ public class InkaBetrieb extends AbstractInkaBetrieb {
         return instance;
     }
 
-    public static List<InkaBetrieb> getAll() {
-        String query = "FROM InkaBetrieb";
+    public static List<InkaAnfallstelle> getAll() {
+        String query = "FROM InkaAnfallstelle";
         List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<InkaBetrieb> resultList = new ArrayList<InkaBetrieb>();
-        InkaBetrieb result = null;
+        List<InkaAnfallstelle> resultList = new ArrayList<InkaAnfallstelle>();
+        InkaAnfallstelle result = null;
         for (Object object : objectList) {
-        	result = (InkaBetrieb) object;
-        	resultList.add(result);
+            result = (InkaAnfallstelle) object;
+            resultList.add(result);
         }
         return resultList;
     }
 
-    public Inka_Betrieb toServiceType() {
-        Inka_Betrieb serviceInstance = new Inka_Betrieb(
+    public Inka_Anfallstelle toServiceType() {
+        Inka_Anfallstelle serviceInstance = new Inka_Anfallstelle(
             this.getAenderungsDatum(),
             this.getErfassungsDatum(),
             this.getGueltigVon(),
             this.getGueltigBis(),
             this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getAdresseAnsprNr(),
-            this.getAdresseAnsprVer(),
-            this.getAdresseEinleitNr(),
-            this.getAdresseEinleitVer(),
-        	this.getAdresseStandNr(),
-        	this.getAdresseStandVer(),
-            this.getBetriebNr(),
-            this.getBetriebVer(),
+//          this.getHistorienNr(),
+        	this.getAnfallstelleNr(),
+        	this.getAnfallstelleVer(),
+        	this.getAnhId(),
+        	this.getAnhVer(),
+            this.getBeschreibung(),
+        	this.getBetriebseinrichtungNr(),
+        	this.getBetriebseinrichtungVer(),
+            this.getChargenbetriebJn(),
+            this.getDauerbetriebJn(),
             this.getGemeindeVer(),
-        	this.getGemeindekennzahl()
+        	this.getGemeindekennzahl(),
+        	this.getGenehmigungNr(),
+        	this.getGenehmigungVer(),
+            new Float(this.getMaxVolTag()),
+        	this.getUebergabestelleLfdNr(),
+        	this.getUebergabestelleVer(),
+            this.getVolJahr()
         );
         return serviceInstance;
 	}
 }
-

@@ -80,8 +80,11 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWgk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWirtschaftszweige.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/DeaAdresse.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaAnfallstelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetrieb.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetriebseinrichtung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaGenehmigung.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaMessstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaUebergabestelle.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

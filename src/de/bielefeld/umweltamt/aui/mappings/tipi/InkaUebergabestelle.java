@@ -28,31 +28,32 @@ import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Betrieb;
+import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
 
 /**
- * Home object for domain model class InkaBetrieb.
- * @see de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetrieb
+ * Home object for domain model class InkaUebergabestelle.
+ * @see de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaUebergabestelle
  * @author Hibernate Tools
  */
-public class InkaBetrieb extends AbstractInkaBetrieb {
+public class InkaUebergabestelle extends AbstractInkaUebergabestelle {
 
-    private static final long serialVersionUID = 3698871024772693854L;
+    private static final long serialVersionUID = -320900909149879431L;
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    public static InkaBetrieb merge(InkaBetrieb detachedInstance) {
-        return (InkaBetrieb) new DatabaseAccess().merge(detachedInstance);
+    public static InkaUebergabestelle merge(InkaUebergabestelle detachedInstance) {
+        return (InkaUebergabestelle) new DatabaseAccess()
+            .merge(detachedInstance);
     }
 
-    public static boolean delete(InkaBetrieb detachedInstance) {
+    public static boolean delete(InkaUebergabestelle detachedInstance) {
         return new DatabaseAccess().delete(detachedInstance);
     }
 
-    public InkaBetrieb findById( java.lang.Integer id) {
-        log.debug("getting InkaBetrieb instance with id: " + id);
-        InkaBetrieb instance = (InkaBetrieb)
-        	new DatabaseAccess().get(InkaBetrieb.class, id);
+    public InkaUebergabestelle findById(java.lang.Integer id) {
+        log.debug("getting InkaUebergabestelle instance with id: " + id);
+        InkaUebergabestelle instance = (InkaUebergabestelle) new DatabaseAccess()
+            .get(InkaUebergabestelle.class, id);
         if (instance == null) {
             log.debug("get successful, no instance found");
         } else {
@@ -61,38 +62,42 @@ public class InkaBetrieb extends AbstractInkaBetrieb {
         return instance;
     }
 
-    public static List<InkaBetrieb> getAll() {
-        String query = "FROM InkaBetrieb";
+    public static List<InkaUebergabestelle> getAll() {
+        String query = "FROM InkaUebergabestelle";
         List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<InkaBetrieb> resultList = new ArrayList<InkaBetrieb>();
-        InkaBetrieb result = null;
+        List<InkaUebergabestelle> resultList = new ArrayList<InkaUebergabestelle>();
+        InkaUebergabestelle result = null;
         for (Object object : objectList) {
-        	result = (InkaBetrieb) object;
-        	resultList.add(result);
+            result = (InkaUebergabestelle) object;
+            resultList.add(result);
         }
         return resultList;
     }
 
-    public Inka_Betrieb toServiceType() {
-        Inka_Betrieb serviceInstance = new Inka_Betrieb(
+    public Inka_Uebergabestelle toServiceType() {
+        Inka_Uebergabestelle serviceInstance = new Inka_Uebergabestelle(
             this.getAenderungsDatum(),
             this.getErfassungsDatum(),
             this.getGueltigVon(),
             this.getGueltigBis(),
             this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getAdresseAnsprNr(),
-            this.getAdresseAnsprVer(),
-            this.getAdresseEinleitNr(),
-            this.getAdresseEinleitVer(),
-        	this.getAdresseStandNr(),
-        	this.getAdresseStandVer(),
+//          this.getHistorienNr(),
+            this.getAnlagenNr(),
             this.getBetriebNr(),
             this.getBetriebVer(),
-            this.getGemeindeVer(),
-        	this.getGemeindekennzahl()
+            this.getGemeindekennzahl(),
+        	this.getGemeindeVer(),
+            this.getGenehmigungNr(),
+            this.getGenehmigungVer(),
+            this.getHochwert(),
+            this.getKanalArt(),
+            this.getKartennummer(),
+            this.getKlaeranlagenVer(),
+            this.getRechtswert(),
+            this.getTk25Ver(),
+            this.getUebergabestelleLfdNr(),
+        	this.getUebergabestelleVer()
         );
         return serviceInstance;
 	}
 }
-

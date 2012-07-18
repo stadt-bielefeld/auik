@@ -62,7 +62,7 @@ public class InkaBetriebModel extends ListTableModel {
 
         switch (ndx) {
         case 0:
-            tmp = fd.getId().getBetriebNr();
+            tmp = fd.getBetriebNr();
         case 1:
             tmp = fd.getAdresseStandNr();
             break;

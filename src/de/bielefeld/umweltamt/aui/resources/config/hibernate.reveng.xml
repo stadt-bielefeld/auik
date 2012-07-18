@@ -3,6 +3,12 @@
 	"http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
+	<!-- Type mappings ===================================================== -->
+	<type-mapping>
+		<sql-type jdbc-type="DATE" hibernate-type="java.util.Calendar"/>
+		<sql-type jdbc-type="TIMESTAMP" hibernate-type="java.util.Calendar"/>
+	</type-mapping>
+
 	<!-- Table filters ===================================================== -->
 	<table-filter match-schema="auik" match-name="atl_.*"
 		package="de.bielefeld.umweltamt.aui.mappings.generated.atl" />
@@ -202,5 +208,4 @@
             <key-column name="uebergabestelle_lfd_nr" />
 		</primary-key>
 	</table>
-
 </hibernate-reverse-engineering>

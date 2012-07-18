@@ -22,7 +22,6 @@
 // Generated ${date} by Hibernate Tools ${version}
 
 ${pojo.getPackageDeclaration()}
-
 <#assign classbody>
 <#include "AuikPojoTypeDeclaration.ftl"/> {
 
