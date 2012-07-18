@@ -19,9 +19,11 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-// Generated 17.07.2012 18:33:28 by Hibernate Tools 3.3.0.GA
+// Generated 18.07.2012 12:46:08 by Hibernate Tools 3.3.0.GA
 
 package de.bielefeld.umweltamt.aui.mappings.atl;
+
+import java.util.Date;
 
 /**
  * A class that represents a row in a database table. You can customize the
@@ -31,7 +33,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 public abstract class AbstractViewAtlAnalysepositionAll implements
     java.io.Serializable {
 
-    private static final long serialVersionUID = 5460050854531729219L;
+    private static final long serialVersionUID = 629268595438966426L;
     private Integer id;
     private String grkl;
     private Float wert;
@@ -43,6 +45,8 @@ public abstract class AbstractViewAtlAnalysepositionAll implements
     private Integer probenahmeId;
     private Boolean enabled;
     private Boolean deleted;
+    private Date datumDerEntnahme;
+    private Integer probepktId;
 
     public AbstractViewAtlAnalysepositionAll() {
     }
@@ -54,7 +58,8 @@ public abstract class AbstractViewAtlAnalysepositionAll implements
     public AbstractViewAtlAnalysepositionAll(Integer id, String grkl,
         Float wert, String analyseVon, String bericht, Double normwert,
         Integer einheitenId, String parameterId, Integer probenahmeId,
-        Boolean enabled, Boolean deleted) {
+        Boolean enabled, Boolean deleted, Date datumDerEntnahme,
+        Integer probepktId) {
         this.id = id;
         this.grkl = grkl;
         this.wert = wert;
@@ -66,6 +71,8 @@ public abstract class AbstractViewAtlAnalysepositionAll implements
         this.probenahmeId = probenahmeId;
         this.enabled = enabled;
         this.deleted = deleted;
+        this.datumDerEntnahme = datumDerEntnahme;
+        this.probepktId = probepktId;
     }
 
     public Integer getId() {
@@ -155,4 +162,21 @@ public abstract class AbstractViewAtlAnalysepositionAll implements
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
+    public Date getDatumDerEntnahme() {
+        return this.datumDerEntnahme;
+    }
+
+    public void setDatumDerEntnahme(Date datumDerEntnahme) {
+        this.datumDerEntnahme = datumDerEntnahme;
+    }
+
+    public Integer getProbepktId() {
+        return this.probepktId;
+    }
+
+    public void setProbepktId(Integer probepktId) {
+        this.probepktId = probepktId;
+    }
+
 }

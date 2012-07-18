@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 18.07.2012 12:46:07 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.generated.atl.ViewAtlAnalysepositionAll" table="view_atl_analyseposition_all" schema="auik">
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll" table="view_atl_analyseposition_all" schema="auik">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="assigned" />
@@ -37,6 +37,12 @@
         </property>
         <property name="deleted" type="java.lang.Boolean">
             <column name="_deleted" />
+        </property>
+        <property name="datumDerEntnahme" type="timestamp">
+            <column name="datum_der_entnahme" length="8" />
+        </property>
+        <property name="probepktId" type="java.lang.Integer">
+            <column name="probepkt_id" />
         </property>
     </class>
 </hibernate-mapping>

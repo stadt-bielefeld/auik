@@ -19,10 +19,12 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-// Generated 17.07.2012 18:33:28 by Hibernate Tools 3.3.0.GA
+// Generated 18.07.2012 12:46:09 by Hibernate Tools 3.3.0.GA
 
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -37,7 +39,6 @@ public class ViewAtlAnalysepositionAll extends
     AbstractViewAtlAnalysepositionAll {
 
     private static final long serialVersionUID = 7628595838089115005L;
-
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -58,8 +59,8 @@ public class ViewAtlAnalysepositionAll extends
 
     public ViewAtlAnalysepositionAll findById(java.lang.Integer id) {
         log.debug("getting ViewAtlAnalysepositionAll instance with id: " + id);
-        ViewAtlAnalysepositionAll instance = (ViewAtlAnalysepositionAll)
-            new DatabaseAccess().get(ViewAtlAnalysepositionAll.class, id);
+        ViewAtlAnalysepositionAll instance = (ViewAtlAnalysepositionAll) new DatabaseAccess()
+            .get(ViewAtlAnalysepositionAll.class, id);
         if (instance == null) {
             log.debug("get successful, no instance found");
         } else {
@@ -71,5 +72,87 @@ public class ViewAtlAnalysepositionAll extends
     public static List<?> getAll() {
         String query = "FROM ViewAtlAnalysepositionAll";
         return new DatabaseAccess().createQuery(query).list();
+    }
+
+    /**
+     * Liefert eine Liste der Analysepositionen mit einem gegebenen Parameter,
+     * einer bestimmten Einheit, an einem bestimmten Probepunkt, die zwischen
+     * <code>beginDate</code> und <code>endDate</code> (inklusive) genommen
+     * wurden. Wenn <code>analyseVon</code> nicht <code>null</code> oder "" ist,
+     * werden nur Analysepositionen geliefert, die von einer bestimmten Stelle
+     * analysiert wurden.
+     * @param param Der Parameter
+     * @param einh Die Einheit
+     * @param pkt Der Probepunkt
+     * @param beginDate Das Anfangs-Datum
+     * @param endDate Das End-Datum
+     * @param analyseVon Wo wurde analysiert?
+     * @return Eine Liste mit <code>AtlAnalyseposition</code>en
+     */
+    public static List<?> get(
+            AtlParameter param, AtlEinheiten einh, AtlProbepkt pkt,
+            Date beginDate, Date endDate, String analyseVon) {
+
+        String query = "FROM ViewAtlAnalysepositionAll pos "
+                + "WHERE pos.parameterId = :param "
+                + "and pos.einheitenId = :einh "
+                + "and pos.probepktId = :pkt "
+                + "and pos.datumDerEntnahme >= :beginDate "
+                + "and pos.datumDerEntnahme <= :endDate ";
+
+        if (analyseVon != null && !analyseVon.equals("")) {
+            query += "and pos.analyseVon like :analyseVon ";
+        }
+
+        query += "ORDER BY pos.datumDerEntnahme";
+
+        List<?> viewResult = null;
+
+        if (analyseVon != null && !analyseVon.equals("")) {
+            viewResult = new DatabaseAccess().createQuery(query)
+                    .setString("param", param.getOrdnungsbegriff())
+                    .setInteger("einh", einh.getId())
+                    .setInteger("pkt", pkt.getObjektid())
+                    .setDate("beginDate", beginDate)
+                    .setDate("endDate", endDate)
+                    .setString("analyseVon", analyseVon)
+                    .list();
+        } else {
+            viewResult = new DatabaseAccess().createQuery(query)
+                    .setString("param", param.getOrdnungsbegriff())
+                    .setInteger("einh", einh.getId())
+                    .setInteger("pkt", pkt.getObjektid())
+                    .setDate("beginDate", beginDate)
+                    .setDate("endDate", endDate)
+                    .list();
+        }
+
+        List<AtlAnalyseposition> result = new ArrayList<AtlAnalyseposition>();
+        ViewAtlAnalysepositionAll viewPos = null;
+        AtlAnalyseposition pos = null;
+        for (Object obj : viewResult) {
+            viewPos = (ViewAtlAnalysepositionAll) obj;
+            pos = viewPos.getAtlAnalyseposition();
+            result.add(pos);
+        }
+        return result;
+    }
+
+    // Dirty cast/copy...
+    public AtlAnalyseposition getAtlAnalyseposition() {
+        AtlAnalyseposition pos = new AtlAnalyseposition();
+        pos.setId(this.getId());
+        pos.setGrkl(this.getGrkl());
+        pos.setWert(this.getWert());
+        pos.setAnalyseVon(this.getAnalyseVon());
+        pos.setBericht(this.getBericht());
+        pos.setNormwert(this.getNormwert());
+        pos.setAtlEinheiten(AtlEinheiten.getEinheit(this.getEinheitenId()));
+        pos.setAtlParameter(AtlParameter.getParameter(this.getParameterId()));
+        pos.setAtlProbenahmen(
+            AtlProbenahmen.getProbenahme(this.getProbenahmeId()));
+        pos.set_enabled(this.getEnabled());
+        pos.set_deleted(this.getDeleted());
+        return pos;
     }
 }

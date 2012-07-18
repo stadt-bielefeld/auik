@@ -82,6 +82,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -722,7 +723,7 @@ public class ProbepktAuswPanel extends JPanel {
                 AtlParameter p = (AtlParameter) paramList.getModel()
                         .getElementAt(i);
 
-                List<?> list = AtlAnalyseposition.getAnalysepositionen(p,
+                List<?> list = ViewAtlAnalysepositionAll.get(p,
                         einheit, pkt, vonDate, bisDate, analyseVon);
 
                 TimeSeries series = ChartDataSets

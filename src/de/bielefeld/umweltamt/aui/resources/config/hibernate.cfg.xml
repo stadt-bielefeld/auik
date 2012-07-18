@@ -29,6 +29,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlProbenahmen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlSielhaut.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlStatus.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/ViewAtlAnalysepositionAll.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisStandort.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisStrassen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisPrioritaet.hbm.xml" />
