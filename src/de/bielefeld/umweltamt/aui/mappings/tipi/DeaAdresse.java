@@ -76,8 +76,8 @@ public class DeaAdresse extends AbstractDeaAdresse {
     public Dea_Adresse toServiceType() {
         Dea_Adresse serviceInstance = new Dea_Adresse(
             this.getAenderungsDatum(), this.getErfassungsDatum(),
-            this.getGueltigVon(),
             this.getGueltigBis(),
+            this.getGueltigVon(),
             this.getIstAktuellJn(),
 //            this.getHistorienNr(),
             this.getAdresseNr(),

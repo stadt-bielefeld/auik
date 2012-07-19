@@ -26,10 +26,11 @@
   indeinl_genehmigung.objektid::integer		AS genehmigung_nr,	-- NOT NULL
   1::integer					AS genehmigung_ver,	-- NOT NULL
   -- Foreign Key: dea_arbeitsstaetten
-  NULL::character varying(2)	AS gaa_nr,
-  NULL::character varying(30)	AS astnr,
-  NULL::character varying(1)	AS zusatz1,
-  NULL::character varying(3)	AS zusatz2,
+--  NULL::character varying(2)	AS gaa_nr,
+--  NULL::character varying(30)	AS astnr,
+--  NULL::character varying(1)	AS zusatz1,
+--  NULL::character varying(3)	AS zusatz2,
+  NULL::integer			AS arbeitsstaette_seq_nr,
   NULL::integer			AS arbeitsstaette_ver,
   -- Foreign Key: dea_wz_code
   NULL::character varying(7)	AS wz_code,

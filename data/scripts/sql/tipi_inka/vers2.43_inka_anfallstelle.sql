@@ -24,9 +24,9 @@
   indeinl_genehmigung.objektid::integer	AS genehmigung_nr,	-- NOT NULL
   1::integer				AS genehmigung_ver,	-- NOT NULL
   -- Foreign Key: dea_anhang
-  indeinl_genehmigung.anhang::character varying(20)	AS anh_id,		-- NOT NULL
-  1::integer						AS anh_ver,		-- NOT NULL
-  'There be dragons'::character varying(30)	AS beschreibung,
+  indeinl_genehmigung.anhang::character varying(20)	AS anh_id,	-- NOT NULL
+  1::integer						AS anh_ver,	-- NOT NULL
+  'There be dragons'::character varying(30)		AS beschreibung,
   NULL::float				AS max_vol_tag,
   NULL::integer				AS vol_jahr,
   NULL::boolean				AS dauerbetrieb_jn,
@@ -41,7 +41,4 @@ WHERE
   indeinl_genehmigung.gen59 AND 
   indeinl_genehmigung._deleted = FALSE AND
   basis_objekt._deleted = FALSE AND
-  basis_objekt.inaktiv = FALSE
-
-ORDER BY
-  anhang ASC;
+  basis_objekt.inaktiv = FALSE;

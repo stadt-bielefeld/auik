@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 18.07.2012 17:02:11 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 19.07.2012 11:17:36 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetriebseinrichtung" table="inka_betriebseinrichtung" schema="tipi">
         <id name="betriebseinrichtungNr" type="java.lang.Integer">
@@ -53,17 +53,8 @@
         <property name="genehmigungVer" type="java.lang.Integer">
             <column name="genehmigung_ver" />
         </property>
-        <property name="gaaNr" type="string">
-            <column name="gaa_nr" length="2" />
-        </property>
-        <property name="astnr" type="string">
-            <column name="astnr" length="30" />
-        </property>
-        <property name="zusatz1" type="string">
-            <column name="zusatz1" length="1" />
-        </property>
-        <property name="zusatz2" type="string">
-            <column name="zusatz2" length="3" />
+        <property name="arbeitsstaetteSeqNr" type="java.lang.Integer">
+            <column name="arbeitsstaette_seq_nr" />
         </property>
         <property name="arbeitsstaetteVer" type="java.lang.Integer">
             <column name="arbeitsstaette_ver" />

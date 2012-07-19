@@ -19,7 +19,7 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-// Generated 18.07.2012 17:02:12 by Hibernate Tools 3.3.0.GA
+// Generated 19.07.2012 11:17:38 by Hibernate Tools 3.3.0.GA
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
@@ -87,22 +87,18 @@ public class InkaBetriebseinrichtung extends AbstractInkaBetriebseinrichtung {
             this.getAdresseAnsprVer(),
             this.getAdresseBetreibNr(),
             this.getAdresseBetreibVer(),
-            new Integer(42), // TODO: Fix this!
+            this.getArbeitsstaetteSeqNr(),
             this.getArbeitsstaetteVer(),
-//            this.getAstnr(),
             this.getBetriebNr(),
             this.getBetriebVer(),
-            this.getBetriebseinrichtungNr(),
+        	this.getBetriebseinrichtungNr(),
         	this.getBetriebseinrichtungVer(),
-//            this.getGaaNr(),
         	this.getGenehmigungNr(),
         	this.getGenehmigungVer(),
             this.getStilllegungDatum(),
             this.getStilllegungJn(),
         	this.getWzCode(),
         	this.getWzCodeVer()
-//            this.getZusatz1(),
-//            this.getZusatz2(),
         );
         return serviceInstance;
 	}

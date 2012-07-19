@@ -77,8 +77,8 @@ public class InkaBetrieb extends AbstractInkaBetrieb {
         Inka_Betrieb serviceInstance = new Inka_Betrieb(
             this.getAenderungsDatum(),
             this.getErfassungsDatum(),
-            this.getGueltigVon(),
             this.getGueltigBis(),
+            this.getGueltigVon(),
             this.getIstAktuellJn(),
 //            this.getHistorienNr(),
             this.getAdresseAnsprNr(),

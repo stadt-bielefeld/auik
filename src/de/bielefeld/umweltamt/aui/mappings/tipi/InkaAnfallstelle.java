@@ -77,8 +77,8 @@ public class InkaAnfallstelle extends AbstractInkaAnfallstelle {
         Inka_Anfallstelle serviceInstance = new Inka_Anfallstelle(
             this.getAenderungsDatum(),
             this.getErfassungsDatum(),
-            this.getGueltigVon(),
             this.getGueltigBis(),
+            this.getGueltigVon(),
             this.getIstAktuellJn(),
 //          this.getHistorienNr(),
         	this.getAnfallstelleNr(),

@@ -77,8 +77,8 @@ public class InkaGenehmigung extends AbstractInkaGenehmigung {
         Inka_Genehmigung serviceInstance = new Inka_Genehmigung(
             this.getAenderungsDatum(),
             this.getErfassungsDatum(),
-            this.getGueltigVon(),
             this.getGueltigBis(),
+            this.getGueltigVon(),
             this.getIstAktuellJn(),
 //            this.getHistorienNr(),
             this.getBefristetBis(),

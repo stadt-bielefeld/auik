@@ -73,16 +73,12 @@ public class InkaMessstelle extends AbstractInkaMessstelle {
         return resultList;
     }
 
-    // TODO: Fix this! This is generated - costumize!
-    // TODO: Add some "_" into the return type!
     public Inka_Messstelle toServiceType() {
-		// TODO: Add some "_" into the type!
         Inka_Messstelle serviceInstance = new Inka_Messstelle(
-        	// TODO: Resort the fields to fit the service class!
             this.getAenderungsDatum(),
             this.getErfassungsDatum(),
-            this.getGueltigVon(),
             this.getGueltigBis(),
+            this.getGueltigVon(),
             this.getIstAktuellJn(),
 //            this.getHistorienNr(),
             this.getBeschrMesspunkt(),

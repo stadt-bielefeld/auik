@@ -78,8 +78,8 @@ public class InkaUebergabestelle extends AbstractInkaUebergabestelle {
         Inka_Uebergabestelle serviceInstance = new Inka_Uebergabestelle(
             this.getAenderungsDatum(),
             this.getErfassungsDatum(),
-            this.getGueltigVon(),
             this.getGueltigBis(),
+            this.getGueltigVon(),
             this.getIstAktuellJn(),
 //          this.getHistorienNr(),
             this.getAnlagenNr(),

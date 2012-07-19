@@ -19,7 +19,7 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-// Generated 18.07.2012 17:02:12 by Hibernate Tools 3.3.0.GA
+// Generated 19.07.2012 11:17:37 by Hibernate Tools 3.3.0.GA
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
@@ -32,7 +32,7 @@ import java.util.Calendar;
 public abstract class AbstractInkaBetriebseinrichtung implements
     java.io.Serializable {
 
-    private static final long serialVersionUID = 1281079461562065092L;
+    private static final long serialVersionUID = -7342242681380768162L;
     private Integer betriebseinrichtungNr;
     private Integer betriebseinrichtungVer;
     private Calendar gueltigVon;
@@ -49,10 +49,7 @@ public abstract class AbstractInkaBetriebseinrichtung implements
     private Integer adresseAnsprVer;
     private Integer genehmigungNr;
     private Integer genehmigungVer;
-    private String gaaNr;
-    private String astnr;
-    private String zusatz1;
-    private String zusatz2;
+    private Integer arbeitsstaetteSeqNr;
     private Integer arbeitsstaetteVer;
     private String wzCode;
     private Integer wzCodeVer;
@@ -73,9 +70,8 @@ public abstract class AbstractInkaBetriebseinrichtung implements
         Integer betriebNr, Integer betriebVer, Integer adresseBetreibNr,
         Integer adresseBetreibVer, Integer adresseAnsprNr,
         Integer adresseAnsprVer, Integer genehmigungNr, Integer genehmigungVer,
-        String gaaNr, String astnr, String zusatz1, String zusatz2,
-        Integer arbeitsstaetteVer, String wzCode, Integer wzCodeVer,
-        Boolean stilllegungJn, Calendar stilllegungDatum) {
+        Integer arbeitsstaetteSeqNr, Integer arbeitsstaetteVer, String wzCode,
+        Integer wzCodeVer, Boolean stilllegungJn, Calendar stilllegungDatum) {
         this.betriebseinrichtungNr = betriebseinrichtungNr;
         this.betriebseinrichtungVer = betriebseinrichtungVer;
         this.gueltigVon = gueltigVon;
@@ -92,10 +88,7 @@ public abstract class AbstractInkaBetriebseinrichtung implements
         this.adresseAnsprVer = adresseAnsprVer;
         this.genehmigungNr = genehmigungNr;
         this.genehmigungVer = genehmigungVer;
-        this.gaaNr = gaaNr;
-        this.astnr = astnr;
-        this.zusatz1 = zusatz1;
-        this.zusatz2 = zusatz2;
+        this.arbeitsstaetteSeqNr = arbeitsstaetteSeqNr;
         this.arbeitsstaetteVer = arbeitsstaetteVer;
         this.wzCode = wzCode;
         this.wzCodeVer = wzCodeVer;
@@ -231,36 +224,12 @@ public abstract class AbstractInkaBetriebseinrichtung implements
         this.genehmigungVer = genehmigungVer;
     }
 
-    public String getGaaNr() {
-        return this.gaaNr;
+    public Integer getArbeitsstaetteSeqNr() {
+        return this.arbeitsstaetteSeqNr;
     }
 
-    public void setGaaNr(String gaaNr) {
-        this.gaaNr = gaaNr;
-    }
-
-    public String getAstnr() {
-        return this.astnr;
-    }
-
-    public void setAstnr(String astnr) {
-        this.astnr = astnr;
-    }
-
-    public String getZusatz1() {
-        return this.zusatz1;
-    }
-
-    public void setZusatz1(String zusatz1) {
-        this.zusatz1 = zusatz1;
-    }
-
-    public String getZusatz2() {
-        return this.zusatz2;
-    }
-
-    public void setZusatz2(String zusatz2) {
-        this.zusatz2 = zusatz2;
+    public void setArbeitsstaetteSeqNr(Integer arbeitsstaetteSeqNr) {
+        this.arbeitsstaetteSeqNr = arbeitsstaetteSeqNr;
     }
 
     public Integer getArbeitsstaetteVer() {
