@@ -17,7 +17,6 @@
 	<classpathentry kind="lib" path="lib/proxool-0.8.3.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="lib/forms-1.0.5.jar"/>
-	<classpathentry kind="lib" path="lib/looks-1.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/l2fprod-common-all.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.0-pre2.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.0-pre2.jar"/>
@@ -53,5 +52,7 @@
 	<classpathentry kind="lib" path="lib/axis-wsdl4j-1.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.10.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/looks-1.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/com.jgoogies.uif_lite.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
