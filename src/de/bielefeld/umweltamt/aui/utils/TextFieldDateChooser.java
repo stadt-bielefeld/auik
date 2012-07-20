@@ -286,6 +286,10 @@ public class TextFieldDateChooser extends JPanel
             }
         }
 
+        // TODO: Test this!
+//        GUIManager.getInstance().showErrorMessage(message.toString(),
+//            "Falsches Datumsformat");
+
         JOptionPane.showMessageDialog(textField, message,
                 "Falsches Datumsformat", JOptionPane.ERROR_MESSAGE);
     }

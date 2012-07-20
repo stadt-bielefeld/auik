@@ -77,7 +77,6 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -86,12 +85,14 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
@@ -108,7 +109,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  * @author David Klotz
  */
 public class LaborProbeSuchen extends AbstractModul {
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String iconPath = "filefind32.png";
@@ -159,7 +160,7 @@ public class LaborProbeSuchen extends AbstractModul {
      */
     @Override
     public Icon getIcon() {
-        return super.getIcon(iconPath);
+        return super.getIcon(this.iconPath);
     }
 
     /*
@@ -167,16 +168,15 @@ public class LaborProbeSuchen extends AbstractModul {
      */
     @Override
     public JPanel getPanel() {
-        if (panel == null) {
-            probeModel = new ProbenahmenModel("Art");
+        if (this.panel == null) {
+            this.probeModel = new ProbenahmenModel("Art");
 
             TableFocusListener tfl = TableFocusListener.getInstance();
             getProbeTabelle().addFocusListener(tfl);
 
-
             JScrollPane probeScroller = new JScrollPane(getProbeTabelle(),
-                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
             JToolBar submitToolBar = new JToolBar();
             submitToolBar.setFloatable(false);
@@ -188,21 +188,21 @@ public class LaborProbeSuchen extends AbstractModul {
             ta.addComp(getProbeTabelle());
 
             FormLayout layout = new FormLayout(
-                    "65dlu, 4dlu, pref:grow, 3dlu, min(16dlu;p)",        // spalten
-                    "pref, 3dlu, f:150dlu:grow");     // zeilen
+                "65dlu, 4dlu, pref:grow, 3dlu, min(16dlu;p)", // spalten
+                "pref, 3dlu, f:150dlu:grow"); // zeilen
 
             PanelBuilder builder = new PanelBuilder(layout);
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
-            builder.add(getSuchBox(),    cc.xy(1, 1));
-            builder.add(getSuchFeld(),    cc.xy(3, 1));
-            builder.add(submitToolBar,    cc.xy(5, 1));//, "r, d"));
-            builder.add(probeScroller,    cc.xyw(1, 3, 5));
+            builder.add(getSuchBox(), cc.xy(1, 1));
+            builder.add(getSuchFeld(), cc.xy(3, 1));
+            builder.add(submitToolBar, cc.xy(5, 1));// , "r, d"));
+            builder.add(probeScroller, cc.xyw(1, 3, 5));
 
-            panel = builder.getPanel();
+            this.panel = builder.getPanel();
         }
-        return panel;
+        return this.panel;
     }
 
     /* (non-Javadoc)
@@ -216,11 +216,12 @@ public class LaborProbeSuchen extends AbstractModul {
     }
 
     /**
-     * Leert die Ergebnis-Liste und wählt allen Text (falls vorhanden) im Suchfeld aus.
+     * Leert die Ergebnis-Liste und wählt allen Text (falls vorhanden) im
+     * Suchfeld aus.
      */
     public void clearForm() {
-        probeModel.setList(new ArrayList<AtlProbenahmen>());
-        probeModel.fireTableDataChanged();
+        this.probeModel.setList(new ArrayList<AtlProbenahmen>());
+        this.probeModel.fireTableDataChanged();
 
         getSuchFeld().selectAll();
         getSuchFeld().requestFocus();
@@ -231,22 +232,24 @@ public class LaborProbeSuchen extends AbstractModul {
      * @param probe Die Probe.
      */
     public void editProbe(AtlProbenahmen probe) {
-        //BetreiberEditor editDialog = new BetreiberEditor(betr, frame, manager);
-        ProbenEditor editor = new ProbenEditor(probe, frame, false);
+        // BetreiberEditor editDialog = new BetreiberEditor(betr, frame,
+        // manager);
+        ProbenEditor editor = new ProbenEditor(probe, this.frame, false);
 
         editor.setVisible(true);
 
-        lastProbe = probe;
+        this.lastProbe = probe;
 
         if (editor.wasSaved()) {
-            // Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen auch angezeigt werden.
+            // Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen
+            // auch angezeigt werden.
             updateProbeListe();
         }
     }
 
     public void updateProbeListe() {
-        if (lastSuche != null && lastProperty != null) {
-            filterProbeListe(lastSuche, lastProperty);
+        if (this.lastSuche != null && this.lastProperty != null) {
+            filterProbeListe(this.lastSuche, this.lastProperty);
         }
     }
 
@@ -256,49 +259,53 @@ public class LaborProbeSuchen extends AbstractModul {
      * @param column Nach welcher Eigenschaft der Probe soll gesucht werden?
      */
     public void filterProbeListe(final String suche, final String column) {
-            SwingWorkerVariant worker = new SwingWorkerVariant(getProbeTabelle()) {
-                @Override
-                protected void doNonUILogic() throws RuntimeException {
-                    probeModel.findByProperty(suche, column);
-                    lastSuche = suche;
-                    lastProperty = column;
-                }
-
-                @Override
-                protected void doUIUpdateLogic() throws RuntimeException {
-                    getProbeTabelle().clearSelection();
-
-                    probeModel.fireTableDataChanged();
-
-                    if (lastProbe != null) {
-                        // Wenn die zuletzt bearbeitete Probe noch in der Liste ist,
-                        // wird sie ausgewählt.
-                        int row = probeModel.getList().indexOf(lastProbe);
-                        if (row != -1) {
-                            getProbeTabelle().setRowSelectionInterval(row, row);
-                            getProbeTabelle().scrollRectToVisible(getProbeTabelle().getCellRect(row, 0, true));
-                        }
-                    } else {
-                        String statusMsg = "Suche: " + probeModel.getRowCount() + " Ergebnis";
-                        if (probeModel.getRowCount() != 1) {
-                            statusMsg += "se";
-                        }
-                        statusMsg += ".";
-                        frame.changeStatus(statusMsg);
-                    }
-                }
-            };
-
-            if (lastProbe == null) {
-                frame.changeStatus("Suche...");
+        SwingWorkerVariant worker = new SwingWorkerVariant(getProbeTabelle()) {
+            @Override
+            protected void doNonUILogic() throws RuntimeException {
+                LaborProbeSuchen.this.probeModel.findByProperty(suche, column);
+                LaborProbeSuchen.this.lastSuche = suche;
+                LaborProbeSuchen.this.lastProperty = column;
             }
 
-            worker.start();
+            @Override
+            protected void doUIUpdateLogic() throws RuntimeException {
+                getProbeTabelle().clearSelection();
+
+                LaborProbeSuchen.this.probeModel.fireTableDataChanged();
+
+                if (LaborProbeSuchen.this.lastProbe != null) {
+                    // Wenn die zuletzt bearbeitete Probe noch in der Liste ist,
+                    // wird sie ausgewählt.
+                    int row = LaborProbeSuchen.this.probeModel.getList()
+                        .indexOf(LaborProbeSuchen.this.lastProbe);
+                    if (row != -1) {
+                        getProbeTabelle().setRowSelectionInterval(row, row);
+                        getProbeTabelle().scrollRectToVisible(
+                            getProbeTabelle().getCellRect(row, 0, true));
+                    }
+                } else {
+                    String statusMsg = "Suche: "
+                        + LaborProbeSuchen.this.probeModel.getRowCount()
+                        + " Ergebnis";
+                    if (LaborProbeSuchen.this.probeModel.getRowCount() != 1) {
+                        statusMsg += "se";
+                    }
+                    statusMsg += ".";
+                    LaborProbeSuchen.this.frame.changeStatus(statusMsg);
+                }
+            }
+        };
+
+        if (this.lastProbe == null) {
+            this.frame.changeStatus("Suche...");
+        }
+
+        worker.start();
     }
 
     private Action getProbeEditAction() {
-        if (probeEditAction == null) {
-            probeEditAction = new AbstractAction("Bearbeiten") {
+        if (this.probeEditAction == null) {
+            this.probeEditAction = new AbstractAction("Bearbeiten") {
                 private static final long serialVersionUID = 5010453878974070301L;
 
                 @Override
@@ -306,56 +313,70 @@ public class LaborProbeSuchen extends AbstractModul {
                     int row = getProbeTabelle().getSelectedRow();
                     log.debug("Enter in Zeile " + row);
 
-                    // Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
+                    // Natürlich nur editieren, wenn wirklich eine Zeile
+                    // ausgewählt ist
                     if (row != -1) {
-                        AtlProbenahmen probe = probeModel.getRow(row);
+                        AtlProbenahmen probe = LaborProbeSuchen.this.probeModel
+                            .getRow(row);
                         editProbe(probe);
                     }
                 }
             };
-            probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
-            probeEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+            this.probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_B));
+            this.probeEditAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
         }
 
-        return probeEditAction;
+        return this.probeEditAction;
     }
 
     private Action getProbeLoeschAction() {
-        if (probeLoeschAction == null) {
-            probeLoeschAction = new AbstractAction("Löschen") {
+        if (this.probeLoeschAction == null) {
+            this.probeLoeschAction = new AbstractAction("Löschen") {
                 private static final long serialVersionUID = -5527830509453388049L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getProbeTabelle().getSelectedRow();
                     if (row != -1 && getProbeTabelle().getEditingRow() == -1) {
-                        AtlProbenahmen probe = probeModel.getRow(row);
-                        int answer = JOptionPane.showConfirmDialog(panel, "Soll die Probenahme '"+ probe.getKennummer() +"' wirklich inkl. aller Analysen gelöscht werden?", "Löschen bestätigen", JOptionPane.YES_NO_OPTION);
-                        if (answer == JOptionPane.YES_OPTION) {
-                            if (probeModel.removeRow(row)) {
-                                frame.changeStatus("Probenahme gelöscht.", HauptFrame.SUCCESS_COLOR);
+                        AtlProbenahmen probe = LaborProbeSuchen.this.probeModel
+                            .getRow(row);
+
+                        if (GUIManager.getInstance().showQuestion(
+                            "Soll die Probenahme '" + probe.getKennummer()
+                                + "' wirklich inkl. aller Analysen gelöscht"
+                                + " werden?", "Löschen bestätigen")) {
+                            if (LaborProbeSuchen.this.probeModel.removeRow(row)) {
+                                LaborProbeSuchen.this.frame.changeStatus(
+                                    "Probenahme gelöscht.",
+                                    HauptFrame.SUCCESS_COLOR);
                                 log.debug("Probe " + probe + " wurde gelöscht!");
                             } else {
-                                frame.changeStatus("Konnte die Probenahme nicht löschen!", HauptFrame.ERROR_COLOR);
+                                LaborProbeSuchen.this.frame.changeStatus(
+                                    "Konnte die Probenahme nicht löschen!",
+                                    HauptFrame.ERROR_COLOR);
                             }
                         }
                     }
                 }
             };
-            probeLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
-            probeLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            this.probeLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_L));
+            this.probeLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
-        return probeLoeschAction;
+        return this.probeLoeschAction;
     }
 
     private void showProbePopup(MouseEvent e) {
-        if (probePopup == null) {
-            probePopup = new JPopupMenu("Probe");
+        if (this.probePopup == null) {
+            this.probePopup = new JPopupMenu("Probe");
             JMenuItem bearbItem = new JMenuItem(getProbeEditAction());
             JMenuItem loeschItem = new JMenuItem(getProbeLoeschAction());
-            probePopup.add(bearbItem);
-            probePopup.add(loeschItem);
+            this.probePopup.add(bearbItem);
+            this.probePopup.add(loeschItem);
         }
 
         if (e.isPopupTrigger()) {
@@ -364,115 +385,138 @@ public class LaborProbeSuchen extends AbstractModul {
 
             if (row != -1) {
                 getProbeTabelle().setRowSelectionInterval(row, row);
-                probePopup.show(e.getComponent(), e.getX(), e.getY());
+                this.probePopup.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
 
     private JTable getProbeTabelle() {
-        if (probeTabelle == null) {
-            probeTabelle = new JTable(probeModel);
+        if (this.probeTabelle == null) {
+            this.probeTabelle = new JTable(this.probeModel);
 
-            probeTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-            probeTabelle.getColumnModel().getColumn(0).setPreferredWidth(15);
-            probeTabelle.getColumnModel().getColumn(1).setPreferredWidth(45);
-            probeTabelle.getColumnModel().getColumn(2).setPreferredWidth(15);
-            probeTabelle.getColumnModel().getColumn(3).setPreferredWidth(100);
-            probeTabelle.getColumnModel().getColumn(4).setPreferredWidth(200);
-            probeTabelle.getColumnModel().getColumn(5).setPreferredWidth(200);
+            this.probeTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+            this.probeTabelle.getColumnModel().getColumn(0)
+                .setPreferredWidth(15);
+            this.probeTabelle.getColumnModel().getColumn(1)
+                .setPreferredWidth(45);
+            this.probeTabelle.getColumnModel().getColumn(2)
+                .setPreferredWidth(15);
+            this.probeTabelle.getColumnModel().getColumn(3)
+                .setPreferredWidth(100);
+            this.probeTabelle.getColumnModel().getColumn(4)
+                .setPreferredWidth(200);
+            this.probeTabelle.getColumnModel().getColumn(5)
+                .setPreferredWidth(200);
 
-            probeTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            probeTabelle.setColumnSelectionAllowed(false);
-            probeTabelle.setRowSelectionAllowed(true);
+            this.probeTabelle
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.probeTabelle.setColumnSelectionAllowed(false);
+            this.probeTabelle.setRowSelectionAllowed(true);
 
-            probeTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                        Point origin = e.getPoint();
-                        int row = getProbeTabelle().rowAtPoint(origin);
+            this.probeTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getProbeTabelle().rowAtPoint(origin);
 
-                        AtlProbenahmen probe = probeModel.getRow(row);
-                        log.debug("Doppelklick auf Zeile " + row);
-                        editProbe(probe);
+                            AtlProbenahmen probe = LaborProbeSuchen.this.probeModel
+                                .getRow(row);
+                            log.debug("Doppelklick auf Zeile " + row);
+                            editProbe(probe);
+                        }
                     }
-                }
 
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    showProbePopup(e);
-                }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showProbePopup(e);
+                    }
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    showProbePopup(e);
-                }
-            });
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showProbePopup(e);
+                    }
+                });
 
-            probeTabelle.getInputMap().put((KeyStroke)getProbeEditAction().getValue(Action.ACCELERATOR_KEY), getProbeEditAction().getValue(Action.NAME));
-            probeTabelle.getActionMap().put(getProbeEditAction().getValue(Action.NAME), getProbeEditAction());
+            this.probeTabelle.getInputMap().put(
+                (KeyStroke) getProbeEditAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getProbeEditAction().getValue(Action.NAME));
+            this.probeTabelle.getActionMap().put(
+                getProbeEditAction().getValue(Action.NAME),
+                getProbeEditAction());
 
-            probeTabelle.getInputMap().put((KeyStroke)getProbeLoeschAction().getValue(Action.ACCELERATOR_KEY), getProbeLoeschAction().getValue(Action.NAME));
-            probeTabelle.getActionMap().put(getProbeLoeschAction().getValue(Action.NAME), getProbeLoeschAction());
+            this.probeTabelle.getInputMap().put(
+                (KeyStroke) getProbeLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getProbeLoeschAction().getValue(Action.NAME));
+            this.probeTabelle.getActionMap().put(
+                getProbeLoeschAction().getValue(Action.NAME),
+                getProbeLoeschAction());
         }
-        return probeTabelle;
+        return this.probeTabelle;
     }
 
     private JComboBox getSuchBox() {
-        if (suchBox == null) {
-            suchBox = new JComboBox(
-                    new NamedObject[]{
-                            new NamedObject("Kennnummer:","kennummer"),
-                            new NamedObject("Bemerkung:","bemerkung")
-                            });
+        if (this.suchBox == null) {
+            this.suchBox = new JComboBox(new NamedObject[] {
+                    new NamedObject("Kennnummer:", "kennummer"),
+                    new NamedObject("Bemerkung:", "bemerkung")});
         }
-        return suchBox;
+        return this.suchBox;
     }
 
     private JTextField getSuchFeld() {
-        if (suchFeld == null) {
-            suchFeld = new JTextField("");
+        if (this.suchFeld == null) {
+            this.suchFeld = new JTextField("");
 
-            suchFeld.addActionListener(new ActionListener() {
+            this.suchFeld.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String suche = getSuchFeld().getText();
-                    String spalte = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();
-                    lastProbe = null;
+                    String spalte = (String) ((NamedObject) getSuchBox()
+                        .getSelectedItem()).getValue();
+                    LaborProbeSuchen.this.lastProbe = null;
                     filterProbeListe(suche, spalte);
                 }
             });
-            suchFeld.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+            this.suchFeld.setFocusTraversalKeys(
+                KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+                Collections.EMPTY_SET);
 
-            suchFeld.addKeyListener(new KeyAdapter() {
+            this.suchFeld.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_TAB) {
                         String suche = getSuchFeld().getText();
-                        String spalte = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();
+                        String spalte = (String) ((NamedObject) getSuchBox()
+                            .getSelectedItem()).getValue();
                         filterProbeListe(suche, spalte);
                     }
                 }
             });
         }
-        return suchFeld;
+        return this.suchFeld;
     }
 
     private JButton getSubmitButton() {
-        if (submitButton == null) {
-            submitButton = new JButton(AuikUtils.getIcon(16, "key_enter.png"));
-            submitButton.setToolTipText("Suche starten");
-            submitButton.addActionListener(new ActionListener() {
+        if (this.submitButton == null) {
+            this.submitButton = new JButton(AuikUtils.getIcon(16,
+                "key_enter.png"));
+            this.submitButton.setToolTipText("Suche starten");
+            this.submitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String suche = getSuchFeld().getText();
-                    String spalte = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();
-                    lastProbe = null;
+                    String spalte = (String) ((NamedObject) getSuchBox()
+                        .getSelectedItem()).getValue();
+                    LaborProbeSuchen.this.lastProbe = null;
                     filterProbeListe(suche, spalte);
                 }
             });
         }
 
-        return submitButton;
+        return this.submitButton;
     }
 }

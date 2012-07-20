@@ -101,7 +101,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
@@ -860,6 +859,7 @@ public class HauptFrame extends JFrame {
         clearStatusTimer.stop();
     }
 
+    // TODO: Move all access to the message methods to the gui manager!
     /**
      * Zeigt eine Fehlermeldung mit dem Titel "Fehler" an.
      *
@@ -876,8 +876,7 @@ public class HauptFrame extends JFrame {
      * @param title Ein Titel für die Meldung
      */
     public void showErrorMessage(String msg, String title) {
-        JOptionPane.showMessageDialog(
-                getRightFrame(), msg, title, JOptionPane.ERROR_MESSAGE);
+        guiManager.showErrorMessage(msg, title);
     }
 
     /**
@@ -887,8 +886,7 @@ public class HauptFrame extends JFrame {
      * @param title Ein Titel für die Meldung
      */
     public void showInfoMessage(String msg, String title) {
-        JOptionPane.showMessageDialog(
-                getRightFrame(), msg, title, JOptionPane.INFORMATION_MESSAGE);
+        guiManager.showInfoMessage(msg, title);
     }
 
     /**
@@ -899,7 +897,7 @@ public class HauptFrame extends JFrame {
      *         <code>false</code>.
      */
     public boolean showQuestion(String question) {
-        return showQuestion(question, "Frage");
+        return guiManager.showQuestion(question, "Frage");
     }
 
     /**
@@ -911,14 +909,7 @@ public class HauptFrame extends JFrame {
      *         <code>false</code>.
      */
     public boolean showQuestion(String question, String title) {
-        boolean ret = false;
-
-        int answer = JOptionPane.showConfirmDialog(
-                getRightFrame(), question, title, JOptionPane.YES_NO_OPTION);
-        if (answer == JOptionPane.YES_OPTION) {
-            ret = true;
-        }
-        return ret;
+        return guiManager.showQuestion(question, title);
     }
 
     public File openFile() {

@@ -79,7 +79,6 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -88,6 +87,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -95,6 +97,7 @@ import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
@@ -122,14 +125,14 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  * @author David Klotz
  */
 
-public class BasisPanel  extends JPanel {
-	/** Logging */
+public class BasisPanel extends JPanel {
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
-	private static final long serialVersionUID = 2520878475016486007L;
+    private static final long serialVersionUID = 2520878475016486007L;
 
-	private class ChooseDialog extends JDialog {
-		private static final long serialVersionUID = 6320119317944629431L;
-		private HauptFrame frame;
+    private class ChooseDialog extends JDialog {
+        private static final long serialVersionUID = 6320119317944629431L;
+        private HauptFrame frame;
         private BasisBetreiber betreiber;
         private BasisStandort standort;
 
@@ -143,7 +146,6 @@ public class BasisPanel  extends JPanel {
         private JButton okButton;
         private JButton abbrechenButton;
 
-
         public ChooseDialog(Object initial, HauptFrame frame) {
             super(frame, true);
             this.frame = frame;
@@ -153,20 +155,21 @@ public class BasisPanel  extends JPanel {
 
             if (initial instanceof BasisBetreiber) {
                 setTitle("Betreiber auswählen");
-                betreiber = (BasisBetreiber) initial;
-                betreiberModel = new BasisBetreiberModel(false);
-                if (betreiber.getBetreiberid() != null) {
-                    betreiberModel.setList(initialList);
+                this.betreiber = (BasisBetreiber) initial;
+                this.betreiberModel = new BasisBetreiberModel(false);
+                if (this.betreiber.getBetreiberid() != null) {
+                    this.betreiberModel.setList(initialList);
                 }
             } else if (initial instanceof BasisStandort) {
                 setTitle("Standort auswählen");
-                standort = (BasisStandort) initial;
-                standortModel = new BasisStandortModel();
-                if (standort.getStandortid() != null) {
-                    standortModel.setList(initialList);
+                this.standort = (BasisStandort) initial;
+                this.standortModel = new BasisStandortModel();
+                if (this.standort.getStandortid() != null) {
+                    this.standortModel.setList(initialList);
                 }
             } else {
-                throw new IllegalArgumentException("intial muss ein BasisBetreiber oder BasisStandort sein!");
+                throw new IllegalArgumentException(
+                    "intial muss ein BasisBetreiber oder BasisStandort sein!");
             }
 
             setContentPane(initializeContentPane());
@@ -174,66 +177,63 @@ public class BasisPanel  extends JPanel {
             pack();
             setResizable(true);
             setLocationRelativeTo(this.frame);
-            setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         }
 
-
-
-
         public BasisBetreiber getChosenBetreiber() {
-            if (betreiber.getBetreiberid() != null) {
-                return betreiber;
+            if (this.betreiber.getBetreiberid() != null) {
+                return this.betreiber;
             } else {
                 return null;
             }
         }
 
         public BasisStandort getChosenStandort() {
-            if (standort.getStandortid() != null) {
-                return standort;
+            if (this.standort.getStandortid() != null) {
+                return this.standort;
             } else {
                 return null;
             }
         }
 
         private JPanel initializeContentPane() {
-            JScrollPane tabellenScroller = new JScrollPane(getErgebnisTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            JScrollPane tabellenScroller = new JScrollPane(
+                getErgebnisTabelle(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             TabAction ta = new TabAction();
             ta.addComp(getErgebnisTabelle());
             ta.addComp(getOkButton());
             ta.addComp(getAbbrechenButton());
 
-            JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(
-                    getOkButton(),
-                    getAbbrechenButton()
-            );
+            JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(getOkButton(),
+                getAbbrechenButton());
 
             JToolBar submitToolBar = new JToolBar();
             submitToolBar.setFloatable(false);
             submitToolBar.setRollover(true);
             submitToolBar.add(getSubmitButton());
 
-            FormLayout layout = new FormLayout(
-                    "700dlu:g, 3dlu, min(16dlu;p)",        // spalten
-                    "pref, 3dlu, 320dlu:g, 3dlu, 3dlu, pref");     // zeilen
+            FormLayout layout = new FormLayout("700dlu:g, 3dlu, min(16dlu;p)", // spalten
+                "pref, 3dlu, 320dlu:g, 3dlu, 3dlu, pref"); // zeilen
             PanelBuilder builder = new PanelBuilder(layout);
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
-            builder.add(getSuchFeld(),        cc.xy(1, 1));
-            builder.add(submitToolBar,        cc.xy(3, 1));
-            builder.add(tabellenScroller,    cc.xywh(1, 3, 3, 2));
-            builder.add(buttonBar,             cc.xyw(1, 6, 3));
+            builder.add(getSuchFeld(), cc.xy(1, 1));
+            builder.add(submitToolBar, cc.xy(3, 1));
+            builder.add(tabellenScroller, cc.xywh(1, 3, 3, 2));
+            builder.add(buttonBar, cc.xyw(1, 6, 3));
 
-            return(builder.getPanel());
+            return (builder.getPanel());
         }
 
         private void choose(int row) {
             if (row != -1) {
-                if (betreiber != null) {
-                    betreiber = betreiberModel.getRow(row);
-                } else if (standort != null) {
-                    standort = standortModel.getRow(row);
+                if (this.betreiber != null) {
+                    this.betreiber = this.betreiberModel.getRow(row);
+                } else if (this.standort != null) {
+                    this.standort = this.standortModel.getRow(row);
                 }
                 dispose();
             }
@@ -242,25 +242,28 @@ public class BasisPanel  extends JPanel {
         private void doSearch() {
             final String suche = getSuchFeld().getText();
 
-            if (betreiber != null) {
-                SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
+            if (this.betreiber != null) {
+                SwingWorkerVariant worker = new SwingWorkerVariant(
+                    getErgebnisTabelle()) {
                     @Override
                     protected void doNonUILogic() throws RuntimeException {
-                        betreiberModel.filterList(suche, null);
+                        ChooseDialog.this.betreiberModel
+                            .filterList(suche, null);
                     }
 
                     @Override
                     protected void doUIUpdateLogic() throws RuntimeException {
-                        betreiberModel.fireTableDataChanged();
+                        ChooseDialog.this.betreiberModel.fireTableDataChanged();
                     }
                 };
                 worker.start();
-            } else if (standort != null) {
-                SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
+            } else if (this.standort != null) {
+                SwingWorkerVariant worker = new SwingWorkerVariant(
+                    getErgebnisTabelle()) {
                     @Override
                     protected void doNonUILogic() throws RuntimeException {
                         String[] test = suche.split(" ");
-                        String last = test[test.length-1];
+                        String last = test[test.length - 1];
                         int nr;
                         String first;
                         try {
@@ -271,12 +274,12 @@ public class BasisPanel  extends JPanel {
                             nr = -1;
                         }
 
-                        standortModel.filterList(first, nr);
+                        ChooseDialog.this.standortModel.filterList(first, nr);
                     }
 
                     @Override
                     protected void doUIUpdateLogic() throws RuntimeException {
-                        standortModel.fireTableDataChanged();
+                        ChooseDialog.this.standortModel.fireTableDataChanged();
                     }
                 };
                 worker.start();
@@ -284,9 +287,9 @@ public class BasisPanel  extends JPanel {
         }
 
         private JTextField getSuchFeld() {
-            if (suchFeld == null) {
-                suchFeld = new JTextField();
-                suchFeld.addActionListener(new ActionListener() {
+            if (this.suchFeld == null) {
+                this.suchFeld = new JTextField();
+                this.suchFeld.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         doSearch();
@@ -294,14 +297,15 @@ public class BasisPanel  extends JPanel {
                 });
             }
 
-            return suchFeld;
+            return this.suchFeld;
         }
 
         private JButton getSubmitButton() {
-            if (submitButton == null) {
-                submitButton = new JButton(AuikUtils.getIcon(16, "key_enter.png"));
-                submitButton.setToolTipText("Suche starten");
-                submitButton.addActionListener(new ActionListener() {
+            if (this.submitButton == null) {
+                this.submitButton = new JButton(AuikUtils.getIcon(16,
+                    "key_enter.png"));
+                this.submitButton.setToolTipText("Suche starten");
+                this.submitButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         doSearch();
@@ -309,41 +313,44 @@ public class BasisPanel  extends JPanel {
                 });
             }
 
-            return submitButton;
+            return this.submitButton;
         }
 
         private JTable getErgebnisTabelle() {
-            if (ergebnisTabelle == null) {
-                if (betreiber != null) {
-                    ergebnisTabelle = new JTable(betreiberModel);
-                } else if (standort != null) {
-                    ergebnisTabelle = new JTable(standortModel);
-                    //ergebnisTabelle = new JTable(3, 3);
+            if (this.ergebnisTabelle == null) {
+                if (this.betreiber != null) {
+                    this.ergebnisTabelle = new JTable(this.betreiberModel);
+                } else if (this.standort != null) {
+                    this.ergebnisTabelle = new JTable(this.standortModel);
+                    // ergebnisTabelle = new JTable(3, 3);
                 }
 
-                ergebnisTabelle.addFocusListener(TableFocusListener.getInstance());
-                ergebnisTabelle.addMouseListener(new MouseAdapter() {
+                this.ergebnisTabelle.addFocusListener(TableFocusListener
+                    .getInstance());
+                this.ergebnisTabelle.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent e) {
-                        if((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
                             Point origin = e.getPoint();
-                            int row = ergebnisTabelle.rowAtPoint(origin);
+                            int row = ChooseDialog.this.ergebnisTabelle
+                                .rowAtPoint(origin);
 
                             choose(row);
                         }
                     }
                 });
 
-                ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(130);
+                this.ergebnisTabelle.getColumnModel().getColumn(0)
+                    .setPreferredWidth(130);
             }
 
-            return ergebnisTabelle;
+            return this.ergebnisTabelle;
         }
 
         private JButton getOkButton() {
-            if (okButton == null) {
-                okButton = new JButton("Ok");
-                okButton.addActionListener(new ActionListener() {
+            if (this.okButton == null) {
+                this.okButton = new JButton("Ok");
+                this.okButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         int row = getErgebnisTabelle().getSelectedRow();
@@ -353,13 +360,13 @@ public class BasisPanel  extends JPanel {
                 });
             }
 
-            return okButton;
+            return this.okButton;
         }
 
         private JButton getAbbrechenButton() {
-            if (abbrechenButton == null) {
-                abbrechenButton = new JButton("Abbrechen");
-                abbrechenButton.addActionListener(new ActionListener() {
+            if (this.abbrechenButton == null) {
+                this.abbrechenButton = new JButton("Abbrechen");
+                this.abbrechenButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         dispose();
@@ -367,28 +374,26 @@ public class BasisPanel  extends JPanel {
                 });
             }
 
-            return abbrechenButton;
+            return this.abbrechenButton;
         }
     }
 
     // Widgets
-    //   Betreiber
+    // Betreiber
     private JTextField betreiberFeld;
     private JToolBar betreiberToolBar;
     private JButton betreiberChooseButton;
     private JButton betreiberEditButton;
     private JButton betreiberNewButton;
-//    private JButton betreiberGotoButton;
 
-    //   Standort
+    // Standort
     private JTextField standortFeld;
     private JToolBar standortToolBar;
     private JButton standortChooseButton;
     private JButton standortEditButton;
     private JButton standortNewButton;
-//    private JButton standortGotoButton;
 
-    //   Art, Sachbearbeiter, Inaktiv, Priorität, Beschreibung, Speichern
+    // Art, Sachbearbeiter, Inaktiv, Priorität, Beschreibung, Speichern
     private JComboBox artBox;
     private JComboBox sachbearbeiterBox;
     private JCheckBox inaktivBox;
@@ -402,7 +407,6 @@ public class BasisPanel  extends JPanel {
     private Font italicFont;
 
     private ActionListener editButtonListener;
-//    private ActionListener gotoButtonListener;
 
     // Daten
     private String name;
@@ -420,18 +424,16 @@ public class BasisPanel  extends JPanel {
 
     public BasisPanel(BasisObjektBearbeiten hauptModul) {
 
-        name = "Objekt";
+        this.name = "Objekt";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout (
-                "r:70dlu, 5dlu, 15dlu, 3dlu, 165dlu, 3dlu, l:min(55dlu;p)",
-                ""        // Zeilen werden dynamisch erzeugt
+        FormLayout layout = new FormLayout(
+            "r:70dlu, 5dlu, 15dlu, 3dlu, 165dlu, 3dlu, l:min(55dlu;p)", ""
+            // Zeilen werden dynamisch erzeugt
         );
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
         builder.setDefaultDialogBorder();
-
-
 
         builder.appendSeparator("Eigenschaften");
         builder.append("Betreiber:", getBetreiberFeld(), 3);
@@ -458,7 +460,10 @@ public class BasisPanel  extends JPanel {
         builder.appendRow("3dlu");
         builder.nextLine(2);
 
-        JScrollPane beschreibungsScroller = new JScrollPane(getBeschreibungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane beschreibungsScroller = new JScrollPane(
+            getBeschreibungsArea(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:25dlu");
         builder.append(beschreibungsScroller, 5);
 
@@ -468,24 +473,23 @@ public class BasisPanel  extends JPanel {
         builder.appendSeparator("Verknüpfte Objekte");
         builder.appendRow("3dlu");
         builder.nextLine(2);
-                JScrollPane objektverknuepfungScroller = new JScrollPane(
-                getObjektverknuepungTabelle(),
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane objektverknuepfungScroller = new JScrollPane(
+            getObjektverknuepungTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:100dlu");
         builder.append(objektverknuepfungScroller, 5);
         builder.nextLine();
 
         JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-                getSelectObjektButton(), getSaveButton());
+            getSelectObjektButton(), getSaveButton());
 
         builder.append(buttonBar, 5);
     }
 
-
     public void fetchFormData() {
-        if (objektarten == null) {
-            objektarten = BasisObjektarten.getObjektarten();
+        if (this.objektarten == null) {
+            this.objektarten = BasisObjektarten.getObjektarten();
         }
     }
 
@@ -493,141 +497,154 @@ public class BasisPanel  extends JPanel {
         boolean neu = false;
 
         // Is this a new object?
-        if (hauptModul.getObjekt() == null ||
-            hauptModul.getObjekt().getObjektid() == null) {
+        if (this.hauptModul.getObjekt() == null
+            || this.hauptModul.getObjekt().getObjektid() == null) {
             neu = true;
         }
 
-		if (neu == true) {
-	        // Create a new object
-		    // Only load enabled Sachbearbeiter
-		    getSachbearbeiterBox().setModel(
-		        new DefaultComboBoxModel(
-		            BasisSachbearbeiter.getEnabledSachbearbeiter()));
-		    // Preset the current Sachbearbeiter
-		    getSachbearbeiterBox().setSelectedItem(
-		        BasisSachbearbeiter.getCurrentSachbearbeiter());
-            getSachbearbeiterBox().setFont(italicFont);
+        if (neu == true) {
+            // Create a new object
+            // Only load enabled Sachbearbeiter
+            getSachbearbeiterBox().setModel(
+                new DefaultComboBoxModel(BasisSachbearbeiter
+                    .getEnabledSachbearbeiter()));
+            // Preset the current Sachbearbeiter
+            getSachbearbeiterBox().setSelectedItem(
+                BasisSachbearbeiter.getCurrentSachbearbeiter());
+            getSachbearbeiterBox().setFont(this.italicFont);
 
-			if (objektarten != null
-					&& (objektarten.length != getArtBox().getItemCount())) {
-				getArtBox().setModel(new DefaultComboBoxModel(objektarten));
-			}
-			// hauptModul.getObjekt().setPrioritaet(0);
-		} else {
-		    // Show / edit an existing object
-	        getSachbearbeiterBox().setModel(
-	            new DefaultComboBoxModel(
-	                BasisSachbearbeiter.getEnabledSachbearbeiter()));
+            if (this.objektarten != null
+                && (this.objektarten.length != getArtBox().getItemCount())) {
+                getArtBox()
+                    .setModel(new DefaultComboBoxModel(this.objektarten));
+            }
+            // hauptModul.getObjekt().setPrioritaet(0);
+        } else {
+            // Show / edit an existing object
+            getSachbearbeiterBox().setModel(
+                new DefaultComboBoxModel(BasisSachbearbeiter
+                    .getEnabledSachbearbeiter()));
 
-		    getArtBox().removeAllItems();
-			// Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000)
-			// und umgekehrt ist weiterhin möglich
-			if (hauptModul.getObjekt().getBasisObjektarten().isAnh53Kl()
-					| hauptModul.getObjekt().getBasisObjektarten().isAnh53Gr()) {
+            getArtBox().removeAllItems();
+            // Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000)
+            // und umgekehrt ist weiterhin möglich
+            if (this.hauptModul.getObjekt().getBasisObjektarten().isAnh53Kl()
+                | this.hauptModul.getObjekt().getBasisObjektarten().isAnh53Gr()) {
                 // Anhang 53 (<3000) (360.33)
-				getArtBox().addItem(BasisObjektarten.getObjektart(17));
+                getArtBox().addItem(BasisObjektarten.getObjektart(17));
                 // Anhang 53 (>3000) (360.33)
-				getArtBox().addItem(BasisObjektarten.getObjektart(18));
-			}
-			// Ändern der Objektarten Anhang 49, Abscheider und Fettabscheider
-			// ist ebenfalls möglich
-			else if (hauptModul.getObjekt().getBasisObjektarten().isAnh49()
-					|| hauptModul.getObjekt().getBasisObjektarten()
-							.isFettabscheider()
-					|| hauptModul.getObjekt().getBasisObjektarten()
-							.isAbscheider()) {
+                getArtBox().addItem(BasisObjektarten.getObjektart(18));
+            }
+            // Ändern der Objektarten Anhang 49, Abscheider und Fettabscheider
+            // ist ebenfalls möglich
+            else if (this.hauptModul.getObjekt().getBasisObjektarten()
+                .isAnh49()
+                || this.hauptModul.getObjekt().getBasisObjektarten()
+                    .isFettabscheider()
+                || this.hauptModul.getObjekt().getBasisObjektarten()
+                    .isAbscheider()) {
                 // Anhang 49 (360.33)
-				getArtBox().addItem(BasisObjektarten.getObjektart(14));
+                getArtBox().addItem(BasisObjektarten.getObjektart(14));
                 // Abscheider (360.32)
-				getArtBox().addItem(BasisObjektarten.getObjektart(19));
+                getArtBox().addItem(BasisObjektarten.getObjektart(19));
                 // Fettabscheider (360.33)
-				getArtBox().addItem(BasisObjektarten.getObjektart(15));
+                getArtBox().addItem(BasisObjektarten.getObjektart(15));
                 // Abscheider (360.34)
-				getArtBox().addItem(BasisObjektarten.getObjektart(58));
-			}
-			// Objektart als einziges in die Liste eintragen
-			else {
-				getArtBox().addItem(
-						hauptModul.getObjekt().getBasisObjektarten());
-			}
-		}
+                getArtBox().addItem(BasisObjektarten.getObjektart(58));
+            }
+            // Objektart als einziges in die Liste eintragen
+            else {
+                getArtBox().addItem(
+                    this.hauptModul.getObjekt().getBasisObjektarten());
+            }
+        }
 
-        if (hauptModul.getObjekt() != null) {
-            if (hauptModul.getObjekt().getBasisBetreiber() != null) {
-                BasisBetreiber betr = hauptModul.getObjekt().getBasisBetreiber();
+        if (this.hauptModul.getObjekt() != null) {
+            if (this.hauptModul.getObjekt().getBasisBetreiber() != null) {
+                BasisBetreiber betr = this.hauptModul.getObjekt()
+                    .getBasisBetreiber();
                 getBetreiberFeld().setText(betr.toString());
-                String toolTip =
-                    "<html><b>Anrede:</b> "+((betr.getBetranrede() != null) ? betr.getBetranrede() : "")+"<br>" +
-                    "<b>Name:</b> "+betr.getBetrname()+"<br>";
+                String toolTip = "<html><b>Anrede:</b> "
+                    + ((betr.getBetranrede() != null) ? betr.getBetranrede()
+                        : "") + "<br>" + "<b>Name:</b> " + betr.getBetrname()
+                    + "<br>";
                 if (betr.getBetrnamezus() != null) {
-                    toolTip += "<b>Zusatz:</b> "+betr.getBetrnamezus()+"<br><br>";
+                    toolTip += "<b>Zusatz:</b> " + betr.getBetrnamezus()
+                        + "<br><br>";
                 }
                 if (betr.getStrasse() != null) {
-                    toolTip += "<b>Adresse:</b><br>"+ betr.getStrasse() +" "+ betr.getHausnr();
+                    toolTip += "<b>Adresse:</b><br>" + betr.getStrasse() + " "
+                        + betr.getHausnr();
                     if (betr.getHausnrzus() != null) {
                         toolTip += betr.getHausnrzus();
                     }
                     toolTip += "<br>";
                 }
-                toolTip += ((betr.getPlzzs() != null) ? betr.getPlzzs().trim() + " - " : "") + ((betr.getPlz() != null) ? betr.getPlz() + " " : "") + ((betr.getOrt() != null) ? betr.getOrt() : "");
+                toolTip += ((betr.getPlzzs() != null) ? betr.getPlzzs().trim()
+                    + " - " : "")
+                    + ((betr.getPlz() != null) ? betr.getPlz() + " " : "")
+                    + ((betr.getOrt() != null) ? betr.getOrt() : "");
                 if (betr.getTelefon() != null) {
                     toolTip += "<br><br><b>Telefon:</b> " + betr.getTelefon();
                 }
                 toolTip += "</html>";
                 getBetreiberFeld().setToolTipText(toolTip);
             }
-            if (hauptModul.getObjekt().getBasisStandort() != null) {
-                BasisStandort sta = hauptModul.getObjekt().getBasisStandort();
-                String toolTip = "<html>"+ sta +"<br>";
+            if (this.hauptModul.getObjekt().getBasisStandort() != null) {
+                BasisStandort sta = this.hauptModul.getObjekt()
+                    .getBasisStandort();
+                String toolTip = "<html>" + sta + "<br>";
                 if (sta.getPlz() != null) {
-                    toolTip += "<b>PLZ:</b> "+sta.getPlz()+"<br>";
+                    toolTip += "<b>PLZ:</b> " + sta.getPlz() + "<br>";
                 }
-                toolTip +=
-                    "<b>Gemarkung:</b> "+sta.getBasisGemarkung() +
-                    ((sta.getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "+sta.getEntgebid() : "") +
-                    "</html>";
+                toolTip += "<b>Gemarkung:</b> "
+                    + sta.getBasisGemarkung()
+                    + ((sta.getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
+                        + sta.getEntgebid() : "") + "</html>";
                 getStandortFeld().setToolTipText(toolTip);
                 getStandortFeld().setText(sta.getFormatierteStrasse());
             }
 
-            if (hauptModul.getObjekt().getBasisObjektarten() != null) {
-                getArtBox().setSelectedItem(hauptModul.getObjekt().getBasisObjektarten());
+            if (this.hauptModul.getObjekt().getBasisObjektarten() != null) {
+                getArtBox().setSelectedItem(
+                    this.hauptModul.getObjekt().getBasisObjektarten());
             }
 
-            if (hauptModul.getObjekt().getBasisSachbearbeiter() != null) {
-                getSachbearbeiterBox().setSelectedItem(hauptModul.getObjekt().getBasisSachbearbeiter());
-                getSachbearbeiterBox().setFont(normalFont);
+            if (this.hauptModul.getObjekt().getBasisSachbearbeiter() != null) {
+                getSachbearbeiterBox().setSelectedItem(
+                    this.hauptModul.getObjekt().getBasisSachbearbeiter());
+                getSachbearbeiterBox().setFont(this.normalFont);
             } else {
                 getSachbearbeiterBox().setSelectedItem(
                     BasisSachbearbeiter.getCurrentSachbearbeiter());
-                getSachbearbeiterBox().setFont(italicFont);
+                getSachbearbeiterBox().setFont(this.italicFont);
             }
 
-            if (hauptModul.getObjekt().getInaktiv() != null) {
-                if (hauptModul.getObjekt().getInaktiv() == true) {
+            if (this.hauptModul.getObjekt().getInaktiv() != null) {
+                if (this.hauptModul.getObjekt().getInaktiv() == true) {
                     getInaktivBox().setSelected(true);
                 } else {
                     getInaktivBox().setSelected(false);
                 }
             }
 
-			if (!neu) {
-				if (hauptModul.getObjekt().getPrioritaet() != null) {
-					getPrioritaetFeld().setText(
-							hauptModul.getObjekt().getPrioritaet().toString());
-				}
-			}
-
-
-            if (hauptModul.getObjekt().getBeschreibung() != null) {
-                getBeschreibungsArea().setText(hauptModul.getObjekt().getBeschreibung());
+            if (!neu) {
+                if (this.hauptModul.getObjekt().getPrioritaet() != null) {
+                    getPrioritaetFeld().setText(
+                        this.hauptModul.getObjekt().getPrioritaet().toString());
+                }
             }
 
-            if (hauptModul.getObjekt().getObjektid() != null) {
-                objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
+            if (this.hauptModul.getObjekt().getBeschreibung() != null) {
+                getBeschreibungsArea().setText(
+                    this.hauptModul.getObjekt().getBeschreibung());
+            }
+
+            if (this.hauptModul.getObjekt().getObjektid() != null) {
+                this.objektVerknuepfungModel.setObjekt(this.hauptModul
+                    .getObjekt());
             } else {
-                objektVerknuepfungModel.clearList();
+                this.objektVerknuepfungModel.clearList();
             }
         }
     }
@@ -643,7 +660,7 @@ public class BasisPanel  extends JPanel {
         if (getSachbearbeiterBox().getItemCount() > 0) {
             getSachbearbeiterBox().setSelectedItem(
                 BasisSachbearbeiter.getCurrentSachbearbeiter());
-            getSachbearbeiterBox().setFont(italicFont);
+            getSachbearbeiterBox().setFont(this.italicFont);
         }
         getInaktivBox().setSelected(false);
         getPrioritaetFeld().setText("");
@@ -663,7 +680,7 @@ public class BasisPanel  extends JPanel {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     private boolean saveObjektDaten() {
@@ -671,59 +688,73 @@ public class BasisPanel  extends JPanel {
 
         Integer prio = null;
 
-        if (!getPrioritaetFeld().getText().equals("")){
-        	prio = Integer.parseInt(getPrioritaetFeld().getText());
+        if (!getPrioritaetFeld().getText().equals("")) {
+            prio = Integer.parseInt(getPrioritaetFeld().getText());
         }
 
         // Eingegebene Daten für das Objekt übernehmen
-        // Betreiber / Standort werden schon nach der Auswahl durch die chooseButtons gesetzt
-        hauptModul.getObjekt().setBasisObjektarten((BasisObjektarten)getArtBox().getSelectedItem());
-        hauptModul.getObjekt().setBeschreibung(getBeschreibungsArea().getText());
-        hauptModul.getObjekt().setBasisSachbearbeiter((BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
-        hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
+        // Betreiber / Standort werden schon nach der Auswahl durch die
+        // chooseButtons gesetzt
+        this.hauptModul.getObjekt().setBasisObjektarten(
+            (BasisObjektarten) getArtBox().getSelectedItem());
+        this.hauptModul.getObjekt().setBeschreibung(
+            getBeschreibungsArea().getText());
+        this.hauptModul.getObjekt().setBasisSachbearbeiter(
+            (BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
+        this.hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
 
-
-        BasisObjekt tmp = BasisObjekt.saveBasisObjekt(hauptModul.getObjekt(),
-        		prio);
+        BasisObjekt tmp = BasisObjekt.saveBasisObjekt(
+            this.hauptModul.getObjekt(), prio);
 
         if (tmp != null) {
-            hauptModul.setObjekt(tmp);
-            hauptModul.completeObjekt();
+            this.hauptModul.setObjekt(tmp);
+            this.hauptModul.completeObjekt();
             success = true;
-            log.debug("Objekt " + hauptModul.getObjekt() + " gespeichert.");
+            log.debug("Objekt " + this.hauptModul.getObjekt() + " gespeichert.");
         } else {
             success = false;
-            log.debug("Objekt " + hauptModul.getObjekt()
-            		+ " konnte nicht gespeichert werden!");
+            log.debug("Objekt " + this.hauptModul.getObjekt()
+                + " konnte nicht gespeichert werden!");
         }
 
         return success;
     }
 
     private ActionListener getEditButtonListener() {
-        if (editButtonListener == null) {
-            editButtonListener = new ActionListener() {
+        if (this.editButtonListener == null) {
+            this.editButtonListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String action = e.getActionCommand();
 
-                    BasisBetreiber betreiber = hauptModul.getObjekt().getBasisBetreiber();
-                    BasisStandort standort = hauptModul.getObjekt().getBasisStandort();
+                    BasisBetreiber betreiber = BasisPanel.this.hauptModul
+                        .getObjekt().getBasisBetreiber();
+                    BasisStandort standort = BasisPanel.this.hauptModul
+                        .getObjekt().getBasisStandort();
 
                     if ("betreiber_edit".equals(action) && betreiber != null) {
-                        BetreiberEditor editDialog = new BetreiberEditor(betreiber, hauptModul.getFrame());
-                        editDialog.setLocationRelativeTo(hauptModul.getFrame());
+                        BetreiberEditor editDialog = new BetreiberEditor(
+                            betreiber, BasisPanel.this.hauptModul.getFrame());
+                        editDialog
+                            .setLocationRelativeTo(BasisPanel.this.hauptModul
+                                .getFrame());
 
                         editDialog.setVisible(true);
 
-                        hauptModul.getObjekt().setBasisBetreiber(editDialog.getBetreiber());
-                    } else if ("standort_edit".equals(action) && standort != null) {
-                        StandortEditor editDialog = new StandortEditor(standort, hauptModul.getFrame());
-                        editDialog.setLocationRelativeTo(hauptModul.getFrame());
+                        BasisPanel.this.hauptModul.getObjekt()
+                            .setBasisBetreiber(editDialog.getBetreiber());
+                    } else if ("standort_edit".equals(action)
+                        && standort != null) {
+                        StandortEditor editDialog = new StandortEditor(
+                            standort, BasisPanel.this.hauptModul.getFrame());
+                        editDialog
+                            .setLocationRelativeTo(BasisPanel.this.hauptModul
+                                .getFrame());
 
                         editDialog.setVisible(true);
 
-                        hauptModul.getObjekt().setBasisStandort(editDialog.getStandort());
+                        BasisPanel.this.hauptModul.getObjekt()
+                            .setBasisStandort(editDialog.getStandort());
                     }
 
                     updateForm();
@@ -731,443 +762,447 @@ public class BasisPanel  extends JPanel {
             };
         }
 
-        return editButtonListener;
+        return this.editButtonListener;
     }
 
-    // TODO: Check this: This method was private and never used locally
-//    private ActionListener getGotoButtonListener() {
-//        if (gotoButtonListener == null) {
-//            gotoButtonListener = new ActionListener() {
-//                public void actionPerformed(ActionEvent e) {
-//                    String action = e.getActionCommand();
-//
-//                    BasisBetreiber betreiber = hauptModul.getObjekt().getBasisBetreiber();
-//                    BasisStandort standort = hauptModul.getObjekt().getBasisStandort();
-//
-//                    if ("betreiber_goto".equals(action) && betreiber != null) {
-//
-//                        hauptModul.getManager().switchModul("m_betreiber_suchen");
-//
-//                    } else if ("standort_goto".equals(action) && standort != null) {
-//
-//                        hauptModul.getManager().switchModul("m_standort_suchen");
-//
-//                    }
-//
-//                    updateForm();
-//                }
-//            };
-//        }
-//
-//        return gotoButtonListener;
-//    }
-
     public JTextField getBetreiberFeld() {
-        if (betreiberFeld == null) {
-            betreiberFeld = new JTextField("");
-            betreiberFeld.setEditable(false);
+        if (this.betreiberFeld == null) {
+            this.betreiberFeld = new JTextField("");
+            this.betreiberFeld.setEditable(false);
         }
-        return betreiberFeld;
+        return this.betreiberFeld;
     }
 
     private JToolBar getBetreiberToolBar() {
-        if (betreiberToolBar == null) {
-            betreiberToolBar = new JToolBar();
-            betreiberToolBar.setFloatable(false);
-            betreiberToolBar.setRollover(true);
+        if (this.betreiberToolBar == null) {
+            this.betreiberToolBar = new JToolBar();
+            this.betreiberToolBar.setFloatable(false);
+            this.betreiberToolBar.setRollover(true);
 
-            betreiberToolBar.add(getBetreiberChooseButton());
-            betreiberToolBar.add(getBetreiberNewButton());
-            betreiberToolBar.add(getBetreiberEditButton());
-//            betreiberToolBar.add(getBetreiberGotoButton());
+            this.betreiberToolBar.add(getBetreiberChooseButton());
+            this.betreiberToolBar.add(getBetreiberNewButton());
+            this.betreiberToolBar.add(getBetreiberEditButton());
         }
-        return betreiberToolBar;
+        return this.betreiberToolBar;
     }
 
     private JButton getBetreiberChooseButton() {
-        if (betreiberChooseButton == null) {
-            betreiberChooseButton = new JButton(AuikUtils.getIcon(16, "reload.png", ""));
-            betreiberChooseButton.setHorizontalAlignment(JButton.CENTER);
-            betreiberChooseButton.setToolTipText("Betreiber auswählen");
+        if (this.betreiberChooseButton == null) {
+            this.betreiberChooseButton = new JButton(AuikUtils.getIcon(16,
+                "reload.png", ""));
+            this.betreiberChooseButton
+                .setHorizontalAlignment(SwingConstants.CENTER);
+            this.betreiberChooseButton.setToolTipText("Betreiber auswählen");
 
-            betreiberChooseButton.addActionListener(new ActionListener() {
+            this.betreiberChooseButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    BasisBetreiber betreiber = hauptModul.getObjekt().getBasisBetreiber();
+                    BasisBetreiber betreiber = BasisPanel.this.hauptModul
+                        .getObjekt().getBasisBetreiber();
                     if (betreiber == null) {
                         betreiber = new BasisBetreiber();
                     }
-                    ChooseDialog chooser = new ChooseDialog(betreiber, hauptModul.getFrame());
+                    ChooseDialog chooser = new ChooseDialog(betreiber,
+                        BasisPanel.this.hauptModul.getFrame());
                     chooser.setVisible(true);
 
-                    hauptModul.getObjekt().setBasisBetreiber(chooser.getChosenBetreiber());
+                    BasisPanel.this.hauptModul.getObjekt().setBasisBetreiber(
+                        chooser.getChosenBetreiber());
                     updateForm();
                 }
             });
         }
 
-        return betreiberChooseButton;
+        return this.betreiberChooseButton;
     }
 
     private JButton getBetreiberEditButton() {
-        if (betreiberEditButton == null) {
-            betreiberEditButton = new JButton(AuikUtils.getIcon(16, "edit.png", ""));
-            betreiberEditButton.setHorizontalAlignment(JButton.CENTER);
-            betreiberEditButton.setToolTipText("Betreiber bearbeiten");
-            betreiberEditButton.setActionCommand("betreiber_edit");
+        if (this.betreiberEditButton == null) {
+            this.betreiberEditButton = new JButton(AuikUtils.getIcon(16,
+                "edit.png", ""));
+            this.betreiberEditButton
+                .setHorizontalAlignment(SwingConstants.CENTER);
+            this.betreiberEditButton.setToolTipText("Betreiber bearbeiten");
+            this.betreiberEditButton.setActionCommand("betreiber_edit");
 
-            betreiberEditButton.addActionListener(getEditButtonListener());
+            this.betreiberEditButton.addActionListener(getEditButtonListener());
         }
 
-        return betreiberEditButton;
+        return this.betreiberEditButton;
     }
 
-//    private JButton getBetreiberGotoButton() {
-//        if (betreiberGotoButton == null) {
-//            betreiberGotoButton = new JButton(AuikUtils.getIcon(16, "edit.png", ""));
-//            betreiberGotoButton.setHorizontalAlignment(JButton.CENTER);
-//            betreiberGotoButton.setToolTipText("Betreibersuche aufrufen");
-//            betreiberGotoButton.setActionCommand("betreiber_goto");
-//
-//            betreiberGotoButton.addActionListener(getGotoButtonListener());
-//        }
-//
-//        return betreiberGotoButton;
-//    }
-
     private JButton getBetreiberNewButton() {
-        if (betreiberNewButton == null) {
-            betreiberNewButton = new JButton(AuikUtils.getIcon(16, "filenew.png", ""));
-            betreiberNewButton.setHorizontalAlignment(JButton.CENTER);
-            betreiberNewButton.setToolTipText("Neuen Betreiber anlegen");
+        if (this.betreiberNewButton == null) {
+            this.betreiberNewButton = new JButton(AuikUtils.getIcon(16,
+                "filenew.png", ""));
+            this.betreiberNewButton
+                .setHorizontalAlignment(SwingConstants.CENTER);
+            this.betreiberNewButton.setToolTipText("Neuen Betreiber anlegen");
 
-            betreiberNewButton.addActionListener(new ActionListener() {
+            this.betreiberNewButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    hauptModul.getManager().getSettingsManager().setSetting("auik.imc.return_to_objekt", true, false);
-                    if (hauptModul.getObjekt().getBasisBetreiber() != null) {
-                        hauptModul.getManager().getSettingsManager().setSetting(
+                    BasisPanel.this.hauptModul.getManager()
+                        .getSettingsManager()
+                        .setSetting("auik.imc.return_to_objekt", true, false);
+                    if (BasisPanel.this.hauptModul.getObjekt()
+                        .getBasisBetreiber() != null) {
+                        BasisPanel.this.hauptModul
+                            .getManager()
+                            .getSettingsManager()
+                            .setSetting(
                                 "auik.imc.use_betreiber",
-                                hauptModul.getObjekt().getBasisBetreiber().getBetreiberid().intValue(), false);
+                                BasisPanel.this.hauptModul.getObjekt()
+                                    .getBasisBetreiber().getBetreiberid()
+                                    .intValue(), false);
                     }
-                    if (hauptModul.getObjekt().getBasisStandort() != null) {
-                        hauptModul.getManager().getSettingsManager().setSetting(
+                    if (BasisPanel.this.hauptModul.getObjekt()
+                        .getBasisStandort() != null) {
+                        BasisPanel.this.hauptModul
+                            .getManager()
+                            .getSettingsManager()
+                            .setSetting(
                                 "auik.imc.use_standort",
-                                hauptModul.getObjekt().getBasisStandort().getStandortid().intValue(), false);
+                                BasisPanel.this.hauptModul.getObjekt()
+                                    .getBasisStandort().getStandortid()
+                                    .intValue(), false);
                     }
-                    hauptModul.getManager().switchModul("m_betreiber_neu");
+                    BasisPanel.this.hauptModul.getManager().switchModul(
+                        "m_betreiber_neu");
                 }
             });
         }
 
-        return betreiberNewButton;
+        return this.betreiberNewButton;
     }
 
     public JTextField getStandortFeld() {
-        if (standortFeld == null) {
-            standortFeld = new JTextField("");
-            standortFeld.setEditable(false);
+        if (this.standortFeld == null) {
+            this.standortFeld = new JTextField("");
+            this.standortFeld.setEditable(false);
         }
-        return standortFeld;
+        return this.standortFeld;
     }
 
     private JToolBar getStandortToolBar() {
-        if (standortToolBar == null) {
-            standortToolBar = new JToolBar();
-            standortToolBar.setFloatable(false);
-            standortToolBar.setRollover(true);
+        if (this.standortToolBar == null) {
+            this.standortToolBar = new JToolBar();
+            this.standortToolBar.setFloatable(false);
+            this.standortToolBar.setRollover(true);
 
-            standortToolBar.add(getStandortChooseButton());
-            standortToolBar.add(getStandortNewButton());
-            standortToolBar.add(getStandortEditButton());
-//            standortToolBar.add(getStandortGotoButton());
+            this.standortToolBar.add(getStandortChooseButton());
+            this.standortToolBar.add(getStandortNewButton());
+            this.standortToolBar.add(getStandortEditButton());
         }
-        return standortToolBar;
+        return this.standortToolBar;
     }
 
     private JButton getStandortChooseButton() {
-        if (standortChooseButton == null) {
-            standortChooseButton = new JButton(AuikUtils.getIcon(16, "reload.png", ""));
-            standortChooseButton.setHorizontalAlignment(JButton.CENTER);
-            standortChooseButton.setToolTipText("Standort auswählen");
+        if (this.standortChooseButton == null) {
+            this.standortChooseButton = new JButton(AuikUtils.getIcon(16,
+                "reload.png", ""));
+            this.standortChooseButton
+                .setHorizontalAlignment(SwingConstants.CENTER);
+            this.standortChooseButton.setToolTipText("Standort auswählen");
 
-            standortChooseButton.addActionListener(new ActionListener() {
+            this.standortChooseButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    BasisStandort standort = hauptModul.getObjekt().getBasisStandort();
+                    BasisStandort standort = BasisPanel.this.hauptModul
+                        .getObjekt().getBasisStandort();
                     if (standort == null) {
                         standort = new BasisStandort();
                     }
-                    ChooseDialog chooser = new ChooseDialog(standort, hauptModul.getFrame());
+                    ChooseDialog chooser = new ChooseDialog(standort,
+                        BasisPanel.this.hauptModul.getFrame());
                     chooser.setVisible(true);
 
-                    hauptModul.getObjekt().setBasisStandort(chooser.getChosenStandort());
+                    BasisPanel.this.hauptModul.getObjekt().setBasisStandort(
+                        chooser.getChosenStandort());
 
                     updateForm();
                 }
             });
         }
 
-        return standortChooseButton;
+        return this.standortChooseButton;
     }
 
     private JButton getStandortEditButton() {
-        if (standortEditButton == null) {
-            standortEditButton = new JButton(AuikUtils.getIcon(16, "edit.png", ""));
-            standortEditButton.setHorizontalAlignment(JButton.CENTER);
-            standortEditButton.setToolTipText("Standort bearbeiten");
-            standortEditButton.setActionCommand("standort_edit");
+        if (this.standortEditButton == null) {
+            this.standortEditButton = new JButton(AuikUtils.getIcon(16,
+                "edit.png", ""));
+            this.standortEditButton
+                .setHorizontalAlignment(SwingConstants.CENTER);
+            this.standortEditButton.setToolTipText("Standort bearbeiten");
+            this.standortEditButton.setActionCommand("standort_edit");
 
-            standortEditButton.addActionListener(getEditButtonListener());
+            this.standortEditButton.addActionListener(getEditButtonListener());
         }
 
-        return standortEditButton;
+        return this.standortEditButton;
     }
 
-//    private JButton getStandortGotoButton() {
-//        if (standortGotoButton == null) {
-//            standortGotoButton = new JButton(AuikUtils.getIcon(16, "edit.png", ""));
-//            standortGotoButton.setHorizontalAlignment(JButton.CENTER);
-//            standortGotoButton.setToolTipText("Standortsuche aufrufen");
-//            standortGotoButton.setActionCommand("standort_goto");
-//
-//            standortGotoButton.addActionListener(getGotoButtonListener());
-//        }
-//
-//        return standortGotoButton;
-//    }
-
     private JButton getStandortNewButton() {
-        if (standortNewButton == null) {
-            standortNewButton = new JButton(AuikUtils.getIcon(16, "filenew.png", ""));
-            standortNewButton.setHorizontalAlignment(JButton.CENTER);
-            standortNewButton.setToolTipText("Neuen Standort anlegen");
+        if (this.standortNewButton == null) {
+            this.standortNewButton = new JButton(AuikUtils.getIcon(16,
+                "filenew.png", ""));
+            this.standortNewButton
+                .setHorizontalAlignment(SwingConstants.CENTER);
+            this.standortNewButton.setToolTipText("Neuen Standort anlegen");
 
-            standortNewButton.addActionListener(new ActionListener() {
+            this.standortNewButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    hauptModul.getManager().getSettingsManager().setSetting("auik.imc.return_to_objekt", true, false);
+                    BasisPanel.this.hauptModul.getManager()
+                        .getSettingsManager()
+                        .setSetting("auik.imc.return_to_objekt", true, false);
 
-                    if (hauptModul.getObjekt().getBasisBetreiber() != null) {
-                        hauptModul.getManager().getSettingsManager().setSetting(
+                    if (BasisPanel.this.hauptModul.getObjekt()
+                        .getBasisBetreiber() != null) {
+                        BasisPanel.this.hauptModul
+                            .getManager()
+                            .getSettingsManager()
+                            .setSetting(
                                 "auik.imc.use_betreiber",
-                                hauptModul.getObjekt().getBasisBetreiber().getBetreiberid().intValue(), false);
+                                BasisPanel.this.hauptModul.getObjekt()
+                                    .getBasisBetreiber().getBetreiberid()
+                                    .intValue(), false);
                     }
-                    if (hauptModul.getObjekt().getBasisStandort() != null) {
-                        hauptModul.getManager().getSettingsManager().setSetting(
+                    if (BasisPanel.this.hauptModul.getObjekt()
+                        .getBasisStandort() != null) {
+                        BasisPanel.this.hauptModul
+                            .getManager()
+                            .getSettingsManager()
+                            .setSetting(
                                 "auik.imc.use_standort",
-                                hauptModul.getObjekt().getBasisStandort().getStandortid().intValue(), false);
+                                BasisPanel.this.hauptModul.getObjekt()
+                                    .getBasisStandort().getStandortid()
+                                    .intValue(), false);
                     }
-                    hauptModul.getManager().switchModul("m_standort_neu");
+                    BasisPanel.this.hauptModul.getManager().switchModul(
+                        "m_standort_neu");
                 }
             });
         }
 
-        return standortNewButton;
+        return this.standortNewButton;
     }
 
     private JComboBox getArtBox() {
-        if (artBox == null) {
+        if (this.artBox == null) {
 
-                artBox = new JComboBox();
-                artBox.setKeySelectionManager(new MyKeySelectionManager());
+            this.artBox = new JComboBox();
+            this.artBox.setKeySelectionManager(new MyKeySelectionManager());
 
         }
-        return artBox;
+        return this.artBox;
     }
 
     private JComboBox getSachbearbeiterBox() {
-        if (sachbearbeiterBox == null) {
+        if (this.sachbearbeiterBox == null) {
 
-        	sachbearbeiterBox = new JComboBox();
-        	sachbearbeiterBox.setKeySelectionManager(new MyKeySelectionManager());
+            this.sachbearbeiterBox = new JComboBox();
+            this.sachbearbeiterBox
+                .setKeySelectionManager(new MyKeySelectionManager());
 
-            normalFont = getSachbearbeiterBox().getFont();
-            italicFont = new Font(
-                normalFont.getName(), Font.ITALIC, normalFont.getSize());
+            this.normalFont = getSachbearbeiterBox().getFont();
+            this.italicFont = new Font(this.normalFont.getName(), Font.ITALIC,
+                this.normalFont.getSize());
 
         }
-        return sachbearbeiterBox;
+        return this.sachbearbeiterBox;
     }
 
     private JCheckBox getInaktivBox() {
-        if (inaktivBox == null) {
-            inaktivBox = new JCheckBox();
+        if (this.inaktivBox == null) {
+            this.inaktivBox = new JCheckBox();
         }
-        return inaktivBox;
+        return this.inaktivBox;
     }
 
     private JFormattedTextField getPrioritaetFeld() {
-        if (prioritaetFeld == null) {
-        	prioritaetFeld = new JFormattedTextField();
+        if (this.prioritaetFeld == null) {
+            this.prioritaetFeld = new JFormattedTextField();
         }
-        return prioritaetFeld;
+        return this.prioritaetFeld;
     }
 
     public JTextArea getBeschreibungsArea() {
-        if (beschreibungsArea == null) {
-            beschreibungsArea = new LimitedTextArea(150);
-            beschreibungsArea.setLineWrap(true);
-            beschreibungsArea.setWrapStyleWord(true);
+        if (this.beschreibungsArea == null) {
+            this.beschreibungsArea = new LimitedTextArea(150);
+            this.beschreibungsArea.setLineWrap(true);
+            this.beschreibungsArea.setWrapStyleWord(true);
         }
-        return beschreibungsArea;
+        return this.beschreibungsArea;
     }
 
     private JButton getSaveButton() {
-        if (saveButton == null) {
-            saveButton = new JButton("Objekt speichern");
-            saveButton.addActionListener(new ActionListener() {
+        if (this.saveButton == null) {
+            this.saveButton = new JButton("Objekt speichern");
+            this.saveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if ((hauptModul.getObjekt().getBasisBetreiber() != null) && (hauptModul.getObjekt().getBasisStandort() != null)) {
+                    if ((BasisPanel.this.hauptModul.getObjekt()
+                        .getBasisBetreiber() != null)
+                        && (BasisPanel.this.hauptModul.getObjekt()
+                            .getBasisStandort() != null)) {
                         enableAll(false);
                         if (saveObjektDaten()) {
-                            hauptModul.getFrame().changeStatus("Objekt "+hauptModul.getObjekt().getObjektid()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
-                            hauptModul.setNew(false);
+                            BasisPanel.this.hauptModul.getFrame().changeStatus(
+                                "Objekt "
+                                    + BasisPanel.this.hauptModul.getObjekt()
+                                        .getObjektid()
+                                    + " erfolgreich gespeichert.",
+                                HauptFrame.SUCCESS_COLOR);
+                            BasisPanel.this.hauptModul.setNew(false);
                         } else {
-                            hauptModul.getFrame().changeStatus("Konnte Objekt nicht speichern!", HauptFrame.ERROR_COLOR);
+                            BasisPanel.this.hauptModul.getFrame().changeStatus(
+                                "Konnte Objekt nicht speichern!",
+                                HauptFrame.ERROR_COLOR);
                         }
 
-                        hauptModul.fillForm();
+                        BasisPanel.this.hauptModul.fillForm();
                     } else {
-                        hauptModul.getFrame().changeStatus("Kein Betreiber/Standort ausgewählt!", HauptFrame.ERROR_COLOR);
+                        BasisPanel.this.hauptModul.getFrame().changeStatus(
+                            "Kein Betreiber/Standort ausgewählt!",
+                            HauptFrame.ERROR_COLOR);
                     }
                 }
             });
         }
-        return saveButton;
+        return this.saveButton;
     }
 
     private JTable getObjektverknuepungTabelle() {
 
-        if (objektVerknuepfungModel == null) {
-            objektVerknuepfungModel = new ObjektVerknuepfungModel(hauptModul
-                    .getObjekt());
+        if (this.objektVerknuepfungModel == null) {
+            this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
+                this.hauptModul.getObjekt());
 
-            if (objektverknuepfungTabelle == null) {
-                objektverknuepfungTabelle = new JTable(objektVerknuepfungModel);
+            if (this.objektverknuepfungTabelle == null) {
+                this.objektverknuepfungTabelle = new JTable(
+                    this.objektVerknuepfungModel);
             } else {
-                objektverknuepfungTabelle.setModel(objektVerknuepfungModel);
+                this.objektverknuepfungTabelle
+                    .setModel(this.objektVerknuepfungModel);
             }
-            objektverknuepfungTabelle.getColumnModel().getColumn(0)
-                    .setPreferredWidth(5);
-            objektverknuepfungTabelle.getColumnModel().getColumn(1)
-                    .setPreferredWidth(100);
-            objektverknuepfungTabelle.getColumnModel().getColumn(2)
-                    .setPreferredWidth(250);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
+                .setPreferredWidth(5);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
+                .setPreferredWidth(100);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
+                .setPreferredWidth(250);
 
-            objektverknuepfungTabelle
-                    .addMouseListener(new java.awt.event.MouseAdapter() {
-                        @Override
-                        public void mouseClicked(java.awt.event.MouseEvent e) {
-                            if ((e.getClickCount() == 2)
-                                    && (e.getButton() == 1)) {
-                                Point origin = e.getPoint();
-                                int row = getObjektverknuepungTabelle()
-                                        .rowAtPoint(origin);
+            this.objektverknuepfungTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getObjektverknuepungTabelle().rowAtPoint(
+                                origin);
 
-                                if (row != -1) {
-                                    BasisObjektverknuepfung obj = objektVerknuepfungModel
-                                            .getRow(row);
-                                    if (obj.getBasisObjektByIstVerknuepftMit().getObjektid().intValue() != hauptModul
-                                            .getObjekt().getObjektid().intValue())
-                                        hauptModul
-                                                .getManager()
-                                                .getSettingsManager()
-                                                .setSetting(
-                                                        "auik.imc.edit_object",
-                                                        obj
-                                                                .getBasisObjektByIstVerknuepftMit()
-                                                                .getObjektid()
-                                                                .intValue(),
-                                                        false);
-                                    else
-                                        hauptModul
-                                                .getManager()
-                                                .getSettingsManager()
-                                                .setSetting(
-                                                        "auik.imc.edit_object",
-                                                        obj
-                                                                .getBasisObjektByObjekt()
-                                                                .getObjektid()
-                                                                .intValue(),
-                                                        false);
-                                    hauptModul.getManager().switchModul(
-                                            "m_objekt_bearbeiten");
-                                }
+                            if (row != -1) {
+                                BasisObjektverknuepfung obj = BasisPanel.this.objektVerknuepfungModel
+                                    .getRow(row);
+                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                    .getObjektid().intValue() != BasisPanel.this.hauptModul
+                                    .getObjekt().getObjektid().intValue())
+                                    BasisPanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getBasisObjektByIstVerknuepftMit()
+                                                .getObjektid().intValue(),
+                                            false);
+                                else
+                                    BasisPanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getBasisObjektByObjekt()
+                                                .getObjektid().intValue(),
+                                            false);
+                                BasisPanel.this.hauptModul.getManager()
+                                    .switchModul("m_objekt_bearbeiten");
                             }
                         }
+                    }
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-                            showVerknuepfungPopup(e);
-                        }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
 
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-                            showVerknuepfungPopup(e);
-                        }
-                    });
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+                });
 
-            objektverknuepfungTabelle.getInputMap().put(
-                    (KeyStroke) getVerknuepfungLoeschAction().getValue(
-                            Action.ACCELERATOR_KEY),
-                    getVerknuepfungLoeschAction().getValue(Action.NAME));
-            objektverknuepfungTabelle.getActionMap().put(
-                    getVerknuepfungLoeschAction().getValue(Action.NAME),
-                    getVerknuepfungLoeschAction());
+            this.objektverknuepfungTabelle.getInputMap().put(
+                (KeyStroke) getVerknuepfungLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getVerknuepfungLoeschAction().getValue(Action.NAME));
+            this.objektverknuepfungTabelle.getActionMap().put(
+                getVerknuepfungLoeschAction().getValue(Action.NAME),
+                getVerknuepfungLoeschAction());
         }
 
-        return objektverknuepfungTabelle;
-
+        return this.objektverknuepfungTabelle;
     }
 
     private void showVerknuepfungPopup(MouseEvent e) {
-        if (verknuepfungPopup == null) {
-            verknuepfungPopup = new JPopupMenu("Objekt");
+        if (this.verknuepfungPopup == null) {
+            this.verknuepfungPopup = new JPopupMenu("Objekt");
             JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-            verknuepfungPopup.add(loeschItem);
+            this.verknuepfungPopup.add(loeschItem);
         }
 
         if (e.isPopupTrigger()) {
             Point origin = e.getPoint();
-            int row = objektverknuepfungTabelle.rowAtPoint(origin);
+            int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
 
             if (row != -1) {
-                objektverknuepfungTabelle.setRowSelectionInterval(row, row);
-                verknuepfungPopup.show(e.getComponent(), e.getX(), e.getY());
+                this.objektverknuepfungTabelle
+                    .setRowSelectionInterval(row, row);
+                this.verknuepfungPopup.show(e.getComponent(), e.getX(),
+                    e.getY());
             }
         }
     }
 
     private Action getVerknuepfungLoeschAction() {
-        if (verknuepfungLoeschAction == null) {
-            verknuepfungLoeschAction = new AbstractAction("Löschen") {
-				private static final long serialVersionUID = 1214869561793347819L;
+        if (this.verknuepfungLoeschAction == null) {
+            this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 1214869561793347819L;
 
-				@Override
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
-                            && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = objektVerknuepfungModel
-                                .getRow(row);
-                        int answer = JOptionPane
-                                .showConfirmDialog(
-                                        hauptModul.getPanel(),
-                                        "Soll die Verknüpfung wirklich gelöscht werden?\n"
-                                                + "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
-                                        "Löschen bestätigen",
-                                        JOptionPane.YES_NO_OPTION);
-                        if (answer == JOptionPane.YES_OPTION) {
-                            if (objektVerknuepfungModel.removeRow(row)) {
-                                hauptModul.getFrame().changeStatus(
-                                        "Objekt gelöscht.",
+                        && getObjektverknuepungTabelle().getEditingRow() == -1) {
+                        BasisObjektverknuepfung verknuepfung = BasisPanel.this.objektVerknuepfungModel
+                            .getRow(row);
+                        if (GUIManager.getInstance().showQuestion(
+                            "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                + "Hinweis: Die Aktion betrifft nur die "
+                                + "Verknüpfung, die Objekte bleiben erhalten "
+                                + "und können jederzeit neu verknüpft werden.",
+                            "Löschen bestätigen")) {
+                            if (BasisPanel.this.objektVerknuepfungModel
+                                .removeRow(row)) {
+                                BasisPanel.this.hauptModul.getFrame()
+                                    .changeStatus("Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
                                 log.debug("Objekt " + verknuepfung.getId()
-                                        + " wurde gelöscht!");
+                                    + " wurde gelöscht!");
                             } else {
-                                hauptModul.getFrame().changeStatus(
+                                BasisPanel.this.hauptModul.getFrame()
+                                    .changeStatus(
                                         "Konnte das Objekt nicht löschen!",
                                         HauptFrame.ERROR_COLOR);
                             }
@@ -1175,35 +1210,39 @@ public class BasisPanel  extends JPanel {
                     }
                 }
             };
-            verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_L));
-            verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
-                    .getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
-        return verknuepfungLoeschAction;
+        return this.verknuepfungLoeschAction;
     }
 
     private JButton getSelectObjektButton() {
-        if (selectObjektButton == null) {
-            selectObjektButton = new JButton("Objekt auswählen");
+        if (this.selectObjektButton == null) {
+            this.selectObjektButton = new JButton("Objekt auswählen");
 
-            selectObjektButton.addActionListener(new ActionListener() {
+            this.selectObjektButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Save the objekt bevor we can link it to another
-                    if (hauptModul.getObjekt().getObjektid() == null) {
-                        hauptModul.getFrame().changeStatus("Das neue Objekt muss erst gespeichert werden, bevor es mit anderen verknüpft werden kann.", HauptFrame.ERROR_COLOR);
+                    if (BasisPanel.this.hauptModul.getObjekt().getObjektid() == null) {
+                        BasisPanel.this.hauptModul
+                            .getFrame()
+                            .changeStatus(
+                                "Das neue Objekt muss erst gespeichert werden, bevor es mit anderen verknüpft werden kann.",
+                                HauptFrame.ERROR_COLOR);
                     } else {
-                        ObjektChooser chooser = new ObjektChooser(hauptModul
-                                .getFrame(), hauptModul.getObjekt(),
-                                objektVerknuepfungModel);
+                        ObjektChooser chooser = new ObjektChooser(
+                            BasisPanel.this.hauptModul.getFrame(),
+                            BasisPanel.this.hauptModul.getObjekt(),
+                            BasisPanel.this.objektVerknuepfungModel);
                         chooser.setVisible(true);
                     }
                 }
             });
         }
-        return selectObjektButton;
+        return this.selectObjektButton;
     }
-
 }

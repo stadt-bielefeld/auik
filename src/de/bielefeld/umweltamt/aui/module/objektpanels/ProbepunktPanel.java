@@ -39,7 +39,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -48,6 +47,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -56,6 +56,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
@@ -117,130 +118,137 @@ public class ProbepunktPanel extends JPanel {
     private JPopupMenu verknuepfungPopup;
 
     public ProbepunktPanel(BasisObjektBearbeiten hauptModul) {
-        name = "Probenahmepunkt";
+        this.name = "Probenahmepunkt";
         this.hauptModul = hauptModul;
         this.probenahmenModel = new ProbenahmenModel();
 
-        FormLayout layout = new FormLayout (
-                "r:50dlu, 5dlu, 250dlu, r:45dlu, 5dlu, 25dlu", // Spalten
-                "pref, " +    //1
-                "3dlu, " +    //2
-                "pref, " +    //3
-                "3dlu, " +    //4
-                "pref, " +    //5
-                "3dlu, " +    //6
-                "pref, " +    //7
-                "5dlu, " +    //8
-                "pref, " +    //9
-                "3dlu, " +    //10
-                "pref, "+     //11
-                "3dlu, " +    //12
-                "pref, " +    //13
-                "3dlu, " +    //14
-                "pref, "+     //15
-                "3dlu, " +    //16
-                "pref, " +    //17
-                "3dlu, " +    //18
-                "fill:40dlu:g, "+ //19
-                "3dlu, " +    //20
-                "pref, " +     // 21
-                "3dlu, " +    //22
-                "pref, " +    //23
-                "3dlu, " +    //24
-                "fill:40dlu:g, " +    //25
-                "3dlu, " +    //26
-                "pref");    //27
+        FormLayout layout = new FormLayout(
+            "r:50dlu, 5dlu, 250dlu, r:45dlu, 5dlu, 25dlu", // Spalten
+            "pref, " + // 1
+                "3dlu, " + // 2
+                "pref, " + // 3
+                "3dlu, " + // 4
+                "pref, " + // 5
+                "3dlu, " + // 6
+                "pref, " + // 7
+                "5dlu, " + // 8
+                "pref, " + // 9
+                "3dlu, " + // 10
+                "pref, " + // 11
+                "3dlu, " + // 12
+                "pref, " + // 13
+                "3dlu, " + // 14
+                "pref, " + // 15
+                "3dlu, " + // 16
+                "pref, " + // 17
+                "3dlu, " + // 18
+                "fill:40dlu:g, " + // 19
+                "3dlu, " + // 20
+                "pref, " + // 21
+                "3dlu, " + // 22
+                "pref, " + // 23
+                "3dlu, " + // 24
+                "fill:40dlu:g, " + // 25
+                "3dlu, " + // 26
+                "pref"); // 27
 
         PanelBuilder builder = new PanelBuilder(layout, this);
         builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
 
-        builder.addSeparator("Eigenschaften", cc.xyw( 1, 1, 6));
-        builder.addLabel("Art:", cc.xy( 1, 3));
-        builder.add(getProbePktArtBox(), cc.xy( 3, 3));
-        builder.addLabel("Nr:", cc.xy( 4, 3));
-        builder.add(getProbePktNrFeld(), cc.xy( 6, 3));
-        builder.addLabel("Kläranlage:", cc.xy( 1, 5));
-        builder.add(getProbeKABox(), cc.xy( 3, 5));
-        builder.addLabel("Sachbearbeiter:", cc.xy( 1, 7));
-        builder.add(getSachbearbeiterBox(), cc.xy( 3, 7));
-        builder.addLabel("Branche:", cc.xy( 1, 9));
-        builder.add(getBrancheFeld(), cc.xy( 3, 9));
+        builder.addSeparator("Eigenschaften", cc.xyw(1, 1, 6));
+        builder.addLabel("Art:", cc.xy(1, 3));
+        builder.add(getProbePktArtBox(), cc.xy(3, 3));
+        builder.addLabel("Nr:", cc.xy(4, 3));
+        builder.add(getProbePktNrFeld(), cc.xy(6, 3));
+        builder.addLabel("Kläranlage:", cc.xy(1, 5));
+        builder.add(getProbeKABox(), cc.xy(3, 5));
+        builder.addLabel("Sachbearbeiter:", cc.xy(1, 7));
+        builder.add(getSachbearbeiterBox(), cc.xy(3, 7));
+        builder.addLabel("Branche:", cc.xy(1, 9));
+        builder.add(getBrancheFeld(), cc.xy(3, 9));
 
         JPanel buttonBar = ButtonBarFactory.buildOKBar(getSavePktButton());
-        builder.add(buttonBar, cc.xyw( 1, 11, 6));
+        builder.add(buttonBar, cc.xyw(1, 11, 6));
 
-        builder.addSeparator("Beschreibung", cc.xyw( 1, 13, 6));
-        JScrollPane beschScroller = new JScrollPane(getProbePktBeschreibungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        builder.addSeparator("Beschreibung", cc.xyw(1, 13, 6));
+        JScrollPane beschScroller = new JScrollPane(
+            getProbePktBeschreibungsArea(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         beschScroller.setBorder(null);
-        builder.add(beschScroller, cc.xyw( 1, 15, 6));
+        builder.add(beschScroller, cc.xyw(1, 15, 6));
 
-        builder.addSeparator("Probenahmen", cc.xyw( 1, 17, 6));
-        JScrollPane tabellenScroller = new JScrollPane(getProbenahmeTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(tabellenScroller, cc.xyw( 1, 19, 6));
-        builder.add(getNeueProbePanel(), cc.xyw( 1, 21, 6));
+        builder.addSeparator("Probenahmen", cc.xyw(1, 17, 6));
+        JScrollPane tabellenScroller = new JScrollPane(getProbenahmeTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        builder.add(tabellenScroller, cc.xyw(1, 19, 6));
+        builder.add(getNeueProbePanel(), cc.xyw(1, 21, 6));
 
-
-        builder.addSeparator("Verknüpfte Objekte", cc.xyw( 1, 23, 6));
+        builder.addSeparator("Verknüpfte Objekte", cc.xyw(1, 23, 6));
         JScrollPane objektverknuepfungScroller = new JScrollPane(
-                getObjektverknuepungTabelle(),
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(objektverknuepfungScroller, cc.xyw( 1, 25, 6));
+            getObjektverknuepungTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        builder.add(objektverknuepfungScroller, cc.xyw(1, 25, 6));
 
-        JPanel buttonBarOv = ButtonBarFactory.buildRightAlignedBar(
-                getSelectObjektButton());
+        JPanel buttonBarOv = ButtonBarFactory
+            .buildRightAlignedBar(getSelectObjektButton());
 
-        builder.add(buttonBarOv, cc.xyw( 1, 27, 6));
+        builder.add(buttonBarOv, cc.xyw(1, 27, 6));
     }
 
-
     public void fetchFormData() throws RuntimeException {
-        probepkt = AtlProbepkt.getProbepunktByObjekt(hauptModul.getObjekt());
-        log.debug("Probepunkt aus DB geholt: " + probepkt);
+        this.probepkt = AtlProbepkt.getProbepunktByObjekt(this.hauptModul
+            .getObjekt());
+        log.debug("Probepunkt aus DB geholt: " + this.probepkt);
 
-        if (probearten == null) {
-            probearten = AtlProbeart.getProbearten();
+        if (this.probearten == null) {
+            this.probearten = AtlProbeart.getProbearten();
         }
-        if (klaeranlagen == null) {
-            klaeranlagen = AtlKlaeranlagen.getKlaeranlagen();
+        if (this.klaeranlagen == null) {
+            this.klaeranlagen = AtlKlaeranlagen.getKlaeranlagen();
         }
-        if (sachbearbeiter == null) {
-        	sachbearbeiter = BasisSachbearbeiter.getEnabledSachbearbeiter();
+        if (this.sachbearbeiter == null) {
+            this.sachbearbeiter = BasisSachbearbeiter
+                .getEnabledSachbearbeiter();
         }
     }
 
     public void updateForm() throws RuntimeException {
-        if (probearten != null) {
-            getProbePktArtBox().setModel(new DefaultComboBoxModel(probearten));
+        if (this.probearten != null) {
+            getProbePktArtBox().setModel(
+                new DefaultComboBoxModel(this.probearten));
         }
-        if (klaeranlagen != null) {
-            getProbeKABox().setModel(new DefaultComboBoxModel(klaeranlagen));
+        if (this.klaeranlagen != null) {
+            getProbeKABox().setModel(
+                new DefaultComboBoxModel(this.klaeranlagen));
         }
-        if (sachbearbeiter != null) {
+        if (this.sachbearbeiter != null) {
             getSachbearbeiterBox().setModel(
-                new DefaultComboBoxModel(sachbearbeiter));
+                new DefaultComboBoxModel(this.sachbearbeiter));
             getSachbearbeiterBox().setEditable(true);
         }
 
-        if (probepkt != null) {
-            getProbePktArtBox().setSelectedItem(probepkt.getAtlProbeart());
-            getProbeKABox().setSelectedItem(probepkt.getAtlKlaeranlagen());
+        if (this.probepkt != null) {
+            getProbePktArtBox().setSelectedItem(this.probepkt.getAtlProbeart());
+            getProbeKABox().setSelectedItem(this.probepkt.getAtlKlaeranlagen());
             getSachbearbeiterBox().setSelectedItem(
-                probepkt.getBasisSachbearbeiter());
+                this.probepkt.getBasisSachbearbeiter());
 
-            if (probepkt.getNummer() != null) {
-                getProbePktNrFeld().setValue(probepkt.getNummer());
+            if (this.probepkt.getNummer() != null) {
+                getProbePktNrFeld().setValue(this.probepkt.getNummer());
             }
 
-            getBrancheFeld().setText(probepkt.getBranche());
+            getBrancheFeld().setText(this.probepkt.getBranche());
             getProbePktBeschreibungsArea().setText(
-                hauptModul.getObjekt().getBeschreibung());
+                this.hauptModul.getObjekt().getBeschreibung());
 
-            probenahmenModel.setProbepunkt(probepkt);
-            probenahmenModel.updateList();
+            this.probenahmenModel.setProbepunkt(this.probepkt);
+            this.probenahmenModel.updateList();
 
-            objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
+            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         }
     }
 
@@ -266,76 +274,88 @@ public class ProbepunktPanel extends JPanel {
         getSavePktButton().setEnabled(enabled);
     }
 
-
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
      * Bearbeitet eine Probenahme.
      */
     public void editProbenahme(AtlProbenahmen probe) {
-        ProbenEditor editDialog = new ProbenEditor(probe, hauptModul.getFrame(), false);
-        editDialog.setLocationRelativeTo(hauptModul.getFrame());
+        ProbenEditor editDialog = new ProbenEditor(probe,
+            this.hauptModul.getFrame(), false);
+        editDialog.setLocationRelativeTo(this.hauptModul.getFrame());
 
         editDialog.setVisible(true);
 
-        probenahmenModel.updateList();
+        this.probenahmenModel.updateList();
     }
 
     /**
      * Legt eine neue Probenahme an.
      */
     public void neueProbenahme(String kennNummer, Timestamp datum) {
-        if (probepkt != null) {
+        if (this.probepkt != null) {
             boolean exists = AtlProbenahmen.probenahmeExists(kennNummer);
             if (!exists) {
                 AtlProbenahmen probe = new AtlProbenahmen();
                 probe.setKennummer(kennNummer);
                 probe.setDatumDerEntnahme(datum);
-                probe.setAtlAnalysepositionen(new HashSet<AtlAnalyseposition>());
-                probe.setAtlProbepkt(probepkt);
+                probe
+                    .setAtlAnalysepositionen(new HashSet<AtlAnalyseposition>());
+                probe.setAtlProbepkt(this.probepkt);
 
-                ProbenEditor editDialog = new ProbenEditor(probe, hauptModul.getFrame(), true);
+                ProbenEditor editDialog = new ProbenEditor(probe,
+                    this.hauptModul.getFrame(), true);
                 editDialog.setVisible(true);
 
-                probenahmenModel.updateList();
+                this.probenahmenModel.updateList();
             } else {
-                hauptModul.getFrame().changeStatus("Eine Probenahme mit dieser Kennnummer existiert schon!", HauptFrame.ERROR_COLOR);
+                this.hauptModul.getFrame().changeStatus(
+                    "Eine Probenahme mit dieser Kennnummer existiert schon!",
+                    HauptFrame.ERROR_COLOR);
             }
         } else {
-            hauptModul.getFrame().changeStatus("Fehler beim Anlegen: Kein Probepunkt!", HauptFrame.ERROR_COLOR);
+            this.hauptModul.getFrame()
+                .changeStatus("Fehler beim Anlegen: Kein Probepunkt!",
+                    HauptFrame.ERROR_COLOR);
         }
     }
 
     private boolean saveProbepunktDaten() {
         boolean success;
 
-        if (probepkt != null) {
+        if (this.probepkt != null) {
             // Eingegebene Daten für den Probepunkt �bernehmen
             if (getProbePktArtBox().getSelectedItem() != null) {
-                probepkt.setAtlProbeart((AtlProbeart) getProbePktArtBox().getSelectedItem());
+                this.probepkt.setAtlProbeart((AtlProbeart) getProbePktArtBox()
+                    .getSelectedItem());
             }
             if (getProbeKABox().getSelectedItem() != null) {
-                probepkt.setAtlKlaeranlagen((AtlKlaeranlagen) getProbeKABox().getSelectedItem());
+                this.probepkt
+                    .setAtlKlaeranlagen((AtlKlaeranlagen) getProbeKABox()
+                        .getSelectedItem());
             }
             if (getSachbearbeiterBox().getSelectedItem() != null) {
-                probepkt.setBasisSachbearbeiter((BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
+                this.probepkt
+                    .setBasisSachbearbeiter((BasisSachbearbeiter) getSachbearbeiterBox()
+                        .getSelectedItem());
             }
 
-            String branche = brancheFeld.getText();
+            String branche = this.brancheFeld.getText();
             if ("".equals(branche)) {
-            	probepkt.setBranche(null);
+                this.probepkt.setBranche(null);
             } else {
-            	probepkt.setBranche(branche);
+                this.probepkt.setBranche(branche);
             }
 
             if (getProbePktNrFeld().getValue() != null) {
-                probepkt.setNummer(((IntegerField) getProbePktNrFeld()).getIntValue());
+                this.probepkt.setNummer(((IntegerField) getProbePktNrFeld())
+                    .getIntValue());
             }
 
-            success = AtlProbepkt.saveProbepunkt(probepkt);
+            success = AtlProbepkt.saveProbepunkt(this.probepkt);
 
         } else {
             success = false;
@@ -345,338 +365,385 @@ public class ProbepunktPanel extends JPanel {
     }
 
     public void completeObjekt() {
-        if (hauptModul.isNew() || probepkt == null) {
+        if (this.hauptModul.isNew() || this.probepkt == null) {
             // Neuen Probepunkt erzeugen
-            probepkt = new AtlProbepkt();
+            this.probepkt = new AtlProbepkt();
             // Objekt_Id setzen
-            probepkt.setBasisObjekt(hauptModul.getObjekt());
+            this.probepkt.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Probepunkt speichern
-            if (AtlProbepkt.saveProbepunkt(probepkt)) {
-                log.debug("Neuer Probepunkt " + probepkt + " gespeichert.");
+            if (AtlProbepkt.saveProbepunkt(this.probepkt)) {
+                log.debug("Neuer Probepunkt " + this.probepkt + " gespeichert.");
             }
         }
     }
 
-
     private JComboBox getProbePktArtBox() {
-        if (probePktArtBox == null) {
-            probePktArtBox = new JComboBox();
+        if (this.probePktArtBox == null) {
+            this.probePktArtBox = new JComboBox();
         }
-        return probePktArtBox;
+        return this.probePktArtBox;
     }
+
     private JComboBox getProbeKABox() {
-        if (probeKABox == null) {
-            probeKABox = new JComboBox();
+        if (this.probeKABox == null) {
+            this.probeKABox = new JComboBox();
         }
-        return probeKABox;
+        return this.probeKABox;
     }
+
     private JComboBox getSachbearbeiterBox() {
-        if (sachbearbeiterBox == null) {
-        	sachbearbeiterBox = new JComboBox();
+        if (this.sachbearbeiterBox == null) {
+            this.sachbearbeiterBox = new JComboBox();
         }
-        return sachbearbeiterBox;
+        return this.sachbearbeiterBox;
     }
+
     private JTextField getBrancheFeld() {
-        if (brancheFeld == null) {
-        	brancheFeld = new LimitedTextField(50, "");
+        if (this.brancheFeld == null) {
+            this.brancheFeld = new LimitedTextField(50, "");
         }
-        return brancheFeld;
+        return this.brancheFeld;
     }
+
     private JFormattedTextField getProbePktNrFeld() {
-        if (probePktNrFeld == null) {
-            probePktNrFeld = new IntegerField();
+        if (this.probePktNrFeld == null) {
+            this.probePktNrFeld = new IntegerField();
         }
-        return probePktNrFeld;
+        return this.probePktNrFeld;
     }
+
     private JTextArea getProbePktBeschreibungsArea() {
-        if (probePktBeschreibungsArea == null) {
-            probePktBeschreibungsArea = new JTextArea();
-            probePktBeschreibungsArea.setLineWrap(true);
-            probePktBeschreibungsArea.setWrapStyleWord(true);
-            probePktBeschreibungsArea.setEditable(false);
-            probePktBeschreibungsArea.setToolTipText("Diese Beschreibung kann unter \"Objekt\" geändert werden.");
-            probePktBeschreibungsArea.setBackground(this.getBackground());
+        if (this.probePktBeschreibungsArea == null) {
+            this.probePktBeschreibungsArea = new JTextArea();
+            this.probePktBeschreibungsArea.setLineWrap(true);
+            this.probePktBeschreibungsArea.setWrapStyleWord(true);
+            this.probePktBeschreibungsArea.setEditable(false);
+            this.probePktBeschreibungsArea
+                .setToolTipText("Diese Beschreibung kann unter \"Objekt\" geändert werden.");
+            this.probePktBeschreibungsArea.setBackground(this.getBackground());
         }
-        return probePktBeschreibungsArea;
+        return this.probePktBeschreibungsArea;
     }
 
     private JTable getProbenahmeTabelle() {
-        if (probenahmeTabelle == null) {
-            probenahmeTabelle = new JTable(probenahmenModel);
-            //probenahmeTabelle.setBackground(Color.BLUE);
-            probenahmeTabelle.getColumnModel().getColumn(0).setMaxWidth(75);
-            probenahmeTabelle.getColumnModel().getColumn(1).setMaxWidth(70);
-            probenahmeTabelle.getColumnModel().getColumn(2).setMaxWidth(60);
-            probenahmeTabelle.getColumnModel().getColumn(3).setPreferredWidth(100);
-            probenahmeTabelle.getColumnModel().getColumn(4).setPreferredWidth(100);
-            probenahmeTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            probenahmeTabelle.setColumnSelectionAllowed(false);
-            probenahmeTabelle.setRowSelectionAllowed(true);
-            probenahmeTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                        Point origin = e.getPoint();
-                        int row = probenahmeTabelle.rowAtPoint(origin);
+        if (this.probenahmeTabelle == null) {
+            this.probenahmeTabelle = new JTable(this.probenahmenModel);
+            // probenahmeTabelle.setBackground(Color.BLUE);
+            this.probenahmeTabelle.getColumnModel().getColumn(0)
+                .setMaxWidth(75);
+            this.probenahmeTabelle.getColumnModel().getColumn(1)
+                .setMaxWidth(70);
+            this.probenahmeTabelle.getColumnModel().getColumn(2)
+                .setMaxWidth(60);
+            this.probenahmeTabelle.getColumnModel().getColumn(3)
+                .setPreferredWidth(100);
+            this.probenahmeTabelle.getColumnModel().getColumn(4)
+                .setPreferredWidth(100);
+            this.probenahmeTabelle
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.probenahmeTabelle.setColumnSelectionAllowed(false);
+            this.probenahmeTabelle.setRowSelectionAllowed(true);
+            this.probenahmeTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = ProbepunktPanel.this.probenahmeTabelle
+                                .rowAtPoint(origin);
 
-                        AtlProbenahmen probe = probenahmenModel.getRow(row);
-                        editProbenahme(probe);
+                            AtlProbenahmen probe = ProbepunktPanel.this.probenahmenModel
+                                .getRow(row);
+                            editProbenahme(probe);
+                        }
                     }
-                }
-            });
+                });
 
             // Den KeyStroke holen, der "Enter" repräsentiert
-            KeyStroke enterKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false);
+            KeyStroke enterKeyStroke = KeyStroke.getKeyStroke(
+                KeyEvent.VK_ENTER, 0, false);
             // Den "Enter"-KeyStroke in die InputMap der Tabelle einfügen
-            probenahmeTabelle.getInputMap().put(enterKeyStroke, "ENTER");
+            this.probenahmeTabelle.getInputMap().put(enterKeyStroke, "ENTER");
             // Eine neue Action fürs editieren erzeugen
             Action editAction = new AbstractAction() {
                 private static final long serialVersionUID = -7537228135751378632L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int row = probenahmeTabelle.getSelectedRow();
-                    // Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
+                    int row = ProbepunktPanel.this.probenahmeTabelle
+                        .getSelectedRow();
+                    // Natürlich nur editieren, wenn wirklich eine Zeile
+                    // ausgewählt ist
                     if (row != -1) {
-                        AtlProbenahmen probe = probenahmenModel.getRow(row);
+                        AtlProbenahmen probe = ProbepunktPanel.this.probenahmenModel
+                            .getRow(row);
                         editProbenahme(probe);
                     }
                 }
             };
             // Diese Action dem "Enter"-KeyStroke zuweisen
-            probenahmeTabelle.getActionMap().put("ENTER", editAction);
+            this.probenahmeTabelle.getActionMap().put("ENTER", editAction);
 
-            KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false);
-            probenahmeTabelle.getInputMap().put(deleteKeyStroke, "DEL");
+            KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(
+                KeyEvent.VK_DELETE, 0, false);
+            this.probenahmeTabelle.getInputMap().put(deleteKeyStroke, "DEL");
             Action removeAction = new AbstractAction() {
                 private static final long serialVersionUID = -4910733866626541511L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int row = probenahmeTabelle.getSelectedRow();
-                    if (row != -1 && probenahmeTabelle.getEditingRow() == -1) {
-                        AtlProbenahmen probe = probenahmenModel.getRow(row);
-                        int answer = JOptionPane.showConfirmDialog(ProbepunktPanel.this, "Soll die Probenahme "+ probe.getKennummer() +" wirklich inkl. aller Analysen gelöscht werden?", "Löschen bestätigen", JOptionPane.YES_NO_OPTION);
-                        if (answer == JOptionPane.YES_OPTION) {
-                            probenahmenModel.removeRow(row);
+                    int row = ProbepunktPanel.this.probenahmeTabelle
+                        .getSelectedRow();
+                    if (row != -1
+                        && ProbepunktPanel.this.probenahmeTabelle
+                            .getEditingRow() == -1) {
+                        AtlProbenahmen probe = ProbepunktPanel.this.probenahmenModel
+                            .getRow(row);
+                        if (GUIManager
+                            .getInstance()
+                            .showQuestion(
+                                "Soll die Probenahme "
+                                    + probe.getKennummer()
+                                    + " wirklich inkl. aller Analysen gelöscht werden?",
+                                "Löschen bestätigen")) {
+                            ProbepunktPanel.this.probenahmenModel
+                                .removeRow(row);
                             log.debug("Probe " + probe.getKennummer()
-                            		+ " wurde gelöscht!");
+                                + " wurde gelöscht!");
                         }
                     }
                 }
             };
-            probenahmeTabelle.getActionMap().put("DEL", removeAction);
+            this.probenahmeTabelle.getActionMap().put("DEL", removeAction);
         }
-        return probenahmeTabelle;
+        return this.probenahmeTabelle;
     }
 
     private JPanel getNeueProbePanel() {
-        if (neueProbePanel == null) {
-            //neueProbePanel = new JPanel();
+        if (this.neueProbePanel == null) {
+            // neueProbePanel = new JPanel();
 
             FormLayout anlegenLayout = new FormLayout(
-                    "pref, 4dlu, max(60dlu;pref), 7dlu, pref, 4dlu, max(60dlu;pref), 7dlu, max(60dlu;pref)"); // spalten, nur eine zeile
+                "pref, 4dlu, max(60dlu;pref), 7dlu, pref, 4dlu, max(60dlu;pref), 7dlu, max(60dlu;pref)");
+            // spalten, nur eine zeile
 
             DefaultFormBuilder builder = new DefaultFormBuilder(anlegenLayout);
 
-            //builder.appendSeparator("Neue Probenahme");
-            builder.append("Kennummer:",getKennummerFeld());
-            builder.append("Datum:",    getDatumsChooser());
+            // builder.appendSeparator("Neue Probenahme");
+            builder.append("Kennummer:", getKennummerFeld());
+            builder.append("Datum:", getDatumsChooser());
             builder.append(getAnlegenButton());
-            neueProbePanel = builder.getPanel();
+            this.neueProbePanel = builder.getPanel();
         }
-        return neueProbePanel;
+        return this.neueProbePanel;
     }
 
     private JTextField getKennummerFeld() {
-        if (kennummerFeld == null) {
-            kennummerFeld = new LimitedTextField(50, "");
+        if (this.kennummerFeld == null) {
+            this.kennummerFeld = new LimitedTextField(50, "");
         }
 
-        return kennummerFeld;
+        return this.kennummerFeld;
     }
+
     private JDateChooser getDatumsChooser() {
-        if (datumsChooser == null) {
-            datumsChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+        if (this.datumsChooser == null) {
+            this.datumsChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
+                false);
         }
 
-        return datumsChooser;
+        return this.datumsChooser;
     }
-    private JButton getAnlegenButton() {
-        if (anlegenButton == null) {
-            anlegenButton = new JButton("Anlegen");
 
-            anlegenButton.addActionListener(new ActionListener() {
+    private JButton getAnlegenButton() {
+        if (this.anlegenButton == null) {
+            this.anlegenButton = new JButton("Anlegen");
+
+            this.anlegenButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (getKennummerFeld().getText().trim().equals("")) {
                         getKennummerFeld().requestFocus();
-                        hauptModul.getFrame().changeStatus("Leere Kennummer!", HauptFrame.ERROR_COLOR);
+                        ProbepunktPanel.this.hauptModul.getFrame()
+                            .changeStatus("Leere Kennummer!",
+                                HauptFrame.ERROR_COLOR);
                     } else {
-                        String kennNummer = getKennummerFeld().getText().trim().replaceAll(" ", "");
-                        Timestamp datum = new Timestamp(getDatumsChooser().getDate().getTime());
+                        String kennNummer = getKennummerFeld().getText().trim()
+                            .replaceAll(" ", "");
+                        Timestamp datum = new Timestamp(getDatumsChooser()
+                            .getDate().getTime());
                         neueProbenahme(kennNummer, datum);
                     }
                 }
             });
         }
 
-        return anlegenButton;
+        return this.anlegenButton;
     }
-    private JButton getSavePktButton() {
-        if (savePktButton == null) {
-            savePktButton = new JButton("Probepunkt speichern");
 
-            savePktButton.addActionListener(new ActionListener() {
+    private JButton getSavePktButton() {
+        if (this.savePktButton == null) {
+            this.savePktButton = new JButton("Probepunkt speichern");
+
+            this.savePktButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveProbepunktDaten()) {
-                        hauptModul.getFrame().changeStatus("Probepunkt "+probepkt.getObjektid()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
-                        //hauptModul.setNew(false);
+                        ProbepunktPanel.this.hauptModul.getFrame()
+                            .changeStatus(
+                                "Probepunkt "
+                                    + ProbepunktPanel.this.probepkt
+                                        .getObjektid()
+                                    + " erfolgreich gespeichert.",
+                                HauptFrame.SUCCESS_COLOR);
+                        // hauptModul.setNew(false);
                     } else {
-                        hauptModul.getFrame().changeStatus("Fehler beim Speichern von Probepunkt!", HauptFrame.ERROR_COLOR);
+                        ProbepunktPanel.this.hauptModul.getFrame()
+                            .changeStatus(
+                                "Fehler beim Speichern von Probepunkt!",
+                                HauptFrame.ERROR_COLOR);
                     }
 
-                    hauptModul.fillForm();
+                    ProbepunktPanel.this.hauptModul.fillForm();
                 }
             });
         }
 
-        return savePktButton;
+        return this.savePktButton;
     }
 
     private JTable getObjektverknuepungTabelle() {
 
-        if (objektVerknuepfungModel == null) {
-            objektVerknuepfungModel = new ObjektVerknuepfungModel(hauptModul
-                    .getObjekt());
+        if (this.objektVerknuepfungModel == null) {
+            this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
+                this.hauptModul.getObjekt());
 
-            if (objektverknuepfungTabelle == null) {
-                objektverknuepfungTabelle = new JTable(objektVerknuepfungModel);
+            if (this.objektverknuepfungTabelle == null) {
+                this.objektverknuepfungTabelle = new JTable(
+                    this.objektVerknuepfungModel);
             } else {
-                objektverknuepfungTabelle.setModel(objektVerknuepfungModel);
+                this.objektverknuepfungTabelle
+                    .setModel(this.objektVerknuepfungModel);
             }
-            objektverknuepfungTabelle.getColumnModel().getColumn(0)
-                    .setPreferredWidth(5);
-            objektverknuepfungTabelle.getColumnModel().getColumn(1)
-                    .setPreferredWidth(100);
-            objektverknuepfungTabelle.getColumnModel().getColumn(2)
-                    .setPreferredWidth(250);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
+                .setPreferredWidth(5);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
+                .setPreferredWidth(100);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
+                .setPreferredWidth(250);
 
-            objektverknuepfungTabelle
-                    .addMouseListener(new java.awt.event.MouseAdapter() {
-                        @Override
-                        public void mouseClicked(java.awt.event.MouseEvent e) {
-                            if ((e.getClickCount() == 2)
-                                    && (e.getButton() == 1)) {
-                                Point origin = e.getPoint();
-                                int row = getObjektverknuepungTabelle()
-                                        .rowAtPoint(origin);
+            this.objektverknuepfungTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getObjektverknuepungTabelle().rowAtPoint(
+                                origin);
 
-                                if (row != -1) {
-                                    BasisObjektverknuepfung obj = objektVerknuepfungModel
-                                            .getRow(row);
-                                    if (obj.getBasisObjektByIstVerknuepftMit().getObjektid().intValue() != hauptModul
-                                            .getObjekt().getObjektid().intValue())
-                                        hauptModul
-                                                .getManager()
-                                                .getSettingsManager()
-                                                .setSetting(
-                                                        "auik.imc.edit_object",
-                                                        obj
-                                                                .getBasisObjektByIstVerknuepftMit()
-                                                                .getObjektid()
-                                                                .intValue(),
-                                                        false);
-                                    else
-                                        hauptModul
-                                                .getManager()
-                                                .getSettingsManager()
-                                                .setSetting(
-                                                        "auik.imc.edit_object",
-                                                        obj
-                                                                .getBasisObjektByObjekt()
-                                                                .getObjektid()
-                                                                .intValue(),
-                                                        false);
-                                    hauptModul.getManager().switchModul(
-                                            "m_objekt_bearbeiten");
-                                }
+                            if (row != -1) {
+                                BasisObjektverknuepfung obj = ProbepunktPanel.this.objektVerknuepfungModel
+                                    .getRow(row);
+                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                    .getObjektid().intValue() != ProbepunktPanel.this.hauptModul
+                                    .getObjekt().getObjektid().intValue())
+                                    ProbepunktPanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getBasisObjektByIstVerknuepftMit()
+                                                .getObjektid().intValue(),
+                                            false);
+                                else
+                                    ProbepunktPanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getBasisObjektByObjekt()
+                                                .getObjektid().intValue(),
+                                            false);
+                                ProbepunktPanel.this.hauptModul.getManager()
+                                    .switchModul("m_objekt_bearbeiten");
                             }
                         }
+                    }
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-                            showVerknuepfungPopup(e);
-                        }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
 
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-                            showVerknuepfungPopup(e);
-                        }
-                    });
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+                });
 
-            objektverknuepfungTabelle.getInputMap().put(
-                    (KeyStroke) getVerknuepfungLoeschAction().getValue(
-                            Action.ACCELERATOR_KEY),
-                    getVerknuepfungLoeschAction().getValue(Action.NAME));
-            objektverknuepfungTabelle.getActionMap().put(
-                    getVerknuepfungLoeschAction().getValue(Action.NAME),
-                    getVerknuepfungLoeschAction());
+            this.objektverknuepfungTabelle.getInputMap().put(
+                (KeyStroke) getVerknuepfungLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getVerknuepfungLoeschAction().getValue(Action.NAME));
+            this.objektverknuepfungTabelle.getActionMap().put(
+                getVerknuepfungLoeschAction().getValue(Action.NAME),
+                getVerknuepfungLoeschAction());
         }
 
-        return objektverknuepfungTabelle;
+        return this.objektverknuepfungTabelle;
 
     }
 
     private void showVerknuepfungPopup(MouseEvent e) {
-        if (verknuepfungPopup == null) {
-            verknuepfungPopup = new JPopupMenu("Objekt");
+        if (this.verknuepfungPopup == null) {
+            this.verknuepfungPopup = new JPopupMenu("Objekt");
             JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-            verknuepfungPopup.add(loeschItem);
+            this.verknuepfungPopup.add(loeschItem);
         }
 
         if (e.isPopupTrigger()) {
             Point origin = e.getPoint();
-            int row = objektverknuepfungTabelle.rowAtPoint(origin);
+            int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
 
             if (row != -1) {
-                objektverknuepfungTabelle.setRowSelectionInterval(row, row);
-                verknuepfungPopup.show(e.getComponent(), e.getX(), e.getY());
+                this.objektverknuepfungTabelle
+                    .setRowSelectionInterval(row, row);
+                this.verknuepfungPopup.show(e.getComponent(), e.getX(),
+                    e.getY());
             }
         }
     }
 
     private Action getVerknuepfungLoeschAction() {
-        if (verknuepfungLoeschAction == null) {
-            verknuepfungLoeschAction = new AbstractAction("Löschen") {
+        if (this.verknuepfungLoeschAction == null) {
+            this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
                 private static final long serialVersionUID = 2362803114601855889L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
-                            && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = objektVerknuepfungModel
-                                .getRow(row);
-                        int answer = JOptionPane
-                                .showConfirmDialog(
-                                        hauptModul.getPanel(),
-                                        "Soll die Verknüpfung wirklich gelöscht werden?\n"
-                                                + "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
-                                        "Löschen bestätigen",
-                                        JOptionPane.YES_NO_OPTION);
-                        if (answer == JOptionPane.YES_OPTION) {
-                            if (objektVerknuepfungModel.removeRow(row)) {
-                                hauptModul.getFrame().changeStatus(
-                                        "Objekt gelöscht.",
+                        && getObjektverknuepungTabelle().getEditingRow() == -1) {
+                        BasisObjektverknuepfung verknuepfung = ProbepunktPanel.this.objektVerknuepfungModel
+                            .getRow(row);
+                        if (GUIManager.getInstance().showQuestion(
+                            "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                + "Hinweis: Die Aktion betrifft nur die "
+                                + "Verknüpfung, die Objekte bleiben erhalten "
+                                + "und können jederzeit neu verknüpft werden.",
+                            "Löschen bestätigen")) {
+                            if (ProbepunktPanel.this.objektVerknuepfungModel
+                                .removeRow(row)) {
+                                ProbepunktPanel.this.hauptModul.getFrame()
+                                    .changeStatus("Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
                                 log.debug("Objekt " + verknuepfung.getId()
-                                        + " wurde gelöscht!");
+                                    + " wurde gelöscht!");
                             } else {
-                                hauptModul.getFrame().changeStatus(
+                                ProbepunktPanel.this.hauptModul.getFrame()
+                                    .changeStatus(
                                         "Konnte das Objekt nicht löschen!",
                                         HauptFrame.ERROR_COLOR);
                             }
@@ -684,29 +751,30 @@ public class ProbepunktPanel extends JPanel {
                     }
                 }
             };
-            verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_L));
-            verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
-                    .getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
-        return verknuepfungLoeschAction;
+        return this.verknuepfungLoeschAction;
     }
 
     private JButton getSelectObjektButton() {
-        if (selectObjektButton == null) {
-            selectObjektButton = new JButton("Objekt auswählen");
+        if (this.selectObjektButton == null) {
+            this.selectObjektButton = new JButton("Objekt auswählen");
 
-            selectObjektButton.addActionListener(new ActionListener() {
+            this.selectObjektButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ObjektChooser chooser = new ObjektChooser(hauptModul
-                            .getFrame(), probepkt.getBasisObjekt(),
-                            objektVerknuepfungModel);
+                    ObjektChooser chooser = new ObjektChooser(
+                        ProbepunktPanel.this.hauptModul.getFrame(),
+                        ProbepunktPanel.this.probepkt.getBasisObjekt(),
+                        ProbepunktPanel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }
             });
         }
-        return selectObjektButton;
+        return this.selectObjektButton;
     }
 }

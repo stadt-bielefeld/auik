@@ -65,4 +65,29 @@ public class GUIManagerTest {
 	public void testGetVersion() {
 		log.debug(guiManager.getVersion());
 	}
+
+    @Test
+    public void testSetInfoStatus() {
+        guiManager.setInfoStatus("Foo");
+    }
+
+    @Test
+    public void testSetErrorStatus() {
+        guiManager.setErrorStatus("Bar");
+    }
+
+	@Test
+    public void testShowQuestion() {
+        log.debug("The answer is " + guiManager.showQuestion("w00t?", "Frage"));
+    }
+
+	@Test
+	public void testShowInfoMessage() {
+	    guiManager.showInfoMessage("Boo", "Message");
+    }
+
+	@Test
+    public void testShowErrorMessage() {
+        guiManager.showErrorMessage("Huu", "Error");
+    }
 }

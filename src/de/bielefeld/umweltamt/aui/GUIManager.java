@@ -107,9 +107,10 @@ public final class GUIManager {
         this.disposeSplashFrame();
     }
 
-    /** Getter */
-    public HauptFrame getRunningFrame() {
-        return this.runningFrame;
+    /** End the application */
+    public void endGUI() {
+        this.runningFrame.close();
+        log.debug("Ending everything here. Good bye!");
     }
 
     /** Show the splash frame */
@@ -130,7 +131,9 @@ public final class GUIManager {
      * @param txt The new status text
      */
     public void setInfoStatus(String txt) {
-        this.getRunningFrame().changeStatus(txt);
+        if (this.runningFrame != null) {
+            this.runningFrame.changeStatus(txt);
+        }
     }
 
     /**
@@ -138,17 +141,20 @@ public final class GUIManager {
      * @param txt The error status text
      */
     public void setErrorStatus(String txt) {
-        this.getRunningFrame().changeStatus(txt, HauptFrame.ERROR_COLOR);
+        if (this.runningFrame != null) {
+            this.runningFrame.changeStatus(txt, HauptFrame.ERROR_COLOR);
+        }
     }
 
     /**
      * Show a question dialog
      * @param question The question to ask
      * @param title The title of the dialog
-     * @return boolean The choosen answer
+     * @return <code>boolean</code> The choosen answer
      */
     public boolean showQuestion(String question, String title) {
-        return this.getRunningFrame().showQuestion(question, title);
+        return (JOptionPane.showConfirmDialog(this.runningFrame, question,
+            title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
     }
 
     /**
@@ -157,7 +163,7 @@ public final class GUIManager {
      * @param title The title of the message
      */
     public void showInfoMessage(String message, String title) {
-        JOptionPane.showMessageDialog(this.getRunningFrame(), message, title,
+        JOptionPane.showMessageDialog(this.runningFrame, message, title,
             JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -167,7 +173,7 @@ public final class GUIManager {
      * @param title The title of the message
      */
     public void showErrorMessage(String message, String title) {
-        JOptionPane.showMessageDialog(this.getRunningFrame(), message, title,
+        JOptionPane.showMessageDialog(this.runningFrame, message, title,
             JOptionPane.ERROR_MESSAGE);
     }
 

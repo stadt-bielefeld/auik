@@ -63,7 +63,6 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -73,6 +72,7 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -82,6 +82,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.uif_lite.component.Factory;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
@@ -101,7 +102,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  * @author David Klotz
  */
 public class BasisBetreiberSuchen extends AbstractModul {
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String iconPath = "filefind32.png";
@@ -125,8 +126,10 @@ public class BasisBetreiberSuchen extends AbstractModul {
     private BasisBetreiberModel betreiberModel;
     private BasisObjektModel objektModel;
 
-    /** Wird benutzt, um nach dem Bearbeiten etc. wieder den
-    selben Betreiber in der Liste auszuwählen. */
+    /**
+     * Wird benutzt, um nach dem Bearbeiten etc. wieder den selben Betreiber in
+     * der Liste auszuwählen.
+     */
     private BasisBetreiber lastBetreiber;
 
     /*
@@ -160,7 +163,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
      */
     @Override
     public Icon getIcon() {
-        return super.getIcon(iconPath);
+        return super.getIcon(this.iconPath);
     }
 
     /*
@@ -168,17 +171,22 @@ public class BasisBetreiberSuchen extends AbstractModul {
      */
     @Override
     public JPanel getPanel() {
-        if (panel == null) {
-            betreiberModel = new BasisBetreiberModel();
-            objektModel = new BasisObjektModel("Standort", manager.getSettingsManager().getSetting("auik.prefs.abteilungsfilter"));
+        if (this.panel == null) {
+            this.betreiberModel = new BasisBetreiberModel();
+            this.objektModel = new BasisObjektModel("Standort", this.manager
+                .getSettingsManager().getSetting("auik.prefs.abteilungsfilter"));
 
             TableFocusListener tfl = TableFocusListener.getInstance();
             getBetreiberTabelle().addFocusListener(tfl);
             getObjektTabelle().addFocusListener(tfl);
 
-
-            JScrollPane betreiberScroller = new JScrollPane(getBetreiberTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            JScrollPane objektScroller = new JScrollPane(getObjektTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            JScrollPane betreiberScroller = new JScrollPane(
+                getBetreiberTabelle(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            JScrollPane objektScroller = new JScrollPane(getObjektTabelle(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
             JToolBar submitToolBar = new JToolBar();
             submitToolBar.setFloatable(false);
@@ -192,30 +200,26 @@ public class BasisBetreiberSuchen extends AbstractModul {
             ta.addComp(getBetreiberTabelle());
             ta.addComp(getObjektTabelle());
 
-            tabellenSplit =
-                Factory.createStrippedSplitPane(
-                        JSplitPane.VERTICAL_SPLIT,
-                        betreiberScroller,
-                        objektScroller,
-                        0.7
-                );
+            this.tabellenSplit = Factory.createStrippedSplitPane(
+                JSplitPane.VERTICAL_SPLIT, betreiberScroller, objektScroller,
+                0.7);
 
             FormLayout layout = new FormLayout(
-                    "50dlu, 4dlu, pref:grow, 3dlu, min(16dlu;p)",    // spalten
-                    "pref, 3dlu, 150dlu:grow(1.0)");         // zeilen
+                "50dlu, 4dlu, pref:grow, 3dlu, min(16dlu;p)", // spalten
+                "pref, 3dlu, 150dlu:grow(1.0)"); // zeilen
 
             PanelBuilder builder = new PanelBuilder(layout);
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
-            builder.add(getSuchBox(),    cc.xy( 1, 1));
-            builder.add(getSuchFeld(),    cc.xy( 3, 1));
-            builder.add(submitToolBar,    cc.xy( 5, 1));
-            builder.add(tabellenSplit,    cc.xyw(1, 3, 5));
+            builder.add(getSuchBox(), cc.xy(1, 1));
+            builder.add(getSuchFeld(), cc.xy(3, 1));
+            builder.add(submitToolBar, cc.xy(5, 1));
+            builder.add(this.tabellenSplit, cc.xyw(1, 3, 5));
 
-            panel = builder.getPanel();
+            this.panel = builder.getPanel();
         }
-        return panel;
+        return this.panel;
     }
 
     /* (non-Javadoc)
@@ -226,12 +230,14 @@ public class BasisBetreiberSuchen extends AbstractModul {
         super.show();
 
         // Gespeicherte Position des Dividers setzen
-        if (SettingsManager.getInstance().getSetting("auik.prefs.divloc_betreiber") != null) {
-            double divloc = Double.parseDouble(SettingsManager.getInstance().getSetting("auik.prefs.divloc_betreiber"));
-            tabellenSplit.setDividerLocation(divloc);
+        if (SettingsManager.getInstance().getSetting(
+            "auik.prefs.divloc_betreiber") != null) {
+            double divloc = Double.parseDouble(SettingsManager.getInstance()
+                .getSetting("auik.prefs.divloc_betreiber"));
+            this.tabellenSplit.setDividerLocation(divloc);
         }
 
-        lastBetreiber = null;
+        this.lastBetreiber = null;
         updateBetreiberListe();
     }
 
@@ -243,10 +249,14 @@ public class BasisBetreiberSuchen extends AbstractModul {
         super.hide();
 
         // Position des Dividers des SplitPanes speichern
-        if ((tabellenSplit != null) && (tabellenSplit.getDividerLocation() != -1)) {
-            double divloc = (float)(tabellenSplit.getDividerLocation()) / (tabellenSplit.getHeight());
+        if ((this.tabellenSplit != null)
+            && (this.tabellenSplit.getDividerLocation() != -1)) {
+            double divloc = (float) (this.tabellenSplit.getDividerLocation())
+                / (this.tabellenSplit.getHeight());
             if (divloc >= 0.0 && divloc <= 1.0) {
-                SettingsManager.getInstance().setSetting("auik.prefs.divloc_betreiber", Double.toString(divloc), true);
+                SettingsManager.getInstance().setSetting(
+                    "auik.prefs.divloc_betreiber", Double.toString(divloc),
+                    true);
             }
         }
     }
@@ -255,30 +265,36 @@ public class BasisBetreiberSuchen extends AbstractModul {
         SwingWorkerVariant worker = new SwingWorkerVariant(getSuchFeld()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                betreiberModel.updateList();
+                BasisBetreiberSuchen.this.betreiberModel.updateList();
             }
 
             @Override
             protected void doUIUpdateLogic() throws RuntimeException {
-                betreiberModel.fireTableDataChanged();
+                BasisBetreiberSuchen.this.betreiberModel.fireTableDataChanged();
 
-                if (lastBetreiber != null) {
-                    // Wenn der Betreiber noch in der Liste ist, wird er ausgewählt.
-                    int row = betreiberModel.getList().indexOf(lastBetreiber);
+                if (BasisBetreiberSuchen.this.lastBetreiber != null) {
+                    // Wenn der Betreiber noch in der Liste ist, wird er
+                    // ausgewählt.
+                    int row = BasisBetreiberSuchen.this.betreiberModel
+                        .getList().indexOf(
+                            BasisBetreiberSuchen.this.lastBetreiber);
                     if (row != -1) {
                         getBetreiberTabelle().setRowSelectionInterval(row, row);
-                        getBetreiberTabelle().scrollRectToVisible(getBetreiberTabelle().getCellRect(row, 0, true));
+                        getBetreiberTabelle().scrollRectToVisible(
+                            getBetreiberTabelle().getCellRect(row, 0, true));
                         getBetreiberTabelle().requestFocus();
                     }
                 } else {
-                    int betreiberCount = betreiberModel.getRowCount();
+                    int betreiberCount = BasisBetreiberSuchen.this.betreiberModel
+                        .getRowCount();
                     if (betreiberCount > 0) {
-                        String statusMsg = "Suche: " + betreiberCount + " Ergebnis";
+                        String statusMsg = "Suche: " + betreiberCount
+                            + " Ergebnis";
                         if (betreiberCount != 1) {
                             statusMsg += "se";
                         }
                         statusMsg += ".";
-                        frame.changeStatus(statusMsg);
+                        BasisBetreiberSuchen.this.frame.changeStatus(statusMsg);
                     }
                 }
 
@@ -293,9 +309,9 @@ public class BasisBetreiberSuchen extends AbstractModul {
         ListSelectionModel lsm = getBetreiberTabelle().getSelectionModel();
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
-            BasisBetreiber betr = betreiberModel.getRow(selectedRow);
+            BasisBetreiber betr = this.betreiberModel.getRow(selectedRow);
             log.debug("Betreiber " + betr.getBetrname() + " (ID"
-            		+ betr.getBetreiberid() + ") angewählt.");
+                + betr.getBetreiberid() + ") angewählt.");
             searchObjekteByBetreiber(betr);
         }
     }
@@ -305,32 +321,36 @@ public class BasisBetreiberSuchen extends AbstractModul {
      * @param betr Der Betreiber
      */
     public void editBetreiber(BasisBetreiber betr) {
-        BetreiberEditor editDialog = new BetreiberEditor(betr, frame);
-        editDialog.setLocationRelativeTo(frame);
+        BetreiberEditor editDialog = new BetreiberEditor(betr, this.frame);
+        editDialog.setLocationRelativeTo(this.frame);
 
         editDialog.setVisible(true);
 
-        lastBetreiber = betr;
+        this.lastBetreiber = betr;
 
-        // Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen auch angezeigt werden.
+        // Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen auch
+        // angezeigt werden.
         updateBetreiberListe();
     }
 
     /**
-     * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines Betreibers.
+     * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines
+     * Betreibers.
      * @param betreiberid Die Betreiber-Id
      */
     public void searchObjekteByBetreiber(final BasisBetreiber betreiber) {
         // ... siehe show()
-        SwingWorkerVariant worker = new SwingWorkerVariant(getBetreiberTabelle()) {
+        SwingWorkerVariant worker = new SwingWorkerVariant(
+            getBetreiberTabelle()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                objektModel.searchByBetreiber(betreiber);
+                BasisBetreiberSuchen.this.objektModel
+                    .searchByBetreiber(betreiber);
             }
 
             @Override
             protected void doUIUpdateLogic() throws RuntimeException {
-                objektModel.fireTableDataChanged();
+                BasisBetreiberSuchen.this.objektModel.fireTableDataChanged();
             }
         };
         worker.start();
@@ -342,217 +362,271 @@ public class BasisBetreiberSuchen extends AbstractModul {
      * @param column Nach welcher Eigenschaft des Betreiber soll gesucht werden?
      */
     public void filterBetreiberListe(final String suche, final String column) {
-            SwingWorkerVariant worker = new SwingWorkerVariant(getBetreiberTabelle()) {
-                @Override
-                protected void doNonUILogic() throws RuntimeException {
-                    betreiberModel.filterList(suche, column);
+        SwingWorkerVariant worker = new SwingWorkerVariant(
+            getBetreiberTabelle()) {
+            @Override
+            protected void doNonUILogic() throws RuntimeException {
+                BasisBetreiberSuchen.this.betreiberModel.filterList(suche,
+                    column);
+            }
+
+            @Override
+            protected void doUIUpdateLogic() throws RuntimeException {
+                getBetreiberTabelle().clearSelection();
+
+                BasisBetreiberSuchen.this.betreiberModel.fireTableDataChanged();
+                String statusMsg = "Suche: "
+                    + BasisBetreiberSuchen.this.betreiberModel.getRowCount()
+                    + " Ergebnis";
+                if (BasisBetreiberSuchen.this.betreiberModel.getRowCount() != 1) {
+                    statusMsg += "se";
                 }
+                statusMsg += ".";
+                BasisBetreiberSuchen.this.frame.changeStatus(statusMsg);
+            }
+        };
 
-                @Override
-                protected void doUIUpdateLogic() throws RuntimeException {
-                    getBetreiberTabelle().clearSelection();
-
-                    betreiberModel.fireTableDataChanged();
-                    String statusMsg = "Suche: " + betreiberModel.getRowCount() + " Ergebnis";
-                    if (betreiberModel.getRowCount() != 1) {
-                        statusMsg += "se";
-                    }
-                    statusMsg += ".";
-                    frame.changeStatus(statusMsg);
-                }
-            };
-
-            frame.changeStatus("Suche...");
-            worker.start();
+        this.frame.changeStatus("Suche...");
+        worker.start();
     }
 
     private Action getBetreiberEditAction() {
-        if (betreiberEditAction == null) {
-            betreiberEditAction = new AbstractAction("Bearbeiten") {
+        if (this.betreiberEditAction == null) {
+            this.betreiberEditAction = new AbstractAction("Bearbeiten") {
                 private static final long serialVersionUID = 5689189314194296978L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getBetreiberTabelle().getSelectedRow();
 
-                    // Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
+                    // Natürlich nur editieren, wenn wirklich eine Zeile
+                    // ausgewählt ist
                     if (row != -1) {
-                        BasisBetreiber betr = betreiberModel.getRow(row);
+                        BasisBetreiber betr = BasisBetreiberSuchen.this.betreiberModel
+                            .getRow(row);
                         editBetreiber(betr);
                     }
                 }
             };
-            betreiberEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
-            betreiberEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+            this.betreiberEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_B));
+            this.betreiberEditAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
         }
 
-        return betreiberEditAction;
+        return this.betreiberEditAction;
     }
 
     private Action getBetreiberLoeschAction() {
-        if (betreiberLoeschAction == null) {
-            betreiberLoeschAction = new AbstractAction("Löschen") {
+        if (this.betreiberLoeschAction == null) {
+            this.betreiberLoeschAction = new AbstractAction("Löschen") {
                 private static final long serialVersionUID = 6709934716520847123L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getBetreiberTabelle().getSelectedRow();
-                    if (row != -1 && getBetreiberTabelle().getEditingRow() == -1) {
-                        if (objektModel.getRowCount() != 0) {
-                            frame.changeStatus("Kann Betreiber nicht löschen: Zu erst alle zugehörigen Objekte löschen!", HauptFrame.ERROR_COLOR);
+                    if (row != -1
+                        && getBetreiberTabelle().getEditingRow() == -1) {
+                        if (BasisBetreiberSuchen.this.objektModel.getRowCount() != 0) {
+                            BasisBetreiberSuchen.this.frame
+                                .changeStatus(
+                                    "Kann Betreiber nicht löschen: Zu erst alle zugehörigen Objekte löschen!",
+                                    HauptFrame.ERROR_COLOR);
                         } else {
-                            BasisBetreiber betr = betreiberModel.getRow(row);
-                            int answer = JOptionPane.showConfirmDialog(panel, "Soll der Betreiber '"+ betr +"' wirklich gelöscht werden?", "Löschen bestätigen", JOptionPane.YES_NO_OPTION);
-                            if (answer == JOptionPane.YES_OPTION) {
-                                if (betreiberModel.removeRow(row)) {
-                                    frame.changeStatus("Betreiber gelöscht.", HauptFrame.SUCCESS_COLOR);
-                                    log.debug("Betreiber " + betr.getBetreiberid()
-                                    		+ " wurde gelöscht!");
+                            BasisBetreiber betr = BasisBetreiberSuchen.this.betreiberModel
+                                .getRow(row);
+
+                            if (GUIManager.getInstance().showQuestion(
+                                "Soll der Betreiber '" + betr
+                                    + "' wirklich gelöscht werden?",
+                                "Löschen bestätigen")) {
+                                if (BasisBetreiberSuchen.this.betreiberModel
+                                    .removeRow(row)) {
+                                    BasisBetreiberSuchen.this.frame
+                                        .changeStatus("Betreiber gelöscht.",
+                                            HauptFrame.SUCCESS_COLOR);
+                                    log.debug("Betreiber "
+                                        + betr.getBetreiberid()
+                                        + " wurde gelöscht!");
                                 } else {
-                                    frame.changeStatus("Konnte den Betreiber nicht löschen!", HauptFrame.ERROR_COLOR);
+                                    BasisBetreiberSuchen.this.frame
+                                        .changeStatus(
+                                            "Konnte den Betreiber nicht löschen!",
+                                            HauptFrame.ERROR_COLOR);
                                 }
                             }
                         }
                     }
                 }
             };
-            betreiberLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
-            betreiberLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            this.betreiberLoeschAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.betreiberLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
-        return betreiberLoeschAction;
+        return this.betreiberLoeschAction;
     }
 
     private Action getObjektNeuAction() {
-        if (objektNeuAction == null) {
-            objektNeuAction = new AbstractAction("Neues Objekt") {
+        if (this.objektNeuAction == null) {
+            this.objektNeuAction = new AbstractAction("Neues Objekt") {
                 private static final long serialVersionUID = 1922038365500278302L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int row = betreiberTabelle.getSelectedRow();
+                    int row = BasisBetreiberSuchen.this.betreiberTabelle
+                        .getSelectedRow();
 
                     if (row != -1) {
-                        BasisBetreiber betr = betreiberModel.getRow(row);
-                        manager.getSettingsManager().setSetting("auik.imc.use_betreiber", betr.getBetreiberid().intValue(), false);
-                        manager.switchModul("m_objekt_bearbeiten");
+                        BasisBetreiber betr = BasisBetreiberSuchen.this.betreiberModel
+                            .getRow(row);
+                        BasisBetreiberSuchen.this.manager.getSettingsManager()
+                            .setSetting("auik.imc.use_betreiber",
+                                betr.getBetreiberid().intValue(), false);
+                        BasisBetreiberSuchen.this.manager
+                            .switchModul("m_objekt_bearbeiten");
                     }
                 }
             };
-            objektNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_O));
+            this.objektNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_O));
         }
 
-        return objektNeuAction;
+        return this.objektNeuAction;
     }
 
     private Action getObjektEditAction() {
-        if (objektEditAction == null) {
-            objektEditAction = new AbstractAction("Bearbeiten") {
+        if (this.objektEditAction == null) {
+            this.objektEditAction = new AbstractAction("Bearbeiten") {
                 private static final long serialVersionUID = 374432667200396085L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int row = objektTabelle.getSelectedRow();
-                    BasisObjekt obj = objektModel.getRow(row);
-                    if (row != -1 || obj.getBasisObjektarten().getObjektartid() != 40) {
-                        manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
-                        manager.switchModul("m_objekt_bearbeiten");
-                    }
-                    else if (row != -1 || obj.getBasisObjektarten().getObjektartid() == 40) {
-                        manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
-                        manager.switchModul("m_sielhaut1");
+                    int row = BasisBetreiberSuchen.this.objektTabelle
+                        .getSelectedRow();
+                    BasisObjekt obj = BasisBetreiberSuchen.this.objektModel
+                        .getRow(row);
+                    if (row != -1
+                        || obj.getBasisObjektarten().getObjektartid() != 40) {
+                        BasisBetreiberSuchen.this.manager.getSettingsManager()
+                            .setSetting("auik.imc.edit_object",
+                                obj.getObjektid().intValue(), false);
+                        BasisBetreiberSuchen.this.manager
+                            .switchModul("m_objekt_bearbeiten");
+                    } else if (row != -1
+                        || obj.getBasisObjektarten().getObjektartid() == 40) {
+                        BasisBetreiberSuchen.this.manager.getSettingsManager()
+                            .setSetting("auik.imc.edit_object",
+                                obj.getObjektid().intValue(), false);
+                        BasisBetreiberSuchen.this.manager
+                            .switchModul("m_sielhaut1");
                     }
                 }
             };
-            objektEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
-            objektEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+            this.objektEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_B));
+            this.objektEditAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
         }
 
-        return objektEditAction;
+        return this.objektEditAction;
     }
 
     private Action getObjektLoeschAction() {
-        if (objektLoeschAction == null) {
-            objektLoeschAction = new AbstractAction("Löschen") {
+        if (this.objektLoeschAction == null) {
+            this.objektLoeschAction = new AbstractAction("Löschen") {
                 private static final long serialVersionUID = 5285618973743780113L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektTabelle().getSelectedRow();
                     if (row != -1 && getObjektTabelle().getEditingRow() == -1) {
-                        BasisObjekt objekt = objektModel.getRow(row);
-                        int answer = JOptionPane.showConfirmDialog(panel,
-                                "Soll das Objekt "+ objekt.getObjektid() +" und alle seine Fachdaten wirklich gelöscht werden?\n" +
-                                "Hinweis: Manche Objekte können auch erst gelöscht werden, wenn für sie\n" +
-                                "keine Fachdaten mehr existieren.",
-                                "Löschen bestätigen", JOptionPane.YES_NO_OPTION);
-                        if (answer == JOptionPane.YES_OPTION) {
-                            if (objektModel.removeRow(row)) {
-                                frame.changeStatus("Objekt gelöscht.", HauptFrame.SUCCESS_COLOR);
+                        BasisObjekt objekt = BasisBetreiberSuchen.this.objektModel
+                            .getRow(row);
+
+                        if (GUIManager.getInstance().showQuestion(
+                            "Soll das Objekt " + objekt.getObjektid()
+                                + " und alle seine Fachdaten wirklich "
+                                + "gelöscht werden?\n"
+                                + "Hinweis: Manche Objekte können auch erst"
+                                + " gelöscht werden, wenn für sie\n"
+                                + "keine Fachdaten mehr existieren.",
+                            "Löschen bestätigen")) {
+                            if (BasisBetreiberSuchen.this.objektModel
+                                .removeRow(row)) {
+                                BasisBetreiberSuchen.this.frame.changeStatus(
+                                    "Objekt gelöscht.",
+                                    HauptFrame.SUCCESS_COLOR);
                                 log.debug("Objekt " + objekt.getObjektid()
-                                		+ " wurde gelöscht!");
+                                    + " wurde gelöscht!");
                             } else {
-                                frame.changeStatus("Konnte das Objekt nicht löschen!", HauptFrame.ERROR_COLOR);
+                                BasisBetreiberSuchen.this.frame.changeStatus(
+                                    "Konnte das Objekt nicht löschen!",
+                                    HauptFrame.ERROR_COLOR);
                             }
                         }
                     }
                 }
             };
-            objektLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
-            objektLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            this.objektLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_L));
+            this.objektLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
-        return objektLoeschAction;
+        return this.objektLoeschAction;
     }
 
     private void showBetreiberPopup(MouseEvent e) {
-        if (betreiberPopup == null) {
-            betreiberPopup = new JPopupMenu("Betreiber");
+        if (this.betreiberPopup == null) {
+            this.betreiberPopup = new JPopupMenu("Betreiber");
             JMenuItem bearbItem = new JMenuItem(getBetreiberEditAction());
             JMenuItem loeschItem = new JMenuItem(getBetreiberLoeschAction());
             JMenuItem neuItem = new JMenuItem(getObjektNeuAction());
-            betreiberPopup.add(bearbItem);
-            betreiberPopup.add(loeschItem);
-            betreiberPopup.add(neuItem);
+            this.betreiberPopup.add(bearbItem);
+            this.betreiberPopup.add(loeschItem);
+            this.betreiberPopup.add(neuItem);
         }
 
         if (e.isPopupTrigger()) {
             Point origin = e.getPoint();
-            int row = betreiberTabelle.rowAtPoint(origin);
+            int row = this.betreiberTabelle.rowAtPoint(origin);
 
             if (row != -1) {
-                betreiberTabelle.setRowSelectionInterval(row, row);
-                betreiberPopup.show(e.getComponent(), e.getX(), e.getY());
+                this.betreiberTabelle.setRowSelectionInterval(row, row);
+                this.betreiberPopup.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
 
     private void showObjektPopup(MouseEvent e) {
-        if (objektPopup == null) {
-            objektPopup = new JPopupMenu("Objekt");
+        if (this.objektPopup == null) {
+            this.objektPopup = new JPopupMenu("Objekt");
             JMenuItem bearbItem = new JMenuItem(getObjektEditAction());
             JMenuItem loeschItem = new JMenuItem(getObjektLoeschAction());
-            objektPopup.add(bearbItem);
-            objektPopup.add(loeschItem);
+            this.objektPopup.add(bearbItem);
+            this.objektPopup.add(loeschItem);
         }
 
         if (e.isPopupTrigger()) {
             Point origin = e.getPoint();
-            int row = objektTabelle.rowAtPoint(origin);
+            int row = this.objektTabelle.rowAtPoint(origin);
 
             if (row != -1) {
-                objektTabelle.setRowSelectionInterval(row, row);
-                objektPopup.show(e.getComponent(), e.getX(), e.getY());
+                this.objektTabelle.setRowSelectionInterval(row, row);
+                this.objektPopup.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
 
     private JTable getBetreiberTabelle() {
-        if (betreiberTabelle == null) {
-            betreiberTabelle = new JTable(betreiberModel);
+        if (this.betreiberTabelle == null) {
+            this.betreiberTabelle = new JTable(this.betreiberModel);
 
             // Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
-            ListSelectionModel rowSM = betreiberTabelle.getSelectionModel();
+            ListSelectionModel rowSM = this.betreiberTabelle
+                .getSelectionModel();
             rowSM.addListSelectionListener(new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent e) {
@@ -565,37 +639,43 @@ public class BasisBetreiberSuchen extends AbstractModul {
                 }
             });
 
-            betreiberTabelle.getColumnModel().getColumn(0).setPreferredWidth(300);
-            betreiberTabelle.getColumnModel().getColumn(1).setPreferredWidth(60);
-            betreiberTabelle.getColumnModel().getColumn(2).setPreferredWidth(70);
+            this.betreiberTabelle.getColumnModel().getColumn(0)
+                .setPreferredWidth(300);
+            this.betreiberTabelle.getColumnModel().getColumn(1)
+                .setPreferredWidth(60);
+            this.betreiberTabelle.getColumnModel().getColumn(2)
+                .setPreferredWidth(70);
 
-            betreiberTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            betreiberTabelle.setColumnSelectionAllowed(false);
-            betreiberTabelle.setRowSelectionAllowed(true);
+            this.betreiberTabelle
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.betreiberTabelle.setColumnSelectionAllowed(false);
+            this.betreiberTabelle.setRowSelectionAllowed(true);
 
-            betreiberTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                        Point origin = e.getPoint();
-                        int row = getBetreiberTabelle().rowAtPoint(origin);
+            this.betreiberTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getBetreiberTabelle().rowAtPoint(origin);
 
-                        BasisBetreiber betr = betreiberModel.getRow(row);
-                        log.debug("Doppelklick auf Zeile " + row);
-                        editBetreiber(betr);
+                            BasisBetreiber betr = BasisBetreiberSuchen.this.betreiberModel
+                                .getRow(row);
+                            log.debug("Doppelklick auf Zeile " + row);
+                            editBetreiber(betr);
+                        }
                     }
-                }
 
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    showBetreiberPopup(e);
-                }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showBetreiberPopup(e);
+                    }
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    showBetreiberPopup(e);
-                }
-            });
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showBetreiberPopup(e);
+                    }
+                });
 
             // Bei Enter in der Tabelle wird der Betreiber auch bearbeitet
             // und mit TAB soll man zwischen den Tabellen springen können.
@@ -604,110 +684,160 @@ public class BasisBetreiberSuchen extends AbstractModul {
             // bestimmten Tastendrücken ("Inputs")zugewiesen werden können.
 
             // Den "Enter"-KeyStroke in die InputMap der Tabelle einfügen
-            betreiberTabelle.getInputMap().put((KeyStroke)getBetreiberEditAction().getValue(Action.ACCELERATOR_KEY), getBetreiberEditAction().getValue(Action.NAME));
+            this.betreiberTabelle.getInputMap().put(
+                (KeyStroke) getBetreiberEditAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getBetreiberEditAction().getValue(Action.NAME));
             // Die Action dem "Enter"-KeyStroke zuweisen
-            betreiberTabelle.getActionMap().put(getBetreiberEditAction().getValue(Action.NAME), getBetreiberEditAction());
+            this.betreiberTabelle.getActionMap().put(
+                getBetreiberEditAction().getValue(Action.NAME),
+                getBetreiberEditAction());
 
-
-            betreiberTabelle.getInputMap().put((KeyStroke)getBetreiberLoeschAction().getValue(Action.ACCELERATOR_KEY), getBetreiberLoeschAction().getValue(Action.NAME));
-            betreiberTabelle.getActionMap().put(getBetreiberLoeschAction().getValue(Action.NAME), getBetreiberLoeschAction());
+            this.betreiberTabelle.getInputMap().put(
+                (KeyStroke) getBetreiberLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getBetreiberLoeschAction().getValue(Action.NAME));
+            this.betreiberTabelle.getActionMap().put(
+                getBetreiberLoeschAction().getValue(Action.NAME),
+                getBetreiberLoeschAction());
         }
-        return betreiberTabelle;
+        return this.betreiberTabelle;
     }
 
     private JTable getObjektTabelle() {
-        if (objektTabelle == null) {
-            objektTabelle = new JTable(objektModel);
-            objektTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        if (this.objektTabelle == null) {
+            this.objektTabelle = new JTable(this.objektModel);
+            this.objektTabelle
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            objektTabelle.getColumnModel().getColumn(0).setMaxWidth(60);
-            objektTabelle.getColumnModel().getColumn(0).setPreferredWidth(objektTabelle.getColumnModel().getColumn(0).getMaxWidth()-10);
+            this.objektTabelle.getColumnModel().getColumn(0).setMaxWidth(60);
+            this.objektTabelle
+                .getColumnModel()
+                .getColumn(0)
+                .setPreferredWidth(
+                    this.objektTabelle.getColumnModel().getColumn(0)
+                        .getMaxWidth() - 10);
 
-            objektTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                        Point origin = e.getPoint();
-                        int row = getObjektTabelle().rowAtPoint(origin);
-                        BasisObjekt obj = objektModel.getRow(row);
-                        if (row != -1 && obj.getBasisObjektarten().getObjektartid().intValue() != 40) {
-                            manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
-                            manager.switchModul("m_objekt_bearbeiten");
-                        }
-                        else if (row != -1 && obj.getBasisObjektarten().getObjektartid().intValue() == 40) {
-                            manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
-                            manager.switchModul("m_sielhaut1");
+            this.objektTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getObjektTabelle().rowAtPoint(origin);
+                            BasisObjekt obj = BasisBetreiberSuchen.this.objektModel
+                                .getRow(row);
+                            if (row != -1
+                                && obj.getBasisObjektarten().getObjektartid()
+                                    .intValue() != 40) {
+                                BasisBetreiberSuchen.this.manager
+                                    .getSettingsManager().setSetting(
+                                        "auik.imc.edit_object",
+                                        obj.getObjektid().intValue(), false);
+                                BasisBetreiberSuchen.this.manager
+                                    .switchModul("m_objekt_bearbeiten");
+                            } else if (row != -1
+                                && obj.getBasisObjektarten().getObjektartid()
+                                    .intValue() == 40) {
+                                BasisBetreiberSuchen.this.manager
+                                    .getSettingsManager().setSetting(
+                                        "auik.imc.edit_object",
+                                        obj.getObjektid().intValue(), false);
+                                BasisBetreiberSuchen.this.manager
+                                    .switchModul("m_sielhaut1");
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    showObjektPopup(e);
-                }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showObjektPopup(e);
+                    }
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    showObjektPopup(e);
-                }
-            });
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showObjektPopup(e);
+                    }
+                });
 
-            objektTabelle.getInputMap().put((KeyStroke)getObjektEditAction().getValue(Action.ACCELERATOR_KEY), getObjektEditAction().getValue(Action.NAME));
-            objektTabelle.getActionMap().put(getObjektEditAction().getValue(Action.NAME), getObjektEditAction());
+            this.objektTabelle.getInputMap().put(
+                (KeyStroke) getObjektEditAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getObjektEditAction().getValue(Action.NAME));
+            this.objektTabelle.getActionMap().put(
+                getObjektEditAction().getValue(Action.NAME),
+                getObjektEditAction());
 
-            objektTabelle.getInputMap().put((KeyStroke)getObjektLoeschAction().getValue(Action.ACCELERATOR_KEY), getObjektLoeschAction().getValue(Action.NAME));
-            objektTabelle.getActionMap().put(getObjektLoeschAction().getValue(Action.NAME), getObjektLoeschAction());
+            this.objektTabelle.getInputMap().put(
+                (KeyStroke) getObjektLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getObjektLoeschAction().getValue(Action.NAME));
+            this.objektTabelle.getActionMap().put(
+                getObjektLoeschAction().getValue(Action.NAME),
+                getObjektLoeschAction());
         }
-        return objektTabelle;
+        return this.objektTabelle;
     }
+
     private JComboBox getSuchBox() {
-        if (suchBox == null) {
-            suchBox = new JComboBox(new NamedObject[]{new NamedObject("Name:","name"), new NamedObject("Anrede:","anrede"), new NamedObject("Zusatz:","zusatz"), new NamedObject("Irgendwo",null)});
+        if (this.suchBox == null) {
+            this.suchBox = new JComboBox(new NamedObject[] {
+                    new NamedObject("Name:", "name"),
+                    new NamedObject("Anrede:", "anrede"),
+                    new NamedObject("Zusatz:", "zusatz"),
+                    new NamedObject("Irgendwo", null)});
         }
-        return suchBox;
+        return this.suchBox;
     }
-    private JTextField getSuchFeld() {
-        if (suchFeld == null) {
-            suchFeld = new JTextField();
 
-            suchFeld.addActionListener(new ActionListener() {
+    private JTextField getSuchFeld() {
+        if (this.suchFeld == null) {
+            this.suchFeld = new JTextField();
+
+            this.suchFeld.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String suche = getSuchFeld().getText();
-                    String spalte = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();
+                    String spalte = (String) ((NamedObject) getSuchBox()
+                        .getSelectedItem()).getValue();
                     filterBetreiberListe(suche, spalte);
                 }
             });
-            suchFeld.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+            this.suchFeld.setFocusTraversalKeys(
+                KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+                Collections.EMPTY_SET);
 
-            suchFeld.addKeyListener(new KeyAdapter() {
+            this.suchFeld.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_TAB) {
                         String suche = getSuchFeld().getText();
-                        String spalte = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();
+                        String spalte = (String) ((NamedObject) getSuchBox()
+                            .getSelectedItem()).getValue();
                         filterBetreiberListe(suche, spalte);
                     }
                 }
             });
         }
-        return suchFeld;
+        return this.suchFeld;
     }
 
     private JButton getSubmitButton() {
-        if (submitButton == null) {
-            submitButton = new JButton(AuikUtils.getIcon(16, "key_enter.png"));
-            submitButton.setToolTipText("Suche starten");
-            submitButton.addActionListener(new ActionListener() {
+        if (this.submitButton == null) {
+            this.submitButton = new JButton(AuikUtils.getIcon(16,
+                "key_enter.png"));
+            this.submitButton.setToolTipText("Suche starten");
+            this.submitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String suche = getSuchFeld().getText();
-                    String spalte = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();
+                    String spalte = (String) ((NamedObject) getSuchBox()
+                        .getSelectedItem()).getValue();
                     filterBetreiberListe(suche, spalte);
                 }
             });
         }
 
-        return submitButton;
+        return this.submitButton;
     }
 }

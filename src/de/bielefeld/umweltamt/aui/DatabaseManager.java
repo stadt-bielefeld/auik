@@ -21,8 +21,6 @@
 
 package de.bielefeld.umweltamt.aui;
 
-import javax.swing.JOptionPane;
-
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -31,7 +29,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * <br>
  * TODO: Most of the stuff which should be here is still scattered across the
  * project and should move here bit by bit.
- *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public final class DatabaseManager {
@@ -39,50 +36,43 @@ public final class DatabaseManager {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-	/** Singleton instance of the DatabaseManager */
-	private static DatabaseManager instance = null;
+    /** Singleton instance of the DatabaseManager */
+    private static DatabaseManager instance = null;
 
-	/** Private Constructor */
-	private DatabaseManager() {
-		// This is intentionally left blank.
-	}
+    /** Private Constructor */
+    private DatabaseManager() {
+        // This is intentionally left blank.
+    }
 
-	/** Get the DatabaseManager instance */
-	public synchronized static DatabaseManager getInstance() {
-		if (instance == null) {
-			instance = new DatabaseManager();
-			log.debug("Instanciated the DatabaseManager.");
-		}
-		return instance;
-	}
+    /** Get the DatabaseManager instance */
+    public synchronized static DatabaseManager getInstance() {
+        if (instance == null) {
+            instance = new DatabaseManager();
+            log.debug("Instanciated the DatabaseManager.");
+        }
+        return instance;
+    }
 
     /**
-     * Wird benutzt um mit im laufenden Betrieb auftretenden
-     * Datenbank-Fehlern umzugehen.
-     *
+     * Wird benutzt um mit im laufenden Betrieb auftretenden Datenbank-Fehlern
+     * umzugehen.
      * @param exception Die aufgetretene Exception
      * @param src Wo trat der Fehler auf
      * @param fatal Soll das Programm beendet werden?
      */
     public void handleDBException(Throwable exception, String src,
     		boolean fatal) {
-        HauptFrame runningFrame = GUIManager.getInstance().getRunningFrame();
         // Close the session as its state may be invalid after an error
         HibernateSessionFactory.closeSession();
         // If we already have a GUI, show the error there.
-        if (runningFrame != null) {
-            runningFrame.changeStatus("Ein Datenbank-Fehler ist aufgetreten!",
-            		HauptFrame.ERROR_COLOR);
-        }
-        // If the error is fatal, also show a message dialog.
+        GUIManager.getInstance().setErrorStatus(
+            "Ein Datenbank-Fehler ist aufgetreten!");
+        // If the error is fatal, also show a message dialog and close the gui
         if (fatal) {
-            JOptionPane.showMessageDialog(runningFrame,
-            		"Es ist keine Verbindung mit der Datenbank möglich!",
-            		"Fehler", JOptionPane.ERROR_MESSAGE);
-        }
-        // If we have a gui and the error is fatal, close the gui.
-        if (runningFrame != null && fatal) {
-            runningFrame.close();
+            GUIManager.getInstance().showErrorMessage(
+                "Es ist keine Verbindung mit der Datenbank möglich!",
+                "DB-Fehler");
+            GUIManager.getInstance().endGUI();
         }
         // Throw an exception with more information.
         throw new RuntimeException("%%%% " + (fatal ? "Fataler " : "")

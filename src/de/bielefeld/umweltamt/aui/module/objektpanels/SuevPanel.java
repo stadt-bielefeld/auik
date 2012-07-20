@@ -37,17 +37,18 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
@@ -98,13 +99,12 @@ public class SuevPanel extends JPanel {
     private AnhSuevFachdaten fachdaten = null;
 
     public SuevPanel(BasisObjektBearbeiten hauptModul) {
-        name = "Suev-Kan Verfahren";
+        this.name = "Suev-Kan Verfahren";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout (
-                "r:70dlu, 5dlu, 90dlu, 5dlu, 10dlu, 5dlu, 90dlu", // Spalten
-                "");
-
+        FormLayout layout = new FormLayout(
+            "r:70dlu, 5dlu, 90dlu, 5dlu, 10dlu, 5dlu, 90dlu", // Spalten
+            "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
         builder.setDefaultDialogBorder();
@@ -133,119 +133,110 @@ public class SuevPanel extends JPanel {
         builder.appendRow("3dlu");
         builder.nextLine(2);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
-                getObjektverknuepungTabelle(),
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            getObjektverknuepungTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:100dlu");
         builder.append(objektverknuepfungScroller, 7);
         builder.nextLine();
 
         JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-                getSelectObjektButton(), getSaveSuevButton());
+            getSelectObjektButton(), getSaveSuevButton());
 
-
-        //JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveSuevButton());
+        // JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveSuevButton());
         builder.append(buttonBar, 7);
     }
 
     public void fetchFormData() throws RuntimeException {
-        fachdaten = AnhSuevFachdaten.getSuevByObjekt(hauptModul.getObjekt());
-        log.debug("SuevKan-Verfahren aus DB geholt: " + fachdaten);
+        this.fachdaten = AnhSuevFachdaten.getSuevByObjekt(this.hauptModul
+            .getObjekt());
+        log.debug("SuevKan-Verfahren aus DB geholt: " + this.fachdaten);
     }
-
 
     public void updateForm() throws RuntimeException {
 
-        if (fachdaten != null) {
-            if (fachdaten.getVersFlaeche() != null) {
-                getVersFlaecheFeld().setText(fachdaten.getVersFlaeche().toString());
+        if (this.fachdaten != null) {
+            if (this.fachdaten.getVersFlaeche() != null) {
+                getVersFlaecheFeld().setText(
+                    this.fachdaten.getVersFlaeche().toString());
             }
-            if (fachdaten.getDatAnschreiben() != null) {
-                getDatAnschreibenDatum().setDate(fachdaten.getDatAnschreiben());
+            if (this.fachdaten.getDatAnschreiben() != null) {
+                getDatAnschreibenDatum().setDate(
+                    this.fachdaten.getDatAnschreiben());
             }
-            if (fachdaten.getDatAnzeige58() != null) {
-                getDatAnzeige58Datum().setDate(fachdaten.getDatAnzeige58());
+            if (this.fachdaten.getDatAnzeige58() != null) {
+                getDatAnzeige58Datum()
+                    .setDate(this.fachdaten.getDatAnzeige58());
             }
-            if (fachdaten.getDatumAnzeige58() != null) {
-                if (fachdaten.getDatumAnzeige58() == true) {
+            if (this.fachdaten.getDatumAnzeige58() != null) {
+                if (this.fachdaten.getDatumAnzeige58() == true) {
                     getDatumAnzeige58Check().setSelected(true);
-                }
-                else {
+                } else {
                     getDatumAnzeige58Check().setSelected(false);
                 }
             }
-            if (fachdaten.getDirektrw() != null) {
-                if (fachdaten.getDirektrw() == true) {
+            if (this.fachdaten.getDirektrw() != null) {
+                if (this.fachdaten.getDirektrw() == true) {
                     getDirektrwCheck().setSelected(true);
-                }
-                else {
+                } else {
                     getDirektrwCheck().setSelected(false);
                 }
             }
-            if (fachdaten.getDirektsw() != null) {
-                if (fachdaten.getDirektsw() == true) {
+            if (this.fachdaten.getDirektsw() != null) {
+                if (this.fachdaten.getDirektsw() == true) {
                     getDirektswCheck().setSelected(true);
-                }
-                else {
+                } else {
                     getDirektswCheck().setSelected(false);
                 }
             }
-            if (fachdaten.getGroesser3ha() != null) {
-                if (fachdaten.getGroesser3ha() == true) {
+            if (this.fachdaten.getGroesser3ha() != null) {
+                if (this.fachdaten.getGroesser3ha() == true) {
                     getGroesser3haCheck().setSelected(true);
-                }
-                else {
+                } else {
                     getGroesser3haCheck().setSelected(false);
                 }
             }
-            if (fachdaten.getIndirektrw() != null) {
-                if (fachdaten.getIndirektrw() == true) {
+            if (this.fachdaten.getIndirektrw() != null) {
+                if (this.fachdaten.getIndirektrw() == true) {
                     getIndirektrwCheck().setSelected(true);
-                }
-                else {
+                } else {
                     getIndirektrwCheck().setSelected(false);
                 }
             }
-            if (fachdaten.getIndirektsw() != null) {
-                if (fachdaten.getIndirektsw() == true) {
+            if (this.fachdaten.getIndirektsw() != null) {
+                if (this.fachdaten.getIndirektsw() == true) {
                     getIndirektswCheck().setSelected(true);
-                }
-                else {
+                } else {
                     getIndirektswCheck().setSelected(false);
                 }
             }
-            if (fachdaten.getKeineAngaben() != null) {
-                if (fachdaten.getKeineAngaben() == true) {
+            if (this.fachdaten.getKeineAngaben() != null) {
+                if (this.fachdaten.getKeineAngaben() == true) {
                     getKeineAngabenCheck().setSelected(true);
-                }
-                else {
+                } else {
                     getKeineAngabenCheck().setSelected(false);
                 }
             }
-            if (fachdaten.getSanierungErfolgt() != null) {
-                if (fachdaten.getSanierungErfolgt() == true) {
+            if (this.fachdaten.getSanierungErfolgt() != null) {
+                if (this.fachdaten.getSanierungErfolgt() == true) {
                     getSanierungErfolgtCheck().setSelected(true);
-                }
-                else {
+                } else {
                     getSanierungErfolgtCheck().setSelected(false);
                 }
             }
-            if (fachdaten.getSanierungskonzept() != null) {
-                if (fachdaten.getSanierungskonzept() == true) {
+            if (this.fachdaten.getSanierungskonzept() != null) {
+                if (this.fachdaten.getSanierungskonzept() == true) {
                     getSanierungskonzeptCheck().setSelected(true);
-                }
-                else {
+                } else {
                     getSanierungskonzeptCheck().setSelected(false);
                 }
             }
-            objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
+            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         }
 
-        }
-
+    }
 
     public void clearForm() {
-
         getVersFlaecheFeld().setText(null);
         getDatAnschreibenDatum().setDate(null);
         getDatAnzeige58Datum().setDate(null);
@@ -259,381 +250,395 @@ public class SuevPanel extends JPanel {
         getSanierungErfolgtCheck().setSelected(false);
         getSanierungskonzeptCheck().setSelected(false);
         getSuevkanPflichtCheck().setSelected(false);
-
     }
 
     public void enableAll(boolean enabled) {
-
+        // This is intentionally left blank
     }
-
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     private boolean saveSuevDaten() {
         boolean success;
 
-        Integer versfl = ((IntegerField)versFlaecheFeld).getIntValue();
-        fachdaten.setVersFlaeche(versfl);
+        Integer versfl = ((IntegerField) this.versFlaecheFeld).getIntValue();
+        this.fachdaten.setVersFlaeche(versfl);
 
-        Date anschreiben = datAnschreibenDatum.getDate();
-        fachdaten.setDatAnschreiben(anschreiben);
+        Date anschreiben = this.datAnschreibenDatum.getDate();
+        this.fachdaten.setDatAnschreiben(anschreiben);
 
-        Date anzeigedatum = datAnzeige58Datum.getDate();
-        fachdaten.setDatAnzeige58(anzeigedatum);
+        Date anzeigedatum = this.datAnzeige58Datum.getDate();
+        this.fachdaten.setDatAnzeige58(anzeigedatum);
 
-        if (getDatumAnzeige58Check().isSelected())  {
-            fachdaten.setDatumAnzeige58(true);
+        if (getDatumAnzeige58Check().isSelected()) {
+            this.fachdaten.setDatumAnzeige58(true);
         } else {
-            fachdaten.setDatumAnzeige58(false);
+            this.fachdaten.setDatumAnzeige58(false);
         }
 
-        if (getDirektrwCheck().isSelected())  {
-            fachdaten.setDirektrw(true);
+        if (getDirektrwCheck().isSelected()) {
+            this.fachdaten.setDirektrw(true);
         } else {
-            fachdaten.setDirektrw(false);
+            this.fachdaten.setDirektrw(false);
         }
 
-        if (getDirektswCheck().isSelected())  {
-            fachdaten.setDirektsw(true);
+        if (getDirektswCheck().isSelected()) {
+            this.fachdaten.setDirektsw(true);
         } else {
-            fachdaten.setDirektsw(false);
+            this.fachdaten.setDirektsw(false);
         }
 
-        if (getGroesser3haCheck().isSelected())  {
-            fachdaten.setGroesser3ha(true);
+        if (getGroesser3haCheck().isSelected()) {
+            this.fachdaten.setGroesser3ha(true);
         } else {
-            fachdaten.setGroesser3ha(false);
+            this.fachdaten.setGroesser3ha(false);
         }
 
-        if (getIndirektrwCheck().isSelected())  {
-            fachdaten.setIndirektrw(true);
+        if (getIndirektrwCheck().isSelected()) {
+            this.fachdaten.setIndirektrw(true);
         } else {
-            fachdaten.setIndirektrw(false);
+            this.fachdaten.setIndirektrw(false);
         }
 
-        if (getIndirektswCheck().isSelected())  {
-            fachdaten.setIndirektsw(true);
+        if (getIndirektswCheck().isSelected()) {
+            this.fachdaten.setIndirektsw(true);
         } else {
-            fachdaten.setIndirektsw(false);
+            this.fachdaten.setIndirektsw(false);
         }
 
-        if (getKeineAngabenCheck().isSelected())  {
-            fachdaten.setKeineAngaben(true);
+        if (getKeineAngabenCheck().isSelected()) {
+            this.fachdaten.setKeineAngaben(true);
         } else {
-            fachdaten.setKeineAngaben(false);
+            this.fachdaten.setKeineAngaben(false);
         }
 
-        if (getSanierungErfolgtCheck().isSelected())  {
-            fachdaten.setSanierungErfolgt(true);
+        if (getSanierungErfolgtCheck().isSelected()) {
+            this.fachdaten.setSanierungErfolgt(true);
         } else {
-            fachdaten.setSanierungErfolgt(false);
+            this.fachdaten.setSanierungErfolgt(false);
         }
 
-        if (getSanierungskonzeptCheck().isSelected())  {
-            fachdaten.setSanierungskonzept(true);
+        if (getSanierungskonzeptCheck().isSelected()) {
+            this.fachdaten.setSanierungskonzept(true);
         } else {
-            fachdaten.setSanierungskonzept(false);
+            this.fachdaten.setSanierungskonzept(false);
         }
 
-        if (getSuevkanPflichtCheck().isSelected())  {
-            fachdaten.setSuevkanPflicht(true);
+        if (getSuevkanPflichtCheck().isSelected()) {
+            this.fachdaten.setSuevkanPflicht(true);
         } else {
-            fachdaten.setSuevkanPflicht(false);
+            this.fachdaten.setSuevkanPflicht(false);
         }
 
-        success = AnhSuevFachdaten.saveFachdaten(fachdaten);
+        success = AnhSuevFachdaten.saveFachdaten(this.fachdaten);
         if (success) {
-            log.debug("SuevKan Verfahren " + fachdaten.getObjektid()
-            		+ " gespeichert.");
+            log.debug("SuevKan Verfahren " + this.fachdaten.getObjektid()
+                + " gespeichert.");
         } else {
-            log.debug("SuevKan Verfahren " + fachdaten
-                    + " konnte nicht gespeichert werden!");
+            log.debug("SuevKan Verfahren " + this.fachdaten
+                + " konnte nicht gespeichert werden!");
         }
         return success;
     }
 
     public void completeObjekt() {
-        if (hauptModul.isNew() || fachdaten == null) {
+        if (this.hauptModul.isNew() || this.fachdaten == null) {
             // Neues SuevKan Verfahren erzeugen
-            fachdaten = new AnhSuevFachdaten();
+            this.fachdaten = new AnhSuevFachdaten();
             // Objekt_Id setzen
-            fachdaten.setBasisObjekt(hauptModul.getObjekt());
+            this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
 
             // SuevKan speichern
-            AnhSuevFachdaten.saveFachdaten(fachdaten);
-            log.debug("Neues SuevKan Verfahren "+fachdaten+" gespeichert.");
+            AnhSuevFachdaten.saveFachdaten(this.fachdaten);
+            log.debug("Neues SuevKan Verfahren " + this.fachdaten
+                + " gespeichert.");
         }
     }
-
-
 
     private TextFieldDateChooser getDatAnschreibenDatum() {
-        if (datAnschreibenDatum == null) {
-            datAnschreibenDatum = new TextFieldDateChooser();
+        if (this.datAnschreibenDatum == null) {
+            this.datAnschreibenDatum = new TextFieldDateChooser();
         }
-        return datAnschreibenDatum;
+        return this.datAnschreibenDatum;
     }
-    private TextFieldDateChooser getDatAnzeige58Datum() {
-        if (datAnzeige58Datum == null) {
-            datAnzeige58Datum = new TextFieldDateChooser();
-        }
-        return datAnzeige58Datum;
-    }
-    private JCheckBox getDatumAnzeige58Check() {
-        if (datumAnzeige58Check == null) {
-            datumAnzeige58Check = new JCheckBox("Datum Anzeige");
-        }
-        return datumAnzeige58Check;
-    }
-    private JCheckBox getDirektrwCheck() {
-        if (direktrwCheck == null) {
-            direktrwCheck = new JCheckBox("Direkt RW");
-        }
-        return direktrwCheck;
-    }
-    private JCheckBox getDirektswCheck() {
-        if (direktswCheck == null) {
-            direktswCheck = new JCheckBox("Direkt SW");
-        }
-        return direktswCheck;
-    }
-    private JCheckBox getGroesser3haCheck() {
-        if (groesser3haCheck == null) {
-            groesser3haCheck = new JCheckBox("Größer 3 ha");
-        }
-        return groesser3haCheck;
-    }
-    private JCheckBox getIndirektrwCheck() {
-        if (indirektrwCheck == null) {
-            indirektrwCheck = new JCheckBox("Indirekt RW");
-        }
-        return indirektrwCheck;
-    }
-    private JCheckBox getIndirektswCheck() {
-        if (indirektswCheck == null) {
-            indirektswCheck = new JCheckBox("Indirekt SW");
-        }
-        return indirektswCheck;
-    }
-    private JCheckBox getKeineAngabenCheck() {
-        if (keineAngabenCheck == null) {
-            keineAngabenCheck = new JCheckBox("Keine Angaben");
-        }
-        return keineAngabenCheck;
-    }
-    private JCheckBox getSanierungErfolgtCheck() {
-        if (sanierungErfolgtCheck == null) {
-            sanierungErfolgtCheck = new JCheckBox("Sanierung erfolgt");
-        }
-        return sanierungErfolgtCheck;
-    }
-    private JCheckBox getSanierungskonzeptCheck() {
-        if (sanierungskonzeptCheck == null) {
-            sanierungskonzeptCheck = new JCheckBox("Sanierungskonzept");
-        }
-        return sanierungskonzeptCheck;
-    }
-    private JCheckBox getSuevkanPflichtCheck() {
-        if (suevkanPflichtCheck == null) {
-            suevkanPflichtCheck = new JCheckBox("SuevKan pflichtig");
-        }
-        return suevkanPflichtCheck;
-    }
-    private JFormattedTextField getVersFlaecheFeld() {
-        if (versFlaecheFeld == null) {
-            versFlaecheFeld = new IntegerField();
-        }
-        return versFlaecheFeld;
-    }
-    private JButton getSaveSuevButton() {
-        if (saveSuevButton == null) {
-            saveSuevButton = new JButton("Speichern");
 
-            saveSuevButton.addActionListener(new ActionListener() {
+    private TextFieldDateChooser getDatAnzeige58Datum() {
+        if (this.datAnzeige58Datum == null) {
+            this.datAnzeige58Datum = new TextFieldDateChooser();
+        }
+        return this.datAnzeige58Datum;
+    }
+
+    private JCheckBox getDatumAnzeige58Check() {
+        if (this.datumAnzeige58Check == null) {
+            this.datumAnzeige58Check = new JCheckBox("Datum Anzeige");
+        }
+        return this.datumAnzeige58Check;
+    }
+
+    private JCheckBox getDirektrwCheck() {
+        if (this.direktrwCheck == null) {
+            this.direktrwCheck = new JCheckBox("Direkt RW");
+        }
+        return this.direktrwCheck;
+    }
+
+    private JCheckBox getDirektswCheck() {
+        if (this.direktswCheck == null) {
+            this.direktswCheck = new JCheckBox("Direkt SW");
+        }
+        return this.direktswCheck;
+    }
+
+    private JCheckBox getGroesser3haCheck() {
+        if (this.groesser3haCheck == null) {
+            this.groesser3haCheck = new JCheckBox("Größer 3 ha");
+        }
+        return this.groesser3haCheck;
+    }
+
+    private JCheckBox getIndirektrwCheck() {
+        if (this.indirektrwCheck == null) {
+            this.indirektrwCheck = new JCheckBox("Indirekt RW");
+        }
+        return this.indirektrwCheck;
+    }
+
+    private JCheckBox getIndirektswCheck() {
+        if (this.indirektswCheck == null) {
+            this.indirektswCheck = new JCheckBox("Indirekt SW");
+        }
+        return this.indirektswCheck;
+    }
+
+    private JCheckBox getKeineAngabenCheck() {
+        if (this.keineAngabenCheck == null) {
+            this.keineAngabenCheck = new JCheckBox("Keine Angaben");
+        }
+        return this.keineAngabenCheck;
+    }
+
+    private JCheckBox getSanierungErfolgtCheck() {
+        if (this.sanierungErfolgtCheck == null) {
+            this.sanierungErfolgtCheck = new JCheckBox("Sanierung erfolgt");
+        }
+        return this.sanierungErfolgtCheck;
+    }
+
+    private JCheckBox getSanierungskonzeptCheck() {
+        if (this.sanierungskonzeptCheck == null) {
+            this.sanierungskonzeptCheck = new JCheckBox("Sanierungskonzept");
+        }
+        return this.sanierungskonzeptCheck;
+    }
+
+    private JCheckBox getSuevkanPflichtCheck() {
+        if (this.suevkanPflichtCheck == null) {
+            this.suevkanPflichtCheck = new JCheckBox("SuevKan pflichtig");
+        }
+        return this.suevkanPflichtCheck;
+    }
+
+    private JFormattedTextField getVersFlaecheFeld() {
+        if (this.versFlaecheFeld == null) {
+            this.versFlaecheFeld = new IntegerField();
+        }
+        return this.versFlaecheFeld;
+    }
+
+    private JButton getSaveSuevButton() {
+        if (this.saveSuevButton == null) {
+            this.saveSuevButton = new JButton("Speichern");
+
+            this.saveSuevButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveSuevDaten()) {
-                        hauptModul.getFrame().changeStatus("SuevKan Verfahren "+fachdaten.getObjektid()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
+                        SuevPanel.this.hauptModul.getFrame().changeStatus(
+                            "SuevKan Verfahren "
+                                + SuevPanel.this.fachdaten.getObjektid()
+                                + " erfolgreich gespeichert.",
+                            HauptFrame.SUCCESS_COLOR);
                     } else {
-                        hauptModul.getFrame().changeStatus("Fehler beim Speichern des SuevKan Verfahrens!", HauptFrame.ERROR_COLOR);
+                        SuevPanel.this.hauptModul.getFrame().changeStatus(
+                            "Fehler beim Speichern des SuevKan Verfahrens!",
+                            HauptFrame.ERROR_COLOR);
                     }
 
-                    hauptModul.fillForm();
+                    SuevPanel.this.hauptModul.fillForm();
                 }
             });
         }
-        return saveSuevButton;
+        return this.saveSuevButton;
     }
 
+    private JTable getObjektverknuepungTabelle() {
 
-private JTable getObjektverknuepungTabelle() {
+        if (this.objektVerknuepfungModel == null) {
+            this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
+                this.hauptModul.getObjekt());
 
-        if (objektVerknuepfungModel == null) {
-            objektVerknuepfungModel = new ObjektVerknuepfungModel(hauptModul
-                    .getObjekt());
-
-            if (objektverknuepfungTabelle == null) {
-                objektverknuepfungTabelle = new JTable(objektVerknuepfungModel);
+            if (this.objektverknuepfungTabelle == null) {
+                this.objektverknuepfungTabelle = new JTable(
+                    this.objektVerknuepfungModel);
             } else {
-                objektverknuepfungTabelle.setModel(objektVerknuepfungModel);
+                this.objektverknuepfungTabelle
+                    .setModel(this.objektVerknuepfungModel);
             }
-            objektverknuepfungTabelle.getColumnModel().getColumn(0)
-                    .setPreferredWidth(5);
-            objektverknuepfungTabelle.getColumnModel().getColumn(1)
-                    .setPreferredWidth(100);
-            objektverknuepfungTabelle.getColumnModel().getColumn(2)
-                    .setPreferredWidth(250);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
+                .setPreferredWidth(5);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
+                .setPreferredWidth(100);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
+                .setPreferredWidth(250);
 
-            objektverknuepfungTabelle
-                    .addMouseListener(new java.awt.event.MouseAdapter() {
-                        @Override
-                        public void mouseClicked(java.awt.event.MouseEvent e) {
-                            if ((e.getClickCount() == 2)
-                                    && (e.getButton() == 1)) {
-                                Point origin = e.getPoint();
-                                int row = getObjektverknuepungTabelle()
-                                        .rowAtPoint(origin);
+            this.objektverknuepfungTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getObjektverknuepungTabelle().rowAtPoint(
+                                origin);
 
-                                if (row != -1) {
-                                    BasisObjektverknuepfung obj = objektVerknuepfungModel
-                                            .getRow(row);
-                                    if (obj.getBasisObjektByIstVerknuepftMit().getObjektid().intValue() != hauptModul
-                                            .getObjekt().getObjektid().intValue())
-                                        hauptModul
-                                                .getManager()
-                                                .getSettingsManager()
-                                                .setSetting(
-                                                        "auik.imc.edit_object",
-                                                        obj
-                                                                .getBasisObjektByIstVerknuepftMit()
-                                                                .getObjektid()
-                                                                .intValue(),
-                                                        false);
-                                    else
-                                        hauptModul
-                                                .getManager()
-                                                .getSettingsManager()
-                                                .setSetting(
-                                                        "auik.imc.edit_object",
-                                                        obj
-                                                                .getBasisObjektByObjekt()
-                                                                .getObjektid()
-                                                                .intValue(),
-                                                        false);
-                                    hauptModul.getManager().switchModul(
-                                            "m_objekt_bearbeiten");
+                            if (row != -1) {
+                                BasisObjektverknuepfung obj = SuevPanel.this.objektVerknuepfungModel
+                                    .getRow(row);
+                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                    .getObjektid().intValue() != SuevPanel.this.hauptModul
+                                    .getObjekt().getObjektid().intValue()) {
+                                    SuevPanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getBasisObjektByIstVerknuepftMit()
+                                                .getObjektid().intValue(),
+                                            false);
+                                } else {
+                                    SuevPanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getBasisObjektByObjekt()
+                                                .getObjektid().intValue(),
+                                            false);
                                 }
+                                SuevPanel.this.hauptModul.getManager()
+                                    .switchModul("m_objekt_bearbeiten");
                             }
                         }
+                    }
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-                            showVerknuepfungPopup(e);
-                        }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
 
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-                            showVerknuepfungPopup(e);
-                        }
-                    });
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+                });
 
-            objektverknuepfungTabelle.getInputMap().put(
-                    (KeyStroke) getVerknuepfungLoeschAction().getValue(
-                            Action.ACCELERATOR_KEY),
-                    getVerknuepfungLoeschAction().getValue(Action.NAME));
-            objektverknuepfungTabelle.getActionMap().put(
-                    getVerknuepfungLoeschAction().getValue(Action.NAME),
-                    getVerknuepfungLoeschAction());
+            this.objektverknuepfungTabelle.getInputMap().put(
+                (KeyStroke) getVerknuepfungLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getVerknuepfungLoeschAction().getValue(Action.NAME));
+            this.objektverknuepfungTabelle.getActionMap().put(
+                getVerknuepfungLoeschAction().getValue(Action.NAME),
+                getVerknuepfungLoeschAction());
         }
 
-        return objektverknuepfungTabelle;
+        return this.objektverknuepfungTabelle;
 
     }
 
     private void showVerknuepfungPopup(MouseEvent e) {
-        if (verknuepfungPopup == null) {
-            verknuepfungPopup = new JPopupMenu("Objekt");
+        if (this.verknuepfungPopup == null) {
+            this.verknuepfungPopup = new JPopupMenu("Objekt");
             JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-            verknuepfungPopup.add(loeschItem);
+            this.verknuepfungPopup.add(loeschItem);
         }
 
         if (e.isPopupTrigger()) {
             Point origin = e.getPoint();
-            int row = objektverknuepfungTabelle.rowAtPoint(origin);
+            int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
 
             if (row != -1) {
-                objektverknuepfungTabelle.setRowSelectionInterval(row, row);
-                verknuepfungPopup.show(e.getComponent(), e.getX(), e.getY());
+                this.objektverknuepfungTabelle
+                    .setRowSelectionInterval(row, row);
+                this.verknuepfungPopup.show(e.getComponent(), e.getX(),
+                    e.getY());
             }
         }
     }
 
     private Action getVerknuepfungLoeschAction() {
-        if (verknuepfungLoeschAction == null) {
-            verknuepfungLoeschAction = new AbstractAction("Löschen") {
+        if (this.verknuepfungLoeschAction == null) {
+            this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
                 private static final long serialVersionUID = 5629438504708021409L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
-                            && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = objektVerknuepfungModel
-                                .getRow(row);
-                        int answer = JOptionPane
-                                .showConfirmDialog(
-                                        hauptModul.getPanel(),
-                                "Soll die Verknüpfung wirklich gelöscht werden?\n"
-                                    + "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
-                                "Löschen bestätigen",
-                                        JOptionPane.YES_NO_OPTION);
-                        if (answer == JOptionPane.YES_OPTION) {
-                            if (objektVerknuepfungModel.removeRow(row)) {
-                                hauptModul.getFrame().changeStatus(
-                                    "Objekt gelöscht.",
+                        && getObjektverknuepungTabelle().getEditingRow() == -1) {
+                        BasisObjektverknuepfung verknuepfung = SuevPanel.this.objektVerknuepfungModel
+                            .getRow(row);
+                        if (GUIManager.getInstance().showQuestion(
+                            "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                + "Hinweis: Die Aktion betrifft nur die "
+                                + "Verknüpfung, die Objekte bleiben erhalten "
+                                + "und können jederzeit neu verknüpft werden.",
+                            "Löschen bestätigen")) {
+                            if (SuevPanel.this.objektVerknuepfungModel
+                                .removeRow(row)) {
+                                SuevPanel.this.hauptModul.getFrame()
+                                    .changeStatus("Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("Objekt "
-                                        + verknuepfung.getId()
+                                log.debug("Objekt " + verknuepfung.getId()
                                     + " wurde gelöscht!");
                             } else {
-                                hauptModul.getFrame().changeStatus(
-                                    "Konnte das Objekt nicht löschen!",
+                                SuevPanel.this.hauptModul.getFrame()
+                                    .changeStatus(
+                                        "Konnte das Objekt nicht löschen!",
                                         HauptFrame.ERROR_COLOR);
                             }
                         }
                     }
                 }
             };
-            verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_L));
-            verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
-                    .getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
-        return verknuepfungLoeschAction;
+        return this.verknuepfungLoeschAction;
     }
 
     private JButton getSelectObjektButton() {
-        if (selectObjektButton == null) {
-            selectObjektButton = new JButton("Objekt auswählen");
+        if (this.selectObjektButton == null) {
+            this.selectObjektButton = new JButton("Objekt auswählen");
 
-            selectObjektButton.addActionListener(new ActionListener() {
+            this.selectObjektButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ObjektChooser chooser = new ObjektChooser(hauptModul
-                            .getFrame(), fachdaten.getBasisObjekt(),
-                            objektVerknuepfungModel);
+                    ObjektChooser chooser = new ObjektChooser(
+                        SuevPanel.this.hauptModul.getFrame(),
+                        SuevPanel.this.fachdaten.getBasisObjekt(),
+                        SuevPanel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }
             });
         }
-        return selectObjektButton;
+        return this.selectObjektButton;
     }
 
-
 }
-

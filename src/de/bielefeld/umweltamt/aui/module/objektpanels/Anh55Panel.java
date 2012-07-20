@@ -87,7 +87,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -95,11 +94,13 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
@@ -116,7 +117,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * Das Panel zum Bearbeiten von Druckereien
  * @author u633d
  */
-public class Anh55Panel extends JPanel{
+public class Anh55Panel extends JPanel {
     private static final long serialVersionUID = 3345458422378912073L;
 
     /** Logging */
@@ -169,12 +170,12 @@ public class Anh55Panel extends JPanel{
     private JPopupMenu verknuepfungPopup;
 
     public Anh55Panel(BasisObjektBearbeiten hauptModul) {
-        name = "Wäscherei";
+        this.name = "Wäscherei";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout (
-                "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
-                "");
+        FormLayout layout = new FormLayout(
+            "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
+            "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
         builder.setDefaultDialogBorder();
@@ -186,7 +187,7 @@ public class Anh55Panel extends JPanel{
         builder.append("Branche:", getBrancheFeld());
         builder.append("", getPutztuecherCheck());
         builder.nextLine();
-        builder.append("Ansprechpartner:",  getAnsprechpartnerFeld());
+        builder.append("Ansprechpartner:", getAnsprechpartnerFeld());
         builder.append("", getMattenCheck());
         builder.nextLine();
         builder.append("Menge:", getMengeFeld());
@@ -220,14 +221,19 @@ public class Anh55Panel extends JPanel{
         builder.appendSeparator("Wasch-Situation");
         builder.appendRow("3dlu");
         builder.nextLine(2);
-        JScrollPane waschsituationScroller = new JScrollPane(getWaschsituationArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane waschsituationScroller = new JScrollPane(
+            getWaschsituationArea(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:30dlu");
         builder.append(waschsituationScroller, 7);
 
         builder.appendSeparator("Bemerkungen");
         builder.appendRow("3dlu");
         builder.nextLine(2);
-        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:30dlu");
         builder.append(bemerkungsScroller, 7);
 
@@ -235,203 +241,205 @@ public class Anh55Panel extends JPanel{
         builder.appendRow("3dlu");
         builder.nextLine(2);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
-                getObjektverknuepungTabelle(),
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            getObjektverknuepungTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:100dlu");
         builder.append(objektverknuepfungScroller, 7);
         builder.nextLine();
 
         JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-                getSelectObjektButton(), getSaveAnh55Button());
+            getSelectObjektButton(), getSaveAnh55Button());
 
-
-    //    JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveAnh55Button());
+        // JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveAnh55Button());
         builder.append(buttonBar, 7);
 
     }
 
     public void completeObjekt() {
-        if (hauptModul.isNew() || fachdaten == null) {
+        if (this.hauptModul.isNew() || this.fachdaten == null) {
             // Neues Anhang 55 Objekt erzeugen
-            fachdaten = new Anh55Fachdaten();
+            this.fachdaten = new Anh55Fachdaten();
             // Objekt_Id setzen
-            fachdaten.setBasisObjekt(hauptModul.getObjekt());
+            this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Anhang 55 Objekt speichern
-            Anh55Fachdaten.saveFachdaten(fachdaten);
-            log.debug("Neues Anh 55 Objekt " + fachdaten + " gespeichert.");
+            Anh55Fachdaten.saveFachdaten(this.fachdaten);
+            log.debug("Neues Anh 55 Objekt " + this.fachdaten + " gespeichert.");
         }
     }
 
     private boolean saveAnh55Daten() {
         boolean success;
 
-        String bemerkungen = BemerkungenArea.getText();
+        String bemerkungen = this.BemerkungenArea.getText();
         if ("".equals(bemerkungen)) {
-            fachdaten.setBemerkungen(null);
+            this.fachdaten.setBemerkungen(null);
         } else {
-            fachdaten.setBemerkungen(bemerkungen);
+            this.fachdaten.setBemerkungen(bemerkungen);
         }
 
-        String mengewaescheString = mengewaescheFeld.getText();
+        String mengewaescheString = this.mengewaescheFeld.getText();
         if ("".equals(mengewaescheString)) {
-            fachdaten.setMengewaesche(null);
+            this.fachdaten.setMengewaesche(null);
         } else {
-            fachdaten.setMengewaesche(mengewaescheString);
+            this.fachdaten.setMengewaesche(mengewaescheString);
         }
 
-        String sachbearbeiterString = sachbearbeiterFeld.getText();
+        String sachbearbeiterString = this.sachbearbeiterFeld.getText();
         if ("".equals(sachbearbeiterString)) {
-            fachdaten.setSachbearbeiter(null);
+            this.fachdaten.setSachbearbeiter(null);
         } else {
-            fachdaten.setSachbearbeiter(sachbearbeiterString);
+            this.fachdaten.setSachbearbeiter(sachbearbeiterString);
         }
 
-        String entgebIdString = entgebIdFeld.getText();
+        String entgebIdString = this.entgebIdFeld.getText();
         if ("".equals(entgebIdString)) {
-            fachdaten.setEntgebId(null);
+            this.fachdaten.setEntgebId(null);
         } else {
-            fachdaten.setEntgebId(entgebIdString);
+            this.fachdaten.setEntgebId(entgebIdString);
         }
 
-        String monatwasserverbString = monatwasserverbFeld.getText();
+        String monatwasserverbString = this.monatwasserverbFeld.getText();
         if ("".equals(monatwasserverbString)) {
-            fachdaten.setMonatwasserverb(null);
+            this.fachdaten.setMonatwasserverb(null);
         } else {
-            fachdaten.setMonatwasserverb(monatwasserverbString);
+            this.fachdaten.setMonatwasserverb(monatwasserverbString);
         }
 
-        String sonsttextString = sonsttexFeld.getText();
+        String sonsttextString = this.sonsttexFeld.getText();
         if ("".equals(sonsttextString)) {
-            fachdaten.setSonsttex(null);
+            this.fachdaten.setSonsttex(null);
         } else {
-            fachdaten.setSonsttex(sonsttextString);
+            this.fachdaten.setSonsttex(sonsttextString);
         }
 
-        String waschsituationString = waschsituationArea.getText();
+        String waschsituationString = this.waschsituationArea.getText();
         if ("".equals(waschsituationString)) {
-            fachdaten.setWaschsituation(null);
+            this.fachdaten.setWaschsituation(null);
         } else {
-            fachdaten.setWaschsituation(waschsituationString);
+            this.fachdaten.setWaschsituation(waschsituationString);
         }
 
-        String ansprechpartnerString = ansprechpartnerFeld.getText();
+        String ansprechpartnerString = this.ansprechpartnerFeld.getText();
         if ("".equals(ansprechpartnerString)) {
-            fachdaten.setAnsprechpartner(null);
+            this.fachdaten.setAnsprechpartner(null);
         } else {
-            fachdaten.setAnsprechpartner(ansprechpartnerString);
+            this.fachdaten.setAnsprechpartner(ansprechpartnerString);
         }
 
-        String brancheString = brancheFeld.getText();
+        String brancheString = this.brancheFeld.getText();
         if ("".equals(brancheString)) {
-            fachdaten.setBranche(null);
+            this.fachdaten.setBranche(null);
         } else {
-            fachdaten.setBranche(brancheString);
+            this.fachdaten.setBranche(brancheString);
         }
 
-        Integer anteilwaschgut = ((IntegerField)anteilwaschgutFeld).getIntValue();
-        fachdaten.setAnteilwaschgut(anteilwaschgut);
+        Integer anteilwaschgut = ((IntegerField) this.anteilwaschgutFeld)
+            .getIntValue();
+        this.fachdaten.setAnteilwaschgut(anteilwaschgut);
 
-        Integer anteilgesamtwg = ((IntegerField)anteilgesamtwaschgutFeld).getIntValue();
-        fachdaten.setAnteilgesamtgut(anteilgesamtwg);
+        Integer anteilgesamtwg = ((IntegerField) this.anteilgesamtwaschgutFeld)
+            .getIntValue();
+        this.fachdaten.setAnteilgesamtgut(anteilgesamtwg);
 
-        if (getAbgemeldetCheck().isSelected())  {
-            fachdaten.setAbgemeldet(true);
+        if (getAbgemeldetCheck().isSelected()) {
+            this.fachdaten.setAbgemeldet(true);
         } else {
-            fachdaten.setAbgemeldet(false);
+            this.fachdaten.setAbgemeldet(false);
         }
 
-        if (getPutztuecherCheck().isSelected())  {
-            fachdaten.setPutztuecher(true);
+        if (getPutztuecherCheck().isSelected()) {
+            this.fachdaten.setPutztuecher(true);
         } else {
-            fachdaten.setPutztuecher(false);
+            this.fachdaten.setPutztuecher(false);
         }
 
-        if (getTeppichCheck().isSelected())  {
-            fachdaten.setTeppich(true);
+        if (getTeppichCheck().isSelected()) {
+            this.fachdaten.setTeppich(true);
         } else {
-            fachdaten.setTeppich(false);;
+            this.fachdaten.setTeppich(false);
         }
 
-        if (getMattenCheck().isSelected())  {
-            fachdaten.setMatten(true);
+        if (getMattenCheck().isSelected()) {
+            this.fachdaten.setMatten(true);
         } else {
-            fachdaten.setMatten(false);
+            this.fachdaten.setMatten(false);
         }
 
-        if (getHaushaltstexCheck().isSelected())  {
-            fachdaten.setHaushaltstex(true);
+        if (getHaushaltstexCheck().isSelected()) {
+            this.fachdaten.setHaushaltstex(true);
         } else {
-            fachdaten.setHaushaltstex(false);
+            this.fachdaten.setHaushaltstex(false);
         }
 
-        if (getBerufsklCheck().isSelected())  {
-            fachdaten.setBerufskl(true);
+        if (getBerufsklCheck().isSelected()) {
+            this.fachdaten.setBerufskl(true);
         } else {
-            fachdaten.setBerufskl(false);
+            this.fachdaten.setBerufskl(false);
         }
 
-        if (getGasthotelCheck().isSelected())  {
-            fachdaten.setGasthotel(true);
+        if (getGasthotelCheck().isSelected()) {
+            this.fachdaten.setGasthotel(true);
         } else {
-            fachdaten.setGasthotel(false);
+            this.fachdaten.setGasthotel(false);
         }
 
-        if (getKrankenhausCheck().isSelected())  {
-            fachdaten.setKrankenhaus(true);
+        if (getKrankenhausCheck().isSelected()) {
+            this.fachdaten.setKrankenhaus(true);
         } else {
-            fachdaten.setKrankenhaus(false);
+            this.fachdaten.setKrankenhaus(false);
         }
 
-        if (getHeimwaescheCheck().isSelected())  {
-            fachdaten.setHeimwaesche(true);
+        if (getHeimwaescheCheck().isSelected()) {
+            this.fachdaten.setHeimwaesche(true);
         } else {
-            fachdaten.setHeimwaesche(false);
+            this.fachdaten.setHeimwaesche(false);
         }
 
-        if (getBetrwasseraufberCheck().isSelected())  {
-            fachdaten.setBetrwasseraufber(true);
+        if (getBetrwasseraufberCheck().isSelected()) {
+            this.fachdaten.setBetrwasseraufber(true);
         } else {
-            fachdaten.setBetrwasseraufber(false);
+            this.fachdaten.setBetrwasseraufber(false);
         }
 
-        if (getChlorCheck().isSelected())  {
-            fachdaten.setChlor(true);
+        if (getChlorCheck().isSelected()) {
+            this.fachdaten.setChlor(true);
         } else {
-            fachdaten.setChlor(false);
+            this.fachdaten.setChlor(false);
         }
 
-        if (getAktivchlorCheck().isSelected())  {
-            fachdaten.setAktivchlor(true);
+        if (getAktivchlorCheck().isSelected()) {
+            this.fachdaten.setAktivchlor(true);
         } else {
-            fachdaten.setAktivchlor(false);
+            this.fachdaten.setAktivchlor(false);
         }
 
-        if (getVliesCheck().isSelected())  {
-            fachdaten.setVlies(true);
+        if (getVliesCheck().isSelected()) {
+            this.fachdaten.setVlies(true);
         } else {
-            fachdaten.setVlies(true);
+            this.fachdaten.setVlies(true);
         }
 
-        if (getFischCheck().isSelected())  {
-            fachdaten.setFischfleisch(true);
+        if (getFischCheck().isSelected()) {
+            this.fachdaten.setFischfleisch(true);
         } else {
-            fachdaten.setFischfleisch(false);
+            this.fachdaten.setFischfleisch(false);
         }
 
-        if (getLoesungsmittelCheck().isSelected())  {
-            fachdaten.setLoesungsmittel(true);
+        if (getLoesungsmittelCheck().isSelected()) {
+            this.fachdaten.setLoesungsmittel(true);
         } else {
-            fachdaten.setLoesungsmittel(false);
+            this.fachdaten.setLoesungsmittel(false);
         }
 
-        success = Anh55Fachdaten.saveFachdaten(fachdaten);
+        success = Anh55Fachdaten.saveFachdaten(this.fachdaten);
         if (success) {
-            log.debug("Anh 55 Objekt " + fachdaten.getId() + " gespeichert.");
+            log.debug("Anh 55 Objekt " + this.fachdaten.getId()
+                + " gespeichert.");
         } else {
-            log.debug("Anh 55 Objekt " + fachdaten
-            		+ " konnte nicht gespeichert werden!");
+            log.debug("Anh 55 Objekt " + this.fachdaten
+                + " konnte nicht gespeichert werden!");
         }
         return success;
     }
@@ -498,185 +506,176 @@ public class Anh55Panel extends JPanel{
 
     public void updateForm() throws RuntimeException {
 
-    if (fachdaten != null) {
-        if (fachdaten.getBemerkungen() != null) {
-            getBemerkungenArea().setText(fachdaten.getBemerkungen());
-        }
+        if (this.fachdaten != null) {
+            if (this.fachdaten.getBemerkungen() != null) {
+                getBemerkungenArea().setText(this.fachdaten.getBemerkungen());
+            }
 
-        if (fachdaten.getSachbearbeiter() != null) {
-            getSachbearbeiterFeld().setText(fachdaten.getSachbearbeiter());
-        }
+            if (this.fachdaten.getSachbearbeiter() != null) {
+                getSachbearbeiterFeld().setText(
+                    this.fachdaten.getSachbearbeiter());
+            }
 
-        if (fachdaten.getEntgebId() != null) {
-            getEntgebIdFeld().setText(fachdaten.getEntgebId());
-        }
+            if (this.fachdaten.getEntgebId() != null) {
+                getEntgebIdFeld().setText(this.fachdaten.getEntgebId());
+            }
 
-        if (fachdaten.getMengewaesche() != null) {
-            getMengeFeld().setText(fachdaten.getMengewaesche());
-        }
+            if (this.fachdaten.getMengewaesche() != null) {
+                getMengeFeld().setText(this.fachdaten.getMengewaesche());
+            }
 
-        if (fachdaten.getSonsttex() != null) {
-            getSonsttexFeld().setText(fachdaten.getSonsttex());
-        }
+            if (this.fachdaten.getSonsttex() != null) {
+                getSonsttexFeld().setText(this.fachdaten.getSonsttex());
+            }
 
-        if (fachdaten.getMonatwasserverb() != null) {
-            getMonatwasserverbFeld().setText(fachdaten.getMonatwasserverb());
-        }
+            if (this.fachdaten.getMonatwasserverb() != null) {
+                getMonatwasserverbFeld().setText(
+                    this.fachdaten.getMonatwasserverb());
+            }
 
-        if (fachdaten.getWaschsituation() != null) {
-            getWaschsituationArea().setText(fachdaten.getWaschsituation());
-        }
+            if (this.fachdaten.getWaschsituation() != null) {
+                getWaschsituationArea().setText(
+                    this.fachdaten.getWaschsituation());
+            }
 
-        if (fachdaten.getAnsprechpartner() != null) {
-            getAnsprechpartnerFeld().setText(fachdaten.getAnsprechpartner());
-        }
+            if (this.fachdaten.getAnsprechpartner() != null) {
+                getAnsprechpartnerFeld().setText(
+                    this.fachdaten.getAnsprechpartner());
+            }
 
-        if (fachdaten.getBranche() != null) {
-            getBrancheFeld().setText(fachdaten.getBranche());
-        }
+            if (this.fachdaten.getBranche() != null) {
+                getBrancheFeld().setText(this.fachdaten.getBranche());
+            }
 
-        if (fachdaten.getAnteilwaschgut() != null) {
-            getAnteilwaschgutFeld().setText(fachdaten.getAnteilwaschgut().toString());
-        }
+            if (this.fachdaten.getAnteilwaschgut() != null) {
+                getAnteilwaschgutFeld().setText(
+                    this.fachdaten.getAnteilwaschgut().toString());
+            }
 
-        if (fachdaten.getAnteilgesamtgut() != null) {
-            getGesamtwaschgutFeld().setText(fachdaten.getAnteilgesamtgut().toString());
-        }
+            if (this.fachdaten.getAnteilgesamtgut() != null) {
+                getGesamtwaschgutFeld().setText(
+                    this.fachdaten.getAnteilgesamtgut().toString());
+            }
 
-        if (fachdaten.getAbgemeldet() != null) {
-            if (fachdaten.getAbgemeldet() == true) {
-                getAbgemeldetCheck().setSelected(true);
+            if (this.fachdaten.getAbgemeldet() != null) {
+                if (this.fachdaten.getAbgemeldet() == true) {
+                    getAbgemeldetCheck().setSelected(true);
+                } else {
+                    getAbgemeldetCheck().setSelected(false);
+                }
             }
-            else {
-                getAbgemeldetCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getPutztuecher() != null) {
-            if (fachdaten.getPutztuecher() == true) {
-                getPutztuecherCheck().setSelected(true);
+            if (this.fachdaten.getPutztuecher() != null) {
+                if (this.fachdaten.getPutztuecher() == true) {
+                    getPutztuecherCheck().setSelected(true);
+                } else {
+                    getPutztuecherCheck().setSelected(false);
+                }
             }
-            else {
-                getPutztuecherCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getTeppich() != null) {
-            if (fachdaten.getTeppich() == true) {
-                getTeppichCheck().setSelected(true);
+            if (this.fachdaten.getTeppich() != null) {
+                if (this.fachdaten.getTeppich() == true) {
+                    getTeppichCheck().setSelected(true);
+                } else {
+                    getTeppichCheck().setSelected(false);
+                }
             }
-            else {
-                getTeppichCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getMatten() != null) {
-            if (fachdaten.getMatten() == true) {
-                getMattenCheck().setSelected(true);
+            if (this.fachdaten.getMatten() != null) {
+                if (this.fachdaten.getMatten() == true) {
+                    getMattenCheck().setSelected(true);
+                } else {
+                    getMattenCheck().setSelected(false);
+                }
             }
-            else {
-                getMattenCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getHaushaltstex() != null) {
-            if (fachdaten.getHaushaltstex() == true) {
-                getHaushaltstexCheck().setSelected(true);
+            if (this.fachdaten.getHaushaltstex() != null) {
+                if (this.fachdaten.getHaushaltstex() == true) {
+                    getHaushaltstexCheck().setSelected(true);
+                } else {
+                    getHaushaltstexCheck().setSelected(false);
+                }
             }
-            else {
-                getHaushaltstexCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getBerufskl() != null) {
-            if (fachdaten.getBerufskl() == true) {
-                getBerufsklCheck().setSelected(true);
+            if (this.fachdaten.getBerufskl() != null) {
+                if (this.fachdaten.getBerufskl() == true) {
+                    getBerufsklCheck().setSelected(true);
+                } else {
+                    getBerufsklCheck().setSelected(false);
+                }
             }
-            else {
-                getBerufsklCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getGasthotel() != null) {
-            if (fachdaten.getGasthotel() == true) {
-                getGasthotelCheck().setSelected(true);
+            if (this.fachdaten.getGasthotel() != null) {
+                if (this.fachdaten.getGasthotel() == true) {
+                    getGasthotelCheck().setSelected(true);
+                } else {
+                    getGasthotelCheck().setSelected(false);
+                }
             }
-            else {
-                getGasthotelCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getKrankenhaus() != null) {
-            if (fachdaten.getKrankenhaus() == true) {
-                getKrankenhausCheck().setSelected(true);
+            if (this.fachdaten.getKrankenhaus() != null) {
+                if (this.fachdaten.getKrankenhaus() == true) {
+                    getKrankenhausCheck().setSelected(true);
+                } else {
+                    getKrankenhausCheck().setSelected(false);
+                }
             }
-            else {
-                getKrankenhausCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getHeimwaesche() != null) {
-            if (fachdaten.getHeimwaesche() == true) {
-                getHeimwaescheCheck().setSelected(true);
+            if (this.fachdaten.getHeimwaesche() != null) {
+                if (this.fachdaten.getHeimwaesche() == true) {
+                    getHeimwaescheCheck().setSelected(true);
+                } else {
+                    getHeimwaescheCheck().setSelected(false);
+                }
             }
-            else {
-                getHeimwaescheCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getBetrwasseraufber() != null) {
-            if (fachdaten.getBetrwasseraufber() == true) {
-                getBetrwasseraufberCheck().setSelected(true);
+            if (this.fachdaten.getBetrwasseraufber() != null) {
+                if (this.fachdaten.getBetrwasseraufber() == true) {
+                    getBetrwasseraufberCheck().setSelected(true);
+                } else {
+                    getBetrwasseraufberCheck().setSelected(false);
+                }
             }
-            else {
-                getBetrwasseraufberCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getChlor() != null) {
-            if (fachdaten.getChlor() == true) {
-                getChlorCheck().setSelected(true);
+            if (this.fachdaten.getChlor() != null) {
+                if (this.fachdaten.getChlor() == true) {
+                    getChlorCheck().setSelected(true);
+                } else {
+                    getChlorCheck().setSelected(false);
+                }
             }
-            else {
-                getChlorCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getAktivchlor() != null) {
-            if (fachdaten.getAktivchlor() == true) {
-                getAktivchlorCheck().setSelected(true);
+            if (this.fachdaten.getAktivchlor() != null) {
+                if (this.fachdaten.getAktivchlor() == true) {
+                    getAktivchlorCheck().setSelected(true);
+                } else {
+                    getAktivchlorCheck().setSelected(false);
+                }
             }
-            else {
-                getAktivchlorCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getVlies() != null) {
-            if (fachdaten.getVlies() == true) {
-                getVliesCheck().setSelected(true);
+            if (this.fachdaten.getVlies() != null) {
+                if (this.fachdaten.getVlies() == true) {
+                    getVliesCheck().setSelected(true);
+                } else {
+                    getVliesCheck().setSelected(false);
+                }
             }
-            else {
-                getVliesCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getFischfleisch() != null) {
-            if (fachdaten.getFischfleisch() == true) {
-                getFischCheck().setSelected(true);
+            if (this.fachdaten.getFischfleisch() != null) {
+                if (this.fachdaten.getFischfleisch() == true) {
+                    getFischCheck().setSelected(true);
+                } else {
+                    getFischCheck().setSelected(false);
+                }
             }
-            else {
-                getFischCheck().setSelected(false);
-            }
-        }
 
-        if (fachdaten.getLoesungsmittel() != null) {
-            if (fachdaten.getLoesungsmittel() == true) {
-                getLoesungsmittelCheck().setSelected(true);
+            if (this.fachdaten.getLoesungsmittel() != null) {
+                if (this.fachdaten.getLoesungsmittel() == true) {
+                    getLoesungsmittelCheck().setSelected(true);
+                } else {
+                    getLoesungsmittelCheck().setSelected(false);
+                }
             }
-            else {
-                getLoesungsmittelCheck().setSelected(false);
-            }
-        }
 
 //        if (fachdaten.getGenpflicht() != null) {
 //            if (fachdaten.getGenpflicht().intValue() == -1) {
@@ -694,342 +693,348 @@ public class Anh55Panel extends JPanel{
 //                getAbwasseranfallCheck().setSelected(false);
 //            }
 //        }
-        objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
-    }
+            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
+        }
 
     }
-
-
 
     public void fetchFormData() throws RuntimeException {
-        fachdaten = Anh55Fachdaten.getAnh55ByObjekt(hauptModul.getObjekt());
-        log.debug("Anhang 55 Objekt aus DB geholt: ID" + fachdaten);
+        this.fachdaten = Anh55Fachdaten.getAnh55ByObjekt(this.hauptModul
+            .getObjekt());
+        log.debug("Anhang 55 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
     private JButton getSaveAnh55Button() {
-        if (saveAnh55Button == null) {
-            saveAnh55Button = new JButton("Speichern");
+        if (this.saveAnh55Button == null) {
+            this.saveAnh55Button = new JButton("Speichern");
 
-            saveAnh55Button.addActionListener(new ActionListener() {
+            this.saveAnh55Button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveAnh55Daten()) {
-                        hauptModul.getFrame().changeStatus("Anh 55 Objekt "+fachdaten.getId()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
+                        Anh55Panel.this.hauptModul.getFrame().changeStatus(
+                            "Anh 55 Objekt "
+                                + Anh55Panel.this.fachdaten.getId()
+                                + " erfolgreich gespeichert.",
+                            HauptFrame.SUCCESS_COLOR);
                     } else {
-                        hauptModul.getFrame().changeStatus("Fehler beim Speichern des Anh 55 Objekt!", HauptFrame.ERROR_COLOR);
+                        Anh55Panel.this.hauptModul.getFrame().changeStatus(
+                            "Fehler beim Speichern des Anh 55 Objekt!",
+                            HauptFrame.ERROR_COLOR);
                     }
 
-                    hauptModul.fillForm();
+                    Anh55Panel.this.hauptModul.fillForm();
                 }
             });
         }
-        return saveAnh55Button;
+        return this.saveAnh55Button;
     }
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     private JCheckBox getAbgemeldetCheck() {
-        if (abgemeldetCheck == null) {
-            abgemeldetCheck = new JCheckBox("Abgemeldet?");
+        if (this.abgemeldetCheck == null) {
+            this.abgemeldetCheck = new JCheckBox("Abgemeldet?");
         }
-        return abgemeldetCheck;
+        return this.abgemeldetCheck;
     }
 
     private JTextField getEntgebIdFeld() {
-        if (entgebIdFeld == null) {
-            entgebIdFeld = new LimitedTextField(50);
+        if (this.entgebIdFeld == null) {
+            this.entgebIdFeld = new LimitedTextField(50);
         }
-        return entgebIdFeld;
+        return this.entgebIdFeld;
     }
 
     private JTextField getBrancheFeld() {
-        if (brancheFeld == null) {
-            brancheFeld = new LimitedTextField(50);
+        if (this.brancheFeld == null) {
+            this.brancheFeld = new LimitedTextField(50);
         }
-        return brancheFeld;
+        return this.brancheFeld;
     }
 
     private JCheckBox getPutztuecherCheck() {
-        if (putztuecherCheck == null) {
-            putztuecherCheck = new JCheckBox("Putztücher?");
+        if (this.putztuecherCheck == null) {
+            this.putztuecherCheck = new JCheckBox("Putztücher?");
         }
-        return putztuecherCheck;
+        return this.putztuecherCheck;
     }
 
     private JTextField getAnsprechpartnerFeld() {
-        if (ansprechpartnerFeld == null) {
-            ansprechpartnerFeld = new LimitedTextField(50);
+        if (this.ansprechpartnerFeld == null) {
+            this.ansprechpartnerFeld = new LimitedTextField(50);
         }
-        return ansprechpartnerFeld;
+        return this.ansprechpartnerFeld;
     }
 
     private JCheckBox getMattenCheck() {
-        if (mattenCheck == null) {
-            mattenCheck = new JCheckBox("Matten?");
+        if (this.mattenCheck == null) {
+            this.mattenCheck = new JCheckBox("Matten?");
         }
-        return mattenCheck;
+        return this.mattenCheck;
     }
 
     private JTextField getMengeFeld() {
-        if (mengewaescheFeld == null) {
-            mengewaescheFeld = new LimitedTextField(50);
+        if (this.mengewaescheFeld == null) {
+            this.mengewaescheFeld = new LimitedTextField(50);
         }
-        return mengewaescheFeld;
+        return this.mengewaescheFeld;
     }
 
     private JCheckBox getTeppichCheck() {
-        if (teppichCheck == null) {
-            teppichCheck = new JCheckBox("Teppiche?");
+        if (this.teppichCheck == null) {
+            this.teppichCheck = new JCheckBox("Teppiche?");
         }
-        return teppichCheck;
+        return this.teppichCheck;
     }
 
     private JTextField getSonsttexFeld() {
-        if (sonsttexFeld == null) {
-            sonsttexFeld = new LimitedTextField(50);
+        if (this.sonsttexFeld == null) {
+            this.sonsttexFeld = new LimitedTextField(50);
         }
-        return sonsttexFeld;
+        return this.sonsttexFeld;
     }
 
     private JCheckBox getBerufsklCheck() {
-        if (berufsklCheck == null) {
-            berufsklCheck = new JCheckBox("Berufskleidung?");
+        if (this.berufsklCheck == null) {
+            this.berufsklCheck = new JCheckBox("Berufskleidung?");
         }
-        return berufsklCheck;
+        return this.berufsklCheck;
     }
 
     private DoubleField getMonatwasserverbFeld() {
-        if (monatwasserverbFeld == null) {
-            monatwasserverbFeld = new DoubleField(50);
+        if (this.monatwasserverbFeld == null) {
+            this.monatwasserverbFeld = new DoubleField(50);
         }
-        return monatwasserverbFeld;
+        return this.monatwasserverbFeld;
     }
 
     private JCheckBox getHaushaltstexCheck() {
-        if (haushaltstexCheck == null) {
-            haushaltstexCheck = new JCheckBox("Haushaltstextilien?");
+        if (this.haushaltstexCheck == null) {
+            this.haushaltstexCheck = new JCheckBox("Haushaltstextilien?");
         }
-        return haushaltstexCheck;
+        return this.haushaltstexCheck;
     }
 
     private JCheckBox getGasthotelCheck() {
-        if (gasthotelCheck == null) {
-            gasthotelCheck = new JCheckBox("Gaststätten-/Hoteltextilien?");
+        if (this.gasthotelCheck == null) {
+            this.gasthotelCheck = new JCheckBox("Gaststätten-/Hoteltextilien?");
         }
-        return gasthotelCheck;
+        return this.gasthotelCheck;
     }
 
     private JCheckBox getKrankenhausCheck() {
-        if (krankenhausCheck == null) {
-            krankenhausCheck = new JCheckBox("Krankenhaus?");
+        if (this.krankenhausCheck == null) {
+            this.krankenhausCheck = new JCheckBox("Krankenhaus?");
         }
-        return krankenhausCheck;
+        return this.krankenhausCheck;
     }
 
     private JCheckBox getHeimwaescheCheck() {
-        if (heimwaescheCheck == null) {
-            heimwaescheCheck = new JCheckBox("Heimwäsche?");
+        if (this.heimwaescheCheck == null) {
+            this.heimwaescheCheck = new JCheckBox("Heimwäsche?");
         }
-        return heimwaescheCheck;
+        return this.heimwaescheCheck;
     }
 
     private JCheckBox getVliesCheck() {
-        if (vliesCheck == null) {
-            vliesCheck = new JCheckBox("Vlies?");
+        if (this.vliesCheck == null) {
+            this.vliesCheck = new JCheckBox("Vlies?");
         }
-        return vliesCheck;
+        return this.vliesCheck;
     }
 
     private JCheckBox getFischCheck() {
-        if (fischCheck == null) {
-            fischCheck = new JCheckBox("Fisch/Fleisch?");
+        if (this.fischCheck == null) {
+            this.fischCheck = new JCheckBox("Fisch/Fleisch?");
         }
-        return fischCheck;
+        return this.fischCheck;
     }
 
     private JCheckBox getLoesungsmittelCheck() {
-        if (loesungsmittelCheck == null) {
-            loesungsmittelCheck = new JCheckBox("Lösungsmittel?");
+        if (this.loesungsmittelCheck == null) {
+            this.loesungsmittelCheck = new JCheckBox("Lösungsmittel?");
         }
-        return loesungsmittelCheck;
+        return this.loesungsmittelCheck;
     }
 
     private JFormattedTextField getAnteilwaschgutFeld() {
-        if (anteilwaschgutFeld == null) {
-            anteilwaschgutFeld = new IntegerField();
+        if (this.anteilwaschgutFeld == null) {
+            this.anteilwaschgutFeld = new IntegerField();
         }
-        return anteilwaschgutFeld;
+        return this.anteilwaschgutFeld;
     }
 
     private JFormattedTextField getGesamtwaschgutFeld() {
-        if (anteilgesamtwaschgutFeld == null) {
-            anteilgesamtwaschgutFeld = new IntegerField();
+        if (this.anteilgesamtwaschgutFeld == null) {
+            this.anteilgesamtwaschgutFeld = new IntegerField();
         }
-        return anteilgesamtwaschgutFeld;
+        return this.anteilgesamtwaschgutFeld;
     }
+
     private JTextField getSachbearbeiterFeld() {
-        if (sachbearbeiterFeld == null) {
-            sachbearbeiterFeld = new LimitedTextField(50);
+        if (this.sachbearbeiterFeld == null) {
+            this.sachbearbeiterFeld = new LimitedTextField(50);
         }
-        return sachbearbeiterFeld;
+        return this.sachbearbeiterFeld;
     }
 
     private JCheckBox getBetrwasseraufberCheck() {
-        if (betrwasseraufberCheck == null) {
-            betrwasseraufberCheck = new JCheckBox("Betriebswasseraufbereitung?");
+        if (this.betrwasseraufberCheck == null) {
+            this.betrwasseraufberCheck = new JCheckBox(
+                "Betriebswasseraufbereitung?");
         }
-        return betrwasseraufberCheck;
+        return this.betrwasseraufberCheck;
     }
 
     private JCheckBox getChlorCheck() {
-        if (chlorCheck == null) {
-            chlorCheck = new JCheckBox("Chlor?");
+        if (this.chlorCheck == null) {
+            this.chlorCheck = new JCheckBox("Chlor?");
         }
-        return chlorCheck;
+        return this.chlorCheck;
     }
 
     private JCheckBox getAktivchlorCheck() {
-        if (aktivchlorCheck == null) {
-            aktivchlorCheck = new JCheckBox("Aktiv-Chlor?");
+        if (this.aktivchlorCheck == null) {
+            this.aktivchlorCheck = new JCheckBox("Aktiv-Chlor?");
         }
-        return aktivchlorCheck;
+        return this.aktivchlorCheck;
     }
-
 
     private JTable getObjektverknuepungTabelle() {
 
-        if (objektVerknuepfungModel == null) {
-            objektVerknuepfungModel = new ObjektVerknuepfungModel(hauptModul
-                    .getObjekt());
+        if (this.objektVerknuepfungModel == null) {
+            this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
+                this.hauptModul.getObjekt());
 
-            if (objektverknuepfungTabelle == null) {
-                objektverknuepfungTabelle = new JTable(objektVerknuepfungModel);
+            if (this.objektverknuepfungTabelle == null) {
+                this.objektverknuepfungTabelle = new JTable(
+                    this.objektVerknuepfungModel);
             } else {
-                objektverknuepfungTabelle.setModel(objektVerknuepfungModel);
+                this.objektverknuepfungTabelle
+                    .setModel(this.objektVerknuepfungModel);
             }
-            objektverknuepfungTabelle.getColumnModel().getColumn(0)
-                    .setPreferredWidth(5);
-            objektverknuepfungTabelle.getColumnModel().getColumn(1)
-                    .setPreferredWidth(100);
-            objektverknuepfungTabelle.getColumnModel().getColumn(2)
-                    .setPreferredWidth(250);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
+                .setPreferredWidth(5);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
+                .setPreferredWidth(100);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
+                .setPreferredWidth(250);
 
-            objektverknuepfungTabelle
-                    .addMouseListener(new java.awt.event.MouseAdapter() {
-                        @Override
-                        public void mouseClicked(java.awt.event.MouseEvent e) {
-                            if ((e.getClickCount() == 2)
-                                    && (e.getButton() == 1)) {
-                                Point origin = e.getPoint();
-                                int row = getObjektverknuepungTabelle()
-                                        .rowAtPoint(origin);
+            this.objektverknuepfungTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getObjektverknuepungTabelle().rowAtPoint(
+                                origin);
 
-                                if (row != -1) {
-                                    BasisObjektverknuepfung obj = objektVerknuepfungModel
-                                            .getRow(row);
-                                    if (obj.getBasisObjektByIstVerknuepftMit().getObjektid().intValue() != hauptModul
-                                            .getObjekt().getObjektid().intValue())
-                                        hauptModul
-                                                .getManager()
-                                                .getSettingsManager()
-                                                .setSetting(
-                                                        "auik.imc.edit_object",
-                                                        obj
-                                                                .getBasisObjektByIstVerknuepftMit()
-                                                                .getObjektid()
-                                                                .intValue(),
-                                                        false);
-                                    else
-                                        hauptModul
-                                                .getManager()
-                                                .getSettingsManager()
-                                                .setSetting(
-                                                        "auik.imc.edit_object",
-                                                        obj
-                                                                .getBasisObjektByObjekt()
-                                                                .getObjektid()
-                                                                .intValue(),
-                                                        false);
-                                    hauptModul.getManager().switchModul(
-                                            "m_objekt_bearbeiten");
-                                }
+                            if (row != -1) {
+                                BasisObjektverknuepfung obj = Anh55Panel.this.objektVerknuepfungModel
+                                    .getRow(row);
+                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                    .getObjektid().intValue() != Anh55Panel.this.hauptModul
+                                    .getObjekt().getObjektid().intValue())
+                                    Anh55Panel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getBasisObjektByIstVerknuepftMit()
+                                                .getObjektid().intValue(),
+                                            false);
+                                else
+                                    Anh55Panel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getBasisObjektByObjekt()
+                                                .getObjektid().intValue(),
+                                            false);
+                                Anh55Panel.this.hauptModul.getManager()
+                                    .switchModul("m_objekt_bearbeiten");
                             }
                         }
+                    }
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-                            showVerknuepfungPopup(e);
-                        }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
 
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-                            showVerknuepfungPopup(e);
-                        }
-                    });
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+                });
 
-            objektverknuepfungTabelle.getInputMap().put(
-                    (KeyStroke) getVerknuepfungLoeschAction().getValue(
-                            Action.ACCELERATOR_KEY),
-                    getVerknuepfungLoeschAction().getValue(Action.NAME));
-            objektverknuepfungTabelle.getActionMap().put(
-                    getVerknuepfungLoeschAction().getValue(Action.NAME),
-                    getVerknuepfungLoeschAction());
+            this.objektverknuepfungTabelle.getInputMap().put(
+                (KeyStroke) getVerknuepfungLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getVerknuepfungLoeschAction().getValue(Action.NAME));
+            this.objektverknuepfungTabelle.getActionMap().put(
+                getVerknuepfungLoeschAction().getValue(Action.NAME),
+                getVerknuepfungLoeschAction());
         }
 
-        return objektverknuepfungTabelle;
+        return this.objektverknuepfungTabelle;
 
     }
 
     private void showVerknuepfungPopup(MouseEvent e) {
-        if (verknuepfungPopup == null) {
-            verknuepfungPopup = new JPopupMenu("Objekt");
+        if (this.verknuepfungPopup == null) {
+            this.verknuepfungPopup = new JPopupMenu("Objekt");
             JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-            verknuepfungPopup.add(loeschItem);
+            this.verknuepfungPopup.add(loeschItem);
         }
 
         if (e.isPopupTrigger()) {
             Point origin = e.getPoint();
-            int row = objektverknuepfungTabelle.rowAtPoint(origin);
+            int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
 
             if (row != -1) {
-                objektverknuepfungTabelle.setRowSelectionInterval(row, row);
-                verknuepfungPopup.show(e.getComponent(), e.getX(), e.getY());
+                this.objektverknuepfungTabelle
+                    .setRowSelectionInterval(row, row);
+                this.verknuepfungPopup.show(e.getComponent(), e.getX(),
+                    e.getY());
             }
         }
     }
 
     private Action getVerknuepfungLoeschAction() {
-        if (verknuepfungLoeschAction == null) {
-            verknuepfungLoeschAction = new AbstractAction("Löschen") {
+        if (this.verknuepfungLoeschAction == null) {
+            this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
                 private static final long serialVersionUID = 221954190162076661L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
-                            && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = objektVerknuepfungModel
-                                .getRow(row);
-                        int answer = JOptionPane
-                                .showConfirmDialog(
-                                        hauptModul.getPanel(),
-                                        "Soll die Verknüpfung wirklich gelöscht werden?\n"
-                                                + "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
-                                        "Löschen bestätigen",
-                                        JOptionPane.YES_NO_OPTION);
-                        if (answer == JOptionPane.YES_OPTION) {
-                            if (objektVerknuepfungModel.removeRow(row)) {
-                                hauptModul.getFrame().changeStatus(
-                                        "Objekt gelöscht.",
+                        && getObjektverknuepungTabelle().getEditingRow() == -1) {
+                        BasisObjektverknuepfung verknuepfung = Anh55Panel.this.objektVerknuepfungModel
+                            .getRow(row);
+                        if (GUIManager.getInstance().showQuestion(
+                            "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                + "Hinweis: Die Aktion betrifft nur die "
+                                + "Verknüpfung, die Objekte bleiben erhalten "
+                                + "und können jederzeit neu verknüpft werden.",
+                            "Löschen bestätigen")) {
+                            if (Anh55Panel.this.objektVerknuepfungModel
+                                .removeRow(row)) {
+                                Anh55Panel.this.hauptModul.getFrame()
+                                    .changeStatus("Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
                                 log.debug("Objekt " + verknuepfung.getId()
-                                        + " wurde gelöscht!");
+                                    + " wurde gelöscht!");
                             } else {
-                                hauptModul.getFrame().changeStatus(
+                                Anh55Panel.this.hauptModul.getFrame()
+                                    .changeStatus(
                                         "Konnte das Objekt nicht löschen!",
                                         HauptFrame.ERROR_COLOR);
                             }
@@ -1037,90 +1042,48 @@ public class Anh55Panel extends JPanel{
                     }
                 }
             };
-            verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_L));
-            verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
-                    .getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
-        return verknuepfungLoeschAction;
+        return this.verknuepfungLoeschAction;
     }
 
     private JButton getSelectObjektButton() {
-        if (selectObjektButton == null) {
-            selectObjektButton = new JButton("Objekt auswählen");
+        if (this.selectObjektButton == null) {
+            this.selectObjektButton = new JButton("Objekt auswählen");
 
-            selectObjektButton.addActionListener(new ActionListener() {
+            this.selectObjektButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ObjektChooser chooser = new ObjektChooser(hauptModul
-                            .getFrame(), fachdaten.getBasisObjekt(),
-                            objektVerknuepfungModel);
+                    ObjektChooser chooser = new ObjektChooser(
+                        Anh55Panel.this.hauptModul.getFrame(),
+                        Anh55Panel.this.fachdaten.getBasisObjekt(),
+                        Anh55Panel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }
             });
         }
-        return selectObjektButton;
+        return this.selectObjektButton;
     }
 
-    //
-//    private JCheckBox getAbwasseranfallCheck() {
-//        if (abwasseranfallCheck == null) {
-//            abwasseranfallCheck = new JCheckBox("Abwasseranfall");
-//        }
-//        return abwasseranfallCheck;
-//    }
-//    private JTextField getDruckverfahrenFeld() {
-//        if (druckverfahrenFeld == null) {
-//            druckverfahrenFeld = new LimitedTextField(150);
-//        }
-//        return druckverfahrenFeld;
-//    }
-//    private JTextField getEntsorgungFeld() {
-//        if (entsorgungFeld == null) {
-//            entsorgungFeld = new LimitedTextField(150);
-//        }
-//        return entsorgungFeld;
-//    }
-//    private TextFieldDateChooser getGen58Datum() {
-//        if (gen58Datum == null) {
-//            gen58Datum = new TextFieldDateChooser();
-//        }
-//        return gen58Datum;
-//    }
-//    private TextFieldDateChooser getGen59Datum() {
-//        if (gen59Datum == null) {
-//            gen59Datum = new TextFieldDateChooser();
-//        }
-//        return gen59Datum;
-//    }
-//    private JCheckBox getGenpflichtCheck() {
-//        if (genpflichtCheck == null) {
-//            genpflichtCheck = new JCheckBox("Genehmigungspflicht");
-//        }
-//        return genpflichtCheck;
-//    }
-//    private JTextField getVerbrauchFeld() {
-//        if (verbrauchFeld == null) {
-//            verbrauchFeld = new LimitedTextField(150);
-//        }
-//        return verbrauchFeld;
-//    }
     private JTextArea getBemerkungenArea() {
-        if (BemerkungenArea == null) {
-            BemerkungenArea = new LimitedTextArea(255);
-            BemerkungenArea.setLineWrap(true);
-            BemerkungenArea.setWrapStyleWord(true);
+        if (this.BemerkungenArea == null) {
+            this.BemerkungenArea = new LimitedTextArea(255);
+            this.BemerkungenArea.setLineWrap(true);
+            this.BemerkungenArea.setWrapStyleWord(true);
         }
-        return BemerkungenArea;
+        return this.BemerkungenArea;
     }
 
     private JTextArea getWaschsituationArea() {
-        if (waschsituationArea == null) {
-            waschsituationArea = new LimitedTextArea(255);
-            waschsituationArea.setLineWrap(true);
-            waschsituationArea.setWrapStyleWord(true);
+        if (this.waschsituationArea == null) {
+            this.waschsituationArea = new LimitedTextArea(255);
+            this.waschsituationArea.setLineWrap(true);
+            this.waschsituationArea.setWrapStyleWord(true);
         }
-        return waschsituationArea;
+        return this.waschsituationArea;
     }
 }

@@ -85,18 +85,19 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -112,24 +113,24 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class Anh49Panel extends AbstractAnhangPanel {
-	private static final long serialVersionUID = 2262140075740338093L;
+    private static final long serialVersionUID = 2262140075740338093L;
 
-	/* Note: As these strings are used as keys in the underlying HashMap,     *
-	 * they should be unique.                                                 */
-	/* Widgets - left */
-	private final String ANSPRECHPARTNER             = "Ansprechpartner:";
-	private final String SACHKUNDE_LFA               = "Sachkunde LFA:";
-	private final String ANALYSEMONAT                = "Analysemonat:";
-	private final String BEMERKUNGEN                 = "Bemerkungen";
-	/* Widgets - right */
-	private final String GENEHMIGUNGSDATUM           = "Genehmigungsdatum:";
+    /* Note: As these strings are used as keys in the underlying HashMap,     *
+     * they should be unique.                                                 */
+    /* Widgets - left */
+    private final String ANSPRECHPARTNER = "Ansprechpartner:";
+    private final String SACHKUNDE_LFA = "Sachkunde LFA:";
+    private final String ANALYSEMONAT = "Analysemonat:";
+    private final String BEMERKUNGEN = "Bemerkungen";
+    /* Widgets - right */
+    private final String GENEHMIGUNGSDATUM = "Genehmigungsdatum:";
     private final String AENDERUNGSGENEHMIGUNGSDATUM = "Änderungsgen.-datum:";
-	private final String ABGEMELDET                  = "abgemeldet";
-	private final String ABWASSERFREI                = "abwasserfrei";
-	private final String E_SATZUNG                   = "E-Satzung";
-	private final String WIEDERVORLAGEDATUM          = "Wiedervorlagedatum:";
-	/* Widgets - bottom */
-	private final String SPEICHERN                   = "Speichern";
+    private final String ABGEMELDET = "abgemeldet";
+    private final String ABWASSERFREI = "abwasserfrei";
+    private final String E_SATZUNG = "E-Satzung";
+    private final String WIEDERVORLAGEDATUM = "Wiedervorlagedatum:";
+    /* Widgets - bottom */
+    private final String SPEICHERN = "Speichern";
 
     private JButton saveAnh49Button = null;
 
@@ -144,54 +145,52 @@ public class Anh49Panel extends AbstractAnhangPanel {
     private JPopupMenu verknuepfungPopup;
 
     public Anh49Panel(BasisObjektBearbeiten hauptModul) {
-    	super("Anhang 49", hauptModul);
+        super("Anhang 49", hauptModul);
 
-    	/* Add components to the "Anhang" panel */
+        /* Add components to the "Anhang" panel */
         /* Left column */
-    	super.addComponent(ANSPRECHPARTNER, new LimitedTextField(50));
-    	super.addComponent(SACHKUNDE_LFA, new LimitedTextField(50));
-    	super.addComponent(ANALYSEMONAT, new LimitedTextField(50));
-    	JTextArea textArea = new LimitedTextArea(150);
-    	textArea.setLineWrap(true);
-    	textArea.setWrapStyleWord(true);
-    	super.addComponent(BEMERKUNGEN, textArea);
+        super.addComponent(this.ANSPRECHPARTNER, new LimitedTextField(50));
+        super.addComponent(this.SACHKUNDE_LFA, new LimitedTextField(50));
+        super.addComponent(this.ANALYSEMONAT, new LimitedTextField(50));
+        JTextArea textArea = new LimitedTextArea(150);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        super.addComponent(this.BEMERKUNGEN, textArea);
 
-    	/* Right column */
-    	super.addComponent(GENEHMIGUNGSDATUM,
-    			new TextFieldDateChooser());
-    	super.addComponent(AENDERUNGSGENEHMIGUNGSDATUM,
-    			new TextFieldDateChooser());
-    	super.addComponent(ABGEMELDET, new JCheckBox(ABGEMELDET));
-    	super.addComponent(ABWASSERFREI, new JCheckBox(ABWASSERFREI));
-    	super.addComponent(E_SATZUNG, new JCheckBox(E_SATZUNG));
-    	super.addComponent(WIEDERVORLAGEDATUM,
-    			new TextFieldDateChooser());
-    	super.addComponent(SPEICHERN, getSaveAnh49Button());
+        /* Right column */
+        super.addComponent(this.GENEHMIGUNGSDATUM, new TextFieldDateChooser());
+        super.addComponent(this.AENDERUNGSGENEHMIGUNGSDATUM,
+            new TextFieldDateChooser());
+        super.addComponent(this.ABGEMELDET, new JCheckBox(this.ABGEMELDET));
+        super.addComponent(this.ABWASSERFREI, new JCheckBox(this.ABWASSERFREI));
+        super.addComponent(this.E_SATZUNG, new JCheckBox(this.E_SATZUNG));
+        super.addComponent(this.WIEDERVORLAGEDATUM, new TextFieldDateChooser());
+        super.addComponent(this.SPEICHERN, getSaveAnh49Button());
 
-        FormLayout layout = new FormLayout (
-                "pref, 5dlu, 100dlu, 10dlu, pref, 5dlu, 100dlu", // Spalten
-                "pref, " +    // Bearbeitung     | Erfassung
-                "3dlu, " +    //
-                "pref, " +    // Sachbearbeiter  | Genehmigungsdatum
-                "3dlu, " +    //
-                "pref, " +    // Ansprechpartner | Änderungsgenehmigungsdatum
-                "3dlu, " +    //
-                "pref, " +    // Sachkunde LFA   | abgemeldet
-                "3dlu, " +    //
-                "pref, " +    // Analyse         | abwasserfrei
-                "3dlu, " +    //
-                "pref, " +    // Analysemonat   | E-Satzung
-                "3dlu, " +    //
-                "pref, " +    // Bemerkung      | Kontrolle
-                "3dlu, " +    //
-                "pref, " +    // Bemerkung      | Wiedervorlage
-                "30dlu, " +   //
-                "3dlu, " +    //
+        FormLayout layout = new FormLayout(
+            "pref, 5dlu, 100dlu, 10dlu, pref, 5dlu, 100dlu", // Spalten
+            "pref, " + // Bearbeitung | Erfassung
+                "3dlu, " + //
+                "pref, " + // Sachbearbeiter | Genehmigungsdatum
+                "3dlu, " + //
+                "pref, " + // Ansprechpartner | Änderungsgenehmigungsdatum
+                "3dlu, " + //
+                "pref, " + // Sachkunde LFA | abgemeldet
+                "3dlu, " + //
+                "pref, " + // Analyse | abwasserfrei
+                "3dlu, " + //
+                "pref, " + // Analysemonat | E-Satzung
+                "3dlu, " + //
+                "pref, " + // Bemerkung | Kontrolle
+                "3dlu, " + //
+                "pref, " + // Bemerkung | Wiedervorlage
+                "30dlu, " + //
+                "3dlu, " + //
                 "pref, " + // Verknüpfte Objekte
-                "5dlu, " +    //
-                "fill:100dlu, " +    // Tabelle
-                "5dlu, " +    //
-                "pref");      // Buttons
+                "5dlu, " + //
+                "fill:100dlu, " + // Tabelle
+                "5dlu, " + //
+                "pref"); // Buttons
 
         PanelBuilder builder = new PanelBuilder(layout, this);
         builder.setDefaultDialogBorder();
@@ -206,41 +205,41 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
         builder.addSeparator("Bearbeitung", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.addLabel(ANSPRECHPARTNER, cc.xy(labelCol, row));
-        builder.add(super.getComponent(ANSPRECHPARTNER), cc.xy(fieldCol, row));
+        builder.addLabel(this.ANSPRECHPARTNER, cc.xy(labelCol, row));
+        builder.add(super.getComponent(this.ANSPRECHPARTNER),
+            cc.xy(fieldCol, row));
         row += 2;
-        builder.addLabel(SACHKUNDE_LFA, cc.xy(labelCol, row));
-        builder.add(super.getComponent(SACHKUNDE_LFA), cc.xy(fieldCol, row));
+        builder.addLabel(this.SACHKUNDE_LFA, cc.xy(labelCol, row));
+        builder.add(super.getComponent(this.SACHKUNDE_LFA),
+            cc.xy(fieldCol, row));
         row += 2;
 
         builder.addSeparator("Analyse", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.addLabel(ANALYSEMONAT, cc.xy(labelCol, row));
-        builder.add(super.getComponent(ANALYSEMONAT), cc.xy(fieldCol, row));
+        builder.addLabel(this.ANALYSEMONAT, cc.xy(labelCol, row));
+        builder
+            .add(super.getComponent(this.ANALYSEMONAT), cc.xy(fieldCol, row));
         row += 2;
 
         builder.addSeparator("Bemerkungen", cc.xyw(labelCol, row, cols));
         row += 2;
-        builder.add(new JScrollPane(super.getComponent(BEMERKUNGEN),
-        		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-        		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),
-        		cc.xywh(labelCol, row, cols, 4));
+        builder.add(new JScrollPane(super.getComponent(this.BEMERKUNGEN),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh(labelCol,
+            row, cols, 4));
         row += 5;
 
         /* Bottom */
         builder.addSeparator("Verknüpfte Objekte", cc.xyw(labelCol, row, cols));
         row += 2;
-        builder.add(
-        		new JScrollPane(
-        				getObjektverknuepungTabelle(),
-        				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-        				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),
-                cc.xyw(labelCol, row, cols));
+        builder.add(new JScrollPane(getObjektverknuepungTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xyw(labelCol,
+            row, cols));
         row += 2;
-        builder.add(
-        		ButtonBarFactory.buildRightAlignedBar(getSelectObjektButton(),
-        				getSaveAnh49Button()),
-				cc.xyw(labelCol, row, cols));
+        builder.add(ButtonBarFactory.buildRightAlignedBar(
+            getSelectObjektButton(), getSaveAnh49Button()), cc.xyw(labelCol,
+            row, cols));
 
         /* Right column */
         row = 1;
@@ -251,314 +250,315 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
         builder.addSeparator("Erfassung", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.add(
-        		super.getComponent(ABGEMELDET),
-        		cc.xy(labelCol, row, "l,d"));
-        builder.add(
-            super.getComponent(E_SATZUNG),
+        builder.add(super.getComponent(this.ABGEMELDET),
+            cc.xy(labelCol, row, "l,d"));
+        builder.add(super.getComponent(this.E_SATZUNG),
             cc.xy(fieldCol, row, "l,d"));
         row += 2;
-        builder.add(
-        		super.getComponent(ABWASSERFREI),
-        		cc.xy(labelCol, row, "l,d"));
+        builder.add(super.getComponent(this.ABWASSERFREI),
+            cc.xy(labelCol, row, "l,d"));
         row += 2;
 
-        builder.addSeparator(
-        		"Wiedervorlage", cc.xyw(labelCol, row, colWidth));
+        builder.addSeparator("Wiedervorlage", cc.xyw(labelCol, row, colWidth));
         row += 2;
-        builder.addLabel(WIEDERVORLAGEDATUM, cc.xy(labelCol, row));
-        builder.add(
-        		super.getComponent(WIEDERVORLAGEDATUM), cc.xy(fieldCol, row));
+        builder.addLabel(this.WIEDERVORLAGEDATUM, cc.xy(labelCol, row));
+        builder.add(super.getComponent(this.WIEDERVORLAGEDATUM),
+            cc.xy(fieldCol, row));
 
         builder.nextLine();
     }
 
     public void fetchFormData() {
-        fachdaten = Anh49Fachdaten.getAnh49ByObjekt(hauptModul.getObjekt());
-        log.debug("Anhang 49 Objekt aus DB geholt: " + fachdaten);
+        this.fachdaten = Anh49Fachdaten.getAnh49ByObjekt(this.hauptModul
+            .getObjekt());
+        this.log.debug("Anhang 49 Objekt aus DB geholt: " + this.fachdaten);
     }
 
     public void updateForm() {
-        if (fachdaten != null) {
-        	super.setComponentValue(ANSPRECHPARTNER,
-        			fachdaten.getAnsprechpartnerIn());
-        	super.setComponentValue(SACHKUNDE_LFA,
-        			fachdaten.getSachkundelfa());
-        	super.setComponentValue(ANALYSEMONAT,
-        			fachdaten.getAnalysemonat());
-        	super.setComponentValue(BEMERKUNGEN,
-        			fachdaten.getBemerkungen());
+        if (this.fachdaten != null) {
+            super.setComponentValue(this.ANSPRECHPARTNER,
+                this.fachdaten.getAnsprechpartnerIn());
+            super.setComponentValue(this.SACHKUNDE_LFA,
+                this.fachdaten.getSachkundelfa());
+            super.setComponentValue(this.ANALYSEMONAT,
+                this.fachdaten.getAnalysemonat());
+            super.setComponentValue(this.BEMERKUNGEN,
+                this.fachdaten.getBemerkungen());
 
-        	super.setComponentValue(GENEHMIGUNGSDATUM,
-        			fachdaten.getGenehmigung());
-        	super.setComponentValue(AENDERUNGSGENEHMIGUNGSDATUM,
-        			fachdaten.getAenderungsgenehmigung());
-        	super.setComponentValue(ABGEMELDET,
-        			fachdaten.getAbgemeldet());
-        	super.setComponentValue(ABWASSERFREI,
-        			fachdaten.getAbwasserfrei());
-        	super.setComponentValue(E_SATZUNG,
-        			fachdaten.getESatzung());
-        	super.setComponentValue(WIEDERVORLAGEDATUM,
-        			fachdaten.getWiedervorlage());
+            super.setComponentValue(this.GENEHMIGUNGSDATUM,
+                this.fachdaten.getGenehmigung());
+            super.setComponentValue(this.AENDERUNGSGENEHMIGUNGSDATUM,
+                this.fachdaten.getAenderungsgenehmigung());
+            super.setComponentValue(this.ABGEMELDET,
+                this.fachdaten.getAbgemeldet());
+            super.setComponentValue(this.ABWASSERFREI,
+                this.fachdaten.getAbwasserfrei());
+            super.setComponentValue(this.E_SATZUNG,
+                this.fachdaten.getESatzung());
+            super.setComponentValue(this.WIEDERVORLAGEDATUM,
+                this.fachdaten.getWiedervorlage());
 
-            objektVerknuepfungModel.setObjekt(hauptModul.getObjekt());
+            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         } else {
             enableAll(false);
-            hauptModul.getFrame().changeStatus(
-                    "FEHLER: Kein Anhang 49 Objekt gefunden!",
-                    HauptFrame.ERROR_COLOR);
+            this.hauptModul.getFrame().changeStatus(
+                "FEHLER: Kein Anhang 49 Objekt gefunden!",
+                HauptFrame.ERROR_COLOR);
         }
     }
 
     public void clearForm() {
-    	super.clearAllComponents();
+        super.clearAllComponents();
     }
 
     public void enableAll(boolean enabled) {
         // Wenn das Fachdaten-Objekt null ist,
         // können die Elemente nicht wieder aktiviert werden:
-        if (!(enabled && (fachdaten == null))) {
-        	super.setAllComponentsEnabled(enabled);
+        if (!(enabled && (this.fachdaten == null))) {
+            super.setAllComponentsEnabled(enabled);
         }
     }
 
     public Anh49Fachdaten getFachdaten() {
-        return fachdaten;
+        return this.fachdaten;
     }
 
     private boolean saveAnh49Daten() {
         boolean success;
 
-        fachdaten.setAnsprechpartnerIn(
-        		(String)super.getComponentValue(ANSPRECHPARTNER));
-        fachdaten.setSachkundelfa(
-        		(String)super.getComponentValue(SACHKUNDE_LFA));
-        fachdaten.setAnalysemonat(
-        		(String)super.getComponentValue(ANALYSEMONAT));
-        fachdaten.setBemerkungen(
-        		(String)super.getComponentValue(BEMERKUNGEN));
+        this.fachdaten.setAnsprechpartnerIn((String) super
+            .getComponentValue(this.ANSPRECHPARTNER));
+        this.fachdaten.setSachkundelfa((String) super
+            .getComponentValue(this.SACHKUNDE_LFA));
+        this.fachdaten.setAnalysemonat((String) super
+            .getComponentValue(this.ANALYSEMONAT));
+        this.fachdaten.setBemerkungen((String) super
+            .getComponentValue(this.BEMERKUNGEN));
 
-        fachdaten.setGenehmigung(
-        		(Date)super.getComponentValue(GENEHMIGUNGSDATUM));
-        fachdaten.setAenderungsgenehmigung(
-        		(Date)super.getComponentValue(AENDERUNGSGENEHMIGUNGSDATUM));
-        fachdaten.setAbgemeldet(
-        		(Boolean)super.getComponentValue(ABGEMELDET));
-        fachdaten.setAbwasserfrei(
-        		(Boolean)super.getComponentValue(ABWASSERFREI));
-        fachdaten.setESatzung(
-        		(Boolean)super.getComponentValue(E_SATZUNG));
-        fachdaten.setWiedervorlage(
-        		(Date)super.getComponentValue(WIEDERVORLAGEDATUM));
+        this.fachdaten.setGenehmigung((Date) super
+            .getComponentValue(this.GENEHMIGUNGSDATUM));
+        this.fachdaten.setAenderungsgenehmigung((Date) super
+            .getComponentValue(this.AENDERUNGSGENEHMIGUNGSDATUM));
+        this.fachdaten.setAbgemeldet((Boolean) super
+            .getComponentValue(this.ABGEMELDET));
+        this.fachdaten.setAbwasserfrei((Boolean) super
+            .getComponentValue(this.ABWASSERFREI));
+        this.fachdaten.setESatzung((Boolean) super
+            .getComponentValue(this.E_SATZUNG));
+        this.fachdaten.setWiedervorlage((Date) super
+            .getComponentValue(this.WIEDERVORLAGEDATUM));
 
-        success = Anh49Fachdaten.saveFachdaten(fachdaten);
+        success = Anh49Fachdaten.saveFachdaten(this.fachdaten);
 
         if (!success) {
-            log.debug("Anh49 Objekt " + fachdaten
-                    + " konnte nicht gespeichert werden!");
+            this.log.debug("Anh49 Objekt " + this.fachdaten
+                + " konnte nicht gespeichert werden!");
         }
 
         return success;
     }
 
     public void completeObjekt() {
-        if (hauptModul.isNew() || fachdaten == null) {
+        if (this.hauptModul.isNew() || this.fachdaten == null) {
             // Neues Anhang49-Objekt erzeugen
-            fachdaten = new Anh49Fachdaten();
+            this.fachdaten = new Anh49Fachdaten();
             // Objekt_Id setzen
-            fachdaten.setBasisObjekt(hauptModul.getObjekt());
+            this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Anhang49-Objekt speichern
-            Anh49Fachdaten.saveFachdaten(fachdaten);
-            log.debug("Neues Anh49 Objekt " + fachdaten + " gespeichert.");
+            Anh49Fachdaten.saveFachdaten(this.fachdaten);
+            this.log.debug("Neues Anh49 Objekt " + this.fachdaten
+                + " gespeichert.");
         }
     }
 
     private JButton getSaveAnh49Button() {
-        if (saveAnh49Button == null) {
-            saveAnh49Button = new JButton("Speichern");
+        if (this.saveAnh49Button == null) {
+            this.saveAnh49Button = new JButton("Speichern");
 
-            saveAnh49Button.addActionListener(new ActionListener() {
+            this.saveAnh49Button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveAnh49Daten()) {
-                        hauptModul.getFrame().changeStatus("Anhang 49-Objekt erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
+                        Anh49Panel.this.hauptModul.getFrame().changeStatus(
+                            "Anhang 49-Objekt erfolgreich gespeichert.",
+                            HauptFrame.SUCCESS_COLOR);
                     } else {
-                        hauptModul.getFrame().changeStatus("Fehler beim Speichern des Objekts!", HauptFrame.ERROR_COLOR);
+                        Anh49Panel.this.hauptModul.getFrame().changeStatus(
+                            "Fehler beim Speichern des Objekts!",
+                            HauptFrame.ERROR_COLOR);
                     }
 
-                    hauptModul.fillForm();
+                    Anh49Panel.this.hauptModul.fillForm();
                 }
             });
         }
-        return saveAnh49Button;
+        return this.saveAnh49Button;
     }
 
     private JTable getObjektverknuepungTabelle() {
 
-        if (objektVerknuepfungModel == null) {
-            objektVerknuepfungModel = new ObjektVerknuepfungModel(hauptModul
-                    .getObjekt());
+        if (this.objektVerknuepfungModel == null) {
+            this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
+                this.hauptModul.getObjekt());
 
-            if (objektverknuepfungTabelle == null) {
-                objektverknuepfungTabelle = new JTable(objektVerknuepfungModel);
+            if (this.objektverknuepfungTabelle == null) {
+                this.objektverknuepfungTabelle = new JTable(
+                    this.objektVerknuepfungModel);
             } else {
-                objektverknuepfungTabelle.setModel(objektVerknuepfungModel);
+                this.objektverknuepfungTabelle
+                    .setModel(this.objektVerknuepfungModel);
             }
-            objektverknuepfungTabelle.getColumnModel().getColumn(0)
-                    .setPreferredWidth(5);
-            objektverknuepfungTabelle.getColumnModel().getColumn(1)
-                    .setPreferredWidth(100);
-            objektverknuepfungTabelle.getColumnModel().getColumn(2)
-                    .setPreferredWidth(250);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
+                .setPreferredWidth(5);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
+                .setPreferredWidth(100);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
+                .setPreferredWidth(250);
 
-            objektverknuepfungTabelle
-                    .addMouseListener(new java.awt.event.MouseAdapter() {
-                        @Override
-                        public void mouseClicked(java.awt.event.MouseEvent e) {
-                            if ((e.getClickCount() == 2)
-                                    && (e.getButton() == 1)) {
-                                Point origin = e.getPoint();
-                                int row = getObjektverknuepungTabelle()
-                                        .rowAtPoint(origin);
+            this.objektverknuepfungTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getObjektverknuepungTabelle().rowAtPoint(
+                                origin);
 
-                                if (row != -1) {
-                                    BasisObjektverknuepfung obj = objektVerknuepfungModel
-                                            .getRow(row);
-                                    if (obj.getBasisObjektByIstVerknuepftMit()
-                                            .getObjektid().intValue() != hauptModul
-                                            .getObjekt().getObjektid()
-                                            .intValue())
-                                        hauptModul
-                                                .getManager()
-                                                .getSettingsManager()
-                                                .setSetting(
-                                                        "auik.imc.edit_object",
-                                                        obj
-                                                                .getBasisObjektByIstVerknuepftMit()
-                                                                .getObjektid()
-                                                                .intValue(),
-                                                        false);
-                                    else
-                                        hauptModul
-                                                .getManager()
-                                                .getSettingsManager()
-                                                .setSetting(
-                                                        "auik.imc.edit_object",
-                                                        obj
-                                                                .getBasisObjektByObjekt()
-                                                                .getObjektid()
-                                                                .intValue(),
-                                                        false);
-                                    hauptModul.getManager().switchModul(
-                                            "m_objekt_bearbeiten");
-                                }
+                            if (row != -1) {
+                                BasisObjektverknuepfung obj = Anh49Panel.this.objektVerknuepfungModel
+                                    .getRow(row);
+                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                    .getObjektid().intValue() != Anh49Panel.this.hauptModul
+                                    .getObjekt().getObjektid().intValue())
+                                    Anh49Panel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getBasisObjektByIstVerknuepftMit()
+                                                .getObjektid().intValue(),
+                                            false);
+                                else
+                                    Anh49Panel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getBasisObjektByObjekt()
+                                                .getObjektid().intValue(),
+                                            false);
+                                Anh49Panel.this.hauptModul.getManager()
+                                    .switchModul("m_objekt_bearbeiten");
                             }
                         }
+                    }
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-                            showVerknuepfungPopup(e);
-                        }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
 
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-                            showVerknuepfungPopup(e);
-                        }
-                    });
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+                });
 
-            objektverknuepfungTabelle.getInputMap().put(
-                    (KeyStroke) getVerknuepfungLoeschAction().getValue(
-                            Action.ACCELERATOR_KEY),
-                    getVerknuepfungLoeschAction().getValue(Action.NAME));
-            objektverknuepfungTabelle.getActionMap().put(
-                    getVerknuepfungLoeschAction().getValue(Action.NAME),
-                    getVerknuepfungLoeschAction());
+            this.objektverknuepfungTabelle.getInputMap().put(
+                (KeyStroke) getVerknuepfungLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getVerknuepfungLoeschAction().getValue(Action.NAME));
+            this.objektverknuepfungTabelle.getActionMap().put(
+                getVerknuepfungLoeschAction().getValue(Action.NAME),
+                getVerknuepfungLoeschAction());
         }
 
-        return objektverknuepfungTabelle;
+        return this.objektverknuepfungTabelle;
 
     }
 
     private void showVerknuepfungPopup(MouseEvent e) {
-        if (verknuepfungPopup == null) {
-            verknuepfungPopup = new JPopupMenu("Objekt");
+        if (this.verknuepfungPopup == null) {
+            this.verknuepfungPopup = new JPopupMenu("Objekt");
             JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-            verknuepfungPopup.add(loeschItem);
+            this.verknuepfungPopup.add(loeschItem);
         }
 
         if (e.isPopupTrigger()) {
             Point origin = e.getPoint();
-            int row = objektverknuepfungTabelle.rowAtPoint(origin);
+            int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
 
             if (row != -1) {
-                objektverknuepfungTabelle.setRowSelectionInterval(row, row);
-                verknuepfungPopup.show(e.getComponent(), e.getX(), e.getY());
+                this.objektverknuepfungTabelle
+                    .setRowSelectionInterval(row, row);
+                this.verknuepfungPopup.show(e.getComponent(), e.getX(),
+                    e.getY());
             }
         }
     }
 
     private Action getVerknuepfungLoeschAction() {
-        if (verknuepfungLoeschAction == null) {
-            verknuepfungLoeschAction = new AbstractAction("Löschen") {
-				private static final long serialVersionUID = 3694639072102209194L;
+        if (this.verknuepfungLoeschAction == null) {
+            this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 3694639072102209194L;
 
-				@Override
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
-                            && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = objektVerknuepfungModel
-                                .getRow(row);
-                        int answer = JOptionPane
-                                .showConfirmDialog(
-                                        hauptModul.getPanel(),
-                                "Soll die Verknüpfung wirklich gelöscht werden?\n"
-                                    + "Hinweis: Die Aktion betrifft nur die Verknüpfung, die Objekte bleiben erhalten und können jederzeit neu verknüpft werden.",
-                                "Löschen bestätigen",
-                                        JOptionPane.YES_NO_OPTION);
-                        if (answer == JOptionPane.YES_OPTION) {
-                            if (objektVerknuepfungModel.removeRow(row)) {
-                                hauptModul.getFrame().changeStatus(
-                                    "Objekt gelöscht.",
+                        && getObjektverknuepungTabelle().getEditingRow() == -1) {
+                        BasisObjektverknuepfung verknuepfung = Anh49Panel.this.objektVerknuepfungModel
+                            .getRow(row);
+                        if (GUIManager.getInstance().showQuestion(
+                            "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                + "Hinweis: Die Aktion betrifft nur die "
+                                + "Verknüpfung, die Objekte bleiben erhalten "
+                                + "und können jederzeit neu verknüpft werden.",
+                            "Löschen bestätigen")) {
+                            if (Anh49Panel.this.objektVerknuepfungModel
+                                .removeRow(row)) {
+                                Anh49Panel.this.hauptModul.getFrame()
+                                    .changeStatus("Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
-                                log.debug("Objekt " + verknuepfung.getId()
-                                    + " wurde gelöscht!");
+                                Anh49Panel.this.log
+                                    .debug("Objekt " + verknuepfung.getId()
+                                        + " wurde gelöscht!");
                             } else {
-                                hauptModul.getFrame().changeStatus(
-                                    "Konnte das Objekt nicht löschen!",
+                                Anh49Panel.this.hauptModul.getFrame()
+                                    .changeStatus(
+                                        "Konnte das Objekt nicht löschen!",
                                         HauptFrame.ERROR_COLOR);
                             }
                         }
                     }
                 }
             };
-            verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_L));
-            verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
-                    .getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
-        return verknuepfungLoeschAction;
+        return this.verknuepfungLoeschAction;
     }
 
     private JButton getSelectObjektButton() {
-        if (selectObjektButton == null) {
-            selectObjektButton = new JButton("Objekt auswählen");
+        if (this.selectObjektButton == null) {
+            this.selectObjektButton = new JButton("Objekt auswählen");
 
-            selectObjektButton.addActionListener(new ActionListener() {
+            this.selectObjektButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ObjektChooser chooser = new ObjektChooser(hauptModul
-                            .getFrame(), fachdaten.getBasisObjekt(),
-                            objektVerknuepfungModel);
+                    ObjektChooser chooser = new ObjektChooser(
+                        Anh49Panel.this.hauptModul.getFrame(),
+                        Anh49Panel.this.fachdaten.getBasisObjekt(),
+                        Anh49Panel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }
             });
         }
-        return selectObjektButton;
+        return this.selectObjektButton;
     }
 }
-

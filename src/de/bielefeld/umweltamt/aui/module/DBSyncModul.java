@@ -32,16 +32,17 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.tipi.DeaAdresse;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetrieb;
@@ -112,38 +113,37 @@ public class DBSyncModul extends AbstractModul {
         url = null;
         user = null;
         password = null;
-        dbTable = new JTable();
-        rowCount = new JLabel("0");
-        addrDBModel = new DeaAdresseModel();
-        addrServiceModel = new DeaAdresseModel();
+        this.dbTable = new JTable();
+        this.rowCount = new JLabel("0");
+        this.addrDBModel = new DeaAdresseModel();
+        this.addrServiceModel = new DeaAdresseModel();
 
-        betriebDBModel = new InkaBetriebModel();
-        betriebServiceModel = new InkaBetriebModel();
+        this.betriebDBModel = new InkaBetriebModel();
+        this.betriebServiceModel = new InkaBetriebModel();
 
-        betriebseinrDBModel = new InkaBetriebseinrichtungModel();
-        betriebseinrServiceModel = new InkaBetriebseinrichtungModel();
+        this.betriebseinrDBModel = new InkaBetriebseinrichtungModel();
+        this.betriebseinrServiceModel = new InkaBetriebseinrichtungModel();
 
-        genehmigungDBModel = new InkaGenehmigungModel();
-        genehmigungServiceModel = new InkaGenehmigungModel();
+        this.genehmigungDBModel = new InkaGenehmigungModel();
+        this.genehmigungServiceModel = new InkaGenehmigungModel();
 
-        sendAddr = new ArrayList<Dea_Adresse>();
-        sendBetrieb = new ArrayList<Inka_Betrieb>();
-        sendBetriebseinr = new ArrayList<Inka_Betriebseinrichtung>();
-        sendGenehm = new ArrayList<Inka_Genehmigung>();
+        this.sendAddr = new ArrayList<Dea_Adresse>();
+        this.sendBetrieb = new ArrayList<Inka_Betrieb>();
+        this.sendBetriebseinr = new ArrayList<Inka_Betriebseinrichtung>();
+        this.sendGenehm = new ArrayList<Inka_Genehmigung>();
 
-        service = ServiceManager.getInstance();
+        this.service = ServiceManager.getInstance();
     }
-
 
     private JPanel createPanel() {
         init();
-        if(panel == null) {
+        if (this.panel == null) {
             String[] entities = readSyncableEntities();
             this.panel = new JPanel();
             final JComboBox compare = new JComboBox();
             final JComboBox selection = new JComboBox();
             if (entities != null && entities.length > 0) {
-                for (String entity: entities) {
+                for (String entity : entities) {
                     selection.addItem(entity);
                 }
             }
@@ -152,19 +152,24 @@ public class DBSyncModul extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     String item = (String) selection.getSelectedItem();
                     if (item.equals("dea_adresse")) {
-                        dbTable.setModel(addrDBModel);
+                        DBSyncModul.this.dbTable
+                            .setModel(DBSyncModul.this.addrDBModel);
                     }
                     if (item.equals("inka_betrieb")) {
-                        dbTable.setModel(betriebDBModel);
+                        DBSyncModul.this.dbTable
+                            .setModel(DBSyncModul.this.betriebDBModel);
                     }
                     if (item.equals("inka_betriebseinrichtung")) {
-                        dbTable.setModel(betriebseinrDBModel);
+                        DBSyncModul.this.dbTable
+                            .setModel(DBSyncModul.this.betriebseinrDBModel);
                     }
                     if (item.equals("inka_genehmigung")) {
-                        dbTable.setModel(genehmigungDBModel);
+                        DBSyncModul.this.dbTable
+                            .setModel(DBSyncModul.this.genehmigungDBModel);
                     }
                     compare.setSelectedItem(compare.getItemAt(0));
-                    rowCount.setText(String.valueOf(dbTable.getRowCount()));
+                    DBSyncModul.this.rowCount.setText(String
+                        .valueOf(DBSyncModul.this.dbTable.getRowCount()));
                 }
             });
 
@@ -177,43 +182,51 @@ public class DBSyncModul extends AbstractModul {
                     String sel = (String) selection.getSelectedItem();
                     if (item.equals("lokale Datenbank")) {
                         if (sel.equals("dea_adresse")) {
-                            dbTable.setModel(addrDBModel);
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.addrDBModel);
                         }
                         if (sel.equals("inka_betrieb")) {
-                            dbTable.setModel(betriebDBModel);
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.betriebDBModel);
                         }
                         if (sel.equals("inka_betriebseinrichtung")) {
-                            dbTable.setModel(betriebseinrDBModel);
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.betriebseinrDBModel);
                         }
                         if (sel.equals("inka_genehmigung")) {
-                            dbTable.setModel(genehmigungDBModel);
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.genehmigungDBModel);
                         }
                     }
                     if (item.equals("entferner Dienst")) {
                         if (sel.equals("dea_adresse")) {
-                            dbTable.setModel(addrServiceModel);
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.addrServiceModel);
                         }
                         if (sel.equals("inka_betrieb")) {
-                            dbTable.setModel(betriebServiceModel);
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.betriebServiceModel);
                         }
                         if (sel.equals("inka_betriebseinrichtung")) {
-                            dbTable.setModel(betriebseinrServiceModel);
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.betriebseinrServiceModel);
                         }
                         if (sel.equals("inka_genehmigung")) {
-                            dbTable.setModel(genehmigungServiceModel);
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.genehmigungServiceModel);
                         }
                     }
-                    rowCount.setText(String.valueOf(dbTable.getRowCount()));
+                    DBSyncModul.this.rowCount.setText(String
+                        .valueOf(DBSyncModul.this.dbTable.getRowCount()));
                 }
             });
-
 
             JButton get = new JButton("Daten von ext. Dienst holen");
             get.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                    CredentialsDialog dialog =
-                        new CredentialsDialog(DBSyncModul.this);
+                    CredentialsDialog dialog = new CredentialsDialog(
+                        DBSyncModul.this);
                     dialog.setVisible(true);
                 }
             });
@@ -222,57 +235,63 @@ public class DBSyncModul extends AbstractModul {
             set.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                    if(url != null && user != null && password != null) {
+                    if (url != null && user != null && password != null) {
                         dbToService();
-                        Dea_Adresse[] addr = new Dea_Adresse[sendAddr.size()];
-                        addr = sendAddr.toArray(addr);
-                        Inka_Betrieb[] betr =
-                            new Inka_Betrieb[sendBetrieb.size()];
-                        betr = sendBetrieb.toArray(betr);
-                        Inka_Betriebseinrichtung[] betreinr =
-                            new Inka_Betriebseinrichtung[
-                                sendBetriebseinr.size()];
-                        betreinr = sendBetriebseinr.toArray(betreinr);
-                        Inka_Genehmigung[] genehm =
-                            new Inka_Genehmigung[sendGenehm.size()];
-                        genehm = sendGenehm.toArray(genehm);
-                        service.setDea_Adressen(user, password, addr);
-                        service.setInka_Betriebe(user, password, betr);
-                        service.setInka_Genehmigungen(user, password, genehm);
-                        service.setInka_Betriebseinrichtungen(user, password, betreinr);
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(null, "Bitte holen Sie zuerst Daten ab!");
+                        Dea_Adresse[] addr = new Dea_Adresse[DBSyncModul.this.sendAddr
+                            .size()];
+                        addr = DBSyncModul.this.sendAddr.toArray(addr);
+                        Inka_Betrieb[] betr = new Inka_Betrieb[DBSyncModul.this.sendBetrieb
+                            .size()];
+                        betr = DBSyncModul.this.sendBetrieb.toArray(betr);
+                        Inka_Betriebseinrichtung[] betreinr = new Inka_Betriebseinrichtung[DBSyncModul.this.sendBetriebseinr
+                            .size()];
+                        betreinr = DBSyncModul.this.sendBetriebseinr
+                            .toArray(betreinr);
+                        Inka_Genehmigung[] genehm = new Inka_Genehmigung[DBSyncModul.this.sendGenehm
+                            .size()];
+                        genehm = DBSyncModul.this.sendGenehm.toArray(genehm);
+                        DBSyncModul.this.service.setDea_Adressen(user,
+                            password, addr);
+                        DBSyncModul.this.service.setInka_Betriebe(user,
+                            password, betr);
+                        DBSyncModul.this.service.setInka_Genehmigungen(user,
+                            password, genehm);
+                        DBSyncModul.this.service.setInka_Betriebseinrichtungen(
+                            user, password, betreinr);
+                    } else {
+                        GUIManager.getInstance().showInfoMessage(
+                            "Bitte holen Sie zuerst Daten ab!", "Info");
                     }
                 }
             });
 
-            FormLayout layout = new FormLayout("pref, 3dlu, 90dlu, 3dlu, 90dlu, 3dlu:grow(1.0)",
-                                               "pref, 3dlu, pref, 3dlu, pref, 3dlu, 150dlu:grow(1.0), 3dlu, pref");
+            FormLayout layout = new FormLayout(
+                "pref, 3dlu, 90dlu, 3dlu, 90dlu, 3dlu:grow(1.0)",
+                "pref, 3dlu, pref, 3dlu, pref, 3dlu, 150dlu:grow(1.0), 3dlu, pref");
             PanelBuilder builder = new PanelBuilder(layout);
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
-            dbTable.setModel(addrDBModel);
-            JScrollPane dbScroller = new JScrollPane(dbTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            this.dbTable.setModel(this.addrDBModel);
+            JScrollPane dbScroller = new JScrollPane(this.dbTable,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
             builder.addLabel("Tabelle", cc.xy(1, 1));
-            builder.add(selection, cc.xy(3,1));
-            builder.add(compare, cc.xy(5,1));
+            builder.add(selection, cc.xy(3, 1));
+            builder.add(compare, cc.xy(5, 1));
             builder.add(get, cc.xy(1, 3));
             builder.add(set, cc.xy(1, 5));
             builder.add(dbScroller, cc.xyw(1, 7, 6));
             builder.addLabel("Anzahl der Elemente: ", cc.xy(1, 9));
-            builder.add(rowCount, cc.xy(3, 9));
+            builder.add(this.rowCount, cc.xy(3, 9));
 
             this.panel = builder.getPanel();
 
         }
 
-
         return this.panel;
     }
-
 
     /**
      * Liest die synchronisierbaren Tabellen aus den Settings und liest die
@@ -286,18 +305,17 @@ public class DBSyncModul extends AbstractModul {
             for (int i = 0; i < entities.length; i++) {
                 entities[i] = entities[i].trim();
                 if (entities[i].equals("dea_adresse")) {
-                    addrDBModel.setList(DeaAdresse.getAll());
+                    this.addrDBModel.setList(DeaAdresse.getAll());
                 }
                 if (entities[i].equals("inka_betrieb")) {
-                    betriebDBModel.setList(InkaBetrieb.getAll());
+                    this.betriebDBModel.setList(InkaBetrieb.getAll());
                 }
                 if (entities[i].equals("inka_betriebseinrichtung")) {
-                    betriebseinrDBModel.setList
-                        (InkaBetriebseinrichtung.getAll());
+                    this.betriebseinrDBModel.setList(InkaBetriebseinrichtung
+                        .getAll());
                 }
                 if (entities[i].equals("inka_genehmigung")) {
-                    genehmigungDBModel.setList
-                        (InkaGenehmigung.getAll());
+                    this.genehmigungDBModel.setList(InkaGenehmigung.getAll());
                 }
             }
             return entities;
@@ -305,11 +323,11 @@ public class DBSyncModul extends AbstractModul {
         return null;
     }
 
-    public static void setServiceUrl (String url) {
+    public static void setServiceUrl(String url) {
         DBSyncModul.url = url;
     }
 
-    public static void setServiceUser (String user) {
+    public static void setServiceUser(String user) {
         DBSyncModul.user = user;
     }
 
@@ -317,69 +335,66 @@ public class DBSyncModul extends AbstractModul {
         DBSyncModul.password = password;
     }
 
-
     /**
-     * Holt die Daten von dem Dienst und speichert diese in den dafür
-     * vorgesehen Models.
+     * Holt die Daten von dem Dienst und speichert diese in den dafür vorgesehen
+     * Models.
      */
     public void requestData() {
         // TODO validation, exception handling etc.
-        if(user != null && password != null && url != null) {
-            service.setInkaEndpointAdress(url);
-            Dea_Adresse[] adr =
-                service.getDea_Adressen(user, password);
+        if (user != null && password != null && url != null) {
+            this.service.setInkaEndpointAdress(url);
+            Dea_Adresse[] adr = this.service.getDea_Adressen(user, password);
             List<Dea_Adresse> adressen = new ArrayList<Dea_Adresse>();
             for (int i = 0; i < adr.length; i++) {
                 adressen.add(adr[i]);
             }
-            Inka_Betrieb[] betr = service.getInka_Betriebe(user, password);
+            Inka_Betrieb[] betr = this.service.getInka_Betriebe(user, password);
             List<Inka_Betrieb> betriebe = new ArrayList<Inka_Betrieb>();
             for (int i = 0; i < betr.length; i++) {
                 betriebe.add(betr[i]);
             }
-            Inka_Betriebseinrichtung[] betrein =
-                service.getInka_Betriebseinrichtungen(user, password);
-            List<Inka_Betriebseinrichtung> betriebseinrichtungen =
-                new ArrayList<Inka_Betriebseinrichtung>();
+            Inka_Betriebseinrichtung[] betrein = this.service
+                .getInka_Betriebseinrichtungen(user, password);
+            List<Inka_Betriebseinrichtung> betriebseinrichtungen = new ArrayList<Inka_Betriebseinrichtung>();
             for (int i = 0; i < betrein.length; i++) {
                 betriebseinrichtungen.add(betrein[i]);
             }
-            Inka_Genehmigung[] genehm =
-                service.getInka_Genehmigungen(user, password);
-            List<Inka_Genehmigung> genehmigungen =
-                new ArrayList<Inka_Genehmigung>();
+            Inka_Genehmigung[] genehm = this.service.getInka_Genehmigungen(
+                user, password);
+            List<Inka_Genehmigung> genehmigungen = new ArrayList<Inka_Genehmigung>();
             for (int i = 0; i < genehm.length; i++) {
                 genehmigungen.add(genehm[i]);
             }
-            addrServiceModel.setList(adressen);
-            betriebServiceModel.setList(betriebe);
-            betriebseinrServiceModel.setList(betriebseinrichtungen);
-            genehmigungServiceModel.setList(genehmigungen);
+            this.addrServiceModel.setList(adressen);
+            this.betriebServiceModel.setList(betriebe);
+            this.betriebseinrServiceModel.setList(betriebseinrichtungen);
+            this.genehmigungServiceModel.setList(genehmigungen);
         }
     }
 
-
     /**
-     * Konvertiert die Datesätze aus der lokalen Datenbank in die Datentypen
-     * des Dienstes.
+     * Konvertiert die Datesätze aus der lokalen Datenbank in die Datentypen des
+     * Dienstes.
      */
     private void dbToService() {
-        sendAddr.clear();
-        List<?> list1 = addrDBModel.getList();
+        this.sendAddr.clear();
+        List<?> list1 = this.addrDBModel.getList();
         for (int i = 0; i < list1.size(); i++) {
-            sendAddr.add(((DeaAdresse)list1.get(i)).toServiceType());
+            this.sendAddr.add(((DeaAdresse) list1.get(i)).toServiceType());
         }
-        List<?> list2 = betriebDBModel.getList();
+        List<?> list2 = this.betriebDBModel.getList();
         for (int i = 0; i < list2.size(); i++) {
-            sendBetrieb.add(((InkaBetrieb)list2.get(i)).toServiceType());
+            this.sendBetrieb.add(((InkaBetrieb) list2.get(i)).toServiceType());
         }
-        List<?> list3 = betriebseinrDBModel.getList();
+        List<?> list3 = this.betriebseinrDBModel.getList();
         for (int i = 0; i < list3.size(); i++) {
-            sendBetriebseinr.add(((InkaBetriebseinrichtung)list3.get(i)).toServiceType());
+            this.sendBetriebseinr.add(((InkaBetriebseinrichtung) list3.get(i))
+                .toServiceType());
         }
-        List<?> list4 = genehmigungDBModel.getList();
+        List<?> list4 = this.genehmigungDBModel.getList();
         for (int i = 0; i < list4.size(); i++) {
-            sendGenehm.add(((InkaGenehmigung)list4.get(i)).toServiceType());
+            this.sendGenehm.add(((InkaGenehmigung) list4.get(i))
+                .toServiceType());
         }
     }
 }
