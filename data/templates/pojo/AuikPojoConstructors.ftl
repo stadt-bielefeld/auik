@@ -1,6 +1,7 @@
 <#assign declarationName = pojo.importType(pojo.getDeclarationName())>
 <#--  /** default constructor */ -->
     public Abstract${declarationName}() {
+    	// This is intentionally left blank.
     }
 
 <#if pojo.needsMinimalConstructor()>
