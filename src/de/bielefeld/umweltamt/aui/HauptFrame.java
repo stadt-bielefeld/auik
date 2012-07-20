@@ -473,27 +473,6 @@ public class HauptFrame extends JFrame {
         return modulFwdButton;
     }
 
-//    private JButton getQgis() {
-//        if (qgis == null) {
-//
-//            String desc = "in QGIS ausgewähltes Objekt aufrufen";
-//            qgis = new JButton("GIS",AuikUtils.getIcon(16, "qgis.png", desc));
-//
-//            qgis.setForeground(getRightFrame().getTextForeground(true));
-//            qgis.setOpaque(false);
-//
-//            qgis.setToolTipText(desc);
-//            qgis.addActionListener(new ActionListener() {
-//                public void actionPerformed(ActionEvent e) {
-//                    readClipboard();
-//                }
-//
-//            });
-//        }
-//
-//        return qgis;
-//    }
-
     /**
      * Zentriert ein Fenster auf dem Desktop.
      */
@@ -1116,12 +1095,10 @@ public class HauptFrame extends JFrame {
                                             "auik.prefs.lastuser", user, true);
                                     BenutzerDatenDialog.this.close();
                                 } else {
-                                    JOptionPane.showMessageDialog(
-                                            BenutzerDatenDialog.this,
-                                            "Der eingegebene Benutzername oder das Passwort war falsch (oder es ist aus anderen\n"
-                                            + "Gründen keine Verbindung mit der Datenbank möglich), bitte versuchen Sie es erneut!",
-                                            "Fehler",
-                                            JOptionPane.ERROR_MESSAGE);
+                                    GUIManager.getInstance().showErrorMessage(
+                                        "Der eingegebene Benutzername oder das Passwort war falsch (oder es ist aus anderen\n"
+                                        + "Gründen keine Verbindung mit der Datenbank möglich), bitte versuchen Sie es erneut!",
+                                        "Fehler");
                                     benutzerFeld.setEnabled(true);
                                     passwortFeld.setEnabled(true);
                                     loginButton.setEnabled(true);

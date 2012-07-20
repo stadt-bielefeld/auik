@@ -54,12 +54,11 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * Das Anlagen- und Indirekteinleiter-Kataster. Diese Klasse stellt den
  * eigentlichen Einstiegspunkt der Anwendung dar. Die Methode {@link main}
  * sollte dazu verwendet werden, das Programm zu starten.
- *
  * @author David Klotz
  */
 public class AUIKataster {
 
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
@@ -67,17 +66,17 @@ public class AUIKataster {
      * @param args Kommandozeilenargumente
      */
     public static void main(String[] args) {
-    	log.debug("Starting everything here.");
+        log.debug("Starting everything here.");
 
-    	/* Command line arguments */
-    	int i = 0;
-    	for (String arg:args) {
-    		log.debug("args[" + i++ + "]: " + arg);
-    	}
+        /* Command line arguments */
+        int i = 0;
+        for (String arg : args) {
+            log.debug("args[" + i++ + "]: " + arg);
+        }
 
-    	/* Start the GUI */
-    	GUIManager.getInstance().startGUI();
+        /* Start the GUI */
+        GUIManager.getInstance().startGUI();
 
-		return;
+        return;
     }
 }

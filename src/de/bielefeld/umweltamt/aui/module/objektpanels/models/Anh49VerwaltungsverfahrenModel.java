@@ -23,7 +23,6 @@ package de.bielefeld.umweltamt.aui.module.objektpanels.models;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
-import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -157,10 +156,9 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
                 if (date != null) {
                     verwaltungsverfahren.setDatum(date);
                 } else {
-                    GUIManager.getInstance().changeStatus(
+                    GUIManager.getInstance().setErrorStatus(
                         "Bitte geben Sie das Datum in der Form "
-                            + DateUtils.FORMAT_DEFAULT
-                            + " ein!", HauptFrame.ERROR_COLOR);
+                            + DateUtils.FORMAT_DEFAULT + " ein!");
                 }
                 break;
             case 1:
@@ -175,10 +173,9 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
                 if (date != null) {
                     verwaltungsverfahren.setWiedervorlage(date);
                 } else {
-                    GUIManager.getInstance().changeStatus(
+                    GUIManager.getInstance().setErrorStatus(
                         "Bitte geben Sie das Datum in der Form "
-                            + DateUtils.FORMAT_DEFAULT
-                            + " ein!", HauptFrame.ERROR_COLOR);
+                            + DateUtils.FORMAT_DEFAULT + " ein!");
                 }
                 break;
             case 4:

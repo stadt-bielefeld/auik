@@ -29,8 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
-
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -39,7 +37,6 @@ import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.GUIManager;
-import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseTableWithCollection;
@@ -564,13 +561,9 @@ public class DatabaseAccess {
             + "oder Gerd melden! Danke!";
 
         /* via GUI */
-        HauptFrame runningFrame = GUIManager.getInstance().getRunningFrame();
-        if (runningFrame != null) {
-            runningFrame.changeStatus(message, HauptFrame.ERROR_COLOR);
-        }
+        GUIManager.getInstance().setErrorStatus(message);
         /* via message dialog */
-        JOptionPane.showMessageDialog(runningFrame, message, "Fehler",
-            JOptionPane.ERROR_MESSAGE);
+        GUIManager.getInstance().showErrorMessage(message, "DB-Fehler");
         /* via stdout */
         log.error(message); // + "\n" + exception.getMessage());
 
