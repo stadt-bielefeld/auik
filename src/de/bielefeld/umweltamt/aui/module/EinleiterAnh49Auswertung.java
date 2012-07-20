@@ -68,6 +68,7 @@ import javax.swing.JPanel;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -78,11 +79,12 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches Auswertungs-Modul für Anhang 49-Datensätze(ausgenommen Fettabscheider).
+ * Ein einfaches Auswertungs-Modul für Anhang 49-Datensätze(ausgenommen
+ * Fettabscheider).
  * @author David Klotz
  */
 public class EinleiterAnh49Auswertung extends AbstractQueryModul {
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
@@ -94,7 +96,6 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     private JComboBox dekraTuevBox;
     private JButton auswahlButton;
     private JButton tabelleExportButton;
-
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private Anh49Model tmodel;
@@ -115,6 +116,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     public HauptFrame getFrame() {
         return frame;
     }
+
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
@@ -126,15 +128,16 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             aktivCheck = new JCheckBox("Aktiv");
             aktivCheck.setSelected(true);
             sachbBox = new JComboBox();
-            sachbBox.setModel(new DefaultComboBoxModel(
-                Anh49Fachdaten.getAllSachbearbeiter()));
+            sachbBox.setModel(new DefaultComboBoxModel(Anh49Fachdaten
+                .getAllSachbearbeiter()));
 //            sachbBox.setEditable(true);
-            sachbBox.setSelectedItem(
-                BasisSachbearbeiter.getCurrentSachbearbeiter());
+            sachbBox.setSelectedItem(BasisSachbearbeiter
+                .getCurrentSachbearbeiter());
             dekraTuevBox = new JComboBox();
-            dekraTuevBox.setModel(new DefaultComboBoxModel(
-                Anh49Fachdaten.getAllDekraTuevYears()));
-            dekraTuevBox.setSelectedIndex(dekraTuevBox.getModel().getSize()-1);
+            dekraTuevBox.setModel(new DefaultComboBoxModel(Anh49Fachdaten
+                .getAllDekraTuevYears()));
+            dekraTuevBox
+                .setSelectedIndex(dekraTuevBox.getModel().getSize() - 1);
 
             auswahlButton = new JButton("Auswahl anwenden");
 
@@ -142,24 +145,20 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Anh49Model model = (Anh49Model) getTableModel();
-                    model.setList(
-                        Anh49Fachdaten.getAuswahlList(
-                            wiedervorlageCheck.isSelected(),
-                            (BasisSachbearbeiter)
-                                ((sachbBox.getSelectedItem() != null) ?
-                                sachbBox.getSelectedItem() : null),
-                            (Integer)dekraTuevBox.getSelectedItem(),
-                            aktivCheck.isSelected()));
+                    model.setList(Anh49Fachdaten.getAuswahlList(
+                        wiedervorlageCheck.isSelected(),
+                        (BasisSachbearbeiter) ((sachbBox.getSelectedItem() != null) ? sachbBox
+                            .getSelectedItem() : null), (Integer) dekraTuevBox
+                            .getSelectedItem(), aktivCheck.isSelected()));
                     model.fireTableDataChanged();
-                    frame.changeStatus(
-                        "" + model.getRowCount() + " Objekte gefunden");
+                    frame.changeStatus("" + model.getRowCount()
+                        + " Objekte gefunden");
                 }
             });
 
             // Noch etwas Layout...
             FormLayout layout = new FormLayout(
-                    "pref, 20dlu, pref, 3dlu, pref, 20dlu, pref"
-                    );
+                "pref, 20dlu, pref, 3dlu, pref, 20dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append(aktivCheck);
@@ -203,12 +202,11 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
         return tabelleExportButton;
     }
 
-
     /**
      * Speichert eine ProbenTabelle.
      */
     public void saveTabelle() {
-        File exportDatei = getFrame().saveFile(new String[]{"csv"});
+        File exportDatei = getFrame().saveFile(new String[] {"csv"});
         if (exportDatei != null) {
             String ext = AuikUtils.getExtension(exportDatei);
 
@@ -219,14 +217,16 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                 } else {
                     newExt = ".csv";
                 }
-                exportDatei = new File(exportDatei.getParent(), exportDatei.getName()+newExt);
+                exportDatei = new File(exportDatei.getParent(),
+                    exportDatei.getName() + newExt);
             }
 
             boolean doIt = false;
             if (exportDatei.exists()) {
-                boolean answer = getFrame().showQuestion(
-                        "Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?",
-                        "Datei bereits vorhanden!");
+                boolean answer = GUIManager.getInstance().showQuestion(
+                    "Soll die vorhandene Datei " + exportDatei.getName()
+                        + " wirklich überschrieben werden?",
+                    "Datei bereits vorhanden!");
                 if (answer && exportDatei.canWrite()) {
                     doIt = true;
                 }
@@ -236,14 +236,16 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
 
             if (doIt) {
                 log.debug("Speichere nach '" + exportDatei.getName()
-                		+ "' (Ext: '"+ext+"') in '" + exportDatei.getParent()
-                		+ "' !");
-                if (AuikUtils.exportTableDataToCVS(getResultTable(), exportDatei)) {
+                    + "' (Ext: '" + ext + "') in '" + exportDatei.getParent()
+                    + "' !");
+                if (AuikUtils.exportTableDataToCVS(getResultTable(),
+                    exportDatei)) {
                     log.debug("Speichern erfolgreich!");
                 } else {
                     log.debug("Fehler beim Speichern!");
-                    getFrame().showErrorMessage("Beim Speichern der Datei '"
-                    		+ exportDatei+"' trat ein Fehler auf!");
+                    GUIManager.getInstance().showErrorMessage(
+                        "Beim Speichern der Datei '" + exportDatei
+                            + "' trat ein Fehler auf!");
                 }
             }
         }

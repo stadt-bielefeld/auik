@@ -132,6 +132,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.uif_lite.component.Factory;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -150,14 +151,14 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Das Abscheiderdetails-Tab beim Objekt bearbeiten
  * @author Gerhard Genuit
  */
-public class Anh49DetailsPanel extends JPanel{
+public class Anh49DetailsPanel extends JPanel {
     private static final long serialVersionUID = -800584079054813622L;
 
     /**
      * Ein TableModel für eine Tabelle mit Abscheider-Details.
      * @author David Klotz, Gerhard Genuit
      */
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private class Anh49AbscheiderModel extends ListTableModel {
@@ -165,15 +166,17 @@ public class Anh49DetailsPanel extends JPanel{
         private Anh49Fachdaten fachdaten;
 
         /**
-         * Erzeugt ein neues Abscheider-TableModel.
-         * Dieses hat die Spalten "Abscheider", "Von", "Lage" und "Bemerkung".
+         * Erzeugt ein neues Abscheider-TableModel. Dieses hat die Spalten
+         * "Abscheider", "Von", "Lage" und "Bemerkung".
          */
         public Anh49AbscheiderModel() {
-            super(new String[]{"Abscheider", "Von", "Lage", "Bemerkung"}, false, true);
+            super(new String[] {"Abscheider", "Von", "Lage", "Bemerkung"},
+                false, true);
         }
 
         /**
-         * Setzt das Fachdatenobjekt, nach dessen Abscheider-Details gesucht werden soll.
+         * Setzt das Fachdatenobjekt, nach dessen Abscheider-Details gesucht
+         * werden soll.
          * @param fachdaten Das Anhang49-Fachdatenobjekt
          */
         public void setFachdaten(Anh49Fachdaten fachdaten) {
@@ -228,6 +231,7 @@ public class Anh49DetailsPanel extends JPanel{
             }
             fireTableDataChanged();
         }
+
         public Anh49Abscheiderdetails getRow(int rowIndex) {
             return (Anh49Abscheiderdetails) getObjectAtRow(rowIndex);
         }
@@ -242,15 +246,17 @@ public class Anh49DetailsPanel extends JPanel{
         private Anh49Fachdaten fachdaten;
 
         /**
-         * Erzeugt ein neues Ortstermin-TableModel.
-         * Dieses hat die Spalten "Datum", "SachbearbeiterIn" und "Bemerkung".
+         * Erzeugt ein neues Ortstermin-TableModel. Dieses hat die Spalten
+         * "Datum", "SachbearbeiterIn" und "Bemerkung".
          */
         public Anh49OrtsterminModel() {
-            super(new String[]{"Datum", "SachbearbeiterIn", "Bemerkung"}, false, true);
+            super(new String[] {"Datum", "SachbearbeiterIn", "Bemerkung"},
+                false, true);
         }
 
         /**
-         * Setzt das Fachdatenobjekt, nach dessen Abscheider-Details gesucht werden soll.
+         * Setzt das Fachdatenobjekt, nach dessen Abscheider-Details gesucht
+         * werden soll.
          * @param fachdaten Das Anhang49-Fachdatenobjekt
          */
         private void setFachdaten(Anh49Fachdaten fachdaten) {
@@ -302,34 +308,42 @@ public class Anh49DetailsPanel extends JPanel{
             }
             fireTableDataChanged();
         }
+
         @Override
         public void editObject(Object objectAtRow, int columnIndex,
-                Object newValue) {
+            Object newValue) {
             Anh49Ortstermine ot = (Anh49Ortstermine) objectAtRow;
 
             String tmp = (String) newValue;
 
             switch (columnIndex) {
                 case 0:
-                    DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+                    DateFormat format = DateFormat
+                        .getDateInstance(DateFormat.SHORT);
                     try {
                         Date tmpDate = format.parse(tmp);
                         ot.setDatum(tmpDate);
                     } catch (ParseException e) {
-                        hauptModul.getFrame().changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
+                        hauptModul
+                            .getFrame()
+                            .changeStatus(
+                                "Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!",
+                                HauptFrame.ERROR_COLOR);
                     }
                     break;
                 case 1:
-                    // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50 Zeichen breit ist
+                    // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50
+                    // Zeichen breit ist
                     if (tmp.length() > 50) {
-                        tmp = tmp.substring(0,50);
+                        tmp = tmp.substring(0, 50);
                     }
                     ot.setSachbearbeiterIn(tmp);
                     break;
                 case 2:
-                    // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255 Zeichen breit ist
+                    // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255
+                    // Zeichen breit ist
                     if (tmp.length() > 255) {
-                        tmp = tmp.substring(0,255);
+                        tmp = tmp.substring(0, 255);
                     }
                     ot.setBemerkungen(tmp);
                     break;
@@ -381,8 +395,12 @@ public class Anh49DetailsPanel extends JPanel{
         TableFocusListener tfl = TableFocusListener.getInstance();
         getAbscheiderTabelle().addFocusListener(tfl);
 
-        JScrollPane abscheiderScroller = new JScrollPane(getAbscheiderTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        JScrollPane ortsterminScroller = new JScrollPane(getOrtsterminTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane abscheiderScroller = new JScrollPane(
+            getAbscheiderTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane ortsterminScroller = new JScrollPane(
+            getOrtsterminTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         abscheiderScroller.addMouseListener(new MouseAdapter() {
             @Override
@@ -400,20 +418,20 @@ public class Anh49DetailsPanel extends JPanel{
         ta.addComp(getAbscheiderTabelle());
         ta.addComp(getOrtsterminTabelle());
 
-        JSplitPane tabellenSplit = Factory.createStrippedSplitPane(JSplitPane.VERTICAL_SPLIT, abscheiderScroller, ortsterminScroller, 0.5);
+        JSplitPane tabellenSplit = Factory.createStrippedSplitPane(
+            JSplitPane.VERTICAL_SPLIT, abscheiderScroller, ortsterminScroller,
+            0.5);
 
-        FormLayout layout = new FormLayout(
-                "150dlu:grow, 100dlu",        // Spalten
-                "100dlu:grow, 3dlu, pref");     // Zeilen
+        FormLayout layout = new FormLayout("150dlu:grow, 100dlu", // Spalten
+            "100dlu:grow, 3dlu, pref"); // Zeilen
 
         PanelBuilder builder = new PanelBuilder(layout, this);
         builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
 
-        builder.add(tabellenSplit, cc.xyw( 1, 1, 2));
-        builder.add(getSpeichernButton(), cc.xy( 2, 3));
+        builder.add(tabellenSplit, cc.xyw(1, 1, 2));
+        builder.add(getSpeichernButton(), cc.xy(2, 3));
     }
-
 
     private Action getAbscheiderLoeschAction() {
         if (abscheiderLoeschAction == null) {
@@ -423,22 +441,32 @@ public class Anh49DetailsPanel extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getAbscheiderTabelle().getSelectedRow();
-                    if (row != -1 && getAbscheiderTabelle().getEditingRow() == -1) {
-                        Anh49Abscheiderdetails abscheider = abscheiderModel.getRow(row);
+                    if (row != -1
+                        && getAbscheiderTabelle().getEditingRow() == -1) {
+                        Anh49Abscheiderdetails abscheider = abscheiderModel
+                            .getRow(row);
 
-                        if (hauptModul.getFrame().showQuestion("Soll der Abscheider "+ abscheider +" wirklich inkl. aller Detailinformationen gelöscht werden?", "Löschen bestätigen")) {
+                        if (GUIManager
+                            .getInstance()
+                            .showQuestion(
+                                "Soll der Abscheider "
+                                    + abscheider
+                                    + " wirklich inkl. aller Detailinformationen gelöscht werden?",
+                                "Löschen bestätigen")) {
                             abscheiderModel.removeRow(row);
                             log.debug("Abscheider " + abscheider.getLage()
-                            		+ " wurde gelöscht!");
+                                + " wurde gelöscht!");
                         } else {
                             log.debug("Löschen von " + abscheider.getLage()
-                            		+ " wurde abgebrochen!");
+                                + " wurde abgebrochen!");
                         }
                     }
                 }
             };
-            abscheiderLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
-            abscheiderLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            abscheiderLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_L));
+            abscheiderLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
         return abscheiderLoeschAction;
@@ -456,13 +484,14 @@ public class Anh49DetailsPanel extends JPanel{
                     editAbscheider(neuerAbscheider);
                 }
             };
-            abscheiderNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_N));
-            //abscheiderNeuAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            abscheiderNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_N));
+            // abscheiderNeuAction.putValue(Action.ACCELERATOR_KEY,
+            // KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
         return abscheiderNeuAction;
     }
-
 
     /**
      * öffnet einen Dialog um einen Abscheider-Datensatz zu bearbeiten.
@@ -470,7 +499,8 @@ public class Anh49DetailsPanel extends JPanel{
      */
     public void editAbscheider(Anh49Abscheiderdetails absch) {
 
-        AbscheiderEditor editDialog = new AbscheiderEditor(absch, hauptModul.getFrame());
+        AbscheiderEditor editDialog = new AbscheiderEditor(absch,
+            hauptModul.getFrame());
         editDialog.setLocationRelativeTo(hauptModul.getFrame());
 
         editDialog.setVisible(true);
@@ -484,7 +514,8 @@ public class Anh49DetailsPanel extends JPanel{
             int row = abscheiderModel.getList().indexOf(details);
             if (row != -1) {
                 getAbscheiderTabelle().setRowSelectionInterval(row, row);
-                getAbscheiderTabelle().scrollRectToVisible(getAbscheiderTabelle().getCellRect(row, 0, true));
+                getAbscheiderTabelle().scrollRectToVisible(
+                    getAbscheiderTabelle().getCellRect(row, 0, true));
             }
         }
     }
@@ -511,11 +542,11 @@ public class Anh49DetailsPanel extends JPanel{
                 getAbscheiderLoeschAction().setEnabled(false);
             }
 
-            // Das Menü zeigen wir aber immer an, zum neu Anlegen eines Abscheiders
+            // Das Menü zeigen wir aber immer an, zum neu Anlegen eines
+            // Abscheiders
             abscheiderPopup.show(e.getComponent(), e.getX(), e.getY());
         }
     }
-
 
     private Action getOrtsterminLoeschAction() {
         if (ortsterminLoeschenAction == null) {
@@ -525,31 +556,37 @@ public class Anh49DetailsPanel extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getOrtsterminTabelle().getSelectedRow();
-                    if (row != -1 && getOrtsterminTabelle().getEditingRow() == -1) {
+                    if (row != -1
+                        && getOrtsterminTabelle().getEditingRow() == -1) {
                         Anh49Ortstermine ot = ortsterminModel.getRow(row);
 
                         if (ot != null) {
-                            if (hauptModul.getFrame().showQuestion("Soll der Ortstermin "+ ot +" gelöscht werden?", "Löschen bestätigen")) {
+                            if (GUIManager.getInstance()
+                                .showQuestion(
+                                    "Soll der Ortstermin " + ot
+                                        + " gelöscht werden?",
+                                    "Löschen bestätigen")) {
                                 ortsterminModel.removeRow(row);
                                 log.debug("Ortstermin " + ot.getOrtsterminid()
-                                		+ " wurde gelöscht!");
+                                    + " wurde gelöscht!");
                             } else {
                                 log.debug("Löschen von " + ot.getOrtsterminid()
-                                		+ " wurde abgebrochen!");
+                                    + " wurde abgebrochen!");
                             }
                         }
                     }
                 }
             };
-            ortsterminLoeschenAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
-            ortsterminLoeschenAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            ortsterminLoeschenAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_L));
+            ortsterminLoeschenAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
         return ortsterminLoeschenAction;
     }
 
-
-    private void showOrtsterminPopup (MouseEvent e) {
+    private void showOrtsterminPopup(MouseEvent e) {
         if (ortsterminPopup == null) {
             ortsterminPopup = new JPopupMenu("Ortstermin");
             JMenuItem loeschItem = new JMenuItem(getOrtsterminLoeschAction());
@@ -562,7 +599,8 @@ public class Anh49DetailsPanel extends JPanel{
 
             if (row != -1) {
                 ortsterminTabelle.setRowSelectionInterval(row, row);
-                // Die letzte (leere) Zeile kann natürlich nicht gelöscht werden:
+                // Die letzte (leere) Zeile kann natürlich nicht gelöscht
+                // werden:
                 if (row < ortsterminModel.getList().size()) {
                     getOrtsterminLoeschAction().setEnabled(true);
                 } else {
@@ -577,16 +615,20 @@ public class Anh49DetailsPanel extends JPanel{
         if (abscheiderTabelle == null) {
             abscheiderTabelle = new JTable(abscheiderModel);
 
-            // Wenn die Spaltengröße sich verändert, verändert sich nur die Nachbarspalte mit
+            // Wenn die Spaltengröße sich verändert, verändert sich nur die
+            // Nachbarspalte mit
             abscheiderTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 
             // Es darf immer nur eine Zeile ausgewählt werden
-            abscheiderTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            abscheiderTabelle
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             abscheiderTabelle.setColumnSelectionAllowed(false);
 
-            // Mal als Beispiel, wie der Text in einigen Spalten zentriert werden kann
+            // Mal als Beispiel, wie der Text in einigen Spalten zentriert
+            // werden kann
             DefaultTableCellRenderer centeredRenderer = new DefaultTableCellRenderer();
-            centeredRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+            centeredRenderer
+                .setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 
             // Die Tabellen-Spalten werden angepasst
             TableColumn column = null;
@@ -608,35 +650,42 @@ public class Anh49DetailsPanel extends JPanel{
             }
 
             // MouseListener für Doppelklick und Rechtsklick
-            abscheiderTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                        Point origin = e.getPoint();
-                        int row = abscheiderTabelle.rowAtPoint(origin);
+            abscheiderTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = abscheiderTabelle.rowAtPoint(origin);
 
-                        if (row != -1) {
-                            Anh49Abscheiderdetails absch = (Anh49Abscheiderdetails) abscheiderModel.getObjectAtRow(row);
-                            log.debug("(Anh49DetailsPanel.abscheiderTabelle) "
-                            		+ "Doppelklick auf: " + absch);
-                            editAbscheider(absch);
+                            if (row != -1) {
+                                Anh49Abscheiderdetails absch = (Anh49Abscheiderdetails) abscheiderModel
+                                    .getObjectAtRow(row);
+                                log.debug("(Anh49DetailsPanel.abscheiderTabelle) "
+                                    + "Doppelklick auf: " + absch);
+                                editAbscheider(absch);
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    showAbscheiderPopup(e);
-                }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showAbscheiderPopup(e);
+                    }
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    showAbscheiderPopup(e);
-                }
-            });
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showAbscheiderPopup(e);
+                    }
+                });
 
-            abscheiderTabelle.getInputMap().put((KeyStroke)getAbscheiderLoeschAction().getValue(Action.ACCELERATOR_KEY), getAbscheiderLoeschAction().getValue(Action.NAME));
-            abscheiderTabelle.getActionMap().put(getAbscheiderLoeschAction().getValue(Action.NAME), getAbscheiderLoeschAction());
+            abscheiderTabelle.getInputMap().put(
+                (KeyStroke) getAbscheiderLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getAbscheiderLoeschAction().getValue(Action.NAME));
+            abscheiderTabelle.getActionMap().put(
+                getAbscheiderLoeschAction().getValue(Action.NAME),
+                getAbscheiderLoeschAction());
         }
         return abscheiderTabelle;
     }
@@ -645,7 +694,8 @@ public class Anh49DetailsPanel extends JPanel{
         if (ortsterminTabelle == null) {
             ortsterminTabelle = new SelectTable(ortsterminModel);
 
-            // Wenn die Spaltengröße sich verändert, verändert sich nur die Nachbarspalte mit
+            // Wenn die Spaltengröße sich verändert, verändert sich nur die
+            // Nachbarspalte mit
             ortsterminTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 
             // Die Größen der Spalten werden angepasst
@@ -658,21 +708,27 @@ public class Anh49DetailsPanel extends JPanel{
                 }
             }
 
-            ortsterminTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+            ortsterminTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
 
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    showOrtsterminPopup(e);
-                }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showOrtsterminPopup(e);
+                    }
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    showOrtsterminPopup(e);
-                }
-            });
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showOrtsterminPopup(e);
+                    }
+                });
 
-            ortsterminTabelle.getInputMap().put((KeyStroke)getOrtsterminLoeschAction().getValue(Action.ACCELERATOR_KEY), getOrtsterminLoeschAction().getValue(Action.NAME));
-            ortsterminTabelle.getActionMap().put(getOrtsterminLoeschAction().getValue(Action.NAME), getOrtsterminLoeschAction());
+            ortsterminTabelle.getInputMap().put(
+                (KeyStroke) getOrtsterminLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getOrtsterminLoeschAction().getValue(Action.NAME));
+            ortsterminTabelle.getActionMap().put(
+                getOrtsterminLoeschAction().getValue(Action.NAME),
+                getOrtsterminLoeschAction());
 
         }
         return ortsterminTabelle;
@@ -719,6 +775,7 @@ public class Anh49DetailsPanel extends JPanel{
     public String getName() {
         return name;
     }
+
     private JButton getSpeichernButton() {
         if (speichernButton == null) {
             speichernButton = new JButton("Ortstermine speichern");

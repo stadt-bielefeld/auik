@@ -88,6 +88,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -101,7 +102,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class LaborIcpImport extends AbstractModul {
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private class FileImporter extends ListTableModel {
@@ -111,11 +112,12 @@ public class LaborIcpImport extends AbstractModul {
         private File importFile = null;
 
         // Als Cache
-        private Map<String[],Boolean> perfectRows = null;
-        private Map<String[],Boolean> importableRows = null;
+        private Map<String[], Boolean> perfectRows = null;
+        private Map<String[], Boolean> importableRows = null;
 
         public FileImporter() {
-            super(new String[]{"Probe", "Parameter", "Wert", "Einheit", "Flags"}, false);
+            super(new String[] {"Probe", "Parameter", "Wert", "Einheit",
+                    "Flags"}, false);
         }
 
         @Override
@@ -134,7 +136,8 @@ public class LaborIcpImport extends AbstractModul {
                         tmp += "red";
                     }
                     String nr = kennummerAusZeile(tmpArr);
-                    value = tmp + ">"+ nr + "</font> "+ tmpArr[0].replaceFirst(nr, "").trim() + "</html>";
+                    value = tmp + ">" + nr + "</font> "
+                        + tmpArr[0].replaceFirst(nr, "").trim() + "</html>";
                     break;
                 case 1:
                     value = paramAusZeile(tmpArr);
@@ -151,14 +154,15 @@ public class LaborIcpImport extends AbstractModul {
 
                 default:
                     value = null;
-                break;
+                    break;
             }
             return value;
         }
 
         @Override
         public void updateList() throws Exception {
-            BufferedReader in = new BufferedReader(new FileReader(importFile));
+            BufferedReader in = new BufferedReader(new FileReader(
+                this.importFile));
             String line;
             int count = 0;
             while ((line = in.readLine()) != null) {
@@ -169,12 +173,10 @@ public class LaborIcpImport extends AbstractModul {
                 if (!(tmp.length == 18 || tmp.length == 15)) {
                     throw new IOException("Datei ist beschädigt!");
                 }
-                //log.debug(count + ": " + line);
+                // log.debug(count + ": " + line);
 
-                if (!tmp[0].startsWith("Standard")
-                        && tmp[1].equals("Samp")
-                        && !tmp[2].startsWith("Ar"))
-                {
+                if (!tmp[0].startsWith("Standard") && tmp[1].equals("Samp")
+                    && !tmp[2].startsWith("Ar")) {
                     getList().add(tmp);
                 }
                 count++;
@@ -187,14 +189,14 @@ public class LaborIcpImport extends AbstractModul {
 
         public void reset() {
             setList(new ArrayList<String[]>());
-            importFile = null;
-            perfectRows = null;
-            importableRows = null;
+            this.importFile = null;
+            this.perfectRows = null;
+            this.importableRows = null;
             fireTableDataChanged();
         }
 
         public void selectAllImportableRows() {
-            if (importFile != null) {
+            if (this.importFile != null) {
                 for (int i = 0; i < getList().size(); i++) {
                     if (isRowPerfect(i)) {
                         getImportTabelle().addRowSelectionInterval(i, i);
@@ -207,7 +209,7 @@ public class LaborIcpImport extends AbstractModul {
             return zeile[9].trim() + " " + zeile[10].trim();
         }
 
-        private String einheitAusZeile(String [] zeile) {
+        private String einheitAusZeile(String[] zeile) {
             return zeile[7].trim();
         }
 
@@ -232,7 +234,8 @@ public class LaborIcpImport extends AbstractModul {
             return result;
         }
 
-        // Schneidet einen String (aus einem Array) vor dem ersten Leerzeichen ab
+        // Schneidet einen String (aus einem Array) vor dem ersten Leerzeichen
+        // ab
         private String spalteAusZeile(String[] zeile, int spalte) {
             if (zeile != null && zeile.length > spalte) {
                 return zeile[spalte].replaceFirst(" .*", "");
@@ -242,80 +245,87 @@ public class LaborIcpImport extends AbstractModul {
         }
 
         private boolean isRowPerfect(int rowIndex) {
-            return isPositionPerfect((String[])getObjectAtRow(rowIndex));
+            return isPositionPerfect((String[]) getObjectAtRow(rowIndex));
         }
 
         private boolean isPositionPerfect(String[] pos) {
-            if (perfectRows == null) {
-                perfectRows = new HashMap<String[],Boolean>(getList().size());
+            if (this.perfectRows == null) {
+                this.perfectRows = new HashMap<String[], Boolean>(getList()
+                    .size());
             }
 
-            if (!perfectRows.containsKey(pos)) {
+            if (!this.perfectRows.containsKey(pos)) {
                 if (!AtlParameter.isParameterSupported(paramAusZeile(pos))) {
-                    perfectRows.put(pos, Boolean.FALSE);
+                    this.perfectRows.put(pos, Boolean.FALSE);
                 } else {
                     String kennummer = kennummerAusZeile(pos);
-                    AtlProbenahmen probe = AtlProbenahmen.getProbenahme(kennummer, false);
+                    AtlProbenahmen probe = AtlProbenahmen.getProbenahme(
+                        kennummer, false);
                     if (probe != null) {
                         if (flagsAusZeile(pos).equals("")) {
-                            if (probe.isKlaerschlammProbe())
-                            {
-                                if (probe.getEinwaage() == null || probe.getEinwaage().floatValue() == 0.0f) {
-                                    perfectRows.put(pos, Boolean.FALSE);
+                            if (probe.isKlaerschlammProbe()) {
+                                if (probe.getEinwaage() == null
+                                    || probe.getEinwaage().floatValue() == 0.0f) {
+                                    this.perfectRows.put(pos, Boolean.FALSE);
                                 } else {
-                                    perfectRows.put(pos, Boolean.TRUE);
+                                    this.perfectRows.put(pos, Boolean.TRUE);
                                 }
                             } else {
-                                perfectRows.put(pos, Boolean.TRUE);
+                                this.perfectRows.put(pos, Boolean.TRUE);
                             }
                         } else {
-                            perfectRows.put(pos, Boolean.FALSE);
+                            this.perfectRows.put(pos, Boolean.FALSE);
                         }
                     } else {
-                        perfectRows.put(pos, Boolean.FALSE);
+                        this.perfectRows.put(pos, Boolean.FALSE);
                     }
                 }
             }
 
-            return ((Boolean)perfectRows.get(pos)).booleanValue();
+            return ((Boolean) this.perfectRows.get(pos)).booleanValue();
         }
 
         public boolean isRowImportable(int rowIndex) {
-            return isPositionImportable((String[])getObjectAtRow(rowIndex));
+            return isPositionImportable((String[]) getObjectAtRow(rowIndex));
         }
 
         private boolean isPositionImportable(String[] pos) {
-            if (importableRows == null) {
-                importableRows = new HashMap<String[],Boolean>(getList().size());
+            if (this.importableRows == null) {
+                this.importableRows = new HashMap<String[], Boolean>(getList()
+                    .size());
             }
 
-            if (!importableRows.containsKey(pos)) {
+            if (!this.importableRows.containsKey(pos)) {
                 if (isPositionPerfect(pos)) {
-                    importableRows.put(pos, new Boolean(true));
-                } else if (!AtlParameter.isParameterSupported(paramAusZeile(pos))) {
-                    importableRows.put(pos, new Boolean(false));
+                    this.importableRows.put(pos, new Boolean(true));
+                } else if (!AtlParameter
+                    .isParameterSupported(paramAusZeile(pos))) {
+                    this.importableRows.put(pos, new Boolean(false));
                 } else {
                     String kennummer = kennummerAusZeile(pos);
-                    AtlProbenahmen probe = AtlProbenahmen.getProbenahme(kennummer, false);
+                    AtlProbenahmen probe = AtlProbenahmen.getProbenahme(
+                        kennummer, false);
                     if (probe != null) {
-                        importableRows.put(pos, new Boolean(true));
+                        this.importableRows.put(pos, new Boolean(true));
                     } else {
-                        importableRows.put(pos, new Boolean(false));
+                        this.importableRows.put(pos, new Boolean(false));
                     }
                 }
             }
 
-            return ((Boolean)importableRows.get(pos)).booleanValue();
+            return ((Boolean) this.importableRows.get(pos)).booleanValue();
         }
 
         public void openFile(File file) {
             if (file.isFile() && file.canRead()) {
                 getDateiLabel().setText("Datei: " + file.getName());
-                importFile = file;
+                this.importFile = file;
                 try {
                     updateList();
                 } catch (Exception e) {
-                    frame.showErrorMessage("<html>Konnte Datei nicht öffnen: <br>"+e.getLocalizedMessage()+"</html>");
+                    GUIManager.getInstance().showErrorMessage(
+                        "<html>Konnte Datei nicht öffnen: <br>"
+                            + e.getLocalizedMessage() + "</html>");
                     switchToStep(1);
                     return;
                 }
@@ -323,17 +333,25 @@ public class LaborIcpImport extends AbstractModul {
                     switchToStep(2);
                     selectAllImportableRows();
                 } else {
-                    frame.showInfoMessage("Die Datei enthält keine importierbaren Analysepositionen!", "ICP-Import");
+                    GUIManager
+                        .getInstance()
+                        .showInfoMessage(
+                            "Die Datei enthält keine importierbaren Analysepositionen!",
+                            "ICP-Import");
                 }
             } else {
-                frame.showErrorMessage("Konnte die angegebene Datei nicht öffnen!", "Fehler beim Öffnen");
+                GUIManager.getInstance().showErrorMessage(
+                    "Konnte die angegebene Datei nicht öffnen!",
+                    "Fehler beim Öffnen");
             }
         }
 
         public void doImport() throws Exception {
-            if (step == 3 && importFile != null && getList() != null) {
+            if (LaborIcpImport.this.step == 3 && this.importFile != null
+                && getList() != null) {
                 int importCount = 0;
-                int[] selectedRows = importTabelle.getSelectedRows();
+                int[] selectedRows = LaborIcpImport.this.importTabelle
+                    .getSelectedRows();
                 DateFormat df = DateFormat.getDateTimeInstance();
                 String problemMessage = "";
 
@@ -341,15 +359,17 @@ public class LaborIcpImport extends AbstractModul {
                     boolean problem = false;
                     String[] current = (String[]) getObjectAtRow(selectedRows[i]);
                     if (isPositionImportable(current)) {
-                        //frame.changeStatus("Verarbeite Position "+ i+1 +"/" + selectedRows.length + " ...");
-                        //Thread.yield();
+                        // frame.changeStatus("Verarbeite Position "+ i+1 +"/" +
+                        // selectedRows.length + " ...");
+                        // Thread.yield();
                         AtlAnalyseposition pos = new AtlAnalyseposition();
 
                         // Kennnummer
                         String kennumer = kennummerAusZeile(current);
 
                         // Probenahme
-                        AtlProbenahmen probe = AtlProbenahmen.getProbenahme(kennumer, true);
+                        AtlProbenahmen probe = AtlProbenahmen.getProbenahme(
+                            kennumer, true);
                         if (probe == null) {
                             // Sollte eigentlich nicht vorkommen, nötig?
                             throw new Exception("Probenahme nicht gefunden!");
@@ -358,7 +378,7 @@ public class LaborIcpImport extends AbstractModul {
 
                         // Wert
                         Float wert = new Float(wertAusZeile(current));
-                          // Negative Werte auf 0 setzen:
+                        // Negative Werte auf 0 setzen:
                         if (wert.floatValue() < 0.0) {
                             wert = new Float(0.0);
                             pos.setGrkl("<");
@@ -366,16 +386,20 @@ public class LaborIcpImport extends AbstractModul {
                         pos.setWert(wert);
 
                         // Einwaage
-                        if (probe.isKlaerschlammProbe() && (probe.getEinwaage() == null || probe.getEinwaage().floatValue() == 0.0f)) {
+                        if (probe.isKlaerschlammProbe()
+                            && (probe.getEinwaage() == null || probe
+                                .getEinwaage().floatValue() == 0.0f)) {
                             probe.setEinwaage(new Float(3.0f));
                             log.debug("Einwaage von " + probe
-                            		+ " auf 3g korrigiert.");
+                                + " auf 3g korrigiert.");
                         }
 
                         // Parameter
                         String sParam = paramAusZeile(current);
                         if (sParam != null) {
-                            AtlParameter para = AtlParameter.getParameter(AtlParameter.getOrdnungsbegriff(sParam));
+                            AtlParameter para = AtlParameter
+                                .getParameter(AtlParameter
+                                    .getOrdnungsbegriff(sParam));
 
                             if (para != null) {
                                 pos.setAtlParameter(para);
@@ -384,7 +408,8 @@ public class LaborIcpImport extends AbstractModul {
                                 if (!problemMessage.equals("")) {
                                     problemMessage += "<br>";
                                 }
-                                problemMessage += "Unbekannter Parameter: "+ sParam;
+                                problemMessage += "Unbekannter Parameter: "
+                                    + sParam;
                             }
                         } else {
                             // Sollte eigentlich auch nicht vorkommen, nötig?
@@ -399,19 +424,24 @@ public class LaborIcpImport extends AbstractModul {
                             if (probe.isKlaerschlammProbe()) {
                                 Float einwaage = probe.getEinwaage();
                                 log.debug("Klärschlamm-Umrechnung nötig, Einwaage: "
-                                		+ einwaage);
+                                    + einwaage);
                                 if (einwaage != null) {
-                                    BigDecimal rundWert = new BigDecimal((wert.doubleValue() * 100) / einwaage.doubleValue());
-                                    rundWert = rundWert.setScale(1, BigDecimal.ROUND_UP);
+                                    BigDecimal rundWert = new BigDecimal(
+                                        (wert.doubleValue() * 100)
+                                            / einwaage.doubleValue());
+                                    rundWert = rundWert.setScale(1,
+                                        BigDecimal.ROUND_UP);
                                     pos.setWert(new Float(rundWert.floatValue()));
-                                    einheit = AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID);
-                                    log.debug("Klärschlamm-Umrechnung: (" + wert
-                                    		+ " mg/L * 100) / "+einwaage+" = "
-                                    		+ pos.getWert() + " mg/KG");
+                                    einheit = AtlEinheiten
+                                        .getEinheit(AtlEinheiten.MG_KG_ID);
+                                    log.debug("Klärschlamm-Umrechnung: ("
+                                        + wert + " mg/L * 100) / " + einwaage
+                                        + " = " + pos.getWert() + " mg/KG");
                                 }
                             } else {
                                 log.debug("Keine Klärschlamm-Umrechnung nötig.");
-                                einheit = AtlEinheiten.getEinheit(AtlEinheiten.MG_L_ID);
+                                einheit = AtlEinheiten
+                                    .getEinheit(AtlEinheiten.MG_L_ID);
                             }
                         }
 
@@ -422,7 +452,7 @@ public class LaborIcpImport extends AbstractModul {
                             if (!problemMessage.equals("")) {
                                 problemMessage += "<br>";
                             }
-                            problemMessage += "Unbekannte Einheit: "+ sEinheit;
+                            problemMessage += "Unbekannte Einheit: " + sEinheit;
                         }
 
                         // ICP-Datum
@@ -438,7 +468,6 @@ public class LaborIcpImport extends AbstractModul {
                             probe.setDatumIcp(date);
                         }
 
-
                         // Analyse von
                         pos.setAnalyseVon("360.33");
 
@@ -448,13 +477,15 @@ public class LaborIcpImport extends AbstractModul {
                                 importCount++;
                                 log.debug("Habe " + pos + " gespeichert!");
                             } else {
-                                throw new Exception("Konnte Analyseposition nicht in der Datenbank speichern!");
+                                throw new Exception(
+                                    "Konnte Analyseposition nicht in der Datenbank speichern!");
                             }
                         }
                     }
                 }
 
-                frame.changeStatus(importCount + " Datensätze importiert!");
+                LaborIcpImport.this.frame.changeStatus(importCount
+                    + " Datensätze importiert!");
                 switchToStep(1);
                 if (!problemMessage.equals("")) {
                     throw new Exception(problemMessage);
@@ -515,25 +546,27 @@ public class LaborIcpImport extends AbstractModul {
 
     @Override
     public Icon getIcon() {
-        //return super.getIcon("1leftarrow.png");
+        // return super.getIcon("1leftarrow.png");
         return super.getIcon("ksysguard.png");
     }
+
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
     @Override
     public JPanel getPanel() {
-        if (panel == null) {
+        if (this.panel == null) {
             initIcons();
 
             FormLayout layout = new FormLayout(
-                    "40px, 5dlu, 65dlu, 5dlu, 175dlu:g",    // Spalten
-                    "");    // Zeilen werden dynamisch erzeugt
+                "40px, 5dlu, 65dlu, 5dlu, 175dlu:g", // Spalten
+                ""); // Zeilen werden dynamisch erzeugt
 
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             builder.setDefaultDialogBorder();
 
-            builder.append(getStepOneLabel(), getDateiButton(), getDateiLabel());
+            builder
+                .append(getStepOneLabel(), getDateiButton(), getDateiLabel());
             builder.appendRelatedComponentsGapRow();
             builder.appendRow("f:50dlu:g");
             builder.nextLine(2);
@@ -550,9 +583,9 @@ public class LaborIcpImport extends AbstractModul {
 
             builder.append(getStepThreeLabel(), getImportButton());
 
-            panel = builder.getPanel();
+            this.panel = builder.getPanel();
         }
-        return panel;
+        return this.panel;
     }
 
     @Override
@@ -562,139 +595,153 @@ public class LaborIcpImport extends AbstractModul {
     }
 
     private void initIcons() {
-        stepOneW = AuikUtils.getIcon("step1_w.png", "Schritt Eins");
-        stepOneG = AuikUtils.getIcon("step1_g.png", "Schritt Eins");
-        stepOneGrey = AuikUtils.getIcon("step1_grey.png", "Schritt Eins");
-        stepTwoW = AuikUtils.getIcon("step2_w.png", "Schritt Zwei");
-        stepTwoG = AuikUtils.getIcon("step2_g.png", "Schritt Zwei");
-        stepTwoGrey = AuikUtils.getIcon("step2_grey.png", "Schritt Zwei");
-        stepThreeW = AuikUtils.getIcon("step3_w.png", "Schritt Drei");
+        this.stepOneW = AuikUtils.getIcon("step1_w.png", "Schritt Eins");
+        this.stepOneG = AuikUtils.getIcon("step1_g.png", "Schritt Eins");
+        this.stepOneGrey = AuikUtils.getIcon("step1_grey.png", "Schritt Eins");
+        this.stepTwoW = AuikUtils.getIcon("step2_w.png", "Schritt Zwei");
+        this.stepTwoG = AuikUtils.getIcon("step2_g.png", "Schritt Zwei");
+        this.stepTwoGrey = AuikUtils.getIcon("step2_grey.png", "Schritt Zwei");
+        this.stepThreeW = AuikUtils.getIcon("step3_w.png", "Schritt Drei");
 //        stepThreeG = AuikUtils.getIcon("step3_g.png", "Schritt Drei");
-        stepThreeGrey = AuikUtils.getIcon("step3_grey.png", "Schritt Drei");
+        this.stepThreeGrey = AuikUtils
+            .getIcon("step3_grey.png", "Schritt Drei");
     }
 
     private JLabel getStepOneLabel() {
-        if (stepOneLabel == null) {
-            stepOneLabel = new JLabel(stepOneGrey);
+        if (this.stepOneLabel == null) {
+            this.stepOneLabel = new JLabel(this.stepOneGrey);
         }
-        return stepOneLabel;
+        return this.stepOneLabel;
     }
 
     private JLabel getStepTwoLabel() {
-        if (stepTwoLabel == null) {
-            stepTwoLabel = new JLabel(stepTwoGrey);
+        if (this.stepTwoLabel == null) {
+            this.stepTwoLabel = new JLabel(this.stepTwoGrey);
         }
-        return stepTwoLabel;
+        return this.stepTwoLabel;
     }
 
     private JLabel getStepThreeLabel() {
-        if (stepThreeLabel == null) {
-            stepThreeLabel = new JLabel(stepThreeGrey);
+        if (this.stepThreeLabel == null) {
+            this.stepThreeLabel = new JLabel(this.stepThreeGrey);
         }
-        return stepThreeLabel;
+        return this.stepThreeLabel;
     }
 
     private JButton getDateiButton() {
-        if (dateiButton == null) {
-            dateiButton = new JButton("Datei wählen");
-            dateiButton.setToolTipText("Wählt eine Datei zum Importieren aus");
-            dateiButton.addActionListener(new ActionListener() {
+        if (this.dateiButton == null) {
+            this.dateiButton = new JButton("Datei wählen");
+            this.dateiButton
+                .setToolTipText("Wählt eine Datei zum Importieren aus");
+            this.dateiButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    File file = frame.openFile(new String[]{"txt"});
+                    File file = LaborIcpImport.this.frame
+                        .openFile(new String[] {"txt"});
                     if (file != null) {
                         switchToStep(1);
-                        fileImporter.openFile(file);
+                        LaborIcpImport.this.fileImporter.openFile(file);
                     }
                 }
             });
         }
-        return dateiButton;
+        return this.dateiButton;
     }
 
     private JLabel getDateiLabel() {
-        if (dateiLabel == null) {
-            dateiLabel = new JLabel();
+        if (this.dateiLabel == null) {
+            this.dateiLabel = new JLabel();
         }
-        return dateiLabel;
+        return this.dateiLabel;
     }
 
     private JButton getImportButton() {
-        if (importButton == null) {
-            importButton = new JButton("Importieren");
-            importButton.setToolTipText("Importiert die gewählten Analysepositionen");
-            importButton.addActionListener(new ActionListener() {
+        if (this.importButton == null) {
+            this.importButton = new JButton("Importieren");
+            this.importButton
+                .setToolTipText("Importiert die gewählten Analysepositionen");
+            this.importButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        fileImporter.doImport();
+                        LaborIcpImport.this.fileImporter.doImport();
                     } catch (Exception e1) {
-                        frame.showErrorMessage("<html>Beim importieren ist ein Fehler aufgetreten:<br>" +
-                                e1.getMessage() + "</html>");
+                        GUIManager.getInstance().showErrorMessage(
+                            "<html>Beim importieren ist ein Fehler aufgetreten:<br>"
+                                + e1.getMessage() + "</html>");
                     }
                 }
             });
         }
-        return importButton;
+        return this.importButton;
     }
 
     private JLabel getErklaerungsLabel() {
-        if (erklaerungsLabel == null) {
-            String sErklaerung = "<html>" +
-                    "<font color=green>Grün:</font> Position kann problemlos importiert werden.<br>" +
-                    "<font color=#ff8200>Orange:</font> Wert aßerhalb des kalibrierten Bereichs oder KS-Einwaage nicht festgelegt.<br>" +    // Klärschlamm-Probenahme existiert, aber die Einwaage ist nicht festgelegt
-                    "<font color=red>Rot:</font> Probenahme nicht gefunden oder Parameter unbekannt.</html>";
-            erklaerungsLabel = new JLabel(sErklaerung);
+        if (this.erklaerungsLabel == null) {
+            String sErklaerung = "<html>"
+                + "<font color=green>Grün:</font> Position kann problemlos importiert werden.<br>"
+                + "<font color=#ff8200>Orange:</font> Wert aßerhalb des kalibrierten Bereichs oder KS-Einwaage nicht festgelegt.<br>"
+                + // Klärschlamm-Probenahme existiert, aber die Einwaage ist
+                  // nicht festgelegt
+                "<font color=red>Rot:</font> Probenahme nicht gefunden oder Parameter unbekannt.</html>";
+            this.erklaerungsLabel = new JLabel(sErklaerung);
         }
-        return erklaerungsLabel;
+        return this.erklaerungsLabel;
     }
 
     private JTable getImportTabelle() {
-        if (importTabelle == null) {
-            if (fileImporter == null) {
-                fileImporter = new FileImporter();
+        if (this.importTabelle == null) {
+            if (this.fileImporter == null) {
+                this.fileImporter = new FileImporter();
             }
-            importTabelle = new JTable(fileImporter);
+            this.importTabelle = new JTable(this.fileImporter);
             // Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
-            importTabelle.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    // überzählige Events ignorieren
-                    if (e.getValueIsAdjusting()) {
-                        return;
-                    }
+            this.importTabelle.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        // überzählige Events ignorieren
+                        if (e.getValueIsAdjusting()) {
+                            return;
+                        }
 
-                    if (importTabelle.getSelectedRowCount() != 0) {
-                        int[] selectedRows = importTabelle.getSelectedRows();
-                        //String tmp = "[ ";
-                        for (int i = 0; i < selectedRows.length; i++) {
-                            if (!fileImporter.isRowImportable(selectedRows[i])) {
-                                importTabelle.removeRowSelectionInterval(selectedRows[i], selectedRows[i]);
-                            } else {
-                                //tmp += selectedRows[i] + " ";
-                                if (step != 3) {
-                                    switchToStep(3);
+                        if (LaborIcpImport.this.importTabelle
+                            .getSelectedRowCount() != 0) {
+                            int[] selectedRows = LaborIcpImport.this.importTabelle
+                                .getSelectedRows();
+                            // String tmp = "[ ";
+                            for (int i = 0; i < selectedRows.length; i++) {
+                                if (!LaborIcpImport.this.fileImporter
+                                    .isRowImportable(selectedRows[i])) {
+                                    LaborIcpImport.this.importTabelle
+                                        .removeRowSelectionInterval(
+                                            selectedRows[i], selectedRows[i]);
+                                } else {
+                                    // tmp += selectedRows[i] + " ";
+                                    if (LaborIcpImport.this.step != 3) {
+                                        switchToStep(3);
+                                    }
                                 }
                             }
-                        }
-                        //tmp += "]";
-                        //AUIKataster.debugOutput("Selection: " + tmp, "LaborIcpImport.ListSelectionListener");
-                    } else {
-                        if (step != 2) {
-                            switchToStep(2);
+                            // tmp += "]";
+                            // AUIKataster.debugOutput("Selection: " + tmp,
+                            // "LaborIcpImport.ListSelectionListener");
+                        } else {
+                            if (LaborIcpImport.this.step != 2) {
+                                switchToStep(2);
+                            }
                         }
                     }
-                }
-            });
+                });
         }
-        return importTabelle;
+        return this.importTabelle;
     }
 
     private JScrollPane getImportScroller() {
-        if (importScroller == null) {
-            importScroller = new JScrollPane(getImportTabelle());
+        if (this.importScroller == null) {
+            this.importScroller = new JScrollPane(getImportTabelle());
         }
-        return importScroller;
+        return this.importScroller;
     }
 
     public void switchToStep(int step) {
@@ -702,29 +749,29 @@ public class LaborIcpImport extends AbstractModul {
 
         switch (step) {
             case 1:
-                fileImporter.reset();
+                this.fileImporter.reset();
                 getDateiLabel().setText("");
-                getStepOneLabel().setIcon(stepOneW);
-                getStepTwoLabel().setIcon(stepTwoGrey);
-                getStepThreeLabel().setIcon(stepThreeGrey);
+                getStepOneLabel().setIcon(this.stepOneW);
+                getStepTwoLabel().setIcon(this.stepTwoGrey);
+                getStepThreeLabel().setIcon(this.stepThreeGrey);
                 enableStepComponents(1, true);
                 enableStepComponents(2, false);
                 enableStepComponents(3, false);
                 getDateiButton().requestFocus();
                 break;
             case 2:
-                getStepOneLabel().setIcon(stepOneG);
-                getStepTwoLabel().setIcon(stepTwoW);
-                getStepThreeLabel().setIcon(stepThreeGrey);
+                getStepOneLabel().setIcon(this.stepOneG);
+                getStepTwoLabel().setIcon(this.stepTwoW);
+                getStepThreeLabel().setIcon(this.stepThreeGrey);
                 enableStepComponents(1, true);
                 enableStepComponents(2, true);
                 enableStepComponents(3, false);
                 getImportTabelle().requestFocus();
                 break;
             case 3:
-                getStepOneLabel().setIcon(stepOneG);
-                getStepTwoLabel().setIcon(stepTwoG);
-                getStepThreeLabel().setIcon(stepThreeW);
+                getStepOneLabel().setIcon(this.stepOneG);
+                getStepTwoLabel().setIcon(this.stepTwoG);
+                getStepThreeLabel().setIcon(this.stepThreeW);
                 enableStepComponents(1, true);
                 enableStepComponents(2, true);
                 enableStepComponents(3, true);

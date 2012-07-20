@@ -627,7 +627,7 @@ public class HauptFrame extends JFrame {
                     .addActionListener(new java.awt.event.ActionListener() {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
-                            showInfoMessage(
+                            guiManager.showInfoMessage(
                                     "<html><table valign='top'>"
                                     + "<tr><th align='left'>Version:</th><td>"
                                     + guiManager.getVersion() + "</td>"
@@ -857,59 +857,6 @@ public class HauptFrame extends JFrame {
         statusLabel.setText(" ");
 
         clearStatusTimer.stop();
-    }
-
-    // TODO: Move all access to the message methods to the gui manager!
-    /**
-     * Zeigt eine Fehlermeldung mit dem Titel "Fehler" an.
-     *
-     * @param msg Der Text der Meldung
-     */
-    public void showErrorMessage(String msg) {
-        showErrorMessage(msg, "Fehler");
-    }
-
-    /**
-     * Zeigt eine Fehlermeldung an.
-     *
-     * @param msg Der Text der Meldung
-     * @param title Ein Titel für die Meldung
-     */
-    public void showErrorMessage(String msg, String title) {
-        guiManager.showErrorMessage(msg, title);
-    }
-
-    /**
-     * Zeigt eine Meldung an.
-     *
-     * @param msg Der Text der Meldung
-     * @param title Ein Titel für die Meldung
-     */
-    public void showInfoMessage(String msg, String title) {
-        guiManager.showInfoMessage(msg, title);
-    }
-
-    /**
-     * Stellt dem Benutzer eine Ja/Nein-Frage.
-     *
-     * @param question Die Frage.
-     * @return <code>true</code>, wenn der Benutzer Ja angeklickt hat, sonst
-     *         <code>false</code>.
-     */
-    public boolean showQuestion(String question) {
-        return guiManager.showQuestion(question, "Frage");
-    }
-
-    /**
-     * Stellt dem Benutzer eine Ja/Nein-Frage.
-     *
-     * @param question Die Frage.
-     * @param title Ein Titel für die Meldung
-     * @return <code>true</code>, wenn der Benutzer Ja angeklickt hat, sonst
-     *         <code>false</code>.
-     */
-    public boolean showQuestion(String question, String title) {
-        return guiManager.showQuestion(question, title);
     }
 
     public File openFile() {

@@ -46,20 +46,21 @@ import javax.swing.text.MaskFormatter;
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 
 /**
- * Diverse häufiger benötigte Utility-Methoden, die keiner anderen
- * Klasse zugeordnet werden können.
+ * Diverse häufiger benötigte Utility-Methoden, die keiner anderen Klasse
+ * zugeordnet werden können.
  * @author David Klotz
  */
 public class AuikUtils {
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
-     * Startet den Standard-Betrachter / -Editor, der vom Betriebssystem
-     * mit der Datei <code>f</code> verknüpft ist.
+     * Startet den Standard-Betrachter / -Editor, der vom Betriebssystem mit der
+     * Datei <code>f</code> verknüpft ist.
      * @param f Die zu öffnende Datei.
      */
     public static void spawnFileProg(File f) {
@@ -67,23 +68,26 @@ public class AuikUtils {
 
 //        Thread spawnThread = new Thread(new Runnable() {
 //            public void run() {
-                //log.debug("Spawning default Editor for: '" +f+ "'");
-                if (f.exists() && f.isFile() && f.canRead()) {
-                    //String comspec = System.getenv("COMSPEC");
-                    String comspec = "cmd";
+        // log.debug("Spawning default Editor for: '" +f+ "'");
+        if (f.exists() && f.isFile() && f.canRead()) {
+            // String comspec = System.getenv("COMSPEC");
+            String comspec = "cmd";
 //                    if (comspec == null) {
 //                        comspec = "cmd";
 //                    }
 
-                    try {
+            try {
 //                        Thread.sleep(500);
-                        Runtime.getRuntime().exec(comspec + " /c start \"Bitte warten...\" " + f.getName(), null, f.getParentFile());
-                    } catch (IOException e) {
-                        throw new RuntimeException("Konnte den Betrachter für " + f + " nicht starten!", e);
-                    }
-                } else {
-                    log.debug("Fehler beim spawnFileProg für " + f);
-                }
+                Runtime.getRuntime().exec(
+                    comspec + " /c start \"Bitte warten...\" " + f.getName(),
+                    null, f.getParentFile());
+            } catch (IOException e) {
+                throw new RuntimeException("Konnte den Betrachter für " + f
+                    + " nicht starten!", e);
+            }
+        } else {
+            log.debug("Fehler beim spawnFileProg für " + f);
+        }
 //            }
 //        });
 
@@ -100,18 +104,19 @@ public class AuikUtils {
             String s = f.getName();
             int i = s.lastIndexOf('.');
 
-            if (i > 0 &&  i < s.length() - 1) {
-                ext = s.substring(i+1).toLowerCase();
+            if (i > 0 && i < s.length() - 1) {
+                ext = s.substring(i + 1).toLowerCase();
             }
         }
         return ext;
     }
 
     /**
-     * Liefert einen FileFilter für einen FileChooser, der nur Dateien
-     * mit einer bestimmten Erweiterung und Verzeichnisse anzeigt.
+     * Liefert einen FileFilter für einen FileChooser, der nur Dateien mit einer
+     * bestimmten Erweiterung und Verzeichnisse anzeigt.
      * @param extension Die Erweiterung (bspw. "txt").
-     * @return Einen FileFilter, der nur Dateien mit einer bestimmten Erweiterung anzeigt.
+     * @return Einen FileFilter, der nur Dateien mit einer bestimmten
+     *         Erweiterung anzeigt.
      */
     public static FileFilter getExtensionFilter(final String extension) {
         FileFilter tmp = new FileFilter() {
@@ -143,10 +148,11 @@ public class AuikUtils {
     }
 
     /**
-     * Liefert einen FileFilter für einen FileChooser, der nur Dateien
-     * mit bestimmten Erweiterungen und Verzeichnisse anzeigt.
+     * Liefert einen FileFilter für einen FileChooser, der nur Dateien mit
+     * bestimmten Erweiterungen und Verzeichnisse anzeigt.
      * @param extensions Die Erweiterungen (bspw. {"txt", "csv"}).
-     * @return Einen FileFilter, der nur Dateien mit bestimmten Erweiterungen anzeigt.
+     * @return Einen FileFilter, der nur Dateien mit bestimmten Erweiterungen
+     *         anzeigt.
      */
     public static FileFilter getExtensionsFilter(final String[] extensions) {
         FileFilter tmp = new FileFilter() {
@@ -202,7 +208,7 @@ public class AuikUtils {
         String desc;
 
         if (ext.equals("txt")) {
-            desc =  "Textdatei";
+            desc = "Textdatei";
         } else if (ext.equals("csv")) {
             desc = "CSV (Trennzeichen getrennt)";
         } else if (ext.equals("png")) {
@@ -215,13 +221,15 @@ public class AuikUtils {
     }
 
     /**
-     * Zeigt einen FileChooser, um eine Tabelle in eine CSV-Datei zu exportieren.
-     * Fragt vor dem überschreiben von bereits vorhandenen Dateien nach.
+     * Zeigt einen FileChooser, um eine Tabelle in eine CSV-Datei zu
+     * exportieren. Fragt vor dem überschreiben von bereits vorhandenen Dateien
+     * nach.
      * @param tabelle Die Tabelle.
-     * @param frame Das HauptFrame um den Chooser anzuzeigen und eventuelle Meldungen auszugeben.
+     * @param frame Das HauptFrame um den Chooser anzuzeigen und eventuelle
+     *            Meldungen auszugeben.
      */
     public static void saveTabelle(JTable tabelle, HauptFrame frame) {
-        File exportDatei = frame.saveFile(new String[]{"csv"});
+        File exportDatei = frame.saveFile(new String[] {"csv"});
         if (exportDatei != null) {
             String ext = AuikUtils.getExtension(exportDatei);
 
@@ -232,14 +240,16 @@ public class AuikUtils {
                 } else {
                     newExt = ".csv";
                 }
-                exportDatei = new File(exportDatei.getParent(), exportDatei.getName()+newExt);
+                exportDatei = new File(exportDatei.getParent(),
+                    exportDatei.getName() + newExt);
             }
 
             boolean doIt = false;
             if (exportDatei.exists()) {
-                boolean answer = frame.showQuestion(
-                        "Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?",
-                        "Datei bereits vorhanden!");
+                boolean answer = GUIManager.getInstance().showQuestion(
+                    "Soll die vorhandene Datei " + exportDatei.getName()
+                        + " wirklich überschrieben werden?",
+                    "Datei bereits vorhanden!");
                 if (answer && exportDatei.canWrite()) {
                     doIt = true;
                 }
@@ -248,23 +258,28 @@ public class AuikUtils {
             }
 
             if (doIt) {
-                log.debug("Speichere nach '" + exportDatei.getName() + "' (Ext: '"+ext+"') in '" + exportDatei.getParent() + "' !");
+                log.debug("Speichere nach '" + exportDatei.getName()
+                    + "' (Ext: '" + ext + "') in '" + exportDatei.getParent()
+                    + "' !");
                 if (exportTableDataToCVS(tabelle, exportDatei)) {
                     log.debug("Speichern erfolgreich!");
                 } else {
                     log.debug("Fehler beim Speichern!");
-                    frame.showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+                    GUIManager.getInstance().showErrorMessage(
+                        "Beim Speichern der Datei '" + exportDatei
+                            + "' trat ein Fehler auf!");
                 }
             }
         }
     }
 
     /**
-     * Speichert den Inhalt einer Tabelle (mit samt überschriften) in
-     * eine CSV-Datei (mit Semikolons getrennt).
+     * Speichert den Inhalt einer Tabelle (mit samt überschriften) in eine
+     * CSV-Datei (mit Semikolons getrennt).
      * @param table Die Tabelle.
      * @param file Die Datei in die geschrieben werden soll.
-     * @return <code>true</code>, wenn alles geklappt hat, sonst <code>false</code>.
+     * @return <code>true</code>, wenn alles geklappt hat, sonst
+     *         <code>false</code>.
      */
     public static boolean exportTableDataToCVS(JTable table, File file) {
         boolean success;
@@ -280,7 +295,7 @@ public class AuikUtils {
             for (int h = 0; h < model.getColumnCount(); h++) {
                 bw.write(model.getColumnName(h));
 
-                if (h+1 != model.getColumnCount()) {
+                if (h + 1 != model.getColumnCount()) {
                     bw.write(";");
                 }
             }
@@ -298,7 +313,7 @@ public class AuikUtils {
                         bw.write(value);
                     }
 
-                    if(j+1 != clmCnt) {
+                    if (j + 1 != clmCnt) {
                         bw.write(";");
                     }
                 }
@@ -329,8 +344,11 @@ public class AuikUtils {
     /**
      * Erzeugt einen neuen MaskFormatter für ein FormattedTextField
      * @param s The formatting mask
-     * @return The new MaskFormatter created using the mask or <code>null</code> if the mask was bad
-     * @see <a href="http://java.sun.com/docs/books/tutorial/uiswing/components/formattedtextfield.html#maskformatter">Swing Tutorial (MaskFormatter)</a>
+     * @return The new MaskFormatter created using the mask or <code>null</code>
+     *         if the mask was bad
+     * @see <a
+     *      href="http://java.sun.com/docs/books/tutorial/uiswing/components/formattedtextfield.html#maskformatter">Swing
+     *      Tutorial (MaskFormatter)</a>
      */
     public static MaskFormatter createFormatter(String s) {
         MaskFormatter formatter = null;
@@ -343,24 +361,25 @@ public class AuikUtils {
     }
 
     /**
-     * Entfernt SQL/HQL Sonderzeichen (konkret sind das ;, ', ( und ) ) aus einem String.
-     * Sollte auf alle Strings angewandt werden, die direkt und NICHT
-     * als =? Parameter in einer SQL/HQL-Abfrage benutzt werden.
+     * Entfernt SQL/HQL Sonderzeichen (konkret sind das ;, ', ( und ) ) aus
+     * einem String. Sollte auf alle Strings angewandt werden, die direkt und
+     * NICHT als =? Parameter in einer SQL/HQL-Abfrage benutzt werden.
      * @param input Der String aus dem die Sonderzeichen entfernt werden sollen.
-     * @return Ein String ohne die oben genannten Zeichen und ohne Whitespace am Anfang und am Ende.
+     * @return Ein String ohne die oben genannten Zeichen und ohne Whitespace am
+     *         Anfang und am Ende.
      */
     public static String sanitizeQueryInput(String input) {
-        return input.replaceAll(";","").replaceAll("'","").replaceAll("\\(","").replaceAll("\\)","").trim();
+        return input.replaceAll(";", "").replaceAll("'", "")
+            .replaceAll("\\(", "").replaceAll("\\)", "").trim();
     }
 
     /**
-     * TODO: WHY are we doing this by hand??? Switch to DateFormat...
-     * Looks like copied from somewhere anyway ("@param DateFormatter")...
-     *
-     * Liefert einen String der Form "dd.mm.JJJJ" für ein
-     * gegebenes Datums-Objekt.
+     * TODO: WHY are we doing this by hand??? Switch to DateFormat... Looks like
+     * copied from somewhere anyway ("@param DateFormatter")... Liefert einen
+     * String der Form "dd.mm.JJJJ" für ein gegebenes Datums-Objekt.
      * @param DateFormatter Das Datum
-     * @return Einen String der Form "dd.mm.JJJJ" oder <code>null</code>, falls DateFormatter <code>null</code> ist
+     * @return Einen String der Form "dd.mm.JJJJ" oder <code>null</code>, falls
+     *         DateFormatter <code>null</code> ist
      */
     public static String getStringFromDate(Date date) {
         if (date != null) {
@@ -368,22 +387,23 @@ public class AuikUtils {
             cal.setTime(date);
 
             int day = cal.get(Calendar.DAY_OF_MONTH);
-            String dayString = (day < 10) ? ("0"+day) : (""+day);
+            String dayString = (day < 10) ? ("0" + day) : ("" + day);
 
             int month = cal.get(Calendar.MONTH) + 1;
-            String monthString = (month < 10) ? ("0"+month) : (""+month);
+            String monthString = (month < 10) ? ("0" + month) : ("" + month);
 
-            return  dayString + "." + monthString + "." + cal.get(Calendar.YEAR);
+            return dayString + "." + monthString + "." + cal.get(Calendar.YEAR);
         } else {
             return null;
         }
     }
 
     /**
-     * Liefert einen String der Form "dd.mm.JJJJ hh:mm" für ein
-     * gegebenes Datums-Objekt.
+     * Liefert einen String der Form "dd.mm.JJJJ hh:mm" für ein gegebenes
+     * Datums-Objekt.
      * @param DateFormatter Das Datum
-     * @return Einen String der Form "dd.mm.JJJJ hh:mm" oder <code>null</code>, falls DateFormatter <code>null</code> ist
+     * @return Einen String der Form "dd.mm.JJJJ hh:mm" oder <code>null</code>,
+     *         falls DateFormatter <code>null</code> ist
      */
     public static String getDayTimeStringFromDate(Date date) {
         if (date != null) {
@@ -391,18 +411,20 @@ public class AuikUtils {
             cal.setTime(date);
 
             int day = cal.get(Calendar.DAY_OF_MONTH);
-            String dayString = (day < 10) ? ("0"+day) : (""+day);
+            String dayString = (day < 10) ? ("0" + day) : ("" + day);
 
             int month = cal.get(Calendar.MONTH) + 1;
-            String monthString = (month < 10) ? ("0"+month) : (""+month);
+            String monthString = (month < 10) ? ("0" + month) : ("" + month);
 
             int hour = cal.get(Calendar.HOUR_OF_DAY);
-            String hourString = (hour < 10) ? ("0"+hour) : (""+hour);
+            String hourString = (hour < 10) ? ("0" + hour) : ("" + hour);
 
             int minute = cal.get(Calendar.MINUTE);
-            String minuteString = (minute < 10) ? ("0"+minute) : (""+minute);
+            String minuteString = (minute < 10) ? ("0" + minute)
+                : ("" + minute);
 
-            return  dayString + "." + monthString + "." + cal.get(Calendar.YEAR) + " " + hourString + ":" + minuteString;
+            return dayString + "." + monthString + "." + cal.get(Calendar.YEAR)
+                + " " + hourString + ":" + minuteString;
         } else {
             return null;
         }
@@ -422,14 +444,22 @@ public class AuikUtils {
         cal.setTime(date);
 
         switch (cal.get(Calendar.DAY_OF_WEEK)) {
-            case 1: return "Sonntag";
-            case 2: return "Montag";
-            case 3: return "Dienstag";
-            case 4: return "Mittwoch";
-            case 5: return "Donnerstag";
-            case 6: return "Freitag";
-            case 7: return "Samstag";
-            default: return null;
+            case 1:
+                return "Sonntag";
+            case 2:
+                return "Montag";
+            case 3:
+                return "Dienstag";
+            case 4:
+                return "Mittwoch";
+            case 5:
+                return "Donnerstag";
+            case 6:
+                return "Freitag";
+            case 7:
+                return "Samstag";
+            default:
+                return null;
         }
 
         /* Old version:
@@ -465,50 +495,50 @@ public class AuikUtils {
     }
 
     /**
-     * Erzeugt ein Icon aus einem Bild aus dem Icons-Package.
-     * Der Dateiname muss ohne Pfad o.Ä. (also einfach "bild.png")
-     * angegeben werden.
+     * Erzeugt ein Icon aus einem Bild aus dem Icons-Package. Der Dateiname muss
+     * ohne Pfad o.Ä. (also einfach "bild.png") angegeben werden.
      * @param filename Der Name der Bilddatei (ohne Pfad)
-     * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens gefunden wurde)
+     * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens
+     *         gefunden wurde)
      */
     public static Icon getIcon(String filename) {
         return getIcon(filename, null);
     }
 
     /**
-     * Erzeugt ein Icon aus einem Bild aus dem Icons-Package.
-     * Der Dateiname muss ohne Pfad o.Ä. (also einfach "bild.png")
-     * angegeben werden. Zusätzlich muss die Größe (32 für 32x32 etc.)
-     * angegeben werden.
+     * Erzeugt ein Icon aus einem Bild aus dem Icons-Package. Der Dateiname muss
+     * ohne Pfad o.Ä. (also einfach "bild.png") angegeben werden. Zusätzlich
+     * muss die Größe (32 für 32x32 etc.) angegeben werden.
      * @param size Die Größe des Icons
      * @param filename Der Name der Bilddatei (ohne Pfad)
-     * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens gefunden wurde)
+     * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens
+     *         gefunden wurde)
      */
     public static Icon getIcon(int size, String filename) {
         return getIcon(size, filename, null);
     }
 
     /**
-     * Erzeugt ein Icon aus einem Bild aus dem Icons-Package.
-     * Der Dateiname muss ohne Pfad o.Ä. (also einfach "bild.png")
-     * angegeben werden.
+     * Erzeugt ein Icon aus einem Bild aus dem Icons-Package. Der Dateiname muss
+     * ohne Pfad o.Ä. (also einfach "bild.png") angegeben werden.
      * @param filename Der Name der Bilddatei (ohne Pfad)
      * @param description Eine kurze textuelle Beschreibung
-     * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens gefunden wurde)
+     * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens
+     *         gefunden wurde)
      */
     public static Icon getIcon(String filename, String description) {
         return getIcon(-1, filename, description);
     }
 
     /**
-     * Erzeugt ein Icon aus einem Bild aus dem Icons-Package.
-     * Der Dateiname muss ohne Pfad o.Ä. (also einfach "bild.png")
-     * angegeben werden. Zusätzlich muss die Größe (32 für 32x32 etc.)
-     * angegeben werden.
+     * Erzeugt ein Icon aus einem Bild aus dem Icons-Package. Der Dateiname muss
+     * ohne Pfad o.Ä. (also einfach "bild.png") angegeben werden. Zusätzlich
+     * muss die Größe (32 für 32x32 etc.) angegeben werden.
      * @param size Die Größe des Icons
      * @param filename Der Name der Bilddatei (ohne Pfad)
      * @param description Eine kurze textuelle Beschreibung
-     * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens gefunden wurde)
+     * @return Ein Icon (oder <code>null</code>, falls kein Icon dieses Namens
+     *         gefunden wurde)
      */
     public static Icon getIcon(int size, String filename, String description) {
         if (filename == null) {
@@ -530,29 +560,31 @@ public class AuikUtils {
         if (iconURL != null) {
             return new ImageIcon(iconURL, description);
         } else {
-            log.debug("Konnte Icon "+ iconPath +" nicht finden!");
+            log.debug("Konnte Icon " + iconPath + " nicht finden!");
             return null;
         }
     }
 
     /**
      * überprüft, ob wir unter XP und mit dem XP-Stil angezeigt werden.
-     * @return <code>true</code>, wenn der XP-Stil aktiv ist, sonst <code>false</code>
+     * @return <code>true</code>, wenn der XP-Stil aktiv ist, sonst
+     *         <code>false</code>
      */
     public static boolean isUsingXpStyle() {
         boolean tmp;
 
         LookAndFeel laf = UIManager.getLookAndFeel();
-        if (laf instanceof WindowsLookAndFeel && !(laf.getClass().getName().endsWith("WindowsClassicLookAndFeel"))) {
+        if (laf instanceof WindowsLookAndFeel
+            && !(laf.getClass().getName().endsWith("WindowsClassicLookAndFeel"))) {
             if (System.getProperty("swing.noxp") != null) {
-                //log.debug("Using Classic style (\"swing.noxp\" defined)");
+                // log.debug("Using Classic style (\"swing.noxp\" defined)");
                 tmp = false;
             } else {
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
-                boolean themeActive =
-                    Boolean.TRUE.equals(toolkit.getDesktopProperty("win.xpstyle.themeActive"));
+                boolean themeActive = Boolean.TRUE.equals(toolkit
+                    .getDesktopProperty("win.xpstyle.themeActive"));
                 if (!themeActive) {
-                    //log.debug("Using Classic style (XP style not enabled on desktop)");
+                    // log.debug("Using Classic style (XP style not enabled on desktop)");
                     tmp = false;
                 } else {
                     /*String dllName   = (String)toolkit.getDesktopProperty("win.xpstyle.dllName");

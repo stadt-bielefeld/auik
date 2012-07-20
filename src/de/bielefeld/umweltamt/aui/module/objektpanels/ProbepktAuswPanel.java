@@ -77,6 +77,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
@@ -133,104 +134,119 @@ public class ProbepktAuswPanel extends JPanel {
     private HauptFrame frame;
 
     public ProbepktAuswPanel(BasisObjektBearbeiten hauptModul) {
-        name = "Auswertung";
+        this.name = "Auswertung";
 
-        einheiten = AtlEinheiten.getEinheiten();
+        this.einheiten = AtlEinheiten.getEinheiten();
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout (
-                "20dlu, 5dlu, 70dlu, 5dlu, 20dlu, 5dlu, 140dlu, 5dlu, r:16px, 5dlu, c:70dlu:g(0.1), 5dlu, l:16px, 10dlu, 300dlu", // Spalten
-                "pref, 3dlu" +", " +  //1
-                "pref, 3dlu " +", " +  //2
-                "pref, 3dlu" +", " +    //3
-                "pref, 3dlu" +", " +    //4
-                "pref, 3dlu" +", " +    //5
-                "pref, 3dlu" +", " +  //6
-                "pref, 3dlu" +", " + //7
-                "pref, 3dlu" +", " +//8
-                "pref, 3dlu" +", " +//9
-                "pref, 3dlu" +", " +    //10
-                "pref, 3dlu"+", " +    //11
-                "pref, 3dlu" +", " +    //12
-                "pref, 3dlu" +", " +//13
-                "pref, 3dlu" +", " +    //14
-                "pref, 3dlu"+", " + //15
-                "pref, 3dlu" +", " +    //16
-                "pref, 3dlu" +", " +     // 17
-                "pref, 3dlu" +", " +    //18
-                "pref, 3dlu" +", " +    //19
-                "pref, 3dlu" +", " +    //20
-                "pref, 3dlu" +", " +    //21
-                "pref, 3dlu" +", " +    //22
-                "pref, 3dlu" +", " +    //23
-                "pref, 3dlu" +", " +    //24
-                "pref, 3dlu" +", " +    //25
-                "pref, 3dlu" +", " +    //26
-                "pref");    //27
+        FormLayout layout = new FormLayout(
+            "20dlu, 5dlu, 70dlu, 5dlu, 20dlu, 5dlu, 140dlu, 5dlu, r:16px, 5dlu, c:70dlu:g(0.1), 5dlu, l:16px, 10dlu, 300dlu", // Spalten
+            "pref, 3dlu" + ", " + // 1
+                "pref, 3dlu " + ", " + // 2
+                "pref, 3dlu" + ", " + // 3
+                "pref, 3dlu" + ", " + // 4
+                "pref, 3dlu" + ", " + // 5
+                "pref, 3dlu" + ", " + // 6
+                "pref, 3dlu" + ", " + // 7
+                "pref, 3dlu" + ", " + // 8
+                "pref, 3dlu" + ", " + // 9
+                "pref, 3dlu" + ", " + // 10
+                "pref, 3dlu" + ", " + // 11
+                "pref, 3dlu" + ", " + // 12
+                "pref, 3dlu" + ", " + // 13
+                "pref, 3dlu" + ", " + // 14
+                "pref, 3dlu" + ", " + // 15
+                "pref, 3dlu" + ", " + // 16
+                "pref, 3dlu" + ", " + // 17
+                "pref, 3dlu" + ", " + // 18
+                "pref, 3dlu" + ", " + // 19
+                "pref, 3dlu" + ", " + // 20
+                "pref, 3dlu" + ", " + // 21
+                "pref, 3dlu" + ", " + // 22
+                "pref, 3dlu" + ", " + // 23
+                "pref, 3dlu" + ", " + // 24
+                "pref, 3dlu" + ", " + // 25
+                "pref, 3dlu" + ", " + // 26
+                "pref"); // 27
 
         PanelBuilder builder = new PanelBuilder(layout, this);
         builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
         CellConstraints cc2 = (CellConstraints) cc.clone();
 
-        builder.addSeparator("Zeitraum",    cc.xyw( 1, 1, 11));
-        builder.addSeparator("Analyse von...",    cc.xyw( 13, 1, 3));
+        builder.addSeparator("Zeitraum", cc.xyw(1, 1, 11));
+        builder.addSeparator("Analyse von...", cc.xyw(13, 1, 3));
 
-        builder.add(new JLabel("Von:"),        cc.xy(  1, 3, "r,d"),
-                getVonDateChooser(),        cc2.xy( 3, 3, "l,d"));
-        builder.add(new JLabel("Bis:"),        cc.xy(  5, 3, "r,d"),
-                getBisDateChooser(),        cc2.xy( 7, 3, "l,d"));
-        builder.add(getAnalyseVonBox(),            cc2.xyw(  13, 3, 3, "l,d"));
+        builder.add(new JLabel("Von:"), cc.xy(1, 3, "r,d"),
+            getVonDateChooser(), cc2.xy(3, 3, "l,d"));
+        builder.add(new JLabel("Bis:"), cc.xy(5, 3, "r,d"),
+            getBisDateChooser(), cc2.xy(7, 3, "l,d"));
+        builder.add(getAnalyseVonBox(), cc2.xyw(13, 3, 3, "l,d"));
 
-        builder.addSeparator("Parameter",    cc.xyw( 1, 5, 15));
+        builder.addSeparator("Parameter", cc.xyw(1, 5, 15));
 
-        builder.add(new JLabel("Erste Y-Achse"),    cc.xyw  ( 1, 7, 7));
-        builder.add(new JLabel("Zweite Y-Achse"),    cc.xy  ( 15, 7));
+        builder.add(new JLabel("Erste Y-Achse"), cc.xyw(1, 7, 7));
+        builder.add(new JLabel("Zweite Y-Achse"), cc.xy(15, 7));
 
         JList lList = getLeftList();
         JList rList = getRightList();
-        builder.add(new JScrollPane(lList),        cc.xywh( 1, 9, 7, 15, "fill, fill"));
-        builder.add(new JScrollPane(rList),        cc.xywh( 15, 9, 1, 15, "fill, fill"));
+        builder.add(new JScrollPane(lList), cc.xywh(1, 9, 7, 15, "fill, fill"));
+        builder
+            .add(new JScrollPane(rList), cc.xywh(15, 9, 1, 15, "fill, fill"));
 
-        builder.add(createRLButton(true, AtlParameter.CADMIUM_ID),    cc.xy( 9, 9));
-        builder.add(new JLabel("Cadmium (Cd)", JLabel.CENTER),         cc.xy( 11, 9, "f,d"));
-        builder.add(createRLButton(false, AtlParameter.CADMIUM_ID),    cc.xy( 13, 9));
+        builder.add(createRLButton(true, AtlParameter.CADMIUM_ID), cc.xy(9, 9));
+        builder.add(new JLabel("Cadmium (Cd)", JLabel.CENTER),
+            cc.xy(11, 9, "f,d"));
+        builder.add(createRLButton(false, AtlParameter.CADMIUM_ID),
+            cc.xy(13, 9));
 
-        builder.add(createRLButton(true, AtlParameter.CHROM_ID),    cc.xy( 9, 11));
-        builder.add(new JLabel("Chrom (Cr)", JLabel.CENTER),         cc.xy( 11, 11, "f,d"));
-        builder.add(createRLButton(false, AtlParameter.CHROM_ID),    cc.xy( 13, 11));
+        builder.add(createRLButton(true, AtlParameter.CHROM_ID), cc.xy(9, 11));
+        builder.add(new JLabel("Chrom (Cr)", JLabel.CENTER),
+            cc.xy(11, 11, "f,d"));
+        builder
+            .add(createRLButton(false, AtlParameter.CHROM_ID), cc.xy(13, 11));
 
-        builder.add(createRLButton(true, AtlParameter.KUPFER_ID),    cc.xy( 9, 13));
-        builder.add(new JLabel("Kupfer (Cu)", JLabel.CENTER),         cc.xy( 11, 13, "f,d"));
-        builder.add(createRLButton(false, AtlParameter.KUPFER_ID),    cc.xy( 13, 13));
+        builder.add(createRLButton(true, AtlParameter.KUPFER_ID), cc.xy(9, 13));
+        builder.add(new JLabel("Kupfer (Cu)", JLabel.CENTER),
+            cc.xy(11, 13, "f,d"));
+        builder.add(createRLButton(false, AtlParameter.KUPFER_ID),
+            cc.xy(13, 13));
 
-        builder.add(createRLButton(true, AtlParameter.QUECKSILBER_ID),    cc.xy( 9, 15));
-        builder.add(new JLabel("Quecksilber (Hg)", JLabel.CENTER),         cc.xy( 11, 15, "f,d"));
-        builder.add(createRLButton(false, AtlParameter.QUECKSILBER_ID),    cc.xy( 13, 15));
+        builder.add(createRLButton(true, AtlParameter.QUECKSILBER_ID),
+            cc.xy(9, 15));
+        builder.add(new JLabel("Quecksilber (Hg)", JLabel.CENTER),
+            cc.xy(11, 15, "f,d"));
+        builder.add(createRLButton(false, AtlParameter.QUECKSILBER_ID),
+            cc.xy(13, 15));
 
-        builder.add(createRLButton(true, AtlParameter.NICKEL_ID),    cc.xy( 9, 17));
-        builder.add(new JLabel("Nickel (Ni)", JLabel.CENTER),         cc.xy( 11, 17, "f,d"));
-        builder.add(createRLButton(false, AtlParameter.NICKEL_ID),    cc.xy( 13, 17));
+        builder.add(createRLButton(true, AtlParameter.NICKEL_ID), cc.xy(9, 17));
+        builder.add(new JLabel("Nickel (Ni)", JLabel.CENTER),
+            cc.xy(11, 17, "f,d"));
+        builder.add(createRLButton(false, AtlParameter.NICKEL_ID),
+            cc.xy(13, 17));
 
-        builder.add(createRLButton(true, AtlParameter.BLEI_ID),    cc.xy( 9,19));
-        builder.add(new JLabel("Blei (Pb)", JLabel.CENTER),     cc.xy( 11,19, "f,d"));
-        builder.add(createRLButton(false, AtlParameter.BLEI_ID),    cc.xy( 13,19));
+        builder.add(createRLButton(true, AtlParameter.BLEI_ID), cc.xy(9, 19));
+        builder.add(new JLabel("Blei (Pb)", JLabel.CENTER),
+            cc.xy(11, 19, "f,d"));
+        builder.add(createRLButton(false, AtlParameter.BLEI_ID), cc.xy(13, 19));
 
-        builder.add(createRLButton(true, AtlParameter.ZINK_ID),    cc.xy( 9,21));
-        builder.add(new JLabel("Zink (Zn)", JLabel.CENTER),     cc.xy( 11,21, "f,d"));
-        builder.add(createRLButton(false, AtlParameter.ZINK_ID),    cc.xy( 13,21));
+        builder.add(createRLButton(true, AtlParameter.ZINK_ID), cc.xy(9, 21));
+        builder.add(new JLabel("Zink (Zn)", JLabel.CENTER),
+            cc.xy(11, 21, "f,d"));
+        builder.add(createRLButton(false, AtlParameter.ZINK_ID), cc.xy(13, 21));
 
-        builder.add(createRLButton(true, "box"),    cc.xy( 9,23));
-        builder.add(getParameterBox(),                 cc.xy( 11,23, "f,d"));
-        builder.add(createRLButton(false, "box"),    cc.xy( 13,23));
+        builder.add(createRLButton(true, "box"), cc.xy(9, 23));
+        builder.add(getParameterBox(), cc.xy(11, 23, "f,d"));
+        builder.add(createRLButton(false, "box"), cc.xy(13, 23));
 
-        builder.add(getLeftEinheitenBox(),        cc.xyw( 1, 25, 7, "c,d"));
-        builder.add(new JLabel("<  Einheit  >", JLabel.CENTER),    cc.xy( 11, 25, "f,d"));
-        builder.add(getRightEinheitenBox(),        cc.xy( 15, 25, "c,d"));
+        builder.add(getLeftEinheitenBox(), cc.xyw(1, 25, 7, "c,d"));
+        builder.add(new JLabel("<  Einheit  >", JLabel.CENTER),
+            cc.xy(11, 25, "f,d"));
+        builder.add(getRightEinheitenBox(), cc.xy(15, 25, "c,d"));
 
-        builder.add(getLeftDeleteButton(),        cc.xyw( 1, 27, 7, "c,d"));
-        builder.add(getRightDeleteButton(),        cc.xy( 15, 27, "c,d"));
-        builder.add(getSubmitButton() ,        cc.xy(11, 27));
+        builder.add(getLeftDeleteButton(), cc.xyw(1, 27, 7, "c,d"));
+        builder.add(getRightDeleteButton(), cc.xy(15, 27, "c,d"));
+        builder.add(getSubmitButton(), cc.xy(11, 27));
     }
 
     private class AuswertungsDialog extends JDialog {
@@ -240,22 +256,25 @@ public class ProbepktAuswPanel extends JPanel {
          * Ein Listener für die Events des Dialogs.
          * @author David Klotz
          */
-        private class DialogListener extends WindowAdapter implements ActionListener {
+        private class DialogListener extends WindowAdapter implements
+            ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == abbrechenButton) {
+                if (e.getSource() == AuswertungsDialog.this.abbrechenButton) {
                     doAbbrechen();
-                } else if (e.getSource() == speichernButton) {
+                } else if (e.getSource() == AuswertungsDialog.this.speichernButton) {
                     doSpeichern();
                 }
             }
 
             @Override
             public void windowClosing(WindowEvent e) {
-                // Wenn der Dialog geschlossen wird, wird das Bearbeiten abgebrochen
+                // Wenn der Dialog geschlossen wird, wird das Bearbeiten
+                // abgebrochen
                 doAbbrechen();
             }
         }
+
         /**
          * Ein Tablemodel für die
          * @author David Klotz
@@ -265,10 +284,11 @@ public class ProbepktAuswPanel extends JPanel {
             private TimeSeriesCollection col1, col2;
             private List<Minute> dateList;
 
-            public ExportTableModel(TimeSeriesCollection col1, TimeSeriesCollection col2) {
+            public ExportTableModel(TimeSeriesCollection col1,
+                TimeSeriesCollection col2) {
                 this.col1 = col1;
                 this.col2 = col2;
-                dateList = new ArrayList<Minute>();
+                this.dateList = new ArrayList<Minute>();
 
                 initializeData();
             }
@@ -277,41 +297,43 @@ public class ProbepktAuswPanel extends JPanel {
                 TimeSeries series;
                 APosDataItem item;
 
-                for (int i = 0; i < col1.getSeriesCount(); i++) {
-                    series = col1.getSeries(i);
+                for (int i = 0; i < this.col1.getSeriesCount(); i++) {
+                    series = this.col1.getSeries(i);
                     for (int j = 0; j < series.getItemCount(); j++) {
                         item = (APosDataItem) series.getDataItem(j);
 
-                        if (!dateList.contains(item.getMinute())) {
-                            dateList.add(item.getMinute());
+                        if (!this.dateList.contains(item.getMinute())) {
+                            this.dateList.add(item.getMinute());
                         }
                     }
                 }
 
-                if (col2 != null) {
-                    for (int i = 0; i < col2.getSeriesCount(); i++) {
-                        series = col2.getSeries(i);
+                if (this.col2 != null) {
+                    for (int i = 0; i < this.col2.getSeriesCount(); i++) {
+                        series = this.col2.getSeries(i);
                         for (int j = 0; j < series.getItemCount(); j++) {
                             item = (APosDataItem) series.getDataItem(j);
-                            //count++;
-                            if (!dateList.contains(item.getMinute())) {
-                                dateList.add(item.getMinute());
+                            // count++;
+                            if (!this.dateList.contains(item.getMinute())) {
+                                this.dateList.add(item.getMinute());
                             }
                         }
                     }
                 }
 
-                Collections.sort(dateList);
+                Collections.sort(this.dateList);
             }
 
             @Override
             public int getColumnCount() {
-                return col1.getSeriesCount() + ((col2 != null) ? col2.getSeriesCount() : 0) + 1;//2;
+                return this.col1.getSeriesCount()
+                    + ((this.col2 != null) ? this.col2.getSeriesCount() : 0)
+                    + 1;// 2;
             }
 
             @Override
             public int getRowCount() {
-                return dateList.size();// + 1;
+                return this.dateList.size();// + 1;
             }
 
             @Override
@@ -323,19 +345,21 @@ public class ProbepktAuswPanel extends JPanel {
                 kommaFormat.setMinimumFractionDigits(1);
 
                 int seriesIndex = columnIndex - 1;
-                int series2Index = seriesIndex - col1.getSeriesCount();
+                int series2Index = seriesIndex - this.col1.getSeriesCount();
                 int itemIndex = rowIndex;// - 1;
 
-                Minute min = (Minute) dateList.get(itemIndex);
-             if (columnIndex == 0) {
+                Minute min = (Minute) this.dateList.get(itemIndex);
+                if (columnIndex == 0) {
                     Date date = new Date(min.getFirstMillisecond());
                     tmp = AuikUtils.getDayTimeStringFromDate(date);
                 } else {
                     APosDataItem item = null;
-                    if (seriesIndex < col1.getSeriesCount()) {
-                        item = (APosDataItem) col1.getSeries(seriesIndex).getDataItem(min);
-                    } else if (col2 != null) {
-                        item = (APosDataItem) col2.getSeries(series2Index).getDataItem(min);
+                    if (seriesIndex < this.col1.getSeriesCount()) {
+                        item = (APosDataItem) this.col1.getSeries(seriesIndex)
+                            .getDataItem(min);
+                    } else if (this.col2 != null) {
+                        item = (APosDataItem) this.col2.getSeries(series2Index)
+                            .getDataItem(min);
                     }
                     if (item != null) {
                         tmp = kommaFormat.format(item.getValue());
@@ -357,19 +381,25 @@ public class ProbepktAuswPanel extends JPanel {
                 String tmp = "!OOB!";
 
                 int seriesIndex = column - 1;
-                int series2Index = seriesIndex - col1.getSeriesCount();
+                int series2Index = seriesIndex - this.col1.getSeriesCount();
 
-                 if (column == 0) {
+                if (column == 0) {
                     tmp = "Datum";
-                 } else {
-                    if (seriesIndex < col1.getSeriesCount()) {
-                        tmp = col1.getSeriesName(seriesIndex) + ", " + col1.getSeries(seriesIndex).getRangeDescription();
-                    } else if (col2 != null) {
-                        tmp = col2.getSeriesName(series2Index) + ", " + col2.getSeries(series2Index).getRangeDescription();
+                } else {
+                    if (seriesIndex < this.col1.getSeriesCount()) {
+                        tmp = this.col1.getSeriesName(seriesIndex)
+                            + ", "
+                            + this.col1.getSeries(seriesIndex)
+                                .getRangeDescription();
+                    } else if (this.col2 != null) {
+                        tmp = this.col2.getSeriesName(series2Index)
+                            + ", "
+                            + this.col2.getSeries(series2Index)
+                                .getRangeDescription();
                     }
-                 }
+                }
 
-                 return tmp;
+                return tmp;
             }
         }
 
@@ -389,28 +419,31 @@ public class ProbepktAuswPanel extends JPanel {
         private TimeSeriesCollection rightDataset;
         private HauptFrame owner;
 
-        public AuswertungsDialog  (String title, TimeSeriesCollection leftDataset, TimeSeriesCollection rightDataset, HauptFrame owner)  {
-            super( owner, title + "-Auswertung", true);
+        public AuswertungsDialog(String title,
+            TimeSeriesCollection leftDataset,
+            TimeSeriesCollection rightDataset, HauptFrame owner) {
+            super(owner, title + "-Auswertung", true);
             this.owner = owner;
             this.title = title;
 
             this.leftDataset = leftDataset;
             this.rightDataset = rightDataset;
 
-            listener = new DialogListener();
+            this.listener = new DialogListener();
 
             this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-            this.addWindowListener(listener);
+            this.addWindowListener(this.listener);
 
-            speichernButton = new JButton("Speichern");
-            speichernButton.addActionListener(listener);
-            abbrechenButton = new JButton("Schließen");
-            abbrechenButton.addActionListener(listener);
+            this.speichernButton = new JButton("Speichern");
+            this.speichernButton.addActionListener(this.listener);
+            this.abbrechenButton = new JButton("Schließen");
+            this.abbrechenButton.addActionListener(this.listener);
 
-            JPanel tmp = new JPanel(new BorderLayout(0,7));
+            JPanel tmp = new JPanel(new BorderLayout(0, 7));
 
             tmp.add(initializeContent(), BorderLayout.CENTER);
-            JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(speichernButton, abbrechenButton);
+            JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(
+                this.speichernButton, this.abbrechenButton);
             tmp.add(buttonBar, BorderLayout.SOUTH);
             tmp.setBorder(Borders.TABBED_DIALOG_BORDER);
 
@@ -420,36 +453,40 @@ public class ProbepktAuswPanel extends JPanel {
         }
 
         private JComponent initializeContent() {
-            tabbedPane = new JTabbedPane();
+            this.tabbedPane = new JTabbedPane();
 
-            tabbedPane.addTab("Diagramm", createDiagrammPanel());
-            tabbedPane.addTab("Tabelle", createTabellenPanel());
+            this.tabbedPane.addTab("Diagramm", createDiagrammPanel());
+            this.tabbedPane.addTab("Tabelle", createTabellenPanel());
 
-            return tabbedPane;
+            return this.tabbedPane;
         }
 
         private JPanel createDiagrammPanel() {
             JFreeChart chart;
-            if (rightDataset == null) {
-                chart = Charts.createDefaultTimeSeriesChart(title, leftDataset);
+            if (this.rightDataset == null) {
+                chart = Charts.createDefaultTimeSeriesChart(this.title,
+                    this.leftDataset);
             } else {
-                chart = Charts.createDefaultTimeSeriesChart(title, leftDataset, rightDataset);
+                chart = Charts.createDefaultTimeSeriesChart(this.title,
+                    this.leftDataset, this.rightDataset);
             }
 
-            chartPanel = new ChartPanel(chart, false);
-            chartPanel.setBorder(Borders.DIALOG_BORDER);
+            this.chartPanel = new ChartPanel(chart, false);
+            this.chartPanel.setBorder(Borders.DIALOG_BORDER);
 
-            return chartPanel;
+            return this.chartPanel;
         }
 
         private JComponent createTabellenPanel() {
-            exportTable = new JTable(new ExportTableModel(leftDataset, rightDataset));
-            exportTable.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-            exportTable.setColumnSelectionAllowed(true);
-            exportTable.setRowSelectionAllowed(true);
-            exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            this.exportTable = new JTable(new ExportTableModel(
+                this.leftDataset, this.rightDataset));
+            this.exportTable.setBorder(BorderFactory
+                .createBevelBorder(BevelBorder.RAISED));
+            this.exportTable.setColumnSelectionAllowed(true);
+            this.exportTable.setRowSelectionAllowed(true);
+            this.exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-            exportTable.addMouseListener(new MouseAdapter() {
+            this.exportTable.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     showTabellenPopup(e);
@@ -462,15 +499,17 @@ public class ProbepktAuswPanel extends JPanel {
             });
 
             DefaultTableCellRenderer zentrierterRenderer = new DefaultTableCellRenderer();
-            zentrierterRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+            zentrierterRenderer
+                .setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 
             DefaultTableCellRenderer rechtsBuendigRenderer = new DefaultTableCellRenderer();
-            rechtsBuendigRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+            rechtsBuendigRenderer
+                .setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
 
             TableColumn column = null;
-            for (int i = 0; i < exportTable.getColumnCount(); i++) {
-                column = exportTable.getColumnModel().getColumn(i);
-                if (i == 0 ) {//|| i == 1) {
+            for (int i = 0; i < this.exportTable.getColumnCount(); i++) {
+                column = this.exportTable.getColumnModel().getColumn(i);
+                if (i == 0) {// || i == 1) {
                     column.setCellRenderer(zentrierterRenderer);
                     column.setPreferredWidth(100);
                 } else {
@@ -479,9 +518,9 @@ public class ProbepktAuswPanel extends JPanel {
                 }
             }
 
-            JScrollPane tabellenScroller = new JScrollPane(exportTable,
-                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                    JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
             tabellenScroller.setBorder(Borders.DIALOG_BORDER);
 
             return tabellenScroller;
@@ -489,10 +528,10 @@ public class ProbepktAuswPanel extends JPanel {
 
         public void saveTabelle() {
             File exportDatei;
-            String[] csv = new String []{"csv"};
-            owner = hauptModul.getFrame();
+            String[] csv = new String[] {"csv"};
+            this.owner = ProbepktAuswPanel.this.hauptModul.getFrame();
 
-            exportDatei = owner.saveFile(csv);
+            exportDatei = this.owner.saveFile(csv);
 
             if (exportDatei != null) {
                 String ext = AuikUtils.getExtension(exportDatei);
@@ -504,14 +543,16 @@ public class ProbepktAuswPanel extends JPanel {
                     } else {
                         newExt = ".csv";
                     }
-                    exportDatei = new File(exportDatei.getParent(), exportDatei.getName()+newExt);
+                    exportDatei = new File(exportDatei.getParent(),
+                        exportDatei.getName() + newExt);
                 }
 
                 boolean doIt = false;
                 if (exportDatei.exists()) {
-                    boolean answer = owner.showQuestion(
-                            "Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?",
-                            "Datei bereits vorhanden!");
+                    boolean answer = GUIManager.getInstance().showQuestion(
+                        "Soll die vorhandene Datei " + exportDatei.getName()
+                            + " wirklich überschrieben werden?",
+                        "Datei bereits vorhanden!");
                     if (answer && exportDatei.canWrite()) {
                         doIt = true;
                     }
@@ -521,23 +562,29 @@ public class ProbepktAuswPanel extends JPanel {
 
                 if (doIt) {
                     log.debug("Speichere nach '" + exportDatei.getName()
-                    		+ "' (Ext: '" + ext + "') in '"
-                    		+ exportDatei.getParent() + "' !");
-                    if (AuikUtils.exportTableDataToCVS(exportTable, exportDatei)) {
-                        owner.showInfoMessage("Speichern der CSV-Datei erfolgreich!", "Speichern erfolgreich");
+                        + "' (Ext: '" + ext + "') in '"
+                        + exportDatei.getParent() + "' !");
+                    if (AuikUtils.exportTableDataToCVS(this.exportTable,
+                        exportDatei)) {
+                        GUIManager.getInstance().showInfoMessage(
+                            "Speichern der CSV-Datei erfolgreich!",
+                            "Speichern erfolgreich");
                     } else {
                         log.debug("Beim Speichern der Datei '" + exportDatei
-                        		+ "' trat ein Fehler auf!");
-                        owner.showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+                            + "' trat ein Fehler auf!");
+                        GUIManager.getInstance().showErrorMessage(
+                            "Beim Speichern der Datei '" + exportDatei
+                                + "' trat ein Fehler auf!");
                     }
                 }
             }
         }
 
         private void showTabellenPopup(MouseEvent e) {
-            if (tabellenMenu == null) {
-                tabellenMenu = new JPopupMenu("Tabelle");
-                JMenuItem speichernItem = new JMenuItem(new AbstractAction("Speichern") {
+            if (this.tabellenMenu == null) {
+                this.tabellenMenu = new JPopupMenu("Tabelle");
+                JMenuItem speichernItem = new JMenuItem(new AbstractAction(
+                    "Speichern") {
                     private static final long serialVersionUID = -6201611660887956188L;
 
                     @Override
@@ -545,18 +592,19 @@ public class ProbepktAuswPanel extends JPanel {
                         saveTabelle();
                     }
                 });
-                tabellenMenu.add(speichernItem);
+                this.tabellenMenu.add(speichernItem);
             }
 
             if (e.isPopupTrigger()) {
                 Point origin = e.getPoint();
-                int row = exportTable.rowAtPoint(origin);
-                int col = exportTable.columnAtPoint(origin);
+                int row = this.exportTable.rowAtPoint(origin);
+                int col = this.exportTable.columnAtPoint(origin);
 
                 if (row != -1) {
-                    exportTable.setRowSelectionInterval(row, row);
-                    exportTable.setColumnSelectionInterval(col, col);
-                    tabellenMenu.show(e.getComponent(), e.getX(), e.getY());
+                    this.exportTable.setRowSelectionInterval(row, row);
+                    this.exportTable.setColumnSelectionInterval(col, col);
+                    this.tabellenMenu
+                        .show(e.getComponent(), e.getX(), e.getY());
                 }
             }
         }
@@ -566,34 +614,33 @@ public class ProbepktAuswPanel extends JPanel {
         }
 
         public void doSpeichern() {
-         if (tabbedPane.getSelectedIndex() == 0) {
+            if (this.tabbedPane.getSelectedIndex() == 0) {
                 try {
-                    chartPanel.doSaveAs();
+                    this.chartPanel.doSaveAs();
                 } catch (IOException e) {
                     log.debug("Konnte Datei nicht speichern!");
                 }
-            } else if (tabbedPane.getSelectedIndex() == 1) {
+            } else if (this.tabbedPane.getSelectedIndex() == 1) {
                 saveTabelle();
             }
         }
     }
 
     private JComboBox getParameterBox() {
-        if (parameterBox == null) {
-            parameterBox = new SearchBox(AtlParameter.getAllAsArray());
+        if (this.parameterBox == null) {
+            this.parameterBox = new SearchBox(AtlParameter.getAllAsArray());
         }
 
-        return parameterBox;
+        return this.parameterBox;
     }
 
     private JButton getSubmitButton() {
-        if (submitButton == null) {
-            submitButton = new JButton("Abschicken");
+        if (this.submitButton == null) {
+            this.submitButton = new JButton("Abschicken");
 
-            submitButton.addActionListener(new ActionListener() {
+            this.submitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
 
                     if (getRightList().getModel().getSize() == 0) {
                         showResultOneAxis(LEFT);
@@ -606,44 +653,48 @@ public class ProbepktAuswPanel extends JPanel {
             });
         }
 
-        return submitButton;
+        return this.submitButton;
     }
 
     private JComboBox getLeftEinheitenBox() {
-        if (leftEinheitenBox == null) {
-            leftEinheitenBox = new SearchBox(einheiten);
-            leftEinheitenBox.setSelectedItem(AtlEinheiten.getEinheit(AtlEinheiten.MG_L_ID));
+        if (this.leftEinheitenBox == null) {
+            this.leftEinheitenBox = new SearchBox(this.einheiten);
+            this.leftEinheitenBox.setSelectedItem(AtlEinheiten
+                .getEinheit(AtlEinheiten.MG_L_ID));
         }
 
-        return leftEinheitenBox;
+        return this.leftEinheitenBox;
     }
 
     private JComboBox getRightEinheitenBox() {
-        if (rightEinheitenBox == null) {
-            rightEinheitenBox = new SearchBox(einheiten);
-            rightEinheitenBox.setSelectedItem(AtlEinheiten.getEinheit(AtlEinheiten.MG_L_ID));
+        if (this.rightEinheitenBox == null) {
+            this.rightEinheitenBox = new SearchBox(this.einheiten);
+            this.rightEinheitenBox.setSelectedItem(AtlEinheiten
+                .getEinheit(AtlEinheiten.MG_L_ID));
         }
 
-        return rightEinheitenBox;
+        return this.rightEinheitenBox;
     }
 
     public void showResultOneAxis(final String axis) {
         SwingWorkerVariant worker = new SwingWorkerVariant(getSubmitButton()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                dataSet1 = createDataset(axis);
+                ProbepktAuswPanel.this.dataSet1 = createDataset(axis);
             }
 
             @Override
             protected void doUIUpdateLogic() throws RuntimeException {
-                if (dataSet1.getSeriesCount() > 0) {
+                if (ProbepktAuswPanel.this.dataSet1.getSeriesCount() > 0) {
 
-                    AuswertungsDialog dialog = new AuswertungsDialog("Probenahmen", dataSet1, null, frame );
+                    AuswertungsDialog dialog = new AuswertungsDialog(
+                        "Probenahmen", ProbepktAuswPanel.this.dataSet1, null,
+                        ProbepktAuswPanel.this.frame);
 
                     dialog.setVisible(true);
                 } else {
                     log.debug("(showResultOneAxis) "
-                    		+ "Keine Parameter ausgewählt!");
+                        + "Keine Parameter ausgewählt!");
                 }
             }
         };
@@ -658,20 +709,26 @@ public class ProbepktAuswPanel extends JPanel {
 
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                dataSet1 = createDataset(LEFT);
-                dataSet2 = createDataset(RIGHT);
+                ProbepktAuswPanel.this.dataSet1 = createDataset(LEFT);
+                ProbepktAuswPanel.this.dataSet2 = createDataset(RIGHT);
 
-                seriesCount = dataSet1.getSeriesCount() + dataSet2.getSeriesCount();
+                this.seriesCount = ProbepktAuswPanel.this.dataSet1
+                    .getSeriesCount()
+                    + ProbepktAuswPanel.this.dataSet2.getSeriesCount();
             }
 
             @Override
             protected void doUIUpdateLogic() throws RuntimeException {
-                if (seriesCount > 0) {
+                if (this.seriesCount > 0) {
 
-                    AuswertungsDialog dialog = new AuswertungsDialog("Probenahmen", dataSet1, dataSet2, frame);
+                    AuswertungsDialog dialog = new AuswertungsDialog(
+                        "Probenahmen", ProbepktAuswPanel.this.dataSet1,
+                        ProbepktAuswPanel.this.dataSet2,
+                        ProbepktAuswPanel.this.frame);
                     dialog.setVisible(true);
                 } else {
-                    log.debug("(showResultDualAxis) " + "Keine Parameter ausgewählt!");
+                    log.debug("(showResultDualAxis) "
+                        + "Keine Parameter ausgewählt!");
                 }
             }
         };
@@ -698,93 +755,101 @@ public class ProbepktAuswPanel extends JPanel {
 
         }
 
-        Timestamp vonDate = new Timestamp(getVonDateChooser().getDate().getTime());
-        Timestamp bisDate = new Timestamp(getBisDateChooser().getDate().getTime());
+        Timestamp vonDate = new Timestamp(getVonDateChooser().getDate()
+            .getTime());
+        Timestamp bisDate = new Timestamp(getBisDateChooser().getDate()
+            .getTime());
         String analyeVon = "";
-        if (analyseVonBox.getSelectedItem() != null){
-        	analyeVon = analyseVonBox.getSelectedItem().toString();
+        if (this.analyseVonBox.getSelectedItem() != null) {
+            analyeVon = this.analyseVonBox.getSelectedItem().toString();
         }
 
-        pkt = AtlProbepkt.getProbepunktByObjekt(hauptModul.getObjekt());
+        this.pkt = AtlProbepkt.getProbepunktByObjekt(this.hauptModul
+            .getObjekt());
 
-        createSeries(paramList, pkt, einheit, vonDate, bisDate, analyeVon, col);
+        createSeries(paramList, this.pkt, einheit, vonDate, bisDate, analyeVon,
+            col);
 
         return col;
     }
 
-    private void createSeries(
-            JList paramList, AtlProbepkt pkt, AtlEinheiten einheit,
-            Date vonDate, Date bisDate, String analyseVon,
-            TimeSeriesCollection col){
+    private void createSeries(JList paramList, AtlProbepkt pkt,
+        AtlEinheiten einheit, Date vonDate, Date bisDate, String analyseVon,
+        TimeSeriesCollection col) {
 
         if (pkt != null) {
 
             for (int i = 0; i < paramList.getModel().getSize(); i++) {
                 AtlParameter p = (AtlParameter) paramList.getModel()
-                        .getElementAt(i);
+                    .getElementAt(i);
 
-                List<?> list = ViewAtlAnalysepositionAll.get(p,
-                        einheit, pkt, vonDate, bisDate, analyseVon);
+                List<?> list = ViewAtlAnalysepositionAll.get(p, einheit, pkt,
+                    vonDate, bisDate, analyseVon);
 
                 TimeSeries series = ChartDataSets
-                        .createAnalysePositionenSeries(list, p+ " ",einheit.toString());
+                    .createAnalysePositionenSeries(list, p + " ",
+                        einheit.toString());
                 col.addSeries(series);
             }
         }
     }
 
     private JDateChooser getVonDateChooser() {
-        if (vonDateChooser == null) {
-            vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+        if (this.vonDateChooser == null) {
+            this.vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
+                false);
         }
 
-        return vonDateChooser;
+        return this.vonDateChooser;
     }
 
     private JDateChooser getBisDateChooser() {
-        if (bisDateChooser == null) {
-            bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+        if (this.bisDateChooser == null) {
+            this.bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
+                false);
         }
 
-        return bisDateChooser;
+        return this.bisDateChooser;
     }
 
     private JComboBox getAnalyseVonBox() {
-        if (analyseVonBox == null) {
-            String[]  inst = AtlAnalyseposition.getAnalysierer();
-            analyseVonBox = new JComboBox();
-            analyseVonBox.setEditable(true);
-            analyseVonBox.setModel(new DefaultComboBoxModel(inst));
-            analyseVonBox.setPrototypeDisplayValue("Faulschlamm   abc");
-            analyseVonBox.setSelectedIndex(-1);
+        if (this.analyseVonBox == null) {
+            String[] inst = AtlAnalyseposition.getAnalysierer();
+            this.analyseVonBox = new JComboBox();
+            this.analyseVonBox.setEditable(true);
+            this.analyseVonBox.setModel(new DefaultComboBoxModel(inst));
+            this.analyseVonBox.setPrototypeDisplayValue("Faulschlamm   abc");
+            this.analyseVonBox.setSelectedIndex(-1);
         }
 
-        return analyseVonBox;
+        return this.analyseVonBox;
     }
 
     private JList getLeftList() {
-        if (leftList == null) {
+        if (this.leftList == null) {
             DefaultListModel listModel = new DefaultListModel();
-            leftList = new JList(listModel);
-            leftList.setPrototypeCellValue("Abcdefghij (Ab)");
+            this.leftList = new JList(listModel);
+            this.leftList.setPrototypeCellValue("Abcdefghij (Ab)");
 
-            leftList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.leftList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         }
 
-        return leftList;
+        return this.leftList;
     }
 
     private JList getRightList() {
-        if (rightList == null) {
+        if (this.rightList == null) {
             DefaultListModel listModel = new DefaultListModel();
-            rightList = new JList(listModel);
-            rightList.setPrototypeCellValue("Abcdefghij (Ab)");
+            this.rightList = new JList(listModel);
+            this.rightList.setPrototypeCellValue("Abcdefghij (Ab)");
 
-            rightList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.rightList
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         }
 
-        return rightList;
+        return this.rightList;
     }
+
     private JButton createRLButton(boolean left, String paramId) {
         Icon icon;
         Icon rIcon;
@@ -811,15 +876,16 @@ public class ProbepktAuswPanel extends JPanel {
     }
 
     private JButton getLeftDeleteButton() {
-        if (leftDeleteButton == null) {
-            leftDeleteButton = new JButton("Löschen");
-            leftDeleteButton.setEnabled(false);
+        if (this.leftDeleteButton == null) {
+            this.leftDeleteButton = new JButton("Löschen");
+            this.leftDeleteButton.setEnabled(false);
 
-            leftDeleteButton.addActionListener(new ActionListener() {
+            this.leftDeleteButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int index = getLeftList().getSelectedIndex();
-                    DefaultListModel leftModel = ((DefaultListModel)getLeftList().getModel());
+                    DefaultListModel leftModel = ((DefaultListModel) getLeftList()
+                        .getModel());
 
                     if (index != -1) {
                         leftModel.remove(index);
@@ -827,7 +893,8 @@ public class ProbepktAuswPanel extends JPanel {
                         int size = leftModel.getSize();
 
                         if (size == 0) {
-                            leftDeleteButton.setEnabled(false);
+                            ProbepktAuswPanel.this.leftDeleteButton
+                                .setEnabled(false);
                         } else {
                             if (index == size) {
                                 index--;
@@ -841,19 +908,20 @@ public class ProbepktAuswPanel extends JPanel {
             });
         }
 
-        return leftDeleteButton;
+        return this.leftDeleteButton;
     }
 
     private JButton getRightDeleteButton() {
-        if (rightDeleteButton == null) {
-            rightDeleteButton = new JButton("Löschen");
-            rightDeleteButton.setEnabled(false);
+        if (this.rightDeleteButton == null) {
+            this.rightDeleteButton = new JButton("Löschen");
+            this.rightDeleteButton.setEnabled(false);
 
-            rightDeleteButton.addActionListener(new ActionListener() {
+            this.rightDeleteButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int index = getRightList().getSelectedIndex();
-                    DefaultListModel rightModel = ((DefaultListModel)getRightList().getModel());
+                    DefaultListModel rightModel = ((DefaultListModel) getRightList()
+                        .getModel());
 
                     if (index != -1) {
                         rightModel.remove(index);
@@ -861,7 +929,8 @@ public class ProbepktAuswPanel extends JPanel {
                         int size = rightModel.getSize();
 
                         if (size == 0) {
-                            rightDeleteButton.setEnabled(false);
+                            ProbepktAuswPanel.this.rightDeleteButton
+                                .setEnabled(false);
                         } else {
                             if (index == size) {
                                 index--;
@@ -875,38 +944,42 @@ public class ProbepktAuswPanel extends JPanel {
             });
         }
 
-        return rightDeleteButton;
+        return this.rightDeleteButton;
     }
 
-
-
     private ActionListener getRLButtonListener() {
-        if (rlButtonListener == null) {
-            rlButtonListener = new ActionListener() {
+        if (this.rlButtonListener == null) {
+            this.rlButtonListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String direction = e.getActionCommand().replaceFirst("_.*", "");
-                    String paramId = e.getActionCommand().replaceFirst(".*_", "");
+                    String direction = e.getActionCommand().replaceFirst("_.*",
+                        "");
+                    String paramId = e.getActionCommand().replaceFirst(".*_",
+                        "");
                     AtlParameter param = null;
 
                     if (!paramId.equals("")) {
                         if (paramId.equals("box")) {
-                            param = (AtlParameter) getParameterBox().getSelectedItem();
+                            param = (AtlParameter) getParameterBox()
+                                .getSelectedItem();
                         } else {
                             param = AtlParameter.getParameter(paramId);
                         }
                     }
 
                     if (param != null) {
-                        DefaultListModel leftModel = (DefaultListModel) getLeftList().getModel();
-                        DefaultListModel rightModel = (DefaultListModel) getRightList().getModel();
+                        DefaultListModel leftModel = (DefaultListModel) getLeftList()
+                            .getModel();
+                        DefaultListModel rightModel = (DefaultListModel) getRightList()
+                            .getModel();
 
                         if (direction.equals(LEFT)) {
                             if (!leftModel.contains(param)) {
                                 if (rightModel.contains(param)) {
                                     rightModel.removeElement(param);
                                     if (rightModel.getSize() == 0) {
-                                        getRightDeleteButton().setEnabled(false);
+                                        getRightDeleteButton()
+                                            .setEnabled(false);
                                     }
                                 }
                                 leftModel.addElement(param);
@@ -929,7 +1002,7 @@ public class ProbepktAuswPanel extends JPanel {
             };
         }
 
-        return rlButtonListener;
+        return this.rlButtonListener;
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -946,6 +1019,6 @@ public class ProbepktAuswPanel extends JPanel {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 }

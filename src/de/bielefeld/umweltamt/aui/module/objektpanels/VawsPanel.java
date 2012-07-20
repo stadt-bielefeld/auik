@@ -93,6 +93,7 @@ import javax.swing.ListSelectionModel;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
@@ -143,6 +144,7 @@ public class VawsPanel extends JPanel {
         anlagenartBox = new JComboBox(VawsAnlagenarten.getAnlagenarten());
         anlegenButton = new JButton("Anlegen");
         anlegenButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 neuerDatensatz();
             }
@@ -150,6 +152,7 @@ public class VawsPanel extends JPanel {
 
         reportListeButton = new JButton("PDF-Liste generieren");
         reportListeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showReportListe();
             }
@@ -157,6 +160,7 @@ public class VawsPanel extends JPanel {
 
         reportAnlageButton = new JButton("PDF-Datenblatt generieren");
         reportAnlageButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showReportAnlage();
             }
@@ -179,6 +183,7 @@ public class VawsPanel extends JPanel {
      * Liefert den Namen dieses Panels.
      * @return "VAWS"
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -242,7 +247,7 @@ public class VawsPanel extends JPanel {
             art = "Lageranlage";
         }
 
-        if (hauptModul.getFrame().showQuestion(
+        if (GUIManager.getInstance().showQuestion(
                 "Soll die ausgewählte "+art+" wirklich gelöscht werden?",
                 "Löschen bestätigen")) {
             if (VawsFachdaten.removeFachdaten(fd)) {
@@ -252,7 +257,7 @@ public class VawsPanel extends JPanel {
                 fetchFormData();
                 updateForm();
             } else {
-                hauptModul.getFrame().showErrorMessage("Konnte Fachdatensatz '" + fd + "' nicht löschen!");
+                GUIManager.getInstance().showErrorMessage("Konnte Fachdatensatz '" + fd + "' nicht löschen!");
             }
         }
     }
@@ -346,7 +351,8 @@ public class VawsPanel extends JPanel {
             vawsEditAction = new AbstractAction("Bearbeiten") {
 				private static final long serialVersionUID = 4646432365839296566L;
 
-				public void actionPerformed(ActionEvent e) {
+				@Override
+                public void actionPerformed(ActionEvent e) {
                     int row = getVawsTable().getSelectedRow();
 
                     // Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
@@ -371,7 +377,8 @@ public class VawsPanel extends JPanel {
             vawsLoeschAction = new AbstractAction("Löschen") {
 				private static final long serialVersionUID = -1355761143104436343L;
 
-				public void actionPerformed(ActionEvent e) {
+				@Override
+                public void actionPerformed(ActionEvent e) {
                     int row = getVawsTable().getSelectedRow();
 
                     // Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
@@ -396,7 +403,8 @@ public class VawsPanel extends JPanel {
             reportAnlageAction = new AbstractAction("PDF-Datenblatt generieren") {
 				private static final long serialVersionUID = -4668237100126864516L;
 
-				public void actionPerformed(ActionEvent e) {
+				@Override
+                public void actionPerformed(ActionEvent e) {
                     showReportAnlage();
                 }
             };
@@ -439,6 +447,7 @@ public class VawsPanel extends JPanel {
             vawsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
             vawsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     if((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
@@ -449,10 +458,12 @@ public class VawsPanel extends JPanel {
                     }
                 }
 
+                @Override
                 public void mousePressed(MouseEvent e) {
                     showVawsPopup(e);
                 }
 
+                @Override
                 public void mouseReleased(MouseEvent e) {
                     showVawsPopup(e);
                 }

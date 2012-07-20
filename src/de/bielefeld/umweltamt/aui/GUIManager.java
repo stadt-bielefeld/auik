@@ -157,6 +157,11 @@ public final class GUIManager {
             title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
     }
 
+    public boolean showQuestion(String question) {
+        return (JOptionPane.showConfirmDialog(this.runningFrame, question,
+            "Frage", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+    }
+
     /**
      * Show an info message
      * @param message The message
@@ -174,6 +179,11 @@ public final class GUIManager {
      */
     public void showErrorMessage(String message, String title) {
         JOptionPane.showMessageDialog(this.runningFrame, message, title,
+            JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this.runningFrame, message, "Fehler",
             JOptionPane.ERROR_MESSAGE);
     }
 

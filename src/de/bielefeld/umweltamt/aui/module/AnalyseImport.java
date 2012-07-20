@@ -40,6 +40,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -47,8 +48,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 /**
  * Diese Klasse ist ein eigenst&auml;ndiges Modul. Es hat die Aufgabe, einen
  * Import-Mechanismus bereitzustellen, mit dem sich Analyseergebnisse von
- * Probenahmen importieren lassen. Der Import gliedert sich in folgende
- * Stufen:<br>
+ * Probenahmen importieren lassen. Der Import gliedert sich in folgende Stufen:<br>
  * <ul>
  * <li>Datei w&auml;hlen</li>
  * <li>Pr&uuml;fung der Kennnummer und Parameter</li>
@@ -57,41 +57,29 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * <li>Plausibilit&auml;tspr&uuml;fung durch den Nutzer</li>
  * <li>Freigabe durch Nutzer mittels Knopfdruck</li>
  * </ul>
- *
  * @author <a href="mailto:ingo.weinzierl@intevation.de">Ingo Weinzierl</a>
  */
 public class AnalyseImport extends AbstractModul {
 
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Diese Klasse importiert die Laborergebnisse einer Probenahme in Form
      * einer Textdatei und stellt diese als {@link ListTableModel} zur
      * Verf&uuml;gung.
-     *
      * @author <a href="mailto:ingo.weinzierl@intevation.de">Ingo Weinzierl</a>
      */
     private class AnalyseImporter extends ListTableModel {
         private static final long serialVersionUID = 5564507170122427828L;
-        protected File      toImport;
+        protected File toImport;
         protected boolean[] selection;
-        protected int[]     status;
+        protected int[] status;
 
         public AnalyseImporter() {
-            super(
-                new String[] {
-                    "Kennnummer",
-                    "Ordnungsbegriff",
-                    "Parameter",
-                    "GrKl",
-                    "Wert",
-                    "Einheit",
-                    "Plausibel"
-                },
-                false);
+            super(new String[] {"Kennnummer", "Ordnungsbegriff", "Parameter",
+                    "GrKl", "Wert", "Einheit", "Plausibel"}, false);
         }
-
 
         @Override
         public Object getValueAt(int row, int col) {
@@ -105,30 +93,30 @@ public class AnalyseImport extends AbstractModul {
             int status = getRowStatus(row);
 
             switch (col) {
-                case 0: return getColoredColumn(
-                    status,
-                    AnalyseProcessor.unquote(columns[0]));
-                case 1: return getColoredColumn(
-                    status,
-                    AnalyseProcessor.unquote(columns[2]));
-                case 2: return getColoredColumn(
-                    status,
-                    AnalyseProcessor.unquote(columns[3]));
-                case 3: return getColoredColumn(
-                    status,
-                    AnalyseProcessor.unquote(columns[4]));
-                case 4: return getColoredColumn(
-                    status,
-                    AnalyseProcessor.unquote(columns[5]));
-                case 5: return getColoredColumn(
-                    status,
-                    AnalyseProcessor.unquote(columns[7]));
-                case 6: return selection[row];
+                case 0:
+                    return getColoredColumn(status,
+                        AnalyseProcessor.unquote(columns[0]));
+                case 1:
+                    return getColoredColumn(status,
+                        AnalyseProcessor.unquote(columns[2]));
+                case 2:
+                    return getColoredColumn(status,
+                        AnalyseProcessor.unquote(columns[3]));
+                case 3:
+                    return getColoredColumn(status,
+                        AnalyseProcessor.unquote(columns[4]));
+                case 4:
+                    return getColoredColumn(status,
+                        AnalyseProcessor.unquote(columns[5]));
+                case 5:
+                    return getColoredColumn(status,
+                        AnalyseProcessor.unquote(columns[7]));
+                case 6:
+                    return this.selection[row];
             }
 
             return null;
         }
-
 
         /**
          * Diese Methode liefert den Status einer Zeile. Da der Status einer
@@ -137,40 +125,33 @@ public class AnalyseImport extends AbstractModul {
          * einen passenden Parameter gibt, wird der Status in {@link status}
          * gepuffert um die Perfomance aufrecht zu erhalten und die DB nicht
          * unn&ouml;tig anzufragen.
-         *
          * @param row Der Index einer Zeile.
-         *
          * @return -1, 1 oder 2.
          */
         protected int getRowStatus(int row) {
-            if (status[row] == 0) {
+            if (this.status[row] == 0) {
                 String[] columns = (String[]) getObjectAtRow(row);
 
-                status[row] = (columns.length < 8)
-                    ? -1
-                    : AnalyseProcessor.importStatus(
-                        AnalyseProcessor.unquote(columns[0]),
+                this.status[row] = (columns.length < 8) ? -1 : AnalyseProcessor
+                    .importStatus(AnalyseProcessor.unquote(columns[0]),
                         AnalyseProcessor.unquote(columns[2]),
                         AnalyseProcessor.unquote(columns[6]));
             }
 
-            return status[row];
+            return this.status[row];
         }
-
 
         /**
          * Diese Methode liefert <i>txt</i> in einem HTML-String. Der
          * HTML-String dient dazu <i>txt</i> in unterschiedlichen Farben
          * darzustellen. Die Farbe ist vom <i>status</i> abh&auml;ngig.<br>
          * <ul>
-         *  <li>Status == -1 : rot gef&auml;rbter String</li>
-         *  <li>Status ==  1 : gr&uuml;n gef&auml;rbter String</li>
-         *  <li>Status ==  2 : orange gef&auml;rbter String</li>
+         * <li>Status == -1 : rot gef&auml;rbter String</li>
+         * <li>Status == 1 : gr&uuml;n gef&auml;rbter String</li>
+         * <li>Status == 2 : orange gef&auml;rbter String</li>
          * </ul>
-         *
          * @param status Status sollte -1, 1 oder 2 sein.
          * @param txt Der auszugebende Text.
-         *
          * @return liefert einen farbigen HTML-Text mit Inhalt <i>txt</i>.
          */
         protected String getColoredColumn(int status, String txt) {
@@ -182,12 +163,12 @@ public class AnalyseImport extends AbstractModul {
                     sb.append(txt);
                     sb.append("</font>");
                     break;
-                case  1:
+                case 1:
                     sb.append("<font color='green'>");
                     sb.append(txt);
                     sb.append("</font>");
                     break;
-                case  2:
+                case 2:
                     sb.append("<font color='FF8200'>");
                     sb.append(txt);
                     sb.append("</font>");
@@ -202,11 +183,9 @@ public class AnalyseImport extends AbstractModul {
             return sb.toString();
         }
 
-
         /**
          * Diese Methode wird nur dann ausgef&uuml;hrt, wenn <i>col</i> auf die
          * boolean Spalte verweist.
-         *
          * @param value Der Wert.
          * @param row Der Index einer Zeile.
          * @param col Der Index einer Spalte.
@@ -217,17 +196,14 @@ public class AnalyseImport extends AbstractModul {
                 return;
             }
 
-            selection[row] = Boolean.TRUE.equals(value);
+            this.selection[row] = Boolean.TRUE.equals(value);
         }
-
 
         /**
          * Diese Methode liefert in dieser Klasse <b>immer</b> <i>null</i>. Es
          * muss stattdessen {@link getValueAt(int, int)} verwendet werden.
-         *
          * @param row Ein Objekt, welches die Zeile representiert.
          * @param col Der Index einer Spalte.
-         *
          * @return <i>null</i>.
          */
         @Override
@@ -235,16 +211,14 @@ public class AnalyseImport extends AbstractModul {
             return null;
         }
 
-
         /**
          * Diese Methode liefert eine Liste mit allen selektierten Zeilen.
-         *
          * @return Liste mit allen selektierten Zeilen.
          */
         public List<String[]> getSelectedRows() {
             List<String[]> selected = new ArrayList<String[]>();
 
-            for (int i = 0; i < selection.length; i++) {
+            for (int i = 0; i < this.selection.length; i++) {
                 boolean s = Boolean.TRUE.equals(getValueAt(i, 6));
                 if (s) {
                     selected.add((String[]) getObjectAtRow(i));
@@ -254,37 +228,32 @@ public class AnalyseImport extends AbstractModul {
             return selected;
         }
 
-
         /**
          * Diese Methode liefert <code>Boolean.class</code>, falls <i>col</i> ==
          * 6. In jedem anderen Fall wird <code>String.class</code>
          * zurückgegeben.
-         *
          * @param col Der Index einer Spalte.
          * @return <code>Boolean.class</code> falls <i>col</i>==6 , sonst
-         * <code>String.class</code>
+         *         <code>String.class</code>
          */
         @Override
         public Class<?> getColumnClass(int col) {
             return col == 6 ? Boolean.class : String.class;
         }
 
-
         /**
          * Diese Methode liefert nur für die Spalte 6 <i>true</i> und in jedem
          * anderen Fall <i>false</i>, da ausschlie&szlig;lich die Spalte 6
          * editierbar sein soll.
-         *
          * @param row Der Index der Zeile.
          * @param col Der Index der Spalte.
-         *
-         * @return True, wenn <i>col</i> == 6 and getRowStatus(row) == 1 | 2 sonst False.
+         * @return True, wenn <i>col</i> == 6 and getRowStatus(row) == 1 | 2
+         *         sonst False.
          */
         @Override
         public boolean isCellEditable(int row, int col) {
             return (col == 6 && getRowStatus(row) > 0) ? true : false;
         }
-
 
         /**
          * Diese Methode liest alle Zeilen der Datei {@link toImport} ein und
@@ -298,11 +267,11 @@ public class AnalyseImport extends AbstractModul {
             BufferedReader in = null;
 
             try {
-                in            = new BufferedReader(new FileReader(toImport));
+                in = new BufferedReader(new FileReader(this.toImport));
                 List dataList = getList();
-                String   line = null;
-                int     count = 0;
-                int      bad  = 0;
+                String line = null;
+                int count = 0;
+                int bad = 0;
 
                 while ((line = in.readLine()) != null) {
                     if (line.startsWith(".")) {
@@ -312,20 +281,16 @@ public class AnalyseImport extends AbstractModul {
                     String[] columns = line.split("','");
 
                     if (columns == null) {
-                        log.error(
-                            "Fehler beim Lesen einer Analyse-Zeile: " +
-                            "Es konnte keine komma-serparierten Spalten " +
-                            "gefunden werden!");
-                            bad++;
-                    }
-                    else if (columns.length < 9) {
-                        log.error(
-                            "Fehler beim Lesen einer Analyse-Zeile: " +
-                            "Es wurden eine kaputte Analyse-Zeile " +
-                            "gefunden!");
-                            bad++;
-                    }
-                    else {
+                        log.error("Fehler beim Lesen einer Analyse-Zeile: "
+                            + "Es konnte keine komma-serparierten Spalten "
+                            + "gefunden werden!");
+                        bad++;
+                    } else if (columns.length < 9) {
+                        log.error("Fehler beim Lesen einer Analyse-Zeile: "
+                            + "Es wurden eine kaputte Analyse-Zeile "
+                            + "gefunden!");
+                        bad++;
+                    } else {
                         dataList.add(columns);
                     }
 
@@ -333,55 +298,54 @@ public class AnalyseImport extends AbstractModul {
                 }
 
                 if (bad > 0) {
-                    frame.showInfoMessage(
-                        "Beim Lesen des Analyse-Imports war/en " + bad + " kaputte "+
-                        "Zeile/n enthalten. Diese wurde/n ignoriert.\n" +
-                        "Weitere Informationen sind im Logfile enthalten.",
-                        "Ungültige Zeilen im Analyse-Import");
+                    GUIManager
+                        .getInstance()
+                        .showInfoMessage(
+                            "Beim Lesen des Analyse-Imports war/en "
+                                + bad
+                                + " kaputte "
+                                + "Zeile/n enthalten. Diese wurde/n ignoriert.\n"
+                                + "Weitere Informationen sind im Logfile enthalten.",
+                            "Ungültige Zeilen im Analyse-Import");
                 }
 
                 log.debug(count + " Zeilen eingelesen.");
 
                 fireTableDataChanged();
 
-                status = new int[dataList.size()];
+                this.status = new int[dataList.size()];
                 initSelection();
-            }
-            catch (FileNotFoundException fnfe) {
-                log.error(
-                    "Fehler beim Lesen der Probenahme-Analyseergebnisse: " +
-                    fnfe.getMessage());
-            }
-            finally {
+            } catch (FileNotFoundException fnfe) {
+                log.error("Fehler beim Lesen der Probenahme-Analyseergebnisse: "
+                    + fnfe.getMessage());
+            } finally {
                 try {
                     if (in != null) {
                         in.close();
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     // do nothing
                 }
             }
         }
 
-
         protected void initSelection() {
-            int rows  = getRowCount();
-            selection = new boolean[rows];
+            int rows = getRowCount();
+            this.selection = new boolean[rows];
 
             for (int i = 0; i < rows; i++) {
-                selection[i] = getRowStatus(i) > 0 ? true : false;
+                this.selection[i] = getRowStatus(i) > 0 ? true : false;
             }
         }
 
         /**
-         * Diese Methode leert die ggf vorhanden Daten, setzt die Datei {@link
-         * toImport} zur&uuml;ck und aktiviert den ersten Schritt des {@link
-         * AnalyseImporter}s.
+         * Diese Methode leert die ggf vorhanden Daten, setzt die Datei
+         * {@link toImport} zur&uuml;ck und aktiviert den ersten Schritt des
+         * {@link AnalyseImporter}s.
          */
         public void reset() {
             setList(new ArrayList<String[]>());
-            toImport = null;
+            this.toImport = null;
 
             activateFileChooser(true, false);
             activateImport(false, false);
@@ -394,25 +358,23 @@ public class AnalyseImport extends AbstractModul {
          * lesende Datei zu &uuml;bergeben. Hier findet eine Pr&uuml;fung statt,
          * ob die Datei lesbar ist; anschlie&szlig;end wird {@link updateList()}
          * aufgerufen, um die Daten zu lesen und die Liste zu aktualisieren.
-         *
          * @param f Die zu importierende Datei.
          */
         public void parse(File f) {
             if (!f.isFile() || !f.canRead()) {
-                frame.showErrorMessage(
-                    "Konnte die angegebene Datei '" + f.getName() +
-                    "' nicht öffnen!",
-                    "Fehler beim Öffnen der Datei");
+                GUIManager.getInstance().showErrorMessage(
+                    "Konnte die angegebene Datei '" + f.getName()
+                        + "' nicht öffnen!", "Fehler beim Öffnen der Datei");
             }
 
             reset();
             String name = f.getName();
 
             try {
-                toImport = f;
+                this.toImport = f;
 
-                log.debug(
-                    "Beginne Analyseergebnisse aus '" + name + "' zu lesen.");
+                log.debug("Beginne Analyseergebnisse aus '" + name
+                    + "' zu lesen.");
 
                 updateList();
                 List<?> data = getList();
@@ -422,69 +384,64 @@ public class AnalyseImport extends AbstractModul {
 
                     activateFileChooser(false, true);
                     activateImport(true, false);
-                }
-                else {
-                    frame.showInfoMessage(
-                        "Datei '" + name + "' wurde erfolgreich geladen.\n" +
-                        "Es wurden jedoch keine Daten gefunden.",
+                } else {
+                    GUIManager.getInstance().showInfoMessage(
+                        "Datei '" + name + "' wurde erfolgreich geladen.\n"
+                            + "Es wurden jedoch keine Daten gefunden.",
                         "Keine Daten");
                 }
-            }
-            catch (Exception e) {
-                frame.showErrorMessage(
-                    "Beim Lesen der Datei " + name +
-                    "ist ein Fehler aufgetreten: " + e.getMessage(),
+            } catch (Exception e) {
+                GUIManager.getInstance().showErrorMessage(
+                    "Beim Lesen der Datei " + name
+                        + "ist ein Fehler aufgetreten: " + e.getMessage(),
                     "Konnte Datei nicht lesen.");
             }
         }
     } // end of AnalyseImporter
 
-
     protected AnalyseImporter importer;
 
-    protected JButton     dateiButton;
-    protected JButton     importButton;
-    protected JLabel      dateiLabel;
-    protected JLabel      parseLabel;
-    protected JLabel      importLabel;
-    protected JLabel      beschreibungLabel;
+    protected JButton dateiButton;
+    protected JButton importButton;
+    protected JLabel dateiLabel;
+    protected JLabel parseLabel;
+    protected JLabel importLabel;
+    protected JLabel beschreibungLabel;
     protected JScrollPane listScroller;
-    protected JTable      table;
+    protected JTable table;
 
     public AnalyseImport() {
-        importer = new AnalyseImporter();
-        table    = new JTable(importer);
+        this.importer = new AnalyseImporter();
+        this.table = new JTable(this.importer);
 
-        dateiButton = new JButton("Datei wählen");
-        dateiLabel  = new JLabel();
-        parseLabel  = new JLabel();
+        this.dateiButton = new JButton("Datei wählen");
+        this.dateiLabel = new JLabel();
+        this.parseLabel = new JLabel();
 
-        listScroller = new JScrollPane(table);
+        this.listScroller = new JScrollPane(this.table);
 
-        beschreibungLabel = new JLabel(
-            "<html><table width='100%'>" +
-            "<tr><td style='color: green;'>Grün:</td>" +
-            "<td>Import m&ouml;glich: Kennnummer und Parameter " +
-            "vorhanden.</td></tr>" +
-            "<tr><td style='color: FF8200;'>Orange:</td>" +
-            "<td>Import m&ouml;glich: Kennnummer vorhanden, " +
-            "Parameter wird angelegt.</td></tr>" +
-            "<tr><td style='color: red;'>Rot:</td>" +
-            "<td>Zeile nicht importierbar.</td></tr>" +
-            "</table></html>");
+        this.beschreibungLabel = new JLabel("<html><table width='100%'>"
+            + "<tr><td style='color: green;'>Grün:</td>"
+            + "<td>Import m&ouml;glich: Kennnummer und Parameter "
+            + "vorhanden.</td></tr>"
+            + "<tr><td style='color: FF8200;'>Orange:</td>"
+            + "<td>Import m&ouml;glich: Kennnummer vorhanden, "
+            + "Parameter wird angelegt.</td></tr>"
+            + "<tr><td style='color: red;'>Rot:</td>"
+            + "<td>Zeile nicht importierbar.</td></tr>" + "</table></html>");
 
-        importButton = new JButton("Importieren");
-        importLabel  = new JLabel(AuikUtils.getIcon(
-            "step3_grey.png",
+        this.importButton = new JButton("Importieren");
+        this.importLabel = new JLabel(AuikUtils.getIcon("step3_grey.png",
             "Schritt Drei"));
 
         activateFileChooser(true, false);
         activateImport(false, false);
 
-        dateiButton.addActionListener(new ActionListener() {
+        this.dateiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                File file = frame.openFile(new String[]{"txt"});
+                File file = AnalyseImport.this.frame
+                    .openFile(new String[] {"txt"});
 
                 if (file != null) {
                     doImport(file);
@@ -492,8 +449,7 @@ public class AnalyseImport extends AbstractModul {
             }
         });
 
-
-        importButton.addActionListener(new ActionListener() {
+        this.importButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 doSave();
@@ -501,30 +457,25 @@ public class AnalyseImport extends AbstractModul {
         });
     }
 
-
     @Override
     public String getName() {
         return "Import Analyseergebnisse";
     }
-
 
     @Override
     public String getIdentifier() {
         return "atl_analyse_import";
     }
 
-
     @Override
     public String getCategory() {
         return "Labor";
     }
 
-
     @Override
     public Icon getIcon() {
         return super.getIcon("ksysguard.png");
     }
-
 
     /**
      * Diese Methode erstellt das Panel, das in der Oberfl&auml;che angezeigt
@@ -538,8 +489,8 @@ public class AnalyseImport extends AbstractModul {
      */
     @Override
     public JPanel getPanel() {
-        if (panel != null) {
-            return panel;
+        if (this.panel != null) {
+            return this.panel;
         }
 
         FormLayout layout = new FormLayout("40px,5dlu,65dlu,5dlu,175dlu:g", "");
@@ -564,84 +515,67 @@ public class AnalyseImport extends AbstractModul {
 
         b.append(getImportLabel(), getImportButton());
 
-        panel = b.getPanel();
+        this.panel = b.getPanel();
 
-        return panel;
+        return this.panel;
     }
-
 
     public JLabel getParseLabel() {
-        return parseLabel;
+        return this.parseLabel;
     }
-
 
     public JLabel getDateiLabel() {
-        return dateiLabel;
+        return this.dateiLabel;
     }
-
 
     public JLabel getBeschreibungLabel() {
-        return beschreibungLabel;
+        return this.beschreibungLabel;
     }
-
 
     public JLabel getImportLabel() {
-        return importLabel;
+        return this.importLabel;
     }
-
 
     public JButton getDateiButton() {
-        return dateiButton;
+        return this.dateiButton;
     }
-
 
     public JButton getImportButton() {
-        return importButton;
+        return this.importButton;
     }
-
 
     public JScrollPane getListScroller() {
-        return listScroller;
+        return this.listScroller;
     }
 
-
     /**
-     * Diese Methode ändert das Aussehen des Labels der Dateiauswahl.
-     * Das Label kann drei verschiebene Farben annehmen:<br>
+     * Diese Methode ändert das Aussehen des Labels der Dateiauswahl. Das Label
+     * kann drei verschiebene Farben annehmen:<br>
      * <ul>
-     * <li>
-     *  <i>active</i> und <i>success</i>gesetzt: Label gr&uuml;n hervorgehoben
-     * </li>
-     * <li>
-     *  <i>active</i> gesetzt: Label wei&szilg; hervorgehoben
-     * </li>
-     * <li>
-     *  <i>active</i> nicht gesetzt (<i>success</i> spielt in diesem Fall keine
-     *  Rolle): Label wird ausgegraut.
-     * </li>
+     * <li><i>active</i> und <i>success</i>gesetzt: Label gr&uuml;n
+     * hervorgehoben</li>
+     * <li><i>active</i> gesetzt: Label wei&szilg; hervorgehoben</li>
+     * <li><i>active</i> nicht gesetzt (<i>success</i> spielt in diesem Fall
+     * keine Rolle): Label wird ausgegraut.</li>
      * </ul>
-     *
      * @param active True, zum Hervorheben (wei&szilg;) des Labels
      * @param success Falls true und <i>active</i> ebenfalls true, zum
-     * Hervorheben (gr&uuml;n) des Labels
+     *            Hervorheben (gr&uuml;n) des Labels
      */
     protected void activateFileChooser(boolean active, boolean success) {
         if (active) {
-            parseLabel.setIcon(AuikUtils.getIcon(
-                "step1_w.png", "Schritt Eins"));
-        }
-        else {
+            this.parseLabel.setIcon(AuikUtils.getIcon("step1_w.png",
+                "Schritt Eins"));
+        } else {
             if (success) {
-                parseLabel.setIcon(AuikUtils.getIcon(
-                    "step1_g.png", "Schritt Eins"));
-            }
-            else {
-                parseLabel.setIcon(AuikUtils.getIcon(
-                    "step1_grey.png", "Schritt Eins"));
+                this.parseLabel.setIcon(AuikUtils.getIcon("step1_g.png",
+                    "Schritt Eins"));
+            } else {
+                this.parseLabel.setIcon(AuikUtils.getIcon("step1_grey.png",
+                    "Schritt Eins"));
             }
         }
     }
-
 
     /**
      * Diese Methode ändert das Aussehen des Labels des Imports und aktiviert
@@ -649,45 +583,35 @@ public class AnalyseImport extends AbstractModul {
      * <i>active</i> gesetzt ist, wird der Knopf aktiv, ansonsten wird er
      * deaktiviert. Das Label kann drei verschiebene Farben annehmen:<br>
      * <ul>
-     * <li>
-     *  <i>active</i> und <i>success</i>gesetzt: Label gr&uuml;n hervorgehoben
-     * </li>
-     * <li>
-     *  <i>active</i> gesetzt: Label wei&szilg; hervorgehoben
-     * </li>
-     * <li>
-     *  <i>active</i> nicht gesetzt (<i>success</i> spielt in diesem Fall keine
-     *  Rolle): Label wird ausgegraut.
-     * </li>
+     * <li><i>active</i> und <i>success</i>gesetzt: Label gr&uuml;n
+     * hervorgehoben</li>
+     * <li><i>active</i> gesetzt: Label wei&szilg; hervorgehoben</li>
+     * <li><i>active</i> nicht gesetzt (<i>success</i> spielt in diesem Fall
+     * keine Rolle): Label wird ausgegraut.</li>
      * </ul>
-     *
      * @param active True, zum Hervorheben des Labels
      */
     protected void activateImport(boolean active, boolean success) {
         if (active) {
-            importLabel.setIcon(AuikUtils.getIcon(
-                "step2_w.png", "Schritt Zwei"));
-            importButton.setEnabled(true);
-        }
-        else {
-            importButton.setEnabled(false);
+            this.importLabel.setIcon(AuikUtils.getIcon("step2_w.png",
+                "Schritt Zwei"));
+            this.importButton.setEnabled(true);
+        } else {
+            this.importButton.setEnabled(false);
 
             if (success) {
-                importLabel.setIcon(AuikUtils.getIcon(
-                    "step2_g.png", "Schritt Zwei"));
-            }
-            else {
-                importLabel.setIcon(AuikUtils.getIcon(
-                    "step2_grey.png", "Schritt Zwei"));
+                this.importLabel.setIcon(AuikUtils.getIcon("step2_g.png",
+                    "Schritt Zwei"));
+            } else {
+                this.importLabel.setIcon(AuikUtils.getIcon("step2_grey.png",
+                    "Schritt Zwei"));
             }
         }
     }
 
-
     protected void doImport(File file) {
-        importer.parse(file);
+        this.importer.parse(file);
     }
-
 
     /**
      * Diese Methode wird aufgerufen, nachdem eine Datei mit Analyseergebnissen
@@ -699,8 +623,8 @@ public class AnalyseImport extends AbstractModul {
     protected void doSave() {
         log.debug("Speichere die importieren Daten.");
 
-        List<?> data = importer.getSelectedRows();
-        int  size = data.size();
+        List<?> data = this.importer.getSelectedRows();
+        int size = data.size();
         int count = 0;
 
         for (int i = 0; i < size; i++) {
@@ -710,10 +634,9 @@ public class AnalyseImport extends AbstractModul {
             }
         }
 
-        frame.showInfoMessage(
-            "Es wurden " + count + " Zeilen der Analyseergebnisse erfolgreich" +
-            "\nin die Datenbank gespeichert.",
-            "Import erfolgreich");
+        GUIManager.getInstance().showInfoMessage(
+            "Es wurden " + count + " Zeilen der Analyseergebnisse erfolgreich"
+                + "\nin die Datenbank gespeichert.", "Import erfolgreich");
 
         activateImport(false, true);
     }

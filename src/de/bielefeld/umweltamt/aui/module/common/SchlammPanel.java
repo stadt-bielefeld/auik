@@ -77,6 +77,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
@@ -304,7 +305,7 @@ public class SchlammPanel extends JPanel {
                     int row = getProbeTabelle().getSelectedRow();
                     if (row != -1 && getProbeTabelle().getEditingRow() == -1) {
                         AtlProbenahmen probe = probeModel.getRow(row);
-                        if (frame
+                        if (GUIManager.getInstance()
                                 .showQuestion(
                                         "Soll die Probenahme '"
                                                 + probe.getKennummer()

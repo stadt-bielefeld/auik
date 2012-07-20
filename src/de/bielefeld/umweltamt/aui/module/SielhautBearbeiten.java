@@ -154,6 +154,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
@@ -188,7 +189,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author David Klotz
  */
 public class SielhautBearbeiten extends AbstractModul {
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private JTextField punktFeld;
@@ -233,11 +234,11 @@ public class SielhautBearbeiten extends AbstractModul {
 
     // Widgets für Fotopanel
     private JLabel fotoLabel;
-    //private ImageIcon fotoBild;
+    // private ImageIcon fotoBild;
 
     // Widgets für Kartenpanel
     private JLabel kartenLabel;
-    //private ImageIcon kartenBild;
+    // private ImageIcon kartenBild;
 
     private AtlSielhaut spunkt;
     private AtlProbepkt sprobePkt;
@@ -247,7 +248,7 @@ public class SielhautBearbeiten extends AbstractModul {
     private BasisObjektarten art;
     private SielhautProbeModel probeModel;
 
-    //Auswertung
+    // Auswertung
     private JDateChooser vonDateChooser;
     private JDateChooser bisDateChooser;
     private JCheckBox BleiCheck;
@@ -262,91 +263,92 @@ public class SielhautBearbeiten extends AbstractModul {
     private TimeSeriesCollection dataSet1;
     private JList auswahlList;
 
-
-
     @Override
     public void show() {
         super.show();
 
-
-        if (manager.getSettingsManager().getSetting("auik.imc.edit_object") != null) {
-            objekt = BasisObjekt.getObjekt(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.edit_object")));
-            manager.getSettingsManager().removeSetting("auik.imc.edit_object");
-            sprobePkt = AtlProbepkt.getProbepunktByObjekt(objekt);
-            spunkt = AtlSielhaut.getSielhaut(sprobePkt.getAtlSielhaut().getId());
-            setSielhautPunkt(spunkt);
-        }
-        else if (BasisObjekt.getObjekt(24856) != null){
-            objekt = BasisObjekt.getObjekt(24856);
-            sprobePkt = AtlProbepkt.getProbepunktByObjekt(objekt);
-            spunkt = AtlSielhaut.getSielhaut(sprobePkt.getAtlSielhaut().getId());
-            setSielhautPunkt(spunkt);
+        if (this.manager.getSettingsManager()
+            .getSetting("auik.imc.edit_object") != null) {
+            this.objekt = BasisObjekt.getObjekt(new Integer(this.manager
+                .getSettingsManager().getIntSetting("auik.imc.edit_object")));
+            this.manager.getSettingsManager().removeSetting(
+                "auik.imc.edit_object");
+            this.sprobePkt = AtlProbepkt.getProbepunktByObjekt(this.objekt);
+            this.spunkt = AtlSielhaut.getSielhaut(this.sprobePkt
+                .getAtlSielhaut().getId());
+            setSielhautPunkt(this.spunkt);
+        } else if (BasisObjekt.getObjekt(24856) != null) {
+            this.objekt = BasisObjekt.getObjekt(24856);
+            this.sprobePkt = AtlProbepkt.getProbepunktByObjekt(this.objekt);
+            this.spunkt = AtlSielhaut.getSielhaut(this.sprobePkt
+                .getAtlSielhaut().getId());
+            setSielhautPunkt(this.spunkt);
         }
 
     }
 
     public void setSielhautPunkt(AtlSielhaut sp) {
-        spunkt = sp;
-        if (spunkt.getId() != null) {
-            sprobePkt = AtlProbepkt.getSielhautProbepunkt(spunkt);
+        this.spunkt = sp;
+        if (this.spunkt.getId() != null) {
+            this.sprobePkt = AtlProbepkt.getSielhautProbepunkt(this.spunkt);
             getPrAnlegenButton().setEnabled(true);
             getTabelleExportButton().setEnabled(true);
         } else {
-            objekt = new BasisObjekt();
-            standort = BasisStandort.getStandort(41);
-            betreiber = BasisBetreiber.getBetreiber(3);
-            art = BasisObjektarten.getObjektart(32);
-            objekt.setBasisStandort(standort);
-            objekt.setBasisBetreiber(betreiber);
-            objekt.setBasisObjektarten(art);
-            sprobePkt = new AtlProbepkt();
-            sprobePkt.setAtlProbeart(AtlProbeart.getProbeart(AtlProbeart.SIELHAUT));
+            this.objekt = new BasisObjekt();
+            this.standort = BasisStandort.getStandort(41);
+            this.betreiber = BasisBetreiber.getBetreiber(3);
+            this.art = BasisObjektarten.getObjektart(32);
+            this.objekt.setBasisStandort(this.standort);
+            this.objekt.setBasisBetreiber(this.betreiber);
+            this.objekt.setBasisObjektarten(this.art);
+            this.sprobePkt = new AtlProbepkt();
+            this.sprobePkt.setAtlProbeart(AtlProbeart
+                .getProbeart(AtlProbeart.SIELHAUT));
             getPrAnlegenButton().setEnabled(false);
             getTabelleExportButton().setEnabled(false);
 
             getFotoLabel().setIcon(null);
-            getFotoLabel().setText("<html><b>- Kein Foto verfügbar! -</b></html>");
+            getFotoLabel().setText(
+                "<html><b>- Kein Foto verfügbar! -</b></html>");
             getKartenLabel().setIcon(null);
-            getKartenLabel().setText("<html><b>- Keine Karte verfügbar! -</b></html>");
+            getKartenLabel().setText(
+                "<html><b>- Keine Karte verfügbar! -</b></html>");
         }
 
-        String titel = spunkt.getBezeichnung();
-        if (spunkt.getLage() != null) {
-            titel += " \"" + spunkt.getLage() + "\"";
+        String titel = this.spunkt.getBezeichnung();
+        if (this.spunkt.getLage() != null) {
+            titel += " \"" + this.spunkt.getLage() + "\"";
         }
         getPunktFeld().setText(titel);
 
-        getSpNamenFeld().setText(spunkt.getBezeichnung());
-        getSpEntgebFeld().setText(spunkt.getEntgeb());
-        getSpLageFeld().setText(spunkt.getLage());
+        getSpNamenFeld().setText(this.spunkt.getBezeichnung());
+        getSpEntgebFeld().setText(this.spunkt.getEntgeb());
+        getSpLageFeld().setText(this.spunkt.getLage());
 
-        getSpBemerkungsArea().setText(spunkt.getBemerkungen());
+        getSpBemerkungsArea().setText(this.spunkt.getBemerkungen());
 
-        getSpRechtsWertFeld().setValue(spunkt.getRechtswert());
-        getSpHochWertFeld().setValue(spunkt.getHochwert());
+        getSpRechtsWertFeld().setValue(this.spunkt.getRechtswert());
+        getSpHochWertFeld().setValue(this.spunkt.getHochwert());
 
-        getSpHaltungsnrFeld().setText(spunkt.getHaltungsnr());
-        getSpAlarmplannrFeld().setText(spunkt.getAlarmplannr());
+        getSpHaltungsnrFeld().setText(this.spunkt.getHaltungsnr());
+        getSpAlarmplannrFeld().setText(this.spunkt.getAlarmplannr());
 
-        if (spunkt.getPsielhaut() == null){
+        if (this.spunkt.getPsielhaut() == null) {
             getSpSielhautCheck().setSelected(false);
-        }
-        else
-        getSpSielhautCheck().setSelected(spunkt.getPsielhaut());
+        } else
+            getSpSielhautCheck().setSelected(this.spunkt.getPsielhaut());
 
-        if (spunkt.getPnachprobe() == null){
+        if (this.spunkt.getPnachprobe() == null) {
             getSpNachprobeCheck().setSelected(false);
-        }
-        else
-        getSpNachprobeCheck().setSelected(spunkt.getPnachprobe());
+        } else
+            getSpNachprobeCheck().setSelected(this.spunkt.getPnachprobe());
 
-        if (spunkt.getPfirmenprobe() == null){
+        if (this.spunkt.getPfirmenprobe() == null) {
             getSpFirmenprobeCheck().setSelected(false);
-        }
-        else
-        getSpFirmenprobeCheck().setSelected(spunkt.getPfirmenprobe());
+        } else
+            getSpFirmenprobeCheck().setSelected(this.spunkt.getPfirmenprobe());
 
-        probeModel.setProbepunkt(sprobePkt);
+        this.probeModel.setProbepunkt(this.sprobePkt);
 
         // Ist eins der einklappbaren Panels offen,
         // wird es (noch einmal) aufgeklappt, um
@@ -365,7 +367,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
         getPunktSaveButton().setEnabled(true);
         getPunktEditButton().setEnabled(true);
-        punktPrintButton.setEnabled(true);
+        this.punktPrintButton.setEnabled(true);
     }
 
     /**
@@ -381,10 +383,10 @@ public class SielhautBearbeiten extends AbstractModul {
     /**
      * Speichert ein neu angelegtes Probenahmepunkt-Objekt.
      */
-    public boolean saveObjekt()  {
+    public boolean saveObjekt() {
         boolean saved = false;
 
-        objekt = BasisObjekt.saveBasisObjekt(objekt);
+        this.objekt = BasisObjekt.saveBasisObjekt(this.objekt);
 
         saved = true;
 
@@ -394,14 +396,14 @@ public class SielhautBearbeiten extends AbstractModul {
     /**
      * Speichert einen neu angelegten Probenahmepunkt.
      */
-    public boolean saveProbepunkt(BasisObjekt objekt)  {
+    public boolean saveProbepunkt(BasisObjekt objekt) {
         boolean saved = false;
 
         objekt = BasisObjekt.getObjekt(objekt.getObjektid());
-        sprobePkt.setBasisObjekt(objekt);
-        spunkt = AtlSielhaut.getSielhaut(spunkt.getId());
-        sprobePkt.setAtlSielhaut(spunkt);
-        AtlProbepkt.saveProbepunkt(sprobePkt);
+        this.sprobePkt.setBasisObjekt(objekt);
+        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
+        this.sprobePkt.setAtlSielhaut(this.spunkt);
+        AtlProbepkt.saveProbepunkt(this.sprobePkt);
 
         saved = true;
 
@@ -413,77 +415,81 @@ public class SielhautBearbeiten extends AbstractModul {
      */
     public void saveSielhautPunkt() {
         // Nur Speichern, wenn der Name nicht leer ist
-        if (getSpNamenFeld().getText() == null || getSpNamenFeld().getText().equals("")) {
-            frame.showErrorMessage("Der Name darf nicht leer sein!");
+        if (getSpNamenFeld().getText() == null
+            || getSpNamenFeld().getText().equals("")) {
+            GUIManager.getInstance().showErrorMessage(
+                "Der Name darf nicht leer sein!");
             getSpNamenFeld().requestFocus();
         } else {
             // Bezeichnung
-            spunkt.setBezeichnung(getSpNamenFeld().getText());
+            this.spunkt.setBezeichnung(getSpNamenFeld().getText());
 
             // Entwässerungsgebiet
             if ("".equals(getSpEntgebFeld().getText())) {
-                spunkt.setEntgeb(null);
+                this.spunkt.setEntgeb(null);
             } else {
-                spunkt.setEntgeb(getSpEntgebFeld().getText());
+                this.spunkt.setEntgeb(getSpEntgebFeld().getText());
             }
 
             // Lage
             if ("".equals(getSpLageFeld().getText())) {
-                spunkt.setLage(null);
+                this.spunkt.setLage(null);
             } else {
-                spunkt.setLage(getSpLageFeld().getText());
+                this.spunkt.setLage(getSpLageFeld().getText());
             }
 
             // Bemerkungen
             if ("".equals(getSpBemerkungsArea().getText())) {
-                spunkt.setBemerkungen(null);
+                this.spunkt.setBemerkungen(null);
             } else {
-                spunkt.setBemerkungen(getSpBemerkungsArea().getText());
+                this.spunkt.setBemerkungen(getSpBemerkungsArea().getText());
             }
 
             // Rechts- und Hochwert
-            spunkt.setRechtswert(getSpRechtsWertFeld().getDoubleValue());
-            spunkt.setHochwert(getSpHochWertFeld().getDoubleValue());
+            this.spunkt.setRechtswert(getSpRechtsWertFeld().getDoubleValue());
+            this.spunkt.setHochwert(getSpHochWertFeld().getDoubleValue());
 
             // Haltungs-Nr.
             if ("".equals(getSpHaltungsnrFeld().getText())) {
-                spunkt.setHaltungsnr(null);
+                this.spunkt.setHaltungsnr(null);
             } else {
-                spunkt.setHaltungsnr(getSpHaltungsnrFeld().getText());
+                this.spunkt.setHaltungsnr(getSpHaltungsnrFeld().getText());
             }
 
             // Alarmplan-Nr.
             if ("".equals(getSpAlarmplannrFeld().getText())) {
-                spunkt.setAlarmplannr(null);
+                this.spunkt.setAlarmplannr(null);
             } else {
-                spunkt.setAlarmplannr(getSpAlarmplannrFeld().getText());
+                this.spunkt.setAlarmplannr(getSpAlarmplannrFeld().getText());
             }
 
             // SielhautBearbeiten, Nachprobe & Alarmplan
-            spunkt.setPsielhaut(getSpSielhautCheck().isSelected());
-            spunkt.setPnachprobe(getSpNachprobeCheck().isSelected());
-            spunkt.setPfirmenprobe(getSpFirmenprobeCheck().isSelected());
+            this.spunkt.setPsielhaut(getSpSielhautCheck().isSelected());
+            this.spunkt.setPnachprobe(getSpNachprobeCheck().isSelected());
+            this.spunkt.setPfirmenprobe(getSpFirmenprobeCheck().isSelected());
 
             if (saveObjekt()) {
-                if (AtlSielhaut.saveSielhautPunkt(spunkt)) {
-                    if (saveProbepunkt(objekt)) {
-                        frame.changeStatus(
-                                "Sielhaut-Messpunkt erfolgreich gespeichert.",
-                                HauptFrame.SUCCESS_COLOR);
-                        setSielhautPunkt(spunkt);
+                if (AtlSielhaut.saveSielhautPunkt(this.spunkt)) {
+                    if (saveProbepunkt(this.objekt)) {
+                        this.frame.changeStatus(
+                            "Sielhaut-Messpunkt erfolgreich gespeichert.",
+                            HauptFrame.SUCCESS_COLOR);
+                        setSielhautPunkt(this.spunkt);
                     }
                 }
             } else {
-                frame.changeStatus(
-                        "Sielhaut-Messpunkt konnte nicht gespeichert werden!",
-                        HauptFrame.ERROR_COLOR);
+                this.frame.changeStatus(
+                    "Sielhaut-Messpunkt konnte nicht gespeichert werden!",
+                    HauptFrame.ERROR_COLOR);
             }
         }
     }
 
     public void showReport() throws EngineException {
-        if (spunkt.getId() != null || spunkt.getHaltungsnr() != null) {
-            ReportManager.getInstance().startReportWorker("SielhautBearbeiten", spunkt.getId(), spunkt.getBezeichnung(), punktPrintButton);
+        if (this.spunkt.getId() != null || this.spunkt.getHaltungsnr() != null) {
+            ReportManager.getInstance().startReportWorker("SielhautBearbeiten",
+                this.spunkt.getId(), this.spunkt.getBezeichnung(),
+                this.punktPrintButton);
         } else {
             log.debug("Dem zu druckenden Sielhaut-Probenahmepunkt fehlen Eingaben!");
         }
@@ -493,13 +499,16 @@ public class SielhautBearbeiten extends AbstractModul {
      * Legt eine neue Probenahme an.
      */
     public void neueProbenahme() {
-        if (sprobePkt != null) {
+        if (this.sprobePkt != null) {
             if (getPrNummerFeld().getText().trim().equals("")) {
                 getPrNummerFeld().requestFocus();
-                frame.changeStatus("Leere Kennummer!", HauptFrame.ERROR_COLOR);
+                this.frame.changeStatus("Leere Kennummer!",
+                    HauptFrame.ERROR_COLOR);
             } else {
-                String kennNummer = getPrNummerFeld().getText().trim().replaceAll(" ", "");
-                Timestamp datum = (new Timestamp(getPrDateChooser().getDate().getTime()));
+                String kennNummer = getPrNummerFeld().getText().trim()
+                    .replaceAll(" ", "");
+                Timestamp datum = (new Timestamp(getPrDateChooser().getDate()
+                    .getTime()));
 
                 boolean exists = AtlProbenahmen.probenahmeExists(kennNummer);
 
@@ -507,22 +516,27 @@ public class SielhautBearbeiten extends AbstractModul {
                     AtlProbenahmen probe = new AtlProbenahmen();
                     probe.setKennummer(kennNummer);
                     probe.setDatumDerEntnahme((Timestamp) datum);
-                    probe.setAtlAnalysepositionen(
-                        new HashSet<AtlAnalyseposition>());
-                    probe.setAtlProbepkt(sprobePkt);
+                    probe
+                        .setAtlAnalysepositionen(new HashSet<AtlAnalyseposition>());
+                    probe.setAtlProbepkt(this.sprobePkt);
                     probe.setArt("Sielhaut");
 
-                    ProbenEditor editDialog = new ProbenEditor(probe, frame, true);
+                    ProbenEditor editDialog = new ProbenEditor(probe,
+                        this.frame, true);
                     editDialog.setVisible(true);
 
-                    //probeModel.updateList();
+                    // probeModel.updateList();
                     updateProbeListe();
                 } else {
-                    frame.changeStatus("Eine Probenahme mit dieser Kennnummer existiert schon!", HauptFrame.ERROR_COLOR);
+                    this.frame
+                        .changeStatus(
+                            "Eine Probenahme mit dieser Kennnummer existiert schon!",
+                            HauptFrame.ERROR_COLOR);
                 }
             }
         } else {
-            frame.changeStatus("Fehler beim Anlegen: Kein Probepunkt!", HauptFrame.ERROR_COLOR);
+            this.frame.changeStatus("Fehler beim Anlegen: Kein Probepunkt!",
+                HauptFrame.ERROR_COLOR);
         }
     }
 
@@ -530,23 +544,22 @@ public class SielhautBearbeiten extends AbstractModul {
      * Bearbeitet eine Probenahme.
      */
     public void editProbenahme(AtlProbenahmen probe) {
-        ProbenEditor editDialog = new ProbenEditor(probe, frame, false);
+        ProbenEditor editDialog = new ProbenEditor(probe, this.frame, false);
 
         editDialog.setVisible(true);
 
-        //lastProbe = probe;
+        // lastProbe = probe;
         if (editDialog.wasSaved()) {
             updateProbeListe();
         }
-        //probeModel.updateList();
+        // probeModel.updateList();
     }
-
 
     /**
      * Speichert eine ProbenTabelle.
      */
     public void saveTabelle() {
-        File exportDatei = getFrame().saveFile(new String[]{"csv"});
+        File exportDatei = getFrame().saveFile(new String[] {"csv"});
         if (exportDatei != null) {
             String ext = AuikUtils.getExtension(exportDatei);
 
@@ -557,14 +570,16 @@ public class SielhautBearbeiten extends AbstractModul {
                 } else {
                     newExt = ".csv";
                 }
-                exportDatei = new File(exportDatei.getParent(), exportDatei.getName()+newExt);
+                exportDatei = new File(exportDatei.getParent(),
+                    exportDatei.getName() + newExt);
             }
 
             boolean doIt = false;
             if (exportDatei.exists()) {
-                boolean answer = getFrame().showQuestion(
-                        "Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?",
-                        "Datei bereits vorhanden!");
+                boolean answer = GUIManager.getInstance().showQuestion(
+                    "Soll die vorhandene Datei " + exportDatei.getName()
+                        + " wirklich überschrieben werden?",
+                    "Datei bereits vorhanden!");
                 if (answer && exportDatei.canWrite()) {
                     doIt = true;
                 }
@@ -574,30 +589,31 @@ public class SielhautBearbeiten extends AbstractModul {
 
             if (doIt) {
                 log.debug("Speichere nach '" + exportDatei.getName()
-                		+ "' (Ext: '"+ext+"') in '" + exportDatei.getParent()
-                		+ "' !");
+                    + "' (Ext: '" + ext + "') in '" + exportDatei.getParent()
+                    + "' !");
                 if (AuikUtils.exportTableDataToCVS(getPrTabelle(), exportDatei)) {
                     log.debug("Speichern erfolgreich!");
                 } else {
                     log.debug("Fehler beim Speichern!");
-                    getFrame().showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+                    GUIManager.getInstance().showErrorMessage(
+                        "Beim Speichern der Datei '" + exportDatei
+                            + "' trat ein Fehler auf!");
                 }
             }
         }
     }
 
-
     private void updateProbeListe() {
         SwingWorkerVariant worker = new SwingWorkerVariant(getPrTabelle()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                probeModel.updateList();
+                SielhautBearbeiten.this.probeModel.updateList();
                 log.debug("Liste geupdatet!");
             }
 
             @Override
             protected void doUIUpdateLogic() throws RuntimeException {
-                probeModel.fireTableDataChanged();
+                SielhautBearbeiten.this.probeModel.fireTableDataChanged();
                 log.debug("Tabelle geupdatet!");
             }
         };
@@ -605,63 +621,81 @@ public class SielhautBearbeiten extends AbstractModul {
     }
 
     private Action getProbeEditAction() {
-        if (probeEditAction == null) {
-            probeEditAction = new AbstractAction("Bearbeiten") {
+        if (this.probeEditAction == null) {
+            this.probeEditAction = new AbstractAction("Bearbeiten") {
                 private static final long serialVersionUID = -4363530282004004696L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getPrTabelle().getSelectedRow();
-                    // Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
+                    // Natürlich nur editieren, wenn wirklich eine Zeile
+                    // ausgewählt ist
                     if (row != -1) {
-                        AtlProbenahmen probe = probeModel.getRow(row);
+                        AtlProbenahmen probe = SielhautBearbeiten.this.probeModel
+                            .getRow(row);
                         editProbenahme(probe);
                     }
                 }
             };
-            probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
-            probeEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+            this.probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_B));
+            this.probeEditAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
         }
 
-        return probeEditAction;
+        return this.probeEditAction;
     }
 
     private Action getProbeLoeschAction() {
-        if (probeLoeschAction == null) {
-            probeLoeschAction = new AbstractAction("Löschen") {
+        if (this.probeLoeschAction == null) {
+            this.probeLoeschAction = new AbstractAction("Löschen") {
                 private static final long serialVersionUID = -3208582919995701684L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getPrTabelle().getSelectedRow();
                     if (row != -1 && getPrTabelle().getEditingRow() == -1) {
-                        AtlProbenahmen probe = probeModel.getRow(row);
-                        if (frame.showQuestion("Soll die Probenahme '"+ probe.getKennummer() +"' wirklich inkl. aller Analysen gelöscht werden?", "Löschen bestätigen")) {
-                            if (probeModel.removeRow(row)) {
-                                frame.changeStatus("Probenahme gelöscht!", HauptFrame.SUCCESS_COLOR);
+                        AtlProbenahmen probe = SielhautBearbeiten.this.probeModel
+                            .getRow(row);
+                        if (GUIManager
+                            .getInstance()
+                            .showQuestion(
+                                "Soll die Probenahme '"
+                                    + probe.getKennummer()
+                                    + "' wirklich inkl. aller Analysen gelöscht werden?",
+                                "Löschen bestätigen")) {
+                            if (SielhautBearbeiten.this.probeModel
+                                .removeRow(row)) {
+                                SielhautBearbeiten.this.frame.changeStatus(
+                                    "Probenahme gelöscht!",
+                                    HauptFrame.SUCCESS_COLOR);
                                 log.debug("Probe " + probe.getKennummer()
-                                		+ " wurde gelöscht!");
+                                    + " wurde gelöscht!");
                             } else {
-                                frame.changeStatus("Konnte Probenahme nicht löschen!", HauptFrame.ERROR_COLOR);
+                                SielhautBearbeiten.this.frame.changeStatus(
+                                    "Konnte Probenahme nicht löschen!",
+                                    HauptFrame.ERROR_COLOR);
                             }
                         }
                     }
                 }
             };
-            probeLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
-            probeLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            this.probeLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_L));
+            this.probeLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
-        return probeLoeschAction;
+        return this.probeLoeschAction;
     }
 
     private void showProbePopup(MouseEvent e) {
-        if (probePopup == null) {
-            probePopup = new JPopupMenu("Probe");
+        if (this.probePopup == null) {
+            this.probePopup = new JPopupMenu("Probe");
             JMenuItem bearbItem = new JMenuItem(getProbeEditAction());
             JMenuItem loeschItem = new JMenuItem(getProbeLoeschAction());
-            probePopup.add(bearbItem);
-            probePopup.add(loeschItem);
+            this.probePopup.add(bearbItem);
+            this.probePopup.add(loeschItem);
         }
 
         if (e.isPopupTrigger()) {
@@ -670,7 +704,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
             if (row != -1) {
                 getPrTabelle().setRowSelectionInterval(row, row);
-                probePopup.show(e.getComponent(), e.getX(), e.getY());
+                this.probePopup.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
@@ -700,7 +734,7 @@ public class SielhautBearbeiten extends AbstractModul {
     }
 
     public HauptFrame getFrame() {
-        return frame;
+        return this.frame;
     }
 
     /* (non-Javadoc)
@@ -708,72 +742,70 @@ public class SielhautBearbeiten extends AbstractModul {
      */
     @Override
     public JPanel getPanel() {
-        if (panel == null) {
-            probeModel = new SielhautProbeModel();
+        if (this.panel == null) {
+            this.probeModel = new SielhautProbeModel();
 
             RetractablePanel datenRP = new RetractablePanel(
-                    DefaultComponentFactory.getInstance()
-                    .createSeparator("Stammdaten"),
-                    getDatenPanel(), true, null);
-
-
-
+                DefaultComponentFactory.getInstance().createSeparator(
+                    "Stammdaten"), getDatenPanel(), true, null);
 
             FormLayout layout = new FormLayout(
-                    "pref, 5dlu, 100dlu:g, 3dlu, l:p",
-                    "p, 3dlu, t:p, 10dlu, t:p, 10dlu, t:p, 10dlu, t:p");
+                "pref, 5dlu, 100dlu:g, 3dlu, l:p",
+                "p, 3dlu, t:p, 10dlu, t:p, 10dlu, t:p, 10dlu, t:p");
             PanelBuilder builder = new PanelBuilder(layout);
             CellConstraints cc = new CellConstraints();
 
             builder.setDefaultDialogBorder();
 
-            builder.addLabel("Messstelle:",    cc.xy(1,1));
-            builder.add(getPunktFeld(),        cc.xy(3,1));
-            builder.add(getPunktToolBar(),    cc.xy(5,1));
-            builder.add(datenRP,            cc.xyw(1,3,5, "f, f"));
-            builder.add(getProbenRtPanel(),    cc.xyw(1,5,5, "f, f"));
-            builder.add(getFotoRtPanel(),    cc.xyw(1,7,5, "f, f"));
-            builder.add(getKartenRtPanel(),    cc.xyw(1,9,5, "f, f"));
+            builder.addLabel("Messstelle:", cc.xy(1, 1));
+            builder.add(getPunktFeld(), cc.xy(3, 1));
+            builder.add(getPunktToolBar(), cc.xy(5, 1));
+            builder.add(datenRP, cc.xyw(1, 3, 5, "f, f"));
+            builder.add(getProbenRtPanel(), cc.xyw(1, 5, 5, "f, f"));
+            builder.add(getFotoRtPanel(), cc.xyw(1, 7, 5, "f, f"));
+            builder.add(getKartenRtPanel(), cc.xyw(1, 9, 5, "f, f"));
 
-            panel = builder.getPanel();
+            this.panel = builder.getPanel();
         }
 
-        return panel;
+        return this.panel;
     }
 
     private JTextField getPunktFeld() {
-        if (punktFeld == null) {
-            punktFeld = new JTextField();
-            punktFeld.setEditable(false);
+        if (this.punktFeld == null) {
+            this.punktFeld = new JTextField();
+            this.punktFeld.setEditable(false);
         }
-        return punktFeld;
+        return this.punktFeld;
     }
 
     private JToolBar getPunktToolBar() {
-        if (punktToolBar == null) {
-            punktToolBar = new JToolBar();
-            punktToolBar.setFloatable(false);
-            punktToolBar.setRollover(true);
+        if (this.punktToolBar == null) {
+            this.punktToolBar = new JToolBar();
+            this.punktToolBar.setFloatable(false);
+            this.punktToolBar.setRollover(true);
 
-            punktToolBar.add(getPunktChooseButton());
-            punktToolBar.add(getPunktEditButton());
-            punktToolBar.add(getPunktNeuButton());
-            punktToolBar.add(getPunktSaveButton());
-            punktToolBar.add(getPunktPrintButton());
+            this.punktToolBar.add(getPunktChooseButton());
+            this.punktToolBar.add(getPunktEditButton());
+            this.punktToolBar.add(getPunktNeuButton());
+            this.punktToolBar.add(getPunktSaveButton());
+            this.punktToolBar.add(getPunktPrintButton());
         }
-        return punktToolBar;
+        return this.punktToolBar;
     }
 
     private JButton getPunktChooseButton() {
-        if (punktChooseButton == null) {
-            punktChooseButton = new JButton(AuikUtils.getIcon(16, "reload.png"));
-            //punktChooseButton.setHorizontalAlignment(JButton.CENTER);
-            punktChooseButton.setToolTipText("Messpunkt auswählen");
+        if (this.punktChooseButton == null) {
+            this.punktChooseButton = new JButton(AuikUtils.getIcon(16,
+                "reload.png"));
+            // punktChooseButton.setHorizontalAlignment(JButton.CENTER);
+            this.punktChooseButton.setToolTipText("Messpunkt auswählen");
 
-            punktChooseButton.addActionListener(new ActionListener() {
+            this.punktChooseButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    SielhautChooser chooser = new SielhautChooser(frame);
+                    SielhautChooser chooser = new SielhautChooser(
+                        SielhautBearbeiten.this.frame);
                     chooser.setVisible(true);
 
                     AtlSielhaut tmp = chooser.getChosenSielhaut();
@@ -784,35 +816,41 @@ public class SielhautBearbeiten extends AbstractModul {
                 }
             });
         }
-        return punktChooseButton;
+        return this.punktChooseButton;
     }
 
     private JButton getPunktEditButton() {
-        if (punktEditButton == null) {
-            punktEditButton = new JButton(AuikUtils.getIcon(16, "edit.png"));
-            punktEditButton.setToolTipText("Bearbeiten");
-            punktEditButton.setEnabled(false);
+        if (this.punktEditButton == null) {
+            this.punktEditButton = new JButton(
+                AuikUtils.getIcon(16, "edit.png"));
+            this.punktEditButton.setToolTipText("Bearbeiten");
+            this.punktEditButton.setEnabled(false);
 
-            punktEditButton.addActionListener(new ActionListener() {
+            this.punktEditButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    AtlProbepkt sielprobepkt = AtlProbepkt.getSielhautProbepunkt(spunkt);
-                    manager.getSettingsManager().setSetting("auik.imc.edit_object", sielprobepkt.getObjektid().intValue(), false);
-                    manager.switchModul("m_objekt_bearbeiten");
+                    AtlProbepkt sielprobepkt = AtlProbepkt
+                        .getSielhautProbepunkt(SielhautBearbeiten.this.spunkt);
+                    SielhautBearbeiten.this.manager.getSettingsManager()
+                        .setSetting("auik.imc.edit_object",
+                            sielprobepkt.getObjektid().intValue(), false);
+                    SielhautBearbeiten.this.manager
+                        .switchModul("m_objekt_bearbeiten");
                 }
             });
         }
-        return punktEditButton;
+        return this.punktEditButton;
     }
 
     private JButton getPunktPrintButton() {
-        if (punktPrintButton == null) {
-            punktPrintButton = new JButton(AuikUtils.getIcon(16, "fileprint.png"));
-            //punktChooseButton.setHorizontalAlignment(JButton.CENTER);
-            punktPrintButton.setToolTipText("Drucken");
-            punktPrintButton.setEnabled(false);
+        if (this.punktPrintButton == null) {
+            this.punktPrintButton = new JButton(AuikUtils.getIcon(16,
+                "fileprint.png"));
+            // punktChooseButton.setHorizontalAlignment(JButton.CENTER);
+            this.punktPrintButton.setToolTipText("Drucken");
+            this.punktPrintButton.setEnabled(false);
 
-            punktPrintButton.addActionListener(new ActionListener() {
+            this.punktPrintButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
@@ -824,172 +862,185 @@ public class SielhautBearbeiten extends AbstractModul {
                 }
             });
         }
-        return punktPrintButton;
+        return this.punktPrintButton;
     }
 
     private JButton getPunktNeuButton() {
-        if (punktNeuButton == null) {
-            punktNeuButton = new JButton(AuikUtils.getIcon(16, "filenew.png"));
-            //punktNeuButton.setHorizontalAlignment(JButton.CENTER);
-            punktNeuButton.setToolTipText("Neuer Messpunkt");
-            punktNeuButton.addActionListener(new ActionListener() {
+        if (this.punktNeuButton == null) {
+            this.punktNeuButton = new JButton(AuikUtils.getIcon(16,
+                "filenew.png"));
+            // punktNeuButton.setHorizontalAlignment(JButton.CENTER);
+            this.punktNeuButton.setToolTipText("Neuer Messpunkt");
+            this.punktNeuButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     neuerSielhautPunkt();
                 }
             });
         }
-        return punktNeuButton;
+        return this.punktNeuButton;
     }
 
     private JButton getPunktSaveButton() {
-        if (punktSaveButton == null) {
-            punktSaveButton = new JButton(AuikUtils.getIcon(16, "filesave.png"));
-            //punktSaveButton.setHorizontalAlignment(JButton.CENTER);
-            punktSaveButton.setToolTipText("Speichern");
-            punktSaveButton.setEnabled(false);
-            punktSaveButton.addActionListener(new ActionListener() {
+        if (this.punktSaveButton == null) {
+            this.punktSaveButton = new JButton(AuikUtils.getIcon(16,
+                "filesave.png"));
+            // punktSaveButton.setHorizontalAlignment(JButton.CENTER);
+            this.punktSaveButton.setToolTipText("Speichern");
+            this.punktSaveButton.setEnabled(false);
+            this.punktSaveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (spunkt != null) {
+                    if (SielhautBearbeiten.this.spunkt != null) {
                         saveSielhautPunkt();
                     }
                 }
             });
         }
-        return punktSaveButton;
+        return this.punktSaveButton;
     }
 
     // Daten
     private JPanel getDatenPanel() {
-        if (datenPanel == null) {
+        if (this.datenPanel == null) {
             FormLayout layout = new FormLayout(
-                    "r:p, 3dlu, 150dlu, 10dlu, 70dlu, 10dlu, 100dlu",
-                    "pref, " +    //1
-                    "3dlu, " +    //2
-                    "pref, " +    //3
-                    "3dlu, " +    //4
-                    "pref, " +    //5
-                    "3dlu, " +    //6
-                    "fill:30dlu, " +    //7
-                    "10dlu, " +    //8
-                    "pref, " +    //9
-                    "3dlu, " +    //10
-                    "pref, " +    //11
-                    "3dlu, " +    //12
-                    "pref, " +    //13
-                    "3dlu, " +    //14
-                    "pref, "    //15
+                "r:p, 3dlu, 150dlu, 10dlu, 70dlu, 10dlu, 100dlu", "pref, " + // 1
+                    "3dlu, " + // 2
+                    "pref, " + // 3
+                    "3dlu, " + // 4
+                    "pref, " + // 5
+                    "3dlu, " + // 6
+                    "fill:30dlu, " + // 7
+                    "10dlu, " + // 8
+                    "pref, " + // 9
+                    "3dlu, " + // 10
+                    "pref, " + // 11
+                    "3dlu, " + // 12
+                    "pref, " + // 13
+                    "3dlu, " + // 14
+                    "pref, " // 15
             );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
-            JScrollPane bemerkungsScroller = new JScrollPane(getSpBemerkungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            JScrollPane bemerkungsScroller = new JScrollPane(
+                getSpBemerkungsArea(),
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-            builder.addLabel("<html><b>Name:</b></html>", cc.xy(  1, 1 ));
-            builder.add(getSpNamenFeld(),                 cc.xy(  3, 1 ));
-            builder.addLabel("Entwässerungsgebiet:",      cc.xy(  1, 3 ));
-            builder.add(getSpEntgebFeld(),                cc.xy(  3, 3 ));
-            builder.addLabel("Lage:",                     cc.xy(  1, 5 ));
-            builder.add(getSpLageFeld(),                  cc.xy(  3, 5 ));
-            builder.addLabel("Bemerkungen:",              cc.xy(  1, 7 ));
-            builder.add(bemerkungsScroller,               cc.xyw(  3, 7, 5 ));
-            builder.addLabel("Rechtswert:",               cc.xy(  1, 9 ));
-            builder.add(getSpRechtsWertFeld(),            cc.xy(  3, 9 ));
-            builder.add(getAusAblageButton(),             cc.xywh(  5, 9, 1, 3 ));
-            builder.add(getSpSielhautCheck(),             cc.xy(  7, 9 ));
-            builder.addLabel("Hochwert:",                 cc.xy(  1, 11 ));
-            builder.add(getSpHochWertFeld(),              cc.xy(  3, 11 ));
-            builder.add(getSpFirmenprobeCheck(),          cc.xy(  7, 11 ));
-            builder.addLabel("Schacht-Nr.:",              cc.xy(  1, 13 ));
-            builder.add(getSpHaltungsnrFeld(),            cc.xyw(  3, 13, 3 ));
-            builder.add(getSpNachprobeCheck(),            cc.xy(  7, 13 ));
-            builder.addLabel("Alarmplan-Nr.:",            cc.xy(  1, 15 ));
-            builder.add(getSpAlarmplannrFeld(),           cc.xyw(  3, 15, 3 ));
+            builder.addLabel("<html><b>Name:</b></html>", cc.xy(1, 1));
+            builder.add(getSpNamenFeld(), cc.xy(3, 1));
+            builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 3));
+            builder.add(getSpEntgebFeld(), cc.xy(3, 3));
+            builder.addLabel("Lage:", cc.xy(1, 5));
+            builder.add(getSpLageFeld(), cc.xy(3, 5));
+            builder.addLabel("Bemerkungen:", cc.xy(1, 7));
+            builder.add(bemerkungsScroller, cc.xyw(3, 7, 5));
+            builder.addLabel("Rechtswert:", cc.xy(1, 9));
+            builder.add(getSpRechtsWertFeld(), cc.xy(3, 9));
+            builder.add(getAusAblageButton(), cc.xywh(5, 9, 1, 3));
+            builder.add(getSpSielhautCheck(), cc.xy(7, 9));
+            builder.addLabel("Hochwert:", cc.xy(1, 11));
+            builder.add(getSpHochWertFeld(), cc.xy(3, 11));
+            builder.add(getSpFirmenprobeCheck(), cc.xy(7, 11));
+            builder.addLabel("Schacht-Nr.:", cc.xy(1, 13));
+            builder.add(getSpHaltungsnrFeld(), cc.xyw(3, 13, 3));
+            builder.add(getSpNachprobeCheck(), cc.xy(7, 13));
+            builder.addLabel("Alarmplan-Nr.:", cc.xy(1, 15));
+            builder.add(getSpAlarmplannrFeld(), cc.xyw(3, 15, 3));
 
-
-            //builder.getPanel().setBackground(Color.WHITE);
-            //builder.getPanel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            datenPanel = builder.getPanel();
+            // builder.getPanel().setBackground(Color.WHITE);
+            // builder.getPanel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            this.datenPanel = builder.getPanel();
         }
-        return datenPanel;
+        return this.datenPanel;
     }
+
     private JTextField getSpAlarmplannrFeld() {
-        if (spAlarmplannrFeld == null) {
-            spAlarmplannrFeld = new LimitedTextField(50);
+        if (this.spAlarmplannrFeld == null) {
+            this.spAlarmplannrFeld = new LimitedTextField(50);
         }
-        return spAlarmplannrFeld;
+        return this.spAlarmplannrFeld;
     }
+
     private JTextArea getSpBemerkungsArea() {
-        if (spBemerkungsArea == null) {
-            spBemerkungsArea = new LimitedTextArea(255);
-            spBemerkungsArea.setLineWrap(true);
-            spBemerkungsArea.setWrapStyleWord(true);
+        if (this.spBemerkungsArea == null) {
+            this.spBemerkungsArea = new LimitedTextArea(255);
+            this.spBemerkungsArea.setLineWrap(true);
+            this.spBemerkungsArea.setWrapStyleWord(true);
         }
-        return spBemerkungsArea;
+        return this.spBemerkungsArea;
     }
+
     private JTextField getSpEntgebFeld() {
-        if (spEntgebFeld == null) {
-            spEntgebFeld = new LimitedTextField(50);
+        if (this.spEntgebFeld == null) {
+            this.spEntgebFeld = new LimitedTextField(50);
         }
-        return spEntgebFeld;
+        return this.spEntgebFeld;
     }
+
     private JTextField getSpHaltungsnrFeld() {
-        if (spHaltungsnrFeld == null) {
-            spHaltungsnrFeld = new LimitedTextField(50);
+        if (this.spHaltungsnrFeld == null) {
+            this.spHaltungsnrFeld = new LimitedTextField(50);
         }
-        return spHaltungsnrFeld;
+        return this.spHaltungsnrFeld;
     }
+
     private DoubleField getSpHochWertFeld() {
-        if (spHochWertFeld == null) {
-            spHochWertFeld = new DoubleField(1);
+        if (this.spHochWertFeld == null) {
+            this.spHochWertFeld = new DoubleField(1);
         }
-        return spHochWertFeld;
+        return this.spHochWertFeld;
     }
+
     private JTextField getSpLageFeld() {
-        if (spLageFeld == null) {
-            spLageFeld = new LimitedTextField(50);
+        if (this.spLageFeld == null) {
+            this.spLageFeld = new LimitedTextField(50);
         }
-        return spLageFeld;
+        return this.spLageFeld;
     }
+
     private JCheckBox getSpNachprobeCheck() {
-        if (spNachprobeCheck == null) {
-            spNachprobeCheck = new JCheckBox("Nachprobe");
+        if (this.spNachprobeCheck == null) {
+            this.spNachprobeCheck = new JCheckBox("Nachprobe");
         }
-        return spNachprobeCheck;
+        return this.spNachprobeCheck;
     }
+
     private JCheckBox getSpFirmenprobeCheck() {
-        if (spFirmenprobeCheck == null) {
-            spFirmenprobeCheck = new JCheckBox("Firmenprobe");
+        if (this.spFirmenprobeCheck == null) {
+            this.spFirmenprobeCheck = new JCheckBox("Firmenprobe");
         }
-        return spFirmenprobeCheck;
+        return this.spFirmenprobeCheck;
     }
+
     private JTextField getSpNamenFeld() {
-        if (spNamenFeld == null) {
-            spNamenFeld = new LimitedTextField(50);
+        if (this.spNamenFeld == null) {
+            this.spNamenFeld = new LimitedTextField(50);
         }
-        return spNamenFeld;
+        return this.spNamenFeld;
     }
+
     private DoubleField getSpRechtsWertFeld() {
-        if (spRechtsWertFeld == null) {
-            spRechtsWertFeld = new DoubleField(1);
+        if (this.spRechtsWertFeld == null) {
+            this.spRechtsWertFeld = new DoubleField(1);
         }
-        return spRechtsWertFeld;
+        return this.spRechtsWertFeld;
     }
+
     private JCheckBox getSpSielhautCheck() {
-        if (spSielhautCheck == null) {
-            spSielhautCheck = new JCheckBox("Routinekontrolle");
+        if (this.spSielhautCheck == null) {
+            this.spSielhautCheck = new JCheckBox("Routinekontrolle");
         }
-        return spSielhautCheck;
+        return this.spSielhautCheck;
     }
 
     // Proben
     private RetractablePanel getProbenRtPanel() {
-        if (probenRtPanel == null) {
+        if (this.probenRtPanel == null) {
             FormLayout layout = new FormLayout(
 
-                    "p, 4dlu, p:g, 7dlu, p, 4dlu, max(60dlu;p), 7dlu,max(60dlu;p),7dlu,max(60dlu;p) "
-            );
+                "p, 4dlu, p:g, 7dlu, p, 4dlu, max(60dlu;p), 7dlu,max(60dlu;p),7dlu,max(60dlu;p) ");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             builder.setDefaultDialogBorder();
 
@@ -998,34 +1049,34 @@ public class SielhautBearbeiten extends AbstractModul {
 
             builder.appendSeparator("Neue Probenahme");
             builder.append(getNeuProbPanel());
-            //builder.append("Kennummer:", getPrNummerFeld());
-            //builder.append("Datum:", getPrDateChooser());
-            //builder.append(getPrAnlegenButton());
-            //builder.append(getTabelleExportButton());
+            // builder.append("Kennummer:", getPrNummerFeld());
+            // builder.append("Datum:", getPrDateChooser());
+            // builder.append(getPrAnlegenButton());
+            // builder.append(getTabelleExportButton());
             builder.nextLine();
             builder.appendSeparator("Auswertung");
             builder.append(getAuswertungPanel());
 
-
-
             JPanel probenPanel = builder.getPanel();
-            probenRtPanel = new RetractablePanel(
-                    DefaultComponentFactory.getInstance()
-                        .createSeparator("Probenahmen"),
-                    probenPanel, false, null) {
+            this.probenRtPanel = new RetractablePanel(DefaultComponentFactory
+                .getInstance().createSeparator("Probenahmen"), probenPanel,
+                false, null) {
                 private static final long serialVersionUID = -6231371376662899465L;
 
                 @Override
                 public void opening() {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getSpNamenFeld()) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(
+                        getSpNamenFeld()) {
                         @Override
                         protected void doNonUILogic() throws RuntimeException {
-                            probeModel.updateList();
+                            SielhautBearbeiten.this.probeModel.updateList();
                         }
 
                         @Override
-                        protected void doUIUpdateLogic() throws RuntimeException {
-                            probeModel.fireTableDataChanged();
+                        protected void doUIUpdateLogic()
+                            throws RuntimeException {
+                            SielhautBearbeiten.this.probeModel
+                                .fireTableDataChanged();
 
                         }
                     };
@@ -1033,94 +1084,103 @@ public class SielhautBearbeiten extends AbstractModul {
                 }
             };
         }
-        return probenRtPanel;
+        return this.probenRtPanel;
     }
-    private JPanel getNeuProbPanel() {
-        if (neuProbPanel == null) {
-            FormLayout layout = new FormLayout(
-                    "pref, 5dlu,  pref, 5dlu, pref, 5dlu,  pref, 5dlu, pref, 5dlu,pref, 5dlu, pref, 5dlu,pref, 5dlu,pref, 5dlu,  pref, 5dlu, pref, 5dlu,  " +
-                    "pref, 5dlu, pref, 5dlu,pref,pref, 5dlu, pref, 5dlu,pref",
 
-                    "pref, 3dlu" +", "+
-                            "pref");
+    private JPanel getNeuProbPanel() {
+        if (this.neuProbPanel == null) {
+            FormLayout layout = new FormLayout(
+                "pref, 5dlu,  pref, 5dlu, pref, 5dlu,  pref, 5dlu, pref, 5dlu,pref, 5dlu, pref, 5dlu,pref, 5dlu,pref, 5dlu,  pref, 5dlu, pref, 5dlu,  "
+                    + "pref, 5dlu, pref, 5dlu,pref,pref, 5dlu, pref, 5dlu,pref",
+
+                "pref, 3dlu" + ", " + "pref");
             CellConstraints cc = new CellConstraints();
             CellConstraints cc2 = (CellConstraints) cc.clone();
 
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             builder.setDefaultDialogBorder();
 
+            builder.add(new JLabel("Kennummer:"), cc.xy(1, 1),
+                getPrNummerFeld(), cc2.xyw(3, 1, 20));
+            builder.add(new JLabel("Datum:"), cc.xy(25, 1), getPrDateChooser(),
+                cc2.xy(28, 1));
 
-            builder.add(new JLabel("Kennummer:"),        cc.xy(  1, 1),
-                    getPrNummerFeld(),        cc2.xyw( 3, 1, 20));
-            builder.add(new JLabel("Datum:"),        cc.xy(  25, 1),
-                    getPrDateChooser(),        cc2.xy( 28, 1));
+            builder.add(getPrAnlegenButton(), cc.xy(30, 1));
+            builder.add(getTabelleExportButton(), cc.xy(32, 1));
 
-            builder.add(getPrAnlegenButton(),        cc.xy( 30, 1));
-            builder.add(getTabelleExportButton(),        cc.xy( 32, 1));
-
-
-                neuProbPanel = builder.getPanel();
+            this.neuProbPanel = builder.getPanel();
 
         }
-        return neuProbPanel;
+        return this.neuProbPanel;
     }
 
     private JPanel getAuswertungPanel() {
-        if (auswertungPanel == null) {
+        if (this.auswertungPanel == null) {
             FormLayout layout = new FormLayout(
-                    "pref, 5dlu,  pref, 5dlu, pref, 5dlu,  pref, 5dlu, pref, 5dlu,pref, 5dlu, pref, 5dlu,pref, 5dlu,pref, 5dlu,  pref, 5dlu, pref, 5dlu,  " +
-                    "pref, 5dlu, pref, 5dlu,pref",
+                "pref, 5dlu,  pref, 5dlu, pref, 5dlu,  pref, 5dlu, pref, 5dlu,pref, 5dlu, pref, 5dlu,pref, 5dlu,pref, 5dlu,  pref, 5dlu, pref, 5dlu,  "
+                    + "pref, 5dlu, pref, 5dlu,pref",
 
-                    "pref, 3dlu" +", "+
-                            "pref");
+                "pref, 3dlu" + ", " + "pref");
             CellConstraints cc = new CellConstraints();
             CellConstraints cc2 = (CellConstraints) cc.clone();
 
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             builder.setDefaultDialogBorder();
 
-            builder.add(new JLabel("Von:"),    cc.xy(  1, 1),
-                    getVonDateChooser(),       cc2.xy( 3, 1));
-            builder.add(new JLabel("Bis:"),    cc.xy(  5, 1),
-                    getBisDateChooser(),       cc2.xy( 7, 1));
+            builder.add(new JLabel("Von:"), cc.xy(1, 1), getVonDateChooser(),
+                cc2.xy(3, 1));
+            builder.add(new JLabel("Bis:"), cc.xy(5, 1), getBisDateChooser(),
+                cc2.xy(7, 1));
 
-            builder.add(getBleiCheck(),        cc.xy( 11, 1));
-            builder.add(getCadmiumCheck(),     cc.xy( 13, 1));
-            builder.add(getChromCheck(),       cc.xy( 15, 1));
-            builder.add(getKupferCheck(),      cc.xy( 17, 1));
-            builder.add(getNickelCheck(),      cc.xy( 19, 1));
-            builder.add(getQuecksilberCheck(), cc.xy( 21, 1));
-            builder.add(getZinkCheck(),        cc.xy( 23, 1));
-            builder.add(getSubmitButton(),     cc.xy( 27, 1));
+            builder.add(getBleiCheck(), cc.xy(11, 1));
+            builder.add(getCadmiumCheck(), cc.xy(13, 1));
+            builder.add(getChromCheck(), cc.xy(15, 1));
+            builder.add(getKupferCheck(), cc.xy(17, 1));
+            builder.add(getNickelCheck(), cc.xy(19, 1));
+            builder.add(getQuecksilberCheck(), cc.xy(21, 1));
+            builder.add(getZinkCheck(), cc.xy(23, 1));
+            builder.add(getSubmitButton(), cc.xy(27, 1));
 
-                auswertungPanel = builder.getPanel();
+            this.auswertungPanel = builder.getPanel();
 
         }
-        return auswertungPanel;
+        return this.auswertungPanel;
     }
 
     private JTable getPrTabelle() {
-        if (prTabelle == null) {
-            prTabelle = new JTable(probeModel);
-            prTabelle.getColumnModel().getColumn(0).setWidth(40);
-            prTabelle.getColumnModel().getColumn(1).setWidth(75);
+        if (this.prTabelle == null) {
+            this.prTabelle = new JTable(this.probeModel);
+            this.prTabelle.getColumnModel().getColumn(0).setWidth(40);
+            this.prTabelle.getColumnModel().getColumn(1).setWidth(75);
 
-            prTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.prTabelle
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            prTabelle.getInputMap().put((KeyStroke)getProbeEditAction().getValue(Action.ACCELERATOR_KEY), getProbeEditAction().getValue(Action.NAME));
-            prTabelle.getActionMap().put(getProbeEditAction().getValue(Action.NAME), getProbeEditAction());
+            this.prTabelle.getInputMap().put(
+                (KeyStroke) getProbeEditAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getProbeEditAction().getValue(Action.NAME));
+            this.prTabelle.getActionMap().put(
+                getProbeEditAction().getValue(Action.NAME),
+                getProbeEditAction());
 
-            prTabelle.getInputMap().put((KeyStroke)getProbeLoeschAction().getValue(Action.ACCELERATOR_KEY), getProbeLoeschAction().getValue(Action.NAME));
-            prTabelle.getActionMap().put(getProbeLoeschAction().getValue(Action.NAME), getProbeLoeschAction());
+            this.prTabelle.getInputMap().put(
+                (KeyStroke) getProbeLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getProbeLoeschAction().getValue(Action.NAME));
+            this.prTabelle.getActionMap().put(
+                getProbeLoeschAction().getValue(Action.NAME),
+                getProbeLoeschAction());
 
-            prTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+            this.prTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                    if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
                         int row = getPrTabelle().rowAtPoint(origin);
 
-                        AtlProbenahmen probe = probeModel.getRow(row);
+                        AtlProbenahmen probe = SielhautBearbeiten.this.probeModel
+                            .getRow(row);
                         editProbenahme(probe);
                     }
                 }
@@ -1136,15 +1196,14 @@ public class SielhautBearbeiten extends AbstractModul {
                 }
             });
         }
-        return prTabelle;
+        return this.prTabelle;
     }
 
-
     private JButton getSubmitButton() {
-        if (submitButton == null) {
-            submitButton = new JButton("Abschicken");
+        if (this.submitButton == null) {
+            this.submitButton = new JButton("Abschicken");
 
-            submitButton.addActionListener(new ActionListener() {
+            this.submitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     showResultOneAxis();
@@ -1152,9 +1211,8 @@ public class SielhautBearbeiten extends AbstractModul {
             });
         }
 
-        return submitButton;
+        return this.submitButton;
     }
-
 
     private class AuswertungsDialog extends JDialog {
         private static final long serialVersionUID = 3892351392140673333L;
@@ -1163,24 +1221,27 @@ public class SielhautBearbeiten extends AbstractModul {
          * Ein Listener für die Events des Dialogs.
          * @author David Klotz
          */
-        private class DialogListener extends WindowAdapter implements ActionListener {
+        private class DialogListener extends WindowAdapter implements
+            ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == abbrechenButton) {
+                if (e.getSource() == AuswertungsDialog.this.abbrechenButton) {
                     doAbbrechen();
-                } else if (e.getSource() == speichernButton) {
+                } else if (e.getSource() == AuswertungsDialog.this.speichernButton) {
                     doSpeichern();
                 }
             }
 
             @Override
             public void windowClosing(WindowEvent e) {
-                // Wenn der Dialog geschlossen wird, wird das Bearbeiten abgebrochen
-                frame.clearStatus();
+                // Wenn der Dialog geschlossen wird, wird das Bearbeiten
+                // abgebrochen
+                SielhautBearbeiten.this.frame.clearStatus();
                 doAbbrechen();
 
             }
         }
+
         /**
          * Ein Tablemodel
          * @author David Klotz
@@ -1190,10 +1251,11 @@ public class SielhautBearbeiten extends AbstractModul {
             private TimeSeriesCollection col1, col2;
             private List<Minute> dateList;
 
-            public ExportTableModel(TimeSeriesCollection col1, TimeSeriesCollection col2) {
+            public ExportTableModel(TimeSeriesCollection col1,
+                TimeSeriesCollection col2) {
                 this.col1 = col1;
                 this.col2 = col2;
-                dateList = new ArrayList<Minute>();
+                this.dateList = new ArrayList<Minute>();
 
                 initializeData();
             }
@@ -1202,41 +1264,43 @@ public class SielhautBearbeiten extends AbstractModul {
                 TimeSeries series;
                 APosDataItem item;
 
-                for (int i = 0; i < col1.getSeriesCount(); i++) {
-                    series = col1.getSeries(i);
+                for (int i = 0; i < this.col1.getSeriesCount(); i++) {
+                    series = this.col1.getSeries(i);
                     for (int j = 0; j < series.getItemCount(); j++) {
                         item = (APosDataItem) series.getDataItem(j);
 
-                        if (!dateList.contains(item.getMinute())) {
-                            dateList.add(item.getMinute());
+                        if (!this.dateList.contains(item.getMinute())) {
+                            this.dateList.add(item.getMinute());
                         }
                     }
                 }
 
-                if (col2 != null) {
-                    for (int i = 0; i < col2.getSeriesCount(); i++) {
-                        series = col2.getSeries(i);
+                if (this.col2 != null) {
+                    for (int i = 0; i < this.col2.getSeriesCount(); i++) {
+                        series = this.col2.getSeries(i);
                         for (int j = 0; j < series.getItemCount(); j++) {
                             item = (APosDataItem) series.getDataItem(j);
-                            //count++;
-                            if (!dateList.contains(item.getMinute())) {
-                                dateList.add(item.getMinute());
+                            // count++;
+                            if (!this.dateList.contains(item.getMinute())) {
+                                this.dateList.add(item.getMinute());
                             }
                         }
                     }
                 }
 
-                Collections.sort(dateList);
+                Collections.sort(this.dateList);
             }
 
             @Override
             public int getColumnCount() {
-                return col1.getSeriesCount() + ((col2 != null) ? col2.getSeriesCount() : 0) + 1;//2;
+                return this.col1.getSeriesCount()
+                    + ((this.col2 != null) ? this.col2.getSeriesCount() : 0)
+                    + 1;// 2;
             }
 
             @Override
             public int getRowCount() {
-                return dateList.size();// + 1;
+                return this.dateList.size();// + 1;
             }
 
             @Override
@@ -1248,19 +1312,21 @@ public class SielhautBearbeiten extends AbstractModul {
                 kommaFormat.setMinimumFractionDigits(1);
 
                 int seriesIndex = columnIndex - 1;
-                int series2Index = seriesIndex - col1.getSeriesCount();
+                int series2Index = seriesIndex - this.col1.getSeriesCount();
                 int itemIndex = rowIndex;// - 1;
 
-                Minute min = dateList.get(itemIndex);
+                Minute min = this.dateList.get(itemIndex);
                 if (columnIndex == 0) {
                     Date date = new Date(min.getFirstMillisecond());
                     tmp = AuikUtils.getStringFromDate(date);
                 } else {
                     APosDataItem item = null;
-                    if (seriesIndex < col1.getSeriesCount()) {
-                        item = (APosDataItem) col1.getSeries(seriesIndex).getDataItem(min);
-                    } else if (col2 != null) {
-                        item = (APosDataItem) col2.getSeries(series2Index).getDataItem(min);
+                    if (seriesIndex < this.col1.getSeriesCount()) {
+                        item = (APosDataItem) this.col1.getSeries(seriesIndex)
+                            .getDataItem(min);
+                    } else if (this.col2 != null) {
+                        item = (APosDataItem) this.col2.getSeries(series2Index)
+                            .getDataItem(min);
                     }
                     if (item != null) {
                         tmp = kommaFormat.format(item.getValue());
@@ -1282,15 +1348,21 @@ public class SielhautBearbeiten extends AbstractModul {
                 String tmp = "!OOB!";
 
                 int seriesIndex = column - 1;
-                int series2Index = seriesIndex - col1.getSeriesCount();
+                int series2Index = seriesIndex - this.col1.getSeriesCount();
 
-                 if (column == 0) {
+                if (column == 0) {
                     tmp = "Datum";
                 } else {
-                    if (seriesIndex < col1.getSeriesCount()) {
-                        tmp = col1.getSeriesName(seriesIndex) + ", " + col1.getSeries(seriesIndex).getRangeDescription();
-                    } else if (col2 != null) {
-                        tmp = col2.getSeriesName(series2Index) + ", " + col2.getSeries(series2Index).getRangeDescription();
+                    if (seriesIndex < this.col1.getSeriesCount()) {
+                        tmp = this.col1.getSeriesName(seriesIndex)
+                            + ", "
+                            + this.col1.getSeries(seriesIndex)
+                                .getRangeDescription();
+                    } else if (this.col2 != null) {
+                        tmp = this.col2.getSeriesName(series2Index)
+                            + ", "
+                            + this.col2.getSeries(series2Index)
+                                .getRangeDescription();
                     }
                 }
 
@@ -1314,67 +1386,74 @@ public class SielhautBearbeiten extends AbstractModul {
         private TimeSeriesCollection rightDataset;
         private HauptFrame owner;
 
-        public AuswertungsDialog  (String title, TimeSeriesCollection leftDataset, TimeSeriesCollection rightDataset, HauptFrame owner)  {
-            super( owner, title + "-Auswertung", true);
+        public AuswertungsDialog(String title,
+            TimeSeriesCollection leftDataset,
+            TimeSeriesCollection rightDataset, HauptFrame owner) {
+            super(owner, title + "-Auswertung", true);
             this.owner = owner;
             this.title = title;
 
             this.leftDataset = leftDataset;
             this.rightDataset = rightDataset;
 
-            listener = new DialogListener();
+            this.listener = new DialogListener();
 
             this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-            this.addWindowListener(listener);
+            this.addWindowListener(this.listener);
 
-            speichernButton = new JButton("Speichern");
-            speichernButton.addActionListener(listener);
-            abbrechenButton = new JButton("Schließen");
-            abbrechenButton.addActionListener(listener);
+            this.speichernButton = new JButton("Speichern");
+            this.speichernButton.addActionListener(this.listener);
+            this.abbrechenButton = new JButton("Schließen");
+            this.abbrechenButton.addActionListener(this.listener);
 
-            JPanel tmp = new JPanel(new BorderLayout(0,7));
+            JPanel tmp = new JPanel(new BorderLayout(0, 7));
 
             tmp.add(initializeContent(), BorderLayout.CENTER);
-            JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(speichernButton, abbrechenButton);
+            JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(
+                this.speichernButton, this.abbrechenButton);
             tmp.add(buttonBar, BorderLayout.SOUTH);
             tmp.setBorder(Borders.TABBED_DIALOG_BORDER);
 
             this.setContentPane(tmp);
             this.pack();
-            this.setLocationRelativeTo(frame);
+            this.setLocationRelativeTo(SielhautBearbeiten.this.frame);
         }
 
         private JComponent initializeContent() {
-            tabbedPane = new JTabbedPane();
+            this.tabbedPane = new JTabbedPane();
 
-            tabbedPane.addTab("Diagramm", createDiagrammPanel());
-            tabbedPane.addTab("Tabelle", createTabellenPanel());
+            this.tabbedPane.addTab("Diagramm", createDiagrammPanel());
+            this.tabbedPane.addTab("Tabelle", createTabellenPanel());
 
-            return tabbedPane;
+            return this.tabbedPane;
         }
 
         private JPanel createDiagrammPanel() {
             JFreeChart chart;
-            if (rightDataset == null) {
-                chart = Charts.createDefaultTimeSeriesChart(title, leftDataset);
+            if (this.rightDataset == null) {
+                chart = Charts.createDefaultTimeSeriesChart(this.title,
+                    this.leftDataset);
             } else {
-                chart = Charts.createDefaultTimeSeriesChart(title, leftDataset, rightDataset);
+                chart = Charts.createDefaultTimeSeriesChart(this.title,
+                    this.leftDataset, this.rightDataset);
             }
 
-            chartPanel = new ChartPanel(chart, false);
-            chartPanel.setBorder(Borders.DIALOG_BORDER);
+            this.chartPanel = new ChartPanel(chart, false);
+            this.chartPanel.setBorder(Borders.DIALOG_BORDER);
 
-            return chartPanel;
+            return this.chartPanel;
         }
 
         private JComponent createTabellenPanel() {
-            exportTable = new JTable(new ExportTableModel(leftDataset, rightDataset));
-            exportTable.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-            exportTable.setColumnSelectionAllowed(true);
-            exportTable.setRowSelectionAllowed(true);
-            exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            this.exportTable = new JTable(new ExportTableModel(
+                this.leftDataset, this.rightDataset));
+            this.exportTable.setBorder(BorderFactory
+                .createBevelBorder(BevelBorder.RAISED));
+            this.exportTable.setColumnSelectionAllowed(true);
+            this.exportTable.setRowSelectionAllowed(true);
+            this.exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-            exportTable.addMouseListener(new MouseAdapter() {
+            this.exportTable.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     showTabellenPopup(e);
@@ -1387,15 +1466,17 @@ public class SielhautBearbeiten extends AbstractModul {
             });
 
             DefaultTableCellRenderer zentrierterRenderer = new DefaultTableCellRenderer();
-            zentrierterRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+            zentrierterRenderer
+                .setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 
             DefaultTableCellRenderer rechtsBuendigRenderer = new DefaultTableCellRenderer();
-            rechtsBuendigRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+            rechtsBuendigRenderer
+                .setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
 
             TableColumn column = null;
-            for (int i = 0; i < exportTable.getColumnCount(); i++) {
-                column = exportTable.getColumnModel().getColumn(i);
-                if (i == 0 ) {//|| i == 1) {
+            for (int i = 0; i < this.exportTable.getColumnCount(); i++) {
+                column = this.exportTable.getColumnModel().getColumn(i);
+                if (i == 0) {// || i == 1) {
                     column.setCellRenderer(zentrierterRenderer);
                     column.setPreferredWidth(75);
                 } else {
@@ -1404,21 +1485,20 @@ public class SielhautBearbeiten extends AbstractModul {
                 }
             }
 
-            JScrollPane tabellenScroller = new JScrollPane(exportTable,
-                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                    JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
             tabellenScroller.setBorder(Borders.DIALOG_BORDER);
 
             return tabellenScroller;
         }
 
         public void saveTabelle() {
-            frame.clearStatus();
+            SielhautBearbeiten.this.frame.clearStatus();
             File exportDatei;
-            String[] csv = new String []{"csv"};
+            String[] csv = new String[] {"csv"};
 
-            exportDatei = owner.saveFile(csv);
-
+            exportDatei = this.owner.saveFile(csv);
 
             if (exportDatei != null) {
                 String ext = AuikUtils.getExtension(exportDatei);
@@ -1430,14 +1510,16 @@ public class SielhautBearbeiten extends AbstractModul {
                     } else {
                         newExt = ".csv";
                     }
-                    exportDatei = new File(exportDatei.getParent(), exportDatei.getName()+newExt);
+                    exportDatei = new File(exportDatei.getParent(),
+                        exportDatei.getName() + newExt);
                 }
 
                 boolean doIt = false;
                 if (exportDatei.exists()) {
-                    boolean answer = owner.showQuestion(
-                            "Soll die vorhandene Datei "+exportDatei.getName()+" wirklich überschrieben werden?",
-                            "Datei bereits vorhanden!");
+                    boolean answer = GUIManager.getInstance().showQuestion(
+                        "Soll die vorhandene Datei " + exportDatei.getName()
+                            + " wirklich überschrieben werden?",
+                        "Datei bereits vorhanden!");
                     if (answer && exportDatei.canWrite()) {
                         doIt = true;
                     }
@@ -1447,23 +1529,29 @@ public class SielhautBearbeiten extends AbstractModul {
 
                 if (doIt) {
                     log.debug("Speichere nach '" + exportDatei.getName()
-                    		+ "' (Ext: '" + ext + "') in '"
-                    		+ exportDatei.getParent() + "' !");
-                    if (AuikUtils.exportTableDataToCVS(exportTable, exportDatei)) {
-                        owner.showInfoMessage("Speichern der CSV-Datei erfolgreich!", "Speichern erfolgreich");
+                        + "' (Ext: '" + ext + "') in '"
+                        + exportDatei.getParent() + "' !");
+                    if (AuikUtils.exportTableDataToCVS(this.exportTable,
+                        exportDatei)) {
+                        GUIManager.getInstance().showInfoMessage(
+                            "Speichern der CSV-Datei erfolgreich!",
+                            "Speichern erfolgreich");
                     } else {
                         log.debug("Beim Speichern der Datei '" + exportDatei
-                        		+ "' trat ein Fehler auf!");
-                        owner.showErrorMessage("Beim Speichern der Datei '"+exportDatei+"' trat ein Fehler auf!");
+                            + "' trat ein Fehler auf!");
+                        GUIManager.getInstance().showErrorMessage(
+                            "Beim Speichern der Datei '" + exportDatei
+                                + "' trat ein Fehler auf!");
                     }
                 }
             }
         }
 
         private void showTabellenPopup(MouseEvent e) {
-            if (tabellenMenu == null) {
-                tabellenMenu = new JPopupMenu("Tabelle");
-                JMenuItem speichernItem = new JMenuItem(new AbstractAction("Speichern") {
+            if (this.tabellenMenu == null) {
+                this.tabellenMenu = new JPopupMenu("Tabelle");
+                JMenuItem speichernItem = new JMenuItem(new AbstractAction(
+                    "Speichern") {
                     private static final long serialVersionUID = 2096747421254651035L;
 
                     @Override
@@ -1471,67 +1559,68 @@ public class SielhautBearbeiten extends AbstractModul {
                         saveTabelle();
                     }
                 });
-                tabellenMenu.add(speichernItem);
+                this.tabellenMenu.add(speichernItem);
             }
 
             if (e.isPopupTrigger()) {
                 Point origin = e.getPoint();
-                int row = exportTable.rowAtPoint(origin);
-                int col = exportTable.columnAtPoint(origin);
+                int row = this.exportTable.rowAtPoint(origin);
+                int col = this.exportTable.columnAtPoint(origin);
 
                 if (row != -1) {
-                    exportTable.setRowSelectionInterval(row, row);
-                    exportTable.setColumnSelectionInterval(col, col);
-                    tabellenMenu.show(e.getComponent(), e.getX(), e.getY());
+                    this.exportTable.setRowSelectionInterval(row, row);
+                    this.exportTable.setColumnSelectionInterval(col, col);
+                    this.tabellenMenu
+                        .show(e.getComponent(), e.getX(), e.getY());
                 }
             }
         }
 
         public void doAbbrechen() {
-            frame.clearStatus();
+            SielhautBearbeiten.this.frame.clearStatus();
             this.dispose();
         }
 
         public void doSpeichern() {
-            frame.clearStatus();
-         if (tabbedPane.getSelectedIndex() == 0) {
+            SielhautBearbeiten.this.frame.clearStatus();
+            if (this.tabbedPane.getSelectedIndex() == 0) {
                 try {
-                    chartPanel.doSaveAs();
+                    this.chartPanel.doSaveAs();
                 } catch (IOException e) {
                     log.debug("Konnte Datei nicht speichern!");
                 }
-            } else if (tabbedPane.getSelectedIndex() == 1) {
+            } else if (this.tabbedPane.getSelectedIndex() == 1) {
                 saveTabelle();
             }
         }
     }
 
-
-
-
     public void showResultOneAxis() {
         SwingWorkerVariant worker = new SwingWorkerVariant(getSubmitButton()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                dataSet1 = createDataset();
+                SielhautBearbeiten.this.dataSet1 = createDataset();
             }
 
             @Override
             protected void doUIUpdateLogic() throws RuntimeException {
 
-                if (dataSet1.getSeriesCount() > 0) {
+                if (SielhautBearbeiten.this.dataSet1.getSeriesCount() > 0) {
 
-                    AuswertungsDialog dialog = new AuswertungsDialog("SielhautBearbeiten", dataSet1, null, frame );
+                    AuswertungsDialog dialog = new AuswertungsDialog(
+                        "SielhautBearbeiten", SielhautBearbeiten.this.dataSet1,
+                        null, SielhautBearbeiten.this.frame);
 
                     dialog.setVisible(true);
                 } else {
-                    frame.changeStatus("Keine Parameter ausgewählt!");
-                    }
+                    SielhautBearbeiten.this.frame
+                        .changeStatus("Keine Parameter ausgewählt!");
+                }
             }
 
         };
 
-        frame.changeStatus("Bereite Auswertung vor...");
+        this.frame.changeStatus("Bereite Auswertung vor...");
         worker.start();
 
     }
@@ -1544,7 +1633,8 @@ public class SielhautBearbeiten extends AbstractModul {
         JList paramList;
         Date von = getVonDateChooser().getDate();
         Date bis = getBisDateChooser().getDate();
-        DefaultListModel leftModel = (DefaultListModel) getAuswahlList().getModel();
+        DefaultListModel leftModel = (DefaultListModel) getAuswahlList()
+            .getModel();
 
         if (getBleiCheck().isSelected()) {
             leftModel.addElement("Blei (Pb)");
@@ -1569,10 +1659,11 @@ public class SielhautBearbeiten extends AbstractModul {
         }
         paramList = getAuswahlList();
 
-        pkt = sprobePkt.getObjektid();
+        this.pkt = this.sprobePkt.getObjektid();
         parameterAnzahl = getAuswahlList().getModel().getSize();
 
-        // Wenn keine Check Box angeklickt wurde sollen alle Paramater berücksichtig werden
+        // Wenn keine Check Box angeklickt wurde sollen alle Paramater
+        // berücksichtig werden
 
         if (parameterAnzahl == 0) {
             leftModel.addElement("Blei (Pb)");
@@ -1584,27 +1675,26 @@ public class SielhautBearbeiten extends AbstractModul {
             leftModel.addElement("Zink (Zn)");
         }
 
-        createSeries(paramList, pkt , von, bis, col);
+        createSeries(paramList, this.pkt, von, bis, col);
         leftModel.clear();
 
         return col;
     }
 
     private JList getAuswahlList() {
-        if (auswahlList == null) {
+        if (this.auswahlList == null) {
             DefaultListModel listModel = new DefaultListModel();
-            auswahlList = new JList(listModel);
-            auswahlList.setPrototypeCellValue("Abcdefghij (Ab)");
+            this.auswahlList = new JList(listModel);
+            this.auswahlList.setPrototypeCellValue("Abcdefghij (Ab)");
 
-            auswahlList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.auswahlList
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         }
 
-        return auswahlList;
+        return this.auswahlList;
     }
 
-
-
-    private void createSeries( JList paramList, Integer pkt, Date von, Date bis,
+    private void createSeries(JList paramList, Integer pkt, Date von, Date bis,
         TimeSeriesCollection col) {
         String einheit;
 
@@ -1612,109 +1702,113 @@ public class SielhautBearbeiten extends AbstractModul {
 
             for (int i = 0; i < paramList.getModel().getSize(); i++) {
 
-                String p =(String) paramList.getModel().getElementAt(i);
-
+                String p = (String) paramList.getModel().getElementAt(i);
 
 //                AtlAnalyseposition position;
 //                position = AtlAnalyseposition.getAnalysepositionObjekt(pkt);
-                einheit =  "Verhältnis zum Hintergrundwert";
+                einheit = "Verhältnis zum Hintergrundwert";
 
-                List<?> list = AtlAnalyseposition.getSielhautpos(p, pkt, von, bis);
+                List<?> list = AtlAnalyseposition.getSielhautpos(p, pkt, von,
+                    bis);
 
                 TimeSeries series = ChartDataSets
-                        .createAnalysePositionenSielhautSeries(list, p+ " ",einheit);
+                    .createAnalysePositionenSielhautSeries(list, p + " ",
+                        einheit);
                 col.addSeries(series);
             }
         }
-        frame.changeStatus("Auswertung abgeschlossen");
+        this.frame.changeStatus("Auswertung abgeschlossen");
     }
 
     private JDateChooser getVonDateChooser() {
-        if (vonDateChooser == null) {
-            vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+        if (this.vonDateChooser == null) {
+            this.vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
+                false);
         }
 
-        return vonDateChooser;
+        return this.vonDateChooser;
     }
 
     private JDateChooser getBisDateChooser() {
 
-        if (bisDateChooser == null) {
-            bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+        if (this.bisDateChooser == null) {
+            this.bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
+                false);
         }
 
-        return bisDateChooser;
+        return this.bisDateChooser;
     }
 
     private JCheckBox getBleiCheck() {
-        if (BleiCheck == null) {
-            BleiCheck = new JCheckBox("Blei", false);
+        if (this.BleiCheck == null) {
+            this.BleiCheck = new JCheckBox("Blei", false);
         }
-        return BleiCheck;
+        return this.BleiCheck;
     }
 
     private JCheckBox getCadmiumCheck() {
-        if (CadmiumCheck == null) {
-            CadmiumCheck = new JCheckBox("Cadmium", false);
+        if (this.CadmiumCheck == null) {
+            this.CadmiumCheck = new JCheckBox("Cadmium", false);
         }
-        return CadmiumCheck;
+        return this.CadmiumCheck;
     }
 
     private JCheckBox getChromCheck() {
-        if (ChromCheck == null) {
-            ChromCheck = new JCheckBox("Chrom", false);
+        if (this.ChromCheck == null) {
+            this.ChromCheck = new JCheckBox("Chrom", false);
         }
-        return ChromCheck;
+        return this.ChromCheck;
     }
 
     private JCheckBox getKupferCheck() {
-        if (KupferCheck == null) {
-            KupferCheck = new JCheckBox("Kupfer", false);
+        if (this.KupferCheck == null) {
+            this.KupferCheck = new JCheckBox("Kupfer", false);
         }
-        return KupferCheck;
+        return this.KupferCheck;
     }
 
     private JCheckBox getNickelCheck() {
-        if (NickelCheck == null) {
-            NickelCheck = new JCheckBox("Nickel", false);
+        if (this.NickelCheck == null) {
+            this.NickelCheck = new JCheckBox("Nickel", false);
         }
-        return NickelCheck;
+        return this.NickelCheck;
     }
 
     private JCheckBox getQuecksilberCheck() {
-        if (QuecksilberCheck == null) {
-            QuecksilberCheck = new JCheckBox("Quecksilber", false);
+        if (this.QuecksilberCheck == null) {
+            this.QuecksilberCheck = new JCheckBox("Quecksilber", false);
         }
-        return QuecksilberCheck;
+        return this.QuecksilberCheck;
     }
 
     private JCheckBox getZinkCheck() {
-        if (ZinkCheck == null) {
-            ZinkCheck = new JCheckBox("Zink", false);
+        if (this.ZinkCheck == null) {
+            this.ZinkCheck = new JCheckBox("Zink", false);
         }
-        return ZinkCheck;
+        return this.ZinkCheck;
     }
 
     private JTextField getPrNummerFeld() {
-        if (prNummerFeld == null) {
-            prNummerFeld = new LimitedTextField(50, "");
+        if (this.prNummerFeld == null) {
+            this.prNummerFeld = new LimitedTextField(50, "");
         }
-        return prNummerFeld;
+        return this.prNummerFeld;
     }
 
     private JDateChooser getPrDateChooser() {
-        if (prDateChooser == null) {
-            prDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+        if (this.prDateChooser == null) {
+            this.prDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
+                false);
         }
-        return prDateChooser;
+        return this.prDateChooser;
     }
 
     private JButton getPrAnlegenButton() {
-        if (prAnlegenButton == null) {
-            prAnlegenButton = new JButton("Anlegen");
-            prAnlegenButton.setEnabled(false);
+        if (this.prAnlegenButton == null) {
+            this.prAnlegenButton = new JButton("Anlegen");
+            this.prAnlegenButton.setEnabled(false);
 
-            prAnlegenButton.addActionListener(new ActionListener() {
+            this.prAnlegenButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     neueProbenahme();
@@ -1722,15 +1816,15 @@ public class SielhautBearbeiten extends AbstractModul {
             });
         }
 
-        return prAnlegenButton;
+        return this.prAnlegenButton;
     }
 
     private JButton getTabelleExportButton() {
-        if (tabelleExportButton == null) {
-            tabelleExportButton = new JButton("Tabelle speichern");
-            tabelleExportButton.setEnabled(false);
+        if (this.tabelleExportButton == null) {
+            this.tabelleExportButton = new JButton("Tabelle speichern");
+            this.tabelleExportButton.setEnabled(false);
 
-            tabelleExportButton.addActionListener(new ActionListener() {
+            this.tabelleExportButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     saveTabelle();
@@ -1738,101 +1832,124 @@ public class SielhautBearbeiten extends AbstractModul {
             });
         }
 
-        return tabelleExportButton;
+        return this.tabelleExportButton;
     }
 
     // Foto
     private RetractablePanel getFotoRtPanel() {
-        if (fotoRtPanel == null) {
+        if (this.fotoRtPanel == null) {
             JPanel fotoPanel = new JPanel();
 
             fotoPanel.add(getFotoLabel());
             fotoPanel.setBackground(Color.WHITE);
             fotoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            fotoRtPanel = new RetractablePanel(
-                    DefaultComponentFactory.getInstance()
-                        .createSeparator("Foto"),
-                    fotoPanel, false, null) {
+            this.fotoRtPanel = new RetractablePanel(DefaultComponentFactory
+                .getInstance().createSeparator("Foto"), fotoPanel, false, null) {
                 private static final long serialVersionUID = 6505102322099919490L;
 
                 @Override
                 public void opening() {
-                    if (spunkt != null && spunkt.getId() != null) {
-                        String imgPath = manager.getSettingsManager().getSetting("auik.system.spath_fotos") + spunkt.getBezeichnung() + ".jpg";
+                    if (SielhautBearbeiten.this.spunkt != null
+                        && SielhautBearbeiten.this.spunkt.getId() != null) {
+                        String imgPath = SielhautBearbeiten.this.manager
+                            .getSettingsManager().getSetting(
+                                "auik.system.spath_fotos")
+                            + SielhautBearbeiten.this.spunkt.getBezeichnung()
+                            + ".jpg";
                         File imgFile = new File(imgPath);
                         if (imgFile.canRead()) {
-                            ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
+                            ImageIcon imgIcon = new ImageIcon(
+                                imgFile.getAbsolutePath());
                             int panelWidth = getPanel().getWidth() - 50;
                             if (imgIcon.getIconWidth() > panelWidth) {
-                                imgIcon.setImage(imgIcon.getImage().getScaledInstance(panelWidth,-1,Image.SCALE_FAST));
+                                imgIcon.setImage(imgIcon.getImage()
+                                    .getScaledInstance(panelWidth, -1,
+                                        Image.SCALE_FAST));
                             }
                             getFotoLabel().setIcon(null);
                             getFotoLabel().setIcon(imgIcon);
                             getFotoLabel().setText(null);
                         } else {
                             getFotoLabel().setIcon(null);
-                            getFotoLabel().setText("<html><b>-  Foto "+spunkt.getBezeichnung()+".jpg nicht gefunden!  -</b></html>");
+                            getFotoLabel().setText(
+                                "<html><b>-  Foto "
+                                    + SielhautBearbeiten.this.spunkt
+                                        .getBezeichnung()
+                                    + ".jpg nicht gefunden!  -</b></html>");
                         }
                     }
                 }
             };
         }
-        return fotoRtPanel;
+        return this.fotoRtPanel;
     }
 
     private JLabel getFotoLabel() {
-        if (fotoLabel == null) {
-            fotoLabel = new JLabel("<html><b>- Kein Foto verfügbar! -</b></html>");
+        if (this.fotoLabel == null) {
+            this.fotoLabel = new JLabel(
+                "<html><b>- Kein Foto verfügbar! -</b></html>");
         }
 
-        return fotoLabel;
+        return this.fotoLabel;
     }
 
     // Kartenausschnitt
     private RetractablePanel getKartenRtPanel() {
-        if (kartenRtPanel == null) {
+        if (this.kartenRtPanel == null) {
             JPanel kartenPanel = new JPanel();
             kartenPanel.add(getKartenLabel());
             kartenPanel.setBackground(Color.WHITE);
             kartenPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-            kartenRtPanel = new RetractablePanel(
-                    DefaultComponentFactory.getInstance()
-                        .createSeparator("Kartenausschnitt"),
-                    kartenPanel, false, null) {
+            this.kartenRtPanel = new RetractablePanel(DefaultComponentFactory
+                .getInstance().createSeparator("Kartenausschnitt"),
+                kartenPanel, false, null) {
                 private static final long serialVersionUID = 1276454146798307743L;
 
                 @Override
                 public void opening() {
-                    if (spunkt != null && spunkt.getId() != null) {
-                        String imgPath = manager.getSettingsManager().getSetting("auik.system.spath_karten") + spunkt.getBezeichnung() + ".jpg";
+                    if (SielhautBearbeiten.this.spunkt != null
+                        && SielhautBearbeiten.this.spunkt.getId() != null) {
+                        String imgPath = SielhautBearbeiten.this.manager
+                            .getSettingsManager().getSetting(
+                                "auik.system.spath_karten")
+                            + SielhautBearbeiten.this.spunkt.getBezeichnung()
+                            + ".jpg";
                         File imgFile = new File(imgPath);
                         if (imgFile.canRead()) {
-                            ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
+                            ImageIcon imgIcon = new ImageIcon(
+                                imgFile.getAbsolutePath());
                             int panelWidth = getPanel().getWidth() - 55;
                             if (imgIcon.getIconWidth() > panelWidth) {
-                                imgIcon.setImage(imgIcon.getImage().getScaledInstance(panelWidth,-1,Image.SCALE_FAST));
+                                imgIcon.setImage(imgIcon.getImage()
+                                    .getScaledInstance(panelWidth, -1,
+                                        Image.SCALE_FAST));
                             }
                             getKartenLabel().setIcon(imgIcon);
                             getKartenLabel().setText(null);
                         } else {
                             getKartenLabel().setIcon(null);
-                            getKartenLabel().setText("<html><b>-  Karte "+spunkt.getBezeichnung()+".jpg nicht gefunden!  -</b></html>");
+                            getKartenLabel().setText(
+                                "<html><b>-  Karte "
+                                    + SielhautBearbeiten.this.spunkt
+                                        .getBezeichnung()
+                                    + ".jpg nicht gefunden!  -</b></html>");
                         }
                     }
                 }
             };
         }
-        kartenRtPanel.repaint();
-        return kartenRtPanel;
+        this.kartenRtPanel.repaint();
+        return this.kartenRtPanel;
     }
 
     private JLabel getKartenLabel() {
-        if (kartenLabel == null) {
-            kartenLabel = new JLabel("<html><b>- Keine Karte verfügbar -</b></html>");
+        if (this.kartenLabel == null) {
+            this.kartenLabel = new JLabel(
+                "<html><b>- Keine Karte verfügbar -</b></html>");
         }
 
-        return kartenLabel;
+        return this.kartenLabel;
     }
 
     private void readClipboard() {
@@ -1857,14 +1974,16 @@ public class SielhautBearbeiten extends AbstractModul {
                 if (tmp.length == 4) {
                     String rechtswertAusZeile = tmp[2];
                     String hochwertAusZeile = tmp[3];
-                    spRechtsWertFeld.setText(rechtswertAusZeile.substring(0, 7));
-                    spHochWertFeld.setText(hochwertAusZeile.substring(0, 7));
-                    frame.changeStatus("Rechts- und Hochwert eingetragen",
-                            HauptFrame.SUCCESS_COLOR);
+                    this.spRechtsWertFeld.setText(rechtswertAusZeile.substring(
+                        0, 7));
+                    this.spHochWertFeld.setText(hochwertAusZeile
+                        .substring(0, 7));
+                    this.frame.changeStatus("Rechts- und Hochwert eingetragen",
+                        HauptFrame.SUCCESS_COLOR);
                 } else {
-                    frame.changeStatus(
-                            "Zwischenablage enthält keine verwertbaren Daten",
-                            HauptFrame.ERROR_COLOR);
+                    this.frame.changeStatus(
+                        "Zwischenablage enthält keine verwertbaren Daten",
+                        HauptFrame.ERROR_COLOR);
                 }
                 break;
             }
@@ -1872,11 +1991,12 @@ public class SielhautBearbeiten extends AbstractModul {
     }
 
     public JButton getAusAblageButton() {
-        if (ausAblageButton == null) {
+        if (this.ausAblageButton == null) {
 
-            ausAblageButton = new JButton("aus QGis");
-            ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
-            ausAblageButton.addActionListener(new ActionListener() {
+            this.ausAblageButton = new JButton("aus QGis");
+            this.ausAblageButton
+                .setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
+            this.ausAblageButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     readClipboard();
@@ -1884,7 +2004,7 @@ public class SielhautBearbeiten extends AbstractModul {
             });
         }
 
-        return ausAblageButton;
+        return this.ausAblageButton;
     }
 }
 
@@ -1895,33 +2015,31 @@ public class SielhautBearbeiten extends AbstractModul {
 class SielhautProbeModel extends ListTableModel {
     private static final long serialVersionUID = -7308141358160583962L;
     private AtlProbepkt probepkt;
-    private Map<AtlProbenahmen,List<AtlAnalyseposition>> wertMap;
+    private Map<AtlProbenahmen, List<AtlAnalyseposition>> wertMap;
     private AtlParameter[] params;
 
     public SielhautProbeModel() {
-        super(new String[]{"Kennnummer", "Datum"}, false, true);
+        super(new String[] {"Kennnummer", "Datum"}, false, true);
 
-        params = new AtlParameter[] {
+        this.params = new AtlParameter[] {
                 AtlParameter.getParameter(AtlParameter.BLEI_ID),
                 AtlParameter.getParameter(AtlParameter.CADMIUM_ID),
                 AtlParameter.getParameter(AtlParameter.CHROM_ID),
                 AtlParameter.getParameter(AtlParameter.KUPFER_ID),
                 AtlParameter.getParameter(AtlParameter.NICKEL_ID),
                 AtlParameter.getParameter(AtlParameter.QUECKSILBER_ID),
-                AtlParameter.getParameter(AtlParameter.ZINK_ID)
-        };
+                AtlParameter.getParameter(AtlParameter.ZINK_ID)};
 
-
-        columns = new String[params.length + 2];
-        columns[0] = "Kennnummer";
-        columns[1] = "Datum";
-        for (int i = 0; i < params.length; i++) {
-            if (params[i] != null) {
-                columns[i + 2] = params[i].toString();
+        this.columns = new String[this.params.length + 2];
+        this.columns[0] = "Kennnummer";
+        this.columns[1] = "Datum";
+        for (int i = 0; i < this.params.length; i++) {
+            if (this.params[i] != null) {
+                this.columns[i + 2] = this.params[i].toString();
             }
         }
 
-        wertMap = new HashMap<AtlProbenahmen,List<AtlAnalyseposition>>();
+        this.wertMap = new HashMap<AtlProbenahmen, List<AtlAnalyseposition>>();
     }
 
     public void setProbepunkt(AtlProbepkt probepkt) {
@@ -1930,18 +2048,19 @@ class SielhautProbeModel extends ListTableModel {
 
     @Override
     public void updateList() {
-        if (probepkt != null) {
-            setList(AtlProbenahmen.getProbenahmen(probepkt, true, -1));
+        if (this.probepkt != null) {
+            setList(AtlProbenahmen.getProbenahmen(this.probepkt, true, -1));
 
-            wertMap.clear();
+            this.wertMap.clear();
             for (int i = 0; i < getList().size(); i++) {
                 AtlProbenahmen probe = getRow(i);
-                List<AtlAnalyseposition> wertList =
-                    new ArrayList<AtlAnalyseposition>(params.length);
+                List<AtlAnalyseposition> wertList = new ArrayList<AtlAnalyseposition>(
+                    this.params.length);
 
-                for (int j = 0; j < params.length; j++) {
-                    AtlParameter param = params[j];
-                    List<?> posList = AtlAnalyseposition.getAnalysepositionen(probe, param);
+                for (int j = 0; j < this.params.length; j++) {
+                    AtlParameter param = this.params[j];
+                    List<?> posList = AtlAnalyseposition.getAnalysepositionen(
+                        probe, param);
                     AtlAnalyseposition pos;
                     if (posList.size() > 0) {
                         pos = (AtlAnalyseposition) posList.get(0);
@@ -1951,10 +2070,10 @@ class SielhautProbeModel extends ListTableModel {
                     wertList.add(j, pos);
                 }
 
-                wertMap.put((AtlProbenahmen)getList().get(i), wertList);
+                this.wertMap.put((AtlProbenahmen) getList().get(i), wertList);
             }
 
-            //fireTableDataChanged();
+            // fireTableDataChanged();
         }
     }
 
@@ -1968,8 +2087,8 @@ class SielhautProbeModel extends ListTableModel {
         } else if (columnIndex == 1) {
             value = AuikUtils.getStringFromDate(probe.getDatumDerEntnahme());
         } else {
-            List<AtlAnalyseposition> wertList = wertMap.get(probe);
-            AtlAnalyseposition pos = wertList.get(columnIndex-2);
+            List<AtlAnalyseposition> wertList = this.wertMap.get(probe);
+            AtlAnalyseposition pos = wertList.get(columnIndex - 2);
             if (pos != null) {
                 String tmp = pos.getWert().toString().replace(".", ",");
                 value = tmp;
@@ -1998,7 +2117,8 @@ class SielhautProbeModel extends ListTableModel {
     /**
      * Liefert das Objekt aus einer bestimmten Zeile.
      * @param rowIndex Die Zeile
-     * @return Das Objekt bei rowIndex oder <code>null</code>, falls die Zeile nicht existiert
+     * @return Das Objekt bei rowIndex oder <code>null</code>, falls die Zeile
+     *         nicht existiert
      */
     public AtlProbenahmen getRow(int rowIndex) {
         return (AtlProbenahmen) getObjectAtRow(rowIndex);
@@ -2021,20 +2141,21 @@ class SielhautChooser extends OkCancelDialog {
     public SielhautChooser(HauptFrame owner) {
         super("Sielhautpunkt auswählen", owner);
 
-        sielhautModel = new SielhautModel();
-        getErgebnisTabelle().setModel(sielhautModel);
+        this.sielhautModel = new SielhautModel();
+        getErgebnisTabelle().setModel(this.sielhautModel);
 
-
-        ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(80);
-        ergebnisTabelle.getColumnModel().getColumn(1).setPreferredWidth(230);
-        ergebnisTabelle.getColumnModel().getColumn(2).setPreferredWidth(8);
-        ergebnisTabelle.getColumnModel().getColumn(3).setPreferredWidth(8);
-        ergebnisTabelle.getColumnModel().getColumn(4).setPreferredWidth(8);
+        this.ergebnisTabelle.getColumnModel().getColumn(0)
+            .setPreferredWidth(80);
+        this.ergebnisTabelle.getColumnModel().getColumn(1)
+            .setPreferredWidth(230);
+        this.ergebnisTabelle.getColumnModel().getColumn(2).setPreferredWidth(8);
+        this.ergebnisTabelle.getColumnModel().getColumn(3).setPreferredWidth(8);
+        this.ergebnisTabelle.getColumnModel().getColumn(4).setPreferredWidth(8);
 
         setResizable(true);
 
-        sielhautModel.filterList("");
-        sielhautModel.fireTableDataChanged();
+        this.sielhautModel.filterList("");
+        this.sielhautModel.fireTableDataChanged();
     }
 
     /* (non-Javadoc)
@@ -2052,12 +2173,12 @@ class SielhautChooser extends OkCancelDialog {
         SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                sielhautModel.filterList(suche);
+                SielhautChooser.this.sielhautModel.filterList(suche);
             }
 
             @Override
             protected void doUIUpdateLogic() throws RuntimeException {
-                sielhautModel.fireTableDataChanged();
+                SielhautChooser.this.sielhautModel.fireTableDataChanged();
             }
         };
 
@@ -2066,13 +2187,14 @@ class SielhautChooser extends OkCancelDialog {
 
     private void choose(int row) {
         if (row != -1) {
-            chosenSielhaut = (AtlSielhaut) sielhautModel.getObjectAtRow(row);
+            this.chosenSielhaut = (AtlSielhaut) this.sielhautModel
+                .getObjectAtRow(row);
             dispose();
         }
     }
 
     public AtlSielhaut getChosenSielhaut() {
-        return chosenSielhaut;
+        return this.chosenSielhaut;
     }
 
     /* (non-Javadoc)
@@ -2080,67 +2202,65 @@ class SielhautChooser extends OkCancelDialog {
      */
     @Override
     protected JComponent buildContentArea() {
-        JScrollPane tabellenScroller = new JScrollPane(
-                getErgebnisTabelle(),
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
-        );
+        JScrollPane tabellenScroller = new JScrollPane(getErgebnisTabelle(),
+            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         TabAction ta = new TabAction();
-        ta.addComp(ergebnisTabelle);
-        ta.addComp(button1);
-        //ta.addComp(button2);
+        ta.addComp(this.ergebnisTabelle);
+        ta.addComp(this.button1);
+        // ta.addComp(button2);
         JToolBar submitToolBar = new JToolBar();
         submitToolBar.setFloatable(false);
         submitToolBar.setRollover(true);
         submitToolBar.add(getSubmitButton());
 
-        FormLayout layout = new FormLayout(
-                "180dlu:g, 3dlu, min(16dlu;p)",        // spalten
-                "20dlu, 3dlu, 300dlu:g");     // zeilen
+        FormLayout layout = new FormLayout("180dlu:g, 3dlu, min(16dlu;p)", // spalten
+            "20dlu, 3dlu, 300dlu:g"); // zeilen
         PanelBuilder builder = new PanelBuilder(layout);
         CellConstraints cc = new CellConstraints();
 
-        builder.add(getSuchFeld(),        cc.xy(1, 1));
-        builder.add(submitToolBar,        cc.xy(3, 1));
-        builder.add(tabellenScroller,    cc.xyw(1, 3, 3));
+        builder.add(getSuchFeld(), cc.xy(1, 1));
+        builder.add(submitToolBar, cc.xy(3, 1));
+        builder.add(tabellenScroller, cc.xyw(1, 3, 3));
 
         return builder.getPanel();
     }
 
     private JTextField getSuchFeld() {
-        if (suchFeld == null) {
-            suchFeld = new JTextField();
+        if (this.suchFeld == null) {
+            this.suchFeld = new JTextField();
 
-            suchFeld.addActionListener(new ActionListener() {
+            this.suchFeld.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     doSearch();
                 }
             });
 
-            suchFeld.addKeyListener(new KeyAdapter() {
+            this.suchFeld.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyTyped(KeyEvent e) {
-                    String text = suchFeld.getText();
+                    String text = SielhautChooser.this.suchFeld.getText();
                     log.debug("(SielhautChooser) " + "keyChar: "
-                    		+ e.getKeyChar() + ", Text: " + text);
+                        + e.getKeyChar() + ", Text: " + text);
                     if (Character.isLetterOrDigit(e.getKeyChar())) {
                         text = text + e.getKeyChar();
                     }
-                    sielhautModel.filterList(text);
-                    sielhautModel.fireTableDataChanged();
+                    SielhautChooser.this.sielhautModel.filterList(text);
+                    SielhautChooser.this.sielhautModel.fireTableDataChanged();
                 }
             });
         }
 
-        return suchFeld;
+        return this.suchFeld;
     }
 
     private JButton getSubmitButton() {
-        if (submitButton == null) {
-            submitButton = new JButton(AuikUtils.getIcon(16, "key_enter.png"));
-            submitButton.setToolTipText("Suche starten");
-            submitButton.addActionListener(new ActionListener() {
+        if (this.submitButton == null) {
+            this.submitButton = new JButton(AuikUtils.getIcon(16,
+                "key_enter.png"));
+            this.submitButton.setToolTipText("Suche starten");
+            this.submitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     doSearch();
@@ -2148,12 +2268,12 @@ class SielhautChooser extends OkCancelDialog {
             });
         }
 
-        return submitButton;
+        return this.submitButton;
     }
 
     private JTable getErgebnisTabelle() {
-        if (ergebnisTabelle == null) {
-            ergebnisTabelle = new JTable();
+        if (this.ergebnisTabelle == null) {
+            this.ergebnisTabelle = new JTable();
 
             Action submitAction = new AbstractAction("Auswählen") {
                 private static final long serialVersionUID = 5609569229635452436L;
@@ -2163,25 +2283,31 @@ class SielhautChooser extends OkCancelDialog {
                     doOk();
                 }
             };
-            submitAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+            submitAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
 
-            ergebnisTabelle.getInputMap().put((KeyStroke)submitAction.getValue(Action.ACCELERATOR_KEY), submitAction.getValue(Action.NAME));
-            ergebnisTabelle.getActionMap().put(submitAction.getValue(Action.NAME), submitAction);
+            this.ergebnisTabelle.getInputMap().put(
+                (KeyStroke) submitAction.getValue(Action.ACCELERATOR_KEY),
+                submitAction.getValue(Action.NAME));
+            this.ergebnisTabelle.getActionMap().put(
+                submitAction.getValue(Action.NAME), submitAction);
 
-            ergebnisTabelle.addFocusListener(TableFocusListener.getInstance());
-            ergebnisTabelle.addMouseListener(new MouseAdapter() {
+            this.ergebnisTabelle.addFocusListener(TableFocusListener
+                .getInstance());
+            this.ergebnisTabelle.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                    if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
                         Point origin = e.getPoint();
-                        int row = ergebnisTabelle.rowAtPoint(origin);
+                        int row = SielhautChooser.this.ergebnisTabelle
+                            .rowAtPoint(origin);
                         choose(row);
                     }
                 }
             });
         }
 
-        return ergebnisTabelle;
+        return this.ergebnisTabelle;
     }
 
 }
@@ -2192,7 +2318,7 @@ class SielhautModel extends ListTableModel {
     private static final AuikLogger log = AuikLogger.getLogger();
 
     public SielhautModel() {
-        super(new String[]{"Bezeichnung", "Lage", "R", "F", "N"}, false);
+        super(new String[] {"Bezeichnung", "Lage", "R", "F", "N"}, false);
     }
 
     /* (non-Javadoc)
@@ -2204,37 +2330,37 @@ class SielhautModel extends ListTableModel {
         Object tmp;
 
         switch (columnIndex) {
-        case 0:
-            tmp = spunkt.getBezeichnung();
-            break;
-        case 1:
-            tmp = spunkt.getLage();
-            break;
-        case 2:
-            if (spunkt.getPsielhaut() == null) {
-                tmp = new Boolean(false);
-            } else {
-                tmp = new Boolean(spunkt.getPsielhaut());
-            }
-            break;
-        case 3:
-            if (spunkt.getPfirmenprobe() == null) {
-                tmp = new Boolean(false);
-            } else {
-                tmp = new Boolean(spunkt.getPfirmenprobe());
-            }
-            break;
-        case 4:
-            if (spunkt.getPnachprobe() == null) {
-                tmp = new Boolean(false);
-            } else {
-                tmp = new Boolean(spunkt.getPnachprobe());
-            }
-            break;
+            case 0:
+                tmp = spunkt.getBezeichnung();
+                break;
+            case 1:
+                tmp = spunkt.getLage();
+                break;
+            case 2:
+                if (spunkt.getPsielhaut() == null) {
+                    tmp = new Boolean(false);
+                } else {
+                    tmp = new Boolean(spunkt.getPsielhaut());
+                }
+                break;
+            case 3:
+                if (spunkt.getPfirmenprobe() == null) {
+                    tmp = new Boolean(false);
+                } else {
+                    tmp = new Boolean(spunkt.getPfirmenprobe());
+                }
+                break;
+            case 4:
+                if (spunkt.getPnachprobe() == null) {
+                    tmp = new Boolean(false);
+                } else {
+                    tmp = new Boolean(spunkt.getPnachprobe());
+                }
+                break;
 
-        default:
-            tmp = "FEHLER!";
-            break;
+            default:
+                tmp = "FEHLER!";
+                break;
         }
 
         return tmp;
@@ -2259,6 +2385,6 @@ class SielhautModel extends ListTableModel {
     public void filterList(String suche) {
         setList(AtlSielhaut.findPunkte(suche));
         log.debug("Suche nach '" + suche + "' (" + getList().size()
-        		+ " Ergebnisse)");
+            + " Ergebnisse)");
     }
 }

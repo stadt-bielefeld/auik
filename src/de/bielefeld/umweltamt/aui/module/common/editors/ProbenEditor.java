@@ -663,14 +663,13 @@ public class ProbenEditor extends AbstractApplyEditor {
                     probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
                     AtlProbenahmen.saveOrUpdateProbenahme(probe);
 
-                    ProbenEditor.this.frame.showInfoMessage(
+                    GUIManager.getInstance().showInfoMessage(
                         "Der Probenahmeauftrag wurde erfolgreich unter '"
                             + path.getAbsolutePath() + "' gespeichert.",
                         "Probenahmeauftrag erfolgreich");
                 } catch (Exception ex) {
                     log.error("Druck schlug fehlt: " + ex.getMessage());
-
-                    ProbenEditor.this.frame.showErrorMessage(
+                    GUIManager.getInstance().showErrorMessage(
                         "Der Druck des Probenahmeauftrags ist fehlgeschlagen."
                             + "\n" + ex.getLocalizedMessage(),
                         "Probenahmeauftrag-Druck fehlgeschlagen");
@@ -749,8 +748,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                             createKasseFile(path.getAbsolutePath());
                         } catch (ParseException pe) {
                             pe.printStackTrace();
-
-                            ProbenEditor.this.frame
+                            GUIManager
+                                .getInstance()
                                 .showErrorMessage(
                                     "Der Druck des Gebührenbescheids ist fehlgeschlagen."
                                         + "Die Datei kasse.txt konnte nicht erstellt werden.",
@@ -766,7 +765,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     AtlProbenahmen.saveOrUpdateProbenahme(probe);
 
-                    ProbenEditor.this.frame.showInfoMessage(
+                    GUIManager.getInstance().showInfoMessage(
                         "Der Gebührenbescheid wurde erfolgreich unter ' "
                             + path.getAbsolutePath() + "' gespeichert.",
                         "Gebührenbescheid erfolgreich");
@@ -775,7 +774,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     ex.printStackTrace();
 
-                    ProbenEditor.this.frame.showErrorMessage(
+                    GUIManager.getInstance().showErrorMessage(
                         "Der Druck des Gebührenbescheids ist fehlgeschlagen."
                             + "\n" + ex.getLocalizedMessage(),
                         "Gebührenbescheid-Druck fehlgeschlagen");
