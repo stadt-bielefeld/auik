@@ -27,13 +27,19 @@ import javax.xml.rpc.ServiceException;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.nrw.lds.tipi.inka.Dea_Adresse;
+import de.nrw.lds.tipi.inka.Inka_Anfallstelle;
 import de.nrw.lds.tipi.inka.Inka_Betrieb;
 import de.nrw.lds.tipi.inka.Inka_Betriebseinrichtung;
 import de.nrw.lds.tipi.inka.Inka_Genehmigung;
+import de.nrw.lds.tipi.inka.Inka_Messstelle;
+import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
 import de.nrw.lds.tipi.inka.request.ReqDea_Adresse;
+import de.nrw.lds.tipi.inka.request.ReqInka_Anfallstelle;
 import de.nrw.lds.tipi.inka.request.ReqInka_Betrieb;
 import de.nrw.lds.tipi.inka.request.ReqInka_Betriebseinrichtung;
 import de.nrw.lds.tipi.inka.request.ReqInka_Genehmigung;
+import de.nrw.lds.tipi.inka.request.ReqInka_Messstelle;
+import de.nrw.lds.tipi.inka.request.ReqInka_Uebergabestelle;
 import de.nrw.lds.tipi.inka.webservice.InkaInterfaceLocator;
 import de.nrw.lds.tipi.inka.webservice.InkaInterfacePortType;
 
@@ -110,6 +116,54 @@ public final class ServiceManager {
         }
         catch(RemoteException re) {
             logger.error("Error while sending dea_adress.");
+            re.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
+    public Inka_Anfallstelle[] getInka_Anfallstelle(String user, String passw) {
+        try {
+            InkaInterfacePortType iip = getInkaInterfacePortType();
+            if (iip == null) {
+                return new Inka_Anfallstelle[0];
+            }
+            ReqInka_Anfallstelle req = new ReqInka_Anfallstelle();
+            req.setClientTimestamp(Calendar.getInstance());
+            req.setKennung(user);
+            req.setPassword(passw);
+            return iip.getInka_Anfallstelle(req).getArrInka_Anfallstelle();
+        }
+        catch(RemoteException re) {
+            logger.error("Error while requesting inka_anfallstelle.");
+        }
+        return new Inka_Anfallstelle[0];
+
+    }
+
+
+    public boolean setInka_Anfallstelle(
+        String user,
+        String passw,
+        Inka_Anfallstelle[] anfallsten)
+    {
+        try {
+            for (int i = 0; i < anfallsten.length; i++) {
+                InkaInterfacePortType iip = getInkaInterfacePortType();
+                if (iip == null) {
+                    return false;
+                }
+                ReqInka_Anfallstelle anfallst = new ReqInka_Anfallstelle();
+                anfallst.setObjInka_Anfallstelle(anfallsten[i]);
+                anfallst.setClientTimestamp(Calendar.getInstance());
+                anfallst.setKennung(user);
+                anfallst.setPassword(passw);
+                iip.setInka_Anfallstelle(anfallst);
+            }
+        }
+        catch(RemoteException re) {
+            logger.error("Error while sending inka_anfallstelle.");
             re.printStackTrace();
             return false;
         }
@@ -266,6 +320,114 @@ public final class ServiceManager {
         }
         catch(RemoteException re) {
             logger.error("Error while sending inka_genehmigung.");
+            re.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
+    public Inka_Messstelle[] getInka_Messstelle(
+        String user,
+        String passw)
+    {
+        try {
+            InkaInterfacePortType iip = getInkaInterfacePortType();
+            if (iip == null) {
+                return new Inka_Messstelle[0];
+            }
+            ReqInka_Messstelle req =
+                new ReqInka_Messstelle();
+            req.setClientTimestamp(Calendar.getInstance());
+            req.setKennung(user);
+            req.setPassword(passw);
+            return iip.getInka_Messstelle(req)
+                      .getArrInka_Messstelle();
+        }
+        catch(RemoteException re) {
+            logger.error("Error while requesting inka_messstelle.");
+        }
+        return new Inka_Messstelle[0];
+
+    }
+
+
+    public boolean setInka_Messstelle(
+        String user,
+        String passw,
+        Inka_Messstelle[] messstellen)
+    {
+        try {
+            for (int i = 0; i < messstellen.length; i++) {
+                InkaInterfacePortType iip = getInkaInterfacePortType();
+                if (iip == null) {
+                    return false;
+                }
+                ReqInka_Messstelle messstelle =
+                    new ReqInka_Messstelle();
+                messstelle.setObjInka_Messstelle(messstellen[i]);
+                messstelle.setClientTimestamp(Calendar.getInstance());
+                messstelle.setKennung(user);
+                messstelle.setPassword(passw);
+                iip.setInka_Messstelle(messstelle);
+            }
+        }
+        catch(RemoteException re) {
+            logger.error("Error while sending inka_messstelle.");
+            re.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
+    public Inka_Uebergabestelle[] getInka_Uebergabestelle(
+        String user,
+        String passw)
+    {
+        try {
+            InkaInterfacePortType iip = getInkaInterfacePortType();
+            if (iip == null) {
+                return new Inka_Uebergabestelle[0];
+            }
+            ReqInka_Uebergabestelle req =
+                new ReqInka_Uebergabestelle();
+            req.setClientTimestamp(Calendar.getInstance());
+            req.setKennung(user);
+            req.setPassword(passw);
+            return iip.getInka_Uebergabestelle(req)
+                      .getArrInka_Uebergabestelle();
+        }
+        catch(RemoteException re) {
+            logger.error("Error while requesting inka_uebergabestelle.");
+        }
+        return new Inka_Uebergabestelle[0];
+
+    }
+
+
+    public boolean setInka_Uebergabestelle(
+        String user,
+        String passw,
+        Inka_Uebergabestelle[] uebergabestellen)
+    {
+        try {
+            for (int i = 0; i < uebergabestellen.length; i++) {
+                InkaInterfacePortType iip = getInkaInterfacePortType();
+                if (iip == null) {
+                    return false;
+                }
+                ReqInka_Uebergabestelle uebergabestelle =
+                    new ReqInka_Uebergabestelle();
+                uebergabestelle.setObjInka_Uebergabestelle(uebergabestellen[i]);
+                uebergabestelle.setClientTimestamp(Calendar.getInstance());
+                uebergabestelle.setKennung(user);
+                uebergabestelle.setPassword(passw);
+                iip.setInka_Uebergabestelle(uebergabestelle);
+            }
+        }
+        catch(RemoteException re) {
+            logger.error("Error while sending inka_uebergabestelle.");
             re.printStackTrace();
             return false;
         }

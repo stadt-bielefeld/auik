@@ -20,23 +20,21 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 
-import de.bielefeld.umweltamt.aui.mappings.tipi.InkaGenehmigung;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstelle;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
-import de.nrw.lds.tipi.inka.Inka_Genehmigung;
+import de.nrw.lds.tipi.inka.Inka_Anfallstelle;
 
-public class InkaGenehmigungModel extends ListTableModel {
-    private static final long serialVersionUID = 4915399132867370442L;
+public class InkaAnfallstelleModel extends ListTableModel {
+    private static final long serialVersionUID = 3913291284739009733L;
 
-    public InkaGenehmigungModel() {
+    public InkaAnfallstelleModel() {
         super(new String[]{
-                "Genehmingung Nr",
-                "Betrieb Nr.",
-                "Behörden ID",
-                "Datum",
-                "befristet"
+                "Beschreibung",
+                "Betriebseinrichtung Nr.",
+                "Erfassungsdatum",
+                "Gemeindekennzahl"
         },
         false);
     }
@@ -49,37 +47,32 @@ public class InkaGenehmigungModel extends ListTableModel {
         if (objectAtRow == null) {
             return "error";
         }
-        if (objectAtRow instanceof InkaGenehmigung) {
-            return getInkaGenehmigungFromDB(objectAtRow, columnIndex);
+        if (objectAtRow instanceof InkaAnfallstelle) {
+            return getInkaAnfallstelleFromDB(objectAtRow, columnIndex);
         }
-        else if (objectAtRow instanceof Inka_Genehmigung) {
-            return getInkaGenehmigungFromService(objectAtRow, columnIndex);
+        else if (objectAtRow instanceof Inka_Anfallstelle) {
+            return getInkaAnfallstelleFromService(objectAtRow, columnIndex);
         }
         else {
             return "Error";
         }
     }
 
-    public Object getInkaGenehmigungFromDB (Object obj, int ndx) {
-        InkaGenehmigung fd = (InkaGenehmigung) obj;
+    public Object getInkaAnfallstelleFromDB(Object obj, int ndx) {
+        InkaAnfallstelle fd = (InkaAnfallstelle) obj;
         Object tmp;
 
         switch (ndx) {
         case 0:
-            tmp = fd.getGenehmigungNr();
+            tmp = fd.getBeschreibung();
         case 1:
-            tmp = fd.getBetriebNr();
+            tmp = fd.getBetriebseinrichtungNr();
             break;
         case 2:
-            tmp = fd.getBehoerdenId();
+            tmp = new SimpleDateFormat("dd.MM.yyyy").format(fd.getErfassungsDatum());
             break;
         case 3:
-        	long millis = fd.getGenehmigungDatum().getTimeInMillis();
-        	Date d = new Date(millis);
-            tmp = d.toString(); 
-            break;
-        case 4:
-            tmp = fd.getBefristetJn();
+            tmp = fd.getGemeindekennzahl();
             break;
 
         default:
@@ -89,26 +82,22 @@ public class InkaGenehmigungModel extends ListTableModel {
         return tmp;
     }
 
-    public Object getInkaGenehmigungFromService (Object obj, int ndx) {
-        Inka_Genehmigung fd = (Inka_Genehmigung) obj;
+
+    public Object getInkaAnfallstelleFromService(Object obj, int ndx) {
+        Inka_Anfallstelle fd = (Inka_Anfallstelle) obj;
         Object tmp;
 
         switch (ndx) {
         case 0:
-            tmp = fd.getGenehmigung_nr();
+            tmp = fd.getBeschreibung();
         case 1:
-            tmp = fd.getBetrieb_nr();
+            tmp = fd.getBetriebseinrichtung_nr();
             break;
         case 2:
-            tmp = fd.getBehoerden_id();
+            tmp = fd.getErfassungs_datum();
             break;
         case 3:
-            long millis = fd.getGenehmigung_datum().getTimeInMillis();
-            Date d = new Date(millis);
-            tmp = d.toString();
-            break;
-        case 4:
-            tmp = fd.getBefristet_jn();
+            tmp = fd.getGemeindekennzahl();
             break;
 
         default:
