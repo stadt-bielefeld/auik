@@ -232,7 +232,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     }
                 } else if (this.probe.getKennummer().startsWith("7")) {
                     String[] params_ordn = {"L15230", "P00013"};
-                    String analyse_von = "Selbstüberwachung";
+                    String analyse_von = "Betriebslabor";
                     setList(new ArrayList<Object>());
                     AtlParameter param = null;
                     for (String param_ordn : params_ordn) {
