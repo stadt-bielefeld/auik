@@ -230,6 +230,16 @@ public class ProbenEditor extends AbstractApplyEditor {
                             AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID),
                             analyse_von);
                     }
+                } else if (this.probe.getKennummer().startsWith("7")) {
+                    String[] params_ordn = {"L15230", "P00013"};
+                    String analyse_von = "Selbstüberwachung";
+                    setList(new ArrayList<Object>());
+                    AtlParameter param = null;
+                    for (String param_ordn : params_ordn) {
+                        param = AtlParameter.getParameter(param_ordn);
+                        addParameter(param, AtlEinheiten.getEinheit(param
+                            .getWirdgemessenineinheit()), analyse_von);
+                    }
                 } else if (!this.isSielhaut) {
                     String[] params_ordn = {"L10111", "B00600", "L10821"};
                     String analyse_von = "360.33";
