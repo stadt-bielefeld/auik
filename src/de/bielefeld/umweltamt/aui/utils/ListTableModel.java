@@ -25,7 +25,6 @@
 package de.bielefeld.umweltamt.aui.utils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Eine TableModel-Grundlage, basierend auf einer <code>java.util.List</code>e .
@@ -34,7 +33,7 @@ import java.util.List;
  */
 public abstract class ListTableModel extends BasicTableModel {
     private static final long serialVersionUID = 4451832362240102803L;
-    private List<?> dataList = null;
+    private ArrayList<Object> dataList = null;
     private boolean removeAllowed;
 
     /**
@@ -56,7 +55,7 @@ public abstract class ListTableModel extends BasicTableModel {
         super(columns);
         this.removeAllowed = removeAllowed;
 
-        dataList = new ArrayList<String[]>();
+        dataList = new ArrayList<Object>();
 
         if (updateAtInit) {
             try {
@@ -72,7 +71,7 @@ public abstract class ListTableModel extends BasicTableModel {
      * @param columns Ein String-Array mit den Namen der Spalten der Tabelle
      * @param liste Die anfängliche Liste
      */
-    public ListTableModel(String[] columns, List<?> liste, boolean removeAllowed) {
+    public ListTableModel(String[] columns, ArrayList<Object> liste, boolean removeAllowed) {
         super(columns);
 
         this.removeAllowed = removeAllowed;
@@ -164,7 +163,7 @@ public abstract class ListTableModel extends BasicTableModel {
     /**
      * @return Die Liste mit dem Tabellen-Inhalt.
      */
-    public List getList() {
+    public ArrayList<Object> getList() {
         return dataList;
     }
 
@@ -172,7 +171,7 @@ public abstract class ListTableModel extends BasicTableModel {
      * Setzt die Liste mit dem Tabellen-Inhalt.
      * @param newList Die neue Liste
      */
-    public void setList(List<?> newList) {
+    public void setList(ArrayList<Object> newList) {
         this.dataList = newList;
     }
 

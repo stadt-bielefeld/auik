@@ -57,9 +57,6 @@ public class PDFExporter {
     public static final String VFG
         = "verfuegung.jasper";
 
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-
     /**
      * Dieser Konstruktor soll nicht aufgerufen werden, um zu verhindern, dass
      * mehr als nur eine Instanz dieser Klasse erstellt wird. Stattdessen soll
