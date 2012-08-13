@@ -216,6 +216,7 @@
             <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-discovery-0.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="${lib}/axis-wsdl4j-1.5.1.jar" />
             <zipfileset excludes="META-INF/*.SF" src="${lib}/junit-4.10.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/com.jgoodies.uif_lite.jar" />
     	</jar>
         <copy file="${dist}/AUIK.jar" tofile="${dist}/${TODAY} AUIK.jar" />
     </target>
