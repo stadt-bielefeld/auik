@@ -104,27 +104,11 @@ AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     }
 
     /**
-     * Set the value of the Telefon column.
-     * @param telefon
-     */
-    private void setTelefon(java.lang.String telefon) {
-        this.telefon = telefon;
-    }
-
-    /**
      * Return the value of the Gehoertzuarbeitsgr column.
      * @return java.lang.Integer
      */
     public java.lang.String getGehoertzuarbeitsgr() {
         return this.gehoertzuarbeitsgr;
-    }
-
-    /**
-     * Set the value of the Istadministrator column.
-     * @param gehoertzuarbeitsgr
-     */
-    private void setGehoertzuarbeitsgr(java.lang.String gehoertzuarbeitsgr) {
-        this.gehoertzuarbeitsgr = gehoertzuarbeitsgr;
     }
 
     /**

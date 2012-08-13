@@ -268,7 +268,7 @@ public class AnalyseImport extends AbstractModul {
 
             try {
                 in = new BufferedReader(new FileReader(this.toImport));
-                List dataList = getList();
+                List<String[]> dataList = getList();
                 String line = null;
                 int count = 0;
                 int bad = 0;

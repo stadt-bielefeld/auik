@@ -21,7 +21,6 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaGenehmigung;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -67,6 +66,7 @@ public class InkaGenehmigungModel extends ListTableModel {
         switch (ndx) {
         case 0:
             tmp = fd.getGenehmigungNr();
+            // TODO: Why is there no break; here?
         case 1:
             tmp = fd.getBetriebNr();
             break;
@@ -76,7 +76,7 @@ public class InkaGenehmigungModel extends ListTableModel {
         case 3:
         	long millis = fd.getGenehmigungDatum().getTimeInMillis();
         	Date d = new Date(millis);
-            tmp = d.toString(); 
+            tmp = d.toString();
             break;
         case 4:
             tmp = fd.getBefristetJn();
