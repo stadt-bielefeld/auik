@@ -1,13 +1,13 @@
 <#assign declarationName = pojo.importType(pojo.getDeclarationName())>
-<#--  /** default constructor */ -->
-    public Abstract${declarationName}() {
-    	// This is intentionally left blank.
+    /** Default constructor */
+    protected Abstract${declarationName}() {
+        // This is intentionally left blank.
     }
 
 <#if pojo.needsMinimalConstructor()>
-<#-- /** minimal constructor */ -->
-    public Abstract${declarationName}(
-    	${c2j.asParameterList(pojo.getPropertyClosureForMinimalConstructor(), jdk5, pojo)}) {
+    /** Minimal constructor */
+    protected Abstract${declarationName}(
+        ${c2j.asParameterList(pojo.getPropertyClosureForMinimalConstructor(), jdk5, pojo)}) {
 <#if pojo.isSubclass() && !pojo.getPropertyClosureForSuperclassMinimalConstructor().isEmpty()>
         super(${c2j.asArgumentList(pojo.getPropertyClosureForSuperclassMinimalConstructor())});        
 </#if>
@@ -15,12 +15,12 @@
         this.${field.name} = ${field.name};
 </#foreach>
     }
-</#if>    
+</#if>
 
 <#if pojo.needsFullConstructor()>
-<#-- /** full constructor */ -->
-    public Abstract${declarationName}(
-    	${c2j.asParameterList(pojo.getPropertyClosureForFullConstructor(), jdk5, pojo)}) {
+    /** Full constructor */
+    protected Abstract${declarationName}(
+        ${c2j.asParameterList(pojo.getPropertyClosureForFullConstructor(), jdk5, pojo)}) {
 <#if pojo.isSubclass() && !pojo.getPropertyClosureForSuperclassFullConstructor().isEmpty()>
         super(${c2j.asArgumentList(pojo.getPropertyClosureForSuperclassFullConstructor())});        
 </#if>
@@ -28,5 +28,5 @@
         this.${field.name} = ${field.name};
 </#foreach>
     }
-</#if>    
+</#if>
 
