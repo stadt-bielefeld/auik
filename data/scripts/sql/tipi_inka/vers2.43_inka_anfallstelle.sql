@@ -25,6 +25,7 @@
   1::integer				AS genehmigung_ver,	-- NOT NULL
   -- Foreign Key: dea_anhang
   indeinl_genehmigung.anhang::character varying(20)	AS anh_id,	-- NOT NULL
+  -- TODO: Die Version ist 2 oder 3...
   1::integer						AS anh_ver,	-- NOT NULL
   'There be dragons'::character varying(30)		AS beschreibung,
   NULL::float				AS max_vol_tag,

@@ -12,11 +12,14 @@
   true::boolean						AS ist_aktuell_jn, 	-- NOT NULL
 
   -- Daten
+  -- Foreign Key: inka_betrieb
   (basis_objekt.betreiberid << 16 | basis_objekt.standortid)::integer
 						AS betrieb_nr,		-- NOT NULL
   1::integer					AS betrieb_ver,		-- NOT NULL
+  -- Foreign Key: dea_wasserbehoerde
   'KR711'::character varying(5)			AS behoerden_id,	-- NOT NULL
   1::integer					AS behoerden_ver,	-- NOT NULL
+
   indeinl_genehmigung.erstellungs_datum::date	AS genehmigung_datum,	-- NOT NULL
   indeinl_genehmigung.befristet::boolean	AS befristet_jn,	-- NOT NULL
   indeinl_genehmigung.befristet_bis::date	AS befristet_bis
