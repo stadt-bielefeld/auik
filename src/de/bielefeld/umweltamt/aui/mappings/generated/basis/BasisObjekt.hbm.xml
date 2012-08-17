@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisObjekt" table="basis_objekt" schema="auik">
         <id name="objektid" type="java.lang.Integer">
@@ -28,19 +28,19 @@
         <property name="beschreibung" type="string">
             <column name="beschreibung" />
         </property>
-        <property name="wiedervorlage" type="timestamp">
+        <property name="wiedervorlage" type="java.util.Calendar">
             <column name="wiedervorlage" length="8" />
         </property>
-        <property name="erfassungsdatum" type="timestamp">
+        <property name="erfassungsdatum" type="java.util.Calendar">
             <column name="erfassungsdatum" length="8" />
         </property>
-        <property name="gueltigVon" type="timestamp">
+        <property name="gueltigVon" type="java.util.Calendar">
             <column name="gueltig_von" length="8" />
         </property>
-        <property name="aenderungsdatum" type="timestamp">
+        <property name="aenderungsdatum" type="java.util.Calendar">
             <column name="aenderungsdatum" length="8" />
         </property>
-        <property name="gueltigBis" type="timestamp">
+        <property name="gueltigBis" type="java.util.Calendar">
             <column name="gueltig_bis" length="8" />
         </property>
         <property name="inaktiv" type="java.lang.Boolean">

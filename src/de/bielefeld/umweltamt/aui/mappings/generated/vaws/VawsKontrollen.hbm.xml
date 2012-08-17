@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.vaws.VawsKontrollen" table="vaws_kontrollen" schema="auik">
         <id name="id" type="java.lang.Integer">
@@ -19,7 +19,7 @@
         <property name="pruefturnus" type="java.lang.Float">
             <column name="pruefturnus" precision="4" scale="0" />
         </property>
-        <property name="pruefdatum" type="timestamp">
+        <property name="pruefdatum" type="java.util.Calendar">
             <column name="pruefdatum" length="8" />
         </property>
         <property name="pruefer" type="string">
@@ -31,13 +31,13 @@
         <property name="nachpruefung" type="java.lang.Boolean">
             <column name="nachpruefung" />
         </property>
-        <property name="nachpruefdatum" type="timestamp">
+        <property name="nachpruefdatum" type="java.util.Calendar">
             <column name="nachpruefdatum" length="8" />
         </property>
         <property name="nachpruefer" type="string">
             <column name="nachpruefer" />
         </property>
-        <property name="naechstepruefung" type="timestamp">
+        <property name="naechstepruefung" type="java.util.Calendar">
             <column name="naechstepruefung" length="8" />
         </property>
         <property name="pruefergebnis" type="string">

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.atl.AtlProbenahmen" table="atl_probenahmen" schema="auik">
         <id name="id" type="java.lang.Integer">
@@ -25,13 +25,13 @@
         <property name="art" type="string">
             <column name="art" />
         </property>
-        <property name="datumDerEntnahme" type="timestamp">
+        <property name="datumDerEntnahme" type="java.util.Calendar">
             <column name="datum_der_entnahme" length="8" />
         </property>
         <property name="zeitAnfang" type="time">
             <column name="zeit_anfang" length="8" />
         </property>
-        <property name="bisDatum" type="timestamp">
+        <property name="bisDatum" type="java.util.Calendar">
             <column name="bis_datum" length="8" />
         </property>
         <property name="zeitDerEntnahmen" type="string">
@@ -49,7 +49,7 @@
         <property name="objektNr" type="string">
             <column name="objekt_nr" />
         </property>
-        <property name="datumIcp" type="timestamp">
+        <property name="datumIcp" type="java.util.Calendar">
             <column name="datum_icp" length="8" />
         </property>
         <property name="sonderparameter" type="string">
@@ -58,7 +58,7 @@
         <property name="bemerkung" type="string">
             <column name="bemerkung" />
         </property>
-        <property name="an360x11" type="timestamp">
+        <property name="an360x11" type="java.util.Calendar">
             <column name="an_360x11" length="8" />
         </property>
         <property name="ueberschreitung" type="string">
@@ -76,7 +76,7 @@
         <property name="fahrtzeit" type="string">
             <column name="fahrtzeit" />
         </property>
-        <property name="bescheid" type="timestamp">
+        <property name="bescheid" type="java.util.Calendar">
             <column name="bescheid" length="8" />
         </property>
         <property name="kosten" type="java.lang.Double">

@@ -5,20 +5,20 @@
     </description>
 
     <!-- Some properties for necessary path definitions -->
-    <property name="root"		location="." />
-    <property name="src"		location="src" />
-    <property name="lib"		location="lib" />
-    <property name="bin" 		location="bin" />
-    <property name="dist"		location="dist" />
-    <property name="javadoc"	location="javadoc" />
-    <property name="test"		location="test" />
-    <property name="data"		location="data" />
-	
+    <property name="root"       location="." />
+    <property name="src"        location="src" />
+    <property name="lib"        location="lib" />
+    <property name="bin"        location="bin" />
+    <property name="dist"       location="dist" />
+    <property name="javadoc"    location="javadoc" />
+    <property name="test"       location="test" />
+    <property name="data"       location="data" />
+
     <property name="resources"
         value="${src}/de/bielefeld/umweltamt/aui/resources" />
-    <property name="config"		value="${resources}/config" />
-    <property name="reports"	value="${resources}/reports" />
-    <property name="gen.mappings" 
+    <property name="config"     value="${resources}/config" />
+    <property name="reports"    value="${resources}/reports" />
+    <property name="gen.mappings"
         value="/de/bielefeld/umweltamt/aui/mappings/generated" />
 
     <!-- The classpath that includes the necessary external libs and AUIK -->
@@ -30,17 +30,16 @@
         <path location="${config}" /> <!-- Add config path for log4j -->
     </path>
 
-	<!-- =================================================================== -->    
-	<!-- Generate hibernate stuff                                            -->    
-    <!-- In:  hibernate.properties, hibernate.reveng.xml                     --> 
+    <!-- =================================================================== -->
+    <!-- Generate hibernate stuff                                            -->
+    <!-- In:  hibernate.properties, hibernate.reveng.xml                     -->
     <!-- Out: [0] ${src}/[package]/{class-name}.hbm.xml,                     -->
     <!--      [1] ${config}/generated/hibernate.cfg.xml [1],                 -->
-    <!--      [2] ${src}/[package]/Abstract{class-name}.java,                -->
-    <!--      [3] ${src}/[package]/{class-name}.java                         -->
-	<!-- =================================================================== -->    
+    <!--      [2] ${src}/[package]/{class-name}.java,                        -->
+    <!-- =================================================================== -->
     <target name="db2hbm2java"
         description="Generate hibernate xml files from database via reverse 
-        	engineering">
+            engineering">
         <taskdef name="hibernatetool"
              classname="org.hibernate.tool.ant.HibernateToolTask"
              classpathref="classpath" />
@@ -54,29 +53,37 @@
             <!-- This (below) is a costum version of hbm2java /--> 
             <!-- [2] -->
             <hbmtemplate
-                templatepath="${data}/templates/pojo"
-                template="AuikPojo.ftl"
-		        filepattern="{package-name}/Abstract{class-name}.java">
+                templatepath="${data}/templates/auik"
+                template="Pojo.ftl"
+                filepattern="{package-name}/{class-name}.java">
                 <property key="jdk5" value="true" />
                 <property key="ejb3" value="false" />
-      		</hbmtemplate>
-            <!-- [3] -->
+            </hbmtemplate>
+            <!-- [2] old -->
+            <!-- hbmtemplate
+                templatepath="${data}/templates/pojo"
+                template="AuikPojo.ftl"
+                filepattern="{package-name}/Abstract{class-name}.java">
+                <property key="jdk5" value="true" />
+                <property key="ejb3" value="false" />
+            </hbmtemplate -->
+            <!-- [3] old -->
             <!-- This (below) is a costum version of hbm2dao /--> 
-            <hbmtemplate
+            <!-- hbmtemplate
                 templatepath="${data}/templates/dao"
                 template="AuikDaoHome.ftl"
-		        filepattern="{package-name}/{class-name}.java">
+                filepattern="{package-name}/{class-name}.java">
                 <property key="jdk5" value="true" />
                 <property key="ejb3" value="false" />
                 <property key="sessionFactoryName" value="SessionFactory" />
-      		</hbmtemplate>
+            </hbmtemplate -->
             <!-- hbm2ddl wrong direction... ;-) / -->
         </hibernatetool>
     </target>
 
-	<!-- =================================================================== -->    
-	<!-- Compile the source                                                  -->    
-	<!-- =================================================================== -->    
+    <!-- =================================================================== -->
+    <!-- Compile the source                                                  -->
+    <!-- =================================================================== -->
     <target name="compile" description="Compile the source">
         <mkdir dir="${bin}" />
         <javac srcdir="${src}" destdir="${bin}" classpathref="classpath"
@@ -95,9 +102,9 @@
         </copy>
     </target>
 
-	<!-- =================================================================== -->    
-	<!-- Compile the jasper reports                                          -->    
-	<!-- =================================================================== -->    
+    <!-- =================================================================== -->
+    <!-- Compile the jasper reports                                          -->
+    <!-- =================================================================== -->
     <target name="jasper" depends="compile">
         <taskdef name="jrc"
             classname="net.sf.jasperreports.ant.JRAntCompileTask">
@@ -115,10 +122,9 @@
         </jrc>
     </target>
 
-    
-	<!-- =================================================================== -->    
-	<!-- Create a jar archive and fill its manifest                          -->    
-	<!-- =================================================================== -->    
+    <!-- =================================================================== -->
+    <!-- Create a jar archive and fill its manifest                          -->
+    <!-- =================================================================== -->
     <target name="dist" depends="compile,version"
         description="Create a jar archive">
         <mkdir dir="${dist}" />
@@ -132,7 +138,7 @@
             basedir="${bin}"
             filesetmanifest="skip"
             update="true">
-		<!-- filesetmanifest="mergewithoutmain" -->
+        <!-- filesetmanifest="mergewithoutmain" -->
             <manifest>
                 <attribute name="Built-By" value="${user.name}" />
                 <attribute name="Built-Date" value="${TODAY}" />
@@ -141,7 +147,7 @@
                     value="de.bielefeld.umweltamt.aui.AUIKataster" />
                 <attribute
                     name="Specification-Title"
-                	value="Anlagen- und Indirekteinleiter Kataster" />
+                    value="Anlagen- und Indirekteinleiter Kataster" />
                 <attribute
                     name="Specification-Version"
                     value="0.0" />
@@ -151,7 +157,7 @@
                     value="Stadt Bielefeld, Umweltamt" />
                 <attribute
                     name="Implementation-Title"
-                	value="Anlagen- und Indirekteinleiter Kataster" />
+                    value="Anlagen- und Indirekteinleiter Kataster" />
                 <attribute
                     name="Implementation-Version"
                     value="Version ${auik.version}" /> 
@@ -166,7 +172,7 @@
             <fileset dir="${libs}">
                 <include name="**/*.jar" />
             </fileset>
-            -->            
+            -->
             <zipfileset excludes="META-INF/*.SF" src="${lib}/c3p0-0.9.0.jar" />
             <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-codec-1.3.jar" />
             <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-collections-2.1.1.jar" />
@@ -217,42 +223,42 @@
             <zipfileset excludes="META-INF/*.SF" src="${lib}/axis-wsdl4j-1.5.1.jar" />
             <zipfileset excludes="META-INF/*.SF" src="${lib}/junit-4.10.jar" />
             <zipfileset excludes="META-INF/*.SF" src="${lib}/com.jgoodies.uif_lite.jar" />
-    	</jar>
+        </jar>
         <copy file="${dist}/AUIK.jar" tofile="${dist}/${TODAY} AUIK.jar" />
     </target>
-    
-	<!-- =================================================================== -->    
-	<!-- Clean up (${bin}, ${dist}, ${test})                                        -->    
-	<!-- =================================================================== -->    
+
+    <!-- =================================================================== -->
+    <!-- Clean up (${bin}, ${dist}, ${test})                                 -->
+    <!-- =================================================================== -->
     <target name="clean"
-    	description="Clean up everything but the directory that contains the
-        	documentation and the previous 'yyyy-MM-dd AUIK.jar's">
+        description="Clean up everything but the directory that contains the
+            documentation and the previous 'yyyy-MM-dd AUIK.jar's">
         <delete dir="${bin}" />
         <delete file="${dist}/AUIK.jar" />
         <delete file="${dist}/auik.properties" />
         <delete file="${config}/generated/hibernate.cfg.xml" />
         <delete>
-        	<fileset dir="${src}/${gen.mappings}" includes="**/*.hbm.xml" />
-        	<fileset dir="${src}/${gen.mappings}" includes="**/*.java" />
+            <fileset dir="${src}/${gen.mappings}" includes="**/*.hbm.xml" />
+            <fileset dir="${src}/${gen.mappings}" includes="**/*.java" />
         </delete>
     </target>
 
-	<!-- =================================================================== -->    
-	<!-- Clean up everything                                                 -->    
-	<!-- =================================================================== -->    
+    <!-- =================================================================== -->
+    <!-- Clean up everything                                                 -->
+    <!-- =================================================================== -->
     <target name="cleanall" depends="clean" description="Clean up everything">
         <delete dir="${javadoc}" />
 <!--
         <delete dir="${dist}" />
-	    <delete>
+        <delete>
             <fileset dir="${src}/${reports}" includes="**/*.jasper" />
         </delete>
 -->
     </target>
 
-	<!-- =================================================================== -->    
-	<!-- Run the application                                                 -->    
-	<!-- =================================================================== -->    
+    <!-- =================================================================== -->
+    <!-- Run the application                                                 -->
+    <!-- =================================================================== -->
     <target name="run" depends="compile,jasper"
         description="Run the application">
         <java
@@ -262,19 +268,19 @@
         />
     </target>
 
-	<!-- =================================================================== -->    
-	<!-- Run the application from the jar archive                            -->    
-	<!-- =================================================================== -->    
+    <!-- =================================================================== -->
+    <!-- Run the application from the jar archive                            -->
+    <!-- =================================================================== -->
     <target name="runjar" depends="dist"
         description="Run the application from the jar archive">
         <java jar="${dist}/AUIK.jar" fork="true" />
     </target>
     
-	<!-- =================================================================== -->    
-	<!-- Generate javadoc                                                    -->    
-	<!-- =================================================================== -->    
+    <!-- =================================================================== -->
+    <!-- Generate javadoc                                                    -->
+    <!-- =================================================================== -->
     <target name="javadoc" depends="compile"
-    	description="Creates JavaDoc for this application">
+        description="Creates JavaDoc for this application">
         <mkdir dir="${javadoc}" />
         <javadoc destdir="${javadoc}" author="true" version="true" use="true">
             <!-- TODO: Get this to work under windows... -->
@@ -285,66 +291,66 @@
         </javadoc>
     </target>
 
-	<!-- =================================================================== -->    
-	<!-- Get the latest tag and revision from the SVN and build the version  -->    
-	<!-- number from them: <version> = <tag>-rev<revision>                   -->    
-	<!-- =================================================================== -->    
-	<target name="version"
-		description="Get the current tag and revision from the SVN and save it
-	    	to the version number.">
-	    <exec
-	    	executable="C:\appz\cygwin\bin\bash.exe"
-	        outputproperty="auik.tag"
-	        osfamily="windows">
-	        <arg value="--login" />
-	        <arg value="/cygdrive/d/Data/workspace/auik_pg/data/scripts/shell/getLatestTag.sh" />
-	    </exec>
-	    <exec
-	        executable="./scripts/shell/getLatestTag.sh"
-	        outputproperty="auik.tag"
-	        osfamily="unix">
-	    </exec>
-	    <exec
-	        executable="C:\appz\cygwin\bin\svnversion.exe"
-	        outputproperty="auik.revision"
-	        osfamily="windows"
-	    />
-	    <exec
-	        executable="svnversion"
-	        outputproperty="auik.revision"
-	        osfamily="unix"
-	    />
-	    <property name="auik.version" value="${auik.tag}-rev${auik.revision}" />
-	    <echo message="Version was set to '${auik.version}'." level="info" />
-	</target>
-    
-	<!-- =================================================================== -->    
-	<!-- This is just me testing and lerning ant here!                       -->
-	<!-- =================================================================== -->    
-	<target name="Connz Target"
-		description="Testing Tasks">
-		<echo message="error"	level="error" />
-		<echo message="warning"	level="warning" />
-		<echo message="info"	level="info" />
-		<echo message="verbose"	level="verbose" />
-		<echo message="debug"	level="debug" />
+    <!-- =================================================================== -->
+    <!-- Get the latest tag and revision from the SVN and build the version  -->
+    <!-- number from them: <version> = <tag>-rev<revision>                   -->
+    <!-- =================================================================== -->
+    <target name="version"
+        description="Get the current tag and revision from the SVN and save it
+            to the version number.">
+        <exec
+            executable="C:\appz\cygwin\bin\bash.exe"
+            outputproperty="auik.tag"
+            osfamily="windows">
+            <arg value="--login" />
+            <arg value="/cygdrive/d/Data/workspace/auik_pg/data/scripts/shell/getLatestTag.sh" />
+        </exec>
+        <exec
+            executable="./scripts/shell/getLatestTag.sh"
+            outputproperty="auik.tag"
+            osfamily="unix">
+        </exec>
+        <exec
+            executable="C:\appz\cygwin\bin\svnversion.exe"
+            outputproperty="auik.revision"
+            osfamily="windows"
+        />
+        <exec
+            executable="svnversion"
+            outputproperty="auik.revision"
+            osfamily="unix"
+        />
+        <property name="auik.version" value="${auik.tag}-rev${auik.revision}" />
+        <echo message="Version was set to '${auik.version}'." level="info" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- This is just me testing and lerning ant here!                       -->
+    <!-- =================================================================== -->
+    <target name="Connz Target"
+        description="Testing Tasks">
+        <echo message="error"   level="error" />
+        <echo message="warning" level="warning" />
+        <echo message="info"    level="info" />
+        <echo message="verbose" level="verbose" />
+        <echo message="debug"   level="debug" />
         <tstamp><format property="TODAY" pattern="dd. MMM yyyy" /></tstamp>
-	    <echo message="${TODAY}" />
-	    <javac
-	        srcdir="${test}" destdir="${bin}">
-	        <classpath>
-	            <path refid="classpath" />
-	            <pathelement path="bin" />
+        <echo message="${TODAY}" />
+        <javac
+            srcdir="${test}" destdir="${bin}">
+            <classpath>
+                <path refid="classpath" />
+                <pathelement path="bin" />
             </classpath>
-	    </javac>
-	    <junit printsummary="true" showoutput="true" fork="false">
-	        <classpath>
-	            <path refid="classpath" />
-	            <pathelement path="bin" />
+        </javac>
+        <junit printsummary="true" showoutput="true" fork="false">
+            <classpath>
+                <path refid="classpath" />
+                <pathelement path="bin" />
             </classpath>
-	        <formatter type="plain" />
-	        <test name="de.bielefeld.umweltamt.aui.utils.KommaDoubleTest" />
-	    </junit>
-	</target>
+            <formatter type="plain" />
+            <test name="de.bielefeld.umweltamt.aui.utils.KommaDoubleTest" />
+        </junit>
+    </target>
 
 </project>

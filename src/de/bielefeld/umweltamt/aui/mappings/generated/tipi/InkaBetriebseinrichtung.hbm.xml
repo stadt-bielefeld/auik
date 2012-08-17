@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaBetriebseinrichtung" table="inka_betriebseinrichtung" schema="tipi">
         <id name="betriebseinrichtungNr" type="java.lang.Integer">
@@ -11,16 +11,16 @@
         <property name="betriebseinrichtungVer" type="java.lang.Integer">
             <column name="betriebseinrichtung_ver" />
         </property>
-        <property name="gueltigVon" type="date">
+        <property name="gueltigVon" type="java.util.Calendar">
             <column name="gueltig_von" length="4" />
         </property>
-        <property name="gueltigBis" type="date">
+        <property name="gueltigBis" type="java.util.Calendar">
             <column name="gueltig_bis" length="4" />
         </property>
-        <property name="aenderungsDatum" type="timestamp">
+        <property name="aenderungsDatum" type="java.util.Calendar">
             <column name="aenderungs_datum" length="8" />
         </property>
-        <property name="erfassungsDatum" type="timestamp">
+        <property name="erfassungsDatum" type="java.util.Calendar">
             <column name="erfassungs_datum" length="8" />
         </property>
         <property name="historienNr" type="java.lang.Integer">
@@ -53,17 +53,8 @@
         <property name="genehmigungVer" type="java.lang.Integer">
             <column name="genehmigung_ver" />
         </property>
-        <property name="gaaNr" type="string">
-            <column name="gaa_nr" length="2" />
-        </property>
-        <property name="astnr" type="string">
-            <column name="astnr" length="30" />
-        </property>
-        <property name="zusatz1" type="string">
-            <column name="zusatz1" length="1" />
-        </property>
-        <property name="zusatz2" type="string">
-            <column name="zusatz2" length="3" />
+        <property name="arbeitsstaetteSeqNr" type="java.lang.Integer">
+            <column name="arbeitsstaette_seq_nr" />
         </property>
         <property name="arbeitsstaetteVer" type="java.lang.Integer">
             <column name="arbeitsstaette_ver" />
@@ -77,7 +68,7 @@
         <property name="stilllegungJn" type="java.lang.Boolean">
             <column name="stilllegung_jn" />
         </property>
-        <property name="stilllegungDatum" type="date">
+        <property name="stilllegungDatum" type="java.util.Calendar">
             <column name="stilllegung_datum" length="4" />
         </property>
     </class>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.atl.AtlKlaeranlagen" table="atl_klaeranlagen" schema="auik">
         <id name="id" type="int">
@@ -13,6 +13,12 @@
         </property>
         <property name="deaKlaeranlageKlaeranlageNr" type="int">
             <column name="dea_klaeranlage_klaeranlage_nr" not-null="true" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
         </property>
         <set name="indeinlUebergabestelles" table="indeinl_uebergabestelle" inverse="true" lazy="true" fetch="select">
             <key>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.vaws.VawsVerwaltungsgebuehren" table="vaws_verwaltungsgebuehren" schema="auik">
         <id name="id" type="java.lang.Integer">
@@ -16,7 +16,7 @@
         <many-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.generated.vaws.VawsFachdaten" fetch="select">
             <column name="behaelterid" />
         </many-to-one>
-        <property name="datum" type="timestamp">
+        <property name="datum" type="java.util.Calendar">
             <column name="datum" length="8" />
         </property>
         <property name="betrag" type="java.lang.Float">

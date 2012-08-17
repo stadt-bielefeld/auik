@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.Anh56Fachdaten" table="anh_56_fachdaten" schema="auik">
         <id name="objektid" type="int">
@@ -35,10 +35,10 @@
         <property name="aba" type="java.lang.Boolean">
             <column name="aba" />
         </property>
-        <property name="gen58" type="timestamp">
+        <property name="gen58" type="java.util.Calendar">
             <column name="gen_58" length="8" />
         </property>
-        <property name="gen59" type="timestamp">
+        <property name="gen59" type="java.util.Calendar">
             <column name="gen_59" length="8" />
         </property>
         <property name="bemerkungen" type="string">
@@ -53,7 +53,7 @@
         <property name="leimabwasser" type="java.lang.Boolean">
             <column name="leimabwasser" />
         </property>
-        <property name="erfasstam" type="timestamp">
+        <property name="erfasstam" type="java.util.Calendar">
             <column name="erfasstam" length="8" />
         </property>
         <property name="enabled" type="boolean">

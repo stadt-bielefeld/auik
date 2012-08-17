@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.Anh50Fachdaten" table="anh_50_fachdaten" schema="auik">
         <id name="objektid" type="int">
@@ -20,16 +20,16 @@
         <property name="erloschen" type="java.lang.Boolean">
             <column name="erloschen" />
         </property>
-        <property name="datumantrag" type="timestamp">
+        <property name="datumantrag" type="java.util.Calendar">
             <column name="datumantrag" length="8" />
         </property>
         <property name="bemerkungen" type="string">
             <column name="bemerkungen" />
         </property>
-        <property name="genehmigung" type="timestamp">
+        <property name="genehmigung" type="java.util.Calendar">
             <column name="genehmigung" length="8" />
         </property>
-        <property name="wiedervorlage" type="timestamp">
+        <property name="wiedervorlage" type="java.util.Calendar">
             <column name="wiedervorlage" length="8" />
         </property>
         <property name="gefaehrdungsklasse" type="string">

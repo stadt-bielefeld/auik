@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.Anh53Fachdaten" table="anh_53_fachdaten" schema="auik">
         <id name="objektid" type="int">
@@ -17,22 +17,22 @@
         <property name="verfahren" type="string">
             <column name="verfahren" />
         </property>
-        <property name="antragsdatum" type="timestamp">
+        <property name="antragsdatum" type="java.util.Calendar">
             <column name="antragsdatum" length="8" />
         </property>
         <property name="bagatell" type="java.lang.Boolean">
             <column name="bagatell" />
         </property>
-        <property name="bagatelldatum" type="timestamp">
+        <property name="bagatelldatum" type="java.util.Calendar">
             <column name="bagatelldatum" length="8" />
         </property>
-        <property name="genehmigungsdatum" type="timestamp">
+        <property name="genehmigungsdatum" type="java.util.Calendar">
             <column name="genehmigungsdatum" length="8" />
         </property>
-        <property name="genehmigungaufgehoben" type="timestamp">
+        <property name="genehmigungaufgehoben" type="java.util.Calendar">
             <column name="genehmigungaufgehoben" length="8" />
         </property>
-        <property name="abnahmedatum" type="timestamp">
+        <property name="abnahmedatum" type="java.util.Calendar">
             <column name="abnahmedatum" length="8" />
         </property>
         <property name="genehmigungstitel" type="string">
@@ -53,10 +53,10 @@
         <property name="abwasser" type="java.lang.Boolean">
             <column name="abwasser" />
         </property>
-        <property name="abwasserfrei" type="timestamp">
+        <property name="abwasserfrei" type="java.util.Calendar">
             <column name="abwasserfrei" length="8" />
         </property>
-        <property name="kleiner200qm" type="timestamp">
+        <property name="kleiner200qm" type="java.util.Calendar">
             <column name="kleiner200qm" length="8" />
         </property>
         <property name="betriebAbgemeldet" type="java.lang.Boolean">

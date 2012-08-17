@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.Anh49Fachdaten" table="anh_49_fachdaten" schema="auik">
         <id name="objektid" type="int">
@@ -83,19 +83,19 @@
         <property name="ansprechpartnerIn" type="string">
             <column name="ansprechpartner_in" />
         </property>
-        <property name="antragvom" type="timestamp">
+        <property name="antragvom" type="java.util.Calendar">
             <column name="antragvom" length="8" />
         </property>
-        <property name="genehmigung" type="timestamp">
+        <property name="genehmigung" type="java.util.Calendar">
             <column name="genehmigung" length="8" />
         </property>
-        <property name="wiedervorlage" type="timestamp">
+        <property name="wiedervorlage" type="java.util.Calendar">
             <column name="wiedervorlage" length="8" />
         </property>
-        <property name="aenderungsgenehmigung" type="timestamp">
+        <property name="aenderungsgenehmigung" type="java.util.Calendar">
             <column name="aenderungsgenehmigung" length="8" />
         </property>
-        <property name="letztesAnschreiben" type="timestamp">
+        <property name="letztesAnschreiben" type="java.util.Calendar">
             <column name="letztes_anschreiben" length="8" />
         </property>
         <property name="anschreiben" type="string">
@@ -107,7 +107,7 @@
         <property name="ESatzung" type="java.lang.Boolean">
             <column name="e_satzung" />
         </property>
-        <property name="seitwann" type="timestamp">
+        <property name="seitwann" type="java.util.Calendar">
             <column name="seitwann" length="8" />
         </property>
         <property name="sonstigestechnik" type="string">
@@ -119,13 +119,13 @@
         <property name="behoben" type="java.lang.Boolean">
             <column name="behoben" />
         </property>
-        <property name="frist" type="timestamp">
+        <property name="frist" type="java.util.Calendar">
             <column name="frist" length="8" />
         </property>
         <property name="durchgefuehrt" type="java.lang.Integer">
             <column name="durchgefuehrt" />
         </property>
-        <property name="dekraTuevDatum" type="timestamp">
+        <property name="dekraTuevDatum" type="java.util.Calendar">
             <column name="dekra_tuev_datum" length="8" />
         </property>
         <property name="enabled" type="boolean">

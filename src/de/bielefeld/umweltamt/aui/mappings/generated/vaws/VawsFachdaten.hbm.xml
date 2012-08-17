@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.vaws.VawsFachdaten" table="vaws_fachdaten" schema="auik">
         <id name="behaelterid" type="java.lang.Integer">
@@ -19,16 +19,16 @@
         <property name="hersteller" type="string">
             <column name="hersteller" />
         </property>
-        <property name="datuminbetriebnahme" type="timestamp">
+        <property name="datuminbetriebnahme" type="java.util.Calendar">
             <column name="datuminbetriebnahme" length="8" />
         </property>
-        <property name="datumerfassung" type="timestamp">
+        <property name="datumerfassung" type="java.util.Calendar">
             <column name="datumerfassung" length="8" />
         </property>
-        <property name="datumaenderung" type="timestamp">
+        <property name="datumaenderung" type="java.util.Calendar">
             <column name="datumaenderung" length="8" />
         </property>
-        <property name="datumgenehmigung" type="timestamp">
+        <property name="datumgenehmigung" type="java.util.Calendar">
             <column name="datumgenehmigung" length="8" />
         </property>
         <property name="anlagenart" type="string">
@@ -115,13 +115,13 @@
         <property name="angemahntkz" type="java.lang.Boolean">
             <column name="angemahntkz" />
         </property>
-        <property name="mahnfrist" type="timestamp">
+        <property name="mahnfrist" type="java.util.Calendar">
             <column name="mahnfrist" length="8" />
         </property>
-        <property name="wiedervorlage" type="timestamp">
+        <property name="wiedervorlage" type="java.util.Calendar">
             <column name="wiedervorlage" length="8" />
         </property>
-        <property name="stillegungsdatum" type="timestamp">
+        <property name="stillegungsdatum" type="java.util.Calendar">
             <column name="stillegungsdatum" length="8" />
         </property>
         <property name="bemerkungen" type="string">

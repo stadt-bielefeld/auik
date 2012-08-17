@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.AnhSuevFachdaten" table="anh_suev_fachdaten" schema="auik">
         <id name="objektid" type="int">
@@ -44,10 +44,10 @@
         <property name="keineAngaben" type="java.lang.Boolean">
             <column name="keine_angaben" />
         </property>
-        <property name="datAnzeige58" type="timestamp">
+        <property name="datAnzeige58" type="java.util.Calendar">
             <column name="dat_anzeige58" length="8" />
         </property>
-        <property name="datAnschreiben" type="timestamp">
+        <property name="datAnschreiben" type="java.util.Calendar">
             <column name="dat_anschreiben" length="8" />
         </property>
         <property name="enabled" type="boolean">

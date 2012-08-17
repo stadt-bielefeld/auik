@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.IndeinlGenehmigung" table="indeinl_genehmigung" schema="auik">
         <id name="objektid" type="int">
@@ -14,19 +14,19 @@
         <property name="bemerkungen" type="string">
             <column name="bemerkungen" />
         </property>
-        <property name="erstellungsDatum" type="date">
+        <property name="erstellungsDatum" type="java.util.Calendar">
             <column name="erstellungs_datum" length="4" />
         </property>
-        <property name="aenderungsDatum" type="date">
+        <property name="aenderungsDatum" type="java.util.Calendar">
             <column name="aenderungs_datum" length="4" />
         </property>
-        <property name="antragDatum" type="date">
+        <property name="antragDatum" type="java.util.Calendar">
             <column name="antrag_datum" length="4" />
         </property>
         <property name="befristet" type="java.lang.Boolean">
             <column name="befristet" />
         </property>
-        <property name="befristetBis" type="date">
+        <property name="befristetBis" type="java.util.Calendar">
             <column name="befristet_bis" length="4" />
         </property>
         <property name="anhang" type="java.lang.Integer">

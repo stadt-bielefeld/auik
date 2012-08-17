@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaUebergabestelle" table="inka_uebergabestelle" schema="tipi">
         <id name="uebergabestelleLfdNr" type="java.lang.Integer">
@@ -17,16 +17,16 @@
         <property name="uebergabestelleVer" type="java.lang.Integer">
             <column name="uebergabestelle_ver" />
         </property>
-        <property name="gueltigVon" type="date">
+        <property name="gueltigVon" type="java.util.Calendar">
             <column name="gueltig_von" length="4" />
         </property>
-        <property name="gueltigBis" type="date">
+        <property name="gueltigBis" type="java.util.Calendar">
             <column name="gueltig_bis" length="4" />
         </property>
-        <property name="aenderungsDatum" type="timestamp">
+        <property name="aenderungsDatum" type="java.util.Calendar">
             <column name="aenderungs_datum" length="8" />
         </property>
-        <property name="erfassungsDatum" type="timestamp">
+        <property name="erfassungsDatum" type="java.util.Calendar">
             <column name="erfassungs_datum" length="8" />
         </property>
         <property name="historienNr" type="java.lang.Integer">

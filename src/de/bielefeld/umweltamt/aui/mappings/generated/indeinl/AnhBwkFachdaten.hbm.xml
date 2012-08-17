@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.AnhBwkFachdaten" table="anh_bwk_fachdaten" schema="auik">
         <id name="objektid" type="int">
@@ -23,7 +23,7 @@
         <property name="KLeistung" type="java.lang.Integer">
             <column name="k_leistung" />
         </property>
-        <property name="datumG" type="timestamp">
+        <property name="datumG" type="java.util.Calendar">
             <column name="datum_g" length="8" />
         </property>
         <property name="aba" type="java.lang.Boolean">
@@ -47,7 +47,7 @@
         <property name="bemerkungen" type="string">
             <column name="bemerkungen" />
         </property>
-        <property name="anschreiben" type="timestamp">
+        <property name="anschreiben" type="java.util.Calendar">
             <column name="anschreiben" length="8" />
         </property>
         <property name="erfassung" type="java.lang.Integer">

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.07.2012 18:33:27 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.generated.indeinl.IndeinlUebergabestelle" table="indeinl_uebergabestelle" schema="auik">
         <id name="objektid" type="int">
@@ -17,10 +17,10 @@
         <property name="bemerkungen" type="string">
             <column name="bemerkungen" />
         </property>
-        <property name="aenderungsDatum" type="date">
+        <property name="aenderungsDatum" type="java.util.Calendar">
             <column name="aenderungs_datum" length="4" />
         </property>
-        <property name="erfassungsDatum" type="date">
+        <property name="erfassungsDatum" type="java.util.Calendar">
             <column name="erfassungs_datum" length="4" />
         </property>
         <property name="kanalart" type="java.lang.Integer">
