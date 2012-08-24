@@ -23,7 +23,8 @@
 
 package de.bielefeld.umweltamt.aui.mappings.generated.basis;
 
-import de.bielefeld.umweltamt.aui.mappings.generated.vaws.VawsWirtschaftszweige;
+import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class BasisBetreiber  implements java.io.Serializable {
 
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
+    private AuikWzCode auikWzCode;
     private VawsWirtschaftszweige vawsWirtschaftszweige;
     private String betranrede;
     private String betrname;
@@ -83,7 +85,8 @@ public class BasisBetreiber  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisBetreiber(
-        VawsWirtschaftszweige vawsWirtschaftszweige, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Calendar revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, Set<BasisPrioritaet> basisPrioritaets, Set<BasisObjekt> basisObjekts) {
+        AuikWzCode auikWzCode, VawsWirtschaftszweige vawsWirtschaftszweige, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Calendar revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, Set<BasisPrioritaet> basisPrioritaets, Set<BasisObjekt> basisObjekts) {
+        this.auikWzCode = auikWzCode;
         this.vawsWirtschaftszweige = vawsWirtschaftszweige;
         this.betranrede = betranrede;
         this.betrname = betrname;
@@ -117,6 +120,14 @@ public class BasisBetreiber  implements java.io.Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public AuikWzCode getAuikWzCode() {
+        return this.auikWzCode;
+    }
+
+    public void setAuikWzCode(AuikWzCode auikWzCode) {
+        this.auikWzCode = auikWzCode;
     }
 
     public VawsWirtschaftszweige getVawsWirtschaftszweige() {

@@ -22,6 +22,8 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -29,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -42,9 +45,12 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
+import de.bielefeld.umweltamt.aui.module.common.dialogs.WZCodeDialog;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
@@ -93,7 +99,14 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
     private JComboBox strassenBox;
     private JComboBox wirtschaftszweigBox;
+    private JComboBox wzCodeBox;
 
+    private JButton wzCodeButton;
+    private WZCodeDialog wzCodeDialog;
+
+    public interface OKListener {
+        public void onOK(AuikWzCode selectedWZCode);
+    }
 
     /**
      * Erzeugt einen neuen Dialog zum Bearbeiten eines Betreibers.
@@ -144,6 +157,22 @@ public class BetreiberEditor extends AbstractBaseEditor {
         strassenBox.setEditable(true);
         wirtschaftszweigBox = new JComboBox();
         wirtschaftszweigBox.setRenderer(new LongNameComboBoxRenderer());
+        wzCodeBox = new JComboBox();
+        wzCodeBox.setModel(new DefaultComboBoxModel(
+            DatabaseQuery.getAuikWzCodesInKurzAuswahl()));
+        wzCodeButton = new JButton("Alle WZ-Codes anzeigen");
+        wzCodeDialog = new WZCodeDialog("WZ-Code auswählen", this.frame);
+        wzCodeDialog.addOKListener(new OKListener() {
+            @Override
+            public void onOK(AuikWzCode selectedWZCode) {
+                if (selectedWZCode != null) {
+                    BetreiberEditor.this.wzCodeBox.setEditable(true);
+                    BetreiberEditor.this.wzCodeBox.setSelectedItem(
+                        selectedWZCode.getBezeichnung());
+                    BetreiberEditor.this.wzCodeBox.setEditable(false);
+                }
+            }
+        });
 
         // Der folgende KeyListener wird benutzt um mit Escape
         // das Bearbeiten abzubrechen und bei Enter im
@@ -188,6 +217,13 @@ public class BetreiberEditor extends AbstractBaseEditor {
         strassenBox.addKeyListener(escEnterListener);
         //strassenFeld.addKeyListener(escEnterListener);
         wirtschaftszweigBox.addKeyListener(escEnterListener);
+        wzCodeBox.addKeyListener(escEnterListener);
+        wzCodeButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                wzCodeDialog.setVisible(true);
+            }
+        });
 
         // Ermögliche TAB aus dem Bemerkungs-Feld zu springen
         bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
@@ -215,8 +251,12 @@ public class BetreiberEditor extends AbstractBaseEditor {
                 "pref, 3dlu, " +    //19
                 "pref, 3dlu, " +    //21            - Neue Revision
                 "pref, 3dlu, " +    //23
-        "pref");            //25
-        layout.setRowGroups(new int[][]{{1,3,5,7,9, 11,13,15,17,19,21}});
+                "pref, 3dlu, " +    //25
+                "pref, 3dlu, " +    //27
+                "pref, 3dlu, " +    //29
+                "pref, 3dlu, " +    //31
+                "pref");            //33
+        layout.setRowGroups(new int[][]{{1,3,5,7,9, 11,13,15,17,19,21,23,25}});
 
         PanelBuilder builder = new PanelBuilder(layout);
         builder.setDefaultDialogBorder();
@@ -242,28 +282,32 @@ public class BetreiberEditor extends AbstractBaseEditor {
         // Wirtschaftszweig
         builder.addLabel("Wirtschaftszweig:",    cc.xy( 1,13));
         builder.add(wirtschaftszweigBox,         cc.xyw(3,13,8));
+        // WZ-Code
+        builder.addLabel("WZ-Code:", cc.xy(1, 15));
+        builder.add(wzCodeBox, cc.xyw(3, 15, 8));
+        builder.add(wzCodeButton, cc.xyw(3, 17, 8));
 
         // Adresse --------------------------------------
-        builder.addSeparator("Adresse", cc.xyw(1,15,10));
+        builder.addSeparator("Adresse", cc.xyw(1,19,10));
         // Straße
-        builder.addLabel("Straße:", cc.xy(1, 17));
-        builder.add(strassenBox,     cc.xyw(3,17,4));
-        builder.add(hausnrFeld,     cc.xy( 8,17));
-        builder.add(hausnrZusFeld,     cc.xy(10,17));
+        builder.addLabel("Straße:", cc.xy(1, 21));
+        builder.add(strassenBox,     cc.xyw(3,21,4));
+        builder.add(hausnrFeld,     cc.xy( 8,21));
+        builder.add(hausnrZusFeld,     cc.xy(10,21));
         // Ort
-        builder.addLabel("Ort:",     cc.xy( 1,19));
-        builder.add(plzZsFeld,         cc.xy( 3,19));
-        builder.add(plzFeld,         cc.xy( 4,19));
-        builder.add(ortsFeld,         cc.xyw(6,19,5));
+        builder.addLabel("Ort:",     cc.xy( 1,23));
+        builder.add(plzZsFeld,         cc.xy( 3,23));
+        builder.add(plzFeld,         cc.xy( 4,23));
+        builder.add(ortsFeld,         cc.xyw(6,23,5));
         // Telefon
-        builder.addLabel("Telefon:",cc.xy( 1,21));
-        builder.add(telefonFeld,     cc.xyw(3,21,4));
+        builder.addLabel("Telefon:",cc.xy( 1,25));
+        builder.add(telefonFeld,     cc.xyw(3,25,4));
         // Telefax
-        builder.addLabel("Telefax:",cc.xy( 1,23));
-        builder.add(telefaxFeld,     cc.xyw(3,23,4));
+        builder.addLabel("Telefax:",cc.xy( 1,27));
+        builder.add(telefaxFeld,     cc.xyw(3,27,4));
         // eMail
-        builder.addLabel("E-Mail:", cc.xy(1,25));
-        builder.add(emailFeld,         cc.xyw(3,25,4));
+        builder.addLabel("E-Mail:", cc.xy(1,29));
+        builder.add(emailFeld,         cc.xyw(3,29,4));
 
         // Betriebsbeauftragter -------------------------
         builder.addSeparator("Ansprechpartner", cc.xyw( 1+11,1,10));
@@ -276,22 +320,22 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
         // Bemerkungen ----------------------------------
         builder.addSeparator("Bemerkungen", cc.xyw( 1+11,5,10));
-        builder.add(bemerkungsScroller,        cc.xywh(1+11,7,10,7));
+        builder.add(bemerkungsScroller,        cc.xywh(1+11,7,10,11));
 
         // Alte Revision --------------------------------
-        builder.addSeparator("Letzte Revision", cc.xyw( 1+11,15,10));
+        builder.addSeparator("Letzte Revision", cc.xyw( 1+11,19,10));
         // Datum
-        builder.addLabel("Datum:",         cc.xy( 1+11,17));
-        builder.add(revdatumsFeld,         cc.xyw(3+11,17,4));
+        builder.addLabel("Datum:",         cc.xy( 1+11,21));
+        builder.add(revdatumsFeld,         cc.xyw(3+11,21,4));
         // Handzeichen (alt)
-        builder.addLabel("Handzeichen:",cc.xy( 1+11,19));
-        builder.add(handzeichenAltFeld, cc.xyw(3+11,19,4));
+        builder.addLabel("Handzeichen:",cc.xy( 1+11,23));
+        builder.add(handzeichenAltFeld, cc.xyw(3+11,23,4));
 
         // Neue Revision --------------------------------
-        builder.addSeparator("Neue Revision", cc.xyw( 1+11,21,10));
+        builder.addSeparator("Neue Revision", cc.xyw( 1+11,25,10));
         // Handzeichen (neu)
-        handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy( 1+11,23));
-        builder.add(handzeichenNeuFeld,                     cc.xyw(3+11,23,4));
+        handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy( 1+11,27));
+        builder.add(handzeichenNeuFeld,                     cc.xyw(3+11,27,4));
 
         return builder.getPanel();
     }
@@ -320,7 +364,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
                     wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
                     wirtschaftszweigBox.setSelectedItem(getBetreiber().getVawsWirtschaftszweige());
                 }
-
+                wzCodeBox.setSelectedItem(getBetreiber().getAuikWzCode());
                 anredeFeld.setText(getBetreiber().getBetranrede());
                 vornamenFeld.setText(getBetreiber().getBetrvorname());
                 namenFeld.setText(getBetreiber().getBetrname());
@@ -530,6 +574,8 @@ public class BetreiberEditor extends AbstractBaseEditor {
         // Wirtschaftszweig
         VawsWirtschaftszweige wizw = (VawsWirtschaftszweige) wirtschaftszweigBox.getSelectedItem();
         getBetreiber().setVawsWirtschaftszweige(wizw);
+        // WZ-Code
+        getBetreiber().setAuikWzCode((AuikWzCode) wzCodeBox.getSelectedItem());
 
         // Bemerkungen
         String bemerkungen = bemerkungsArea.getText();

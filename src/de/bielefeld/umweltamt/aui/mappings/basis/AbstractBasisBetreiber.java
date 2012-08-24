@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 
 import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 
 /**
@@ -42,6 +43,9 @@ public abstract class AbstractBasisBetreiber extends
 
     /** The composite primary key value. */
     private java.lang.Integer betreiberid;
+
+    /** The value of the auikWzCode association. */
+    private AuikWzCode auikWzCode;
 
     /** The value of the vawsWirtschaftszweige association. */
     private VawsWirtschaftszweige vawsWirtschaftszweige;
@@ -454,6 +458,14 @@ public abstract class AbstractBasisBetreiber extends
      */
     public void setKassenzeichen(java.lang.String kassenzeichen) {
         this.kassenzeichen = kassenzeichen;
+    }
+
+    public AuikWzCode getAuikWzCode() {
+        return this.auikWzCode;
+    }
+
+    public void setAuikWzCode(AuikWzCode auikWzCode2) {
+        this.auikWzCode = auikWzCode2;
     }
 
     /**

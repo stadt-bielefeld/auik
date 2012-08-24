@@ -86,5 +86,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaGenehmigung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaMessstelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaUebergabestelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/DeaWzCode.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/AuikWzCode.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

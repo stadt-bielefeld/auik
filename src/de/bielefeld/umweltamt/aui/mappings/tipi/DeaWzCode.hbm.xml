@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 24.08.2012 14:25:53 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 20.08.2012 13:51:53 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.DeaWzCode" table="dea_wz_code" schema="tipi">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.tipi.DeaWzCodeId">
+    <class name="de.bielefeld.umweltamt.aui.mappings.tipi.DeaWzCode" table="dea_wz_code" schema="tipi">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.tipi.DeaWzCodeId">
             <key-property name="wzcdId" type="string">
                 <column name="wzcd_id" length="7" />
             </key-property>
@@ -75,12 +75,5 @@
         <property name="zeitstempel" type="java.util.Calendar">
             <column name="zeitstempel" length="4" />
         </property>
-        <set name="auikWzCodes" table="auik_wz_code" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="wzcd_id" length="7" />
-                <column name="wzcd_version" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.generated.tipi.AuikWzCode" />
-        </set>
     </class>
 </hibernate-mapping>

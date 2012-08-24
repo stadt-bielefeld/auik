@@ -1,16 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17.08.2012 15:16:46 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 24.08.2012 14:25:53 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.generated.basis.BasisBetreiber" table="basis_betreiber" schema="auik">
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber" table="basis_betreiber" schema="auik">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="native">
                 <param name="sequence">basis_betreiber_id_seq</param>
             </generator>
         </id>
-        <many-to-one name="vawsWirtschaftszweige" class="de.bielefeld.umweltamt.aui.mappings.generated.vaws.VawsWirtschaftszweige" fetch="select">
+        <many-to-one name="auikWzCode" class="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" fetch="select">
+            <column name="auik_wz_code" />
+        </many-to-one>
+        <many-to-one name="vawsWirtschaftszweige" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige" fetch="select">
             <column name="wirtschaftszweigid" />
         </many-to-one>
         <property name="betranrede" type="string">

@@ -26,10 +26,10 @@
   -- This is the official definition which seems to be rather wrong...
 --  'Therebedragons!'::character varying(15)			AS anlagen_nr,		-- NOT NULL
 --  1::integer							AS klaeranlagen_ver,	-- NOT NULL
---  'NIKK_BR7'::character varying(20)		AS anl_herkunft,	-- NOT NULL
+--  'NIKK_BR7'::character varying(20)				AS anl_herkunft,	-- NOT NULL
   atl_klaeranlagen.dea_klaeranlage_klaeranlage_nr::integer	AS anlagen_nr,		-- NOT NULL
   1::integer							AS klaeranlagen_ver,	-- NOT NULL
---  'NIKK_BR7'::character varying(20)		AS anl_herkunft,	-- NOT NULL
+--  'NIKK_BR7'::character varying(20)				AS anl_herkunft,	-- NOT NULL
   -- Foreign Key: dea_tk25
   NULL::integer		AS kartennummer,
   NULL::integer		AS tk25_ver,

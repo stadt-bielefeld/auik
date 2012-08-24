@@ -32,6 +32,8 @@
 		package="de.bielefeld.umweltamt.aui.mappings.generated.tipi" />
 	<table-filter match-schema="tipi" match-name="inka_.*"
 		package="de.bielefeld.umweltamt.aui.mappings.generated.tipi" />
+    <table-filter match-schema="tipi" match-name="auik_wz_code"
+        package="de.bielefeld.umweltamt.aui.mappings.generated.tipi" />
 		
 	<!-- Sequences ========================================================= -->
 	<table schema="auik" name="anh_49_abscheiderdetails">
@@ -178,34 +180,63 @@
             <key-column name="adresse_nr" />
 		</primary-key>
 	</table>
-	<table schema="tipi" name="inka_anfallstelle">
-		<primary-key>
-            <key-column name="anfallstelle_nr" />
-		</primary-key>
-	</table>
-	<table schema="tipi" name="inka_betrieb">
-		<primary-key>
+    <table schema="tipi" name="inka_betrieb">
+        <primary-key>
             <key-column name="betrieb_nr" />
-		</primary-key>
-	</table>
-	<table schema="tipi" name="inka_betriebseinrichtung">
-		<primary-key>
-            <key-column name="betriebseinrichtung_nr" />
-		</primary-key>
-	</table>
-	<table schema="tipi" name="inka_genehmigung">
-		<primary-key>
+        </primary-key>
+    </table>
+    <table schema="tipi" name="inka_genehmigung">
+        <primary-key>
             <key-column name="genehmigung_nr" />
-		</primary-key>
-	</table>
-	<table schema="tipi" name="inka_messstelle">
-		<primary-key>
-            <key-column name="messstelle_lfd_nr" />
-		</primary-key>
-	</table>
-	<table schema="tipi" name="inka_uebergabestelle">
-		<primary-key>
+        </primary-key>
+    </table>
+    <table schema="tipi" name="inka_betriebseinrichtung">
+        <primary-key>
+            <key-column name="betriebseinrichtung_nr" />
+        </primary-key>
+    </table>
+    <table schema="tipi" name="inka_uebergabestelle">
+        <primary-key>
             <key-column name="uebergabestelle_lfd_nr" />
-		</primary-key>
-	</table>
+        </primary-key>
+    </table>
+    <table schema="tipi" name="inka_messstelle">
+        <primary-key>
+            <key-column name="messstelle_lfd_nr" />
+        </primary-key>
+    </table>
+    <table schema="tipi" name="inka_anfallstelle">
+        <primary-key>
+            <key-column name="anfallstelle_nr" />
+        </primary-key>
+    </table>
+    <table schema="tipi" name="inka_anlage">
+        <primary-key>
+            <key-column name="anlage_nr" />
+        </primary-key>
+    </table>
+    <table schema="tipi" name="inka_messst_anlage">
+        <primary-key>
+            <key-column name="messstelle_lfd_nr" />
+            <key-column name="anlage_nr" />
+        </primary-key>
+    </table>
+    <table schema="tipi" name="inka_anfallst_messst">
+        <primary-key>
+            <key-column name="anfallstelle_nr" />
+            <key-column name="messstelle_lfd_nr" />
+        </primary-key>
+    </table>
+    <table schema="tipi" name="inka_anfallst_anlage">
+        <primary-key>
+            <key-column name="anfallstelle_nr" />
+            <key-column name="anlage_nr" />
+        </primary-key>
+    </table>
+    <!-- table schema="tipi" name="inka_anfallst_stoffe">
+        <primary-key>
+            <key-column name="anfallstelle_nr" />
+            <key-column name="stoff_nr" />
+        </primary-key>
+    </table -->
 </hibernate-reverse-engineering>

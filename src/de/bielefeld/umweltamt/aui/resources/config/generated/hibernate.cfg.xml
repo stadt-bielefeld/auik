@@ -31,6 +31,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/basis/BasisPrioritaet.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/basis/BasisSachbearbeiter.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/InkaGenehmigung.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/InkaAnfallstAnlage.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/atl/AtlEinheiten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh49Analysen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh49Fachdaten.hbm.xml" />
@@ -46,6 +47,8 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsWgk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/AnhEntsorger.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/atl/AtlKlaeranlagen.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/InkaMessstAnlage.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/AuikWzCode.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsVerwaltungsverf.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsGefaehrdungsstufen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh53Fachdaten.hbm.xml" />
@@ -63,6 +66,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh49Abscheiderdetails.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsVerwmassnahmen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh55Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/InkaAnfallstMessst.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsGebuehrenarten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/atl/ViewAtlAnalysepositionAll.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/atl/AtlParameter.hbm.xml" />
@@ -88,6 +92,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/basis/BasisObjektchrono.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/DeaWzCode.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh52Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/InkaAnlage.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/atl/AtlProbeart.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh40Fachdaten.hbm.xml" />
     </session-factory>

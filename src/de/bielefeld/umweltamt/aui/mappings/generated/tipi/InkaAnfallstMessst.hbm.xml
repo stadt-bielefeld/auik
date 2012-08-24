@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 24.08.2012 14:25:53 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaAnfallstMessst" table="inka_anfallst_messst" schema="tipi">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaAnfallstMessstId">
+            <key-property name="anfallstelleNr" type="java.lang.Integer">
+                <column name="anfallstelle_nr" />
+            </key-property>
+            <key-property name="messstelleLfdNr" type="java.lang.Integer">
+                <column name="messstelle_lfd_nr" />
+            </key-property>
+        </composite-id>
+        <property name="anfallstelleVer" type="java.lang.Integer">
+            <column name="anfallstelle_ver" />
+        </property>
+        <property name="gemeindekennzahl" type="string">
+            <column name="gemeindekennzahl" length="8" />
+        </property>
+        <property name="gemeindeVer" type="java.lang.Integer">
+            <column name="gemeinde_ver" />
+        </property>
+        <property name="uebergabestelleLfdNr" type="java.lang.Integer">
+            <column name="uebergabestelle_lfd_nr" />
+        </property>
+        <property name="uebergabestelleVer" type="java.lang.Integer">
+            <column name="uebergabestelle_ver" />
+        </property>
+        <property name="messstelleVer" type="java.lang.Integer">
+            <column name="messstelle_ver" />
+        </property>
+        <property name="anfallstMessstVer" type="java.lang.Integer">
+            <column name="anfallst_messst_ver" />
+        </property>
+        <property name="gueltigVon" type="java.util.Calendar">
+            <column name="gueltig_von" length="4" />
+        </property>
+        <property name="gueltigBis" type="java.util.Calendar">
+            <column name="gueltig_bis" length="4" />
+        </property>
+        <property name="aenderungsDatum" type="java.util.Calendar">
+            <column name="aenderungs_datum" length="8" />
+        </property>
+        <property name="erfassungsDatum" type="java.util.Calendar">
+            <column name="erfassungs_datum" length="8" />
+        </property>
+        <property name="historienNr" type="java.lang.Integer">
+            <column name="historien_nr" />
+        </property>
+        <property name="istAktuellJn" type="java.lang.Boolean">
+            <column name="ist_aktuell_jn" />
+        </property>
+    </class>
+</hibernate-mapping>
