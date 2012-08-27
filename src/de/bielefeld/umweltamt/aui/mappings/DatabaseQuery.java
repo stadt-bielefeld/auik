@@ -57,7 +57,7 @@ public class DatabaseQuery {
      */
     public static AuikWzCode[] getAuikWzCodesInKurzAuswahl() {
         return new DatabaseAccess().createQuery(
-            "FROM AuikWzCode WHERE inKurzAuswahl = TRUE")
+            "FROM AuikWzCode WHERE inKurzAuswahl = TRUE ORDER BY bezeichnung")
             .array(new AuikWzCode[0]);
     }
 }
