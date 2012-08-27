@@ -25,8 +25,7 @@
   1::integer				AS genehmigung_ver,	-- NOT NULL
   -- Foreign Key: dea_anhang
   indeinl_genehmigung.anhang::character varying(20)	AS anh_id,	-- NOT NULL
-  -- TODO: Die Version ist 2 oder 3...
-  1::integer						AS anh_ver,	-- NOT NULL
+  dea_anhang.anh_version::integer			AS anh_ver,	-- NOT NULL
   'There be dragons'::character varying(30)		AS beschreibung,
   NULL::float				AS max_vol_tag,
   NULL::integer				AS vol_jahr,
@@ -36,10 +35,13 @@
 FROM auik.indeinl_genehmigung
   LEFT OUTER JOIN auik.basis_objekt
     ON indeinl_genehmigung.objektid = basis_objekt.objektid
+  LEFT OUTER JOIN tipi.dea_anhang
+    ON dea_anhang.anh_id = (indeinl_genehmigung.anhang || '')
 
 WHERE 
   indeinl_genehmigung.anhang IS NOT NULL AND 
   indeinl_genehmigung.gen59 AND 
+  dea_anhang.inka_gueltig_bis IS NULL AND
   indeinl_genehmigung._deleted = FALSE AND
   basis_objekt._deleted = FALSE AND
   basis_objekt.inaktiv = FALSE;

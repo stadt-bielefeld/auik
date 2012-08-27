@@ -233,10 +233,10 @@
             <key-column name="anlage_nr" />
         </primary-key>
     </table>
-    <!-- table schema="tipi" name="inka_anfallst_stoffe">
+    <table schema="tipi" name="inka_anfallst_stoffe">
         <primary-key>
             <key-column name="anfallstelle_nr" />
             <key-column name="stoff_nr" />
         </primary-key>
-    </table -->
+    </table>
 </hibernate-reverse-engineering>

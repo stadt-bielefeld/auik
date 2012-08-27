@@ -80,12 +80,17 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWgk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWirtschaftszweige.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/DeaAdresse.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaAnfallstelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetrieb.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetriebseinrichtung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaGenehmigung.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaMessstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaBetriebseinrichtung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaUebergabestelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaMessstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaAnfallstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaAnlage.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaMessstAnlage.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaAnfallstMessst.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaAnfallstAnlage.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaAnfallstStoffe.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/DeaWzCode.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/AuikWzCode.hbm.xml" />
     </session-factory>
