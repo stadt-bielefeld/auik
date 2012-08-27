@@ -21,9 +21,6 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -62,19 +59,5 @@ public class DatabaseQuery {
         return new DatabaseAccess().createQuery(
             "FROM AuikWzCode WHERE inKurzAuswahl = TRUE")
             .array(new AuikWzCode[0]);
-    }
-
-    /**
-     * Get a List of all AuikWzCodes sorted by Bezeichnung
-     * @return <code>List&lt;AuikWzCode&gt;</code>
-     */
-    public static List<AuikWzCode> getAllSortedAuikWzCodes() {
-        List<?> objectList = new DatabaseAccess().createQuery(
-            "FROM AuikWzCode ORDER BY bezeichnung").list();
-        List<AuikWzCode> resultList = new ArrayList<AuikWzCode>();
-        for (Object object : objectList) {
-            resultList.add((AuikWzCode) object);
-        }
-        return resultList;
     }
 }

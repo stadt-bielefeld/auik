@@ -11,7 +11,6 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -37,7 +36,7 @@ public class WZCodeDialog extends SimpleDialog {
 
     @Override
     protected JComponent buildContentArea() {
-        List<AuikWzCode> listWZCodes = DatabaseQuery.getAllSortedAuikWzCodes();
+        List<AuikWzCode> listWZCodes = AuikWzCode.getAll();
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("WZ-Code:");
         DefaultMutableTreeNode currentRootNode = root;
 
@@ -74,9 +73,9 @@ public class WZCodeDialog extends SimpleDialog {
         wzCodeTree = new JTree(root);
 
         // Expand all nodes
-        for (int i = 0; i < wzCodeTree.getRowCount(); i++) {
-            wzCodeTree.expandRow(i);
-        }
+//        for (int i = 0; i < wzCodeTree.getRowCount(); i++) {
+//            wzCodeTree.expandRow(i);
+//        }
 
         return new JScrollPane(wzCodeTree);
     }
