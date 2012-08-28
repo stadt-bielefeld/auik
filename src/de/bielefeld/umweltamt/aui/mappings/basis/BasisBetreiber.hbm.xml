@@ -35,6 +35,7 @@
         <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
 
         <many-to-one name="vawsWirtschaftszweige" column="wirtschaftszweigid" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige" />
+        <many-to-one name="auikWzCode" column="auik_wz_code" class="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" />
     </class>
 
 </hibernate-mapping>

@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 24.08.2012 14:25:53 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" table="auik_wz_code" schema="tipi">
+    <class name="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" table="auik_wz_code" lazy="false" schema="tipi">
         <id name="bezeichnung" type="string">
             <column name="bezeichnung" />
             <generator class="assigned" />

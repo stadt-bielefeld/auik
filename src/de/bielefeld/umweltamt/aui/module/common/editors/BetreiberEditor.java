@@ -364,7 +364,9 @@ public class BetreiberEditor extends AbstractBaseEditor {
                     wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
                     wirtschaftszweigBox.setSelectedItem(getBetreiber().getVawsWirtschaftszweige());
                 }
+                wzCodeBox.setEditable(true);
                 wzCodeBox.setSelectedItem(getBetreiber().getAuikWzCode());
+                wzCodeBox.setEditable(false);
                 anredeFeld.setText(getBetreiber().getBetranrede());
                 vornamenFeld.setText(getBetreiber().getBetrvorname());
                 namenFeld.setText(getBetreiber().getBetrname());
@@ -575,7 +577,8 @@ public class BetreiberEditor extends AbstractBaseEditor {
         VawsWirtschaftszweige wizw = (VawsWirtschaftszweige) wirtschaftszweigBox.getSelectedItem();
         getBetreiber().setVawsWirtschaftszweige(wizw);
         // WZ-Code
-        getBetreiber().setAuikWzCode((AuikWzCode) wzCodeBox.getSelectedItem());
+        getBetreiber().setAuikWzCode(
+            AuikWzCode.findById((String)wzCodeBox.getSelectedItem()));
 
         // Bemerkungen
         String bemerkungen = bemerkungsArea.getText();
