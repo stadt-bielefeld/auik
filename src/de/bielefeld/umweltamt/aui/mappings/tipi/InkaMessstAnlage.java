@@ -23,11 +23,12 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the InkaMessstAnlage database table.<br>
@@ -246,7 +247,7 @@ public class InkaMessstAnlage  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static InkaMessstAnlage findById(de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaMessstAnlageId id) {
+    public static InkaMessstAnlage findById(InkaMessstAnlageId id) {
         log.debug("Getting InkaMessstAnlage instance with id: " + id);
         return (InkaMessstAnlage)
             new DatabaseAccess().get(InkaMessstAnlage.class, id);
@@ -260,12 +261,12 @@ public class InkaMessstAnlage  implements java.io.Serializable {
     public static List<InkaMessstAnlage> getAll() {
         log.debug("Getting all InkaMessstAnlage instances");
         String query = "FROM InkaMessstAnlage ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list(); 
+        List<?> objectList = new DatabaseAccess().createQuery(query).list();
         List<InkaMessstAnlage> resultList = new ArrayList<InkaMessstAnlage>();
         InkaMessstAnlage result = null;
         for (Object object : objectList) {
             result = (InkaMessstAnlage) object;
-            resultList.add(result); 
+            resultList.add(result);
         }
         return resultList;
     }

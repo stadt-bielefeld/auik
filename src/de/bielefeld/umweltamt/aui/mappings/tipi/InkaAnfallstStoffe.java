@@ -207,7 +207,7 @@ public class InkaAnfallstStoffe  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static InkaAnfallstStoffe findById(de.bielefeld.umweltamt.aui.mappings.generated.tipi.InkaAnfallstStoffeId id) {
+    public static InkaAnfallstStoffe findById(InkaAnfallstStoffeId id) {
         log.debug("Getting InkaAnfallstStoffe instance with id: " + id);
         return (InkaAnfallstStoffe)
             new DatabaseAccess().get(InkaAnfallstStoffe.class, id);

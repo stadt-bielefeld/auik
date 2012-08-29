@@ -11,7 +11,12 @@
                 <param name="sequence">atl_sielhaut_id_seq</param>
         	</generator>
         </id>
-
+        <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select">
+            <column name="objektid" not-null="true" />
+        </many-to-one>
+        <many-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" update="false" insert="false" fetch="select">
+            <column name="objektid" not-null="true" />
+        </many-to-one>
         <property name="bezeichnung" column="bezeichnung" type="java.lang.String" />
         <property name="haltungsnr" column="haltungsnr" type="java.lang.String" />
         <property name="alarmplannr" column="alarmplannr" type="java.lang.String" />

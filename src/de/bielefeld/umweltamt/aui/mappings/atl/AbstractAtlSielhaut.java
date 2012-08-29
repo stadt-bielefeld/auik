@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 
 import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the ATL_SIELHAUT table. You can customize
@@ -41,6 +42,9 @@ public abstract class AbstractAtlSielhaut extends
 
     /** The composite primary key value. */
     private java.lang.Integer id;
+
+    private BasisObjekt basisObjekt;
+    private AtlProbepkt atlProbepkt;
 
     /** The value of the simple bezeichnung property. */
     private java.lang.String bezeichnung;
@@ -122,6 +126,22 @@ public abstract class AbstractAtlSielhaut extends
     public void setId(java.lang.Integer id) {
         this.hashValue = 0;
         this.id = id;
+    }
+
+    public BasisObjekt getBasisObjekt() {
+        return this.basisObjekt;
+    }
+
+    public void setBasisObjekt(BasisObjekt basisObjekt) {
+        this.basisObjekt = basisObjekt;
+    }
+
+    public AtlProbepkt getAtlProbepkt() {
+        return this.atlProbepkt;
+    }
+
+    public void setAtlProbepkt(AtlProbepkt atlProbepkt) {
+        this.atlProbepkt = atlProbepkt;
     }
 
     /**
