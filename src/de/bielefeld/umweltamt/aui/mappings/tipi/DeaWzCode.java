@@ -37,6 +37,8 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
  */
 public class DeaWzCode  implements java.io.Serializable {
 
+    /** Generated serialVersionUID for Serializable interface */
+    private static final long serialVersionUID = 3034083110670597876L;
     /* Primary key, foreign keys (relations) and table columns */
     private DeaWzCodeId id;
     private Calendar inkaGueltigVon;

@@ -31,6 +31,8 @@ package de.bielefeld.umweltamt.aui.mappings.tipi;
  */
 public class InkaMessstAnlageId  implements java.io.Serializable {
 
+    /** Generated serialVersionUID for Serializable interface */
+    private static final long serialVersionUID = -6436513883100334234L;
     /* Primary key, foreign keys (relations) and table columns */
     private Integer messstelleLfdNr;
     private Integer anlageNr;
@@ -65,15 +67,17 @@ public class InkaMessstAnlageId  implements java.io.Serializable {
         this.anlageNr = anlageNr;
     }
 
+    @Override
     public boolean equals(Object other) {
         if ((this == other )) return true;
         if ((other == null )) return false;
         if (!(other instanceof InkaMessstAnlageId) ) return false;
-        InkaMessstAnlageId castOther = ( InkaMessstAnlageId ) other; 
+        InkaMessstAnlageId castOther = ( InkaMessstAnlageId ) other;
         return ( (this.getMessstelleLfdNr()==castOther.getMessstelleLfdNr()) || ( this.getMessstelleLfdNr()!=null && castOther.getMessstelleLfdNr()!=null && this.getMessstelleLfdNr().equals(castOther.getMessstelleLfdNr()) ) )
  && ( (this.getAnlageNr()==castOther.getAnlageNr()) || ( this.getAnlageNr()!=null && castOther.getAnlageNr()!=null && this.getAnlageNr().equals(castOther.getAnlageNr()) ) );
    }
 
+    @Override
     public int hashCode() {
         int result = 17;
         result = 37 * result + ( getMessstelleLfdNr() == null ? 0 : this.getMessstelleLfdNr().hashCode() );

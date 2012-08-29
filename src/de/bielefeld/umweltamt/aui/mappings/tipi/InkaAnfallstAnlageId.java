@@ -31,6 +31,8 @@ package de.bielefeld.umweltamt.aui.mappings.tipi;
  */
 public class InkaAnfallstAnlageId  implements java.io.Serializable {
 
+    /** Generated serialVersionUID for Serializable interface */
+    private static final long serialVersionUID = -6413601096149741295L;
     /* Primary key, foreign keys (relations) and table columns */
     private Integer anfallstelleNr;
     private Integer anlageNr;
@@ -65,15 +67,17 @@ public class InkaAnfallstAnlageId  implements java.io.Serializable {
         this.anlageNr = anlageNr;
     }
 
+    @Override
     public boolean equals(Object other) {
         if ((this == other )) return true;
         if ((other == null )) return false;
         if (!(other instanceof InkaAnfallstAnlageId) ) return false;
-        InkaAnfallstAnlageId castOther = ( InkaAnfallstAnlageId ) other; 
+        InkaAnfallstAnlageId castOther = ( InkaAnfallstAnlageId ) other;
         return ( (this.getAnfallstelleNr()==castOther.getAnfallstelleNr()) || ( this.getAnfallstelleNr()!=null && castOther.getAnfallstelleNr()!=null && this.getAnfallstelleNr().equals(castOther.getAnfallstelleNr()) ) )
  && ( (this.getAnlageNr()==castOther.getAnlageNr()) || ( this.getAnlageNr()!=null && castOther.getAnlageNr()!=null && this.getAnlageNr().equals(castOther.getAnlageNr()) ) );
    }
 
+    @Override
     public int hashCode() {
         int result = 17;
         result = 37 * result + ( getAnfallstelleNr() == null ? 0 : this.getAnfallstelleNr().hashCode() );

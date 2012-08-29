@@ -39,6 +39,8 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
  */
 public class AuikWzCode  implements java.io.Serializable {
 
+    /** Generated serialVersionUID for Serializable interface */
+    private static final long serialVersionUID = -7676557605733724012L;
     /* Primary key, foreign keys (relations) and table columns */
     private String bezeichnung;
     private DeaWzCode deaWzCode;

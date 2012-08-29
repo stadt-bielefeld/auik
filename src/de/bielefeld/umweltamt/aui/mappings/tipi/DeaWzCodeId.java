@@ -31,6 +31,8 @@ package de.bielefeld.umweltamt.aui.mappings.tipi;
  */
 public class DeaWzCodeId  implements java.io.Serializable {
 
+    /** Generated serialVersionUID for Serializable interface */
+    private static final long serialVersionUID = -5674177208843998788L;
     /* Primary key, foreign keys (relations) and table columns */
     private String wzcdId;
     private int wzcdVersion;
@@ -65,23 +67,25 @@ public class DeaWzCodeId  implements java.io.Serializable {
         this.wzcdVersion = wzcdVersion;
     }
 
-   public boolean equals(Object other) {
+   @Override
+public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
          if ( !(other instanceof DeaWzCodeId) ) return false;
-         DeaWzCodeId castOther = ( DeaWzCodeId ) other; 
-         
+         DeaWzCodeId castOther = ( DeaWzCodeId ) other;
+
          return ( (this.getWzcdId()==castOther.getWzcdId()) || ( this.getWzcdId()!=null && castOther.getWzcdId()!=null && this.getWzcdId().equals(castOther.getWzcdId()) ) )
  && (this.getWzcdVersion()==castOther.getWzcdVersion());
    }
 
-   public int hashCode() {
+   @Override
+public int hashCode() {
          int result = 17;
-         
+
          result = 37 * result + ( getWzcdId() == null ? 0 : this.getWzcdId().hashCode() );
          result = 37 * result + this.getWzcdVersion();
          return result;
-   }   
+   }
     /* Custom code goes below here! */
 
 }

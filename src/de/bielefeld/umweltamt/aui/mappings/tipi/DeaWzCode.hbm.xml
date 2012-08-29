@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 20.08.2012 13:51:53 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.tipi.DeaWzCode" table="dea_wz_code" schema="tipi">
         <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.tipi.DeaWzCodeId">

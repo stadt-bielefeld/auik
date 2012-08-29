@@ -23,11 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
+import de.nrw.lds.tipi.inka.Inka_Anlage;
 
 /**
  * A class that represents a row in the InkaAnlage database table.<br>
@@ -36,6 +38,8 @@ import java.util.List;
  */
 public class InkaAnlage  implements java.io.Serializable {
 
+    /** Generated serialVersionUID for Serializable interface */
+    private static final long serialVersionUID = 3472042834605284957L;
     /* Primary key, foreign keys (relations) and table columns */
     private Integer anlageNr;
     private Integer anlageVer;
@@ -810,16 +814,91 @@ public class InkaAnlage  implements java.io.Serializable {
     public static List<InkaAnlage> getAll() {
         log.debug("Getting all InkaAnlage instances");
         String query = "FROM InkaAnlage ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list(); 
+        List<?> objectList = new DatabaseAccess().createQuery(query).list();
         List<InkaAnlage> resultList = new ArrayList<InkaAnlage>();
         InkaAnlage result = null;
         for (Object object : objectList) {
             result = (InkaAnlage) object;
-            resultList.add(result); 
+            resultList.add(result);
         }
         return resultList;
     }
 
     /* Custom code goes below here! */
+
+    public Inka_Anlage toServiceType() {
+        Inka_Anlage serviceInstance = new Inka_Anlage(
+            this.getAenderungsDatum(),
+            this.getErfassungsDatum(),
+            this.getGueltigBis(),
+            this.getGueltigVon(),
+            this.getIstAktuellJn(),
+//            this.getHistorienNr(),
+            this.getAbfuhrUnbehJn(),
+            this.getAbscheiderJn(),
+            this.getAbsorptionJn(),
+            this.getAdresseAnsprNr(),
+            this.getAdresseAnsprVer(),
+            this.getAktenzeichen(),
+            this.getAnaerobeVorbJn(),
+            this.getAnlBauaufsZulJn(),
+            this.getAnlBaurechtPrJn(),
+            this.getAnlDinDeJn(),
+            this.getAnlEinzelabnJn(),
+            this.getAnlOhneZulJn(),
+            this.getAnlageNr(),
+            this.getAnlageVer(),
+            this.getAusgleichsbeckenJn(),
+            this.getBefristungBis(),
+            this.getBefristungJn(),
+            this.getBehoerdenId(),
+            this.getBehoerdenVer(),
+            this.getBelCEliJn(),
+            this.getBelNEliJn(),
+            this.getBetriebseinrichtungNr(),
+            this.getBetriebseinrichtungVer(),
+            this.getBiologPEliJn(),
+            this.getDatGenehmigung(),
+            this.getDatInbetrieb(),
+            this.getEmulsionsspaltJn(),
+            this.getExtraktionJn(),
+            this.getFiltrationJn(),
+            this.getFlockungJn(),
+            this.getFlotationJn(),
+            this.getGemeindeVer(),
+            this.getGemeindekennzahl(),
+            this.getGenArt(),
+            this.getGenPflichtigJn(),
+            this.getGenehmigungNr(),
+            this.getGenehmigungVer(),
+            this.getIonenaustauschJn(),
+            this.getKammerfilterpJn(),
+            this.getMaschEntwJn(),
+            this.getMembranfiltrationJn(),
+            this.getNachklaerungJn(),
+            this.getNatEntwJn(),
+            this.getNeutralisationJn(),
+            this.getSchlammfangJn(),
+            this.getSiebRechenJn(),
+            this.getSiebbandpJn(),
+            this.getSonstAbscheiderJn(),
+            this.getSonstigeBiolVerf(),
+            this.getSonstigeMechVerf(),
+            this.getSonstigeSchlammBeh(),
+            this.getStatEntwJn(),
+            this.getStrippAnlageJn(),
+            this.getStuaBezirk(),
+            this.getStuaVer(),
+            this.getTropfkoerperJn(),
+            this.getUebergabestelleLfdNr(),
+            this.getUebergabestelleVer(),
+            this.getVakuumfilterJn(),
+            this.getVorklaerungAbsetzJn(),
+            this.getWasBehoerdenId(),
+            this.getWasBehoerdenVer(),
+            this.getZentrifugeJn()
+        );
+        return serviceInstance;
+    }
 
 }

@@ -107,7 +107,7 @@ AbstractVirtuallyDeletableDatabaseTable implements Serializable {
      * Set the value of the Telefon column.
      * @param telefon
      */
-    private void setTelefon(java.lang.String telefon) {
+    public void setTelefon(java.lang.String telefon) {
         this.telefon = telefon;
     }
 
@@ -123,7 +123,7 @@ AbstractVirtuallyDeletableDatabaseTable implements Serializable {
      * Set the value of the Istadministrator column.
      * @param gehoertzuarbeitsgr
      */
-    private void setGehoertzuarbeitsgr(java.lang.String gehoertzuarbeitsgr) {
+    public void setGehoertzuarbeitsgr(java.lang.String gehoertzuarbeitsgr) {
         this.gehoertzuarbeitsgr = gehoertzuarbeitsgr;
     }
 

@@ -29,6 +29,7 @@ import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
+import de.nrw.lds.tipi.inka.Inka_Anfallst_Stoffe;
 
 /**
  * A class that represents a row in the InkaAnfallstStoffe database table.<br>
@@ -37,6 +38,8 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
  */
 public class InkaAnfallstStoffe  implements java.io.Serializable {
 
+    /** Generated serialVersionUID for Serializable interface */
+    private static final long serialVersionUID = -788736460598643786L;
     /* Primary key, foreign keys (relations) and table columns */
     private InkaAnfallstStoffeId id;
     private Integer anfallstelleVer;
@@ -233,4 +236,20 @@ public class InkaAnfallstStoffe  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    public Inka_Anfallst_Stoffe toServiceType() {
+        Inka_Anfallst_Stoffe serviceInstance = new Inka_Anfallst_Stoffe(
+            this.getAenderungsDatum(),
+            this.getErfassungsDatum(),
+            this.getGueltigBis(),
+            this.getGueltigVon(),
+            this.getIstAktuellJn(),
+//            this.getHistorienNr(),
+            this.getAnfallstStoffeVer(),
+            this.getId().getAnfallstelleNr(),
+            this.getAnfallstelleVer(),
+            this.getId().getStoffNr(),
+            this.getStoffVer()
+        );
+        return serviceInstance;
+    }
 }

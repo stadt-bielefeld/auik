@@ -29,6 +29,7 @@ import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
+import de.nrw.lds.tipi.inka.Inka_Anfallst_Messst;
 
 /**
  * A class that represents a row in the InkaAnfallstMessst database table.<br>
@@ -37,6 +38,8 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
  */
 public class InkaAnfallstMessst  implements java.io.Serializable {
 
+    /** Generated serialVersionUID for Serializable interface */
+    private static final long serialVersionUID = -7747533363598407285L;
     /* Primary key, foreign keys (relations) and table columns */
     private InkaAnfallstMessstId id;
     private Integer anfallstelleVer;
@@ -273,4 +276,24 @@ public class InkaAnfallstMessst  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    public Inka_Anfallst_Messst toServiceType() {
+        Inka_Anfallst_Messst serviceInstance = new Inka_Anfallst_Messst(
+            this.getAenderungsDatum(),
+            this.getErfassungsDatum(),
+            this.getGueltigBis(),
+            this.getGueltigVon(),
+            this.getIstAktuellJn(),
+//            this.getHistorienNr(),
+            this.getAnfallstMessstVer(),
+            this.getId().getAnfallstelleNr(),
+            this.getAnfallstelleVer(),
+            this.getGemeindeVer(),
+            this.getGemeindekennzahl(),
+            this.getId().getMessstelleLfdNr(),
+            this.getMessstelleVer(),
+            this.getUebergabestelleLfdNr(),
+            this.getUebergabestelleVer()
+        );
+        return serviceInstance;
+    }
 }
