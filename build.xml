@@ -233,10 +233,10 @@
     <target name="clean"
         description="Clean up everything but the directory that contains the
             documentation and the previous 'yyyy-MM-dd AUIK.jar's">
-        <delete dir="${bin}" />
+        <!-- delete dir="${bin}" / -->
         <delete file="${dist}/AUIK.jar" />
         <delete file="${dist}/auik.properties" />
-        <delete file="${config}/generated/hibernate.cfg.xml" />
+        <!-- delete file="${config}/generated/hibernate.cfg.xml" / -->
         <delete>
             <fileset dir="${src}/${gen.mappings}" includes="**/*.hbm.xml" />
             <fileset dir="${src}/${gen.mappings}" includes="**/*.java" />
