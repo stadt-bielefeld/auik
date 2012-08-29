@@ -168,7 +168,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
                 if (selectedWZCode != null) {
                     BetreiberEditor.this.wzCodeBox.setEditable(true);
                     BetreiberEditor.this.wzCodeBox.setSelectedItem(
-                        selectedWZCode.getBezeichnung());
+                        selectedWZCode);
                     BetreiberEditor.this.wzCodeBox.setEditable(false);
                 }
             }
@@ -577,8 +577,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
         VawsWirtschaftszweige wizw = (VawsWirtschaftszweige) wirtschaftszweigBox.getSelectedItem();
         getBetreiber().setVawsWirtschaftszweige(wizw);
         // WZ-Code
-        getBetreiber().setAuikWzCode(
-            AuikWzCode.findById((String)wzCodeBox.getSelectedItem()));
+        getBetreiber().setAuikWzCode((AuikWzCode)wzCodeBox.getSelectedItem());
 
         // Bemerkungen
         String bemerkungen = bemerkungsArea.getText();
