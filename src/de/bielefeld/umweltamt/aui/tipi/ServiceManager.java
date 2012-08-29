@@ -28,6 +28,7 @@ import javax.xml.rpc.ServiceException;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.nrw.lds.tipi.inka.Dea_Adresse;
 import de.nrw.lds.tipi.inka.Inka_Anfallstelle;
+import de.nrw.lds.tipi.inka.Inka_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Betrieb;
 import de.nrw.lds.tipi.inka.Inka_Betriebseinrichtung;
 import de.nrw.lds.tipi.inka.Inka_Genehmigung;
@@ -35,6 +36,7 @@ import de.nrw.lds.tipi.inka.Inka_Messstelle;
 import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
 import de.nrw.lds.tipi.inka.request.ReqDea_Adresse;
 import de.nrw.lds.tipi.inka.request.ReqInka_Anfallstelle;
+import de.nrw.lds.tipi.inka.request.ReqInka_Anlage;
 import de.nrw.lds.tipi.inka.request.ReqInka_Betrieb;
 import de.nrw.lds.tipi.inka.request.ReqInka_Betriebseinrichtung;
 import de.nrw.lds.tipi.inka.request.ReqInka_Genehmigung;
@@ -164,6 +166,54 @@ public final class ServiceManager {
         }
         catch(RemoteException re) {
             logger.error("Error while sending inka_anfallstelle.");
+            re.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
+    public Inka_Anlage[] getInka_Anlage(String user, String passw) {
+        try {
+            InkaInterfacePortType iip = getInkaInterfacePortType();
+            if (iip == null) {
+                return new Inka_Anlage[0];
+            }
+            ReqInka_Anlage req = new ReqInka_Anlage();
+            req.setClientTimestamp(Calendar.getInstance());
+            req.setKennung(user);
+            req.setPassword(passw);
+            return iip.getInka_Anlage(req).getArrInka_Anlage();
+        }
+        catch(RemoteException re) {
+            logger.error("Error while requesting inka_anfallstelle.");
+        }
+        return new Inka_Anlage[0];
+
+    }
+
+
+    public boolean setInka_Anlage(
+        String user,
+        String passw,
+        Inka_Anlage[] anlagen)
+    {
+        try {
+            for (int i = 0; i < anlagen.length; i++) {
+                InkaInterfacePortType iip = getInkaInterfacePortType();
+                if (iip == null) {
+                    return false;
+                }
+                ReqInka_Anlage anlage = new ReqInka_Anlage();
+                anlage.setObjInka_Anlage(anlagen[i]);
+                anlage.setClientTimestamp(Calendar.getInstance());
+                anlage.setKennung(user);
+                anlage.setPassword(passw);
+                iip.setInka_Anlage(anlage);
+            }
+        }
+        catch(RemoteException re) {
+            logger.error("Error while sending inka_anlage.");
             re.printStackTrace();
             return false;
         }
