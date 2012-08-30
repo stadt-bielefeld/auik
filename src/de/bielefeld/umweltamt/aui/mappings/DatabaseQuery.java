@@ -21,11 +21,16 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
- * This is a service class for all custom queries
+ * This is a service class for all custom queries.<br>
+ * <br>
+ * These queries are not in their respective classes because we want to keep
+ * them as clean of not-generated code as possible. As most of the custom
+ * queries were static anyway, they can just as fine live here.
  *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
@@ -34,6 +39,21 @@ public class DatabaseQuery {
     /* ********************************************************************** */
     /* Queries for package BASIS                                              */
     /* ********************************************************************** */
+
+    /**
+     * Check if a location already exists
+     * @return true, if the given location exists, false otherwise
+     */
+    public static boolean basisStandortExists(
+        String strasse, Integer hausnr, String zusatz) {
+        return (!(new DatabaseAccess()
+            .createCriteria(BasisStandort.class)
+            .addRestrictionEqual("strasse", strasse)
+            .addRestrictionEqual("hausnr", hausnr)
+            .addRestrictionEqual("hausnrzus", zusatz)
+            .listCriteria()
+            .isEmpty()));
+    }
 
     /* ********************************************************************** */
     /* Queries for package ATL                                                */
@@ -56,8 +76,10 @@ public class DatabaseQuery {
      * @return <code>AuikWzCode[]</code>
      */
     public static AuikWzCode[] getAuikWzCodesInKurzAuswahl() {
-        return new DatabaseAccess().createQuery(
-            "FROM AuikWzCode WHERE inKurzAuswahl = TRUE ORDER BY bezeichnung")
-            .array(new AuikWzCode[0]);
+        return new DatabaseAccess()
+            .createCriteria(AuikWzCode.class)
+            .addRestrictionEqual("inKurzAuswahl", true)
+            .addAscOrder("bezeichnung")
+            .arrayCriteria(new AuikWzCode[0]);
     }
 }

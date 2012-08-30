@@ -29,11 +29,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -59,8 +62,9 @@ public class DatabaseAccess {
         GET_SESSION, BEGIN_TRANSACTION, COMMIT, ROLLBACK,
         /* Operations on entitys */
         GET, SAVEORUPDATE, MERGE, DELETE,
-        /* Querys */
-        CREATE_QUERY, CREATE_FILTER, LIST, UNIQUE_RESULT, ITERATE
+        /* Querys and criteria */
+        CREATE_QUERY, CREATE_CRITERIA, LIST, LIST_CRITERIA,
+        UNIQUE_RESULT, ITERATE
     }
 
     /** The session of the localThread */
@@ -69,6 +73,8 @@ public class DatabaseAccess {
     private Transaction transaction = null;
     /** A query */
     private Query query = null;
+    /** A Criteria */
+    private Criteria criteria = null;
 
     /**
      * A simple constructor
@@ -282,28 +288,13 @@ public class DatabaseAccess {
         return this;
     }
 
-    public DatabaseAccess setDouble(String name, double val) {
-        this.query.setDouble(name, val);
-        return this;
-    }
-
     public DatabaseAccess setEntity(String name, Object val) {
         this.query.setEntity(name, val);
         return this;
     }
 
-    public DatabaseAccess setFloat(String name, float val) {
-        this.query.setFloat(name, val);
-        return this;
-    }
-
     public DatabaseAccess setInteger(String name, int val) {
         this.query.setInteger(name, val);
-        return this;
-    }
-
-    public DatabaseAccess setLong(String name, long val) {
-        this.query.setLong(name, val);
         return this;
     }
 
@@ -417,6 +408,100 @@ public class DatabaseAccess {
             this.closeSession();
         }
         return result;
+    }
+
+    /**
+     * Create a new instance of <code>Criteria</code> for the given
+     * <code>Class</code><br>
+     * <br>
+     * Note: For all classes except those in the
+     * <code>de.bielefeld.umweltamt.aui.mappings.tipi</code>-Package
+     * global Restrictions are set (field <code>_deleted = false</code>).<br>
+     * Usage:<br>
+     * <code><pre>
+     * List<?> result = new DatabaseAccess()
+     *     .createCriteria(Anh49Verwaltungsverfahren.class)
+     *     .addRestrictionEqual("anh49Fachdaten", fachdaten))
+     *     .addAscOrder("datum")
+     *     .listCriteria();</pre></code>
+     * @param persistentClass The class
+     * @return DatabaseAccess this
+     */
+    public DatabaseAccess createCriteria(Class<?> persistentClass) {
+        try {
+            this.criteria = this.getSession().createCriteria(persistentClass);
+            // Add global restrictions
+            // For all classes except those in the tipi package
+            if (!(persistentClass.getPackage().getName()
+                .equals("de.bielefeld.umweltamt.aui.mappings.tipi"))) {
+                this.criteria.add(Restrictions.eq("_deleted", false));
+                // This will be for the new hibernate mappings:
+//                this.criteria.add(Restrictions.eq("deleted", false));
+            }
+        } catch (HibernateException he) {
+            this.handleDBException(
+                he, DatabaseAccessType.CREATE_CRITERIA, false);
+        } finally {
+            // This place is intentionally left blank.
+        }
+        return this;
+    }
+
+    /* Restrictions */
+    public DatabaseAccess addRestrictionEqual(
+        String propertyName, Object value) {
+        // This is a workaround for hibernate issue HHH-2951
+        // See: https://hibernate.onjira.com/browse/HHH-2951
+        if (value == null) {
+            this.criteria.add(Restrictions.isNull(propertyName));
+        } else {
+            this.criteria.add(Restrictions.eq(propertyName, value));
+        }
+        return this;
+    }
+
+    /**
+     * Add ascending order by a given property to the <code>Criteria</code>
+     * @param propertyName Property to sort by
+     * @return <code>this</code>
+     */
+    public DatabaseAccess addAscOrder(String propertyName) {
+        this.criteria.addOrder(Order.asc(propertyName));
+        return this;
+    }
+
+    /**
+     * Add descending order by a given property to the <code>Criteria</code>
+     * @param propertyName Property to sort by
+     * @return <code>this</code>
+     */
+    public DatabaseAccess addDescOrder(String propertyName) {
+        this.criteria.addOrder(Order.desc(propertyName));
+        return this;
+    }
+
+    /**
+     * Execute the criteria and get the result as a <code>List&lt;?&gt;</code>
+     * @return List<?> The result of the Criteria
+     */
+    public List<?> listCriteria() {
+        List<?> criteriaResult = null;
+        try {
+            criteriaResult = this.criteria.list();
+        } catch (HibernateException he) {
+            this.handleDBException(he, DatabaseAccessType.LIST_CRITERIA, false);
+        } finally {
+            this.closeSession();
+        }
+        return criteriaResult;
+    }
+
+    /**
+     * Execute the criteria and get the result as an array
+     * @return Object[] The result of the criteria
+     */
+    public <T> T[] arrayCriteria(T[] arrayType) {
+        return this.listCriteria().toArray(arrayType);
     }
 
     /*

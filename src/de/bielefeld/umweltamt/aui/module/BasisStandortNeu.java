@@ -51,7 +51,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -69,13 +68,13 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
@@ -515,26 +514,10 @@ public class BasisStandortNeu extends AbstractModul {
      * @return true, if the given location exists, false otherwise
      */
     private boolean standortExists() {
-        boolean exists = true;
-        List<?> result = null;
-        String strasse = (String) strassenBox.getSelectedItem();
-        Integer hausnr = ((IntegerField)hausnrEditFeld).getIntValue();
-        String zusatz  = hausnrZusFeld.getText();
-            result = new DatabaseAccess()
-            .createQuery(
-                "FROM BasisStandort " +
-                "WHERE strasse = :strasse " +
-                    "AND hausnr = :hausnr " +
-                    "AND hausnrzus = :zusatz ")
-            .setString("strasse", strasse)
-            .setInteger("hausnr", hausnr)
-            .setString("zusatz", zusatz)
-            .list();
-        log.debug(result);
-        if (result.isEmpty()) {
-            exists = false;
-        }
-        return exists;
+        return DatabaseQuery.basisStandortExists(
+            (String) strassenBox.getSelectedItem(),
+            ((IntegerField)hausnrEditFeld).getIntValue(),
+            (hausnrZusFeld.getText().equals("")?null:hausnrZusFeld.getText()));
     }
 
     /**
