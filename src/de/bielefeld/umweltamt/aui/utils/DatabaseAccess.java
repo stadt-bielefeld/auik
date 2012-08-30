@@ -481,6 +481,17 @@ public class DatabaseAccess {
     }
 
     /**
+     * Add ascending order by a identifier property to the <code>Criteria</code>
+     * @return <code>this</code>
+     */
+    public DatabaseAccess addIdOrder(Class<?> entityClass) {
+        this.criteria.addOrder(Order.asc(
+            this.getSession().getSessionFactory()
+                .getClassMetadata(entityClass).getIdentifierPropertyName()));
+        return this;
+    }
+
+    /**
      * Execute the criteria and get the result as a <code>List&lt;?&gt;</code>
      * @return List<?> The result of the Criteria
      */

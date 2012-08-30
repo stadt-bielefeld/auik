@@ -387,7 +387,7 @@ public class InkaAnfallstelle  implements java.io.Serializable {
             this.getGemeindekennzahl(),
             this.getGenehmigungNr(),
             this.getGenehmigungVer(),
-            new Float(this.getMaxVolTag()),
+            ((this.getMaxVolTag()==null)?null:new Float(this.getMaxVolTag())),
             this.getUebergabestelleLfdNr(),
             this.getUebergabestelleVer(),
             this.getVolJahr()

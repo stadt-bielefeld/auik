@@ -176,8 +176,10 @@ public class AuikWzCode  implements java.io.Serializable {
      */
     public static List<AuikWzCode> getAll() {
         log.debug("Getting all AuikWzCode instances");
-        String query = "FROM AuikWzCode ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list();
+        List<?> objectList = new DatabaseAccess()
+            .createCriteria(AuikWzCode.class)
+            .addIdOrder(AuikWzCode.class)
+            .listCriteria();
         List<AuikWzCode> resultList = new ArrayList<AuikWzCode>();
         AuikWzCode result = null;
         for (Object object : objectList) {
