@@ -271,20 +271,17 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         return sortedPositionen;
     }
 
-    public static List<?> sortExterneAnalysepositionen(AtlProbenahmen probe) {
-        List<?> sortedPositionen = null;
-        sortedPositionen = new DatabaseAccess()
-            .createFilter(AtlProbenahmen.class, probe.getId(), 0,
-                "WHERE this.atlParameter.bezeichnung not like :str "
-                    + "ORDER BY this.atlParameter.reihenfolge")
-            .setString("str", new String("%bei Probenahme"))
-            // I do not need to understand this, do I? ^^
-            .list();
-        return sortedPositionen;
-    }
-
     public static JRMapDataSource getAuftragDataSource(AtlProbenahmen probe) {
-        List<?> sorted = sortExterneAnalysepositionen(probe);
+        List<?> sorted = new DatabaseAccess()
+            .createQuery(
+                "FROM AtlAnalyseposition AS pos "
+                + "WHERE pos.atlProbenahmen = :probe "
+                    + "AND pos.atlParameter.bezeichnung not like "
+                        + "'%bei Probenahme' "
+                + "ORDER BY pos.atlParameter.reihenfolge")
+            .setEntity("probe", probe)
+            .list();
+
         int elements = sorted.size();
 
         Object[][] values = new Object[elements][];

@@ -271,40 +271,6 @@ public class DatabaseAccess {
         return this;
     }
 
-    /**
-     * Create a new instance of Query for the given Collection and filter
-     * String.<br>
-     * Usage:<br>
-     * <code><pre>
-     * List<?> result = new DatabaseAccess().createFilter(
-     *     newProbe.getAtlAnalysepositionen(),
-     *     "order by this.atlParameter.reihenfolge")
-     *     .list();</pre></code>
-     * @param collection The Collection
-     * @param filterString The filter String
-     * @return DatabaseAccess this
-     */
-    public DatabaseAccess createFilter(
-        Class<?> clazz, Serializable id, int collnr, String filterString) {
-        DatabaseTableWithCollection persistent_object = null;
-        Collection<?> persistent_coll = null;
-        try {
-            persistent_object =
-                (DatabaseTableWithCollection) this.getSession().get(clazz, id);
-            persistent_coll =
-                persistent_object.getToInitCollections().get(collnr);
-            Hibernate.initialize(persistent_coll);
-
-            this.query = this.getSession()
-                .createFilter(persistent_coll, filterString);
-        } catch (HibernateException he) {
-            this.handleDBException(he, DatabaseAccessType.CREATE_FILTER, false);
-        } finally {
-            // This place is intentionally left blank.
-        }
-        return this;
-    }
-
     /* Setter for named parameters */
     public DatabaseAccess setBoolean(String name, boolean val) {
         this.query.setBoolean(name, val);
