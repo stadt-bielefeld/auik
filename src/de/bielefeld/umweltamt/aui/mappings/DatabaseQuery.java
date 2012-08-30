@@ -21,6 +21,12 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
+import java.util.List;
+
+import org.hibernate.criterion.Restrictions;
+import org.jfree.util.Log;
+
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
@@ -40,6 +46,41 @@ public class DatabaseQuery {
     /* Queries for package BASIS                                              */
     /* ********************************************************************** */
 
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisBetreiber                       */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    public static List<BasisBetreiber> getBasisBetreiber(
+        String property, String search) {
+
+        String modSearch = search.toLowerCase().trim() + "%";
+        Log.debug("Suche nach '" + modSearch + "' (" + property + ").");
+
+        DatabaseAccess criteria = new DatabaseAccess()
+            .createCriteria(BasisBetreiber.class)
+            .addAscOrder("betrname")
+            .addAscOrder("betrnamezus");
+
+        if (property.equals("name")) {
+            criteria.addRestrictionILike("betrname", modSearch);
+        } else if (property.equals("anrede")) {
+            criteria.addRestrictionILike("betranrede", modSearch);
+        } else if (property.equals("zusatz")) {
+            criteria.addRestrictionILike("betrnamezus", modSearch);
+        } else {
+            // TODO: Uhuh, we need to somehow model this in the DatabaseAccess
+            criteria.addRestrictionOr(
+                Restrictions.ilike("betrname", modSearch),
+                Restrictions.or(
+                    Restrictions.ilike("betranrede", modSearch),
+                    Restrictions.ilike("betrnamezus", modSearch)));
+        }
+
+        return criteria.listCriteriaCastToType(new BasisBetreiber());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisStandort                        */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /**
      * Check if a location already exists
      * @return true, if the given location exists, false otherwise

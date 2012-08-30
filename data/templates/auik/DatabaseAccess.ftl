@@ -60,8 +60,10 @@
      */
     public static ${pojo.importType("java.util.List")}<${declarationName}> getAll() {
         log.debug("Getting all ${declarationName} instances");
-        String query = "FROM ${declarationName} ORDER BY 1";
-        ${pojo.importType("java.util.List")}<?> objectList = new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().createQuery(query).list(); 
+        ${pojo.importType("java.util.List")}<?> objectList = new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}()
+            .createCriteria(${declarationName}.class)
+            .addIdOrder(${declarationName}.class)
+            .listCriteria(); 
         ${pojo.importType("java.util.List")}<${declarationName}> resultList = new ${pojo.importType("java.util.ArrayList")}<${declarationName}>();
         ${declarationName} result = null;
         for (Object object : objectList) {

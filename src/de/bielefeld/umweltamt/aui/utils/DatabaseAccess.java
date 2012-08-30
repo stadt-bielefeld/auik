@@ -35,6 +35,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -460,6 +461,17 @@ public class DatabaseAccess {
         return this;
     }
 
+    public DatabaseAccess addRestrictionILike(
+        String propertyName, Object value) {
+        this.criteria.add(Restrictions.ilike(propertyName, value));
+        return this;
+    }
+
+    public DatabaseAccess addRestrictionOr(Criterion lhs, Criterion rhs) {
+        this.criteria.add(Restrictions.or(lhs, rhs));
+        return this;
+    }
+
     /**
      * Add ascending order by a given property to the <code>Criteria</code>
      * @param propertyName Property to sort by
@@ -513,6 +525,25 @@ public class DatabaseAccess {
      */
     public <T> T[] arrayCriteria(T[] arrayType) {
         return this.listCriteria().toArray(arrayType);
+    }
+
+    /**
+     * Cast the result list to the right type
+     * @param <T>
+     * @param type
+     * @return
+     */
+    // This will be my only suppressed warning, promise! ;-)
+    @SuppressWarnings("unchecked")
+    public <T> List<T> listCriteriaCastToType(T type) {
+        List<T> resultList = new ArrayList<T>();
+        List<?> objectList = this.listCriteria();
+        T result = null;
+        for (Object object : objectList) {
+            result = (T) object;
+            resultList.add(result);
+        }
+        return resultList;
     }
 
     /*
