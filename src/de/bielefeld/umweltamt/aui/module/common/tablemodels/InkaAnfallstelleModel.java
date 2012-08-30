@@ -20,9 +20,8 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.text.SimpleDateFormat;
-
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstelle;
+import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.nrw.lds.tipi.inka.Inka_Anfallstelle;
 
@@ -58,28 +57,17 @@ public class InkaAnfallstelleModel extends ListTableModel {
         }
     }
 
-    public Object getInkaAnfallstelleFromDB(Object obj, int ndx) {
-        InkaAnfallstelle fd = (InkaAnfallstelle) obj;
-        Object tmp;
-
-        switch (ndx) {
-        case 0:
-            tmp = fd.getBeschreibung();
-        case 1:
-            tmp = fd.getBetriebseinrichtungNr();
-            break;
-        case 2:
-            tmp = new SimpleDateFormat("dd.MM.yyyy").format(fd.getErfassungsDatum());
-            break;
-        case 3:
-            tmp = fd.getGemeindekennzahl();
-            break;
-
-        default:
-            tmp = "ERROR";
-            break;
+    public Object getInkaAnfallstelleFromDB(Object obj, int index) {
+        switch (index) {
+            case 0: return ((InkaAnfallstelle) obj).getBeschreibung();
+            case 1: return ((InkaAnfallstelle) obj).getBetriebseinrichtungNr();
+            case 2:
+                return DateUtils.format(
+                    ((InkaAnfallstelle) obj).getErfassungsDatum().getTime(),
+                    DateUtils.FORMAT_DATE);
+            case 3: return ((InkaAnfallstelle) obj).getGemeindekennzahl();
+            default: return "ERROR";
         }
-        return tmp;
     }
 
 
