@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 /**
@@ -125,7 +126,8 @@ public class BasisBetreiberModel extends ListTableModel {
      * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
      */
     public void filterList(String suche, String property) {
-        setList(BasisBetreiber.findBetreiber(suche, property));
+//        setList(BasisBetreiber.findBetreiber(suche, property));
+        setList(DatabaseQuery.getBasisBetreiber(property, suche));
         lastSuchWort = suche;
         lastProperty = property;
     }

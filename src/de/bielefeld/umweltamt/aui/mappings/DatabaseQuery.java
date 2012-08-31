@@ -60,19 +60,21 @@ public class DatabaseQuery {
             .addAscOrder("betrname")
             .addAscOrder("betrnamezus");
 
-        if (property.equals("name")) {
+        if (property == null) {
+            // TODO: Uhuh, we need to somehow model this in the DatabaseAccess
+            criteria.add(Restrictions.or(
+                Restrictions.ilike("betrname", modSearch),
+                Restrictions.or(
+                    Restrictions.ilike("betranrede", modSearch),
+                    Restrictions.ilike("betrnamezus", modSearch))));
+        } else if (property.equals("name")) {
             criteria.addRestrictionILike("betrname", modSearch);
         } else if (property.equals("anrede")) {
             criteria.addRestrictionILike("betranrede", modSearch);
         } else if (property.equals("zusatz")) {
             criteria.addRestrictionILike("betrnamezus", modSearch);
         } else {
-            // TODO: Uhuh, we need to somehow model this in the DatabaseAccess
-            criteria.addRestrictionOr(
-                Restrictions.ilike("betrname", modSearch),
-                Restrictions.or(
-                    Restrictions.ilike("betranrede", modSearch),
-                    Restrictions.ilike("betrnamezus", modSearch)));
+            Log.debug("Something went really wrong here...");
         }
 
         return criteria.listCriteriaCastToType(new BasisBetreiber());

@@ -467,8 +467,9 @@ public class DatabaseAccess {
         return this;
     }
 
-    public DatabaseAccess addRestrictionOr(Criterion lhs, Criterion rhs) {
-        this.criteria.add(Restrictions.or(lhs, rhs));
+    // Note: We need this until we find a solution for (con|dis)junctions
+    public DatabaseAccess add(Criterion criterion) {
+        this.criteria.add(criterion);
         return this;
     }
 
