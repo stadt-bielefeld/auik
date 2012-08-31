@@ -330,7 +330,7 @@ public class DBSyncModul extends AbstractModul {
                         addr = DBSyncModul.this.sendAddr.toArray(addr);
                         Inka_Anfallstelle[] anfallst =
                             new Inka_Anfallstelle[DBSyncModul.this.sendAnfallstelle.size()];
-                        anfallst = 
+                        anfallst =
                             DBSyncModul.this.sendAnfallstelle.toArray(anfallst);
                         Inka_Anlage[] anlage =
                             new Inka_Anlage[DBSyncModul.this.sendAnlage.size()];
@@ -338,21 +338,22 @@ public class DBSyncModul extends AbstractModul {
                         Inka_Betrieb[] betr =
                             new Inka_Betrieb[DBSyncModul.this.sendBetrieb.size()];
                         betr = DBSyncModul.this.sendBetrieb.toArray(betr);
-                        Inka_Betriebseinrichtung[] betreinr = 
+                        Inka_Betriebseinrichtung[] betreinr =
                             new Inka_Betriebseinrichtung[DBSyncModul.this.sendBetriebseinr.size()];
-                        betreinr = 
+                        betreinr =
                             DBSyncModul.this.sendBetriebseinr.toArray(betreinr);
-                        Inka_Genehmigung[] genehm = 
+                        Inka_Genehmigung[] genehm =
                             new Inka_Genehmigung[DBSyncModul.this.sendGenehm.size()];
                         genehm = DBSyncModul.this.sendGenehm.toArray(genehm);
-                        Inka_Messstelle[] messst = 
+                        Inka_Messstelle[] messst =
                             new Inka_Messstelle[DBSyncModul.this.sendMessstelle.size()];
-                        messst = 
+                        messst =
                             DBSyncModul.this.sendMessstelle.toArray(messst);
-                        Inka_Uebergabestelle[] uebergabe = 
+                        Inka_Uebergabestelle[] uebergabe =
                             new Inka_Uebergabestelle[DBSyncModul.this.sendUebergabe.size()];
-                        uebergabe = 
+                        uebergabe =
                             DBSyncModul.this.sendUebergabe.toArray(uebergabe);
+                        // Note: Take care to transmit in the right order!
                         DBSyncModul.this.service.setDea_Adressen(
                             user, password, addr);
                         DBSyncModul.this.service.setInka_Betriebe(
@@ -361,14 +362,14 @@ public class DBSyncModul extends AbstractModul {
                             user, password, genehm);
                         DBSyncModul.this.service.setInka_Betriebseinrichtungen(
                             user, password, betreinr);
+                        DBSyncModul.this.service.setInka_Uebergabestelle(
+                            user, password, uebergabe);
+                        DBSyncModul.this.service.setInka_Messstelle(
+                            user, password, messst);
                         DBSyncModul.this.service.setInka_Anfallstelle(
                             user, password, anfallst);
                         DBSyncModul.this.service.setInka_Anlage(
                             user, password, anlage);
-                        DBSyncModul.this.service.setInka_Messstelle(
-                                user, password, messst);
-                        DBSyncModul.this.service.setInka_Uebergabestelle(
-                                user, password, uebergabe);
                     } else {
                         GUIManager.getInstance().showInfoMessage(
                             "Bitte holen Sie zuerst Daten ab!", "Info");
@@ -472,9 +473,9 @@ public class DBSyncModul extends AbstractModul {
             for (int i = 0; i < adr.length; i++) {
                 adressen.add(adr[i]);
             }
-            Inka_Anfallstelle[] anfallst = 
+            Inka_Anfallstelle[] anfallst =
                 this.service.getInka_Anfallstelle(user, password);
-            List<Inka_Anfallstelle> anfallsten = 
+            List<Inka_Anfallstelle> anfallsten =
                 new ArrayList<Inka_Anfallstelle>();
             for (int i = 0; i < anfallst.length; i++) {
                 anfallsten.add(anfallst[i]);
@@ -491,14 +492,14 @@ public class DBSyncModul extends AbstractModul {
             }
             Inka_Betriebseinrichtung[] betrein = this.service
                 .getInka_Betriebseinrichtungen(user, password);
-            List<Inka_Betriebseinrichtung> betriebseinrichtungen = 
+            List<Inka_Betriebseinrichtung> betriebseinrichtungen =
                 new ArrayList<Inka_Betriebseinrichtung>();
             for (int i = 0; i < betrein.length; i++) {
                 betriebseinrichtungen.add(betrein[i]);
             }
             Inka_Genehmigung[] genehm = this.service.getInka_Genehmigungen(
                 user, password);
-            List<Inka_Genehmigung> genehmigungen = 
+            List<Inka_Genehmigung> genehmigungen =
                 new ArrayList<Inka_Genehmigung>();
             for (int i = 0; i < genehm.length; i++) {
                 genehmigungen.add(genehm[i]);
@@ -509,9 +510,9 @@ public class DBSyncModul extends AbstractModul {
 			for (int i = 0; i < messst.length; i++) {
 				messsten.add(messst[i]);
 			}
-			Inka_Uebergabestelle[] uebergabe = 
+			Inka_Uebergabestelle[] uebergabe =
 			    this.service.getInka_Uebergabestelle(user, password);
-			List<Inka_Uebergabestelle> uebergaben = 
+			List<Inka_Uebergabestelle> uebergaben =
 			    new ArrayList<Inka_Uebergabestelle>();
 			for (int i = 0; i < uebergabe.length; i++) {
 				uebergaben.add(uebergabe[i]);

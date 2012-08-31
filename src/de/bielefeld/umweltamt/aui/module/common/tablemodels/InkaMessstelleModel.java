@@ -21,6 +21,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaMessstelle;
+import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.nrw.lds.tipi.inka.Inka_Messstelle;
 
@@ -56,28 +57,17 @@ public class InkaMessstelleModel extends ListTableModel {
         }
     }
 
-    public Object getInkaMessstelleFromDB(Object obj, int ndx) {
-    	InkaMessstelle fd = (InkaMessstelle) obj;
-        Object tmp;
-
-        switch (ndx) {
-        case 0:
-            tmp = fd.getBeschrMesspunkt();
-        case 1:
-            tmp = fd.getMessstelleLfdNr();
-            break;
-        case 2:
-            tmp = fd.getErfassungsDatum();
-            break;
-        case 3:
-            tmp = fd.getGemeindekennzahl();
-            break;
-
-        default:
-            tmp = "ERROR";
-            break;
+    public Object getInkaMessstelleFromDB(Object obj, int index) {
+        switch (index) {
+            case 0: return ((InkaMessstelle) obj).getBeschrMesspunkt();
+            case 1: return ((InkaMessstelle) obj).getMessstelleLfdNr();
+            case 2:
+                return DateUtils.format(
+                    ((InkaMessstelle) obj).getErfassungsDatum().getTime(),
+                    DateUtils.FORMAT_DATE);
+            case 3: return ((InkaMessstelle) obj).getGemeindekennzahl();
+            default: return "ERROR";
         }
-        return tmp;
     }
 
 
