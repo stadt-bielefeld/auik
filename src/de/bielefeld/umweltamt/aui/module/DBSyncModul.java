@@ -45,29 +45,41 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.tipi.DeaAdresse;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstAnlage;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstMessst;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstStoffe;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnlage;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetrieb;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetriebseinrichtung;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaGenehmigung;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaMessstAnlage;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaMessstelle;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaUebergabestelle;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.DeaAdresseModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaAnfallstAnlageModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaAnfallstMessstModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaAnfallstStoffeModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaAnfallstelleModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaAnlageModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaBetriebModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaBetriebseinrichtungModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaGenehmigungModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaMessstAnlageModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaMessstelleModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaUebergabestelleModel;
 import de.bielefeld.umweltamt.aui.tipi.CredentialsDialog;
 import de.bielefeld.umweltamt.aui.tipi.ServiceManager;
 import de.nrw.lds.tipi.inka.Dea_Adresse;
+import de.nrw.lds.tipi.inka.Inka_Anfallst_Anlage;
+import de.nrw.lds.tipi.inka.Inka_Anfallst_Messst;
+import de.nrw.lds.tipi.inka.Inka_Anfallst_Stoffe;
 import de.nrw.lds.tipi.inka.Inka_Anfallstelle;
 import de.nrw.lds.tipi.inka.Inka_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Betrieb;
 import de.nrw.lds.tipi.inka.Inka_Betriebseinrichtung;
 import de.nrw.lds.tipi.inka.Inka_Genehmigung;
+import de.nrw.lds.tipi.inka.Inka_Messst_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Messstelle;
 import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
 
@@ -79,37 +91,49 @@ public class DBSyncModul extends AbstractModul {
     private JPanel panel;
 
     // Model für Datensätze aus der Datenbank
-    private DeaAdresseModel addrDBModel;
-    private InkaAnfallstelleModel anfallstelleDBModel;
-    private InkaAnlageModel anlageDBModel;
-    private InkaBetriebModel betriebDBModel;
+    private DeaAdresseModel              addrDBModel;
+    private InkaBetriebModel             betriebDBModel;
+    private InkaGenehmigungModel         genehmigungDBModel;
     private InkaBetriebseinrichtungModel betriebseinrDBModel;
-    private InkaGenehmigungModel genehmigungDBModel;
-    private InkaMessstelleModel messstelleDBModel;
-    private InkaUebergabestelleModel uebergabestelleDBModel;
+    private InkaUebergabestelleModel     uebergabestelleDBModel;
+    private InkaMessstelleModel          messstelleDBModel;
+    private InkaAnfallstelleModel        anfallstelleDBModel;
+    private InkaAnlageModel              anlageDBModel;
+    private InkaMessstAnlageModel        messstAnlageDBModel;
+    private InkaAnfallstMessstModel      anfallstMessstDBModel;
+    private InkaAnfallstAnlageModel      anfallstAnlageDBModel;
+    private InkaAnfallstStoffeModel      anfallstStoffeDBModel;
 
     // Model für Datensätze des entferneten Service.
-    private DeaAdresseModel addrServiceModel;
-    private InkaAnfallstelleModel anfallstelleServiceModel;
-    private InkaAnlageModel anlageServiceModel;
-    private InkaBetriebModel betriebServiceModel;
+    private DeaAdresseModel              addrServiceModel;
+    private InkaBetriebModel             betriebServiceModel;
+    private InkaGenehmigungModel         genehmigungServiceModel;
     private InkaBetriebseinrichtungModel betriebseinrServiceModel;
-    private InkaGenehmigungModel genehmigungServiceModel;
-    private InkaMessstelleModel messstelleServiceModel;
-    private InkaUebergabestelleModel uebergabestelleServiceModel;
+    private InkaUebergabestelleModel     uebergabestelleServiceModel;
+    private InkaMessstelleModel          messstelleServiceModel;
+    private InkaAnfallstelleModel        anfallstelleServiceModel;
+    private InkaAnlageModel              anlageServiceModel;
+    private InkaMessstAnlageModel        messstAnlageServiceModel;
+    private InkaAnfallstMessstModel      anfallstMessstServiceModel;
+    private InkaAnfallstAnlageModel      anfallstAnlageServiceModel;
+    private InkaAnfallstStoffeModel      anfallstStoffeServiceModel;
 
     private JTable dbTable;
     private JLabel rowCount;
 
     // Listen mit zu übertragenden Daten.
-    private List<Dea_Adresse> sendAddr;
-    private List<Inka_Anfallstelle> sendAnfallstelle;
-    private List<Inka_Anlage> sendAnlage;
-    private List<Inka_Betrieb> sendBetrieb;
-    private List<Inka_Betriebseinrichtung> sendBetriebseinr;
-    private List<Inka_Genehmigung> sendGenehm;
-    private List<Inka_Messstelle> sendMessstelle;
-    private List<Inka_Uebergabestelle> sendUebergabe;
+    private List<Dea_Adresse>              sendAddr;
+    private List<Inka_Betrieb>             sendBetrieb;
+    private List<Inka_Genehmigung>         sendGenehmigung;
+    private List<Inka_Betriebseinrichtung> sendBetriebseinrichtung;
+    private List<Inka_Uebergabestelle>     sendUebergabestelle;
+    private List<Inka_Messstelle>          sendMessstelle;
+    private List<Inka_Anfallstelle>        sendAnfallstelle;
+    private List<Inka_Anlage>              sendAnlage;
+    private List<Inka_Messst_Anlage>       sendMessstAnlage;
+    private List<Inka_Anfallst_Messst>     sendAnfallstMessst;
+    private List<Inka_Anfallst_Anlage>     sendAnfallstAnlage;
+    private List<Inka_Anfallst_Stoffe>     sendAnfallstStoffe;
 
     private ServiceManager service;
 
@@ -139,38 +163,44 @@ public class DBSyncModul extends AbstractModul {
         password = null;
         this.dbTable = new JTable();
         this.rowCount = new JLabel("0");
+
         this.addrDBModel = new DeaAdresseModel();
         this.addrServiceModel = new DeaAdresseModel();
-
-        this.anfallstelleDBModel = new InkaAnfallstelleModel();
-        this.anfallstelleServiceModel = new InkaAnfallstelleModel();
-
-        this.anlageDBModel = new InkaAnlageModel();
-        this.anlageServiceModel = new InkaAnlageModel();
-
         this.betriebDBModel = new InkaBetriebModel();
         this.betriebServiceModel = new InkaBetriebModel();
-
-        this.betriebseinrDBModel = new InkaBetriebseinrichtungModel();
-        this.betriebseinrServiceModel = new InkaBetriebseinrichtungModel();
-
         this.genehmigungDBModel = new InkaGenehmigungModel();
         this.genehmigungServiceModel = new InkaGenehmigungModel();
-
-        this.messstelleDBModel = new InkaMessstelleModel();
-        this.messstelleServiceModel = new InkaMessstelleModel();
-
+        this.betriebseinrDBModel = new InkaBetriebseinrichtungModel();
+        this.betriebseinrServiceModel = new InkaBetriebseinrichtungModel();
         this.uebergabestelleDBModel = new InkaUebergabestelleModel();
         this.uebergabestelleServiceModel = new InkaUebergabestelleModel();
+        this.messstelleDBModel = new InkaMessstelleModel();
+        this.messstelleServiceModel = new InkaMessstelleModel();
+        this.anfallstelleDBModel = new InkaAnfallstelleModel();
+        this.anfallstelleServiceModel = new InkaAnfallstelleModel();
+        this.anlageDBModel = new InkaAnlageModel();
+        this.anlageServiceModel = new InkaAnlageModel();
+        this.messstAnlageDBModel = new InkaMessstAnlageModel();
+        this.messstAnlageServiceModel = new InkaMessstAnlageModel();
+        this.anfallstMessstDBModel = new InkaAnfallstMessstModel();
+        this.anfallstMessstServiceModel = new InkaAnfallstMessstModel();
+        this.anfallstAnlageDBModel = new InkaAnfallstAnlageModel();
+        this.anfallstAnlageServiceModel = new InkaAnfallstAnlageModel();
+        this.anfallstStoffeDBModel = new InkaAnfallstStoffeModel();
+        this.anfallstStoffeServiceModel = new InkaAnfallstStoffeModel();
 
         this.sendAddr = new ArrayList<Dea_Adresse>();
+        this.sendBetrieb = new ArrayList<Inka_Betrieb>();
+        this.sendGenehmigung = new ArrayList<Inka_Genehmigung>();
+        this.sendBetriebseinrichtung = new ArrayList<Inka_Betriebseinrichtung>();
+        this.sendUebergabestelle = new ArrayList<Inka_Uebergabestelle>();
+        this.sendMessstelle = new ArrayList<Inka_Messstelle>();
         this.sendAnfallstelle = new ArrayList<Inka_Anfallstelle>();
         this.sendAnlage = new ArrayList<Inka_Anlage>();
-        this.sendBetrieb = new ArrayList<Inka_Betrieb>();
-        this.sendBetriebseinr = new ArrayList<Inka_Betriebseinrichtung>();
-        this.sendGenehm = new ArrayList<Inka_Genehmigung>();
-        this.sendMessstelle = new ArrayList<Inka_Messstelle>();
-        this.sendUebergabe = new ArrayList<Inka_Uebergabestelle>();
+        this.sendMessstAnlage = new ArrayList<Inka_Messst_Anlage>();
+        this.sendAnfallstMessst = new ArrayList<Inka_Anfallst_Messst>();
+        this.sendAnfallstAnlage = new ArrayList<Inka_Anfallst_Anlage>();
+        this.sendAnfallstStoffe = new ArrayList<Inka_Anfallst_Stoffe>();
 
         this.service = ServiceManager.getInstance();
     }
@@ -195,6 +225,26 @@ public class DBSyncModul extends AbstractModul {
                         DBSyncModul.this.dbTable
                             .setModel(DBSyncModul.this.addrDBModel);
                     }
+                    if (item.equals("inka_betrieb")) {
+                        DBSyncModul.this.dbTable
+                            .setModel(DBSyncModul.this.betriebDBModel);
+                    }
+                    if (item.equals("inka_genehmigung")) {
+                        DBSyncModul.this.dbTable
+                            .setModel(DBSyncModul.this.genehmigungDBModel);
+                    }
+                    if (item.equals("inka_betriebseinrichtung")) {
+                        DBSyncModul.this.dbTable
+                            .setModel(DBSyncModul.this.betriebseinrDBModel);
+                    }
+                    if (item.equals("inka_uebergabestelle")) {
+                        DBSyncModul.this.dbTable
+                            .setModel(DBSyncModul.this.uebergabestelleDBModel);
+                    }
+                    if (item.equals("inka_messstelle")) {
+                        DBSyncModul.this.dbTable
+                            .setModel(DBSyncModul.this.messstelleDBModel);
+                    }
                     if (item.equals("inka_anfallstelle")) {
                         DBSyncModul.this.dbTable
                             .setModel(DBSyncModul.this.anfallstelleDBModel);
@@ -203,25 +253,21 @@ public class DBSyncModul extends AbstractModul {
                         DBSyncModul.this.dbTable
                             .setModel(DBSyncModul.this.anlageDBModel);
                     }
-                    if (item.equals("inka_betrieb")) {
+                    if (item.equals("inka_messst_anlage")) {
                         DBSyncModul.this.dbTable
-                            .setModel(DBSyncModul.this.betriebDBModel);
+                            .setModel(DBSyncModul.this.messstAnlageDBModel);
                     }
-                    if (item.equals("inka_betriebseinrichtung")) {
+                    if (item.equals("inka_anfallst_messst")) {
                         DBSyncModul.this.dbTable
-                            .setModel(DBSyncModul.this.betriebseinrDBModel);
+                            .setModel(DBSyncModul.this.anfallstMessstDBModel);
                     }
-                    if (item.equals("inka_genehmigung")) {
+                    if (item.equals("inka_anfallst_anlage")) {
                         DBSyncModul.this.dbTable
-                            .setModel(DBSyncModul.this.genehmigungDBModel);
+                            .setModel(DBSyncModul.this.anfallstAnlageDBModel);
                     }
-                    if (item.equals("inka_messstelle")) {
+                    if (item.equals("inka_anfallst_stoffe")) {
                         DBSyncModul.this.dbTable
-                            .setModel(DBSyncModul.this.messstelleDBModel);
-                    }
-                    if (item.equals("inka_uebergabestelle")) {
-                        DBSyncModul.this.dbTable
-                            .setModel(DBSyncModul.this.uebergabestelleDBModel);
+                            .setModel(DBSyncModul.this.anfallstStoffeDBModel);
                     }
                     compare.setSelectedItem(compare.getItemAt(0));
                     DBSyncModul.this.rowCount.setText(String
@@ -241,6 +287,26 @@ public class DBSyncModul extends AbstractModul {
                             DBSyncModul.this.dbTable
                                 .setModel(DBSyncModul.this.addrDBModel);
                         }
+                        if (sel.equals("inka_betrieb")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.betriebDBModel);
+                        }
+                        if (sel.equals("inka_genehmigung")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.genehmigungDBModel);
+                        }
+                        if (sel.equals("inka_betriebseinrichtung")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.betriebseinrDBModel);
+                        }
+                        if (sel.equals("inka_uebergabestelle")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.uebergabestelleDBModel);
+                        }
+                        if (sel.equals("inka_messstelle")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.messstelleDBModel);
+                        }
                         if (sel.equals("inka_anfallstelle")) {
                             DBSyncModul.this.dbTable
                                 .setModel(DBSyncModul.this.anfallstelleDBModel);
@@ -249,31 +315,47 @@ public class DBSyncModul extends AbstractModul {
                             DBSyncModul.this.dbTable
                                 .setModel(DBSyncModul.this.anlageDBModel);
                         }
-                        if (sel.equals("inka_betrieb")) {
+                        if (sel.equals("inka_messst_anlage")) {
                             DBSyncModul.this.dbTable
-                                .setModel(DBSyncModul.this.betriebDBModel);
+                                .setModel(DBSyncModul.this.messstAnlageDBModel);
                         }
-                        if (sel.equals("inka_betriebseinrichtung")) {
+                        if (sel.equals("inka_anfallst_messst")) {
                             DBSyncModul.this.dbTable
-                                .setModel(DBSyncModul.this.betriebseinrDBModel);
+                                .setModel(DBSyncModul.this.anfallstMessstDBModel);
                         }
-                        if (sel.equals("inka_genehmigung")) {
+                        if (sel.equals("inka_anfallst_anlage")) {
                             DBSyncModul.this.dbTable
-                                .setModel(DBSyncModul.this.genehmigungDBModel);
+                                .setModel(DBSyncModul.this.anfallstAnlageDBModel);
                         }
-                        if (sel.equals("inka_messstelle")) {
+                        if (sel.equals("inka_anfallst_stoffe")) {
                             DBSyncModul.this.dbTable
-                                .setModel(DBSyncModul.this.messstelleDBModel);
-                        }
-                        if (sel.equals("inka_uebergabestelle")) {
-                            DBSyncModul.this.dbTable
-                                .setModel(DBSyncModul.this.uebergabestelleDBModel);
+                                .setModel(DBSyncModul.this.anfallstStoffeDBModel);
                         }
                     }
                     if (item.equals("entferner Dienst")) {
                         if (sel.equals("dea_adresse")) {
                             DBSyncModul.this.dbTable
                                 .setModel(DBSyncModul.this.addrServiceModel);
+                        }
+                        if (sel.equals("inka_betrieb")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.betriebServiceModel);
+                        }
+                        if (sel.equals("inka_genehmigung")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.genehmigungServiceModel);
+                        }
+                        if (sel.equals("inka_betriebseinrichtung")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.betriebseinrServiceModel);
+                        }
+                        if (sel.equals("inka_uebergabestelle")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.uebergabestelleServiceModel);
+                        }
+                        if (sel.equals("inka_messstelle")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.messstelleServiceModel);
                         }
                         if (sel.equals("inka_anfallstelle")) {
                             DBSyncModul.this.dbTable
@@ -283,25 +365,13 @@ public class DBSyncModul extends AbstractModul {
                             DBSyncModul.this.dbTable
                                 .setModel(DBSyncModul.this.anlageServiceModel);
                         }
-                        if (sel.equals("inka_betrieb")) {
+                        if (sel.equals("inka_messst_anlage")) {
                             DBSyncModul.this.dbTable
-                                .setModel(DBSyncModul.this.betriebServiceModel);
+                                .setModel(DBSyncModul.this.messstAnlageServiceModel);
                         }
-                        if (sel.equals("inka_betriebseinrichtung")) {
+                        if (sel.equals("inka_anfallst_messst")) {
                             DBSyncModul.this.dbTable
-                                .setModel(DBSyncModul.this.betriebseinrServiceModel);
-                        }
-                        if (sel.equals("inka_genehmigung")) {
-                            DBSyncModul.this.dbTable
-                                .setModel(DBSyncModul.this.genehmigungServiceModel);
-                        }
-                        if (sel.equals("inka_messstelle")) {
-                            DBSyncModul.this.dbTable
-                                .setModel(DBSyncModul.this.messstelleServiceModel);
-                        }
-                        if (sel.equals("inka_uebergabestelle")) {
-                            DBSyncModul.this.dbTable
-                                .setModel(DBSyncModul.this.uebergabestelleServiceModel);
+                                .setModel(DBSyncModul.this.anfallstMessstServiceModel);
                         }
                     }
                     DBSyncModul.this.rowCount.setText(String
@@ -328,6 +398,24 @@ public class DBSyncModul extends AbstractModul {
                         Dea_Adresse[] addr =
                             new Dea_Adresse[DBSyncModul.this.sendAddr.size()];
                         addr = DBSyncModul.this.sendAddr.toArray(addr);
+                        Inka_Betrieb[] betr =
+                            new Inka_Betrieb[DBSyncModul.this.sendBetrieb.size()];
+                        betr = DBSyncModul.this.sendBetrieb.toArray(betr);
+                        Inka_Genehmigung[] genehm =
+                            new Inka_Genehmigung[DBSyncModul.this.sendGenehmigung.size()];
+                        genehm = DBSyncModul.this.sendGenehmigung.toArray(genehm);
+                        Inka_Betriebseinrichtung[] betreinr =
+                            new Inka_Betriebseinrichtung[DBSyncModul.this.sendBetriebseinrichtung.size()];
+                        betreinr =
+                            DBSyncModul.this.sendBetriebseinrichtung.toArray(betreinr);
+                        Inka_Uebergabestelle[] uebergabe =
+                            new Inka_Uebergabestelle[DBSyncModul.this.sendUebergabestelle.size()];
+                        uebergabe =
+                            DBSyncModul.this.sendUebergabestelle.toArray(uebergabe);
+                        Inka_Messstelle[] messst =
+                            new Inka_Messstelle[DBSyncModul.this.sendMessstelle.size()];
+                        messst =
+                            DBSyncModul.this.sendMessstelle.toArray(messst);
                         Inka_Anfallstelle[] anfallst =
                             new Inka_Anfallstelle[DBSyncModul.this.sendAnfallstelle.size()];
                         anfallst =
@@ -335,24 +423,22 @@ public class DBSyncModul extends AbstractModul {
                         Inka_Anlage[] anlage =
                             new Inka_Anlage[DBSyncModul.this.sendAnlage.size()];
                         anlage = DBSyncModul.this.sendAnlage.toArray(anlage);
-                        Inka_Betrieb[] betr =
-                            new Inka_Betrieb[DBSyncModul.this.sendBetrieb.size()];
-                        betr = DBSyncModul.this.sendBetrieb.toArray(betr);
-                        Inka_Betriebseinrichtung[] betreinr =
-                            new Inka_Betriebseinrichtung[DBSyncModul.this.sendBetriebseinr.size()];
-                        betreinr =
-                            DBSyncModul.this.sendBetriebseinr.toArray(betreinr);
-                        Inka_Genehmigung[] genehm =
-                            new Inka_Genehmigung[DBSyncModul.this.sendGenehm.size()];
-                        genehm = DBSyncModul.this.sendGenehm.toArray(genehm);
-                        Inka_Messstelle[] messst =
-                            new Inka_Messstelle[DBSyncModul.this.sendMessstelle.size()];
-                        messst =
-                            DBSyncModul.this.sendMessstelle.toArray(messst);
-                        Inka_Uebergabestelle[] uebergabe =
-                            new Inka_Uebergabestelle[DBSyncModul.this.sendUebergabe.size()];
-                        uebergabe =
-                            DBSyncModul.this.sendUebergabe.toArray(uebergabe);
+                        Inka_Messst_Anlage[] messstAnlage =
+                            new Inka_Messst_Anlage[DBSyncModul.this.sendMessstAnlage.size()];
+                        messstAnlage =
+                            DBSyncModul.this.sendMessstAnlage.toArray(messstAnlage);
+                        Inka_Anfallst_Messst[] anfallstMessst =
+                            new Inka_Anfallst_Messst[DBSyncModul.this.sendAnfallstMessst.size()];
+                        anfallstMessst =
+                            DBSyncModul.this.sendAnfallstMessst.toArray(anfallstMessst);
+                        Inka_Anfallst_Anlage[] anfallstAnlage =
+                            new Inka_Anfallst_Anlage[DBSyncModul.this.sendAnfallstAnlage.size()];
+                        anfallstAnlage =
+                            DBSyncModul.this.sendAnfallstAnlage.toArray(anfallstAnlage);
+                        Inka_Anfallst_Stoffe[] anfallstStoffe =
+                            new Inka_Anfallst_Stoffe[DBSyncModul.this.sendAnfallstStoffe.size()];
+                        anfallstStoffe =
+                            DBSyncModul.this.sendAnfallstStoffe.toArray(anfallstStoffe);
                         // Note: Take care to transmit in the right order!
                         DBSyncModul.this.service.setDea_Adressen(
                             user, password, addr);
@@ -370,6 +456,14 @@ public class DBSyncModul extends AbstractModul {
                             user, password, anfallst);
                         DBSyncModul.this.service.setInka_Anlage(
                             user, password, anlage);
+                        DBSyncModul.this.service.setInka_Messst_Anlage(
+                            user, password, messstAnlage);
+                        DBSyncModul.this.service.setInka_Anfallst_Messst(
+                            user, password, anfallstMessst);
+                        DBSyncModul.this.service.setInka_Anfallst_Anlage(
+                            user, password, anfallstAnlage);
+                        DBSyncModul.this.service.setInka_Anfallst_Stoffe(
+                            user, password, anfallstStoffe);
                     } else {
                         GUIManager.getInstance().showInfoMessage(
                             "Bitte holen Sie zuerst Daten ab!", "Info");
@@ -419,28 +513,43 @@ public class DBSyncModul extends AbstractModul {
                 if (entities[i].equals("dea_adresse")) {
                     this.addrDBModel.setList(DeaAdresse.getAll());
                 }
+                if (entities[i].equals("inka_betrieb")) {
+                    this.betriebDBModel.setList(InkaBetrieb.getAll());
+                }
+                if (entities[i].equals("inka_genehmigung")) {
+                    this.genehmigungDBModel.setList(InkaGenehmigung.getAll());
+                }
+                if (entities[i].equals("inka_betriebseinrichtung")) {
+                    this.betriebseinrDBModel.setList(
+                        InkaBetriebseinrichtung.getAll());
+                }
+                if (entities[i].equals("inka_uebergabestelle")) {
+                    this.uebergabestelleDBModel.setList(
+                        InkaUebergabestelle.getAll());
+                }
+                if (entities[i].equals("inka_messstelle")) {
+                    this.messstelleDBModel.setList(InkaMessstelle.getAll());
+                }
                 if (entities[i].equals("inka_anfallstelle")) {
                     this.anfallstelleDBModel.setList(InkaAnfallstelle.getAll());
                 }
                 if (entities[i].equals("inka_anlage")) {
                     this.anlageDBModel.setList(InkaAnlage.getAll());
                 }
-                if (entities[i].equals("inka_betrieb")) {
-                    this.betriebDBModel.setList(InkaBetrieb.getAll());
+                if (entities[i].equals("inka_messst_anlage")) {
+                    this.messstAnlageDBModel.setList(InkaMessstAnlage.getAll());
                 }
-                if (entities[i].equals("inka_betriebseinrichtung")) {
-                    this.betriebseinrDBModel.setList(InkaBetriebseinrichtung
-                        .getAll());
+                if (entities[i].equals("inka_anfallst_messst")) {
+                    this.anfallstMessstDBModel.setList(
+                        InkaAnfallstMessst.getAll());
                 }
-                if (entities[i].equals("inka_genehmigung")) {
-                    this.genehmigungDBModel.setList(InkaGenehmigung.getAll());
+                if (entities[i].equals("inka_anfallst_anlage")) {
+                    this.anfallstAnlageDBModel.setList(
+                        InkaAnfallstAnlage.getAll());
                 }
-                if (entities[i].equals("inka_messstelle")) {
-                    this.messstelleDBModel.setList(InkaMessstelle.getAll());
-                }
-                if (entities[i].equals("inka_uebergabestelle")) {
-                    this.uebergabestelleDBModel.setList(
-                        InkaUebergabestelle.getAll());
+                if (entities[i].equals("inka_anfallst_stoffe")) {
+                    this.anfallstStoffeDBModel.setList(
+                        InkaAnfallstStoffe.getAll());
                 }
             }
             return entities;
@@ -468,7 +577,6 @@ public class DBSyncModul extends AbstractModul {
         // TODO validation, exception handling etc.
         if (user != null && password != null && url != null) {
             this.service.setInkaEndpointAdress(url);
-            // Note: Maybe we have to take care of the order here as well?
             // Dea_Adresse
             Dea_Adresse[] adr = this.service.getDea_Adressen(user, password);
             List<Dea_Adresse> adressen = new ArrayList<Dea_Adresse>();
@@ -526,6 +634,38 @@ public class DBSyncModul extends AbstractModul {
             for (int i = 0; i < anlage.length; i++) {
                 anlagen.add(anlage[i]);
             }
+            // Inka_Messst_Anlage
+            Inka_Messst_Anlage[] messstAnlage =
+                this.service.getInka_Messst_Anlage(user, password);
+            List<Inka_Messst_Anlage> messstAnlagen =
+                new ArrayList<Inka_Messst_Anlage>();
+            for (int i = 0; i < messstAnlage.length; i++) {
+                messstAnlagen.add(messstAnlage[i]);
+            }
+            // Inka_Anfallst_Messst
+            Inka_Anfallst_Messst[] anfallstMessst =
+                this.service.getInka_Anfallst_Messst(user, password);
+            List<Inka_Anfallst_Messst> anfallstMessstn =
+                new ArrayList<Inka_Anfallst_Messst>();
+            for (int i = 0; i < anfallstMessst.length; i++) {
+                anfallstMessstn.add(anfallstMessst[i]);
+            }
+            // Inka_Anfallst_Anlage
+            Inka_Anfallst_Anlage[] anfallstAnlage =
+                this.service.getInka_Anfallst_Anlage(user, password);
+            List<Inka_Anfallst_Anlage> anfallstAnlagen =
+                new ArrayList<Inka_Anfallst_Anlage>();
+            for (int i = 0; i < anfallstAnlage.length; i++) {
+                anfallstAnlagen.add(anfallstAnlage[i]);
+            }
+            // Inka_Anfallst_Stoffe
+            Inka_Anfallst_Stoffe[] anfallstStoffe =
+                this.service.getInka_Anfallst_Stoffe(user, password);
+            List<Inka_Anfallst_Stoffe> anfallstStoffen =
+                new ArrayList<Inka_Anfallst_Stoffe>();
+            for (int i = 0; i < anfallstStoffe.length; i++) {
+                anfallstStoffen.add(anfallstStoffe[i]);
+            }
             this.addrServiceModel.setList(adressen);
             this.betriebServiceModel.setList(betriebe);
             this.genehmigungServiceModel.setList(genehmigungen);
@@ -533,7 +673,11 @@ public class DBSyncModul extends AbstractModul {
             this.uebergabestelleServiceModel.setList(uebergaben);
             this.messstelleServiceModel.setList(messsten);
             this.anfallstelleServiceModel.setList(anfallsten);
-            this.anlageServiceModel.setList(anfallsten);
+            this.anlageServiceModel.setList(anlagen);
+            this.messstAnlageServiceModel.setList(messstAnlagen);
+            this.anfallstMessstServiceModel.setList(anfallstMessstn);
+            this.anfallstAnlageServiceModel.setList(anfallstAnlagen);
+            this.anfallstStoffeServiceModel.setList(anfallstStoffen);
         }
     }
 
@@ -553,12 +697,12 @@ public class DBSyncModul extends AbstractModul {
         }
         List<?> list3 = this.betriebseinrDBModel.getList();
         for (int i = 0; i < list3.size(); i++) {
-            this.sendBetriebseinr.add(((InkaBetriebseinrichtung) list3.get(i))
+            this.sendBetriebseinrichtung.add(((InkaBetriebseinrichtung) list3.get(i))
                 .toServiceType());
         }
         List<?> list4 = this.genehmigungDBModel.getList();
         for (int i = 0; i < list4.size(); i++) {
-            this.sendGenehm.add(((InkaGenehmigung) list4.get(i))
+            this.sendGenehmigung.add(((InkaGenehmigung) list4.get(i))
                 .toServiceType());
         }
         List<?> list5 = this.anfallstelleDBModel.getList();
@@ -573,13 +717,33 @@ public class DBSyncModul extends AbstractModul {
         }
         List<?> list7 = this.uebergabestelleDBModel.getList();
         for (int i = 0; i < list7.size(); i++) {
-            this.sendUebergabe.add(((InkaUebergabestelle) list7.get(i))
+            this.sendUebergabestelle.add(((InkaUebergabestelle) list7.get(i))
                 .toServiceType());
         }
         List<?> list8 = this.anlageDBModel.getList();
         for (int i = 0; i < list8.size(); i++) {
             this.sendAnlage.add(((InkaAnlage) list8.get(i))
                 .toServiceType());
+        }
+        List<?> tempList = this.messstAnlageDBModel.getList();
+        for (Object obj : tempList) {
+            this.sendMessstAnlage.add(
+                ((InkaMessstAnlage) obj).toServiceType());
+        }
+        tempList = this.anfallstMessstDBModel.getList();
+        for (Object obj : tempList) {
+            this.sendAnfallstMessst.add(
+                ((InkaAnfallstMessst) obj).toServiceType());
+        }
+        tempList = this.anfallstAnlageDBModel.getList();
+        for (Object obj : tempList) {
+            this.sendAnfallstAnlage.add(
+                ((InkaAnfallstAnlage) obj).toServiceType());
+        }
+        tempList = this.anfallstStoffeDBModel.getList();
+        for (Object obj : tempList) {
+            this.sendAnfallstStoffe.add(
+                ((InkaAnfallstStoffe) obj).toServiceType());
         }
     }
 }

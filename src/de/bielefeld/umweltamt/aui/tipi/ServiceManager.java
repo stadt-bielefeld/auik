@@ -27,19 +27,27 @@ import javax.xml.rpc.ServiceException;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.nrw.lds.tipi.inka.Dea_Adresse;
+import de.nrw.lds.tipi.inka.Inka_Anfallst_Anlage;
+import de.nrw.lds.tipi.inka.Inka_Anfallst_Messst;
+import de.nrw.lds.tipi.inka.Inka_Anfallst_Stoffe;
 import de.nrw.lds.tipi.inka.Inka_Anfallstelle;
 import de.nrw.lds.tipi.inka.Inka_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Betrieb;
 import de.nrw.lds.tipi.inka.Inka_Betriebseinrichtung;
 import de.nrw.lds.tipi.inka.Inka_Genehmigung;
+import de.nrw.lds.tipi.inka.Inka_Messst_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Messstelle;
 import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
 import de.nrw.lds.tipi.inka.request.ReqDea_Adresse;
+import de.nrw.lds.tipi.inka.request.ReqInka_Anfallst_Anlage;
+import de.nrw.lds.tipi.inka.request.ReqInka_Anfallst_Messst;
+import de.nrw.lds.tipi.inka.request.ReqInka_Anfallst_Stoffe;
 import de.nrw.lds.tipi.inka.request.ReqInka_Anfallstelle;
 import de.nrw.lds.tipi.inka.request.ReqInka_Anlage;
 import de.nrw.lds.tipi.inka.request.ReqInka_Betrieb;
 import de.nrw.lds.tipi.inka.request.ReqInka_Betriebseinrichtung;
 import de.nrw.lds.tipi.inka.request.ReqInka_Genehmigung;
+import de.nrw.lds.tipi.inka.request.ReqInka_Messst_Anlage;
 import de.nrw.lds.tipi.inka.request.ReqInka_Messstelle;
 import de.nrw.lds.tipi.inka.request.ReqInka_Uebergabestelle;
 import de.nrw.lds.tipi.inka.webservice.InkaInterfaceLocator;
@@ -484,7 +492,208 @@ public final class ServiceManager {
         return true;
     }
 
+    public Inka_Messst_Anlage[] getInka_Messst_Anlage(
+        String user,
+        String passw)
+    {
+        try {
+            InkaInterfacePortType iip = getInkaInterfacePortType();
+            if (iip == null) {
+                return new Inka_Messst_Anlage[0];
+            }
+            ReqInka_Messst_Anlage req = new ReqInka_Messst_Anlage();
+            req.setClientTimestamp(Calendar.getInstance());
+            req.setKennung(user);
+            req.setPassword(passw);
+            return iip.getInka_Messst_Anlage(req).getArrInka_Messst_Anlage();
+        }
+        catch(RemoteException re) {
+            logger.error("Error while requesting Inka_Messst_Anlage.");
+        }
+        return new Inka_Messst_Anlage[0];
 
+    }
+
+    public boolean setInka_Messst_Anlage(
+        String user,
+        String passw,
+        Inka_Messst_Anlage[] inka_list)
+    {
+        try {
+            for (int i = 0; i < inka_list.length; i++) {
+                InkaInterfacePortType iip = getInkaInterfacePortType();
+                if (iip == null) {
+                    return false;
+                }
+                ReqInka_Messst_Anlage inka_obj =
+                    new ReqInka_Messst_Anlage();
+                inka_obj.setObjInka_Messst_Anlage(inka_list[i]);
+                inka_obj.setClientTimestamp(Calendar.getInstance());
+                inka_obj.setKennung(user);
+                inka_obj.setPassword(passw);
+                iip.setInka_Messst_Anlage(inka_obj);
+            }
+        }
+        catch(RemoteException re) {
+            logger.error("Error while sending Inka_Messst_Anlage.");
+            re.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public Inka_Anfallst_Messst[] getInka_Anfallst_Messst(
+        String user,
+        String passw)
+    {
+        try {
+            InkaInterfacePortType iip = getInkaInterfacePortType();
+            if (iip == null) {
+                return new Inka_Anfallst_Messst[0];
+            }
+            ReqInka_Anfallst_Messst req = new ReqInka_Anfallst_Messst();
+            req.setClientTimestamp(Calendar.getInstance());
+            req.setKennung(user);
+            req.setPassword(passw);
+            return iip.getInka_Anfallst_Messst(req)
+                .getArrInka_Anfallst_Messst();
+        }
+        catch(RemoteException re) {
+            logger.error("Error while requesting Inka_Anfallst_Messst.");
+        }
+        return new Inka_Anfallst_Messst[0];
+
+    }
+
+    public boolean setInka_Anfallst_Messst(
+        String user,
+        String passw,
+        Inka_Anfallst_Messst[] inka_list)
+    {
+        try {
+            for (int i = 0; i < inka_list.length; i++) {
+                InkaInterfacePortType iip = getInkaInterfacePortType();
+                if (iip == null) {
+                    return false;
+                }
+                ReqInka_Anfallst_Messst inka_obj =
+                    new ReqInka_Anfallst_Messst();
+                inka_obj.setObjInka_Anfallst_Messst(inka_list[i]);
+                inka_obj.setClientTimestamp(Calendar.getInstance());
+                inka_obj.setKennung(user);
+                inka_obj.setPassword(passw);
+                iip.setInka_Anfallst_Messst(inka_obj);
+            }
+        }
+        catch(RemoteException re) {
+            logger.error("Error while sending Inka_Anfallst_Messst.");
+            re.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public Inka_Anfallst_Anlage[] getInka_Anfallst_Anlage(
+        String user,
+        String passw)
+    {
+        try {
+            InkaInterfacePortType iip = getInkaInterfacePortType();
+            if (iip == null) {
+                return new Inka_Anfallst_Anlage[0];
+            }
+            ReqInka_Anfallst_Anlage req = new ReqInka_Anfallst_Anlage();
+            req.setClientTimestamp(Calendar.getInstance());
+            req.setKennung(user);
+            req.setPassword(passw);
+            return iip.getInka_Anfallst_Anlage(req)
+                .getArrInka_Anfallst_Anlage();
+        }
+        catch(RemoteException re) {
+            logger.error("Error while requesting Inka_Anfallst_Anlage.");
+        }
+        return new Inka_Anfallst_Anlage[0];
+
+    }
+
+    public boolean setInka_Anfallst_Anlage(
+        String user,
+        String passw,
+        Inka_Anfallst_Anlage[] inka_list)
+    {
+        try {
+            for (int i = 0; i < inka_list.length; i++) {
+                InkaInterfacePortType iip = getInkaInterfacePortType();
+                if (iip == null) {
+                    return false;
+                }
+                ReqInka_Anfallst_Anlage inka_obj =
+                    new ReqInka_Anfallst_Anlage();
+                inka_obj.setObjInka_Anfallst_Anlage(inka_list[i]);
+                inka_obj.setClientTimestamp(Calendar.getInstance());
+                inka_obj.setKennung(user);
+                inka_obj.setPassword(passw);
+                iip.setInka_Anfallst_Anlage(inka_obj);
+            }
+        }
+        catch(RemoteException re) {
+            logger.error("Error while sending Inka_Anfallst_Anlage.");
+            re.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public Inka_Anfallst_Stoffe[] getInka_Anfallst_Stoffe(
+        String user,
+        String passw)
+    {
+        try {
+            InkaInterfacePortType iip = getInkaInterfacePortType();
+            if (iip == null) {
+                return new Inka_Anfallst_Stoffe[0];
+            }
+            ReqInka_Anfallst_Stoffe req = new ReqInka_Anfallst_Stoffe();
+            req.setClientTimestamp(Calendar.getInstance());
+            req.setKennung(user);
+            req.setPassword(passw);
+            return iip.getInka_Anfallst_Stoffe(req)
+                .getArrInka_Anfallst_Stoffe();
+        }
+        catch(RemoteException re) {
+            logger.error("Error while requesting Inka_Anfallst_Stoffe.");
+        }
+        return new Inka_Anfallst_Stoffe[0];
+
+    }
+
+    public boolean setInka_Anfallst_Stoffe(
+        String user,
+        String passw,
+        Inka_Anfallst_Stoffe[] inka_list)
+    {
+        try {
+            for (int i = 0; i < inka_list.length; i++) {
+                InkaInterfacePortType iip = getInkaInterfacePortType();
+                if (iip == null) {
+                    return false;
+                }
+                ReqInka_Anfallst_Stoffe inka_obj =
+                    new ReqInka_Anfallst_Stoffe();
+                inka_obj.setObjInka_Anfallst_Stoffe(inka_list[i]);
+                inka_obj.setClientTimestamp(Calendar.getInstance());
+                inka_obj.setKennung(user);
+                inka_obj.setPassword(passw);
+                iip.setInka_Anfallst_Stoffe(inka_obj);
+            }
+        }
+        catch(RemoteException re) {
+            logger.error("Error while sending Inka_Anfallst_Stoffe.");
+            re.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     protected InkaInterfaceLocator getInkaInterface() {
         if (inkaService == null) {
