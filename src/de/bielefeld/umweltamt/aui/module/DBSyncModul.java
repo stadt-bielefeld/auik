@@ -395,75 +395,31 @@ public class DBSyncModul extends AbstractModul {
                 public void actionPerformed(ActionEvent ae) {
                     if (url != null && user != null && password != null) {
                         dbToService();
-                        Dea_Adresse[] addr =
-                            new Dea_Adresse[DBSyncModul.this.sendAddr.size()];
-                        addr = DBSyncModul.this.sendAddr.toArray(addr);
-                        Inka_Betrieb[] betr =
-                            new Inka_Betrieb[DBSyncModul.this.sendBetrieb.size()];
-                        betr = DBSyncModul.this.sendBetrieb.toArray(betr);
-                        Inka_Genehmigung[] genehm =
-                            new Inka_Genehmigung[DBSyncModul.this.sendGenehmigung.size()];
-                        genehm = DBSyncModul.this.sendGenehmigung.toArray(genehm);
-                        Inka_Betriebseinrichtung[] betreinr =
-                            new Inka_Betriebseinrichtung[DBSyncModul.this.sendBetriebseinrichtung.size()];
-                        betreinr =
-                            DBSyncModul.this.sendBetriebseinrichtung.toArray(betreinr);
-                        Inka_Uebergabestelle[] uebergabe =
-                            new Inka_Uebergabestelle[DBSyncModul.this.sendUebergabestelle.size()];
-                        uebergabe =
-                            DBSyncModul.this.sendUebergabestelle.toArray(uebergabe);
-                        Inka_Messstelle[] messst =
-                            new Inka_Messstelle[DBSyncModul.this.sendMessstelle.size()];
-                        messst =
-                            DBSyncModul.this.sendMessstelle.toArray(messst);
-                        Inka_Anfallstelle[] anfallst =
-                            new Inka_Anfallstelle[DBSyncModul.this.sendAnfallstelle.size()];
-                        anfallst =
-                            DBSyncModul.this.sendAnfallstelle.toArray(anfallst);
-                        Inka_Anlage[] anlage =
-                            new Inka_Anlage[DBSyncModul.this.sendAnlage.size()];
-                        anlage = DBSyncModul.this.sendAnlage.toArray(anlage);
-                        Inka_Messst_Anlage[] messstAnlage =
-                            new Inka_Messst_Anlage[DBSyncModul.this.sendMessstAnlage.size()];
-                        messstAnlage =
-                            DBSyncModul.this.sendMessstAnlage.toArray(messstAnlage);
-                        Inka_Anfallst_Messst[] anfallstMessst =
-                            new Inka_Anfallst_Messst[DBSyncModul.this.sendAnfallstMessst.size()];
-                        anfallstMessst =
-                            DBSyncModul.this.sendAnfallstMessst.toArray(anfallstMessst);
-                        Inka_Anfallst_Anlage[] anfallstAnlage =
-                            new Inka_Anfallst_Anlage[DBSyncModul.this.sendAnfallstAnlage.size()];
-                        anfallstAnlage =
-                            DBSyncModul.this.sendAnfallstAnlage.toArray(anfallstAnlage);
-                        Inka_Anfallst_Stoffe[] anfallstStoffe =
-                            new Inka_Anfallst_Stoffe[DBSyncModul.this.sendAnfallstStoffe.size()];
-                        anfallstStoffe =
-                            DBSyncModul.this.sendAnfallstStoffe.toArray(anfallstStoffe);
                         // Note: Take care to transmit in the right order!
-                        DBSyncModul.this.service.setDea_Adressen(
-                            user, password, addr);
-                        DBSyncModul.this.service.setInka_Betriebe(
-                            user, password, betr);
-                        DBSyncModul.this.service.setInka_Genehmigungen(
-                            user, password, genehm);
-                        DBSyncModul.this.service.setInka_Betriebseinrichtungen(
-                            user, password, betreinr);
-                        DBSyncModul.this.service.setInka_Uebergabestelle(
-                            user, password, uebergabe);
-                        DBSyncModul.this.service.setInka_Messstelle(
-                            user, password, messst);
-                        DBSyncModul.this.service.setInka_Anfallstelle(
-                            user, password, anfallst);
-                        DBSyncModul.this.service.setInka_Anlage(
-                            user, password, anlage);
-                        DBSyncModul.this.service.setInka_Messst_Anlage(
-                            user, password, messstAnlage);
-                        DBSyncModul.this.service.setInka_Anfallst_Messst(
-                            user, password, anfallstMessst);
-                        DBSyncModul.this.service.setInka_Anfallst_Anlage(
-                            user, password, anfallstAnlage);
-                        DBSyncModul.this.service.setInka_Anfallst_Stoffe(
-                            user, password, anfallstStoffe);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendAddr);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendBetrieb);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendGenehmigung);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendBetriebseinrichtung);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendUebergabestelle);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendMessstelle);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendAnfallstelle);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendAnlage);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendMessstAnlage);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendAnfallstMessst);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendAnfallstAnlage);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendAnfallstStoffe);
                     } else {
                         GUIManager.getInstance().showInfoMessage(
                             "Bitte holen Sie zuerst Daten ab!", "Info");
@@ -577,107 +533,43 @@ public class DBSyncModul extends AbstractModul {
         // TODO validation, exception handling etc.
         if (user != null && password != null && url != null) {
             this.service.setInkaEndpointAdress(url);
-            // Dea_Adresse
-            Dea_Adresse[] adr = this.service.getDea_Adressen(user, password);
-            List<Dea_Adresse> adressen = new ArrayList<Dea_Adresse>();
-            for (int i = 0; i < adr.length; i++) {
-                adressen.add(adr[i]);
-            }
-            // Inka_Betrieb
-            Inka_Betrieb[] betr = this.service.getInka_Betriebe(user, password);
-            List<Inka_Betrieb> betriebe = new ArrayList<Inka_Betrieb>();
-            for (int i = 0; i < betr.length; i++) {
-                betriebe.add(betr[i]);
-            }
-            // Inka_Genehmigung
-            Inka_Genehmigung[] genehm = this.service.getInka_Genehmigungen(
-                user, password);
-            List<Inka_Genehmigung> genehmigungen =
-                new ArrayList<Inka_Genehmigung>();
-            for (int i = 0; i < genehm.length; i++) {
-                genehmigungen.add(genehm[i]);
-            }
-            // Inka_Betriebseinrichtung
-            Inka_Betriebseinrichtung[] betrein =
-                this.service.getInka_Betriebseinrichtungen(user, password);
-            List<Inka_Betriebseinrichtung> betriebseinrichtungen =
-                new ArrayList<Inka_Betriebseinrichtung>();
-            for (int i = 0; i < betrein.length; i++) {
-                betriebseinrichtungen.add(betrein[i]);
-            }
-            // Inka_Übergabestelle
-            Inka_Uebergabestelle[] uebergabe =
-                this.service.getInka_Uebergabestelle(user, password);
-            List<Inka_Uebergabestelle> uebergaben =
-                new ArrayList<Inka_Uebergabestelle>();
-            for (int i = 0; i < uebergabe.length; i++) {
-                uebergaben.add(uebergabe[i]);
-            }
-            // Inka_Messstelle
-            Inka_Messstelle[] messst =
-                this.service.getInka_Messstelle(user, password);
-            List<Inka_Messstelle> messsten = new ArrayList<Inka_Messstelle>();
-            for (int i = 0; i < messst.length; i++) {
-                messsten.add(messst[i]);
-            }
-            // Inka_Anfallstelle
-            Inka_Anfallstelle[] anfallst =
-                this.service.getInka_Anfallstelle(user, password);
-            List<Inka_Anfallstelle> anfallsten =
-                new ArrayList<Inka_Anfallstelle>();
-            for (int i = 0; i < anfallst.length; i++) {
-                anfallsten.add(anfallst[i]);
-            }
-            // Inka_Anlage
-            Inka_Anlage[] anlage = this.service.getInka_Anlage(user, password);
-            List<Inka_Anlage> anlagen = new ArrayList<Inka_Anlage>();
-            for (int i = 0; i < anlage.length; i++) {
-                anlagen.add(anlage[i]);
-            }
-            // Inka_Messst_Anlage
-            Inka_Messst_Anlage[] messstAnlage =
-                this.service.getInka_Messst_Anlage(user, password);
-            List<Inka_Messst_Anlage> messstAnlagen =
-                new ArrayList<Inka_Messst_Anlage>();
-            for (int i = 0; i < messstAnlage.length; i++) {
-                messstAnlagen.add(messstAnlage[i]);
-            }
-            // Inka_Anfallst_Messst
-            Inka_Anfallst_Messst[] anfallstMessst =
-                this.service.getInka_Anfallst_Messst(user, password);
-            List<Inka_Anfallst_Messst> anfallstMessstn =
-                new ArrayList<Inka_Anfallst_Messst>();
-            for (int i = 0; i < anfallstMessst.length; i++) {
-                anfallstMessstn.add(anfallstMessst[i]);
-            }
-            // Inka_Anfallst_Anlage
-            Inka_Anfallst_Anlage[] anfallstAnlage =
-                this.service.getInka_Anfallst_Anlage(user, password);
-            List<Inka_Anfallst_Anlage> anfallstAnlagen =
-                new ArrayList<Inka_Anfallst_Anlage>();
-            for (int i = 0; i < anfallstAnlage.length; i++) {
-                anfallstAnlagen.add(anfallstAnlage[i]);
-            }
-            // Inka_Anfallst_Stoffe
-            Inka_Anfallst_Stoffe[] anfallstStoffe =
-                this.service.getInka_Anfallst_Stoffe(user, password);
-            List<Inka_Anfallst_Stoffe> anfallstStoffen =
-                new ArrayList<Inka_Anfallst_Stoffe>();
-            for (int i = 0; i < anfallstStoffe.length; i++) {
-                anfallstStoffen.add(anfallstStoffe[i]);
-            }
-            this.addrServiceModel.setList(adressen);
-            this.betriebServiceModel.setList(betriebe);
-            this.genehmigungServiceModel.setList(genehmigungen);
-            this.betriebseinrServiceModel.setList(betriebseinrichtungen);
-            this.uebergabestelleServiceModel.setList(uebergaben);
-            this.messstelleServiceModel.setList(messsten);
-            this.anfallstelleServiceModel.setList(anfallsten);
-            this.anlageServiceModel.setList(anlagen);
-            this.messstAnlageServiceModel.setList(messstAnlagen);
-            this.anfallstMessstServiceModel.setList(anfallstMessstn);
-            this.anfallstAnlageServiceModel.setList(anfallstAnlagen);
-            this.anfallstStoffeServiceModel.setList(anfallstStoffen);
+            this.addrServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Dea_Adresse()));
+            this.betriebServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Betrieb()));
+            this.genehmigungServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Genehmigung()));
+            this.betriebseinrServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Betriebseinrichtung()));
+            this.uebergabestelleServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Uebergabestelle()));
+            this.messstelleServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Messstelle()));
+            this.anfallstelleServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Anfallstelle()));
+            this.anlageServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Anlage()));
+            this.messstAnlageServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Messst_Anlage()));
+            this.anfallstMessstServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Anfallst_Messst()));
+            this.anfallstAnlageServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Anfallst_Anlage()));
+            this.anfallstStoffeServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Anfallst_Stoffe()));
+            // Add new DEA/INKA-Table here
         }
     }
 

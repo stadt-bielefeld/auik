@@ -21,11 +21,14 @@
 package de.bielefeld.umweltamt.aui.tipi;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.xml.rpc.ServiceException;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.nrw.lds.tipi.general.HistoryObject;
 import de.nrw.lds.tipi.inka.Dea_Adresse;
 import de.nrw.lds.tipi.inka.Inka_Anfallst_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Anfallst_Messst;
@@ -38,6 +41,7 @@ import de.nrw.lds.tipi.inka.Inka_Genehmigung;
 import de.nrw.lds.tipi.inka.Inka_Messst_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Messstelle;
 import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
+import de.nrw.lds.tipi.inka.general.ReqStandard;
 import de.nrw.lds.tipi.inka.request.ReqDea_Adresse;
 import de.nrw.lds.tipi.inka.request.ReqInka_Anfallst_Anlage;
 import de.nrw.lds.tipi.inka.request.ReqInka_Anfallst_Messst;
@@ -62,7 +66,7 @@ import de.nrw.lds.tipi.inka.webservice.InkaInterfacePortType;
 public final class ServiceManager {
 
     /** Logging */
-    private static final AuikLogger logger = AuikLogger.getLogger();
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /** The ServiceManager instance */
     private static ServiceManager instance;
@@ -80,619 +84,257 @@ public final class ServiceManager {
         return instance;
     }
 
-
     public void setInkaEndpointAdress(String address) {
         getInkaInterface().setInkaInterfaceEndpointAddress(address);
     }
 
-
-    public Dea_Adresse[] getDea_Adressen(String user, String passw) {
+    /**
+     * Get all remote inka data records
+     * @param <T> Type of the inka records
+     * @param user
+     * @param password
+     * @param type A HistoryObject merely used for its type
+     * @return List<T> List of remote inka data records
+     */
+    public <T extends HistoryObject> List<T> getInkaDataRecords(
+        String user, String password, T type) {
+        T[] resultArray = null;
+        List<T> resultList = new ArrayList<T>();
         try {
             InkaInterfacePortType iip = getInkaInterfacePortType();
             if (iip == null) {
-                return new Dea_Adresse[0];
+                return resultList;
             }
-            ReqDea_Adresse req = new ReqDea_Adresse();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getDea_Adresse(req).getArrDea_Adresse();
+            ReqStandard request = this.getNewRequest(type);
+            request.setClientTimestamp(Calendar.getInstance());
+            request.setKennung(user);
+            request.setPassword(password);
+            resultArray = this.getResponseArrayFromIIP(type, request, iip);
+        } catch(RemoteException re) {
+            log.error("Error while requesting "
+                + type.getClass().getSimpleName() +  ".");
+            re.printStackTrace();
         }
-        catch(RemoteException re) {
-            logger.error("Error while requesting dea_adressen.");
+        for (T result : resultArray) {
+            resultList.add(result);
         }
-        return new Dea_Adresse[0];
+        return resultList;
     }
 
-
-    public boolean setDea_Adressen(
-        String user,
-        String passw,
-        Dea_Adresse[] address)
-    {
+    /**
+     * Set remote inka data records
+     * @param <T> Type of the inka records
+     * @param user
+     * @param password
+     * @param recordList List of records to set
+     * @return true, if roughly everything went ok, false otherwise
+     */
+    public <T extends HistoryObject> boolean setInkaDataRecords(
+        String user, String password, List<T> recordList) {
         try {
-            for (int i = 0; i < address.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqDea_Adresse addr = new ReqDea_Adresse();
-                addr.setClientTimestamp(Calendar.getInstance());
-                addr.setKennung(user);
-                addr.setPassword(passw);
-                addr.setObjDea_Adresse(address[i]);
-                iip.setDea_Adresse(addr);
+            InkaInterfacePortType iip = getInkaInterfacePortType();
+            if (iip == null) {
+                return false;
             }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending dea_adress.");
+            for (T record : recordList) {
+                ReqStandard request = this.getNewRequest(record);
+                request.setClientTimestamp(Calendar.getInstance());
+                request.setKennung(user);
+                request.setPassword(password);
+                this.setRecordToRequestToIIP(record, request, iip);
+            }
+        } catch(RemoteException re) {
+            log.error("Error while sending "
+                + recordList.get(0).getClass().getSimpleName() + ".");
             re.printStackTrace();
             return false;
         }
         return true;
     }
 
-
-    public Inka_Anfallstelle[] getInka_Anfallstelle(String user, String passw) {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Anfallstelle[0];
-            }
-            ReqInka_Anfallstelle req = new ReqInka_Anfallstelle();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Anfallstelle(req).getArrInka_Anfallstelle();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting inka_anfallstelle.");
-        }
-        return new Inka_Anfallstelle[0];
-
+    /* Some helper methods to generalize the generics */
+    /**
+     * Get the respective ReqStandard object for a given type
+     * @param <T extends HistoryObject> Type of the request
+     * @param type A HistoryObject merely used for its type
+     * @return a new ReqStandard object
+     */
+    private <T extends HistoryObject> ReqStandard getNewRequest(T type) {
+        if (type instanceof Dea_Adresse)
+            return new ReqDea_Adresse();
+        if (type instanceof Inka_Betrieb)
+            return new ReqInka_Betrieb();
+        if (type instanceof Inka_Genehmigung)
+            return new ReqInka_Genehmigung();
+        if (type instanceof Inka_Betriebseinrichtung)
+            return new ReqInka_Betriebseinrichtung();
+        if (type instanceof Inka_Uebergabestelle)
+            return new ReqInka_Uebergabestelle();
+        if (type instanceof Inka_Messstelle)
+            return new ReqInka_Messstelle();
+        if (type instanceof Inka_Anfallstelle)
+            return new ReqInka_Anfallstelle();
+        if (type instanceof Inka_Anlage)
+            return new ReqInka_Anlage();
+        if (type instanceof Inka_Messst_Anlage)
+            return new ReqInka_Messst_Anlage();
+        if (type instanceof Inka_Anfallst_Messst)
+            return new ReqInka_Anfallst_Messst();
+        if (type instanceof Inka_Anfallst_Anlage)
+            return new ReqInka_Anfallst_Anlage();
+        if (type instanceof Inka_Anfallst_Stoffe)
+            return new ReqInka_Anfallst_Stoffe();
+        // Add new DEA/INKA-Table here
+        return null;
     }
 
-
-    public boolean setInka_Anfallstelle(
-        String user,
-        String passw,
-        Inka_Anfallstelle[] anfallsten)
-    {
-        try {
-            for (int i = 0; i < anfallsten.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Anfallstelle anfallst = new ReqInka_Anfallstelle();
-                anfallst.setObjInka_Anfallstelle(anfallsten[i]);
-                anfallst.setClientTimestamp(Calendar.getInstance());
-                anfallst.setKennung(user);
-                anfallst.setPassword(passw);
-                iip.setInka_Anfallstelle(anfallst);
-            }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending inka_anfallstelle.");
-            re.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-
-    public Inka_Anlage[] getInka_Anlage(String user, String passw) {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Anlage[0];
-            }
-            ReqInka_Anlage req = new ReqInka_Anlage();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Anlage(req).getArrInka_Anlage();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting inka_anfallstelle.");
-        }
-        return new Inka_Anlage[0];
-
-    }
-
-
-    public boolean setInka_Anlage(
-        String user,
-        String passw,
-        Inka_Anlage[] anlagen)
-    {
-        try {
-            for (int i = 0; i < anlagen.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Anlage anlage = new ReqInka_Anlage();
-                anlage.setObjInka_Anlage(anlagen[i]);
-                anlage.setClientTimestamp(Calendar.getInstance());
-                anlage.setKennung(user);
-                anlage.setPassword(passw);
-                iip.setInka_Anlage(anlage);
-            }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending inka_anlage.");
-            re.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-
-    public Inka_Betrieb[] getInka_Betriebe(String user, String passw) {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Betrieb[0];
-            }
-            ReqInka_Betrieb req = new ReqInka_Betrieb();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Betrieb(req).getArrInka_Betrieb();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting inka_betrieb.");
-        }
-        return new Inka_Betrieb[0];
-
-    }
-
-
-    public boolean setInka_Betriebe(
-        String user,
-        String passw,
-        Inka_Betrieb[] betriebe)
-    {
-        try {
-            for (int i = 0; i < betriebe.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Betrieb betrieb = new ReqInka_Betrieb();
-                betrieb.setObjInka_Betrieb(betriebe[i]);
-                betrieb.setClientTimestamp(Calendar.getInstance());
-                betrieb.setKennung(user);
-                betrieb.setPassword(passw);
-                iip.setInka_Betrieb(betrieb);
-            }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending inka_betrieb.");
-            re.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-
-    public Inka_Betriebseinrichtung[] getInka_Betriebseinrichtungen(
-        String user,
-        String passw)
-    {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Betriebseinrichtung[0];
-            }
-            ReqInka_Betriebseinrichtung req =
-                new ReqInka_Betriebseinrichtung();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Betriebseinrichtung(req)
-                      .getArrInka_Betriebseinrichtung();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting inka_betriebseinrichtung.");
-        }
-        return new Inka_Betriebseinrichtung[0];
-
-    }
-
-
-    public boolean setInka_Betriebseinrichtungen(
-        String user,
-        String passw,
-        Inka_Betriebseinrichtung[] betriebseinrichtungen)
-    {
-        try {
-            for (int i = 0; i < betriebseinrichtungen.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Betriebseinrichtung betrieb =
-                    new ReqInka_Betriebseinrichtung();
-                betrieb.setObjInka_Betriebseinrichtung(betriebseinrichtungen[i]);
-                betrieb.setClientTimestamp(Calendar.getInstance());
-                betrieb.setKennung(user);
-                betrieb.setPassword(passw);
-                iip.setInka_Betriebseinrichtung(betrieb);
-            }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending inka_betriebseinrichtung.");
-            re.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-
-    public Inka_Genehmigung[] getInka_Genehmigungen(
-        String user,
-        String passw)
-    {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Genehmigung[0];
-            }
-            ReqInka_Genehmigung req =
-                new ReqInka_Genehmigung();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Genehmigung(req)
-                      .getArrInka_Genehmigung();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting inka_genehmigung.");
-        }
-        return new Inka_Genehmigung[0];
-
-    }
-
-
-    public boolean setInka_Genehmigungen(
-        String user,
-        String passw,
-        Inka_Genehmigung[] genehmigungen)
-    {
-        try {
-            for (int i = 0; i < genehmigungen.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Genehmigung genehmigung =
-                    new ReqInka_Genehmigung();
-                genehmigung.setObjInka_Genehmigung(genehmigungen[i]);
-                genehmigung.setClientTimestamp(Calendar.getInstance());
-                genehmigung.setKennung(user);
-                genehmigung.setPassword(passw);
-                iip.setInka_Genehmigung(genehmigung);
-            }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending inka_genehmigung.");
-            re.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-
-    public Inka_Messstelle[] getInka_Messstelle(
-        String user,
-        String passw)
-    {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Messstelle[0];
-            }
-            ReqInka_Messstelle req =
-                new ReqInka_Messstelle();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Messstelle(req)
-                      .getArrInka_Messstelle();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting inka_messstelle.");
-        }
-        return new Inka_Messstelle[0];
-
-    }
-
-
-    public boolean setInka_Messstelle(
-        String user,
-        String passw,
-        Inka_Messstelle[] messstellen)
-    {
-        try {
-            for (int i = 0; i < messstellen.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Messstelle messstelle =
-                    new ReqInka_Messstelle();
-                messstelle.setObjInka_Messstelle(messstellen[i]);
-                messstelle.setClientTimestamp(Calendar.getInstance());
-                messstelle.setKennung(user);
-                messstelle.setPassword(passw);
-                iip.setInka_Messstelle(messstelle);
-            }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending inka_messstelle.");
-            re.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-
-    public Inka_Uebergabestelle[] getInka_Uebergabestelle(
-        String user,
-        String passw)
-    {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Uebergabestelle[0];
-            }
-            ReqInka_Uebergabestelle req =
-                new ReqInka_Uebergabestelle();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Uebergabestelle(req)
-                      .getArrInka_Uebergabestelle();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting inka_uebergabestelle.");
-        }
-        return new Inka_Uebergabestelle[0];
-
-    }
-
-
-    public boolean setInka_Uebergabestelle(
-        String user,
-        String passw,
-        Inka_Uebergabestelle[] uebergabestellen)
-    {
-        try {
-            for (int i = 0; i < uebergabestellen.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Uebergabestelle uebergabestelle =
-                    new ReqInka_Uebergabestelle();
-                uebergabestelle.setObjInka_Uebergabestelle(uebergabestellen[i]);
-                uebergabestelle.setClientTimestamp(Calendar.getInstance());
-                uebergabestelle.setKennung(user);
-                uebergabestelle.setPassword(passw);
-                iip.setInka_Uebergabestelle(uebergabestelle);
-            }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending inka_uebergabestelle.");
-            re.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public Inka_Messst_Anlage[] getInka_Messst_Anlage(
-        String user,
-        String passw)
-    {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Messst_Anlage[0];
-            }
-            ReqInka_Messst_Anlage req = new ReqInka_Messst_Anlage();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Messst_Anlage(req).getArrInka_Messst_Anlage();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting Inka_Messst_Anlage.");
-        }
-        return new Inka_Messst_Anlage[0];
-
-    }
-
-    public boolean setInka_Messst_Anlage(
-        String user,
-        String passw,
-        Inka_Messst_Anlage[] inka_list)
-    {
-        try {
-            for (int i = 0; i < inka_list.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Messst_Anlage inka_obj =
-                    new ReqInka_Messst_Anlage();
-                inka_obj.setObjInka_Messst_Anlage(inka_list[i]);
-                inka_obj.setClientTimestamp(Calendar.getInstance());
-                inka_obj.setKennung(user);
-                inka_obj.setPassword(passw);
-                iip.setInka_Messst_Anlage(inka_obj);
-            }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending Inka_Messst_Anlage.");
-            re.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public Inka_Anfallst_Messst[] getInka_Anfallst_Messst(
-        String user,
-        String passw)
-    {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Anfallst_Messst[0];
-            }
-            ReqInka_Anfallst_Messst req = new ReqInka_Anfallst_Messst();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Anfallst_Messst(req)
+    /**
+     * Get a response object array for a given request object (HistoryObject)
+     * @param <T> Type of the request (HistoryObject)
+     * @param type A HistoryObject merely used for its type
+     * @param request ReqStandard
+     * @param iip InkaInterfacePortType
+     * @return HistoryObject[] A response array to the request
+     * @throws RemoteException
+     */
+    /* Uh-uh, second suppress warnings from me :( */
+    @SuppressWarnings("unchecked")
+    private <T extends HistoryObject> T[] getResponseArrayFromIIP(
+        T type, ReqStandard request, InkaInterfacePortType iip)
+    throws RemoteException {
+        if (type instanceof Dea_Adresse)
+            return (T[]) iip.getDea_Adresse((ReqDea_Adresse) request)
+                .getArrDea_Adresse();
+        if (type instanceof Inka_Betrieb)
+            return (T[]) iip.getInka_Betrieb((ReqInka_Betrieb) request)
+                .getArrInka_Betrieb();
+        if (type instanceof Inka_Genehmigung)
+            return (T[]) iip.getInka_Genehmigung((ReqInka_Genehmigung) request)
+                .getArrInka_Genehmigung();
+        if (type instanceof Inka_Betriebseinrichtung)
+            return (T[]) iip.getInka_Betriebseinrichtung(
+                (ReqInka_Betriebseinrichtung) request)
+                .getArrInka_Betriebseinrichtung();
+        if (type instanceof Inka_Uebergabestelle)
+            return (T[]) iip
+                .getInka_Uebergabestelle((ReqInka_Uebergabestelle) request)
+                .getArrInka_Uebergabestelle();
+        if (type instanceof Inka_Messstelle)
+            return (T[]) iip.getInka_Messstelle((ReqInka_Messstelle) request)
+                .getArrInka_Messstelle();
+        if (type instanceof Inka_Anfallstelle)
+            return (T[]) iip
+                .getInka_Anfallstelle((ReqInka_Anfallstelle) request)
+                .getArrInka_Anfallstelle();
+        if (type instanceof Inka_Anlage)
+            return (T[]) iip.getInka_Anlage((ReqInka_Anlage) request)
+                .getArrInka_Anlage();
+        if (type instanceof Inka_Messst_Anlage)
+            return (T[]) iip
+                .getInka_Messst_Anlage((ReqInka_Messst_Anlage) request)
+                .getArrInka_Messst_Anlage();
+        if (type instanceof Inka_Anfallst_Messst)
+            return (T[]) iip
+                .getInka_Anfallst_Messst((ReqInka_Anfallst_Messst) request)
                 .getArrInka_Anfallst_Messst();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting Inka_Anfallst_Messst.");
-        }
-        return new Inka_Anfallst_Messst[0];
-
-    }
-
-    public boolean setInka_Anfallst_Messst(
-        String user,
-        String passw,
-        Inka_Anfallst_Messst[] inka_list)
-    {
-        try {
-            for (int i = 0; i < inka_list.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Anfallst_Messst inka_obj =
-                    new ReqInka_Anfallst_Messst();
-                inka_obj.setObjInka_Anfallst_Messst(inka_list[i]);
-                inka_obj.setClientTimestamp(Calendar.getInstance());
-                inka_obj.setKennung(user);
-                inka_obj.setPassword(passw);
-                iip.setInka_Anfallst_Messst(inka_obj);
-            }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending Inka_Anfallst_Messst.");
-            re.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public Inka_Anfallst_Anlage[] getInka_Anfallst_Anlage(
-        String user,
-        String passw)
-    {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Anfallst_Anlage[0];
-            }
-            ReqInka_Anfallst_Anlage req = new ReqInka_Anfallst_Anlage();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Anfallst_Anlage(req)
+        if (type instanceof Inka_Anfallst_Anlage)
+            return (T[]) iip
+                .getInka_Anfallst_Anlage((ReqInka_Anfallst_Anlage) request)
                 .getArrInka_Anfallst_Anlage();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting Inka_Anfallst_Anlage.");
-        }
-        return new Inka_Anfallst_Anlage[0];
-
-    }
-
-    public boolean setInka_Anfallst_Anlage(
-        String user,
-        String passw,
-        Inka_Anfallst_Anlage[] inka_list)
-    {
-        try {
-            for (int i = 0; i < inka_list.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Anfallst_Anlage inka_obj =
-                    new ReqInka_Anfallst_Anlage();
-                inka_obj.setObjInka_Anfallst_Anlage(inka_list[i]);
-                inka_obj.setClientTimestamp(Calendar.getInstance());
-                inka_obj.setKennung(user);
-                inka_obj.setPassword(passw);
-                iip.setInka_Anfallst_Anlage(inka_obj);
-            }
-        }
-        catch(RemoteException re) {
-            logger.error("Error while sending Inka_Anfallst_Anlage.");
-            re.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public Inka_Anfallst_Stoffe[] getInka_Anfallst_Stoffe(
-        String user,
-        String passw)
-    {
-        try {
-            InkaInterfacePortType iip = getInkaInterfacePortType();
-            if (iip == null) {
-                return new Inka_Anfallst_Stoffe[0];
-            }
-            ReqInka_Anfallst_Stoffe req = new ReqInka_Anfallst_Stoffe();
-            req.setClientTimestamp(Calendar.getInstance());
-            req.setKennung(user);
-            req.setPassword(passw);
-            return iip.getInka_Anfallst_Stoffe(req)
+        if (type instanceof Inka_Anfallst_Stoffe)
+            return (T[]) iip
+                .getInka_Anfallst_Stoffe((ReqInka_Anfallst_Stoffe) request)
                 .getArrInka_Anfallst_Stoffe();
-        }
-        catch(RemoteException re) {
-            logger.error("Error while requesting Inka_Anfallst_Stoffe.");
-        }
-        return new Inka_Anfallst_Stoffe[0];
-
+        // Add new DEA/INKA-Table here
+        return null;
     }
 
-    public boolean setInka_Anfallst_Stoffe(
-        String user,
-        String passw,
-        Inka_Anfallst_Stoffe[] inka_list)
-    {
-        try {
-            for (int i = 0; i < inka_list.length; i++) {
-                InkaInterfacePortType iip = getInkaInterfacePortType();
-                if (iip == null) {
-                    return false;
-                }
-                ReqInka_Anfallst_Stoffe inka_obj =
-                    new ReqInka_Anfallst_Stoffe();
-                inka_obj.setObjInka_Anfallst_Stoffe(inka_list[i]);
-                inka_obj.setClientTimestamp(Calendar.getInstance());
-                inka_obj.setKennung(user);
-                inka_obj.setPassword(passw);
-                iip.setInka_Anfallst_Stoffe(inka_obj);
-            }
+
+    /**
+     * Set a record (HistoryObject) to a given request and then set that to the
+     * InkaInterfacePortType
+     * @param <T> type
+     * @param record HistoryObject
+     * @param request ReqStandard
+     * @param iip InkaInterfacePortType
+     * @throws RemoteException
+     */
+    private <T extends HistoryObject> void setRecordToRequestToIIP(
+        T record, ReqStandard request, InkaInterfacePortType iip)
+    throws RemoteException {
+        if (record instanceof Dea_Adresse) {
+            ((ReqDea_Adresse) request).setObjDea_Adresse((Dea_Adresse) record);
+            iip.setDea_Adresse((ReqDea_Adresse) request);
+            return;
         }
-        catch(RemoteException re) {
-            logger.error("Error while sending Inka_Anfallst_Stoffe.");
-            re.printStackTrace();
-            return false;
+        if (record instanceof Inka_Betrieb) {
+            ((ReqInka_Betrieb) request).setObjInka_Betrieb(
+                (Inka_Betrieb) record);
+            iip.setInka_Betrieb((ReqInka_Betrieb) request);
+            return;
         }
-        return true;
+        if (record instanceof Inka_Genehmigung) {
+            ((ReqInka_Genehmigung) request).setObjInka_Genehmigung(
+                (Inka_Genehmigung) record);
+            iip.setInka_Genehmigung((ReqInka_Genehmigung) request);
+            return;
+        }
+        if (record instanceof Inka_Betriebseinrichtung) {
+            ((ReqInka_Betriebseinrichtung) request)
+                .setObjInka_Betriebseinrichtung(
+                    (Inka_Betriebseinrichtung) record);
+            iip.setInka_Betriebseinrichtung(
+                (ReqInka_Betriebseinrichtung) request);
+            return;
+        }
+        if (record instanceof Inka_Uebergabestelle) {
+            ((ReqInka_Uebergabestelle) request).setObjInka_Uebergabestelle(
+                (Inka_Uebergabestelle) record);
+            iip.setInka_Uebergabestelle((ReqInka_Uebergabestelle) request);
+            return;
+        }
+        if (record instanceof Inka_Messstelle) {
+            ((ReqInka_Messstelle) request).setObjInka_Messstelle(
+                (Inka_Messstelle) record);
+            iip.setInka_Messstelle((ReqInka_Messstelle) request);
+            return;
+        }
+        if (record instanceof Inka_Anfallstelle) {
+            ((ReqInka_Anfallstelle) request).setObjInka_Anfallstelle(
+                (Inka_Anfallstelle) record);
+            iip.setInka_Anfallstelle((ReqInka_Anfallstelle) request);
+            return;
+        }
+        if (record instanceof Inka_Anlage) {
+            ((ReqInka_Anlage) request).setObjInka_Anlage((Inka_Anlage) record);
+            iip.setInka_Anlage((ReqInka_Anlage) request);
+            return;
+        }
+        if (record instanceof Inka_Messst_Anlage) {
+            ((ReqInka_Messst_Anlage) request).setObjInka_Messst_Anlage(
+                (Inka_Messst_Anlage) record);
+            iip.setInka_Messst_Anlage((ReqInka_Messst_Anlage) request);
+            return;
+        }
+        if (record instanceof Inka_Anfallst_Messst) {
+            ((ReqInka_Anfallst_Messst) request).setObjInka_Anfallst_Messst(
+                (Inka_Anfallst_Messst) record);
+            iip.setInka_Anfallst_Messst((ReqInka_Anfallst_Messst) request);
+            return;
+        }
+        if (record instanceof Inka_Anfallst_Anlage) {
+            ((ReqInka_Anfallst_Anlage) request).setObjInka_Anfallst_Anlage(
+                (Inka_Anfallst_Anlage) record);
+            iip.setInka_Anfallst_Anlage((ReqInka_Anfallst_Anlage) request);
+            return;
+        }
+        if (record instanceof Inka_Anfallst_Stoffe) {
+            ((ReqInka_Anfallst_Stoffe) request).setObjInka_Anfallst_Stoffe(
+                (Inka_Anfallst_Stoffe) record);
+            iip.setInka_Anfallst_Stoffe((ReqInka_Anfallst_Stoffe) request);
+            return;
+        }
+        // Add new DEA/INKA-Table here
     }
 
     protected InkaInterfaceLocator getInkaInterface() {
@@ -702,13 +344,12 @@ public final class ServiceManager {
         return inkaService;
     }
 
-
     protected InkaInterfacePortType getInkaInterfacePortType() {
         try {
             return getInkaInterface().getInkaInterface();
         }
         catch (ServiceException se) {
-            logger.error("Error getting the remote service.");
+            log.error("Error getting the remote service.");
             se.printStackTrace();
         }
         return null;
