@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
@@ -86,48 +85,6 @@ public class BasisBetreiber extends AbstractBasisBetreiber implements
         betreiber = (BasisBetreiber) new DatabaseAccess()
             .get(BasisBetreiber.class, id);
         return betreiber;
-    }
-
-    /**
-     * Durchsucht die Betreiber-Tabelle. Mit <code>property</code> wird
-     * festgelegt, welche Eigenschaft (im Endeffekt also welche Tabellen-Spalte)
-     * der Betreiber nach dem Suchwort durchsucht wird. Wenn
-     * <code>property</code> <code>null</code> ist, werden alle drei möglichen
-     * Spalten (Name, Anrede und Namens-Zusatz) durchsucht. Beim Suchwort wird
-     * Groß-/Kleinschreibung ignoriert und automatisch ein '%' angehängt.
-     * @param suche Wonach soll gesucht werden?
-     * @param property PROPERTY_NAME, PROPERTY_ANREDE, PROPERTY_ZUSATZ oder
-     *            <code>null</code> um in allen dreien zu suchen.
-     * @return Eine Liste mit allen gefundenen Betreibern.
-     */
-    public static List<?> findBetreiber(String suche, String property) {
-        String suche2 = suche.toLowerCase().trim() + "%";
-        log.debug("Suche nach '" + suche2 + "' (" + property + ").");
-
-        String queryString;
-        if (PROPERTY_NAME.equals(property)) {
-            queryString = "FROM BasisBetreiber as betr WHERE "
-                + "lower(betr.betrname) like :suche "
-                + "ORDER BY betr.betrname, betr.betrnamezus";
-        } else if (PROPERTY_ANREDE.equals(property)) {
-            queryString = "FROM BasisBetreiber as betr WHERE "
-                + "lower(betr.betranrede) like :suche "
-                + "ORDER BY betr.betrname, betr.betrnamezus";
-        } else if (PROPERTY_ZUSATZ.equals(property)) {
-            queryString = "FROM BasisBetreiber as betr WHERE "
-                + "lower(betr.betrnamezus) like :suche "
-                + "ORDER BY betr.betrname, betr.betrnamezus";
-        } else {
-            queryString = "FROM BasisBetreiber as betr WHERE "
-                + "lower(betr.betrname) like :suche "
-                + "or lower(betr.betranrede) like :suche "
-                + "or lower(betr.betrnamezus) like :suche "
-                + "ORDER BY betr.betrname, betr.betrnamezus";
-        }
-
-        return new DatabaseAccess().createQuery(queryString)
-            .setString("suche", suche2)
-            .list();
     }
 
     /**

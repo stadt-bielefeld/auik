@@ -50,6 +50,7 @@ package de.bielefeld.umweltamt.aui.tests;
 import java.util.List;
 
 import junit.framework.TestCase;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 
 public class BetreiberTest extends TestCase {
@@ -87,7 +88,7 @@ public class BetreiberTest extends TestCase {
     private BasisBetreiber testQuery() {
         BasisBetreiber betreiber;
 
-        List<?> result = BasisBetreiber.findBetreiber(Name, "name");
+        List<?> result = DatabaseQuery.getBasisBetreiber("name", Name);
 
         betreiber = (BasisBetreiber) result.get(0);
 
@@ -119,7 +120,7 @@ public class BetreiberTest extends TestCase {
         // session.delete(betreiber);
         BasisBetreiber.removeBetreiber(betreiber);
 
-        List<?> result = BasisBetreiber.findBetreiber(Name, "name");
+        List<?> result = DatabaseQuery.getBasisBetreiber("name", Name);
 
         assertEquals(0, result.size());
     }

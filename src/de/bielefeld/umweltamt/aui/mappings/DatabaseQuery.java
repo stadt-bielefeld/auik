@@ -49,6 +49,16 @@ public class DatabaseQuery {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisBetreiber                       */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get all BasisBetreiber with a given search string in the selected
+     * property. <br>
+     * If property is <code>null</code>, we search in all three properties.
+     * @param property Name of the property
+     * @param search Search string
+     * @return <code>List&lt;BasisBetreiber&gt;<code> List of BasisBetreiber
+     *         with the given search string in the given property
+     */
     public static List<BasisBetreiber> getBasisBetreiber(
         String property, String search) {
 
@@ -62,6 +72,7 @@ public class DatabaseQuery {
 
         if (property == null) {
             // TODO: Uhuh, we need to somehow model this in the DatabaseAccess
+            // Or just use the Restrictions everywhere.
             criteria.add(Restrictions.or(
                 Restrictions.ilike("betrname", modSearch),
                 Restrictions.or(
@@ -83,9 +94,14 @@ public class DatabaseQuery {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisStandort                        */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
     /**
      * Check if a location already exists
-     * @return true, if the given location exists, false otherwise
+     * @param strasse The street
+     * @param hausnr The house number
+     * @param zusatz Addition to the house number
+     * @return <code>true</code>, if the given location exists,
+     *         <code>false</code> otherwise
      */
     public static boolean basisStandortExists(
         String strasse, Integer hausnr, String zusatz) {
@@ -115,7 +131,7 @@ public class DatabaseQuery {
     /* ********************************************************************** */
 
     /**
-     * Get a list of the WZ-Codes which are marked for the Kurzauswahl
+     * Get an array of the WZ-Codes which are marked for the Kurzauswahl
      * @return <code>AuikWzCode[]</code>
      */
     public static AuikWzCode[] getAuikWzCodesInKurzAuswahl() {
