@@ -23,12 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+
 /**
  * A class that represents a row in the BASIS_OBJEKTARTEN table. You can
  * customize the behavior of this class by editing the class,
  * {@link BasisObjektarten}.
  */
-public abstract class AbstractBasisObjektarten implements Serializable {
+public abstract class AbstractBasisObjektarten extends
+    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
     private static final long serialVersionUID = 4925553783726079062L;
 
     /**

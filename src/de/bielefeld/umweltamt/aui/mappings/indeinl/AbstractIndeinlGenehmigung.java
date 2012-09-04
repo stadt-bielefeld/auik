@@ -61,6 +61,9 @@ public class AbstractIndeinlGenehmigung extends
 
     private Boolean esatzung;
 
+    private Integer uebergabestelleRechtswert;
+    private Integer uebergabestelleHochwert;
+
     // Constructors
 
     /** default constructor */
@@ -207,5 +210,21 @@ public class AbstractIndeinlGenehmigung extends
 
     public void setEsatzung(Boolean esatzung) {
         this.esatzung = esatzung;
+    }
+
+    public Integer getUebergabestelleRechtswert() {
+        return this.uebergabestelleRechtswert;
+    }
+
+    public void setUebergabestelleRechtswert(Integer uebergabestelleRechtswert) {
+        this.uebergabestelleRechtswert = uebergabestelleRechtswert;
+    }
+
+    public Integer getUebergabestelleHochwert() {
+        return this.uebergabestelleHochwert;
+    }
+
+    public void setUebergabestelleHochwert(Integer uebergabestelleHochwert) {
+        this.uebergabestelleHochwert = uebergabestelleHochwert;
     }
 }

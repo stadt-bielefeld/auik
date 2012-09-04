@@ -64,7 +64,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlUebergabestelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
 
 public class AuswertungTest extends TestCase {
@@ -243,32 +242,6 @@ public class AuswertungTest extends TestCase {
         }
 
         assertEquals(list.size(), listquery.size());
-        if (session != null && session.isConnected()) {
-            session.close();
-        }
-    }
-
-    /**
-     * Testen ob Uebergabe Auswertung fehlerfrei funktioniert
-     */
-    public void testAusUebergabe() {
-        Session session = null;
-        session = _sessionFactory.openSession();
-
-        List<?> list = IndeinlUebergabestelle.getAuswertungsListe();
-
-        List<?> listquery;
-        String query = "from IndeinlUebergabestelle as stelle "
-            + "order by stelle.objektid";
-
-        try {
-            listquery = session.createQuery(query).list();
-        } catch (HibernateException e) {
-            throw new RuntimeException(e);
-        }
-
-        assertEquals(list.size(), listquery.size());
-
         if (session != null && session.isConnected()) {
             session.close();
         }

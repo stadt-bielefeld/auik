@@ -35,13 +35,6 @@ public class BasisBetreiber extends AbstractBasisBetreiber implements
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    /** Durchsucht die Tabelle nach dem Betreiber-Namen */
-    public static final String PROPERTY_NAME = "name";
-    /** Durchsucht die Tabelle nach der Betreiber-Anrede */
-    public static final String PROPERTY_ANREDE = "anrede";
-    /** Durchsucht die Tabelle nach dem Betreiber-Namenszusatz */
-    public static final String PROPERTY_ZUSATZ = "zusatz";
-
     /**
      * Simple constructor of BasisBetreiber instances.
      */

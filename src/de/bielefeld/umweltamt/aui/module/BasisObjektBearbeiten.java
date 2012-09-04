@@ -127,7 +127,6 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.GenehmigungPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepktAuswPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepunktPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SuevPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.UebergabePanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.VawsPanel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -163,7 +162,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private Anh55Panel anhang55Tab;
     private Anh56Panel anhang56Tab;
     private ChronoPanel chronoTab;
-    private UebergabePanel uebergabeTab;
     private GenehmigungPanel genehmigungTab;
     private VawsPanel vawsTab;
 
@@ -379,13 +377,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return chronoTab;
     }
 
-    public UebergabePanel getUebergabeTab() {
-        if (uebergabeTab == null) {
-            uebergabeTab = new UebergabePanel(this);
-        }
-        return uebergabeTab;
-    }
-
     public GenehmigungPanel getGenehmigungTab() {
         if (genehmigungTab == null) {
             genehmigungTab = new GenehmigungPanel(this);
@@ -504,9 +495,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     } else if (objekt.getBasisObjektarten().isAnh53Gr()) {
                         getChronoTab().fetchFormData();
                         getAnh53Tab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isUebergabestelle()) {
-                        getChronoTab().fetchFormData();
-                        getUebergabeTab().fetchFormData();
                     } else if (objekt.getBasisObjektarten().isGenehmigung()) {
                         getChronoTab().fetchFormData();
                         getGenehmigungTab().fetchFormData();
@@ -642,12 +630,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             getChronoTab().updateForm();
                             getAnh53Tab().updateForm();
                             getTabbedPane().setSelectedComponent(getAnh53Tab());
-                        } else if (objekt.getBasisObjektarten().isUebergabestelle()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getUebergabeTab().getName(), getUebergabeTab());
-                            getChronoTab().updateForm();
-                            getUebergabeTab().updateForm();
-                            getTabbedPane().setSelectedComponent(getUebergabeTab());
                         } else if (objekt.getBasisObjektarten().isGenehmigung()) {
                             getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                             getTabbedPane().addTab(getGenehmigungTab().getName(), getGenehmigungTab());
@@ -698,8 +680,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 getAnh40Tab().clearForm();
             } else if (objekt.getBasisObjektarten().isAnh55()) {
                 getAnh55Tab().clearForm();
-            } else if (objekt.getBasisObjektarten().isUebergabestelle()) {
-                getUebergabeTab().clearForm();
             } else if (objekt.getBasisObjektarten().isGenehmigung()) {
                 getGenehmigungTab().clearForm();
             } else if (objekt.getBasisObjektarten().isAnh56()) {
@@ -744,8 +724,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 getAnh53Tab().enableAll(enabled);
             } else if (objekt.getBasisObjektarten().isAnh53Kl()) {
                 getAnh53Tab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isUebergabestelle()) {
-                getUebergabeTab().enableAll(enabled);
             } else if (objekt.getBasisObjektarten().isGenehmigung()) {
                 getGenehmigungTab().enableAll(enabled);
             }
@@ -784,8 +762,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 getAnh53Tab().completeObjekt();
             } else if (objekt.getBasisObjektarten().isAnh53Kl()) {
                 getAnh53Tab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isUebergabestelle()) {
-                getUebergabeTab().completeObjekt();
             } else if (objekt.getBasisObjektarten().isGenehmigung()) {
                 getGenehmigungTab().completeObjekt();
             } else if (objekt.getBasisObjektarten().isProbepunkt()) {

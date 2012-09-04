@@ -88,6 +88,8 @@ public class GenehmigungPanel extends JPanel {
     private JCheckBox gen59Check = null;
     private JCheckBox selbstueberwCheck = null;
     private JCheckBox eSatzungCheck = null;
+    private IntegerField uebergabestelleRechtswertField = null;
+    private IntegerField uebergabestelleHochwertField = null;
 
     private JButton saveGenehmigungButton = null;
 
@@ -115,23 +117,27 @@ public class GenehmigungPanel extends JPanel {
 
         builder.appendSeparator("Fachdaten");
         builder.append("Antragsdatum:", getAntragsDatum());
-        builder.append("", getgen58CheckBox());
+        builder.append("", getGen58CheckBox());
         builder.nextLine();
         builder.append("Genehmigungsdatum:", getGenehmigungsDatum());
-        builder.append("", getgen59CheckBox());
+        builder.append("", getGen59CheckBox());
         builder.nextLine();
         builder.append("Änderungsdatum:", getAenderungsDatum());
-        builder.append("", getselbCheckBox());
+        builder.append("", getSelbCheckBox());
         builder.nextLine();
         builder.append("Anhang:", getAnhangFeld());
-        builder.append("", getesaCheckBox());
+        builder.append("", getEsaCheckBox());
         builder.nextLine();
         builder.append("Genehmigte Menge [m³]:", getGenMengeFeld());
-        builder.append("", getbefCheckBox());
+        builder.append("", getBefCheckBox());
         builder.nextLine();
         builder.append("");
         builder.append("");
         builder.append("bis:", getBefristetDatum());
+        builder.nextLine();
+        builder.appendSeparator("Übergabestelle");
+        builder.append("Rechtswert:", this.getUebergabestelleRechtswertField());
+        builder.append("Hochwert:",   this.getUebergabestelleHochwertField());
         builder.nextLine();
         builder.appendSeparator("Bemerkungen");
         builder.appendRow("3dlu");
@@ -196,38 +202,46 @@ public class GenehmigungPanel extends JPanel {
             }
             if (this.fachdaten.getBefristet() != null) {
                 if (this.fachdaten.getBefristet() == true) {
-                    getbefCheckBox().setSelected(true);
+                    getBefCheckBox().setSelected(true);
                 } else {
-                    getbefCheckBox().setSelected(false);
+                    getBefCheckBox().setSelected(false);
                 }
             }
             if (this.fachdaten.getGen58() != null) {
                 if (this.fachdaten.getGen58() == true) {
-                    getgen58CheckBox().setSelected(true);
+                    getGen58CheckBox().setSelected(true);
                 } else {
-                    getgen58CheckBox().setSelected(false);
+                    getGen58CheckBox().setSelected(false);
                 }
             }
             if (this.fachdaten.getGen59() != null) {
                 if (this.fachdaten.getGen59() == true) {
-                    getgen59CheckBox().setSelected(true);
+                    getGen59CheckBox().setSelected(true);
                 } else {
-                    getgen59CheckBox().setSelected(false);
+                    getGen59CheckBox().setSelected(false);
                 }
             }
             if (this.fachdaten.getSelbstueberw() != null) {
                 if (this.fachdaten.getSelbstueberw() == true) {
-                    getselbCheckBox().setSelected(true);
+                    getSelbCheckBox().setSelected(true);
                 } else {
-                    getselbCheckBox().setSelected(false);
+                    getSelbCheckBox().setSelected(false);
                 }
             }
             if (this.fachdaten.getEsatzung() != null) {
                 if (this.fachdaten.getEsatzung() == true) {
-                    getesaCheckBox().setSelected(true);
+                    getEsaCheckBox().setSelected(true);
                 } else {
-                    getesaCheckBox().setSelected(false);
+                    getEsaCheckBox().setSelected(false);
                 }
+            }
+            if (this.fachdaten.getUebergabestelleRechtswert() != null) {
+                this.getUebergabestelleRechtswertField().setValue(
+                    this.fachdaten.getUebergabestelleRechtswert());
+            }
+            if (this.fachdaten.getUebergabestelleHochwert() != null) {
+                this.getUebergabestelleHochwertField().setValue(
+                    this.fachdaten.getUebergabestelleHochwert());
             }
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
 
@@ -243,11 +257,13 @@ public class GenehmigungPanel extends JPanel {
         getAenderungsDatum().setDate(null);
         getGenehmigungsDatum().setDate(null);
         getBefristetDatum().setDate(null);
-        getbefCheckBox().setSelected(false);
-        getgen58CheckBox().setSelected(false);
-        getgen59CheckBox().setSelected(false);
-        getselbCheckBox().setSelected(false);
-        getesaCheckBox().setSelected(false);
+        getBefCheckBox().setSelected(false);
+        getGen58CheckBox().setSelected(false);
+        getGen59CheckBox().setSelected(false);
+        getSelbCheckBox().setSelected(false);
+        getEsaCheckBox().setSelected(false);
+        getUebergabestelleRechtswertField().setValue(null);
+        getUebergabestelleHochwertField().setValue(null);
     }
 
     public void enableAll(boolean enabled) {
@@ -258,11 +274,13 @@ public class GenehmigungPanel extends JPanel {
         getAenderungsDatum().setEnabled(enabled);
         getGenehmigungsDatum().setEnabled(enabled);
         getBefristetDatum().setEnabled(enabled);
-        getbefCheckBox().setEnabled(enabled);
-        getgen58CheckBox().setEnabled(enabled);
-        getgen59CheckBox().setEnabled(enabled);
-        getselbCheckBox().setEnabled(enabled);
-        getesaCheckBox().setEnabled(enabled);
+        getBefCheckBox().setEnabled(enabled);
+        getGen58CheckBox().setEnabled(enabled);
+        getGen59CheckBox().setEnabled(enabled);
+        getSelbCheckBox().setEnabled(enabled);
+        getEsaCheckBox().setEnabled(enabled);
+        getUebergabestelleRechtswertField().setEnabled(enabled);
+        getUebergabestelleHochwertField().setEnabled(enabled);
     }
 
     private boolean saveGenehmigungDaten() {
@@ -293,35 +311,39 @@ public class GenehmigungPanel extends JPanel {
         Integer menge = ((IntegerField) this.genMengeFeld).getIntValue();
         this.fachdaten.setGenMenge(menge);
 
-        if (getbefCheckBox().isSelected()) {
+        if (getBefCheckBox().isSelected()) {
             this.fachdaten.setBefristet(true);
         } else {
             this.fachdaten.setBefristet(false);
         }
 
-        if (getgen58CheckBox().isSelected()) {
+        if (getGen58CheckBox().isSelected()) {
             this.fachdaten.setGen58(true);
         } else {
             this.fachdaten.setGen58(false);
         }
 
-        if (getgen59CheckBox().isSelected()) {
+        if (getGen59CheckBox().isSelected()) {
             this.fachdaten.setGen59(true);
         } else {
             this.fachdaten.setGen59(false);
         }
 
-        if (getselbCheckBox().isSelected()) {
+        if (getSelbCheckBox().isSelected()) {
             this.fachdaten.setSelbstueberw(true);
         } else {
             this.fachdaten.setSelbstueberw(false);
         }
 
-        if (getesaCheckBox().isSelected()) {
+        if (getEsaCheckBox().isSelected()) {
             this.fachdaten.setEsatzung(true);
         } else {
             this.fachdaten.setEsatzung(false);
         }
+        this.fachdaten.setUebergabestelleRechtswert(
+            this.getUebergabestelleRechtswertField().getIntValue());
+        this.fachdaten.setUebergabestelleHochwert(
+            this.getUebergabestelleHochwertField().getIntValue());
 
         success = IndeinlGenehmigung.saveFachdaten(this.fachdaten);
         if (success) {
@@ -426,35 +448,35 @@ public class GenehmigungPanel extends JPanel {
         return this.genMengeFeld;
     }
 
-    private JCheckBox getbefCheckBox() {
+    private JCheckBox getBefCheckBox() {
         if (this.befristetCheck == null) {
             this.befristetCheck = new JCheckBox("Genehmigung befristet");
         }
         return this.befristetCheck;
     }
 
-    private JCheckBox getgen58CheckBox() {
+    private JCheckBox getGen58CheckBox() {
         if (this.gen58Check == null) {
             this.gen58Check = new JCheckBox("58er Genehmigung");
         }
         return this.gen58Check;
     }
 
-    private JCheckBox getgen59CheckBox() {
+    private JCheckBox getGen59CheckBox() {
         if (this.gen59Check == null) {
             this.gen59Check = new JCheckBox("59er Genehmigung");
         }
         return this.gen59Check;
     }
 
-    private JCheckBox getselbCheckBox() {
+    private JCheckBox getSelbCheckBox() {
         if (this.selbstueberwCheck == null) {
             this.selbstueberwCheck = new JCheckBox("Selbstüberwachung");
         }
         return this.selbstueberwCheck;
     }
 
-    private JCheckBox getesaCheckBox() {
+    private JCheckBox getEsaCheckBox() {
         if (this.eSatzungCheck == null) {
             this.eSatzungCheck = new JCheckBox("E-Satzungsüberwachung");
         }
@@ -468,6 +490,20 @@ public class GenehmigungPanel extends JPanel {
             this.genBemerkungArea.setWrapStyleWord(true);
         }
         return this.genBemerkungArea;
+    }
+
+    private IntegerField getUebergabestelleRechtswertField() {
+        if (this.uebergabestelleRechtswertField == null) {
+            this.uebergabestelleRechtswertField = new IntegerField();
+        }
+        return this.uebergabestelleRechtswertField;
+    }
+
+    private IntegerField getUebergabestelleHochwertField() {
+        if (this.uebergabestelleHochwertField == null) {
+            this.uebergabestelleHochwertField = new IntegerField();
+        }
+        return this.uebergabestelleHochwertField;
     }
 
     private JTable getObjektverknuepungTabelle() {

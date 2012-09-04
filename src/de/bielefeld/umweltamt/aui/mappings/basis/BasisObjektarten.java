@@ -138,8 +138,6 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
     public static final int ANHANG_55 = 29;
     /** Die ID der Objektart "Duckerei" */
     public static final int ANHANG_56 = 30;
-    /** Die ID der Objektart "Uebergabestelle" */
-    public static final int UEBERGABESTELLE = 41;
     /** Die ID der Objektart "Genehmigung" */
     public static final int GENEHMIGUNG = 42;
 
@@ -262,14 +260,6 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
      */
     public boolean isSuev() {
         return (SUEV == this.getObjektartid().intValue());
-    }
-
-    /**
-     * @return Liefert <code>true</code>, wenn diese Objektart "Uebergabestelle"
-     *         ist
-     */
-    public boolean isUebergabestelle() {
-        return (UEBERGABESTELLE == this.getObjektartid().intValue());
     }
 
     /**

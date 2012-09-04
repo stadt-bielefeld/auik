@@ -48,8 +48,18 @@
         <property name="esatzung" type="java.lang.Boolean">
         	<column name="e_satzung" />
         </property>
-        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="_enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="_deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="uebergabestelleRechtswert" type="java.lang.Integer">
+            <column name="uebergabestelle_rechtswert" />
+        </property>
+        <property name="uebergabestelleHochwert" type="java.lang.Integer">
+            <column name="uebergabestelle_hochwert" />
+        </property>
         
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
         

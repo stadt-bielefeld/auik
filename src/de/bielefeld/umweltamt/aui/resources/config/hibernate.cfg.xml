@@ -55,7 +55,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh56Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/AnhBwkFachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/AnhSuevFachdaten.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/IndeinlUebergabestelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/IndeinlGenehmigung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/ViewBwk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsAbfuellflaeche.hbm.xml" />
