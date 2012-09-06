@@ -165,4 +165,12 @@ public class BasisObjektModel extends ListTableModel {
     public void searchByStandort(BasisStandort standort, Integer istartid) {
         setList(BasisObjekt.getObjekteByStandort(standort, istartid));
     }
+
+    /**
+     * Remove a BasisObjekt from the model
+     * @param objekt
+     */
+    public void removeFromList(BasisObjekt objekt) {
+        this.getList().remove(objekt);
+    }
 }
