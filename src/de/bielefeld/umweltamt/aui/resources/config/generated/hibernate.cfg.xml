@@ -67,6 +67,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/InkaAnfallstStoffe.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsVerwmassnahmen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh55Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/InkaProbenahme.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/InkaAnfallstMessst.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsGebuehrenarten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/atl/ViewAtlAnalysepositionAll.hbm.xml" />

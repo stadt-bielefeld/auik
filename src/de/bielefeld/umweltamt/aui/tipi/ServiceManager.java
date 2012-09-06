@@ -40,6 +40,7 @@ import de.nrw.lds.tipi.inka.Inka_Betriebseinrichtung;
 import de.nrw.lds.tipi.inka.Inka_Genehmigung;
 import de.nrw.lds.tipi.inka.Inka_Messst_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Messstelle;
+import de.nrw.lds.tipi.inka.Inka_Probenahme;
 import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
 import de.nrw.lds.tipi.inka.general.ReqStandard;
 import de.nrw.lds.tipi.inka.request.ReqDea_Adresse;
@@ -53,6 +54,7 @@ import de.nrw.lds.tipi.inka.request.ReqInka_Betriebseinrichtung;
 import de.nrw.lds.tipi.inka.request.ReqInka_Genehmigung;
 import de.nrw.lds.tipi.inka.request.ReqInka_Messst_Anlage;
 import de.nrw.lds.tipi.inka.request.ReqInka_Messstelle;
+import de.nrw.lds.tipi.inka.request.ReqInka_Probenahme;
 import de.nrw.lds.tipi.inka.request.ReqInka_Uebergabestelle;
 import de.nrw.lds.tipi.inka.webservice.InkaInterfaceLocator;
 import de.nrw.lds.tipi.inka.webservice.InkaInterfacePortType;
@@ -184,7 +186,9 @@ public final class ServiceManager {
             return new ReqInka_Anfallst_Anlage();
         if (type instanceof Inka_Anfallst_Stoffe)
             return new ReqInka_Anfallst_Stoffe();
-        // Add new DEA/INKA-Table here
+        if (type instanceof Inka_Probenahme)
+            return new ReqInka_Probenahme();
+        // TODO: Add new DEA/INKA-Table here
         return null;
     }
 
@@ -245,7 +249,11 @@ public final class ServiceManager {
             return (T[]) iip
                 .getInka_Anfallst_Stoffe((ReqInka_Anfallst_Stoffe) request)
                 .getArrInka_Anfallst_Stoffe();
-        // Add new DEA/INKA-Table here
+        if (type instanceof Inka_Probenahme)
+            return (T[]) iip
+                .getInka_Probenahme((ReqInka_Probenahme) request)
+                .getArrInka_Probenahme();
+        // TODO: Add new DEA/INKA-Table here
         return null;
     }
 
@@ -334,7 +342,13 @@ public final class ServiceManager {
             iip.setInka_Anfallst_Stoffe((ReqInka_Anfallst_Stoffe) request);
             return;
         }
-        // Add new DEA/INKA-Table here
+        if (record instanceof Inka_Probenahme) {
+            ((ReqInka_Probenahme) request).setObjInka_Probenahme(
+                (Inka_Probenahme) record);
+            iip.setInka_Probenahme((ReqInka_Probenahme) request);
+            return;
+        }
+        // TODO: Add new DEA/INKA-Table here
     }
 
     protected InkaInterfaceLocator getInkaInterface() {

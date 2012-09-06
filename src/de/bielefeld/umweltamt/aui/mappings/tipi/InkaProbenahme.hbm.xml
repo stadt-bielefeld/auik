@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.tipi.InkaProbenahme" table="inka_probenahme" schema="tipi">
+        <id name="probenahmeNr" type="java.lang.Integer">
+            <column name="probenahme_nr" />
+            <generator class="assigned" />
+        </id>
+        <property name="probenahmeVer" type="java.lang.Integer">
+            <column name="probenahme_ver" />
+        </property>
+        <property name="gueltigVon" type="java.util.Calendar">
+            <column name="gueltig_von" length="4" />
+        </property>
+        <property name="gueltigBis" type="java.util.Calendar">
+            <column name="gueltig_bis" length="4" />
+        </property>
+        <property name="aenderungsDatum" type="java.util.Calendar">
+            <column name="aenderungs_datum" length="8" />
+        </property>
+        <property name="erfassungsDatum" type="java.util.Calendar">
+            <column name="erfassungs_datum" length="8" />
+        </property>
+        <property name="historienNr" type="java.lang.Integer">
+            <column name="historien_nr" />
+        </property>
+        <property name="istAktuellJn" type="java.lang.Boolean">
+            <column name="ist_aktuell_jn" />
+        </property>
+        <property name="gemeindekennzahl" type="string">
+            <column name="gemeindekennzahl" length="8" />
+        </property>
+        <property name="gemeindeVer" type="java.lang.Integer">
+            <column name="gemeinde_ver" />
+        </property>
+        <property name="uebergabestelleLfdNr" type="java.lang.Integer">
+            <column name="uebergabestelle_lfd_nr" />
+        </property>
+        <property name="uebergabestelleVer" type="java.lang.Integer">
+            <column name="uebergabestelle_ver" />
+        </property>
+        <property name="messstelleLfdNr" type="java.lang.Integer">
+            <column name="messstelle_lfd_nr" />
+        </property>
+        <property name="messstelleVer" type="java.lang.Integer">
+            <column name="messstelle_ver" />
+        </property>
+        <property name="probSchluessel" type="string">
+            <column name="prob_schluessel" length="1" />
+        </property>
+        <property name="probVer" type="java.lang.Integer">
+            <column name="prob_ver" />
+        </property>
+        <property name="datumAnalyse" type="java.util.Calendar">
+            <column name="datum_analyse" length="4" />
+        </property>
+        <property name="selbstueberwJn" type="java.lang.Boolean">
+            <column name="selbstueberw_jn" />
+        </property>
+        <property name="probeNr" type="string">
+            <column name="probe_nr" length="15" />
+        </property>
+        <property name="durchflussmessungJn" type="java.lang.Boolean">
+            <column name="durchflussmessung_jn" />
+        </property>
+        <property name="registrierungJn" type="java.lang.Boolean">
+            <column name="registrierung_jn" />
+        </property>
+        <property name="q05h" type="java.lang.Double">
+            <column name="q_05h" precision="8" scale="0" />
+        </property>
+        <property name="q2h" type="java.lang.Double">
+            <column name="q_2h" precision="8" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

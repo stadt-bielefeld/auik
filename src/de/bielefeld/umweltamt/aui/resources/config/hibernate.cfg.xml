@@ -92,5 +92,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaAnfallstStoffe.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/DeaWzCode.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/AuikWzCode.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/tipi/InkaProbenahme.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

@@ -239,4 +239,9 @@
             <key-column name="stoff_nr" />
         </primary-key>
     </table>
+    <table schema="tipi" name="inka_probenahme">
+        <primary-key>
+            <key-column name="probenahme_nr" />
+        </primary-key>
+    </table>
 </hibernate-reverse-engineering>
