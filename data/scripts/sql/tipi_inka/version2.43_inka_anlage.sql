@@ -91,8 +91,8 @@ FROM auik.indeinl_genehmigung
 WHERE 
   indeinl_genehmigung.anhang IS NOT NULL AND 
   indeinl_genehmigung.gen59 AND 
-  indeinl_genehmigung.gen58 AND AND
-  basis_objekt.inaktiv = FALSE 
+  indeinl_genehmigung.gen58 AND
+  basis_objekt.inaktiv = FALSE AND
   indeinl_genehmigung._deleted = FALSE AND
   basis_objekt._deleted = FALSE
 
