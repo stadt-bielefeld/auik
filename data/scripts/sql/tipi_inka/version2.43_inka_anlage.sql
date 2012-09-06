@@ -91,10 +91,10 @@ FROM auik.indeinl_genehmigung
 WHERE 
   indeinl_genehmigung.anhang IS NOT NULL AND 
   indeinl_genehmigung.gen59 AND 
-  indeinl_genehmigung.gen58 AND 
+  indeinl_genehmigung.gen58 AND AND
+  basis_objekt.inaktiv = FALSE 
   indeinl_genehmigung._deleted = FALSE AND
-  basis_objekt._deleted = FALSE AND
-  basis_objekt.inaktiv = FALSE
+  basis_objekt._deleted = FALSE
 
 UNION
 
@@ -199,15 +199,15 @@ FROM auik.indeinl_genehmigung AS gen59
 WHERE 
   gen59.anhang IS NOT NULL AND 
   gen59.gen59 AND 
-  gen58.gen58 AND 
+  basis_objekt.inaktiv = FALSE AND
 -- Das hier sind alle Anhang XY Objektarten:
 --  anhang.objektartid IN ('26', '27', '46', '38', '28', '31', '25', '39', '14', '20', '35', '17', '18', '54', '29', '30') AND
 -- Wir brauchen aber bisher nur diese: (entspricht Anhang 31, 40, 49, 50 und 53)
   anhang.objektartid IN ('28', '25', '14', '20', '17', '18') AND
+  gen58.gen58 AND 
   gen59._deleted = FALSE AND
-  gen58._deleted = FALSE AND
+  basis_objekt._deleted = FALSE AND
   gen59_verkn._deleted = FALSE AND
   anh_verkn._deleted = FALSE AND
   anhang._deleted = FALSE AND
-  basis_objekt._deleted = FALSE AND
-  basis_objekt.inaktiv = FALSE;
+  gen58._deleted = FALSE;

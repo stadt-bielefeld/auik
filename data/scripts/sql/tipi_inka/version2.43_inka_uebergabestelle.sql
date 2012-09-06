@@ -37,8 +37,8 @@
 --  3917::integer	AS kartennummer,
 --  1::integer		AS tk25_ver,
   1::integer		AS kanal_art,		-- NOT NULL
-  NULL::integer		AS rechtswert,
-  NULL::integer		AS hochwert
+  indeinl_genehmigung.uebergabestelle_rechtswert::integer	AS rechtswert,
+  indeinl_genehmigung.uebergabestelle_hochwert::integer		AS hochwert
 
 FROM auik.indeinl_genehmigung
   LEFT OUTER JOIN auik.basis_objekt

@@ -39,11 +39,11 @@ FROM
 WHERE 
   indeinl_genehmigung.anhang IS NOT NULL AND 
   indeinl_genehmigung.gen59 AND 
+  basis_objekt.inaktiv = FALSE AND
   indeinl_genehmigung._deleted = FALSE AND 
   basis_objekt._deleted = FALSE AND 
   basis_standort._deleted = FALSE AND
   basis_betreiber._deleted = FALSE AND
-  basis_objekt.inaktiv = FALSE AND
   NOT (basis_standort.strasse = basis_betreiber.strasse AND
        basis_standort.hausnr = basis_betreiber.hausnr AND
        basis_standort.hausnrzus IS NOT DISTINCT FROM basis_betreiber.hausnrzus AND
@@ -89,9 +89,9 @@ FROM
       
 WHERE 
   indeinl_genehmigung.anhang IS NOT NULL AND 
-  indeinl_genehmigung.gen59 AND 
+  indeinl_genehmigung.gen59 AND AND
+  basis_objekt.inaktiv = FALSE
   indeinl_genehmigung._deleted = FALSE AND 
   basis_objekt._deleted = FALSE AND 
-  basis_betreiber._deleted = FALSE AND
-  basis_objekt.inaktiv = FALSE;
+  basis_betreiber._deleted = FALSE;
   

@@ -41,8 +41,6 @@
 FROM auik.indeinl_genehmigung
   LEFT OUTER JOIN auik.basis_objekt
     ON indeinl_genehmigung.objektid = basis_objekt.objektid
---  LEFT OUTER JOIN auik.basis_standort 
---    ON basis_standort.id = basis_objekt.standortid
   LEFT OUTER JOIN auik.basis_betreiber
     ON basis_betreiber.id = basis_objekt.betreiberid
   LEFT OUTER JOIN tipi.auik_wz_code
@@ -51,9 +49,8 @@ FROM auik.indeinl_genehmigung
 WHERE
   indeinl_genehmigung.anhang IS NOT NULL AND
   indeinl_genehmigung.gen59 AND 
+  basis_objekt.inaktiv = FALSE AND
   indeinl_genehmigung._deleted = false AND
   basis_objekt._deleted = false AND
---  basis_standort._deleted = false AND
---  basis_betreiber._deleted = false AND
-  basis_objekt.inaktiv = FALSE;
+  basis_betreiber._deleted = false;
   
