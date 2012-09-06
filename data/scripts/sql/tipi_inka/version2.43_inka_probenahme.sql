@@ -36,24 +36,21 @@
   null::float						AS q_2h
 
 FROM auik.indeinl_genehmigung
-  JOIN auik.basis_objektverknuepfung
-    ON (indeinl_genehmigung.objektid = basis_objektverknuepfung.ist_verknuepft_mit
-      OR indeinl_genehmigung.objektid = basis_objektverknuepfung.objekt)
-  JOIN auik.atl_probepkt
-    ON (atl_probepkt.objektid = basis_objektverknuepfung.ist_verknuepft_mit
-      OR atl_probepkt.objektid = basis_objektverknuepfung.objekt)
+  JOIN auik.view_two_way_objektverknuepfung
+    ON indeinl_genehmigung.objektid = view_two_way_objektverknuepfung.ist_verknuepft_mit
   JOIN auik.basis_objekt
     ON indeinl_genehmigung.objektid = basis_objekt.objektid
+  JOIN auik.atl_probepkt
+    ON atl_probepkt.objektid = view_two_way_objektverknuepfung.objekt
   JOIN auik.atl_probenahmen
     ON atl_probepkt.objektid = atl_probenahmen.objektid
 
 WHERE 
   indeinl_genehmigung.anhang IS NOT NULL AND 
   indeinl_genehmigung.gen59 AND 
+  basis_objekt.inaktiv = FALSE AND
   indeinl_genehmigung._deleted = FALSE AND
   basis_objekt._deleted = FALSE AND
-  basis_objekt.inaktiv = FALSE AND
-  atl_probenahmen._deleted = FALSE
-
-ORDER BY
-  probenahme_nr;
+  view_two_way_objektverknuepfung._deleted = FALSE AND
+  atl_probepkt._deleted = FALSE AND
+  atl_probenahmen._deleted = FALSE;
