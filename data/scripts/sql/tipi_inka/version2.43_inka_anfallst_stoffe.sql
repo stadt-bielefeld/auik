@@ -3,8 +3,8 @@
   inka_anfallstelle.anfallstelle_nr::integer	AS anfallstelle_nr,
   1::integer					AS anfallstelle_ver,
   -- Primary / Foreign Key: dea_stoffe
-  dea_stoffe.stoff_nr::integer			AS stoff_nr,
-  1::integer					AS stoff_ver,
+  auik_anhang_stoff.stoff_nr::integer		AS stoff_nr,
+  auik_anhang_stoff.stoff_ver::integer		AS stoff_ver,
 
   1::integer					AS anfallst_stoffe_ver,
 
@@ -17,7 +17,5 @@
   true::boolean						AS ist_aktuell_jn 	-- NOT NULL
 
 FROM tipi.inka_anfallstelle
-  JOIN tipi.dea_stoffe
-    ON (true)
-  JOIN auik.atl_parameter
-    ON dea_stoffe.stoff_nr = atl_parameter.dea_stoffe_stoff_nr;
+  JOIN tipi.auik_anhang_stoff
+    ON inka_anfallstelle.anh_id = auik_anhang_stoff.anh_id;
