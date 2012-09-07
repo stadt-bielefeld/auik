@@ -151,8 +151,8 @@ public class ViewAtlAnalysepositionAll extends
         pos.setAtlParameter(AtlParameter.getParameter(this.getParameterId()));
         pos.setAtlProbenahmen(
             AtlProbenahmen.getProbenahme(this.getProbenahmeId()));
-        pos.set_enabled(this.getEnabled());
-        pos.set_deleted(this.getDeleted());
+        pos.set_enabled(this.is_enabled());
+        pos.set_deleted(this.is_deleted());
         return pos;
     }
 }

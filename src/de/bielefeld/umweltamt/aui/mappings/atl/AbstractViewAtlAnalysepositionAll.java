@@ -25,12 +25,15 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.util.Date;
 
+import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+
 /**
  * A class that represents a row in a database table. You can customize the
  * behavior of this class by editing the class,
  * {@link ViewAtlAnalysepositionAll}.
  */
-public abstract class AbstractViewAtlAnalysepositionAll implements
+public abstract class AbstractViewAtlAnalysepositionAll  extends
+    AbstractVirtuallyDeletableDatabaseTable implements
     java.io.Serializable {
 
     private static final long serialVersionUID = 629268595438966426L;
@@ -43,8 +46,6 @@ public abstract class AbstractViewAtlAnalysepositionAll implements
     private Integer einheitenId;
     private String parameterId;
     private Integer probenahmeId;
-    private Boolean enabled;
-    private Boolean deleted;
     private Date datumDerEntnahme;
     private Integer probepktId;
 
@@ -69,8 +70,6 @@ public abstract class AbstractViewAtlAnalysepositionAll implements
         this.einheitenId = einheitenId;
         this.parameterId = parameterId;
         this.probenahmeId = probenahmeId;
-        this.enabled = enabled;
-        this.deleted = deleted;
         this.datumDerEntnahme = datumDerEntnahme;
         this.probepktId = probepktId;
     }
@@ -145,22 +144,6 @@ public abstract class AbstractViewAtlAnalysepositionAll implements
 
     public void setProbenahmeId(Integer probenahmeId) {
         this.probenahmeId = probenahmeId;
-    }
-
-    public Boolean getEnabled() {
-        return this.enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Boolean getDeleted() {
-        return this.deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 
     public Date getDatumDerEntnahme() {
