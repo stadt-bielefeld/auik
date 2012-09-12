@@ -92,13 +92,23 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
             .array(new Integer[0]);
     }
 
-    public Date getLetzteAnalyse(Anh49Fachdaten fd) {
+    public Date getLetzteAnalyse() {
         return (Date) new DatabaseAccess()
             .createQuery(
                 "SELECT max(fd.anh49Analysen.datum) "
                     + "FROM Anh49Fachdaten fd "
                     + "WHERE fd = :fd")
-            .setEntity("fd", fd)
+            .setEntity("fd", this)
+            .uniqueResult();
+    }
+
+    public Date getNaechsteKontrolle() {
+        return (Date) new DatabaseAccess()
+            .createQuery(
+                "SELECT max(kontrolle.naechstepruefung) "
+                    + "FROM Anh49Kontrollen kontrolle "
+                    + "WHERE kontrolle.anh49Fachdaten = :fd")
+            .setEntity("fd", this)
             .uniqueResult();
     }
 

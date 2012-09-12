@@ -57,12 +57,13 @@ public class Anh49Model extends ListTableModel {
 
     public Anh49Model() {
         super(new String[]{
-                "Betreiber",
-                "Standort",
-                "Letzte Analyse",
-                "TÜV/DEKRA",
-                "Sonstiges Technik",
-                "SachbearbeiterIn"
+            "Betreiber",
+            "Standort",
+            "Letzte Analyse",
+            "Nächste Prüfung",
+            "(Alter) TÜV/DEKRA Termin",
+            "Sonstiges Technik",
+            "SachbearbeiterIn"
         },
         false);
     }
@@ -73,47 +74,28 @@ public class Anh49Model extends ListTableModel {
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Anh49Fachdaten fd = (Anh49Fachdaten) objectAtRow;
-        Object tmp;
-
         switch (columnIndex) {
-        case 0:
-            tmp = fd.getBasisObjekt().getBasisBetreiber();
-            break;
-        case 1:
-            tmp = fd.getBasisObjekt().getBasisStandort();
-            break;
-        case 2:
-        	tmp = fd.getLetzteAnalyse(fd);
-            break;
-        case 3:
-            tmp = fd.getDekraTuevDatum();
-            break;
-        case 4:
-            tmp = fd.getSonstigestechnik();
-            break;
-        case 5:
-            tmp = fd.getBasisObjekt().getBasisSachbearbeiter();
-            break;
-
-        default:
-            tmp = "ERROR";
-            break;
+            case 0: return fd.getBasisObjekt().getBasisBetreiber();
+            case 1: return fd.getBasisObjekt().getBasisStandort();
+            case 2: return fd.getLetzteAnalyse();
+            case 3: return fd.getNaechsteKontrolle();
+            case 4: return fd.getDekraTuevDatum();
+            case 5: return fd.getSonstigestechnik();
+            case 6: return fd.getBasisObjekt().getBasisSachbearbeiter();
+            default: return "ERROR";
         }
-//        if (fd.getBasisObjekt().getInaktiv() == true) {
-//            tmp = StringUtils.setStrike(tmp.toString());
-//        }
-        return tmp;
     }
 
-	  @Override
+    @Override
 	public Class<?> getColumnClass( int columnIndex ){
 		switch( columnIndex ){
 			case 0: return String.class;
 			case 1: return String.class;
 			case 2: return Date.class;
-			case 3: return Date.class;
-			case 4: return String.class;
+            case 3: return Date.class;
+            case 4: return Date.class;
 			case 5: return String.class;
+			case 6: return String.class;
 			default: return null;
 		}
 	}
