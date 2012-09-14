@@ -59,18 +59,7 @@
      *         all <code>${declarationName}</code>
      */
     public static ${pojo.importType("java.util.List")}<${declarationName}> getAll() {
-        log.debug("Getting all ${declarationName} instances");
-        ${pojo.importType("java.util.List")}<?> objectList = new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}()
-            .createCriteria(${declarationName}.class)
-            .addIdOrder(${declarationName}.class)
-            .listCriteria(); 
-        ${pojo.importType("java.util.List")}<${declarationName}> resultList = new ${pojo.importType("java.util.ArrayList")}<${declarationName}>();
-        ${declarationName} result = null;
-        for (Object object : objectList) {
-            result = (${declarationName}) object;
-            resultList.add(result); 
-        }
-        return resultList;
+        return ${pojo.importType("de.bielefeld.umweltamt.aui.mappings.DatabaseQuery")}.getAll(new ${declarationName}());
     }
 
 </#if>

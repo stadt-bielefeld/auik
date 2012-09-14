@@ -21,14 +21,20 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.jfree.util.Log;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -41,6 +47,27 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public class DatabaseQuery {
+
+    /** Logging */
+    private static final AuikLogger log = AuikLogger.getLogger();
+
+    /* ********************************************************************** */
+    /* General Queries for all packages                                       */
+    /* ********************************************************************** */
+
+    /**
+     * Get a list of all <code>AuikWzCode</code>
+     * @return <code>List&lt;AuikWzCode&gt;</code>
+     *         all <code>AuikWzCode</code>
+     */
+    public static <T> List<T> getAll(T type) {
+        log.debug("Getting all " + type.getClass().getName() +  " instances");
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(type.getClass())
+                .addOrder(new DatabaseAccess().getIdOrder(type.getClass())),
+            type);
+    }
+
 
     /* ********************************************************************** */
     /* Queries for package BASIS                                              */
@@ -56,39 +83,38 @@ public class DatabaseQuery {
      * If property is <code>null</code>, we search in all three properties.
      * @param property Name of the property
      * @param search Search string
-     * @return <code>List&lt;BasisBetreiber&gt;<code> List of BasisBetreiber
+     * @return <code>List&lt;BasisBetreiber&gt;</code> List of BasisBetreiber
      *         with the given search string in the given property
      */
     public static List<BasisBetreiber> getBasisBetreiber(
         String property, String search) {
 
         String modSearch = search.toLowerCase().trim() + "%";
-        Log.debug("Suche nach '" + modSearch + "' (" + property + ").");
+        log.debug("Suche nach '" + modSearch + "' (" + property + ").");
 
-        DatabaseAccess criteria = new DatabaseAccess()
-            .createCriteria(BasisBetreiber.class)
-            .addAscOrder("betrname")
-            .addAscOrder("betrnamezus");
+        DetachedCriteria criteria =
+            DetachedCriteria.forClass(BasisBetreiber.class)
+                .addOrder(Order.asc("betrname"))
+                .addOrder(Order.asc("betrnamezus"));
 
         if (property == null) {
-            // TODO: Uhuh, we need to somehow model this in the DatabaseAccess
-            // Or just use the Restrictions everywhere.
             criteria.add(Restrictions.or(
                 Restrictions.ilike("betrname", modSearch),
                 Restrictions.or(
                     Restrictions.ilike("betranrede", modSearch),
                     Restrictions.ilike("betrnamezus", modSearch))));
         } else if (property.equals("name")) {
-            criteria.addRestrictionILike("betrname", modSearch);
+            criteria.add(Restrictions.ilike("betrname", modSearch));
         } else if (property.equals("anrede")) {
-            criteria.addRestrictionILike("betranrede", modSearch);
+            criteria.add(Restrictions.ilike("betranrede", modSearch));
         } else if (property.equals("zusatz")) {
-            criteria.addRestrictionILike("betrnamezus", modSearch);
+            criteria.add(Restrictions.ilike("betrnamezus", modSearch));
         } else {
-            Log.debug("Something went really wrong here...");
+            log.debug("Something went really wrong here...");
         }
 
-        return criteria.listCriteriaCastToType(new BasisBetreiber());
+        return new DatabaseAccess().executeCriteriaToList(
+            criteria, new BasisBetreiber());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
@@ -105,12 +131,13 @@ public class DatabaseQuery {
      */
     public static boolean basisStandortExists(
         String strasse, Integer hausnr, String zusatz) {
-        return (!(new DatabaseAccess()
-            .createCriteria(BasisStandort.class)
-            .addRestrictionEqual("strasse", strasse)
-            .addRestrictionEqual("hausnr", hausnr)
-            .addRestrictionEqual("hausnrzus", zusatz)
-            .listCriteria()
+        return (!(new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(BasisStandort.class)
+                .add(Restrictions.eq("strasse", strasse))
+                .add(Restrictions.eq("hausnr", hausnr))
+                .add(DatabaseAccess.getRestrictionsEqualOrNull(
+                    "hausnrzus", zusatz)),
+            new BasisStandort())
             .isEmpty()));
     }
 
@@ -121,6 +148,60 @@ public class DatabaseQuery {
     /* ********************************************************************** */
     /* Queries for package INDEINL                                            */
     /* ********************************************************************** */
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh49Fachdaten                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    public static List<Anh49Fachdaten> getAnh49FachdatenAuswahl(
+        Boolean aktiv, Boolean abgemeldet, Boolean abwasserfrei,
+        Boolean abgelWdrVorlage, Integer tuev,
+        BasisSachbearbeiter sachbearbeiter) {
+
+        DetachedCriteria criteria =
+            DetachedCriteria.forClass(Anh49Fachdaten.class)
+                .createAlias("basisObjekt", "obj")
+                .createAlias("basisObjekt.basisObjektarten", "art");
+
+        if (aktiv != null) {
+            criteria.add(Restrictions.eq("obj.inaktiv", !aktiv));
+        }
+        if (abgemeldet != null) {
+            criteria.add(Restrictions.eq("abgemeldet", abgemeldet));
+        }
+        if (abwasserfrei != null) {
+            criteria.add(Restrictions.eq("abwasserfrei", abwasserfrei));
+        }
+        if (abgelWdrVorlage != null && abgelWdrVorlage) {
+            criteria.add(Restrictions.le("wiedervorlage", new Date()));
+        }
+        if (tuev != null) {
+//            criteria.add(Restrictions.eq("year(dekraTuevDatum)", tuev));
+//            criteria.add(
+//                Restrictions.sqlRestriction(
+//                    "year(dekra_Tuev_Datum) = ?",
+//                    tuev, Hibernate.INTEGER));
+            Calendar cal = Calendar.getInstance();
+            cal.set(tuev, 1, 1);
+            Date start = cal.getTime();
+            cal.add(Calendar.YEAR, 1);
+            Date end = cal.getTime();
+            criteria.add(Restrictions.between("dekraTuevDatum", start, end));
+        }
+        if (sachbearbeiter != null) {
+            criteria.add(
+                Restrictions.eq("obj.basisSachbearbeiter", sachbearbeiter));
+        }
+
+        criteria.add(Restrictions.not(
+            Restrictions.like("art.objektart", "Fettabscheider")));
+
+        criteria.addOrder(Order.asc("obj.basisSachbearbeiter"));
+        criteria.addOrder(Order.asc("dekraTuevDatum"));
+
+        return new DatabaseAccess().executeCriteriaToList(
+            criteria, new Anh49Fachdaten());
+    }
 
     /* ********************************************************************** */
     /* Queries for package VAWS                                               */
@@ -135,10 +216,10 @@ public class DatabaseQuery {
      * @return <code>AuikWzCode[]</code>
      */
     public static AuikWzCode[] getAuikWzCodesInKurzAuswahl() {
-        return new DatabaseAccess()
-            .createCriteria(AuikWzCode.class)
-            .addRestrictionEqual("inKurzAuswahl", true)
-            .addAscOrder("bezeichnung")
-            .arrayCriteria(new AuikWzCode[0]);
+        return new DatabaseAccess().executeCriteriaToArray(
+            DetachedCriteria.forClass(AuikWzCode.class)
+                .add(Restrictions.eq("inKurzAuswahl", true))
+                .addOrder(Order.asc("bezeichnung")),
+            new AuikWzCode[0]);
     }
 }

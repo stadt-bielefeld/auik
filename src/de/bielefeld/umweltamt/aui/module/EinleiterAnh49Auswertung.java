@@ -70,6 +70,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
@@ -145,11 +146,13 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Anh49Model model = (Anh49Model) getTableModel();
-                    model.setList(Anh49Fachdaten.getAuswahlList(
+                    model.setList(DatabaseQuery.getAnh49FachdatenAuswahl(
+                        aktivCheck.isSelected(),
+                        null, // abgemeldet,
+                        null, // abwasserfrei,
                         wiedervorlageCheck.isSelected(),
-                        (BasisSachbearbeiter) ((sachbBox.getSelectedItem() != null) ? sachbBox
-                            .getSelectedItem() : null), (Integer) dekraTuevBox
-                            .getSelectedItem(), aktivCheck.isSelected()));
+                        (Integer) dekraTuevBox.getSelectedItem(),
+                        (BasisSachbearbeiter) sachbBox.getSelectedItem()));
                     model.fireTableDataChanged();
                     frame.changeStatus("" + model.getRowCount()
                         + " Objekte gefunden");

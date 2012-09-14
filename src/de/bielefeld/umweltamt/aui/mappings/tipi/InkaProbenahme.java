@@ -23,10 +23,10 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 import de.nrw.lds.tipi.inka.Inka_Probenahme;
@@ -352,23 +352,11 @@ public class InkaProbenahme  implements java.io.Serializable {
      *         all <code>InkaProbenahme</code>
      */
     public static List<InkaProbenahme> getAll() {
-        log.debug("Getting all InkaProbenahme instances");
-        List<?> objectList = new DatabaseAccess()
-            .createCriteria(InkaProbenahme.class)
-            .addIdOrder(InkaProbenahme.class)
-            .listCriteria();
-        List<InkaProbenahme> resultList = new ArrayList<InkaProbenahme>();
-        InkaProbenahme result = null;
-        for (Object object : objectList) {
-            result = (InkaProbenahme) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new InkaProbenahme());
     }
 
     /* Custom code goes below here! */
 
-    // TODO: Fix this! This is generated - customize!
     public Inka_Probenahme toServiceType() {
         Inka_Probenahme serviceInstance = new Inka_Probenahme(
             this.getAenderungsDatum(),

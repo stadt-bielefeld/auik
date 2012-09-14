@@ -23,11 +23,11 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
@@ -175,18 +175,7 @@ public class AuikWzCode  implements java.io.Serializable {
      *         all <code>AuikWzCode</code>
      */
     public static List<AuikWzCode> getAll() {
-        log.debug("Getting all AuikWzCode instances");
-        List<?> objectList = new DatabaseAccess()
-            .createCriteria(AuikWzCode.class)
-            .addIdOrder(AuikWzCode.class)
-            .listCriteria();
-        List<AuikWzCode> resultList = new ArrayList<AuikWzCode>();
-        AuikWzCode result = null;
-        for (Object object : objectList) {
-            result = (AuikWzCode) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new AuikWzCode());
     }
 
     /* Custom code goes below here! */

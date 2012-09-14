@@ -36,6 +36,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -64,7 +65,7 @@ public class DatabaseAccess {
         /* Operations on entitys */
         GET, SAVEORUPDATE, MERGE, DELETE,
         /* Querys and criteria */
-        CREATE_QUERY, CREATE_CRITERIA, LIST, LIST_CRITERIA,
+        CREATE_QUERY, CRITERIA, LIST, LIST_CRITERIA,
         UNIQUE_RESULT, ITERATE
     }
 
@@ -412,103 +413,102 @@ public class DatabaseAccess {
     }
 
     /**
-     * Create a new instance of <code>Criteria</code> for the given
-     * <code>Class</code><br>
-     * <br>
+     * Execute a detached query/criteria and return the result as a list
+     * <br><br>
      * Note: For all classes except those in the
      * <code>de.bielefeld.umweltamt.aui.mappings.tipi</code>-Package
-     * global Restrictions are set (field <code>_deleted = false</code>).<br>
-     * Usage:<br>
+     * global Restrictions are set (field <code>_deleted = false</code>).
+     * <br><br>
+     * Usage:
      * <code><pre>
-     * List<?> result = new DatabaseAccess()
-     *     .createCriteria(Anh49Verwaltungsverfahren.class)
-     *     .addRestrictionEqual("anh49Fachdaten", fachdaten))
-     *     .addAscOrder("datum")
-     *     .listCriteria();</pre></code>
-     * @param persistentClass The class
-     * @return DatabaseAccess this
+     * DetachedCriteria criteria =
+     *     DetachedCriteria.forClass(Anh49Verwaltungsverfahren.class);
+     * criteria.add(Restrictions.eq("anh49Fachdaten", fachdaten);
+     * ...
+     * criteria.addOrder(Order.asc("datum"));
+     * ...
+     * List<Anh49Verwaltungsverfahren> result = new DatabaseAccess()
+     *     .executeCriteriaToList(criteria, Anh49Verwaltungsverfahren.class);
+     * </pre></code>
+     * @param <T> type of the result
+     * @param detachedCriteria query/criteria to execute
+     * @param type type of the result
+     * @return List<T> result of the query/criteria as a list
      */
-    public DatabaseAccess createCriteria(Class<?> persistentClass) {
+    /*
+     * We are using detached criteria to keep the opening and closing of the
+     * session within on method call here to keep it saver
+     */
+    public <T> List<T> executeCriteriaToList(
+        DetachedCriteria detachedCriteria, T type) {
+        this.getExecutableCriteria(detachedCriteria);
+        return this.listCriteriaCastToType(type);
+    }
+
+    /**
+     * Execute a detached query/criteria and return the result as an array
+     * <br><br>
+     * Note: For all classes except those in the
+     * <code>de.bielefeld.umweltamt.aui.mappings.tipi</code>-Package
+     * global Restrictions are set (field <code>_deleted = false</code>).
+     * <br><br>
+     * Usage:
+     * <code><pre>
+     * DetachedCriteria criteria =
+     *     DetachedCriteria.forClass(Anh49Verwaltungsverfahren.class);
+     * criteria.add(Restrictions.eq("anh49Fachdaten", fachdaten);
+     * ...
+     * criteria.addOrder(Order.asc("datum"));
+     * ...
+     * Anh49Verwaltungsverfahren[] result = new DatabaseAccess()
+     *     .executeCriteriaToArray(criteria, new Anh49Verwaltungsverfahren[0]);
+     * </pre></code>
+     * @param <T> type of the result
+     * @param detachedCriteria query/criteria to execute
+     * @param type type of the result
+     * @return <code>T[]</code> result of the query/criteria as an array
+     */
+    /*
+     * We are using detached criteria to keep the opening and closing of the
+     * session within on method call here to keep it saver
+     */
+    public <T> T[] executeCriteriaToArray(
+        DetachedCriteria detachedCriteria, T[] type) {
+        this.getExecutableCriteria(detachedCriteria);
+        return this.arrayCriteria(type);
+    }
+
+    /**
+     * Get an executable criteria for a given detached criteria.
+     * Add global <code>Restrictions</code>
+     * @param detachedCriteria
+     */
+    private void getExecutableCriteria(
+        DetachedCriteria detachedCriteria) {
         try {
-            this.criteria = this.getSession().createCriteria(persistentClass);
+            this.criteria =
+                detachedCriteria.getExecutableCriteria(this.getSession());
             // Add global restrictions
             // For all classes except those in the tipi package
-            if (!(persistentClass.getPackage().getName()
-                .equals("de.bielefeld.umweltamt.aui.mappings.tipi"))) {
+            if (!(this.criteria.toString().contains(
+                "de.bielefeld.umweltamt.aui.mappings.tipi"))) {
                 this.criteria.add(Restrictions.eq("_deleted", false));
                 // This will be for the new hibernate mappings:
 //                this.criteria.add(Restrictions.eq("deleted", false));
             }
         } catch (HibernateException he) {
             this.handleDBException(
-                he, DatabaseAccessType.CREATE_CRITERIA, false);
+                he, DatabaseAccessType.CRITERIA, false);
         } finally {
             // This place is intentionally left blank.
         }
-        return this;
-    }
-
-    /* Restrictions */
-    public DatabaseAccess addRestrictionEqual(
-        String propertyName, Object value) {
-        // This is a workaround for hibernate issue HHH-2951
-        // See: https://hibernate.onjira.com/browse/HHH-2951
-        if (value == null) {
-            this.criteria.add(Restrictions.isNull(propertyName));
-        } else {
-            this.criteria.add(Restrictions.eq(propertyName, value));
-        }
-        return this;
-    }
-
-    public DatabaseAccess addRestrictionILike(
-        String propertyName, Object value) {
-        this.criteria.add(Restrictions.ilike(propertyName, value));
-        return this;
-    }
-
-    // Note: We need this until we find a solution for (con|dis)junctions
-    public DatabaseAccess add(Criterion criterion) {
-        this.criteria.add(criterion);
-        return this;
-    }
-
-    /**
-     * Add ascending order by a given property to the <code>Criteria</code>
-     * @param propertyName Property to sort by
-     * @return <code>this</code>
-     */
-    public DatabaseAccess addAscOrder(String propertyName) {
-        this.criteria.addOrder(Order.asc(propertyName));
-        return this;
-    }
-
-    /**
-     * Add descending order by a given property to the <code>Criteria</code>
-     * @param propertyName Property to sort by
-     * @return <code>this</code>
-     */
-    public DatabaseAccess addDescOrder(String propertyName) {
-        this.criteria.addOrder(Order.desc(propertyName));
-        return this;
-    }
-
-    /**
-     * Add ascending order by a identifier property to the <code>Criteria</code>
-     * @return <code>this</code>
-     */
-    public DatabaseAccess addIdOrder(Class<?> entityClass) {
-        this.criteria.addOrder(Order.asc(
-            this.getSession().getSessionFactory()
-                .getClassMetadata(entityClass).getIdentifierPropertyName()));
-        return this;
     }
 
     /**
      * Execute the criteria and get the result as a <code>List&lt;?&gt;</code>
      * @return List<?> The result of the Criteria
      */
-    public List<?> listCriteria() {
+    private List<?> listCriteria() {
         List<?> criteriaResult = null;
         try {
             criteriaResult = this.criteria.list();
@@ -522,9 +522,11 @@ public class DatabaseAccess {
 
     /**
      * Execute the criteria and get the result as an array
-     * @return Object[] The result of the criteria
+     * @param <T>
+     * @param arrayType
+     * @return T[]
      */
-    public <T> T[] arrayCriteria(T[] arrayType) {
+    private <T> T[] arrayCriteria(T[] arrayType) {
         return this.listCriteria().toArray(arrayType);
     }
 
@@ -532,11 +534,11 @@ public class DatabaseAccess {
      * Cast the result list to the right type
      * @param <T>
      * @param type
-     * @return
+     * @return List<T>
      */
     // This will be my only suppressed warning, promise! ;-)
     @SuppressWarnings("unchecked")
-    public <T> List<T> listCriteriaCastToType(T type) {
+    private <T> List<T> listCriteriaCastToType(T type) {
         List<T> resultList = new ArrayList<T>();
         List<?> objectList = this.listCriteria();
         T result = null;
@@ -545,6 +547,35 @@ public class DatabaseAccess {
             resultList.add(result);
         }
         return resultList;
+    }
+
+    /**
+     * This is a workaround for hibernate issue HHH-2951<br>
+     * See: https://hibernate.onjira.com/browse/HHH-2951
+     * @param propertyName
+     * @param value
+     * @return
+     */
+    public static Criterion getRestrictionsEqualOrNull(
+        String propertyName, Object value) {
+        if (value == null) {
+            return Restrictions.isNull(propertyName);
+        } else {
+            return Restrictions.eq(propertyName, value);
+        }
+    }
+
+    /**
+     * Get an ascending order for the identifier property of the class<br>
+     * Note: This opens and closes the session!
+     * @return <code>Order</code>
+     */
+    public Order getIdOrder(Class<?> entityClass) {
+        Order idOrder = Order.asc(
+            this.getSession().getSessionFactory()
+                .getClassMetadata(entityClass).getIdentifierPropertyName());
+        this.closeSession();
+        return idOrder;
     }
 
     /*
