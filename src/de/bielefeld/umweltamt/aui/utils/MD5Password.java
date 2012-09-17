@@ -34,12 +34,16 @@
  */
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import org.apache.commons.codec.binary.Hex;
+
 /**
  * Simple Methods for converting and testing MD5-Encoded
  * Passwords.
  * @author Trygve Isaacson. <http://www.bombaydigital.com>
  */
-import java.security.*;
 
 public class MD5Password
 {
@@ -54,7 +58,7 @@ public class MD5Password
 
             md.update(clearTextPassword.getBytes());
 
-            return HexString.bufferToHex(md.digest());
+            return new String(Hex.encodeHex(md.digest()));
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Cant use MD5-algorithm!", e);
         }
