@@ -40,7 +40,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/DeaAnhang.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/basis/BasisObjektverknuepfung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/basis/BasisStrassen.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/IndeinlUebergabestelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/InkaBetriebseinrichtung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsAnlagenarten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsFachdaten.hbm.xml" />

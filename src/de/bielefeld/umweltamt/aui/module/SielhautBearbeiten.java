@@ -1609,7 +1609,8 @@ public class SielhautBearbeiten extends AbstractModul {
                 if (SielhautBearbeiten.this.dataSet1.getSeriesCount() > 0) {
 
                     AuswertungsDialog dialog = new AuswertungsDialog(
-                        "SielhautBearbeiten", SielhautBearbeiten.this.dataSet1,
+                        SielhautBearbeiten.this.getPunktFeld().getText(),
+                        SielhautBearbeiten.this.dataSet1,
                         null, SielhautBearbeiten.this.frame);
 
                     dialog.setVisible(true);
