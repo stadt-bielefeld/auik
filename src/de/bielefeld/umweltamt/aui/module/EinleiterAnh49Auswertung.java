@@ -91,6 +91,8 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     private JPanel queryPanel;
 
     // Widgets für die Abfrage
+    private JCheckBox abgemeldetCheck;
+    private JCheckBox abwasserfreiCheck;
     private JCheckBox aktivCheck;
     private JCheckBox wiedervorlageCheck;
     private JComboBox sachbBox;
@@ -126,7 +128,11 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
             wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage");
+            abgemeldetCheck = new JCheckBox("Abgemeldet");
+            abwasserfreiCheck = new JCheckBox("Abwasserfrei");
             aktivCheck = new JCheckBox("Aktiv");
+            abgemeldetCheck.setSelected(false);
+            abwasserfreiCheck.setSelected(false);
             aktivCheck.setSelected(true);
             sachbBox = new JComboBox();
             sachbBox.setModel(new DefaultComboBoxModel(Anh49Fachdaten
@@ -148,8 +154,8 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                     Anh49Model model = (Anh49Model) getTableModel();
                     model.setList(DatabaseQuery.getAnh49FachdatenAuswahl(
                         aktivCheck.isSelected(),
-                        null, // abgemeldet,
-                        null, // abwasserfrei,
+                        abgemeldetCheck.isSelected(),
+                        abwasserfreiCheck.isSelected(),
                         wiedervorlageCheck.isSelected(),
                         (Integer) dekraTuevBox.getSelectedItem(),
                         (BasisSachbearbeiter) sachbBox.getSelectedItem()));
@@ -161,13 +167,15 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
 
             // Noch etwas Layout...
             FormLayout layout = new FormLayout(
-                "pref, 20dlu, pref, 3dlu, pref, 20dlu, pref");
+                "pref, 20dlu, pref, 20dlu, pref, 3dlu, pref, 20dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
+            builder.append(abgemeldetCheck);
             builder.append(aktivCheck);
             builder.append("SachbearbeiterIn:", sachbBox);
             builder.append(auswahlButton);
             builder.nextLine();
+            builder.append(abwasserfreiCheck);
             builder.append(wiedervorlageCheck);
             builder.append("TÜV/DEKRA Termin:", dekraTuevBox);
             builder.append(getTabelleExportButton());
