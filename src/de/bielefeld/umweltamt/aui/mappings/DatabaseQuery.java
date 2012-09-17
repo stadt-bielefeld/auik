@@ -21,10 +21,10 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -176,17 +176,10 @@ public class DatabaseQuery {
             criteria.add(Restrictions.le("wiedervorlage", new Date()));
         }
         if (tuev != null) {
-//            criteria.add(Restrictions.eq("year(dekraTuevDatum)", tuev));
-//            criteria.add(
-//                Restrictions.sqlRestriction(
-//                    "year(dekra_Tuev_Datum) = ?",
-//                    tuev, Hibernate.INTEGER));
-            Calendar cal = Calendar.getInstance();
-            cal.set(tuev, 1, 1);
-            Date start = cal.getTime();
-            cal.add(Calendar.YEAR, 1);
-            Date end = cal.getTime();
-            criteria.add(Restrictions.between("dekraTuevDatum", start, end));
+            criteria.add(
+                Restrictions.sqlRestriction(
+                    "date_part('year', dekra_Tuev_Datum) = ?",
+                    tuev, Hibernate.INTEGER));
         }
         if (sachbearbeiter != null) {
             criteria.add(
@@ -196,7 +189,6 @@ public class DatabaseQuery {
         criteria.add(Restrictions.not(
             Restrictions.like("art.objektart", "Fettabscheider")));
 
-        criteria.addOrder(Order.asc("obj.basisSachbearbeiter"));
         criteria.addOrder(Order.asc("dekraTuevDatum"));
 
         return new DatabaseAccess().executeCriteriaToList(
