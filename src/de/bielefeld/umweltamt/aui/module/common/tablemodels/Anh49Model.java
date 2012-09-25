@@ -75,13 +75,13 @@ public class Anh49Model extends ListTableModel {
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Anh49Fachdaten fd = (Anh49Fachdaten) objectAtRow;
         switch (columnIndex) {
-            case 0: return fd.getBasisObjekt().getBasisBetreiber();
-            case 1: return fd.getBasisObjekt().getBasisStandort();
+            case 0: return fd.getBasisObjekt().getBasisBetreiber().toString();
+            case 1: return fd.getBasisObjekt().getBasisStandort().toString();
             case 2: return fd.getLetzteAnalyse();
             case 3: return fd.getNaechsteKontrolle();
             case 4: return fd.getDekraTuevDatum();
             case 5: return fd.getSonstigestechnik();
-            case 6: return fd.getBasisObjekt().getBasisSachbearbeiter();
+            case 6: return fd.getBasisObjekt().getBasisSachbearbeiter().toString();
             default: return "ERROR";
         }
     }
