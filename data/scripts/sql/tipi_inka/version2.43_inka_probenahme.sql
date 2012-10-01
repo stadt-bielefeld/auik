@@ -49,6 +49,7 @@ WHERE
   indeinl_genehmigung.anhang IS NOT NULL AND 
   indeinl_genehmigung.gen59 AND 
   basis_objekt.inaktiv = FALSE AND
+  atl_probenahmen.datum_der_entnahme >= '2001-01-01 00:00:00' AND
   indeinl_genehmigung._deleted = FALSE AND
   basis_objekt._deleted = FALSE AND
   view_two_way_objektverknuepfung._deleted = FALSE AND
