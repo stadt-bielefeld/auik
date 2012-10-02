@@ -212,6 +212,23 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
         return parameter;
     }
 
+    /**
+     * Liefert den Sielhautgrenzwert für einen bestimmten Parameter.
+     * @param id Die ID des Parameters
+     * @return Den Sielhautgrenzwert für den Parameter mit der gegebenen ID oder <code>null</code> falls
+     *         dieser nicht existiert
+     */
+    public static Double getSielhautGW(String id) {
+        AtlParameter parameter = null;
+        Double sielhautgw = null;
+
+        parameter = (AtlParameter) new DatabaseAccess()
+                .get(AtlParameter.class, id);
+        sielhautgw = parameter.getSielhautGw();
+
+        return sielhautgw;
+    }
+
     /*
      * Liefert alle Parameter, die für Klärschlamm-Probenahmen relevant sind.
      * D.h. alle, deren Klärschlamm-Grenzwert nicht <code>NULL</code> ist.

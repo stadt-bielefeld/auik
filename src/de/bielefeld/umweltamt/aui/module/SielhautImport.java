@@ -315,6 +315,20 @@ public class SielhautImport extends AbstractModul {
                         wert = new Float(decform.parse(strWert).floatValue());
                         pos.setWert(wert);
 
+                        // Normwert
+                        Double dwert;
+                        Double normwert;
+                        Double sielhautgw = null;
+                        String sPara = paramAusZeile(current);
+                        if (sPara != null) {
+                            sielhautgw = AtlParameter
+                                .getSielhautGW(AtlParameter
+                                    .getOrdnungsbegriff(sPara));
+                        }
+                        dwert = new Double(decform.parse(strWert).doubleValue());
+                        normwert = dwert / sielhautgw;
+                        pos.setNormwert(normwert);
+
                         // Parameter
                         String sParam = paramAusZeile(current);
                         if (sParam != null) {
