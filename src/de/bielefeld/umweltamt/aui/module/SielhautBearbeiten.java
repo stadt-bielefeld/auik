@@ -279,6 +279,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 .getAtlSielhaut().getId());
             setSielhautPunkt(this.spunkt);
         } else if (BasisObjekt.getObjekt(24856) != null) {
+            //FIXME: A constant id? In the code? -.-
             this.objekt = BasisObjekt.getObjekt(24856);
             this.sprobePkt = AtlProbepkt.getProbepunktByObjekt(this.objekt);
             this.spunkt = AtlSielhaut.getSielhaut(this.sprobePkt
