@@ -57,6 +57,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
@@ -126,7 +127,7 @@ public class SielhautTest extends TestCase {
         AtlSielhaut sielhaut = testQuery();
         Transaction transaction = session.beginTransaction();
         sielhaut.setBemerkungen("neue");
-        AtlSielhaut.saveSielhautPunkt(sielhaut, new BasisObjekt());
+        AtlSielhaut.saveSielhautPunkt(sielhaut, new BasisObjekt(), new AtlProbepkt());
         transaction.commit();
         session.close();
         session = _sessionFactory.openSession();
@@ -177,7 +178,7 @@ public class SielhautTest extends TestCase {
             session = _sessionFactory.openSession();
             transaction = session.beginTransaction();
 
-            AtlSielhaut.saveSielhautPunkt(sielhaut, new BasisObjekt());
+            AtlSielhaut.saveSielhautPunkt(sielhaut, new BasisObjekt(), new AtlProbepkt());
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {

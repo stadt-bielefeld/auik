@@ -472,13 +472,13 @@ public class SielhautBearbeiten extends AbstractModul {
             this.spunkt.setPfirmenprobe(getSpFirmenprobeCheck().isSelected());
 
             if (saveObjekt()) {
-                if (AtlSielhaut.saveSielhautPunkt(this.spunkt, this.objekt)) {
-                    if (saveProbepunkt(this.objekt)) {
-                        this.frame.changeStatus(
-                            "Sielhaut-Messpunkt erfolgreich gespeichert.",
-                            HauptFrame.SUCCESS_COLOR);
-                        setSielhautPunkt(this.spunkt);
-                    }
+                if (saveProbepunkt(this.objekt) &&
+                    AtlSielhaut.saveSielhautPunkt(this.spunkt, this.objekt,
+                    this.sprobePkt)) {
+                    this.frame.changeStatus(
+                        "Sielhaut-Messpunkt erfolgreich gespeichert.",
+                        HauptFrame.SUCCESS_COLOR);
+                    setSielhautPunkt(this.spunkt);
                 }
             } else {
                 this.frame.changeStatus(

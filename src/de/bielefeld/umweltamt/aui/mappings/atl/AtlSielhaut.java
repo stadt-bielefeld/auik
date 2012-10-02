@@ -107,8 +107,9 @@ public class AtlSielhaut extends AbstractAtlSielhaut implements Serializable {
     }
 
     public static boolean saveSielhautPunkt(
-        AtlSielhaut spunkt, BasisObjekt objekt) {
+        AtlSielhaut spunkt, BasisObjekt objekt, AtlProbepkt probePunkt) {
         spunkt.setBasisObjekt(objekt);
+        spunkt.setAtlProbepkt(probePunkt);
         boolean success = false;
         success = new DatabaseAccess().saveOrUpdate(spunkt);
         if (success) {
