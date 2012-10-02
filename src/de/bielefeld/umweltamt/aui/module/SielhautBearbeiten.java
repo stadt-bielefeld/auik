@@ -302,6 +302,7 @@ public class SielhautBearbeiten extends AbstractModul {
             this.objekt.setBasisStandort(this.standort);
             this.objekt.setBasisBetreiber(this.betreiber);
             this.objekt.setBasisObjektarten(this.art);
+            this.objekt.setInaktiv(false);
             this.sprobePkt = new AtlProbepkt();
             this.sprobePkt.setAtlProbeart(AtlProbeart
                 .getProbeart(AtlProbeart.SIELHAUT));
@@ -470,7 +471,7 @@ public class SielhautBearbeiten extends AbstractModul {
             this.spunkt.setPfirmenprobe(getSpFirmenprobeCheck().isSelected());
 
             if (saveObjekt()) {
-                if (AtlSielhaut.saveSielhautPunkt(this.spunkt)) {
+                if (AtlSielhaut.saveSielhautPunkt(this.spunkt, this.objekt)) {
                     if (saveProbepunkt(this.objekt)) {
                         this.frame.changeStatus(
                             "Sielhaut-Messpunkt erfolgreich gespeichert.",

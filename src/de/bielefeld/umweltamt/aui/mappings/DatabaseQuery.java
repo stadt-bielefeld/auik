@@ -153,6 +153,18 @@ public class DatabaseQuery {
     /* Queries for package INDEINL: class Anh49Fachdaten                      */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
+    /**
+     * Get a selection of Anhang49 objects which meet the given parameters<br>
+     * Global restriction: no "Fettabscheider"
+     * @param aktiv (optional) The status of the underlying BasisObjekt
+     * @param abgemeldet (optional)
+     * @param abwasserfrei (optional)
+     * @param abgelWdrVorlage (optional)
+     *        Is the date of the WdrVorlage in the past?
+     * @param tuev (optional) Year of next TÜV date
+     * @param sachbearbeiter
+     * @returns <code>List&lt;Anh49Fachdaten&gt;</code>
+     */
     public static List<Anh49Fachdaten> getAnh49FachdatenAuswahl(
         Boolean aktiv, Boolean abgemeldet, Boolean abwasserfrei,
         Boolean abgelWdrVorlage, Integer tuev,

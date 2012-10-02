@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -105,7 +106,9 @@ public class AtlSielhaut extends AbstractAtlSielhaut implements Serializable {
         return sielhaut;
     }
 
-    public static boolean saveSielhautPunkt(AtlSielhaut spunkt) {
+    public static boolean saveSielhautPunkt(
+        AtlSielhaut spunkt, BasisObjekt objekt) {
+        spunkt.setBasisObjekt(objekt);
         boolean success = false;
         success = new DatabaseAccess().saveOrUpdate(spunkt);
         if (success) {
