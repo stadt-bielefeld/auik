@@ -321,9 +321,9 @@ public class SielhautImport extends AbstractModul {
                         Double sielhautgw = null;
                         String sPara = paramAusZeile(current);
                         if (sPara != null) {
-                            sielhautgw = AtlParameter
-                                .getSielhautGW(AtlParameter
-                                    .getOrdnungsbegriff(sPara));
+                            sielhautgw = AtlParameter.getParameter(
+                                AtlParameter.getOrdnungsbegriff(sPara))
+                                    .getSielhautGw();
                         }
                         dwert = new Double(decform.parse(strWert).doubleValue());
                         normwert = dwert / sielhautgw;
