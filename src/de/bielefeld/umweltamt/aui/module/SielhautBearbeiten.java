@@ -404,8 +404,9 @@ public class SielhautBearbeiten extends AbstractModul {
 
         objekt = BasisObjekt.getObjekt(objekt.getObjektid());
         this.sprobePkt.setBasisObjekt(objekt);
-        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
-        this.sprobePkt.setAtlSielhaut(this.spunkt);
+//        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
+//        this.sprobePkt.setAtlSielhaut(this.spunkt);
+
         AtlProbepkt.saveProbepunkt(this.sprobePkt);
 
         saved = true;
@@ -475,6 +476,12 @@ public class SielhautBearbeiten extends AbstractModul {
                 if (saveProbepunkt(this.objekt) &&
                     AtlSielhaut.saveSielhautPunkt(this.spunkt, this.objekt,
                     this.sprobePkt)) {
+
+                    // TODO: This needs to be changed more consistent...
+                    this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
+                    this.sprobePkt.setAtlSielhaut(this.spunkt);
+                    AtlProbepkt.saveProbepunkt(this.sprobePkt);
+
                     this.frame.changeStatus(
                         "Sielhaut-Messpunkt erfolgreich gespeichert.",
                         HauptFrame.SUCCESS_COLOR);
