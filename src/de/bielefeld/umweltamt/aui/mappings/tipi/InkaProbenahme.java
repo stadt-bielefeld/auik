@@ -352,7 +352,7 @@ public class InkaProbenahme  implements java.io.Serializable {
      *         all <code>InkaProbenahme</code>
      */
     public static List<InkaProbenahme> getAll() {
-        return DatabaseQuery.getAll(new InkaProbenahme());
+        return DatabaseQuery.getOrderedAll(new InkaProbenahme());
     }
 
     /* Custom code goes below here! */

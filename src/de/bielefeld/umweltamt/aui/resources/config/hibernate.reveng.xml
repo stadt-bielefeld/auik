@@ -244,4 +244,16 @@
             <key-column name="probenahme_nr" />
         </primary-key>
     </table>
+    <table schema="tipi" name="inka_ueberwach_ergebnis">
+        <primary-key>
+            <key-column name="parameter_nr" />
+            <key-column name="probenahme_nr" />
+        </primary-key>
+    </table>
+    <table schema="tipi" name="inka_ueberwachungswert">
+        <primary-key>
+            <key-column name="parameter_nr" />
+            <key-column name="messstelle_lfd_nr" />
+        </primary-key>
+    </table>
 </hibernate-reverse-engineering>

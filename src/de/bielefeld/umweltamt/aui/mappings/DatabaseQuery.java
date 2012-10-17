@@ -56,18 +56,28 @@ public class DatabaseQuery {
     /* ********************************************************************** */
 
     /**
-     * Get a list of all <code>AuikWzCode</code>
-     * @return <code>List&lt;AuikWzCode&gt;</code>
-     *         all <code>AuikWzCode</code>
+     * Get a list of all <code>T</code>
+     * @return <code>List&lt;T&gt;</code>
+     *         all <code>T</code>
      */
     public static <T> List<T> getAll(T type) {
+        log.debug("Getting all " + type.getClass().getName() +  " instances");
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(type.getClass()), type);
+    }
+
+    /**
+     * Get an ordered list of all <code>T</code>
+     * @return <code>List&lt;T&gt;</code>
+     *         all <code>T</code>
+     */
+    public static <T> List<T> getOrderedAll(T type) {
         log.debug("Getting all " + type.getClass().getName() +  " instances");
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(type.getClass())
                 .addOrder(new DatabaseAccess().getIdOrder(type.getClass())),
             type);
     }
-
 
     /* ********************************************************************** */
     /* Queries for package BASIS                                              */

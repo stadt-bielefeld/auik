@@ -57,6 +57,8 @@ import de.bielefeld.umweltamt.aui.mappings.tipi.InkaMessstAnlage;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaMessstelle;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaProbenahme;
 import de.bielefeld.umweltamt.aui.mappings.tipi.InkaUebergabestelle;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaUeberwachErgebnis;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaUeberwachungswert;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.DeaAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaAnfallstAnlageModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaAnfallstMessstModel;
@@ -70,6 +72,8 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaMessstAnlageMode
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaMessstelleModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaProbenahmeModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaUebergabestelleModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaUeberwachErgebnisModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaUeberwachungswertModel;
 import de.bielefeld.umweltamt.aui.tipi.CredentialsDialog;
 import de.bielefeld.umweltamt.aui.tipi.ServiceManager;
 import de.nrw.lds.tipi.inka.Dea_Adresse;
@@ -85,6 +89,8 @@ import de.nrw.lds.tipi.inka.Inka_Messst_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Messstelle;
 import de.nrw.lds.tipi.inka.Inka_Probenahme;
 import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
+import de.nrw.lds.tipi.inka.Inka_Ueberwach_Ergebnis;
+import de.nrw.lds.tipi.inka.Inka_Ueberwachungswert;
 
 /**
  * Modul zum Synchronisieren der lokalen Datenbank mit einem entfernten Service.
@@ -107,6 +113,8 @@ public class DBSyncModul extends AbstractModul {
     private InkaAnfallstAnlageModel      anfallstAnlageDBModel;
     private InkaAnfallstStoffeModel      anfallstStoffeDBModel;
     private InkaProbenahmeModel          probenahmeDBModel;
+    private InkaUeberwachErgebnisModel   ueberwachErgebnisDBModel;
+    private InkaUeberwachungswertModel   ueberwachungswertDBModel;
 
     // Model für Datensätze des entferneten Service.
     private DeaAdresseModel              addrServiceModel;
@@ -122,6 +130,8 @@ public class DBSyncModul extends AbstractModul {
     private InkaAnfallstAnlageModel      anfallstAnlageServiceModel;
     private InkaAnfallstStoffeModel      anfallstStoffeServiceModel;
     private InkaProbenahmeModel          probenahmeServiceModel;
+    private InkaUeberwachErgebnisModel   ueberwachErgebnisServiceModel;
+    private InkaUeberwachungswertModel   ueberwachungswertServiceModel;
 
     private JTable dbTable;
     private JLabel rowCount;
@@ -140,6 +150,8 @@ public class DBSyncModul extends AbstractModul {
     private List<Inka_Anfallst_Anlage>     sendAnfallstAnlage;
     private List<Inka_Anfallst_Stoffe>     sendAnfallstStoffe;
     private List<Inka_Probenahme>          sendProbenahme;
+    private List<Inka_Ueberwach_Ergebnis>  sendUeberwachErgebnis;
+    private List<Inka_Ueberwachungswert>   sendUeberwachungswert;
 
     private ServiceManager service;
 
@@ -196,6 +208,10 @@ public class DBSyncModul extends AbstractModul {
         this.anfallstStoffeServiceModel = new InkaAnfallstStoffeModel();
         this.probenahmeDBModel = new InkaProbenahmeModel();
         this.probenahmeServiceModel = new InkaProbenahmeModel();
+        this.ueberwachErgebnisDBModel = new InkaUeberwachErgebnisModel();
+        this.ueberwachErgebnisServiceModel = new InkaUeberwachErgebnisModel();
+        this.ueberwachungswertDBModel = new InkaUeberwachungswertModel();
+        this.ueberwachungswertServiceModel = new InkaUeberwachungswertModel();
 
         this.sendAddr = new ArrayList<Dea_Adresse>();
         this.sendBetrieb = new ArrayList<Inka_Betrieb>();
@@ -210,6 +226,8 @@ public class DBSyncModul extends AbstractModul {
         this.sendAnfallstAnlage = new ArrayList<Inka_Anfallst_Anlage>();
         this.sendAnfallstStoffe = new ArrayList<Inka_Anfallst_Stoffe>();
         this.sendProbenahme = new ArrayList<Inka_Probenahme>();
+        this.sendUeberwachErgebnis = new ArrayList<Inka_Ueberwach_Ergebnis>();
+        this.sendUeberwachungswert = new ArrayList<Inka_Ueberwachungswert>();
 
         this.service = ServiceManager.getInstance();
     }
@@ -282,6 +300,16 @@ public class DBSyncModul extends AbstractModul {
                         DBSyncModul.this.dbTable
                             .setModel(DBSyncModul.this.probenahmeDBModel);
                     }
+                    if (item.equals("inka_ueberwach_ergebnis")) {
+                        DBSyncModul.this.dbTable
+                            .setModel(
+                                DBSyncModul.this.ueberwachErgebnisDBModel);
+                    }
+                    if (item.equals("inka_ueberwachungswert")) {
+                        DBSyncModul.this.dbTable
+                            .setModel(
+                                DBSyncModul.this.ueberwachungswertDBModel);
+                    }
                     compare.setSelectedItem(compare.getItemAt(0));
                     DBSyncModul.this.rowCount.setText(String
                         .valueOf(DBSyncModul.this.dbTable.getRowCount()));
@@ -348,6 +376,14 @@ public class DBSyncModul extends AbstractModul {
                             DBSyncModul.this.dbTable
                                 .setModel(DBSyncModul.this.probenahmeDBModel);
                         }
+                        if (sel.equals("inka_ueberwach_ergebnis")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.ueberwachErgebnisDBModel);
+                        }
+                        if (sel.equals("inka_ueberwachungswert")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.ueberwachungswertDBModel);
+                        }
                     }
                     if (item.equals("entferner Dienst")) {
                         if (sel.equals("dea_adresse")) {
@@ -393,6 +429,14 @@ public class DBSyncModul extends AbstractModul {
                         if (sel.equals("inka_probenahme")) {
                             DBSyncModul.this.dbTable
                                 .setModel(DBSyncModul.this.probenahmeServiceModel);
+                        }
+                        if (sel.equals("inka_ueberwach_ergebnis")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.ueberwachErgebnisServiceModel);
+                        }
+                        if (sel.equals("inka_ueberwachungswert")) {
+                            DBSyncModul.this.dbTable
+                                .setModel(DBSyncModul.this.ueberwachungswertServiceModel);
                         }
                     }
                     DBSyncModul.this.rowCount.setText(String
@@ -443,6 +487,10 @@ public class DBSyncModul extends AbstractModul {
                             user, password, DBSyncModul.this.sendAnfallstStoffe);
                         DBSyncModul.this.service.setInkaDataRecords(
                             user, password, DBSyncModul.this.sendProbenahme);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendUeberwachErgebnis);
+                        DBSyncModul.this.service.setInkaDataRecords(
+                            user, password, DBSyncModul.this.sendUeberwachungswert);
                     } else {
                         GUIManager.getInstance().showInfoMessage(
                             "Bitte holen Sie zuerst Daten ab!", "Info");
@@ -534,6 +582,14 @@ public class DBSyncModul extends AbstractModul {
                     this.probenahmeDBModel.setList(
                         InkaProbenahme.getAll());
                 }
+                if (entities[i].equals("inka_ueberwach_ergebnis")) {
+                    this.ueberwachErgebnisDBModel.setList(
+                        InkaUeberwachErgebnis.getAll());
+                }
+                if (entities[i].equals("inka_ueberwachungswert")) {
+                    this.ueberwachungswertDBModel.setList(
+                        InkaUeberwachungswert.getAll());
+                }
             }
             return entities;
         }
@@ -596,9 +652,15 @@ public class DBSyncModul extends AbstractModul {
             this.anfallstStoffeServiceModel.setList(
                 this.service.getInkaDataRecords(
                     user, password, new Inka_Anfallst_Stoffe()));
-            this.anfallstStoffeServiceModel.setList(
+            this.probenahmeServiceModel.setList(
                 this.service.getInkaDataRecords(
                     user, password, new Inka_Probenahme()));
+            this.ueberwachErgebnisServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Ueberwach_Ergebnis()));
+            this.ueberwachungswertServiceModel.setList(
+                this.service.getInkaDataRecords(
+                    user, password, new Inka_Ueberwachungswert()));
             // Add new DEA/INKA-Table here
         }
     }

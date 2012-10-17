@@ -175,7 +175,7 @@ public class AuikWzCode  implements java.io.Serializable {
      *         all <code>AuikWzCode</code>
      */
     public static List<AuikWzCode> getAll() {
-        return DatabaseQuery.getAll(new AuikWzCode());
+        return DatabaseQuery.getOrderedAll(new AuikWzCode());
     }
 
     /* Custom code goes below here! */
