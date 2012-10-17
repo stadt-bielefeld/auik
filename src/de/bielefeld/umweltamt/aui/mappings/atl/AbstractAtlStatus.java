@@ -99,9 +99,9 @@ public abstract class AbstractAtlStatus implements Serializable {
     public boolean equals(Object rhs) {
         if (rhs == null)
             return false;
-        if (!(rhs instanceof AtlEinheiten))
+        if (!(rhs instanceof AtlStatus))
             return false;
-        AtlEinheiten that = (AtlEinheiten) rhs;
+        AtlStatus that = (AtlStatus) rhs;
         if (this.getId() != null && that.getId() != null) {
             if (!this.getId().equals(that.getId())) {
                 return false;

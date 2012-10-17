@@ -29,7 +29,7 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
  * A class that represents a row in the 'ATL_STATUS' table. This class may be
  * customized as it is never re-generated after being created.
  */
-public class AtlStatus extends AbstractAtlEinheiten implements Serializable {
+public class AtlStatus extends AbstractAtlStatus implements Serializable {
     private static final long serialVersionUID = 8102132119175012262L;
 
     /**
