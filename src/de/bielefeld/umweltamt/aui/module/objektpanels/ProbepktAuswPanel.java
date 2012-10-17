@@ -688,7 +688,8 @@ public class ProbepktAuswPanel extends JPanel {
                 if (ProbepktAuswPanel.this.dataSet1.getSeriesCount() > 0) {
 
                     AuswertungsDialog dialog = new AuswertungsDialog(
-                        "Probenahmen", ProbepktAuswPanel.this.dataSet1, null,
+                        ProbepktAuswPanel.this.pkt.getBasisBetreiber().getBetrname(),
+                        ProbepktAuswPanel.this.dataSet1, null,
                         ProbepktAuswPanel.this.frame);
 
                     dialog.setVisible(true);
@@ -722,7 +723,8 @@ public class ProbepktAuswPanel extends JPanel {
                 if (this.seriesCount > 0) {
 
                     AuswertungsDialog dialog = new AuswertungsDialog(
-                        "Probenahmen", ProbepktAuswPanel.this.dataSet1,
+                        ProbepktAuswPanel.this.pkt.getBasisBetreiber().getBetrname(),
+                        ProbepktAuswPanel.this.dataSet1,
                         ProbepktAuswPanel.this.dataSet2,
                         ProbepktAuswPanel.this.frame);
                     dialog.setVisible(true);
