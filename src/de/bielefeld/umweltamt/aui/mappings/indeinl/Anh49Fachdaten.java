@@ -89,6 +89,7 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         for (int i=1997; i<=thisYear; i++) {
             years.add(new Integer(i));
         }
+        years.add(null);
         return years.toArray(new Integer[0]);
 //        return (Integer[]) new DatabaseAccess()
 //            .createQuery(
