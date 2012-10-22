@@ -32,6 +32,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -264,6 +265,8 @@ public class ProbepktAuswPanel extends JPanel {
                     doAbbrechen();
                 } else if (e.getSource() == AuswertungsDialog.this.speichernButton) {
                     doSpeichern();
+                } else if (e.getSource() == AuswertungsDialog.this.printButton) {
+                    doPrint();
                 }
             }
 
@@ -404,6 +407,7 @@ public class ProbepktAuswPanel extends JPanel {
         }
 
         private JButton speichernButton;
+        private JButton printButton;
         private JButton abbrechenButton;
 
         private JTable exportTable;
@@ -436,14 +440,16 @@ public class ProbepktAuswPanel extends JPanel {
 
             this.speichernButton = new JButton("Speichern");
             this.speichernButton.addActionListener(this.listener);
+            this.printButton = new JButton("Drucken");
+            this.printButton.addActionListener(this.listener);
             this.abbrechenButton = new JButton("Schließen");
             this.abbrechenButton.addActionListener(this.listener);
 
             JPanel tmp = new JPanel(new BorderLayout(0, 7));
 
             tmp.add(initializeContent(), BorderLayout.CENTER);
-            JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(
-                this.speichernButton, this.abbrechenButton);
+            JPanel buttonBar = ButtonBarFactory.buildOKCancelApplyBar(
+                this.speichernButton, this.printButton, this.abbrechenButton);
             tmp.add(buttonBar, BorderLayout.SOUTH);
             tmp.setBorder(Borders.TABBED_DIALOG_BORDER);
 
@@ -580,6 +586,16 @@ public class ProbepktAuswPanel extends JPanel {
             }
         }
 
+        private void printTable() {
+            try {
+                exportTable.print();
+            } catch (PrinterException e) {
+                GUIManager.getInstance().setErrorStatus(
+                    "Beim Drucken der Tabelle trat ein Fehler auf!");
+                e.printStackTrace();
+            }
+        }
+
         private void showTabellenPopup(MouseEvent e) {
             if (this.tabellenMenu == null) {
                 this.tabellenMenu = new JPopupMenu("Tabelle");
@@ -593,6 +609,14 @@ public class ProbepktAuswPanel extends JPanel {
                     }
                 });
                 this.tabellenMenu.add(speichernItem);
+                this.tabellenMenu.add(new JMenuItem(
+                    new AbstractAction("Drucken") {
+                    private static final long serialVersionUID = -553069817163L;
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        printTable();
+                    }
+                }));
             }
 
             if (e.isPopupTrigger()) {
@@ -622,6 +646,17 @@ public class ProbepktAuswPanel extends JPanel {
                 }
             } else if (this.tabbedPane.getSelectedIndex() == 1) {
                 saveTabelle();
+            }
+        }
+
+        public void doPrint() {
+            switch (this.tabbedPane.getSelectedIndex()) {
+                case 0:
+                    this.chartPanel.createChartPrintJob();
+                    break;
+                case 1:
+                    printTable();
+                    break;
             }
         }
     }
