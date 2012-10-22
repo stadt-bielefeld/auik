@@ -135,16 +135,16 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             abwasserfreiCheck.setSelected(false);
             aktivCheck.setSelected(true);
             sachbBox = new JComboBox();
-            sachbBox.setModel(new DefaultComboBoxModel(Anh49Fachdaten
-                .getAllSachbearbeiter()));
+            sachbBox.setModel(new DefaultComboBoxModel(
+                Anh49Fachdaten.getAllSachbearbeiter()));
 //            sachbBox.setEditable(true);
             sachbBox.setSelectedItem(BasisSachbearbeiter
                 .getCurrentSachbearbeiter());
             dekraTuevBox = new JComboBox();
-            dekraTuevBox.setModel(new DefaultComboBoxModel(Anh49Fachdaten
-                .getAllDekraTuevYears()));
-            dekraTuevBox
-                .setSelectedIndex(dekraTuevBox.getModel().getSize() - 1);
+            dekraTuevBox.setModel(new DefaultComboBoxModel(
+                Anh49Fachdaten.getDekraTuevYears()));
+            dekraTuevBox.setSelectedIndex(
+                dekraTuevBox.getModel().getSize() - 6);
 
             auswahlButton = new JButton("Auswahl anwenden");
 

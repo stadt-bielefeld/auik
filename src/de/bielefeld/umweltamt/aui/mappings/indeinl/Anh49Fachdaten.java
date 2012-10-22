@@ -22,7 +22,10 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
@@ -80,16 +83,22 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
             .array(new BasisSachbearbeiter[0]);
     }
 
-    public static Integer[] getAllDekraTuevYears() {
-        return (Integer[]) new DatabaseAccess()
-            .createQuery(
-                "SELECT DISTINCT year(fd.dekraTuevDatum) "
-                + "FROM Anh49Fachdaten AS fd "
-                + "WHERE fd.basisObjekt.basisObjektarten.objektart "
-                    + "NOT LIKE 'Fettabscheider'"
-                // TODO: This is rather tricky and should not be here at all...
-                + "AND fd._deleted = false")
-            .array(new Integer[0]);
+    public static Integer[] getDekraTuevYears() {
+        ArrayList<Integer> years = new ArrayList<Integer>();
+        int thisYear = new GregorianCalendar().get(Calendar.YEAR) + 5;
+        for (int i=1997; i<=thisYear; i++) {
+            years.add(new Integer(i));
+        }
+        return years.toArray(new Integer[0]);
+//        return (Integer[]) new DatabaseAccess()
+//            .createQuery(
+//                "SELECT DISTINCT year(fd.dekraTuevDatum) "
+//                + "FROM Anh49Fachdaten AS fd "
+//                + "WHERE fd.basisObjekt.basisObjektarten.objektart "
+//                    + "NOT LIKE 'Fettabscheider'"
+//                // TODO: This is rather tricky and should not be here at all...
+//                + "AND fd._deleted = false")
+//            .array(new Integer[0]);
     }
 
     public Date getLetzteAnalyse() {
