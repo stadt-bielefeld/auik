@@ -89,6 +89,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -432,16 +433,14 @@ public class LaborIcpImport extends AbstractModul {
                                     rundWert = rundWert.setScale(1,
                                         BigDecimal.ROUND_UP);
                                     pos.setWert(new Float(rundWert.floatValue()));
-                                    einheit = AtlEinheiten
-                                        .getEinheit(AtlEinheiten.MG_KG_ID);
+                                    einheit = DatabaseConstants.ATL_EINHEIT_MG_KG;
                                     log.debug("Klärschlamm-Umrechnung: ("
                                         + wert + " mg/L * 100) / " + einwaage
                                         + " = " + pos.getWert() + " mg/KG");
                                 }
                             } else {
                                 log.debug("Keine Klärschlamm-Umrechnung nötig.");
-                                einheit = AtlEinheiten
-                                    .getEinheit(AtlEinheiten.MG_L_ID);
+                                einheit = DatabaseConstants.ATL_EINHEIT_MG_L;
                             }
                         }
 

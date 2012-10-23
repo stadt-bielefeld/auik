@@ -29,6 +29,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
@@ -154,6 +155,32 @@ public class DatabaseQuery {
     /* ********************************************************************** */
     /* Queries for package ATL                                                */
     /* ********************************************************************** */
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlEinheiten                           */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get an unit by its description
+     * @param description The description of the unit (e.g. "mg/l")
+     * @return <code>AtlEinheiten</code>, if an unit was found,
+     *         <code>null</code> otherwise
+     */
+    public static AtlEinheiten getEinheitByDescription(String description) {
+        List<AtlEinheiten> list = new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlEinheiten.class)
+                .add(Restrictions.eq("bezeichnung", description)),
+//                .uniqueResult(),
+            new AtlEinheiten());
+        // TODO: UniqueResult for Criteria
+        switch (list.size()) {
+            case 1: return list.get(0);
+            case 0: return null;
+            default:
+                log.error("More than one result in unique request!");
+                return null;
+        }
+    }
 
     /* ********************************************************************** */
     /* Queries for package INDEINL                                            */

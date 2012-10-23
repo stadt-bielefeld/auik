@@ -122,6 +122,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -227,10 +228,11 @@ public class ProbenEditor extends AbstractApplyEditor {
                     for (String param_ordn : params_ordn) {
                         param = AtlParameter.getParameter(param_ordn);
                         addParameter(param,
-                            AtlEinheiten.getEinheit(AtlEinheiten.MG_KG_ID),
+                            DatabaseConstants.ATL_EINHEIT_MG_KG,
                             analyse_von);
                     }
                 } else if (this.probe.getKennummer().startsWith("7")) {
+                    // TODO: Strings auslagern!
                     String[] params_ordn = {"L15230", "P00013"};
                     String analyse_von = "Betriebslabor";
                     setList(new ArrayList<Object>());
@@ -241,6 +243,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                             .getWirdgemessenineinheit()), analyse_von);
                     }
                 } else if (!this.isSielhaut) {
+                    // TODO: Strings auslagern!
                     String[] params_ordn = {"L10111", "B00600", "L10821"};
                     String analyse_von = "360.33";
                     setList(new ArrayList<Object>());
@@ -297,8 +300,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                 // % Normwert
                 case 6:
                     value = "-";
-                    if (pos.getAtlEinheiten().getId()
-                        .equals(AtlEinheiten.MG_KG_ID)) {
+                    if (pos.getAtlEinheiten().getId().equals(
+                        DatabaseConstants.ATL_EINHEIT_MG_KG.getId())) {
                         double tmpVal = -1;
                         if (this.probe.isKlaerschlammProbe()) {
                             if (pos.getAtlParameter().getKlaerschlammGw() != null) {
@@ -417,11 +420,9 @@ public class ProbenEditor extends AbstractApplyEditor {
             AtlAnalyseposition tmp = new AtlAnalyseposition(this.probe);
             if (this.probe.isKlaerschlammProbe()
                 || this.probe.getProbeArt().isSielhaut()) {
-                tmp.setAtlEinheiten(AtlEinheiten
-                    .getEinheit(AtlEinheiten.MG_KG_ID));
+                tmp.setAtlEinheiten(DatabaseConstants.ATL_EINHEIT_MG_KG);
             } else {
-                tmp.setAtlEinheiten(AtlEinheiten
-                    .getEinheit(AtlEinheiten.MG_L_ID));
+                tmp.setAtlEinheiten(DatabaseConstants.ATL_EINHEIT_MG_L);
             }
             tmp.setAtlParameter((AtlParameter) ProbenEditor.this.parameterBox
                 .getSelectedItem());

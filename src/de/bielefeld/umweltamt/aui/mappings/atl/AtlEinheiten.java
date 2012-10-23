@@ -22,8 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -33,21 +31,6 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
  */
 public class AtlEinheiten extends AbstractAtlEinheiten implements Serializable {
     private static final long serialVersionUID = 866939599579322354L;
-    /** Die ID der Einheit "mg/l" */
-    final public static Integer MG_L_ID = new Integer(42);
-    /** Die ID der Einheit "mg/kg" */
-    final public static Integer MG_KG_ID = new Integer(43);
-    /** Die ID der Einheit "%" */
-    final public static Integer PROZENT_ID = new Integer(63);
-
-    final public static Integer DEFAULT_ID = MG_L_ID;
-
-    /**
-     * Die Map für die beim Import unterstützten Einheiten. Sie enthält eine
-     * Zuordnung von Einheitennamen zu den jeweiligen Schlüsseln der
-     * Einheiten-Tabelle. Sie wird in initMap() gefüllt.
-     */
-    private static Map<String, Integer> sEinheiten = null;
 
     /** Simple constructor of AtlEinheiten instances. */
     public AtlEinheiten() {
@@ -73,45 +56,6 @@ public class AtlEinheiten extends AbstractAtlEinheiten implements Serializable {
             tmp = tmp.trim();
         }
         return tmp;
-    }
-
-    /**
-     * Initialisiert die Map für die beim Import unterstützten Einheiten. Sie
-     * enthält eine Zuordnung von Einheitennamen zu den jeweiligen Schlüsseln
-     * der Einheiten-Tabelle.
-     */
-    private static void initMap() {
-        if (sEinheiten == null) {
-            sEinheiten = new HashMap<String, Integer>();
-
-            // SielhautBearbeiten:
-            sEinheiten.put("mg/kg TS", AtlEinheiten.MG_KG_ID);
-            sEinheiten.put("%", AtlEinheiten.PROZENT_ID);
-
-            // ICP-Daten liegen immer als mg/L vor
-        }
-    }
-
-    /**
-     * überprüft ob ein entsprechender Parameter importierbar ist.
-     * @param name Der Einheiten-Name (bspw. "%").
-     * @return <code>true</code>, wenn eine entsprechende Einheit bekannt ist,
-     *         sonst <code>false</code>.
-     */
-    public static boolean isEinheitSupported(String name) {
-        initMap();
-        return sEinheiten.containsKey(name);
-    }
-
-    /**
-     * Liefert den Schlüssel für eine Einheit.
-     * @param name Der Einheiten-Name (bspw. "%").
-     * @return Den Schlüssel der Einheit oder <code>null</code>, falls die
-     *         Einheit nicht unterstützt wird.
-     */
-    public static Integer getID(String name) {
-        initMap();
-        return sEinheiten.get(name);
     }
 
     /**

@@ -75,6 +75,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -232,17 +233,14 @@ public class SielhautImport extends AbstractModul {
             }
 
             if (!this.importableRows.containsKey(pos)) {
-                if (!AtlParameter.isParameterSupported(paramAusZeile(pos))
-                    || !AtlEinheiten.isEinheitSupported(einheitAusZeile(pos))) {
-                    this.importableRows.put(pos, new Boolean(false));
-                } else {
-                    String kennummer = kennummerAusZeile(pos);
-                    if (AtlProbenahmen.probenahmeExists(kennummer)) {
-                        this.importableRows.put(pos, new Boolean(true));
-                    } else {
-                        this.importableRows.put(pos, new Boolean(false));
-                    }
-                }
+                this.importableRows.put(pos, new Boolean(
+                    // Check the parameter
+                    AtlParameter.getParameter(paramAusZeile(pos)) != null &&
+                    // Check the unit
+                    DatabaseQuery.getEinheitByDescription(
+                        einheitAusZeile(pos)) != null &&
+                    // Check the sample
+                    AtlProbenahmen.probenahmeExists(kennummerAusZeile(pos))));
             }
 
             return ((Boolean) this.importableRows.get(pos)).booleanValue();
@@ -352,9 +350,9 @@ public class SielhautImport extends AbstractModul {
                         }
 
                         // Einheit
-                        String sEinheit = einheitAusZeile(current);
-                        AtlEinheiten einheit = AtlEinheiten
-                            .getEinheit(AtlEinheiten.getID(sEinheit));
+                        AtlEinheiten einheit =
+                            DatabaseQuery.getEinheitByDescription(
+                                einheitAusZeile(current));
 
                         if (einheit != null) {
                             pos.setAtlEinheiten(einheit);
@@ -363,7 +361,8 @@ public class SielhautImport extends AbstractModul {
                             if (!problemMessage.equals("")) {
                                 problemMessage += "<br>";
                             }
-                            problemMessage += "Unbekannte Einheit: " + sEinheit;
+                            problemMessage += "Unbekannte Einheit: " +
+                                einheitAusZeile(current);
                         }
 
                         // Analyse von

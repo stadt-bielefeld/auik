@@ -135,6 +135,7 @@ import com.toedter.calendar.JDateChooser;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -1126,8 +1127,8 @@ public class KlaerschlammAuswertung extends AbstractModul {
     private JComboBox getLeftEinheitenBox() {
         if (this.leftEinheitenBox == null) {
             this.leftEinheitenBox = new SearchBox(this.einheiten);
-            this.leftEinheitenBox.setSelectedItem(AtlEinheiten
-                .getEinheit(AtlEinheiten.MG_KG_ID));
+            this.leftEinheitenBox.setSelectedItem(
+                DatabaseConstants.ATL_EINHEIT_MG_KG);
         }
 
         return this.leftEinheitenBox;
@@ -1136,8 +1137,8 @@ public class KlaerschlammAuswertung extends AbstractModul {
     private JComboBox getRightEinheitenBox() {
         if (this.rightEinheitenBox == null) {
             this.rightEinheitenBox = new SearchBox(this.einheiten);
-            this.rightEinheitenBox.setSelectedItem(AtlEinheiten
-                .getEinheit(AtlEinheiten.MG_KG_ID));
+            this.rightEinheitenBox.setSelectedItem(
+                DatabaseConstants.ATL_EINHEIT_MG_KG);
         }
 
         return this.rightEinheitenBox;

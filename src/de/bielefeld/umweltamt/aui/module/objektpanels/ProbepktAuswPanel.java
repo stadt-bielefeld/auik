@@ -80,6 +80,7 @@ import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -694,8 +695,8 @@ public class ProbepktAuswPanel extends JPanel {
     private JComboBox getLeftEinheitenBox() {
         if (this.leftEinheitenBox == null) {
             this.leftEinheitenBox = new SearchBox(this.einheiten);
-            this.leftEinheitenBox.setSelectedItem(AtlEinheiten
-                .getEinheit(AtlEinheiten.MG_L_ID));
+            this.leftEinheitenBox.setSelectedItem(
+                DatabaseConstants.ATL_EINHEIT_MG_L);
         }
 
         return this.leftEinheitenBox;
@@ -704,8 +705,9 @@ public class ProbepktAuswPanel extends JPanel {
     private JComboBox getRightEinheitenBox() {
         if (this.rightEinheitenBox == null) {
             this.rightEinheitenBox = new SearchBox(this.einheiten);
-            this.rightEinheitenBox.setSelectedItem(AtlEinheiten
-                .getEinheit(AtlEinheiten.MG_L_ID));
+            this.rightEinheitenBox.setSelectedItem(
+                DatabaseConstants.ATL_EINHEIT_MG_L);
+
         }
 
         return this.rightEinheitenBox;
