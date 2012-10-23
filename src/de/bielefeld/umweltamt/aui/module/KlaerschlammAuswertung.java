@@ -946,54 +946,25 @@ public class KlaerschlammAuswertung extends AbstractModul {
             builder.add(new JScrollPane(rList),
                 cc.xywh(9, 3, 1, 15, "fill, fill"));
 
-            builder.add(createRLButton(true, AtlParameter.CADMIUM_ID),
-                cc.xy(3, 3));
-            builder.add(new JLabel("Cadmium (Cd)", JLabel.CENTER),
-                cc.xy(5, 3, "f,d"));
-            builder.add(createRLButton(false, AtlParameter.CADMIUM_ID),
-                cc.xy(7, 3));
-
-            builder.add(createRLButton(true, AtlParameter.CHROM_ID),
-                cc.xy(3, 5));
-            builder.add(new JLabel("Chrom (Cr)", JLabel.CENTER),
-                cc.xy(5, 5, "f,d"));
-            builder.add(createRLButton(false, AtlParameter.CHROM_ID),
-                cc.xy(7, 5));
-
-            builder.add(createRLButton(true, AtlParameter.KUPFER_ID),
-                cc.xy(3, 7));
-            builder.add(new JLabel("Kupfer (Cu)", JLabel.CENTER),
-                cc.xy(5, 7, "f,d"));
-            builder.add(createRLButton(false, AtlParameter.KUPFER_ID),
-                cc.xy(7, 7));
-
-            builder.add(createRLButton(true, AtlParameter.QUECKSILBER_ID),
-                cc.xy(3, 9));
-            builder.add(new JLabel("Quecksilber (Hg)", JLabel.CENTER),
-                cc.xy(5, 9, "f,d"));
-            builder.add(createRLButton(false, AtlParameter.QUECKSILBER_ID),
-                cc.xy(7, 9));
-
-            builder.add(createRLButton(true, AtlParameter.NICKEL_ID),
-                cc.xy(3, 11));
-            builder.add(new JLabel("Nickel (Ni)", JLabel.CENTER),
-                cc.xy(5, 11, "f,d"));
-            builder.add(createRLButton(false, AtlParameter.NICKEL_ID),
-                cc.xy(7, 11));
-
-            builder.add(createRLButton(true, AtlParameter.BLEI_ID),
-                cc.xy(3, 13));
-            builder.add(new JLabel("Blei (Pb)", JLabel.CENTER),
-                cc.xy(5, 13, "f,d"));
-            builder.add(createRLButton(false, AtlParameter.BLEI_ID),
-                cc.xy(7, 13));
-
-            builder.add(createRLButton(true, AtlParameter.ZINK_ID),
-                cc.xy(3, 15));
-            builder.add(new JLabel("Zink (Zn)", JLabel.CENTER),
-                cc.xy(5, 15, "f,d"));
-            builder.add(createRLButton(false, AtlParameter.ZINK_ID),
-                cc.xy(7, 15));
+            AtlParameter[] params = {
+                DatabaseConstants.ATL_PARAMETER_CADMIUM,
+                DatabaseConstants.ATL_PARAMETER_CHROM,
+                DatabaseConstants.ATL_PARAMETER_KUPFER,
+                DatabaseConstants.ATL_PARAMETER_QUECKSILBER,
+                DatabaseConstants.ATL_PARAMETER_NICKEL,
+                DatabaseConstants.ATL_PARAMETER_BLEI,
+                DatabaseConstants.ATL_PARAMETER_ZINK
+            };
+            int y = 3;
+            for (AtlParameter param : params) {
+                builder.add(createRLButton(true, param.getOrdnungsbegriff()),
+                    cc.xy(3, y));
+                builder.add(new JLabel(param.getBezeichnung(), JLabel.CENTER),
+                    cc.xy(5, y, "f,d"));
+                builder.add(createRLButton(false, param.getOrdnungsbegriff()),
+                    cc.xy(7, y));
+                y += 2;
+            }
 
             builder.add(createRLButton(true, "box"), cc.xy(3, 17));
             builder.add(getParameterBox(), cc.xy(5, 17, "f,d"));

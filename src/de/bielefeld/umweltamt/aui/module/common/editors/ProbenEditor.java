@@ -220,38 +220,49 @@ public class ProbenEditor extends AbstractApplyEditor {
                 setList(AtlProbenahmen.sortAnalysepositionen(this.probe));
             } else { // isNew
                 if (this.isSchlamm) {
-                    String[] params_ordn = {"L11380", "L11650", "L11510",
-                            "L11610", "L11880", "L11660", "L11640", "L13430"};
+                    AtlParameter[] params = {
+                        DatabaseConstants.ATL_PARAMETER_BLEI,
+                        DatabaseConstants.ATL_PARAMETER_CADMIUM,
+                        DatabaseConstants.ATL_PARAMETER_CHROM,
+                        DatabaseConstants.ATL_PARAMETER_KUPFER,
+                        DatabaseConstants.ATL_PARAMETER_NICKEL,
+                        DatabaseConstants.ATL_PARAMETER_QUECKSILBER,
+                        DatabaseConstants.ATL_PARAMETER_ZINK,
+                        DatabaseConstants.ATL_PARAMETER_AOX
+                    };
                     String analyse_von = "AGROLAB";
                     setList(new ArrayList<Object>());
-                    AtlParameter param = null;
-                    for (String param_ordn : params_ordn) {
-                        param = AtlParameter.getParameter(param_ordn);
+                    for (AtlParameter param : params) {
                         addParameter(param,
                             DatabaseConstants.ATL_EINHEIT_MG_KG,
                             analyse_von);
                     }
                 } else if (this.probe.getKennummer().startsWith("7")) {
-                    // TODO: Strings auslagern!
-                    String[] params_ordn = {"L15230", "P00013"};
+                    AtlParameter[] params = {
+                        DatabaseConstants.ATL_PARAMETER_TOC,
+                        DatabaseConstants.ATL_PARAMETER_ABWASSERMENGE
+                    };
                     String analyse_von = "Betriebslabor";
                     setList(new ArrayList<Object>());
-                    AtlParameter param = null;
-                    for (String param_ordn : params_ordn) {
-                        param = AtlParameter.getParameter(param_ordn);
-                        addParameter(param, AtlEinheiten.getEinheit(param
-                            .getWirdgemessenineinheit()), analyse_von);
+                    for (AtlParameter param : params) {
+                        addParameter(param,
+                            AtlEinheiten.getEinheit(
+                                param.getWirdgemessenineinheit()),
+                            analyse_von);
                     }
                 } else if (!this.isSielhaut) {
-                    // TODO: Strings auslagern!
-                    String[] params_ordn = {"L10111", "B00600", "L10821"};
+                    AtlParameter[] params = {
+                        DatabaseConstants.ATL_PARAMETER_TEMPERATUR,
+                        DatabaseConstants.ATL_PARAMETER_PH_WERT,
+                        DatabaseConstants.ATL_PARAMETER_LEITFAEHIGKEIT
+                    };
                     String analyse_von = "360.33";
                     setList(new ArrayList<Object>());
-                    AtlParameter param = null;
-                    for (String param_ordn : params_ordn) {
-                        param = AtlParameter.getParameter(param_ordn);
-                        addParameter(param, AtlEinheiten.getEinheit(param
-                            .getWirdgemessenineinheit()), analyse_von);
+                    for (AtlParameter param : params) {
+                        addParameter(param,
+                            AtlEinheiten.getEinheit(
+                                param.getWirdgemessenineinheit()),
+                            analyse_von);
                     }
                 }
             }

@@ -209,7 +209,8 @@ public class SielhautImport extends AbstractModul {
         }
 
         private String paramAusZeile(String[] zeile) {
-            return zeile[5].replaceFirst(" \\(.*\\)", "");
+//            return zeile[5].replaceFirst(" \\(.*\\)", "");
+            return zeile[5].trim();
         }
 
         // Schneidet einen String (aus einem Array) vor dem ersten Leerzeichen
@@ -319,9 +320,8 @@ public class SielhautImport extends AbstractModul {
                         Double sielhautgw = null;
                         String sPara = paramAusZeile(current);
                         if (sPara != null) {
-                            sielhautgw = AtlParameter.getParameter(
-                                AtlParameter.getOrdnungsbegriff(sPara))
-                                    .getSielhautGw();
+                            sielhautgw = AtlParameter.getParameter(sPara)
+                                .getSielhautGw();
                         }
                         dwert = new Double(decform.parse(strWert).doubleValue());
                         normwert = dwert / sielhautgw;
@@ -331,8 +331,7 @@ public class SielhautImport extends AbstractModul {
                         String sParam = paramAusZeile(current);
                         if (sParam != null) {
                             AtlParameter para = AtlParameter
-                                .getParameter(AtlParameter
-                                    .getOrdnungsbegriff(sParam));
+                                .getParameter(sParam);
 
                             if (para != null) {
                                 pos.setAtlParameter(para);

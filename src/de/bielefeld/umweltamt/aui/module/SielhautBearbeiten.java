@@ -157,6 +157,7 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
@@ -2033,20 +2034,21 @@ class SielhautProbeModel extends ListTableModel {
         super(new String[] {"Kennnummer", "Datum"}, false, true);
 
         this.params = new AtlParameter[] {
-                AtlParameter.getParameter(AtlParameter.BLEI_ID),
-                AtlParameter.getParameter(AtlParameter.CADMIUM_ID),
-                AtlParameter.getParameter(AtlParameter.CHROM_ID),
-                AtlParameter.getParameter(AtlParameter.KUPFER_ID),
-                AtlParameter.getParameter(AtlParameter.NICKEL_ID),
-                AtlParameter.getParameter(AtlParameter.QUECKSILBER_ID),
-                AtlParameter.getParameter(AtlParameter.ZINK_ID)};
+            DatabaseConstants.ATL_PARAMETER_BLEI,
+            DatabaseConstants.ATL_PARAMETER_CADMIUM,
+            DatabaseConstants.ATL_PARAMETER_CHROM,
+            DatabaseConstants.ATL_PARAMETER_KUPFER,
+            DatabaseConstants.ATL_PARAMETER_NICKEL,
+            DatabaseConstants.ATL_PARAMETER_QUECKSILBER,
+            DatabaseConstants.ATL_PARAMETER_ZINK
+        };
 
         this.columns = new String[this.params.length + 2];
         this.columns[0] = "Kennnummer";
         this.columns[1] = "Datum";
         for (int i = 0; i < this.params.length; i++) {
             if (this.params[i] != null) {
-                this.columns[i + 2] = this.params[i].toString();
+                this.columns[i + 2] = this.params[i].getBezeichnung();
             }
         }
 

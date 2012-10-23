@@ -22,6 +22,7 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 
 /**
  * This is a service class for all database constants.<br>
@@ -34,9 +35,40 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
  */
 public class DatabaseConstants {
 
+    /* AtlEinheiten */
     public static final AtlEinheiten ATL_EINHEIT_MG_L =
         AtlEinheiten.getEinheit(42);
     public static final AtlEinheiten ATL_EINHEIT_MG_KG =
         AtlEinheiten.getEinheit(43);
+
+    /* AtlParameter */
+    public static final AtlParameter ATL_PARAMETER_BLEI =
+        AtlParameter.getParameter("L11380");
+    public static final AtlParameter ATL_PARAMETER_CADMIUM =
+        AtlParameter.getParameter("L11650");
+    public static final AtlParameter ATL_PARAMETER_CHROM =
+        AtlParameter.getParameter("L11510");
+    public static final AtlParameter ATL_PARAMETER_KUPFER =
+        AtlParameter.getParameter("L11610");
+    public static final AtlParameter ATL_PARAMETER_NICKEL =
+        AtlParameter.getParameter("L11880");
+    public static final AtlParameter ATL_PARAMETER_QUECKSILBER =
+        AtlParameter.getParameter("L11660");
+    public static final AtlParameter ATL_PARAMETER_ZINK =
+        AtlParameter.getParameter("L11640");
+    public static final AtlParameter ATL_PARAMETER_AOX =
+        AtlParameter.getParameter("L13430");
+
+    public static final AtlParameter ATL_PARAMETER_TOC =
+        AtlParameter.getParameter("L15230");
+    public static final AtlParameter ATL_PARAMETER_ABWASSERMENGE =
+        AtlParameter.getParameter("P00013");
+
+    public static final AtlParameter ATL_PARAMETER_TEMPERATUR =
+        AtlParameter.getParameter("L10111");
+    public static final AtlParameter ATL_PARAMETER_PH_WERT =
+        AtlParameter.getParameter("B00600");
+    public static final AtlParameter ATL_PARAMETER_LEITFAEHIGKEIT =
+        AtlParameter.getParameter("L10821");
 
 }
