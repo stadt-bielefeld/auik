@@ -256,4 +256,10 @@
             <key-column name="messstelle_lfd_nr" />
         </primary-key>
     </table>
+    <!-- Columns for gui toString ========================================== -->
+    <table schema="auik" name="atl_einheiten">
+        <column name="bezeichnung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
 </hibernate-reverse-engineering>

@@ -160,7 +160,6 @@ import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
@@ -306,8 +305,8 @@ public class SielhautBearbeiten extends AbstractModul {
             this.objekt.setBasisObjektarten(this.art);
             this.objekt.setInaktiv(false);
             this.sprobePkt = new AtlProbepkt();
-            this.sprobePkt.setAtlProbeart(AtlProbeart
-                .getProbeart(AtlProbeart.SIELHAUT));
+            this.sprobePkt.setAtlProbeart(
+                DatabaseConstants.ATL_PROBEART_SIELHAUT);
             getPrAnlegenButton().setEnabled(false);
             getTabelleExportButton().setEnabled(false);
 

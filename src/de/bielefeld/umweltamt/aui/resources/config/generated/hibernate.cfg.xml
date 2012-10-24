@@ -27,6 +27,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh49Kontrollen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsAnlagenchrono.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh50Fachdaten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/basis/BasisBezeichnung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsVbfeinstufung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsKontrollen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/basis/BasisPrioritaet.hbm.xml" />
@@ -37,6 +38,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh49Analysen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh49Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsWirtschaftszweige.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/atl/AtlSielhautUtm.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/InkaUeberwachungswert.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsAbscheider.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/DeaAnhang.hbm.xml" />

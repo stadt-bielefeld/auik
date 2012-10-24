@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 
 /**
  * This is a service class for all database constants.<br>
@@ -71,4 +72,15 @@ public class DatabaseConstants {
     public static final AtlParameter ATL_PARAMETER_LEITFAEHIGKEIT =
         AtlParameter.getParameter("L10821");
 
+    /* AtlProbeart */
+    public static final AtlProbeart ATL_PROBEART_ANLIEFERUNG =
+        AtlProbeart.getProbeart(4);
+    public static final AtlProbeart ATL_PROBEART_FAULSCHLAMM =
+        AtlProbeart.getProbeart(5);
+    public static final AtlProbeart ATL_PROBEART_ROHRSCHLAMM =
+        AtlProbeart.getProbeart(6);
+    public static final AtlProbeart ATL_PROBEART_SIELHAUT =
+        AtlProbeart.getProbeart(7);
+    public static final AtlProbeart ATL_PROBEART_ZULAUF =
+        AtlProbeart.getProbeart(9);
 }

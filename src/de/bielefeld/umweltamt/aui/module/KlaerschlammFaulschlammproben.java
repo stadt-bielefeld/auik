@@ -43,7 +43,7 @@ import javax.swing.Icon;
 import javax.swing.JPanel;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.module.common.SchlammPanel;
 
 /**
@@ -52,6 +52,7 @@ import de.bielefeld.umweltamt.aui.module.common.SchlammPanel;
  */
 public class KlaerschlammFaulschlammproben extends AbstractModul {
 
+    @Override
     public Icon getIcon() {
         return super.getIcon("recycled_braun32.png");
     }
@@ -59,6 +60,7 @@ public class KlaerschlammFaulschlammproben extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Faulschlamm Probenahmen";
     }
@@ -66,6 +68,7 @@ public class KlaerschlammFaulschlammproben extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      */
+    @Override
     public String getIdentifier() {
         return "m_schlaemme_faul";
     }
@@ -73,6 +76,7 @@ public class KlaerschlammFaulschlammproben extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
      */
+    @Override
     public String getCategory() {
         return "Klärschlamm";
     }
@@ -80,9 +84,11 @@ public class KlaerschlammFaulschlammproben extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
      */
+    @Override
     public JPanel getPanel() {
         if (panel == null) {
-            panel = new SchlammPanel(AtlProbeart.getProbeart(AtlProbeart.FAULSCHLAMM), frame);
+            panel = new SchlammPanel(
+                DatabaseConstants.ATL_PROBEART_FAULSCHLAMM, frame);
         }
         return panel;
     }
@@ -90,6 +96,7 @@ public class KlaerschlammFaulschlammproben extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#show()
      */
+    @Override
     public void show() {
         super.show();
         if (panel != null && panel instanceof SchlammPanel) {

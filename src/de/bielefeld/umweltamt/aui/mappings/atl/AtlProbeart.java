@@ -31,24 +31,6 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
  */
 public class AtlProbeart extends AbstractAtlProbeart implements Serializable {
     private static final long serialVersionUID = -4946349358783685742L;
-    /** Die ID von Abwasser-Proben */
-    final public static Integer ABWASSER = new Integer(1);
-    /** Die ID von UWB Abwasser-Proben */
-    final public static Integer ABWASSER_UWB = new Integer(2);
-    /** Die ID von E-Satzungs Abwasser-Proben */
-    final public static Integer ABWASSER_ES = new Integer(3);
-    /** Die ID von Anlieferungs-Proben */
-    final public static Integer ANLIEFERUNG = new Integer(4);
-    /** Die ID von Faulschlamm-Proben */
-    final public static Integer FAULSCHLAMM = new Integer(5);
-    /** Die ID von Rohschlamm-Proben */
-    final public static Integer ROHSCHLAMM = new Integer(6);
-    /** Die ID von SielhautBearbeiten-Proben */
-    final public static Integer SIELHAUT = new Integer(7);
-    /** Die ID von sonstigen Proben */
-    final public static Integer SONSTIGE = new Integer(8);
-    /** Die ID von Zulauf-Proben */
-    final public static Integer ZULAUF = new Integer(9);
 
     /**
      * Simple constructor of AtlProbeart instances.
@@ -70,42 +52,6 @@ public class AtlProbeart extends AbstractAtlProbeart implements Serializable {
     @Override
     public String toString() {
         return getArt();
-    }
-
-    public boolean isAbwasser() {
-        return ABWASSER.equals(this.getArtId());
-    }
-
-    public boolean isAbwasserUWB() {
-        return ABWASSER_UWB.equals(this.getArtId());
-    }
-
-    public boolean isAbwasserES() {
-        return ABWASSER_ES.equals(this.getArtId());
-    }
-
-    public boolean isAnlieferung() {
-        return ANLIEFERUNG.equals(this.getArtId());
-    }
-
-    public boolean isFaulschlamm() {
-        return FAULSCHLAMM.equals(this.getArtId());
-    }
-
-    public boolean isRohschlamm() {
-        return ROHSCHLAMM.equals(this.getArtId());
-    }
-
-    public boolean isSielhaut() {
-        return SIELHAUT.equals(this.getArtId());
-    }
-
-    public boolean isSonstige() {
-        return SONSTIGE.equals(this.getArtId());
-    }
-
-    public boolean isZulauf() {
-        return ZULAUF.equals(this.getArtId());
     }
 
     /**

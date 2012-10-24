@@ -875,10 +875,11 @@ public class KlaerschlammAuswertung extends AbstractModul {
     private JComboBox getArtBox() {
         if (this.artBox == null) {
             AtlProbeart[] arten = new AtlProbeart[] {
-                    AtlProbeart.getProbeart(AtlProbeart.ROHSCHLAMM),
-                    AtlProbeart.getProbeart(AtlProbeart.FAULSCHLAMM),
-                    AtlProbeart.getProbeart(AtlProbeart.ANLIEFERUNG),
-                    AtlProbeart.getProbeart(AtlProbeart.ZULAUF)};
+                DatabaseConstants.ATL_PROBEART_ROHRSCHLAMM,
+                DatabaseConstants.ATL_PROBEART_FAULSCHLAMM,
+                DatabaseConstants.ATL_PROBEART_ANLIEFERUNG,
+                DatabaseConstants.ATL_PROBEART_ZULAUF
+            };
             this.artBox = new JComboBox(arten);
             this.artBox.setPrototypeDisplayValue("Faulschlamm   abc");
         }

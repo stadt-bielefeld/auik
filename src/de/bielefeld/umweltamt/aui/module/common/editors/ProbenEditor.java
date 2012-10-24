@@ -300,7 +300,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                     Double grenzWert = null;
                     if (this.probe.isKlaerschlammProbe()) {
                         grenzWert = pos.getAtlParameter().getKlaerschlammGw();
-                    } else if (this.probe.getProbeArt().isSielhaut()) {
+                    } else if (this.probe.getProbeArt().equals(
+                        DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
                         grenzWert = pos.getAtlParameter().getSielhautGw();
                     }
 
@@ -323,7 +324,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                                             .getKlaerschlammGw().doubleValue();
                                 }
                             }
-                        } else if (this.probe.getProbeArt().isSielhaut()) {
+                        } else if (this.probe.getProbeArt().equals(
+                            DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
                             if (pos.getAtlParameter().getSielhautGw() != null) {
                                 if (!pos.getAtlParameter().getSielhautGw()
                                     .equals(new Double(0.0))) {
@@ -430,7 +432,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         public Object newObject() {
             AtlAnalyseposition tmp = new AtlAnalyseposition(this.probe);
             if (this.probe.isKlaerschlammProbe()
-                || this.probe.getProbeArt().isSielhaut()) {
+                || this.probe.getProbeArt().equals(
+                    DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
                 tmp.setAtlEinheiten(DatabaseConstants.ATL_EINHEIT_MG_KG);
             } else {
                 tmp.setAtlEinheiten(DatabaseConstants.ATL_EINHEIT_MG_L);

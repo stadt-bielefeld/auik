@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -473,8 +474,11 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      *         Probe Rohschlamm oder Faulschlamm ist, sonst <code>false</code>
      */
     public boolean isKlaerschlammProbe() {
-        return (this.getProbeArt().isFaulschlamm() || this.getProbeArt()
-            .isRohschlamm());
+        return (
+            this.getProbeArt().equals(
+                DatabaseConstants.ATL_PROBEART_FAULSCHLAMM) ||
+            this.getProbeArt().equals(
+                DatabaseConstants.ATL_PROBEART_ROHRSCHLAMM));
     }
 
     /**
@@ -482,7 +486,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      *         Probe Rohschlamm oder Faulschlamm ist, sonst <code>false</code>
      */
     public boolean isSielhautProbe() {
-        return (this.getProbeArt().isSielhaut());
+        return (this.getProbeArt().equals(
+            DatabaseConstants.ATL_PROBEART_SIELHAUT));
     }
 
     /**
