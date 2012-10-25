@@ -42,6 +42,8 @@ import de.nrw.lds.tipi.inka.Inka_Messst_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Messstelle;
 import de.nrw.lds.tipi.inka.Inka_Probenahme;
 import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
+import de.nrw.lds.tipi.inka.Inka_Ueberwach_Ergebnis;
+import de.nrw.lds.tipi.inka.Inka_Ueberwachungswert;
 import de.nrw.lds.tipi.inka.general.ReqStandard;
 import de.nrw.lds.tipi.inka.request.ReqDea_Adresse;
 import de.nrw.lds.tipi.inka.request.ReqInka_Anfallst_Anlage;
@@ -56,6 +58,8 @@ import de.nrw.lds.tipi.inka.request.ReqInka_Messst_Anlage;
 import de.nrw.lds.tipi.inka.request.ReqInka_Messstelle;
 import de.nrw.lds.tipi.inka.request.ReqInka_Probenahme;
 import de.nrw.lds.tipi.inka.request.ReqInka_Uebergabestelle;
+import de.nrw.lds.tipi.inka.request.ReqInka_Ueberwach_Ergebnis;
+import de.nrw.lds.tipi.inka.request.ReqInka_Ueberwachungswert;
 import de.nrw.lds.tipi.inka.webservice.InkaInterfaceLocator;
 import de.nrw.lds.tipi.inka.webservice.InkaInterfacePortType;
 
@@ -188,6 +192,10 @@ public final class ServiceManager {
             return new ReqInka_Anfallst_Stoffe();
         if (type instanceof Inka_Probenahme)
             return new ReqInka_Probenahme();
+        if (type instanceof Inka_Ueberwach_Ergebnis)
+            return new ReqInka_Ueberwach_Ergebnis();
+        if (type instanceof Inka_Ueberwachungswert)
+            return new ReqInka_Ueberwachungswert();
         // TODO: Add new DEA/INKA-Table here
         return null;
     }
@@ -253,6 +261,14 @@ public final class ServiceManager {
             return (T[]) iip
                 .getInka_Probenahme((ReqInka_Probenahme) request)
                 .getArrInka_Probenahme();
+        if (type instanceof Inka_Ueberwach_Ergebnis)
+            return (T[]) iip
+                .getInka_Ueberwach_Ergebnis((ReqInka_Ueberwach_Ergebnis) request)
+                .getArrInka_Ueberwach_Ergebnis();
+        if (type instanceof Inka_Ueberwachungswert)
+            return (T[]) iip
+                .getInka_Ueberwachungswert((ReqInka_Ueberwachungswert) request)
+                .getArrInka_Ueberwachungswert();
         // TODO: Add new DEA/INKA-Table here
         return null;
     }
@@ -346,6 +362,18 @@ public final class ServiceManager {
             ((ReqInka_Probenahme) request).setObjInka_Probenahme(
                 (Inka_Probenahme) record);
             iip.setInka_Probenahme((ReqInka_Probenahme) request);
+            return;
+        }
+        if (record instanceof Inka_Ueberwach_Ergebnis) {
+            ((ReqInka_Ueberwach_Ergebnis) request).setObjInka_Ueberwach_Ergebnis(
+                (Inka_Ueberwach_Ergebnis) record);
+            iip.setInka_Ueberwach_Ergebnis((ReqInka_Ueberwach_Ergebnis) request);
+            return;
+        }
+        if (record instanceof Inka_Ueberwachungswert) {
+            ((ReqInka_Ueberwachungswert) request).setObjInka_Ueberwachungswert(
+                (Inka_Ueberwachungswert) record);
+            iip.setInka_Ueberwachungswert((ReqInka_Ueberwachungswert) request);
             return;
         }
         // TODO: Add new DEA/INKA-Table here
