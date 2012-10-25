@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -200,23 +201,14 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
     }
 
     /**
-     * @return Einen String der Form
-     *         "[Position: Parameter: Wert Einheit, Analyse_Von, [Probenahme], ID:Id]"
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> or return a
+     * String for the gui.
+     * @return String
      */
     @Override
     public String toString() {
-        String tmp = "[Position: " + getAtlParameter() + ": " + getWert() + " "
-                + getAtlEinheiten() + ", " + getAnalyseVon() + ", ";
-        if (getAtlProbenahmen() != null) {
-            tmp += getAtlProbenahmen() + ", ";
-        }
-        if (getId() != null) {
-            tmp += "ID:" + getId();
-        } else {
-            tmp += "UNSAVED";
-        }
-        tmp += "]";
-        return tmp;
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     // Liefert einObjekt vom Typ Analysepositionen mit einer gegebenen ID

@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -47,12 +48,42 @@ public class AtlProbeart extends AbstractAtlProbeart implements Serializable {
         super(artId);
     }
 
-    /* Add customized code below */
-
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
     @Override
     public String toString() {
+        return DatabaseClassToString.toStringForClass(this);
+    }
+
+    /**
+     * Get a string representation for the gui
+     * @return String
+     */
+    public String toGuiString() {
         return getArt();
     }
+
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("id").append("='").append(getArtId()).append("' ");
+        buffer.append("art").append("='").append(getArt()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /* Add customized code below */
 
     /**
      * Liefert alle vorhandenen Probearten.

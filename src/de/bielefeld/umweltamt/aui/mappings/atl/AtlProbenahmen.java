@@ -31,11 +31,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
@@ -72,6 +72,18 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      */
     public AtlProbenahmen(java.lang.Integer id) {
         super(id);
+    }
+
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /* Add customized code below */
@@ -434,32 +446,6 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         }
 
         return params;
-    }
-
-    /**
-     * @return Einen String der Form
-     *         "[Probe: Kennummer, Probeart, Datum, Anz.Positionen]" bzw.
-     *         "[Probe: Kennummer, Probeart, Datum, N/A]" falls die Positionen
-     *         noch nicht aus der Datenbank geholt wurden.
-     */
-    @Override
-    public String toString() {
-        String tmp = "[Probe: " + getKennummer() + ", " + getProbeArt() + ", "
-            + AuikUtils.getStringFromDate(getDatumDerEntnahme());
-
-        if (getZeitDerEntnahmen() != null) {
-            tmp += " " + getZeitDerEntnahmen();
-        }
-        tmp += ", ";
-
-        if (new DatabaseAccess().isInitialized(getAtlAnalysepositionen())) {
-            tmp += getAtlAnalysepositionen().size();
-        } else {
-            tmp += "N/A";
-        }
-
-        tmp += "]";
-        return tmp;
     }
 
     /**

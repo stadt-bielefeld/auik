@@ -766,28 +766,23 @@ public class KlaerschlammAuswertung extends AbstractModul {
         Date bisDate = getBisDateChooser().getDate();
 
         if (getHeepenCheck().isSelected()) {
-            createSeries(art,
-                AtlKlaeranlagen.getKlaeranlage(AtlKlaeranlagen.HEEPEN),
+            createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_HEEPEN,
                 einheit, paramList, analyseVon, vonDate, bisDate, col);
         }
         if (getBrakeCheck().isSelected()) {
-            createSeries(art,
-                AtlKlaeranlagen.getKlaeranlage(AtlKlaeranlagen.BRAKE), einheit,
-                paramList, analyseVon, vonDate, bisDate, col);
+            createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_BRAKE,
+                einheit, paramList, analyseVon, vonDate, bisDate, col);
         }
         if (getSennestCheck().isSelected()) {
-            createSeries(art,
-                AtlKlaeranlagen.getKlaeranlage(AtlKlaeranlagen.SENNESTADT),
+            createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_SENNESTADT,
                 einheit, paramList, analyseVon, vonDate, bisDate, col);
         }
         if (getOlutterCheck().isSelected()) {
-            createSeries(art,
-                AtlKlaeranlagen.getKlaeranlage(AtlKlaeranlagen.OBERE_LUTTER),
+            createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_OBERE_LUTTER,
                 einheit, paramList, analyseVon, vonDate, bisDate, col);
         }
         if (getVerlCheck().isSelected()) {
-            createSeries(art,
-                AtlKlaeranlagen.getKlaeranlage(AtlKlaeranlagen.VERL_SENDE),
+            createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_VERL_SENDE,
                 einheit, paramList, analyseVon, vonDate, bisDate, col);
         }
 

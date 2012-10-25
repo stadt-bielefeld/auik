@@ -256,8 +256,29 @@
             <key-column name="messstelle_lfd_nr" />
         </primary-key>
     </table>
+    
     <!-- Columns for gui toString ========================================== -->
     <table schema="auik" name="atl_einheiten">
+        <column name="bezeichnung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="atl_klaeranlagen">
+        <column name="anlage">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="atl_parameter">
+        <column name="bezeichnung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="atl_probeart">
+        <column name="art">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="atl_status">
         <column name="bezeichnung">
             <meta attribute="use-in-tostring">true</meta>
         </column>

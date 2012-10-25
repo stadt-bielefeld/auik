@@ -22,6 +22,7 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 
@@ -83,4 +84,16 @@ public class DatabaseConstants {
         AtlProbeart.getProbeart(7);
     public static final AtlProbeart ATL_PROBEART_ZULAUF =
         AtlProbeart.getProbeart(9);
+
+    /* AtlKläranlage */
+    public static final AtlKlaeranlagen ATL_KLAERANLAGE_HEEPEN =
+        AtlKlaeranlagen.getKlaeranlage(1);
+    public static final AtlKlaeranlagen ATL_KLAERANLAGE_BRAKE =
+        AtlKlaeranlagen.getKlaeranlage(4);
+    public static final AtlKlaeranlagen ATL_KLAERANLAGE_OBERE_LUTTER =
+        AtlKlaeranlagen.getKlaeranlage(5);
+    public static final AtlKlaeranlagen ATL_KLAERANLAGE_SENNESTADT =
+        AtlKlaeranlagen.getKlaeranlage(8);
+    public static final AtlKlaeranlagen ATL_KLAERANLAGE_VERL_SENDE =
+        AtlKlaeranlagen.getKlaeranlage(9);
 }

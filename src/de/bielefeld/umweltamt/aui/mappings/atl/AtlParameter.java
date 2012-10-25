@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -47,19 +48,56 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
         super(ordnungsbegriff);
     }
 
-    /* Add customized code below */
-
     /**
-     * @return Der Name des Parameters.
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
      */
     @Override
     public String toString() {
-        String tmp = getBezeichnung();
-        if (tmp != null) {
-            tmp = tmp.trim();
-        }
-        return tmp;
+        return DatabaseClassToString.toStringForClass(this);
     }
+
+    /**
+     * Get a string representation for the gui
+     * @return String
+     */
+    public String toGuiString() {
+        return getBezeichnung();
+    }
+
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("ordnungsbegriff").append("='").append(getOrdnungsbegriff()).append("' ");
+        buffer.append("atlParametergruppen").append("='").append(getAtlParameterGruppe()).append("' ");
+        buffer.append("analyseverfahren").append("='").append(getAnalyseverfahren()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("wirdgemessenineinheit").append("='").append(getWirdgemessenineinheit()).append("' ");
+        buffer.append("grenzwert").append("='").append(getGrenzwert()).append("' ");
+        buffer.append("grenzwertname").append("='").append(getGrenzwertname()).append("' ");
+        buffer.append("sielhautGw").append("='").append(getSielhautGw()).append("' ");
+        buffer.append("klaerschlammGw").append("='").append(getKlaerschlammGw()).append("' ");
+        buffer.append("preisfueranalyse").append("='").append(getPreisfueranalyse()).append("' ");
+        buffer.append("einzelnbeauftragbar").append("='").append(getEinzelnBeauftragbar()).append("' ");
+        buffer.append("kennzeichnung").append("='").append(getKennzeichnung()).append("' ");
+        buffer.append("konservierung").append("='").append(getKonservierung()).append("' ");
+        buffer.append("reihenfolge").append("='").append(getReihenfolge()).append("' ");
+        buffer.append("enabled").append("='").append(is_enabled()).append("' ");
+        buffer.append("deleted").append("='").append(is_deleted()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /* Add customized code below */
 
     /**
      * Liefert einen bestimmten Parameter.

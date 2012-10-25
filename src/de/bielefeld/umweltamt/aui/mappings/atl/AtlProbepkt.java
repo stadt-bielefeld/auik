@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -52,13 +53,19 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
         super(objektid);
     }
 
-    /* Add customized code below */
-
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
     @Override
     public String toString() {
-        return "[Probepunkt:" + getObjektid() + ", Art:" + getAtlProbeart()
-                + ", Nr:" + getNummer() + "]";
+        return DatabaseClassToString.toStringForClass(this);
     }
+
+    /* Add customized code below */
 
     /**
      * Liefert den ersten Probepunkt einer bestimmten Art und Kläranlage.

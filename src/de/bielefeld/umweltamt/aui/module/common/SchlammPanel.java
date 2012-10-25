@@ -79,6 +79,7 @@ import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
@@ -262,11 +263,10 @@ public class SchlammPanel extends JPanel {
     public void showContent() {
         lastProbe = null;
 
-        // Standardmäßig wird Heepen ausgewählt (-1 weil der Index
-        // der Combobox bei 0 anfängt)
+        // Standardmäßig wird Heepen ausgewählt
         if (AtlKlaeranlagen.getKlaeranlagen().length != 0) {
-            getAnlageBox().setSelectedIndex(
-                    AtlKlaeranlagen.HEEPEN.intValue() - 1);
+            getAnlageBox().setSelectedItem(
+                DatabaseConstants.ATL_KLAERANLAGE_HEEPEN);
         }
     }
 

@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -32,21 +33,6 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 public class AtlKlaeranlagen extends AbstractAtlKlaeranlagen implements
         Serializable {
     private static final long serialVersionUID = 4476838822557197680L;
-
-    /*
-     * Warum haben wir überhaupt die Tabelle. wenn hier eh alle Werte stehen?
-     */
-
-    /** Die ID der KA Brake */
-    final public static Integer BRAKE = new Integer(4);
-    /** Die ID der KA Heepen */
-    final public static Integer HEEPEN = new Integer(1);
-    /** Die ID der KA Sennestadt */
-    final public static Integer SENNESTADT = new Integer(8);
-    /** Die ID der KA O.Lutter */
-    final public static Integer OBERE_LUTTER = new Integer(5);
-    /** Die ID der KA Verl-Sende */
-    final public static Integer VERL_SENDE = new Integer(9);
 
     /** Simple constructor of AtlKlaeranlagen instances. */
     public AtlKlaeranlagen() {
@@ -60,15 +46,42 @@ public class AtlKlaeranlagen extends AbstractAtlKlaeranlagen implements
         super(kaId);
     }
 
-    /* Add customized code below */
-
     /**
-     * Liefert den Namen der Kläranlage.
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
      */
     @Override
     public String toString() {
+        return DatabaseClassToString.toStringForClass(this);
+    }
+
+    /**
+     * Get a string representation for the gui
+     * @return String
+     */
+    public String toGuiString() {
         return getAnlage();
     }
+
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("id").append("='").append(getKaId()).append("' ");
+        buffer.append("anlage").append("='").append(getAnlage()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /* Add customized code below */
 
     /**
      * Liefert eine bestimmte Kläranlage.
