@@ -264,7 +264,7 @@ public class VawsPanel extends JPanel {
 
     public void showReportListe() {
         betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
-        standort = hauptModul.getObjekt().getBasisStandort().getFormatierteStrasse();
+        standort = hauptModul.getObjekt().getBasisStandort().toString();
         art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
         objektid = hauptModul.getObjekt().getObjektid();
 
@@ -282,7 +282,7 @@ public class VawsPanel extends JPanel {
         if (row != -1) {
             VawsFachdaten anlage = vawsModel.getDatenSatz(row);
             betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
-            standort = hauptModul.getObjekt().getBasisStandort().getFormatierteStrasse();
+            standort = hauptModul.getObjekt().getBasisStandort().toString();
             art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
             behaelterid = anlage.getBehaelterId();
 

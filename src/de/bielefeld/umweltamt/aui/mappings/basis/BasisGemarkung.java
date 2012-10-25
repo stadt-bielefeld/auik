@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -47,15 +48,42 @@ public class BasisGemarkung extends AbstractBasisGemarkung implements
         super(gemarkungid);
     }
 
-    /* Add customized code below */
-
     /**
-     * Liefert den Gemarkungsnamen.
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
      */
     @Override
     public String toString() {
-        return super.getGemarkung();
+        return DatabaseClassToString.toStringForClass(this);
     }
+
+    /**
+     * Get a string representation for the gui
+     * @return String
+     */
+    public String toGuiString() {
+        return getGemarkung();
+    }
+
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("id").append("='").append(getGemarkungid()).append("' ");
+        buffer.append("gemarkung").append("='").append(getGemarkung()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /* Add customized code below */
 
     /**
      * Liefert alle vorhandenen Gemarkungen.

@@ -602,7 +602,7 @@ public class BasisPanel extends JPanel {
                     + ((sta.getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
                         + sta.getEntgebid() : "") + "</html>";
                 getStandortFeld().setToolTipText(toolTip);
-                getStandortFeld().setText(sta.getFormatierteStrasse());
+                getStandortFeld().setText(sta.toString());
             }
 
             if (this.hauptModul.getObjekt().getBasisObjektarten() != null) {

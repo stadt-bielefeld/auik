@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -46,6 +47,18 @@ public class BasisObjektverknuepfung extends AbstractBasisObjektverknuepfung
      */
     public BasisObjektverknuepfung(java.lang.Integer id) {
         super(id);
+    }
+
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /* Add customized code below */
@@ -104,14 +117,5 @@ public class BasisObjektverknuepfung extends AbstractBasisObjektverknuepfung
     public static boolean removeObjektVerknuepfung(
         BasisObjektverknuepfung verknuepf) {
         return new DatabaseAccess().delete(verknuepf);
-    }
-
-    /**
-     * Liefert einen String mit der ID.
-     */
-    @Override
-    public String toString() {
-        String tmp = getId() + ": ";
-        return tmp;
     }
 }

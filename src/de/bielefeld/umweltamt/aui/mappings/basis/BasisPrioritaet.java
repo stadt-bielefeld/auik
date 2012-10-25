@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -34,44 +35,16 @@ public class BasisPrioritaet extends AbstractBasisPrioritaet implements
     Serializable {
     private static final long serialVersionUID = 7751778530285997527L;
 
-// This was not used anywhere and why the hell was it here anyway???
-//    Session session = HibernateSessionFactory.currentSession();
-//
-//    public void persist(AbstractBasisPrioritaet transientInstance) {
-//        try {
-//            session.persist(transientInstance);
-//        } catch (RuntimeException re) {
-//            throw re;
-//        }
-//    }
-//
-//    public void attachDirty(AbstractBasisPrioritaet instance) {
-//        try {
-//            session.saveOrUpdate(instance);
-//        } catch (RuntimeException re) {
-//            throw re;
-//        }
-//    }
-//
-//    public void attachClean(AbstractBasisPrioritaet instance) {
-//        try {
-//            session.lock(instance, LockMode.NONE);
-//        } catch (RuntimeException re) {
-//            throw re;
-//        }
-//    }
-//
-//    public void delete(AbstractBasisPrioritaet persistentInstance) {
-//        try {
-//            session.delete(persistentInstance);
-//        } catch (RuntimeException re) {
-//            throw re;
-//        }
-//    }
-
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
     @Override
     public String toString() {
-        return super.getPrioritaet().toString();
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     public static BasisPrioritaet getPrioritaet(BasisObjekt basisObjekt) {

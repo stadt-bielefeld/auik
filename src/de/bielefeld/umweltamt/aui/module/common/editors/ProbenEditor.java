@@ -1484,7 +1484,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("kennnummer", this.probenummer.getText());
         params.put("name", betr.toString());
         params.put("art", art.getArt());
-        params.put("betriebsgrundstueck", std.getFormatierteStrasse());
+        params.put("betriebsgrundstueck", std.toString());
 
         try {
             Integer anzahl = Integer.parseInt(this.beteiligte.getText());

@@ -283,4 +283,14 @@
             <meta attribute="use-in-tostring">true</meta>
         </column>
     </table>
+    <table schema="auik" name="basis_gemarkung">
+        <column name="gemarkung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="basis_strassen">
+        <column name="strasse">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
 </hibernate-reverse-engineering>

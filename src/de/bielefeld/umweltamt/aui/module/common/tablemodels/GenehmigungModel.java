@@ -49,6 +49,7 @@ public class GenehmigungModel extends ListTableModel {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
+    @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         IndeinlGenehmigung fd = (IndeinlGenehmigung) objectAtRow;
         Object tmp;
@@ -58,7 +59,7 @@ public class GenehmigungModel extends ListTableModel {
             tmp = fd.getBasisObjekt().getBasisBetreiber().toString();
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBasisStandort().getFormatierteStrasse();
+            tmp = fd.getBasisObjekt().getBasisStandort().toString();
             break;
         case 2:
             tmp = fd.getErstellungsDatum();
@@ -92,7 +93,7 @@ public class GenehmigungModel extends ListTableModel {
         }
         return tmp;
     }
-    
+
 	  @Override
 	public Class<?> getColumnClass( int columnIndex ){
 		switch( columnIndex ){
@@ -110,6 +111,7 @@ public class GenehmigungModel extends ListTableModel {
     /*
      * Leer, da kein Updaten der Liste nötig/möglich.
      */
+    @Override
     public void updateList() {
     	// This is intentionally left blank.
     }

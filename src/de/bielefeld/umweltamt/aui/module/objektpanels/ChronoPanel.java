@@ -389,7 +389,7 @@ public class ChronoPanel extends JPanel {
         this.betreiber = this.hauptModul.getObjekt().getBasisBetreiber()
             .toString();
         this.standort = this.hauptModul.getObjekt().getBasisStandort()
-            .getFormatierteStrasse();
+            .toString();
         this.art = this.hauptModul.getObjekt().getBasisObjektarten()
             .getObjektart();
 

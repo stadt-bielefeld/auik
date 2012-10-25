@@ -25,6 +25,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 
 /**
  * This is a service class for all database constants.<br>
@@ -36,6 +37,10 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public class DatabaseConstants {
+
+    /* ********************************************************************** */
+    /* Constants for package ATL                                              */
+    /* ********************************************************************** */
 
     /* AtlEinheiten */
     public static final AtlEinheiten ATL_EINHEIT_MG_L =
@@ -96,4 +101,12 @@ public class DatabaseConstants {
         AtlKlaeranlagen.getKlaeranlage(8);
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_VERL_SENDE =
         AtlKlaeranlagen.getKlaeranlage(9);
+
+    /* ********************************************************************** */
+    /* Constants for package BASIS                                            */
+    /* ********************************************************************** */
+
+    /* BasisObjektarten */
+    public static final BasisObjektarten BASIS_OBJEKTART_PROBEPUNKT =
+        BasisObjektarten.getObjektart(32);
 }

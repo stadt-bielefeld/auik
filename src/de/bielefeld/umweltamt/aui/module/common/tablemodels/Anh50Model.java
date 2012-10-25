@@ -75,7 +75,7 @@ public class Anh50Model extends ListTableModel {
             tmp = fd.getBasisObjekt().getBasisBetreiber().toString();
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBasisStandort().getFormatierteStrasse();
+            tmp = fd.getBasisObjekt().getBasisStandort().toString();
             break;
         case 2:
             tmp = fd.getWiedervorlage();

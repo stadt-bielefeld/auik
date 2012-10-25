@@ -95,6 +95,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -109,37 +110,37 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /** Die ID der Objektart "Probenahmepunkt" */
-    public static final int PROBEPUNKT = 32;
+    private static final int PROBEPUNKT = 32;
     /** Die ID der Objektart "Brennwertkessel" */
-    public static final int BWK = 16;
+    private static final int BWK = 16;
     /** Die ID der Objektart "Blockheizkraftwerk" */
-    public static final int BHKW = 36;
+    private static final int BHKW = 36;
     /** Die ID der Objektart "Anhang 40" */
-    public static final int ANHANG_40 = 25;
+    private static final int ANHANG_40 = 25;
     /** Die ID der Objektart "Anhang 49" */
-    public static final int ANHANG_49 = 14;
+    private static final int ANHANG_49 = 14;
     /** Die ID der Objektart "Abscheider" */
-    public static final int ABSCHEIDER = 19;
+    private static final int ABSCHEIDER = 19;
     /** Die ID der Objektart "Abscheider34" */
-    public static final int ABSCHEIDER34 = 58;
+    private static final int ABSCHEIDER34 = 58;
     /** Die ID der Objektart "Fettabscheider" */
-    public static final int FETTABSCHEIDER = 15;
+    private static final int FETTABSCHEIDER = 15;
     /** Die ID der Objektart "Zahnarzt" */
-    public static final int ANHANG_50 = 20;
+    private static final int ANHANG_50 = 20;
     /** Die ID der Objektart "Chemische Wäscherei" */
-    public static final int ANHANG_52 = 35;
+    private static final int ANHANG_52 = 35;
     /** Die ID der Objektart "Anhang 53 (< 3000)" */
-    public static final int ANHANG_53_KLEIN = 17;
+    private static final int ANHANG_53_KLEIN = 17;
     /** Die ID der Objektart "Anhang 53 (> 3000)" */
-    public static final int ANHANG_53_GROSS = 18;
+    private static final int ANHANG_53_GROSS = 18;
     /** Die ID der Objektart "Suev-Kan" */
-    public static final int SUEV = 13;
+    private static final int SUEV = 13;
     /** Die ID der Objektart "Wäscherei" */
-    public static final int ANHANG_55 = 29;
+    private static final int ANHANG_55 = 29;
     /** Die ID der Objektart "Duckerei" */
-    public static final int ANHANG_56 = 30;
+    private static final int ANHANG_56 = 30;
     /** Die ID der Objektart "Genehmigung" */
-    public static final int GENEHMIGUNG = 42;
+    private static final int GENEHMIGUNG = 42;
 
     /**
      * Simple constructor of BasisObjektarten instances.
@@ -155,17 +156,19 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
         super(objektartid);
     }
 
-    /* Add customized code below */
-
-    /** Liefert den Namen dieser Objektart */
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
     @Override
     public String toString() {
-        String abteilung = "";
-        if (getAbteilung() != null) {
-            abteilung = " (" + getAbteilung() + ")";
-        }
-        return getObjektart() + abteilung;
+        return DatabaseClassToString.toStringForClass(this);
     }
+
+    /* Add customized code below */
 
     /**
      * @return Liefert <code>true</code>, wenn diese Objektart "Probepunkt" ist

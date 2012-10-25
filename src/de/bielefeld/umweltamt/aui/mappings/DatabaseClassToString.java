@@ -31,6 +31,16 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -53,11 +63,118 @@ public class DatabaseClassToString {
     /* toStrings for package BASIC                                            */
     /* ********************************************************************** */
 
+    /**
+     * Custom BasisBetreiber.toString()
+     * Liefert einen String der Form "Name, Zusatz" falls ein Zusatz vorhanden
+     * ist, sonst nur den Namen.
+     */
+    public static String toStringForClass(BasisBetreiber clazz) {
+        String zusatz = "";
+        if (clazz.getBetrvorname() != null) {
+            zusatz = ", " + clazz.getBetrvorname();
+        } else if (clazz.getBetrnamezus() != null) {
+            zusatz = ", " + clazz.getBetrnamezus();
+        }
+        return clazz.getBetrname() + zusatz;
+    }
+
+    /** @return BasisGemarkung.toGuiString() */
+    public static String toStringForClass(BasisGemarkung clazz) {
+        return clazz.toGuiString();
+    }
+
+    /**
+     * Custom BasisObjekt.toString()
+     * Liefert einen String, der dieses BasisObjekt beschreibt.
+     * @return Einen String in der Form
+     *         "[ID:Objekt-ID, Betr.:BasisBetreiber, Stdort:BasisStandort, Art:BasisObjektart]"
+     */
+    public static String toStringForClass(BasisObjekt clazz) {
+        return "[ID:" + clazz.getObjektid() +
+            ", Betr.:" + clazz.getBasisBetreiber() +
+            ", Stdort:" + clazz.getBasisStandort() +
+            ", Art:" + clazz.getBasisObjektarten() + "]";
+    }
+
+    /** Custom BasisObjektarten.toString() */
+    public static String toStringForClass(BasisObjektarten clazz) {
+        String abteilung = "";
+        if (clazz.getAbteilung() != null) {
+            abteilung = " (" + clazz.getAbteilung() + ")";
+        }
+        return clazz.getObjektart() + abteilung;
+    }
+
+    /**
+     * Custom BasisObjektchrono.toString()
+     * Liefert einen String der Form "BehaelterID: Anlagenart Herstellnr".
+     */
+    public static String toStringForClass(BasisObjektchrono clazz) {
+        String tmp = clazz.getId() + ": ";
+        if (clazz.getDatum() != null) {
+            tmp += clazz.getDatum() + " ";
+        }
+        if (clazz.getSachverhalt() != null) {
+            tmp += clazz.getSachverhalt();
+        }
+        return tmp;
+    }
+
+    /**
+     * Custom BasisObjektverknuepfung.toString()
+     * Liefert einen String mit der ID.
+     */
+    public static String toStringForClass(BasisObjektverknuepfung clazz) {
+        return clazz.getId() + ": ";
+    }
+
+    /** @return Custom BasisPrioritaet.toString() */
+    public static String toStringForClass(BasisPrioritaet clazz) {
+        return clazz.getPrioritaet().toString();
+    }
+
+    /** @return Custom BasisSachbearbeiter.toString() */
+    public static String toStringForClass(BasisSachbearbeiter clazz) {
+        String name = clazz.getName();
+        String kennnummer = clazz.getKennummer();
+
+        return ((name != null) ?
+            name + " (" + kennnummer + ")" : kennnummer);
+    }
+
+    /**
+     * Custom BasisStandort.toString()<br>
+     * Liefert die komplette Strasse, wenn vorhanden inklusive der Hausnummer
+     * und deren Zusatz.<br>
+     * <br>
+     * Formatierung: &quot;&lt;Strasse&gt; &lt;HausNr&gt;&lt;HausNrzus&gt;&quot;<br>
+     * <br>
+     * Beispiele: &quot;Ravensberger Straße 77&quot;, &quot;Apfelstraße
+     * 23b&quot;, &quot;Jahnplatz 41-42&quot;
+     * @return Komplette, formatierte Strasse inkl. Hausnr
+     */
+    public static String toStringForClass(BasisStandort clazz) {
+        String formatierteStrasse = clazz.getStrasse();
+        if (clazz.getHausnr() != null) {
+            formatierteStrasse += (" " + clazz.getHausnr());
+        }
+        if (clazz.getHausnrzus() != null) {
+            formatierteStrasse += clazz.getHausnrzus();
+        }
+        return formatierteStrasse;
+    }
+
+    /** @return BasisStrassen.toGuiString() */
+    public static String toStringForClass(BasisStrassen clazz) {
+        return clazz.toGuiString();
+    }
+
     /* ********************************************************************** */
     /* toStrings for package ATL                                              */
     /* ********************************************************************** */
 
     /**
+     * Custom AtlAnalyseposition.toString()
      * @return Einen String der Form
      *         "[Position: Parameter: Wert Einheit, Analyse_Von, [Probenahme], ID:Id]"
      */
@@ -104,6 +221,7 @@ public class DatabaseClassToString {
     }
 
     /**
+     * Custom AtlProbenahmen.toString()
      * @return Einen String der Form
      *         "[Probe: Kennummer, Probeart, Datum, Anz.Positionen]" bzw.
      *         "[Probe: Kennummer, Probeart, Datum, N/A]" falls die Positionen
