@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 import java.io.Serializable;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -42,11 +43,15 @@ public class Anh40Fachdaten extends AbstractAnh40Fachdaten implements
     }
 
     /**
-     * Liefert einen String der Form "[Anhang 40:ID]"
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
      */
     @Override
     public String toString() {
-        return "[Anhang 40:" + getBasisObjekt() + "]";
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**

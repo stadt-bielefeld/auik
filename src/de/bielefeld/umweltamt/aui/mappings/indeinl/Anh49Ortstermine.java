@@ -27,8 +27,8 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 import java.io.Serializable;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -55,17 +55,19 @@ public class Anh49Ortstermine extends AbstractAnh49Ortstermine implements
         super(ortsterminid);
     }
 
-    /* Add customized code below */
-
     /**
-     * Liefert einen String der Form "[Datum: DATUM und SACHBEARBEITER]".
-     * @see java.lang.Object#toString()
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
      */
     @Override
     public String toString() {
-        return "[Datum: " + AuikUtils.getStringFromDate(getDatum())
-            + ", SachbearbeiterIn: " + getSachbearbeiterIn() + "]";
+        return DatabaseClassToString.toStringForClass(this);
     }
+
+    /* Add customized code below */
 
     /**
      * Liefert alle Ortstermine eines bestimmten Fachdatenobjekts.

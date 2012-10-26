@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -49,10 +50,16 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
     public Anh49Fachdaten() {
     }
 
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
     @Override
     public String toString() {
-        String tmp = "[Anh49:" + getBasisObjekt() + "]";
-        return tmp;
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     public static Anh49Fachdaten getAnh49ByObjekt(BasisObjekt objekt) {

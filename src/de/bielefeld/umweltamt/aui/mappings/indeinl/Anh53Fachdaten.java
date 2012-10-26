@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 import java.io.Serializable;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -49,9 +50,16 @@ public class Anh53Fachdaten extends AbstractAnh53Fachdaten implements
         super(objektid);
     }
 
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
     @Override
     public String toString() {
-        return "[ID:" + this.getObjektid() + "]";
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     public static Anh53Fachdaten getAnh53ByObjekt(BasisObjekt objekt) {

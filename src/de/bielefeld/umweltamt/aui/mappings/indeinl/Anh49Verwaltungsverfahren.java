@@ -24,8 +24,8 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 import java.io.Serializable;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
@@ -56,15 +56,16 @@ public class Anh49Verwaltungsverfahren extends
         super(verwaltungsverfahrenID);
     }
 
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
     @Override
     public String toString() {
-        return "[Datum: " + AuikUtils.getStringFromDate(this.getDatum())
-            + ", Maßnahme: " + this.getMassnahme() + " ("
-            + ((this.isAbgeschlossen() != null && this.isAbgeschlossen()) ? ""
-                : "nicht ") + "abgeschlossen)"
-            + ", SachbearbeiterIn: " + this.getSachbearbeiterIn()
-            + (this.getWiedervorlage() == null ? "" : ", Wiedervorlage: "
-            + AuikUtils.getStringFromDate(this.getWiedervorlage())) + "]";
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**

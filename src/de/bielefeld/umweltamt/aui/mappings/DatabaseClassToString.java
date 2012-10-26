@@ -41,6 +41,23 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -269,6 +286,132 @@ public class DatabaseClassToString {
     /* ********************************************************************** */
     /* toStrings for package INDEINL                                          */
     /* ********************************************************************** */
+
+    /**
+     * @return Custom Anh40Fachdaten.toString()
+     * Liefert einen String der Form "[Anhang 40:ID]"
+     */
+    public static String toStringForClass(Anh40Fachdaten clazz) {
+        return "[Anhang 40:" + clazz.getBasisObjekt() + "]";
+    }
+
+    /**
+     * @return Custom Anh49Abscheiderdetails.toString()
+     * Liefert einen String der Form "[ID:ID, NR von VON, LAGE]".
+     */
+    public static String toStringForClass(Anh49Abscheiderdetails clazz) {
+        return "[ID:" + clazz.getAbscheiderid() + ", " + clazz.getAbscheidernr()
+            + " von " + clazz.getVon() + ", " + clazz.getLage() + "]";
+    }
+
+    /**
+     * @return Custom Anh49Analysen.toString()
+     * Liefert einen String der Form "[Datum: DATUM und ANALYSENID]".
+     */
+    public static String toStringForClass(Anh49Analysen clazz) {
+        return "[Datum:" + clazz.getDatum() + ", "
+            + clazz.getAnalysenid() + "]";
+    }
+
+    /** @return Custom Anh49Fachdaten.toString() */
+    public static String toStringForClass(Anh49Fachdaten clazz) {
+        return "[Anh49:" + clazz.getBasisObjekt() + "]";
+    }
+
+    /**
+     * @return Custom Anh49Kontrollen.toString()
+     * Liefert einen String der Form "[Datum: Prüfdatum und Pruefergebnis]".
+     */
+    public static String toStringForClass(Anh49Kontrollen clazz) {
+        return "[Prüfdatum: "
+            + AuikUtils.getStringFromDate(clazz.getPruefdatum())
+            + ", Ergebnis: " + clazz.getPruefergebnis() + "]";
+    }
+
+    /**
+     * @return Custom Anh49Ortstermine.toString()
+     * Liefert einen String der Form "[Datum: DATUM und SACHBEARBEITER]".
+     */
+    public static String toStringForClass(Anh49Ortstermine clazz) {
+        return "[Datum: " + AuikUtils.getStringFromDate(clazz.getDatum())
+            + ", SachbearbeiterIn: " + clazz.getSachbearbeiterIn() + "]";
+    }
+
+    /** @return Custom Anh49Verwaltungsverfahren.toString() */
+    public static String toStringForClass(Anh49Verwaltungsverfahren clazz) {
+        return "[Datum: " + AuikUtils.getStringFromDate(clazz.getDatum())
+            + ", Maßnahme: " + clazz.getMassnahme() + " ("
+            + ((clazz.isAbgeschlossen() != null && clazz.isAbgeschlossen()) ?
+                "" : "nicht ") + "abgeschlossen)"
+            + ", SachbearbeiterIn: " + clazz.getSachbearbeiterIn()
+            + (clazz.getWiedervorlage() == null ? "" : ", Wiedervorlage: "
+            + AuikUtils.getStringFromDate(clazz.getWiedervorlage())) + "]";
+    }
+
+    /** @return Custom Anh50Fachdaten.toString() */
+    public static String toStringForClass(Anh50Fachdaten clazz) {
+        return "[ID:" + clazz.getObjektid() + "]";
+    }
+
+    /** @return Custom Anh52Fachdaten.toString() */
+    public static String toStringForClass(Anh52Fachdaten clazz) {
+        return "[ID:" + clazz.getObjektid() + "]";
+    }
+
+    /** @return Custom Anh53Fachdaten.toString() */
+    public static String toStringForClass(Anh53Fachdaten clazz) {
+        return "[ID:" + clazz.getObjektid() + "]";
+    }
+
+    /** @return Custom Anh55Fachdaten.toString() */
+    public static String toStringForClass(Anh55Fachdaten clazz) {
+        return "[ID:" + clazz.getId() + "]";
+    }
+
+    /** @return Custom Anh56Fachdaten.toString() */
+    public static String toStringForClass(Anh56Fachdaten clazz) {
+        return "[ID:" + clazz.getObjektid() + "]";
+    }
+
+    /**
+     * @return Custom AnhBwkFachdaten.toString()
+     * Liefert einen String der Form "[BWK:ID, Hersteller Typ]"
+     */
+    public static String toStringForClass(AnhBwkFachdaten clazz) {
+        return "[BWK:" + clazz.getBwkId() + ", "
+            + clazz.getKHersteller() + " " + clazz.getKTyp() + "]";
+    }
+
+    /** @return AnhEntsorger.toGuiString() */
+    public static String toStringForClass(AnhEntsorger clazz) {
+        return clazz.toGuiString();
+    }
+
+    /**
+     * @return Custom AnhSuevFachdaten.toString()
+     * Liefert einen String der Form "[SuevKan Verfahren:ID]"
+     */
+    public static String toStringForClass(AnhSuevFachdaten clazz) {
+        return "[SuevKan Verfahren:" + clazz.getObjektid() + "]";
+    }
+
+    /**
+     * @return Custom IndeinlGenehmigung.toString()
+     * Liefert einen String der Form "[Genehmigung Verfahren:ID]"
+     */
+    public static String toStringForClass(IndeinlGenehmigung clazz) {
+        return "[Genehmigung Verfahren:" + clazz.getObjektid() + "]";
+    }
+
+    /**
+     * @return Custom ViewBwk.toString()
+     * Liefert einen String der Form "[BWK:ID, Hersteller Typ]"
+     */
+    public static String toStringForClass(ViewBwk clazz) {
+        return "[BWK:" + clazz.getBwkId() + ", "
+            + clazz.getKHersteller() + " " + clazz.getKTyp() + "]";
+    }
+
     /* ********************************************************************** */
     /* toStrings for package VAWS                                             */
     /* ********************************************************************** */
