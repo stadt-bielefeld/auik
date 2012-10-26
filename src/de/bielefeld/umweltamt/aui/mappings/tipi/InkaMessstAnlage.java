@@ -23,13 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Messst_Anlage;
+import de.nrw.lds.tipi.general.HistoryObject;
 
 /**
  * A class that represents a row in the InkaMessstAnlage database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Inka_Messst_Anlage;
 public class InkaMessstAnlage  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = 369241301956273907L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaMessstAnlage;
+
     /* Primary key, foreign keys (relations) and table columns */
     private InkaMessstAnlageId id;
     private String gemeindekennzahl;
@@ -203,6 +204,33 @@ public class InkaMessstAnlage  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("gemeindekennzahl").append("='").append(getGemeindekennzahl()).append("' ");
+        buffer.append("gemeindeVer").append("='").append(getGemeindeVer()).append("' ");
+        buffer.append("uebergabestelleLfdNr").append("='").append(getUebergabestelleLfdNr()).append("' ");
+        buffer.append("uebergabestelleVer").append("='").append(getUebergabestelleVer()).append("' ");
+        buffer.append("messstelleVer").append("='").append(getMessstelleVer()).append("' ");
+        buffer.append("anlageVer").append("='").append(getAnlageVer()).append("' ");
+        buffer.append("messstAnlageVer").append("='").append(getMessstAnlageVer()).append("' ");
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>InkaMessstAnlage</code> the merged instance,
@@ -262,38 +290,19 @@ public class InkaMessstAnlage  implements java.io.Serializable {
      *         all <code>InkaMessstAnlage</code>
      */
     public static List<InkaMessstAnlage> getAll() {
-        log.debug("Getting all InkaMessstAnlage instances");
-        String query = "FROM InkaMessstAnlage ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<InkaMessstAnlage> resultList = new ArrayList<InkaMessstAnlage>();
-        InkaMessstAnlage result = null;
-        for (Object object : objectList) {
-            result = (InkaMessstAnlage) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new InkaMessstAnlage());
+    }
+
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to InkaMessstAnlage)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */
 
-    public Inka_Messst_Anlage toServiceType() {
-        Inka_Messst_Anlage serviceInstance = new Inka_Messst_Anlage(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getId().getAnlageNr(),
-            this.getAnlageVer(),
-            this.getGemeindeVer(),
-            this.getGemeindekennzahl(),
-            this.getMessstAnlageVer(),
-            this.getId().getMessstelleLfdNr(),
-            this.getMessstelleVer(),
-            this.getUebergabestelleLfdNr(),
-            this.getUebergabestelleVer()
-        );
-        return serviceInstance;
-    }
 }

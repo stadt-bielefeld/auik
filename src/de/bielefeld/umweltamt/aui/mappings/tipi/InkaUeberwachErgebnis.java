@@ -29,7 +29,7 @@ import java.util.List;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Ueberwach_Ergebnis;
+import de.nrw.lds.tipi.general.HistoryObject;
 
 /**
  * A class that represents a row in the InkaUeberwachErgebnis database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Inka_Ueberwach_Ergebnis;
 public class InkaUeberwachErgebnis  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = 7254451254817393909L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaUeberwachErgebnis;
+
     /* Primary key, foreign keys (relations) and table columns */
     private InkaUeberwachErgebnisId id;
     private Integer parameterVer;
@@ -203,6 +204,33 @@ public class InkaUeberwachErgebnis  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("parameterVer").append("='").append(getParameterVer()).append("' ");
+        buffer.append("probenahmeVer").append("='").append(getProbenahmeVer()).append("' ");
+        buffer.append("ueberwachErgebnisVer").append("='").append(getUeberwachErgebnisVer()).append("' ");
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");
+        buffer.append("einMasseinheitNr").append("='").append(getEinMasseinheitNr()).append("' ");
+        buffer.append("einMasseinheitVer").append("='").append(getEinMasseinheitVer()).append("' ");
+        buffer.append("messergebnisText").append("='").append(getMessergebnisText()).append("' ");
+        buffer.append("messergebnis").append("='").append(getMessergebnis()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>InkaUeberwachErgebnis</code> the merged instance,
@@ -265,28 +293,16 @@ public class InkaUeberwachErgebnis  implements java.io.Serializable {
         return DatabaseQuery.getAll(new InkaUeberwachErgebnis());
     }
 
-    /* Custom code goes below here! */
-
-    public Inka_Ueberwach_Ergebnis toServiceType() {
-        Inka_Ueberwach_Ergebnis serviceInstance = new Inka_Ueberwach_Ergebnis(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getEinMasseinheitNr(),
-            this.getEinMasseinheitVer(),
-            ((this.getMessergebnis()==null)?
-                null:new Float(this.getMessergebnis())),
-            this.getMessergebnisText(),
-            this.getId().getParameterNr(),
-            this.getParameterVer(),
-            this.getId().getProbenahmeNr(),
-            this.getProbenahmeVer(),
-            this.getUeberwachErgebnisVer()
-        );
-        return serviceInstance;
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to InkaUeberwachErgebnis)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
+
+    /* Custom code goes below here! */
 
 }

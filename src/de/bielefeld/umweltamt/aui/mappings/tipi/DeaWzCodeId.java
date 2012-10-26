@@ -23,6 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 
 /**
  * A class that represents a row in the DeaWzCodeId database table.<br>
@@ -32,7 +33,8 @@ package de.bielefeld.umweltamt.aui.mappings.tipi;
 public class DeaWzCodeId  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = -5674177208843998788L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForDeaWzCodeId;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private String wzcdId;
     private int wzcdVersion;
@@ -67,25 +69,36 @@ public class DeaWzCodeId  implements java.io.Serializable {
         this.wzcdVersion = wzcdVersion;
     }
 
-   @Override
-public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof DeaWzCodeId) ) return false;
-         DeaWzCodeId castOther = ( DeaWzCodeId ) other;
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("wzcdId").append("='").append(getWzcdId()).append("' ");			
+        buffer.append("wzcdVersion").append("='").append(getWzcdVersion()).append("' ");			
+        buffer.append("]");
 
-         return ( (this.getWzcdId()==castOther.getWzcdId()) || ( this.getWzcdId()!=null && castOther.getWzcdId()!=null && this.getWzcdId().equals(castOther.getWzcdId()) ) )
+        return buffer.toString();
+    }
+
+    public boolean equals(Object other) {
+        if ((this == other )) return true;
+        if ((other == null )) return false;
+        if (!(other instanceof DeaWzCodeId) ) return false;
+        DeaWzCodeId castOther = ( DeaWzCodeId ) other; 
+        return ( (this.getWzcdId()==castOther.getWzcdId()) || ( this.getWzcdId()!=null && castOther.getWzcdId()!=null && this.getWzcdId().equals(castOther.getWzcdId()) ) )
  && (this.getWzcdVersion()==castOther.getWzcdVersion());
    }
 
-   @Override
-public int hashCode() {
-         int result = 17;
-
-         result = 37 * result + ( getWzcdId() == null ? 0 : this.getWzcdId().hashCode() );
-         result = 37 * result + this.getWzcdVersion();
-         return result;
-   }
+    public int hashCode() {
+        int result = 17;
+        result = 37 * result + ( getWzcdId() == null ? 0 : this.getWzcdId().hashCode() );
+        result = 37 * result + this.getWzcdVersion();
+        return result;
+    }
     /* Custom code goes below here! */
 
 }

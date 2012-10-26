@@ -23,13 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.Calendar;
-import java.util.List;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Probenahme;
+import de.nrw.lds.tipi.general.HistoryObject;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * A class that represents a row in the InkaProbenahme database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Inka_Probenahme;
 public class InkaProbenahme  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = -5050362549508267536L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaProbenahme;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer probenahmeNr;
     private Integer probenahmeVer;
@@ -293,6 +294,42 @@ public class InkaProbenahme  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("probenahmeNr").append("='").append(getProbenahmeNr()).append("' ");			
+        buffer.append("probenahmeVer").append("='").append(getProbenahmeVer()).append("' ");			
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
+        buffer.append("gemeindekennzahl").append("='").append(getGemeindekennzahl()).append("' ");			
+        buffer.append("gemeindeVer").append("='").append(getGemeindeVer()).append("' ");			
+        buffer.append("uebergabestelleLfdNr").append("='").append(getUebergabestelleLfdNr()).append("' ");			
+        buffer.append("uebergabestelleVer").append("='").append(getUebergabestelleVer()).append("' ");			
+        buffer.append("messstelleLfdNr").append("='").append(getMessstelleLfdNr()).append("' ");			
+        buffer.append("messstelleVer").append("='").append(getMessstelleVer()).append("' ");			
+        buffer.append("probSchluessel").append("='").append(getProbSchluessel()).append("' ");			
+        buffer.append("probVer").append("='").append(getProbVer()).append("' ");			
+        buffer.append("datumAnalyse").append("='").append(getDatumAnalyse()).append("' ");			
+        buffer.append("selbstueberwJn").append("='").append(getSelbstueberwJn()).append("' ");			
+        buffer.append("probeNr").append("='").append(getProbeNr()).append("' ");			
+        buffer.append("durchflussmessungJn").append("='").append(getDurchflussmessungJn()).append("' ");			
+        buffer.append("registrierungJn").append("='").append(getRegistrierungJn()).append("' ");			
+        buffer.append("q05h").append("='").append(getQ05h()).append("' ");			
+        buffer.append("q2h").append("='").append(getQ2h()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>InkaProbenahme</code> the merged instance,
@@ -352,37 +389,19 @@ public class InkaProbenahme  implements java.io.Serializable {
      *         all <code>InkaProbenahme</code>
      */
     public static List<InkaProbenahme> getAll() {
-        return DatabaseQuery.getOrderedAll(new InkaProbenahme());
+        return DatabaseQuery.getAll(new InkaProbenahme());
+    }
+
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to InkaProbenahme)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */
 
-    public Inka_Probenahme toServiceType() {
-        Inka_Probenahme serviceInstance = new Inka_Probenahme(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getDatumAnalyse(),
-            this.getDurchflussmessungJn(),
-            this.getGemeindeVer(),
-            this.getGemeindekennzahl(),
-            this.getMessstelleLfdNr(),
-            this.getMessstelleVer(),
-            this.getProbSchluessel(),
-            this.getProbVer(),
-            this.getProbeNr(),
-            this.getProbenahmeNr(),
-            this.getProbenahmeVer(),
-            ((this.getQ05h()==null)? null : new Float(this.getQ05h())),
-            ((this.getQ2h()==null)?  null : new Float(this.getQ2h())),
-            this.getRegistrierungJn(),
-            this.getSelbstueberwJn(),
-            this.getUebergabestelleLfdNr(),
-            this.getUebergabestelleVer()
-        );
-        return serviceInstance;
-    }
 }

@@ -23,6 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 
 /**
  * A class that represents a row in the InkaAnfallstStoffeId database table.<br>
@@ -32,7 +33,8 @@ package de.bielefeld.umweltamt.aui.mappings.tipi;
 public class InkaAnfallstStoffeId  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = -5289479020872430748L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaAnfallstStoffeId;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer anfallstelleNr;
     private Integer stoffNr;
@@ -67,17 +69,30 @@ public class InkaAnfallstStoffeId  implements java.io.Serializable {
         this.stoffNr = stoffNr;
     }
 
-    @Override
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("anfallstelleNr").append("='").append(getAnfallstelleNr()).append("' ");			
+        buffer.append("stoffNr").append("='").append(getStoffNr()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
     public boolean equals(Object other) {
         if ((this == other )) return true;
         if ((other == null )) return false;
         if (!(other instanceof InkaAnfallstStoffeId) ) return false;
-        InkaAnfallstStoffeId castOther = ( InkaAnfallstStoffeId ) other;
+        InkaAnfallstStoffeId castOther = ( InkaAnfallstStoffeId ) other; 
         return ( (this.getAnfallstelleNr()==castOther.getAnfallstelleNr()) || ( this.getAnfallstelleNr()!=null && castOther.getAnfallstelleNr()!=null && this.getAnfallstelleNr().equals(castOther.getAnfallstelleNr()) ) )
  && ( (this.getStoffNr()==castOther.getStoffNr()) || ( this.getStoffNr()!=null && castOther.getStoffNr()!=null && this.getStoffNr().equals(castOther.getStoffNr()) ) );
    }
 
-    @Override
     public int hashCode() {
         int result = 17;
         result = 37 * result + ( getAnfallstelleNr() == null ? 0 : this.getAnfallstelleNr().hashCode() );

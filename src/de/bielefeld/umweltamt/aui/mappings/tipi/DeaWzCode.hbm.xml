@@ -74,5 +74,12 @@
         <property name="zeitstempel" type="java.util.Calendar">
             <column name="zeitstempel" length="4" />
         </property>
+        <set name="auikWzCodes" table="auik_wz_code" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="wzcd_id" length="7" />
+                <column name="wzcd_version" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" />
+        </set>
     </class>
 </hibernate-mapping>

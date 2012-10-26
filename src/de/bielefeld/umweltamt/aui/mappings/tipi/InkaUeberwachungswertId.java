@@ -23,6 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 
 /**
  * A class that represents a row in the InkaUeberwachungswertId database table.<br>
@@ -32,7 +33,8 @@ package de.bielefeld.umweltamt.aui.mappings.tipi;
 public class InkaUeberwachungswertId  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = -4927388838974180455L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaUeberwachungswertId;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer parameterNr;
     private Integer messstelleLfdNr;
@@ -67,24 +69,36 @@ public class InkaUeberwachungswertId  implements java.io.Serializable {
         this.messstelleLfdNr = messstelleLfdNr;
     }
 
-    @Override
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("parameterNr").append("='").append(getParameterNr()).append("' ");			
+        buffer.append("messstelleLfdNr").append("='").append(getMessstelleLfdNr()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
     public boolean equals(Object other) {
         if ((this == other )) return true;
         if ((other == null )) return false;
         if (!(other instanceof InkaUeberwachungswertId) ) return false;
-        InkaUeberwachungswertId castOther = ( InkaUeberwachungswertId ) other;
+        InkaUeberwachungswertId castOther = ( InkaUeberwachungswertId ) other; 
         return ( (this.getParameterNr()==castOther.getParameterNr()) || ( this.getParameterNr()!=null && castOther.getParameterNr()!=null && this.getParameterNr().equals(castOther.getParameterNr()) ) )
  && ( (this.getMessstelleLfdNr()==castOther.getMessstelleLfdNr()) || ( this.getMessstelleLfdNr()!=null && castOther.getMessstelleLfdNr()!=null && this.getMessstelleLfdNr().equals(castOther.getMessstelleLfdNr()) ) );
    }
 
-    @Override
     public int hashCode() {
         int result = 17;
         result = 37 * result + ( getParameterNr() == null ? 0 : this.getParameterNr().hashCode() );
         result = 37 * result + ( getMessstelleLfdNr() == null ? 0 : this.getMessstelleLfdNr().hashCode() );
         return result;
     }
-
     /* Custom code goes below here! */
 
 }

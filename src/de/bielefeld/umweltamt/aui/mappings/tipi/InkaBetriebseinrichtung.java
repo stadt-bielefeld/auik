@@ -23,13 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Betriebseinrichtung;
+import de.nrw.lds.tipi.general.HistoryObject;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * A class that represents a row in the InkaBetriebseinrichtung database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Inka_Betriebseinrichtung;
 public class InkaBetriebseinrichtung  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = 8566427593898344893L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaBetriebseinrichtung;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer betriebseinrichtungNr;
     private Integer betriebseinrichtungVer;
@@ -283,6 +284,41 @@ public class InkaBetriebseinrichtung  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("betriebseinrichtungNr").append("='").append(getBetriebseinrichtungNr()).append("' ");			
+        buffer.append("betriebseinrichtungVer").append("='").append(getBetriebseinrichtungVer()).append("' ");			
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
+        buffer.append("betriebNr").append("='").append(getBetriebNr()).append("' ");			
+        buffer.append("betriebVer").append("='").append(getBetriebVer()).append("' ");			
+        buffer.append("adresseBetreibNr").append("='").append(getAdresseBetreibNr()).append("' ");			
+        buffer.append("adresseBetreibVer").append("='").append(getAdresseBetreibVer()).append("' ");			
+        buffer.append("adresseAnsprNr").append("='").append(getAdresseAnsprNr()).append("' ");			
+        buffer.append("adresseAnsprVer").append("='").append(getAdresseAnsprVer()).append("' ");			
+        buffer.append("genehmigungNr").append("='").append(getGenehmigungNr()).append("' ");			
+        buffer.append("genehmigungVer").append("='").append(getGenehmigungVer()).append("' ");			
+        buffer.append("arbeitsstaetteSeqNr").append("='").append(getArbeitsstaetteSeqNr()).append("' ");			
+        buffer.append("arbeitsstaetteVer").append("='").append(getArbeitsstaetteVer()).append("' ");			
+        buffer.append("wzCode").append("='").append(getWzCode()).append("' ");			
+        buffer.append("wzCodeVer").append("='").append(getWzCodeVer()).append("' ");			
+        buffer.append("stilllegungJn").append("='").append(getStilllegungJn()).append("' ");			
+        buffer.append("stilllegungDatum").append("='").append(getStilllegungDatum()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>InkaBetriebseinrichtung</code> the merged instance,
@@ -342,45 +378,19 @@ public class InkaBetriebseinrichtung  implements java.io.Serializable {
      *         all <code>InkaBetriebseinrichtung</code>
      */
     public static List<InkaBetriebseinrichtung> getAll() {
-        log.debug("Getting all InkaBetriebseinrichtung instances");
-        String query = "FROM InkaBetriebseinrichtung ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<InkaBetriebseinrichtung> resultList = new ArrayList<InkaBetriebseinrichtung>();
-        InkaBetriebseinrichtung result = null;
-        for (Object object : objectList) {
-            result = (InkaBetriebseinrichtung) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new InkaBetriebseinrichtung());
+    }
+
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to InkaBetriebseinrichtung)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */
 
-    public Inka_Betriebseinrichtung toServiceType() {
-        Inka_Betriebseinrichtung serviceInstance = new Inka_Betriebseinrichtung(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getAdresseAnsprNr(),
-            this.getAdresseAnsprVer(),
-            this.getAdresseBetreibNr(),
-            this.getAdresseBetreibVer(),
-            this.getArbeitsstaetteSeqNr(),
-            this.getArbeitsstaetteVer(),
-            this.getBetriebNr(),
-            this.getBetriebVer(),
-            this.getBetriebseinrichtungNr(),
-            this.getBetriebseinrichtungVer(),
-            this.getGenehmigungNr(),
-            this.getGenehmigungVer(),
-            this.getStilllegungDatum(),
-            this.getStilllegungJn(),
-            this.getWzCode(),
-            this.getWzCodeVer()
-        );
-        return serviceInstance;
-    }
 }

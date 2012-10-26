@@ -23,13 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Genehmigung;
+import de.nrw.lds.tipi.general.HistoryObject;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * A class that represents a row in the InkaGenehmigung database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Inka_Genehmigung;
 public class InkaGenehmigung  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = 88581501599708509L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaGenehmigung;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer genehmigungNr;
     private Integer genehmigungVer;
@@ -213,6 +214,34 @@ public class InkaGenehmigung  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("genehmigungNr").append("='").append(getGenehmigungNr()).append("' ");			
+        buffer.append("genehmigungVer").append("='").append(getGenehmigungVer()).append("' ");			
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
+        buffer.append("betriebNr").append("='").append(getBetriebNr()).append("' ");			
+        buffer.append("betriebVer").append("='").append(getBetriebVer()).append("' ");			
+        buffer.append("behoerdenId").append("='").append(getBehoerdenId()).append("' ");			
+        buffer.append("behoerdenVer").append("='").append(getBehoerdenVer()).append("' ");			
+        buffer.append("genehmigungDatum").append("='").append(getGenehmigungDatum()).append("' ");			
+        buffer.append("befristetJn").append("='").append(getBefristetJn()).append("' ");			
+        buffer.append("befristetBis").append("='").append(getBefristetBis()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>InkaGenehmigung</code> the merged instance,
@@ -272,38 +301,19 @@ public class InkaGenehmigung  implements java.io.Serializable {
      *         all <code>InkaGenehmigung</code>
      */
     public static List<InkaGenehmigung> getAll() {
-        log.debug("Getting all InkaGenehmigung instances");
-        String query = "FROM InkaGenehmigung ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<InkaGenehmigung> resultList = new ArrayList<InkaGenehmigung>();
-        InkaGenehmigung result = null;
-        for (Object object : objectList) {
-            result = (InkaGenehmigung) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new InkaGenehmigung());
+    }
+
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to InkaGenehmigung)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */
 
-    public Inka_Genehmigung toServiceType() {
-        Inka_Genehmigung serviceInstance = new Inka_Genehmigung(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getBefristetBis(),
-            this.getBefristetJn(),
-            this.getBehoerdenId(),
-            this.getBehoerdenVer(),
-            this.getBetriebNr(),
-            this.getBetriebVer(),
-            this.getGenehmigungDatum(),
-            this.getGenehmigungNr(),
-            this.getGenehmigungVer()
-        );
-        return serviceInstance;
-    }
 }

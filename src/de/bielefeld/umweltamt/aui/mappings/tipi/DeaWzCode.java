@@ -23,10 +23,12 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -38,7 +40,8 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 public class DeaWzCode  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = 3034083110670597876L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForDeaWzCode;
+
     /* Primary key, foreign keys (relations) and table columns */
     private DeaWzCodeId id;
     private Calendar inkaGueltigVon;
@@ -62,6 +65,7 @@ public class DeaWzCode  implements java.io.Serializable {
     private Calendar aktualDat;
     private int versionsnr;
     private Calendar zeitstempel;
+    private Set<AuikWzCode> auikWzCodes = new HashSet<AuikWzCode>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -89,7 +93,7 @@ public class DeaWzCode  implements java.io.Serializable {
 
     /** Full constructor */
     public DeaWzCode(
-        DeaWzCodeId id, Calendar inkaGueltigVon, Calendar inkaGueltigBis, short istAktuellTog, Calendar erfassungsDatum, Calendar aenderungsDatum, int ebene, Character abschnittId, Character UAbschnittId, String abteilungId, Character grpId, Character klaId, Character UKlaId, String bezeichnung, int zustandsNr, Calendar gueltigVon, Calendar igStichtag, Calendar gueltigBis, Calendar erstellDat, Calendar aktualDat, int versionsnr, Calendar zeitstempel) {
+        DeaWzCodeId id, Calendar inkaGueltigVon, Calendar inkaGueltigBis, short istAktuellTog, Calendar erfassungsDatum, Calendar aenderungsDatum, int ebene, Character abschnittId, Character UAbschnittId, String abteilungId, Character grpId, Character klaId, Character UKlaId, String bezeichnung, int zustandsNr, Calendar gueltigVon, Calendar igStichtag, Calendar gueltigBis, Calendar erstellDat, Calendar aktualDat, int versionsnr, Calendar zeitstempel, Set<AuikWzCode> auikWzCodes) {
         this.id = id;
         this.inkaGueltigVon = inkaGueltigVon;
         this.inkaGueltigBis = inkaGueltigBis;
@@ -112,6 +116,7 @@ public class DeaWzCode  implements java.io.Serializable {
         this.aktualDat = aktualDat;
         this.versionsnr = versionsnr;
         this.zeitstempel = zeitstempel;
+        this.auikWzCodes = auikWzCodes;
     }
 
     /* Setter and getter methods */
@@ -291,6 +296,50 @@ public class DeaWzCode  implements java.io.Serializable {
         this.zeitstempel = zeitstempel;
     }
 
+    public Set<AuikWzCode> getAuikWzCodes() {
+        return this.auikWzCodes;
+    }
+
+    public void setAuikWzCodes(Set<AuikWzCode> auikWzCodes) {
+        this.auikWzCodes = auikWzCodes;
+    }
+
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("inkaGueltigVon").append("='").append(getInkaGueltigVon()).append("' ");
+        buffer.append("inkaGueltigBis").append("='").append(getInkaGueltigBis()).append("' ");
+        buffer.append("istAktuellTog").append("='").append(getIstAktuellTog()).append("' ");
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
+        buffer.append("ebene").append("='").append(getEbene()).append("' ");
+        buffer.append("abschnittId").append("='").append(getAbschnittId()).append("' ");
+        buffer.append("UAbschnittId").append("='").append(getUAbschnittId()).append("' ");
+        buffer.append("abteilungId").append("='").append(getAbteilungId()).append("' ");
+        buffer.append("grpId").append("='").append(getGrpId()).append("' ");
+        buffer.append("klaId").append("='").append(getKlaId()).append("' ");
+        buffer.append("UKlaId").append("='").append(getUKlaId()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("zustandsNr").append("='").append(getZustandsNr()).append("' ");
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");
+        buffer.append("igStichtag").append("='").append(getIgStichtag()).append("' ");
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("versionsnr").append("='").append(getVersionsnr()).append("' ");
+        buffer.append("zeitstempel").append("='").append(getZeitstempel()).append("' ");
+        buffer.append("auikWzCodes").append("='").append(getAuikWzCodes()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -351,20 +400,9 @@ public class DeaWzCode  implements java.io.Serializable {
      *         all <code>DeaWzCode</code>
      */
     public static List<DeaWzCode> getAll() {
-        log.debug("Getting all DeaWzCode instances");
-        String query = "FROM DeaWzCode";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<DeaWzCode> resultList = new ArrayList<DeaWzCode>();
-        DeaWzCode result = null;
-        for (Object object : objectList) {
-            result = (DeaWzCode) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new DeaWzCode());
     }
 
     /* Custom code goes below here! */
-
-    // TODO: Can we generate this?
 
 }

@@ -23,13 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Anfallstelle;
+import de.nrw.lds.tipi.general.HistoryObject;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * A class that represents a row in the InkaAnfallstelle database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Inka_Anfallstelle;
 public class InkaAnfallstelle  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = -8607068471213912134L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaAnfallstelle;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer anfallstelleNr;
     private Integer anfallstelleVer;
@@ -293,6 +294,42 @@ public class InkaAnfallstelle  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("anfallstelleNr").append("='").append(getAnfallstelleNr()).append("' ");			
+        buffer.append("anfallstelleVer").append("='").append(getAnfallstelleVer()).append("' ");			
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
+        buffer.append("betriebseinrichtungNr").append("='").append(getBetriebseinrichtungNr()).append("' ");			
+        buffer.append("betriebseinrichtungVer").append("='").append(getBetriebseinrichtungVer()).append("' ");			
+        buffer.append("gemeindekennzahl").append("='").append(getGemeindekennzahl()).append("' ");			
+        buffer.append("gemeindeVer").append("='").append(getGemeindeVer()).append("' ");			
+        buffer.append("uebergabestelleLfdNr").append("='").append(getUebergabestelleLfdNr()).append("' ");			
+        buffer.append("uebergabestelleVer").append("='").append(getUebergabestelleVer()).append("' ");			
+        buffer.append("genehmigungNr").append("='").append(getGenehmigungNr()).append("' ");			
+        buffer.append("genehmigungVer").append("='").append(getGenehmigungVer()).append("' ");			
+        buffer.append("anhId").append("='").append(getAnhId()).append("' ");			
+        buffer.append("anhVer").append("='").append(getAnhVer()).append("' ");			
+        buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");			
+        buffer.append("maxVolTag").append("='").append(getMaxVolTag()).append("' ");			
+        buffer.append("volJahr").append("='").append(getVolJahr()).append("' ");			
+        buffer.append("dauerbetriebJn").append("='").append(getDauerbetriebJn()).append("' ");			
+        buffer.append("chargenbetriebJn").append("='").append(getChargenbetriebJn()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>InkaAnfallstelle</code> the merged instance,
@@ -352,46 +389,19 @@ public class InkaAnfallstelle  implements java.io.Serializable {
      *         all <code>InkaAnfallstelle</code>
      */
     public static List<InkaAnfallstelle> getAll() {
-        log.debug("Getting all InkaAnfallstelle instances");
-        String query = "FROM InkaAnfallstelle ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<InkaAnfallstelle> resultList = new ArrayList<InkaAnfallstelle>();
-        InkaAnfallstelle result = null;
-        for (Object object : objectList) {
-            result = (InkaAnfallstelle) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new InkaAnfallstelle());
+    }
+
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to InkaAnfallstelle)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */
 
-    public Inka_Anfallstelle toServiceType() {
-        Inka_Anfallstelle serviceInstance = new Inka_Anfallstelle(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//          this.getHistorienNr(),
-            this.getAnfallstelleNr(),
-            this.getAnfallstelleVer(),
-            this.getAnhId(),
-            this.getAnhVer(),
-            this.getBeschreibung(),
-            this.getBetriebseinrichtungNr(),
-            this.getBetriebseinrichtungVer(),
-            this.getChargenbetriebJn(),
-            this.getDauerbetriebJn(),
-            this.getGemeindeVer(),
-            this.getGemeindekennzahl(),
-            this.getGenehmigungNr(),
-            this.getGenehmigungVer(),
-            ((this.getMaxVolTag()==null)?null:new Float(this.getMaxVolTag())),
-            this.getUebergabestelleLfdNr(),
-            this.getUebergabestelleVer(),
-            this.getVolJahr()
-        );
-        return serviceInstance;
-    }
 }

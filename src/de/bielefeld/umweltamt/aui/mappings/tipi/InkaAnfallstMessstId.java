@@ -23,6 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 
 /**
  * A class that represents a row in the InkaAnfallstMessstId database table.<br>
@@ -32,7 +33,8 @@ package de.bielefeld.umweltamt.aui.mappings.tipi;
 public class InkaAnfallstMessstId  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = -1256631272831575070L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaAnfallstMessstId;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer anfallstelleNr;
     private Integer messstelleLfdNr;
@@ -67,17 +69,30 @@ public class InkaAnfallstMessstId  implements java.io.Serializable {
         this.messstelleLfdNr = messstelleLfdNr;
     }
 
-    @Override
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("anfallstelleNr").append("='").append(getAnfallstelleNr()).append("' ");			
+        buffer.append("messstelleLfdNr").append("='").append(getMessstelleLfdNr()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
     public boolean equals(Object other) {
         if ((this == other )) return true;
         if ((other == null )) return false;
         if (!(other instanceof InkaAnfallstMessstId) ) return false;
-        InkaAnfallstMessstId castOther = ( InkaAnfallstMessstId ) other;
+        InkaAnfallstMessstId castOther = ( InkaAnfallstMessstId ) other; 
         return ( (this.getAnfallstelleNr()==castOther.getAnfallstelleNr()) || ( this.getAnfallstelleNr()!=null && castOther.getAnfallstelleNr()!=null && this.getAnfallstelleNr().equals(castOther.getAnfallstelleNr()) ) )
  && ( (this.getMessstelleLfdNr()==castOther.getMessstelleLfdNr()) || ( this.getMessstelleLfdNr()!=null && castOther.getMessstelleLfdNr()!=null && this.getMessstelleLfdNr().equals(castOther.getMessstelleLfdNr()) ) );
    }
 
-    @Override
     public int hashCode() {
         int result = 17;
         result = 37 * result + ( getAnfallstelleNr() == null ? 0 : this.getAnfallstelleNr().hashCode() );

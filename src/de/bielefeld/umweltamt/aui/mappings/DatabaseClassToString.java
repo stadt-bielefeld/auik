@@ -31,6 +31,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
@@ -269,6 +270,11 @@ public class DatabaseClassToString {
     /** @return AtlStatus.toGuiString() */
     public static String toStringForClass(AtlStatus clazz) {
         return clazz.toGuiString();
+    }
+
+    /** Custom ViewAtlAnalysepositionAll.toString() */
+    public static String toStringForClass(ViewAtlAnalysepositionAll clazz) {
+        return clazz.getAtlAnalyseposition().toString();
     }
 
     /* ********************************************************************** */

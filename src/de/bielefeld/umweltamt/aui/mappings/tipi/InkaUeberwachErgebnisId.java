@@ -23,6 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 
 /**
  * A class that represents a row in the InkaUeberwachErgebnisId database table.<br>
@@ -32,7 +33,8 @@ package de.bielefeld.umweltamt.aui.mappings.tipi;
 public class InkaUeberwachErgebnisId  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = -8024127649409634127L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaUeberwachErgebnisId;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer parameterNr;
     private Integer probenahmeNr;
@@ -41,6 +43,7 @@ public class InkaUeberwachErgebnisId  implements java.io.Serializable {
     public InkaUeberwachErgebnisId() {
         // This place is intentionally left blank.
     }
+
 
     /** Full constructor */
     public InkaUeberwachErgebnisId(
@@ -66,24 +69,36 @@ public class InkaUeberwachErgebnisId  implements java.io.Serializable {
         this.probenahmeNr = probenahmeNr;
     }
 
-    @Override
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("parameterNr").append("='").append(getParameterNr()).append("' ");			
+        buffer.append("probenahmeNr").append("='").append(getProbenahmeNr()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
     public boolean equals(Object other) {
         if ((this == other )) return true;
         if ((other == null )) return false;
         if (!(other instanceof InkaUeberwachErgebnisId) ) return false;
-        InkaUeberwachErgebnisId castOther = ( InkaUeberwachErgebnisId ) other;
+        InkaUeberwachErgebnisId castOther = ( InkaUeberwachErgebnisId ) other; 
         return ( (this.getParameterNr()==castOther.getParameterNr()) || ( this.getParameterNr()!=null && castOther.getParameterNr()!=null && this.getParameterNr().equals(castOther.getParameterNr()) ) )
  && ( (this.getProbenahmeNr()==castOther.getProbenahmeNr()) || ( this.getProbenahmeNr()!=null && castOther.getProbenahmeNr()!=null && this.getProbenahmeNr().equals(castOther.getProbenahmeNr()) ) );
    }
 
-    @Override
     public int hashCode() {
         int result = 17;
         result = 37 * result + ( getParameterNr() == null ? 0 : this.getParameterNr().hashCode() );
         result = 37 * result + ( getProbenahmeNr() == null ? 0 : this.getProbenahmeNr().hashCode() );
         return result;
     }
-
     /* Custom code goes below here! */
 
 }

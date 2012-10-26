@@ -23,13 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Anfallst_Stoffe;
+import de.nrw.lds.tipi.general.HistoryObject;
 
 /**
  * A class that represents a row in the InkaAnfallstStoffe database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Inka_Anfallst_Stoffe;
 public class InkaAnfallstStoffe  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = -788736460598643786L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaAnfallstStoffe;
+
     /* Primary key, foreign keys (relations) and table columns */
     private InkaAnfallstStoffeId id;
     private Integer anfallstelleVer;
@@ -163,6 +164,29 @@ public class InkaAnfallstStoffe  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("anfallstelleVer").append("='").append(getAnfallstelleVer()).append("' ");
+        buffer.append("stoffVer").append("='").append(getStoffVer()).append("' ");
+        buffer.append("anfallstStoffeVer").append("='").append(getAnfallstStoffeVer()).append("' ");
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>InkaAnfallstStoffe</code> the merged instance,
@@ -222,34 +246,19 @@ public class InkaAnfallstStoffe  implements java.io.Serializable {
      *         all <code>InkaAnfallstStoffe</code>
      */
     public static List<InkaAnfallstStoffe> getAll() {
-        log.debug("Getting all InkaAnfallstStoffe instances");
-        String query = "FROM InkaAnfallstStoffe ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<InkaAnfallstStoffe> resultList = new ArrayList<InkaAnfallstStoffe>();
-        InkaAnfallstStoffe result = null;
-        for (Object object : objectList) {
-            result = (InkaAnfallstStoffe) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new InkaAnfallstStoffe());
+    }
+
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to InkaAnfallstStoffe)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */
 
-    public Inka_Anfallst_Stoffe toServiceType() {
-        Inka_Anfallst_Stoffe serviceInstance = new Inka_Anfallst_Stoffe(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getAnfallstStoffeVer(),
-            this.getId().getAnfallstelleNr(),
-            this.getAnfallstelleVer(),
-            this.getId().getStoffNr(),
-            this.getStoffVer()
-        );
-        return serviceInstance;
-    }
 }

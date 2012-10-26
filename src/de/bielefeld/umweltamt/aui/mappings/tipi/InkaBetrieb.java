@@ -23,13 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Betrieb;
+import de.nrw.lds.tipi.general.HistoryObject;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * A class that represents a row in the InkaBetrieb database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Inka_Betrieb;
 public class InkaBetrieb  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = 6405136415680544314L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaBetrieb;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer betriebNr;
     private Integer betriebVer;
@@ -223,6 +224,35 @@ public class InkaBetrieb  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("betriebNr").append("='").append(getBetriebNr()).append("' ");			
+        buffer.append("betriebVer").append("='").append(getBetriebVer()).append("' ");			
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
+        buffer.append("adresseStandNr").append("='").append(getAdresseStandNr()).append("' ");			
+        buffer.append("adresseStandVer").append("='").append(getAdresseStandVer()).append("' ");			
+        buffer.append("adresseEinleitNr").append("='").append(getAdresseEinleitNr()).append("' ");			
+        buffer.append("adresseEinleitVer").append("='").append(getAdresseEinleitVer()).append("' ");			
+        buffer.append("adresseAnsprNr").append("='").append(getAdresseAnsprNr()).append("' ");			
+        buffer.append("adresseAnsprVer").append("='").append(getAdresseAnsprVer()).append("' ");			
+        buffer.append("gemeindekennzahl").append("='").append(getGemeindekennzahl()).append("' ");			
+        buffer.append("gemeindeVer").append("='").append(getGemeindeVer()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>InkaBetrieb</code> the merged instance,
@@ -282,39 +312,19 @@ public class InkaBetrieb  implements java.io.Serializable {
      *         all <code>InkaBetrieb</code>
      */
     public static List<InkaBetrieb> getAll() {
-        log.debug("Getting all InkaBetrieb instances");
-        String query = "FROM InkaBetrieb ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<InkaBetrieb> resultList = new ArrayList<InkaBetrieb>();
-        InkaBetrieb result = null;
-        for (Object object : objectList) {
-            result = (InkaBetrieb) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new InkaBetrieb());
+    }
+
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to InkaBetrieb)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */
 
-    public Inka_Betrieb toServiceType() {
-        Inka_Betrieb serviceInstance = new Inka_Betrieb(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getAdresseAnsprNr(),
-            this.getAdresseAnsprVer(),
-            this.getAdresseEinleitNr(),
-            this.getAdresseEinleitVer(),
-            this.getAdresseStandNr(),
-            this.getAdresseStandVer(),
-            this.getBetriebNr(),
-            this.getBetriebVer(),
-            this.getGemeindeVer(),
-            this.getGemeindekennzahl()
-        );
-        return serviceInstance;
-    }
 }

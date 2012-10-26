@@ -23,13 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
+import de.nrw.lds.tipi.general.HistoryObject;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * A class that represents a row in the InkaUebergabestelle database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Inka_Uebergabestelle;
 public class InkaUebergabestelle  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = 1598006436070443214L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaUebergabestelle;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer uebergabestelleLfdNr;
     private String gemeindekennzahl;
@@ -273,6 +274,40 @@ public class InkaUebergabestelle  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("uebergabestelleLfdNr").append("='").append(getUebergabestelleLfdNr()).append("' ");			
+        buffer.append("gemeindekennzahl").append("='").append(getGemeindekennzahl()).append("' ");			
+        buffer.append("gemeindeVer").append("='").append(getGemeindeVer()).append("' ");			
+        buffer.append("uebergabestelleVer").append("='").append(getUebergabestelleVer()).append("' ");			
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
+        buffer.append("betriebNr").append("='").append(getBetriebNr()).append("' ");			
+        buffer.append("betriebVer").append("='").append(getBetriebVer()).append("' ");			
+        buffer.append("genehmigungNr").append("='").append(getGenehmigungNr()).append("' ");			
+        buffer.append("genehmigungVer").append("='").append(getGenehmigungVer()).append("' ");			
+        buffer.append("anlagenNr").append("='").append(getAnlagenNr()).append("' ");			
+        buffer.append("klaeranlagenVer").append("='").append(getKlaeranlagenVer()).append("' ");			
+        buffer.append("kartennummer").append("='").append(getKartennummer()).append("' ");			
+        buffer.append("tk25Ver").append("='").append(getTk25Ver()).append("' ");			
+        buffer.append("kanalArt").append("='").append(getKanalArt()).append("' ");			
+        buffer.append("rechtswert").append("='").append(getRechtswert()).append("' ");			
+        buffer.append("hochwert").append("='").append(getHochwert()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>InkaUebergabestelle</code> the merged instance,
@@ -332,44 +367,19 @@ public class InkaUebergabestelle  implements java.io.Serializable {
      *         all <code>InkaUebergabestelle</code>
      */
     public static List<InkaUebergabestelle> getAll() {
-        log.debug("Getting all InkaUebergabestelle instances");
-        String query = "FROM InkaUebergabestelle ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<InkaUebergabestelle> resultList = new ArrayList<InkaUebergabestelle>();
-        InkaUebergabestelle result = null;
-        for (Object object : objectList) {
-            result = (InkaUebergabestelle) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new InkaUebergabestelle());
+    }
+
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to InkaUebergabestelle)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */
 
-    public Inka_Uebergabestelle toServiceType() {
-        Inka_Uebergabestelle serviceInstance = new Inka_Uebergabestelle(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//          this.getHistorienNr(),
-            this.getBetriebNr(),
-            this.getBetriebVer(),
-            this.getGemeindeVer(),
-            this.getGemeindekennzahl(),
-            this.getGenehmigungNr(),
-            this.getGenehmigungVer(),
-            this.getHochwert(),
-            this.getKanalArt(),
-            this.getKartennummer(),
-            this.getAnlagenNr(),
-            this.getKlaeranlagenVer(),
-            this.getRechtswert(),
-            this.getTk25Ver(),
-            this.getUebergabestelleLfdNr(),
-            this.getUebergabestelleVer()
-        );
-        return serviceInstance;
-    }
 }

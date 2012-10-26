@@ -671,68 +671,106 @@ public class DBSyncModul extends AbstractModul {
      */
     private void dbToService() {
         this.sendAddr.clear();
+        this.sendBetrieb.clear();
+        this.sendGenehmigung.clear();
+        this.sendBetriebseinrichtung.clear();
+        this.sendUebergabestelle.clear();
+        this.sendMessstelle.clear();
+        this.sendAnfallstelle.clear();
+        this.sendAnlage.clear();
+        this.sendMessstAnlage.clear();
+        this.sendAnfallstMessst.clear();
+        this.sendAnfallstAnlage.clear();
+        this.sendAnfallstStoffe.clear();
+        this.sendProbenahme.clear();
+        this.sendUeberwachErgebnis.clear();
+        this.sendUeberwachungswert.clear();
+
         List<?> list1 = this.addrDBModel.getList();
         for (int i = 0; i < list1.size(); i++) {
-            this.sendAddr.add(((DeaAdresse) list1.get(i)).toServiceType());
+            this.sendAddr.add(
+                (Dea_Adresse) ((DeaAdresse) list1.get(i)).toServiceType());
         }
         List<?> list2 = this.betriebDBModel.getList();
         for (int i = 0; i < list2.size(); i++) {
-            this.sendBetrieb.add(((InkaBetrieb) list2.get(i)).toServiceType());
+            this.sendBetrieb.add(
+                (Inka_Betrieb) ((InkaBetrieb) list2.get(i)).toServiceType());
         }
         List<?> list3 = this.betriebseinrDBModel.getList();
         for (int i = 0; i < list3.size(); i++) {
-            this.sendBetriebseinrichtung.add(((InkaBetriebseinrichtung) list3.get(i))
-                .toServiceType());
+            this.sendBetriebseinrichtung.add(
+                (Inka_Betriebseinrichtung) ((InkaBetriebseinrichtung)
+                    list3.get(i)).toServiceType());
         }
         List<?> list4 = this.genehmigungDBModel.getList();
         for (int i = 0; i < list4.size(); i++) {
-            this.sendGenehmigung.add(((InkaGenehmigung) list4.get(i))
-                .toServiceType());
+            this.sendGenehmigung.add(
+                (Inka_Genehmigung) ((InkaGenehmigung) list4.get(i))
+                    .toServiceType());
         }
         List<?> list5 = this.anfallstelleDBModel.getList();
         for (int i = 0; i < list5.size(); i++) {
-            this.sendAnfallstelle.add(((InkaAnfallstelle) list5.get(i))
-                .toServiceType());
+            this.sendAnfallstelle.add(
+                (Inka_Anfallstelle) ((InkaAnfallstelle) list5.get(i))
+                    .toServiceType());
         }
         List<?> list6 = this.messstelleDBModel.getList();
         for (int i = 0; i < list6.size(); i++) {
-            this.sendMessstelle.add(((InkaMessstelle) list6.get(i))
-                .toServiceType());
+            this.sendMessstelle.add(
+                (Inka_Messstelle) ((InkaMessstelle) list6.get(i))
+                    .toServiceType());
         }
         List<?> list7 = this.uebergabestelleDBModel.getList();
         for (int i = 0; i < list7.size(); i++) {
-            this.sendUebergabestelle.add(((InkaUebergabestelle) list7.get(i))
-                .toServiceType());
+            this.sendUebergabestelle.add(
+                (Inka_Uebergabestelle) ((InkaUebergabestelle) list7.get(i))
+                    .toServiceType());
         }
         List<?> list8 = this.anlageDBModel.getList();
         for (int i = 0; i < list8.size(); i++) {
-            this.sendAnlage.add(((InkaAnlage) list8.get(i))
-                .toServiceType());
+            this.sendAnlage.add(
+                (Inka_Anlage) ((InkaAnlage) list8.get(i))
+                    .toServiceType());
         }
         List<?> tempList = this.messstAnlageDBModel.getList();
         for (Object obj : tempList) {
             this.sendMessstAnlage.add(
-                ((InkaMessstAnlage) obj).toServiceType());
+                (Inka_Messst_Anlage) ((InkaMessstAnlage) obj).toServiceType());
         }
         tempList = this.anfallstMessstDBModel.getList();
         for (Object obj : tempList) {
             this.sendAnfallstMessst.add(
-                ((InkaAnfallstMessst) obj).toServiceType());
+                (Inka_Anfallst_Messst) ((InkaAnfallstMessst) obj)
+                    .toServiceType());
         }
         tempList = this.anfallstAnlageDBModel.getList();
         for (Object obj : tempList) {
             this.sendAnfallstAnlage.add(
-                ((InkaAnfallstAnlage) obj).toServiceType());
+                (Inka_Anfallst_Anlage) ((InkaAnfallstAnlage) obj)
+                    .toServiceType());
         }
         tempList = this.anfallstStoffeDBModel.getList();
         for (Object obj : tempList) {
             this.sendAnfallstStoffe.add(
-                ((InkaAnfallstStoffe) obj).toServiceType());
+                (Inka_Anfallst_Stoffe) ((InkaAnfallstStoffe) obj)
+                    .toServiceType());
         }
         tempList = this.probenahmeDBModel.getList();
         for (Object obj : tempList) {
             this.sendProbenahme.add(
-                ((InkaProbenahme) obj).toServiceType());
+                (Inka_Probenahme) ((InkaProbenahme) obj).toServiceType());
+        }
+        tempList = this.ueberwachErgebnisDBModel.getList();
+        for (Object obj : tempList) {
+            this.sendUeberwachErgebnis.add(
+                (Inka_Ueberwach_Ergebnis) ((InkaUeberwachErgebnis) obj)
+                    .toServiceType());
+        }
+        tempList = this.ueberwachungswertDBModel.getList();
+        for (Object obj : tempList) {
+            this.sendUeberwachungswert.add(
+                (Inka_Ueberwachungswert) ((InkaUeberwachungswert) obj)
+                    .toServiceType());
         }
     }
 }

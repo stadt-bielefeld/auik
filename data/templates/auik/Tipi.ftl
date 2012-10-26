@@ -5,9 +5,8 @@
         // TODO: Add some "_" into the type!
         ${declarationName} serviceInstance = new ${declarationName}(
             // TODO: Resort the fields to fit the service class!
-            // TODO: Change the first character of each field to upper case!
 <#foreach field in pojo.getPropertiesForFullConstructor()> 
-            this.get${field.name}(),
+            this.${pojo.getGetterSignature(field)}(),
 </#foreach>
             // TODO: Remove the stupid last ","!
         );

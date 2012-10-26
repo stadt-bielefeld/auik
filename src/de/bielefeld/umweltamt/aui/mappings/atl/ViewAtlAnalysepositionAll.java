@@ -27,12 +27,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * Home object for domain model class ViewAtlAnalysepositionAll.
- * @see de.bielefeld.umweltamt.aui.mappings.generated.atl.ViewAtlAnalysepositionAll
+ * @see de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll
  * @author Hibernate Tools
  */
 public class ViewAtlAnalysepositionAll extends
@@ -41,6 +42,18 @@ public class ViewAtlAnalysepositionAll extends
     private static final long serialVersionUID = 7628595838089115005L;
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
+
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return DatabaseClassToString.toStringForClass(this);
+    }
 
     public static boolean saveOrUpdate(
         ViewAtlAnalysepositionAll detachedInstance) {

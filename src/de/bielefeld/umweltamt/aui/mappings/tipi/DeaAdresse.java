@@ -23,13 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Dea_Adresse;
+import de.nrw.lds.tipi.general.HistoryObject;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * A class that represents a row in the DeaAdresse database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Dea_Adresse;
 public class DeaAdresse  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = 3184366511630120026L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForDeaAdresse;
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer adresseNr;
     private Integer adresseVer;
@@ -253,6 +254,38 @@ public class DeaAdresse  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+        
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("adresseNr").append("='").append(getAdresseNr()).append("' ");			
+        buffer.append("adresseVer").append("='").append(getAdresseVer()).append("' ");			
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
+        buffer.append("name1").append("='").append(getName1()).append("' ");			
+        buffer.append("name2").append("='").append(getName2()).append("' ");			
+        buffer.append("strasse").append("='").append(getStrasse()).append("' ");			
+        buffer.append("hausnr").append("='").append(getHausnr()).append("' ");			
+        buffer.append("plz").append("='").append(getPlz()).append("' ");			
+        buffer.append("ort").append("='").append(getOrt()).append("' ");			
+        buffer.append("staatskennung").append("='").append(getStaatskennung()).append("' ");			
+        buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
+        buffer.append("telefonMobil").append("='").append(getTelefonMobil()).append("' ");			
+        buffer.append("fax").append("='").append(getFax()).append("' ");			
+        buffer.append("email").append("='").append(getEmail()).append("' ");			
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>DeaAdresse</code> the merged instance,
@@ -312,41 +345,19 @@ public class DeaAdresse  implements java.io.Serializable {
      *         all <code>DeaAdresse</code>
      */
     public static List<DeaAdresse> getAll() {
-        log.debug("Getting all DeaAdresse instances");
-        String query = "FROM DeaAdresse ORDER BY 1";
-        List<?> objectList = new DatabaseAccess().createQuery(query).list();
-        List<DeaAdresse> resultList = new ArrayList<DeaAdresse>();
-        DeaAdresse result = null;
-        for (Object object : objectList) {
-            result = (DeaAdresse) object;
-            resultList.add(result);
-        }
-        return resultList;
+        return DatabaseQuery.getAll(new DeaAdresse());
+    }
+
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to DeaAdresse)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */
 
-    public Dea_Adresse toServiceType() {
-        Dea_Adresse serviceInstance = new Dea_Adresse(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getAdresseNr(),
-            this.getAdresseVer(),
-            this.getEmail(),
-            this.getFax(),
-            this.getHausnr(),
-            this.getName1(),
-            this.getName2(),
-            this.getOrt(),
-            this.getPlz(),
-            this.getStaatskennung(),
-            this.getStrasse(),
-            this.getTelefon(),
-            this.getTelefonMobil());
-        return serviceInstance;
-    }
 }

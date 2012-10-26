@@ -29,7 +29,7 @@ import java.util.List;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
-import de.nrw.lds.tipi.inka.Inka_Ueberwachungswert;
+import de.nrw.lds.tipi.general.HistoryObject;
 
 /**
  * A class that represents a row in the InkaUeberwachungswert database table.<br>
@@ -39,7 +39,8 @@ import de.nrw.lds.tipi.inka.Inka_Ueberwachungswert;
 public class InkaUeberwachungswert  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = -6813860251765032191L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaUeberwachungswert;
+
     /* Primary key, foreign keys (relations) and table columns */
     private InkaUeberwachungswertId id;
     private Integer parameterVer;
@@ -283,6 +284,41 @@ public class InkaUeberwachungswert  implements java.io.Serializable {
     }
 
     /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("parameterVer").append("='").append(getParameterVer()).append("' ");
+        buffer.append("gemeindekennzahl").append("='").append(getGemeindekennzahl()).append("' ");
+        buffer.append("gemeindeVer").append("='").append(getGemeindeVer()).append("' ");
+        buffer.append("uebergabestelleLfdNr").append("='").append(getUebergabestelleLfdNr()).append("' ");
+        buffer.append("uebergabestelleVer").append("='").append(getUebergabestelleVer()).append("' ");
+        buffer.append("messstelleVer").append("='").append(getMessstelleVer()).append("' ");
+        buffer.append("selbstAmtlJn").append("='").append(getSelbstAmtlJn()).append("' ");
+        buffer.append("ueberwachungswertVer").append("='").append(getUeberwachungswertVer()).append("' ");
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");
+        buffer.append("genehmigungNr").append("='").append(getGenehmigungNr()).append("' ");
+        buffer.append("genehmigungVer").append("='").append(getGenehmigungVer()).append("' ");
+        buffer.append("anzJahr").append("='").append(getAnzJahr()).append("' ");
+        buffer.append("uewert").append("='").append(getUewert()).append("' ");
+        buffer.append("uewertObergr").append("='").append(getUewertObergr()).append("' ");
+        buffer.append("uewertUntergr").append("='").append(getUewertUntergr()).append("' ");
+        buffer.append("jahresfracht").append("='").append(getJahresfracht()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>InkaUeberwachungswert</code> the merged instance,
@@ -345,38 +381,16 @@ public class InkaUeberwachungswert  implements java.io.Serializable {
         return DatabaseQuery.getAll(new InkaUeberwachungswert());
     }
 
-    /* Custom code goes below here! */
-
-    public Inka_Ueberwachungswert toServiceType() {
-        Inka_Ueberwachungswert serviceInstance = new Inka_Ueberwachungswert(
-            this.getAenderungsDatum(),
-            this.getErfassungsDatum(),
-            this.getGueltigBis(),
-            this.getGueltigVon(),
-            this.getIstAktuellJn(),
-//            this.getHistorienNr(),
-            this.getAnzJahr(),
-            this.getGemeindeVer(),
-            this.getGemeindekennzahl(),
-            this.getGenehmigungNr(),
-            this.getGenehmigungVer(),
-            ((this.getJahresfracht()==null)?
-                null:new Float(this.getJahresfracht())),
-            this.getId().getMessstelleLfdNr(),
-            this.getMessstelleVer(),
-            this.getId().getParameterNr(),
-            this.getParameterVer(),
-            this.getSelbstAmtlJn(),
-            this.getUebergabestelleLfdNr(),
-            this.getUebergabestelleVer(),
-            this.getUeberwachungswertVer(),
-            ((this.getUewert()==null)?null:new Float(this.getUewert())),
-            ((this.getUewertObergr()==null)?
-                null:new Float(this.getUewertObergr())),
-            ((this.getUewertUntergr()==null)?
-                null:new Float(this.getUewertUntergr()))
-        );
-        return serviceInstance;
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to InkaUeberwachungswert)
+     */
+    public HistoryObject toServiceType() {
+        return DatabaseTipi.toServiceTypeForClass(this);
     }
+
+    /* Custom code goes below here! */
 
 }

@@ -41,7 +41,8 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 public class AuikWzCode  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = -7676557605733724012L;
+    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForAuikWzCode;
+
     /* Primary key, foreign keys (relations) and table columns */
     private String bezeichnung;
     private DeaWzCode deaWzCode;
@@ -117,6 +118,44 @@ public class AuikWzCode  implements java.io.Serializable {
     }
 
     /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return DatabaseClassToString.toStringForClass(this);
+    }
+
+    /**
+     * Get a string representation for the gui
+     * @return String
+     */
+    public String toGuiString() {
+        return getBezeichnung();
+    }
+
+    /**
+     * Get a string representation for debugging
+     * @return String
+     */
+    public String toDebugString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("deaWzCode").append("='").append(getDeaWzCode()).append("' ");
+        buffer.append("inKurzAuswahl").append("='").append(isInKurzAuswahl()).append("' ");
+        buffer.append("ebene").append("='").append(getEbene()).append("' ");
+        buffer.append("basisBetreibers").append("='").append(getBasisBetreibers()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>AuikWzCode</code> the merged instance,
@@ -176,28 +215,9 @@ public class AuikWzCode  implements java.io.Serializable {
      *         all <code>AuikWzCode</code>
      */
     public static List<AuikWzCode> getAll() {
-        return DatabaseQuery.getOrderedAll(new AuikWzCode());
-    }
-
-    /**
-     * To implement custom toString methods, jump to not generated code.<br>
-     * Basically we either call on <code>toDebugString</code> for a debug
-     * string, call on <code>toGuiString</code> for a gui representation or do
-     * something completely different.
-     * @return String
-     */
-    @Override
-    public String toString() {
-        return DatabaseClassToString.toStringForClass(this);
-    }
-
-    /**
-     * Get a string representation for the gui
-     * @return String
-     */
-    public String toGuiString() {
-        return getBezeichnung();
+        return DatabaseQuery.getAll(new AuikWzCode());
     }
 
     /* Custom code goes below here! */
+
 }

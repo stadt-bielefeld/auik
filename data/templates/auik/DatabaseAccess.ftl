@@ -62,6 +62,18 @@
         return ${pojo.importType("de.bielefeld.umweltamt.aui.mappings.DatabaseQuery")}.getAll(new ${declarationName}());
     }
 
+<#if false>
+    /**
+     * As we can not generate this bit of code completely
+     * (ordering of the parameters is the main problem),
+     * we jump to not generated code.
+     * @return HistoryObject (the corresponding service type to ${declarationName})
+     */
+    public ${pojo.importType("de.nrw.lds.tipi.general.HistoryObject")} toServiceType() {
+        return ${pojo.importType("de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi")}.toServiceTypeForClass(this);
+    }
+
+</#if>
 </#if>
 <#foreach queryName in cfg.namedQueries.keySet()>
 <#if queryName.startsWith(clazz.entityName + ".")>
