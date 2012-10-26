@@ -293,4 +293,59 @@
             <meta attribute="use-in-tostring">true</meta>
         </column>
     </table>
+    <table schema="auik" name="vaws_anlagenarten">
+        <column name="anlagenart">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="vaws_behaelterart">
+        <column name="behaelterart">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="vaws_fluessigkeit">
+        <column name="fluessigkeit">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="vaws_gebuehrenarten">
+        <column name="gebuehrenart">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="vaws_gefaehrdungsstufen">
+        <column name="gefaehrdungsstufen">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="vaws_material">
+        <column name="material">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="vaws_standortgghwsg">
+        <column name="standortgg">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="vaws_vbfeinstufung">
+        <column name="vbfeinstufung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="vaws_wassereinzugsgebiete">
+        <column name="ezgbname">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="vaws_wirtschaftszweige">
+        <column name="wirtschaftszweig">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="tipi" name="auik_wz_code">
+        <column name="bezeichnung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
 </hibernate-reverse-engineering>

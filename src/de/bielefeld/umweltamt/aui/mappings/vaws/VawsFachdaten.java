@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
@@ -54,19 +55,15 @@ public class VawsFachdaten extends AbstractVawsFachdaten implements
     }
 
     /**
-     * Liefert einen String der Form "BehaelterID: Anlagenart Herstellnr".
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
      */
     @Override
     public String toString() {
-        String tmp = getBehaelterId() + ": ";
-        // = "[Vaws:" + getAnlagenart() + "," + getBasisObjekt() + "]";
-        if (getAnlagenart() != null) {
-            tmp += getAnlagenart() + " ";
-        }
-        if (getHerstellnr() != null) {
-            tmp += getHerstellnr();
-        }
-        return tmp;
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     public String getStillegungsDatumString() {

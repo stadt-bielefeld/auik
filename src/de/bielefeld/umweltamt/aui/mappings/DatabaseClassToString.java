@@ -58,6 +58,21 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
+import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsBehaelterart;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGefaehrdungsstufen;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsMaterial;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWgk;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -115,11 +130,9 @@ public class DatabaseClassToString {
 
     /** Custom BasisObjektarten.toString() */
     public static String toStringForClass(BasisObjektarten clazz) {
-        String abteilung = "";
-        if (clazz.getAbteilung() != null) {
-            abteilung = " (" + clazz.getAbteilung() + ")";
-        }
-        return clazz.getObjektart() + abteilung;
+        return clazz.getObjektart()
+            + (clazz.getAbteilung() != null ?
+                " (" + clazz.getAbteilung() + ")" : "");
     }
 
     /**
@@ -127,14 +140,9 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "BehaelterID: Anlagenart Herstellnr".
      */
     public static String toStringForClass(BasisObjektchrono clazz) {
-        String tmp = clazz.getId() + ": ";
-        if (clazz.getDatum() != null) {
-            tmp += clazz.getDatum() + " ";
-        }
-        if (clazz.getSachverhalt() != null) {
-            tmp += clazz.getSachverhalt();
-        }
-        return tmp;
+        return clazz.getId() + ": "
+            + (clazz.getDatum() != null ? clazz.getDatum() + " " : "")
+            + (clazz.getSachverhalt() != null ? clazz.getSachverhalt() : "");
     }
 
     /**
@@ -155,8 +163,7 @@ public class DatabaseClassToString {
         String name = clazz.getName();
         String kennnummer = clazz.getKennummer();
 
-        return ((name != null) ?
-            name + " (" + kennnummer + ")" : kennnummer);
+        return ((name != null) ? name + " (" + kennnummer + ")" : kennnummer);
     }
 
     /**
@@ -171,14 +178,9 @@ public class DatabaseClassToString {
      * @return Komplette, formatierte Strasse inkl. Hausnr
      */
     public static String toStringForClass(BasisStandort clazz) {
-        String formatierteStrasse = clazz.getStrasse();
-        if (clazz.getHausnr() != null) {
-            formatierteStrasse += (" " + clazz.getHausnr());
-        }
-        if (clazz.getHausnrzus() != null) {
-            formatierteStrasse += clazz.getHausnrzus();
-        }
-        return formatierteStrasse;
+        return clazz.getStrasse()
+            + (clazz.getHausnr() != null ? " " + clazz.getHausnr() : "")
+            + (clazz.getHausnrzus() != null ? clazz.getHausnrzus() : "");
     }
 
     /** @return BasisStrassen.toGuiString() */
@@ -196,20 +198,14 @@ public class DatabaseClassToString {
      *         "[Position: Parameter: Wert Einheit, Analyse_Von, [Probenahme], ID:Id]"
      */
     public static String toStringForClass(AtlAnalyseposition clazz) {
-        String tmp = "[Position: " +
-            clazz.getAtlParameter() + ": " + clazz.getWert() + " " +
-            clazz.getAtlEinheiten() + ", " +
-            clazz.getAnalyseVon() + ", ";
-        if (clazz.getAtlProbenahmen() != null) {
-            tmp += clazz.getAtlProbenahmen() + ", ";
-        }
-        if (clazz.getId() != null) {
-            tmp += "ID:" + clazz.getId();
-        } else {
-            tmp += "UNSAVED";
-        }
-        tmp += "]";
-        return tmp;
+        return "[Position: " + clazz.getAtlParameter() + ": "
+            + clazz.getWert() + " " + clazz.getAtlEinheiten() + ", "
+            + clazz.getAnalyseVon() + ", "
+            + (clazz.getAtlProbenahmen() != null ?
+                clazz.getAtlProbenahmen() + ", " : "")
+            + (clazz.getId() != null ?
+                "ID:" + clazz.getId() : "UNSAVED")
+            + "]";
     }
 
     /** @return AtlEinheiten.toGuiString() */
@@ -245,24 +241,16 @@ public class DatabaseClassToString {
      *         noch nicht aus der Datenbank geholt wurden.
      */
     public static String toStringForClass(AtlProbenahmen clazz) {
-        String tmp = "[Probe: " + clazz.getKennummer() + ", "
+        return "[Probe: " + clazz.getKennummer() + ", "
             + clazz.getProbeArt() + ", "
-            + AuikUtils.getStringFromDate(clazz.getDatumDerEntnahme());
-
-        if (clazz.getZeitDerEntnahmen() != null) {
-            tmp += " " + clazz.getZeitDerEntnahmen();
-        }
-        tmp += ", ";
-
-        if (new DatabaseAccess().isInitialized(
-            clazz.getAtlAnalysepositionen())) {
-            tmp += clazz.getAtlAnalysepositionen().size();
-        } else {
-            tmp += "N/A";
-        }
-
-        tmp += "]";
-        return tmp;
+            + AuikUtils.getStringFromDate(clazz.getDatumDerEntnahme())
+            + (clazz.getZeitDerEntnahmen() != null ?
+                " " + clazz.getZeitDerEntnahmen() : "")
+            + ", "
+            + (new DatabaseAccess().isInitialized(
+                clazz.getAtlAnalysepositionen()) ?
+                    clazz.getAtlAnalysepositionen().size() : "N/A")
+            + "]";
     }
 
     /** @return Custom AtlProbepkt.toString() */
@@ -415,7 +403,90 @@ public class DatabaseClassToString {
     /* ********************************************************************** */
     /* toStrings for package VAWS                                             */
     /* ********************************************************************** */
+
+    /** @return Custom VawsAbfuellflaeche.toString() */
+    public static String toStringForClass(VawsAbfuellflaeche clazz) {
+        return "[VawsAbfuellflaeche: " + clazz.getBehaelterid()
+            + ", FD:" + clazz.getVawsFachdaten() + "]";
+    }
+
+    /** @return Custom VawsAbscheider.toString() */
+    public static String toStringForClass(VawsAbscheider clazz) {
+        return "[VawsAbscheider: " + clazz.getBehaelterid()
+            + ", FD:" + clazz.getVawsFachdaten() + "]";
+    }
+
+    /** @return "VawsAnlagenarten.toGuiString() */
+    public static String toStringForClass(VawsAnlagenarten clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return "VawsBehaelterart.toGuiString() */
+    public static String toStringForClass(VawsBehaelterart clazz) {
+        return clazz.toGuiString();
+    }
+
+    /**
+     * @return Custom VawsFachdaten.toString()
+     * Liefert einen String der Form "BehaelterID: Anlagenart Herstellnr".
+     */
+    public static String toStringForClass(VawsFachdaten clazz) {
+        return clazz.getBehaelterId() + ": "
+            + (clazz.getAnlagenart() != null ? clazz.getAnlagenart() + " " : "")
+            + (clazz.getHerstellnr() != null ? clazz.getHerstellnr() : "");
+    }
+
+    /** @return "VawsFluessigkeit.toGuiString() */
+    public static String toStringForClass(VawsFluessigkeit clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return "VawsGebuehrenarten.toGuiString() */
+    public static String toStringForClass(VawsGebuehrenarten clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return "VawsGefaehrdungsstufen.toGuiString() */
+    public static String toStringForClass(VawsGefaehrdungsstufen clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return "VawsMaterial.toGuiString() */
+    public static String toStringForClass(VawsMaterial clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return "VawsStandortgghwsg.toGuiString() */
+    public static String toStringForClass(VawsStandortgghwsg clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return "VawsVbfeinstufung.toGuiString() */
+    public static String toStringForClass(VawsVbfeinstufung clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return "VawsWassereinzugsgebiete.toGuiString() */
+    public static String toStringForClass(VawsWassereinzugsgebiete clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return Custom VawsWgk.toString() */
+    public static String toStringForClass(VawsWgk clazz) {
+        return clazz.getWassergef().toString();
+    }
+
+    /** @return "VawsWirtschaftszweige.toGuiString() */
+    public static String toStringForClass(VawsWirtschaftszweige clazz) {
+        return clazz.toGuiString();
+    }
+
     /* ********************************************************************** */
     /* toStrings for package TIPI                                             */
     /* ********************************************************************** */
+
+    /** @return AuikWzCode.toGuiString() */
+    public static String toStringForClass(AuikWzCode clazz) {
+        return clazz.toGuiString();
+    }
 }

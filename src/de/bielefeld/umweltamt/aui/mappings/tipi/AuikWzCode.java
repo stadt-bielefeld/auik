@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -178,10 +179,25 @@ public class AuikWzCode  implements java.io.Serializable {
         return DatabaseQuery.getOrderedAll(new AuikWzCode());
     }
 
-    /* Custom code goes below here! */
-
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
     @Override
     public String toString() {
-        return this.bezeichnung;
+        return DatabaseClassToString.toStringForClass(this);
     }
+
+    /**
+     * Get a string representation for the gui
+     * @return String
+     */
+    public String toGuiString() {
+        return getBezeichnung();
+    }
+
+    /* Custom code goes below here! */
 }

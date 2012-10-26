@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
@@ -53,13 +54,19 @@ public class VawsAbfuellflaeche extends AbstractVawsAbfuellflaeche implements
         super(id);
     }
 
-    /* Add customized code below */
-
+    /**
+     * To implement custom toString methods, jump to not generated code.<br>
+     * Basically we either call on <code>toDebugString</code> for a debug
+     * string, call on <code>toGuiString</code> for a gui representation or do
+     * something completely different.
+     * @return String
+     */
     @Override
     public String toString() {
-        return "[VawsAbfuellflaeche: " + getBehaelterid() + ", FD:"
-            + getVawsFachdaten() + "]";
+        return DatabaseClassToString.toStringForClass(this);
     }
+
+    /* Add customized code below */
 
     public static VawsAbfuellflaeche getAbfuellflaeche(VawsFachdaten fachdaten)
         throws IllegalArgumentException {
