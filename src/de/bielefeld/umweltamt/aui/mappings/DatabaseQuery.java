@@ -27,8 +27,10 @@ import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
@@ -155,6 +157,23 @@ public class DatabaseQuery {
     /* ********************************************************************** */
     /* Queries for package ATL                                                */
     /* ********************************************************************** */
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlAnalyseposition                     */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Liefert eine Liste der Analyseinstitute.
+     * @return String[]
+     */
+    public static String[] getAnalysierer() {
+        return new DatabaseAccess().executeCriteriaToArray(
+            DetachedCriteria.forClass(AtlAnalyseposition.class)
+            .setProjection(Projections.distinct(
+                Projections.property("analyseVon"))),
+            new String[0]);
+    }
+
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package ATL : class AtlEinheiten                           */

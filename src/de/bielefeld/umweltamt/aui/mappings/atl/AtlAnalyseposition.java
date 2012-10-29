@@ -357,13 +357,6 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
             .list();
     }
 
-    // Liefert eine Liste der Parameter, die immer bestimmt werden.
-    public static List<?> getVorOrtParameter() {
-        String query = "FROM AtlAnalyseposition as pos "
-                + "WHERE pos.atlParameter.ordnungsbegriff = 'L10821' ";
-        return new DatabaseAccess().createQuery(query).list();
-    }
-
     public static List<?> getSielhautpos(
             String param, Integer pkt, Date anfang, Date ende) {
         log.debug("Suche (HQL): p:" + param + ", pkt:" + pkt + ", bD:" + anfang
@@ -394,7 +387,7 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
     }
 
     // Liefert eine Liste der Analyseinstitute.
-    public static String[] getAnalysierer() {
+    private static String[] getAnalysierer() {
         return (String[]) new DatabaseAccess()
             .createQuery(
                 "SELECT distinct analyseVon "

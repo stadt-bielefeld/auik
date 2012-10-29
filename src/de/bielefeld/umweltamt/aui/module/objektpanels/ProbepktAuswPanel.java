@@ -81,7 +81,7 @@ import com.toedter.calendar.JDateChooser;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
@@ -177,13 +177,13 @@ public class ProbepktAuswPanel extends JPanel {
         CellConstraints cc2 = (CellConstraints) cc.clone();
 
         builder.addSeparator("Zeitraum", cc.xyw(1, 1, 11));
-        builder.addSeparator("Analyse von...", cc.xyw(13, 1, 3));
+        builder.addSeparator("Analyse von...", cc.xyw(15, 1, 1));
 
         builder.add(new JLabel("Von:"), cc.xy(1, 3, "r,d"),
             getVonDateChooser(), cc2.xy(3, 3, "l,d"));
         builder.add(new JLabel("Bis:"), cc.xy(5, 3, "r,d"),
             getBisDateChooser(), cc2.xy(7, 3, "l,d"));
-        builder.add(getAnalyseVonBox(), cc2.xyw(13, 3, 3, "l,d"));
+        builder.add(getAnalyseVonBox(), cc2.xyw(15, 3, 1, "l,d"));
 
         builder.addSeparator("Parameter", cc.xyw(1, 5, 15));
 
@@ -832,11 +832,9 @@ public class ProbepktAuswPanel extends JPanel {
 
     private JComboBox getAnalyseVonBox() {
         if (this.analyseVonBox == null) {
-            String[] inst = AtlAnalyseposition.getAnalysierer();
             this.analyseVonBox = new JComboBox();
-            this.analyseVonBox.setEditable(true);
-            this.analyseVonBox.setModel(new DefaultComboBoxModel(inst));
-            this.analyseVonBox.setPrototypeDisplayValue("Faulschlamm   abc");
+            this.analyseVonBox.setModel(
+                new DefaultComboBoxModel(DatabaseQuery.getAnalysierer()));
             this.analyseVonBox.setSelectedIndex(-1);
         }
 
