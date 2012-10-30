@@ -30,6 +30,7 @@ import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -40,7 +41,8 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class DeaWzCode  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForDeaWzCode;
+    private static final long serialVersionUID =
+        DatabaseSerialVersionUID.forDeaWzCode;
 
     /* Primary key, foreign keys (relations) and table columns */
     private DeaWzCodeId id;

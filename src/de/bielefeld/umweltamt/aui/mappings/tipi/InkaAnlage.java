@@ -25,6 +25,7 @@ package de.bielefeld.umweltamt.aui.mappings.tipi;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.nrw.lds.tipi.general.HistoryObject;
@@ -39,7 +40,8 @@ import java.util.List;
 public class InkaAnlage  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaAnlage;
+    private static final long serialVersionUID =
+        DatabaseSerialVersionUID.forInkaAnlage;
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer anlageNr;

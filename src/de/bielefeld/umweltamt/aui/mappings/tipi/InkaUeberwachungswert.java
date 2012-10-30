@@ -28,6 +28,7 @@ import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.nrw.lds.tipi.general.HistoryObject;
 
@@ -39,7 +40,8 @@ import de.nrw.lds.tipi.general.HistoryObject;
 public class InkaUeberwachungswert  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaUeberwachungswert;
+    private static final long serialVersionUID =
+        DatabaseSerialVersionUID.forInkaUeberwachungswert;
 
     /* Primary key, foreign keys (relations) and table columns */
     private InkaUeberwachungswertId id;

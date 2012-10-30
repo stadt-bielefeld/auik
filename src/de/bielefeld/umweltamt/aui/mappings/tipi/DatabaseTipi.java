@@ -49,32 +49,6 @@ import de.nrw.lds.tipi.inka.Inka_Ueberwachungswert;
  */
 public class DatabaseTipi {
 
-    /** Generated serialVersionUID for tipi classes */
-    public static final long serialVersionUIDForAuikWzCode              = 5073432466094350505L;
-    public static final long serialVersionUIDForDeaAdresse              = -4303747653665846292L;
-    public static final long serialVersionUIDForDeaWzCode               = -6659127113195766272L;
-    public static final long serialVersionUIDForDeaWzCodeId             = -2995479622461488814L;
-    public static final long serialVersionUIDForInkaAnfallstAnlage      = 2896103490391231803L;
-    public static final long serialVersionUIDForInkaAnfallstAnlageId    = -6659267692350715319L;
-    public static final long serialVersionUIDForInkaAnfallstelle        = -123665137892413536L;
-    public static final long serialVersionUIDForInkaAnfallstMessst      = 7171365306972731833L;
-    public static final long serialVersionUIDForInkaAnfallstMessstId    = -1796095750368006537L;
-    public static final long serialVersionUIDForInkaAnfallstStoffe      = -7046151130444979828L;
-    public static final long serialVersionUIDForInkaAnfallstStoffeId    = -5563943732350813400L;
-    public static final long serialVersionUIDForInkaAnlage              = 2551742979569968415L;
-    public static final long serialVersionUIDForInkaBetrieb             = 5912627864733277754L;
-    public static final long serialVersionUIDForInkaBetriebseinrichtung = -2426278414733263459L;
-    public static final long serialVersionUIDForInkaGenehmigung         = -214881933336420597L;
-    public static final long serialVersionUIDForInkaMessstAnlage        = 3602721241814130872L;
-    public static final long serialVersionUIDForInkaMessstAnlageId      = -3906892009920374912L;
-    public static final long serialVersionUIDForInkaMessstelle          = 2685880116244862141L;
-    public static final long serialVersionUIDForInkaProbenahme          = -1322194123496627110L;
-    public static final long serialVersionUIDForInkaUebergabestelle     = -2278878459747755125L;
-    public static final long serialVersionUIDForInkaUeberwachErgebnis   = -4907428653302709658L;
-    public static final long serialVersionUIDForInkaUeberwachErgebnisId = -756159384549934619L;
-    public static final long serialVersionUIDForInkaUeberwachungswert   = -7215726564799484939L;
-    public static final long serialVersionUIDForInkaUeberwachungswertId = 4518302662515738672L;
-
     /** DeaAdresse => Dea_Adresse */
     public static HistoryObject toServiceTypeForClass(DeaAdresse clazz) {
         return new Dea_Adresse(

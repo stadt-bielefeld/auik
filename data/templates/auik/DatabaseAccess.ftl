@@ -8,7 +8,7 @@
      */
     public static ${declarationName} merge(${declarationName} detachedInstance) {
         log.debug("Merging ${declarationName} instance " + detachedInstance);
-        return (${declarationName}) new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().merge(detachedInstance);
+        return (${declarationName}) new ${pojo.importType("de.bielefeld.umweltamt.aui.mappings.DatabaseAccess")}().merge(detachedInstance);
     }
 
     /**
@@ -28,7 +28,7 @@
      */
     public static boolean delete(${declarationName} detachedInstance) {
         log.debug("Deleting ${declarationName} instance " + detachedInstance);
-        return new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().delete(detachedInstance);
+        return new ${pojo.importType("de.bielefeld.umweltamt.aui.mappings.DatabaseAccess")}().delete(detachedInstance);
     }
 
     /**
@@ -50,7 +50,7 @@
     public static ${declarationName} findById(${c2j.getJavaTypeName(clazz.identifierProperty, jdk5)} id) {
         log.debug("Getting ${declarationName} instance with id: " + id);
         return (${declarationName})
-            new ${pojo.importType("de.bielefeld.umweltamt.aui.utils.DatabaseAccess")}().get(${declarationName}.class, id);
+            new ${pojo.importType("de.bielefeld.umweltamt.aui.mappings.DatabaseAccess")}().get(${declarationName}.class, id);
     }
 
     /**

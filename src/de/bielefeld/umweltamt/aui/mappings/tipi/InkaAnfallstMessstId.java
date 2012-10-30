@@ -23,7 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
-import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 
 /**
  * A class that represents a row in the InkaAnfallstMessstId database table.<br>
@@ -33,7 +33,8 @@ import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 public class InkaAnfallstMessstId  implements java.io.Serializable {
 
     /** Generated serialVersionUID for Serializable interface */
-    private static final long serialVersionUID = DatabaseTipi.serialVersionUIDForInkaAnfallstMessstId;
+    private static final long serialVersionUID =
+        DatabaseSerialVersionUID.forInkaAnfallstMessstId;
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer anfallstelleNr;
