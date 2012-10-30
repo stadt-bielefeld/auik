@@ -6,7 +6,8 @@
 	<!-- Type mappings ===================================================== -->
 	<type-mapping>
 		<sql-type jdbc-type="DATE" hibernate-type="java.util.Calendar"/>
-		<sql-type jdbc-type="TIMESTAMP" hibernate-type="java.util.Calendar"/>
+        <sql-type jdbc-type="TIMESTAMP" hibernate-type="java.util.Calendar"/>
+        <sql-type jdbc-type="REAL" hibernate-type="java.lang.Float"/>
 	</type-mapping>
 
 	<!-- Table filters ===================================================== -->
@@ -37,126 +38,126 @@
 	<table schema="auik" name="anh_49_abscheiderdetails">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">anh_49_abscheiderdetails_id_seq</param>
+                <param name="sequence">auik.anh_49_abscheiderdetails_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="anh_49_analysen">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">anh_49_analysen_id_seq</param>
+                <param name="sequence">auik.anh_49_analysen_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="anh_49_kontrollen">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">anh_49_kontrollen_id_seq</param>
+                <param name="sequence">auik.anh_49_kontrollen_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="anh_49_ortstermine">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">anh_49_ortstermine_id_seq</param>
+                <param name="sequence">auik.anh_49_ortstermine_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="anh_49_verwaltungsverf">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">anh_49_verwaltungsverf_id_seq</param>
+                <param name="sequence">auik.anh_49_verwaltungsverf_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="atl_analyseposition">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">atl_analyseposition_id_seq</param>
+                <param name="sequence">auik.atl_analyseposition_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="atl_probenahmen">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">atl_probenahmen_id_seq</param>
+                <param name="sequence">auik.atl_probenahmen_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="atl_sielhaut">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">atl_sielhaut_id_seq</param>
+                <param name="sequence">auik.atl_sielhaut_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="basis_betreiber">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">basis_betreiber_id_seq</param>
+                <param name="sequence">auik.basis_betreiber_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="basis_objekt">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">basis_objekt_objektid_seq</param>
+                <param name="sequence">auik.basis_objekt_objektid_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="basis_objektchrono">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">basis_objektchrono_id_seq</param>
+                <param name="sequence">auik.basis_objektchrono_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="basis_objektverknuepfung">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">basis_objektverknuepfung_id_seq</param>
+                <param name="sequence">auik.basis_objektverknuepfung_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="basis_standort">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">basis_standort_id_seq</param>
+                <param name="sequence">auik.basis_standort_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="vaws_anlagenchrono">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">vaws_anlagenchrono_id_seq</param>
+                <param name="sequence">auik.vaws_anlagenchrono_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="vaws_fachdaten">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">vaws_fachdaten_behaelterid_seq</param>
+                <param name="sequence">auik.vaws_fachdaten_behaelterid_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="vaws_kontrollen">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">vaws_kontrollen_id_seq</param>
+                <param name="sequence">auik.vaws_kontrollen_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="vaws_verwaltungsgebuehren">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">vaws_verwaltungsgebuehren_id_seq</param>
+                <param name="sequence">auik.vaws_verwaltungsgebuehren_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>
 	<table schema="auik" name="vaws_verwaltungsverf">
 		<primary-key>
             <generator class="native">
-                <param name="sequence">vaws_verwaltungsverf_id_seq</param>
+                <param name="sequence">auik.vaws_verwaltungsverf_id_seq</param>
         	</generator>
 		</primary-key>
 	</table>

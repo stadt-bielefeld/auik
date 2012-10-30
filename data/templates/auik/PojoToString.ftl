@@ -1,4 +1,3 @@
-<#if pojo.needsToString()>
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -11,6 +10,7 @@
         return ${pojo.importType("de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString")}.toStringForClass(this); 
     }
 
+<#if pojo.needsToString()>
     /**
      * Get a string representation for the gui
      * @return String

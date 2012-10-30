@@ -371,7 +371,7 @@ public class SielhautImport extends AbstractModul {
 
                         if (!problem) {
                             // Speichern...
-                            if (AtlAnalyseposition.saveAnalyseposition(pos)) {
+                            if (pos.merge()) {
                                 importCount++;
                                 log.debug("Habe " + pos + " gespeichert!");
                             } else {

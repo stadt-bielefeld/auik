@@ -35,8 +35,20 @@ public class KommaDouble {
     protected Double value;
     protected NumberFormat formatter;
 
+    public KommaDouble() {
+        this.value = 0.0;
+    }
+
     public KommaDouble(Double value) {
         this.value = value;
+    }
+
+    public KommaDouble(Float value) {
+        if (value == null) {
+            this.value = 0.0;
+        } else {
+            this.value = value.doubleValue();
+        }
     }
 
     public KommaDouble(double value) {
@@ -56,6 +68,7 @@ public class KommaDouble {
         this.value = value;
     }
 
+    @Override
     public String toString() {
         if (formatter == null) {
             formatter = NumberFormat.getNumberInstance();

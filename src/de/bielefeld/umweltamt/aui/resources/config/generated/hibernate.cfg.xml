@@ -62,7 +62,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/atl/AtlAnalyseposition.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/atl/AtlProbenahmen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/DeaAdresse.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/ViewBwk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/vaws/VawsFluessigkeit.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/tipi/DeaStoffe.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/generated/indeinl/Anh49Abscheiderdetails.hbm.xml" />

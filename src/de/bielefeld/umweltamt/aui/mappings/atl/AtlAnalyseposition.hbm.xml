@@ -1,30 +1,43 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl" schema="auik">
-
-    <class name="AtlAnalyseposition" table="atl_analyseposition">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition" table="atl_analyseposition" schema="auik">
         <id name="id" type="java.lang.Integer">
-        	<column name="id" sql-type="serial"/>
+            <column name="id" />
             <generator class="native">
-                <param name="sequence">atl_analyseposition_id_seq</param>
-        	</generator>
+                <param name="sequence">auik.atl_analyseposition_id_seq</param>
+            </generator>
         </id>
-
-        <property name="grkl" column="grkl" type="java.lang.String" />
-        <property name="wert" column="wert" type="java.lang.Float" not-null="true" />
-        <property name="analyseVon" column="analyse_von" type="java.lang.String" />
-        <property name="bericht" column="bericht" type="java.lang.String" />
-        <property name="normwert" column="normwert" type="java.lang.Double" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <many-to-one name="atlEinheiten" column="einheiten_id" class="AtlEinheiten" />
-
-        <many-to-one name="atlParameter" column="parameter_id" class="AtlParameter" not-null="true" />
-
-        <many-to-one name="atlProbenahmen" column="probenahme_id" class="AtlProbenahmen" not-null="true" />
+        <many-to-one name="atlParameter" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter" fetch="select">
+            <column name="parameter_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="atlProbenahmen" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen" fetch="select">
+            <column name="probenahme_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="atlEinheiten" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten" fetch="select">
+            <column name="einheiten_id" />
+        </many-to-one>
+        <property name="grkl" type="string">
+            <column name="grkl" />
+        </property>
+        <property name="wert" type="java.lang.Float">
+            <column name="wert" precision="4" scale="0" not-null="true" />
+        </property>
+        <property name="analyseVon" type="string">
+            <column name="analyse_von" />
+        </property>
+        <property name="bericht" type="string">
+            <column name="bericht" />
+        </property>
+        <property name="normwert" type="java.lang.Double">
+            <column name="normwert" precision="8" scale="0" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>
