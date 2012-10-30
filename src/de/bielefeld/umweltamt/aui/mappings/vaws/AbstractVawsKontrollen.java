@@ -23,14 +23,14 @@ package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 
 /**
  * A class that represents a row in the VAWS_KONTROLLEN table. You can customize
  * the behavior of this class by editing the class, {@link VawsKontrollen()}.
  */
 public abstract class AbstractVawsKontrollen extends
-    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
+    StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = 641389056004553929L;
 
     /**

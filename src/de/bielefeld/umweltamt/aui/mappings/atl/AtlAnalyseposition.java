@@ -22,16 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the 'ATL_ANALYSEPOSITION' table. This class
@@ -40,8 +33,6 @@ import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
         Serializable {
     private static final long serialVersionUID = 8611630449814009888L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /** Simple constructor of AtlAnalyseposition instances. */
     public AtlAnalyseposition() {
@@ -54,15 +45,6 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
      */
     public AtlAnalyseposition(Float wert) {
         setWert(wert);
-    }
-
-    /**
-     * Constructor of AtlAnalyseposition instances given a AtlProbenahme.
-     * @param probe
-     */
-    public AtlAnalyseposition(AtlProbenahmen probe) {
-        this(new Float(0.0));
-        setAtlProbenahmen(probe);
     }
 
     /**
@@ -209,209 +191,6 @@ public class AtlAnalyseposition extends AbstractAtlAnalyseposition implements
     @Override
     public String toString() {
         return DatabaseClassToString.toStringForClass(this);
-    }
-
-    // Liefert einObjekt vom Typ Analysepositionen mit einer gegebenen ID
-    public static AtlAnalyseposition getAnalysepositionObjekt(Integer id) {
-        AtlAnalyseposition objekt = null;
-
-        objekt = (AtlAnalyseposition)
-                new DatabaseAccess().get(AtlAnalyseposition.class, id);
-
-        return objekt;
-    }
-
-    /**
-     * Liefert eine Liste der Analysepositionen mit einem gegebenen Parameter
-     * aus einer gegebenen Probenahme.
-     * @param probe Die Probenahme.
-     * @param param Der Parameter.
-     * @return Eine Liste mit <code>AtlAnalyseposition</code>en.
-     */
-    public static List<?> getAnalysepositionen(
-            AtlProbenahmen probe, AtlParameter param) {
-        // TODO: Evtl. mit komplizierterem HQL gleich beim Laden der Proben
-        // lösen?
-        // SELECT probe.name, probe.pos....
-//        String query =
-//            "FROM AtlAnalyseposition pos " +
-//            "WHERE pos.atlParameter = ? " +
-//            "and pos.atlProbenahmen = ? " +
-//            "ORDER BY pos.atlProbenahmen.datumDerEntnahme";
-
-        // Nothing was done here...
-//        if (!Hibernate.isInitialized(probe.getAtlAnalysepositionen())) {
-//        }
-
-        List<AtlAnalyseposition> proben = new ArrayList<AtlAnalyseposition>();
-
-        Iterator<AtlAnalyseposition> it =
-            probe.loadAtlAnalysepositionen().iterator();
-        for (; it.hasNext();) {
-            AtlAnalyseposition pos = it.next();
-            if ((pos.getAtlParameter().getOrdnungsbegriff().equals(param
-                    .getOrdnungsbegriff()))) {
-                proben.add(pos);
-            }
-        }
-
-        return proben;
-
-        // TODO: Maybe better use something like this?
-//        List<?> result = null;
-//        result = new DatabaseAccess()
-//            .createQuery(
-//                "FROM AtlAnalyseposition "
-//                    + "WHERE atlProbenahmen = :probe "
-//                    + "AND atlParameter.ordnungsbegriff = :param")
-//            .setEntity("probe", probe)
-//            .setString("param", param.getOrdnungsbegriff())
-//            .list();
-//
-//        return result;
-    }
-
-    /**
-     * Liefert eine Liste der Analysepositionen mit einem gegebenen Parameter,
-     * einer bestimmten Einheit, an einem bestimmten Probepunkt, die zwischen
-     * <code>beginDate</code> und <code>endDate</code> (inklusive) genommen
-     * wurden. Wenn <code>analyseVon</code> nicht <code>null</code> oder "" ist,
-     * werden nur Analysepositionen geliefert, die von einer bestimmten Stelle
-     * analysiert wurden.
-     * @param param Der Parameter
-     * @param einh Die Einheit
-     * @param pkt Der Probepunkt
-     * @param beginDate Das Anfangs-Datum
-     * @param endDate Das End-Datum
-     * @param analyseVon Wo wurde analysiert?
-     * @return Eine Liste mit <code>AtlAnalyseposition</code>en
-     */
-    public static List<?> getAnalysepositionen(
-            AtlParameter param, AtlEinheiten einh, AtlProbepkt pkt,
-            Date beginDate, Date endDate, String analyseVon) {
-        log.debug("Suche (HQL): p:" + param + ", e:" + einh + ", pkt:" + pkt
-                + ", bD:" + beginDate + ", eD:" + endDate + ", aV:'"
-                + analyseVon + "'");
-
-//        String paramID = param.getOrdnungsbegriff();
-//        Integer einhID = einh.getId();
-//        Integer pktID = pkt.getObjektid();
-
-        String query = "FROM AtlAnalyseposition pos "
-//        String query = "FROM ViewAtlAnalysepositionAll pos "
-                + "WHERE pos.atlParameter = :param "
-                + "and pos.atlEinheiten = :einh "
-                + "and pos.atlProbenahmen.atlProbepkt = :pkt "
-                + "and pos.atlProbenahmen.datumDerEntnahme >= :beginDate "
-                + "and pos.atlProbenahmen.datumDerEntnahme <= :endDate ";
-
-        if (analyseVon != null && !analyseVon.equals("")) {
-            query += "and pos.analyseVon like :analyseVon ";
-        }
-
-        query += "ORDER BY pos.atlProbenahmen.datumDerEntnahme";
-
-        List<?> proben = null;
-
-        if (analyseVon != null && !analyseVon.equals("")) {
-            proben = new DatabaseAccess().createQuery(query)
-                    .setEntity("param", param)
-                    .setEntity("einh", einh)
-                    .setEntity("pkt", pkt)
-                    .setDate("beginDate", beginDate)
-                    .setDate("endDate", endDate)
-                    .setString("analyseVon", analyseVon)
-                    .list();
-        } else {
-            proben = new DatabaseAccess().createQuery(query)
-                    .setEntity("param", param)
-                    .setEntity("einh", einh)
-                    .setEntity("pkt", pkt)
-                    .setDate("beginDate", beginDate)
-                    .setDate("endDate", endDate)
-                    .list();
-        }
-
-        return proben;
-    }
-
-    // Liefert eine Liste der Analysepositionen mit einem gegebenen
-    // Parameter, an einem bestimmten Probepunkt.
-    public static List<?> getAnalysepos(AtlParameter param, Integer pkt) {
-        log.debug("Suche (HQL): p:" + param + " pkt:" + pkt);
-
-        String query = "FROM AtlAnalyseposition as pos "
-                + "WHERE pos.atlParameter = :param ";
-
-        if (pkt != null) {
-            query += "and pos.atlProbenahmen.atlProbepkt.objektid = '" + pkt
-                    + "' ";
-        } else {
-            log.debug("objektid = null");
-        }
-
-        query += "ORDER BY pos.atlProbenahmen.datumDerEntnahme";
-
-        return new DatabaseAccess().createQuery(query)
-            .setEntity("param", param)
-            .list();
-    }
-
-    public static List<?> getSielhautpos(
-            String param, Integer pkt, Date anfang, Date ende) {
-        log.debug("Suche (HQL): p:" + param + ", pkt:" + pkt + ", bD:" + anfang
-                + ", eD:" + ende + ", aV:'");
-        String query = "FROM AtlAnalyseposition pos "
-                + "WHERE pos.atlProbenahmen.datumDerEntnahme >= :anfang "
-                + "and pos.atlProbenahmen.datumDerEntnahme <= :ende ";
-
-        if (pkt != null) {
-            query += "and pos.atlProbenahmen.atlProbepkt.objektid = '" + pkt
-                    + "' ";
-        } else {
-            log.debug("objektid = null");
-        }
-
-        if (param != null) {
-            query += "and pos.atlParameter.bezeichnung = '" + param + "' ";
-        } else {
-            log.debug("param = null");
-        }
-
-        query += "ORDER BY pos.atlProbenahmen.datumDerEntnahme";
-
-        return new DatabaseAccess().createQuery(query)
-            .setDate("anfang", anfang)
-            .setDate("ende", ende)
-            .list();
-    }
-
-    // Liefert eine Liste der Analyseinstitute.
-    private static String[] getAnalysierer() {
-        return (String[]) new DatabaseAccess()
-            .createQuery(
-                "SELECT distinct analyseVon "
-                    + "FROM AtlAnalyseposition as ap "
-                    + "ORDER BY ap.analyseVon")
-            .array(new String[0]);
-    }
-
-    public static Set<AtlAnalyseposition> getAnalysepositionen(
-        AtlProbenahmen probe) {
-        Set<AtlAnalyseposition> resultSet = new HashSet<AtlAnalyseposition>();
-        List<?> result = null;
-        result = new DatabaseAccess()
-            .createQuery(
-                "FROM AtlAnalyseposition "
-                    + "WHERE atlProbenahmen = :probe")
-            .setEntity("probe", probe)
-            .list();
-        AtlAnalyseposition position = null;
-        for (Object object : result) {
-            position = (AtlAnalyseposition) object;
-            resultSet.add(position);
-        }
-        return resultSet;
     }
 
     public static boolean saveAnalyseposition(AtlAnalyseposition pos) {

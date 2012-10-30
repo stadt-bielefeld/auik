@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
  * Anh55Fachdaten()}.
  */
 public abstract class AbstractAnh55Fachdaten extends
-    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
+    StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = -7312833435361099418L;
 
     /**

@@ -19,13 +19,13 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-package de.bielefeld.umweltamt.aui.utils;
+package de.bielefeld.umweltamt.aui.mappings;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -43,8 +43,7 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseTableWithCollection;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A wrapper class for all access to the database, which only allows certain
@@ -58,17 +57,6 @@ public class DatabaseAccess {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    /** The type of the DatabaseAccess */
-    public enum DatabaseAccessType {
-        /* Database access */
-        GET_SESSION, BEGIN_TRANSACTION, COMMIT, ROLLBACK,
-        /* Operations on entitys */
-        GET, SAVEORUPDATE, MERGE, DELETE,
-        /* Querys and criteria */
-        CREATE_QUERY, CRITERIA, LIST, LIST_CRITERIA,
-        UNIQUE_RESULT, ITERATE
-    }
-
     /** The session of the localThread */
     private Session session = null;
     /** The transaction */
@@ -80,20 +68,21 @@ public class DatabaseAccess {
 
     /**
      * A simple constructor
-     * @param type The type of the DatabaseAccess
      */
-    public DatabaseAccess(/*DatabaseAccessType type*/) {
-//        this.type = type;
+    public DatabaseAccess() {
+        // This is intentionally left blank
     }
 
     /**
-     * Check if the proxy or persistent collection is initialized.
+     * Check if the proxy or persistent collection is initialized.<br>
+     * TODO: This is just used in the toString method of the AtlProbenahme.
+     * Check if we really need it!
      * @param proxy a persistable object, proxy, persistent collection or
      *            <code>null</code>
      * @return <code>true</code> if the argument is already initialized, or is
      *         not a proxy or collection
      */
-    public boolean isInitialized(Object proxy) {
+    public static boolean isInitialized(Object proxy) {
         return Hibernate.isInitialized(proxy);
     }
 
@@ -137,22 +126,40 @@ public class DatabaseAccess {
                 }
             }
         } catch (HibernateException he) {
-            this.handleDBException(he, DatabaseAccessType.GET, false);
+            this.handleDBException(he, false);
         } finally {
             this.closeSession();
         }
 
-        /* If the object is virtual deletable and virtual deleted,
-         * return null */
-        AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
-        if (result instanceof AbstractVirtuallyDeletableDatabaseTable) {
-            virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) result;
-            if (virtDelObjekt.is_deleted()) {
-                return null;
-            }
+        /* If the object is marked as deleted, return null */
+        if (this.isMarkedAsDeleted(result)) {
+            return null;
         }
 
         return result;
+    }
+
+    /**
+     * Check if the object is marked as deleted
+     * @param object
+     * @return
+     */
+    private boolean isMarkedAsDeleted(Object object) {
+        if (object == null) return false;
+        Class<?> clazz = object.getClass();
+        Method method = null;
+        while (clazz != null) {
+            try {
+                method = clazz.getDeclaredMethod("isDeleted");
+                return (Boolean) method.invoke(object);
+            } catch (NoSuchMethodException nsme) {
+                // This is intentionally left blank
+            } catch (Exception e) {
+                log.error("This /should/ not happen...");
+            }
+            clazz = clazz.getSuperclass();
+        }
+        return false;
     }
 
     /**
@@ -176,8 +183,7 @@ public class DatabaseAccess {
                     success = true;
                 }
             } catch (HibernateException he) {
-                this.handleDBException(
-                    he, DatabaseAccessType.SAVEORUPDATE, true);
+                this.handleDBException(he, true);
             } finally {
                 this.closeSession();
             }
@@ -208,7 +214,7 @@ public class DatabaseAccess {
                     success = true;
                 }
             } catch (HibernateException he) {
-                this.handleDBException(he, DatabaseAccessType.MERGE, true);
+                this.handleDBException(he, true);
             } finally {
                 this.closeSession();
             }
@@ -226,33 +232,50 @@ public class DatabaseAccess {
      * @return boolean True, if everything went as planned, false otherwise
      */
     public boolean delete(Object object) {
-
-        /* If the object is virtual deletable, just delete it virtually */
-        AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
-        if (object instanceof AbstractVirtuallyDeletableDatabaseTable) {
-            virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) object;
-            virtDelObjekt.set_deleted(true);
-            return this.saveOrUpdate(virtDelObjekt);
-        }
+        /* Only mark the object as deleted and save that */
+        this.markedAsDeleted(object);
+        return this.saveOrUpdate(object);
 
         /* Really delete the object */
-        boolean success = false;
-        /* Begin a new Transaction */
-        if (this.beginTransaction()) {
+//        boolean success = false;
+//        /* Begin a new Transaction */
+//        if (this.beginTransaction()) {
+//            try {
+//                /* Delete the object */
+//                this.getSession().delete(object);
+//                /* Commit the transaction */
+//                if (this.commitTransaction()) {
+//                    success = true;
+//                }
+//            } catch (HibernateException he) {
+//                this.handleDBException(he, DatabaseAccessType.DELETE, true);
+//            } finally {
+//                this.closeSession();
+//            }
+//        }
+//        return success;
+    }
+
+    /**
+     * Mark an object as deleted
+     * @param object
+     * @return
+     */
+    private void markedAsDeleted(Object object) {
+        if (object == null) return;
+        Class<?> clazz = object.getClass();
+        Method method = null;
+        while (clazz != null) {
             try {
-                /* Delete the object */
-                this.getSession().delete(object);
-                /* Commit the transaction */
-                if (this.commitTransaction()) {
-                    success = true;
-                }
-            } catch (HibernateException he) {
-                this.handleDBException(he, DatabaseAccessType.DELETE, true);
-            } finally {
-                this.closeSession();
+                method = clazz.getDeclaredMethod("setDeleted", Boolean.class);
+                method.invoke(object, true);
+            } catch (NoSuchMethodException nsme) {
+                // This is intentionally left blank
+            } catch (Exception e) {
+                log.error("This /should/ not happen...");
             }
+            clazz = clazz.getSuperclass();
         }
-        return success;
     }
 
     /**
@@ -272,7 +295,7 @@ public class DatabaseAccess {
         try {
             this.query = this.getSession().createQuery(queryString);
         } catch (HibernateException he) {
-            this.handleDBException(he, DatabaseAccessType.CREATE_QUERY, false);
+            this.handleDBException(he, false);
         } finally {
             // This place is intentionally left blank.
         }
@@ -336,12 +359,12 @@ public class DatabaseAccess {
     /* Note: The result of the query only lives as long as the session! */
     public List<?> list() {
         List<?> queryResult = null;
-        List<Object> virtDelResult = new ArrayList<Object>();
+        List<Object> notDeletedResult = new ArrayList<Object>();
 
         try {
             queryResult = this.query.list();
         } catch (HibernateException he) {
-            this.handleDBException(he, DatabaseAccessType.LIST, false);
+            this.handleDBException(he, false);
         } finally {
             this.closeSession();
         }
@@ -351,24 +374,31 @@ public class DatabaseAccess {
             return queryResult;
         }
 
-        // Not a VirtDelDBTable? Return queryResult
-        Object firstObject = queryResult.get(0);
-        if (!(firstObject instanceof AbstractVirtuallyDeletableDatabaseTable)) {
-            return queryResult;
-        }
-
-        // VirtDelDBTable? Build a new result with just the not deleted rows
-        // TODO: This is the most dirty solution...
-        // Add the "where xyz._deleted = FALSE" to all the querys?
-        // Can we let the database do that? Maybe with an Index? Or many...
-        AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
         for (Object object : queryResult) {
-            virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) object;
-            if (!virtDelObjekt.is_deleted()) {
-                virtDelResult.add(object);
+            if (!(this.isMarkedAsDeleted(object))) {
+                notDeletedResult.add(object);
             }
         }
-        return virtDelResult;
+        return notDeletedResult;
+
+//        // Not a VirtDelDBTable? Return queryResult
+//        Object firstObject = queryResult.get(0);
+//        if (!(firstObject instanceof AbstractVirtuallyDeletableDatabaseTable)) {
+//            return queryResult;
+//        }
+//
+//        // VirtDelDBTable? Build a new result with just the not deleted rows
+//        // TODO: This is the most dirty solution...
+//        // Add the "where xyz._deleted = FALSE" to all the querys?
+//        // Can we let the database do that? Maybe with an Index? Or many...
+//        AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
+//        for (Object object : queryResult) {
+//            virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) object;
+//            if (!virtDelObjekt.is_deleted()) {
+//                virtDelResult.add(object);
+//            }
+//        }
+//        return virtDelResult;
     }
 
     /**
@@ -405,7 +435,7 @@ public class DatabaseAccess {
                         "More than one result in unique request!");
             }
         } catch (HibernateException he) {
-            this.handleDBException(he, DatabaseAccessType.UNIQUE_RESULT, false);
+            this.handleDBException(he, false);
         } finally {
             this.closeSession();
         }
@@ -492,13 +522,10 @@ public class DatabaseAccess {
             // For all classes except those in the tipi package
             if (!(this.criteria.toString().contains(
                 "de.bielefeld.umweltamt.aui.mappings.tipi"))) {
-                this.criteria.add(Restrictions.eq("_deleted", false));
-                // This will be for the new hibernate mappings:
-//                this.criteria.add(Restrictions.eq("deleted", false));
+                this.criteria.add(Restrictions.eq("deleted", false));
             }
         } catch (HibernateException he) {
-            this.handleDBException(
-                he, DatabaseAccessType.CRITERIA, false);
+            this.handleDBException(he, false);
         } finally {
             // This place is intentionally left blank.
         }
@@ -513,7 +540,7 @@ public class DatabaseAccess {
         try {
             criteriaResult = this.criteria.list();
         } catch (HibernateException he) {
-            this.handleDBException(he, DatabaseAccessType.LIST_CRITERIA, false);
+            this.handleDBException(he, false);
         } finally {
             this.closeSession();
         }
@@ -578,34 +605,13 @@ public class DatabaseAccess {
         return idOrder;
     }
 
-    /*
-     * Are you thinking about using this? Don't.
-     * Don't think about it and don't use it.
-     * It only makes sense if the instances are already in the session or
-     * in the cache and we should only think about such stuff if performance
-     * becomes an issue.
-     */
-    public Iterator<?> iterate() {
-        Iterator<?> result = null;
-        /*
-        try {
-            result = this.query.iterate();
-        } catch (HibernateException he) {
-            this.handleDBException(he, DatabaseAccessType.ITERATE, false);
-        } finally {
-            this.closeSession();
-        }
-        */
-        return result;
-    }
-
     /** Get the (current) Session */
     private Session getSession() {
         if (this.session == null) {
             try {
                 this.session = HibernateSessionFactory.currentSession();
             } catch (HibernateException he) {
-                this.handleDBException(he, DatabaseAccessType.GET_SESSION, true);
+                this.handleDBException(he, true);
             } finally {
                 // This place is intentionally left blank.
             }
@@ -634,8 +640,7 @@ public class DatabaseAccess {
             this.transaction = this.getSession().beginTransaction();
             success = true;
         } catch (HibernateException he) {
-            this.handleDBException(
-                he, DatabaseAccessType.BEGIN_TRANSACTION, true);
+            this.handleDBException(he, true);
         } finally {
             // This place is intentionally left blank.
         }
@@ -652,7 +657,7 @@ public class DatabaseAccess {
             this.transaction.commit();
             success = this.transaction.wasCommitted();
         } catch (HibernateException he) {
-            this.handleDBException(he, DatabaseAccessType.COMMIT, true);
+            this.handleDBException(he, true);
         } finally {
             if (!success) {
                 log.warn("Commit did not throw an Exception, but the "
@@ -660,8 +665,7 @@ public class DatabaseAccess {
                 try {
                     this.transaction.rollback();
                 } catch (HibernateException he) {
-                    this.handleDBException(
-                        he, DatabaseAccessType.ROLLBACK, true);
+                    this.handleDBException(he, true);
                 }
             }
             this.transaction = null;
@@ -672,13 +676,10 @@ public class DatabaseAccess {
     /**
      * Make sure we always pass on the type of the failed database access
      * @param exception The occurred Exception
-     * @param type The type of the DatabaseAccess
      * @param fatal <code>true</code> if the error was fatal, <code>false</code>
      *            otherwise
      */
-    private void handleDBException(Throwable exception,
-        DatabaseAccessType type, boolean fatal) {
-
+    private void handleDBException(Throwable exception, boolean fatal) {
         /* For testing talk with the user... */
         String message = "TESTPHASE: Hier /könnte/ etwas schief gegangen sein. "
             + "Wenn sich das AUIK ab jetzt anders als sonst verhält, "
@@ -693,7 +694,7 @@ public class DatabaseAccess {
         log.error(message); // + "\n" + exception.getMessage());
 
         /* Hand the exception to the DatabaseManager */
-        DatabaseManager.getInstance().handleDBException(exception,
-            "DatabaseAccess." + type, fatal);
+        DatabaseManager.getInstance().handleDBException(
+            exception, "DatabaseAccess", fatal);
     }
 }

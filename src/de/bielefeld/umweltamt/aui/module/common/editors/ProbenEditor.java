@@ -430,7 +430,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         @Override
         public Object newObject() {
-            AtlAnalyseposition tmp = new AtlAnalyseposition(this.probe);
+            AtlAnalyseposition tmp = new AtlAnalyseposition();
+            tmp.setAtlProbenahmen(this.probe);
             if (this.probe.isKlaerschlammProbe()
                 || this.probe.getProbeArt().equals(
                     DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
@@ -458,8 +459,9 @@ public class ProbenEditor extends AbstractApplyEditor {
                 return;
             }
 
-            AtlAnalyseposition pos = new AtlAnalyseposition(this.probe);
+            AtlAnalyseposition pos = new AtlAnalyseposition();
 
+            pos.setAtlProbenahmen(this.probe);
             pos.setAtlParameter(parameter);
             pos.setAtlEinheiten(AtlEinheiten.getEinheit(parameter
                 .getWirdgemessenineinheit()));
@@ -484,8 +486,9 @@ public class ProbenEditor extends AbstractApplyEditor {
                 return;
             }
 
-            AtlAnalyseposition pos = new AtlAnalyseposition(this.probe);
+            AtlAnalyseposition pos = new AtlAnalyseposition();
 
+            pos.setAtlProbenahmen(this.probe);
             pos.setAtlParameter(parameter);
             pos.setAtlEinheiten(einheit);
             pos.setAnalyseVon(analysevon);

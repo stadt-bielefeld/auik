@@ -54,13 +54,13 @@
         <property name="ausfuehrung" column="ausfuehrung" type="java.lang.String" />
         <property name="pruefumfang" column="pruefumfang" type="java.lang.String" />
         <property name="verwendung" column="verwendung" type="java.lang.String" />
-        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
         <property name="ausHdpe" column="aus_hdpe" type="java.lang.Boolean" />
         <property name="Druckleitung" column="druckleitung" type="java.lang.Boolean" />
         <property name="schutzSensor" column="schutz_sensor" type="java.lang.Boolean" />
         <property name="schutzFolie" column="schutz_folie" type="java.lang.Boolean" />
         <property name="schutzAntiheber" column="schutz_antiheber" type="java.lang.Boolean" />
+        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
 
     </class>
 

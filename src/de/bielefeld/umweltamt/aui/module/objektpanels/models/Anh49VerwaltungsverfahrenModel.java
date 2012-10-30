@@ -112,7 +112,7 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
                 return null;
         }
 
-        if (!(verwaltungsverfahren.is_enabled())) {
+        if (!(verwaltungsverfahren.isEnabled())) {
             result = StringUtils.setStrike(result);
         }
 

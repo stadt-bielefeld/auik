@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 
@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
  * the behavior of this class by editing the class, {@link BasisStandort}.
  */
 public abstract class AbstractBasisStandort extends
-    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
+    StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = -3432191385268283675L;
 
     /**

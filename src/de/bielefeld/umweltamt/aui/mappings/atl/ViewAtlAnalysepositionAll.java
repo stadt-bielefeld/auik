@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * Home object for domain model class ViewAtlAnalysepositionAll.
@@ -164,8 +164,8 @@ public class ViewAtlAnalysepositionAll extends
         pos.setAtlParameter(AtlParameter.getParameter(this.getParameterId()));
         pos.setAtlProbenahmen(
             AtlProbenahmen.getProbenahme(this.getProbenahmeId()));
-        pos.set_enabled(this.is_enabled());
-        pos.set_deleted(this.is_deleted());
+        pos.setEnabled(this.isEnabled());
+        pos.setDeleted(this.isDeleted());
         return pos;
     }
 }

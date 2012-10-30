@@ -23,11 +23,14 @@ package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
+
 /**
  * A class that represents a row in the VAWS_WGK table. You can customize the
  * behavior of this class by editing the class, {@link VawsWgk()}.
  */
-public abstract class AbstractVawsWgk implements Serializable {
+public abstract class AbstractVawsWgk extends
+StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = -6852719807785818034L;
 
     /**

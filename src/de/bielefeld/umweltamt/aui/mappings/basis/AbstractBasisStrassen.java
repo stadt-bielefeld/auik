@@ -23,11 +23,14 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
+
 /**
  * A class that represents a row in the BASIS_STRASSEN table. You can customize
  * the behavior of this class by editing the class, {@link BasisStrassen}.
  */
-public abstract class AbstractBasisStrassen implements Serializable {
+public abstract class AbstractBasisStrassen extends
+StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = -1425674265183003048L;
 
     /**

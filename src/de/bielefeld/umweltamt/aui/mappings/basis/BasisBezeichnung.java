@@ -25,9 +25,9 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the BasisBezeichnung database table.<br>

@@ -48,10 +48,10 @@
         <property name="esatzung" type="java.lang.Boolean">
         	<column name="e_satzung" />
         </property>
-        <property name="_enabled" type="boolean">
+        <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
         </property>
-        <property name="_deleted" type="boolean">
+        <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
         <property name="uebergabestelleRechtswert" type="java.lang.Integer">

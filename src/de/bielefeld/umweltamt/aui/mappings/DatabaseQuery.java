@@ -22,7 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
@@ -32,13 +34,16 @@ import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * This is a service class for all custom queries.<br>
@@ -163,17 +168,78 @@ public class DatabaseQuery {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
     /**
+     * This is used to load the AtlAnalysepositions for the set within the
+     * Probenahme. I am not sure if they will be auto-loaded with the new
+     * generated classes. TODO: Test that!
+     * @param probe
+     * @return
+     */
+    public static Set<AtlAnalyseposition> getAnalysepositionen(
+        AtlProbenahmen probe) {
+        Set<AtlAnalyseposition> resultSet = new HashSet<AtlAnalyseposition>();
+        List<AtlAnalyseposition> resultList = new DatabaseAccess()
+            .executeCriteriaToList(
+                DetachedCriteria.forClass(AtlAnalyseposition.class)
+                    .add(Restrictions.eq("atlProbenahmen", probe)),
+                new AtlAnalyseposition());
+        resultSet.addAll(resultList);
+        return resultSet;
+    }
+
+    /**
      * Liefert eine Liste der Analyseinstitute.
      * @return String[]
      */
     public static String[] getAnalysierer() {
         return new DatabaseAccess().executeCriteriaToArray(
             DetachedCriteria.forClass(AtlAnalyseposition.class)
-            .setProjection(Projections.distinct(
-                Projections.property("analyseVon"))),
+                .setProjection(Projections.distinct(
+                    Projections.property("analyseVon"))),
             new String[0]);
     }
 
+    /**
+     * Liefert eine Analyseposition mit einem gegebenen Parameter
+     * aus einer gegebenen Probenahme.
+     * @param probe Die Probenahme
+     * @param param Der Parameter
+     * @return AtlAnalyseposition
+     */
+    public static AtlAnalyseposition getAnalyseposition(
+            AtlProbenahmen probe, AtlParameter param) {
+        Set<AtlAnalyseposition> set = probe.loadAtlAnalysepositionen();
+        for (AtlAnalyseposition pos : set) {
+            if (pos.getAtlParameter().getOrdnungsbegriff().equals(
+                    param.getOrdnungsbegriff())) {
+                return pos;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get all <code>AtlAnalyseposition</code>s for a given
+     * <code>AtlProbepkt</code> and <code>AtlParameter</code> in a given
+     * time interval
+     * @param param AtlParameter
+     * @param pkt AtlProbepkt
+     * @param beginDate
+     * @param endDate
+     * @return
+     */
+    public static List<AtlAnalyseposition> getAnalysepositionen(
+            AtlParameter param, AtlProbepkt pkt, Date beginDate, Date endDate) {
+        DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(AtlAnalyseposition.class)
+                .createAlias("atlProbenahmen", "probe")
+                .add(Restrictions.eq("probe.atlProbepkt", pkt))
+                .add(Restrictions.eq("atlParameter", param))
+                .add(Restrictions.between(
+                    "probe.datumDerEntnahme", beginDate, endDate))
+                .addOrder(Order.asc("probe.datumDerEntnahme"));
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new AtlAnalyseposition());
+    }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package ATL : class AtlEinheiten                           */
@@ -261,6 +327,42 @@ public class DatabaseQuery {
 
         return new DatabaseAccess().executeCriteriaToList(
             criteria, new Anh49Fachdaten());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class AnhBwkFachdaten                     */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get AnhBwkFachdaten for a given year.
+     * @param year Integer
+     * @return <code>List&lt;AnhBwkFachdaten&gt;</code>
+     */
+    public static List<AnhBwkFachdaten> getBwkByYear(Integer year) {
+        DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(AnhBwkFachdaten.class)
+                .createAlias("basisObjekt.basisStandort", "standort");
+        detachedCriteria.addOrder(Order.asc("standort.strasse"));
+        detachedCriteria.addOrder(Order.asc("standort.hausnr"));
+        /* year == -1 => alle Jahre */
+        if (year != -1) {
+            detachedCriteria.add(
+                DatabaseAccess.getRestrictionsEqualOrNull("erfassung", year));
+        }
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new AnhBwkFachdaten());
+    }
+
+    /**
+     * Get a list of all recording years
+     * @return Integer[]
+     */
+    public static Integer[] getBwkErfassungsjahre() {
+        return new DatabaseAccess().executeCriteriaToArray(
+            DetachedCriteria.forClass(AnhBwkFachdaten.class)
+                .setProjection(Projections.distinct(
+                    Projections.property("erfassung"))),
+            new Integer[0]);
     }
 
     /* ********************************************************************** */

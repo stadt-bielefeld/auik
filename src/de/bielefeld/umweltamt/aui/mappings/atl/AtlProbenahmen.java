@@ -31,12 +31,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 
@@ -515,7 +516,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             return null;
         }
 
-        AtlAnalyseposition neu = new AtlAnalyseposition(this);
+        AtlAnalyseposition neu = new AtlAnalyseposition();
+        neu.setAtlProbenahmen(this);
         neu.setAtlParameter(parameter);
         neu.setAtlEinheiten(einheit);
 
@@ -555,7 +557,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
       // TODO: This is not an optimal solution...
       if (!loadedAtlAnalysepositionen) {
           super.setAtlAnalysepositionen(
-              AtlAnalyseposition.getAnalysepositionen(this));
+              DatabaseQuery.getAnalysepositionen(this));
           loadedAtlAnalysepositionen = true;
       }
 //      super.setAtlAnalysepositionen(

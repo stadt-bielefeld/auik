@@ -10,6 +10,8 @@
         </id>
         
         <property name="vbfeinstufung" column="vbfeinstufung" type="java.lang.String"/>
+        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
 
     </class>
 

@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 
 /**
  * A class that represents a row in the ANH_49_ABSCHEIDERDETAILS table. You can
@@ -31,7 +31,7 @@ import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTab
  * Anh49Abscheiderdetails()}.
  */
 public abstract class AbstractAnh49Abscheiderdetails extends
-    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
+    StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = -1822237692610542309L;
 
     /**

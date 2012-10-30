@@ -31,7 +31,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 
 /**
  * Diese Klasse representiert eine Parametergruppe.

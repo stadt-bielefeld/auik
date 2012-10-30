@@ -127,22 +127,15 @@ public class ChartDataSets {
         return result;
     }
 
-    public static TimeSeries createAnalysePositionenSielhautSeries(List<?> list, String name, String einheit) {
+    public static TimeSeries createAnalysePositionenSielhautSeries(
+        List<AtlAnalyseposition> list, String name, String einheit) {
         TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
         log.debug("Erzeuge TimeSeries: " + name);
 
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-//                if (list.get(i) instanceof AtlAnalyseposition) {
-//                    AtlAnalyseposition pos = (AtlAnalyseposition) list.get(i);
-//
-//                    APosDataItem item = new APosDataItem("Normwert", pos);
-//
-//                    addPosToMinuteSielhautSeries(result, item);
-//                }
                 addPosToMinuteSielhautSeries(
-                    result, new APosDataItem("Normwert",
-                        (AtlAnalyseposition) list.get(i)));
+                    result, new APosDataItem("Normwert", list.get(i)));
             }
         }
 
@@ -174,17 +167,22 @@ public class ChartDataSets {
         }
     }
 
-    private static void addPosToMinuteSielhautSeries(TimeSeries series, APosDataItem item/*Minute minute, AtlAnalyseposition pos*/) {
+    private static void addPosToMinuteSielhautSeries(
+        TimeSeries series, APosDataItem item) {
         if (series.getDataItem(item.getPeriod()) == null) {
-            //AUIKataster.debugOutput("  |- Füge " + pos + " bei " + minute + " hinzu.", "ChartDataSets.createAnalysepositionenSeries");
             series.add(item);
         } else {
-            //AUIKataster.debugOutput("  |- !Bei " + minute + " existiert schon ein Eintrag -> Rekursion!.", "ChartDataSets.createAnalysepositionenSeries");
             Calendar cal = GregorianCalendar.getInstance();
-            cal.setTime(item.getAnalysePosition().getAtlProbenahmen().getDatumDerEntnahme());
+            cal.setTime(item.getAnalysePosition().getAtlProbenahmen()
+                .getDatumDerEntnahme());
             Minute minute = item.getMinute();
-            APosDataItem item2 = new APosDataItem("Normwert",item.getAnalysePosition(), new Minute(minute.getMinute()+1, minute.getHour().getHour(), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH)+1, cal.get(Calendar.YEAR)));
-
+            APosDataItem item2 = new APosDataItem(
+                "Normwert", item.getAnalysePosition(),
+                new Minute(minute.getMinute()+1,
+                    minute.getHour().getHour(),
+                    cal.get(Calendar.DAY_OF_MONTH),
+                    cal.get(Calendar.MONTH)+1,
+                    cal.get(Calendar.YEAR)));
 
             addPosToMinuteSielhautSeries(series, item2);
         }

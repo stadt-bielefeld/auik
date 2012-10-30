@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 
 /**
  * A class that represents a row in the 'VAWS_PRUEFER' table. This class may be

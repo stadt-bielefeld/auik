@@ -113,14 +113,12 @@ import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -158,6 +156,7 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
@@ -260,9 +259,7 @@ public class SielhautBearbeiten extends AbstractModul {
     private JCheckBox QuecksilberCheck;
     private JCheckBox ZinkCheck;
     private JButton submitButton;
-    private int pkt;
     private TimeSeriesCollection dataSet1;
-    private JList auswahlList;
 
     @Override
     public void show() {
@@ -1638,93 +1635,63 @@ public class SielhautBearbeiten extends AbstractModul {
 
     private TimeSeriesCollection createDataset() {
         TimeSeriesCollection col = new TimeSeriesCollection();
-
-        int parameterAnzahl;
-
-        JList paramList;
         Date von = getVonDateChooser().getDate();
         Date bis = getBisDateChooser().getDate();
-        DefaultListModel leftModel = (DefaultListModel) getAuswahlList()
-            .getModel();
+        List<AtlParameter> selectedParams = new ArrayList<AtlParameter>();
 
         if (getBleiCheck().isSelected()) {
-            leftModel.addElement("Blei (Pb)");
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_BLEI);
         }
         if (getCadmiumCheck().isSelected()) {
-            leftModel.addElement("Cadmium (Cd)");
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_CADMIUM);
         }
         if (getChromCheck().isSelected()) {
-            leftModel.addElement("Chrom (Cr)");
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_CHROM);
         }
         if (getKupferCheck().isSelected()) {
-            leftModel.addElement("Kupfer (Cu)");
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_KUPFER);
         }
         if (getNickelCheck().isSelected()) {
-            leftModel.addElement("Nickel (Ni)");
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_NICKEL);
         }
         if (getQuecksilberCheck().isSelected()) {
-            leftModel.addElement("Quecksilber (Hg)");
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_QUECKSILBER);
         }
         if (getZinkCheck().isSelected()) {
-            leftModel.addElement("Zink (Zn)");
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_ZINK);
         }
-        paramList = getAuswahlList();
-
-        this.pkt = this.sprobePkt.getObjektid();
-        parameterAnzahl = getAuswahlList().getModel().getSize();
 
         // Wenn keine Check Box angeklickt wurde sollen alle Paramater
         // berücksichtig werden
-
-        if (parameterAnzahl == 0) {
-            leftModel.addElement("Blei (Pb)");
-            leftModel.addElement("Cadmium (Cd)");
-            leftModel.addElement("Chrom (Cr)");
-            leftModel.addElement("Kupfer (Cu)");
-            leftModel.addElement("Nickel (Ni)");
-            leftModel.addElement("Quecksilber (Hg)");
-            leftModel.addElement("Zink (Zn)");
+        if (selectedParams.isEmpty()) {
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_BLEI);
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_CADMIUM);
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_CHROM);
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_KUPFER);
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_NICKEL);
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_QUECKSILBER);
+            selectedParams.add(DatabaseConstants.ATL_PARAMETER_ZINK);
         }
 
-        createSeries(paramList, this.pkt, von, bis, col);
-        leftModel.clear();
+        createSeries(selectedParams, this.sprobePkt, von, bis, col);
+        selectedParams.clear();
 
         return col;
     }
 
-    private JList getAuswahlList() {
-        if (this.auswahlList == null) {
-            DefaultListModel listModel = new DefaultListModel();
-            this.auswahlList = new JList(listModel);
-            this.auswahlList.setPrototypeCellValue("Abcdefghij (Ab)");
-
-            this.auswahlList
-                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        }
-
-        return this.auswahlList;
-    }
-
-    private void createSeries(JList paramList, Integer pkt, Date von, Date bis,
+    private void createSeries(
+        List<AtlParameter> params, AtlProbepkt pkt, Date von, Date bis,
         TimeSeriesCollection col) {
-        String einheit;
-
         if (pkt != null) {
-
-            for (int i = 0; i < paramList.getModel().getSize(); i++) {
-
-                String p = (String) paramList.getModel().getElementAt(i);
-
-//                AtlAnalyseposition position;
-//                position = AtlAnalyseposition.getAnalysepositionObjekt(pkt);
-                einheit = "Verhältnis zum Hintergrundwert";
-
-                List<?> list = AtlAnalyseposition.getSielhautpos(p, pkt, von,
-                    bis);
+            for (AtlParameter param : params) {
+                List<AtlAnalyseposition> list =
+                    DatabaseQuery.getAnalysepositionen(param, pkt, von, bis);
 
                 TimeSeries series = ChartDataSets
-                    .createAnalysePositionenSielhautSeries(list, p + " ",
-                        einheit);
+                    .createAnalysePositionenSielhautSeries(
+                        list,
+                        param.getBezeichnung() + " ",
+                        "Verhältnis zum Hintergrundwert");
                 col.addSeries(series);
             }
         }
@@ -2066,20 +2033,13 @@ class SielhautProbeModel extends ListTableModel {
             this.wertMap.clear();
             for (int i = 0; i < getList().size(); i++) {
                 AtlProbenahmen probe = getRow(i);
-                List<AtlAnalyseposition> wertList = new ArrayList<AtlAnalyseposition>(
-                    this.params.length);
+                List<AtlAnalyseposition> wertList =
+                    new ArrayList<AtlAnalyseposition>(this.params.length);
 
                 for (int j = 0; j < this.params.length; j++) {
-                    AtlParameter param = this.params[j];
-                    List<?> posList = AtlAnalyseposition.getAnalysepositionen(
-                        probe, param);
-                    AtlAnalyseposition pos;
-                    if (posList.size() > 0) {
-                        pos = (AtlAnalyseposition) posList.get(0);
-                    } else {
-                        pos = null;
-                    }
-                    wertList.add(j, pos);
+                    wertList.add(j,
+                        DatabaseQuery.getAnalyseposition(
+                            probe, this.params[j]));
                 }
 
                 this.wertMap.put((AtlProbenahmen) getList().get(i), wertList);

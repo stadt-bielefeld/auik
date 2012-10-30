@@ -24,8 +24,8 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the 'ATL_PARAMETER' table. This class may be
@@ -90,8 +90,8 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
         buffer.append("kennzeichnung").append("='").append(getKennzeichnung()).append("' ");
         buffer.append("konservierung").append("='").append(getKonservierung()).append("' ");
         buffer.append("reihenfolge").append("='").append(getReihenfolge()).append("' ");
-        buffer.append("enabled").append("='").append(is_enabled()).append("' ");
-        buffer.append("deleted").append("='").append(is_deleted()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

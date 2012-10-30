@@ -23,12 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
+
 /**
  * A class that represents a row in the ATL_KLAERANLAGEN table. You can
  * customize the behavior of this class by editing the class,
  * {@link AtlKlaeranlagen}.
  */
-public abstract class AbstractAtlKlaeranlagen implements Serializable {
+public abstract class AbstractAtlKlaeranlagen extends
+StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = -5840147815006399671L;
 
     /**

@@ -11,6 +11,8 @@
 
         <property name="strasse" column="strasse" type="java.lang.String" />
         <property name="plz" column="plz" type="java.lang.String" />
+        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
     </class>
 
 </hibernate-mapping>

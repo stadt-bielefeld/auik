@@ -23,12 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
+
 /**
  * A class that represents a row in the VAWS_GEBUEHRENARTEN table. You can
  * customize the behavior of this class by editing the class, {@link
  * VawsGebuehrenarten()}.
  */
-public abstract class AbstractVawsGebuehrenarten implements Serializable {
+public abstract class AbstractVawsGebuehrenarten extends
+StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = 5780046754751531630L;
 
     /**

@@ -35,8 +35,8 @@
         <property name="kosten" column="kosten" type="java.lang.Double" />
         <property name="massnahmen" column="massnahmen" type="java.lang.String" />
         <property name="bezeichnung" column="bezeichnung" type="java.lang.String" />
-        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
 
         <many-to-one name="atlProbepkt" column="objektid" class="AtlProbepkt" />
 

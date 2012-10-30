@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 
 /**
  * A class that represents a row in the VAWS_ABFUELLFLAECHE table. You can
@@ -31,7 +31,7 @@ import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTab
  * VawsAbfuellflaeche()}.
  */
 public abstract class AbstractVawsAbfuellflaeche extends
-    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
+    StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = 902670291995436106L;
 
     /**

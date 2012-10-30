@@ -77,8 +77,8 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 import java.io.Serializable;
 
 import de.bielefeld.umweltamt.aui.SettingsManager;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * A class that represents a row in the 'BasisSachbearbeiter' table. This class
@@ -120,7 +120,7 @@ public class BasisSachbearbeiter extends AbstractBasisSachbearbeiter implements
         return (BasisSachbearbeiter[])
             new DatabaseAccess().createQuery(
                 "FROM BasisSachbearbeiter AS sachbearbeiter "
-                    + "ORDER BY sachbearbeiter._enabled DESC, "
+                    + "ORDER BY sachbearbeiter.enabled DESC, "
                     + "sachbearbeiter.name ASC")
             .array(new BasisSachbearbeiter[0]);
     }
@@ -135,7 +135,7 @@ public class BasisSachbearbeiter extends AbstractBasisSachbearbeiter implements
         return (BasisSachbearbeiter[])
             new DatabaseAccess().createQuery(
                 "FROM BasisSachbearbeiter AS sachbearbeiter "
-                    + "WHERE sachbearbeiter._enabled = true "
+                    + "WHERE sachbearbeiter.enabled = true "
                     + "ORDER BY sachbearbeiter.name ASC")
             .array(new BasisSachbearbeiter[0]);
     }

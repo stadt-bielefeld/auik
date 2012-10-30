@@ -23,11 +23,14 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
+
 /**
  * A class that represents a row in the ATL_STATUS table. You can customize the
  * behavior of this class by editing the class, {@link AtlStatus}.
  */
-public abstract class AbstractAtlStatus implements Serializable {
+public abstract class AbstractAtlStatus extends
+StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = 7838323542497206932L;
 
     /**

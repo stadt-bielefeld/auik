@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 
 /**
  * A class that represents a row in the ANH_49_VERWALTUNGSVERF table. You can
@@ -36,7 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTab
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public abstract class AbstractAnh49Verwaltungsverfahren extends
-    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
+    StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = 6965756804975056383L;
 
     /**

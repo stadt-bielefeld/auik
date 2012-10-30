@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 
@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
  * the behavior of this class by editing the class, {@link BasisBetreiber}.
  */
 public abstract class AbstractBasisBetreiber extends
-    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
+    StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = 7619136552719221885L;
 
     /**

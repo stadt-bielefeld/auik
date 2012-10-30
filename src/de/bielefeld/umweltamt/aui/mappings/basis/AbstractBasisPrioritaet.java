@@ -1,9 +1,9 @@
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 
 public abstract class AbstractBasisPrioritaet extends
-    AbstractVirtuallyDeletableDatabaseTable implements java.io.Serializable {
+    StupidHelperClassWhichWillBeGoneSoon implements java.io.Serializable {
 
     private static final long serialVersionUID = 7187397059108121923L;
     private BasisPrioritaetId id;

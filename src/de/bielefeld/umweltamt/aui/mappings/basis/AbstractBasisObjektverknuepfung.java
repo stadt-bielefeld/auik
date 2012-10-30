@@ -21,10 +21,10 @@
 
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 
 public class AbstractBasisObjektverknuepfung extends
-    AbstractVirtuallyDeletableDatabaseTable implements java.io.Serializable {
+    StupidHelperClassWhichWillBeGoneSoon implements java.io.Serializable {
     private static final long serialVersionUID = 7508674418350138126L;
 
     /**

@@ -24,7 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.Set;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 
@@ -33,7 +33,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
  * the behavior of this class by editing the class, {@link AtlProbepkt}.
  */
 public abstract class AbstractAtlProbepkt extends
-    AbstractVirtuallyDeletableDatabaseTable implements Serializable {
+    StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = -4603102088962913875L;
 
     /**

@@ -27,8 +27,8 @@
         <property name="abwmengegesamt" column="abwmengegesamt" type="java.lang.Integer" />
         <property name="gen58" column="gen58" type="java.util.Date" />
         <property name="gen59" column="gen59" type="java.util.Date" />
-        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
 
         <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
 

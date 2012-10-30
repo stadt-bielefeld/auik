@@ -11,8 +11,8 @@
                 <param name="sequence">basis_objektverknuepfung_id_seq</param>
         	</generator>
         </id>
-        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
         <many-to-one name="basisObjektByIstVerknuepftMit" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select">
             <column name="ist_verknuepft_mit" />
         </many-to-one>

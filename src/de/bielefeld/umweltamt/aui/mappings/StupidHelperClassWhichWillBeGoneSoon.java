@@ -26,51 +26,51 @@ package de.bielefeld.umweltamt.aui.mappings;
  *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
-public abstract class AbstractVirtuallyDeletableDatabaseTable {
+public abstract class StupidHelperClassWhichWillBeGoneSoon {
 
     /**
      * The value of the simple _enabled property.<br>
      * If a data record is _enabled, it can come up in the views, but will be
      * marked as being not active.
      */
-    private java.lang.Boolean _enabled = true;
+    private java.lang.Boolean enabled = true;
 
     /**
      * The value of the simple _deleted property.<br>
      * If a data record is _deleted, it will not show up anywhere but in the
      * database itself.
      */
-    private java.lang.Boolean _deleted = false;
+    private java.lang.Boolean deleted = false;
 
     /**
      * Return the value of the _ENABLED column.
      * @return java.lang.Boolean
      */
-    public java.lang.Boolean is_enabled() {
-        return _enabled;
+    public java.lang.Boolean isEnabled() {
+        return enabled;
     }
 
     /**
      * Set the value of the _ENABLED column.
      * @param _enabled the _enabled to set
      */
-    public void set_enabled(java.lang.Boolean _enabled) {
-        this._enabled = _enabled;
+    public void setEnabled(java.lang.Boolean _enabled) {
+        this.enabled = _enabled;
     }
 
     /**
      * Return the value of the _DELETED column.
      * @return java.lang.Boolean
      */
-    public java.lang.Boolean is_deleted() {
-        return _deleted;
+    public java.lang.Boolean isDeleted() {
+        return deleted;
     }
 
     /**
      * Set the value of the _DELETED column.
      * @param _deleted the _deleted to set
      */
-    public void set_deleted(java.lang.Boolean _deleted) {
-        this._deleted = _deleted;
+    public void setDeleted(java.lang.Boolean _deleted) {
+        this.deleted = _deleted;
     }
 }

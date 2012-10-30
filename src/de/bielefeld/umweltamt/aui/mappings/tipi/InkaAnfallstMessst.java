@@ -26,9 +26,9 @@ package de.bielefeld.umweltamt.aui.mappings.tipi;
 import java.util.Calendar;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 import de.nrw.lds.tipi.general.HistoryObject;
 
 /**

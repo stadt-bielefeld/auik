@@ -19,8 +19,8 @@
         <property name="betrag" column="betrag" type="java.lang.Float" />
         <property name="abschnitt" column="abschnitt" type="java.lang.String" />
         <property name="kassenzeichen" column="kassenzeichen" type="java.lang.String" />
-        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
 
     </class>
 

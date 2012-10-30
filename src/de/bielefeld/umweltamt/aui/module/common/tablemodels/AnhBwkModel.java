@@ -45,7 +45,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.Date;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -70,73 +70,43 @@ public class AnhBwkModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        ViewBwk fd = (ViewBwk) objectAtRow;
-        Object tmp;
-        String anrede;
-        String hausnr;
-        String hausnrzus;
-
-        if (fd.getBetranrede() != null) {
-            anrede = fd.getBetranrede() + " ";
-        } else {
-            anrede = "";
-        }
-
-        if (fd.getHausnr() != null) {
-            hausnr = fd.getHausnr().toString();
-        } else {
-            hausnr = "";
-        }
-
-        if (fd.getHausnrzus() != null) {
-            hausnrzus = fd.getHausnrzus();
-        } else {
-            hausnrzus = "";
-        }
+        AnhBwkFachdaten fachdaten = (AnhBwkFachdaten) objectAtRow;
+        Object result = null;
 
         switch (columnIndex) {
             case 0:
-                tmp = anrede + fd.getBetrname();
+                String anrede = fachdaten.getBasisObjekt().getBasisBetreiber()
+                    .getBetranrede();
+                result = (anrede != null? anrede + " " : "")
+                    + fachdaten.getBasisObjekt().getBasisBetreiber()
+                        .getBetrname();
                 break;
             case 1:
-                tmp = fd.getStrasse() + " " + hausnr + hausnrzus;
+                result = fachdaten.getBasisObjekt().getBasisStandort()
+                    .toString();
                 break;
-            case 2:
-                tmp = fd.getKHersteller();
-                break;
-            case 3:
-                tmp = fd.getKBrennmittel();
-                break;
-            case 4:
-                tmp = fd.getKLeistung();
-                break;
-            case 5:
-                tmp = fd.getErfassung();
-                break;
-            case 6:
-                tmp = fd.getAnschreiben();
-                break;
-            case 7:
-                tmp = fd.getDatumG();
-                break;
+            case 2: result = fachdaten.getKHersteller();  break;
+            case 3: result = fachdaten.getKBrennmittel(); break;
+            case 4: result = fachdaten.getKLeistung();    break;
+            case 5: result = fachdaten.getErfassung();    break;
+            case 6: result = fachdaten.getAnschreiben();  break;
+            case 7: result = fachdaten.getDatumG();       break;
             case 8:
-                tmp = fd.getBasisObjekt().getBeschreibung();
+                result = fachdaten.getBasisObjekt().getBeschreibung();
                 break;
-
-            default:
-                tmp = "ERROR";
-                break;
+            default: result = "ERROR";                    break;
         }
+
         /* Do not try to paint a strike throw a date field... */
         if (columnIndex == 6 || columnIndex == 7) {
-            return tmp;
+            return result;
         }
-        if (fd.getBasisObjekt().getInaktiv()) {
-            if (tmp != null) {
-                tmp = StringUtils.setStrike(tmp.toString());
+        if (fachdaten.getBasisObjekt().getInaktiv()) {
+            if (result != null) {
+                result = StringUtils.setStrike(result.toString());
             }
         }
-        return tmp;
+        return result;
     }
 
     @Override

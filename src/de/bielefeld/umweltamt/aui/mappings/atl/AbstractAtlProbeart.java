@@ -23,11 +23,14 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
+
 /**
  * A class that represents a row in the ATL_PROBEART table. You can customize
  * the behavior of this class by editing the class, {@link AtlProbeart}.
  */
-public abstract class AbstractAtlProbeart implements Serializable {
+public abstract class AbstractAtlProbeart extends
+StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = 1728274429317812721L;
 
     /**

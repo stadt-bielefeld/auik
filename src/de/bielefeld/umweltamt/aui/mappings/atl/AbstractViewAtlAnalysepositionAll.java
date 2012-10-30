@@ -25,7 +25,7 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.util.Date;
 
-import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTable;
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 
 /**
  * A class that represents a row in a database table. You can customize the
@@ -33,7 +33,7 @@ import de.bielefeld.umweltamt.aui.mappings.AbstractVirtuallyDeletableDatabaseTab
  * {@link ViewAtlAnalysepositionAll}.
  */
 public abstract class AbstractViewAtlAnalysepositionAll  extends
-    AbstractVirtuallyDeletableDatabaseTable implements
+    StupidHelperClassWhichWillBeGoneSoon implements
     java.io.Serializable {
 
     private static final long serialVersionUID = 629268595438966426L;

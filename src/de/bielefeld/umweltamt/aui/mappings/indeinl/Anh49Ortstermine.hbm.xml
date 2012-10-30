@@ -15,8 +15,8 @@
         <property name="datum" column="datum" type="java.util.Date" />
         <property name="sachbearbeiterIn" column="sachbearbeiter_in" type="java.lang.String" />
         <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
-        <property name="_enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="_deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
+        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
 
         <many-to-one name="anh49Fachdaten" column="anh49id" class="Anh49Fachdaten" />
 

@@ -58,7 +58,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
 import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
@@ -75,7 +74,6 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWgk;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
-import de.bielefeld.umweltamt.aui.utils.DatabaseAccess;
 
 /**
  * This is a service class for the toString method of the database classes.<br>
@@ -248,7 +246,7 @@ public class DatabaseClassToString {
             + (clazz.getZeitDerEntnahmen() != null ?
                 " " + clazz.getZeitDerEntnahmen() : "")
             + ", "
-            + (new DatabaseAccess().isInitialized(
+            + (DatabaseAccess.isInitialized(
                 clazz.getAtlAnalysepositionen()) ?
                     clazz.getAtlAnalysepositionen().size() : "N/A")
             + "]";
@@ -395,15 +393,6 @@ public class DatabaseClassToString {
      */
     public static String toStringForClass(IndeinlGenehmigung clazz) {
         return "[Genehmigung Verfahren:" + clazz.getObjektid() + "]";
-    }
-
-    /**
-     * @return Custom ViewBwk.toString()
-     * Liefert einen String der Form "[BWK:ID, Hersteller Typ]"
-     */
-    public static String toStringForClass(ViewBwk clazz) {
-        return "[BWK:" + clazz.getBwkId() + ", "
-            + clazz.getKHersteller() + " " + clazz.getKTyp() + "]";
     }
 
     /* ********************************************************************** */

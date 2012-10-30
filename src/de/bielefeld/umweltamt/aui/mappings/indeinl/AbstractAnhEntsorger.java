@@ -23,12 +23,15 @@ package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
 
+import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
+
 /**
  * A class that represents a row in the ANH_50_ENTSORGER table. You can
  * customize the behavior of this class by editing the class,
  * {@link AnhEntsorger}.
  */
-public abstract class AbstractAnhEntsorger implements Serializable {
+public abstract class AbstractAnhEntsorger extends
+StupidHelperClassWhichWillBeGoneSoon implements Serializable {
     private static final long serialVersionUID = 3361173097408989463L;
 
     /**

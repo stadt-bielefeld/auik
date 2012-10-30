@@ -56,6 +56,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
@@ -64,7 +65,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
 
 public class AuswertungTest extends TestCase {
 
@@ -254,7 +254,7 @@ public class AuswertungTest extends TestCase {
         Session session = null;
         session = _sessionFactory.openSession();
 
-        List<?> list = ViewBwk.findByErfassungsjahr(2010);
+        List<?> list = DatabaseQuery.getBwkByYear(2010);
 
         List<?> listquery;
         String query = "from ViewBwk as bwk "

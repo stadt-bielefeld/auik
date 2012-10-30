@@ -22,8 +22,6 @@
 		package="de.bielefeld.umweltamt.aui.mappings.generated.indeinl" />
 	<table-filter match-schema="auik" match-name="anh_.*"
 		package="de.bielefeld.umweltamt.aui.mappings.generated.indeinl" />
-	<table-filter match-schema="auik" match-name="view_bwk"
-		package="de.bielefeld.umweltamt.aui.mappings.generated.indeinl" />
 		
 	<table-filter match-schema="auik" match-name="vaws_.*"
 		package="de.bielefeld.umweltamt.aui.mappings.generated.vaws" />
@@ -167,11 +165,6 @@
 	<table schema="auik" name="view_atl_analyseposition_all">
 		<primary-key>
             <key-column name="id" />
-		</primary-key>
-	</table>
-	<table schema="auik" name="view_bwk">
-		<primary-key>
-            <key-column name="objektid" />
 		</primary-key>
 	</table>
 

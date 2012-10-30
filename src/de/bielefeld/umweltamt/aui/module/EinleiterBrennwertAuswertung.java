@@ -58,7 +58,7 @@ import javax.swing.JTable;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.AnhBwkModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -106,7 +106,7 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
 
             // Die jahrBox mit "Alle", allen existierenden Werten
             // und "keine Angabe" füllen
-            Integer[] iJahre = ViewBwk.getErfassungsjahre();
+            Integer[] iJahre = DatabaseQuery.getBwkErfassungsjahre();
             String[] jahrBoxValues = new String[iJahre.length+1];
             jahrBoxValues[0] = "Alle";
             for (int i = 0; i < iJahre.length; i++) {
@@ -144,7 +144,8 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((AnhBwkModel)getTableModel()).setList(ViewBwk.findByErfassungsjahr(fJahr));
+                            ((AnhBwkModel)getTableModel()).setList(
+                                DatabaseQuery.getBwkByYear(fJahr));
                         }
 
                         @Override

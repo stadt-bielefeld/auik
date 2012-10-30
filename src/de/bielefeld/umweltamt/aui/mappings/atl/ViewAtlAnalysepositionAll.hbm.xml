@@ -32,10 +32,10 @@
         <property name="probenahmeId" type="java.lang.Integer">
             <column name="probenahme_id" />
         </property>
-        <property name="_enabled" type="java.lang.Boolean">
+        <property name="enabled" type="java.lang.Boolean">
             <column name="_enabled" />
         </property>
-        <property name="_deleted" type="java.lang.Boolean">
+        <property name="deleted" type="java.lang.Boolean">
             <column name="_deleted" />
         </property>
         <property name="datumDerEntnahme" type="timestamp">
