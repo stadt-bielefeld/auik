@@ -136,6 +136,7 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -634,7 +635,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
     @Override
     public JPanel getPanel() {
         if (this.panel == null) {
-            this.einheiten = AtlEinheiten.getEinheiten();
+            this.einheiten = DatabaseQuery.getEinheiten();
 
             String spaltenTeil = "pref, 5dlu, pref:g";
             String zeileLuecke = "pref, 3dlu";

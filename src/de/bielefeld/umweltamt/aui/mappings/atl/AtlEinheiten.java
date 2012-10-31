@@ -81,24 +81,12 @@ public class AtlEinheiten extends AbstractAtlEinheiten implements Serializable {
     /* Add customized code below */
 
     /**
-     * Liefert alle in der Einheiten-Tabelle gespeicherten Einheiten.
-     * @return Ein Array mit allen Einheiten
-     */
-    public static AtlEinheiten[] getEinheiten() {
-        return (AtlEinheiten[]) new DatabaseAccess()
-            .createQuery(
-                "FROM AtlEinheiten as einheit " +
-                "ORDER BY einheit.bezeichnung")
-            .array(new AtlEinheiten[0]);
-    }
-
-    /**
      * Liefert eine bestimmte Einheit.
      * @param id Die ID der Einheit
      * @return Die Einheit mit der gegebenen ID oder <code>null</code> falls
      *         diese nicht existiert
      */
-    public static AtlEinheiten getEinheit(Integer id) {
+    public static AtlEinheiten findById(Integer id) {
         AtlEinheiten einheit = null;
 
         einheit = (AtlEinheiten) new DatabaseAccess()

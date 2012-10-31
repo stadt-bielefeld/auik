@@ -123,6 +123,7 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -246,7 +247,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     setList(new ArrayList<Object>());
                     for (AtlParameter param : params) {
                         addParameter(param,
-                            AtlEinheiten.getEinheit(
+                            AtlEinheiten.findById(
                                 param.getWirdgemessenineinheit()),
                             analyse_von);
                     }
@@ -260,7 +261,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     setList(new ArrayList<Object>());
                     for (AtlParameter param : params) {
                         addParameter(param,
-                            AtlEinheiten.getEinheit(
+                            AtlEinheiten.findById(
                                 param.getWirdgemessenineinheit()),
                             analyse_von);
                     }
@@ -441,7 +442,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
             tmp.setAtlParameter((AtlParameter) ProbenEditor.this.parameterBox
                 .getSelectedItem());
-            tmp.setAtlEinheiten(AtlEinheiten.getEinheit(tmp.getAtlParameter()
+            tmp.setAtlEinheiten(AtlEinheiten.findById(tmp.getAtlParameter()
                 .getWirdgemessenineinheit()));
             // tmp.setAnalyseVon("");
             return tmp;
@@ -463,7 +464,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             pos.setAtlProbenahmen(this.probe);
             pos.setAtlParameter(parameter);
-            pos.setAtlEinheiten(AtlEinheiten.getEinheit(parameter
+            pos.setAtlEinheiten(AtlEinheiten.findById(parameter
                 .getWirdgemessenineinheit()));
 
 //            getList().add(pos);
@@ -1250,9 +1251,10 @@ public class ProbenEditor extends AbstractApplyEditor {
             .getColumn(3);
         einheitenColumn.setPreferredWidth(100);
 
-        AtlEinheiten[] einheiten = AtlEinheiten.getEinheiten();
+//        AtlEinheiten[] einheiten = AtlEinheiten.getEinheiten();
 
-        this.einheitenBox = new JComboBox(einheiten);
+//        this.einheitenBox = new JComboBox(einheiten);
+        this.einheitenBox = new JComboBox(DatabaseQuery.getEinheiten());
         this.einheitenBox.setEditable(false);
         this.einheitenBox.addFocusListener(new FocusAdapter() {
             @Override

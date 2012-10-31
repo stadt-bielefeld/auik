@@ -84,7 +84,7 @@ public class AnalyseProcessor {
         }
 
         AtlParameter parameter = AtlParameter.getParameter(ordnungsbegriff);
-        AtlEinheiten einheit   = AtlEinheiten.getEinheit(id);
+        AtlEinheiten einheit   = AtlEinheiten.findById(id);
         AtlAnalyseposition pos = probe.findAtlAnalyseposition(
             parameter, einheit);
 
@@ -142,7 +142,7 @@ public class AnalyseProcessor {
 
         int               id   = Integer.parseInt(einheit);
         AtlParameter       p   = AtlParameter.getParameter(param);
-        AtlEinheiten       e   = AtlEinheiten.getEinheit(id);
+        AtlEinheiten       e   = AtlEinheiten.findById(id);
 
         if (p == null || e == null) {
             return -1;

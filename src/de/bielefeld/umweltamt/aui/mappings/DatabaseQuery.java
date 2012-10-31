@@ -69,21 +69,37 @@ public class DatabaseQuery {
      *         all <code>T</code>
      */
     public static <T> List<T> getAll(T type) {
-        log.debug("Getting all " + type.getClass().getName() +  " instances");
+        log.debug("Getting all " + type.getClass().getSimpleName()
+            +  " instances");
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(type.getClass()), type);
     }
 
     /**
-     * Get an ordered list of all <code>T</code>
+     * Get an ordered list of all <code>T</code> ordered by the id
      * @return <code>List&lt;T&gt;</code>
      *         all <code>T</code>
      */
     public static <T> List<T> getOrderedAll(T type) {
-        log.debug("Getting all " + type.getClass().getName() +  " instances");
+        log.debug("Getting all " + type.getClass().getSimpleName()
+            +  " instances");
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(type.getClass())
                 .addOrder(new DatabaseAccess().getIdOrder(type.getClass())),
+            type);
+    }
+
+    /**
+     * Get an ordered list of all <code>T</code> ordered by a given property
+     * @return <code>List&lt;T&gt;</code>
+     *         all <code>T</code>
+     */
+    public static <T> List<T> getOrderedAll(T type, String propertyName) {
+        log.debug("Getting all " + type.getClass().getSimpleName()
+            +  " instances");
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(type.getClass())
+                .addOrder(Order.asc(propertyName)),
             type);
     }
 
@@ -244,6 +260,15 @@ public class DatabaseQuery {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package ATL : class AtlEinheiten                           */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Liefert alle in der Einheiten-Tabelle gespeicherten Einheiten.
+     * @return Ein Array mit allen Einheiten
+     */
+    public static AtlEinheiten[] getEinheiten() {
+        return DatabaseQuery.getOrderedAll(new AtlEinheiten(), "bezeichnung")
+            .toArray(new AtlEinheiten[0]);
+    }
 
     /**
      * Get an unit by its description

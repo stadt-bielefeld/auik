@@ -44,9 +44,9 @@ public class DatabaseConstants {
 
     /* AtlEinheiten */
     public static final AtlEinheiten ATL_EINHEIT_MG_L =
-        AtlEinheiten.getEinheit(42);
+        AtlEinheiten.findById(42);
     public static final AtlEinheiten ATL_EINHEIT_MG_KG =
-        AtlEinheiten.getEinheit(43);
+        AtlEinheiten.findById(43);
 
     /* AtlParameter */
     public static final AtlParameter ATL_PARAMETER_BLEI =
