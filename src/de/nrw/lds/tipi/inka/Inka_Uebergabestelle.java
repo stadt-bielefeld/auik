@@ -20,7 +20,7 @@ public class Inka_Uebergabestelle  extends de.nrw.lds.tipi.general.HistoryObject
 
     private java.lang.Integer genehmigung_ver;
 
-    private java.lang.Integer hochwert;
+    private java.lang.Integer n32;
 
     private java.lang.Integer kanal_art;
 
@@ -30,7 +30,7 @@ public class Inka_Uebergabestelle  extends de.nrw.lds.tipi.general.HistoryObject
 
     private java.lang.Integer klaeranlage_ver;
 
-    private java.lang.Integer rechtswert;
+    private java.lang.Integer e32;
 
     private java.lang.Integer tk25_ver;
 
@@ -53,12 +53,12 @@ public class Inka_Uebergabestelle  extends de.nrw.lds.tipi.general.HistoryObject
            java.lang.String gemeindekennzahl,
            java.lang.Integer genehmigung_nr,
            java.lang.Integer genehmigung_ver,
-           java.lang.Integer hochwert,
+           java.lang.Integer n32,
            java.lang.Integer kanal_art,
            java.lang.Integer kartennummer,
            java.lang.Integer klaeranlage_nr,
            java.lang.Integer klaeranlage_ver,
-           java.lang.Integer rechtswert,
+           java.lang.Integer e32,
            java.lang.Integer tk25_ver,
            java.lang.Integer uebergabestelle_lfd_nr,
            java.lang.Integer uebergabestelle_ver) {
@@ -74,12 +74,12 @@ public class Inka_Uebergabestelle  extends de.nrw.lds.tipi.general.HistoryObject
         this.gemeindekennzahl = gemeindekennzahl;
         this.genehmigung_nr = genehmigung_nr;
         this.genehmigung_ver = genehmigung_ver;
-        this.hochwert = hochwert;
+        this.n32 = n32;
         this.kanal_art = kanal_art;
         this.kartennummer = kartennummer;
         this.klaeranlage_nr = klaeranlage_nr;
         this.klaeranlage_ver = klaeranlage_ver;
-        this.rechtswert = rechtswert;
+        this.e32 = e32;
         this.tk25_ver = tk25_ver;
         this.uebergabestelle_lfd_nr = uebergabestelle_lfd_nr;
         this.uebergabestelle_ver = uebergabestelle_ver;
@@ -207,22 +207,22 @@ public class Inka_Uebergabestelle  extends de.nrw.lds.tipi.general.HistoryObject
 
 
     /**
-     * Gets the hochwert value for this Inka_Uebergabestelle.
+     * Gets the n32 value for this Inka_Uebergabestelle.
      * 
-     * @return hochwert
+     * @return n32
      */
-    public java.lang.Integer getHochwert() {
-        return hochwert;
+    public java.lang.Integer getN32() {
+        return n32;
     }
 
 
     /**
-     * Sets the hochwert value for this Inka_Uebergabestelle.
+     * Sets the n32 value for this Inka_Uebergabestelle.
      * 
      * @param hochwert
      */
-    public void setHochwert(java.lang.Integer hochwert) {
-        this.hochwert = hochwert;
+    public void setN32(java.lang.Integer n32) {
+        this.n32 = n32;
     }
 
 
@@ -307,22 +307,22 @@ public class Inka_Uebergabestelle  extends de.nrw.lds.tipi.general.HistoryObject
 
 
     /**
-     * Gets the rechtswert value for this Inka_Uebergabestelle.
+     * Gets the e32 value for this Inka_Uebergabestelle.
      * 
-     * @return rechtswert
+     * @return e32
      */
-    public java.lang.Integer getRechtswert() {
-        return rechtswert;
+    public java.lang.Integer getE32() {
+        return e32;
     }
 
 
     /**
-     * Sets the rechtswert value for this Inka_Uebergabestelle.
+     * Sets the e32 value for this Inka_Uebergabestelle.
      * 
-     * @param rechtswert
+     * @param e32
      */
-    public void setRechtswert(java.lang.Integer rechtswert) {
-        this.rechtswert = rechtswert;
+    public void setE32(java.lang.Integer e32) {
+        this.e32 = e32;
     }
 
 
@@ -415,9 +415,9 @@ public class Inka_Uebergabestelle  extends de.nrw.lds.tipi.general.HistoryObject
             ((this.genehmigung_ver==null && other.getGenehmigung_ver()==null) || 
              (this.genehmigung_ver!=null &&
               this.genehmigung_ver.equals(other.getGenehmigung_ver()))) &&
-            ((this.hochwert==null && other.getHochwert()==null) || 
-             (this.hochwert!=null &&
-              this.hochwert.equals(other.getHochwert()))) &&
+            ((this.n32==null && other.getN32()==null) || 
+             (this.n32!=null &&
+              this.n32.equals(other.getN32()))) &&
             ((this.kanal_art==null && other.getKanal_art()==null) || 
              (this.kanal_art!=null &&
               this.kanal_art.equals(other.getKanal_art()))) &&
@@ -430,9 +430,9 @@ public class Inka_Uebergabestelle  extends de.nrw.lds.tipi.general.HistoryObject
             ((this.klaeranlage_ver==null && other.getKlaeranlage_ver()==null) || 
              (this.klaeranlage_ver!=null &&
               this.klaeranlage_ver.equals(other.getKlaeranlage_ver()))) &&
-            ((this.rechtswert==null && other.getRechtswert()==null) || 
-             (this.rechtswert!=null &&
-              this.rechtswert.equals(other.getRechtswert()))) &&
+            ((this.e32==null && other.getE32()==null) || 
+             (this.e32!=null &&
+              this.e32.equals(other.getE32()))) &&
             ((this.tk25_ver==null && other.getTk25_ver()==null) || 
              (this.tk25_ver!=null &&
               this.tk25_ver.equals(other.getTk25_ver()))) &&
@@ -471,8 +471,8 @@ public class Inka_Uebergabestelle  extends de.nrw.lds.tipi.general.HistoryObject
         if (getGenehmigung_ver() != null) {
             _hashCode += getGenehmigung_ver().hashCode();
         }
-        if (getHochwert() != null) {
-            _hashCode += getHochwert().hashCode();
+        if (getN32() != null) {
+            _hashCode += getN32().hashCode();
         }
         if (getKanal_art() != null) {
             _hashCode += getKanal_art().hashCode();
@@ -486,8 +486,8 @@ public class Inka_Uebergabestelle  extends de.nrw.lds.tipi.general.HistoryObject
         if (getKlaeranlage_ver() != null) {
             _hashCode += getKlaeranlage_ver().hashCode();
         }
-        if (getRechtswert() != null) {
-            _hashCode += getRechtswert().hashCode();
+        if (getE32() != null) {
+            _hashCode += getE32().hashCode();
         }
         if (getTk25_ver() != null) {
             _hashCode += getTk25_ver().hashCode();

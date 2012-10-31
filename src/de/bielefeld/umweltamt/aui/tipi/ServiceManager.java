@@ -307,8 +307,7 @@ public final class ServiceManager {
             ((ReqInka_Betriebseinrichtung) request)
                 .setObjInka_Betriebseinrichtung(
                     (Inka_Betriebseinrichtung) record);
-            iip.setInka_Betriebseinrichtung(
-                (ReqInka_Betriebseinrichtung) request);
+            iip.setInka_Betriebseinrichtung((ReqInka_Betriebseinrichtung) request);
             return;
         }
         if (record instanceof Inka_Uebergabestelle) {

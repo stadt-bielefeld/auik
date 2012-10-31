@@ -20,13 +20,13 @@ public class Dea_Klaeranlage  extends de.nrw.lds.tipi.general.HistoryObject  imp
 
     private java.lang.String gemeindekennzahl;
 
-    private java.lang.Integer hochwert;
+    private java.lang.Integer e32;
 
     private java.lang.Integer klaeranlage_nr;
 
     private java.lang.Integer klaeranlage_ver;
 
-    private java.lang.Integer rechtswert;
+    private java.lang.Integer n32;
 
     private java.util.Calendar stilllegungs_datum;
 
@@ -55,10 +55,10 @@ public class Dea_Klaeranlage  extends de.nrw.lds.tipi.general.HistoryObject  imp
            java.lang.Integer behoerden_ver,
            java.lang.Integer gemeinde_ver,
            java.lang.String gemeindekennzahl,
-           java.lang.Integer hochwert,
+           java.lang.Integer n32,
            java.lang.Integer klaeranlage_nr,
            java.lang.Integer klaeranlage_ver,
-           java.lang.Integer rechtswert,
+           java.lang.Integer e32,
            java.util.Calendar stilllegungs_datum,
            java.lang.Integer stua_bezirk,
            java.lang.Integer stua_ver,
@@ -77,10 +77,10 @@ public class Dea_Klaeranlage  extends de.nrw.lds.tipi.general.HistoryObject  imp
         this.behoerden_ver = behoerden_ver;
         this.gemeinde_ver = gemeinde_ver;
         this.gemeindekennzahl = gemeindekennzahl;
-        this.hochwert = hochwert;
+        this.e32 = e32;
         this.klaeranlage_nr = klaeranlage_nr;
         this.klaeranlage_ver = klaeranlage_ver;
-        this.rechtswert = rechtswert;
+        this.n32 = n32;
         this.stilllegungs_datum = stilllegungs_datum;
         this.stua_bezirk = stua_bezirk;
         this.stua_ver = stua_ver;
@@ -211,22 +211,22 @@ public class Dea_Klaeranlage  extends de.nrw.lds.tipi.general.HistoryObject  imp
 
 
     /**
-     * Gets the hochwert value for this Dea_Klaeranlage.
+     * Gets the e32 value for this Dea_Klaeranlage.
      * 
-     * @return hochwert
+     * @return e32
      */
-    public java.lang.Integer getHochwert() {
-        return hochwert;
+    public java.lang.Integer getE32() {
+        return e32;
     }
 
 
     /**
-     * Sets the hochwert value for this Dea_Klaeranlage.
+     * Sets the e32 value for this Dea_Klaeranlage.
      * 
      * @param hochwert
      */
-    public void setHochwert(java.lang.Integer hochwert) {
-        this.hochwert = hochwert;
+    public void setE32(java.lang.Integer e32) {
+        this.e32 = e32;
     }
 
 
@@ -271,12 +271,12 @@ public class Dea_Klaeranlage  extends de.nrw.lds.tipi.general.HistoryObject  imp
 
 
     /**
-     * Gets the rechtswert value for this Dea_Klaeranlage.
+     * Gets the n32 value for this Dea_Klaeranlage.
      * 
-     * @return rechtswert
+     * @return n32
      */
-    public java.lang.Integer getRechtswert() {
-        return rechtswert;
+    public java.lang.Integer getN32() {
+        return n32;
     }
 
 
@@ -285,8 +285,8 @@ public class Dea_Klaeranlage  extends de.nrw.lds.tipi.general.HistoryObject  imp
      * 
      * @param rechtswert
      */
-    public void setRechtswert(java.lang.Integer rechtswert) {
-        this.rechtswert = rechtswert;
+    public void setN32(java.lang.Integer n32) {
+        this.n32 = n32;
     }
 
 
@@ -439,18 +439,18 @@ public class Dea_Klaeranlage  extends de.nrw.lds.tipi.general.HistoryObject  imp
             ((this.gemeindekennzahl==null && other.getGemeindekennzahl()==null) || 
              (this.gemeindekennzahl!=null &&
               this.gemeindekennzahl.equals(other.getGemeindekennzahl()))) &&
-            ((this.hochwert==null && other.getHochwert()==null) || 
-             (this.hochwert!=null &&
-              this.hochwert.equals(other.getHochwert()))) &&
+            ((this.e32==null && other.getE32()==null) || 
+             (this.e32!=null &&
+              this.e32.equals(other.getE32()))) &&
             ((this.klaeranlage_nr==null && other.getKlaeranlage_nr()==null) || 
              (this.klaeranlage_nr!=null &&
               this.klaeranlage_nr.equals(other.getKlaeranlage_nr()))) &&
             ((this.klaeranlage_ver==null && other.getKlaeranlage_ver()==null) || 
              (this.klaeranlage_ver!=null &&
               this.klaeranlage_ver.equals(other.getKlaeranlage_ver()))) &&
-            ((this.rechtswert==null && other.getRechtswert()==null) || 
-             (this.rechtswert!=null &&
-              this.rechtswert.equals(other.getRechtswert()))) &&
+            ((this.n32==null && other.getN32()==null) || 
+             (this.n32!=null &&
+              this.n32.equals(other.getN32()))) &&
             ((this.stilllegungs_datum==null && other.getStilllegungs_datum()==null) || 
              (this.stilllegungs_datum!=null &&
               this.stilllegungs_datum.equals(other.getStilllegungs_datum()))) &&
@@ -498,8 +498,8 @@ public class Dea_Klaeranlage  extends de.nrw.lds.tipi.general.HistoryObject  imp
         if (getGemeindekennzahl() != null) {
             _hashCode += getGemeindekennzahl().hashCode();
         }
-        if (getHochwert() != null) {
-            _hashCode += getHochwert().hashCode();
+        if (getE32() != null) {
+            _hashCode += getE32().hashCode();
         }
         if (getKlaeranlage_nr() != null) {
             _hashCode += getKlaeranlage_nr().hashCode();
@@ -507,8 +507,8 @@ public class Dea_Klaeranlage  extends de.nrw.lds.tipi.general.HistoryObject  imp
         if (getKlaeranlage_ver() != null) {
             _hashCode += getKlaeranlage_ver().hashCode();
         }
-        if (getRechtswert() != null) {
-            _hashCode += getRechtswert().hashCode();
+        if (getN32() != null) {
+            _hashCode += getN32().hashCode();
         }
         if (getStilllegungs_datum() != null) {
             _hashCode += getStilllegungs_datum().hashCode();

@@ -14,21 +14,13 @@ public class Dea_Gemeinde  extends de.nrw.lds.tipi.general.HistoryObject  implem
 
     private java.lang.String gemeindename;
 
-    private java.lang.Integer gkz_max_hoch_2;
+    private java.lang.Integer e32_max;
 
-    private java.lang.Integer gkz_max_hoch_3;
+    private java.lang.Integer e32_min;
 
-    private java.lang.Integer gkz_max_rechts_2;
+    private java.lang.Integer n32_max;
 
-    private java.lang.Integer gkz_max_rechts_3;
-
-    private java.lang.Integer gkz_min_hoch_2;
-
-    private java.lang.Integer gkz_min_hoch_3;
-
-    private java.lang.Integer gkz_min_rechts_2;
-
-    private java.lang.Integer gkz_min_rechts_3;
+    private java.lang.Integer n32_min;
 
     private java.lang.Integer stua_bezirk;
 
@@ -46,14 +38,10 @@ public class Dea_Gemeinde  extends de.nrw.lds.tipi.general.HistoryObject  implem
            java.lang.Integer gemeinde_ver,
            java.lang.String gemeindekennzahl,
            java.lang.String gemeindename,
-           java.lang.Integer gkz_max_hoch_2,
-           java.lang.Integer gkz_max_hoch_3,
-           java.lang.Integer gkz_max_rechts_2,
-           java.lang.Integer gkz_max_rechts_3,
-           java.lang.Integer gkz_min_hoch_2,
-           java.lang.Integer gkz_min_hoch_3,
-           java.lang.Integer gkz_min_rechts_2,
-           java.lang.Integer gkz_min_rechts_3,
+           java.lang.Integer e32_max,
+           java.lang.Integer e32_min,
+           java.lang.Integer n32_max,
+           java.lang.Integer n32_min,
            java.lang.Integer stua_bezirk,
            java.lang.Integer stua_ver) {
         super(
@@ -65,14 +53,10 @@ public class Dea_Gemeinde  extends de.nrw.lds.tipi.general.HistoryObject  implem
         this.gemeinde_ver = gemeinde_ver;
         this.gemeindekennzahl = gemeindekennzahl;
         this.gemeindename = gemeindename;
-        this.gkz_max_hoch_2 = gkz_max_hoch_2;
-        this.gkz_max_hoch_3 = gkz_max_hoch_3;
-        this.gkz_max_rechts_2 = gkz_max_rechts_2;
-        this.gkz_max_rechts_3 = gkz_max_rechts_3;
-        this.gkz_min_hoch_2 = gkz_min_hoch_2;
-        this.gkz_min_hoch_3 = gkz_min_hoch_3;
-        this.gkz_min_rechts_2 = gkz_min_rechts_2;
-        this.gkz_min_rechts_3 = gkz_min_rechts_3;
+        this.e32_max = e32_max;
+        this.e32_min = e32_min;
+        this.n32_max = n32_max;
+        this.n32_min = n32_min;
         this.stua_bezirk = stua_bezirk;
         this.stua_ver = stua_ver;
     }
@@ -139,162 +123,82 @@ public class Dea_Gemeinde  extends de.nrw.lds.tipi.general.HistoryObject  implem
 
 
     /**
-     * Gets the gkz_max_hoch_2 value for this Dea_Gemeinde.
+     * Gets the e32_max value for this Dea_Gemeinde.
      * 
-     * @return gkz_max_hoch_2
+     * @return e32_max
      */
-    public java.lang.Integer getGkz_max_hoch_2() {
-        return gkz_max_hoch_2;
+    public java.lang.Integer getE32_max() {
+        return e32_max;
     }
 
 
     /**
-     * Sets the gkz_max_hoch_2 value for this Dea_Gemeinde.
+     * Sets the e32_max value for this Dea_Gemeinde.
      * 
-     * @param gkz_max_hoch_2
+     * @param e32_max
      */
-    public void setGkz_max_hoch_2(java.lang.Integer gkz_max_hoch_2) {
-        this.gkz_max_hoch_2 = gkz_max_hoch_2;
+    public void setE32_max(java.lang.Integer gkz_max_hoch_3) {
+        this.e32_max = e32_max;
     }
 
 
     /**
-     * Gets the gkz_max_hoch_3 value for this Dea_Gemeinde.
+     * Gets the e32_min value for this Dea_Gemeinde.
      * 
-     * @return gkz_max_hoch_3
+     * @return e32_min
      */
-    public java.lang.Integer getGkz_max_hoch_3() {
-        return gkz_max_hoch_3;
+    public java.lang.Integer getE32_min() {
+        return e32_min;
     }
 
 
     /**
-     * Sets the gkz_max_hoch_3 value for this Dea_Gemeinde.
+     * Sets the e32_min value for this Dea_Gemeinde.
      * 
-     * @param gkz_max_hoch_3
+     * @param e32_min
      */
-    public void setGkz_max_hoch_3(java.lang.Integer gkz_max_hoch_3) {
-        this.gkz_max_hoch_3 = gkz_max_hoch_3;
+    public void setE32_min(java.lang.Integer e32_min) {
+        this.e32_min = e32_min;
     }
 
 
     /**
-     * Gets the gkz_max_rechts_2 value for this Dea_Gemeinde.
+     * Gets the n32_max value for this Dea_Gemeinde.
      * 
-     * @return gkz_max_rechts_2
+     * @return n32_max
      */
-    public java.lang.Integer getGkz_max_rechts_2() {
-        return gkz_max_rechts_2;
+    public java.lang.Integer getN32_max() {
+        return n32_max;
     }
 
 
     /**
-     * Sets the gkz_max_rechts_2 value for this Dea_Gemeinde.
+     * Sets the n32_max value for this Dea_Gemeinde.
      * 
-     * @param gkz_max_rechts_2
+     * @param n32_max
      */
-    public void setGkz_max_rechts_2(java.lang.Integer gkz_max_rechts_2) {
-        this.gkz_max_rechts_2 = gkz_max_rechts_2;
+    public void setN32_max(java.lang.Integer n32_max) {
+        this.n32_max = n32_max;
     }
 
 
     /**
-     * Gets the gkz_max_rechts_3 value for this Dea_Gemeinde.
+     * Gets the n32_min value for this Dea_Gemeinde.
      * 
-     * @return gkz_max_rechts_3
+     * @return n32_min
      */
-    public java.lang.Integer getGkz_max_rechts_3() {
-        return gkz_max_rechts_3;
+    public java.lang.Integer getN32_min() {
+        return n32_min;
     }
 
 
     /**
-     * Sets the gkz_max_rechts_3 value for this Dea_Gemeinde.
+     * Sets the n32_min value for this Dea_Gemeinde.
      * 
-     * @param gkz_max_rechts_3
+     * @param n32_min
      */
-    public void setGkz_max_rechts_3(java.lang.Integer gkz_max_rechts_3) {
-        this.gkz_max_rechts_3 = gkz_max_rechts_3;
-    }
-
-
-    /**
-     * Gets the gkz_min_hoch_2 value for this Dea_Gemeinde.
-     * 
-     * @return gkz_min_hoch_2
-     */
-    public java.lang.Integer getGkz_min_hoch_2() {
-        return gkz_min_hoch_2;
-    }
-
-
-    /**
-     * Sets the gkz_min_hoch_2 value for this Dea_Gemeinde.
-     * 
-     * @param gkz_min_hoch_2
-     */
-    public void setGkz_min_hoch_2(java.lang.Integer gkz_min_hoch_2) {
-        this.gkz_min_hoch_2 = gkz_min_hoch_2;
-    }
-
-
-    /**
-     * Gets the gkz_min_hoch_3 value for this Dea_Gemeinde.
-     * 
-     * @return gkz_min_hoch_3
-     */
-    public java.lang.Integer getGkz_min_hoch_3() {
-        return gkz_min_hoch_3;
-    }
-
-
-    /**
-     * Sets the gkz_min_hoch_3 value for this Dea_Gemeinde.
-     * 
-     * @param gkz_min_hoch_3
-     */
-    public void setGkz_min_hoch_3(java.lang.Integer gkz_min_hoch_3) {
-        this.gkz_min_hoch_3 = gkz_min_hoch_3;
-    }
-
-
-    /**
-     * Gets the gkz_min_rechts_2 value for this Dea_Gemeinde.
-     * 
-     * @return gkz_min_rechts_2
-     */
-    public java.lang.Integer getGkz_min_rechts_2() {
-        return gkz_min_rechts_2;
-    }
-
-
-    /**
-     * Sets the gkz_min_rechts_2 value for this Dea_Gemeinde.
-     * 
-     * @param gkz_min_rechts_2
-     */
-    public void setGkz_min_rechts_2(java.lang.Integer gkz_min_rechts_2) {
-        this.gkz_min_rechts_2 = gkz_min_rechts_2;
-    }
-
-
-    /**
-     * Gets the gkz_min_rechts_3 value for this Dea_Gemeinde.
-     * 
-     * @return gkz_min_rechts_3
-     */
-    public java.lang.Integer getGkz_min_rechts_3() {
-        return gkz_min_rechts_3;
-    }
-
-
-    /**
-     * Sets the gkz_min_rechts_3 value for this Dea_Gemeinde.
-     * 
-     * @param gkz_min_rechts_3
-     */
-    public void setGkz_min_rechts_3(java.lang.Integer gkz_min_rechts_3) {
-        this.gkz_min_rechts_3 = gkz_min_rechts_3;
+    public void setN32_min(java.lang.Integer n32_min) {
+        this.n32_min = n32_min;
     }
 
 
@@ -358,30 +262,18 @@ public class Dea_Gemeinde  extends de.nrw.lds.tipi.general.HistoryObject  implem
             ((this.gemeindename==null && other.getGemeindename()==null) || 
              (this.gemeindename!=null &&
               this.gemeindename.equals(other.getGemeindename()))) &&
-            ((this.gkz_max_hoch_2==null && other.getGkz_max_hoch_2()==null) || 
-             (this.gkz_max_hoch_2!=null &&
-              this.gkz_max_hoch_2.equals(other.getGkz_max_hoch_2()))) &&
-            ((this.gkz_max_hoch_3==null && other.getGkz_max_hoch_3()==null) || 
-             (this.gkz_max_hoch_3!=null &&
-              this.gkz_max_hoch_3.equals(other.getGkz_max_hoch_3()))) &&
-            ((this.gkz_max_rechts_2==null && other.getGkz_max_rechts_2()==null) || 
-             (this.gkz_max_rechts_2!=null &&
-              this.gkz_max_rechts_2.equals(other.getGkz_max_rechts_2()))) &&
-            ((this.gkz_max_rechts_3==null && other.getGkz_max_rechts_3()==null) || 
-             (this.gkz_max_rechts_3!=null &&
-              this.gkz_max_rechts_3.equals(other.getGkz_max_rechts_3()))) &&
-            ((this.gkz_min_hoch_2==null && other.getGkz_min_hoch_2()==null) || 
-             (this.gkz_min_hoch_2!=null &&
-              this.gkz_min_hoch_2.equals(other.getGkz_min_hoch_2()))) &&
-            ((this.gkz_min_hoch_3==null && other.getGkz_min_hoch_3()==null) || 
-             (this.gkz_min_hoch_3!=null &&
-              this.gkz_min_hoch_3.equals(other.getGkz_min_hoch_3()))) &&
-            ((this.gkz_min_rechts_2==null && other.getGkz_min_rechts_2()==null) || 
-             (this.gkz_min_rechts_2!=null &&
-              this.gkz_min_rechts_2.equals(other.getGkz_min_rechts_2()))) &&
-            ((this.gkz_min_rechts_3==null && other.getGkz_min_rechts_3()==null) || 
-             (this.gkz_min_rechts_3!=null &&
-              this.gkz_min_rechts_3.equals(other.getGkz_min_rechts_3()))) &&
+            ((this.e32_max==null && other.getE32_max()==null) || 
+             (this.e32_max!=null &&
+              this.e32_max.equals(other.getE32_max()))) &&
+            ((this.e32_min==null && other.getE32_min()==null) || 
+             (this.e32_min!=null &&
+              this.e32_min.equals(other.getE32_min()))) &&
+            ((this.n32_max==null && other.getN32_max()==null) || 
+             (this.n32_max!=null &&
+              this.n32_max.equals(other.getN32_max()))) &&
+            ((this.n32_min==null && other.getE32_min()==null) || 
+             (this.n32_min!=null &&
+              this.n32_min.equals(other.getE32_min()))) &&
             ((this.stua_bezirk==null && other.getStua_bezirk()==null) || 
              (this.stua_bezirk!=null &&
               this.stua_bezirk.equals(other.getStua_bezirk()))) &&
@@ -408,29 +300,17 @@ public class Dea_Gemeinde  extends de.nrw.lds.tipi.general.HistoryObject  implem
         if (getGemeindename() != null) {
             _hashCode += getGemeindename().hashCode();
         }
-        if (getGkz_max_hoch_2() != null) {
-            _hashCode += getGkz_max_hoch_2().hashCode();
+        if (getE32_max() != null) {
+            _hashCode += getE32_max().hashCode();
         }
-        if (getGkz_max_hoch_3() != null) {
-            _hashCode += getGkz_max_hoch_3().hashCode();
+        if (getE32_min() != null) {
+            _hashCode += getE32_min().hashCode();
         }
-        if (getGkz_max_rechts_2() != null) {
-            _hashCode += getGkz_max_rechts_2().hashCode();
+        if (getN32_max() != null) {
+            _hashCode += getN32_max().hashCode();
         }
-        if (getGkz_max_rechts_3() != null) {
-            _hashCode += getGkz_max_rechts_3().hashCode();
-        }
-        if (getGkz_min_hoch_2() != null) {
-            _hashCode += getGkz_min_hoch_2().hashCode();
-        }
-        if (getGkz_min_hoch_3() != null) {
-            _hashCode += getGkz_min_hoch_3().hashCode();
-        }
-        if (getGkz_min_rechts_2() != null) {
-            _hashCode += getGkz_min_rechts_2().hashCode();
-        }
-        if (getGkz_min_rechts_3() != null) {
-            _hashCode += getGkz_min_rechts_3().hashCode();
+        if (getN32_min() != null) {
+            _hashCode += getN32_min().hashCode();
         }
         if (getStua_bezirk() != null) {
             _hashCode += getStua_bezirk().hashCode();

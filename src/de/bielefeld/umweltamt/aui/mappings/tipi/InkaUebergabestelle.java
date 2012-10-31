@@ -63,8 +63,8 @@ public class InkaUebergabestelle  implements java.io.Serializable {
     private Integer kartennummer;
     private Integer tk25Ver;
     private Integer kanalArt;
-    private Integer rechtswert;
-    private Integer hochwert;
+    private Integer e32;
+	private Integer n32;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -82,7 +82,7 @@ public class InkaUebergabestelle  implements java.io.Serializable {
 
     /** Full constructor */
     public InkaUebergabestelle(
-        Integer uebergabestelleLfdNr, String gemeindekennzahl, Integer gemeindeVer, Integer uebergabestelleVer, Calendar gueltigVon, Calendar gueltigBis, Calendar aenderungsDatum, Calendar erfassungsDatum, Integer historienNr, Boolean istAktuellJn, Integer betriebNr, Integer betriebVer, Integer genehmigungNr, Integer genehmigungVer, Integer anlagenNr, Integer klaeranlagenVer, Integer kartennummer, Integer tk25Ver, Integer kanalArt, Integer rechtswert, Integer hochwert) {
+        Integer uebergabestelleLfdNr, String gemeindekennzahl, Integer gemeindeVer, Integer uebergabestelleVer, Calendar gueltigVon, Calendar gueltigBis, Calendar aenderungsDatum, Calendar erfassungsDatum, Integer historienNr, Boolean istAktuellJn, Integer betriebNr, Integer betriebVer, Integer genehmigungNr, Integer genehmigungVer, Integer anlagenNr, Integer klaeranlagenVer, Integer kartennummer, Integer tk25Ver, Integer kanalArt, Integer e32, Integer n32) {
         this.uebergabestelleLfdNr = uebergabestelleLfdNr;
         this.gemeindekennzahl = gemeindekennzahl;
         this.gemeindeVer = gemeindeVer;
@@ -102,8 +102,8 @@ public class InkaUebergabestelle  implements java.io.Serializable {
         this.kartennummer = kartennummer;
         this.tk25Ver = tk25Ver;
         this.kanalArt = kanalArt;
-        this.rechtswert = rechtswert;
-        this.hochwert = hochwert;
+        this.e32 = e32;
+        this.n32 = n32;
     }
 
     /* Setter and getter methods */
@@ -259,23 +259,23 @@ public class InkaUebergabestelle  implements java.io.Serializable {
         this.kanalArt = kanalArt;
     }
 
-    public Integer getRechtswert() {
-        return this.rechtswert;
-    }
+    public Integer getE32() {
+	    return this.e32;
+	}
 
-    public void setRechtswert(Integer rechtswert) {
-        this.rechtswert = rechtswert;
-    }
+	public void setE32(Integer e32) {
+	    this.e32 = e32;
+	}
 
-    public Integer getHochwert() {
-        return this.hochwert;
-    }
+	public Integer getN32() {
+	    return this.n32;
+	}
 
-    public void setHochwert(Integer hochwert) {
-        this.hochwert = hochwert;
-    }
+	public void setN32(Integer n32) {
+	    this.n32 = n32;
+	}
 
-    /**
+	/**
      * Get a string representation for debugging
      * @return String
      */
@@ -302,8 +302,8 @@ public class InkaUebergabestelle  implements java.io.Serializable {
         buffer.append("kartennummer").append("='").append(getKartennummer()).append("' ");			
         buffer.append("tk25Ver").append("='").append(getTk25Ver()).append("' ");			
         buffer.append("kanalArt").append("='").append(getKanalArt()).append("' ");			
-        buffer.append("rechtswert").append("='").append(getRechtswert()).append("' ");			
-        buffer.append("hochwert").append("='").append(getHochwert()).append("' ");			
+        buffer.append("e32").append("='").append(getE32()).append("' ");			
+        buffer.append("h32").append("='").append(getN32()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();

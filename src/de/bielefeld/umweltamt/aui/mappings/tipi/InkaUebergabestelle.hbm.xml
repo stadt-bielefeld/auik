@@ -61,11 +61,11 @@
         <property name="kanalArt" type="java.lang.Integer">
             <column name="kanal_art" />
         </property>
-        <property name="rechtswert" type="java.lang.Integer">
-            <column name="rechtswert" />
+        <property name="e32" type="java.lang.Integer">
+            <column name="e32" />
         </property>
-        <property name="hochwert" type="java.lang.Integer">
-            <column name="hochwert" />
+        <property name="n32" type="java.lang.Integer">
+            <column name="n32" />
         </property>
     </class>
 </hibernate-mapping>
