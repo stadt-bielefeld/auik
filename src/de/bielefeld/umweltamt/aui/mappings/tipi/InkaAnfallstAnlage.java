@@ -258,7 +258,7 @@ public class InkaAnfallstAnlage  implements java.io.Serializable {
      * @return HistoryObject (the corresponding service type to InkaAnfallstAnlage)
      */
     public HistoryObject toServiceType() {
-        return DatabaseTipi.toServiceTypeForClass(this);
+        return DatabaseQuery.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */

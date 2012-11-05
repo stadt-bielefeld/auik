@@ -23,14 +23,14 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
+import java.util.Calendar;
+import java.util.List;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.nrw.lds.tipi.general.HistoryObject;
-import java.util.Calendar;
-import java.util.List;
 
 /**
  * A class that represents a row in the InkaBetriebseinrichtung database table.<br>
@@ -42,7 +42,7 @@ public class InkaBetriebseinrichtung  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forInkaBetriebseinrichtung;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer betriebseinrichtungNr;
     private Integer betriebseinrichtungVer;
@@ -291,30 +291,30 @@ public class InkaBetriebseinrichtung  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("betriebseinrichtungNr").append("='").append(getBetriebseinrichtungNr()).append("' ");			
-        buffer.append("betriebseinrichtungVer").append("='").append(getBetriebseinrichtungVer()).append("' ");			
-        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
-        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
-        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
-        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
-        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
-        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
-        buffer.append("betriebNr").append("='").append(getBetriebNr()).append("' ");			
-        buffer.append("betriebVer").append("='").append(getBetriebVer()).append("' ");			
-        buffer.append("adresseBetreibNr").append("='").append(getAdresseBetreibNr()).append("' ");			
-        buffer.append("adresseBetreibVer").append("='").append(getAdresseBetreibVer()).append("' ");			
-        buffer.append("adresseAnsprNr").append("='").append(getAdresseAnsprNr()).append("' ");			
-        buffer.append("adresseAnsprVer").append("='").append(getAdresseAnsprVer()).append("' ");			
-        buffer.append("genehmigungNr").append("='").append(getGenehmigungNr()).append("' ");			
-        buffer.append("genehmigungVer").append("='").append(getGenehmigungVer()).append("' ");			
-        buffer.append("arbeitsstaetteSeqNr").append("='").append(getArbeitsstaetteSeqNr()).append("' ");			
-        buffer.append("arbeitsstaetteVer").append("='").append(getArbeitsstaetteVer()).append("' ");			
-        buffer.append("wzCode").append("='").append(getWzCode()).append("' ");			
-        buffer.append("wzCodeVer").append("='").append(getWzCodeVer()).append("' ");			
-        buffer.append("stilllegungJn").append("='").append(getStilllegungJn()).append("' ");			
-        buffer.append("stilllegungDatum").append("='").append(getStilllegungDatum()).append("' ");			
+        buffer.append("betriebseinrichtungNr").append("='").append(getBetriebseinrichtungNr()).append("' ");
+        buffer.append("betriebseinrichtungVer").append("='").append(getBetriebseinrichtungVer()).append("' ");
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");
+        buffer.append("betriebNr").append("='").append(getBetriebNr()).append("' ");
+        buffer.append("betriebVer").append("='").append(getBetriebVer()).append("' ");
+        buffer.append("adresseBetreibNr").append("='").append(getAdresseBetreibNr()).append("' ");
+        buffer.append("adresseBetreibVer").append("='").append(getAdresseBetreibVer()).append("' ");
+        buffer.append("adresseAnsprNr").append("='").append(getAdresseAnsprNr()).append("' ");
+        buffer.append("adresseAnsprVer").append("='").append(getAdresseAnsprVer()).append("' ");
+        buffer.append("genehmigungNr").append("='").append(getGenehmigungNr()).append("' ");
+        buffer.append("genehmigungVer").append("='").append(getGenehmigungVer()).append("' ");
+        buffer.append("arbeitsstaetteSeqNr").append("='").append(getArbeitsstaetteSeqNr()).append("' ");
+        buffer.append("arbeitsstaetteVer").append("='").append(getArbeitsstaetteVer()).append("' ");
+        buffer.append("wzCode").append("='").append(getWzCode()).append("' ");
+        buffer.append("wzCodeVer").append("='").append(getWzCodeVer()).append("' ");
+        buffer.append("stilllegungJn").append("='").append(getStilllegungJn()).append("' ");
+        buffer.append("stilllegungDatum").append("='").append(getStilllegungDatum()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -390,7 +390,7 @@ public class InkaBetriebseinrichtung  implements java.io.Serializable {
      * @return HistoryObject (the corresponding service type to InkaBetriebseinrichtung)
      */
     public HistoryObject toServiceType() {
-        return DatabaseTipi.toServiceTypeForClass(this);
+        return DatabaseQuery.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */

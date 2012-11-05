@@ -302,7 +302,7 @@ public class InkaMessstAnlage  implements java.io.Serializable {
      * @return HistoryObject (the corresponding service type to InkaMessstAnlage)
      */
     public HistoryObject toServiceType() {
-        return DatabaseTipi.toServiceTypeForClass(this);
+        return DatabaseQuery.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */

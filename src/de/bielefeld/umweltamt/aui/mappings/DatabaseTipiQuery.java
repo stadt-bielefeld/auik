@@ -19,8 +19,28 @@
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
-package de.bielefeld.umweltamt.aui.mappings.tipi;
+package de.bielefeld.umweltamt.aui.mappings;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
+import de.bielefeld.umweltamt.aui.mappings.tipi.DeaAdresse;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstAnlage;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstMessst;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstStoffe;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaAnlage;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetrieb;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaBetriebseinrichtung;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaGenehmigung;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaMessstAnlage;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaMessstelle;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaProbenahme;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaUebergabestelle;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaUeberwachErgebnis;
+import de.bielefeld.umweltamt.aui.mappings.tipi.InkaUeberwachungswert;
 import de.nrw.lds.tipi.general.HistoryObject;
 import de.nrw.lds.tipi.inka.Dea_Adresse;
 import de.nrw.lds.tipi.inka.Inka_Anfallst_Anlage;
@@ -46,8 +66,21 @@ import de.nrw.lds.tipi.inka.Inka_Ueberwachungswert;
  * This may not be the best solution... :-/<br><br>
  *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
-public class DatabaseTipi {
+abstract class DatabaseTipiQuery {
+
+    /**
+     * Get an array of the WZ-Codes which are marked for the Kurzauswahl
+     * @return <code>AuikWzCode[]</code>
+     */
+    public static AuikWzCode[] getAuikWzCodesInKurzAuswahl() {
+        return new DatabaseAccess().executeCriteriaToArray(
+            DetachedCriteria.forClass(AuikWzCode.class)
+                .add(Restrictions.eq("inKurzAuswahl", true))
+                .addOrder(Order.asc("bezeichnung")),
+            new AuikWzCode[0]);
+    }
 
     /** DeaAdresse => Dea_Adresse */
     public static HistoryObject toServiceTypeForClass(DeaAdresse clazz) {

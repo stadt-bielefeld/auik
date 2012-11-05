@@ -23,14 +23,14 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
+import java.util.Calendar;
+import java.util.List;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.nrw.lds.tipi.general.HistoryObject;
-import java.util.Calendar;
-import java.util.List;
 
 /**
  * A class that represents a row in the DeaAdresse database table.<br>
@@ -42,7 +42,7 @@ public class DeaAdresse  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forDeaAdresse;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer adresseNr;
     private Integer adresseVer;
@@ -261,27 +261,27 @@ public class DeaAdresse  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("adresseNr").append("='").append(getAdresseNr()).append("' ");			
-        buffer.append("adresseVer").append("='").append(getAdresseVer()).append("' ");			
-        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
-        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
-        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
-        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
-        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
-        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
-        buffer.append("name1").append("='").append(getName1()).append("' ");			
-        buffer.append("name2").append("='").append(getName2()).append("' ");			
-        buffer.append("strasse").append("='").append(getStrasse()).append("' ");			
-        buffer.append("hausnr").append("='").append(getHausnr()).append("' ");			
-        buffer.append("plz").append("='").append(getPlz()).append("' ");			
-        buffer.append("ort").append("='").append(getOrt()).append("' ");			
-        buffer.append("staatskennung").append("='").append(getStaatskennung()).append("' ");			
-        buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
-        buffer.append("telefonMobil").append("='").append(getTelefonMobil()).append("' ");			
-        buffer.append("fax").append("='").append(getFax()).append("' ");			
-        buffer.append("email").append("='").append(getEmail()).append("' ");			
+        buffer.append("adresseNr").append("='").append(getAdresseNr()).append("' ");
+        buffer.append("adresseVer").append("='").append(getAdresseVer()).append("' ");
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");
+        buffer.append("name1").append("='").append(getName1()).append("' ");
+        buffer.append("name2").append("='").append(getName2()).append("' ");
+        buffer.append("strasse").append("='").append(getStrasse()).append("' ");
+        buffer.append("hausnr").append("='").append(getHausnr()).append("' ");
+        buffer.append("plz").append("='").append(getPlz()).append("' ");
+        buffer.append("ort").append("='").append(getOrt()).append("' ");
+        buffer.append("staatskennung").append("='").append(getStaatskennung()).append("' ");
+        buffer.append("telefon").append("='").append(getTelefon()).append("' ");
+        buffer.append("telefonMobil").append("='").append(getTelefonMobil()).append("' ");
+        buffer.append("fax").append("='").append(getFax()).append("' ");
+        buffer.append("email").append("='").append(getEmail()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -357,7 +357,7 @@ public class DeaAdresse  implements java.io.Serializable {
      * @return HistoryObject (the corresponding service type to DeaAdresse)
      */
     public HistoryObject toServiceType() {
-        return DatabaseTipi.toServiceTypeForClass(this);
+        return DatabaseQuery.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */

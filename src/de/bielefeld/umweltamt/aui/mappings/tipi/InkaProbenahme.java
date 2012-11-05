@@ -23,14 +23,14 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
+import java.util.Calendar;
+import java.util.List;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.nrw.lds.tipi.general.HistoryObject;
-import java.util.Calendar;
-import java.util.List;
 
 /**
  * A class that represents a row in the InkaProbenahme database table.<br>
@@ -42,7 +42,7 @@ public class InkaProbenahme  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forInkaProbenahme;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer probenahmeNr;
     private Integer probenahmeVer;
@@ -301,31 +301,31 @@ public class InkaProbenahme  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("probenahmeNr").append("='").append(getProbenahmeNr()).append("' ");			
-        buffer.append("probenahmeVer").append("='").append(getProbenahmeVer()).append("' ");			
-        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
-        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
-        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
-        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
-        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
-        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
-        buffer.append("gemeindekennzahl").append("='").append(getGemeindekennzahl()).append("' ");			
-        buffer.append("gemeindeVer").append("='").append(getGemeindeVer()).append("' ");			
-        buffer.append("uebergabestelleLfdNr").append("='").append(getUebergabestelleLfdNr()).append("' ");			
-        buffer.append("uebergabestelleVer").append("='").append(getUebergabestelleVer()).append("' ");			
-        buffer.append("messstelleLfdNr").append("='").append(getMessstelleLfdNr()).append("' ");			
-        buffer.append("messstelleVer").append("='").append(getMessstelleVer()).append("' ");			
-        buffer.append("probSchluessel").append("='").append(getProbSchluessel()).append("' ");			
-        buffer.append("probVer").append("='").append(getProbVer()).append("' ");			
-        buffer.append("datumAnalyse").append("='").append(getDatumAnalyse()).append("' ");			
-        buffer.append("selbstueberwJn").append("='").append(getSelbstueberwJn()).append("' ");			
-        buffer.append("probeNr").append("='").append(getProbeNr()).append("' ");			
-        buffer.append("durchflussmessungJn").append("='").append(getDurchflussmessungJn()).append("' ");			
-        buffer.append("registrierungJn").append("='").append(getRegistrierungJn()).append("' ");			
-        buffer.append("q05h").append("='").append(getQ05h()).append("' ");			
-        buffer.append("q2h").append("='").append(getQ2h()).append("' ");			
+        buffer.append("probenahmeNr").append("='").append(getProbenahmeNr()).append("' ");
+        buffer.append("probenahmeVer").append("='").append(getProbenahmeVer()).append("' ");
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");
+        buffer.append("gemeindekennzahl").append("='").append(getGemeindekennzahl()).append("' ");
+        buffer.append("gemeindeVer").append("='").append(getGemeindeVer()).append("' ");
+        buffer.append("uebergabestelleLfdNr").append("='").append(getUebergabestelleLfdNr()).append("' ");
+        buffer.append("uebergabestelleVer").append("='").append(getUebergabestelleVer()).append("' ");
+        buffer.append("messstelleLfdNr").append("='").append(getMessstelleLfdNr()).append("' ");
+        buffer.append("messstelleVer").append("='").append(getMessstelleVer()).append("' ");
+        buffer.append("probSchluessel").append("='").append(getProbSchluessel()).append("' ");
+        buffer.append("probVer").append("='").append(getProbVer()).append("' ");
+        buffer.append("datumAnalyse").append("='").append(getDatumAnalyse()).append("' ");
+        buffer.append("selbstueberwJn").append("='").append(getSelbstueberwJn()).append("' ");
+        buffer.append("probeNr").append("='").append(getProbeNr()).append("' ");
+        buffer.append("durchflussmessungJn").append("='").append(getDurchflussmessungJn()).append("' ");
+        buffer.append("registrierungJn").append("='").append(getRegistrierungJn()).append("' ");
+        buffer.append("q05h").append("='").append(getQ05h()).append("' ");
+        buffer.append("q2h").append("='").append(getQ2h()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -401,7 +401,7 @@ public class InkaProbenahme  implements java.io.Serializable {
      * @return HistoryObject (the corresponding service type to InkaProbenahme)
      */
     public HistoryObject toServiceType() {
-        return DatabaseTipi.toServiceTypeForClass(this);
+        return DatabaseQuery.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */

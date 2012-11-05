@@ -70,7 +70,7 @@
      * @return HistoryObject (the corresponding service type to ${declarationName})
      */
     public ${pojo.importType("de.nrw.lds.tipi.general.HistoryObject")} toServiceType() {
-        return ${pojo.importType("de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi")}.toServiceTypeForClass(this);
+        return ${pojo.importType("de.bielefeld.umweltamt.aui.mappings.DatabaseQuery")}.toServiceTypeForClass(this);
     }
 
 </#if>

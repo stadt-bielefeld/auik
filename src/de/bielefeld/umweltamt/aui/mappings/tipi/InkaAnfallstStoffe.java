@@ -258,7 +258,7 @@ public class InkaAnfallstStoffe  implements java.io.Serializable {
      * @return HistoryObject (the corresponding service type to InkaAnfallstStoffe)
      */
     public HistoryObject toServiceType() {
-        return DatabaseTipi.toServiceTypeForClass(this);
+        return DatabaseQuery.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */

@@ -23,14 +23,15 @@
 
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * A class that represents a row in the AtlEinheiten database table.<br>
@@ -42,7 +43,7 @@ public class AtlEinheiten  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAtlEinheiten;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String bezeichnung;
@@ -146,7 +147,7 @@ public class AtlEinheiten  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -163,15 +164,15 @@ public class AtlEinheiten  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("deaEinheitenMasseinheitenNr").append("='").append(getDeaEinheitenMasseinheitenNr()).append("' ");			
-        buffer.append("atlAnalysepositions").append("='").append(getAtlAnalysepositions()).append("' ");			
-        buffer.append("atlMetaParameters").append("='").append(getAtlMetaParameters()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("deaEinheitenMasseinheitenNr").append("='").append(getDeaEinheitenMasseinheitenNr()).append("' ");
+        buffer.append("atlAnalysepositions").append("='").append(getAtlAnalysepositions()).append("' ");
+        buffer.append("atlMetaParameters").append("='").append(getAtlMetaParameters()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

@@ -23,12 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
+import java.util.List;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import java.util.List;
 
 /**
  * A class that represents a row in the AtlAnalyseposition database table.<br>
@@ -40,7 +41,7 @@ public class AtlAnalyseposition  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAtlAnalyseposition;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private AtlParameter atlParameter;
@@ -185,7 +186,7 @@ public class AtlAnalyseposition  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -194,18 +195,18 @@ public class AtlAnalyseposition  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("atlParameter").append("='").append(getAtlParameter()).append("' ");			
-        buffer.append("atlProbenahmen").append("='").append(getAtlProbenahmen()).append("' ");			
-        buffer.append("atlEinheiten").append("='").append(getAtlEinheiten()).append("' ");			
-        buffer.append("grkl").append("='").append(getGrkl()).append("' ");			
-        buffer.append("wert").append("='").append(getWert()).append("' ");			
-        buffer.append("analyseVon").append("='").append(getAnalyseVon()).append("' ");			
-        buffer.append("bericht").append("='").append(getBericht()).append("' ");			
-        buffer.append("normwert").append("='").append(getNormwert()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("atlParameter").append("='").append(getAtlParameter()).append("' ");
+        buffer.append("atlProbenahmen").append("='").append(getAtlProbenahmen()).append("' ");
+        buffer.append("atlEinheiten").append("='").append(getAtlEinheiten()).append("' ");
+        buffer.append("grkl").append("='").append(getGrkl()).append("' ");
+        buffer.append("wert").append("='").append(getWert()).append("' ");
+        buffer.append("analyseVon").append("='").append(getAnalyseVon()).append("' ");
+        buffer.append("bericht").append("='").append(getBericht()).append("' ");
+        buffer.append("normwert").append("='").append(getNormwert()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

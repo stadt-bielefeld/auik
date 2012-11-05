@@ -23,14 +23,14 @@
 
 package de.bielefeld.umweltamt.aui.mappings.tipi;
 
+import java.util.Calendar;
+import java.util.List;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.tipi.DatabaseTipi;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.nrw.lds.tipi.general.HistoryObject;
-import java.util.Calendar;
-import java.util.List;
 
 /**
  * A class that represents a row in the InkaAnlage database table.<br>
@@ -42,7 +42,7 @@ public class InkaAnlage  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forInkaAnlage;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer anlageNr;
     private Integer anlageVer;
@@ -761,77 +761,77 @@ public class InkaAnlage  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("anlageNr").append("='").append(getAnlageNr()).append("' ");			
-        buffer.append("anlageVer").append("='").append(getAnlageVer()).append("' ");			
-        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
-        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
-        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
-        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");			
-        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");			
-        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");			
-        buffer.append("betriebseinrichtungNr").append("='").append(getBetriebseinrichtungNr()).append("' ");			
-        buffer.append("betriebseinrichtungVer").append("='").append(getBetriebseinrichtungVer()).append("' ");			
-        buffer.append("gemeindekennzahl").append("='").append(getGemeindekennzahl()).append("' ");			
-        buffer.append("gemeindeVer").append("='").append(getGemeindeVer()).append("' ");			
-        buffer.append("uebergabestelleLfdNr").append("='").append(getUebergabestelleLfdNr()).append("' ");			
-        buffer.append("uebergabestelleVer").append("='").append(getUebergabestelleVer()).append("' ");			
-        buffer.append("genehmigungNr").append("='").append(getGenehmigungNr()).append("' ");			
-        buffer.append("genehmigungVer").append("='").append(getGenehmigungVer()).append("' ");			
-        buffer.append("stuaBezirk").append("='").append(getStuaBezirk()).append("' ");			
-        buffer.append("stuaVer").append("='").append(getStuaVer()).append("' ");			
-        buffer.append("behoerdenId").append("='").append(getBehoerdenId()).append("' ");			
-        buffer.append("behoerdenVer").append("='").append(getBehoerdenVer()).append("' ");			
-        buffer.append("wasBehoerdenId").append("='").append(getWasBehoerdenId()).append("' ");			
-        buffer.append("wasBehoerdenVer").append("='").append(getWasBehoerdenVer()).append("' ");			
-        buffer.append("adresseAnsprNr").append("='").append(getAdresseAnsprNr()).append("' ");			
-        buffer.append("adresseAnsprVer").append("='").append(getAdresseAnsprVer()).append("' ");			
-        buffer.append("genPflichtigJn").append("='").append(getGenPflichtigJn()).append("' ");			
-        buffer.append("genArt").append("='").append(getGenArt()).append("' ");			
-        buffer.append("anlBauaufsZulJn").append("='").append(getAnlBauaufsZulJn()).append("' ");			
-        buffer.append("anlDinDeJn").append("='").append(getAnlDinDeJn()).append("' ");			
-        buffer.append("anlOhneZulJn").append("='").append(getAnlOhneZulJn()).append("' ");			
-        buffer.append("anlBaurechtPrJn").append("='").append(getAnlBaurechtPrJn()).append("' ");			
-        buffer.append("anlEinzelabnJn").append("='").append(getAnlEinzelabnJn()).append("' ");			
-        buffer.append("datGenehmigung").append("='").append(getDatGenehmigung()).append("' ");			
-        buffer.append("befristungJn").append("='").append(getBefristungJn()).append("' ");			
-        buffer.append("befristungBis").append("='").append(getBefristungBis()).append("' ");			
-        buffer.append("aktenzeichen").append("='").append(getAktenzeichen()).append("' ");			
-        buffer.append("datInbetrieb").append("='").append(getDatInbetrieb()).append("' ");			
-        buffer.append("schlammfangJn").append("='").append(getSchlammfangJn()).append("' ");			
-        buffer.append("abscheiderJn").append("='").append(getAbscheiderJn()).append("' ");			
-        buffer.append("neutralisationJn").append("='").append(getNeutralisationJn()).append("' ");			
-        buffer.append("flockungJn").append("='").append(getFlockungJn()).append("' ");			
-        buffer.append("flotationJn").append("='").append(getFlotationJn()).append("' ");			
-        buffer.append("emulsionsspaltJn").append("='").append(getEmulsionsspaltJn()).append("' ");			
-        buffer.append("absorptionJn").append("='").append(getAbsorptionJn()).append("' ");			
-        buffer.append("sonstAbscheiderJn").append("='").append(getSonstAbscheiderJn()).append("' ");			
-        buffer.append("ionenaustauschJn").append("='").append(getIonenaustauschJn()).append("' ");			
-        buffer.append("strippAnlageJn").append("='").append(getStrippAnlageJn()).append("' ");			
-        buffer.append("extraktionJn").append("='").append(getExtraktionJn()).append("' ");			
-        buffer.append("filtrationJn").append("='").append(getFiltrationJn()).append("' ");			
-        buffer.append("membranfiltrationJn").append("='").append(getMembranfiltrationJn()).append("' ");			
-        buffer.append("siebRechenJn").append("='").append(getSiebRechenJn()).append("' ");			
-        buffer.append("ausgleichsbeckenJn").append("='").append(getAusgleichsbeckenJn()).append("' ");			
-        buffer.append("vorklaerungAbsetzJn").append("='").append(getVorklaerungAbsetzJn()).append("' ");			
-        buffer.append("sonstigeMechVerf").append("='").append(getSonstigeMechVerf()).append("' ");			
-        buffer.append("anaerobeVorbJn").append("='").append(getAnaerobeVorbJn()).append("' ");			
-        buffer.append("tropfkoerperJn").append("='").append(getTropfkoerperJn()).append("' ");			
-        buffer.append("belCEliJn").append("='").append(getBelCEliJn()).append("' ");			
-        buffer.append("belNEliJn").append("='").append(getBelNEliJn()).append("' ");			
-        buffer.append("biologPEliJn").append("='").append(getBiologPEliJn()).append("' ");			
-        buffer.append("nachklaerungJn").append("='").append(getNachklaerungJn()).append("' ");			
-        buffer.append("sonstigeBiolVerf").append("='").append(getSonstigeBiolVerf()).append("' ");			
-        buffer.append("abfuhrUnbehJn").append("='").append(getAbfuhrUnbehJn()).append("' ");			
-        buffer.append("maschEntwJn").append("='").append(getMaschEntwJn()).append("' ");			
-        buffer.append("statEntwJn").append("='").append(getStatEntwJn()).append("' ");			
-        buffer.append("vakuumfilterJn").append("='").append(getVakuumfilterJn()).append("' ");			
-        buffer.append("kammerfilterpJn").append("='").append(getKammerfilterpJn()).append("' ");			
-        buffer.append("siebbandpJn").append("='").append(getSiebbandpJn()).append("' ");			
-        buffer.append("zentrifugeJn").append("='").append(getZentrifugeJn()).append("' ");			
-        buffer.append("natEntwJn").append("='").append(getNatEntwJn()).append("' ");			
-        buffer.append("sonstigeSchlammBeh").append("='").append(getSonstigeSchlammBeh()).append("' ");			
+        buffer.append("anlageNr").append("='").append(getAnlageNr()).append("' ");
+        buffer.append("anlageVer").append("='").append(getAnlageVer()).append("' ");
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
+        buffer.append("erfassungsDatum").append("='").append(getErfassungsDatum()).append("' ");
+        buffer.append("historienNr").append("='").append(getHistorienNr()).append("' ");
+        buffer.append("istAktuellJn").append("='").append(getIstAktuellJn()).append("' ");
+        buffer.append("betriebseinrichtungNr").append("='").append(getBetriebseinrichtungNr()).append("' ");
+        buffer.append("betriebseinrichtungVer").append("='").append(getBetriebseinrichtungVer()).append("' ");
+        buffer.append("gemeindekennzahl").append("='").append(getGemeindekennzahl()).append("' ");
+        buffer.append("gemeindeVer").append("='").append(getGemeindeVer()).append("' ");
+        buffer.append("uebergabestelleLfdNr").append("='").append(getUebergabestelleLfdNr()).append("' ");
+        buffer.append("uebergabestelleVer").append("='").append(getUebergabestelleVer()).append("' ");
+        buffer.append("genehmigungNr").append("='").append(getGenehmigungNr()).append("' ");
+        buffer.append("genehmigungVer").append("='").append(getGenehmigungVer()).append("' ");
+        buffer.append("stuaBezirk").append("='").append(getStuaBezirk()).append("' ");
+        buffer.append("stuaVer").append("='").append(getStuaVer()).append("' ");
+        buffer.append("behoerdenId").append("='").append(getBehoerdenId()).append("' ");
+        buffer.append("behoerdenVer").append("='").append(getBehoerdenVer()).append("' ");
+        buffer.append("wasBehoerdenId").append("='").append(getWasBehoerdenId()).append("' ");
+        buffer.append("wasBehoerdenVer").append("='").append(getWasBehoerdenVer()).append("' ");
+        buffer.append("adresseAnsprNr").append("='").append(getAdresseAnsprNr()).append("' ");
+        buffer.append("adresseAnsprVer").append("='").append(getAdresseAnsprVer()).append("' ");
+        buffer.append("genPflichtigJn").append("='").append(getGenPflichtigJn()).append("' ");
+        buffer.append("genArt").append("='").append(getGenArt()).append("' ");
+        buffer.append("anlBauaufsZulJn").append("='").append(getAnlBauaufsZulJn()).append("' ");
+        buffer.append("anlDinDeJn").append("='").append(getAnlDinDeJn()).append("' ");
+        buffer.append("anlOhneZulJn").append("='").append(getAnlOhneZulJn()).append("' ");
+        buffer.append("anlBaurechtPrJn").append("='").append(getAnlBaurechtPrJn()).append("' ");
+        buffer.append("anlEinzelabnJn").append("='").append(getAnlEinzelabnJn()).append("' ");
+        buffer.append("datGenehmigung").append("='").append(getDatGenehmigung()).append("' ");
+        buffer.append("befristungJn").append("='").append(getBefristungJn()).append("' ");
+        buffer.append("befristungBis").append("='").append(getBefristungBis()).append("' ");
+        buffer.append("aktenzeichen").append("='").append(getAktenzeichen()).append("' ");
+        buffer.append("datInbetrieb").append("='").append(getDatInbetrieb()).append("' ");
+        buffer.append("schlammfangJn").append("='").append(getSchlammfangJn()).append("' ");
+        buffer.append("abscheiderJn").append("='").append(getAbscheiderJn()).append("' ");
+        buffer.append("neutralisationJn").append("='").append(getNeutralisationJn()).append("' ");
+        buffer.append("flockungJn").append("='").append(getFlockungJn()).append("' ");
+        buffer.append("flotationJn").append("='").append(getFlotationJn()).append("' ");
+        buffer.append("emulsionsspaltJn").append("='").append(getEmulsionsspaltJn()).append("' ");
+        buffer.append("absorptionJn").append("='").append(getAbsorptionJn()).append("' ");
+        buffer.append("sonstAbscheiderJn").append("='").append(getSonstAbscheiderJn()).append("' ");
+        buffer.append("ionenaustauschJn").append("='").append(getIonenaustauschJn()).append("' ");
+        buffer.append("strippAnlageJn").append("='").append(getStrippAnlageJn()).append("' ");
+        buffer.append("extraktionJn").append("='").append(getExtraktionJn()).append("' ");
+        buffer.append("filtrationJn").append("='").append(getFiltrationJn()).append("' ");
+        buffer.append("membranfiltrationJn").append("='").append(getMembranfiltrationJn()).append("' ");
+        buffer.append("siebRechenJn").append("='").append(getSiebRechenJn()).append("' ");
+        buffer.append("ausgleichsbeckenJn").append("='").append(getAusgleichsbeckenJn()).append("' ");
+        buffer.append("vorklaerungAbsetzJn").append("='").append(getVorklaerungAbsetzJn()).append("' ");
+        buffer.append("sonstigeMechVerf").append("='").append(getSonstigeMechVerf()).append("' ");
+        buffer.append("anaerobeVorbJn").append("='").append(getAnaerobeVorbJn()).append("' ");
+        buffer.append("tropfkoerperJn").append("='").append(getTropfkoerperJn()).append("' ");
+        buffer.append("belCEliJn").append("='").append(getBelCEliJn()).append("' ");
+        buffer.append("belNEliJn").append("='").append(getBelNEliJn()).append("' ");
+        buffer.append("biologPEliJn").append("='").append(getBiologPEliJn()).append("' ");
+        buffer.append("nachklaerungJn").append("='").append(getNachklaerungJn()).append("' ");
+        buffer.append("sonstigeBiolVerf").append("='").append(getSonstigeBiolVerf()).append("' ");
+        buffer.append("abfuhrUnbehJn").append("='").append(getAbfuhrUnbehJn()).append("' ");
+        buffer.append("maschEntwJn").append("='").append(getMaschEntwJn()).append("' ");
+        buffer.append("statEntwJn").append("='").append(getStatEntwJn()).append("' ");
+        buffer.append("vakuumfilterJn").append("='").append(getVakuumfilterJn()).append("' ");
+        buffer.append("kammerfilterpJn").append("='").append(getKammerfilterpJn()).append("' ");
+        buffer.append("siebbandpJn").append("='").append(getSiebbandpJn()).append("' ");
+        buffer.append("zentrifugeJn").append("='").append(getZentrifugeJn()).append("' ");
+        buffer.append("natEntwJn").append("='").append(getNatEntwJn()).append("' ");
+        buffer.append("sonstigeSchlammBeh").append("='").append(getSonstigeSchlammBeh()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -907,7 +907,7 @@ public class InkaAnlage  implements java.io.Serializable {
      * @return HistoryObject (the corresponding service type to InkaAnlage)
      */
     public HistoryObject toServiceType() {
-        return DatabaseTipi.toServiceTypeForClass(this);
+        return DatabaseQuery.toServiceTypeForClass(this);
     }
 
     /* Custom code goes below here! */
