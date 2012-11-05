@@ -22,6 +22,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlAnalyseposition.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlEinheiten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlKlaeranlagen.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlMetaParameter.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlParameter.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlParameterGruppen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/AtlProbeart.hbm.xml" />

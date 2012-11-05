@@ -261,13 +261,18 @@ public class DatabaseQuery {
     /* Queries for package ATL : class AtlEinheiten                           */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
+    private static AtlEinheiten[] atlEinheiten = null;
     /**
      * Liefert alle in der Einheiten-Tabelle gespeicherten Einheiten.
      * @return Ein Array mit allen Einheiten
      */
-    public static AtlEinheiten[] getEinheiten() {
-        return DatabaseQuery.getOrderedAll(new AtlEinheiten(), "bezeichnung")
-            .toArray(new AtlEinheiten[0]);
+    public static AtlEinheiten[] getAtlEinheiten() {
+        if (DatabaseQuery.atlEinheiten == null) {
+            DatabaseQuery.atlEinheiten =
+                DatabaseQuery.getOrderedAll(new AtlEinheiten(), "bezeichnung")
+                    .toArray(new AtlEinheiten[0]);
+        }
+        return DatabaseQuery.atlEinheiten;
     }
 
     /**

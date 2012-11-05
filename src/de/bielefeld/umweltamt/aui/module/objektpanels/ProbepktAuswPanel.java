@@ -138,7 +138,7 @@ public class ProbepktAuswPanel extends JPanel {
     public ProbepktAuswPanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Auswertung";
 
-        this.einheiten = DatabaseQuery.getEinheiten();
+        this.einheiten = DatabaseQuery.getAtlEinheiten();
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(

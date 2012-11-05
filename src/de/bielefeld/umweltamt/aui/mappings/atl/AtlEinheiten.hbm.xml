@@ -1,18 +1,36 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl" schema="auik">
-
-    <class name="AtlEinheiten" table="atl_einheiten" lazy="false" mutable="false">
-        <id name="id" column="id" type="java.lang.Integer">
-
-            <generator class="assigned"/>
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten" lazy="false" table="atl_einheiten" schema="auik">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-
-        <property name="bezeichnung" column="bezeichnung" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="bezeichnung" type="string">
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="bezeichnung" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="deaEinheitenMasseinheitenNr" type="java.lang.Integer">
+            <column name="dea_einheiten_masseinheiten_nr" />
+        </property>
+        <set name="atlAnalysepositions" table="atl_analyseposition" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="einheiten_id" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition" />
+        </set>
+        <set name="atlMetaParameters" table="atl_meta_parameter" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="einheit_id" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlMetaParameter" />
+        </set>
     </class>
-
 </hibernate-mapping>

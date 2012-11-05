@@ -50,6 +50,7 @@ public class DatabaseSerialVersionUID {
     public static final long forAtlAnalyseposition      = 8611630449814009888L;
     public static final long forAtlEinheiten            = 866939599579322354L;
     public static final long forAtlKlaeranlagen         = 4476838822557197680L;
+    public static final long forAtlMetaParameter        = 8096270946149269437L;
     public static final long forAtlParameter            = 2852105702010364133L;
     public static final long forAtlParameterGruppen     = 2622823822795338854L;
     public static final long forAtlProbeart             = -4946349358783685742L;

@@ -8,6 +8,8 @@
 		<sql-type jdbc-type="DATE" hibernate-type="java.util.Calendar"/>
         <sql-type jdbc-type="TIMESTAMP" hibernate-type="java.util.Calendar"/>
         <sql-type jdbc-type="REAL" hibernate-type="java.lang.Float"/>
+        <sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer"/>
+        <sql-type jdbc-type="BOOLEAN" hibernate-type="java.lang.Boolean"/>
 	</type-mapping>
 
 	<!-- Table filters ===================================================== -->
@@ -162,7 +164,7 @@
 		</primary-key>
 	</table>
 	
-	<!-- Primary keys for views ============================================ -->
+    <!-- Primary keys for views ============================================ -->
 	<table schema="auik" name="view_atl_analyseposition_all">
 		<primary-key>
             <key-column name="id" />

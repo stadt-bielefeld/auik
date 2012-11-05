@@ -1254,7 +1254,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 //        AtlEinheiten[] einheiten = AtlEinheiten.getEinheiten();
 
 //        this.einheitenBox = new JComboBox(einheiten);
-        this.einheitenBox = new JComboBox(DatabaseQuery.getEinheiten());
+        this.einheitenBox = new JComboBox(DatabaseQuery.getAtlEinheiten());
         this.einheitenBox.setEditable(false);
         this.einheitenBox.addFocusListener(new FocusAdapter() {
             @Override
