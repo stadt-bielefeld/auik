@@ -33,6 +33,7 @@ import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
@@ -169,5 +170,27 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
                 log.error("More than one result in unique request!");
                 return null;
         }
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlKlaeranlagen                        */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static AtlKlaeranlagen[] atlKlaeranlagen = null;
+    /**
+     * Get an array of all AtlKlaeranlagen,
+     * omit id 7 because this is an intended duplicate
+     * @return AtlKlaeranlagen[]
+     */
+    public static AtlKlaeranlagen[] getKlaeranlagen() {
+        if (DatabaseAtlQuery.atlKlaeranlagen == null) {
+            DatabaseAtlQuery.atlKlaeranlagen =
+                new DatabaseAccess().executeCriteriaToArray(
+                    DetachedCriteria.forClass(AtlKlaeranlagen.class)
+                        .add(Restrictions.ne("id", 7))
+                        .addOrder(Order.asc("id")),
+                    new AtlKlaeranlagen[0]);
+        }
+        return DatabaseAtlQuery.atlKlaeranlagen;
     }
 }

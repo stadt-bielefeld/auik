@@ -58,6 +58,7 @@ import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
@@ -208,7 +209,7 @@ public class ProbepunktPanel extends JPanel {
             this.probearten = AtlProbeart.getProbearten();
         }
         if (this.klaeranlagen == null) {
-            this.klaeranlagen = AtlKlaeranlagen.getKlaeranlagen();
+            this.klaeranlagen = DatabaseQuery.getKlaeranlagen();
         }
         if (this.sachbearbeiter == null) {
             this.sachbearbeiter = BasisSachbearbeiter

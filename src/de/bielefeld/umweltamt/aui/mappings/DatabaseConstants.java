@@ -92,15 +92,15 @@ public class DatabaseConstants {
 
     /* AtlKläranlage */
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_HEEPEN =
-        AtlKlaeranlagen.getKlaeranlage(1);
+        AtlKlaeranlagen.findById(1);
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_BRAKE =
-        AtlKlaeranlagen.getKlaeranlage(4);
+        AtlKlaeranlagen.findById(4);
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_OBERE_LUTTER =
-        AtlKlaeranlagen.getKlaeranlage(5);
+        AtlKlaeranlagen.findById(5);
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_SENNESTADT =
-        AtlKlaeranlagen.getKlaeranlage(8);
+        AtlKlaeranlagen.findById(8);
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_VERL_SENDE =
-        AtlKlaeranlagen.getKlaeranlage(9);
+        AtlKlaeranlagen.findById(9);
 
     /* ********************************************************************** */
     /* Constants for package BASIS                                            */

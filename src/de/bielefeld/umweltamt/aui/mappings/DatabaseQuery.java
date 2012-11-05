@@ -35,13 +35,17 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * them as clean of not-generated code as possible. As most of the custom
  * queries were static anyway, they can just as fine live here.<br>
  * <br>
- * This class has been split up in six separate classes (general methods and
- * methods for the classes in oour five packages).<br>
- * I did this with a inheritance chain. Do forgive me...
+ * This class has been split up in six separate classes (general methods [here]
+ * and methods for the classes in our five packages).<br>
+ * I did this with an inheritance chain. Do forgive me...
  *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
 public abstract class DatabaseQuery extends DatabaseAtlQuery {
+// Essentially this is somewhat like this:
+// DatabaseQuery extends DatabaseAtlQuery, DatabaseBasisQuery,
+//                       DatabaseIndeinlQuery, DatabaseVawsQuery,
+//                       DatabaseTipiQuery
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
