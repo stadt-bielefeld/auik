@@ -25,6 +25,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 
 /**
@@ -101,6 +102,16 @@ public class DatabaseConstants {
         AtlKlaeranlagen.findById(8);
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_VERL_SENDE =
         AtlKlaeranlagen.findById(9);
+
+    /* AtlStatus */
+    public static final AtlStatus ATL_STATUS_ANGELEGT =
+        AtlStatus.getStatus(8);
+    public static final AtlStatus ATL_STATUS_ERGAENZT =
+        AtlStatus.getStatus(9);
+    public static final AtlStatus ATL_STATUS_EINGETRAGEN =
+        AtlStatus.getStatus(10);
+    public static final AtlStatus ATL_STATUS_BESCHEIDDRUCK =
+        AtlStatus.getStatus(11);
 
     /* ********************************************************************** */
     /* Constants for package BASIS                                            */

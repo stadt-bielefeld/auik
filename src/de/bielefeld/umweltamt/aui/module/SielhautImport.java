@@ -241,7 +241,7 @@ public class SielhautImport extends AbstractModul {
                     DatabaseQuery.getEinheitByDescription(
                         einheitAusZeile(pos)) != null &&
                     // Check the sample
-                    AtlProbenahmen.probenahmeExists(kennummerAusZeile(pos))));
+                    DatabaseQuery.probenahmeExists(kennummerAusZeile(pos))));
             }
 
             return ((Boolean) this.importableRows.get(pos)).booleanValue();

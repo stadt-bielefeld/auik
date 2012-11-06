@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
@@ -72,12 +73,12 @@ public class ProbenahmenModel extends ListTableModel {
         }
     }
 
-    public void findByProperty(String suche, String property) {
-        setList(AtlProbenahmen.findProbenahmen(suche, property));
+    public void findByProperty(String property, String suche) {
+        setList(DatabaseQuery.findProbenahmen(property, suche));
     }
 
     public void findByKA(AtlProbeart art, AtlKlaeranlagen ka) {
-        setList(AtlProbenahmen.getKSProbenahmen(art, ka));
+        setList(DatabaseQuery.findProbenahmen(art, ka));
     }
 
     @Override
@@ -155,7 +156,7 @@ public class ProbenahmenModel extends ListTableModel {
         boolean removed;
 
         if (removedProbe.getKennummer() != null) {
-            removed = AtlProbenahmen.removeProbenahme(removedProbe);
+            removed = AtlProbenahmen.delete(removedProbe);
         } else {
             removed = true;
         }

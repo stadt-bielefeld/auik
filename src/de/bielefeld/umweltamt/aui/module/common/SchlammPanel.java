@@ -231,7 +231,7 @@ public class SchlammPanel extends JPanel {
      * Legt eine neue Probenahme an.
      */
     public void neueProbenahme(String kennNummer, Timestamp datum) {
-        boolean exists = AtlProbenahmen.probenahmeExists(kennNummer);
+        boolean exists = DatabaseQuery.probenahmeExists(kennNummer);
         if (!exists) {
             AtlProbenahmen probe = new AtlProbenahmen();
             probe.setKennummer(kennNummer);

@@ -693,7 +693,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     String gedruckt = updateVorgangsstatus("Probenahmeauftrag gedruckt");
 
                     probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
-                    AtlProbenahmen.saveOrUpdateProbenahme(probe);
+                    AtlProbenahmen.merge(probe);
 
                     GUIManager.getInstance().showInfoMessage(
                         "Der Probenahmeauftrag wurde erfolgreich unter '"
@@ -795,7 +795,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
 
-                    AtlProbenahmen.saveOrUpdateProbenahme(probe);
+                    AtlProbenahmen.merge(probe);
 
                     GUIManager.getInstance().showInfoMessage(
                         "Der Gebührenbescheid wurde erfolgreich unter ' "
@@ -1473,7 +1473,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         if (this.isNew) {
             this.isNew = false;
         }
-        success = AtlProbenahmen.saveOrUpdateProbenahme(getProbe());
+        success = AtlProbenahmen.merge(getProbe());
 
         return success;
     }

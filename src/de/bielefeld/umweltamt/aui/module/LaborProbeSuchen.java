@@ -262,7 +262,7 @@ public class LaborProbeSuchen extends AbstractModul {
         SwingWorkerVariant worker = new SwingWorkerVariant(getProbeTabelle()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                LaborProbeSuchen.this.probeModel.findByProperty(suche, column);
+                LaborProbeSuchen.this.probeModel.findByProperty(column, suche);
                 LaborProbeSuchen.this.lastSuche = suche;
                 LaborProbeSuchen.this.lastProperty = column;
             }

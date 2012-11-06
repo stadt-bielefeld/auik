@@ -516,7 +516,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 Timestamp datum = (new Timestamp(getPrDateChooser().getDate()
                     .getTime()));
 
-                boolean exists = AtlProbenahmen.probenahmeExists(kennNummer);
+                boolean exists = DatabaseQuery.probenahmeExists(kennNummer);
 
                 if (!exists) {
                     AtlProbenahmen probe = new AtlProbenahmen();
@@ -2077,7 +2077,7 @@ class SielhautProbeModel extends ListTableModel {
         boolean removed;
 
         if (removedProbe.getKennummer() != null) {
-            removed = AtlProbenahmen.removeProbenahme(removedProbe);
+            removed = AtlProbenahmen.delete(removedProbe);
         } else {
             removed = true;
         }

@@ -37,7 +37,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 
@@ -48,15 +47,6 @@ import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     Serializable {
     private static final long serialVersionUID = 950596109574293371L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-
-    public static final String[] COLUMNS_AUFTRAG = {"auswahl", "Parameter",
-            "Kennzeichnung", "Konservierung", "Zusatz"};
-
-    public static final String[] COLUMNS_BESCHEID = {"Pos", "Parameter",
-            "Grenzwert_Wert", "Grenzwert_Einheit", "Ergebnis_Wert",
-            "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett", "inGruppe"};
 
     private boolean loadedAtlAnalysepositionen = false;
 
@@ -90,23 +80,6 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     /* Add customized code below */
 
     /**
-     * Liefert alle Probenahmen einer bestimmten Art von einer bestimmten
-     * Kläranlage.
-     */
-    public static List<?> getKSProbenahmen(AtlProbeart art, AtlKlaeranlagen ka) {
-        return new DatabaseAccess()
-            .createQuery(
-                "FROM AtlProbenahmen as probenahme WHERE "
-                    + "probenahme.atlProbepkt.atlProbeart = :art "
-                    + "and probenahme.atlProbepkt.atlKlaeranlagen = :ka "
-                    + "ORDER BY probenahme.datumDerEntnahme desc, "
-                    + "probenahme.kennummer desc")
-            .setEntity("art", art)
-            .setEntity("ka", ka)
-            .list();
-    }
-
-    /**
      * Liefert alle Probenahmen eines bestimmten Probepunktes.
      * @param pkt Der Probepunkt.
      * @param loadPos Sollen die Analysepositionen auch geholt werden?
@@ -128,89 +101,6 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             .list();
 
         return proben;
-    }
-
-//    /**
-//     * Liefert alle Probenahmen eines bestimmten Probepunktes.
-//     * @param pkt Der Probepunkt.
-//     * @param loadPos Sollen die Analysepositionen auch geholt werden?
-//     */
-//    public static List getProbenahmenAndPos(AtlProbepkt pkt, AtlParameter[] params) {
-//        List proben;
-//        if (pkt.getPktId() != null) {
-//            try {
-//                Session session = HibernateSessionFactory.currentSession();
-//                proben = session.find(
-//                        "FROM AtlProbenahmen as probenahme WHERE " +
-//                        "probenahme.atlProbepkt = ? " +
-//                        "ORDER BY probenahme.datumDerEntnahme desc, probenahme.kennummer desc",
-//                        pkt,
-//                        Hibernate.entity(AtlProbepkt.class)
-//                );
-//            } catch (HibernateException e) {
-//                throw new RuntimeException("Datenbank-Fehler", e);
-//            } finally {
-//                HibernateSessionFactory.closeSession();
-//            }
-//        } else {
-//            proben = new ArrayList();
-//        }
-//
-//        return proben;
-//    }
-
-    public static List<?> findProbenahmen(String suche, String property) {
-        String suche2 = suche.toLowerCase().trim() + "%";
-        log.debug("Suche nach '" + suche2 + "' (" + property + ").");
-        return new DatabaseAccess()
-            .createQuery(
-                "FROM AtlProbenahmen as probenahme WHERE "
-                    + "lower(probenahme." + property + ") like :suche "
-                    + "ORDER BY probenahme.datumDerEntnahme desc, "
-                    + "probenahme.kennummer desc").setString("suche", suche2)
-            .list();
-    }
-
-    public static List<?> findBescheiddruck() {
-        return AtlProbenahmen.findAtlStatus(11);
-    }
-
-    public static List<?> findEingetragen() {
-        return AtlProbenahmen.findAtlStatus(10);
-    }
-
-    public static List<?> findErgaenzt() {
-        return AtlProbenahmen.findAtlStatus(9);
-    }
-
-    public static List<?> findAngelegt() {
-        return AtlProbenahmen.findAtlStatus(8);
-    }
-
-    private static List<?> findAtlStatus(int id) {
-        return new DatabaseAccess().createQuery(
-            "FROM AtlProbenahmen as pn WHERE "
-                + "pn.atlStatus.id = :id "
-                + "ORDER BY pn.datumDerEntnahme desc, pn.kennummer desc")
-            .setInteger("id", id)
-            .list();
-    }
-
-    /**
-     * überprüft ob eine Probenahme mit einer bestimmten Kennnummer existiert.
-     * @param kennnummer Die Kennnummer.
-     * @return <code>true</code>, falls bereits eine Probenahme mit dieser
-     *         Kennung existiert, sonst <code>false</code>.
-     */
-    public static boolean probenahmeExists(String kennnummer) {
-        int count;
-        List<?> liste = null;
-        liste = new DatabaseAccess()
-            .createQuery("FROM AtlProbenahmen pn WHERE pn.kennummer = :kn")
-            .setString("kn", kennnummer)
-            .list();
-        count = liste.size();
-        return (count >= 1);
     }
 
     /**
@@ -256,11 +146,11 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             .uniqueResult();
     }
 
-    public static boolean saveOrUpdateProbenahme(AtlProbenahmen probe) {
+    public static boolean merge(AtlProbenahmen probe) {
         return new DatabaseAccess().saveOrUpdate(probe);
     }
 
-    public static boolean removeProbenahme(AtlProbenahmen probe) {
+    public static boolean delete(AtlProbenahmen probe) {
         return new DatabaseAccess().delete(probe);
     }
 
@@ -320,13 +210,19 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             values[i] = columns;
         }
 
-        return new JRMapDataSource(COLUMNS_AUFTRAG, values);
+        String[] columnsAuftrag = {"auswahl", "Parameter",
+            "Kennzeichnung", "Konservierung", "Zusatz"};
+
+        return new JRMapDataSource(columnsAuftrag, values);
     }
 
     public static JRMapDataSource getBescheidDataSource(AtlProbenahmen probe) {
         List<?> sorted = sortAnalysepositionen(probe);
         List<AtlParameter> params = probe.getAtlParameter();
         int elements = sorted.size();
+        String[] columnsBescheid = {"Pos", "Parameter",
+            "Grenzwert_Wert", "Grenzwert_Einheit", "Ergebnis_Wert",
+            "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett", "inGruppe"};
 
         Object[][] values = new Object[elements][];
         Object[] columns;
@@ -336,7 +232,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             new HashMap<Integer, AtlParametergruppen>(1);
 
         for (int i = 0; i < elements; i++) {
-            columns = new Object[COLUMNS_BESCHEID.length];
+            columns = new Object[columnsBescheid.length];
 
             AtlAnalyseposition pos = (AtlAnalyseposition) sorted.get(i);
             AtlParameter parameter = pos.getAtlParameter();
@@ -401,7 +297,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         int numGroups = groups.size();
 
         if (numGroups == 0) {
-            return new JRMapDataSource(COLUMNS_BESCHEID, values);
+            return new JRMapDataSource(columnsBescheid, values);
         }
 
         Object[][] newValues = new Object[elements + numGroups][];
@@ -418,7 +314,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             String gebuehr = new GermanDouble(apg.getPreisfueranalyse())
                 .toString() + " €";
 
-            columns = new Object[COLUMNS_BESCHEID.length];
+            columns = new Object[columnsBescheid.length];
             columns[0] = i + 1;
             columns[1] = apg.getName();
             columns[2] = "";
@@ -432,7 +328,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
             newValues[i] = columns;
         }
 
-        return new JRMapDataSource(COLUMNS_BESCHEID, newValues);
+        return new JRMapDataSource(columnsBescheid, newValues);
     }
 
     public List<AtlParameter> getAtlParameter() {

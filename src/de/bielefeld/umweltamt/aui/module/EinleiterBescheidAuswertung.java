@@ -58,7 +58,8 @@ import javax.swing.JPanel;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BescheidModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -119,7 +120,9 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findBescheiddruck());
+                            ((BescheidModel)getTableModel()).setList(
+                                DatabaseQuery.findProbenahmen(
+                                    DatabaseConstants.ATL_STATUS_BESCHEIDDRUCK));
                         }
 
                         @Override
@@ -138,7 +141,9 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findEingetragen());
+                            ((BescheidModel)getTableModel()).setList(
+                                DatabaseQuery.findProbenahmen(
+                                    DatabaseConstants.ATL_STATUS_EINGETRAGEN));
                         }
 
                         @Override
@@ -157,7 +162,9 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findErgaenzt());
+                            ((BescheidModel)getTableModel()).setList(
+                                DatabaseQuery.findProbenahmen(
+                                    DatabaseConstants.ATL_STATUS_ERGAENZT));
                         }
 
                         @Override
@@ -176,7 +183,9 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((BescheidModel)getTableModel()).setList(AtlProbenahmen.findAngelegt());
+                            ((BescheidModel)getTableModel()).setList(
+                                DatabaseQuery.findProbenahmen(
+                                    DatabaseConstants.ATL_STATUS_ANGELEGT));
                         }
 
                         @Override

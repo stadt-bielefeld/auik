@@ -298,7 +298,7 @@ public class ProbepunktPanel extends JPanel {
      */
     public void neueProbenahme(String kennNummer, Timestamp datum) {
         if (this.probepkt != null) {
-            boolean exists = AtlProbenahmen.probenahmeExists(kennNummer);
+            boolean exists = DatabaseQuery.probenahmeExists(kennNummer);
             if (!exists) {
                 AtlProbenahmen probe = new AtlProbenahmen();
                 probe.setKennummer(kennNummer);

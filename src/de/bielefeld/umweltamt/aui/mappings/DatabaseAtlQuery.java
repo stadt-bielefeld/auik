@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -38,6 +39,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -306,5 +308,73 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
                 new AtlProbeart()).toArray(new AtlProbeart[0]);
         }
         return DatabaseAtlQuery.atlProbearten;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlProbenahmen                         */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Liefert alle Probenahmen einer bestimmten Art von einer bestimmten
+     * Kläranlage.
+     * @param art AtlProbeart
+     * @param ka AtlKlaeranlagen
+     * @return List&lt;AtlProbenahmen&gt;
+     */
+    public static List<AtlProbenahmen> findProbenahmen(
+        AtlProbeart art, AtlKlaeranlagen ka) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbenahmen.class)
+                .createAlias("atlProbepkt", "probepunkt")
+                .add(Restrictions.eq("probepunkt.atlProbeart", art))
+                .add(Restrictions.eq("probepunkt.atlKlaeranlagen", ka))
+                .addOrder(Order.desc("datumDerEntnahme"))
+                .addOrder(Order.desc("kennummer")),
+            new AtlProbenahmen());
+    }
+
+    /**
+     * Find AtlProbenahmen with <code>value</code> somewhere in
+     * <code>propertyName</code> (search case insensitive).
+     * @param propertyName String
+     * @param value String
+     * @return List&lt;AtlProbenahmen&gt;
+     */
+    public static List<AtlProbenahmen> findProbenahmen(
+        String propertyName, String value) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbenahmen.class)
+                .add(Restrictions.ilike(
+                    propertyName, value, MatchMode.ANYWHERE))
+                .addOrder(Order.desc("datumDerEntnahme"))
+                .addOrder(Order.desc("kennummer")),
+            new AtlProbenahmen());
+    }
+
+    /**
+     * Find AtlProbenahmen with <code>status</code>
+     * @param status AtlStatus
+     * @return List&lt;AtlProbenahmen&gt;
+     */
+    public static List<AtlProbenahmen> findProbenahmen(AtlStatus status) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbenahmen.class)
+                .add(Restrictions.eq("atlStatus", status))
+                .addOrder(Order.desc("datumDerEntnahme"))
+                .addOrder(Order.desc("kennummer")),
+            new AtlProbenahmen());
+    }
+
+    /**
+     * Check if there is an AtlProbenahmen with <code>kennnummer</code>
+     * @param kennnummer String
+     * @return <code>true</code>, if an AtlProbenahmen exists,
+     *         <code>false</code> otherwise
+     */
+    public static Boolean probenahmeExists(String kennnummer) {
+        return (!(new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbenahmen.class)
+                .add(Restrictions.eq("kennummer", kennnummer)),
+            new AtlProbenahmen()).isEmpty()));
     }
 }
