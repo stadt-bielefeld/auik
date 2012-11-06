@@ -1,21 +1,29 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl" schema="auik">
-
-    <class name="AtlParametergruppen" table="atl_parametergruppen" lazy="false">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen" table="atl_parametergruppen" lazy="false" schema="auik">
         <id name="id" type="java.lang.Integer">
-            <column name="id" sql-type="serial"/>
-            <generator class="native">
-                <param name="sequence">atl_parametergruppen_id_seq</param>
-            </generator>
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-
-        <property name="name" column="name" type="java.lang.String" />
-        <property name="preisfueranalyse" column="preisfueranalyse" type="java.lang.Double"/>
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="preisfueranalyse" type="java.lang.Double">
+            <column name="preisfueranalyse" precision="8" scale="0" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="atlParameters" table="atl_parameter" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="parametergruppe_id" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter" />
+        </set>
     </class>
-
 </hibernate-mapping>

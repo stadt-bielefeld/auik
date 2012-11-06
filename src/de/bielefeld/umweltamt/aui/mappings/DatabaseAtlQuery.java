@@ -223,7 +223,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
     public static List<AtlParameter> getGroupedParameterAsList() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(AtlParameter.class)
-                .add(Restrictions.isNotNull("atlParameterGruppe"))
+                .add(Restrictions.isNotNull("atlParametergruppen"))
                 .addOrder(Order.asc("reihenfolge")),
             new AtlParameter());
     }
@@ -236,7 +236,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
     public static AtlParameter[] getGroupedParameter() {
         return new DatabaseAccess().executeCriteriaToArray(
             DetachedCriteria.forClass(AtlParameter.class)
-                .add(Restrictions.isNotNull("atlParameterGruppe"))
+                .add(Restrictions.isNotNull("atlParametergruppen"))
                 .addOrder(Order.asc("reihenfolge")),
             new AtlParameter[0]);
     }
@@ -253,7 +253,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
     public static List<AtlParameter> getParameterInGroup(int id) {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(AtlParameter.class)
-                .add(Restrictions.eq("atlParameterGruppe.id", id)),
+                .add(Restrictions.eq("atlParametergruppen.id", id)),
             new AtlParameter());
     }
 
