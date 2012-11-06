@@ -1,30 +1,72 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl" schema="auik">
-
-    <class name="AtlParameter" table="atl_parameter" mutable="false" lazy="false">
-        <id name="ordnungsbegriff" column="ordnungsbegriff" type="java.lang.String">
-            <generator class="assigned"/>
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter" table="atl_parameter" lazy="false" schema="auik">
+        <id name="ordnungsbegriff" type="string">
+            <column name="ordnungsbegriff" />
+            <generator class="assigned" />
         </id>
-
-        <property name="analyseverfahren" column="analyseverfahren" type="java.lang.String" />
-        <property name="bezeichnung" column="bezeichnung" type="java.lang.String" />
-        <property name="wirdgemessenineinheit" column="wirdgemessenineinheit" type="java.lang.Integer" />
-        <property name="grenzwert" column="grenzwert" type="java.lang.Double" />
-        <property name="grenzwertname" column="grenzwertname" type="java.lang.String" />
-        <property name="sielhautGw" column="sielhaut_gw" type="java.lang.Double" />
-        <property name="klaerschlammGw" column="klaerschlamm_gw" type="java.lang.Double" />
-        <property name="preisfueranalyse" column="preisfueranalyse" type="java.lang.Double" />
-        <property name="einzelnBeauftragbar" column="einzelnBeauftragbar" type="java.lang.Boolean" />
-        <property name="kennzeichnung" column="kennzeichnung" type="java.lang.String" />
-        <property name="konservierung" column="konservierung" type="java.lang.String" />
-        <property name="reihenfolge" column="reihenfolge" type="java.lang.Integer" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <many-to-one name="atlParametergruppen" column="parametergruppe_id" class="AtlParametergruppen" />
+        <many-to-one name="atlParametergruppen" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen" fetch="select">
+            <column name="parametergruppe_id" />
+        </many-to-one>
+        <property name="analyseverfahren" type="string">
+            <column name="analyseverfahren" />
+        </property>
+        <property name="bezeichnung" type="string">
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="bezeichnung" />
+        </property>
+        <property name="wirdgemessenineinheit" type="java.lang.Integer">
+            <column name="wirdgemessenineinheit" />
+        </property>
+        <property name="grenzwert" type="java.lang.Double">
+            <column name="grenzwert" precision="8" scale="0" />
+        </property>
+        <property name="grenzwertname" type="string">
+            <column name="grenzwertname" />
+        </property>
+        <property name="sielhautGw" type="java.lang.Double">
+            <column name="sielhaut_gw" precision="8" scale="0" />
+        </property>
+        <property name="klaerschlammGw" type="java.lang.Double">
+            <column name="klaerschlamm_gw" precision="8" scale="0" />
+        </property>
+        <property name="preisfueranalyse" type="java.lang.Double">
+            <column name="preisfueranalyse" precision="8" scale="0" />
+        </property>
+        <property name="einzelnbeauftragbar" type="java.lang.Boolean">
+            <column name="einzelnbeauftragbar" />
+        </property>
+        <property name="kennzeichnung" type="string">
+            <column name="kennzeichnung" />
+        </property>
+        <property name="konservierung" type="string">
+            <column name="konservierung" />
+        </property>
+        <property name="reihenfolge" type="java.lang.Integer">
+            <column name="reihenfolge" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="deaStoffeStoffNr" type="java.lang.Integer">
+            <column name="dea_stoffe_stoff_nr" />
+        </property>
+        <set name="atlMetaParameters" table="atl_meta_parameter" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ordnungsbegriff" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlMetaParameter" />
+        </set>
+        <set name="atlAnalysepositions" table="atl_analyseposition" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="parameter_id" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition" />
+        </set>
     </class>
-
 </hibernate-mapping>

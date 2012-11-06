@@ -1728,7 +1728,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             for (int i = 0; i < parameter; i++) {
                 AtlParameter p = params.get(i);
 
-                if (p.getEinzelnBeauftragbar()) {
+                if (p.getEinzelnbeauftragbar()) {
                     preis += p.getPreisfueranalyse();
                 } else {
                     String msg = "Parameter " + p.getOrdnungsbegriff()
