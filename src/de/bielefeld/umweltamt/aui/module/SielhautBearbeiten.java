@@ -174,7 +174,6 @@ import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.RetractablePanel;
-import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -2334,9 +2333,10 @@ class SielhautModel extends ListTableModel {
                 break;
         }
 
-        if (tmp instanceof String && spunkt.getBasisObjekt().getInaktiv()) {
-            tmp = StringUtils.setStrike((String) tmp);
-        }
+        // This is too slooow... :(
+//        if (tmp instanceof String && spunkt.getBasisObjekt().getInaktiv()) {
+//            tmp = StringUtils.setStrike((String) tmp);
+//        }
 
         return tmp;
     }
