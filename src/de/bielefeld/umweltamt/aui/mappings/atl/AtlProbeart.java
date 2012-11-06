@@ -86,25 +86,12 @@ public class AtlProbeart extends AbstractAtlProbeart implements Serializable {
     /* Add customized code below */
 
     /**
-     * Liefert alle vorhandenen Probearten.
-     * @return Alle vorhandenen Probearten
-     */
-    public static AtlProbeart[] getProbearten() {
-        String suchString = "FROM AtlProbeart art ORDER BY art.artId";
-
-        return (AtlProbeart[]) new DatabaseAccess().createQuery(suchString)
-                .setCacheable(true)
-                .setCacheRegion("probeartliste")
-                .array(new AtlProbeart[0]);
-    }
-
-    /**
      * Liefert eine bestimmte Probeart.
      * @param id Die ID der Probeart
      * @return Die Probeart mit der gegebenen ID oder <code>null</code> falls
      *         diese nicht existiert
      */
-    public static AtlProbeart getProbeart(Integer id) {
+    public static AtlProbeart findById(Integer id) {
         return (AtlProbeart) new DatabaseAccess().get(AtlProbeart.class, id);
     }
 }

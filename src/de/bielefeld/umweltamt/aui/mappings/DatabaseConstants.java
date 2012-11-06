@@ -80,15 +80,15 @@ public class DatabaseConstants {
 
     /* AtlProbeart */
     public static final AtlProbeart ATL_PROBEART_ANLIEFERUNG =
-        AtlProbeart.getProbeart(4);
+        AtlProbeart.findById(4);
     public static final AtlProbeart ATL_PROBEART_FAULSCHLAMM =
-        AtlProbeart.getProbeart(5);
+        AtlProbeart.findById(5);
     public static final AtlProbeart ATL_PROBEART_ROHRSCHLAMM =
-        AtlProbeart.getProbeart(6);
+        AtlProbeart.findById(6);
     public static final AtlProbeart ATL_PROBEART_SIELHAUT =
-        AtlProbeart.getProbeart(7);
+        AtlProbeart.findById(7);
     public static final AtlProbeart ATL_PROBEART_ZULAUF =
-        AtlProbeart.getProbeart(9);
+        AtlProbeart.findById(9);
 
     /* AtlKläranlage */
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_HEEPEN =

@@ -35,6 +35,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -63,7 +64,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
      * Probenahme. I am not sure if they will be auto-loaded with the new
      * generated classes. TODO: Test that!
      * @param probe
-     * @return
+     * @return Set&lt;AtlAnalyseposition&gt;
      */
     public static Set<AtlAnalyseposition> getAnalysepositionen(
         AtlProbenahmen probe) {
@@ -288,5 +289,22 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
 //            return false;
 //        }
         return true;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlProbeart                            */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static AtlProbeart[] atlProbearten = null;
+    /**
+     * Liefert alle vorhandenen Probearten.
+     * @return Alle vorhandenen Probearten
+     */
+    public static AtlProbeart[] getProbearten() {
+        if (DatabaseAtlQuery.atlProbearten == null) {
+            DatabaseAtlQuery.atlProbearten = DatabaseQuery.getOrderedAll(
+                new AtlProbeart()).toArray(new AtlProbeart[0]);
+        }
+        return DatabaseAtlQuery.atlProbearten;
     }
 }
