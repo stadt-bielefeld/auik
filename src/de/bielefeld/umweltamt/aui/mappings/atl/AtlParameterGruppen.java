@@ -29,10 +29,8 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 
 /**
  * Diese Klasse representiert eine Parametergruppe.
@@ -61,57 +59,13 @@ public class AtlParameterGruppen
      *
      * @return die Parametergruppe mit der ID <i>id</i>.
      */
-    public static AtlParameterGruppen getParameterGroup(int id) {
+    public static AtlParameterGruppen findById(int id) {
         AtlParameterGruppen result = null;
 
         result = (AtlParameterGruppen) new DatabaseAccess()
                 .get(AtlParameterGruppen.class, id);
 
         return result;
-    }
-
-
-    /**
-     * Diese Funktion pr&uuml;ft, ob die {@link AtlParameter}, die in
-     * <i>group</i> enthalten sind, vollst&auml;ndig sind.
-     *
-     * @param id Die ID der Parametergruppe.
-     * @param group Die Liste mit den Parametern.
-     *
-     * @return true, wenn alle Parameter der Gruppen enthalten sind, sonst
-     * false.
-     */
-    public static boolean isGroupComplete(int id, List<?> group) {
-        AtlParameter[] complete = DatabaseQuery.getParameterInGroup(id);
-
-        int completeSize = complete.length;
-        int groupSize    = group.size();
-
-        if (completeSize > groupSize) {
-            return false;
-        }
-
-//        int contains = 0;
-
-        for (AtlParameter parameter: complete) {
-            String  paramId  = parameter.getOrdnungsbegriff();
-            boolean isInList = false;
-
-            for (int i = 0; i < groupSize; i++) {
-                AtlParameter tmp = (AtlParameter) group.get(i);
-
-                if (paramId.equals(tmp.getOrdnungsbegriff())) {
-                    isInList = true;
-                    break;
-                }
-            }
-
-            if (!isInList) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }
 // vim:set ts=4 sw=4 si et sta sts=4 fenc=utf8:

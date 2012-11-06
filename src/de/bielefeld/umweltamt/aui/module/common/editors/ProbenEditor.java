@@ -1713,9 +1713,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         List<AtlParameter> params) throws IllegalArgumentException {
         double preis = 0d;
 
-        if (AtlParameterGruppen.isGroupComplete(gruppe, params)) {
-            AtlParameterGruppen g = AtlParameterGruppen
-                .getParameterGroup(gruppe);
+        if (DatabaseQuery.isCompleteParameterGroup(gruppe, params)) {
+            AtlParameterGruppen g = AtlParameterGruppen.findById(gruppe);
 
             if (g == null) {
                 log.debug("No such group with id: " + gruppe);

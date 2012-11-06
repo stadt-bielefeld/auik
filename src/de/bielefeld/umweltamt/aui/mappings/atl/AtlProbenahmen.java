@@ -325,7 +325,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
 
     public static JRMapDataSource getBescheidDataSource(AtlProbenahmen probe) {
         List<?> sorted = sortAnalysepositionen(probe);
-        List<?> params = probe.getAtlParameter();
+        List<AtlParameter> params = probe.getAtlParameter();
         int elements = sorted.size();
 
         Object[][] values = new Object[elements][];
@@ -374,8 +374,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
 
             AtlParameterGruppen gr = parameter.getAtlParameterGruppe();
             int groupId = gr != null ? gr.getId() : -1;
-            boolean inGroup = AtlParameterGruppen.isGroupComplete(groupId,
-                params);
+            boolean inGroup = DatabaseQuery.isCompleteParameterGroup(
+                groupId, params);
 
 //            if (inGroup) {
 //                groups.put(groupId, gr);
@@ -435,7 +435,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         return new JRMapDataSource(COLUMNS_BESCHEID, newValues);
     }
 
-    public List<?> getAtlParameter() {
+    public List<AtlParameter> getAtlParameter() {
         List<?> sorted = sortAnalysepositionen(this);
 
         int num = sorted != null ? sorted.size() : 0;

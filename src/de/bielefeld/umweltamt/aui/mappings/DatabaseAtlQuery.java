@@ -250,10 +250,43 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
             .toArray(new AtlParameter[0]);
     }
 
-    public static AtlParameter[] getParameterInGroup(int id) {
-        return new DatabaseAccess().executeCriteriaToArray(
+    public static List<AtlParameter> getParameterInGroup(int id) {
+        return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(AtlParameter.class)
                 .add(Restrictions.eq("atlParameterGruppe.id", id)),
-            new AtlParameter[0]);
+            new AtlParameter());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlParametergruppen                    */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Diese Funktion pr&uuml;ft, ob die {@link AtlParameter}, die in
+     * <i>group</i> enthalten sind, vollst&auml;ndig sind.
+     *
+     * @param id Die ID der Parametergruppe.
+     * @param group Die Liste mit den Parametern.
+     *
+     * @return true, wenn alle Parameter der Gruppen enthalten sind, sonst
+     * false.
+     */
+    public static boolean isCompleteParameterGroup(
+        int id, List<AtlParameter> group) {
+        List<AtlParameter> complete = DatabaseQuery.getParameterInGroup(id);
+        // First simply check the size
+        // As we use List and not Set the size is not a good criteria...
+//        if (group.size() != complete.size()) {
+//            return false;
+//        }
+        // Check if all parameters from the complete group are in the group
+        if (!(group.containsAll(complete))) {
+            return false;
+        }
+        // Be really restrictive and check if there are other parameters
+//        if (!(complete.containsAll(group))) {
+//            return false;
+//        }
+        return true;
     }
 }
