@@ -161,7 +161,7 @@ public class ViewAtlAnalysepositionAll extends
         pos.setBericht(this.getBericht());
         pos.setNormwert(this.getNormwert());
         pos.setAtlEinheiten(AtlEinheiten.findById(this.getEinheitenId()));
-        pos.setAtlParameter(AtlParameter.getParameter(this.getParameterId()));
+        pos.setAtlParameter(AtlParameter.findById(this.getParameterId()));
         pos.setAtlProbenahmen(
             AtlProbenahmen.getProbenahme(this.getProbenahmeId()));
         pos.setEnabled(this.isEnabled());

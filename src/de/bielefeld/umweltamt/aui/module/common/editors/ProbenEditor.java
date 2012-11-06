@@ -442,6 +442,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
             tmp.setAtlParameter((AtlParameter) ProbenEditor.this.parameterBox
                 .getSelectedItem());
+            tmp.setWert(new Float(0));
             tmp.setAtlEinheiten(AtlEinheiten.findById(tmp.getAtlParameter()
                 .getWirdgemessenineinheit()));
             // tmp.setAnalyseVon("");
@@ -464,6 +465,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             pos.setAtlProbenahmen(this.probe);
             pos.setAtlParameter(parameter);
+            pos.setWert(new Float(0));
             pos.setAtlEinheiten(AtlEinheiten.findById(parameter
                 .getWirdgemessenineinheit()));
 
@@ -491,6 +493,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             pos.setAtlProbenahmen(this.probe);
             pos.setAtlParameter(parameter);
+            pos.setWert(new Float(0));
             pos.setAtlEinheiten(einheit);
             pos.setAnalyseVon(analysevon);
 
@@ -1227,7 +1230,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             .getColumn(0);
         parameterColumn.setPreferredWidth(150);
 
-        AtlParameter[] parameter = AtlParameter.getGroupedParameter();
+        AtlParameter[] parameter = DatabaseQuery.getGroupedParameter();
 
         this.parameterBox = new JComboBox(parameter);
         this.parameterBox.setEditable(false);
@@ -2064,12 +2067,12 @@ class ParameterAuswahlModel extends ListTableModel {
     }
 
     public void filterList() {
-        setList(AtlParameter.getGroupedParameterAsList());
+        setList(DatabaseQuery.getGroupedParameterAsList());
         log.debug("Suche nach '" + getList().size() + " Ergebnisse)");
     }
 
     public void AlleParameter() {
-        setList(AtlParameter.getAllAsList());
+        setList(DatabaseQuery.getAllParameterAsList());
         log.debug("Suche nach '" + getList().size() + " Ergebnisse)");
     }
 }

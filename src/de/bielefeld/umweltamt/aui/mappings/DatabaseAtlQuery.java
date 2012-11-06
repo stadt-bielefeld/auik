@@ -193,4 +193,67 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
         }
         return DatabaseAtlQuery.atlKlaeranlagen;
     }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlParameter                           */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Liefert alle Parameter, die für Klärschlamm-Probenahmen relevant sind.
+     * D.h. alle, deren Klärschlamm-Grenzwert nicht <code>NULL</code> ist.
+     * @return Ein Array mit allen für Klärschlamm-Probenahmen relevanten
+     * Parametern
+     */
+    public static AtlParameter[] getKlaerschlammParameter() {
+        return new DatabaseAccess().executeCriteriaToArray(
+            DetachedCriteria.forClass(AtlParameter.class)
+                .add(Restrictions.isNotNull("klaerschlammGw"))
+                .addOrder(Order.asc("bezeichnung")),
+            new AtlParameter[0]);
+    }
+
+    /**
+     * Liefert alle Parameter, die für SielhautBearbeiten-Probenahmen relevant
+     * sind. D.h. alle, deren SielhautBearbeiten-Grenzwert nicht
+     * <code>NULL</code> ist.
+     *
+     * @return Ein Array mit allen für SielhautBearbeiten-Probenahmen relevanten
+     * Parametern
+     */
+    public static List<AtlParameter> getGroupedParameterAsList() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlParameter.class)
+                .add(Restrictions.isNotNull("atlParameterGruppe"))
+                .addOrder(Order.asc("reihenfolge")),
+            new AtlParameter());
+    }
+
+    /**
+     * AtlParameter.getGroupedParameterAsList als Array
+     *
+     * @return Ein Array mit allen für Probenahmen relevanten Parametern
+     */
+    public static AtlParameter[] getGroupedParameter() {
+        return new DatabaseAccess().executeCriteriaToArray(
+            DetachedCriteria.forClass(AtlParameter.class)
+                .add(Restrictions.isNotNull("atlParameterGruppe"))
+                .addOrder(Order.asc("reihenfolge")),
+            new AtlParameter[0]);
+    }
+
+    public static List<AtlParameter> getAllParameterAsList() {
+        return DatabaseQuery.getOrderedAll(new AtlParameter(), "bezeichnung");
+    }
+
+    public static AtlParameter[] getAllParameterAsArray() {
+        return DatabaseQuery.getOrderedAll(new AtlParameter(), "bezeichnung")
+            .toArray(new AtlParameter[0]);
+    }
+
+    public static AtlParameter[] getParameterInGroup(int id) {
+        return new DatabaseAccess().executeCriteriaToArray(
+            DetachedCriteria.forClass(AtlParameter.class)
+                .add(Restrictions.eq("atlParameterGruppe.id", id)),
+            new AtlParameter[0]);
+    }
 }

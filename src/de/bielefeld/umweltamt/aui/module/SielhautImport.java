@@ -236,7 +236,7 @@ public class SielhautImport extends AbstractModul {
             if (!this.importableRows.containsKey(pos)) {
                 this.importableRows.put(pos, new Boolean(
                     // Check the parameter
-                    AtlParameter.getParameter(paramAusZeile(pos)) != null &&
+                    AtlParameter.findById(paramAusZeile(pos)) != null &&
                     // Check the unit
                     DatabaseQuery.getEinheitByDescription(
                         einheitAusZeile(pos)) != null &&
@@ -320,7 +320,7 @@ public class SielhautImport extends AbstractModul {
                         Double sielhautgw = null;
                         String sPara = paramAusZeile(current);
                         if (sPara != null) {
-                            sielhautgw = AtlParameter.getParameter(sPara)
+                            sielhautgw = AtlParameter.findById(sPara)
                                 .getSielhautGw();
                         }
                         dwert = new Double(decform.parse(strWert).doubleValue());
@@ -330,8 +330,7 @@ public class SielhautImport extends AbstractModul {
                         // Parameter
                         String sParam = paramAusZeile(current);
                         if (sParam != null) {
-                            AtlParameter para = AtlParameter
-                                .getParameter(sParam);
+                            AtlParameter para = AtlParameter.findById(sParam);
 
                             if (para != null) {
                                 pos.setAtlParameter(para);

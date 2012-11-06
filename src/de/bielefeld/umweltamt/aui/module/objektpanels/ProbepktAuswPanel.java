@@ -643,7 +643,7 @@ public class ProbepktAuswPanel extends JPanel {
 
     private JComboBox getParameterBox() {
         if (this.parameterBox == null) {
-            this.parameterBox = new SearchBox(AtlParameter.getAllAsArray());
+            this.parameterBox = new SearchBox(DatabaseQuery.getAllParameterAsArray());
         }
 
         return this.parameterBox;
@@ -979,7 +979,7 @@ public class ProbepktAuswPanel extends JPanel {
                             param = (AtlParameter) getParameterBox()
                                 .getSelectedItem();
                         } else {
-                            param = AtlParameter.getParameter(paramId);
+                            param = AtlParameter.findById(paramId);
                         }
                     }
 

@@ -32,6 +32,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 
 /**
  * Diese Klasse representiert eine Parametergruppe.
@@ -81,7 +82,7 @@ public class AtlParameterGruppen
      * false.
      */
     public static boolean isGroupComplete(int id, List<?> group) {
-        AtlParameter[] complete = AtlParameter.getParameterGroup(id);
+        AtlParameter[] complete = DatabaseQuery.getParameterInGroup(id);
 
         int completeSize = complete.length;
         int groupSize    = group.size();

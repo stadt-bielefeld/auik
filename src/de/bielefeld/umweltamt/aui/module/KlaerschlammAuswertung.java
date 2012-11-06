@@ -1014,7 +1014,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
     private JComboBox getParameterBox() {
         if (this.parameterBox == null) {
             this.parameterBox = new SearchBox(
-                AtlParameter.getKlaerschlammParameter());
+                DatabaseQuery.getKlaerschlammParameter());
         }
 
         return this.parameterBox;
@@ -1173,7 +1173,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
                             param = (AtlParameter) getParameterBox()
                                 .getSelectedItem();
                         } else {
-                            param = AtlParameter.getParameter(paramId);
+                            param = AtlParameter.findById(paramId);
                         }
                     }
 

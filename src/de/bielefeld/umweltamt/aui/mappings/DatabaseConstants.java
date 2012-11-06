@@ -50,33 +50,33 @@ public class DatabaseConstants {
 
     /* AtlParameter */
     public static final AtlParameter ATL_PARAMETER_BLEI =
-        AtlParameter.getParameter("L11380");
+        AtlParameter.findById("L11380");
     public static final AtlParameter ATL_PARAMETER_CADMIUM =
-        AtlParameter.getParameter("L11650");
+        AtlParameter.findById("L11650");
     public static final AtlParameter ATL_PARAMETER_CHROM =
-        AtlParameter.getParameter("L11510");
+        AtlParameter.findById("L11510");
     public static final AtlParameter ATL_PARAMETER_KUPFER =
-        AtlParameter.getParameter("L11610");
+        AtlParameter.findById("L11610");
     public static final AtlParameter ATL_PARAMETER_NICKEL =
-        AtlParameter.getParameter("L11880");
+        AtlParameter.findById("L11880");
     public static final AtlParameter ATL_PARAMETER_QUECKSILBER =
-        AtlParameter.getParameter("L11660");
+        AtlParameter.findById("L11660");
     public static final AtlParameter ATL_PARAMETER_ZINK =
-        AtlParameter.getParameter("L11640");
+        AtlParameter.findById("L11640");
     public static final AtlParameter ATL_PARAMETER_AOX =
-        AtlParameter.getParameter("L13430");
+        AtlParameter.findById("L13430");
 
     public static final AtlParameter ATL_PARAMETER_TOC =
-        AtlParameter.getParameter("L15230");
+        AtlParameter.findById("L15230");
     public static final AtlParameter ATL_PARAMETER_ABWASSERMENGE =
-        AtlParameter.getParameter("P00013");
+        AtlParameter.findById("P00013");
 
     public static final AtlParameter ATL_PARAMETER_TEMPERATUR =
-        AtlParameter.getParameter("L10111");
+        AtlParameter.findById("L10111");
     public static final AtlParameter ATL_PARAMETER_PH_WERT =
-        AtlParameter.getParameter("B00600");
+        AtlParameter.findById("B00600");
     public static final AtlParameter ATL_PARAMETER_LEITFAEHIGKEIT =
-        AtlParameter.getParameter("L10821");
+        AtlParameter.findById("L10821");
 
     /* AtlProbeart */
     public static final AtlProbeart ATL_PROBEART_ANLIEFERUNG =

@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -105,69 +104,12 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
      * @return Der Parameter mit der gegebenen ID oder <code>null</code> falls
      *         dieser nicht existiert
      */
-    public static AtlParameter getParameter(String id) {
+    public static AtlParameter findById(String id) {
         AtlParameter parameter = null;
 
         parameter = (AtlParameter) new DatabaseAccess()
                 .get(AtlParameter.class, id);
 
         return parameter;
-    }
-
-    /*
-     * Liefert alle Parameter, die für Klärschlamm-Probenahmen relevant sind.
-     * D.h. alle, deren Klärschlamm-Grenzwert nicht <code>NULL</code> ist.
-     * @return Ein Array mit allen für Klärschlamm-Probenahmen relevanten Parametern
-     */
-    public static AtlParameter[] getKlaerschlammParameter() {
-        return (AtlParameter[]) new DatabaseAccess().createQuery(
-                "FROM AtlParameter as param WHERE " +
-                "param.klaerschlammGw is not null " +
-                "ORDER BY param.bezeichnung")
-                .array(new AtlParameter[0]);
-    }
-
-    /**
-     * Liefert alle Parameter, die für SielhautBearbeiten-Probenahmen relevant
-     * sind. D.h. alle, deren SielhautBearbeiten-Grenzwert nicht
-     * <code>NULL</code> ist.
-     * @return Ein Array mit allen für SielhautBearbeiten-Probenahmen relevanten
-     * Parametern
-     */
-    public static List<?> getGroupedParameterAsList() {
-        return new DatabaseAccess().createQuery(
-                "FROM AtlParameter as param "
-                + "WHERE param.atlParameterGruppe.id = 1"
-                + "or param.atlParameterGruppe.id = 2"
-                + "or param.atlParameterGruppe.id = 3"
-                + "ORDER BY param.reihenfolge")
-                .list();
-    }
-    /**
-     * AtlParameter.getGroupedParameterAsList als Array
-     *
-     * @return Ein Array mit allen für Probenahmen relevanten Parametern
-     */
-    public static AtlParameter[] getGroupedParameter() {
-        return (AtlParameter[])
-            AtlParameter.getGroupedParameterAsList().toArray(new AtlParameter[0]);
-    }
-
-    public static List<?> getAllAsList() {
-        return new DatabaseAccess().createQuery(
-            "FROM AtlParameter as param ORDER BY param.bezeichnung")
-            .list();
-    }
-    public static AtlParameter[] getAllAsArray() {
-        return new DatabaseAccess().createQuery(
-            "FROM AtlParameter as param ORDER BY param.bezeichnung")
-            .array(new AtlParameter[0]);
-    }
-
-    public static AtlParameter[] getParameterGroup(int id) {
-        return (AtlParameter[]) new DatabaseAccess().createQuery(
-                "FROM AtlParameter as param WHERE "
-                + "param.atlParameterGruppe.id = " + id)
-                .array(new AtlParameter[0]);
     }
 }
