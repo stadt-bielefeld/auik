@@ -332,8 +332,8 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         Object[] columns;
 
         // TODO: This map is basically never used...
-        Map<Integer, AtlParameterGruppen> groups =
-            new HashMap<Integer, AtlParameterGruppen>(1);
+        Map<Integer, AtlParametergruppen> groups =
+            new HashMap<Integer, AtlParametergruppen>(1);
 
         for (int i = 0; i < elements; i++) {
             columns = new Object[COLUMNS_BESCHEID.length];
@@ -372,7 +372,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
                 gebuehr = new GermanDouble(parameter.getPreisfueranalyse())
                     .toString() + " €";
 
-            AtlParameterGruppen gr = parameter.getAtlParameterGruppe();
+            AtlParametergruppen gr = parameter.getAtlParametergruppen();
             int groupId = gr != null ? gr.getId() : -1;
             boolean inGroup = DatabaseQuery.isCompleteParameterGroup(
                 groupId, params);
@@ -413,7 +413,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
 
         Collection<?> theGroups = groups.values();
         for (Object obj : theGroups) {
-            AtlParameterGruppen apg = (AtlParameterGruppen) obj;
+            AtlParametergruppen apg = (AtlParametergruppen) obj;
 
             String gebuehr = new GermanDouble(apg.getPreisfueranalyse())
                 .toString() + " €";

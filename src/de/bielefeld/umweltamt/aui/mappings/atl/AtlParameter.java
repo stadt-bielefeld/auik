@@ -76,7 +76,7 @@ public class AtlParameter extends AbstractAtlParameter implements Serializable {
 
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("ordnungsbegriff").append("='").append(getOrdnungsbegriff()).append("' ");
-        buffer.append("atlParametergruppen").append("='").append(getAtlParameterGruppe()).append("' ");
+        buffer.append("atlParametergruppen").append("='").append(getAtlParametergruppen()).append("' ");
         buffer.append("analyseverfahren").append("='").append(getAnalyseverfahren()).append("' ");
         buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
         buffer.append("wirdgemessenineinheit").append("='").append(getWirdgemessenineinheit()).append("' ");

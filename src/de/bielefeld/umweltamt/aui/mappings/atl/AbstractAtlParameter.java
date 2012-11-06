@@ -41,7 +41,7 @@ public class AbstractAtlParameter extends
     private Double klaerschlammGw;
     private Double preisfueranalyse;
     private Boolean einzelnBeauftragbar;
-    private AtlParameterGruppen atlParameterGruppe;
+    private AtlParametergruppen atlParametergruppe;
     private String kennzeichnung;
     private String konservierung;
     private Integer reihenfolge;
@@ -160,12 +160,12 @@ public class AbstractAtlParameter extends
         this.einzelnBeauftragbar = einzelnBeauftragbar;
     }
 
-    public AtlParameterGruppen getAtlParameterGruppe() {
-        return this.atlParameterGruppe;
+    public AtlParametergruppen getAtlParametergruppen() {
+        return this.atlParametergruppe;
     }
 
-    public void setAtlParameterGruppe(AtlParameterGruppen atlParameterGruppe) {
-        this.atlParameterGruppe = atlParameterGruppe;
+    public void setAtlParametergruppen(AtlParametergruppen atlParameterGruppe) {
+        this.atlParametergruppe = atlParameterGruppe;
     }
 
     public String getKennzeichnung() {

@@ -127,7 +127,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameterGruppen;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
@@ -1662,7 +1662,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         for (int i = 0; i < sorted.size(); i++) {
             AtlAnalyseposition pos = (AtlAnalyseposition) sorted.get(i);
             AtlParameter para = pos.getAtlParameter();
-            AtlParameterGruppen gruppe = para.getAtlParameterGruppe();
+            AtlParametergruppen gruppe = para.getAtlParametergruppen();
 
             if (gruppe == null) {
                 single += para.getPreisfueranalyse();
@@ -1714,7 +1714,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         double preis = 0d;
 
         if (DatabaseQuery.isCompleteParameterGroup(gruppe, params)) {
-            AtlParameterGruppen g = AtlParameterGruppen.findById(gruppe);
+            AtlParametergruppen g = AtlParametergruppen.findById(gruppe);
 
             if (g == null) {
                 log.debug("No such group with id: " + gruppe);

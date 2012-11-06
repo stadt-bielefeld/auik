@@ -26,7 +26,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlMetaParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameterGruppen;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
@@ -229,7 +229,7 @@ public class DatabaseClassToString {
     }
 
     /** Not used so far */
-    public static String toStringForClass(AtlParameterGruppen clazz) {
+    public static String toStringForClass(AtlParametergruppen clazz) {
         return null;
     }
 
