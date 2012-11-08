@@ -509,6 +509,47 @@ public class DatabaseAccess {
     }
 
     /**
+     * Execute a detached query/criteria and return the unique result
+     * <br><br>
+     * Note: For all classes except those in the
+     * <code>de.bielefeld.umweltamt.aui.mappings.tipi</code>-Package
+     * global Restrictions are set (field <code>_deleted = false</code>).
+     * <br><br>
+     * Usage:
+     * <code><pre>
+     * DetachedCriteria criteria =
+     *     DetachedCriteria.forClass(Anh49Verwaltungsverfahren.class);
+     * criteria.add(Restrictions.eq("anh49Fachdaten", fachdaten);
+     * ...
+     * criteria.addOrder(Order.asc("datum"));
+     * ...
+     * Anh49Verwaltungsverfahren result = new DatabaseAccess()
+     *     .executeCriteriaToUniqueResult(
+     *         criteria, Anh49Verwaltungsverfahren.class);
+     * </pre></code>
+     * @param <T> type of the result
+     * @param detachedCriteria query/criteria to execute
+     * @param type type of the result
+     * @return T result of the query/criteria
+     */
+    /*
+     * We are using detached criteria to keep the opening and closing of the
+     * session within on method call here to keep it saver
+     */
+    public <T> T executeCriteriaToUniqueResult(
+        DetachedCriteria detachedCriteria, T type) {
+        this.getExecutableCriteria(detachedCriteria);
+        List<T> list = this.listCriteriaCastToType(type);
+        switch (list.size()) {
+            case 1: return list.get(0);
+            case 0: return null;
+            default:
+                log.error("More than one result in unique request!");
+                return null;
+        }
+    }
+
+    /**
      * Get an executable criteria for a given detached criteria.
      * Add global <code>Restrictions</code>
      * @param detachedCriteria

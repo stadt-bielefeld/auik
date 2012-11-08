@@ -247,7 +247,7 @@ public class DatabaseClassToString {
      */
     public static String toStringForClass(AtlProbenahmen clazz) {
         return "[Probe: " + clazz.getKennummer() + ", "
-            + clazz.getProbeArt() + ", "
+            + clazz.getAtlProbepkt().getAtlProbeart() + ", "
             + AuikUtils.getStringFromDate(clazz.getDatumDerEntnahme())
             + (clazz.getZeitDerEntnahmen() != null ?
                 " " + clazz.getZeitDerEntnahmen() : "")

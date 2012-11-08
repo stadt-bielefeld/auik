@@ -218,7 +218,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 // positionen = probe.getAtlAnalysepositionen();
                 this.probe = AtlProbenahmen.getProbenahme(this.probe.getId(),
                     true);
-                setList(AtlProbenahmen.sortAnalysepositionen(this.probe));
+                setList(DatabaseQuery.getSortedAnalysepositionen(this.probe));
             } else { // isNew
                 if (this.isSchlamm) {
                     AtlParameter[] params = {
@@ -299,10 +299,10 @@ public class ProbenEditor extends AbstractApplyEditor {
                 case 5:
                     value = null;
                     Double grenzWert = null;
-                    if (this.probe.isKlaerschlammProbe()) {
+                    if (DatabaseQuery.isKlaerschlammProbe(this.probe)) {
                         grenzWert = pos.getAtlParameter().getKlaerschlammGw();
-                    } else if (this.probe.getProbeArt().equals(
-                        DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
+                    } else if (this.probe.getAtlProbepkt().getAtlProbeart()
+                        .equals(DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
                         grenzWert = pos.getAtlParameter().getSielhautGw();
                     }
 
@@ -316,7 +316,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     if (pos.getAtlEinheiten().getId().equals(
                         DatabaseConstants.ATL_EINHEIT_MG_KG.getId())) {
                         double tmpVal = -1;
-                        if (this.probe.isKlaerschlammProbe()) {
+                        if (DatabaseQuery.isKlaerschlammProbe(this.probe)) {
                             if (pos.getAtlParameter().getKlaerschlammGw() != null) {
                                 if (!pos.getAtlParameter().getKlaerschlammGw()
                                     .equals(new Double(0.0))) {
@@ -325,8 +325,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                                             .getKlaerschlammGw().doubleValue();
                                 }
                             }
-                        } else if (this.probe.getProbeArt().equals(
-                            DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
+                        } else if (this.probe.getAtlProbepkt().getAtlProbeart()
+                            .equals(DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
                             if (pos.getAtlParameter().getSielhautGw() != null) {
                                 if (!pos.getAtlParameter().getSielhautGw()
                                     .equals(new Double(0.0))) {
@@ -433,8 +433,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         public Object newObject() {
             AtlAnalyseposition tmp = new AtlAnalyseposition();
             tmp.setAtlProbenahmen(this.probe);
-            if (this.probe.isKlaerschlammProbe()
-                || this.probe.getProbeArt().equals(
+            if (DatabaseQuery.isKlaerschlammProbe(this.probe)
+                || this.probe.getAtlProbepkt().getAtlProbeart().equals(
                     DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
                 tmp.setAtlEinheiten(DatabaseConstants.ATL_EINHEIT_MG_KG);
             } else {
@@ -609,11 +609,12 @@ public class ProbenEditor extends AbstractApplyEditor {
         this.isSchlamm = false;
         this.isSielhaut = false;
 
-        if (probe.isKlaerschlammProbe()) {
+        if (DatabaseQuery.isKlaerschlammProbe(probe)) {
             this.isSchlamm = true;
         }
 
-        if (probe.isSielhautProbe()) {
+        if (probe.getAtlProbepkt().getAtlProbeart().equals(
+            DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
             this.isSielhaut = true;
         }
 
@@ -682,7 +683,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 params.put("localFile", path.getAbsolutePath());
 
                 try {
-                    JRDataSource subdata = AtlProbenahmen
+                    JRDataSource subdata = DatabaseQuery
                         .getAuftragDataSource(probe);
 
                     log.debug("Fülle Probenahmeauftrag mit "
@@ -753,13 +754,13 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     Map<String, Object> params = getBescheidDruckMap(probe);
 
-                    JRDataSource subdata = AtlProbenahmen
+                    JRDataSource subdata = DatabaseQuery
                         .getBescheidDataSource(probe);
 
                     PDFExporter.getInstance().exportBescheid(params, subdata,
                         PDFExporter.BESCHEID, path.getAbsolutePath(), true);
 
-                    JRDataSource vSubdata = AtlProbenahmen
+                    JRDataSource vSubdata = DatabaseQuery
                         .getBescheidDataSource(probe);
 
                     PDFExporter.getInstance().exportBescheid(params, vSubdata,
@@ -1021,7 +1022,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         AtlProbenahmen probe = getProbe();
 
-        BasisBetreiber basisBetr = probe.getBasisBetreiber();
+        BasisBetreiber basisBetr = probe.getAtlProbepkt().getBasisBetreiber();
 
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
         CurrencyDouble cd = new CurrencyDouble(getRechnungsbetrag(probe),
@@ -1131,7 +1132,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         });
 
         AtlProbenahmen probe = getProbe();
-        BasisBetreiber basisBetr = probe.getBasisBetreiber();
+        BasisBetreiber basisBetr = probe.getAtlProbepkt().getBasisBetreiber();
 
         this.probenummer.setText(probe.getKennummer());
         this.probenummer.setEnabled(false);
@@ -1203,7 +1204,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         fillVorgangsstatus();
 
-        if (getProbe().isKlaerschlammProbe()) {
+        if (DatabaseQuery.isKlaerschlammProbe(getProbe())) {
             this.icpEinwaageFeld.setValue(getProbe().getEinwaage());
         } else {
             this.icpEinwaageFeld.setEditable(false);
@@ -1484,8 +1485,9 @@ public class ProbenEditor extends AbstractApplyEditor {
      * @return die Variablen für den Probenahmeauftrag als Map.
      */
     public Map<String, Object> getAuftragDruckMap(AtlProbenahmen probe) {
-        BasisBetreiber betr = probe.getBasisBetreiber();
-        BasisStandort std = probe.getBasisObjekt().getBasisStandort();
+        BasisBetreiber betr = probe.getAtlProbepkt().getBasisBetreiber();
+        BasisStandort std = probe.getAtlProbepkt().getBasisObjekt()
+            .getBasisStandort();
         AtlProbeart art = probe.getAtlProbepkt().getAtlProbeart();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
@@ -1537,8 +1539,9 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public Map<String, Object> getBescheidDruckMap(AtlProbenahmen probe)
         throws IllegalArgumentException {
-        BasisBetreiber betr = probe.getBasisBetreiber();
-        BasisStandort basisStandort = probe.getBasisObjekt().getBasisStandort();
+        BasisBetreiber betr = probe.getAtlProbepkt().getBasisBetreiber();
+        BasisStandort basisStandort = probe.getAtlProbepkt().getBasisObjekt()
+            .getBasisStandort();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
 
@@ -1654,15 +1657,19 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public double getAnalysekosten(AtlProbenahmen probe)
         throws IllegalArgumentException {
-        List<?> sorted = AtlProbenahmen.sortAnalysepositionen(probe);
+        List<AtlAnalyseposition> sorted =
+            DatabaseQuery.getSortedAnalysepositionen(probe);
         HashMap<Integer, List<AtlParameter>> gruppen = new HashMap<Integer, List<AtlParameter>>();
         double single = 0d;
         double group = 0d;
 
+        AtlAnalyseposition pos = null;
+        AtlParameter para = null;
+        AtlParametergruppen gruppe = null;
         for (int i = 0; i < sorted.size(); i++) {
-            AtlAnalyseposition pos = (AtlAnalyseposition) sorted.get(i);
-            AtlParameter para = pos.getAtlParameter();
-            AtlParametergruppen gruppe = para.getAtlParametergruppen();
+            pos = sorted.get(i);
+            para = pos.getAtlParameter();
+            gruppe = para.getAtlParametergruppen();
 
             if (gruppe == null) {
                 single += para.getPreisfueranalyse();

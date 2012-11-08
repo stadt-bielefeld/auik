@@ -21,9 +21,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -36,11 +40,13 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.GermanDouble;
+import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 
 /**
  * This is a service class for all custom queries from the atl package.
@@ -49,9 +55,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
 abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
-
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /* ********************************************************************** */
     /* Queries for package ATL                                                */
@@ -119,20 +122,35 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
      * @param pkt AtlProbepkt
      * @param beginDate
      * @param endDate
-     * @return
+     * @return List&lt;AtlAnalyseposition&gt;
      */
     public static List<AtlAnalyseposition> getAnalysepositionen(
             AtlParameter param, AtlProbepkt pkt, Date beginDate, Date endDate) {
-        DetachedCriteria detachedCriteria =
+        return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(AtlAnalyseposition.class)
                 .createAlias("atlProbenahmen", "probe")
                 .add(Restrictions.eq("probe.atlProbepkt", pkt))
                 .add(Restrictions.eq("atlParameter", param))
                 .add(Restrictions.between(
                     "probe.datumDerEntnahme", beginDate, endDate))
-                .addOrder(Order.asc("probe.datumDerEntnahme"));
+                .addOrder(Order.asc("probe.datumDerEntnahme")),
+            new AtlAnalyseposition());
+    }
+
+    /**
+     * Get all <code>AtlAnalyseposition</code>s for a given
+     * <code>AtlProbenahmen</code> and sort them
+     * @param probe AtlProbenahmen
+     * @return List&lt;AtlAnalyseposition&gt;
+     */
+    public static List<AtlAnalyseposition> getSortedAnalysepositionen(
+        AtlProbenahmen probe) {
         return new DatabaseAccess().executeCriteriaToList(
-            detachedCriteria, new AtlAnalyseposition());
+            DetachedCriteria.forClass(AtlAnalyseposition.class)
+                .createAlias("atlParameter", "parameter")
+                .add(Restrictions.eq("atlProbenahmen", probe))
+                .addOrder(Order.asc("parameter.reihenfolge")),
+            new AtlAnalyseposition());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
@@ -160,19 +178,10 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
      *         <code>null</code> otherwise
      */
     public static AtlEinheiten getEinheitByDescription(String description) {
-        List<AtlEinheiten> list = new DatabaseAccess().executeCriteriaToList(
+        return new DatabaseAccess().executeCriteriaToUniqueResult(
             DetachedCriteria.forClass(AtlEinheiten.class)
                 .add(Restrictions.eq("bezeichnung", description)),
-//                .uniqueResult(),
             new AtlEinheiten());
-        // TODO: UniqueResult for Criteria
-        switch (list.size()) {
-            case 1: return list.get(0);
-            case 0: return null;
-            default:
-                log.error("More than one result in unique request!");
-                return null;
-        }
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
@@ -315,6 +324,19 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
     /**
+     * Liefert eine bestimmte Probenahme.
+     * @param kennummer Die Kennummer der Probenahme
+     * @return Die Probe mit der gegebenen ID oder <code>null</code> falls diese
+     *         nicht existiert
+     */
+    public static AtlProbenahmen findProbenahme(String kennnummer) {
+        return new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(AtlProbenahmen.class)
+                .add(Restrictions.eq("kennummer", kennnummer)),
+            new AtlProbenahmen());
+    }
+
+    /**
      * Liefert alle Probenahmen einer bestimmten Art von einer bestimmten
      * Kläranlage.
      * @param art AtlProbeart
@@ -376,5 +398,177 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
             DetachedCriteria.forClass(AtlProbenahmen.class)
                 .add(Restrictions.eq("kennummer", kennnummer)),
             new AtlProbenahmen()).isEmpty()));
+    }
+
+    /**
+     * @param probe AtlProbenahmen
+     * @return <code>true</code>, wenn die Probeart des Probepunktes dieser
+     *         Probe Rohschlamm oder Faulschlamm ist, sonst <code>false</code>
+     */
+    public static Boolean isKlaerschlammProbe(AtlProbenahmen probe) {
+        return (
+            probe.getAtlProbepkt().getAtlProbeart().equals(
+                DatabaseConstants.ATL_PROBEART_FAULSCHLAMM) ||
+            probe.getAtlProbepkt().getAtlProbeart().equals(
+                DatabaseConstants.ATL_PROBEART_ROHRSCHLAMM));
+    }
+
+    public static JRMapDataSource getAuftragDataSource(AtlProbenahmen probe) {
+        List<AtlAnalyseposition> sorted = new DatabaseAccess()
+            .executeCriteriaToList(
+                DetachedCriteria.forClass(AtlAnalyseposition.class)
+                    .createAlias("atlParameter", "parameter")
+                    .add(Restrictions.eq("atlProbenahmen", probe))
+                    .add(Restrictions.not(
+                        Restrictions.ilike("parameter.bezeichnung",
+                            "bei Probenahme", MatchMode.ANYWHERE)))
+                    .addOrder(Order.asc("parameter.reihenfolge")),
+                new AtlAnalyseposition());
+
+        int elements = sorted.size();
+
+        Object[][] values = new Object[elements][];
+        Object[] columns;
+        AtlParameter parameter = null;
+
+        String[] columnsAuftrag = {"auswahl", "Parameter",
+            "Kennzeichnung", "Konservierung", "Zusatz"};
+
+        for (int i = 0; i < elements; i++) {
+            columns = new Object[5];
+
+            parameter = sorted.get(i).getAtlParameter();
+
+            columns[0] = true; // this value is always true
+            columns[1] = parameter.getBezeichnung();
+            columns[2] = parameter.getKennzeichnung();
+            columns[3] = parameter.getKonservierung();
+            columns[4] = parameter.getAnalyseverfahren();
+
+            values[i] = columns;
+        }
+
+        return new JRMapDataSource(columnsAuftrag, values);
+    }
+
+    public static JRMapDataSource getBescheidDataSource(AtlProbenahmen probe) {
+        List<AtlAnalyseposition> sorted =
+            DatabaseQuery.getSortedAnalysepositionen(probe);
+        List<AtlParameter> params = new ArrayList<AtlParameter>();
+        for (AtlAnalyseposition pos : sorted) {
+            params.add(pos.getAtlParameter());
+        }
+
+        int elements = sorted.size();
+        String[] columnsBescheid = {"Pos", "Parameter",
+            "Grenzwert_Wert", "Grenzwert_Einheit", "Ergebnis_Wert",
+            "Ergebnis_Einheit", "Gebühr", "Gr_Kl", "Fett", "inGruppe"};
+
+        Object[][] values = new Object[elements][];
+        Object[] columns;
+        AtlAnalyseposition pos = null;
+        AtlParameter parameter = null;
+
+        for (int i = 0; i < elements; i++) {
+            columns = new Object[columnsBescheid.length];
+            pos = sorted.get(i);
+
+            parameter = pos.getAtlParameter();
+            String grenzwert = "";
+            if (parameter.getGrenzwert() != null
+                && parameter.getGrenzwert() <= 10) {
+                grenzwert = parameter.getGrenzwert().toString()
+                    .replace(".", ",");
+            } else if (parameter.getGrenzwert() != null
+                && parameter.getGrenzwert() > 10) {
+                grenzwert = parameter.getGrenzwert().toString()
+                    .replace(".0", "");
+            }
+            String wert = "";
+            if (pos.getWert() == 0.0) {
+                wert = pos.getWert().toString().replace(".", ",");
+            } else if (pos.getWert() < 0.009) {
+                wert = pos.getWert().toString().substring(0, 5);
+                wert = wert.replace(".", ",");
+            } else if (pos.getWert() < 100) {
+                wert = pos.getWert().toString().replace(".", ",");
+            } else {
+                wert = pos.getWert().toString().replace(".0", "");
+            }
+            Boolean fett = false;
+            if (pos.getWert() != null && parameter.getGrenzwert() != null
+                && pos.getWert() > parameter.getGrenzwert()) {
+                fett = true;
+            }
+            String gebuehr = "0,00 €";
+            if (parameter.getPreisfueranalyse() != 0)
+                gebuehr = new GermanDouble(parameter.getPreisfueranalyse())
+                    .toString() + " €";
+
+            AtlParametergruppen gr = parameter.getAtlParametergruppen();
+            int groupId = gr != null ? gr.getId() : -1;
+
+            boolean inGroup = DatabaseQuery.isCompleteParameterGroup(
+                groupId, params);
+
+//            if (inGroup) {
+//                groups.put(groupId, gr);
+//            }
+            String einh = "";
+            if (!pos.getAtlEinheiten().getBezeichnung().equals("ohne")) {
+                einh = pos.getAtlEinheiten().getBezeichnung();
+            }
+
+            columns[0] = i + 1;
+            columns[1] = parameter.getBezeichnung();
+            columns[2] = grenzwert;
+            columns[3] = einh;
+            columns[4] = wert;
+            columns[5] = einh;
+            columns[6] = inGroup ? "0,00 €" : gebuehr;
+            columns[7] = pos.getGrkl();
+            columns[8] = fett;
+
+            values[i] = columns;
+        }
+
+        Map<Integer, AtlParametergruppen> groups =
+            new HashMap<Integer, AtlParametergruppen>(1);
+
+        int numGroups = groups.size();
+
+        if (numGroups == 0) {
+            return new JRMapDataSource(columnsBescheid, values);
+        }
+
+        Object[][] newValues = new Object[elements + numGroups][];
+        int i;
+
+        for (i = 0; i < elements; i++) {
+            newValues[i] = values[i];
+        }
+
+        Collection<AtlParametergruppen> theGroups = groups.values();
+        for (AtlParametergruppen apg : theGroups) {
+
+            String gebuehr = new GermanDouble(apg.getPreisfueranalyse())
+                .toString() + " €";
+
+            columns = new Object[columnsBescheid.length];
+            columns[0] = i + 1;
+            columns[1] = apg.getName();
+            columns[2] = "";
+            columns[3] = "";
+            columns[4] = "";
+            columns[5] = "";
+            columns[6] = gebuehr;
+            columns[7] = "";
+            columns[8] = "";
+
+            newValues[i] = columns;
+            i++;
+        }
+
+        return new JRMapDataSource(columnsBescheid, newValues);
     }
 }

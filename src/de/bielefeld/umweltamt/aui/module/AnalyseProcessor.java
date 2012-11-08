@@ -28,6 +28,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
@@ -73,7 +74,7 @@ public class AnalyseProcessor {
             "Verarbeite Analyseposition für Parameter: " +
             parameterBezeichnung);
 
-        AtlProbenahmen probe = AtlProbenahmen.getProbenahme(kennnummer, true);
+        AtlProbenahmen probe = DatabaseQuery.findProbenahme(kennnummer);
 
         if (probe == null) {
             log.error(
@@ -130,7 +131,7 @@ public class AnalyseProcessor {
      * {@link AtlParameter} besitzt.
      */
     public static int importStatus(String kenn, String param, String einheit) {
-        AtlProbenahmen probe = AtlProbenahmen.getProbenahme(kenn, true);
+        AtlProbenahmen probe = DatabaseQuery.findProbenahme(kenn);
 
         if (probe == null) {
             return -1;

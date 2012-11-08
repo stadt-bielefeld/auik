@@ -138,7 +138,8 @@ public class ProbenahmenModel extends ListTableModel {
                 		value = "";
                     break;
                 case 5:
-                    value = probe.getBasisObjekt().getBasisBetreiber();
+                    value = probe.getAtlProbepkt().getBasisObjekt()
+                        .getBasisBetreiber();
                     break;
                 case 6:
                     value = probe.getBemerkung();

@@ -296,8 +296,8 @@ public class SielhautImport extends AbstractModul {
                         String kennumer = kennummerAusZeile(current);
 
                         // Probenahme
-                        AtlProbenahmen probe = AtlProbenahmen.getProbenahme(
-                            kennumer, true);
+                        AtlProbenahmen probe = DatabaseQuery.findProbenahme(
+                            kennumer);
                         if (probe == null) {
                             // Sollte eigentlich nicht vorkommen, nötig?
                             throw new Exception("Probenahme nicht gefunden!");
