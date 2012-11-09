@@ -270,14 +270,14 @@ public class SielhautBearbeiten extends AbstractModul {
                 .getSettingsManager().getIntSetting("auik.imc.edit_object")));
             this.manager.getSettingsManager().removeSetting(
                 "auik.imc.edit_object");
-            this.sprobePkt = AtlProbepkt.getProbepunktByObjekt(this.objekt);
+            this.sprobePkt = AtlProbepkt.findById(this.objekt.getObjektid());
             this.spunkt = AtlSielhaut.getSielhaut(this.sprobePkt
                 .getAtlSielhaut().getId());
             setSielhautPunkt(this.spunkt);
         } else if (BasisObjekt.getObjekt(24856) != null) {
             //FIXME: A constant id? In the code? -.-
             this.objekt = BasisObjekt.getObjekt(24856);
-            this.sprobePkt = AtlProbepkt.getProbepunktByObjekt(this.objekt);
+            this.sprobePkt = AtlProbepkt.findById(this.objekt.getObjektid());
             this.spunkt = AtlSielhaut.getSielhaut(this.sprobePkt
                 .getAtlSielhaut().getId());
             setSielhautPunkt(this.spunkt);
@@ -2027,7 +2027,7 @@ class SielhautProbeModel extends ListTableModel {
     @Override
     public void updateList() {
         if (this.probepkt != null) {
-            setList(AtlProbenahmen.getProbenahmen(this.probepkt, true, -1));
+            setList(AtlProbenahmen.getProbenahmen(this.probepkt, true));
 
             this.wertMap.clear();
             for (int i = 0; i < getList().size(); i++) {

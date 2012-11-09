@@ -72,6 +72,7 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
      * @return Den Probepunkt oder <code>null</code>, falls kein Probepunkt
      *         dieser Art mit dieser Kläranlage existiert.
      */
+    // TODO: This does not seem to be what we really want here???
     public static AtlProbepkt getKlaerschlammProbepunkt(
             AtlProbeart art, AtlKlaeranlagen ka) {
         return (AtlProbepkt) new DatabaseAccess()
@@ -86,56 +87,8 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
                 .uniqueResult();
     }
 
-    /*public static List getFirmenProbepunkte() throws HibernateException {
-        Session session = HibernateSessionFactory.currentSession();
-        List pkte = session.find(
-                "FROM AtlProbepkt as probepkt WHERE " +
-                "probepkt.atlProbeart.artId = ? " +
-                "or probepkt.atlProbeart.artId = ? " +
-                "ORDER BY probepkt.pktId asc",
-                new Object[]{    AtlProbeart.ABWASSER_ES,
-                                AtlProbeart.ABWASSER_UWB},
-                new Type[]{    Hibernate.INTEGER,
-                            Hibernate.INTEGER}
-            );
-        HibernateSessionFactory.closeSession();
-
-        return pkte;
-    }
-
-    public static List getFirmenProbepunkte(AtlFirmen firma) throws HibernateException {
-        Session session = HibernateSessionFactory.currentSession();
-        List pkte = session.find(
-                "FROM AtlProbepkt as probepkt WHERE " +
-                "probepkt.atlFirmen = ? " +
-                "ORDER BY probepkt.pktId asc",
-                new Object[]{firma},
-                new Type[]{    Hibernate.entity(AtlFirmen.class)}
-            );
-        HibernateSessionFactory.closeSession();
-
-        return pkte;
-    }*/
-
-    public static AtlProbepkt getProbepunkt(Integer id) {
-        return (AtlProbepkt) new DatabaseAccess()
-            .createQuery(
-                "FROM AtlProbepkt as probepkt WHERE "
-                    + "probepkt.objektid = :id")
-                .setInteger("id", id)
-                .uniqueResult();
-    }
-
-    public static AtlProbepkt getProbepunktByObjekt(BasisObjekt objekt) {
-        if (objekt == null) {
-            return null;
-        }
-        return (AtlProbepkt) new DatabaseAccess()
-            .createQuery(
-                "FROM AtlProbepkt as probepkt WHERE "
-                    + "probepkt.basisObjekt = :objekt")
-                .setEntity("objekt", objekt)
-                .uniqueResult();
+    public static AtlProbepkt findById(Integer id) {
+        return (AtlProbepkt) new DatabaseAccess().get(AtlProbepkt.class, id);
     }
 
     public static AtlProbepkt getSielhautProbepunkt(AtlSielhaut siel) {

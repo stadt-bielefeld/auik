@@ -33,6 +33,7 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
 /**
  * This is a service class for all custom queries from the indeinl package.
@@ -138,5 +139,56 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .setProjection(Projections.distinct(
                     Projections.property("erfassung"))),
             new Integer[0]);
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class IndeinlGenehmigung                  */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static Integer[] anhaenge = null;
+    public static Integer[] getAnhangFromGenehmigung() {
+        if (DatabaseIndeinlQuery.anhaenge == null) {
+            DatabaseIndeinlQuery.anhaenge = new DatabaseAccess()
+                .executeCriteriaToArray(
+                    DetachedCriteria.forClass(IndeinlGenehmigung.class)
+                        .addOrder(Order.asc("anhang"))
+                        .setProjection(Projections.distinct(
+                            Projections.property("anhang"))),
+                    new Integer[0]);
+        }
+        return DatabaseIndeinlQuery.anhaenge;
+    }
+
+    /**
+     * Get a selection of IndeinlGenehmigungen
+     * @param anhang Integer -1: all, other: IndeinlGenehmigung.anhang
+     * @param inaktiv Boolean IndeinlGenehmigung.basisObjekt.inaktiv
+     * @param gen58 Boolean false: whatever, true: IndeinlGenehmigung.gen58
+     * @param gen59 Boolean false: whatever, true: IndeinlGenehmigung.gen59
+     * @return List&lt;IndeinlGenehmigung&gt;
+     */
+    public static List<IndeinlGenehmigung> getGenehmigungen(
+        Integer anhang, Boolean inaktiv, Boolean gen58, Boolean gen59) {
+        DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(IndeinlGenehmigung.class)
+                .createAlias("basisObjekt", "objekt")
+                .createAlias("basisObjekt.basisBetreiber", "betreiber")
+                .createAlias("basisObjekt.basisStandort", "standort")
+                .add(Restrictions.eq("objekt.inaktiv", inaktiv))
+                .addOrder(Order.asc("betreiber.betrname"))
+                .addOrder(Order.asc("standort.strasse"))
+                .addOrder(Order.asc("standort.hausnr"));
+        if (anhang == null || anhang != -1) {
+            detachedCriteria.add(
+                DatabaseAccess.getRestrictionsEqualOrNull("anhang", anhang));
+        }
+        if (gen58) {
+            detachedCriteria.add(Restrictions.eq("gen58", gen58));
+        }
+        if (gen59) {
+            detachedCriteria.add(Restrictions.eq("gen59", gen59));
+        }
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new IndeinlGenehmigung());
     }
 }

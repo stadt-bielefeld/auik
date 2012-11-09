@@ -77,8 +77,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
      * @param pkt Der Probepunkt.
      * @param loadPos Sollen die Analysepositionen auch geholt werden?
      */
-    public static List<?> getProbenahmen(AtlProbepkt pkt, boolean loadPos,
-        int limit) {
+    public static List<?> getProbenahmen(AtlProbepkt pkt, boolean loadPos) {
         if (pkt.getObjektid() == null) {
             return new ArrayList<AtlProbenahmen>();
         }
@@ -88,8 +87,7 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
                 "FROM AtlProbenahmen as probenahme "
                     + "WHERE probenahme.atlProbepkt = :pkt "
                     + "ORDER BY probenahme.datumDerEntnahme desc, "
-                    + "probenahme.kennummer desc"
-                    + ((limit != -1) ? " LIMIT 5" : ""))
+                    + "probenahme.kennummer desc")
             .setEntity("pkt", pkt)
             .list();
 

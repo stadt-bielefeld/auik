@@ -64,7 +64,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
 public class AuswertungTest extends TestCase {
 
@@ -280,12 +279,13 @@ public class AuswertungTest extends TestCase {
         Session session = null;
         session = _sessionFactory.openSession();
 
-        List<?> list = IndeinlGenehmigung.getAuswertungsListe(true, true);
+        List<?> list = DatabaseQuery.getGenehmigungen(-1, false, true, true);
 
         List<?> listquery;
         String query = "from IndeinlGenehmigung as gen "
-            + "where gen.gen58 = 't' or gen.gen59 = 't' "
-            + "order by gen.basisObjekt.inaktiv, gen.basisObjekt.basisBetreiber.betrname";
+            + "where (gen.gen58 = 't' or gen.gen59 = 't') "
+    		    + "and gen.basisObjekt.inaktiv = 'f' "
+            + "order by gen.basisObjekt.basisBetreiber.betrname";
 
         try {
             listquery = session.createQuery(query).list();

@@ -24,15 +24,16 @@ package de.bielefeld.umweltamt.aui.module;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.GenehmigungModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -43,16 +44,11 @@ public class EinleiterGenehmigungAuswertung extends AbstractQueryModul {
     private JPanel queryPanel;
 
     // Widgets für die Abfrage
-    private JButton submitButton;
-    private JButton anh40Button;
-    private JButton anh49Button;
-    private JButton anh50Button;
-    private JButton anh53Button;
-    private JButton BwkButton;
-    private JRadioButton alleButton;
-    private JRadioButton gen58Button;
-    private JRadioButton gen59Button;
-    private ButtonGroup group;
+    private JComboBox anhangBox;
+    private JCheckBox inaktivCheck;
+    private JCheckBox gen58Check;
+    private JCheckBox gen59Check;
+    private JButton okayButton;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private GenehmigungModel tmodel;
@@ -80,264 +76,17 @@ public class EinleiterGenehmigungAuswertung extends AbstractQueryModul {
     @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
-            // Die Widgets initialisieren
-            submitButton = new JButton("Alle Objekte anzeigen");
-            anh40Button = new JButton("40");
-            anh49Button = new JButton("49");
-            anh50Button = new JButton("50");
-            anh53Button = new JButton("53");
-            BwkButton = new JButton("BWK");
-            group = new ButtonGroup();
-            alleButton = new JRadioButton("alle", true);
-            group.add(alleButton);
-            gen58Button = new JRadioButton("nur 58er", false);
-            group.add(gen58Button);
-            gen59Button = new JRadioButton("nur 59er", false);
-            group.add(gen59Button);
-
-            // Ein ActionListener für den Button,
-            // der die eigentliche Suche auslöst:
-
-
-            submitButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
-                        @Override
-                        protected void doNonUILogic() {
-                            Boolean gen58 = new Boolean(true);
-                            Boolean gen59 = new Boolean(true);
-                            if (alleButton.isSelected() == true){
-                                gen58 = true;
-                                gen59 = true;
-                            }
-                            else if (gen58Button.isSelected() == true){
-                                gen58 = true;
-                                gen59 = false;
-                            }
-                            else if (gen59Button.isSelected() == true){
-                                gen58 = false;
-                                gen59 = true;
-                            }
-                            ((GenehmigungModel)getTableModel()).setList(IndeinlGenehmigung.getAuswertungsListe(gen58, gen59));
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic(){
-                            ((GenehmigungModel)getTableModel()).fireTableDataChanged();
-                            frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-            anh40Button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(
-                            getResultTable()) {
-                        @Override
-                        protected void doNonUILogic() {
-                            Boolean gen58 = new Boolean(true);
-                            Boolean gen59 = new Boolean(true);
-                            if (alleButton.isSelected() == true){
-                                gen58 = true;
-                                gen59 = true;
-                            }
-                            else if (gen58Button.isSelected() == true){
-                                gen58 = true;
-                                gen59 = false;
-                            }
-                            else if (gen59Button.isSelected() == true){
-                                gen58 = false;
-                                gen59 = true;
-                            }
-                            ((GenehmigungModel) getTableModel())
-                                    .setList(IndeinlGenehmigung.getAnh40Liste(gen58, gen59));
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic() {
-                            ((GenehmigungModel) getTableModel())
-                                    .fireTableDataChanged();
-                            frame.changeStatus(""
-                                    + getTableModel().getRowCount()
-                                    + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-            anh49Button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(
-                            getResultTable()) {
-                        @Override
-                        protected void doNonUILogic() {
-                            Boolean gen58 = new Boolean(true);
-                            Boolean gen59 = new Boolean(true);
-                            if (alleButton.isSelected() == true){
-                                gen58 = true;
-                                gen59 = true;
-                            }
-                            else if (gen58Button.isSelected() == true){
-                                gen58 = true;
-                                gen59 = false;
-                            }
-                            else if (gen59Button.isSelected() == true){
-                                gen58 = false;
-                                gen59 = true;
-                            }
-                            ((GenehmigungModel) getTableModel())
-                                    .setList(IndeinlGenehmigung.getAnh49Liste(gen58, gen59));
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic() {
-                            ((GenehmigungModel) getTableModel())
-                                    .fireTableDataChanged();
-                            frame.changeStatus(""
-                                    + getTableModel().getRowCount()
-                                    + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-            anh50Button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(
-                            getResultTable()) {
-                        @Override
-                        protected void doNonUILogic() {
-                            Boolean gen58 = new Boolean(true);
-                            Boolean gen59 = new Boolean(true);
-                            if (alleButton.isSelected() == true){
-                                gen58 = true;
-                                gen59 = true;
-                            }
-                            else if (gen58Button.isSelected() == true){
-                                gen58 = true;
-                                gen59 = false;
-                            }
-                            else if (gen59Button.isSelected() == true){
-                                gen58 = false;
-                                gen59 = true;
-                            }
-                            ((GenehmigungModel) getTableModel())
-                                    .setList(IndeinlGenehmigung.getAnh50Liste(gen58, gen59));
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic() {
-                            ((GenehmigungModel) getTableModel())
-                                    .fireTableDataChanged();
-                            frame.changeStatus(""
-                                    + getTableModel().getRowCount()
-                                    + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-            anh53Button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(
-                            getResultTable()) {
-                        @Override
-                        protected void doNonUILogic() {
-                            Boolean gen58 = new Boolean(true);
-                            Boolean gen59 = new Boolean(true);
-                            if (alleButton.isSelected() == true){
-                                gen58 = true;
-                                gen59 = true;
-                            }
-                            else if (gen58Button.isSelected() == true){
-                                gen58 = true;
-                                gen59 = false;
-                            }
-                            else if (gen59Button.isSelected() == true){
-                                gen58 = false;
-                                gen59 = true;
-                            }
-                            ((GenehmigungModel) getTableModel())
-                                    .setList(IndeinlGenehmigung.getAnh53Liste(gen58, gen59));
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic() {
-                            ((GenehmigungModel) getTableModel())
-                                    .fireTableDataChanged();
-                            frame.changeStatus(""
-                                    + getTableModel().getRowCount()
-                                    + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-            BwkButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(
-                            getResultTable()) {
-                        @Override
-                        protected void doNonUILogic() {
-                            Boolean gen58 = new Boolean(true);
-                            Boolean gen59 = new Boolean(true);
-                            if (alleButton.isSelected() == true){
-                                gen58 = true;
-                                gen59 = true;
-                            }
-                            else if (gen58Button.isSelected() == true){
-                                gen58 = true;
-                                gen59 = false;
-                            }
-                            else if (gen59Button.isSelected() == true){
-                                gen58 = false;
-                                gen59 = true;
-                            }
-                            ((GenehmigungModel) getTableModel())
-                                    .setList(IndeinlGenehmigung.getBwkListe(gen58, gen59));
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic() {
-                            ((GenehmigungModel) getTableModel())
-                                    .fireTableDataChanged();
-                            frame.changeStatus(""
-                                    + getTableModel().getRowCount()
-                                    + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-            // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu");
+            FormLayout layout = new FormLayout(
+                "pref, 3dlu, pref, 3dlu, pref, 3dlu, " +
+                "pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(submitButton);
-            builder.append(anh40Button);
-            builder.append(anh49Button);
-            builder.append(anh50Button);
-            builder.append(anh53Button);
-            builder.append(BwkButton);
-            builder.nextLine();
-            builder.append("");
-            builder.append(alleButton);
-            builder.append(gen58Button);
-            builder.append(gen59Button);
+            builder.append(new JLabel("Anhang:"));
+            builder.append(this.getAnhangBox());
+            builder.append(this.getInaktivCheck());
+            builder.append(this.getGen58Check());
+            builder.append(this.getGen59Check());
+            builder.append(this.getOkayButton());
 
             queryPanel = builder.getPanel();
         }
@@ -354,5 +103,85 @@ public class EinleiterGenehmigungAuswertung extends AbstractQueryModul {
             tmodel = new GenehmigungModel();
         }
         return tmodel;
+    }
+
+    private JComboBox getAnhangBox() {
+        if (this.anhangBox == null) {
+            Integer[] anhaenge = DatabaseQuery.getAnhangFromGenehmigung();
+            String[] comboValues = new String[anhaenge.length+1];
+            comboValues[0] = "alle";
+            for (int i = 1; i < anhaenge.length; i++) {
+                comboValues[i] =
+                    (anhaenge[i-1] != null ? anhaenge[i-1].toString() : null);
+            }
+            comboValues[anhaenge.length] = "keine Angabe (BWK)";
+            this.anhangBox = new JComboBox(comboValues);
+        }
+        return this.anhangBox;
+    }
+
+    private Integer getAnhang() {
+        String comboValue = (String) this.getAnhangBox().getSelectedItem();
+        if (comboValue.equals("alle")) {
+            return -1;
+        } else if (comboValue.equals("keine Angabe (BWK)")) {
+            return null;
+        } else {
+            return new Integer(comboValue);
+        }
+    }
+
+    private JCheckBox getInaktivCheck() {
+        if (this.inaktivCheck == null) {
+            this.inaktivCheck = new JCheckBox("inaktiv", false);
+        }
+        return this.inaktivCheck;
+    }
+
+    private JCheckBox getGen58Check() {
+        if (this.gen58Check == null) {
+            this.gen58Check = new JCheckBox("nur 58er", false);
+        }
+        return this.gen58Check;
+    }
+
+    private JCheckBox getGen59Check() {
+        if (this.gen59Check == null) {
+            this.gen59Check = new JCheckBox("nur 59er", false);
+        }
+        return this.gen59Check;
+    }
+
+    private JButton getOkayButton() {
+        if (this.okayButton == null) {
+            this.okayButton = new JButton("Genehmigungen anzeigen");
+            this.okayButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(
+                        getResultTable()) {
+                        @Override
+                        protected void doNonUILogic() {
+                            getTableModel().setList(
+                                DatabaseQuery.getGenehmigungen(
+                                    getAnhang(),
+                                    getInaktivCheck().isSelected(),
+                                    getGen58Check().isSelected(),
+                                    getGen59Check().isSelected()));
+                        }
+
+                        @Override
+                        protected void doUIUpdateLogic(){
+                            getTableModel().fireTableDataChanged();
+                            frame.changeStatus(
+                                getTableModel().getRowCount()
+                                + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+        }
+        return this.okayButton;
     }
 }

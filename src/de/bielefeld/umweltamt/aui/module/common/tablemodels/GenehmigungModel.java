@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -86,10 +87,9 @@ public class GenehmigungModel extends ListTableModel {
         default:
             tmp = "ERROR";
             break;
-//        }
-//        if (fd.getBasisObjekt().getInaktiv() == true && columnIndex != 4 && columnIndex != 5)
-//        {
-//            tmp = "<html><strike>" + tmp + "</strike></html>";
+        }
+        if (tmp instanceof String && fd.getBasisObjekt().getInaktiv()) {
+            tmp = StringUtils.setStrike((String)tmp);
         }
         return tmp;
     }

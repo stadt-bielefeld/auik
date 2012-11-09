@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -82,91 +81,5 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
      */
     public static boolean saveFachdaten(IndeinlGenehmigung fachdaten) {
         return new DatabaseAccess().saveOrUpdate(fachdaten);
-    }
-
-    /**
-     * Liefert eine Liste mit allen IndeinlGenehmigung Objekten.
-     * @return Eine Liste aus IndeinlGenehmigungen.
-     */
-    public static List<?> getAuswertungsListe(Boolean gen58, Boolean gen59) {
-        String query = "FROM IndeinlGenehmigung as gen "
-            // TODO: AND has a higher priority than OR. I do not think we wanted
-            // what we had here before, but this should be checked!
-//            + "WHERE gen.gen58 = :gen58 or gen.gen59 = :gen59 and gen.basisObjekt.inaktiv = 'false'"
-            + "WHERE (gen.gen58 = :gen58 or gen.gen59 = :gen59) "
-    		+ "and gen.basisObjekt.inaktiv = 'false' "
-            + "ORDER BY gen.basisObjekt.basisBetreiber.betrname";
-
-        return new DatabaseAccess().createQuery(query)
-            .setBoolean("gen58", gen58)
-            .setBoolean("gen59", gen59)
-            .list();
-    }
-
-    /**
-     * Liefert eine Liste mit allen Anhang 40 Genehmigungsobjekten.
-     * @return Eine Liste aus Genehmigungsfachdaten.
-     */
-    public static List<?> getAnh40Liste(Boolean gen58, Boolean gen59) {
-        return IndeinlGenehmigung.getAnhListe(40, gen58, gen59);
-    }
-
-    /**
-     * Liefert eine Liste mit allen Anhang 49 Genehmigungsobjekten.
-     * @return Eine Liste aus Genehmigungsfachdaten.
-     */
-    public static List<?> getAnh49Liste(Boolean gen58, Boolean gen59) {
-        return IndeinlGenehmigung.getAnhListe(49, gen58, gen59);
-    }
-
-    /**
-     * Liefert eine Liste mit allen Anhang 50 Genehmigungsobjekten.
-     * @return Eine Liste aus Genehmigungsfachdaten.
-     */
-    public static List<?> getAnh50Liste(Boolean gen58, Boolean gen59) {
-        return IndeinlGenehmigung.getAnhListe(50, gen58, gen59);
-    }
-
-    /**
-     * Liefert eine Liste mit allen Anhang 53 Genehmigungsobjekten.
-     * @return Eine Liste aus Genehmigungsfachdaten.
-     */
-    public static List<?> getAnh53Liste(Boolean gen58, Boolean gen59) {
-        return IndeinlGenehmigung.getAnhListe(53, gen58, gen59);
-    }
-
-    /**
-     * Little helper method for the four methods above
-     */
-    private static List<?> getAnhListe(int anhang, Boolean gen58, Boolean gen59) {
-        String query = "FROM IndeinlGenehmigung as gen "
-            + "WHERE gen.anhang = :anhang "
-            + "and (gen.gen58 = :gen58 or gen.gen59 = :gen59) "
-            + "ORDER BY gen.basisObjekt.inaktiv, "
-            + "gen.basisObjekt.basisBetreiber.betrname";
-
-        return new DatabaseAccess().createQuery(query)
-            .setInteger("anhang", anhang)
-            .setBoolean("gen58", gen58)
-            .setBoolean("gen59", gen59)
-            .list();
-    }
-
-    /**
-     * Liefert eine Liste mit allen Anhang 40 Genehmigungsobjekten.
-     * @return Eine Liste aus Genehmigungsfachdaten.
-     */
-    public static List<?> getBwkListe(Boolean gen58, Boolean gen59) {
-        String query = "FROM IndeinlGenehmigung as gen "
-            + "WHERE gen.anhang Is Null "
-            + "and (gen.gen58 = :gen58 or gen.gen59 = :gen59) "
-            + "ORDER BY gen.basisObjekt.inaktiv, "
-            + "gen.basisObjekt.basisStandort.strasse, "
-            + "gen.basisObjekt.basisStandort.hausnr";
-
-        return new DatabaseAccess().createQuery(query)
-            .setBoolean("gen58", gen58)
-            .setBoolean("gen59", gen59)
-            .list();
     }
 }

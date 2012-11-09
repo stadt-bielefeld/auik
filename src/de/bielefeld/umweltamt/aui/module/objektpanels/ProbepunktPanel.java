@@ -201,8 +201,8 @@ public class ProbepunktPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.probepkt = AtlProbepkt.getProbepunktByObjekt(this.hauptModul
-            .getObjekt());
+        this.probepkt = AtlProbepkt.findById(
+            this.hauptModul.getObjekt().getObjektid());
         log.debug("Probepunkt aus DB geholt: " + this.probepkt);
 
         if (this.probearten == null) {
