@@ -158,6 +158,20 @@ public class AtlProbeart  implements java.io.Serializable {
     }
 
     /**
+     * @param other
+     * @return <code>true</code>, if this and other are equal,
+     *         <code>false</code> otherwise
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        if (!(other instanceof AtlProbeart)) return false;
+        return (this.getId().equals(
+            ((AtlProbeart) other).getId()));
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>AtlProbeart</code> the merged instance,

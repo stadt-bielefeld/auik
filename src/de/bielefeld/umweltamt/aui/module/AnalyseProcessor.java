@@ -28,12 +28,12 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 
@@ -96,7 +96,7 @@ public class AnalyseProcessor {
             pos.setAtlEinheiten(einheit);
             pos.setAnalyseVon("E-Satzung");
 
-            probe.setAtlStatus(new AtlStatus(10));
+            probe.setAtlStatus(DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN);
             AtlProbenahmen.merge(probe);
         }
 
