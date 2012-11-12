@@ -122,7 +122,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(
                                 DatabaseQuery.findProbenahmen(
-                                    DatabaseConstants.ATL_STATUS_BESCHEIDDRUCK));
+                                    DatabaseConstants.ATL_STATUS_FREIGEGEBEN_FUER_BESCHEIDDRUCK));
                         }
 
                         @Override
@@ -143,7 +143,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(
                                 DatabaseQuery.findProbenahmen(
-                                    DatabaseConstants.ATL_STATUS_EINGETRAGEN));
+                                    DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN));
                         }
 
                         @Override
@@ -164,7 +164,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(
                                 DatabaseQuery.findProbenahmen(
-                                    DatabaseConstants.ATL_STATUS_ERGAENZT));
+                                    DatabaseConstants.ATL_STATUS_ERGAENZT_UND_FREIGEGEBEN));
                         }
 
                         @Override
@@ -185,7 +185,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(
                                 DatabaseQuery.findProbenahmen(
-                                    DatabaseConstants.ATL_STATUS_ANGELEGT));
+                                    DatabaseConstants.ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT));
                         }
 
                         @Override

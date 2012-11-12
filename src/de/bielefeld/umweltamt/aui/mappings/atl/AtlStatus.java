@@ -82,50 +82,10 @@ public class AtlStatus extends AbstractAtlStatus implements Serializable {
         return buffer.toString();
     }
 
+    public static AtlStatus findById(int id) {
+        return (AtlStatus) new DatabaseAccess().get(AtlStatus.class, id);
+    }
+
     /* Add customized code below */
 
-    /**
-     * Liefert alle in der Einheiten-Tabelle gespeicherten Einheiten.
-     * @return Ein Array mit allen Einheiten
-     */
-    private static AtlStatus[] getStatus() {
-        return (AtlStatus[]) new DatabaseAccess()
-                .createQuery("FROM AtlStatus as status")
-                .array(new AtlStatus[0]);
-    }
-
-    /**
-     * Liefert das AtlStatus Objekt mit der passenden Bezeichnung.
-     * @return das Objekt passend zu <i>bezeichnung</i>, oder <i>null</i> falls
-     *         kein Objekt mit dieser Bezeichnung existiert.
-     */
-    public static AtlStatus getStatus(String bezeichnung) {
-        AtlStatus[] status = getStatus();
-        for (AtlStatus s : status) {
-            if (bezeichnung.equals(s.getBezeichnung())) {
-                return s;
-            }
-        }
-        return null;
-    }
-
-    public static AtlStatus getStatus(int id) {
-        AtlStatus[] status = getStatus();
-        for (AtlStatus s : status) {
-            if (id == s.getId()) {
-                return s;
-            }
-        }
-        return null;
-    }
-
-    public static String[] getStatusAsString() {
-        AtlStatus[] status = getStatus();
-        String[] str = new String[status.length];
-        int idx = 0;
-        for (AtlStatus s : status) {
-            str[idx++] = s.getBezeichnung();
-        }
-        return str;
-    }
 }

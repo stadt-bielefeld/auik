@@ -571,4 +571,39 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
 
         return new JRMapDataSource(columnsBescheid, newValues);
     }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlStatus                              */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static AtlStatus[] atlStatus = null;
+    /**
+     * Get all AtlStatus
+     * @return <code>AtlStatus[]</code>
+     */
+    public static AtlStatus[] getStatus() {
+        if (DatabaseAtlQuery.atlStatus == null) {
+            DatabaseAtlQuery.atlStatus =
+                DatabaseQuery.getOrderedAll(new AtlStatus())
+                    .toArray(new AtlStatus[0]);
+        }
+        return DatabaseAtlQuery.atlStatus;
+    }
+
+    /**
+     * Hole den nächsten Status - für den Wullspuffel ;-)
+     * @param aktuellerStatus
+     * @return <code>AtlStatus</code> nächster Status
+     */
+    public static AtlStatus getNextStatus(AtlStatus aktuellerStatus) {
+        if (aktuellerStatus.equals(
+            DatabaseConstants.ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT)) {
+            return DatabaseConstants.ATL_STATUS_ERGAENZT_UND_FREIGEGEBEN;
+        }
+        if (aktuellerStatus.equals(
+            DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN)) {
+            return DatabaseConstants.ATL_STATUS_FREIGEGEBEN_FUER_BESCHEIDDRUCK;
+        }
+        return aktuellerStatus;
+    }
 }

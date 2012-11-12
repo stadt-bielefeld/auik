@@ -104,14 +104,16 @@ public class DatabaseConstants {
         AtlKlaeranlagen.findById(9);
 
     /* AtlStatus */
-    public static final AtlStatus ATL_STATUS_ANGELEGT =
-        AtlStatus.getStatus(8);
-    public static final AtlStatus ATL_STATUS_ERGAENZT =
-        AtlStatus.getStatus(9);
-    public static final AtlStatus ATL_STATUS_EINGETRAGEN =
-        AtlStatus.getStatus(10);
-    public static final AtlStatus ATL_STATUS_BESCHEIDDRUCK =
-        AtlStatus.getStatus(11);
+    public static final AtlStatus ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT =
+        AtlStatus.findById(8);
+    public static final AtlStatus ATL_STATUS_ERGAENZT_UND_FREIGEGEBEN =
+        AtlStatus.findById(9);
+    public static final AtlStatus ATL_STATUS_DATEN_EINGETRAGEN =
+        AtlStatus.findById(10);
+    public static final AtlStatus ATL_STATUS_FREIGEGEBEN_FUER_BESCHEIDDRUCK =
+        AtlStatus.findById(11);
+    public static final AtlStatus ATL_STATUS_BESCHEID_GEDRUCKT =
+        AtlStatus.findById(3);
 
     /* ********************************************************************** */
     /* Constants for package BASIS                                            */

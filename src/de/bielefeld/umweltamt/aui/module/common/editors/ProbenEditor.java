@@ -571,7 +571,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     private Dimension minimumSize;
 
-    private JComboBox vorgangsstatus;
+    private JComboBox vorgangsstatusBox;
     private JButton statusHoch;
     private TextFieldDateChooser datum;
     private JFormattedTextField uhrzeitVon;
@@ -691,9 +691,12 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     PDFExporter.getInstance().exportAuftrag(params, subdata,
                         path.getAbsolutePath(), true);
-                    String gedruckt = updateVorgangsstatus("Probenahmeauftrag gedruckt");
 
-                    probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
+                    updateVorgangsstatus(
+                        DatabaseConstants.ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT);
+                    probe.setAtlStatus(
+                        DatabaseConstants.ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT);
+
                     AtlProbenahmen.merge(probe);
 
                     GUIManager.getInstance().showInfoMessage(
@@ -766,12 +769,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                     PDFExporter.getInstance().exportBescheid(params, vSubdata,
                         PDFExporter.VFG, vPath.getAbsolutePath(), true);
 
-                    AtlStatus currentStatus = getVorgangsstatus();
-                    String currentBez = currentStatus.getBezeichnung();
-
-                    currentBez = currentBez.trim();
-
-                    if (!currentBez.equals("Bescheid gedruckt")) {
+                    if (!(getVorgangsstatus().equals(
+                        DatabaseConstants.ATL_STATUS_BESCHEID_GEDRUCKT))) {
                         // Diese Datei soll nur 1x erzeugt werden. Nachdem der
                         // Status auf "Bescheid gedruckt" erhöht wurde, kann
                         // zwar der Bescheid nochmals gedruckt werden, jedoch
@@ -792,9 +791,11 @@ public class ProbenEditor extends AbstractApplyEditor {
                         }
                     }
 
-                    String gedruckt = updateVorgangsstatus("Bescheid gedruckt");
+                    updateVorgangsstatus(
+                        DatabaseConstants.ATL_STATUS_BESCHEID_GEDRUCKT);
 
-                    probe.setAtlStatus(AtlStatus.getStatus(gedruckt));
+                    probe.setAtlStatus(
+                        DatabaseConstants.ATL_STATUS_BESCHEID_GEDRUCKT);
 
                     AtlProbenahmen.merge(probe);
 
@@ -835,7 +836,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         this.bezug = new JTextField();
         this.beteiligte = new JTextField();
         this.probenummer = new JTextField();
-        this.vorgangsstatus = new JComboBox();
+        this.vorgangsstatusBox = new JComboBox();
         this.statusHoch = new JButton("erhöhen");
         this.sachbearbeiterBox = new JComboBox();
         this.icpEinwaageFeld = new DoubleField(0);
@@ -844,11 +845,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         this.betrieb = new JLabel();
         this.parameterTabelle = new SelectTable();
 
-        // wir nehmen hier nur die Strings um die ComboBox zu füllen, da die Box
-        // nicht mehr auf Änderungen reagiert, wenn man sie mit AtlStatus
-        // Objekten befüllt
-        this.vorgangsstatus.setModel(new DefaultComboBoxModel(AtlStatus
-            .getStatusAsString()));
+        this.vorgangsstatusBox.setModel(
+            new DefaultComboBoxModel(DatabaseQuery.getStatus()));
 
         this.sachbearbeiterBox.setModel(new DefaultComboBoxModel(
             BasisSachbearbeiter.getEnabledSachbearbeiter()));
@@ -857,15 +855,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         this.statusHoch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AtlStatus current = getVorgangsstatus();
-                if (current == null)
-                    return;
-
-                AtlStatus next = AtlStatus.getStatus(current.getId() + 1);
-                if (next == null)
-                    return;
-
-                updateVorgangsstatus(next.getBezeichnung());
+                updateVorgangsstatus(
+                    DatabaseQuery.getNextStatus(getVorgangsstatus()));
             }
         });
 
@@ -925,7 +916,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         row += 2;
         builder.add(new JLabel("Vorgangsstatus:"), cc.xyw(1, row, 1));
-        builder.add(this.vorgangsstatus, cc.xyw(2, row, 4));
+        builder.add(this.vorgangsstatusBox, cc.xyw(2, row, 4));
         builder.addLabel("", cc.xyw(1, row, 1));
         builder.add(this.statusHoch, cc.xyw(7, row, 1));
 
@@ -1316,16 +1307,11 @@ public class ProbenEditor extends AbstractApplyEditor {
         AtlStatus status = probe.getAtlStatus();
         log.debug("Aktueller Status: " + status.getBezeichnung());
 
-        String bezeichnung = status.getBezeichnung();
-
-        updateVorgangsstatus(bezeichnung);
+        updateVorgangsstatus(status);
     }
 
     protected AtlStatus getVorgangsstatus() {
-        String selection = (String) this.vorgangsstatus.getSelectedItem();
-        AtlStatus current = AtlStatus.getStatus(selection);
-
-        return current;
+        return (AtlStatus) this.vorgangsstatusBox.getSelectedItem();
     }
 
     protected BasisSachbearbeiter getSachbearbeiter() {
@@ -1334,29 +1320,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         return (BasisSachbearbeiter) model.getSelectedItem();
     }
 
-    protected String updateVorgangsstatus(String bezeichnung) {
-        DefaultComboBoxModel model = (DefaultComboBoxModel) this.vorgangsstatus
-            .getModel();
-
-        Object selection = null;
-        int size = model.getSize();
-
-        bezeichnung = bezeichnung.trim().toLowerCase();
-
-        for (int i = 0; i < size; i++) {
-            String tmp = (String) model.getElementAt(i);
-
-            if (bezeichnung.equals(tmp.trim().toLowerCase())) {
-                selection = tmp;
-                break;
-            }
-        }
-
-        if (selection != null) {
-            model.setSelectedItem(selection);
-        }
-
-        return (String) selection;
+    protected void updateVorgangsstatus(AtlStatus newStatus) {
+        this.vorgangsstatusBox.setSelectedItem(newStatus);
     }
 
     @Override
@@ -1371,10 +1336,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         AtlProbenahmen probe = getProbe();
 
         // Vorgangsstatus
-        String status = (String) this.vorgangsstatus.getSelectedItem();
-        if (status != null) {
-            probe.setAtlStatus(AtlStatus.getStatus(status));
-        }
+        probe.setAtlStatus((AtlStatus) this.vorgangsstatusBox.getSelectedItem());
 
         // Von
         // TODO: This does not seem to make sense...
