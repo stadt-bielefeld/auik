@@ -35,9 +35,9 @@ import java.awt.event.WindowEvent;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -773,10 +773,11 @@ public class ProbepktAuswPanel extends JPanel {
 
         }
 
-        Timestamp vonDate = new Timestamp(getVonDateChooser().getDate()
-            .getTime());
-        Timestamp bisDate = new Timestamp(getBisDateChooser().getDate()
-            .getTime());
+        Calendar vonDate = Calendar.getInstance();
+        vonDate.setTime(getVonDateChooser().getDate());
+        Calendar bisDate = Calendar.getInstance();
+        bisDate.setTime(getBisDateChooser().getDate());
+
         String analyeVon = "";
         if (this.analyseVonBox.getSelectedItem() != null) {
             analyeVon = this.analyseVonBox.getSelectedItem().toString();
@@ -792,8 +793,8 @@ public class ProbepktAuswPanel extends JPanel {
     }
 
     private void createSeries(JList paramList, AtlProbepkt pkt,
-        AtlEinheiten einheit, Date vonDate, Date bisDate, String analyseVon,
-        TimeSeriesCollection col) {
+        AtlEinheiten einheit, Calendar vonDate, Calendar bisDate,
+        String analyseVon, TimeSeriesCollection col) {
 
         if (pkt != null) {
 

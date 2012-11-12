@@ -91,6 +91,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -763,8 +764,11 @@ public class KlaerschlammAuswertung extends AbstractModul {
         }
 
         AtlProbeart art = (AtlProbeart) getArtBox().getSelectedItem();
-        Date vonDate = getVonDateChooser().getDate();
-        Date bisDate = getBisDateChooser().getDate();
+
+        Calendar vonDate = Calendar.getInstance();
+        vonDate.setTime(getVonDateChooser().getDate());
+        Calendar bisDate = Calendar.getInstance();
+        bisDate.setTime(getBisDateChooser().getDate());
 
         if (getHeepenCheck().isSelected()) {
             createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_HEEPEN,
@@ -791,8 +795,8 @@ public class KlaerschlammAuswertung extends AbstractModul {
     }
 
     private void createSeries(AtlProbeart art, AtlKlaeranlagen ka,
-        AtlEinheiten einheit, JList paramList, String analyseVon, Date vonDate,
-        Date bisDate, TimeSeriesCollection col) {
+        AtlEinheiten einheit, JList paramList, String analyseVon,
+        Calendar vonDate, Calendar bisDate, TimeSeriesCollection col) {
 
         AtlProbepkt pkt = AtlProbepkt.getKlaerschlammProbepunkt(art, ka);
 
