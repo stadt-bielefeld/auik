@@ -137,12 +137,12 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -799,16 +799,17 @@ public class KlaerschlammAuswertung extends AbstractModul {
         if (pkt != null) {
 
             for (int i = 0; i < paramList.getModel().getSize(); i++) {
-                AtlParameter p = (AtlParameter) paramList.getModel()
+                AtlParameter param = (AtlParameter) paramList.getModel()
                     .getElementAt(i);
 
-                this.frame.changeStatus("Erzeuge Datenreihe für " + p + ", "
+                this.frame.changeStatus("Erzeuge Datenreihe für " + param + ", "
                     + ka);
 
-                List<?> list = ViewAtlAnalysepositionAll.get(p, einheit, pkt,
-                    vonDate, bisDate, analyseVon);
+                List<AtlAnalyseposition> list =
+                    DatabaseQuery.getAnalysepositionFromView(
+                        param, einheit, pkt, vonDate, bisDate, analyseVon);
                 TimeSeries series = ChartDataSets
-                    .createAnalysePositionenSeries(list, p + ", " + ka,
+                    .createAnalysePositionenSeries(list, param + ", " + ka,
                         einheit.toString());
                 col.addSeries(series);
             }

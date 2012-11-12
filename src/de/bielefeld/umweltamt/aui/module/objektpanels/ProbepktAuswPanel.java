@@ -82,10 +82,10 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -798,14 +798,15 @@ public class ProbepktAuswPanel extends JPanel {
         if (pkt != null) {
 
             for (int i = 0; i < paramList.getModel().getSize(); i++) {
-                AtlParameter p = (AtlParameter) paramList.getModel()
+                AtlParameter param = (AtlParameter) paramList.getModel()
                     .getElementAt(i);
 
-                List<?> list = ViewAtlAnalysepositionAll.get(p, einheit, pkt,
-                    vonDate, bisDate, analyseVon);
+                List<AtlAnalyseposition> list =
+                    DatabaseQuery.getAnalysepositionFromView(
+                        param, einheit, pkt, vonDate, bisDate, analyseVon);
 
                 TimeSeries series = ChartDataSets
-                    .createAnalysePositionenSeries(list, p + " ",
+                    .createAnalysePositionenSeries(list, param + " ",
                         einheit.toString());
                 col.addSeries(series);
             }

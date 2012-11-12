@@ -278,7 +278,7 @@ public class DatabaseClassToString {
 
     /** Custom ViewAtlAnalysepositionAll.toString() */
     public static String toStringForClass(ViewAtlAnalysepositionAll clazz) {
-        return clazz.getAtlAnalyseposition().toString();
+        return DatabaseQuery.getAnalysepositionFromView(clazz).toString();
     }
 
     /* ********************************************************************** */

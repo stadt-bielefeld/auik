@@ -45,6 +45,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 
@@ -55,6 +56,9 @@ import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
 abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
+
+    /** Logging */
+    // private static final AuikLogger log = AuikLogger.getLogger();
 
     /* ********************************************************************** */
     /* Queries for package ATL                                                */
@@ -605,5 +609,67 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
             return DatabaseConstants.ATL_STATUS_FREIGEGEBEN_FUER_BESCHEIDDRUCK;
         }
         return aktuellerStatus;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class ViewAtlAnalyseposition                 */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Liefert eine Liste der Analysepositionen mit einem gegebenen Parameter,
+     * einer bestimmten Einheit, an einem bestimmten Probepunkt, die zwischen
+     * <code>beginDate</code> und <code>endDate</code> (inklusive) genommen
+     * wurden. Wenn <code>analyseVon</code> nicht <code>null</code> oder "" ist,
+     * werden nur Analysepositionen geliefert, die von einer bestimmten Stelle
+     * analysiert wurden.
+     * @param param Der Parameter
+     * @param einheit Die Einheit
+     * @param punkt Der Probepunkt
+     * @param beginDate Das Anfangs-Datum
+     * @param endDate Das End-Datum
+     * @param analyseVon Wo wurde analysiert?
+     * @return Eine Liste mit <code>AtlAnalyseposition</code>en
+     */
+    public static List<AtlAnalyseposition> getAnalysepositionFromView(
+            AtlParameter param, AtlEinheiten einheit, AtlProbepkt punkt,
+            Date beginDate, Date endDate, String analyseVon) {
+        DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(ViewAtlAnalysepositionAll.class)
+                .add(Restrictions.eq("parameterId", param.getOrdnungsbegriff()))
+                .add(Restrictions.eq("einheitenId", einheit.getId()))
+                .add(Restrictions.eq("probepktId", punkt.getObjektid()))
+                .add(Restrictions.between(
+                    "datumDerEntnahme", beginDate, endDate))
+                .addOrder(Order.asc("datumDerEntnahme"));
+        if (analyseVon != null && !analyseVon.equals("")) {
+            detachedCriteria.add(Restrictions.like("analyseVon", analyseVon));
+        }
+        List<ViewAtlAnalysepositionAll> viewResult =
+            new DatabaseAccess().executeCriteriaToList(
+                detachedCriteria, new ViewAtlAnalysepositionAll());
+        List<AtlAnalyseposition> result = new ArrayList<AtlAnalyseposition>();
+        for (ViewAtlAnalysepositionAll viewPos : viewResult) {
+            result.add(DatabaseQuery.getAnalysepositionFromView(viewPos));
+        }
+        return result;
+    }
+
+    // Dirty cast/copy...
+    public static AtlAnalyseposition getAnalysepositionFromView(
+        ViewAtlAnalysepositionAll viewPos) {
+        AtlAnalyseposition pos = new AtlAnalyseposition();
+        pos.setId(viewPos.getId());
+        pos.setGrkl(viewPos.getGrkl());
+        pos.setWert(viewPos.getWert());
+        pos.setAnalyseVon(viewPos.getAnalyseVon());
+        pos.setBericht(viewPos.getBericht());
+        pos.setNormwert(viewPos.getNormwert());
+        pos.setAtlEinheiten(AtlEinheiten.findById(viewPos.getEinheitenId()));
+        pos.setAtlParameter(AtlParameter.findById(viewPos.getParameterId()));
+        pos.setAtlProbenahmen(
+            AtlProbenahmen.findById(viewPos.getProbenahmeId()));
+        pos.setEnabled(viewPos.isEnabled());
+        pos.setDeleted(viewPos.isDeleted());
+        return pos;
     }
 }
