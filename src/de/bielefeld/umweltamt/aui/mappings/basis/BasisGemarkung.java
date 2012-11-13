@@ -23,7 +23,6 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 
 /**
@@ -85,15 +84,4 @@ public class BasisGemarkung extends AbstractBasisGemarkung implements
 
     /* Add customized code below */
 
-    /**
-     * Liefert alle vorhandenen Gemarkungen.
-     * @return Alle vorhandenen Gemarkungen
-     */
-    public static BasisGemarkung[] getGemarkungen() {
-        return (BasisGemarkung[]) new DatabaseAccess().createQuery(
-            "FROM BasisGemarkung bg ORDER BY bg.gemarkungid")
-            .setCacheable(true)
-            .setCacheRegion("gemarkungsliste")
-            .array(new BasisGemarkung[0]);
-    }
 }

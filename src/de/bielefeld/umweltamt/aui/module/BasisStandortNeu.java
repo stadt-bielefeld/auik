@@ -433,7 +433,7 @@ public class BasisStandortNeu extends AbstractModul {
                     strassen = BasisStrassen.getStrassen();
                 }
                 if (gemarkungen == null) {
-                    gemarkungen = BasisGemarkung.getGemarkungen();
+                    gemarkungen = DatabaseQuery.getBasisGemarkungen();
                 }
                 if (standortggs == null) {
                     standortggs = VawsStandortgghwsg.getStandortGg();

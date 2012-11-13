@@ -30,6 +30,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
@@ -106,6 +107,23 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
         return (strasse != null ? strasse + " " : "")
             + (hausnr != null ? hausnr.toString() : "")
             + (zusatz != null ? zusatz : "");
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisGemarkung                       */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static BasisGemarkung[] gemarkungen = null;
+    /**
+     * Get an array with all <code>BasisGemarkung</code>en
+     * @return <code>BasisGemarkung[]</code>
+     */
+    public static BasisGemarkung[] getBasisGemarkungen() {
+        if (DatabaseBasisQuery.gemarkungen == null) {
+            DatabaseBasisQuery.gemarkungen = DatabaseQuery.getOrderedAll(
+                new BasisGemarkung()).toArray(new BasisGemarkung[0]);
+        }
+        return DatabaseBasisQuery.gemarkungen;
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

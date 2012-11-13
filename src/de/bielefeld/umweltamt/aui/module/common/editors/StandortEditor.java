@@ -47,6 +47,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
@@ -315,7 +316,7 @@ public class StandortEditor extends AbstractBaseEditor {
                     strassen = BasisStrassen.getStrassen();
                 }
                 if (gemarkungen == null) {
-                    gemarkungen = BasisGemarkung.getGemarkungen();
+                    gemarkungen = DatabaseQuery.getBasisGemarkungen();
                 }
                 if (standortggs == null) {
                     standortggs = VawsStandortgghwsg.getStandortGg();
