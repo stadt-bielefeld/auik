@@ -62,9 +62,6 @@ public class AnhBwkFachdaten extends AbstractAnhBwkFachdaten implements
     }
 
     public static AnhBwkFachdaten getAnhBwkByObjekt(BasisObjekt objekt) {
-        if (!objekt.getBasisObjektarten().isBWK()) {
-            return null;
-        }
         return (AnhBwkFachdaten) new DatabaseAccess()
             .createQuery(
                 "FROM AnhBwkFachdaten as brennwert "

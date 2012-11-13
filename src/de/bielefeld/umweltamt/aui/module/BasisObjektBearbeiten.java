@@ -107,6 +107,7 @@ import com.jgoodies.plaf.Options;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ModulManager;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
@@ -442,67 +443,80 @@ public class BasisObjektBearbeiten extends AbstractModul {
             protected void doNonUILogic() throws RuntimeException {
                 getBasisTab().fetchFormData();
 
-
-
-
-
                 // Daten für verschiedene Objektarten holen
                 if (objekt.getBasisObjektarten() != null) {
-                    if (objekt.getBasisObjektarten().isProbepunkt()) {
-                        getChronoTab().fetchFormData();
-                        getProbepunktTab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isBWK()) {
-                        getChronoTab().fetchFormData();
-                        getBWKTab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isAnh50()) {
-                        getChronoTab().fetchFormData();
-                        getZahnarztTab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isAnh49()) {
-                        getChronoTab().fetchFormData();
-                        getAnhang49Tab().fetchFormData();
-                        getAnh49DetailTab().setFachdaten(getAnhang49Tab().getFachdaten());
-
-                        if (objekt.getBasisObjektarten().isFettabscheider()== true)
-                        {
-
-                        }
-
-                        if (objekt.getBasisObjektarten().isFettabscheider() == false)
-                        {
-                            getAnh49AnalyseTab().setFachdaten(getAnhang49Tab().getFachdaten());
-                        }
-
-                        getAnh49VerwaltungsverfahrenTab().setFachdaten(getAnhang49Tab().getFachdaten());
-
-                    } else if (objekt.getBasisObjektarten().isSuev()) {
-                        getChronoTab().fetchFormData();
-                        getSuevTab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isAnh40()) {
-                        getChronoTab().fetchFormData();
-                        getAnh40Tab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isAnh55()) {
-                        getChronoTab().fetchFormData();
-                        getAnh55Tab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isAnh56()) {
-                        getChronoTab().fetchFormData();
-                        getAnh56Tab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isAnh52()) {
-                        getChronoTab().fetchFormData();
-                        getAnh52Tab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isAnh53Kl()) {
-                        getChronoTab().fetchFormData();
-                        getAnh53Tab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isAnh53Gr()) {
-                        getChronoTab().fetchFormData();
-                        getAnh53Tab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isGenehmigung()) {
-                        getChronoTab().fetchFormData();
-                        getGenehmigungTab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isAbteilung34()) {
-                        getChronoTab().fetchFormData();
-                        getVawsTab().fetchFormData();
-                    } else if (objekt.getBasisObjektarten().isAbteilung33()) {
-                        getChronoTab().fetchFormData();
+                    switch (objekt.getBasisObjektarten().getObjektartid()) {
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
+                            getChronoTab().fetchFormData();
+                            getProbepunktTab().fetchFormData();
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_BWK:
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_BHKW:
+                            getChronoTab().fetchFormData();
+                            getBWKTab().fetchFormData();
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
+                            getChronoTab().fetchFormData();
+                            getZahnarztTab().fetchFormData();
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+                            getChronoTab().fetchFormData();
+                            getAnhang49Tab().fetchFormData();
+                            getAnh49DetailTab().setFachdaten(
+                                getAnhang49Tab().getFachdaten());
+                            getAnh49AnalyseTab().setFachdaten(
+                                getAnhang49Tab().getFachdaten());
+                            getAnh49VerwaltungsverfahrenTab().setFachdaten(
+                                getAnhang49Tab().getFachdaten());
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
+                            getChronoTab().fetchFormData();
+                            getAnhang49Tab().fetchFormData();
+                            getAnh49DetailTab().setFachdaten(
+                                getAnhang49Tab().getFachdaten());
+                            getAnh49VerwaltungsverfahrenTab().setFachdaten(
+                                getAnhang49Tab().getFachdaten());
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
+                            getChronoTab().fetchFormData();
+                            getSuevTab().fetchFormData();
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_40:
+                            getChronoTab().fetchFormData();
+                            getAnh40Tab().fetchFormData();
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_55:
+                            getChronoTab().fetchFormData();
+                            getAnh55Tab().fetchFormData();
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_56:
+                            getChronoTab().fetchFormData();
+                            getAnh56Tab().fetchFormData();
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
+                            getChronoTab().fetchFormData();
+                            getAnh52Tab().fetchFormData();
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
+                            getChronoTab().fetchFormData();
+                            getAnh53Tab().fetchFormData();
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
+                            getChronoTab().fetchFormData();
+                            getGenehmigungTab().fetchFormData();
+                            break;
+                        default:
+                            log.debug("Unknown BasisObjektart: "
+                                + objekt.getBasisObjektarten());
+                            if (objekt.getBasisObjektarten().isAbteilung34()) {
+                                getChronoTab().fetchFormData();
+                                getVawsTab().fetchFormData();
+                            } else if (objekt.getBasisObjektarten().isAbteilung33()) {
+                                getChronoTab().fetchFormData();
+                            }
                     }
                 }
             }
@@ -529,123 +543,120 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
                     // Einzelne Objektarten behandeln
                     if (objekt.getBasisObjektarten() != null) {
-                        if (objekt.getBasisObjektarten().isProbepunkt()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getProbepunktTab().getName(), getProbepunktTab());
-                            getTabbedPane().addTab(getProbepktAuswTab().getName(), getProbepktAuswTab());
-                            getChronoTab().updateForm();
-                            getProbepunktTab().updateForm();
-                            getTabbedPane().setSelectedComponent(getProbepunktTab());
-                        } else if (objekt.getBasisObjektarten().isBWK()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
-                            getChronoTab().updateForm();
-                            getBWKTab().updateForm();
-                            getTabbedPane().setSelectedComponent(getBWKTab());
-                        } else if (objekt.getBasisObjektarten().isAnh50()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getZahnarztTab().getName(), getZahnarztTab());
-                            getChronoTab().updateForm();
-                            getZahnarztTab().updateForm();
-                            getTabbedPane().setSelectedComponent(getZahnarztTab());
-                        } else if (objekt.getBasisObjektarten().isAnh49()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-
-                            if (objekt.getBasisObjektarten().isFettabscheider() == false)
-                            {
+                        switch (objekt.getBasisObjektarten().getObjektartid()) {
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getProbepunktTab().getName(), getProbepunktTab());
+                                getTabbedPane().addTab(getProbepktAuswTab().getName(), getProbepktAuswTab());
+                                getChronoTab().updateForm();
+                                getProbepunktTab().updateForm();
+                                getTabbedPane().setSelectedComponent(getProbepunktTab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_BWK:
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_BHKW:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
+                                getChronoTab().updateForm();
+                                getBWKTab().updateForm();
+                                getTabbedPane().setSelectedComponent(getBWKTab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getZahnarztTab().getName(), getZahnarztTab());
+                                getChronoTab().updateForm();
+                                getZahnarztTab().updateForm();
+                                getTabbedPane().setSelectedComponent(getZahnarztTab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                 getTabbedPane().addTab(getAnhang49Tab().getName(), getAnhang49Tab());
-                            }
-
-                            if ( objekt.getBasisObjektarten().isFettabscheider()== true)
-                            {
-                                getTabbedPane().addTab("Fettabscheider", getAnhang49Tab());
-                            }
-
-                            getTabbedPane().addTab(getAnh49DetailTab().getName(), getAnh49DetailTab());
-
-                            if (objekt.getBasisObjektarten().isFettabscheider() == false)
-                            {
+                                getTabbedPane().addTab(getAnh49DetailTab().getName(), getAnh49DetailTab());
                                 getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
-                            }
-
-                            getTabbedPane().addTab(getAnh49VerwaltungsverfahrenTab().getName(), getAnh49VerwaltungsverfahrenTab());
-
-                            if ( objekt.getBasisObjektarten().isFettabscheider()== true)
-                            {
-
-                            }
-
-                            getChronoTab().updateForm();
-                            getAnhang49Tab().updateForm();
-                            getAnh49DetailTab().updateForm();
-                            if ( objekt.getBasisObjektarten().isFettabscheider()== true)
-                            {
-
-                            }
-                            if (objekt.getBasisObjektarten().isFettabscheider() == false)
-                            {
+                                getTabbedPane().addTab(getAnh49VerwaltungsverfahrenTab().getName(), getAnh49VerwaltungsverfahrenTab());
+                                getChronoTab().updateForm();
+                                getAnhang49Tab().updateForm();
+                                getAnh49DetailTab().updateForm();
                                 getAnh49AnalyseTab().updateForm();
-                            }
-                            getAnh49VerwaltungsverfahrenTab().updateForm();
-                            getTabbedPane().setSelectedComponent(getAnhang49Tab());
-                        } else if (objekt.getBasisObjektarten().isSuev()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getSuevTab().getName(), getSuevTab());
-                            getChronoTab().updateForm();
-                            getSuevTab().updateForm();
-                            getTabbedPane().setSelectedComponent(getSuevTab());
-                        } else if (objekt.getBasisObjektarten().isAnh40()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getAnh40Tab().getName(), getAnh40Tab());
-                            getChronoTab().updateForm();
-                            getAnh40Tab().updateForm();
-                            getTabbedPane().setSelectedComponent(getAnh40Tab());
-                        } else if (objekt.getBasisObjektarten().isAnh55()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getAnh55Tab().getName(), getAnh55Tab());
-                            getChronoTab().updateForm();
-                            getAnh55Tab().updateForm();
-                            getTabbedPane().setSelectedComponent(getAnh55Tab());
-                        } else if (objekt.getBasisObjektarten().isAnh56()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getAnh56Tab().getName(), getAnh56Tab());
-                            getChronoTab().updateForm();
-                            getAnh56Tab().updateForm();
-                            getTabbedPane().setSelectedComponent(getAnh56Tab());
-                        } else if (objekt.getBasisObjektarten().isAnh52()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getAnh52Tab().getName(), getAnh52Tab());
-                            getChronoTab().updateForm();
-                            getAnh52Tab().updateForm();
-                            getTabbedPane().setSelectedComponent(getAnh52Tab());
-                        } else if (objekt.getBasisObjektarten().isAnh53Kl()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getAnh53Tab().getName(), getAnh53Tab());
-                            getChronoTab().updateForm();
-                            getAnh53Tab().updateForm();
-                            getTabbedPane().setSelectedComponent(getAnh53Tab());
-                        } else if (objekt.getBasisObjektarten().isAnh53Gr()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getAnh53Tab().getName(), getAnh53Tab());
-                            getChronoTab().updateForm();
-                            getAnh53Tab().updateForm();
-                            getTabbedPane().setSelectedComponent(getAnh53Tab());
-                        } else if (objekt.getBasisObjektarten().isGenehmigung()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getGenehmigungTab().getName(), getGenehmigungTab());
-                            getChronoTab().updateForm();
-                            getGenehmigungTab().updateForm();
-                            getTabbedPane().setSelectedComponent(getGenehmigungTab());
-                        } else if (objekt.getBasisObjektarten().isAbteilung34()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getTabbedPane().addTab(getVawsTab().getName(), getVawsTab());
-                            getChronoTab().updateForm();
-                            getVawsTab().updateForm();
-                            getTabbedPane().setSelectedComponent(getVawsTab());
-                        } else if (objekt.getBasisObjektarten().isAbteilung33()) {
-                            getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            getChronoTab().updateForm();
-                            getTabbedPane().setSelectedComponent(getBasisTab());
+                                getAnh49VerwaltungsverfahrenTab().updateForm();
+                                getTabbedPane().setSelectedComponent(getAnhang49Tab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab("Fettabscheider", getAnhang49Tab());
+                                getTabbedPane().addTab(getAnh49DetailTab().getName(), getAnh49DetailTab());
+                                getTabbedPane().addTab(getAnh49VerwaltungsverfahrenTab().getName(), getAnh49VerwaltungsverfahrenTab());
+                                getChronoTab().updateForm();
+                                getAnhang49Tab().updateForm();
+                                getAnh49DetailTab().updateForm();
+                                getAnh49VerwaltungsverfahrenTab().updateForm();
+                                getTabbedPane().setSelectedComponent(getAnhang49Tab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getSuevTab().getName(), getSuevTab());
+                                getChronoTab().updateForm();
+                                getSuevTab().updateForm();
+                                getTabbedPane().setSelectedComponent(getSuevTab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_40:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getAnh40Tab().getName(), getAnh40Tab());
+                                getChronoTab().updateForm();
+                                getAnh40Tab().updateForm();
+                                getTabbedPane().setSelectedComponent(getAnh40Tab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_55:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getAnh55Tab().getName(), getAnh55Tab());
+                                getChronoTab().updateForm();
+                                getAnh55Tab().updateForm();
+                                getTabbedPane().setSelectedComponent(getAnh55Tab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_56:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getAnh56Tab().getName(), getAnh56Tab());
+                                getChronoTab().updateForm();
+                                getAnh56Tab().updateForm();
+                                getTabbedPane().setSelectedComponent(getAnh56Tab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getAnh52Tab().getName(), getAnh52Tab());
+                                getChronoTab().updateForm();
+                                getAnh52Tab().updateForm();
+                                getTabbedPane().setSelectedComponent(getAnh52Tab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getAnh53Tab().getName(), getAnh53Tab());
+                                getChronoTab().updateForm();
+                                getAnh53Tab().updateForm();
+                                getTabbedPane().setSelectedComponent(getAnh53Tab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getGenehmigungTab().getName(), getGenehmigungTab());
+                                getChronoTab().updateForm();
+                                getGenehmigungTab().updateForm();
+                                getTabbedPane().setSelectedComponent(getGenehmigungTab());
+                                break;
+                            default:
+                                log.debug("Unknown BasisObjektart: "
+                                    + objekt.getBasisObjektarten());
+                                if (objekt.getBasisObjektarten().isAbteilung34()) {
+                                    getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                    getTabbedPane().addTab(getVawsTab().getName(), getVawsTab());
+                                    getChronoTab().updateForm();
+                                    getVawsTab().updateForm();
+                                    getTabbedPane().setSelectedComponent(getVawsTab());
+                                } else if (objekt.getBasisObjektarten().isAbteilung33()) {
+                                    getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                    getChronoTab().updateForm();
+                                    getTabbedPane().setSelectedComponent(getBasisTab());
+                                }
                         }
                     }
                 }
@@ -662,34 +673,52 @@ public class BasisObjektBearbeiten extends AbstractModul {
         getBasisTab().clearForm();
 
         if (objekt.getBasisObjektarten() != null) {
-            if (objekt.getBasisObjektarten().isProbepunkt()) {
-                getProbepunktTab().clearForm();
-                getProbepktAuswTab().clearForm();
-            } else if (objekt.getBasisObjektarten().isBWK()) {
-                getBWKTab().clearForm();
-            } else if (objekt.getBasisObjektarten().isAnh50()) {
-                getZahnarztTab().clearForm();
-            } else if (objekt.getBasisObjektarten().isAnh49()) {
-                getAnhang49Tab().clearForm();
-                getAnh49DetailTab().clearForm();
-                getAnh49AnalyseTab().clearForm();
-                getAnh49VerwaltungsverfahrenTab().clearForm();
-            } else if (objekt.getBasisObjektarten().isSuev()) {
-                getSuevTab().clearForm();
-            } else if (objekt.getBasisObjektarten().isAnh40()) {
-                getAnh40Tab().clearForm();
-            } else if (objekt.getBasisObjektarten().isAnh55()) {
-                getAnh55Tab().clearForm();
-            } else if (objekt.getBasisObjektarten().isGenehmigung()) {
-                getGenehmigungTab().clearForm();
-            } else if (objekt.getBasisObjektarten().isAnh56()) {
-                getAnh56Tab().clearForm();
-            } else if (objekt.getBasisObjektarten().isAnh52()) {
-                getAnh52Tab().clearForm();
-            } else if (objekt.getBasisObjektarten().isAnh53Gr()) {
-                getAnh53Tab().clearForm();
-            } else if (objekt.getBasisObjektarten().isAnh53Kl()) {
-                getAnh53Tab().clearForm();
+            switch (objekt.getBasisObjektarten().getObjektartid()) {
+                case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
+                    getProbepunktTab().clearForm();
+                    getProbepktAuswTab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_BWK:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_BHKW:
+                    getBWKTab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
+                    getZahnarztTab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+                    getAnhang49Tab().clearForm();
+                    getAnh49DetailTab().clearForm();
+                    getAnh49AnalyseTab().clearForm();
+                    getAnh49VerwaltungsverfahrenTab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
+                    getSuevTab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_40:
+                    getAnh40Tab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_55:
+                    getAnh55Tab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
+                    getGenehmigungTab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_56:
+                    getAnh56Tab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
+                    getAnh52Tab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
+                    getAnh53Tab().clearForm();
+                    break;
+                default:
+                    log.debug("Unknown BasisObjektart: "
+                        + objekt.getBasisObjektarten());
             }
         }
     }
@@ -697,35 +726,53 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private void enableAll(boolean enabled) {
 
         getBasisTab().enableAll(enabled);
-
         if (objekt.getBasisObjektarten() != null) {
-            if (objekt.getBasisObjektarten().isProbepunkt()) {
-                getProbepunktTab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isBWK()) {
-                getBWKTab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isAnh50()) {
-                getZahnarztTab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isAnh49()) {
-                getAnhang49Tab().enableAll(enabled);
-                getAnh49DetailTab().enableAll(enabled);
-                getAnh49AnalyseTab().enableAll(enabled);
-                getAnh49VerwaltungsverfahrenTab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isSuev()) {
-                getSuevTab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isAnh40()) {
-                getAnh40Tab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isAnh55()) {
-                getAnh55Tab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isAnh56()) {
-                getAnh56Tab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isAnh52()) {
-                getAnh52Tab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isAnh53Gr()) {
-                getAnh53Tab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isAnh53Kl()) {
-                getAnh53Tab().enableAll(enabled);
-            } else if (objekt.getBasisObjektarten().isGenehmigung()) {
-                getGenehmigungTab().enableAll(enabled);
+
+            switch (objekt.getBasisObjektarten().getObjektartid()) {
+                case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
+                    getProbepunktTab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_BWK:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_BHKW:
+                    getBWKTab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
+                    getZahnarztTab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+                    getAnhang49Tab().enableAll(enabled);
+                    getAnh49DetailTab().enableAll(enabled);
+                    getAnh49AnalyseTab().enableAll(enabled);
+                    getAnh49VerwaltungsverfahrenTab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
+                    getSuevTab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_40:
+                    getAnh40Tab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_55:
+                    getAnh55Tab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_56:
+                    getAnh56Tab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
+                    getAnh52Tab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
+                    getAnh53Tab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
+                    getGenehmigungTab().enableAll(enabled);
+                    break;
+                default:
+                    log.debug("Unknown BasisObjektart: "
+                        + objekt.getBasisObjektarten());
             }
         }
     }
@@ -740,34 +787,49 @@ public class BasisObjektBearbeiten extends AbstractModul {
         // TODO: Fachdaten beim Objektart-Wechsel löschen?
         if (objekt.getBasisObjektarten() != null) {
             // Verschiedene Fachdaten bei neuem Objekt neu anlegen
-            if (objekt.getBasisObjektarten().isProbepunkt()) {
-                getProbepunktTab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isBWK()) {
-                getBWKTab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isAnh50()) {
-                getZahnarztTab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isAnh49()) {
-                getAnhang49Tab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isSuev()) {
-                getSuevTab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isAnh40()) {
-                getAnh40Tab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isAnh55()) {
-                getAnh55Tab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isAnh56()) {
-                getAnh56Tab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isAnh52()) {
-                getAnh52Tab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isAnh53Gr()) {
-                getAnh53Tab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isAnh53Kl()) {
-                getAnh53Tab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isGenehmigung()) {
-                getGenehmigungTab().completeObjekt();
-            } else if (objekt.getBasisObjektarten().isProbepunkt()) {
-                getProbepunktTab().completeObjekt();
+            switch (objekt.getBasisObjektarten().getObjektartid()) {
+                case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
+                    getProbepunktTab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_BWK:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_BHKW:
+                    getBWKTab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
+                    getZahnarztTab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+                    getAnhang49Tab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
+                    getSuevTab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_40:
+                    getAnh40Tab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_55:
+                    getAnh55Tab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
+                    getGenehmigungTab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_56:
+                    getAnh56Tab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
+                    getAnh52Tab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
+                    getAnh53Tab().completeObjekt();
+                    break;
+                default:
+                    log.debug("Unknown BasisObjektart: "
+                        + objekt.getBasisObjektarten());
             }
         }
     }
-
 }

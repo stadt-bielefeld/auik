@@ -62,15 +62,12 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
     }
 
     public static IndeinlGenehmigung getGenByObjekt(BasisObjekt objekt) {
-        if (objekt.getBasisObjektarten().isGenehmigung()) {
-            return (IndeinlGenehmigung) new DatabaseAccess()
-                .createQuery(
-                    "FROM IndeinlGenehmigung as gen WHERE "
-                        + "gen.basisObjekt = :objekt")
-                .setEntity("objekt", objekt)
-                .uniqueResult();
-        }
-        return null;
+        return (IndeinlGenehmigung) new DatabaseAccess()
+            .createQuery(
+                "FROM IndeinlGenehmigung as gen WHERE "
+                    + "gen.basisObjekt = :objekt")
+            .setEntity("objekt", objekt)
+            .uniqueResult();
     }
 
     /**

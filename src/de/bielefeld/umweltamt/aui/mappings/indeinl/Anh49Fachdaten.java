@@ -63,9 +63,6 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
     }
 
     public static Anh49Fachdaten getAnh49ByObjekt(BasisObjekt objekt) {
-        if (!objekt.getBasisObjektarten().isAnh49()) {
-            return null;
-        }
         return (Anh49Fachdaten) new DatabaseAccess()
             .createQuery(
                 "FROM Anh49Fachdaten as ah49 "

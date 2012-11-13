@@ -99,6 +99,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
@@ -525,11 +526,13 @@ public class BasisPanel extends JPanel {
                 new DefaultComboBoxModel(BasisSachbearbeiter
                     .getEnabledSachbearbeiter()));
 
+            // FIXME: BasisObjektart ids in the code...
             getArtBox().removeAllItems();
             // Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000)
             // und umgekehrt ist weiterhin möglich
-            if (this.hauptModul.getObjekt().getBasisObjektarten().isAnh53Kl()
-                | this.hauptModul.getObjekt().getBasisObjektarten().isAnh53Gr()) {
+            Integer art = this.hauptModul.getObjekt().getBasisObjektarten().getObjektartid();
+            if (art == DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN
+                || art == DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS) {
                 // Anhang 53 (<3000) (360.33)
                 getArtBox().addItem(BasisObjektarten.getObjektart(17));
                 // Anhang 53 (>3000) (360.33)
@@ -537,12 +540,10 @@ public class BasisPanel extends JPanel {
             }
             // Ändern der Objektarten Anhang 49, Abscheider und Fettabscheider
             // ist ebenfalls möglich
-            else if (this.hauptModul.getObjekt().getBasisObjektarten()
-                .isAnh49()
-                || this.hauptModul.getObjekt().getBasisObjektarten()
-                    .isFettabscheider()
-                || this.hauptModul.getObjekt().getBasisObjektarten()
-                    .isAbscheider()) {
+            else if (art == DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49
+                || art == DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER
+                || art == DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER
+                || art == DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34) {
                 // Anhang 49 (360.33)
                 getArtBox().addItem(BasisObjektarten.getObjektart(14));
                 // Abscheider (360.32)

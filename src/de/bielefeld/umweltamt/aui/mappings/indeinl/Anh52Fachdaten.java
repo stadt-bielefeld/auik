@@ -63,9 +63,6 @@ public class Anh52Fachdaten extends AbstractAnh52Fachdaten implements
     }
 
     public static Anh52Fachdaten getAnh52ByObjekt(BasisObjekt objekt) {
-        if (!objekt.getBasisObjektarten().isAnh52()) {
-            return null;
-        }
         return (Anh52Fachdaten) new DatabaseAccess()
             .createQuery(
                 "FROM Anh52Fachdaten as anhang52 "

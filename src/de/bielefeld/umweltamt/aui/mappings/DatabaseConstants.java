@@ -122,4 +122,21 @@ public class DatabaseConstants {
     /* BasisObjektarten */
     public static final BasisObjektarten BASIS_OBJEKTART_PROBEPUNKT =
         BasisObjektarten.getObjektart(32);
+    /* BasisObjektarten IDs */
+    public static final int BASIS_OBJEKTART_ID_PROBEPUNKT = 32;
+    public static final int BASIS_OBJEKTART_ID_BWK = 16;
+    public static final int BASIS_OBJEKTART_ID_BHKW = 36;
+    public static final int BASIS_OBJEKTART_ID_ANHANG_40 = 25;
+    public static final int BASIS_OBJEKTART_ID_ANHANG_49 = 14;
+    public static final int BASIS_OBJEKTART_ID_ABSCHEIDER = 19;
+    public static final int BASIS_OBJEKTART_ID_ABSCHEIDER34 = 58;
+    public static final int BASIS_OBJEKTART_ID_FETTABSCHEIDER = 15;
+    public static final int BASIS_OBJEKTART_ID_ANHANG_50 = 20;
+    public static final int BASIS_OBJEKTART_ID_ANHANG_52 = 35;
+    public static final int BASIS_OBJEKTART_ID_ANHANG_53_KLEIN = 17;
+    public static final int BASIS_OBJEKTART_ID_ANHANG_53_GROSS = 18;
+    public static final int BASIS_OBJEKTART_ID_SUEV = 13;
+    public static final int BASIS_OBJEKTART_ID_ANHANG_55 = 29;
+    public static final int BASIS_OBJEKTART_ID_ANHANG_56 = 30;
+    public static final int BASIS_OBJEKTART_ID_GENEHMIGUNG = 42;
 }

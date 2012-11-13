@@ -63,9 +63,6 @@ public class AnhSuevFachdaten extends AbstractAnhSuevFachdaten implements
     }
 
     public static AnhSuevFachdaten getSuevByObjekt(BasisObjekt objekt) {
-        if (!objekt.getBasisObjektarten().isSuev()) {
-            return null;
-        }
         return (AnhSuevFachdaten) new DatabaseAccess()
             .createQuery(
                 "FROM AnhSuevFachdaten as suev "

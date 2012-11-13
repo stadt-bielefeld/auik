@@ -358,6 +358,7 @@
     <!-- auik.basis: -->
     <!--             basis_betreiber -->
     <!--             basis_gemarkung -->
+    <!--             basis_objektarten -->
     <!-- tipi: -->
     <!--       auik_wz_code -->
 </hibernate-reverse-engineering>
