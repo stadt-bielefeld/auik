@@ -423,7 +423,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
             }
             if (manager.getSettingsManager().getSetting("auik.imc.use_betreiber") != null) {
-                BasisBetreiber betr = BasisBetreiber.getBetreiber(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
+                BasisBetreiber betr = BasisBetreiber.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
                 objekt.setBasisBetreiber(betr);
                 manager.getSettingsManager().removeSetting("auik.imc.use_betreiber");
             }

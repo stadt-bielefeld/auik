@@ -1,41 +1,94 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis" schema="auik">
-
-    <class name="BasisBetreiber" table="basis_betreiber" lazy="false">
-        <id name="betreiberid" type="java.lang.Integer">
-        	<column name="id" sql-type="serial"/>
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber" table="basis_betreiber" lazy="false" schema="auik">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
             <generator class="native">
-                <param name="sequence">basis_betreiber_id_seq</param>
-        	</generator>
+                <param name="sequence">auik.basis_betreiber_id_seq</param>
+            </generator>
         </id>
-
-        <property name="betranrede" column="betranrede" type="java.lang.String" />
-        <property name="betrvorname" column="betrvorname" type="java.lang.String" />
-        <property name="betrname" column="betrname" type="java.lang.String" />
-        <property name="betrnamezus" column="betrnamezus" type="java.lang.String" />
-        <property name="namebetrbeauf" column="namebetrbeauf" type="java.lang.String" />
-        <property name="vornamebetrbeauf" column="vornamebetrbeauf" type="java.lang.String" />
-        <property name="strasse" column="strasse" type="java.lang.String" />
-        <property name="hausnr" column="hausnr" type="java.lang.Integer" />
-        <property name="hausnrzus" column="hausnrzus" type="java.lang.String" />
-        <property name="plzzs" column="plzzs" type="java.lang.String" />
-        <property name="plz" column="plz" type="java.lang.String" />
-        <property name="ort" column="ort" type="java.lang.String" />
-        <property name="telefon" column="telefon" type="java.lang.String" />
-        <property name="telefax" column="telefax" type="java.lang.String" />
-        <property name="email" column="email" type="java.lang.String" />
-        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
-        <property name="revidatum" column="revidatum" type="java.util.Date" />
-        <property name="revihandz" column="revihandz" type="java.lang.String" />
-        <property name="kassenzeichen" column="kassenzeichen" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <many-to-one name="vawsWirtschaftszweige" column="wirtschaftszweigid" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige" />
-        <many-to-one name="auikWzCode" column="auik_wz_code" class="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" />
+        <many-to-one name="auikWzCode" class="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" fetch="select">
+            <column name="auik_wz_code" />
+        </many-to-one>
+        <many-to-one name="vawsWirtschaftszweige" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige" fetch="select">
+            <column name="wirtschaftszweigid" />
+        </many-to-one>
+        <property name="betranrede" type="string">
+            <column name="betranrede" />
+        </property>
+        <property name="betrname" type="string">
+            <column name="betrname" />
+        </property>
+        <property name="betrnamezus" type="string">
+            <column name="betrnamezus" />
+        </property>
+        <property name="namebetrbeauf" type="string">
+            <column name="namebetrbeauf" />
+        </property>
+        <property name="vornamebetrbeauf" type="string">
+            <column name="vornamebetrbeauf" />
+        </property>
+        <property name="strasse" type="string">
+            <column name="strasse" />
+        </property>
+        <property name="hausnr" type="java.lang.Integer">
+            <column name="hausnr" />
+        </property>
+        <property name="hausnrzus" type="string">
+            <column name="hausnrzus" />
+        </property>
+        <property name="plzzs" type="string">
+            <column name="plzzs" />
+        </property>
+        <property name="plz" type="string">
+            <column name="plz" />
+        </property>
+        <property name="ort" type="string">
+            <column name="ort" />
+        </property>
+        <property name="telefon" type="string">
+            <column name="telefon" />
+        </property>
+        <property name="telefax" type="string">
+            <column name="telefax" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" />
+        </property>
+        <property name="bemerkungen" type="string">
+            <column name="bemerkungen" />
+        </property>
+        <property name="revidatum" type="java.util.Date">
+            <column name="revidatum" length="8" />
+        </property>
+        <property name="revihandz" type="string">
+            <column name="revihandz" />
+        </property>
+        <property name="kassenzeichen" type="string">
+            <column name="kassenzeichen" />
+        </property>
+        <property name="betrvorname" type="string">
+            <column name="betrvorname" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="basisPrioritaets" table="basis_prioritaet" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="betreiber_id" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet" />
+        </set>
+        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="betreiberid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
+        </set>
     </class>
-
 </hibernate-mapping>

@@ -112,7 +112,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
      * Erzeugt einen neuen Dialog zum Bearbeiten eines Betreibers.
      */
     public BetreiberEditor(BasisBetreiber betr, HauptFrame owner) {
-        super("Betreiber ("+ betr.getBetreiberid()+")", betr, owner);
+        super("Betreiber ("+ betr.getId()+")", betr, owner);
     }
 
     @Override
@@ -598,7 +598,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
         // frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
 
         BasisBetreiber persistentBetreiber = null;
-        persistentBetreiber = BasisBetreiber.saveBetreiber(getBetreiber());
+        persistentBetreiber = BasisBetreiber.merge(getBetreiber());
 
         if (persistentBetreiber != null) {
             setEditedObject(persistentBetreiber);

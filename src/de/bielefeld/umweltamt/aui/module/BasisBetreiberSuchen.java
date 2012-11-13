@@ -311,7 +311,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
             int selectedRow = lsm.getMinSelectionIndex();
             BasisBetreiber betr = this.betreiberModel.getRow(selectedRow);
             log.debug("Betreiber " + betr.getBetrname() + " (ID"
-                + betr.getBetreiberid() + ") angewählt.");
+                + betr.getId() + ") angewählt.");
             searchObjekteByBetreiber(betr);
         }
     }
@@ -446,7 +446,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                                         .changeStatus("Betreiber gelöscht.",
                                             HauptFrame.SUCCESS_COLOR);
                                     log.debug("Betreiber "
-                                        + betr.getBetreiberid()
+                                        + betr.getId()
                                         + " wurde gelöscht!");
                                 } else {
                                     BasisBetreiberSuchen.this.frame
@@ -483,7 +483,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                             .getRow(row);
                         BasisBetreiberSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.use_betreiber",
-                                betr.getBetreiberid().intValue(), false);
+                                betr.getId().intValue(), false);
                         BasisBetreiberSuchen.this.manager
                             .switchModul("m_objekt_bearbeiten");
                     }

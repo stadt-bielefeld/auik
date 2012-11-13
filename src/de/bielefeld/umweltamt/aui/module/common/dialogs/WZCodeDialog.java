@@ -14,7 +14,6 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog;
 
 /**
@@ -24,8 +23,7 @@ import de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog;
  */
 public class WZCodeDialog extends SimpleDialog {
 
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
+    private static final long serialVersionUID = 3428599900076887896L;
 
     private AuikWzCode selectedWZCode = null;
     private JTree wzCodeTree;
@@ -44,7 +42,7 @@ public class WZCodeDialog extends SimpleDialog {
 
         for (AuikWzCode wzCode : listWZCodes) {
             currentRootNode = root;
-            log.debug(wzCode.getEbene() + ":" + wzCode);
+            // log.debug(wzCode.getEbene() + ":" + wzCode);
             switch (wzCode.getEbene()) {
                 case 6:
                     currentRootNode = (DefaultMutableTreeNode)
@@ -85,6 +83,8 @@ public class WZCodeDialog extends SimpleDialog {
     @Override
     protected Action getFirstButtonAction() {
         return new AbstractAction("OK") {
+            private static final long serialVersionUID = -3048396425539493118L;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (wzCodeTree.isSelectionEmpty()) {
@@ -95,7 +95,7 @@ public class WZCodeDialog extends SimpleDialog {
                     (String) ((DefaultMutableTreeNode)
                     wzCodeTree.getSelectionPath().getLastPathComponent())
                     .getUserObject());
-                log.debug(selectedWZCode);
+                //log.debug(selectedWZCode);
                 fireOKEvent(selectedWZCode);
                 dispose();
             }

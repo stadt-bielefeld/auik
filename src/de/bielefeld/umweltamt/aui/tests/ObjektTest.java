@@ -185,7 +185,7 @@ public class ObjektTest extends TestCase {
     }
 
     private BasisBetreiber findeBetreiber() {
-        BasisBetreiber betreiber = BasisBetreiber.getBetreiber(1);
+        BasisBetreiber betreiber = BasisBetreiber.findById(1);
         return betreiber;
     }
 

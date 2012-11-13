@@ -80,7 +80,7 @@ public class _TabellenErstellenTest extends TestCase {
         }
         assertEquals(idO, "vorhanden");
 
-        BasisBetreiber.removeBetreiber(BasisBetreiber.getBetreiber(_idB));
+        BasisBetreiber.delete(BasisBetreiber.findById(_idB));
         BasisStandort.removeStandort(BasisStandort.getStandort(_idS));
         BasisObjektarten.removeObjektart(BasisObjektarten.getObjektart(_idO));
     }
@@ -114,9 +114,9 @@ public class _TabellenErstellenTest extends TestCase {
         betreiber.setBetrname(name);
         betreiber.setRevihandz(handz);
 
-        BasisBetreiber.saveBetreiber(betreiber);
+        BasisBetreiber.merge(betreiber);
 
-        return betreiber.getBetreiberid();
+        return betreiber.getId();
     }
 
     /**

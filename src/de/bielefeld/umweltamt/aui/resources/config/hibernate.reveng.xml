@@ -6,7 +6,7 @@
 	<!-- Type mappings ===================================================== -->
 	<type-mapping>
 		<sql-type jdbc-type="DATE" hibernate-type="java.util.Calendar"/>
-        <sql-type jdbc-type="TIMESTAMP" hibernate-type="java.util.Calendar"/>
+        <sql-type jdbc-type="TIMESTAMP" hibernate-type="java.util.Date"/>
         <sql-type jdbc-type="REAL" hibernate-type="java.lang.Float"/>
         <sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer"/>
         <sql-type jdbc-type="BOOLEAN" hibernate-type="java.lang.Boolean"/>
@@ -344,4 +344,19 @@
             <meta attribute="use-in-tostring">true</meta>
         </column>
     </table>
+    <!-- Classes which need lazy="false" =================================== -->
+    <!-- I did not find a way to generate this. :( ========================= -->
+    <!-- auik.atl: -->
+    <!--           atl_einheiten -->
+    <!--           atl_klaeranlagen -->
+    <!--           atl_parameter -->
+    <!--           atl_parametergruppen -->
+    <!--           atl_probeart -->
+    <!--           atl_probenahmen -->
+    <!--           atl_probepkt -->
+    <!--           atl_status -->
+    <!-- auik.basis: -->
+    <!--             basis_betreiber -->
+    <!-- tipi: -->
+    <!--       auik_wz_code -->
 </hibernate-reverse-engineering>

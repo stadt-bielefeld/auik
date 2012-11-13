@@ -157,7 +157,7 @@ public class BasisPanel extends JPanel {
                 setTitle("Betreiber auswählen");
                 this.betreiber = (BasisBetreiber) initial;
                 this.betreiberModel = new BasisBetreiberModel(false);
-                if (this.betreiber.getBetreiberid() != null) {
+                if (this.betreiber.getId() != null) {
                     this.betreiberModel.setList(initialList);
                 }
             } else if (initial instanceof BasisStandort) {
@@ -181,7 +181,7 @@ public class BasisPanel extends JPanel {
         }
 
         public BasisBetreiber getChosenBetreiber() {
-            if (this.betreiber.getBetreiberid() != null) {
+            if (this.betreiber.getId() != null) {
                 return this.betreiber;
             } else {
                 return null;
@@ -853,7 +853,7 @@ public class BasisPanel extends JPanel {
                             .setSetting(
                                 "auik.imc.use_betreiber",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisBetreiber().getBetreiberid()
+                                    .getBasisBetreiber().getId()
                                     .intValue(), false);
                     }
                     if (BasisPanel.this.hauptModul.getObjekt()
@@ -966,7 +966,7 @@ public class BasisPanel extends JPanel {
                             .setSetting(
                                 "auik.imc.use_betreiber",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisBetreiber().getBetreiberid()
+                                    .getBasisBetreiber().getId()
                                     .intValue(), false);
                     }
                     if (BasisPanel.this.hauptModul.getObjekt()

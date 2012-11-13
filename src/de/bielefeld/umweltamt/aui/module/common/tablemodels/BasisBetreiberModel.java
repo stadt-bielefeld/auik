@@ -116,7 +116,7 @@ public class BasisBetreiberModel extends ListTableModel {
     @Override
     public boolean objectRemoved(Object objectAtRow) {
         BasisBetreiber removedBetreiber = (BasisBetreiber) objectAtRow;
-        return BasisBetreiber.removeBetreiber(removedBetreiber);
+        return BasisBetreiber.delete(removedBetreiber);
     }
 
     /**

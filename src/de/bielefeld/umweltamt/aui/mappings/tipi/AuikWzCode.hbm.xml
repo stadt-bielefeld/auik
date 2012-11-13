@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" table="auik_wz_code" schema="tipi">
+    <class name="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" table="auik_wz_code" lazy="false" schema="tipi">
         <id name="bezeichnung" type="string">
             <meta attribute="use-in-tostring" inherit="false">true</meta>
             <column name="bezeichnung" />

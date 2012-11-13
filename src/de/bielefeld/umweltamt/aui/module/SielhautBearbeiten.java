@@ -294,7 +294,7 @@ public class SielhautBearbeiten extends AbstractModul {
         } else {
             this.objekt = new BasisObjekt();
             this.standort = BasisStandort.getStandort(41);
-            this.betreiber = BasisBetreiber.getBetreiber(3);
+            this.betreiber = BasisBetreiber.findById(3);
             this.art = BasisObjektarten.getObjektart(32);
             this.objekt.setBasisStandort(this.standort);
             this.objekt.setBasisBetreiber(this.betreiber);

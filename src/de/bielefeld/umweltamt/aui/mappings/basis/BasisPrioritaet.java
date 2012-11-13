@@ -50,13 +50,13 @@ public class BasisPrioritaet extends AbstractBasisPrioritaet implements
     public static BasisPrioritaet getPrioritaet(BasisObjekt basisObjekt) {
         String query = "FROM BasisPrioritaet as bp "
             + "WHERE bp.basisStandort.standortid = :standortid "
-            + "and bp.basisBetreiber.betreiberid = :betreiberid";
+            + "and bp.basisBetreiber.id = :betreiberid";
 
         return (BasisPrioritaet) new DatabaseAccess().createQuery(query)
                 .setInteger("standortid",
                     basisObjekt.getBasisStandort().getStandortid())
                 .setInteger("betreiberid",
-                    basisObjekt.getBasisBetreiber().getBetreiberid())
+                    basisObjekt.getBasisBetreiber().getId())
                 .uniqueResult();
     }
 
@@ -79,7 +79,7 @@ public class BasisPrioritaet extends AbstractBasisPrioritaet implements
             prioId = new BasisPrioritaetId();
 
             prioId.setStandortId(obj.getBasisStandort().getStandortid());
-            prioId.setBetreiberId(obj.getBasisBetreiber().getBetreiberid());
+            prioId.setBetreiberId(obj.getBasisBetreiber().getId());
             prioritaet.setId(prioId);
 
             prioritaet.setBasisBetreiber(obj.getBasisBetreiber());

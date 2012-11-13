@@ -1056,9 +1056,9 @@ public class ProbenEditor extends AbstractApplyEditor {
             sb.append(" ");
         }
 
-        sb.append(basisBetr.getBetriebsgrundstueck());
-
-        for (int i = 1; i <= 28 - basisBetr.getBetriebsgrundstueck().length(); i++) {
+        String addr = DatabaseQuery.getBetriebsgrundstueck(basisBetr);
+        sb.append(addr);
+        for (int i = 1; i <= 28 - addr.length(); i++) {
             sb.append(" ");
         }
 
@@ -1152,7 +1152,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         if (basisBetr != null) {
             String name = basisBetr.getBetrname();
-            String addr = basisBetr.getBetriebsgrundstueck();
+            String addr = DatabaseQuery.getBetriebsgrundstueck(basisBetr);
 
             StringBuilder sb = new StringBuilder();
 
@@ -1537,7 +1537,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         else
             params.put("firmaName", betr.getBetrname());
         params.put("firmaNameZus", betr.getBetrnamezus());
-        params.put("firmaStrasse", betr.getBetriebsgrundstueck());
+        params.put("firmaStrasse", DatabaseQuery.getBetriebsgrundstueck(betr));
         params.put("firmaOrt", betr.getPlz() + " " + betr.getOrt());
 
         try {

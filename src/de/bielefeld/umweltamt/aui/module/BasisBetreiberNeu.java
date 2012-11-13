@@ -515,14 +515,14 @@ public class BasisBetreiberNeu extends AbstractModul {
             betrn.setRevihandz(handzeichenNeuFeld.getText().trim());
 
             BasisBetreiber persistentBetreiber = null;
-            persistentBetreiber = BasisBetreiber.saveBetreiber(betrn);
+            persistentBetreiber = BasisBetreiber.merge(betrn);
 
             if (persistentBetreiber != null) {
-                frame.changeStatus("Neuer Betreiber "+persistentBetreiber.getBetreiberid()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
+                frame.changeStatus("Neuer Betreiber "+persistentBetreiber.getId()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
 
                 // Wenn wir vom Objekt anlegen kommen,
                 if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt")) {
-                    manager.getSettingsManager().setSetting("auik.imc.use_betreiber", persistentBetreiber.getBetreiberid().intValue(), false);
+                    manager.getSettingsManager().setSetting("auik.imc.use_betreiber", persistentBetreiber.getId().intValue(), false);
                     manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt");
                     // ... kehren wir direkt dorthin zurück:
                     manager.switchModul("m_objekt_bearbeiten");

@@ -104,7 +104,7 @@ public class BetreiberTest extends TestCase {
         BasisBetreiber betreiber = testQuery();
 
         betreiber.setBetranrede("neue");
-        BasisBetreiber.saveBetreiber(betreiber);
+        BasisBetreiber.merge(betreiber);
 
         betreiber = testQuery();
         assertEquals(Name, betreiber.getBetrname());
@@ -118,7 +118,7 @@ public class BetreiberTest extends TestCase {
         BasisBetreiber betreiber = testQuery();
 
         // session.delete(betreiber);
-        BasisBetreiber.removeBetreiber(betreiber);
+        BasisBetreiber.delete(betreiber);
 
         List<?> result = DatabaseQuery.getBasisBetreiber("name", Name);
 
@@ -137,8 +137,8 @@ public class BetreiberTest extends TestCase {
         betreiber.setBetrname(name);
         betreiber.setRevihandz(handz);
 
-        BasisBetreiber.saveBetreiber(betreiber);
+        BasisBetreiber.merge(betreiber);
 
-        return betreiber.getBetreiberid();
+        return betreiber.getId();
     }
 }

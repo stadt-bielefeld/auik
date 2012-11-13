@@ -94,6 +94,20 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
             criteria, new BasisBetreiber());
     }
 
+    /**
+     * Get a nicely formatted street and house number for a BasisBetreiber
+     * @param betreiber BasisBetreiber
+     * @return String
+     */
+    public static String getBetriebsgrundstueck(BasisBetreiber betreiber) {
+        String strasse = betreiber.getStrasse();
+        Integer hausnr = betreiber.getHausnr();
+        String zusatz = betreiber.getHausnrzus();
+        return (strasse != null ? strasse + " " : "")
+            + (hausnr != null ? hausnr.toString() : "")
+            + (zusatz != null ? zusatz : "");
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisObjektchrono                    */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
