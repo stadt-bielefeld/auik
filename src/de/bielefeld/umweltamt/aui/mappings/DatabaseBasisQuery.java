@@ -21,13 +21,17 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -88,6 +92,22 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
         return new DatabaseAccess().executeCriteriaToList(
             criteria, new BasisBetreiber());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisObjektchrono                    */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    // TODO: Add foreign key Objekt to Objektchrono, then fix the query and this
+    // will no longer be needed...
+    public static Timestamp getLastChronoDateForObjekt(BasisObjekt objekt) {
+//        Calendar cal = Calendar.getInstance();
+        return new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(BasisObjektchrono.class)
+                .add(Restrictions.eq("basisObjekt", objekt))
+                .setProjection(Projections.distinct(Projections.max("datum"))),
+            new Timestamp(0));
+//            cal);
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

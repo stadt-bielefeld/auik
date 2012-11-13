@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -36,7 +37,8 @@ public class FettabschModel extends ListTableModel {
                 "Betreiber",
                 "Standort",
                 "Nenngröße",
-                "Bemerkungen"
+                "Bemerkungen",
+                "letztes Chrono-Datum"
         },
         false);
     }
@@ -64,9 +66,14 @@ public class FettabschModel extends ListTableModel {
     		case 3:
     			tmp = ad.getAnh49Fachdaten().getBemerkungen();
     			break;
+    		case 4:
+    		    // TODO: Add Foreign key from Objekt to Objektchrono and then:
+    		    // tmp = ad.getAnh49Fachdaten().getBasisObjekt().getBasisObjektchrono().getDatum();
+    		    tmp = DatabaseQuery.getLastChronoDateForObjekt(
+    		        ad.getBasisObjekt());
+    		    break;
     		default:
     			tmp = "ERROR";
-    			break;
 		}
 
 		if (tmp != null &&
