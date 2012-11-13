@@ -66,14 +66,14 @@ SELECT
   NULL::boolean				AS sieb_rechen_jn,
   NULL::boolean				AS ausgleichsbecken_jn,
   NULL::boolean				AS vorklaerung_absetz_jn,
-  'There be dragons'::character varying(50)		AS sonstige_mech_verf,
+  NULL::character varying(50)		AS sonstige_mech_verf,
   NULL::boolean				AS anaerobe_vorb_jn,
   NULL::boolean				AS tropfkoerper_jn,
   NULL::boolean				AS bel_c_eli_jn,
   NULL::boolean				AS bel_n_eli_jn,
   NULL::boolean				AS biolog_p_eli_jn,
   NULL::boolean				AS nachklaerung_jn,
-  'There be dragons'::character varying(50)		AS sonstige_biol_verf,
+  NULL::character varying(50)		AS sonstige_biol_verf,
   NULL::boolean				AS abfuhr_unbeh_jn,
   NULL::boolean				AS masch_entw_jn,
   NULL::boolean				AS stat_entw_jn,
@@ -82,7 +82,7 @@ SELECT
   NULL::boolean				AS siebbandp_jn,
   NULL::boolean				AS zentrifuge_jn,
   NULL::boolean				AS nat_entw_jn,
-  'There be dragons'::character varying(50)		AS sonstige_schlamm_beh
+  NULL::character varying(50)		AS sonstige_schlamm_beh
 
 FROM auik.indeinl_genehmigung
   LEFT OUTER JOIN auik.basis_objekt
@@ -166,14 +166,14 @@ SELECT
   NULL::boolean				AS sieb_rechen_jn,
   NULL::boolean				AS ausgleichsbecken_jn,
   NULL::boolean				AS vorklaerung_absetz_jn,
-  'There be dragons'::character varying(50)		AS sonstige_mech_verf,
+  NULL::character varying(50)		AS sonstige_mech_verf,
   NULL::boolean				AS anaerobe_vorb_jn,
   NULL::boolean				AS tropfkoerper_jn,
   NULL::boolean				AS bel_c_eli_jn,
   NULL::boolean				AS bel_n_eli_jn,
   NULL::boolean				AS biolog_p_eli_jn,
   NULL::boolean				AS nachklaerung_jn,
-  'There be dragons'::character varying(50)		AS sonstige_biol_verf,
+  NULL::character varying(50)		AS sonstige_biol_verf,
   NULL::boolean				AS abfuhr_unbeh_jn,
   NULL::boolean				AS masch_entw_jn,
   NULL::boolean				AS stat_entw_jn,
@@ -182,7 +182,7 @@ SELECT
   NULL::boolean				AS siebbandp_jn,
   NULL::boolean				AS zentrifuge_jn,
   NULL::boolean				AS nat_entw_jn,
-  'There be dragons'::character varying(50)		AS sonstige_schlamm_beh
+  NULL::character varying(50)		AS sonstige_schlamm_beh
 
 FROM auik.indeinl_genehmigung AS gen59
   LEFT OUTER JOIN auik.basis_objekt

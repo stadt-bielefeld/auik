@@ -18,11 +18,11 @@
 
   -- Daten
   -- Foreign Key: inka_genehmigung
-  indeinl_genehmigung.objektid::integer		AS genehmigung_nr,		-- NOT NULL
-  1::integer					AS genehmigung_ver,		-- NOT NULL
-  3::integer					AS messstelle_typ,		-- NOT NULL
-  'There be dragons'::character varying(50)	AS beschr_messpunkt,
-  false::boolean				AS relevant_sum_fracht_jn	-- NOT NULL
+  indeinl_genehmigung.objektid::integer	AS genehmigung_nr,		-- NOT NULL
+  1::integer				AS genehmigung_ver,		-- NOT NULL
+  3::integer				AS messstelle_typ,		-- NOT NULL
+  NULL::character varying(50)		AS beschr_messpunkt,
+  false::boolean			AS relevant_sum_fracht_jn	-- NOT NULL
 
 FROM auik.indeinl_genehmigung
   JOIN auik.view_two_way_objektverknuepfung

@@ -26,7 +26,7 @@
   -- Foreign Key: dea_anhang
   indeinl_genehmigung.anhang::character varying(20)	AS anh_id,	-- NOT NULL
   dea_anhang.anh_version::integer			AS anh_ver,	-- NOT NULL
-  'There be dragons'::character varying(30)		AS beschreibung,
+  NULL::character varying(30)		AS beschreibung,
   NULL::float				AS max_vol_tag,
   NULL::integer				AS vol_jahr,
   NULL::boolean				AS dauerbetrieb_jn,
@@ -40,8 +40,8 @@ FROM auik.indeinl_genehmigung
 
 WHERE 
   indeinl_genehmigung.anhang IS NOT NULL AND 
-  indeinl_genehmigung.gen59 AND AND
-  basis_objekt.inaktiv = FALSE 
+  indeinl_genehmigung.gen59 AND
+  basis_objekt.inaktiv = FALSE AND
   dea_anhang.inka_gueltig_bis IS NULL AND
   indeinl_genehmigung._deleted = FALSE AND
   basis_objekt._deleted = FALSE;
