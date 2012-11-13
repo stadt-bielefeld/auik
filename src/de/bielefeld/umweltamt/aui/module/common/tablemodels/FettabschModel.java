@@ -47,35 +47,30 @@ public class FettabschModel extends ListTableModel {
 	@Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
 		Anh49Abscheiderdetails ad = (Anh49Abscheiderdetails) objectAtRow;
-
-		Object tmp;
-
+		Object tmp = null;
 		switch (columnIndex) {
-		case 0:
-			tmp = ad.getAnh49Fachdaten().getBasisObjekt().getBasisBetreiber();
-			break;
-
-		case 1:
-			tmp = ad.getAnh49Fachdaten().getBasisObjekt().getBasisStandort();
-			break;
-
-		case 2:
-			tmp = ad.getNenngroesse();
-			if (tmp == null) {
-				tmp = "Keine Nenngröße angegeben";
-			}
-			break;
-
-		case 3:
-			tmp = ad.getAnh49Fachdaten().getBemerkungen();
-			break;
-
-		default:
-			tmp = "ERROR";
-			break;
+    		case 0:
+    			tmp = ad.getAnh49Fachdaten().getBasisObjekt().getBasisBetreiber();
+    			break;
+    		case 1:
+    			tmp = ad.getAnh49Fachdaten().getBasisObjekt().getBasisStandort();
+    			break;
+    		case 2:
+    			tmp = ad.getNenngroesse();
+    			if (tmp == null) {
+    				tmp = "Keine Nenngröße angegeben";
+    			}
+    			break;
+    		case 3:
+    			tmp = ad.getAnh49Fachdaten().getBemerkungen();
+    			break;
+    		default:
+    			tmp = "ERROR";
+    			break;
 		}
 
-		if (ad.getAnh49Fachdaten().getBasisObjekt().getInaktiv()) {
+		if (tmp != null &&
+		    ad.getAnh49Fachdaten().getBasisObjekt().getInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
 		}
 		return tmp;
