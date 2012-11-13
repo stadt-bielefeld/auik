@@ -357,6 +357,7 @@
     <!--           atl_status -->
     <!-- auik.basis: -->
     <!--             basis_betreiber -->
+    <!--             basis_gemarkung -->
     <!-- tipi: -->
     <!--       auik_wz_code -->
 </hibernate-reverse-engineering>
