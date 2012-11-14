@@ -138,42 +138,12 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
     /* Add customized code below */
 
     /**
-     * @return Liefert <code>true</code>, wenn diese Objektart vom Abschnitt
-     *         360.33 bearbeitet wird
-     */
-    /* Deleted the .trim(), because we do not seam to need it. */
-    public boolean isAbteilung33() {
-        return ("360.33".equals(getAbteilung()));
-    }
-
-    /**
-     * @return Liefert <code>true</code>, wenn diese Objektart vom Abschnitt
-     *         360.34 bearbeitet wird
-     */
-    /* Deleted the .trim(), because we do not seam to need it. */
-    public boolean isAbteilung34() {
-        return ("360.34".equals(getAbteilung()));
-    }
-
-    /**
-     * Liefert alle vorhandenen Objektarten.
-     * @return Alle vorhandenen Objektarten
-     */
-    public static BasisObjektarten[] getObjektarten() {
-        return (BasisObjektarten[]) new DatabaseAccess().createQuery(
-            "FROM BasisObjektarten bo ORDER BY bo.objektart")
-            .setCacheable(true)
-            .setCacheRegion("objartliste")
-            .array(new BasisObjektarten[0]);
-    }
-
-    /**
      * Liefert eine Objektart mit einer bestimmten ID.
      * @param id Die ID (der Primärschlüssel) des Standorts.
      * @return Den gesuchten Standort oder <code>null</code>, falls kein
      *         Standort mit dieser ID existiert.
      */
-    public static BasisObjektarten getObjektart(Integer id) {
+    public static BasisObjektarten findById(Integer id) {
         BasisObjektarten art = null;
         art = (BasisObjektarten) new DatabaseAccess()
             .get(BasisObjektarten.class, id);
@@ -187,7 +157,7 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
      * @return Die gespeicherte Objektart, oder <code>null</code>, falls beim
      *         Speichern ein Fehler auftrat.
      */
-    public static BasisObjektarten saveObjektart(BasisObjektarten art) {
+    public static BasisObjektarten merge(BasisObjektarten art) {
         BasisObjektarten artRet = null;
         artRet = (BasisObjektarten) new DatabaseAccess().merge(art);
         if (artRet != null) {
@@ -203,7 +173,7 @@ public class BasisObjektarten extends AbstractBasisObjektarten implements
      *         <code>false</code> falls dabei ein Fehler auftrat (z.B. die
      *         Objektart nicht in der Datenbank existiert).
      */
-    public static boolean removeObjektart(BasisObjektarten objektart) {
+    public static boolean delete(BasisObjektarten objektart) {
         return new DatabaseAccess().delete(objektart);
     }
 }

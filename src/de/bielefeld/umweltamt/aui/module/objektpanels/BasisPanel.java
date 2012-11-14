@@ -100,6 +100,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
@@ -490,7 +491,7 @@ public class BasisPanel extends JPanel {
 
     public void fetchFormData() {
         if (this.objektarten == null) {
-            this.objektarten = BasisObjektarten.getObjektarten();
+            this.objektarten = DatabaseQuery.getObjektarten();
         }
     }
 
@@ -526,7 +527,6 @@ public class BasisPanel extends JPanel {
                 new DefaultComboBoxModel(BasisSachbearbeiter
                     .getEnabledSachbearbeiter()));
 
-            // FIXME: BasisObjektart ids in the code...
             getArtBox().removeAllItems();
             // Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000)
             // und umgekehrt ist weiterhin möglich
@@ -534,9 +534,11 @@ public class BasisPanel extends JPanel {
             if (art == DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN
                 || art == DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS) {
                 // Anhang 53 (<3000) (360.33)
-                getArtBox().addItem(BasisObjektarten.getObjektart(17));
+                getArtBox().addItem(BasisObjektarten.findById(
+                    DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN));
                 // Anhang 53 (>3000) (360.33)
-                getArtBox().addItem(BasisObjektarten.getObjektart(18));
+                getArtBox().addItem(BasisObjektarten.findById(
+                    DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS));
             }
             // Ändern der Objektarten Anhang 49, Abscheider und Fettabscheider
             // ist ebenfalls möglich
@@ -545,13 +547,17 @@ public class BasisPanel extends JPanel {
                 || art == DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER
                 || art == DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34) {
                 // Anhang 49 (360.33)
-                getArtBox().addItem(BasisObjektarten.getObjektart(14));
+                getArtBox().addItem(BasisObjektarten.findById(
+                    DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49));
                 // Abscheider (360.32)
-                getArtBox().addItem(BasisObjektarten.getObjektart(19));
+                getArtBox().addItem(BasisObjektarten.findById(
+                    DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER));
                 // Fettabscheider (360.33)
-                getArtBox().addItem(BasisObjektarten.getObjektart(15));
+                getArtBox().addItem(BasisObjektarten.findById(
+                    DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER));
                 // Abscheider (360.34)
-                getArtBox().addItem(BasisObjektarten.getObjektart(58));
+                getArtBox().addItem(BasisObjektarten.findById(
+                    DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34));
             }
             // Objektart als einziges in die Liste eintragen
             else {
@@ -562,6 +568,7 @@ public class BasisPanel extends JPanel {
 
         if (this.hauptModul.getObjekt() != null) {
             if (this.hauptModul.getObjekt().getBasisBetreiber() != null) {
+                // TODO: Why are we using html here? :-/
                 BasisBetreiber betr = this.hauptModul.getObjekt()
                     .getBasisBetreiber();
                 getBetreiberFeld().setText(betr.toString());

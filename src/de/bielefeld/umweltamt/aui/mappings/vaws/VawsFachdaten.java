@@ -27,6 +27,7 @@ import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -102,7 +103,8 @@ public class VawsFachdaten extends AbstractVawsFachdaten implements
     public static List<?> getVawsByObjekt(BasisObjekt objekt)
         throws IllegalArgumentException {
 
-        if (!objekt.getBasisObjektarten().isAbteilung34()) {
+        if (!(objekt.getBasisObjektarten().getAbteilung().equals(
+            DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34))) {
             throw new IllegalArgumentException(
             "Zu diesem BasisObjekt existieren keine VAWS-Fachdaten-Objekte!");
         }

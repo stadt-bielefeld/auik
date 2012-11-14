@@ -190,7 +190,7 @@ public class ObjektTest extends TestCase {
     }
 
     private BasisObjektarten findeObjektart() {
-        BasisObjektarten objektart = BasisObjektarten.getObjektart(1);
+        BasisObjektarten objektart = BasisObjektarten.findById(1);
         return objektart;
     }
 }

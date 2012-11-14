@@ -26,7 +26,6 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 
 /**
  * This is a service class for all database constants.<br>
@@ -119,10 +118,10 @@ public class DatabaseConstants {
     /* Constants for package BASIS                                            */
     /* ********************************************************************** */
 
+    /* BasisBetreiber */
+    public static final int BASIS_BETREIBER_ID_KEINE_BETREIBER = 3;
+
     /* BasisObjektarten */
-    public static final BasisObjektarten BASIS_OBJEKTART_PROBEPUNKT =
-        BasisObjektarten.getObjektart(32);
-    /* BasisObjektarten IDs */
     public static final int BASIS_OBJEKTART_ID_PROBEPUNKT = 32;
     public static final int BASIS_OBJEKTART_ID_BWK = 16;
     public static final int BASIS_OBJEKTART_ID_BHKW = 36;
@@ -139,4 +138,6 @@ public class DatabaseConstants {
     public static final int BASIS_OBJEKTART_ID_ANHANG_55 = 29;
     public static final int BASIS_OBJEKTART_ID_ANHANG_56 = 30;
     public static final int BASIS_OBJEKTART_ID_GENEHMIGUNG = 42;
+    public static final String BASIS_OBJEKTART_ABTEILUNG_33 = "360.33";
+    public static final String BASIS_OBJEKTART_ABTEILUNG_34 = "360.34";
 }

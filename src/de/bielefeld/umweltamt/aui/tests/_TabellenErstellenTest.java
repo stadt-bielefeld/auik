@@ -82,7 +82,7 @@ public class _TabellenErstellenTest extends TestCase {
 
         BasisBetreiber.delete(BasisBetreiber.findById(_idB));
         BasisStandort.removeStandort(BasisStandort.getStandort(_idS));
-        BasisObjektarten.removeObjektart(BasisObjektarten.getObjektart(_idO));
+        BasisObjektarten.delete(BasisObjektarten.findById(_idO));
     }
 
     /**
@@ -131,7 +131,7 @@ public class _TabellenErstellenTest extends TestCase {
         art.setObjektartid(ID);
         art.setObjektart(ObjArt);
 
-        art = BasisObjektarten.saveObjektart(art);
+        art = BasisObjektarten.merge(art);
 
         return art.getObjektartid();
     }

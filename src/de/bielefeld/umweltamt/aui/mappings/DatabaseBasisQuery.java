@@ -32,6 +32,7 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -140,6 +141,24 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
                 .setProjection(Projections.distinct(Projections.max("datum"))),
             new Timestamp(0));
 //            cal);
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisObjektarten                     */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static BasisObjektarten[] objektarten = null;
+    /**
+     * Get all BasisObjektarten and sort them by their name
+     * @return <code>BasisObjektarten[]</code>
+     */
+    public static BasisObjektarten[] getObjektarten() {
+        if (DatabaseBasisQuery.objektarten == null) {
+            DatabaseBasisQuery.objektarten = DatabaseQuery.getOrderedAll(
+                new BasisObjektarten(), "objektart")
+                .toArray(new BasisObjektarten[0]);
+        }
+        return DatabaseBasisQuery.objektarten;
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
