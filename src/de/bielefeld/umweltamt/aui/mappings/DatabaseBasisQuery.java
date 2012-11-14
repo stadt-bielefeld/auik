@@ -130,6 +130,70 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisObjekt                          */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Liefert eine Liste von Objekten, die einem bestimmten Betreiber
+     * zugeordnet sind.
+     * @param betreiber Der Betreiber.
+     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll,
+     *            sonst <code>null</code>.
+     * @return Eine Liste von BasisObjekten dieses Betreibers.
+     */
+    public static List<BasisObjekt> getObjekteByBetreiber(
+            BasisBetreiber betreiber, String abteilung) {
+        DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(BasisObjekt.class)
+            .createAlias("basisStandort", "standort")
+            .createAlias("basisObjektarten", "art")
+            .add(Restrictions.eq("basisBetreiber", betreiber))
+            .addOrder(Order.asc("inaktiv"))
+            .addOrder(Order.asc("standort.strasse"))
+            .addOrder(Order.asc("standort.hausnr"))
+            .addOrder(Order.asc("art.objektart"));
+        if (abteilung != null) {
+            detachedCriteria.add(Restrictions.eq("art.abteilung", abteilung));
+        }
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new BasisObjekt());
+    }
+
+    /**
+     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet
+     * sind.
+     * @param betr Der Standort.
+     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll,
+     *            sonst <code>null</code>.
+     * @param artid Die Objektart, die (nicht) dargestellt werden soll.
+     * @return Eine Liste von BasisObjekten an diesem Standort.
+     */
+    public static List<BasisObjekt> getObjekteByStandort(
+            BasisStandort standort, String abteilung, Integer artid,
+            Boolean matchArtId) {
+        DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(BasisObjekt.class)
+            .createAlias("basisBetreiber", "betreiber")
+            .createAlias("basisObjektarten", "art")
+            .add(Restrictions.eq("basisStandort", standort))
+            .addOrder(Order.asc("inaktiv"))
+            .addOrder(Order.asc("betreiber.betrname"))
+            .addOrder(Order.asc("art.objektart"));
+        if (abteilung != null) {
+            detachedCriteria.add(Restrictions.eq("art.abteilung", abteilung));
+        }
+        if (artid != null) {
+            if (matchArtId) {
+                detachedCriteria.add(Restrictions.eq("art.id", artid));
+            } else {
+                detachedCriteria.add(Restrictions.ne("art.id", artid));
+            }
+        }
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new BasisObjekt());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisObjektchrono                    */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 

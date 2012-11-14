@@ -62,99 +62,6 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
 
     /* Add customized code below */
 
-    /**
-     * Liefert eine Liste von Objekten, die einem bestimmten Betreiber
-     * zugeordnet sind.
-     * @param betr Der Betreiber.
-     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll,
-     *            sonst <code>null</code>.
-     * @return Eine Liste von BasisObjekten dieses Betreibers.
-     */
-    public static List<?> getObjekteByBetreiber(
-            BasisBetreiber betr, String abteilung) {
-        String query = "FROM BasisObjekt as bo "
-            + "WHERE bo.basisBetreiber = :betreiber ";
-
-        if (abteilung != null) {
-            query += "and bo.basisObjektarten.abteilung = '" + abteilung + "' ";
-        }
-
-        query += "ORDER BY bo.inaktiv, bo.basisStandort.strasse, " +
-        		"bo.basisStandort.hausnr, bo.basisObjektarten.objektart";
-
-        return new DatabaseAccess().createQuery(query)
-            .setEntity("betreiber", betr)
-            .list();
-    }
-
-    /**
-     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet
-     * sind.
-     * @param betr Der Standort.
-     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll,
-     *            sonst <code>null</code>.
-     * @param nichtartid Die Objektart, die nicht dargestellt werden soll.
-     * @return Eine Liste von BasisObjekten an diesem Standort.
-     */
-    public static List<?> getObjekteByStandort(
-            BasisStandort standort, String abteilung, Integer nichtartid) {
-        String query = "FROM BasisObjekt as bo "
-            + "WHERE bo.basisStandort = :standort "; // +
-//            "and bo.inaktiv = :f ";
-
-        if (abteilung != null) {
-            query += "and bo.basisObjektarten.abteilung = '" + abteilung + "' ";
-        }
-
-        if (nichtartid != null) {
-            query += "and bo.basisObjektarten.id != " + nichtartid;
-        }
-
-        query += "ORDER BY bo.inaktiv, bo.basisBetreiber.betrname, " +
-        		"bo.basisObjektarten.objektart";
-
-        return new DatabaseAccess().createQuery(query)
-            .setEntity("standort", standort)
-//            .setString("f", "f")
-            .list();
-    }
-
-    /**
-     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet
-     * sind.
-     * @param betr Der Standort.
-     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll,
-     *            sonst <code>null</code>.
-     * @param nichtartid Die Objektart, die nicht dargestellt werden soll.
-     * @return Eine Liste von BasisObjekten an diesem Standort.
-     */
-    public static List<?> getObjekteByStandort(
-            BasisStandort standort, Integer istartid) {
-        String query = "FROM BasisObjekt as bo "
-            + "WHERE bo.basisStandort = :standort ";
-
-        if (istartid != null) {
-            query += "and bo.basisObjektarten.id = :objektartid ";
-        }
-
-        query += "ORDER BY bo.inaktiv, bo.basisBetreiber.betrname, " +
-        		"bo.basisObjektarten.objektart";
-
-        return new DatabaseAccess().createQuery(query)
-            .setEntity("standort", standort)
-            .setInteger("objektartid", 32)
-            .list();
-    }
-
-    /**
-     * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet
-     * sind.
-     * @param betr Der Standort.
-     * @param abteilung Die Abteilung, wenn nach ihr gefiltert werden soll,
-     *            sonst <code>null</code>.
-     * @param nichtartid Die Objektart, die nicht dargestellt werden soll.
-     * @return Eine Liste von BasisObjekten an diesem Standort.
-     */
     public static List<?> getObjekteMitPrioritaet() {
         String query = "SELECT distinct bo.basisStandort, bo.basisBetreiber, "
             + "bp.prioritaet, bo.basisSachbearbeiter "
@@ -172,7 +79,7 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      * @return Das BasisObjekt mit dem Primärschlüssel oder <code>null</code>,
      *         falls ein solches nicht gefunden wurde.
      */
-    public static BasisObjekt getObjekt(Integer id) {
+    public static BasisObjekt findById(Integer id) {
         BasisObjekt objekt = null;
         objekt = (BasisObjekt) new DatabaseAccess().get(BasisObjekt.class, id);
         return objekt;
@@ -197,7 +104,7 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      * @param obj Das zu speichernde Objekt.
      * @return Das gespeicherte Objekt.
      */
-    public static BasisObjekt saveBasisObjekt(BasisObjekt obj) {
+    public static BasisObjekt merge(BasisObjekt obj) {
         return (BasisObjekt) new DatabaseAccess().merge(obj);
     }
 
@@ -209,7 +116,7 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      */
     public static BasisObjekt saveBasisObjekt(BasisObjekt obj, Integer prio) {
         BasisPrioritaet.saveBasisPrioritaet(obj, prio);
-        return BasisObjekt.saveBasisObjekt(obj);
+        return BasisObjekt.merge(obj);
     }
 
     /**
@@ -218,7 +125,7 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      * @return <code>true</code>, wenn das Objekt gelöscht wurde, sonst
      *         <code>false</code>.
      */
-    public static boolean removeBasisObjekt(BasisObjekt obj) {
+    public static boolean delete(BasisObjekt obj) {
         return new DatabaseAccess().delete(obj);
     }
 }

@@ -50,6 +50,7 @@ package de.bielefeld.umweltamt.aui.tests;
 import java.util.List;
 
 import junit.framework.TestCase;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
@@ -98,8 +99,8 @@ public class ObjektTest extends TestCase {
      * Das erstellet Objekt wird in der Datenbank gesucht
      */
     public BasisObjekt testQuery() {
-        List<?> result = BasisObjekt.getObjekteByStandort(
-            standort, null, 16);
+        List<?> result = DatabaseQuery.getObjekteByStandort(
+            standort, null, 16, false);
 
         BasisObjekt objekt = (BasisObjekt) result.get(0);
 
@@ -114,7 +115,7 @@ public class ObjektTest extends TestCase {
         BasisObjekt objekt = testQuery();
 
         objekt.setBeschreibung("neue");
-        BasisObjekt.saveBasisObjekt(objekt);
+        BasisObjekt.merge(objekt);
 
         objekt = testQuery();
 
@@ -146,9 +147,10 @@ public class ObjektTest extends TestCase {
         BasisObjektchrono chrono = (BasisObjektchrono) chronolist.get(0);
 
         BasisObjektchrono.removeObjektChrono(chrono);
-        BasisObjekt.removeBasisObjekt(objekt);
+        BasisObjekt.delete(objekt);
 
-        List<?> result = BasisObjekt.getObjekteByStandort(standort, 1);
+        List<?> result = DatabaseQuery.getObjekteByStandort(
+            standort, null, 1, true);
 
         assertEquals(0, result.size());
     }
@@ -169,7 +171,7 @@ public class ObjektTest extends TestCase {
         objekt.setBasisStandort(standort);
         BasisObjektchrono chrono = new BasisObjektchrono();
 
-        objekt = BasisObjekt.saveBasisObjekt(objekt);
+        objekt = BasisObjekt.merge(objekt);
         chrono.setBasisObjekt(objekt);
         chrono.setSachbearbeiter("JUNIT");
         BasisObjektchrono.saveObjektChrono(chrono);

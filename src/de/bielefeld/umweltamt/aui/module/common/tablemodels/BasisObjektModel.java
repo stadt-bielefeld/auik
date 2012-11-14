@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
@@ -109,7 +110,7 @@ public class BasisObjektModel extends ListTableModel {
         boolean removed;
 
         if (removedObjekt.getObjektid() != null) {
-            removed = BasisObjekt.removeBasisObjekt(removedObjekt);
+            removed = BasisObjekt.delete(removedObjekt);
         } else {
             removed = true;
         }
@@ -131,7 +132,7 @@ public class BasisObjektModel extends ListTableModel {
      * @param betreiberId Die Betreiber-Id
      */
     public void searchByBetreiber(BasisBetreiber betr) {
-        setList(BasisObjekt.getObjekteByBetreiber(betr, abteilung));
+        setList(DatabaseQuery.getObjekteByBetreiber(betr, abteilung));
     }
 
     /**
@@ -139,7 +140,8 @@ public class BasisObjektModel extends ListTableModel {
      * @param standortId Die Standort-Id
      */
     public void searchByStandort(BasisStandort standort) {
-        setList(BasisObjekt.getObjekteByStandort(standort, abteilung, null));
+        setList(DatabaseQuery.getObjekteByStandort(
+            standort, abteilung, null, null));
     }
 
     /**
@@ -147,15 +149,18 @@ public class BasisObjektModel extends ListTableModel {
      * @param standortId Die Standort-Id
      */
     public void searchByStandort(BasisStandort standort, String abteilung) {
-        setList(BasisObjekt.getObjekteByStandort(standort, abteilung, null));
+        setList(DatabaseQuery.getObjekteByStandort(
+            standort, abteilung, null, null));
     }
 
     /**
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(BasisStandort standort, String abteilung, Integer nichtartid) {
-        setList(BasisObjekt.getObjekteByStandort(standort, abteilung, nichtartid));
+    public void searchByStandort(
+        BasisStandort standort, String abteilung, Integer nichtartid) {
+        setList(DatabaseQuery.getObjekteByStandort(
+            standort, abteilung, nichtartid, false));
     }
 
     /**
@@ -163,7 +168,8 @@ public class BasisObjektModel extends ListTableModel {
      * @param standortId Die Standort-Id
      */
     public void searchByStandort(BasisStandort standort, Integer istartid) {
-        setList(BasisObjekt.getObjekteByStandort(standort, istartid));
+        setList(DatabaseQuery.getObjekteByStandort(
+            standort, null, istartid, true));
     }
 
     /**

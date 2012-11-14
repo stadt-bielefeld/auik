@@ -266,7 +266,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
         if (this.manager.getSettingsManager()
             .getSetting("auik.imc.edit_object") != null) {
-            this.objekt = BasisObjekt.getObjekt(new Integer(this.manager
+            this.objekt = BasisObjekt.findById(new Integer(this.manager
                 .getSettingsManager().getIntSetting("auik.imc.edit_object")));
             this.manager.getSettingsManager().removeSetting(
                 "auik.imc.edit_object");
@@ -274,9 +274,9 @@ public class SielhautBearbeiten extends AbstractModul {
             this.spunkt = AtlSielhaut.getSielhaut(this.sprobePkt
                 .getAtlSielhaut().getId());
             setSielhautPunkt(this.spunkt);
-        } else if (BasisObjekt.getObjekt(24856) != null) {
+        } else if (BasisObjekt.findById(24856) != null) {
             //FIXME: A constant id? In the code? -.-
-            this.objekt = BasisObjekt.getObjekt(24856);
+            this.objekt = BasisObjekt.findById(24856);
             this.sprobePkt = AtlProbepkt.findById(this.objekt.getObjektid());
             this.spunkt = AtlSielhaut.getSielhaut(this.sprobePkt
                 .getAtlSielhaut().getId());
@@ -387,7 +387,7 @@ public class SielhautBearbeiten extends AbstractModul {
     public boolean saveObjekt() {
         boolean saved = false;
 
-        this.objekt = BasisObjekt.saveBasisObjekt(this.objekt);
+        this.objekt = BasisObjekt.merge(this.objekt);
 
         saved = true;
 
@@ -400,7 +400,7 @@ public class SielhautBearbeiten extends AbstractModul {
     public boolean saveProbepunkt(BasisObjekt objekt) {
         boolean saved = false;
 
-        objekt = BasisObjekt.getObjekt(objekt.getObjektid());
+        objekt = BasisObjekt.findById(objekt.getObjektid());
         this.sprobePkt.setBasisObjekt(objekt);
 //        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
 //        this.sprobePkt.setAtlSielhaut(this.spunkt);

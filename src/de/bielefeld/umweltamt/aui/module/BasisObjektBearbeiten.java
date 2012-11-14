@@ -413,7 +413,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
         if (manager.getSettingsManager().getSetting("auik.imc.edit_object") != null) {
             isNew = false;
-            objekt = BasisObjekt.getObjekt(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.edit_object")));
+            objekt = BasisObjekt.findById(new Integer(
+                manager.getSettingsManager().getIntSetting("auik.imc.edit_object")));
             manager.getSettingsManager().removeSetting("auik.imc.edit_object");
         } else {
             isNew = true;

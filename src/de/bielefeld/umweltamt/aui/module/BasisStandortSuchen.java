@@ -694,7 +694,10 @@ public class BasisStandortSuchen extends AbstractModul {
                         BasisStandort standort = BasisStandortSuchen.this.standortModel
                             .getRow(selectedRow);
                         log.debug("Standort " + standort + " angewählt.");
-                        searchObjekteByStandort(standort, "360.33", 32);
+                        searchObjekteByStandort(
+                            standort,
+                            DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_33,
+                            DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
                     }
                 }
             });
@@ -717,7 +720,10 @@ public class BasisStandortSuchen extends AbstractModul {
                         BasisStandort standort = BasisStandortSuchen.this.standortModel
                             .getRow(selectedRow);
                         log.debug("Standort " + standort + " angewählt.");
-                        searchObjekteByStandort(standort, "360.34", 32);
+                        searchObjekteByStandort(
+                            standort,
+                            DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34,
+                            DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
                     }
                 }
             });
@@ -741,7 +747,8 @@ public class BasisStandortSuchen extends AbstractModul {
                         BasisStandort standort = BasisStandortSuchen.this.standortModel
                             .getRow(selectedRow);
                         log.debug("Standort " + standort + " angewählt.");
-                        searchObjekteByStandort(standort, 32);
+                        searchObjekteByStandort(standort,
+                            DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
                     }
                 }
             });
