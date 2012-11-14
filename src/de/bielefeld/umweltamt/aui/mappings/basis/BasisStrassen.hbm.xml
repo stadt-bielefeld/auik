@@ -1,18 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis" schema="auik">
-
-    <class name="BasisStrassen" table="basis_strassen" mutable="false">
-        <id name="strasseid" column="id" type="java.lang.Integer">
-            <generator class="assigned"/>
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen" table="basis_strassen" schema="auik">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-
-        <property name="strasse" column="strasse" type="java.lang.String" />
-        <property name="plz" column="plz" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="strasse" type="string">
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="strasse" />
+        </property>
+        <property name="plz" type="string">
+            <column name="plz" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>

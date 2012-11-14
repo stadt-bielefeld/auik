@@ -44,7 +44,7 @@ public class DatabaseSerialVersionUID {
     public static final long forBasisPrioritaetId       = -1304451453173654906L;
     public static final long forBasisSachbearbeiter     = 7587341236085960792L;
     public static final long forBasisStandort           = 2774552431508434460L;
-    public static final long forBasisStrasse            = -3812115749085297644L;
+    public static final long forBasisStrassen           = -3812115749085297644L;
 
     /* Generated serialVersionUID for atl package */
     public static final long forAtlAnalyseposition      = 8611630449814009888L;

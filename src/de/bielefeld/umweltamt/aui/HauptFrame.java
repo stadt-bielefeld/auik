@@ -963,7 +963,7 @@ public class HauptFrame extends JFrame {
             this.textLabel = new JLabel(
                     "<html>Bitte geben Sie ihren Benutzernamen und <br>"
                     + "ihr Passwort ein und klicken Sie auf <br>"
-                    + " den Wullspuffel \"Login\".</html>");
+                    + "den Wullspuffel \"Login\".</html>");
             this.benutzerFeld = new JTextField(10);
             if (settings.getSetting("auik.prefs.lastuser") == null) {
                 benutzerFeld.setText(System.getProperty("user.name"));
