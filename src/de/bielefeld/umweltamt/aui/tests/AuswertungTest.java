@@ -177,7 +177,8 @@ public class AuswertungTest extends TestCase {
 
         List<?> listquery;
         String query = "from Anh53Fachdaten as anh53 "
-            + "order by anh53.basisObjekt.inaktiv, anh53.basisObjekt.basisObjektarten.objektartid, "
+            + "order by anh53.basisObjekt.inaktiv, "
+            + "anh53.basisObjekt.basisObjektarten.id, "
             + "anh53.basisObjekt.basisStandort.strasse, "
             + "anh53.basisObjekt.basisStandort.hausnr";
 

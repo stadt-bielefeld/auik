@@ -73,24 +73,22 @@ public class Anh56Model extends ListTableModel {
         Object tmp;
 
         switch (columnIndex) {
-        case 0:
-            tmp = fd.getBasisObjekt().getBasisBetreiber();
-            break;
-        case 1:
-            tmp = fd.getBasisObjekt().getBasisStandort();
-            break;
-        case 2:
-            tmp = fd.getDruckverfahren();
-            break;
-        case 3:
-            tmp = fd.getBemerkungen();
-            break;
-
-        default:
-            tmp = "ERROR";
-            break;
+            case 0:
+                tmp = fd.getBasisObjekt().getBasisBetreiber();
+                break;
+            case 1:
+                tmp = fd.getBasisObjekt().getBasisStandort();
+                break;
+            case 2:
+                tmp = fd.getDruckverfahren();
+                break;
+            case 3:
+                tmp = fd.getBemerkungen();
+                break;
+            default:
+                tmp = "ERROR";
         }
-        if (fd.getBasisObjekt().getInaktiv() == true) {
+        if (tmp != null && fd.getBasisObjekt().getInaktiv() == true) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

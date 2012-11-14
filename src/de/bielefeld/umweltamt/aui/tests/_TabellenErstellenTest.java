@@ -128,11 +128,11 @@ public class _TabellenErstellenTest extends TestCase {
      */
     private int erzeugeObjektart(int ID, String ObjArt) {
         BasisObjektarten art = new BasisObjektarten();
-        art.setObjektartid(ID);
+        art.setId(ID);
         art.setObjektart(ObjArt);
 
         art = BasisObjektarten.merge(art);
 
-        return art.getObjektartid();
+        return art.getId();
     }
 }

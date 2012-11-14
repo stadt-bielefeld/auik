@@ -107,7 +107,7 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
         }
 
         if (nichtartid != null) {
-            query += "and bo.basisObjektarten.objektartid != " + nichtartid;
+            query += "and bo.basisObjektarten.id != " + nichtartid;
         }
 
         query += "ORDER BY bo.inaktiv, bo.basisBetreiber.betrname, " +
@@ -134,7 +134,7 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
             + "WHERE bo.basisStandort = :standort ";
 
         if (istartid != null) {
-            query += "and bo.basisObjektarten.objektartid = :objektartid ";
+            query += "and bo.basisObjektarten.id = :objektartid ";
         }
 
         query += "ORDER BY bo.inaktiv, bo.basisBetreiber.betrname, " +

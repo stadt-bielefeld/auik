@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -50,25 +51,26 @@ public class Anh53Model extends ListTableModel {
         Object tmp;
 
         switch (columnIndex) {
-        case 0:
-            tmp = fd.getBasisObjekt().getBasisBetreiber();
-            break;
-        case 1:
-            tmp = fd.getBasisObjekt().getBasisStandort();
-            break;
-        case 2:
-            if (fd.getBasisObjekt().getBasisObjektarten().getObjektartid()==17)
-                tmp = "kleiner 3000";
-            else
-                tmp = "größer 3000";
-            break;
-        case 3:
-            tmp = fd.getBasisObjekt().getBeschreibung();
-            break;
+            case 0:
+                tmp = fd.getBasisObjekt().getBasisBetreiber();
+                break;
+            case 1:
+                tmp = fd.getBasisObjekt().getBasisStandort();
+                break;
+            case 2:
+                if (fd.getBasisObjekt().getBasisObjektarten().getId().equals(
+                    DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN)) {
+                    tmp = "kleiner 3000";
+                } else {
+                    tmp = "größer 3000";
+                }
+                break;
+            case 3:
+                tmp = fd.getBasisObjekt().getBeschreibung();
+                break;
 
-        default:
-            tmp = "ERROR";
-            break;
+            default:
+                tmp = "ERROR";
         }
         if (fd.getBasisObjekt().getInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());

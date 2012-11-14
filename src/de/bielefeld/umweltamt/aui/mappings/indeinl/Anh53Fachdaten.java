@@ -82,7 +82,7 @@ public class Anh53Fachdaten extends AbstractAnh53Fachdaten implements
     public static List<?> getAuswertungsListe() {
         String query = "FROM Anh53Fachdaten as anh53 "
             + "ORDER BY anh53.basisObjekt.inaktiv, "
-            + "anh53.basisObjekt.basisObjektarten.objektartid, "
+            + "anh53.basisObjekt.basisObjektarten.id, "
             + "anh53.basisObjekt.basisStandort.strasse, "
             + "anh53.basisObjekt.basisStandort.hausnr";
         return new DatabaseAccess().createQuery(query).list();

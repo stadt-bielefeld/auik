@@ -124,6 +124,7 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.SettingsManager;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
@@ -942,8 +943,9 @@ public class BasisStandortSuchen extends AbstractModul {
                         .getSelectedRow();
                     BasisObjekt obj = BasisStandortSuchen.this.objektModel
                         .getRow(row);
-                    if (row != -1
-                        || obj.getBasisObjektarten().getObjektartid() != 40) {
+                    if ((row != -1)
+                        || (!(obj.getBasisObjektarten().getId().equals(
+                            DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)))) {
                         BasisStandortSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.edit_object",
                                 obj.getObjektid().intValue(), false);
@@ -951,7 +953,8 @@ public class BasisStandortSuchen extends AbstractModul {
                         BasisStandortSuchen.this.manager
                             .switchModul("m_objekt_bearbeiten");
                     } else if (row != -1
-                        || obj.getBasisObjektarten().getObjektartid() == 40) {
+                        || obj.getBasisObjektarten().getId().equals(
+                            DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)) {
                         BasisStandortSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.edit_object",
                                 obj.getObjektid().intValue(), false);
@@ -1125,18 +1128,18 @@ public class BasisStandortSuchen extends AbstractModul {
                             int row = getObjektTabelle().rowAtPoint(origin);
                             BasisObjekt obj = BasisStandortSuchen.this.objektModel
                                 .getRow(row);
-                            if (row != -1
-                                && obj.getBasisObjektarten().getObjektartid()
-                                    .intValue() != 40) {
+                            if ((row != -1)
+                                && (!(obj.getBasisObjektarten().getId().equals(
+                                    DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)))) {
                                 BasisStandortSuchen.this.manager
                                     .getSettingsManager().setSetting(
                                         "auik.imc.edit_object",
                                         obj.getObjektid().intValue(), false);
                                 BasisStandortSuchen.this.manager
                                     .switchModul("m_objekt_bearbeiten");
-                            } else if (row != -1
-                                && obj.getBasisObjektarten().getObjektartid()
-                                    .intValue() == 40) {
+                            } else if ((row != -1)
+                                && (obj.getBasisObjektarten().getId().equals(
+                                    DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))) {
                                 BasisStandortSuchen.this.manager
                                     .getSettingsManager().setSetting(
                                         "auik.imc.edit_object",

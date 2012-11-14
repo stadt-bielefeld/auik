@@ -530,7 +530,7 @@ public class BasisPanel extends JPanel {
             getArtBox().removeAllItems();
             // Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000)
             // und umgekehrt ist weiterhin möglich
-            Integer art = this.hauptModul.getObjekt().getBasisObjektarten().getObjektartid();
+            Integer art = this.hauptModul.getObjekt().getBasisObjektarten().getId();
             if (art == DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN
                 || art == DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS) {
                 // Anhang 53 (<3000) (360.33)
