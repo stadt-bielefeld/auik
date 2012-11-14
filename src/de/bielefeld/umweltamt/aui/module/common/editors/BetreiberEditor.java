@@ -47,7 +47,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.module.common.dialogs.WZCodeDialog;
@@ -347,7 +346,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 if (strassen == null) {
-                    strassen = BasisStrassen.getStrassen();
+                    strassen = DatabaseQuery.getStrassen();
                 }
                 if (wirtschaftszweige == null) {
                     wirtschaftszweige = VawsWirtschaftszweige.getWirtschaftszweige();

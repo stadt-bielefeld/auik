@@ -125,6 +125,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
@@ -580,8 +581,8 @@ public class BasisStandortSuchen extends AbstractModul {
                             } else {
                                 String suchText = AuikUtils
                                     .sanitizeQueryInput(this.oldText);
-                                BasisStrassen str = BasisStrassen
-                                    .getStrasseByName(suchText);
+                                BasisStrassen str =
+                                    DatabaseQuery.findStrasse(suchText);
 
                                 if (str != null) {
                                     this.newText = str.getStrasse();

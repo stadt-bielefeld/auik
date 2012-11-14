@@ -25,6 +25,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -35,6 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -183,5 +185,43 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
                     "hausnrzus", zusatz)),
             new BasisStandort())
             .isEmpty()));
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisStrassen                        */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    // TODO: Could we change this from String to BasisStrassen?
+    // SearchBox may be a problem here...
+    private static String[] strassen = null;
+    /**
+     * Get all BasisStrassen sorted by strasse
+     * @return <code>BasisStrassen[]</code>
+     */
+    public static String[] getStrassen() {
+        if (DatabaseBasisQuery.strassen == null) {
+            BasisStrassen[] basisStrassen = DatabaseQuery.getOrderedAll(
+                new BasisStrassen(), "strasse").toArray(new BasisStrassen[0]);
+            strassen = new String[basisStrassen.length];
+            for (int i = 0; i < basisStrassen.length; i++) {
+                strassen[i] = basisStrassen[i].getStrasse();
+            }
+        }
+        return DatabaseBasisQuery.strassen;
+    }
+
+    /**
+     * Get the first matching BasisStrasse for the serach String
+     * @param search String
+     * @return <code>BasisStrassen</code>
+     */
+    public static BasisStrassen findStrasse(String search) {
+        List<BasisStrassen> list = new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(BasisStrassen.class)
+                .add(Restrictions.ilike("strasse", search, MatchMode.START))
+                .addOrder(Order.asc("strasse")),
+            new BasisStrassen());
+        // If we got something, just return the first result
+        return (list.isEmpty() ? null : list.get(0));
     }
 }

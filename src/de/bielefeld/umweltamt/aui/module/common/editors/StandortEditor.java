@@ -283,7 +283,8 @@ public class StandortEditor extends AbstractBaseEditor {
                 if (e.getSource() == strassenBox) {
                     if (plzFeld.getText().equals("") || strassenCounter > 0) {
                         // Wenn wir eine Straße auswählen, wird die PLZ upgedatet.
-                        BasisStrassen stra = BasisStrassen.getStrasseByName((String) strassenBox.getSelectedItem());
+                        BasisStrassen stra = DatabaseQuery.findStrasse(
+                            (String) strassenBox.getSelectedItem());
                         if (stra != null) {
                             if (stra.getPlz() != null) {
                                 frame.clearStatus();
@@ -313,7 +314,7 @@ public class StandortEditor extends AbstractBaseEditor {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 if (strassen == null) {
-                    strassen = BasisStrassen.getStrassen();
+                    strassen = DatabaseQuery.getStrassen();
                 }
                 if (gemarkungen == null) {
                     gemarkungen = DatabaseQuery.getBasisGemarkungen();

@@ -430,7 +430,7 @@ public class BasisStandortNeu extends AbstractModul {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 if (strassen == null) {
-                    strassen = BasisStrassen.getStrassen();
+                    strassen = DatabaseQuery.getStrassen();
                 }
                 if (gemarkungen == null) {
                     gemarkungen = DatabaseQuery.getBasisGemarkungen();
@@ -540,7 +540,8 @@ public class BasisStandortNeu extends AbstractModul {
                 }
             } else if (e.getSource() == strassenBox) {
                 // Wenn wir eine Straße auswählen, wird die PLZ upgedatet
-                BasisStrassen stra = BasisStrassen.getStrasseByName((String) strassenBox.getSelectedItem());
+                BasisStrassen stra = DatabaseQuery.findStrasse(
+                    (String) strassenBox.getSelectedItem());
                 if (stra != null) {
                     // Natürlich nur, wenn die Straße eine eindeutige PLZ hat
                     if (stra.getPlz() != null) {

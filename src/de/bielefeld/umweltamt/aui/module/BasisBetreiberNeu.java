@@ -68,8 +68,8 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -546,7 +546,7 @@ public class BasisBetreiberNeu extends AbstractModul {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 if (strassen == null) {
-                    strassen = BasisStrassen.getStrassen();
+                    strassen = DatabaseQuery.getStrassen();
                 }
                 if (wirtschaftszweige == null) {
                     wirtschaftszweige = VawsWirtschaftszweige.getWirtschaftszweige();

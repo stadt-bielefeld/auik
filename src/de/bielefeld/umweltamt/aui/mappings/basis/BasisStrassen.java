@@ -23,9 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'BASIS_STRASSEN' table. This class may
@@ -34,8 +32,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class BasisStrassen extends AbstractBasisStrassen implements
     Serializable {
     private static final long serialVersionUID = -3812115749085297644L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of BasisStrassen instances.
@@ -88,42 +84,4 @@ public class BasisStrassen extends AbstractBasisStrassen implements
     }
 
     /* Add customized code below */
-
-    // Nur nötig, weil wir Strassen so komisch handhaben...
-    /**
-     * Liefert das passende BasisStrassen-Objekt zu einem Strassennamen.
-     * @return Das passende BasisStrassen-Objekt oder <code>null</code>, falls
-     *         keins diesen Namens gefunden wird.
-     */
-    public static BasisStrassen getStrasseByName(String name) {
-        if (name == null) {
-            return null;
-        }
-
-        String name2 = name.toLowerCase().trim() + "%";
-        log.debug("Suche nach: " + name);
-        BasisStrassen result = (BasisStrassen) new DatabaseAccess()
-            .createQuery(
-                "FROM BasisStrassen str WHERE lower(str.strasse) like :name")
-            .setString("name", name2)
-            .setMaxResults(1) // TODO: This should not be needed anymore
-            .uniqueResult();
-        log.debug("Ergebnis: " + result);
-
-        return result;
-    }
-
-    /**
-     * Liefert alle vorhandenen Straßennamen als Strings.
-     * @return Alle vorhandenen Straßennamen
-     */
-    public static String[] getStrassen() {
-        return (String[]) new DatabaseAccess().createQuery(
-            "SELECT strassen.strasse "
-                + "FROM BasisStrassen strassen "
-                + "ORDER BY strassen.strasse")
-            .setCacheable(true)
-            .setCacheRegion("strassenliste")
-            .array(new String[0]);
-    }
 }
