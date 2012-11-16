@@ -82,6 +82,8 @@ public abstract class AbstractBasisObjekt extends
     /** The value of the simple inaktiv property. */
     private java.lang.Boolean inaktiv;
 
+    private String prioritaet;
+
     /**
      * Simple constructor of AbstractBasisObjekt instances.
      */
@@ -303,6 +305,14 @@ public abstract class AbstractBasisObjekt extends
      */
     public void setInaktiv(java.lang.Boolean inaktiv) {
         this.inaktiv = inaktiv;
+    }
+
+    public String getPrioritaet() {
+        return this.prioritaet;
+    }
+
+    public void setPrioritaet(String prioritaet) {
+        this.prioritaet = prioritaet;
     }
 
     /**

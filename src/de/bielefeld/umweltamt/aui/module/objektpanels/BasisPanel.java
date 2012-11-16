@@ -637,9 +637,9 @@ public class BasisPanel extends JPanel {
             }
 
             if (!neu) {
-                if (this.hauptModul.getObjekt().getPrioritaet() != null) {
+                if (this.hauptModul.getObjekt().getOldPrioritaet() != null) {
                     getPrioritaetFeld().setText(
-                        this.hauptModul.getObjekt().getPrioritaet().toString());
+                        this.hauptModul.getObjekt().getOldPrioritaet().toString());
                 }
             }
 
@@ -711,8 +711,10 @@ public class BasisPanel extends JPanel {
             (BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
         this.hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
 
-        BasisObjekt tmp = BasisObjekt.saveBasisObjekt(
-            this.hauptModul.getObjekt(), prio);
+//        BasisObjekt tmp = BasisObjekt.saveBasisObjekt(
+//            this.hauptModul.getObjekt(), prio);
+        BasisObjekt tmp = BasisObjekt.merge(this.hauptModul.getObjekt());
+        DatabaseQuery.cascadePriority(prio.toString(), tmp);
 
         if (tmp != null) {
             this.hauptModul.setObjekt(tmp);

@@ -26,6 +26,7 @@ import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'BASIS_OBJEKT' table. This class may be
@@ -33,6 +34,8 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
  */
 public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
     private static final long serialVersionUID = -5770125513608713721L;
+    /** Logging */
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of BasisObjekt instances.
@@ -89,7 +92,7 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
      * Gibt den Wert für die Priorität des Objektes zurück.
      * @return java.lang.Integer
      */
-    public java.lang.Integer getPrioritaet() {
+    public java.lang.Integer getOldPrioritaet() {
         Integer prioritaet = null;
 
         if (BasisPrioritaet.getPrioritaet(this) != null) {
@@ -100,23 +103,24 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
     }
 
     /**
-     * Speichert ein Objekt in der Datenbank.
-     * @param obj Das zu speichernde Objekt.
-     * @return Das gespeicherte Objekt.
+     * Merge (save or update) a detached instance
+     * @param detachedInstance the instance to merge
+     * @return <code>BasisObjekt</code> the merged instance,
+     *         if everything went okay,
+     *         <code>null</code> otherwise
      */
-    public static BasisObjekt merge(BasisObjekt obj) {
-        return (BasisObjekt) new DatabaseAccess().merge(obj);
+    public static BasisObjekt merge(BasisObjekt detachedInstance) {
+        log.debug("Merging BasisObjekt instance " + detachedInstance);
+        return (BasisObjekt) new DatabaseAccess().merge(detachedInstance);
     }
 
     /**
-     * Speichert ein Objekt in der Datenbank.
-     * @param obj Das zu speichernde Objekt.
-     * @param prio Die zu speichernde Priorität
-     * @return Das gespeicherte Objekt.
+     * Merge (save or update) this instance
+     * @return <code>true</code>, if everything went okay,
+     *         <code>false</code> otherwise
      */
-    public static BasisObjekt saveBasisObjekt(BasisObjekt obj, Integer prio) {
-        BasisPrioritaet.saveBasisPrioritaet(obj, prio);
-        return BasisObjekt.merge(obj);
+    public boolean merge() {
+        return BasisObjekt.merge(this).equals(this);
     }
 
     /**

@@ -193,6 +193,32 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
             detachedCriteria, new BasisObjekt());
     }
 
+    /**
+     * Cascade a priority to all objects from the same BasisBetreiber and
+     * BasisStandort
+     * @param prioritaet String
+     * @param basisObjekt BasisObjekt
+     * @return <code>true</code> if every merge was successful,
+     *         <code>false</code> otherwise
+     */
+    public static Boolean cascadePriority(
+        String prioritaet, BasisObjekt basisObjekt) {
+        Boolean result = true;
+        List<BasisObjekt> list = new DatabaseAccess()
+            .executeCriteriaToList(
+                DetachedCriteria.forClass(BasisObjekt.class)
+                    .add(Restrictions.eq(
+                        "basisBetreiber", basisObjekt.getBasisBetreiber()))
+                    .add(Restrictions.eq(
+                        "basisStandort", basisObjekt.getBasisStandort())),
+                new BasisObjekt());
+        for (BasisObjekt objekt : list) {
+            objekt.setPrioritaet(prioritaet);
+            result = result && objekt.merge();
+        }
+        return result;
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisObjektchrono                    */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
