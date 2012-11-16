@@ -56,7 +56,7 @@ import javax.swing.JTable;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.PrioritaetModel;
@@ -121,7 +121,8 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
                 	SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((PrioritaetModel)getTableModel()).setList(BasisObjekt.getObjekteMitPrioritaet());
+                            ((PrioritaetModel)getTableModel()).setList(
+                                DatabaseQuery.getObjektsWithPriority());
                         }
 
                         @Override

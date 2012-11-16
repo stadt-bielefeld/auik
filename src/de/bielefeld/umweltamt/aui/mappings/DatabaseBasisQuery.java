@@ -219,6 +219,30 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
         return result;
     }
 
+    /**
+     * Get a list of all priorities. The list contains an array with
+     * <code>BasisStandort</code>, <code>BasisBetreiber</code>,
+     * <code>String</code> (priority) and <code>BasisSachbearbeiter</code>
+     * @return <code>List&lt;?&gt;</code>
+     */
+    public static List<?> getObjektsWithPriority() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(BasisObjekt.class)
+                .add(Restrictions.isNotNull("prioritaet"))
+                .add(Restrictions.isNotNull("basisSachbearbeiter"))
+                .setProjection(Projections.distinct(
+                    Projections.projectionList()
+                        .add(Projections.property("basisStandort"))
+                        .add(Projections.property("basisBetreiber"))
+                        .add(Projections.property("prioritaet"))
+                        .add(Projections.property("basisSachbearbeiter"))))
+                .addOrder(Order.asc("prioritaet"))
+                .addOrder(Order.asc("basisStandort"))
+                .addOrder(Order.asc("basisBetreiber"))
+                ,
+            new BasisObjekt());
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisObjektchrono                    */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

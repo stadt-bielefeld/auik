@@ -72,7 +72,6 @@ public class BasisBetreiber  implements java.io.Serializable {
     private String betrvorname;
     private boolean enabled;
     private boolean deleted;
-    private Set<BasisPrioritaet> basisPrioritaets = new HashSet<BasisPrioritaet>(0);
     private Set<BasisObjekt> basisObjekts = new HashSet<BasisObjekt>(0);
 
     /** Logging */
@@ -92,7 +91,7 @@ public class BasisBetreiber  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisBetreiber(
-        AuikWzCode auikWzCode, VawsWirtschaftszweige vawsWirtschaftszweige, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, Set<BasisPrioritaet> basisPrioritaets, Set<BasisObjekt> basisObjekts) {
+        AuikWzCode auikWzCode, VawsWirtschaftszweige vawsWirtschaftszweige, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, Set<BasisObjekt> basisObjekts) {
         this.auikWzCode = auikWzCode;
         this.vawsWirtschaftszweige = vawsWirtschaftszweige;
         this.betranrede = betranrede;
@@ -116,7 +115,6 @@ public class BasisBetreiber  implements java.io.Serializable {
         this.betrvorname = betrvorname;
         this.enabled = enabled;
         this.deleted = deleted;
-        this.basisPrioritaets = basisPrioritaets;
         this.basisObjekts = basisObjekts;
     }
 
@@ -313,14 +311,6 @@ public class BasisBetreiber  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    public Set<BasisPrioritaet> getBasisPrioritaets() {
-        return this.basisPrioritaets;
-    }
-
-    public void setBasisPrioritaets(Set<BasisPrioritaet> basisPrioritaets) {
-        this.basisPrioritaets = basisPrioritaets;
-    }
-
     public Set<BasisObjekt> getBasisObjekts() {
         return this.basisObjekts;
     }
@@ -372,7 +362,6 @@ public class BasisBetreiber  implements java.io.Serializable {
         buffer.append("betrvorname").append("='").append(getBetrvorname()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");
-        buffer.append("basisPrioritaets").append("='").append(getBasisPrioritaets()).append("' ");
         buffer.append("basisObjekts").append("='").append(getBasisObjekts()).append("' ");
         buffer.append("]");
 

@@ -637,9 +637,9 @@ public class BasisPanel extends JPanel {
             }
 
             if (!neu) {
-                if (this.hauptModul.getObjekt().getOldPrioritaet() != null) {
+                if (this.hauptModul.getObjekt().getPrioritaet() != null) {
                     getPrioritaetFeld().setText(
-                        this.hauptModul.getObjekt().getOldPrioritaet().toString());
+                        this.hauptModul.getObjekt().getPrioritaet().toString());
                 }
             }
 

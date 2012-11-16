@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -65,17 +64,6 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
 
     /* Add customized code below */
 
-    public static List<?> getObjekteMitPrioritaet() {
-        String query = "SELECT distinct bo.basisStandort, bo.basisBetreiber, "
-            + "bp.prioritaet, bo.basisSachbearbeiter "
-            + "FROM BasisObjekt as bo, BasisPrioritaet as bp  "
-            + "WHERE bo.basisStandort = bp.basisStandort and "
-    		+ "bo.basisBetreiber = bp.basisBetreiber "
-            + "ORDER BY bo.basisStandort.strasse";
-
-        return new DatabaseAccess().createQuery(query).list();
-    }
-
     /**
      * Lädt ein Objekt aus der Datenbank.
      * @param id Der Primärschlüssel des zu ladenden Objekts.
@@ -86,20 +74,6 @@ public class BasisObjekt extends AbstractBasisObjekt implements Serializable {
         BasisObjekt objekt = null;
         objekt = (BasisObjekt) new DatabaseAccess().get(BasisObjekt.class, id);
         return objekt;
-    }
-
-    /**
-     * Gibt den Wert für die Priorität des Objektes zurück.
-     * @return java.lang.Integer
-     */
-    public java.lang.Integer getOldPrioritaet() {
-        Integer prioritaet = null;
-
-        if (BasisPrioritaet.getPrioritaet(this) != null) {
-            prioritaet = BasisPrioritaet.getPrioritaet(this).getPrioritaet();
-        }
-
-        return prioritaet;
     }
 
     /**

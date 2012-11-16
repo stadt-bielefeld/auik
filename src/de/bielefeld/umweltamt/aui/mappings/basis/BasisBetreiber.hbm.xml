@@ -78,12 +78,6 @@
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
-        <set name="basisPrioritaets" table="basis_prioritaet" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="betreiber_id" not-null="true" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet" />
-        </set>
         <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="betreiberid" />

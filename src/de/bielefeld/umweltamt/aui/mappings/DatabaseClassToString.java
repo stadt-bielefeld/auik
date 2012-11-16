@@ -39,7 +39,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
@@ -151,11 +150,6 @@ public class DatabaseClassToString {
      */
     public static String toStringForClass(BasisObjektverknuepfung clazz) {
         return clazz.getId() + ": ";
-    }
-
-    /** @return Custom BasisPrioritaet.toString() */
-    public static String toStringForClass(BasisPrioritaet clazz) {
-        return clazz.getPrioritaet().toString();
     }
 
     /** @return Custom BasisSachbearbeiter.toString() */

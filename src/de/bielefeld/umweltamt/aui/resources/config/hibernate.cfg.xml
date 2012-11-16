@@ -33,7 +33,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/ViewAtlAnalysepositionAll.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisStandort.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisStrassen.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisPrioritaet.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisSachbearbeiter.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisGemarkung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjekt.hbm.xml" />
