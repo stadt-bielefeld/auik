@@ -259,6 +259,16 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 //            cal);
     }
 
+    // TODO: This may be replaced with objekt.getBasisObjektchonos() if we find
+    // an easy way to load them as they are lazy loaded.
+    public static List<BasisObjektchrono> getChronos(BasisObjekt objekt) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(BasisObjektchrono.class)
+                .add(Restrictions.eq("basisObjekt", objekt))
+                .addOrder(Order.asc("datum")),
+            new BasisObjektchrono(0));
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisObjektarten                     */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

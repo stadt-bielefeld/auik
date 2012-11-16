@@ -128,7 +128,7 @@ public class ObjektTest extends TestCase {
      */
     public void testChrono() {
         BasisObjekt objekt = testQuery();
-        List<?> chronolist = BasisObjektchrono.getChronoByObjekt(objekt);
+        List<?> chronolist = DatabaseQuery.getChronos(objekt);
 
         BasisObjektchrono chrono = (BasisObjektchrono) chronolist.get(0);
 
@@ -142,11 +142,11 @@ public class ObjektTest extends TestCase {
      */
     public void testDelete() {
         BasisObjekt objekt = testQuery();
-        List<?> chronolist = BasisObjektchrono.getChronoByObjekt(objekt);
+        List<?> chronolist = DatabaseQuery.getChronos(objekt);
 
         BasisObjektchrono chrono = (BasisObjektchrono) chronolist.get(0);
 
-        BasisObjektchrono.removeObjektChrono(chrono);
+        BasisObjektchrono.delete(chrono);
         BasisObjekt.delete(objekt);
 
         List<?> result = DatabaseQuery.getObjekteByStandort(
@@ -174,7 +174,7 @@ public class ObjektTest extends TestCase {
         objekt = BasisObjekt.merge(objekt);
         chrono.setBasisObjekt(objekt);
         chrono.setSachbearbeiter("JUNIT");
-        BasisObjektchrono.saveObjektChrono(chrono);
+        BasisObjektchrono.merge(chrono);
         this.chronoid = chrono.getId();
         log.debug("ChronoID: " + this.chronoid);
 

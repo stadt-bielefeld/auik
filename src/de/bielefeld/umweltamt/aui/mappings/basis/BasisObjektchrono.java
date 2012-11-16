@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -61,32 +60,13 @@ public class BasisObjektchrono extends AbstractBasisObjektchrono implements
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    /* Add customized code below */
-
-    // Statischer Teil:
-
-    /**
-     * Liefert alle VAWS-Fachdatensätze zu einem bestimmten BasisObjekt.
-     * @param objekt Das BasisObjekt.
-     * @return Eine Liste mit VawsFachdaten.
-     */
-    public static List<?> getChronoByObjekt(BasisObjekt objekt) {
-        return new DatabaseAccess()
-            .createQuery(
-                "FROM BasisObjektchrono oc WHERE "
-                + "oc.basisObjekt = :objekt "
-                + "ORDER BY oc.datum, oc.wv")
-            .setEntity("objekt", objekt)
-            .list();
-    }
-
     /**
      * Speichert einen Objektchronologie-Eintrag in der Datenbank.
      * @param chrono Der zu speichernde Datensatz.
      * @return <code>true</code>, falls beim Speichern kein Fehler auftritt,
      *         sonst <code>false</code>.
      */
-    public static boolean saveObjektChrono(BasisObjektchrono chrono) {
+    public static boolean merge(BasisObjektchrono chrono) {
         return new DatabaseAccess().saveOrUpdate(chrono);
     }
 
@@ -97,7 +77,9 @@ public class BasisObjektchrono extends AbstractBasisObjektchrono implements
      *         <code>false</code> falls dabei ein Fehler auftrat (z.B. der
      *         Datensatz nicht in der Datenbank existiert).
      */
-    public static boolean removeObjektChrono(BasisObjektchrono chrono) {
+    public static boolean delete(BasisObjektchrono chrono) {
         return new DatabaseAccess().delete(chrono);
     }
+
+    /* Add customized code below */
 }

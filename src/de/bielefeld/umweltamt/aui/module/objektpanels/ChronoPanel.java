@@ -96,6 +96,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -182,7 +183,7 @@ public class ChronoPanel extends JPanel {
             this.obj = obj;
 
             if (obj != null) {
-                setList(BasisObjektchrono.getChronoByObjekt(this.obj));
+                setList(DatabaseQuery.getChronos(this.obj));
                 fireTableDataChanged();
             }
         }
@@ -244,7 +245,7 @@ public class ChronoPanel extends JPanel {
             boolean removed;
 
             if (removedchr.getId() != null) {
-                removed = BasisObjektchrono.removeObjektChrono(removedchr);
+                removed = BasisObjektchrono.delete(removedchr);
             } else {
                 removed = true;
             }
@@ -316,8 +317,8 @@ public class ChronoPanel extends JPanel {
      * Holt die Liste mit Fachdatensätzen aus der Datenbank.
      */
     public void fetchFormData() {
-        this.chronoModel.setList(BasisObjektchrono
-            .getChronoByObjekt(this.hauptModul.getObjekt()));
+        this.chronoModel.setList(
+            DatabaseQuery.getChronos(this.hauptModul.getObjekt()));
     }
 
     /**
@@ -350,19 +351,19 @@ public class ChronoPanel extends JPanel {
                 if (sachbearbeiter == null || sachbearbeiter.length() == 0) {
                     sachbear = false;
                 } else {
-                    BasisObjektchrono.saveObjektChrono(chrono);
+                    BasisObjektchrono.merge(chrono);
                     this.chronoModel.fireTableDataChanged();
 
-                    if (BasisObjektchrono.saveObjektChrono(chrono) == false) {
+                    if (BasisObjektchrono.merge(chrono) == false) {
                         gespeichert = false;
                     }
 
                 }
             } else {
-                BasisObjektchrono.saveObjektChrono(chrono);
+                BasisObjektchrono.merge(chrono);
                 this.chronoModel.fireTableDataChanged();
 
-                if (BasisObjektchrono.saveObjektChrono(chrono) == false) {
+                if (BasisObjektchrono.merge(chrono) == false) {
                     gespeichert = false;
                 }
 
