@@ -1,41 +1,97 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis" schema="auik">
-
-    <class name="BasisObjekt" table="basis_objekt" lazy="false">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" table="basis_objekt" lazy="false" schema="auik">
         <id name="objektid" type="java.lang.Integer">
-        	<column name="objektid" sql-type="serial"/>
+            <column name="objektid" />
             <generator class="native">
-                <param name="sequence">basis_objekt_objektid_seq</param>
-        	</generator>
+                <param name="sequence">auik.basis_objekt_objektid_seq</param>
+            </generator>
         </id>
-
-        <property name="uschistdid" column="uschistdid" type="java.lang.Integer" />
-		<property name="beschreibung" column="beschreibung" type="java.lang.String" />
-        <property name="wiedervorlage" column="wiedervorlage" type="java.util.Date" />
-        <property name="erfassungsdatum" column="erfassungsdatum" type="java.util.Date" />
-        <property name="gueltigVon" column="gueltig_von" type="java.util.Date" />
-        <property name="aenderungsdatum" column="aenderungsdatum" type="java.util.Date" />
-        <property name="gueltigBis" column="gueltig_bis" type="java.util.Date" />
-        <property name="inaktiv" column="inaktiv" type="java.lang.Boolean" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
+        <many-to-one name="basisBetreiber" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber" fetch="select">
+            <column name="betreiberid" />
+        </many-to-one>
+        <many-to-one name="basisStandort" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort" fetch="select">
+            <column name="standortid" />
+        </many-to-one>
+        <many-to-one name="basisSachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" fetch="select">
+            <column name="sachbearbeiter" />
+        </many-to-one>
+        <many-to-one name="basisObjektarten" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten" fetch="select">
+            <column name="objektartid" />
+        </many-to-one>
+        <property name="uschistdid" type="java.lang.Integer">
+            <column name="uschistdid" />
+        </property>
+        <property name="beschreibung" type="string">
+            <column name="beschreibung" />
+        </property>
+        <property name="wiedervorlage" type="java.util.Date">
+            <column name="wiedervorlage" length="8" />
+        </property>
+        <property name="erfassungsdatum" type="java.util.Date">
+            <column name="erfassungsdatum" length="8" />
+        </property>
+        <property name="gueltigVon" type="java.util.Date">
+            <column name="gueltig_von" length="8" />
+        </property>
+        <property name="aenderungsdatum" type="java.util.Date">
+            <column name="aenderungsdatum" length="8" />
+        </property>
+        <property name="gueltigBis" type="java.util.Date">
+            <column name="gueltig_bis" length="8" />
+        </property>
+        <property name="inaktiv" type="boolean">
+            <column name="inaktiv" not-null="true" />
+        </property>
         <property name="prioritaet" type="string">
             <column name="prioritaet" length="0" />
         </property>
-
-        <many-to-one name="basisBetreiber" column="betreiberid" class="BasisBetreiber" />
-
-        <many-to-one name="basisObjektarten" column="objektartid" class="BasisObjektarten" />
-
-        <many-to-one name="basisStandort" column="standortid" class="BasisStandort" />
-
-        <many-to-one name="basisSachbearbeiter" column="sachbearbeiter" class="BasisSachbearbeiter" />
-        
-        <one-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" />
-
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <one-to-one name="indeinlGenehmigung" class="de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung"></one-to-one>
+        <one-to-one name="anh53Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten"></one-to-one>
+        <one-to-one name="anhSuevFachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten"></one-to-one>
+        <one-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt"></one-to-one>
+        <set name="basisObjektverknuepfungsForObjekt" table="basis_objektverknuepfung" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objekt" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung" />
+        </set>
+        <set name="vawsFachdatens" table="vaws_fachdaten" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" />
+        </set>
+        <one-to-one name="anh52Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten"></one-to-one>
+        <one-to-one name="anh56Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten"></one-to-one>
+        <set name="basisObjektverknuepfungsForIstVerknuepftMit" table="basis_objektverknuepfung" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ist_verknuepft_mit" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung" />
+        </set>
+        <one-to-one name="anh40Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten"></one-to-one>
+        <set name="basisObjektchronos" table="basis_objektchrono" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono" />
+        </set>
+        <set name="atlSielhauts" table="atl_sielhaut" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut" />
+        </set>
+        <one-to-one name="anh49Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten"></one-to-one>
+        <one-to-one name="anh50Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten"></one-to-one>
     </class>
-
 </hibernate-mapping>

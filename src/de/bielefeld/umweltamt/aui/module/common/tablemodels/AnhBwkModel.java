@@ -101,10 +101,8 @@ public class AnhBwkModel extends ListTableModel {
         if (columnIndex == 6 || columnIndex == 7) {
             return result;
         }
-        if (fachdaten.getBasisObjekt().getInaktiv()) {
-            if (result != null) {
-                result = StringUtils.setStrike(result.toString());
-            }
+        if (result != null && fachdaten.getBasisObjekt().isInaktiv()) {
+            result = StringUtils.setStrike(result.toString());
         }
         return result;
     }

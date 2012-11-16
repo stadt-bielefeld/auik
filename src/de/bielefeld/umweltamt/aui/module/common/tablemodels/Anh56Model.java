@@ -88,7 +88,7 @@ public class Anh56Model extends ListTableModel {
             default:
                 tmp = "ERROR";
         }
-        if (tmp != null && fd.getBasisObjekt().getInaktiv() == true) {
+        if (tmp != null && fd.getBasisObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

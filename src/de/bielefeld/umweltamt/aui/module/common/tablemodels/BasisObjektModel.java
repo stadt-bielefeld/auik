@@ -97,7 +97,7 @@ public class BasisObjektModel extends ListTableModel {
                 tmp = null;
         }
 
-        if (tmp != bo.getBeschreibung() && bo.getInaktiv().booleanValue()) {
+        if (tmp != bo.getBeschreibung() && bo.isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
 

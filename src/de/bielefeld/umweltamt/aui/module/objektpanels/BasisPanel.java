@@ -628,13 +628,8 @@ public class BasisPanel extends JPanel {
                 getSachbearbeiterBox().setFont(this.italicFont);
             }
 
-            if (this.hauptModul.getObjekt().getInaktiv() != null) {
-                if (this.hauptModul.getObjekt().getInaktiv() == true) {
-                    getInaktivBox().setSelected(true);
-                } else {
-                    getInaktivBox().setSelected(false);
-                }
-            }
+            getInaktivBox().setSelected(
+                this.hauptModul.getObjekt().isInaktiv());
 
             if (!neu) {
                 if (this.hauptModul.getObjekt().getPrioritaet() != null) {

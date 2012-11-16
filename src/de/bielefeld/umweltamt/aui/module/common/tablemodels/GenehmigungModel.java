@@ -88,7 +88,7 @@ public class GenehmigungModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (tmp instanceof String && fd.getBasisObjekt().getInaktiv()) {
+        if (tmp instanceof String && fd.getBasisObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike((String)tmp);
         }
         return tmp;

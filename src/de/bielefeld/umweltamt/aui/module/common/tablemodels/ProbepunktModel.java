@@ -93,7 +93,7 @@ public class ProbepunktModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (pkt.getBasisObjekt().getInaktiv()) {
+        if (pkt.getBasisObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;
