@@ -266,7 +266,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
             DetachedCriteria.forClass(BasisObjektchrono.class)
                 .add(Restrictions.eq("basisObjekt", objekt))
                 .addOrder(Order.asc("datum")),
-            new BasisObjektchrono(0));
+            new BasisObjektchrono());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

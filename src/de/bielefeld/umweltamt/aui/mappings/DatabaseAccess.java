@@ -267,7 +267,7 @@ public class DatabaseAccess {
         Method method = null;
         while (clazz != null) {
             try {
-                method = clazz.getDeclaredMethod("setDeleted", Boolean.class);
+                method = clazz.getDeclaredMethod("setDeleted", boolean.class);
                 method.invoke(object, true);
             } catch (NoSuchMethodException nsme) {
                 // This is intentionally left blank

@@ -351,36 +351,26 @@ public class ChronoPanel extends JPanel {
                 if (sachbearbeiter == null || sachbearbeiter.length() == 0) {
                     sachbear = false;
                 } else {
-                    BasisObjektchrono.merge(chrono);
+                    gespeichert = chrono.merge();
                     this.chronoModel.fireTableDataChanged();
-
-                    if (BasisObjektchrono.merge(chrono) == false) {
-                        gespeichert = false;
-                    }
-
                 }
             } else {
-                BasisObjektchrono.merge(chrono);
+                gespeichert = chrono.merge();
                 this.chronoModel.fireTableDataChanged();
-
-                if (BasisObjektchrono.merge(chrono) == false) {
-                    gespeichert = false;
-                }
-
             }
 
         }
 
-        if (sachbear == false & gespeichert == true) {
+        if (!sachbear && gespeichert) {
             GUIManager.getInstance().showErrorMessage(
                 "Es muss ein Sachbearbeiter angegeben werden!",
                 "Sachbearbeiter fehlt");
-        } else if (sachbear == true & gespeichert == true) {
+        } else if (sachbear && gespeichert) {
             this.hauptModul.getFrame().changeStatus("Speichern erfolgreich",
                 HauptFrame.SUCCESS_COLOR);
-        } else if (gespeichert == false) {
+        } else if (!gespeichert) {
             this.hauptModul.getFrame().changeStatus(
-                "Chronoligie konnte nicht gespeichert werden",
+                "Chronologie konnte nicht gespeichert werden",
                 HauptFrame.ERROR_COLOR);
         }
     }
