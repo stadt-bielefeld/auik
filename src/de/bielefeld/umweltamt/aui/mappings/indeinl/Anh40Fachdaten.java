@@ -22,11 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the 'ANH_40_FACHDATEN' table. This class may
@@ -55,26 +53,18 @@ public class Anh40Fachdaten extends AbstractAnh40Fachdaten implements
     }
 
     /**
-     * Liefert eine Liste mit allen Anhang40 Objekten.
-     * @return Eine Liste aus Anh40Fachdaten.
+     * Find an <code>Anh40Fachdaten</code> instance by its primary key
+     * @param id the primary key value
+     * @return <code>Anh40Fachdaten</code> the requested instance,
+     *         if one exists,
+     *         <code>null</code> otherwise
      */
-    public static List<?> getAuswertungsListe() {
-        return new DatabaseAccess()
-            .createQuery(
-                "FROM Anh40Fachdaten as anh40 "
-                + "ORDER BY anh40.basisObjekt.inaktiv, anh40.id")
-            .list();
+    public static Anh40Fachdaten findById(java.lang.Integer id) {
+        return (Anh40Fachdaten)
+            new DatabaseAccess().get(Anh40Fachdaten.class, id);
     }
 
-    public static Anh40Fachdaten getAnh40ByObjekt(BasisObjekt objekt) {
-        return (Anh40Fachdaten) new DatabaseAccess()
-            .createQuery(
-                "FROM Anh40Fachdaten as ah40 WHERE ah40.basisObjekt = :objekt")
-            .setEntity("objekt", objekt)
-            .uniqueResult();
-    }
-
-    public static boolean saveAnh40(Anh40Fachdaten anh40) {
+    public static boolean merge(Anh40Fachdaten anh40) {
         return new DatabaseAccess().saveOrUpdate(anh40);
     }
 }

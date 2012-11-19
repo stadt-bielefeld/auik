@@ -173,8 +173,8 @@ public class Anh40Panel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = Anh40Fachdaten.getAnh40ByObjekt(this.hauptModul
-            .getObjekt());
+        this.fachdaten = Anh40Fachdaten.findById(
+            this.hauptModul.getObjekt().getObjektid());
         log.debug("Anhang 40 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
@@ -203,29 +203,29 @@ public class Anh40Panel extends JPanel {
             if (this.fachdaten.getKlaeranlage() != null) {
                 getKlaeranlageFeld().setText(this.fachdaten.getKlaeranlage());
             }
-            if (this.fachdaten.getWsg() != null) {
-                if (this.fachdaten.getWsg() == true) {
+            if (this.fachdaten.isWsg() != null) {
+                if (this.fachdaten.isWsg() == true) {
                     getWsgCheck().setSelected(true);
                 } else {
                     getWsgCheck().setSelected(false);
                 }
             }
-            if (this.fachdaten.getGenehmigungspflicht() != null) {
-                if (this.fachdaten.getGenehmigungspflicht() == true) {
+            if (this.fachdaten.isGenehmigungspflicht() != null) {
+                if (this.fachdaten.isGenehmigungspflicht() == true) {
                     getGenehmigungspflichtCheck().setSelected(true);
                 } else {
                     getGenehmigungspflichtCheck().setSelected(false);
                 }
             }
-            if (this.fachdaten.getNachtrag() != null) {
-                if (this.fachdaten.getNachtrag() == true) {
+            if (this.fachdaten.isNachtrag() != null) {
+                if (this.fachdaten.isNachtrag() == true) {
                     getNachtragCheck().setSelected(true);
                 } else {
                     getNachtragCheck().setSelected(false);
                 }
             }
-            if (this.fachdaten.getBimsch() != null) {
-                if (this.fachdaten.getBimsch() == true) {
+            if (this.fachdaten.isBimsch() != null) {
+                if (this.fachdaten.isBimsch() == true) {
                     getBimschCheck().setSelected(true);
                 } else {
                     getBimschCheck().setSelected(false);
@@ -375,7 +375,7 @@ public class Anh40Panel extends JPanel {
         Date gen59 = this.gen59Datum.getDate();
         this.fachdaten.setGen59(gen59);
 
-        success = Anh40Fachdaten.saveAnh40(this.fachdaten);
+        success = Anh40Fachdaten.merge(this.fachdaten);
         if (success) {
             log.debug("Anh 40 Objekt " + this.fachdaten.getObjektid()
                 + " gespeichert.");
@@ -394,7 +394,7 @@ public class Anh40Panel extends JPanel {
             this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Anhang 40 Objekt speichern
-            Anh40Fachdaten.saveAnh40(this.fachdaten);
+            Anh40Fachdaten.merge(this.fachdaten);
             log.debug("Neues Anh 40 Objekt " + this.fachdaten + " gespeichert.");
         }
     }

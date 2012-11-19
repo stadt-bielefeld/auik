@@ -120,7 +120,7 @@ public abstract class AbstractAnh40Fachdaten extends
         this.abwmengeprodspez = abwmengeprodspez;
     }
 
-    public java.lang.Boolean getBimsch() {
+    public java.lang.Boolean isBimsch() {
         return bimsch;
     }
 
@@ -128,7 +128,7 @@ public abstract class AbstractAnh40Fachdaten extends
         this.bimsch = bimsch;
     }
 
-    public java.lang.Boolean getNachtrag() {
+    public java.lang.Boolean isNachtrag() {
         return nachtrag;
     }
 
@@ -286,7 +286,7 @@ public abstract class AbstractAnh40Fachdaten extends
      * @return java.lang.Short >>>>>>> 1.2
      */
 
-    public java.lang.Boolean getWsg() {
+    public java.lang.Boolean isWsg() {
         return this.wsg;
     }
 
@@ -302,7 +302,7 @@ public abstract class AbstractAnh40Fachdaten extends
      * Return the value of the WSG column.
      * @return java.lang.Boolean
      */
-    public java.lang.Boolean getGenehmigungspflicht() {
+    public java.lang.Boolean isGenehmigungspflicht() {
         return this.genehmigungspflicht;
     }
 

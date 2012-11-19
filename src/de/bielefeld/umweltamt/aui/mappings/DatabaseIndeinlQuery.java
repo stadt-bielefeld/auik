@@ -31,6 +31,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
@@ -46,6 +47,23 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     /* ********************************************************************** */
     /* Queries for package INDEINL                                            */
     /* ********************************************************************** */
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh40Fachdaten                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get a list of all Anh40Fachdaten
+     * @return <code>List&lt;Anh40Fachdaten&gt;</code>
+     */
+    public static List<Anh40Fachdaten> getAnhang40Auswertung() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(Anh40Fachdaten.class)
+                .createAlias("basisObjekt", "objekt")
+                .addOrder(Order.asc("objekt.inaktiv"))
+                .addOrder(Order.asc("objektid")),
+            new Anh40Fachdaten());
+    }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class Anh49Fachdaten                      */
