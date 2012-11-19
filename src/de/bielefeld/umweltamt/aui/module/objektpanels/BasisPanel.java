@@ -507,12 +507,11 @@ public class BasisPanel extends JPanel {
         if (neu == true) {
             // Create a new object
             // Only load enabled Sachbearbeiter
-            getSachbearbeiterBox().setModel(
-                new DefaultComboBoxModel(BasisSachbearbeiter
-                    .getEnabledSachbearbeiter()));
+            getSachbearbeiterBox().setModel(new DefaultComboBoxModel(
+                DatabaseQuery.getEnabledSachbearbeiter()));
             // Preset the current Sachbearbeiter
             getSachbearbeiterBox().setSelectedItem(
-                BasisSachbearbeiter.getCurrentSachbearbeiter());
+                DatabaseQuery.getCurrentSachbearbeiter());
             getSachbearbeiterBox().setFont(this.italicFont);
 
             if (this.objektarten != null
@@ -523,9 +522,8 @@ public class BasisPanel extends JPanel {
             // hauptModul.getObjekt().setPrioritaet(0);
         } else {
             // Show / edit an existing object
-            getSachbearbeiterBox().setModel(
-                new DefaultComboBoxModel(BasisSachbearbeiter
-                    .getEnabledSachbearbeiter()));
+            getSachbearbeiterBox().setModel(new DefaultComboBoxModel(
+                DatabaseQuery.getEnabledSachbearbeiter()));
 
             getArtBox().removeAllItems();
             // Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000)
@@ -624,7 +622,7 @@ public class BasisPanel extends JPanel {
                 getSachbearbeiterBox().setFont(this.normalFont);
             } else {
                 getSachbearbeiterBox().setSelectedItem(
-                    BasisSachbearbeiter.getCurrentSachbearbeiter());
+                    DatabaseQuery.getCurrentSachbearbeiter());
                 getSachbearbeiterBox().setFont(this.italicFont);
             }
 
@@ -662,7 +660,7 @@ public class BasisPanel extends JPanel {
         }
         if (getSachbearbeiterBox().getItemCount() > 0) {
             getSachbearbeiterBox().setSelectedItem(
-                BasisSachbearbeiter.getCurrentSachbearbeiter());
+                DatabaseQuery.getCurrentSachbearbeiter());
             getSachbearbeiterBox().setFont(this.italicFont);
         }
         getInaktivBox().setSelected(false);

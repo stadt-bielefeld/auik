@@ -212,8 +212,7 @@ public class ProbepunktPanel extends JPanel {
             this.klaeranlagen = DatabaseQuery.getKlaeranlagen();
         }
         if (this.sachbearbeiter == null) {
-            this.sachbearbeiter = BasisSachbearbeiter
-                .getEnabledSachbearbeiter();
+            this.sachbearbeiter = DatabaseQuery.getEnabledSachbearbeiter();
         }
     }
 

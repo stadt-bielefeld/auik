@@ -21,10 +21,10 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -86,10 +86,12 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
             criteria.add(Restrictions.le("wiedervorlage", new Date()));
         }
         if (tuev != null) {
-            criteria.add(
-                Restrictions.sqlRestriction(
-                    "date_part('year', dekra_Tuev_Datum) = ?",
-                    tuev, Hibernate.INTEGER));
+            Calendar start = Calendar.getInstance();
+            start.set(tuev, 1, 1, 0, 0, 0); // start = 'tuev-01-01 00:00:00'
+            Calendar end = Calendar.getInstance();
+            end.set(tuev, 12, 31, 23, 59, 59); // end = 'tuev-12-31 23:59:59'
+            criteria.add(Restrictions.between(
+                "dekraTuevDatum", start.getTime(), end.getTime()));
         }
         if (sachbearbeiter != null) {
             criteria.add(

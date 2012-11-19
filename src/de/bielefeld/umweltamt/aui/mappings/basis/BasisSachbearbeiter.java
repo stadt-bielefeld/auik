@@ -76,7 +76,6 @@ package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
 
-import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 
@@ -114,29 +113,18 @@ public class BasisSachbearbeiter extends AbstractBasisSachbearbeiter implements
         return DatabaseClassToString.toStringForClass(this);
     }
 
+    /**
+     * Find an <code>BasisSachbearbeiter</code> instance by its primary key
+     * @param id the primary key value
+     * @return <code>BasisSachbearbeiter</code> the requested instance,
+     *         if one exists,
+     *         <code>null</code> otherwise
+     */
+    public static BasisSachbearbeiter findById(java.lang.String id) {
+        return (BasisSachbearbeiter)
+            new DatabaseAccess().get(BasisSachbearbeiter.class, id);
+    }
+
     /* Add customized code below */
 
-    public static BasisSachbearbeiter[] getSachbearbeiter() {
-        return (BasisSachbearbeiter[])
-            new DatabaseAccess().createQuery(
-                "FROM BasisSachbearbeiter AS sachbearbeiter "
-                    + "ORDER BY sachbearbeiter.enabled DESC, "
-                    + "sachbearbeiter.name ASC")
-            .array(new BasisSachbearbeiter[0]);
-    }
-
-    public static BasisSachbearbeiter getCurrentSachbearbeiter() {
-        return (BasisSachbearbeiter)
-            new DatabaseAccess().get(BasisSachbearbeiter.class,
-                SettingsManager.getInstance().getSetting("auik.prefs.lastuser"));
-    }
-
-    public static BasisSachbearbeiter[] getEnabledSachbearbeiter() {
-        return (BasisSachbearbeiter[])
-            new DatabaseAccess().createQuery(
-                "FROM BasisSachbearbeiter AS sachbearbeiter "
-                    + "WHERE sachbearbeiter.enabled = true "
-                    + "ORDER BY sachbearbeiter.name ASC")
-            .array(new BasisSachbearbeiter[0]);
-    }
 }

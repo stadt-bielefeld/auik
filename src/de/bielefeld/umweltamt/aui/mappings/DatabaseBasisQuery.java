@@ -30,11 +30,13 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -285,6 +287,36 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
                 .toArray(new BasisObjektarten[0]);
         }
         return DatabaseBasisQuery.objektarten;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisSachbearbeiter                  */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static BasisSachbearbeiter[] sachbearbeiter = null;
+    /**
+     * Get a sorted array of all enabled BasisSachbearbeiter
+     * @return <code>BasisSachbearbeiter[]</code>
+     */
+    public static BasisSachbearbeiter[] getEnabledSachbearbeiter() {
+        if (DatabaseBasisQuery.sachbearbeiter == null) {
+            DatabaseBasisQuery.sachbearbeiter = new DatabaseAccess()
+                .executeCriteriaToArray(
+                    DetachedCriteria.forClass(BasisSachbearbeiter.class)
+                        .add(Restrictions.eq("enabled", true))
+                        .addOrder(Order.asc("name")),
+                    new BasisSachbearbeiter[0]);
+        }
+        return DatabaseBasisQuery.sachbearbeiter;
+    }
+
+    /**
+     * Get the current BasisSachbearbeiter.
+     * @return <code>BasisSachbearbeiter</code>
+     */
+    public static BasisSachbearbeiter getCurrentSachbearbeiter() {
+        return BasisSachbearbeiter.findById(
+            SettingsManager.getInstance().getSetting("auik.prefs.lastuser"));
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

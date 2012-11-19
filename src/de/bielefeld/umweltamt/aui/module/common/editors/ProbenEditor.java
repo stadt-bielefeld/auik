@@ -623,8 +623,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         if (isNew) {
-            this.sachbearbeiterBox.setSelectedItem(BasisSachbearbeiter
-                .getCurrentSachbearbeiter());
+            this.sachbearbeiterBox.setSelectedItem(
+                DatabaseQuery.getCurrentSachbearbeiter());
             this.uhrzeitVon.setText("");
             this.uhrzeitBis.setText("");
         }
@@ -849,7 +849,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             new DefaultComboBoxModel(DatabaseQuery.getStatus()));
 
         this.sachbearbeiterBox.setModel(new DefaultComboBoxModel(
-            BasisSachbearbeiter.getEnabledSachbearbeiter()));
+            DatabaseQuery.getEnabledSachbearbeiter()));
         this.sachbearbeiterBox.setEditable(true);
 
         this.statusHoch.addActionListener(new ActionListener() {
