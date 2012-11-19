@@ -1,37 +1,68 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
-
-    <class name="Anh40Fachdaten" table="anh_40_fachdaten">
-        <id name="objektid" column="objektid" type="java.lang.Integer">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten" table="anh_40_fachdaten" schema="auik">
+        <id name="objektid" type="java.lang.Integer">
+            <column name="objektid" />
             <generator class="foreign">
-            	<param name="property">basisObjekt</param>
+                <param name="property">basisObjekt</param>
             </generator>
         </id>
-
-        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
-        <property name="ansprechpartner" column="ansprechpartner" type="java.lang.String" />
-        <property name="sachbearbeiterrav" column="sachbearbeiterrav" type="java.lang.String" />
-        <property name="sachbearbeiterheepen" column="sachbearbeiterheepen" type="java.lang.String" />
-        <property name="klaeranlage" column="klaeranlage" type="java.lang.String" />
-        <property name="herkunftsbereich" column="herkunftsbereich" type="java.lang.String" />
-        <property name="wsg" column="wsg" type="java.lang.Boolean" />
-        <property name="prioritaet" column="prioritaet" type="java.lang.Short" />
-        <property name="genehmigungspflicht" column="genehmigungspflicht" type="java.lang.Boolean" />
-        <property name="nachtrag" column="nachtrag" type="java.lang.Boolean" />
-        <property name="bimsch" column="bimsch" type="java.lang.Boolean" />
-        <property name="abwmengegenehmigt" column="abwmengegenehmigt" type="java.lang.Integer" />
-        <property name="abwmengeprodspez" column="abwmengeprodspez" type="java.lang.Integer" />
-        <property name="abwmengegesamt" column="abwmengegesamt" type="java.lang.Integer" />
-        <property name="gen58" column="gen58" type="java.util.Date" />
-        <property name="gen59" column="gen59" type="java.util.Date" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
-
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"></one-to-one>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <property name="ansprechpartner" type="java.lang.String">
+            <column name="ansprechpartner" />
+        </property>
+        <property name="sachbearbeiterrav" type="java.lang.String">
+            <column name="sachbearbeiterrav" />
+        </property>
+        <property name="sachbearbeiterheepen" type="java.lang.String">
+            <column name="sachbearbeiterheepen" />
+        </property>
+        <property name="klaeranlage" type="java.lang.String">
+            <column name="klaeranlage" />
+        </property>
+        <property name="herkunftsbereich" type="java.lang.String">
+            <column name="herkunftsbereich" />
+        </property>
+        <property name="wsg" type="java.lang.Boolean">
+            <column name="wsg" />
+        </property>
+        <property name="prioritaet" type="java.lang.Short">
+            <column name="prioritaet" />
+        </property>
+        <property name="genehmigungspflicht" type="java.lang.Boolean">
+            <column name="genehmigungspflicht" />
+        </property>
+        <property name="nachtrag" type="java.lang.Boolean">
+            <column name="nachtrag" />
+        </property>
+        <property name="bimsch" type="java.lang.Boolean">
+            <column name="bimsch" />
+        </property>
+        <property name="abwmengegenehmigt" type="java.lang.Integer">
+            <column name="abwmengegenehmigt" />
+        </property>
+        <property name="abwmengeprodspez" type="java.lang.Integer">
+            <column name="abwmengeprodspez" />
+        </property>
+        <property name="abwmengegesamt" type="java.lang.Integer">
+            <column name="abwmengegesamt" />
+        </property>
+        <property name="gen58" type="java.util.Date">
+            <column name="gen58" length="8" />
+        </property>
+        <property name="gen59" type="java.util.Date">
+            <column name="gen59" length="8" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-    
 </hibernate-mapping>

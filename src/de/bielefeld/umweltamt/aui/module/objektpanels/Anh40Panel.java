@@ -203,29 +203,29 @@ public class Anh40Panel extends JPanel {
             if (this.fachdaten.getKlaeranlage() != null) {
                 getKlaeranlageFeld().setText(this.fachdaten.getKlaeranlage());
             }
-            if (this.fachdaten.isWsg() != null) {
-                if (this.fachdaten.isWsg() == true) {
+            if (this.fachdaten.getWsg() != null) {
+                if (this.fachdaten.getWsg() == true) {
                     getWsgCheck().setSelected(true);
                 } else {
                     getWsgCheck().setSelected(false);
                 }
             }
-            if (this.fachdaten.isGenehmigungspflicht() != null) {
-                if (this.fachdaten.isGenehmigungspflicht() == true) {
+            if (this.fachdaten.getGenehmigungspflicht() != null) {
+                if (this.fachdaten.getGenehmigungspflicht() == true) {
                     getGenehmigungspflichtCheck().setSelected(true);
                 } else {
                     getGenehmigungspflichtCheck().setSelected(false);
                 }
             }
-            if (this.fachdaten.isNachtrag() != null) {
-                if (this.fachdaten.isNachtrag() == true) {
+            if (this.fachdaten.getNachtrag() != null) {
+                if (this.fachdaten.getNachtrag() == true) {
                     getNachtragCheck().setSelected(true);
                 } else {
                     getNachtragCheck().setSelected(false);
                 }
             }
-            if (this.fachdaten.isBimsch() != null) {
-                if (this.fachdaten.isBimsch() == true) {
+            if (this.fachdaten.getBimsch() != null) {
+                if (this.fachdaten.getBimsch() == true) {
                     getBimschCheck().setSelected(true);
                 } else {
                     getBimschCheck().setSelected(false);
@@ -375,7 +375,7 @@ public class Anh40Panel extends JPanel {
         Date gen59 = this.gen59Datum.getDate();
         this.fachdaten.setGen59(gen59);
 
-        success = Anh40Fachdaten.merge(this.fachdaten);
+        success = this.fachdaten.merge();
         if (success) {
             log.debug("Anh 40 Objekt " + this.fachdaten.getObjektid()
                 + " gespeichert.");
