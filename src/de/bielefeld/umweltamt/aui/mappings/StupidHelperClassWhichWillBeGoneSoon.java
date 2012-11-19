@@ -54,7 +54,7 @@ public abstract class StupidHelperClassWhichWillBeGoneSoon {
      * Set the value of the _ENABLED column.
      * @param _enabled the _enabled to set
      */
-    public void setEnabled(java.lang.Boolean _enabled) {
+    public void setEnabled(boolean _enabled) {
         this.enabled = _enabled;
     }
 
@@ -70,7 +70,7 @@ public abstract class StupidHelperClassWhichWillBeGoneSoon {
      * Set the value of the _DELETED column.
      * @param _deleted the _deleted to set
      */
-    public void setDeleted(java.lang.Boolean _deleted) {
+    public void setDeleted(boolean _deleted) {
         this.deleted = _deleted;
     }
 }
