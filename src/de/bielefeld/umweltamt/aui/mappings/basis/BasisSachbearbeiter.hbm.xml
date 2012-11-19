@@ -1,18 +1,53 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis" schema="auik">
-
-    <class name="BasisSachbearbeiter" table="basis_sachbearbeiter" lazy="false" mutable="false">
-        <id name="kennummer" column="kennummer" type="java.lang.String">
-            <generator class="assigned"/>
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" table="basis_sachbearbeiter" lazy="false" schema="auik">
+        <id name="kennummer" type="string">
+            <column name="kennummer" />
+            <generator class="assigned" />
         </id>
-
-        <property name="name" column="name" type="java.lang.String" />
-        <property name="telefon" column="telefon" type="java.lang.String" />
-        <property name="gehoertzuarbeitsgr" column="gehoertzuarbeitsgr" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="name" type="string">
+            <column name="name" not-null="true" />
+        </property>
+        <property name="zeichen" type="string">
+            <column name="zeichen" />
+        </property>
+        <property name="zimmer" type="string">
+            <column name="zimmer" />
+        </property>
+        <property name="telefon" type="string">
+            <column name="telefon" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" />
+        </property>
+        <property name="gehoertzuarbeitsgr" type="string">
+            <column name="gehoertzuarbeitsgr" length="0" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="atlProbepkts" table="atl_probepkt" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sachbearbeiter" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" />
+        </set>
+        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sachbearbeiter" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
+        </set>
+        <set name="atlProbenahmens" table="atl_probenahmen" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sachbearbeiter" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen" />
+        </set>
     </class>
-
 </hibernate-mapping>
