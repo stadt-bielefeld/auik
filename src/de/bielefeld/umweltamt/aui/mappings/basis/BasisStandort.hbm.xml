@@ -1,45 +1,91 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.basis" schema="auik">
-
-    <class name="BasisStandort" table="basis_standort" lazy="false">
-        <id name="standortid" type="java.lang.Integer">
-        	<column name="id" sql-type="serial"/>
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort" table="basis_standort" lazy="false" schema="auik">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
             <generator class="native">
-                <param name="sequence">basis_standort_id_seq</param>
-        	</generator>
+                <param name="sequence">auik.basis_standort_id_seq</param>
+            </generator>
         </id>
-
-        <property name="strasse" column="strasse" type="java.lang.String" />
-        <property name="hausnr" column="hausnr" type="java.lang.Integer" />
-        <property name="hausnrzus" column="hausnrzus" type="java.lang.String" />
-        <property name="plz" column="plz" type="java.lang.String" />
-        <property name="rechtswert" column="rechtswert" type="java.lang.Float" />
-        <property name="hochwert" column="hochwert" type="java.lang.Float" />
-        <property name="flur" column="flur" type="java.lang.String" />
-        <property name="flurstueck" column="flurstueck" type="java.lang.String" />
-        <property name="entgebid" column="entgebid" type="java.lang.String" />
-        <property name="vornameeigent" column="vornameeigent" type="java.lang.String" />
-        <property name="nameeigent" column="nameeigent" type="java.lang.String" />
-        <property name="strasseeigent" column="strasseeigent" type="java.lang.String" />
-        <property name="hausnreigent" column="hausnreigent" type="java.lang.Integer" />
-        <property name="hausnrzuseigent" column="hausnrzuseigent" type="java.lang.String" />
-        <property name="revidatum" column="revidatum" type="java.util.Date" />
-        <property name="revihandz" column="revihandz" type="java.lang.String" />
-        <property name="wassermenge" column="wassermenge" type="java.lang.Integer" />
-        <property name="sachbe33rav" column="sachbe33rav" type="java.lang.String" />
-        <property name="sachbe33hee" column="sachbe33hee" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <many-to-one name="basisGemarkung" column="gemarkungid" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung" />
-
-        <many-to-one name="vawsStandortgghwsg" column="standortgegebid" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg" />
-
-        <many-to-one name="vawsWassereinzugsgebiete" column="wassereinzgebid" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete" />
-
+        <many-to-one name="basisGemarkung" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung" fetch="select">
+            <column name="gemarkungid" />
+        </many-to-one>
+        <many-to-one name="vawsWassereinzugsgebiete" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete" fetch="select">
+            <column name="wassereinzgebid" />
+        </many-to-one>
+        <many-to-one name="vawsStandortgghwsg" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg" fetch="select">
+            <column name="standortgegebid" />
+        </many-to-one>
+        <property name="strasse" type="java.lang.String">
+            <column name="strasse" />
+        </property>
+        <property name="hausnr" type="java.lang.Integer">
+            <column name="hausnr" />
+        </property>
+        <property name="hausnrzus" type="java.lang.String">
+            <column name="hausnrzus" />
+        </property>
+        <property name="plz" type="java.lang.String">
+            <column name="plz" />
+        </property>
+        <property name="rechtswert" type="java.lang.Float">
+            <column name="rechtswert" precision="4" scale="0" />
+        </property>
+        <property name="hochwert" type="java.lang.Float">
+            <column name="hochwert" precision="4" scale="0" />
+        </property>
+        <property name="flur" type="java.lang.String">
+            <column name="flur" />
+        </property>
+        <property name="flurstueck" type="java.lang.String">
+            <column name="flurstueck" />
+        </property>
+        <property name="entgebid" type="java.lang.String">
+            <column name="entgebid" />
+        </property>
+        <property name="vornameeigent" type="java.lang.String">
+            <column name="vornameeigent" />
+        </property>
+        <property name="nameeigent" type="java.lang.String">
+            <column name="nameeigent" />
+        </property>
+        <property name="strasseeigent" type="java.lang.String">
+            <column name="strasseeigent" />
+        </property>
+        <property name="hausnreigent" type="java.lang.Integer">
+            <column name="hausnreigent" />
+        </property>
+        <property name="hausnrzuseigent" type="java.lang.String">
+            <column name="hausnrzuseigent" />
+        </property>
+        <property name="revidatum" type="java.util.Date">
+            <column name="revidatum" length="8" />
+        </property>
+        <property name="revihandz" type="java.lang.String">
+            <column name="revihandz" />
+        </property>
+        <property name="wassermenge" type="java.lang.Integer">
+            <column name="wassermenge" />
+        </property>
+        <property name="sachbe33rav" type="java.lang.String">
+            <column name="sachbe33rav" />
+        </property>
+        <property name="sachbe33hee" type="java.lang.String">
+            <column name="sachbe33hee" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="standortid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
+        </set>
     </class>
-
 </hibernate-mapping>

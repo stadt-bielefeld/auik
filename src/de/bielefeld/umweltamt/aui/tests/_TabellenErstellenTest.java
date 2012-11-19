@@ -99,7 +99,7 @@ public class _TabellenErstellenTest extends TestCase {
 
         standort = BasisStandort.merge(standort);
 
-        return standort.getStandortid();
+        return standort.getId();
     }
 
     /**

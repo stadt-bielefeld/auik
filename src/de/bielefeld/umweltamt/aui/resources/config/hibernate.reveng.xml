@@ -10,6 +10,7 @@
         <sql-type jdbc-type="REAL" hibernate-type="java.lang.Float"/>
         <sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer"/>
         <sql-type jdbc-type="BOOLEAN" hibernate-type="java.lang.Boolean"/>
+        <sql-type jdbc-type="VARCHAR" hibernate-type="java.lang.String"/>
 	</type-mapping>
 
 	<!-- Table filters ===================================================== -->
@@ -252,6 +253,11 @@
             <key-column name="messstelle_lfd_nr" />
         </primary-key>
     </table>
+
+    <!-- Exclude Geometry columns ========================================== -->
+    <table schema="auik" name="basis_standort">
+        <column name="the_geom" exclude="true" />
+    </table>
     
     <!-- Columns for gui toString ========================================== -->
     <table schema="auik" name="atl_einheiten">
@@ -359,6 +365,7 @@
     <!--             basis_betreiber -->
     <!--             basis_gemarkung -->
     <!--             basis_objektarten -->
+    <!-- TODO: Weiter ausfüllen -->
     <!-- tipi: -->
     <!--       auik_wz_code -->
 </hibernate-reverse-engineering>

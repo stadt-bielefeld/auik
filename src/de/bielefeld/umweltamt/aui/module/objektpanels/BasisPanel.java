@@ -166,7 +166,7 @@ public class BasisPanel extends JPanel {
                 setTitle("Standort auswählen");
                 this.standort = (BasisStandort) initial;
                 this.standortModel = new BasisStandortModel();
-                if (this.standort.getStandortid() != null) {
+                if (this.standort.getId() != null) {
                     this.standortModel.setList(initialList);
                 }
             } else {
@@ -191,7 +191,7 @@ public class BasisPanel extends JPanel {
         }
 
         public BasisStandort getChosenStandort() {
-            if (this.standort.getStandortid() != null) {
+            if (this.standort.getId() != null) {
                 return this.standort;
             } else {
                 return null;
@@ -867,7 +867,7 @@ public class BasisPanel extends JPanel {
                             .setSetting(
                                 "auik.imc.use_standort",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisStandort().getStandortid()
+                                    .getBasisStandort().getId()
                                     .intValue(), false);
                     }
                     BasisPanel.this.hauptModul.getManager().switchModul(
@@ -980,8 +980,8 @@ public class BasisPanel extends JPanel {
                             .setSetting(
                                 "auik.imc.use_standort",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisStandort().getStandortid()
-                                    .intValue(), false);
+                                    .getBasisStandort().getId().intValue(),
+                                false);
                     }
                     BasisPanel.this.hauptModul.getManager().switchModul(
                         "m_standort_neu");

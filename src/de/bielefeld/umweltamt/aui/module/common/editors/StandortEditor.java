@@ -104,7 +104,7 @@ public class StandortEditor extends AbstractBaseEditor {
      * Erzeugt einen neuen Dialog zum Bearbeiten eines Standorts.
      */
     public StandortEditor(BasisStandort bsta, HauptFrame owner) {
-        super("Standort ("+ bsta.getStandortid() +")", bsta, owner);
+        super("Standort ("+ bsta.getId() +")", bsta, owner);
     }
 
     @Override

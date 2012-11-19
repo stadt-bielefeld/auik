@@ -148,6 +148,6 @@ public class StandortTest extends TestCase {
             throw e;
         }
 
-        return standort.getStandortid();
+        return standort.getId();
     }
 }

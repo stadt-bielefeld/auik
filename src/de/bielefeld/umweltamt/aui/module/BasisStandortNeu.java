@@ -402,11 +402,11 @@ public class BasisStandortNeu extends AbstractModul {
             bsta = BasisStandort.merge(bsta);
 
             if (bsta != null) {
-                frame.changeStatus("Neuer Standort "+bsta.getStandortid()+" erfolgreich gespeichert!", HauptFrame.SUCCESS_COLOR);
+                frame.changeStatus("Neuer Standort "+bsta.getId()+" erfolgreich gespeichert!", HauptFrame.SUCCESS_COLOR);
 
                 // Wenn wir vom Objekt anlegen kommen,
                 if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt")) {
-                    manager.getSettingsManager().setSetting("auik.imc.use_standort", bsta.getStandortid().intValue(), false);
+                    manager.getSettingsManager().setSetting("auik.imc.use_standort", bsta.getId().intValue(), false);
                     manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt");
                     // ... kehren wir direkt dorthin zurück:
                     manager.switchModul("m_objekt_bearbeiten");

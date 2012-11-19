@@ -547,7 +547,7 @@ public class BasisStandortSuchen extends AbstractModul {
             this.frame.changeStatus("PDF-Datei wird erstellt");
         }
 
-        this.standortID = standort.getStandortid();
+        this.standortID = standort.getId();
 
         log.debug(adresse + " mit ID: " + this.standortID + " ausgewaehlt");
 
@@ -905,7 +905,7 @@ public class BasisStandortSuchen extends AbstractModul {
                             .getRow(row);
                         BasisStandortSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.use_standort",
-                                bsta.getStandortid().intValue(), false);
+                                bsta.getId().intValue(), false);
                         BasisStandortSuchen.this.manager
                             .switchModul("m_objekt_bearbeiten");
                     }
