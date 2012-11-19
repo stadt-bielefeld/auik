@@ -40,7 +40,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektchrono.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektverknuepfung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisBetreiber.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisBezeichnung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh40Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Abscheiderdetails.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Analysen.hbm.xml" />

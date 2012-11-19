@@ -364,7 +364,10 @@
     <!-- auik.basis: -->
     <!--             basis_betreiber -->
     <!--             basis_gemarkung -->
+    <!--             basis_objekt -->
     <!--             basis_objektarten -->
+    <!--             basis_sachbearbeiter -->
+    <!--             basis_standort -->
     <!-- TODO: Weiter ausfüllen -->
     <!-- tipi: -->
     <!--       auik_wz_code -->
