@@ -1521,7 +1521,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         Date now = new Date();
         params.put("datum", DateUtils.format(now, DateUtils.FORMAT_DATE));
         params.put("entnahmedatum", entnahmezeitpunkt);
-        params.put("entnahmeort", basisStandort.getAdresse());
+        params.put("entnahmeort", basisStandort.toString());
         params.put("entnahmestelle", probe.getAtlProbepkt().getBasisObjekt()
             .getBeschreibung());
         params.put("entnahmestellen", "1");

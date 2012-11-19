@@ -323,7 +323,7 @@ public class StandortEditor extends AbstractBaseEditor {
                     standortggs = VawsStandortgghwsg.getStandortGg();
                 }
                 if (entwgebiete == null) {
-                    entwgebiete = BasisStandort.getEntwGebiete();
+                    entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
                 }
                 if (wEinzugsgebiete == null) {
                     wEinzugsgebiete = VawsWassereinzugsgebiete.getWEinzugsgebiete();
@@ -502,7 +502,7 @@ public class StandortEditor extends AbstractBaseEditor {
         Integer wassermng = ((IntegerField)wassermengeFeld).getIntValue();
         getStandort().setWassermenge(wassermng);
 
-        BasisStandort bsta = BasisStandort.saveStandort(getStandort());
+        BasisStandort bsta = BasisStandort.merge(getStandort());
         if (bsta != null) {
             setEditedObject(bsta);
             log.debug("Änderungen gespeichert!");

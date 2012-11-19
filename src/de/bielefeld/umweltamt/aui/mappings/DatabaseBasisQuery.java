@@ -343,6 +343,43 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
             .isEmpty()));
     }
 
+    /**
+     * Find BasisStandorte that match the parameters.
+     * @param strasse String
+     * @param hausnr Integer (-1: all)
+     * @return <code>List&lt;BasisStandort&gt;</code>
+     */
+    public static List<BasisStandort> findStandorte(
+        String strasse, Integer hausnr) {
+        DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(BasisStandort.class)
+                .add(Restrictions.ilike("strasse", strasse, MatchMode.START))
+                .addOrder(Order.asc("strasse"))
+                .addOrder(Order.asc("hausnr"));
+        if (hausnr != -1) {
+            detachedCriteria.add(Restrictions.eq("hausnr", hausnr));
+        }
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new BasisStandort());
+    }
+
+    private static String[] entwaesserungsgebiete = null;
+    /**
+     * Get a list of all Entwässerungsgebiet Ids.
+     * @return <code>String[]</code>
+     */
+    public static String[] getEntwaesserungsgebiete() {
+        if (DatabaseBasisQuery.entwaesserungsgebiete == null) {
+            DatabaseBasisQuery.entwaesserungsgebiete = new DatabaseAccess()
+                .executeCriteriaToArray(
+                    DetachedCriteria.forClass(BasisStandort.class)
+                        .setProjection(Projections.distinct(
+                            Projections.property("entgebid"))),
+                    new String[0]);
+        }
+        return DatabaseBasisQuery.entwaesserungsgebiete;
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisStrassen                        */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

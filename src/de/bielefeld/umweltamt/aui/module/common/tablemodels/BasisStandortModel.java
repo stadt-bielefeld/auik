@@ -21,8 +21,10 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -72,7 +74,7 @@ public class BasisStandortModel extends ListTableModel {
      * @param hausnr Die Hausnr (oder -1 falls alle Standorte in dieser Straßen gesucht werden sollen)
      */
     public void filterList(String strasse, int hausnr) {
-        setList(BasisStandort.findStandorte(strasse, hausnr));
+        setList(DatabaseQuery.findStandorte(strasse, hausnr));
         lastStrasse = strasse;
         lastHausNr = hausnr;
     }
@@ -82,7 +84,9 @@ public class BasisStandortModel extends ListTableModel {
      * @param std BasisStandort
      */
     public void filterList(BasisStandort std) {
-        setList((List<?>)BasisStandort.getStandortList(std.getStandortid()));
+        List<BasisStandort> oneItemList = new ArrayList<BasisStandort>();
+        oneItemList.add(std);
+        setList(oneItemList);
     }
 
     /**

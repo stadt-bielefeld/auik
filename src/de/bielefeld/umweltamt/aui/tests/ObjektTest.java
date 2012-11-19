@@ -182,7 +182,7 @@ public class ObjektTest extends TestCase {
     }
 
     private BasisStandort findeStandort() {
-        BasisStandort standort = BasisStandort.getStandort(1);
+        BasisStandort standort = BasisStandort.findById(1);
         return standort;
     }
 

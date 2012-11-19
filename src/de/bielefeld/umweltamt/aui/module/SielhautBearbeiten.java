@@ -293,7 +293,8 @@ public class SielhautBearbeiten extends AbstractModul {
             getTabelleExportButton().setEnabled(true);
         } else {
             this.objekt = new BasisObjekt();
-            this.standort = BasisStandort.getStandort(41);
+            this.standort = BasisStandort.findById(
+                DatabaseConstants.BASIS_STANDORT_KEIN_STANDORT);
             this.betreiber = BasisBetreiber.findById(
                 DatabaseConstants.BASIS_BETREIBER_ID_KEINE_BETREIBER);
             this.art = BasisObjektarten.findById(

@@ -420,7 +420,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
             isNew = true;
             objekt = new BasisObjekt();
             if (manager.getSettingsManager().getSetting("auik.imc.use_standort") != null) {
-                BasisStandort sta = BasisStandort.getStandort(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
+                BasisStandort sta = BasisStandort.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
                 objekt.setBasisStandort(sta);
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
             }

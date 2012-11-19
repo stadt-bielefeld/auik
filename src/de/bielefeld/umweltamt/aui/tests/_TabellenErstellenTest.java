@@ -81,7 +81,7 @@ public class _TabellenErstellenTest extends TestCase {
         assertEquals(idO, "vorhanden");
 
         BasisBetreiber.delete(BasisBetreiber.findById(_idB));
-        BasisStandort.removeStandort(BasisStandort.getStandort(_idS));
+        BasisStandort.delete(BasisStandort.findById(_idS));
         BasisObjektarten.delete(BasisObjektarten.findById(_idO));
     }
 
@@ -97,7 +97,7 @@ public class _TabellenErstellenTest extends TestCase {
         standort.setStrasse(Strasse);
         standort.setHausnr(Hausnr);
 
-        standort = BasisStandort.saveStandort(standort);
+        standort = BasisStandort.merge(standort);
 
         return standort.getStandortid();
     }

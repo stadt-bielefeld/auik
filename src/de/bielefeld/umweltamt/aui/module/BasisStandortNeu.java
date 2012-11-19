@@ -399,7 +399,7 @@ public class BasisStandortNeu extends AbstractModul {
             bsta.setRevidatum(new Date());
             bsta.setRevihandz(handzeichenNeuFeld.getText().trim());
 
-            bsta = BasisStandort.saveStandort(bsta);
+            bsta = BasisStandort.merge(bsta);
 
             if (bsta != null) {
                 frame.changeStatus("Neuer Standort "+bsta.getStandortid()+" erfolgreich gespeichert!", HauptFrame.SUCCESS_COLOR);
@@ -439,7 +439,7 @@ public class BasisStandortNeu extends AbstractModul {
                     standortggs = VawsStandortgghwsg.getStandortGg();
                 }
                 if (entwgebiete == null) {
-                    entwgebiete = BasisStandort.getEntwGebiete();
+                    entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
                 }
                 if (wEinzugsgebiete == null) {
                     wEinzugsgebiete = VawsWassereinzugsgebiete.getWEinzugsgebiete();

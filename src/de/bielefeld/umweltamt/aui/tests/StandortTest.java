@@ -56,6 +56,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 
 public class StandortTest extends TestCase {
@@ -92,7 +93,7 @@ public class StandortTest extends TestCase {
      * Und hier versuchen wir ihn über eine Datenbankabfrage zu finden.
      */
     public BasisStandort testQuery() {
-        List<?> result = BasisStandort.findStandorte(Strasse, Hausnr);
+        List<?> result = DatabaseQuery.findStandorte(Strasse, Hausnr);
 
         assertEquals(1, result.size());
 
@@ -109,7 +110,7 @@ public class StandortTest extends TestCase {
         BasisStandort standort = testQuery();
 
         standort.setPlz("neue");
-        BasisStandort.saveStandort(standort);
+        BasisStandort.merge(standort);
 
         standort = testQuery();
 
@@ -142,7 +143,7 @@ public class StandortTest extends TestCase {
         standort.setStrasse(Strasse);
         standort.setHausnr(Hausnr);
         try {
-            standort = BasisStandort.saveStandort(standort);
+            standort = BasisStandort.merge(standort);
         } catch (HibernateException e) {
             throw e;
         }

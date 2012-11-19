@@ -25,7 +25,6 @@
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -75,67 +74,11 @@ public class BasisStandort extends AbstractBasisStandort implements
      * @return Den gesuchten Standort oder <code>null</code>, falls kein
      *         Standort mit dieser ID existiert.
      */
-    public static BasisStandort getStandort(Integer id) {
+    public static BasisStandort findById(Integer id) {
         BasisStandort standort = null;
         standort = (BasisStandort) new DatabaseAccess()
             .get(BasisStandort.class, id);
         return standort;
-    }
-
-    /**
-     * Liefert einen Standort mit einer bestimmten ID.
-     * @param id Die ID (der Primärschlüssel) des Standorts.
-     * @return Den gesuchten Standort oder <code>null</code>, falls kein
-     *         Standort mit dieser ID existiert.
-     */
-    public static List<?> getStandortList(Integer id) {
-        return new DatabaseAccess()
-            .createQuery(
-                "FROM BasisStandort as bsta WHERE "
-                    + "bsta.standortid = :id ")
-            .setInteger("id", id)
-            .list();
-    }
-
-    /**
-     * Durchsucht die Standort-Tabelle nach Straße und Hausnummer.. Bei der
-     * Straße wird Groß-/Kleinschreibung ignoriert und automatisch ein '%'
-     * angehängt. Wenn die Hausnummer -1 ist, wird nur nach der Straße gesucht.
-     * @param strasse Der Straßenname (oder sein Anfang).
-     * @param hausnr Die Hausnummer (oder -1, falls nicht nach einer bestimmten
-     *            Hausnummer gesucht werden soll)
-     * @return Eine Liste mit allen gefundenen Standorten.
-     */
-    public static List<?> findStandorte(String strasse, int hausnr) {
-        String strasse2 = strasse.toLowerCase().trim() + "%";
-        Integer hausNummer = new Integer(hausnr);
-
-        log.debug("Suche nach '" + strasse2 + "' Nr. " + hausnr);
-        List<?> standorte = null;
-
-        String query = "FROM BasisStandort as bsta WHERE "
-            + "lower(bsta.strasse) like :strasse ";
-        if (hausnr != -1) {
-            query += "and bsta.hausnr = :hausnr ";
-        }
-        query += "ORDER BY bsta.strasse, bsta.hausnr";
-
-        // TODO: Test if it leads to errors if we set a named variable which is
-        // not there
-        if (hausnr != -1) {
-            standorte = new DatabaseAccess()
-                .createQuery(query)
-                .setString("strasse", strasse2)
-                .setInteger("hausnr", hausNummer)
-                .list();
-        } else {
-            standorte = new DatabaseAccess()
-                .createQuery(query)
-                .setString("strasse", strasse2)
-                .list();
-        }
-
-        return standorte;
     }
 
     /**
@@ -145,7 +88,7 @@ public class BasisStandort extends AbstractBasisStandort implements
      * @return Der gespeicherte Standort, oder <code>null</code>, falls beim
      *         Speichern ein Fehler auftrat.
      */
-    public static BasisStandort saveStandort(BasisStandort bsta) {
+    public static BasisStandort merge(BasisStandort bsta) {
         BasisStandort bstaRet = null;
         bstaRet = (BasisStandort) new DatabaseAccess().merge(bsta);
         if (bstaRet != null) {
@@ -155,49 +98,15 @@ public class BasisStandort extends AbstractBasisStandort implements
     }
 
     /**
-     * Liefert alle in der Tabelle benutzten Entwässerungsgebiete als Strings. <br>
-     * <b>ACHTUNG:</b> Diese Methode liefert <b>nicht</b> alle Standorte,
-     * sondern alle in der Spalte ENTWGEB benutzten Werte!
-     * @return Alle zur Zeit benutzten Entwässerungsgebiete
-     */
-    public static String[] getEntwGebiete() {
-        return (String[]) new DatabaseAccess().createQuery(
-            "SELECT DISTINCT sta.entgebid "
-                + "FROM de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort sta")
-            .setCacheable(true)
-            .setCacheRegion("ezgbliste")
-            .array(new String[0]);
-    }
-
-    /**
      * Löscht einen vorhandenen Standort aus der Datenbank.
      * @param standort Der Standort, der gelöscht werden soll.
      * @return <code>true</code>, wenn der Betreiber gelöscht wurde oder
      *         <code>false</code> falls dabei ein Fehler auftrat (z.B. der
      *         Standort nicht in der Datenbank existiert).
      */
-    public static boolean removeStandort(BasisStandort standort) {
+    public static boolean delete(BasisStandort standort) {
         boolean removed = false;
         removed = new DatabaseAccess().delete(standort);
         return removed;
-    }
-
-    public String getAdresse() {
-        String strasse = getStrasse();
-        Integer hausnr = getHausnr();
-        String hausnrZus = getHausnrzus();
-
-        StringBuilder sb = new StringBuilder(strasse);
-
-        if (hausnr != null) {
-            sb.append(" ");
-            sb.append(hausnr.toString());
-        }
-
-        if (hausnr != null && hausnrZus != null) {
-            sb.append(hausnrZus);
-        }
-
-        return sb.toString();
     }
 }
