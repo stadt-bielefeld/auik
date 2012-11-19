@@ -36,6 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
@@ -246,6 +247,24 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisObjektarten                     */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static BasisObjektarten[] objektarten = null;
+    /**
+     * Get all BasisObjektarten and sort them by their name
+     * @return <code>BasisObjektarten[]</code>
+     */
+    public static BasisObjektarten[] getObjektarten() {
+        if (DatabaseBasisQuery.objektarten == null) {
+            DatabaseBasisQuery.objektarten = DatabaseQuery.getOrderedAll(
+                new BasisObjektarten(), "objektart")
+                .toArray(new BasisObjektarten[0]);
+        }
+        return DatabaseBasisQuery.objektarten;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisObjektchrono                    */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
@@ -272,21 +291,22 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package BASIS : class BasisObjektarten                     */
+    /* Queries for package BASIS : class BasisObjektverknuepfung              */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
-    private static BasisObjektarten[] objektarten = null;
     /**
-     * Get all BasisObjektarten and sort them by their name
-     * @return <code>BasisObjektarten[]</code>
+     * Liefert alle verknuepften Objekte zu einem bestimmten BasisObjekt.
+     * @param objekt Das BasisObjekt.
+     * @return Eine Liste mit Objekten.
      */
-    public static BasisObjektarten[] getObjektarten() {
-        if (DatabaseBasisQuery.objektarten == null) {
-            DatabaseBasisQuery.objektarten = DatabaseQuery.getOrderedAll(
-                new BasisObjektarten(), "objektart")
-                .toArray(new BasisObjektarten[0]);
-        }
-        return DatabaseBasisQuery.objektarten;
+    public static List<BasisObjektverknuepfung> getLinkedObjekts(
+        BasisObjekt objekt) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(BasisObjektverknuepfung.class)
+                .add(Restrictions.or(
+                    Restrictions.eq("basisObjektByIstVerknuepftMit", objekt),
+                    Restrictions.eq("basisObjektByObjekt", objekt))),
+            new BasisObjektverknuepfung());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

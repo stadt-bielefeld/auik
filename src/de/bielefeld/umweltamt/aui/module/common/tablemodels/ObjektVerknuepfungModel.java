@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -110,8 +111,7 @@ public class ObjektVerknuepfungModel extends ListTableModel {
         boolean removed;
 
         if (removedObjekt.getClass() != null) {
-            removed = BasisObjektverknuepfung
-                    .removeObjektVerknuepfung(removedObjekt);
+            removed = BasisObjektverknuepfung.delete(removedObjekt);
         } else {
             removed = true;
         }
@@ -121,7 +121,7 @@ public class ObjektVerknuepfungModel extends ListTableModel {
 
     @Override
     public void updateList() {
-        setList(BasisObjektverknuepfung.getVerknuepfungByObjekt(objekt));
+        setList(DatabaseQuery.getLinkedObjekts(objekt));
         fireTableDataChanged();
     }
 

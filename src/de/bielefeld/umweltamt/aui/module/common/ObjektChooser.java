@@ -98,7 +98,7 @@ public class ObjektChooser extends OkCancelDialog {
             BasisObjektverknuepfung neueov = new BasisObjektverknuepfung();
             neueov.setBasisObjektByObjekt(objekt);
             neueov.setBasisObjektByIstVerknuepftMit(chosenObjekt);
-            BasisObjektverknuepfung.saveObjektVerknuepfung(neueov);
+            BasisObjektverknuepfung.merge(neueov);
             objektVerknuepfungModel.updateList();
             dispose();
         }

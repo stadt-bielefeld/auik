@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -61,49 +60,13 @@ public class BasisObjektverknuepfung extends AbstractBasisObjektverknuepfung
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    /* Add customized code below */
-
-    // Statischer Teil:
-
-    /**
-     * Liefert alle verknuepften Objekte zu einem bestimmten BasisObjekt.
-     * @param objekt Das BasisObjekt.
-     * @return Eine Liste mit Objekten.
-     */
-    public static List<?> getVerknuepfungByObjekt(BasisObjekt objekt) {
-        return new DatabaseAccess()
-            .createQuery(
-                "FROM BasisObjektverknuepfung ov WHERE "
-                    + "ov.basisObjektByObjekt = :objekt "
-                    + "or ov.basisObjektByIstVerknuepftMit = :objekt ")
-            .setEntity("objekt", objekt)
-            .list();
-    }
-
-    /**
-     * Liefert alle verknuepften Sielhautmessstellen zu einem bestimmten
-     * BasisObjekt.
-     * @param objekt Das BasisObjekt.
-     * @return Eine Liste mit Objekten.
-     */
-    public static List<?> getVerknuepfungSielhaut(BasisObjekt objekt) {
-        return new DatabaseAccess()
-            .createQuery(
-                "FROM BasisObjektverknuepfung ov WHERE "
-                    + "ov.basisObjektByObjekt = :objekt "
-                    + "and ov.basisObjektByIstVerknuepftMit.basisObjektarten.objektart like 'Sielhautmessstelle' ")
-            .setEntity("objekt", objekt)
-            .list();
-    }
-
     /**
      * Speichert einen Objektverknuepfungs-Eintrag in der Datenbank.
      * @param verknuepf Der zu speichernde Datensatz.
      * @return <code>true</code>, falls beim Speichern kein Fehler auftritt,
      *         sonst <code>false</code>.
      */
-    public static boolean saveObjektVerknuepfung(
-        BasisObjektverknuepfung verknuepf) {
+    public static boolean merge(BasisObjektverknuepfung verknuepf) {
         return new DatabaseAccess().saveOrUpdate(verknuepf);
     }
 
@@ -114,8 +77,11 @@ public class BasisObjektverknuepfung extends AbstractBasisObjektverknuepfung
      *         <code>false</code> falls dabei ein Fehler auftrat (z.B. der
      *         Datensatz nicht in der Datenbank existiert).
      */
-    public static boolean removeObjektVerknuepfung(
+    public static boolean delete(
         BasisObjektverknuepfung verknuepf) {
         return new DatabaseAccess().delete(verknuepf);
     }
+
+    /* Add customized code below */
+
 }
