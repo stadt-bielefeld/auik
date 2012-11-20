@@ -80,7 +80,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         Anh49Fachdaten fachdaten) {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh49Abscheiderdetails.class)
-                .add(Restrictions.eq("Anh49Fachdaten", fachdaten))
+                .add(Restrictions.eq("anh49Fachdaten", fachdaten))
                 .addOrder(Order.asc("abscheidernr")),
             new Anh49Abscheiderdetails());
     }
@@ -92,12 +92,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<Anh49Abscheiderdetails> getFettabscheider() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh49Abscheiderdetails.class)
-                .createAlias("Anh49Fachdaten", "anhang")
-                .createAlias("Anh49Fachdaten.basisObjekt", "objekt")
-                .createAlias("Anh49Fachdaten.basisObjekt.basisObjektarten",
-                    "art")
-                .createAlias("Anh49Fachdaten.basisObjekt.basisBetreiber",
-                    "betreiber")
+                .createAlias("anh49Fachdaten", "anhang")
+                .createAlias("anhang.basisObjekt", "objekt")
+                .createAlias("objekt.basisObjektarten", "art")
+                .createAlias("objekt.basisBetreiber", "betreiber")
                 .add(Restrictions.eq("art.id",
                     DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
                 .addOrder(Order.asc("objekt.inaktiv"))

@@ -187,25 +187,28 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     @Override
     protected void fillForm() {
     	Anh49Abscheiderdetails details = this.getDetails();
-        getLageFeld().setText(details.getLage());
-        getHerstellerFeld().setText(details.getHersteller());
-        getNrFeld().setValue(details.getAbscheidernr());
-        getVonFeld().setValue(details.getVon());
-        getNgsfFeld().setValue(details.getNgSf());
-        getNgbaFeld().setValue(details.getNgBa());
-        getNgkaFeld().setValue(details.getNgKa());
-        getNgfaFeld().setValue(details.getNenngroesse());
-        getBemerkungsArea().setText(details.getBemerkung());
+    	// Nur für vorhandene Abscheider Werte laden.
+    	if (details.getId() != null) {
+            getLageFeld().setText(details.getLage());
+            getHerstellerFeld().setText(details.getHersteller());
+            getNrFeld().setValue(details.getAbscheidernr());
+            getVonFeld().setValue(details.getVon());
+            getNgsfFeld().setValue(details.getNgSf());
+            getNgbaFeld().setValue(details.getNgBa());
+            getNgkaFeld().setValue(details.getNgKa());
+            getNgfaFeld().setValue(details.getNenngroesse());
+            getBemerkungsArea().setText(details.getBemerkung());
 
-        getTankstelleCheck().setSelected(details.getTankstelle());
-        getSchlammfangCheck().setSelected(details.getSchlammfang());
-        getBenzinabscheiderCheck().setSelected(
-        		details.getBenzinOelabscheider());
-        getKoalenszenzfilterCheck().setSelected(details.getKoaleszenzfilter());
-        getIntegriertCheck().setSelected(details.getIntegriert());
-        getEmulsionCheck().setSelected(details.getEmulsionsspaltanlage());
-        getSchwimmerCheck().setSelected(details.getSchwimmer());
-        getWohnhausCheck().setSelected(details.getWohnhaus());
+            getTankstelleCheck().setSelected(details.getTankstelle());
+            getSchlammfangCheck().setSelected(details.getSchlammfang());
+            getBenzinabscheiderCheck().setSelected(
+            		details.getBenzinOelabscheider());
+            getKoalenszenzfilterCheck().setSelected(details.getKoaleszenzfilter());
+            getIntegriertCheck().setSelected(details.getIntegriert());
+            getEmulsionCheck().setSelected(details.getEmulsionsspaltanlage());
+            getSchwimmerCheck().setSelected(details.getSchwimmer());
+            getWohnhausCheck().setSelected(details.getWohnhaus());
+    	}
     }
 
     /* (non-Javadoc)

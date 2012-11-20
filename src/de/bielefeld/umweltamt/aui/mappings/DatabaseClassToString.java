@@ -292,7 +292,7 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "[ID:ID, NR von VON, LAGE]".
      */
     public static String toStringForClass(Anh49Abscheiderdetails clazz) {
-        return "[ID:" + clazz.getAbscheiderid() + ", " + clazz.getAbscheidernr()
+        return "[ID:" + clazz.getId() + ", " + clazz.getAbscheidernr()
             + " von " + clazz.getVon() + ", " + clazz.getLage() + "]";
     }
 

@@ -216,7 +216,7 @@ public class Anh49DetailsPanel extends JPanel {
             Anh49Abscheiderdetails removedAbsch = (Anh49Abscheiderdetails) objectAtRow;
             boolean removed;
 
-            if (removedAbsch.getAbscheiderid() != null) {
+            if (removedAbsch.getId() != null) {
                 removed = Anh49Abscheiderdetails.delete(removedAbsch);
             } else {
                 removed = true;
