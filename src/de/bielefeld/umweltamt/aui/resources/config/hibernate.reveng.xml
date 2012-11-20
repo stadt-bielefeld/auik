@@ -5,7 +5,7 @@
 <hibernate-reverse-engineering>
 	<!-- Type mappings ===================================================== -->
 	<type-mapping>
-		<sql-type jdbc-type="DATE" hibernate-type="java.util.Calendar"/>
+		<sql-type jdbc-type="DATE" hibernate-type="java.util.Date"/>
         <sql-type jdbc-type="TIMESTAMP" hibernate-type="java.util.Date"/>
         <sql-type jdbc-type="REAL" hibernate-type="java.lang.Float"/>
         <sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer"/>
