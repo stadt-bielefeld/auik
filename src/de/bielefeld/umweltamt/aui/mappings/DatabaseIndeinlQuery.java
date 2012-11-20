@@ -228,6 +228,19 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     /* Queries for package INDEINL: class Anh49Kontrollen                     */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
+    /**
+     * Get all Anh49Kontrollen for an Anh49Fachdaten and sort them by date
+     * @param fachdaten Anh49Fachdaten
+     * @return <code>List&lt;Anh49Kontrollen&gt;</code>
+     */
+    public static List<Anh49Kontrollen> getKontrollen(Anh49Fachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(Anh49Kontrollen.class)
+                .add(Restrictions.eq("anh49Fachdaten", fachdaten))
+                .addOrder(Order.asc("pruefdatum")),
+            new Anh49Kontrollen());
+    }
+
     // TODO: Maybe work with the set directly?
     public static Timestamp getNaechsteKontrolle(Anh49Fachdaten fachdaten) {
         return new DatabaseAccess().executeCriteriaToUniqueResult(

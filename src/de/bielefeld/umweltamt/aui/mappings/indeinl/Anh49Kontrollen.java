@@ -22,11 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'ANH_49_KONTROLLEN' table. This class
@@ -35,8 +33,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class Anh49Kontrollen extends AbstractAnh49Kontrollen implements
     Serializable {
     private static final long serialVersionUID = 6385012584069870464L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of Anh49Ortstermine instances.
@@ -66,31 +62,11 @@ public class Anh49Kontrollen extends AbstractAnh49Kontrollen implements
 
     /* Add customized code below */
 
-    /**
-     * Liefert alle Kontrollen eines bestimmten Fachdatenobjekts.
-     */
-    public static List<?> getKontrollen(Anh49Fachdaten fd) {
-        List<?> list = null;
-        list = new DatabaseAccess()
-            .createQuery(
-                "FROM Anh49Kontrollen as kt "
-                    + "WHERE kt.anh49Fachdaten = :fd "
-                    + "ORDER BY kt.pruefdatum")
-            .setEntity("fd", fd)
-            .list();
-        log.debug("Kontrollen für " + fd + ", Anzahl: " + list.size());
-        return list;
-    }
-
-    public static boolean saveOrUpdateOrtstermin(Anh49Kontrollen kt) {
-        return new DatabaseAccess().saveOrUpdate(kt);
-    }
-
-    public static boolean removeOrtstermin(Anh49Kontrollen kt) {
+    public static boolean delete(Anh49Kontrollen kt) {
         return new DatabaseAccess().delete(kt);
     }
 
-    public static boolean saveOrUpdateAnalyse(Anh49Kontrollen kontrolle) {
+    public static boolean merge(Anh49Kontrollen kontrolle) {
         return new DatabaseAccess().saveOrUpdate(kontrolle);
     }
 }

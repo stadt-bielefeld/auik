@@ -384,7 +384,7 @@ public class Anh49AnalysenPanel extends JPanel {
             boolean removed;
 
             if (removedOt.getId() != null) {
-                removed = Anh49Kontrollen.removeOrtstermin(removedOt);
+                removed = Anh49Kontrollen.delete(removedOt);
             } else {
                 removed = true;
             }
@@ -395,7 +395,7 @@ public class Anh49AnalysenPanel extends JPanel {
         @Override
         public void updateList() {
             if (fachdaten != null) {
-                setList(Anh49Kontrollen.getKontrollen(fachdaten));
+                setList(DatabaseQuery.getKontrollen(fachdaten));
             }
             fireTableDataChanged();
         }
@@ -640,7 +640,7 @@ public class Anh49AnalysenPanel extends JPanel {
         List<?> konListe = kontrollenModel.getList();
         for (int i = 0; i < konListe.size(); i++) {
             Anh49Kontrollen kontrolle = (Anh49Kontrollen) konListe.get(i);
-            Anh49Kontrollen.saveOrUpdateAnalyse(kontrolle);
+            Anh49Kontrollen.merge(kontrolle);
         }
         analysenModel.updateList();
     }
