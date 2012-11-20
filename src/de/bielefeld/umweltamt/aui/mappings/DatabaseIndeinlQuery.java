@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,9 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
@@ -104,12 +107,25 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh49Analysen                       */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    // TODO: Maybe work with the set directly?
+    public static Timestamp getLetzteAnalyse(Anh49Fachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(Anh49Analysen.class)
+                .add(Restrictions.eq("anh49Fachdaten", fachdaten))
+                .setProjection(Projections.max("datum")),
+            new Timestamp(0));
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class Anh49Fachdaten                      */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
     /**
      * Get a selection of Anhang49 objects which meet the given parameters<br>
-     * Global restriction: no "Fettabscheider"
+     * Global restriction: no BasisObjektart "Fettabscheider"
      * @param aktiv (optional) The status of the underlying BasisObjekt
      * @param abgemeldet (optional)
      * @param abwasserfrei (optional)
@@ -154,13 +170,54 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 Restrictions.eq("obj.basisSachbearbeiter", sachbearbeiter));
         }
 
-        criteria.add(Restrictions.not(
-            Restrictions.like("art.objektart", "Fettabscheider")));
+        criteria.add(Restrictions.ne("art.id",
+                DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER));
 
         criteria.addOrder(Order.asc("dekraTuevDatum"));
 
         return new DatabaseAccess().executeCriteriaToList(
             criteria, new Anh49Fachdaten());
+    }
+
+    // This is used for a drop down box. When the time comes and we are not
+    // using the dekra_tuev_datum anymore, this should be replaced by the last
+    // analyse datum
+    public static Integer[] getOldDekraTuevYears() {
+        Integer years[] = null;
+        Timestamp times[] = new DatabaseAccess().executeCriteriaToArray(
+            DetachedCriteria.forClass(Anh49Fachdaten.class)
+                .createAlias("basisObjekt", "objekt")
+                .createAlias("basisObjekt.basisObjektarten", "art")
+                .add(Restrictions.ne("art.id",
+                    DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
+                .setProjection(Projections.distinct(
+                    Projections.property("dekraTuevDatum")))
+                .addOrder(Order.asc("dekraTuevDatum")),
+            new Timestamp[0]);
+        years = new Integer[times.length];
+        Calendar cal = Calendar.getInstance();
+        for (int i = 0; i < times.length; i++) {
+            if (times[i] != null) {
+                cal.setTime(times[i]);
+                years[i] = cal.get(Calendar.YEAR);
+            } else {
+                years[i] = null;
+            }
+        }
+        return years;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh49Kontrollen                     */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    // TODO: Maybe work with the set directly?
+    public static Timestamp getNaechsteKontrolle(Anh49Fachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(Anh49Kontrollen.class)
+                .add(Restrictions.eq("anh49Fachdaten", fachdaten))
+                .setProjection(Projections.max("naechstepruefung")),
+            new Timestamp(0));
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

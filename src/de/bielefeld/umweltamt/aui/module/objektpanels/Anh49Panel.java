@@ -269,8 +269,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
     }
 
     public void fetchFormData() {
-        this.fachdaten = Anh49Fachdaten.getAnh49ByObjekt(this.hauptModul
-            .getObjekt());
+        this.fachdaten = this.hauptModul.getObjekt().getAnh49Fachdaten();
         this.log.debug("Anhang 49 Objekt aus DB geholt: " + this.fachdaten);
     }
 
@@ -348,7 +347,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         this.fachdaten.setWiedervorlage((Date) super
             .getComponentValue(this.WIEDERVORLAGEDATUM));
 
-        success = Anh49Fachdaten.saveFachdaten(this.fachdaten);
+        success = this.fachdaten.merge();
 
         if (!success) {
             this.log.debug("Anh49 Objekt " + this.fachdaten
@@ -366,7 +365,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
             this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Anhang49-Objekt speichern
-            Anh49Fachdaten.saveFachdaten(this.fachdaten);
+            Anh49Fachdaten.merge(this.fachdaten);
             this.log.debug("Neues Anh49 Objekt " + this.fachdaten
                 + " gespeichert.");
         }

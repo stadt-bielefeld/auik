@@ -45,6 +45,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.Date;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -77,8 +78,8 @@ public class Anh49Model extends ListTableModel {
         switch (columnIndex) {
             case 0: return fd.getBasisObjekt().getBasisBetreiber().toString();
             case 1: return fd.getBasisObjekt().getBasisStandort().toString();
-            case 2: return fd.getLetzteAnalyse();
-            case 3: return fd.getNaechsteKontrolle();
+            case 2: return DatabaseQuery.getLetzteAnalyse(fd);
+            case 3: return DatabaseQuery.getNaechsteKontrolle(fd);
             case 4: return fd.getDekraTuevDatum();
             case 5: return fd.getSonstigestechnik();
             case 6: return fd.getBasisObjekt().getBasisSachbearbeiter().toString();

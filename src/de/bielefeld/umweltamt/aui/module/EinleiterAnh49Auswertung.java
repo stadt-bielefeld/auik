@@ -72,7 +72,6 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49Model;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -136,12 +135,12 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             aktivCheck.setSelected(true);
             sachbBox = new JComboBox();
             sachbBox.setModel(new DefaultComboBoxModel(
-                Anh49Fachdaten.getAllSachbearbeiter()));
-//            sachbBox.setEditable(true);
+                DatabaseQuery.getOrderedAll(new BasisSachbearbeiter(), "name")
+                    .toArray(new BasisSachbearbeiter[0])));
             sachbBox.setSelectedItem(DatabaseQuery.getCurrentSachbearbeiter());
             dekraTuevBox = new JComboBox();
             dekraTuevBox.setModel(new DefaultComboBoxModel(
-                Anh49Fachdaten.getDekraTuevYears()));
+                DatabaseQuery.getOldDekraTuevYears()));
             dekraTuevBox.setSelectedIndex(
                 dekraTuevBox.getModel().getSize() - 6);
 

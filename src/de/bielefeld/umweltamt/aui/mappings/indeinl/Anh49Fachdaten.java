@@ -22,17 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'ANH_49_FACHDATEN' table. This class may
@@ -41,8 +33,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
     Serializable {
     private static final long serialVersionUID = 1996484061739446871L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of Anh49Fachdaten instances.
@@ -62,125 +52,11 @@ public class Anh49Fachdaten extends AbstractAnh49Fachdaten implements
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    public static Anh49Fachdaten getAnh49ByObjekt(BasisObjekt objekt) {
-        return (Anh49Fachdaten) new DatabaseAccess()
-            .createQuery(
-                "FROM Anh49Fachdaten as ah49 "
-                + "WHERE ah49.basisObjekt = :objekt")
-            .setEntity("objekt", objekt)
-            .uniqueResult();
+    public boolean merge() {
+        return new DatabaseAccess().saveOrUpdate(this);
     }
 
-    public static boolean saveFachdaten(Anh49Fachdaten fachdaten) {
-        return new DatabaseAccess().saveOrUpdate(fachdaten);
-    }
-
-    public static BasisSachbearbeiter[] getAllSachbearbeiter() {
-        return (BasisSachbearbeiter[]) new DatabaseAccess()
-            .createQuery(
-                "SELECT DISTINCT fd.basisObjekt.basisSachbearbeiter "
-                + "FROM Anh49Fachdaten AS fd "
-                + "WHERE fd.basisObjekt.basisObjektarten.objektart "
-                    + "NOT LIKE 'Fettabscheider'")
-            .setCacheable(true)
-            .setCacheRegion("sachbearbeiter")
-            .array(new BasisSachbearbeiter[0]);
-    }
-
-    public static Integer[] getDekraTuevYears() {
-        ArrayList<Integer> years = new ArrayList<Integer>();
-        int thisYear = new GregorianCalendar().get(Calendar.YEAR) + 5;
-        for (int i=1997; i<=thisYear; i++) {
-            years.add(new Integer(i));
-        }
-        years.add(null);
-        return years.toArray(new Integer[0]);
-//        return (Integer[]) new DatabaseAccess()
-//            .createQuery(
-//                "SELECT DISTINCT year(fd.dekraTuevDatum) "
-//                + "FROM Anh49Fachdaten AS fd "
-//                + "WHERE fd.basisObjekt.basisObjektarten.objektart "
-//                    + "NOT LIKE 'Fettabscheider'"
-//                // TODO: This is rather tricky and should not be here at all...
-//                + "AND fd._deleted = false")
-//            .array(new Integer[0]);
-    }
-
-    public Date getLetzteAnalyse() {
-        return (Date) new DatabaseAccess()
-            .createQuery(
-                "SELECT max(fd.anh49Analysen.datum) "
-                    + "FROM Anh49Fachdaten fd "
-                    + "WHERE fd = :fd")
-            .setEntity("fd", this)
-            .uniqueResult();
-    }
-
-    public Date getNaechsteKontrolle() {
-        return (Date) new DatabaseAccess()
-            .createQuery(
-                "SELECT max(kontrolle.naechstepruefung) "
-                    + "FROM Anh49Kontrollen kontrolle "
-                    + "WHERE kontrolle.anh49Fachdaten = :fd")
-            .setEntity("fd", this)
-            .uniqueResult();
-    }
-
-    /**
-     * Anhang 49 Fachdaten nach Kriterien auswählen
-     * TODO: Eine Variante einbauen, die für die ganzen Booleans auch "egal"
-     * erlaubt.
-     * @param abgelWdrVorlage Liegt das Wiedervorlagedatum hinter dem aktuellen
-     * @param sachbearbeiter
-     * @param tuev
-     * @param aktiv
-     * @return List<?>
-     */
-    public static List<?> getAuswahlList (
-        Boolean abgelWdrVorlage, BasisSachbearbeiter sachbearbeiter,
-        Integer tuev, Boolean aktiv) {
-
-        String query = "FROM Anh49Fachdaten AS anh49 "
-            + "WHERE "
-            + "anh49.basisObjekt.basisSachbearbeiter = :sachbearbeiter "
-            + "AND anh49.basisObjekt.inaktiv = :inaktiv ";
-
-        if (abgelWdrVorlage) {
-            query += "AND anh49.wiedervorlage <= :today ";
-        }
-
-        if (tuev == null) {
-            // This place is intentionally left blank.
-//            query += "AND anh49.dekraTuevDatum IS NULL ";
-        } else {
-//            query += "AND date_part('year', anh49.dekraTuevDatum) = :tuev ";
-            query += "AND year(anh49.dekraTuevDatum) = :tuev ";
-        }
-
-        /* For a strange reason we do not want the Fettabscheider... */
-        query += "AND anh49.basisObjekt.basisObjektarten.objektart "
-            + "NOT LIKE 'Fettabscheider' "
-            + "ORDER BY anh49.basisObjekt.basisSachbearbeiter";
-
-        if (tuev == null) {
-            query += ", anh49.dekraTuevDatum";
-        }
-
-        log.debug(query);
-
-        DatabaseAccess da = new DatabaseAccess()
-            .createQuery(query)
-            .setEntity("sachbearbeiter", sachbearbeiter)
-//                ((sachbearbeiter != null) ? sachbearbeiter : "%"))
-            .setBoolean("inaktiv", !aktiv);
-
-        if (abgelWdrVorlage) {
-            da.setDate("today", new Date());
-        }
-        if (tuev != null) {
-            da.setInteger("tuev", tuev);
-        }
-
-        return da.list();
+    public static void merge(Anh49Fachdaten fachdaten) {
+        new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 }
