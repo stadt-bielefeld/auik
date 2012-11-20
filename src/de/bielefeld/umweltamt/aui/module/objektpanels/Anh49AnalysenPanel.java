@@ -96,6 +96,7 @@ import com.jgoodies.uif_lite.component.Factory;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
@@ -151,7 +152,7 @@ public class Anh49AnalysenPanel extends JPanel {
             boolean removed;
 
             if (removedAna.getAnalysenid() != null) {
-                removed = Anh49Analysen.removeAnalyse(removedAna);
+                removed = Anh49Analysen.delete(removedAna);
             } else {
                 removed = true;
             }
@@ -204,7 +205,7 @@ public class Anh49AnalysenPanel extends JPanel {
         @Override
         public void updateList() {
             if (fachdaten != null) {
-                setList(Anh49Analysen.getAnalyse(fachdaten));
+                setList(DatabaseQuery.getAnalysen(fachdaten));
             }
             fireTableDataChanged();
         }
@@ -631,7 +632,7 @@ public class Anh49AnalysenPanel extends JPanel {
         List<?> anaListe = analysenModel.getList();
         for (int i = 0; i < anaListe.size(); i++) {
             Anh49Analysen analyse = (Anh49Analysen) anaListe.get(i);
-            Anh49Analysen.saveOrUpdateAnalyse(analyse);
+            Anh49Analysen.merge(analyse);
         }
         analysenModel.updateList();
     }

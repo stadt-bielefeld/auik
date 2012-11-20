@@ -81,6 +81,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     // TODO: Maybe we can use the Set within the Anh49Fachdaten directly?
     public static List<Anh49Abscheiderdetails> getAbscheiderDetails(
         Anh49Fachdaten fachdaten) {
+//        Set<Anh49Abscheiderdetails> set = fachdaten.getAnh49Abscheiderdetailses();
+//        List<Anh49Abscheiderdetails> list = new ArrayList<Anh49Abscheiderdetails>();
+//        list.addAll(set);
+//        return list;
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh49Abscheiderdetails.class)
                 .add(Restrictions.eq("anh49Fachdaten", fachdaten))
@@ -109,6 +113,19 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class Anh49Analysen                       */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get all Anh49Analysen for an Anh49Fachdaten and sort them by date
+     * @param fachdaten Anh49Fachdaten
+     * @return <code>List&lt;Anh49Analysen&gt;</code>
+     */
+    public static List<Anh49Analysen> getAnalysen(Anh49Fachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(Anh49Analysen.class)
+                .add(Restrictions.eq("anh49Fachdaten", fachdaten))
+                .addOrder(Order.asc("datum")),
+            new Anh49Analysen());
+    }
 
     // TODO: Maybe work with the set directly?
     public static Timestamp getLetzteAnalyse(Anh49Fachdaten fachdaten) {

@@ -22,11 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'ANH_49_ANALYSEN' table. This class may
@@ -35,8 +33,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class Anh49Analysen extends AbstractAnh49Analysen implements
     Serializable {
     private static final long serialVersionUID = 2452591869709833506L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of Anh49Analysen instances.
@@ -66,26 +62,11 @@ public class Anh49Analysen extends AbstractAnh49Analysen implements
 
     /* Add customized code below */
 
-    /**
-     * Liefert alle Analysen eines bestimmten Fachdatenobjekts.
-     */
-    public static List<?> getAnalyse(Anh49Fachdaten fd) {
-        List<?> analyse = null;
-        analyse = new DatabaseAccess().createQuery(
-            "FROM Anh49Analysen as analyse WHERE "
-                + "analyse.anh49Fachdaten = :fd "
-                + "ORDER BY analyse.datum")
-            .setEntity("fd", fd)
-            .list();
-        log.debug("Analysen für " + fd + ", Anzahl: " + analyse.size());
-        return analyse;
-    }
-
-    public static boolean saveOrUpdateAnalyse(Anh49Analysen analyse) {
+    public static boolean merge(Anh49Analysen analyse) {
         return new DatabaseAccess().saveOrUpdate(analyse);
     }
 
-    public static boolean removeAnalyse(Anh49Analysen analyse) {
+    public static boolean delete(Anh49Analysen analyse) {
         return new DatabaseAccess().delete(analyse);
     }
 }
