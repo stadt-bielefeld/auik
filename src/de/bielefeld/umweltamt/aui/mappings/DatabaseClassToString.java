@@ -301,8 +301,7 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "[Datum: DATUM und ANALYSENID]".
      */
     public static String toStringForClass(Anh49Analysen clazz) {
-        return "[Datum:" + clazz.getDatum() + ", "
-            + clazz.getAnalysenid() + "]";
+        return "[Datum:" + clazz.getDatum() + ", " + clazz.getId() + "]";
     }
 
     /** @return Custom Anh49Fachdaten.toString() */

@@ -151,7 +151,7 @@ public class Anh49AnalysenPanel extends JPanel {
             Anh49Analysen removedAna = (Anh49Analysen) objectAtRow;
             boolean removed;
 
-            if (removedAna.getAnalysenid() != null) {
+            if (removedAna.getId() != null) {
                 removed = Anh49Analysen.delete(removedAna);
             } else {
                 removed = true;
@@ -530,15 +530,14 @@ public class Anh49AnalysenPanel extends JPanel {
                         if (GUIManager
                             .getInstance()
                             .showQuestion(
-                                "Soll die Analyse "
-                                    + analyse.getAnalysenid()
+                                "Soll die Analyse " + analyse.getId()
                                     + " wirklich inkl. aller untersuchten Parameter gelöscht werden?",
                                 "Löschen bestätigen")) {
                             analysenModel.removeRow(row);
-                            log.debug("Analyse " + analyse.getAnalysenid()
+                            log.debug("Analyse " + analyse.getId()
                                 + " wurde gelöscht!");
                         } else {
-                            log.debug("Löschen von " + analyse.getAnalysenid()
+                            log.debug("Löschen von " + analyse.getId()
                                 + " wurde abgebrochen!");
                         }
                     }
