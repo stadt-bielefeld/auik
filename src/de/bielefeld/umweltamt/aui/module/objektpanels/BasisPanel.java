@@ -687,12 +687,6 @@ public class BasisPanel extends JPanel {
     private boolean saveObjektDaten() {
         boolean success;
 
-        Integer prio = null;
-
-        if (!getPrioritaetFeld().getText().equals("")) {
-            prio = Integer.parseInt(getPrioritaetFeld().getText());
-        }
-
         // Eingegebene Daten für das Objekt übernehmen
         // Betreiber / Standort werden schon nach der Auswahl durch die
         // chooseButtons gesetzt
@@ -707,7 +701,11 @@ public class BasisPanel extends JPanel {
 //        BasisObjekt tmp = BasisObjekt.saveBasisObjekt(
 //            this.hauptModul.getObjekt(), prio);
         BasisObjekt tmp = BasisObjekt.merge(this.hauptModul.getObjekt());
-        DatabaseQuery.cascadePriority(prio.toString(), tmp);
+
+        // Only cascade the priority, if one is set
+        if (!getPrioritaetFeld().getText().equals("")) {
+            DatabaseQuery.cascadePriority(getPrioritaetFeld().getText(), tmp);
+        }
 
         if (tmp != null) {
             this.hauptModul.setObjekt(tmp);
