@@ -268,16 +268,29 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
     /* Queries for package BASIS : class BasisObjektchrono                    */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
-    // TODO: Add foreign key Objekt to Objektchrono, then fix the query and this
-    // will no longer be needed...
+    /**
+     * Go throw the BasisObjektchrono Set and grep the earliest chrono.
+     * @param objekt BasisObjekt
+     * @return BasisObjektchrono
+     */
     public static Timestamp getLastChronoDateForObjekt(BasisObjekt objekt) {
-//        Calendar cal = Calendar.getInstance();
+//        // TODO: When we can load the lazy initialized stuff properly, do this:
+//        Set<BasisObjektchrono> chronos = objekt.getBasisObjektchronos();
+//        if (!(DatabaseAccess.isInitialized(chronos))) {
+//            // TODO: Load the Set
+//        }
+//        BasisObjektchrono max = null;
+//        for (BasisObjektchrono chrono : chronos) {
+//            if ((max == null) || max.getDatum().before(chrono.getDatum())) {
+//                max = chrono;
+//            }
+//        }
+//        return max;
         return new DatabaseAccess().executeCriteriaToUniqueResult(
             DetachedCriteria.forClass(BasisObjektchrono.class)
                 .add(Restrictions.eq("basisObjekt", objekt))
                 .setProjection(Projections.distinct(Projections.max("datum"))),
             new Timestamp(0));
-//            cal);
     }
 
     // TODO: This may be replaced with objekt.getBasisObjektchonos() if we find

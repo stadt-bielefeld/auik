@@ -122,6 +122,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     }
 
 
+    @Override
     protected JComponent buildContentArea() {
 
         String columnString = "right:pref, 3dlu, 30dlu, 10dlu:g, left:max(pref;60dlu):grow";
@@ -183,6 +184,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#fillForm()
      */
+    @Override
     protected void fillForm() {
     	Anh49Abscheiderdetails details = this.getDetails();
         getLageFeld().setText(details.getLage());
@@ -209,6 +211,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#canSave()
      */
+    @Override
     protected boolean canSave() {
         return true;
     }
@@ -216,6 +219,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     /**
      * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
      */
+    @Override
     protected boolean doSave() {
     	Anh49Abscheiderdetails details = this.getDetails();
 
@@ -277,12 +281,12 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         // Bemerkungen:
         details.setBemerkung(bemerkungsArea.getText());
 
-        boolean save = Anh49Abscheiderdetails.saveAbscheider(details);
-        
+        boolean save = details.merge();
+
         if (save) { // Args, this was "save = true" FAIL!
             log.debug("Änderungen gespeichert!");
         }
-        
+
         return save;
     }
 

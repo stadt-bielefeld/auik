@@ -67,10 +67,8 @@ public class FettabschModel extends ListTableModel {
     			tmp = ad.getAnh49Fachdaten().getBemerkungen();
     			break;
     		case 4:
-    		    // TODO: Add Foreign key from Objekt to Objektchrono and then:
-    		    // tmp = ad.getAnh49Fachdaten().getBasisObjekt().getBasisObjektchrono().getDatum();
     		    tmp = DatabaseQuery.getLastChronoDateForObjekt(
-    		        ad.getBasisObjekt());
+    		        ad.getAnh49Fachdaten().getBasisObjekt());
     		    break;
     		default:
     			tmp = "ERROR";

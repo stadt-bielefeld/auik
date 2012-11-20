@@ -94,8 +94,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
             DetachedCriteria.forClass(Anh49Abscheiderdetails.class)
                 .createAlias("Anh49Fachdaten", "anhang")
                 .createAlias("Anh49Fachdaten.basisObjekt", "objekt")
-                .createAlias("Anh49Fachdaten.basisObjekt.basisObjektarten", "art")
-                .createAlias("Anh49Fachdaten.basisObjekt.basisBetreiber", "betreiber")
+                .createAlias("Anh49Fachdaten.basisObjekt.basisObjektarten",
+                    "art")
+                .createAlias("Anh49Fachdaten.basisObjekt.basisBetreiber",
+                    "betreiber")
                 .add(Restrictions.eq("art.id",
                     DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
                 .addOrder(Order.asc("objekt.inaktiv"))

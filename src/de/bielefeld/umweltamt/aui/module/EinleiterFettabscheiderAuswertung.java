@@ -61,7 +61,7 @@ import javax.swing.JPanel;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.FettabschModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -83,10 +83,12 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Fettabscheider";
     }
 
+    @Override
     public String getIdentifier() {
         return "m_fettabscheider_auswertung";
     }
@@ -94,6 +96,7 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren
@@ -101,12 +104,16 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        @Override
                         protected void doNonUILogic() {
-                            ((FettabschModel)getTableModel()).setList(Anh49Abscheiderdetails.getFettabschListe());
+                            ((FettabschModel)getTableModel()).setList(
+                                DatabaseQuery.getFettabscheider());
                         }
 
+                        @Override
                         protected void doUIUpdateLogic(){
                             ((FettabschModel)getTableModel()).fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
@@ -134,6 +141,7 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
+    @Override
     public ListTableModel getTableModel() {
         if (tmodel == null) {
             tmodel = new FettabschModel();

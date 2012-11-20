@@ -22,12 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'ANH_49_ABSCHEIDERDETAILS' table. This
@@ -36,22 +33,11 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class Anh49Abscheiderdetails extends AbstractAnh49Abscheiderdetails
     implements Serializable {
     private static final long serialVersionUID = -7129534671978623498L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of Anh49Abscheiderdetails instances.
      */
     public Anh49Abscheiderdetails() {
-        // Die Bool-Werte sind standardmäßig false
-        setTankstelle(false);
-        setSchlammfang(false);
-        setBenzinOelabscheider(false);
-        setKoaleszenzfilter(false);
-        setIntegriert(false);
-        setEmulsionsspaltanlage(false);
-        setSchwimmer(false);
-        setWohnhaus(false);
     }
 
     /**
@@ -77,43 +63,15 @@ public class Anh49Abscheiderdetails extends AbstractAnh49Abscheiderdetails
 
     /* Add customized code below */
 
-    /**
-     * Liefert alle Abscheiderdetails eines bestimmten Fachdatenobjekts.
-     */
-    public static List<?> getAbscheiderDetails(Anh49Fachdaten fd) {
-        List<?> details;
-        details = new DatabaseAccess()
-            .createQuery(
-                "FROM Anh49Abscheiderdetails as details "
-                    + "WHERE details.Anh49Fachdaten = :fd "
-                    + "ORDER BY details.abscheidernr asc")
-            .setEntity("fd", fd)
-            .list();
-
-        log.debug("Details für " + fd + ", Anzahl: " + details.size());
-        return details;
+    public static Anh49Abscheiderdetails merge(Anh49Abscheiderdetails absch) {
+        return (Anh49Abscheiderdetails) new DatabaseAccess().merge(absch);
     }
 
-    public static List<?> getFettabschListe() {
-        // Liste für Fettabscheider aus Anh49Abscheiderdetails
-        String query = "FROM Anh49Abscheiderdetails details "
-            + "WHERE details.Anh49Fachdaten.basisObjekt.basisObjektarten.objektart like 'Fettabscheider' "
-            + "ORDER BY details.Anh49Fachdaten.basisObjekt.inaktiv, "
-            + "details.Anh49Fachdaten.basisObjekt.basisBetreiber.betrname";
-        return new DatabaseAccess().createQuery(query).list();
+    public boolean merge() {
+        return new DatabaseAccess().saveOrUpdate(this);
     }
 
-    public static boolean saveAbscheider(Anh49Abscheiderdetails absch) {
-        return new DatabaseAccess().saveOrUpdate(absch);
-    }
-
-    public static boolean removeAbscheider(Anh49Abscheiderdetails abscheider) {
+    public static boolean delete(Anh49Abscheiderdetails abscheider) {
         return new DatabaseAccess().delete(abscheider);
-    }
-
-    public BasisObjekt getBasisObjekt() {
-        Anh49Fachdaten fd = getAnh49Fachdaten();
-
-        return fd != null ? fd.getBasisObjekt() : null;
     }
 }

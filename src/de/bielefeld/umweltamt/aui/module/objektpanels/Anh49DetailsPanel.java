@@ -134,6 +134,7 @@ import com.jgoodies.uif_lite.component.Factory;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
@@ -216,7 +217,7 @@ public class Anh49DetailsPanel extends JPanel {
             boolean removed;
 
             if (removedAbsch.getAbscheiderid() != null) {
-                removed = Anh49Abscheiderdetails.removeAbscheider(removedAbsch);
+                removed = Anh49Abscheiderdetails.delete(removedAbsch);
             } else {
                 removed = true;
             }
@@ -227,7 +228,7 @@ public class Anh49DetailsPanel extends JPanel {
         @Override
         public void updateList() {
             if (fachdaten != null) {
-                setList(Anh49Abscheiderdetails.getAbscheiderDetails(fachdaten));
+                setList(DatabaseQuery.getAbscheiderDetails(fachdaten));
             }
             fireTableDataChanged();
         }
