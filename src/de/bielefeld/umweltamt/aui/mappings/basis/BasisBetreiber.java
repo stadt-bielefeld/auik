@@ -400,7 +400,7 @@ public class BasisBetreiber  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return BasisBetreiber.merge(this).equals(this);
+        return (BasisBetreiber.merge(this) != null);
     }
 
     /**

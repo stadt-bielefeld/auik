@@ -210,7 +210,7 @@ public class AtlEinheiten  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return AtlEinheiten.merge(this).equals(this);
+        return (AtlEinheiten.merge(this) != null);
     }
 
     /**

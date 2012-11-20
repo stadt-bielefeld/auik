@@ -202,7 +202,7 @@ public class BasisObjektarten  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return BasisObjektarten.merge(this).equals(this);
+        return (BasisObjektarten.merge(this) != null);
     }
 
     /**

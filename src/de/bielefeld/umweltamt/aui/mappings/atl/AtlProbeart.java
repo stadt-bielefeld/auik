@@ -189,7 +189,7 @@ public class AtlProbeart  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return AtlProbeart.merge(this).equals(this);
+        return (AtlProbeart.merge(this) != null);
     }
 
     /**

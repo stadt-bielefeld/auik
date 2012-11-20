@@ -260,7 +260,7 @@ public class BasisSachbearbeiter  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return BasisSachbearbeiter.merge(this).equals(this);
+        return (BasisSachbearbeiter.merge(this) != null);
     }
 
     /**

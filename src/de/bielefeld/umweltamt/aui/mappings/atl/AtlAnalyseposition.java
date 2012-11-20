@@ -230,7 +230,7 @@ public class AtlAnalyseposition  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return AtlAnalyseposition.merge(this).equals(this);
+        return (AtlAnalyseposition.merge(this) != null);
     }
 
     /**

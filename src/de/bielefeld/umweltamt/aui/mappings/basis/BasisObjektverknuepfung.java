@@ -175,7 +175,7 @@ public class BasisObjektverknuepfung  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return BasisObjektverknuepfung.merge(this).equals(this);
+        return (BasisObjektverknuepfung.merge(this) != null);
     }
 
     /**

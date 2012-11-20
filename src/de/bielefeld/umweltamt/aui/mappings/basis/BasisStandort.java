@@ -411,7 +411,7 @@ public class BasisStandort  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return BasisStandort.merge(this).equals(this);
+        return (BasisStandort.merge(this) != null);
     }
 
     /**

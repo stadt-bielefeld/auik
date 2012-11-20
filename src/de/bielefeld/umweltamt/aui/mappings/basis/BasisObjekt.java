@@ -465,7 +465,7 @@ public class BasisObjekt  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return BasisObjekt.merge(this).equals(this);
+        return (BasisObjekt.merge(this) != null);
     }
 
     /**

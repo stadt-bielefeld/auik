@@ -219,7 +219,7 @@ public class AtlMetaParameter  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return AtlMetaParameter.merge(this).equals(this);
+        return (AtlMetaParameter.merge(this) != null);
     }
 
     /**

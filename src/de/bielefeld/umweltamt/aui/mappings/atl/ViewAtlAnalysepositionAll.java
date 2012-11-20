@@ -265,7 +265,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return ViewAtlAnalysepositionAll.merge(this).equals(this);
+        return (ViewAtlAnalysepositionAll.merge(this) != null);
     }
 
     /**

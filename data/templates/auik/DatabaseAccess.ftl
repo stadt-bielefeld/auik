@@ -17,7 +17,7 @@
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return ${declarationName}.merge(this).equals(this);
+        return (${declarationName}.merge(this) != null);
     }
 
     /**

@@ -32,6 +32,7 @@ import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
@@ -63,6 +64,43 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("objektid")),
             new Anh40Fachdaten());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh49Abscheiderdetails              */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Liefert alle Abscheiderdetails eines bestimmten Fachdatenobjekts.
+     * @param fachdaten Anh49Fachdaten
+     * @return <code>List&lt;Anh49Abscheiderdetails&gt;</code>
+     */
+    // TODO: Maybe we can use the Set within the Anh49Fachdaten directly?
+    public static List<Anh49Abscheiderdetails> getAbscheiderDetails(
+        Anh49Fachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(Anh49Abscheiderdetails.class)
+                .add(Restrictions.eq("Anh49Fachdaten", fachdaten))
+                .addOrder(Order.asc("abscheidernr")),
+            new Anh49Abscheiderdetails());
+    }
+
+    /**
+     * Get all Anh49Abscheiderdetails that are Fettabscheider
+     * @return <code>List&lt;Anh49Abscheiderdetails&gt;</code>
+     */
+    public static List<Anh49Abscheiderdetails> getFettabscheider() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(Anh49Abscheiderdetails.class)
+                .createAlias("Anh49Fachdaten", "anhang")
+                .createAlias("Anh49Fachdaten.basisObjekt", "objekt")
+                .createAlias("Anh49Fachdaten.basisObjekt.basisObjektarten", "art")
+                .createAlias("Anh49Fachdaten.basisObjekt.basisBetreiber", "betreiber")
+                .add(Restrictions.eq("art.id",
+                    DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
+                .addOrder(Order.asc("objekt.inaktiv"))
+                .addOrder(Order.asc("betreiber.betrname")),
+            new Anh49Abscheiderdetails());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

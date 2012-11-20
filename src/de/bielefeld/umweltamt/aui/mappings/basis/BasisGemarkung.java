@@ -188,7 +188,7 @@ public class BasisGemarkung  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return BasisGemarkung.merge(this).equals(this);
+        return (BasisGemarkung.merge(this) != null);
     }
 
     /**

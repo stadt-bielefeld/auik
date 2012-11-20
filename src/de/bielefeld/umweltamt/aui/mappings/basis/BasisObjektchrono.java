@@ -209,7 +209,7 @@ public class BasisObjektchrono  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return BasisObjektchrono.merge(this).equals(this);
+        return (BasisObjektchrono.merge(this) != null);
     }
 
     /**

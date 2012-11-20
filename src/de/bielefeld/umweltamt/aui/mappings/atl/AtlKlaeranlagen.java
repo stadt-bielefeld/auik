@@ -201,7 +201,7 @@ public class AtlKlaeranlagen  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return AtlKlaeranlagen.merge(this).equals(this);
+        return (AtlKlaeranlagen.merge(this) != null);
     }
 
     /**

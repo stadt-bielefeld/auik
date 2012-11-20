@@ -188,7 +188,7 @@ public class AtlStatus  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return AtlStatus.merge(this).equals(this);
+        return (AtlStatus.merge(this) != null);
     }
 
     /**

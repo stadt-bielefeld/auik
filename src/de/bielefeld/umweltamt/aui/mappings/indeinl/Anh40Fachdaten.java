@@ -343,7 +343,7 @@ public class Anh40Fachdaten  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return Anh40Fachdaten.merge(this).equals(this);
+        return (Anh40Fachdaten.merge(this) != null);
     }
 
     /**

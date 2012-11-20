@@ -177,7 +177,7 @@ public class AtlParametergruppen  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return AtlParametergruppen.merge(this).equals(this);
+        return (AtlParametergruppen.merge(this) != null);
     }
 
     /**

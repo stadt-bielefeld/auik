@@ -186,7 +186,7 @@ public class BasisStrassen  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return BasisStrassen.merge(this).equals(this);
+        return (BasisStrassen.merge(this) != null);
     }
 
     /**

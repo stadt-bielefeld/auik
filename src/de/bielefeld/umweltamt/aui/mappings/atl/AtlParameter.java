@@ -342,7 +342,7 @@ public class AtlParameter  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return AtlParameter.merge(this).equals(this);
+        return (AtlParameter.merge(this) != null);
     }
 
     /**
