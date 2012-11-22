@@ -1642,37 +1642,49 @@ public class SielhautBearbeiten extends AbstractModul {
         List<AtlParameter> selectedParams = new ArrayList<AtlParameter>();
 
         if (getBleiCheck().isSelected()) {
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_BLEI);
+            selectedParams.add(AtlParameter.findById(
+                DatabaseConstants.ATL_PARAMETER_ID_BLEI));
         }
         if (getCadmiumCheck().isSelected()) {
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_CADMIUM);
+            selectedParams.add(AtlParameter.findById(
+                DatabaseConstants.ATL_PARAMETER_ID_CADMIUM));
         }
         if (getChromCheck().isSelected()) {
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_CHROM);
+            selectedParams.add(AtlParameter.findById(
+                DatabaseConstants.ATL_PARAMETER_ID_CHROM));
         }
         if (getKupferCheck().isSelected()) {
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_KUPFER);
+            selectedParams.add(AtlParameter.findById(
+                DatabaseConstants.ATL_PARAMETER_ID_KUPFER));
         }
         if (getNickelCheck().isSelected()) {
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_NICKEL);
+            selectedParams.add(AtlParameter.findById(
+                DatabaseConstants.ATL_PARAMETER_ID_NICKEL));
         }
         if (getQuecksilberCheck().isSelected()) {
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_QUECKSILBER);
+            selectedParams.add(AtlParameter.findById(
+                DatabaseConstants.ATL_PARAMETER_ID_QUECKSILBER));
         }
         if (getZinkCheck().isSelected()) {
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_ZINK);
+            selectedParams.add(AtlParameter.findById(
+                DatabaseConstants.ATL_PARAMETER_ID_ZINK));
         }
 
         // Wenn keine Check Box angeklickt wurde sollen alle Paramater
         // berücksichtig werden
         if (selectedParams.isEmpty()) {
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_BLEI);
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_CADMIUM);
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_CHROM);
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_KUPFER);
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_NICKEL);
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_QUECKSILBER);
-            selectedParams.add(DatabaseConstants.ATL_PARAMETER_ZINK);
+            String[] paramIDs = {
+                DatabaseConstants.ATL_PARAMETER_ID_BLEI,
+                DatabaseConstants.ATL_PARAMETER_ID_CADMIUM,
+                DatabaseConstants.ATL_PARAMETER_ID_CHROM,
+                DatabaseConstants.ATL_PARAMETER_ID_KUPFER,
+                DatabaseConstants.ATL_PARAMETER_ID_NICKEL,
+                DatabaseConstants.ATL_PARAMETER_ID_QUECKSILBER,
+                DatabaseConstants.ATL_PARAMETER_ID_ZINK
+            };
+            for (String paramID : paramIDs) {
+                selectedParams.add(AtlParameter.findById(paramID));
+            }
         }
 
         createSeries(selectedParams, this.sprobePkt, von, bis, col);
@@ -2001,15 +2013,19 @@ class SielhautProbeModel extends ListTableModel {
     public SielhautProbeModel() {
         super(new String[] {"Kennnummer", "Datum"}, false, true);
 
-        this.params = new AtlParameter[] {
-            DatabaseConstants.ATL_PARAMETER_BLEI,
-            DatabaseConstants.ATL_PARAMETER_CADMIUM,
-            DatabaseConstants.ATL_PARAMETER_CHROM,
-            DatabaseConstants.ATL_PARAMETER_KUPFER,
-            DatabaseConstants.ATL_PARAMETER_NICKEL,
-            DatabaseConstants.ATL_PARAMETER_QUECKSILBER,
-            DatabaseConstants.ATL_PARAMETER_ZINK
+        String[] paramIDs = new String[] {
+            DatabaseConstants.ATL_PARAMETER_ID_BLEI,
+            DatabaseConstants.ATL_PARAMETER_ID_CADMIUM,
+            DatabaseConstants.ATL_PARAMETER_ID_CHROM,
+            DatabaseConstants.ATL_PARAMETER_ID_KUPFER,
+            DatabaseConstants.ATL_PARAMETER_ID_NICKEL,
+            DatabaseConstants.ATL_PARAMETER_ID_QUECKSILBER,
+            DatabaseConstants.ATL_PARAMETER_ID_ZINK
         };
+        this.params = new AtlParameter[paramIDs.length];
+        for (int i = 0; i < paramIDs.length; i++) {
+            this.params[i] = AtlParameter.findById(paramIDs[i]);
+        }
 
         this.columns = new String[this.params.length + 2];
         this.columns[0] = "Kennnummer";

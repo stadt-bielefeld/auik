@@ -23,7 +23,6 @@ package de.bielefeld.umweltamt.aui.mappings;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 
@@ -36,6 +35,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
  *
  * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
  */
+// TODO: Only save the IDs here and not the objects!
 public class DatabaseConstants {
 
     /* ********************************************************************** */
@@ -49,34 +49,45 @@ public class DatabaseConstants {
         AtlEinheiten.findById(43);
 
     /* AtlParameter */
-    public static final AtlParameter ATL_PARAMETER_BLEI =
-        AtlParameter.findById("L11380");
-    public static final AtlParameter ATL_PARAMETER_CADMIUM =
-        AtlParameter.findById("L11650");
-    public static final AtlParameter ATL_PARAMETER_CHROM =
-        AtlParameter.findById("L11510");
-    public static final AtlParameter ATL_PARAMETER_KUPFER =
-        AtlParameter.findById("L11610");
-    public static final AtlParameter ATL_PARAMETER_NICKEL =
-        AtlParameter.findById("L11880");
-    public static final AtlParameter ATL_PARAMETER_QUECKSILBER =
-        AtlParameter.findById("L11660");
-    public static final AtlParameter ATL_PARAMETER_ZINK =
-        AtlParameter.findById("L11640");
-    public static final AtlParameter ATL_PARAMETER_AOX =
-        AtlParameter.findById("L13430");
+    public static final String ATL_PARAMETER_ID_AMMONIUM_STICKSTOFF = "L12490";
+    public static final String ATL_PARAMETER_ID_AOX = "L13430";
+    public static final String ATL_PARAMETER_ID_ARSEN = "L11420";
+    public static final String ATL_PARAMETER_ID_BASISCH_WIRKSAME_SUBSTANZ =
+        "N00002";
+    public static final String ATL_PARAMETER_ID_BENZO_A_PYREN = "B00106";
+    public static final String ATL_PARAMETER_ID_BLEI = "L11380";
+    public static final String ATL_PARAMETER_ID_CADMIUM = "L11650";
+    public static final String ATL_PARAMETER_ID_CHROM = "L11510";
+    public static final String ATL_PARAMETER_ID_CHROMAT = "B00188";
+    public static final String ATL_PARAMETER_ID_COBALT = "B00108";
+    public static final String ATL_PARAMETER_ID_DEHP = "N00001";
+    public static final String ATL_PARAMETER_ID_GLUEHVERLUST = "B00150";
+    public static final String ATL_PARAMETER_ID_KALIUM = "L11130";
+    public static final String ATL_PARAMETER_ID_KUPFER = "L11610";
+    public static final String ATL_PARAMETER_ID_MAGNESIUM = "L11210";
+    public static final String ATL_PARAMETER_ID_NICKEL = "L11880";
+    public static final String ATL_PARAMETER_ID_PCB_28 = "B00109";
+    public static final String ATL_PARAMETER_ID_PCB_52 = "B00110";
+    public static final String ATL_PARAMETER_ID_PCB_101 = "B00111";
+    public static final String ATL_PARAMETER_ID_PCB_138 = "B00112";
+    public static final String ATL_PARAMETER_ID_PCB_153 = "B00113";
+    public static final String ATL_PARAMETER_ID_PCB_180 = "B00114";
+    public static final String ATL_PARAMETER_ID_PCB_SUMME = "B00145";
+    public static final String ATL_PARAMETER_ID_PCDD_PCDF = "B00613";
+    public static final String ATL_PARAMETER_ID_PHOSPHOR = "B00273";
+    public static final String ATL_PARAMETER_ID_QUECKSILBER = "L11660";
+    public static final String ATL_PARAMETER_ID_SCHWEFEL = "N00003";
+    public static final String ATL_PARAMETER_ID_STICKSTOFF = "B00125";
+    public static final String ATL_PARAMETER_ID_THALLIUM = "B00384";
+    public static final String ATL_PARAMETER_ID_TROCKENSUBSTANZ = "B00107";
+    public static final String ATL_PARAMETER_ID_ZINK = "L11640";
 
-    public static final AtlParameter ATL_PARAMETER_TOC =
-        AtlParameter.findById("L15230");
-    public static final AtlParameter ATL_PARAMETER_ABWASSERMENGE =
-        AtlParameter.findById("P00013");
+    public static final String ATL_PARAMETER_ID_TOC = "L15230";
+    public static final String ATL_PARAMETER_ID_ABWASSERMENGE = "P00013";
 
-    public static final AtlParameter ATL_PARAMETER_TEMPERATUR =
-        AtlParameter.findById("L10111");
-    public static final AtlParameter ATL_PARAMETER_PH_WERT =
-        AtlParameter.findById("B00600");
-    public static final AtlParameter ATL_PARAMETER_LEITFAEHIGKEIT =
-        AtlParameter.findById("L10821");
+    public static final String ATL_PARAMETER_ID_TEMPERATUR = "L10111";
+    public static final String ATL_PARAMETER_ID_PH_WERT = "B00600";
+    public static final String ATL_PARAMETER_ID_LEITFAEHIGKEIT = "L10821";
 
     /* AtlProbeart */
     public static final AtlProbeart ATL_PROBEART_ANLIEFERUNG =

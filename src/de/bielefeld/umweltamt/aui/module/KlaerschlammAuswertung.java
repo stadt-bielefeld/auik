@@ -948,23 +948,24 @@ public class KlaerschlammAuswertung extends AbstractModul {
             builder.add(new JScrollPane(rList),
                 cc.xywh(9, 3, 1, 15, "fill, fill"));
 
-            AtlParameter[] params = {
-                DatabaseConstants.ATL_PARAMETER_CADMIUM,
-                DatabaseConstants.ATL_PARAMETER_CHROM,
-                DatabaseConstants.ATL_PARAMETER_KUPFER,
-                DatabaseConstants.ATL_PARAMETER_QUECKSILBER,
-                DatabaseConstants.ATL_PARAMETER_NICKEL,
-                DatabaseConstants.ATL_PARAMETER_BLEI,
-                DatabaseConstants.ATL_PARAMETER_ZINK
+            String[] paramIDs = {
+                DatabaseConstants.ATL_PARAMETER_ID_CADMIUM,
+                DatabaseConstants.ATL_PARAMETER_ID_CHROM,
+                DatabaseConstants.ATL_PARAMETER_ID_KUPFER,
+                DatabaseConstants.ATL_PARAMETER_ID_QUECKSILBER,
+                DatabaseConstants.ATL_PARAMETER_ID_NICKEL,
+                DatabaseConstants.ATL_PARAMETER_ID_BLEI,
+                DatabaseConstants.ATL_PARAMETER_ID_ZINK
             };
             int y = 3;
-            for (AtlParameter param : params) {
-                builder.add(createRLButton(true, param.getOrdnungsbegriff()),
-                    cc.xy(3, y));
-                builder.add(new JLabel(param.getBezeichnung(), JLabel.CENTER),
+            for (String paramID : paramIDs) {
+                builder.add(createRLButton(true, paramID), cc.xy(3, y));
+                builder.add(
+                    new JLabel(
+                        AtlParameter.findById(paramID).getBezeichnung(),
+                        JLabel.CENTER),
                     cc.xy(5, y, "f,d"));
-                builder.add(createRLButton(false, param.getOrdnungsbegriff()),
-                    cc.xy(7, y));
+                builder.add(createRLButton(false, paramID), cc.xy(7, y));
                 y += 2;
             }
 

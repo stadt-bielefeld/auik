@@ -221,16 +221,44 @@ public class ProbenEditor extends AbstractApplyEditor {
                 setList(DatabaseQuery.getSortedAnalysepositionen(this.probe));
             } else { // isNew
                 if (this.isSchlamm) {
-                    AtlParameter[] params = {
-                        DatabaseConstants.ATL_PARAMETER_BLEI,
-                        DatabaseConstants.ATL_PARAMETER_CADMIUM,
-                        DatabaseConstants.ATL_PARAMETER_CHROM,
-                        DatabaseConstants.ATL_PARAMETER_KUPFER,
-                        DatabaseConstants.ATL_PARAMETER_NICKEL,
-                        DatabaseConstants.ATL_PARAMETER_QUECKSILBER,
-                        DatabaseConstants.ATL_PARAMETER_ZINK,
-                        DatabaseConstants.ATL_PARAMETER_AOX
+                    String[] paramIDs = {
+                        DatabaseConstants.ATL_PARAMETER_ID_AMMONIUM_STICKSTOFF,
+                        DatabaseConstants.ATL_PARAMETER_ID_AOX,
+                        DatabaseConstants.ATL_PARAMETER_ID_ARSEN,
+                        DatabaseConstants.ATL_PARAMETER_ID_BASISCH_WIRKSAME_SUBSTANZ,
+                        DatabaseConstants.ATL_PARAMETER_ID_BENZO_A_PYREN,
+                        DatabaseConstants.ATL_PARAMETER_ID_BLEI,
+                        DatabaseConstants.ATL_PARAMETER_ID_CADMIUM,
+                        DatabaseConstants.ATL_PARAMETER_ID_CHROM,
+                        DatabaseConstants.ATL_PARAMETER_ID_CHROMAT,
+                        DatabaseConstants.ATL_PARAMETER_ID_COBALT,
+                        DatabaseConstants.ATL_PARAMETER_ID_DEHP,
+                        DatabaseConstants.ATL_PARAMETER_ID_GLUEHVERLUST,
+                        DatabaseConstants.ATL_PARAMETER_ID_KALIUM,
+                        DatabaseConstants.ATL_PARAMETER_ID_KUPFER,
+                        DatabaseConstants.ATL_PARAMETER_ID_MAGNESIUM,
+                        DatabaseConstants.ATL_PARAMETER_ID_NICKEL,
+                        DatabaseConstants.ATL_PARAMETER_ID_PCB_28,
+                        DatabaseConstants.ATL_PARAMETER_ID_PCB_52,
+                        DatabaseConstants.ATL_PARAMETER_ID_PCB_101,
+                        DatabaseConstants.ATL_PARAMETER_ID_PCB_138,
+                        DatabaseConstants.ATL_PARAMETER_ID_PCB_153,
+                        DatabaseConstants.ATL_PARAMETER_ID_PCB_180,
+                        DatabaseConstants.ATL_PARAMETER_ID_PCB_SUMME,
+                        DatabaseConstants.ATL_PARAMETER_ID_PCDD_PCDF,
+                        DatabaseConstants.ATL_PARAMETER_ID_PH_WERT,
+                        DatabaseConstants.ATL_PARAMETER_ID_PHOSPHOR,
+                        DatabaseConstants.ATL_PARAMETER_ID_QUECKSILBER,
+                        DatabaseConstants.ATL_PARAMETER_ID_SCHWEFEL,
+                        DatabaseConstants.ATL_PARAMETER_ID_STICKSTOFF,
+                        DatabaseConstants.ATL_PARAMETER_ID_THALLIUM,
+                        DatabaseConstants.ATL_PARAMETER_ID_TROCKENSUBSTANZ,
+                        DatabaseConstants.ATL_PARAMETER_ID_ZINK
                     };
+                    AtlParameter[] params = new AtlParameter[paramIDs.length];
+                    for (int i = 0; i < paramIDs.length; i++) {
+                        params[i] = AtlParameter.findById(paramIDs[i]);
+                    }
                     String analyse_von = "AGROLAB";
                     setList(new ArrayList<Object>());
                     for (AtlParameter param : params) {
@@ -240,8 +268,10 @@ public class ProbenEditor extends AbstractApplyEditor {
                     }
                 } else if (this.probe.getKennummer().startsWith("7")) {
                     AtlParameter[] params = {
-                        DatabaseConstants.ATL_PARAMETER_TOC,
-                        DatabaseConstants.ATL_PARAMETER_ABWASSERMENGE
+                        AtlParameter.findById(
+                            DatabaseConstants.ATL_PARAMETER_ID_TOC),
+                        AtlParameter.findById(
+                            DatabaseConstants.ATL_PARAMETER_ID_ABWASSERMENGE)
                     };
                     String analyse_von = "Betriebslabor";
                     setList(new ArrayList<Object>());
@@ -253,9 +283,12 @@ public class ProbenEditor extends AbstractApplyEditor {
                     }
                 } else if (!this.isSielhaut) {
                     AtlParameter[] params = {
-                        DatabaseConstants.ATL_PARAMETER_TEMPERATUR,
-                        DatabaseConstants.ATL_PARAMETER_PH_WERT,
-                        DatabaseConstants.ATL_PARAMETER_LEITFAEHIGKEIT
+                        AtlParameter.findById(
+                            DatabaseConstants.ATL_PARAMETER_ID_TEMPERATUR),
+                        AtlParameter.findById(
+                            DatabaseConstants.ATL_PARAMETER_ID_PH_WERT),
+                        AtlParameter.findById(
+                            DatabaseConstants.ATL_PARAMETER_ID_LEITFAEHIGKEIT)
                     };
                     String analyse_von = "360.33";
                     setList(new ArrayList<Object>());
@@ -299,11 +332,13 @@ public class ProbenEditor extends AbstractApplyEditor {
                 case 5:
                     value = null;
                     Double grenzWert = null;
-                    if (DatabaseQuery.isKlaerschlammProbe(this.probe)) {
-                        grenzWert = pos.getAtlParameter().getKlaerschlammGw();
-                    } else if (this.probe.getAtlProbepkt().getAtlProbeart()
-                        .equals(DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
-                        grenzWert = pos.getAtlParameter().getSielhautGw();
+                    if (pos.getAtlParameter() != null) {
+                        if (DatabaseQuery.isKlaerschlammProbe(this.probe)) {
+                            grenzWert = pos.getAtlParameter().getKlaerschlammGw();
+                        } else if (this.probe.getAtlProbepkt().getAtlProbeart()
+                            .equals(DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
+                            grenzWert = pos.getAtlParameter().getSielhautGw();
+                        }
                     }
 
                     if (grenzWert != null && !grenzWert.equals(new Double(0.0))) {
