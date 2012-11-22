@@ -293,7 +293,7 @@ public class Anh49DetailsPanel extends JPanel {
             Anh49Ortstermine removedOt = (Anh49Ortstermine) objectAtRow;
             boolean removed;
 
-            if (removedOt.getOrtsterminid() != null) {
+            if (removedOt.getId() != null) {
                 removed = Anh49Ortstermine.delete(removedOt);
             } else {
                 removed = true;
@@ -568,10 +568,10 @@ public class Anh49DetailsPanel extends JPanel {
                                         + " gelöscht werden?",
                                     "Löschen bestätigen")) {
                                 ortsterminModel.removeRow(row);
-                                log.debug("Ortstermin " + ot.getOrtsterminid()
+                                log.debug("Ortstermin " + ot.getId()
                                     + " wurde gelöscht!");
                             } else {
-                                log.debug("Löschen von " + ot.getOrtsterminid()
+                                log.debug("Löschen von " + ot.getId()
                                     + " wurde abgebrochen!");
                             }
                         }
