@@ -93,7 +93,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
     private Set<Anh49Kontrollen> anh49Kontrollens = new HashSet<Anh49Kontrollen>(0);
     private Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses = new HashSet<Anh49Abscheiderdetails>(0);
     private Set<Anh49Analysen> anh49Analysens = new HashSet<Anh49Analysen>(0);
-    private Set<Anh49Verwaltungsverfahren> anh49Verwaltungsverfs = new HashSet<Anh49Verwaltungsverfahren>(0);
+    private Set<Anh49Verwaltungsverf> anh49Verwaltungsverfs = new HashSet<Anh49Verwaltungsverf>(0);
     private Set<Anh49Ortstermine> anh49Ortstermines = new HashSet<Anh49Ortstermine>(0);
 
     /** Logging */
@@ -114,7 +114,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
 
     /** Full constructor */
     public Anh49Fachdaten(
-        BasisObjekt basisObjekt, String klaeranlage, String name, String bemerkungen, String planquadrat, Boolean abgemeldet, String technikAnh49, String technikAnh49Nr, String sachkundelfa, Boolean werkstatt, Boolean bodeneinlaeufe, Boolean waschanlagen, String sonstiges, String analysemonat, Boolean abwasserfrei, String anredeantragst, String nameantragst, String zusantragst, String strasseantragst, Integer hausnrantragst, String hausnrzusantragst, String plzantragst, String ortantragst, String sachbearbeiterIn, String ansprechpartnerIn, Date antragvom, Date genehmigung, Date wiedervorlage, Date aenderungsgenehmigung, Date letztesAnschreiben, String anschreiben, Boolean waschanlage, Boolean ESatzung, Date seitwann, String sonstigestechnik, Boolean maengel, Boolean behoben, Date frist, Integer durchgefuehrt, Date dekraTuevDatum, boolean enabled, boolean deleted, Set<Anh49Kontrollen> anh49Kontrollens, Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses, Set<Anh49Analysen> anh49Analysens, Set<Anh49Verwaltungsverfahren> anh49Verwaltungsverfs, Set<Anh49Ortstermine> anh49Ortstermines) {
+        BasisObjekt basisObjekt, String klaeranlage, String name, String bemerkungen, String planquadrat, Boolean abgemeldet, String technikAnh49, String technikAnh49Nr, String sachkundelfa, Boolean werkstatt, Boolean bodeneinlaeufe, Boolean waschanlagen, String sonstiges, String analysemonat, Boolean abwasserfrei, String anredeantragst, String nameantragst, String zusantragst, String strasseantragst, Integer hausnrantragst, String hausnrzusantragst, String plzantragst, String ortantragst, String sachbearbeiterIn, String ansprechpartnerIn, Date antragvom, Date genehmigung, Date wiedervorlage, Date aenderungsgenehmigung, Date letztesAnschreiben, String anschreiben, Boolean waschanlage, Boolean ESatzung, Date seitwann, String sonstigestechnik, Boolean maengel, Boolean behoben, Date frist, Integer durchgefuehrt, Date dekraTuevDatum, boolean enabled, boolean deleted, Set<Anh49Kontrollen> anh49Kontrollens, Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses, Set<Anh49Analysen> anh49Analysens, Set<Anh49Verwaltungsverf> anh49Verwaltungsverfs, Set<Anh49Ortstermine> anh49Ortstermines) {
         this.basisObjekt = basisObjekt;
         this.klaeranlage = klaeranlage;
         this.name = name;
@@ -533,11 +533,11 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.anh49Analysens = anh49Analysens;
     }
 
-    public Set<Anh49Verwaltungsverfahren> getAnh49Verwaltungsverfs() {
+    public Set<Anh49Verwaltungsverf> getAnh49Verwaltungsverfs() {
         return this.anh49Verwaltungsverfs;
     }
 
-    public void setAnh49Verwaltungsverfs(Set<Anh49Verwaltungsverfahren> anh49Verwaltungsverfs) {
+    public void setAnh49Verwaltungsverfs(Set<Anh49Verwaltungsverf> anh49Verwaltungsverfs) {
         this.anh49Verwaltungsverfs = anh49Verwaltungsverfs;
     }
 

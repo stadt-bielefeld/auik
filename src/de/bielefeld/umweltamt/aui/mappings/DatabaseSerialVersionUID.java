@@ -67,7 +67,7 @@ public class DatabaseSerialVersionUID {
     public static final long forAnh49Fachdaten          = 1996484061739446871L;
     public static final long forAnh49Kontrollen         = 6385012584069870464L;
     public static final long forAnh49Ortstermine        = -5694754322859087778L;
-    public static final long forAnh49Verwaltungsverfahren = 696154300748058009L;
+    public static final long forAnh49Verwaltungsverf    = 696154300748058009L;
     public static final long forAnh50Fachdaten          = -6104395668554659237L;
     public static final long forAnh52Fachdaten          = -284019428699023860L;
     public static final long forAnh53Fachdaten          = 610656003582230532L;

@@ -48,7 +48,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
@@ -328,11 +328,11 @@ public class DatabaseClassToString {
             + ", SachbearbeiterIn: " + clazz.getSachbearbeiterIn() + "]";
     }
 
-    /** @return Custom Anh49Verwaltungsverfahren.toString() */
-    public static String toStringForClass(Anh49Verwaltungsverfahren clazz) {
+    /** @return Custom Anh49Verwaltungsverf.toString() */
+    public static String toStringForClass(Anh49Verwaltungsverf clazz) {
         return "[Datum: " + AuikUtils.getStringFromDate(clazz.getDatum())
             + ", Maßnahme: " + clazz.getMassnahme() + " ("
-            + ((clazz.isAbgeschlossen() != null && clazz.isAbgeschlossen()) ?
+            + ((clazz.getAbgeschlossen() != null && clazz.getAbgeschlossen()) ?
                 "" : "nicht ") + "abgeschlossen)"
             + ", SachbearbeiterIn: " + clazz.getSachbearbeiterIn()
             + (clazz.getWiedervorlage() == null ? "" : ", Wiedervorlage: "

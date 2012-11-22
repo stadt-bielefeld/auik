@@ -155,7 +155,7 @@
             <key>
                 <column name="anh49id" />
             </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren" />
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf" />
         </set>
         <set name="anh49Ortstermines" table="anh_49_ortstermine" inverse="true" lazy="true" fetch="select">
             <key>

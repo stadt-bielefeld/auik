@@ -18,16 +18,15 @@
  *
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
-package de.bielefeld.umweltamt.aui.module.objektpanels.models;
+package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
-import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -85,8 +84,8 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Anh49Verwaltungsverfahren verwaltungsverfahren =
-            (Anh49Verwaltungsverfahren) objectAtRow;
+        Anh49Verwaltungsverf verwaltungsverfahren =
+            (Anh49Verwaltungsverf) objectAtRow;
 
         String result = null;
         switch (columnIndex) {
@@ -108,13 +107,9 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
                 break;
             case 4:
                 // As we can not set a strike through a Boolean, return directly
-                return verwaltungsverfahren.isAbgeschlossen();
+                return verwaltungsverfahren.getAbgeschlossen();
             default:
                 return null;
-        }
-
-        if (!(verwaltungsverfahren.isEnabled())) {
-            result = StringUtils.setStrike(result);
         }
 
         return result;
@@ -127,8 +122,8 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
      */
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        return Anh49Verwaltungsverfahren.delete(
-            (Anh49Verwaltungsverfahren) objectAtRow);
+        return Anh49Verwaltungsverf.delete(
+            (Anh49Verwaltungsverf) objectAtRow);
     }
 
     /** Update the table and fire a changed event. */
@@ -144,8 +139,8 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
     @Override
     public void editObject(
         Object objectAtRow, int columnIndex, Object newValue) {
-        Anh49Verwaltungsverfahren verwaltungsverfahren =
-            (Anh49Verwaltungsverfahren) objectAtRow;
+        Anh49Verwaltungsverf verwaltungsverfahren =
+            (Anh49Verwaltungsverf) objectAtRow;
 
         Date date = null;
 
@@ -192,8 +187,8 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
      */
     @Override
     public Object newObject() {
-        Anh49Verwaltungsverfahren verwaltungsverfahren =
-            new Anh49Verwaltungsverfahren();
+        Anh49Verwaltungsverf verwaltungsverfahren =
+            new Anh49Verwaltungsverf();
         verwaltungsverfahren.setAnh49Fachdaten(fachdaten);
         verwaltungsverfahren.setAbgeschlossen(false);
         return verwaltungsverfahren;
@@ -204,7 +199,7 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
      * @param rowIndex The index of the row
      * @return The "Verwaltungsverfahren" at the given row index
      */
-    public Anh49Verwaltungsverfahren getRow(int rowIndex) {
-        return (Anh49Verwaltungsverfahren) getObjectAtRow(rowIndex);
+    public Anh49Verwaltungsverf getRow(int rowIndex) {
+        return (Anh49Verwaltungsverf) getObjectAtRow(rowIndex);
     }
 }

@@ -46,7 +46,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Kontrollen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Ortstermine.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Verwaltungsverfahren.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Verwaltungsverf.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/AnhEntsorger.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh50Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh52Fachdaten.hbm.xml" />

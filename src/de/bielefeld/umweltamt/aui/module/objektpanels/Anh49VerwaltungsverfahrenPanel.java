@@ -50,8 +50,8 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
-import de.bielefeld.umweltamt.aui.module.objektpanels.models.Anh49VerwaltungsverfahrenModel;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49VerwaltungsverfahrenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 
@@ -116,7 +116,7 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
                     int editingRow  =
                         getVerwaltungsverfahrenTabelle().getEditingRow();
                     if (selectedRow != -1 && editingRow == -1) {
-                        Anh49Verwaltungsverfahren verwaltungsverfahren =
+                        Anh49Verwaltungsverf verwaltungsverfahren =
                             verwaltungsverfahrenModel.getRow(selectedRow);
 
                         if (GUIManager.getInstance().showQuestion(
@@ -269,8 +269,8 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
     public void speichernVerwaltungsverfahren() {
         List<?> liste = verwaltungsverfahrenModel.getList();
         for (Object verwaltungsverfahren : liste) {
-            Anh49Verwaltungsverfahren
-                .merge((Anh49Verwaltungsverfahren)verwaltungsverfahren);
+            Anh49Verwaltungsverf.merge(
+                (Anh49Verwaltungsverf)verwaltungsverfahren);
         }
         verwaltungsverfahrenModel.updateList();
     }
@@ -287,7 +287,7 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
 
     public void clearForm() {
         verwaltungsverfahrenModel
-                .setList(new ArrayList<Anh49Verwaltungsverfahren>());
+                .setList(new ArrayList<Anh49Verwaltungsverf>());
     }
 
     public void enableAll(boolean enabled) {

@@ -38,7 +38,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
@@ -279,13 +279,13 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
      * @param fachdaten Anh49Fachdaten
      * @return <code>List&lt;Anh49Verwaltungsverfahren&gt;</code>
      */
-    public static List<Anh49Verwaltungsverfahren> getVerwaltungsverfahren(
+    public static List<Anh49Verwaltungsverf> getVerwaltungsverfahren(
         Anh49Fachdaten fachdaten) {
         return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anh49Verwaltungsverfahren.class)
+            DetachedCriteria.forClass(Anh49Verwaltungsverf.class)
                 .add(Restrictions.eq("anh49Fachdaten", fachdaten))
                 .addOrder(Order.asc("datum")),
-            new Anh49Verwaltungsverfahren());
+            new Anh49Verwaltungsverf());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
