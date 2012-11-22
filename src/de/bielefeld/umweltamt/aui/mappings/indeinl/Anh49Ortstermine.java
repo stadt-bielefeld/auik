@@ -25,11 +25,9 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'ANH_49_ORTSTERMINE' table. This class
@@ -38,8 +36,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class Anh49Ortstermine extends AbstractAnh49Ortstermine implements
     Serializable {
     private static final long serialVersionUID = -5694754322859087778L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of Anh49Ortstermine instances.
@@ -69,27 +65,11 @@ public class Anh49Ortstermine extends AbstractAnh49Ortstermine implements
 
     /* Add customized code below */
 
-    /**
-     * Liefert alle Ortstermine eines bestimmten Fachdatenobjekts.
-     */
-    public static List<?> getOrtstermine(Anh49Fachdaten fd) {
-        List<?> list;
-        list = new DatabaseAccess()
-            .createQuery(
-                "FROM Anh49Ortstermine as ot "
-                    + "WHERE ot.anh49Fachdaten = :fd "
-                    + "ORDER BY ot.datum")
-            .setEntity("fd", fd)
-            .list();
-        log.debug("Ortstermine für " + fd + ", Anzahl: " + list.size());
-        return list;
-    }
-
-    public static boolean saveOrUpdateOrtstermin(Anh49Ortstermine ot) {
+    public static boolean merge(Anh49Ortstermine ot) {
         return new DatabaseAccess().saveOrUpdate(ot);
     }
 
-    public static boolean removeOrtstermin(Anh49Ortstermine ot) {
+    public static boolean delete(Anh49Ortstermine ot) {
         return new DatabaseAccess().delete(ot);
     }
 }

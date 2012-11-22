@@ -294,7 +294,7 @@ public class Anh49DetailsPanel extends JPanel {
             boolean removed;
 
             if (removedOt.getOrtsterminid() != null) {
-                removed = Anh49Ortstermine.removeOrtstermin(removedOt);
+                removed = Anh49Ortstermine.delete(removedOt);
             } else {
                 removed = true;
             }
@@ -305,7 +305,7 @@ public class Anh49DetailsPanel extends JPanel {
         @Override
         public void updateList() {
             if (fachdaten != null) {
-                setList(Anh49Ortstermine.getOrtstermine(fachdaten));
+                setList(DatabaseQuery.getOrtstermine(fachdaten));
             }
             fireTableDataChanged();
         }
@@ -739,7 +739,7 @@ public class Anh49DetailsPanel extends JPanel {
         List<?> otListe = ortsterminModel.getList();
         for (int i = 0; i < otListe.size(); i++) {
             Anh49Ortstermine ot = (Anh49Ortstermine) otListe.get(i);
-            Anh49Ortstermine.saveOrUpdateOrtstermin((Anh49Ortstermine) ot);
+            Anh49Ortstermine.merge((Anh49Ortstermine) ot);
         }
         ortsterminModel.updateList();
     }

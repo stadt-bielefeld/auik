@@ -37,6 +37,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
@@ -248,6 +249,23 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .add(Restrictions.eq("anh49Fachdaten", fachdaten))
                 .setProjection(Projections.max("naechstepruefung")),
             new Timestamp(0));
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh49Ortstermine                    */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get all Anh49Ortstermine for an Anh49Fachdaten and sort them by date
+     * @param fachdaten Anh49Fachdaten
+     * @return <code>List&lt;Anh49Ortstermine&gt;</code>
+     */
+    public static List<Anh49Ortstermine> getOrtstermine(Anh49Fachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(Anh49Ortstermine.class)
+                .add(Restrictions.eq("anh49Fachdaten", fachdaten))
+                .addOrder(Order.asc("datum")),
+            new Anh49Ortstermine());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
