@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -68,26 +67,7 @@ public class Anh49Verwaltungsverfahren extends
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    /**
-     * Get all "Verwaltungsverfahren" for a given "Anhang 49" object
-     * @param fachdaten The "Anhang 49" object
-     * @return List<Anh49Verwaltungsverfahren>
-     */
-    public static List<?> getVerwaltungsverfahren(Anh49Fachdaten fachdaten) {
-        List<?> liste = null;
-        liste = new DatabaseAccess()
-            .createQuery(
-                "FROM Anh49Verwaltungsverfahren as verfahren "
-                    + "WHERE verfahren.anh49Fachdaten = :fachdaten "
-                    + "ORDER BY verfahren.datum")
-            .setEntity("fachdaten", fachdaten)
-            .list();
-        log.debug("Verwaltungsverfahren für " + fachdaten + ", Anzahl: "
-            + liste.size());
-        return liste;
-    }
-
-    public static boolean saveOrUpdateVerwaltungsverfahren(
+    public static boolean merge(
         Anh49Verwaltungsverfahren verwaltungsverfahren) {
         boolean success = false;
         success = new DatabaseAccess().saveOrUpdate(verwaltungsverfahren);
@@ -96,7 +76,7 @@ public class Anh49Verwaltungsverfahren extends
         return success;
     }
 
-    public static boolean removeVerwaltungsverfahren(
+    public static boolean delete(
         Anh49Verwaltungsverfahren verwaltungsverfahren) {
         boolean success;
         success = new DatabaseAccess().delete(verwaltungsverfahren);

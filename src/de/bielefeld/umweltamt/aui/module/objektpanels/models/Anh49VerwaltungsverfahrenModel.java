@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.module.objektpanels.models;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -126,7 +127,7 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
      */
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        return Anh49Verwaltungsverfahren.removeVerwaltungsverfahren(
+        return Anh49Verwaltungsverfahren.delete(
             (Anh49Verwaltungsverfahren) objectAtRow);
     }
 
@@ -134,8 +135,7 @@ public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
     @Override
     public void updateList() {
         if (fachdaten != null) {
-            setList(Anh49Verwaltungsverfahren
-                .getVerwaltungsverfahren(fachdaten));
+            setList(DatabaseQuery.getVerwaltungsverfahren(fachdaten));
         }
         fireTableDataChanged();
     }

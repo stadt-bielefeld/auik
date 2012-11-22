@@ -270,8 +270,7 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
         List<?> liste = verwaltungsverfahrenModel.getList();
         for (Object verwaltungsverfahren : liste) {
             Anh49Verwaltungsverfahren
-                    .saveOrUpdateVerwaltungsverfahren(
-                        (Anh49Verwaltungsverfahren)verwaltungsverfahren);
+                .merge((Anh49Verwaltungsverfahren)verwaltungsverfahren);
         }
         verwaltungsverfahrenModel.updateList();
     }

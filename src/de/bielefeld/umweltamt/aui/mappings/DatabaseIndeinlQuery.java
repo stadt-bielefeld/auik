@@ -38,6 +38,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverfahren;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
@@ -260,12 +261,31 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
      * @param fachdaten Anh49Fachdaten
      * @return <code>List&lt;Anh49Ortstermine&gt;</code>
      */
-    public static List<Anh49Ortstermine> getOrtstermine(Anh49Fachdaten fachdaten) {
+    public static List<Anh49Ortstermine> getOrtstermine(
+        Anh49Fachdaten fachdaten) {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh49Ortstermine.class)
                 .add(Restrictions.eq("anh49Fachdaten", fachdaten))
                 .addOrder(Order.asc("datum")),
             new Anh49Ortstermine());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh49Ortstermine                    */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get all Anh49Verwaltungsverfahren for an Anh49Fachdaten and sort them by date
+     * @param fachdaten Anh49Fachdaten
+     * @return <code>List&lt;Anh49Verwaltungsverfahren&gt;</code>
+     */
+    public static List<Anh49Verwaltungsverfahren> getVerwaltungsverfahren(
+        Anh49Fachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(Anh49Verwaltungsverfahren.class)
+                .add(Restrictions.eq("anh49Fachdaten", fachdaten))
+                .addOrder(Order.asc("datum")),
+            new Anh49Verwaltungsverfahren());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
