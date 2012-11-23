@@ -189,6 +189,22 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
             new AtlEinheiten());
     }
 
+    /**
+     * Check if an AtlEinheiten with <code>description</code> exists.<br>
+     * This is mainly used for the import.
+     * @param description String
+     * @return <code>true</code>, if an AtlEinheiten exists,
+     *         <code>false</code> otherwise
+     */
+    public static boolean einheitExists(String description) {
+        for (AtlEinheiten einheit : DatabaseAtlQuery.getAtlEinheiten()) {
+            if (einheit.getBezeichnung().equals(description)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package ATL : class AtlKlaeranlagen                        */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
@@ -262,9 +278,14 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
         return DatabaseQuery.getOrderedAll(new AtlParameter(), "bezeichnung");
     }
 
+    private static AtlParameter[] parameter = null;
     public static AtlParameter[] getAllParameterAsArray() {
-        return DatabaseQuery.getOrderedAll(new AtlParameter(), "bezeichnung")
-            .toArray(new AtlParameter[0]);
+        if (DatabaseAtlQuery.parameter == null) {
+            DatabaseAtlQuery.parameter =
+                DatabaseQuery.getOrderedAll(new AtlParameter(), "bezeichnung")
+                    .toArray(new AtlParameter[0]);
+        }
+        return DatabaseAtlQuery.parameter;
     }
 
     public static List<AtlParameter> getParameterInGroup(int id) {
@@ -287,6 +308,22 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
             DetachedCriteria.forClass(AtlParameter.class)
                 .add(Restrictions.eq("bezeichnung", description)),
             new AtlParameter());
+    }
+
+    /**
+     * Check if an AtlParameter with <code>description</code> exists.<br>
+     * This is mainly used for the import.
+     * @param description String
+     * @return <code>true</code>, if an AtlParameter exists,
+     *         <code>false</code> otherwise
+     */
+    public static boolean parameterExists(String description) {
+        for (AtlParameter para : DatabaseAtlQuery.getAllParameterAsArray()) {
+            if (para.getBezeichnung().equals(description)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

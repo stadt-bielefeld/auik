@@ -236,11 +236,9 @@ public class SielhautImport extends AbstractModul {
             if (!this.importableRows.containsKey(pos)) {
                 this.importableRows.put(pos, new Boolean(
                     // Check the parameter
-                    DatabaseQuery.getParameterByDescription(
-                        paramAusZeile(pos)) != null &&
+                    DatabaseQuery.parameterExists(paramAusZeile(pos)) &&
                     // Check the unit
-                    DatabaseQuery.getEinheitByDescription(
-                        einheitAusZeile(pos)) != null &&
+                    DatabaseQuery.einheitExists(einheitAusZeile(pos)) &&
                     // Check the sample
                     DatabaseQuery.probenahmeExists(kennummerAusZeile(pos))));
             }
