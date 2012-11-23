@@ -369,7 +369,7 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "[BWK:ID, Hersteller Typ]"
      */
     public static String toStringForClass(AnhBwkFachdaten clazz) {
-        return "[BWK:" + clazz.getBwkId() + ", "
+        return "[BWK:" + clazz.getObjektid() + ", "
             + clazz.getKHersteller() + " " + clazz.getKTyp() + "]";
     }
 

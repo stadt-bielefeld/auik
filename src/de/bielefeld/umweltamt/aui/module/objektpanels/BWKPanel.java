@@ -402,7 +402,7 @@ public class BWKPanel extends JPanel {
             this.bwk.setBemerkungen(beschreibung);
         }
 
-        success = AnhBwkFachdaten.merge(this.bwk);
+        success = this.bwk.merge();
 
         if (success) {
             log.debug("Brennwertkessel " + this.bwk + " gespeichert.");
@@ -422,8 +422,9 @@ public class BWKPanel extends JPanel {
             this.bwk.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Brennwertkessel speichern
-            if (AnhBwkFachdaten.merge(this.bwk)) {
-                log.debug("Neuer Brennwertkessel " + this.bwk + " gespeichert.");
+            if (this.bwk.merge()) {
+                log.debug("Neuer Brennwertkessel " + this.bwk
+                    + " gespeichert.");
             }
         }
     }
@@ -545,7 +546,7 @@ public class BWKPanel extends JPanel {
                     enableAll(false);
                     if (saveBwkDaten()) {
                         BWKPanel.this.hauptModul.getFrame().changeStatus(
-                            "Brennwertkessel " + BWKPanel.this.bwk.getBwkId()
+                            "Brennwertkessel " + BWKPanel.this.bwk.getObjektid()
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
                     } else {
