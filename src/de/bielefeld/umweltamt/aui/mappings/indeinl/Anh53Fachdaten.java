@@ -22,11 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the 'ANH_56_FACHDATEN' table. This class may
@@ -62,29 +60,7 @@ public class Anh53Fachdaten extends AbstractAnh53Fachdaten implements
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    public static Anh53Fachdaten getAnh53ByObjekt(BasisObjekt objekt) {
-        return (Anh53Fachdaten) new DatabaseAccess()
-            .createQuery(
-                "FROM Anh53Fachdaten as anhang53 WHERE "
-                    + "anhang53.basisObjekt = :objekt")
-            .setEntity("objekt", objekt)
-            .uniqueResult();
-    }
-
-    public static boolean saveFachdaten(Anh53Fachdaten fachdaten) {
+    public static boolean merge(Anh53Fachdaten fachdaten) {
         return new DatabaseAccess().saveOrUpdate(fachdaten);
-    }
-
-    /**
-     * Liefert eine Liste mit allen Anhang53 Objekten.
-     * @return Eine Liste aus Anh53Fachdaten.
-     */
-    public static List<?> getAuswertungsListe() {
-        String query = "FROM Anh53Fachdaten as anh53 "
-            + "ORDER BY anh53.basisObjekt.inaktiv, "
-            + "anh53.basisObjekt.basisObjektarten.id, "
-            + "anh53.basisObjekt.basisStandort.strasse, "
-            + "anh53.basisObjekt.basisStandort.hausnr";
-        return new DatabaseAccess().createQuery(query).list();
     }
 }

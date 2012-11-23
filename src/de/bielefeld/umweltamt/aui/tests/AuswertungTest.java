@@ -57,7 +57,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
@@ -170,7 +169,7 @@ public class AuswertungTest extends TestCase {
         Session session = null;
         session = _sessionFactory.openSession();
 
-        List<?> list = Anh53Fachdaten.getAuswertungsListe();
+        List<?> list = DatabaseQuery.getAnhang53();
 
         List<?> listquery;
         String query = "from Anh53Fachdaten as anh53 "
