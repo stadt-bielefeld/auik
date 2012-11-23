@@ -1,23 +1,45 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
-
-    <class name="AnhEntsorger" table="anh_entsorger" lazy="false">
-        <id name="entsorgerid" column="id" type="java.lang.Integer">
-            <generator class="assigned"/>
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger" table="anh_entsorger" lazy="false" schema="auik">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-
-        <property name="entsorger" column="entsorger" type="java.lang.String" />
-        <property name="strasse" column="strasse" type="java.lang.String" />
-        <property name="hausnr" column="hausnr" type="java.lang.Integer" />
-        <property name="plz" column="plz" type="java.lang.String" />
-        <property name="ort" column="ort" type="java.lang.String" />
-        <property name="ansprechpartner" column="ansprechpartner" type="java.lang.String" />
-        <property name="telefon" column="telefon" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="entsorger" type="java.lang.String">
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="entsorger" />
+        </property>
+        <property name="strasse" type="java.lang.String">
+            <column name="strasse" />
+        </property>
+        <property name="hausnr" type="java.lang.Integer">
+            <column name="hausnr" />
+        </property>
+        <property name="plz" type="java.lang.String">
+            <column name="plz" />
+        </property>
+        <property name="ort" type="java.lang.String">
+            <column name="ort" />
+        </property>
+        <property name="ansprechpartner" type="java.lang.String">
+            <column name="ansprechpartner" />
+        </property>
+        <property name="telefon" type="java.lang.String">
+            <column name="telefon" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="anh50Fachdatens" table="anh_50_fachdaten" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="entsorgerid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten" />
+        </set>
     </class>
-
 </hibernate-mapping>

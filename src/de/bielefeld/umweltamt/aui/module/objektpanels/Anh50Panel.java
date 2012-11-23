@@ -55,6 +55,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
@@ -289,8 +290,8 @@ public class Anh50Panel extends JPanel {
             // Objekt_Id setzen
             this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
             // Entsorger auf "unbekannt" setzen
-            AnhEntsorger entsorg = new AnhEntsorger();
-            entsorg.setEntsorgerid(1);
+            AnhEntsorger entsorg = AnhEntsorger.findById(
+                DatabaseConstants.ANH_ENTSORGER_ID_UNBEKANNT);
             this.fachdaten.setAnhEntsorger(entsorg);
 
             // Zahnarzt speichern

@@ -155,4 +155,7 @@ public class DatabaseConstants {
 
     /* BasisStandort */
     public static final int BASIS_STANDORT_KEIN_STANDORT = 41;
+
+    /* AnhEntsorger */
+    public static final int ANH_ENTSORGER_ID_UNBEKANNT = 1;
 }

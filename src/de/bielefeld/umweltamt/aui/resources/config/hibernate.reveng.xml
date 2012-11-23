@@ -295,6 +295,11 @@
             <meta attribute="use-in-tostring">true</meta>
         </column>
     </table>
+    <table schema="auik" name="anh_entsorger">
+        <column name="entsorger">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
     <table schema="auik" name="vaws_anlagenarten">
         <column name="anlagenart">
             <meta attribute="use-in-tostring">true</meta>
@@ -368,6 +373,8 @@
     <!--             basis_objektarten -->
     <!--             basis_sachbearbeiter -->
     <!--             basis_standort -->
+    <!-- auik.indeinl: -->
+    <!--             anh_entsorger -->
     <!-- TODO: Weiter ausfüllen -->
     <!-- tipi: -->
     <!--       auik_wz_code -->
