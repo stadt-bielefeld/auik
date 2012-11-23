@@ -25,7 +25,6 @@ import java.io.Serializable;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the 'IndeinlGenehmigung' table. This class
@@ -61,22 +60,13 @@ public class IndeinlGenehmigung extends AbstractIndeinlGenehmigung implements
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    public static IndeinlGenehmigung getGenByObjekt(BasisObjekt objekt) {
-        return (IndeinlGenehmigung) new DatabaseAccess()
-            .createQuery(
-                "FROM IndeinlGenehmigung as gen WHERE "
-                    + "gen.basisObjekt = :objekt")
-            .setEntity("objekt", objekt)
-            .uniqueResult();
-    }
-
     /**
      * Speichert ein IndeinlGenehmigung Fachdaten-Objekt in der Datenbank.
      * @param fachdaten Das zu speichernde Fachdaten-Objekt.
      * @return <code>true</code>, wenn das Objekt gespeichert wurde, sonst
      *         <code>false</code>.
      */
-    public static boolean saveFachdaten(IndeinlGenehmigung fachdaten) {
+    public static boolean merge(IndeinlGenehmigung fachdaten) {
         return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 }
