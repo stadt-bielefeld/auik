@@ -1,45 +1,95 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
-
-    <class name="Anh53Fachdaten" table="anh_53_fachdaten">
-        <id name="objektid" column="objektid" type="java.lang.Integer">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten" table="anh_53_fachdaten" schema="auik">
+        <id name="objektid" type="java.lang.Integer">
+            <column name="objektid" />
             <generator class="foreign">
-            	<param name="property">basisObjekt</param>
+                <param name="property">basisObjekt</param>
             </generator>
         </id>
-
-        <property name="branche" column="branche" type="java.lang.String" />
-        <property name="verfahren" column="verfahren" type="java.lang.String" />
-        <property name="antragsdatum" column="antragsdatum" type="java.util.Date" />
-        <property name="bagatell" column="bagatell" type="java.lang.Boolean" />
-        <property name="bagatelldatum" column="bagatelldatum" type="java.util.Date" />
-        <property name="genehmigungsdatum" column="genehmigungsdatum" type="java.util.Date" />
-        <property name="genehmigungaufgehoben" column="genehmigungaufgehoben" type="java.util.Date" />
-        <property name="abnahmedatum" column="abnahmedatum" type="java.util.Date" />
-        <property name="genehmigungstitel" column="genehmigungstitel" type="java.lang.String" />
-        <property name="genehmigung" column="genehmigung" type="java.lang.Boolean" />
-        <property name="durchsatz" column="durchsatz" type="java.lang.Integer" />
-        <property name="gesamtmengeEb" column="gesamtmenge_eb" type="java.lang.Integer" />
-        <property name="onlineentsilberung" column="onlineentsilberung" type="java.lang.Boolean" />
-        <property name="abwasser" column="abwasser" type="java.lang.Boolean" />
-        <property name="abwasserfrei" column="abwasserfrei" type="java.util.Date" />
-        <property name="kleiner200qm" column="kleiner200qm" type="java.util.Date" />
-        <property name="betriebAbgemeldet" column="betrieb_abgemeldet" type="java.lang.Boolean" />
-        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
-        <property name="betriebstagebuch" column="betriebstagebuch" type="java.lang.Boolean" />
-        <property name="wasseruhr" column="wasseruhr" type="java.lang.Boolean" />
-        <property name="spuelwassermenge" column="spuelwassermenge" type="java.lang.Integer" />
-        <property name="spuelwasserverbrauch" column="spuelwasserverbrauch" type="java.lang.Integer" />
-        <property name="wartungsvertrag" column="wartungsvertrag" type="java.lang.Boolean" />
-        <property name="grgen" column="grgen" type="java.lang.Boolean" />
-        <property name="genart" column="genart" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"></one-to-one>
+        <property name="branche" type="java.lang.String">
+            <column name="branche" />
+        </property>
+        <property name="verfahren" type="java.lang.String">
+            <column name="verfahren" />
+        </property>
+        <property name="antragsdatum" type="java.util.Date">
+            <column name="antragsdatum" length="8" />
+        </property>
+        <property name="bagatell" type="java.lang.Boolean">
+            <column name="bagatell" />
+        </property>
+        <property name="bagatelldatum" type="java.util.Date">
+            <column name="bagatelldatum" length="8" />
+        </property>
+        <property name="genehmigungsdatum" type="java.util.Date">
+            <column name="genehmigungsdatum" length="8" />
+        </property>
+        <property name="genehmigungaufgehoben" type="java.util.Date">
+            <column name="genehmigungaufgehoben" length="8" />
+        </property>
+        <property name="abnahmedatum" type="java.util.Date">
+            <column name="abnahmedatum" length="8" />
+        </property>
+        <property name="genehmigungstitel" type="java.lang.String">
+            <column name="genehmigungstitel" />
+        </property>
+        <property name="genehmigung" type="java.lang.Boolean">
+            <column name="genehmigung" />
+        </property>
+        <property name="durchsatz" type="java.lang.Integer">
+            <column name="durchsatz" />
+        </property>
+        <property name="gesamtmengeEb" type="java.lang.Integer">
+            <column name="gesamtmenge_eb" />
+        </property>
+        <property name="onlineentsilberung" type="java.lang.Boolean">
+            <column name="onlineentsilberung" />
+        </property>
+        <property name="abwasser" type="java.lang.Boolean">
+            <column name="abwasser" />
+        </property>
+        <property name="abwasserfrei" type="java.util.Date">
+            <column name="abwasserfrei" length="8" />
+        </property>
+        <property name="kleiner200qm" type="java.util.Date">
+            <column name="kleiner200qm" length="8" />
+        </property>
+        <property name="betriebAbgemeldet" type="java.lang.Boolean">
+            <column name="betrieb_abgemeldet" />
+        </property>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <property name="betriebstagebuch" type="java.lang.Boolean">
+            <column name="betriebstagebuch" />
+        </property>
+        <property name="wasseruhr" type="java.lang.Boolean">
+            <column name="wasseruhr" />
+        </property>
+        <property name="spuelwassermenge" type="java.lang.Integer">
+            <column name="spuelwassermenge" />
+        </property>
+        <property name="spuelwasserverbrauch" type="java.lang.Integer">
+            <column name="spuelwasserverbrauch" />
+        </property>
+        <property name="wartungsvertrag" type="java.lang.Boolean">
+            <column name="wartungsvertrag" />
+        </property>
+        <property name="grgen" type="java.lang.Boolean">
+            <column name="grgen" />
+        </property>
+        <property name="genart" type="java.lang.String">
+            <column name="genart" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>

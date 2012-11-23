@@ -243,7 +243,7 @@ public class Anh53Panel extends JPanel {
             this.fachdaten.setBemerkungen(bemerkungen);
         }
 
-        success = Anh53Fachdaten.merge(this.fachdaten);
+        success = this.fachdaten.merge();
         if (success) {
             log.debug("Objekt "
                 + this.fachdaten.getBasisObjekt().getBasisBetreiber()
