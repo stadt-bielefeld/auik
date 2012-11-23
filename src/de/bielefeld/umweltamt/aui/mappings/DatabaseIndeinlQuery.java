@@ -45,6 +45,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
 /**
@@ -439,6 +440,24 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .setProjection(Projections.distinct(
                     Projections.property("erfassung"))),
             new Integer[0]);
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class AnhEntsorger                        */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static AnhEntsorger[] entsorger = null;
+    /**
+     * Get all AnhEntsorger
+     * @return <code>AnhEntsorger[]</code>
+     */
+    public static AnhEntsorger[] getEntsorger() {
+        if (DatabaseIndeinlQuery.entsorger == null) {
+            DatabaseIndeinlQuery.entsorger =
+                DatabaseQuery.getOrderedAll(new AnhEntsorger())
+                    .toArray(new AnhEntsorger[0]);
+        }
+        return DatabaseIndeinlQuery.entsorger;
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

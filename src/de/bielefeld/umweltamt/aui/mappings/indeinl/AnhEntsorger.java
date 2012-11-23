@@ -67,20 +67,7 @@ public class AnhEntsorger extends AbstractAnhEntsorger implements Serializable {
         return getEntsorger();
     }
 
-    /**
-     * Liefert alle vorhandenen Entsorger.
-     * @return Alle vorhandenen Entsorger
-     */
-    public static AnhEntsorger[] getEntsorg() {
-        return (AnhEntsorger[]) new DatabaseAccess().createQuery(
-            "FROM AnhEntsorger ahe "
-                + "ORDER BY ahe.entsorgerid")
-            .setCacheable(true)
-            .setCacheRegion("entsorgerliste")
-            .array(new AnhEntsorger[0]);
-    }
-
-    public static AnhEntsorger saveEntsorger(AnhEntsorger ents) {
+    public static AnhEntsorger merge(AnhEntsorger ents) {
         return (AnhEntsorger) new DatabaseAccess().merge(ents);
     }
 }

@@ -55,6 +55,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
@@ -165,7 +166,7 @@ public class Anh50Panel extends JPanel {
         log.debug("Zahnarzt aus DB geholt: " + this.fachdaten);
 
         if (this.entsorg == null || this.entsorg.length == 0) {
-            this.entsorg = AnhEntsorger.getEntsorg();
+            this.entsorg = DatabaseQuery.getEntsorger();
         }
     }
 
@@ -461,7 +462,8 @@ public class Anh50Panel extends JPanel {
                                 origin);
 
                             if (row != -1) {
-                                BasisObjektverknuepfung obj = Anh50Panel.this.objektVerknuepfungModel
+                                BasisObjektverknuepfung obj =
+                                    Anh50Panel.this.objektVerknuepfungModel
                                     .getRow(row);
                                 if (obj.getBasisObjektByIstVerknuepftMit()
                                     .getObjektid().intValue() != Anh50Panel.this.hauptModul
@@ -543,8 +545,8 @@ public class Anh50Panel extends JPanel {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                         && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = Anh50Panel.this.objektVerknuepfungModel
-                            .getRow(row);
+                        BasisObjektverknuepfung verknuepfung =
+                            Anh50Panel.this.objektVerknuepfungModel.getRow(row);
                         if (GUIManager.getInstance().showQuestion(
                             "Soll die Verknüpfung wirklich gelöscht werden?\n"
                                 + "Hinweis: Die Aktion betrifft nur die "

@@ -234,7 +234,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
         }
 
         AnhEntsorger persistentEntsorger = null;
-        persistentEntsorger = AnhEntsorger.saveEntsorger(getEntsorger());
+        persistentEntsorger = AnhEntsorger.merge(getEntsorger());
         boolean success = (persistentEntsorger != null);
 
         if (success) {
