@@ -1,33 +1,31 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 01.09.2008 14:20:15 by Hibernate Tools 3.2.0.beta8 -->
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
-
-    <class name="IndeinlGenehmigung" table="indeinl_genehmigung">
-        <id name="objektid" type="int">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung" table="indeinl_genehmigung" schema="auik">
+        <id name="objektid" type="java.lang.Integer">
             <column name="objektid" />
             <generator class="foreign">
-            	<param name="property">basisObjekt</param>
+                <param name="property">basisObjekt</param>
             </generator>
         </id>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"></one-to-one>
         <property name="bemerkungen" type="java.lang.String">
             <column name="bemerkungen" />
         </property>
-        <property name="erstellungsDatum" type="date">
+        <property name="erstellungsDatum" type="java.util.Date">
             <column name="erstellungs_datum" length="4" />
         </property>
-        <property name="aenderungsDatum" type="date">
+        <property name="aenderungsDatum" type="java.util.Date">
             <column name="aenderungs_datum" length="4" />
         </property>
-        <property name="antragDatum" type="date">
+        <property name="antragDatum" type="java.util.Date">
             <column name="antrag_datum" length="4" />
-        </property>        
-        <property name="befristet" type="java.lang.Boolean">
-        	<column name="befristet" />
         </property>
-        <property name="befristetBis" type="date">
+        <property name="befristet" type="java.lang.Boolean">
+            <column name="befristet" />
+        </property>
+        <property name="befristetBis" type="java.util.Date">
             <column name="befristet_bis" length="4" />
         </property>
         <property name="anhang" type="java.lang.Integer">
@@ -35,18 +33,18 @@
         </property>
         <property name="genMenge" type="java.lang.Integer">
             <column name="gen_menge" />
-        </property>        
+        </property>
         <property name="gen58" type="java.lang.Boolean">
-        	<column name="gen58" />
-        </property>        
+            <column name="gen58" />
+        </property>
         <property name="gen59" type="java.lang.Boolean">
-        	<column name="gen59" />
-        </property>        
+            <column name="gen59" />
+        </property>
         <property name="selbstueberw" type="java.lang.Boolean">
-        	<column name="selbstueberw" />
-        </property>        
-        <property name="esatzung" type="java.lang.Boolean">
-        	<column name="e_satzung" />
+            <column name="selbstueberw" />
+        </property>
+        <property name="ESatzung" type="java.lang.Boolean">
+            <column name="e_satzung" />
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
@@ -60,8 +58,5 @@
         <property name="uebergabestelleHochwert" type="java.lang.Integer">
             <column name="uebergabestelle_hochwert" />
         </property>
-        
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
-        
     </class>
 </hibernate-mapping>

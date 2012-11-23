@@ -227,8 +227,8 @@ public class GenehmigungPanel extends JPanel {
                     getSelbCheckBox().setSelected(false);
                 }
             }
-            if (this.fachdaten.getEsatzung() != null) {
-                if (this.fachdaten.getEsatzung() == true) {
+            if (this.fachdaten.getESatzung() != null) {
+                if (this.fachdaten.getESatzung() == true) {
                     getEsaCheckBox().setSelected(true);
                 } else {
                     getEsaCheckBox().setSelected(false);
@@ -335,16 +335,16 @@ public class GenehmigungPanel extends JPanel {
         }
 
         if (getEsaCheckBox().isSelected()) {
-            this.fachdaten.setEsatzung(true);
+            this.fachdaten.setESatzung(true);
         } else {
-            this.fachdaten.setEsatzung(false);
+            this.fachdaten.setESatzung(false);
         }
         this.fachdaten.setUebergabestelleRechtswert(
             this.getUebergabestelleRechtswertField().getIntValue());
         this.fachdaten.setUebergabestelleHochwert(
             this.getUebergabestelleHochwertField().getIntValue());
 
-        success = IndeinlGenehmigung.merge(this.fachdaten);
+        success = this.fachdaten.merge();
         if (success) {
             log.debug("Uebergabestelle Objekt " + this.fachdaten.getObjektid()
                 + " gespeichert.");
