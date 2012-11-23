@@ -80,7 +80,6 @@ public class SuevPanel extends JPanel {
     private JCheckBox indirektrwCheck = null;
     private JCheckBox direktswCheck = null;
     private JCheckBox direktrwCheck = null;
-    private JCheckBox datumAnzeige58Check = null;
     private JCheckBox sanierungErfolgtCheck = null;
     private JCheckBox sanierungskonzeptCheck = null;
     private JCheckBox keineAngabenCheck = null;
@@ -167,13 +166,6 @@ public class SuevPanel extends JPanel {
                 getDatAnzeige58Datum()
                     .setDate(this.fachdaten.getDatAnzeige58());
             }
-            if (this.fachdaten.getDatumAnzeige58() != null) {
-                if (this.fachdaten.getDatumAnzeige58() == true) {
-                    getDatumAnzeige58Check().setSelected(true);
-                } else {
-                    getDatumAnzeige58Check().setSelected(false);
-                }
-            }
             if (this.fachdaten.getDirektrw() != null) {
                 if (this.fachdaten.getDirektrw() == true) {
                     getDirektrwCheck().setSelected(true);
@@ -239,7 +231,6 @@ public class SuevPanel extends JPanel {
         getVersFlaecheFeld().setText(null);
         getDatAnschreibenDatum().setDate(null);
         getDatAnzeige58Datum().setDate(null);
-        getDatumAnzeige58Check().setSelected(false);
         getDirektrwCheck().setSelected(false);
         getDirektswCheck().setSelected(false);
         getGroesser3haCheck().setSelected(false);
@@ -271,12 +262,6 @@ public class SuevPanel extends JPanel {
 
         Date anzeigedatum = this.datAnzeige58Datum.getDate();
         this.fachdaten.setDatAnzeige58(anzeigedatum);
-
-        if (getDatumAnzeige58Check().isSelected()) {
-            this.fachdaten.setDatumAnzeige58(true);
-        } else {
-            this.fachdaten.setDatumAnzeige58(false);
-        }
 
         if (getDirektrwCheck().isSelected()) {
             this.fachdaten.setDirektrw(true);
@@ -332,7 +317,7 @@ public class SuevPanel extends JPanel {
             this.fachdaten.setSuevkanPflicht(false);
         }
 
-        success = AnhSuevFachdaten.merge(this.fachdaten);
+        success = this.fachdaten.merge();
         if (success) {
             log.debug("SuevKan Verfahren " + this.fachdaten.getObjektid()
                 + " gespeichert.");
@@ -369,13 +354,6 @@ public class SuevPanel extends JPanel {
             this.datAnzeige58Datum = new TextFieldDateChooser();
         }
         return this.datAnzeige58Datum;
-    }
-
-    private JCheckBox getDatumAnzeige58Check() {
-        if (this.datumAnzeige58Check == null) {
-            this.datumAnzeige58Check = new JCheckBox("Datum Anzeige");
-        }
-        return this.datumAnzeige58Check;
     }
 
     private JCheckBox getDirektrwCheck() {

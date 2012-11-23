@@ -1,33 +1,59 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
-
-    <class name="AnhSuevFachdaten" table="anh_suev_fachdaten">
-        <id name="objektid" column="objektid" type="java.lang.Integer">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten" table="anh_suev_fachdaten" schema="auik">
+        <id name="objektid" type="java.lang.Integer">
+            <column name="objektid" />
             <generator class="foreign">
-            	<param name="property">basisObjekt</param>
+                <param name="property">basisObjekt</param>
             </generator>
         </id>
-
-        <property name="groesser3ha" column="groesser_3ha" type="java.lang.Boolean" />
-        <property name="versFlaeche" column="vers_flaeche" type="java.lang.Integer" />
-        <property name="suevkanPflicht" column="suevkan_pflicht" type="java.lang.Boolean" />
-        <property name="indirektsw" column="indirektsw" type="java.lang.Boolean" />
-        <property name="indirektrw" column="indirektrw" type="java.lang.Boolean" />
-        <property name="direktsw" column="direktsw" type="java.lang.Boolean" />
-        <property name="direktrw" column="direktrw" type="java.lang.Boolean" />
-        <property name="anzeige58" column="anzeige58" type="java.lang.Integer" />
-        <property name="sanierungErfolgt" column="sanierung_erfolgt" type="java.lang.Boolean" />
-        <property name="sanierungskonzept" column="sanierungskonzept" type="java.lang.Boolean" />
-        <property name="keineAngaben" column="keine_angaben" type="java.lang.Boolean" />
-        <property name="datAnzeige58" column="dat_anzeige58" type="java.util.Date" />
-        <property name="datAnschreiben" column="dat_anschreiben" type="java.util.Date" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"></one-to-one>
+        <property name="groesser3ha" type="java.lang.Boolean">
+            <column name="groesser_3ha" />
+        </property>
+        <property name="versFlaeche" type="java.lang.Integer">
+            <column name="vers_flaeche" />
+        </property>
+        <property name="suevkanPflicht" type="java.lang.Boolean">
+            <column name="suevkan_pflicht" />
+        </property>
+        <property name="indirektsw" type="java.lang.Boolean">
+            <column name="indirektsw" />
+        </property>
+        <property name="indirektrw" type="java.lang.Boolean">
+            <column name="indirektrw" />
+        </property>
+        <property name="direktsw" type="java.lang.Boolean">
+            <column name="direktsw" />
+        </property>
+        <property name="direktrw" type="java.lang.Boolean">
+            <column name="direktrw" />
+        </property>
+        <property name="anzeige58" type="java.lang.Integer">
+            <column name="anzeige58" />
+        </property>
+        <property name="sanierungErfolgt" type="java.lang.Boolean">
+            <column name="sanierung_erfolgt" />
+        </property>
+        <property name="sanierungskonzept" type="java.lang.Boolean">
+            <column name="sanierungskonzept" />
+        </property>
+        <property name="keineAngaben" type="java.lang.Boolean">
+            <column name="keine_angaben" />
+        </property>
+        <property name="datAnzeige58" type="java.util.Date">
+            <column name="dat_anzeige58" length="8" />
+        </property>
+        <property name="datAnschreiben" type="java.util.Date">
+            <column name="dat_anschreiben" length="8" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>
