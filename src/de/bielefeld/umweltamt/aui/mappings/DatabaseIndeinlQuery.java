@@ -39,6 +39,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
@@ -271,7 +272,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package INDEINL: class Anh49Ortstermine                    */
+    /* Queries for package INDEINL: class Anh49Verwaltungsverfahren           */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
     /**
@@ -286,6 +287,34 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .add(Restrictions.eq("anh49Fachdaten", fachdaten))
                 .addOrder(Order.asc("datum")),
             new Anh49Verwaltungsverf());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh50Fachdaten                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Sucht alle Anhang50-Fachdatensätze,  die nicht erloschen sind.
+     * @param nurWiedervorlageAbgelaufen Sollen nur Datensätze angezeigt werden,
+     *            deren Wiedervorlage in der Vergangenheit liegt?
+     * @return <code>List&lt;Anh50Fachdaten&gt;</code>
+     *         Eine Liste mit den entstprechenden Anh50Fachdaten.
+     */
+    public static List<Anh50Fachdaten> getAnhang50ByWiedervorlage(
+        boolean nurWiedervorlageAbgelaufen) {
+        DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(Anh50Fachdaten.class)
+                .createAlias("basisObjekt", "objekt")
+                .createAlias("basisObjekt.basisBetreiber", "betreiber")
+                .add(Restrictions.eq("erloschen", false))
+                .add(Restrictions.eq("objekt.inaktiv", false))
+                .addOrder(Order.asc("wiedervorlage"))
+                .addOrder(Order.asc("betreiber.betrname"));
+        if (nurWiedervorlageAbgelaufen) {
+            detachedCriteria.add(Restrictions.le("wiedervorlage", new Date()));
+        }
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new Anh50Fachdaten());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

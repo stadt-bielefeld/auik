@@ -22,12 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the 'ANH_50_FACHDATEN' table. This class may
@@ -63,48 +60,7 @@ public class Anh50Fachdaten extends AbstractAnh50Fachdaten implements
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    /**
-     * Sucht alle Anhang50-Fachdatensätze, bei denen Amalgam selektiert ist und
-     * die nicht erloschen sind.
-     * @param nurWiedervorlageAbgelaufen Sollen nur Datensätze angezeigt werden,
-     *            deren Wiedervorlage in der Vergangenheit liegt?
-     * @return Eine Liste mit den entstprechenden Anh50Fachdaten.
-     */
-    public static List<?> findByWiedervorlage(boolean nurWiedervorlageAbgelaufen) {
-        if (nurWiedervorlageAbgelaufen) {
-            return new DatabaseAccess()
-                .createQuery(
-                    "FROM Anh50Fachdaten as anh50 "
-                        + "WHERE anh50.wiedervorlage <= :today "
-                        + "and anh50.erloschen = 'f' "
-                        + "and anh50.basisObjekt.inaktiv = 'f' "
-                        + "ORDER BY anh50.wiedervorlage, "
-                        + "anh50.basisObjekt.basisBetreiber.betrname")
-                .setDate("today", new Date())
-                .list();
-
-        } else {
-            return new DatabaseAccess()
-                .createQuery(
-                    "FROM Anh50Fachdaten as anh50 WHERE "
-                        + "anh50.erloschen = 'f' "
-                        + "and anh50.basisObjekt.inaktiv = 'f' "
-                        + "ORDER BY anh50.wiedervorlage, "
-                        + "anh50.basisObjekt.basisBetreiber.betrname")
-                .list();
-        }
-    }
-
-    public static Anh50Fachdaten getAnh50ByObjekt(BasisObjekt objekt) {
-        return (Anh50Fachdaten) new DatabaseAccess()
-            .createQuery(
-                "FROM Anh50Fachdaten as anhang50 WHERE "
-                    + "anhang50.objektid = :objekt ")
-            .setEntity("objekt", objekt)
-            .uniqueResult();
-    }
-
-    public static boolean saveFachdaten(Anh50Fachdaten fachdaten) {
-        return new DatabaseAccess().saveOrUpdate(fachdaten);
+    public boolean merge() {
+        return new DatabaseAccess().saveOrUpdate(this);
     }
 }

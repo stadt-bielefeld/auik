@@ -161,8 +161,7 @@ public class Anh50Panel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = Anh50Fachdaten.getAnh50ByObjekt(this.hauptModul
-            .getObjekt());
+        this.fachdaten = this.hauptModul.getObjekt().getAnh50Fachdaten();
         log.debug("Zahnarzt aus DB geholt: " + this.fachdaten);
 
         if (this.entsorg == null || this.entsorg.length == 0) {
@@ -270,7 +269,7 @@ public class Anh50Panel extends JPanel {
         this.fachdaten.setAnhEntsorger((AnhEntsorger) getEntsorgerBox()
             .getSelectedItem());
 
-        success = Anh50Fachdaten.saveFachdaten(this.fachdaten);
+        success = this.fachdaten.merge();
         if (success) {
             log.debug("Zahnarzt "
                 + this.fachdaten.getBasisObjekt().getBasisBetreiber()
@@ -294,7 +293,7 @@ public class Anh50Panel extends JPanel {
             this.fachdaten.setAnhEntsorger(entsorg);
 
             // Zahnarzt speichern
-            Anh50Fachdaten.saveFachdaten(this.fachdaten);
+            this.fachdaten.merge();
             log.debug("Neuer Zahnarzt " + this.fachdaten + " gespeichert.");
         }
     }

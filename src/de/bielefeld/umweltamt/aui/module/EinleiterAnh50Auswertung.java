@@ -56,7 +56,7 @@ import javax.swing.JPanel;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh50Model;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -79,6 +79,7 @@ public class EinleiterAnh50Auswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Anhang 50";
     }
@@ -86,6 +87,7 @@ public class EinleiterAnh50Auswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
@@ -96,8 +98,11 @@ public class EinleiterAnh50Auswertung extends AbstractQueryModul {
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
-                    ((Anh50Model)getTableModel()).setList(Anh50Fachdaten.findByWiedervorlage(wiedervorlageCheck.isSelected()));
+                    ((Anh50Model)getTableModel()).setList(
+                        DatabaseQuery.getAnhang50ByWiedervorlage(
+                            wiedervorlageCheck.isSelected()));
                     ((Anh50Model)getTableModel()).fireTableDataChanged();
                     frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                 }
@@ -118,6 +123,7 @@ public class EinleiterAnh50Auswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
+    @Override
     public ListTableModel getTableModel() {
         if (tmodel == null) {
             tmodel = new Anh50Model();
