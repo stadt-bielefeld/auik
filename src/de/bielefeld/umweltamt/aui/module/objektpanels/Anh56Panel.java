@@ -234,7 +234,7 @@ public class Anh56Panel extends JPanel {
             this.fachdaten.setAbwasseranfall(false);
         }
 
-        success = Anh56Fachdaten.merge(this.fachdaten);
+        success = fachdaten.merge();
         if (success) {
             log.debug("Anh 56 Objekt " + this.fachdaten.getObjektid()
                 + " gespeichert.");
