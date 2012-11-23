@@ -148,8 +148,7 @@ public class SuevPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = AnhSuevFachdaten.getSuevByObjekt(this.hauptModul
-            .getObjekt());
+        this.fachdaten = this.hauptModul.getObjekt().getAnhSuevFachdaten();
         log.debug("SuevKan-Verfahren aus DB geholt: " + this.fachdaten);
     }
 
@@ -333,7 +332,7 @@ public class SuevPanel extends JPanel {
             this.fachdaten.setSuevkanPflicht(false);
         }
 
-        success = AnhSuevFachdaten.saveFachdaten(this.fachdaten);
+        success = AnhSuevFachdaten.merge(this.fachdaten);
         if (success) {
             log.debug("SuevKan Verfahren " + this.fachdaten.getObjektid()
                 + " gespeichert.");
@@ -352,7 +351,7 @@ public class SuevPanel extends JPanel {
             this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
 
             // SuevKan speichern
-            AnhSuevFachdaten.saveFachdaten(this.fachdaten);
+            AnhSuevFachdaten.merge(this.fachdaten);
             log.debug("Neues SuevKan Verfahren " + this.fachdaten
                 + " gespeichert.");
         }

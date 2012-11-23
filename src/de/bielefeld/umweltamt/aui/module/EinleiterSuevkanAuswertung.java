@@ -56,7 +56,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.ReportManager;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SuevModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -104,8 +104,8 @@ public class EinleiterSuevkanAuswertung extends AbstractQueryModul {
                         getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((SuevModel) getTableModel())
-                                .setList(AnhSuevFachdaten.getAuswertungsListe());
+                            ((SuevModel) getTableModel()).setList(
+                                DatabaseQuery.getAnhangSuev());
                         }
 
                         @Override

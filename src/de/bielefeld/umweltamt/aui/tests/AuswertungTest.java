@@ -57,7 +57,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 
 public class AuswertungTest extends TestCase {
 
@@ -302,7 +301,7 @@ public class AuswertungTest extends TestCase {
         Session session = null;
         session = _sessionFactory.openSession();
 
-        List<?> list = AnhSuevFachdaten.getAuswertungsListe();
+        List<?> list = DatabaseQuery.getAnhangSuev();
 
         List<?> listquery;
         String query = "from AnhSuevFachdaten as sv "

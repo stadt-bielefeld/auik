@@ -22,11 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the 'SUEV_FACHDATEN' table. This class may
@@ -62,33 +60,13 @@ public class AnhSuevFachdaten extends AbstractAnhSuevFachdaten implements
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    public static AnhSuevFachdaten getSuevByObjekt(BasisObjekt objekt) {
-        return (AnhSuevFachdaten) new DatabaseAccess()
-            .createQuery(
-                "FROM AnhSuevFachdaten as suev "
-                    + "WHERE suev.basisObjekt = :objekt")
-            .setEntity("objekt", objekt)
-            .uniqueResult();
-    }
-
     /**
      * Speichert ein SUEV-KAN Fachdaten-Objekt in der Datenbank.
      * @param fachdaten Das zu speichernde Fachdaten-Objekt.
      * @return <code>true</code>, wenn das Objekt gespeichert wurde, sonst
      *         <code>false</code>.
      */
-    public static boolean saveFachdaten(AnhSuevFachdaten fachdaten) {
+    public static boolean merge(AnhSuevFachdaten fachdaten) {
         return new DatabaseAccess().saveOrUpdate(fachdaten);
-    }
-
-    /**
-     * Liefert eine Liste mit allen SUEV-KAN Objekten.
-     * @return Eine Liste aus SuevFachdaten.
-     */
-    public static List<?> getAuswertungsListe() {
-        return new DatabaseAccess().createQuery(
-            "FROM AnhSuevFachdaten as sv "
-                + "ORDER BY sv.basisObjekt.inaktiv, sv.objektid")
-            .list();
     }
 }

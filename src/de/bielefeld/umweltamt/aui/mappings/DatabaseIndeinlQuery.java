@@ -46,6 +46,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
 /**
@@ -458,6 +459,23 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                     .toArray(new AnhEntsorger[0]);
         }
         return DatabaseIndeinlQuery.entsorger;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class AnhSuevFachdaten                    */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Liefert eine Liste mit allen AnhSuevFachdaten Objekten.
+     * @return <code>List&lt;AnhSuevFachdaten&gt;</code>
+     */
+    public static List<AnhSuevFachdaten> getAnhangSuev() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AnhSuevFachdaten.class)
+                .createAlias("basisObjekt", "objekt")
+                .addOrder(Order.asc("objekt.inaktiv"))
+                .addOrder(Order.asc("id")),
+            new AnhSuevFachdaten());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
