@@ -41,6 +41,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
@@ -77,11 +78,12 @@ public class BasisObjekt  implements java.io.Serializable {
     private IndeinlGenehmigung indeinlGenehmigung;
     private Anh53Fachdaten anh53Fachdaten;
     private AnhSuevFachdaten anhSuevFachdaten;
+    private AnhBwkFachdaten anhBwkFachdaten;
     private AtlProbepkt atlProbepkt;
     private Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt = new HashSet<BasisObjektverknuepfung>(0);
     private Set<VawsFachdaten> vawsFachdatens = new HashSet<VawsFachdaten>(0);
-    private Anh52Fachdaten anh52Fachdaten;
     private Anh55Fachdaten anh55Fachdaten;
+    private Anh52Fachdaten anh52Fachdaten;
     private Anh56Fachdaten anh56Fachdaten;
     private Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit = new HashSet<BasisObjektverknuepfung>(0);
     private Anh40Fachdaten anh40Fachdaten;
@@ -108,7 +110,7 @@ public class BasisObjekt  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisObjekt(
-        BasisBetreiber basisBetreiber, BasisStandort basisStandort, BasisSachbearbeiter basisSachbearbeiter, BasisObjektarten basisObjektarten, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, IndeinlGenehmigung indeinlGenehmigung, Anh53Fachdaten anh53Fachdaten, AnhSuevFachdaten anhSuevFachdaten, AtlProbepkt atlProbepkt, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt, Set<VawsFachdaten> vawsFachdatens, Anh52Fachdaten anh52Fachdaten, Anh55Fachdaten anh55Fachdaten, Anh56Fachdaten anh56Fachdaten, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit, Anh40Fachdaten anh40Fachdaten, Set<BasisObjektchrono> basisObjektchronos, Set<AtlSielhaut> atlSielhauts, Anh49Fachdaten anh49Fachdaten, Anh50Fachdaten anh50Fachdaten) {
+        BasisBetreiber basisBetreiber, BasisStandort basisStandort, BasisSachbearbeiter basisSachbearbeiter, BasisObjektarten basisObjektarten, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, IndeinlGenehmigung indeinlGenehmigung, Anh53Fachdaten anh53Fachdaten, AnhSuevFachdaten anhSuevFachdaten, AnhBwkFachdaten anhBwkFachdaten, AtlProbepkt atlProbepkt, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt, Set<VawsFachdaten> vawsFachdatens, Anh55Fachdaten anh55Fachdaten, Anh52Fachdaten anh52Fachdaten, Anh56Fachdaten anh56Fachdaten, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit, Anh40Fachdaten anh40Fachdaten, Set<BasisObjektchrono> basisObjektchronos, Set<AtlSielhaut> atlSielhauts, Anh49Fachdaten anh49Fachdaten, Anh50Fachdaten anh50Fachdaten) {
         this.basisBetreiber = basisBetreiber;
         this.basisStandort = basisStandort;
         this.basisSachbearbeiter = basisSachbearbeiter;
@@ -127,11 +129,12 @@ public class BasisObjekt  implements java.io.Serializable {
         this.indeinlGenehmigung = indeinlGenehmigung;
         this.anh53Fachdaten = anh53Fachdaten;
         this.anhSuevFachdaten = anhSuevFachdaten;
+        this.anhBwkFachdaten = anhBwkFachdaten;
         this.atlProbepkt = atlProbepkt;
         this.basisObjektverknuepfungsForObjekt = basisObjektverknuepfungsForObjekt;
         this.vawsFachdatens = vawsFachdatens;
-        this.anh52Fachdaten = anh52Fachdaten;
         this.anh55Fachdaten = anh55Fachdaten;
+        this.anh52Fachdaten = anh52Fachdaten;
         this.anh56Fachdaten = anh56Fachdaten;
         this.basisObjektverknuepfungsForIstVerknuepftMit = basisObjektverknuepfungsForIstVerknuepftMit;
         this.anh40Fachdaten = anh40Fachdaten;
@@ -294,6 +297,14 @@ public class BasisObjekt  implements java.io.Serializable {
         this.anhSuevFachdaten = anhSuevFachdaten;
     }
 
+    public AnhBwkFachdaten getAnhBwkFachdaten() {
+        return this.anhBwkFachdaten;
+    }
+
+    public void setAnhBwkFachdaten(AnhBwkFachdaten anhBwkFachdaten) {
+        this.anhBwkFachdaten = anhBwkFachdaten;
+    }
+
     public AtlProbepkt getAtlProbepkt() {
         return this.atlProbepkt;
     }
@@ -318,20 +329,20 @@ public class BasisObjekt  implements java.io.Serializable {
         this.vawsFachdatens = vawsFachdatens;
     }
 
-    public Anh52Fachdaten getAnh52Fachdaten() {
-        return this.anh52Fachdaten;
-    }
-
-    public void setAnh52Fachdaten(Anh52Fachdaten anh52Fachdaten) {
-        this.anh52Fachdaten = anh52Fachdaten;
-    }
-
     public Anh55Fachdaten getAnh55Fachdaten() {
         return this.anh55Fachdaten;
     }
 
     public void setAnh55Fachdaten(Anh55Fachdaten anh55Fachdaten) {
         this.anh55Fachdaten = anh55Fachdaten;
+    }
+
+    public Anh52Fachdaten getAnh52Fachdaten() {
+        return this.anh52Fachdaten;
+    }
+
+    public void setAnh52Fachdaten(Anh52Fachdaten anh52Fachdaten) {
+        this.anh52Fachdaten = anh52Fachdaten;
     }
 
     public Anh56Fachdaten getAnh56Fachdaten() {
@@ -428,11 +439,12 @@ public class BasisObjekt  implements java.io.Serializable {
         buffer.append("indeinlGenehmigung").append("='").append(getIndeinlGenehmigung()).append("' ");
         buffer.append("anh53Fachdaten").append("='").append(getAnh53Fachdaten()).append("' ");
         buffer.append("anhSuevFachdaten").append("='").append(getAnhSuevFachdaten()).append("' ");
+        buffer.append("anhBwkFachdaten").append("='").append(getAnhBwkFachdaten()).append("' ");
         buffer.append("atlProbepkt").append("='").append(getAtlProbepkt()).append("' ");
         buffer.append("basisObjektverknuepfungsForObjekt").append("='").append(getBasisObjektverknuepfungsForObjekt()).append("' ");
         buffer.append("vawsFachdatens").append("='").append(getVawsFachdatens()).append("' ");
-        buffer.append("anh52Fachdaten").append("='").append(getAnh52Fachdaten()).append("' ");
         buffer.append("anh55Fachdaten").append("='").append(getAnh55Fachdaten()).append("' ");
+        buffer.append("anh52Fachdaten").append("='").append(getAnh52Fachdaten()).append("' ");
         buffer.append("anh56Fachdaten").append("='").append(getAnh56Fachdaten()).append("' ");
         buffer.append("basisObjektverknuepfungsForIstVerknuepftMit").append("='").append(getBasisObjektverknuepfungsForIstVerknuepftMit()).append("' ");
         buffer.append("anh40Fachdaten").append("='").append(getAnh40Fachdaten()).append("' ");
@@ -477,7 +489,52 @@ public class BasisObjekt  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (BasisObjekt.merge(this) != null);
+        BasisObjekt saved = BasisObjekt.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this BasisObjekt with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy BasisObjekt
+     */
+    private void copy(BasisObjekt copy) {
+        this.basisBetreiber = copy.getBasisBetreiber();
+        this.basisStandort = copy.getBasisStandort();
+        this.basisSachbearbeiter = copy.getBasisSachbearbeiter();
+        this.basisObjektarten = copy.getBasisObjektarten();
+        this.uschistdid = copy.getUschistdid();
+        this.beschreibung = copy.getBeschreibung();
+        this.wiedervorlage = copy.getWiedervorlage();
+        this.erfassungsdatum = copy.getErfassungsdatum();
+        this.gueltigVon = copy.getGueltigVon();
+        this.aenderungsdatum = copy.getAenderungsdatum();
+        this.gueltigBis = copy.getGueltigBis();
+        this.inaktiv = copy.isInaktiv();
+        this.prioritaet = copy.getPrioritaet();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.indeinlGenehmigung = copy.getIndeinlGenehmigung();
+        this.anh53Fachdaten = copy.getAnh53Fachdaten();
+        this.anhSuevFachdaten = copy.getAnhSuevFachdaten();
+        this.anhBwkFachdaten = copy.getAnhBwkFachdaten();
+        this.atlProbepkt = copy.getAtlProbepkt();
+        this.basisObjektverknuepfungsForObjekt = copy.getBasisObjektverknuepfungsForObjekt();
+        this.vawsFachdatens = copy.getVawsFachdatens();
+        this.anh55Fachdaten = copy.getAnh55Fachdaten();
+        this.anh52Fachdaten = copy.getAnh52Fachdaten();
+        this.anh56Fachdaten = copy.getAnh56Fachdaten();
+        this.basisObjektverknuepfungsForIstVerknuepftMit = copy.getBasisObjektverknuepfungsForIstVerknuepftMit();
+        this.anh40Fachdaten = copy.getAnh40Fachdaten();
+        this.basisObjektchronos = copy.getBasisObjektchronos();
+        this.atlSielhauts = copy.getAtlSielhauts();
+        this.anh49Fachdaten = copy.getAnh49Fachdaten();
+        this.anh50Fachdaten = copy.getAnh50Fachdaten();
     }
 
     /**

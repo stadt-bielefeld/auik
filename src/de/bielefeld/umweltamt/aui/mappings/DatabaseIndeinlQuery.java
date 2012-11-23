@@ -411,7 +411,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 
     /**
      * Get AnhBwkFachdaten for a given year.
-     * @param year Integer
+     * @param year Integer (may be null)
      * @return <code>List&lt;AnhBwkFachdaten&gt;</code>
      */
     public static List<AnhBwkFachdaten> getBwkByYear(Integer year) {
@@ -421,7 +421,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         detachedCriteria.addOrder(Order.asc("standort.strasse"));
         detachedCriteria.addOrder(Order.asc("standort.hausnr"));
         /* year == -1 => alle Jahre */
-        if (year != -1) {
+        if (year == null || year != -1) {
             detachedCriteria.add(
                 DatabaseAccess.getRestrictionsEqualOrNull("erfassung", year));
         }

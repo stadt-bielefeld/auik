@@ -24,7 +24,7 @@
         <property name="uschistdid" type="java.lang.Integer">
             <column name="uschistdid" />
         </property>
-        <property name="beschreibung" type="string">
+        <property name="beschreibung" type="java.lang.String">
             <column name="beschreibung" />
         </property>
         <property name="wiedervorlage" type="java.util.Date">
@@ -45,7 +45,7 @@
         <property name="inaktiv" type="boolean">
             <column name="inaktiv" not-null="true" />
         </property>
-        <property name="prioritaet" type="string">
+        <property name="prioritaet" type="java.lang.String">
             <column name="prioritaet" length="0" />
         </property>
         <property name="enabled" type="boolean">
@@ -55,9 +55,9 @@
             <column name="_deleted" not-null="true" />
         </property>
         <one-to-one name="indeinlGenehmigung" class="de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung"></one-to-one>
-        <one-to-one name="anh55Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten"></one-to-one>
         <one-to-one name="anh53Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten"></one-to-one>
         <one-to-one name="anhSuevFachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten"></one-to-one>
+        <one-to-one name="anhBwkFachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten"></one-to-one>
         <one-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt"></one-to-one>
         <set name="basisObjektverknuepfungsForObjekt" table="basis_objektverknuepfung" inverse="true" lazy="true" fetch="select">
             <key>
@@ -71,6 +71,7 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" />
         </set>
+        <one-to-one name="anh55Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten"></one-to-one>
         <one-to-one name="anh52Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten"></one-to-one>
         <one-to-one name="anh56Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten"></one-to-one>
         <set name="basisObjektverknuepfungsForIstVerknuepftMit" table="basis_objektverknuepfung" inverse="true" lazy="true" fetch="select">

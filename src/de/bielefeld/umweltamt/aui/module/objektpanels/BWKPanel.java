@@ -196,8 +196,7 @@ public class BWKPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.bwk = AnhBwkFachdaten.getAnhBwkByObjekt(this.hauptModul
-            .getObjekt());
+        this.bwk = this.hauptModul.getObjekt().getAnhBwkFachdaten();
         log.debug("Brennwertkessel aus DB geholt: " + this.bwk);
     }
 
@@ -403,7 +402,7 @@ public class BWKPanel extends JPanel {
             this.bwk.setBemerkungen(beschreibung);
         }
 
-        success = AnhBwkFachdaten.saveBwk(this.bwk);
+        success = AnhBwkFachdaten.merge(this.bwk);
 
         if (success) {
             log.debug("Brennwertkessel " + this.bwk + " gespeichert.");
@@ -423,7 +422,7 @@ public class BWKPanel extends JPanel {
             this.bwk.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Brennwertkessel speichern
-            if (AnhBwkFachdaten.saveBwk(this.bwk)) {
+            if (AnhBwkFachdaten.merge(this.bwk)) {
                 log.debug("Neuer Brennwertkessel " + this.bwk + " gespeichert.");
             }
         }

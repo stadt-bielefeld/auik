@@ -25,7 +25,6 @@ import java.io.Serializable;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the 'ANH_BWK' table. This class may be
@@ -61,22 +60,13 @@ public class AnhBwkFachdaten extends AbstractAnhBwkFachdaten implements
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    public static AnhBwkFachdaten getAnhBwkByObjekt(BasisObjekt objekt) {
-        return (AnhBwkFachdaten) new DatabaseAccess()
-            .createQuery(
-                "FROM AnhBwkFachdaten as brennwert "
-                    + "WHERE brennwert.basisObjekt = :objekt")
-            .setEntity("objekt", objekt)
-            .uniqueResult();
-    }
-
     /**
      * Speichert ein BWK Fachdaten-Objekt in der Datenbank.
      * @param fachdaten Das zu speichernde Fachdaten-Objekt.
      * @return <code>true</code>, wenn das Objekt gespeichert wurde, sonst
      *         <code>false</code>.
      */
-    public static boolean saveBwk(AnhBwkFachdaten bwk) {
+    public static boolean merge(AnhBwkFachdaten bwk) {
         return new DatabaseAccess().saveOrUpdate(bwk);
     }
 }

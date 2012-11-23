@@ -87,20 +87,16 @@ public class AnhBwkModel extends ListTableModel {
                 break;
             case 2: result = fachdaten.getKHersteller();  break;
             case 3: result = fachdaten.getKBrennmittel(); break;
-            case 4: result = fachdaten.getKLeistung();    break;
-            case 5: result = fachdaten.getErfassung();    break;
-            case 6: result = fachdaten.getAnschreiben();  break;
-            case 7: result = fachdaten.getDatumG();       break;
+            case 4: return fachdaten.getKLeistung();
+            case 5: return fachdaten.getErfassung();
+            case 6: return fachdaten.getAnschreiben();
+            case 7: return fachdaten.getDatumG();
             case 8:
                 result = fachdaten.getBasisObjekt().getBeschreibung();
                 break;
             default: result = "ERROR";                    break;
         }
 
-        /* Do not try to paint a strike throw a date field... */
-        if (columnIndex == 6 || columnIndex == 7) {
-            return result;
-        }
         if (result != null && fachdaten.getBasisObjekt().isInaktiv()) {
             result = StringUtils.setStrike(result.toString());
         }
