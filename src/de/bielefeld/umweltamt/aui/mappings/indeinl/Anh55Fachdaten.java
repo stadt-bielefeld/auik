@@ -22,11 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 
 /**
  * A class that represents a row in the 'ANH_56_FACHDATEN' table. This class may
@@ -62,28 +60,7 @@ public class Anh55Fachdaten extends AbstractAnh55Fachdaten implements
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    public static Anh55Fachdaten getAnh55ByObjekt(BasisObjekt objekt) {
-        return (Anh55Fachdaten) new DatabaseAccess()
-            .createQuery(
-                "FROM Anh55Fachdaten as anhang55 WHERE "
-                    + "anhang55.basisObjekt = :objekt")
-            .setEntity("objekt", objekt)
-            .uniqueResult();
-    }
-
-    public static boolean saveFachdaten(Anh55Fachdaten fachdaten) {
+    public static boolean merge(Anh55Fachdaten fachdaten) {
         return new DatabaseAccess().saveOrUpdate(fachdaten);
-    }
-
-    /**
-     * Liefert eine Liste mit allen Anhang55 Objekten.
-     * @return Eine Liste aus Anh55Fachdaten.
-     */
-    public static List<?> getAuswertungsListe() {
-        return new DatabaseAccess()
-            .createQuery(
-                "FROM Anh55Fachdaten as anh55 "
-                    + "ORDER BY anh55.basisObjekt.inaktiv, anh55.id")
-            .list();
     }
 }

@@ -42,6 +42,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
@@ -341,7 +342,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
     /**
-     * Liefert eine Liste mit allen Anhang52 Objekten.
+     * Liefert eine Liste mit allen Anhang53 Objekten.
      * @return <code>List&lt;Anh53Fachdaten&gt;</code>
      */
     public static List<Anh53Fachdaten> getAnhang53() {
@@ -355,6 +356,23 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .addOrder(Order.asc("standort.strasse"))
                 .addOrder(Order.asc("standort.hausnr")),
             new Anh53Fachdaten());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh55Fachdaten                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Liefert eine Liste mit allen Anhang55 Objekten.
+     * @return <code>List&lt;Anh55Fachdaten&gt;</code>
+     */
+    public static List<Anh55Fachdaten> getAnhang55() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(Anh55Fachdaten.class)
+                .createAlias("basisObjekt", "objekt")
+                .addOrder(Order.asc("objekt.inaktiv"))
+                .addOrder(Order.asc("id")),
+            new Anh55Fachdaten());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

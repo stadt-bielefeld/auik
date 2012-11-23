@@ -55,6 +55,7 @@
             <column name="_deleted" not-null="true" />
         </property>
         <one-to-one name="indeinlGenehmigung" class="de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung"></one-to-one>
+        <one-to-one name="anh55Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten"></one-to-one>
         <one-to-one name="anh53Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten"></one-to-one>
         <one-to-one name="anhSuevFachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten"></one-to-one>
         <one-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt"></one-to-one>
