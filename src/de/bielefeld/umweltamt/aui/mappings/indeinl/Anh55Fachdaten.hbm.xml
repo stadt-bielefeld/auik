@@ -1,46 +1,98 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
-
-    <class name="Anh55Fachdaten" table="anh_55_fachdaten">
-        <id name="id" column="objektid" type="java.lang.Integer">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten" table="anh_55_fachdaten" schema="auik">
+        <id name="objektid" type="java.lang.Integer">
+            <column name="objektid" />
             <generator class="foreign">
-            	<param name="property">basisObjekt</param>
+                <param name="property">basisObjekt</param>
             </generator>
         </id>
-
-		<property name="abgemeldet" column="abgemeldet" type="java.lang.Boolean" />
-		<property name="putztuecher" column="putztuecher" type="java.lang.Boolean" />
-		<property name="teppich" column="teppich" type="java.lang.Boolean" />
-		<property name="matten" column="matten" type="java.lang.Boolean" />
-		<property name="haushaltstex" column="haushaltstex" type="java.lang.Boolean" />
-		<property name="berufskl" column="berufskl" type="java.lang.Boolean" />
-		<property name="gasthotel" column="gaststhotel" type="java.lang.Boolean" />
-		<property name="krankenhaus" column="krankenhaus" type="java.lang.Boolean" />
-		<property name="heimwaesche" column="heimwaesche" type="java.lang.Boolean" />
-		<property name="anteilwaschgut" column="anteilwaschgut" type="java.lang.Integer" />
-		<property name="vlies" column="vlies" type="java.lang.Boolean" />
-		<property name="fischfleisch" column="fischfleisch" type="java.lang.Boolean" />
-		<property name="anteilgesamtgut" column="anteilgesamtgut" type="java.lang.Integer" />
-		<property name="betrwasseraufber" column="betrwasseraufber" type="java.lang.Boolean" />
-		<property name="chlor" column="chlor" type="java.lang.Boolean" />
-		<property name="aktivchlor" column="aktivchlor" type="java.lang.Boolean" />
-		<property name="sachbearbeiter" column="sachbearbeiter" type="java.lang.String" />
-		<property name="entgebId" column="entgeb_id" type="java.lang.String" />
-		<property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
-		<property name="mengewaesche" column="mengewaesche" type="java.lang.String" />		
-        <property name="sonsttex" column="sonsttex" type="java.lang.String" />
-        <property name="monatwasserverb" column="monatwasserverb" type="java.lang.String" />
-        <property name="waschsituation" column="waschsituation" type="java.lang.String" />
-        <property name="ansprechpartner" column="ansprechpartner" type="java.lang.String" />
-        <property name="branche" column="branche" type="java.lang.String" />
-        <property name="loesungsmittel" column="loesungsmittel" type="java.lang.Boolean" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" cascade="all"/>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"></one-to-one>
+        <property name="abgemeldet" type="java.lang.Boolean">
+            <column name="abgemeldet" />
+        </property>
+        <property name="putztuecher" type="java.lang.Boolean">
+            <column name="putztuecher" />
+        </property>
+        <property name="teppich" type="java.lang.Boolean">
+            <column name="teppich" />
+        </property>
+        <property name="matten" type="java.lang.Boolean">
+            <column name="matten" />
+        </property>
+        <property name="haushaltstex" type="java.lang.Boolean">
+            <column name="haushaltstex" />
+        </property>
+        <property name="berufskl" type="java.lang.Boolean">
+            <column name="berufskl" />
+        </property>
+        <property name="gaststhotel" type="java.lang.Boolean">
+            <column name="gaststhotel" />
+        </property>
+        <property name="krankenhaus" type="java.lang.Boolean">
+            <column name="krankenhaus" />
+        </property>
+        <property name="heimwaesche" type="java.lang.Boolean">
+            <column name="heimwaesche" />
+        </property>
+        <property name="anteilwaschgut" type="java.lang.Integer">
+            <column name="anteilwaschgut" />
+        </property>
+        <property name="vlies" type="java.lang.Boolean">
+            <column name="vlies" />
+        </property>
+        <property name="fischfleisch" type="java.lang.Boolean">
+            <column name="fischfleisch" />
+        </property>
+        <property name="anteilgesamtgut" type="java.lang.Integer">
+            <column name="anteilgesamtgut" />
+        </property>
+        <property name="betrwasseraufber" type="java.lang.Boolean">
+            <column name="betrwasseraufber" />
+        </property>
+        <property name="chlor" type="java.lang.Boolean">
+            <column name="chlor" />
+        </property>
+        <property name="aktivchlor" type="java.lang.Boolean">
+            <column name="aktivchlor" />
+        </property>
+        <property name="sachbearbeiter" type="java.lang.String">
+            <column name="sachbearbeiter" />
+        </property>
+        <property name="entgebId" type="java.lang.String">
+            <column name="entgeb_id" />
+        </property>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <property name="mengewaesche" type="java.lang.String">
+            <column name="mengewaesche" />
+        </property>
+        <property name="sonsttex" type="java.lang.String">
+            <column name="sonsttex" />
+        </property>
+        <property name="monatwasserverb" type="java.lang.String">
+            <column name="monatwasserverb" />
+        </property>
+        <property name="waschsituation" type="java.lang.String">
+            <column name="waschsituation" />
+        </property>
+        <property name="ansprechpartner" type="java.lang.String">
+            <column name="ansprechpartner" />
+        </property>
+        <property name="branche" type="java.lang.String">
+            <column name="branche" />
+        </property>
+        <property name="loesungsmittel" type="java.lang.Boolean">
+            <column name="loesungsmittel" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>

@@ -380,9 +380,9 @@ public class Anh55Panel extends JPanel {
         }
 
         if (getGasthotelCheck().isSelected()) {
-            this.fachdaten.setGasthotel(true);
+            this.fachdaten.setGaststhotel(true);
         } else {
-            this.fachdaten.setGasthotel(false);
+            this.fachdaten.setGaststhotel(false);
         }
 
         if (getKrankenhausCheck().isSelected()) {
@@ -433,9 +433,9 @@ public class Anh55Panel extends JPanel {
             this.fachdaten.setLoesungsmittel(false);
         }
 
-        success = Anh55Fachdaten.merge(this.fachdaten);
+        success = fachdaten.merge();
         if (success) {
-            log.debug("Anh 55 Objekt " + this.fachdaten.getId()
+            log.debug("Anh 55 Objekt " + this.fachdaten.getObjektid()
                 + " gespeichert.");
         } else {
             log.debug("Anh 55 Objekt " + this.fachdaten
@@ -605,8 +605,8 @@ public class Anh55Panel extends JPanel {
                 }
             }
 
-            if (this.fachdaten.getGasthotel() != null) {
-                if (this.fachdaten.getGasthotel() == true) {
+            if (this.fachdaten.getGaststhotel() != null) {
+                if (this.fachdaten.getGaststhotel() == true) {
                     getGasthotelCheck().setSelected(true);
                 } else {
                     getGasthotelCheck().setSelected(false);
@@ -714,7 +714,7 @@ public class Anh55Panel extends JPanel {
                     if (saveAnh55Daten()) {
                         Anh55Panel.this.hauptModul.getFrame().changeStatus(
                             "Anh 55 Objekt "
-                                + Anh55Panel.this.fachdaten.getId()
+                                + Anh55Panel.this.fachdaten.getObjektid()
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
                     } else {

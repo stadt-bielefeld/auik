@@ -356,7 +356,7 @@ public class DatabaseClassToString {
 
     /** @return Custom Anh55Fachdaten.toString() */
     public static String toStringForClass(Anh55Fachdaten clazz) {
-        return "[ID:" + clazz.getId() + "]";
+        return "[ID:" + clazz.getObjektid() + "]";
     }
 
     /** @return Custom Anh56Fachdaten.toString() */
