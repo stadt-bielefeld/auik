@@ -244,7 +244,31 @@ public class Anh52Fachdaten  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (Anh52Fachdaten.merge(this) != null);
+        Anh52Fachdaten saved = Anh52Fachdaten.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this Anh52Fachdaten with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy Anh52Fachdaten
+     */
+    private void copy(Anh52Fachdaten copy) {
+        this.basisObjekt = copy.getBasisObjekt();
+        this.nrbetriebsstaette = copy.getNrbetriebsstaette();
+        this.firmenname = copy.getFirmenname();
+        this.telefon = copy.getTelefon();
+        this.telefax = copy.getTelefax();
+        this.ansprechpartner = copy.getAnsprechpartner();
+        this.datumgenehmigung = copy.getDatumgenehmigung();
+        this.bemerkungen = copy.getBemerkungen();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
     }
 
     /**

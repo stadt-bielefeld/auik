@@ -17,8 +17,25 @@
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (${declarationName}.merge(this) != null);
+        ${declarationName} saved = ${declarationName}.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
     }
+
+    /**
+     * Update this ${declarationName} with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy ${declarationName}
+     */
+    private void copy(${declarationName} copy) {
+<#foreach property in pojo.getPropertiesForFullConstructor()>
+        this.${property.name} = copy.${pojo.getGetterSignature(property)}();            
+</#foreach>
+    }    
 
     /**
      * Delete (mark as deleted) a detached instance
