@@ -150,7 +150,7 @@ public class Anh52Panel extends JPanel{
             fachdaten.setBasisObjekt(hauptModul.getObjekt());
 
             // Anhang 52 Objekt speichern
-            Anh52Fachdaten.saveFachdaten(fachdaten);
+            fachdaten.merge();
             log.debug("Neues Anh 52 Objekt " + fachdaten + " gespeichert.");
         }
     }
@@ -199,7 +199,7 @@ public class Anh52Panel extends JPanel{
             fachdaten.setFirmenname(firmennameString);
         }
 
-        success = Anh52Fachdaten.saveFachdaten(fachdaten);
+        success = fachdaten.merge();
         if (success) {
             log.debug("Anh 52 Objekt " + fachdaten.getObjektid()
             		+ " gespeichert.");
@@ -268,7 +268,7 @@ public class Anh52Panel extends JPanel{
 
 
     public void fetchFormData() throws RuntimeException {
-        fachdaten = Anh52Fachdaten.getAnh52ByObjekt(hauptModul.getObjekt());
+        fachdaten = hauptModul.getObjekt().getAnh52Fachdaten();
         log.debug("(Anh52Panel.fetchFormData) "
         		+ "Anhang 52 Objekt aus DB geholt: ID" + fachdaten);
     }

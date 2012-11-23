@@ -30,7 +30,7 @@ import javax.swing.JPanel;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh52Model;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -49,6 +49,7 @@ public class EinleiterAnh52Auswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
+    @Override
     public String getName() {
         return "Anhang 52";
     }
@@ -57,6 +58,7 @@ public class EinleiterAnh52Auswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
      * @return "m_auswertung_anh52"
      */
+    @Override
     public String getIdentifier() {
         return "m_auswertung_anh52";
     }
@@ -64,6 +66,7 @@ public class EinleiterAnh52Auswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
      */
+    @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren
@@ -72,12 +75,16 @@ public class EinleiterAnh52Auswertung extends AbstractQueryModul {
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
             submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        @Override
                         protected void doNonUILogic() {
-                            ((Anh52Model)getTableModel()).setList(Anh52Fachdaten.getAuswertungsListe());
+                            ((Anh52Model)getTableModel()).setList(
+                                DatabaseQuery.getAnhang52());
                         }
 
+                        @Override
                         protected void doUIUpdateLogic(){
                             ((Anh52Model)getTableModel()).fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
@@ -102,6 +109,7 @@ public class EinleiterAnh52Auswertung extends AbstractQueryModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
+    @Override
     public ListTableModel getTableModel() {
         if (tmodel == null) {
             tmodel = new Anh52Model();
