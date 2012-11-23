@@ -274,6 +274,21 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
             new AtlParameter());
     }
 
+    /**
+     * Get a parameter by its description
+     * @param description The description of the parameter
+     *        (e.g. "Palladium (Pd)")
+     * @return <code>AtlParameter</code>, if a parameter was found,
+     *         <code>null</code> otherwise
+     */
+    // TODO: Maybe like or ilike is a better solution?
+    public static AtlParameter getParameterByDescription(String description) {
+        return new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(AtlParameter.class)
+                .add(Restrictions.eq("bezeichnung", description)),
+            new AtlParameter());
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package ATL : class AtlParametergruppen                    */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
