@@ -255,6 +255,9 @@
     </table>
 
     <!-- Exclude Geometry columns ========================================== -->
+    <table schema="auik" name="atl_sielhaut">
+        <column name="the_geom" exclude="true" />
+    </table>
     <table schema="auik" name="basis_standort">
         <column name="the_geom" exclude="true" />
     </table>

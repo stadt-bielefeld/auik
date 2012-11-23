@@ -22,12 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -104,16 +101,7 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
         return punkt;
     }
 
-    public static List<?> getProbenehmerpunkte() {
-        return new DatabaseAccess().createQuery(
-            "SELECT distinct pk FROM AtlProbepkt as pk "
-                + "inner join pk.atlProbenahmen as pn "
-                + "WHERE pn.kennummer like '3%' "
-                + "and pk.basisObjekt.inaktiv = false ")
-            .list();
-    }
-
-    public static boolean saveProbepunkt(AtlProbepkt punkt) {
+    public static boolean merge(AtlProbepkt punkt) {
         boolean saved = false;
         saved = new DatabaseAccess().saveOrUpdate(punkt);
         if (saved) {
@@ -125,7 +113,7 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
         return saved;
     }
 
-    public static boolean removeProbepunkt(AtlProbepkt punkt) {
+    public static boolean delete(AtlProbepkt punkt) {
         boolean removed = false;
         removed = new DatabaseAccess().delete(punkt);
         if (removed) {
@@ -134,35 +122,5 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
             log.debug("Probepunkt " + punkt + " konnte nicht gelöscht werden!");
         }
         return removed;
-    }
-
-    public BasisBetreiber getBasisBetreiber() {
-        BasisObjekt basisObj = getBasisObjekt();
-
-        return basisObj != null ? basisObj.getBasisBetreiber() : null;
-    }
-
-    public static List<?> getESatzung() {
-        return new DatabaseAccess().createQuery(
-            "FROM AtlProbepkt as pk WHERE " + "pk.atlProbeart.id = 3 "
-                + "and pk.basisObjekt.inaktiv = false "
-                + "ORDER BY pk.basisObjekt.basisStandort")
-            .list();
-    }
-
-    public static List<?> getUWB() {
-        return new DatabaseAccess().createQuery(
-            "FROM AtlProbepkt as pk WHERE " + "pk.atlProbeart.id = 2 "
-                + "and pk.basisObjekt.inaktiv = false "
-                + "ORDER BY pk.basisObjekt.basisStandort")
-            .list();
-    }
-
-    public static List<?> getInaktiv() {
-        return new DatabaseAccess().createQuery(
-            "FROM AtlProbepkt as pk WHERE "
-                + "pk.basisObjekt.inaktiv = true "
-                + "ORDER BY pk.basisObjekt.basisStandort")
-            .list();
     }
 }

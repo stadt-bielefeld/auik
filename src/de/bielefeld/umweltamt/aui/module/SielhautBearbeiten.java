@@ -159,6 +159,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
@@ -271,14 +272,14 @@ public class SielhautBearbeiten extends AbstractModul {
             this.manager.getSettingsManager().removeSetting(
                 "auik.imc.edit_object");
             this.sprobePkt = AtlProbepkt.findById(this.objekt.getObjektid());
-            this.spunkt = AtlSielhaut.getSielhaut(this.sprobePkt
+            this.spunkt = AtlSielhaut.findById(this.sprobePkt
                 .getAtlSielhaut().getId());
             setSielhautPunkt(this.spunkt);
         } else if (BasisObjekt.findById(24856) != null) {
             //FIXME: A constant id? In the code? -.-
             this.objekt = BasisObjekt.findById(24856);
             this.sprobePkt = AtlProbepkt.findById(this.objekt.getObjektid());
-            this.spunkt = AtlSielhaut.getSielhaut(this.sprobePkt
+            this.spunkt = AtlSielhaut.findById(this.sprobePkt
                 .getAtlSielhaut().getId());
             setSielhautPunkt(this.spunkt);
         }
@@ -305,7 +306,8 @@ public class SielhautBearbeiten extends AbstractModul {
             this.objekt.setInaktiv(false);
             this.sprobePkt = new AtlProbepkt();
             this.sprobePkt.setAtlProbeart(
-                DatabaseConstants.ATL_PROBEART_SIELHAUT);
+                AtlProbeart.findById(
+                    DatabaseConstants.ATL_PROBEART_ID_SIELHAUT));
             getPrAnlegenButton().setEnabled(false);
             getTabelleExportButton().setEnabled(false);
 
@@ -406,7 +408,7 @@ public class SielhautBearbeiten extends AbstractModul {
 //        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
 //        this.sprobePkt.setAtlSielhaut(this.spunkt);
 
-        AtlProbepkt.saveProbepunkt(this.sprobePkt);
+        AtlProbepkt.merge(this.sprobePkt);
 
         saved = true;
 
@@ -477,9 +479,9 @@ public class SielhautBearbeiten extends AbstractModul {
                     this.sprobePkt)) {
 
                     // TODO: This needs to be changed more consistent...
-                    this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
+                    this.spunkt = AtlSielhaut.findById(this.spunkt.getId());
                     this.sprobePkt.setAtlSielhaut(this.spunkt);
-                    AtlProbepkt.saveProbepunkt(this.sprobePkt);
+                    AtlProbepkt.merge(this.sprobePkt);
 
                     this.frame.changeStatus(
                         "Sielhaut-Messpunkt erfolgreich gespeichert.",
@@ -2377,7 +2379,7 @@ class SielhautModel extends ListTableModel {
     }
 
     public void filterList(String suche) {
-        setList(AtlSielhaut.findPunkte(suche));
+        setList(DatabaseQuery.findSielhaut(suche));
         log.debug("Suche nach '" + suche + "' (" + getList().size()
             + " Ergebnisse)");
     }

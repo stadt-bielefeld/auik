@@ -60,7 +60,8 @@ import javax.swing.table.TableColumn;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbepunkteModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -120,7 +121,8 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
-                            ((ProbepunkteModel)getTableModel()).setList(AtlProbepkt.getProbenehmerpunkte());
+                            ((ProbepunkteModel)getTableModel()).setList(
+                                DatabaseQuery.getProbenehmerPunkte());
                         }
 
                         @Override
@@ -139,7 +141,9 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
-                            ((ProbepunkteModel)getTableModel()).setList(AtlProbepkt.getESatzung());
+                            ((ProbepunkteModel)getTableModel()).setList(
+                                DatabaseQuery.getProbepktByArtID(
+                                    DatabaseConstants.ATL_PROBEART_ID_ABWASSER_E_SATZUNG));
                         }
 
                         @Override
@@ -159,7 +163,10 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
-                            ((ProbepunkteModel)getTableModel()).setList(AtlProbepkt.getUWB());
+                            ((ProbepunkteModel)getTableModel()).setList(
+                                DatabaseQuery.getProbepktByArtID(
+                                    DatabaseConstants
+                                        .ATL_PROBEART_ID_ABWASSER_UWB));
                         }
 
                         @Override
@@ -179,7 +186,8 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
-                            ((ProbepunkteModel)getTableModel()).setList(AtlProbepkt.getInaktiv());
+                            ((ProbepunkteModel)getTableModel()).setList(
+                                DatabaseQuery.getInaktivProbepkt());
                         }
 
                         @Override

@@ -45,6 +45,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
@@ -464,10 +465,10 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
      */
     public static Boolean isKlaerschlammProbe(AtlProbenahmen probe) {
         return (
-            probe.getAtlProbepkt().getAtlProbeart().equals(
-                DatabaseConstants.ATL_PROBEART_FAULSCHLAMM) ||
-            probe.getAtlProbepkt().getAtlProbeart().equals(
-                DatabaseConstants.ATL_PROBEART_ROHRSCHLAMM));
+            probe.getAtlProbepkt().getAtlProbeart().getId().equals(
+                DatabaseConstants.ATL_PROBEART_ID_FAULSCHLAMM) ||
+            probe.getAtlProbepkt().getAtlProbeart().getId().equals(
+                DatabaseConstants.ATL_PROBEART_ID_ROHRSCHLAMM));
     }
 
     public static JRMapDataSource getAuftragDataSource(AtlProbenahmen probe) {
@@ -627,6 +628,79 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
         }
 
         return new JRMapDataSource(columnsBescheid, newValues);
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlProbepkt                            */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get all AtlProbepkt with AtlProbeart(ID)
+     * @return <code>List&lt;AtlProbepkt&gt;</code>
+     */
+    public static List<AtlProbepkt> getProbepktByArtID(Integer atlProbeartID) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbepkt.class)
+                .createAlias("basisObjekt", "objekt")
+                .createAlias("objekt.basisStandort", "standort")
+                .createAlias("atlProbeart", "art")
+                .add(Restrictions.eq("objekt.inaktiv", false))
+                .add(Restrictions.eq("art.id", atlProbeartID))
+                .addOrder(Order.asc("standort.strasse"))
+                .addOrder(Order.asc("standort.hausnr")),
+            new AtlProbepkt());
+    }
+
+    /**
+     * Get all inactive AtlProbepkt
+     * @return <code>List&lt;AtlProbepkt&gt;</code>
+     */
+    public static List<AtlProbepkt> getInaktivProbepkt() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbepkt.class)
+                .createAlias("basisObjekt", "objekt")
+                .createAlias("objekt.basisStandort", "standort")
+                .add(Restrictions.eq("objekt.inaktiv", true))
+                .addOrder(Order.asc("standort.strasse"))
+                .addOrder(Order.asc("standort.hausnr")),
+            new AtlProbepkt());
+    }
+
+    /**
+     * Get all AtlProbepkt which have AtlProbenahmen from Probenehmer
+     * (kennummer starts with "3").
+     * @return <code>List&lt;AtlProbepkt&gt;</code>
+     */
+    public static List<AtlProbepkt> getProbenehmerPunkte() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbepkt.class)
+                .createAlias("basisObjekt", "objekt")
+                .createAlias("atlProbenahmen", "probe")
+                .add(Restrictions.eq("objekt.inaktiv", false))
+                .add(Restrictions.like(
+                    "probe.kennummer", "3", MatchMode.START))
+                // YAY! Finally found the right way to do distinct and get
+                // the complete objects! :D
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
+            new AtlProbepkt());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlSielhaut                            */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Find AtlSielhaut starting with the <code>search</code> String
+     * @return <code>List&lt;AtlSielhaut&gt;</code>
+     */
+    public static List<AtlSielhaut> findSielhaut(String search) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlSielhaut.class)
+                .add(Restrictions.ilike("bezeichnung", search, MatchMode.START))
+                .addOrder(Order.desc("psielhaut"))
+                .addOrder(Order.desc("pfirmenprobe"))
+                .addOrder(Order.asc("bezeichnung")),
+            new AtlSielhaut());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

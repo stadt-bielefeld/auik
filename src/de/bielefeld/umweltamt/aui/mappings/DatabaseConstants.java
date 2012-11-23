@@ -23,7 +23,6 @@ package de.bielefeld.umweltamt.aui.mappings;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 
 /**
@@ -90,16 +89,13 @@ public class DatabaseConstants {
     public static final String ATL_PARAMETER_ID_LEITFAEHIGKEIT = "L10821";
 
     /* AtlProbeart */
-    public static final AtlProbeart ATL_PROBEART_ANLIEFERUNG =
-        AtlProbeart.findById(4);
-    public static final AtlProbeart ATL_PROBEART_FAULSCHLAMM =
-        AtlProbeart.findById(5);
-    public static final AtlProbeart ATL_PROBEART_ROHRSCHLAMM =
-        AtlProbeart.findById(6);
-    public static final AtlProbeart ATL_PROBEART_SIELHAUT =
-        AtlProbeart.findById(7);
-    public static final AtlProbeart ATL_PROBEART_ZULAUF =
-        AtlProbeart.findById(9);
+    public static final Integer ATL_PROBEART_ID_ABWASSER_UWB = 2;
+    public static final Integer ATL_PROBEART_ID_ABWASSER_E_SATZUNG = 3;
+    public static final Integer ATL_PROBEART_ID_ANLIEFERUNG = 4;
+    public static final Integer ATL_PROBEART_ID_FAULSCHLAMM = 5;
+    public static final Integer ATL_PROBEART_ID_ROHRSCHLAMM = 6;
+    public static final Integer ATL_PROBEART_ID_SIELHAUT = 7;
+    public static final Integer ATL_PROBEART_ID_ZULAUF = 9;
 
     /* AtlKläranlage */
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_HEEPEN =

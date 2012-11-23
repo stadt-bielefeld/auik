@@ -57,6 +57,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
@@ -103,7 +104,7 @@ public class SielhautTest extends TestCase {
         try {
             session = _sessionFactory.openSession();
 
-            List<?> result = AtlSielhaut.findPunkte(Messstelle);
+            List<?> result = DatabaseQuery.findSielhaut(Messstelle);
 
             AtlSielhaut sielhaut = (AtlSielhaut) result.get(0);
 

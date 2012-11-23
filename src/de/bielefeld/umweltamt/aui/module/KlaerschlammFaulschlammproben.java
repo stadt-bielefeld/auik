@@ -44,6 +44,7 @@ import javax.swing.JPanel;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.module.common.SchlammPanel;
 
 /**
@@ -88,7 +89,9 @@ public class KlaerschlammFaulschlammproben extends AbstractModul {
     public JPanel getPanel() {
         if (panel == null) {
             panel = new SchlammPanel(
-                DatabaseConstants.ATL_PROBEART_FAULSCHLAMM, frame);
+                AtlProbeart.findById(
+                    DatabaseConstants.ATL_PROBEART_ID_FAULSCHLAMM),
+                frame);
         }
         return panel;
     }

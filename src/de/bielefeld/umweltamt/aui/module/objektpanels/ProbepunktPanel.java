@@ -355,7 +355,7 @@ public class ProbepunktPanel extends JPanel {
                     .getIntValue());
             }
 
-            success = AtlProbepkt.saveProbepunkt(this.probepkt);
+            success = AtlProbepkt.merge(this.probepkt);
 
         } else {
             success = false;
@@ -372,7 +372,7 @@ public class ProbepunktPanel extends JPanel {
             this.probepkt.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Probepunkt speichern
-            if (AtlProbepkt.saveProbepunkt(this.probepkt)) {
+            if (AtlProbepkt.merge(this.probepkt)) {
                 log.debug("Neuer Probepunkt " + this.probepkt + " gespeichert.");
             }
         }

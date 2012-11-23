@@ -336,7 +336,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                         if (DatabaseQuery.isKlaerschlammProbe(this.probe)) {
                             grenzWert = pos.getAtlParameter().getKlaerschlammGw();
                         } else if (this.probe.getAtlProbepkt().getAtlProbeart()
-                            .equals(DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
+                            .getId().equals(
+                            DatabaseConstants.ATL_PROBEART_ID_SIELHAUT)) {
                             grenzWert = pos.getAtlParameter().getSielhautGw();
                         }
                     }
@@ -360,8 +361,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                                             .getKlaerschlammGw().doubleValue();
                                 }
                             }
-                        } else if (this.probe.getAtlProbepkt().getAtlProbeart()
-                            .equals(DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
+                        } else if (this.probe.getAtlProbepkt().getAtlProbeart().getId().equals(
+                            DatabaseConstants.ATL_PROBEART_ID_SIELHAUT)) {
                             if (pos.getAtlParameter().getSielhautGw() != null) {
                                 if (!pos.getAtlParameter().getSielhautGw()
                                     .equals(new Double(0.0))) {
@@ -469,8 +470,8 @@ public class ProbenEditor extends AbstractApplyEditor {
             AtlAnalyseposition tmp = new AtlAnalyseposition();
             tmp.setAtlProbenahmen(this.probe);
             if (DatabaseQuery.isKlaerschlammProbe(this.probe)
-                || this.probe.getAtlProbepkt().getAtlProbeart().equals(
-                    DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
+                || this.probe.getAtlProbepkt().getAtlProbeart().getId().equals(
+                    DatabaseConstants.ATL_PROBEART_ID_SIELHAUT)) {
                 tmp.setAtlEinheiten(DatabaseConstants.ATL_EINHEIT_MG_KG);
             } else {
                 tmp.setAtlEinheiten(DatabaseConstants.ATL_EINHEIT_MG_L);
@@ -648,8 +649,8 @@ public class ProbenEditor extends AbstractApplyEditor {
             this.isSchlamm = true;
         }
 
-        if (probe.getAtlProbepkt().getAtlProbeart().equals(
-            DatabaseConstants.ATL_PROBEART_SIELHAUT)) {
+        if (probe.getAtlProbepkt().getAtlProbeart().getId().equals(
+            DatabaseConstants.ATL_PROBEART_ID_SIELHAUT)) {
             this.isSielhaut = true;
         }
 
@@ -1048,7 +1049,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         AtlProbenahmen probe = getProbe();
 
-        BasisBetreiber basisBetr = probe.getAtlProbepkt().getBasisBetreiber();
+        BasisBetreiber basisBetr =
+            probe.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
 
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
         CurrencyDouble cd = new CurrencyDouble(getRechnungsbetrag(probe),
@@ -1158,7 +1160,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         });
 
         AtlProbenahmen probe = getProbe();
-        BasisBetreiber basisBetr = probe.getAtlProbepkt().getBasisBetreiber();
+        BasisBetreiber basisBetr =
+            probe.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
 
         this.probenummer.setText(probe.getKennummer());
         this.probenummer.setEnabled(false);
@@ -1482,7 +1485,8 @@ public class ProbenEditor extends AbstractApplyEditor {
      * @return die Variablen für den Probenahmeauftrag als Map.
      */
     public Map<String, Object> getAuftragDruckMap(AtlProbenahmen probe) {
-        BasisBetreiber betr = probe.getAtlProbepkt().getBasisBetreiber();
+        BasisBetreiber betr = probe.getAtlProbepkt().getBasisObjekt()
+            .getBasisBetreiber();
         BasisStandort std = probe.getAtlProbepkt().getBasisObjekt()
             .getBasisStandort();
         AtlProbeart art = probe.getAtlProbepkt().getAtlProbeart();
@@ -1536,9 +1540,10 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public Map<String, Object> getBescheidDruckMap(AtlProbenahmen probe)
         throws IllegalArgumentException {
-        BasisBetreiber betr = probe.getAtlProbepkt().getBasisBetreiber();
-        BasisStandort basisStandort = probe.getAtlProbepkt().getBasisObjekt()
-            .getBasisStandort();
+        BasisBetreiber betr =
+            probe.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
+        BasisStandort basisStandort =
+            probe.getAtlProbepkt().getBasisObjekt().getBasisStandort();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
 

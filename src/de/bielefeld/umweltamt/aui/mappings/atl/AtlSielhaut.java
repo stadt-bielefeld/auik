@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -77,37 +76,13 @@ public class AtlSielhaut extends AbstractAtlSielhaut implements Serializable {
 
     /* Add customized code below */
 
-    public static List<?> findPunkte(String suche) {
-        String sucheF = suche.toLowerCase().trim() + "%";
-        return new DatabaseAccess()
-            .createQuery(
-                "FROM AtlSielhaut as sp WHERE "
-                    + "lower(sp.bezeichnung) like :suche "
-                    + "ORDER BY sp.psielhaut desc, "
-                    + "sp.pfirmenprobe desc, sp.bezeichnung")
-            .setString("suche", sucheF)
-            .list();
-    }
-
-    public static AtlSielhaut getSielhautByBez(String bezeichnung) {
-        String sucheF = bezeichnung.toLowerCase().trim() + "%";
-        return (AtlSielhaut) new DatabaseAccess()
-            .createQuery(
-                "FROM AtlSielhaut as sp WHERE "
-                    + "lower(sp.bezeichnung) like :suche "
-                    + "ORDER BY sp.psielhaut desc, "
-                    + "sp.pfirmenprobe desc, sp.bezeichnung")
-            .setString("suche", sucheF)
-            .uniqueResult();
-    }
-
     /**
      * Lädt ein Objekt aus der Datenbank.
      * @param id Der Primärschlüssel des zu ladenden Objekts.
      * @return Das BasisObjekt mit dem Primärschlüssel oder <code>null</code>,
      *         falls ein solches nicht gefunden wurde.
      */
-    public static AtlSielhaut getSielhaut(Integer id) {
+    public static AtlSielhaut findById(Integer id) {
         AtlSielhaut sielhaut = null;
         sielhaut = (AtlSielhaut) new DatabaseAccess()
                 .get(AtlSielhaut.class, id);
