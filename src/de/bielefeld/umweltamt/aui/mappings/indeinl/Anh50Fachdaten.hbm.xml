@@ -1,29 +1,44 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
-
-    <class name="Anh50Fachdaten" table="anh_50_fachdaten">
-        <id name="objektid" column="objektid" type="java.lang.Integer">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten" table="anh_50_fachdaten" schema="auik">
+        <id name="objektid" type="java.lang.Integer">
+            <column name="objektid" />
             <generator class="foreign">
-            	<param name="property">basisObjekt</param>
+                <param name="property">basisObjekt</param>
             </generator>
         </id>
-
-        <property name="telefon" column="telefon" type="java.lang.String" />
-        <property name="erloschen" column="erloschen" type="java.lang.Boolean" />
-        <property name="datumantrag" column="datumantrag" type="java.util.Date" />
-        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
-        <property name="genehmigung" column="genehmigung" type="java.util.Date" />
-        <property name="wiedervorlage" column="wiedervorlage" type="java.util.Date" />
-        <property name="gefaehrdungsklasse" column="gefaehrdungsklasse" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <many-to-one name="anhEntsorger" column="entsorgerid" class="AnhEntsorger" />
-
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"></one-to-one>
+        <many-to-one name="anhEntsorger" class="de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger" fetch="select">
+            <column name="entsorgerid" />
+        </many-to-one>
+        <property name="telefon" type="java.lang.String">
+            <column name="telefon" />
+        </property>
+        <property name="erloschen" type="java.lang.Boolean">
+            <column name="erloschen" />
+        </property>
+        <property name="datumantrag" type="java.util.Date">
+            <column name="datumantrag" length="8" />
+        </property>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <property name="genehmigung" type="java.util.Date">
+            <column name="genehmigung" length="8" />
+        </property>
+        <property name="wiedervorlage" type="java.util.Date">
+            <column name="wiedervorlage" length="8" />
+        </property>
+        <property name="gefaehrdungsklasse" type="java.lang.String">
+            <column name="gefaehrdungsklasse" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>
