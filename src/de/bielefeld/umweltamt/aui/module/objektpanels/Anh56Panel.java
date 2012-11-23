@@ -174,7 +174,7 @@ public class Anh56Panel extends JPanel {
             this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Anhang 56 Objekt speichern
-            Anh56Fachdaten.saveFachdaten(this.fachdaten);
+            Anh56Fachdaten.merge(this.fachdaten);
             log.debug("Neues Anh 56 Objekt " + this.fachdaten + " gespeichert.");
         }
     }
@@ -234,7 +234,7 @@ public class Anh56Panel extends JPanel {
             this.fachdaten.setAbwasseranfall(false);
         }
 
-        success = Anh56Fachdaten.saveFachdaten(this.fachdaten);
+        success = Anh56Fachdaten.merge(this.fachdaten);
         if (success) {
             log.debug("Anh 56 Objekt " + this.fachdaten.getObjektid()
                 + " gespeichert.");
@@ -323,8 +323,7 @@ public class Anh56Panel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = Anh56Fachdaten.getAnh56ByObjekt(this.hauptModul
-            .getObjekt());
+        this.fachdaten = this.hauptModul.getObjekt().getAnh56Fachdaten();
         log.debug("Anhang 56 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 

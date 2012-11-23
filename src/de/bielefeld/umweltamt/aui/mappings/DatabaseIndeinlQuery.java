@@ -43,6 +43,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
@@ -373,6 +374,35 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("id")),
             new Anh55Fachdaten());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh56Fachdaten                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Liefert eine Liste mit allen Anhang53 Objekten.
+     * @return <code>List&lt;Anh56Fachdaten&gt;</code>
+     */
+    public static List<Anh56Fachdaten> getAnhang56(
+        Boolean abwasseranfall, Boolean genpflicht) {
+        DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(Anh56Fachdaten.class)
+                .createAlias("basisObjekt", "objekt")
+                .createAlias("basisObjekt.basisStandort", "standort")
+                .addOrder(Order.asc("objekt.inaktiv"))
+                .addOrder(Order.asc("standort.strasse"))
+                .addOrder(Order.asc("standort.hausnr"));
+        if (abwasseranfall != null) {
+            detachedCriteria.add(
+                Restrictions.eq("abwasseranfall", abwasseranfall));
+        }
+        if (genpflicht != null) {
+            detachedCriteria.add(
+                Restrictions.eq("genpflicht", genpflicht));
+        }
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new Anh56Fachdaten());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
