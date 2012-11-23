@@ -1,27 +1,41 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.indeinl" schema="auik">
-
-    <class name="Anh52Fachdaten" table="anh_52_fachdaten">
-        <id name="objektid" column="objektid" type="java.lang.Integer">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten" table="anh_52_fachdaten" schema="auik">
+        <id name="objektid" type="java.lang.Integer">
+            <column name="objektid" />
             <generator class="foreign">
-            	<param name="property">basisObjekt</param>
+                <param name="property">basisObjekt</param>
             </generator>
         </id>
-
-		<property name="nrbetriebsstaette" column="nrbetriebsstaette" type="java.lang.Integer" />
-		<property name="firmenname" column="firmenname" type="java.lang.String" />
-		<property name="telefon" column="telefon" type="java.lang.String" />
-		<property name="telefax" column="telefax" type="java.lang.String" />
-		<property name="ansprechpartner" column="ansprechpartner" type="java.lang.String" />
-		<property name="datumGen" column="datumgenehmigung" type="java.util.Date" />
-        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"></one-to-one>
+        <property name="nrbetriebsstaette" type="java.lang.Integer">
+            <column name="nrbetriebsstaette" />
+        </property>
+        <property name="firmenname" type="java.lang.String">
+            <column name="firmenname" />
+        </property>
+        <property name="telefon" type="java.lang.String">
+            <column name="telefon" />
+        </property>
+        <property name="telefax" type="java.lang.String">
+            <column name="telefax" />
+        </property>
+        <property name="ansprechpartner" type="java.lang.String">
+            <column name="ansprechpartner" />
+        </property>
+        <property name="datumgenehmigung" type="java.util.Date">
+            <column name="datumgenehmigung" length="8" />
+        </property>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>

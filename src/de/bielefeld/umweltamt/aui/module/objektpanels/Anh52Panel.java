@@ -169,7 +169,7 @@ public class Anh52Panel extends JPanel{
         fachdaten.setNrbetriebsstaette(nrbetriebst);
 
         Date genehmigung = datumGenChooser.getDate();
-        fachdaten.setDatumGen(genehmigung);
+        fachdaten.setDatumgenehmigung(genehmigung);
 
         String ansprechpartnerString = ansprechpartnerFeld.getText();
         if ("".equals(ansprechpartnerString)) {
@@ -258,8 +258,8 @@ public class Anh52Panel extends JPanel{
             getAnsprechpartnerFeld().setText(fachdaten.getAnsprechpartner());
         }
 
-        if (fachdaten.getDatumGen() != null) {
-            getGenehmigungDatum().setDate(fachdaten.getDatumGen());
+        if (fachdaten.getDatumgenehmigung() != null) {
+            getGenehmigungDatum().setDate(fachdaten.getDatumgenehmigung());
         }
     }
 
