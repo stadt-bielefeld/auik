@@ -382,4 +382,5 @@
     <!--       auik_wz_code -->
     <!-- auik.vaws: -->
     <!--            vaws_fachdaten -->
+    <!--            vaws_gebuehrenarten -->
 </hibernate-reverse-engineering>

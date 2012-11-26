@@ -648,7 +648,7 @@ public class VawsEditor extends AbstractBaseEditor {
         verwGebuehrenTabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
 
         // Für die ComboBox bei "Gebührenart"
-        gebArtenBox = new JComboBox(VawsGebuehrenarten.getAllGebuehrenarten());
+        gebArtenBox = new JComboBox(DatabaseQuery.getVawsGebuehrenarten());
         gebArtenBox.setEditable(false);
         gebArtenBox.addFocusListener(new FocusAdapter() {
             @Override

@@ -35,6 +35,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsBehaelterart;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -177,7 +178,7 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
     private static String[] vawsBehaelterart = null;
     /**
      * Get all VawsBehaelterart
-     * @return <code>VawsBehaelterart[]</code>
+     * @return <code>String[]</code>
      */
     public static String[] getVawsBehaelterarten() {
         if (DatabaseVawsQuery.vawsBehaelterart == null) {
@@ -253,7 +254,7 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
     private static String[] vawsFluessigkeit = null;
     /**
      * Get all VawsFluessigkeit
-     * @return <code>VawsBehaelterart[]</code>
+     * @return <code>String[]</code>
      */
     public static String[] getVawsFluessigkeiten() {
         if (DatabaseVawsQuery.vawsFluessigkeit == null) {
@@ -265,6 +266,24 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                     new String[0]);
         }
         return DatabaseVawsQuery.vawsFluessigkeit;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsGebuehrenarten                     */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static VawsGebuehrenarten[] vawsGebuehrenarten = null;
+    /**
+     * Get all VawsGebuehrenarten
+     * @return <code>VawsGebuehrenarten[]</code>
+     */
+    public static VawsGebuehrenarten[] getVawsGebuehrenarten() {
+        if (DatabaseVawsQuery.vawsGebuehrenarten == null) {
+            DatabaseVawsQuery.vawsGebuehrenarten =
+                DatabaseQuery.getOrderedAll(new VawsGebuehrenarten())
+                    .toArray(new VawsGebuehrenarten[0]);
+        }
+        return DatabaseVawsQuery.vawsGebuehrenarten;
     }
 
 }
