@@ -104,7 +104,6 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefer;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefergebnisse;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
@@ -556,7 +555,7 @@ public class VawsEditor extends AbstractBaseEditor {
         svPruefungTabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
 
         // Für die ComboBox bei "Prüfer"
-        prueferBox = new JComboBox(VawsPruefer.getAllPruefer());
+        prueferBox = new JComboBox(DatabaseQuery.getVawsPruefer());
         prueferBox.setEditable(false);
         prueferBox.addFocusListener(new FocusAdapter() {
             @Override
