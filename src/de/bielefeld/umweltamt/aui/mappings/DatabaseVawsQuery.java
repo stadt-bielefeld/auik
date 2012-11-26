@@ -32,6 +32,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsBehaelterart;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -166,6 +167,27 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                 .addOrder(Order.asc("datum"))
                 .addOrder(Order.asc("wv")),
             new VawsAnlagenchrono());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsBehaelterart                       */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static String[] vawsBehaelterart = null;
+    /**
+     * Get all VawsBehaelterart
+     * @return <code>VawsBehaelterart[]</code>
+     */
+    public static String[] getVawsBehaelterarten() {
+        if (DatabaseVawsQuery.vawsBehaelterart == null) {
+            DatabaseVawsQuery.vawsBehaelterart =
+                new DatabaseAccess().executeCriteriaToArray(
+                    DetachedCriteria.forClass(VawsBehaelterart.class)
+                        .setProjection(Projections.property("behaelterart"))
+                        .addOrder(Order.asc("behaelterart")),
+                    new String[0]);
+        }
+        return DatabaseVawsQuery.vawsBehaelterart;
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

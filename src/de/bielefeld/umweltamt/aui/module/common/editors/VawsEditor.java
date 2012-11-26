@@ -101,7 +101,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsBehaelterart;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
@@ -418,7 +417,7 @@ public class VawsEditor extends AbstractBaseEditor {
         stillegungChooser = new TextFieldDateChooser();
         pruefTurnusFeld = new DoubleField(0);
 
-        behaelterArtBox = new JComboBox(VawsBehaelterart.getBehaelterarten());
+        behaelterArtBox = new JComboBox(DatabaseQuery.getVawsBehaelterarten());
         behaelterArtBox.setEditable(false);
 
         materialBox = new JComboBox(VawsMaterial.getMaterialien());
@@ -1046,7 +1045,8 @@ public class VawsEditor extends AbstractBaseEditor {
         getFachdaten().setStillegungsdatum(stillegungChooser.getDate());
         getFachdaten().setPruefturnus(pruefTurnusFeld.getDoubleValue());
 
-        getFachdaten().setBehaelterart((String)behaelterArtBox.getSelectedItem());
+        getFachdaten().setBehaelterart(
+            (String)behaelterArtBox.getSelectedItem());
         getFachdaten().setMaterial((String)materialBox.getSelectedItem());
         getFachdaten().setBemerkungen(bemerkungArea.getText());
 
