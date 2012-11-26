@@ -72,7 +72,7 @@ public class VawsVerwaltungsverf extends AbstractVawsVerwaltungsverf implements
     public static List<?> getVerwaltungsverf(VawsFachdaten fachdaten) {
         List<?> verfahren;
 
-        if (fachdaten.getBehaelterId() == null) {
+        if (fachdaten.getBehaelterid() == null) {
             verfahren = new ArrayList<VawsVerwaltungsverf>();
         } else {
             verfahren = new DatabaseAccess()

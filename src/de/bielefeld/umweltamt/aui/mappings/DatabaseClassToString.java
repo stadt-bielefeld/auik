@@ -425,7 +425,7 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "BehaelterID: Anlagenart Herstellnr".
      */
     public static String toStringForClass(VawsFachdaten clazz) {
-        return clazz.getBehaelterId() + ": "
+        return clazz.getBehaelterid() + ": "
             + (clazz.getAnlagenart() != null ? clazz.getAnlagenart() + " " : "")
             + (clazz.getHerstellnr() != null ? clazz.getHerstellnr() : "");
     }

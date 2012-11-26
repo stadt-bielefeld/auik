@@ -183,7 +183,7 @@ class WiedervorlageSVModel extends ListTableModel {
 
         switch (columnIndex) {
             case 0:
-                tmp = vk.getVawsFachdaten().getBehaelterId();
+                tmp = vk.getVawsFachdaten().getBehaelterid();
                 break;
             case 1:
                 tmp = AuikUtils.getStringFromDate(vk.getNaechstepruefung());

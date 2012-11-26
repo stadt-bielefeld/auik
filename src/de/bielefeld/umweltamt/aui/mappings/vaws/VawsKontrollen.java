@@ -80,7 +80,7 @@ public class VawsKontrollen extends AbstractVawsKontrollen implements
     public static List<?> getKontrollen(VawsFachdaten fachdaten) {
         List<?> kontrollen;
 
-        if (fachdaten.getBehaelterId() == null) {
+        if (fachdaten.getBehaelterid() == null) {
             kontrollen = new ArrayList<VawsKontrollen>();
         } else {
             kontrollen = new DatabaseAccess()

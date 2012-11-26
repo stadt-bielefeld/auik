@@ -1,67 +1,184 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws" schema="auik">
-
-    <class name="VawsFachdaten" table="vaws_fachdaten" lazy="false">
-        <id name="behaelterId" column="behaelterid" type="java.lang.Integer">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" table="vaws_fachdaten" lazy="false" schema="auik">
+        <id name="behaelterid" type="java.lang.Integer">
+            <column name="behaelterid" />
             <generator class="native">
-                <param name="sequence">vaws_fachdaten_behaelterid_seq</param>
-        	</generator>
+                <param name="sequence">auik.vaws_fachdaten_behaelterid_seq</param>
+            </generator>
         </id>
-
-        <many-to-one name="basisObjekt" column="objektid" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" cascade="all"/>
-
-        <property name="herstellnr" column="herstellnr" type="java.lang.String" />
-        <property name="hersteller" column="hersteller" type="java.lang.String" />
-        <property name="datumInbetriebnahme" column="datuminbetriebnahme" type="java.util.Date" />
-        <property name="datumErfassung" column="datumerfassung" type="java.util.Date" />
-        <property name="datumAenderung" column="datumaenderung" type="java.util.Date" />
-        <property name="datumGenehmigung" column="datumgenehmigung" type="java.util.Date" />
-        <property name="anlagenart" column="anlagenart" type="java.lang.String" />
-        <property name="behaelterart" column="behaelterart" type="java.lang.String" />
-        <property name="material" column="material" type="java.lang.String" />
-        <property name="fluessigkeit" column="fluessigkeit" type="java.lang.String" />
-        <property name="vbfeinstufung" column="vbfeinstufung" type="java.lang.String" />
-        <property name="menge" column="menge" type="java.lang.Double" />
-        <property name="wgk" column="wgk" type="java.lang.Integer" />
-        <property name="gefaehrdungsstufe" column="gefaehrdungsstufe" type="java.lang.String" />
-        <property name="baujahr" column="baujahr" type="java.lang.Integer" />
-        <property name="doppelwandig" column="doppelwandig" type="java.lang.Boolean" />
-        <property name="leckanzeige" column="leckanzeige" type="java.lang.Boolean" />
-        <property name="auffangraum" column="auffangraum" type="java.lang.Boolean" />
-        <property name="grenzwertgeber" column="grenzwertgeber" type="java.lang.Boolean" />
-        <property name="leckschutzauskleidung" column="leckschutzauskleidung" type="java.lang.Boolean" />
-        <property name="kellerlagerung" column="kellerlagerung" type="java.lang.Boolean" />
-        <property name="innenbeschichtung" column="innenbeschichtung" type="java.lang.Boolean" />
-        <property name="beschreibung_a" column="beschreibung_a" type="java.lang.String" />
-        <property name="beschreibung_s" column="beschreibung_s" type="java.lang.String" />
-        <property name="oberirdisch" column="oberirdisch" type="java.lang.Boolean" />
-        <property name="unterirdisch" column="unterirdisch" type="java.lang.Boolean" />
-        <property name="saugleitung" column="saugleitung" type="java.lang.Boolean" />
-        <property name="rohrKathodenschutz" column="rohr_kathodenschutz" type="java.lang.Boolean" />
-        <property name="ausKupfer" column="aus_kupfer" type="java.lang.Boolean" />
-        <property name="ausStahl" column="aus_stahl" type="java.lang.Boolean" />
-        <property name="mitSchutzrohr" column="mit_schutzrohr" type="java.lang.Boolean" />
-        <property name="beschreibung_r" column="beschreibung_r" type="java.lang.String" />
-        <property name="pruefturnus" column="pruefturnus" type="java.lang.Double" />
-        <property name="angemahntkz" column="angemahntkz" type="java.lang.Boolean" />
-        <property name="mahnfrist" column="mahnfrist" type="java.util.Date" />
-        <property name="wiedervorlage" column="wiedervorlage" type="java.util.Date" />
-        <property name="stillegungsdatum" column="stillegungsdatum" type="java.util.Date" />
-        <property name="bemerkungen" column="bemerkungen" type="java.lang.String" />
-        <property name="ausfuehrung" column="ausfuehrung" type="java.lang.String" />
-        <property name="pruefumfang" column="pruefumfang" type="java.lang.String" />
-        <property name="verwendung" column="verwendung" type="java.lang.String" />
-        <property name="ausHdpe" column="aus_hdpe" type="java.lang.Boolean" />
-        <property name="Druckleitung" column="druckleitung" type="java.lang.Boolean" />
-        <property name="schutzSensor" column="schutz_sensor" type="java.lang.Boolean" />
-        <property name="schutzFolie" column="schutz_folie" type="java.lang.Boolean" />
-        <property name="schutzAntiheber" column="schutz_antiheber" type="java.lang.Boolean" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
+        <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select">
+            <column name="objektid" not-null="true" />
+        </many-to-one>
+        <property name="herstellnr" type="java.lang.String">
+            <column name="herstellnr" />
+        </property>
+        <property name="hersteller" type="java.lang.String">
+            <column name="hersteller" />
+        </property>
+        <property name="datuminbetriebnahme" type="java.util.Date">
+            <column name="datuminbetriebnahme" length="8" />
+        </property>
+        <property name="datumerfassung" type="java.util.Date">
+            <column name="datumerfassung" length="8" />
+        </property>
+        <property name="datumaenderung" type="java.util.Date">
+            <column name="datumaenderung" length="8" />
+        </property>
+        <property name="datumgenehmigung" type="java.util.Date">
+            <column name="datumgenehmigung" length="8" />
+        </property>
+        <property name="anlagenart" type="java.lang.String">
+            <column name="anlagenart" />
+        </property>
+        <property name="behaelterart" type="java.lang.String">
+            <column name="behaelterart" />
+        </property>
+        <property name="material" type="java.lang.String">
+            <column name="material" />
+        </property>
+        <property name="fluessigkeit" type="java.lang.String">
+            <column name="fluessigkeit" />
+        </property>
+        <property name="vbfeinstufung" type="java.lang.String">
+            <column name="vbfeinstufung" />
+        </property>
+        <property name="menge" type="java.lang.Double">
+            <column name="menge" precision="8" scale="0" />
+        </property>
+        <property name="wgk" type="java.lang.Integer">
+            <column name="wgk" />
+        </property>
+        <property name="gefaehrdungsstufe" type="java.lang.String">
+            <column name="gefaehrdungsstufe" />
+        </property>
+        <property name="baujahr" type="java.lang.Integer">
+            <column name="baujahr" />
+        </property>
+        <property name="doppelwandig" type="java.lang.Boolean">
+            <column name="doppelwandig" />
+        </property>
+        <property name="leckanzeige" type="java.lang.Boolean">
+            <column name="leckanzeige" />
+        </property>
+        <property name="auffangraum" type="java.lang.Boolean">
+            <column name="auffangraum" />
+        </property>
+        <property name="grenzwertgeber" type="java.lang.Boolean">
+            <column name="grenzwertgeber" />
+        </property>
+        <property name="leckschutzauskleidung" type="java.lang.Boolean">
+            <column name="leckschutzauskleidung" />
+        </property>
+        <property name="kellerlagerung" type="java.lang.Boolean">
+            <column name="kellerlagerung" />
+        </property>
+        <property name="innenbeschichtung" type="java.lang.Boolean">
+            <column name="innenbeschichtung" />
+        </property>
+        <property name="beschreibungA" type="java.lang.String">
+            <column name="beschreibung_a" />
+        </property>
+        <property name="beschreibungS" type="java.lang.String">
+            <column name="beschreibung_s" />
+        </property>
+        <property name="oberirdisch" type="java.lang.Boolean">
+            <column name="oberirdisch" />
+        </property>
+        <property name="unterirdisch" type="java.lang.Boolean">
+            <column name="unterirdisch" />
+        </property>
+        <property name="saugleitung" type="java.lang.Boolean">
+            <column name="saugleitung" />
+        </property>
+        <property name="rohrKathodenschutz" type="java.lang.Boolean">
+            <column name="rohr_kathodenschutz" />
+        </property>
+        <property name="ausKupfer" type="java.lang.Boolean">
+            <column name="aus_kupfer" />
+        </property>
+        <property name="ausStahl" type="java.lang.Boolean">
+            <column name="aus_stahl" />
+        </property>
+        <property name="mitSchutzrohr" type="java.lang.Boolean">
+            <column name="mit_schutzrohr" />
+        </property>
+        <property name="beschreibungR" type="java.lang.String">
+            <column name="beschreibung_r" />
+        </property>
+        <property name="pruefturnus" type="java.lang.Double">
+            <column name="pruefturnus" precision="8" scale="0" />
+        </property>
+        <property name="angemahntkz" type="java.lang.Boolean">
+            <column name="angemahntkz" />
+        </property>
+        <property name="mahnfrist" type="java.util.Date">
+            <column name="mahnfrist" length="8" />
+        </property>
+        <property name="wiedervorlage" type="java.util.Date">
+            <column name="wiedervorlage" length="8" />
+        </property>
+        <property name="stillegungsdatum" type="java.util.Date">
+            <column name="stillegungsdatum" length="8" />
+        </property>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <property name="ausfuehrung" type="java.lang.String">
+            <column name="ausfuehrung" />
+        </property>
+        <property name="pruefumfang" type="java.lang.String">
+            <column name="pruefumfang" />
+        </property>
+        <property name="verwendung" type="java.lang.String">
+            <column name="verwendung" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="ausHdpe" type="java.lang.Boolean">
+            <column name="aus_hdpe" />
+        </property>
+        <property name="druckleitung" type="java.lang.Boolean">
+            <column name="druckleitung" />
+        </property>
+        <property name="schutzSensor" type="java.lang.Boolean">
+            <column name="schutz_sensor" />
+        </property>
+        <property name="schutzFolie" type="java.lang.Boolean">
+            <column name="schutz_folie" />
+        </property>
+        <property name="schutzAntiheber" type="java.lang.Boolean">
+            <column name="schutz_antiheber" />
+        </property>
+        <set name="vawsVerwaltungsverfs" table="vaws_verwaltungsverf" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="behaelterid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf" />
+        </set>
+        <set name="vawsKontrollens" table="vaws_kontrollen" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="behaelterid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen" />
+        </set>
+        <set name="vawsAnlagenchronos" table="vaws_anlagenchrono" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="behaelterid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono" />
+        </set>
+        <set name="vawsVerwaltungsgebuehrens" table="vaws_verwaltungsgebuehren" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="behaelterid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren" />
+        </set>
     </class>
-
 </hibernate-mapping>

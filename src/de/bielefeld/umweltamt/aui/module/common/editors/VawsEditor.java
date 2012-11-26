@@ -300,7 +300,7 @@ public class VawsEditor extends AbstractBaseEditor {
      */
     public VawsEditor(VawsFachdaten fachdaten, HauptFrame owner) {
         //super("VAwS-Einzelanlage (" + fachdaten + ")", fachdaten, owner);
-        super("VAwS-Einzelanlage " + (fachdaten.getBehaelterId() == null ? "(Neu)" : fachdaten.getBehaelterId().toString()), fachdaten, owner);
+        super("VAwS-Einzelanlage " + (fachdaten.getBehaelterid() == null ? "(Neu)" : fachdaten.getBehaelterid().toString()), fachdaten, owner);
     }
 
     /**
@@ -709,9 +709,9 @@ public class VawsEditor extends AbstractBaseEditor {
         wgkBox.setSelectedItem(getFachdaten().getWgk());
 
         baujahrFeld.setValue(getFachdaten().getBaujahr());
-        inbetriebnahmeChooser.setDate(getFachdaten().getDatumInbetriebnahme());
-        genehmigungChooser.setDate(getFachdaten().getDatumGenehmigung());
-        erfassungChooser.setDate(getFachdaten().getDatumErfassung());
+        inbetriebnahmeChooser.setDate(getFachdaten().getDatuminbetriebnahme());
+        genehmigungChooser.setDate(getFachdaten().getDatumgenehmigung());
+        erfassungChooser.setDate(getFachdaten().getDatumerfassung());
         stillegungChooser.setDate(getFachdaten().getStillegungsdatum());
         pruefTurnusFeld.setValue(getFachdaten().getPruefturnus());
 
@@ -869,8 +869,8 @@ public class VawsEditor extends AbstractBaseEditor {
             else
                 schutzAntiheberCheck.setSelected(false);
 
-            beschreibungAFeld.setText(getFachdaten().getBeschreibung_a());
-            beschreibungSFeld.setText(getFachdaten().getBeschreibung_s());
+            beschreibungAFeld.setText(getFachdaten().getBeschreibungA());
+            beschreibungSFeld.setText(getFachdaten().getBeschreibungS());
 
             if(getFachdaten().getOberirdisch()!=null)
                 oberIrdischCheck.setSelected(getFachdaten().getOberirdisch());
@@ -917,7 +917,7 @@ public class VawsEditor extends AbstractBaseEditor {
             else
                 druckleitungCheck.setSelected(false);
 
-            beschreibungRFeld.setText(getFachdaten().getBeschreibung_r());
+            beschreibungRFeld.setText(getFachdaten().getBeschreibungR());
 
         } else if (getFachdaten().getAnlagenart().equals(
             DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG)) {
@@ -1030,9 +1030,9 @@ public class VawsEditor extends AbstractBaseEditor {
         getFachdaten().setWgk((Integer)wgkBox.getSelectedItem());
 
         getFachdaten().setBaujahr(baujahrFeld.getIntValue());
-        getFachdaten().setDatumInbetriebnahme(inbetriebnahmeChooser.getDate());
-        getFachdaten().setDatumGenehmigung(genehmigungChooser.getDate());
-        getFachdaten().setDatumErfassung(erfassungChooser.getDate());
+        getFachdaten().setDatuminbetriebnahme(inbetriebnahmeChooser.getDate());
+        getFachdaten().setDatumgenehmigung(genehmigungChooser.getDate());
+        getFachdaten().setDatumerfassung(erfassungChooser.getDate());
         getFachdaten().setStillegungsdatum(stillegungChooser.getDate());
         getFachdaten().setPruefturnus(pruefTurnusFeld.getDoubleValue());
 
@@ -1055,8 +1055,8 @@ public class VawsEditor extends AbstractBaseEditor {
             getFachdaten().setSchutzSensor(schutzSensorCheck.isSelected());
             getFachdaten().setSchutzFolie(schutzFolieCheck.isSelected());
             getFachdaten().setSchutzAntiheber(schutzAntiheberCheck.isSelected());
-            getFachdaten().setBeschreibung_a(beschreibungAFeld.getText());
-            getFachdaten().setBeschreibung_s(beschreibungSFeld.getText());
+            getFachdaten().setBeschreibungA(beschreibungAFeld.getText());
+            getFachdaten().setBeschreibungS(beschreibungSFeld.getText());
 
             getFachdaten().setOberirdisch(oberIrdischCheck.isSelected());
             getFachdaten().setUnterirdisch(unterIrdischCheck.isSelected());
@@ -1067,15 +1067,15 @@ public class VawsEditor extends AbstractBaseEditor {
             getFachdaten().setMitSchutzrohr(schutzrohrCheck.isSelected());
             getFachdaten().setAusHdpe(ausHdpeCheck.isSelected());
             getFachdaten().setDruckleitung(druckleitungCheck.isSelected());
-            getFachdaten().setBeschreibung_r(beschreibungRFeld.getText());
+            getFachdaten().setBeschreibungR(beschreibungRFeld.getText());
 
         } else if (getFachdaten().getAnlagenart().equals(
             DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG)) {
             getFachdaten().setAusfuehrung((String)ausfuehrungBox.getSelectedItem());
         }
 
-        success = success && VawsFachdaten.merge(getFachdaten());
-        setEditedObject(VawsFachdaten.findById(getFachdaten().getBehaelterId()));
+        success = success && getFachdaten().merge();
+        setEditedObject(VawsFachdaten.findById(getFachdaten().getBehaelterid()));
 
         // Für Abfüllflächen (wg. dem VawsAbfuellflaechen-Objekt)
         if (getFachdaten().getAnlagenart().equals(

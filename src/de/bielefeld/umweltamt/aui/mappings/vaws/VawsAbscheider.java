@@ -80,7 +80,7 @@ public class VawsAbscheider extends AbstractVawsAbscheider implements
                 "Fachdaten-Objekt ist kein VAwS-Abscheider!");
         }
 
-        if (fachdaten.getBehaelterId() == null) {
+        if (fachdaten.getBehaelterid() == null) {
             list = new ArrayList<VawsAbscheider>();
         } else {
             list = new DatabaseAccess()

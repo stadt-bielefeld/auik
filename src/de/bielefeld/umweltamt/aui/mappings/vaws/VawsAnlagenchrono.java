@@ -63,7 +63,7 @@ public class VawsAnlagenchrono extends AbstractVawsAnlagenchrono implements
     public static List<?> getAnlagenChrono(VawsFachdaten fachdaten) {
         List<?> chrono;
 
-        if (fachdaten.getBehaelterId() == null) {
+        if (fachdaten.getBehaelterid() == null) {
             chrono = new ArrayList<VawsAnlagenchrono>();
         } else {
             chrono = new DatabaseAccess()

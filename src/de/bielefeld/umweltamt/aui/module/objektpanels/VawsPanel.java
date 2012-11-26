@@ -285,7 +285,7 @@ public class VawsPanel extends JPanel {
             betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
             standort = hauptModul.getObjekt().getBasisStandort().toString();
             art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
-            behaelterid = anlage.getBehaelterId();
+            behaelterid = anlage.getBehaelterid();
 
             //scriptables.put("liste", vawsModel.getList());
             if (betreiber != null || standort != null || behaelterid != null)

@@ -66,7 +66,7 @@ public class VawsVerwaltungsgebuehren extends AbstractVawsVerwaltungsgebuehren
     public static List<?> getVerwaltungsgebuehren(VawsFachdaten fachdaten) {
         List<?> gebuehren;
 
-        if (fachdaten.getBehaelterId() == null) {
+        if (fachdaten.getBehaelterid() == null) {
             gebuehren = new ArrayList<VawsVerwaltungsgebuehren>();
         } else {
             gebuehren = new DatabaseAccess()

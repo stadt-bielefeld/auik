@@ -79,7 +79,7 @@ public class VawsAbfuellflaeche extends AbstractVawsAbfuellflaeche implements
                 "Fachdaten-Objekt ist keine Abfüllfläche!");
         }
 
-        if (fachdaten.getBehaelterId() == null) {
+        if (fachdaten.getBehaelterid() == null) {
             list = new ArrayList<VawsAbfuellflaeche>();
         } else {
             list = new DatabaseAccess()
