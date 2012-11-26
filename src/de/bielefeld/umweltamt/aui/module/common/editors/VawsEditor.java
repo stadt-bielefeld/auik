@@ -1163,10 +1163,10 @@ public class VawsEditor extends AbstractBaseEditor {
 
         // Sachverständigenprüfung speichern:
         for (Iterator<?> it = svPruefungModel.getList().iterator(); it.hasNext();) {
-            success = success && VawsKontrollen.saveKontrolle((VawsKontrollen) it.next());
+            success = success && ((VawsKontrollen) it.next()).merge();
         }
-        for (Iterator<?> it = svPruefungModel.getGeloeschte().iterator(); it.hasNext();) {
-            success = success && VawsKontrollen.removeKontrolle((VawsKontrollen) it.next());
+        for (Iterator<VawsKontrollen> it = svPruefungModel.getGeloeschte().iterator(); it.hasNext();) {
+            success = success && it.next().delete();
         }
         log.debug(svPruefungModel.getList().size()
         		+ " Sachverständigenprüfungs-Einträge neu/behalten, "
@@ -1869,7 +1869,7 @@ class VawsKontrollenModel extends EditableListTableModel {
         this.fachdaten = fachdaten;
 
         if (fachdaten != null) {
-            setList(VawsKontrollen.getKontrollen(fachdaten));
+            setList(DatabaseQuery.getKontrollen(fachdaten));
             fireTableDataChanged();
         }
     }
@@ -1939,7 +1939,7 @@ class VawsKontrollenModel extends EditableListTableModel {
         return true;
     }
 
-    public List<?> getGeloeschte() {
+    public List<VawsKontrollen> getGeloeschte() {
         return geloeschte;
     }
 

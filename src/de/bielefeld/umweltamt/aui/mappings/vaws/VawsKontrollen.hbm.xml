@@ -1,31 +1,52 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws" schema="auik">
-
-    <class name="VawsKontrollen" table="vaws_kontrollen">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen" table="vaws_kontrollen" schema="auik">
         <id name="id" type="java.lang.Integer">
-        	<column name="id" sql-type="serial"/>
+            <column name="id" />
             <generator class="native">
-            	<param name="sequence">vaws_kontrollen_id_seq</param>
+                <param name="sequence">auik.vaws_kontrollen_id_seq</param>
             </generator>
         </id>
-
-        <property name="grundderpruefung" column="grundderpruefung" type="java.lang.String" />
-        <property name="pruefturnus" column="pruefturnus" type="java.lang.Float" />
-        <property name="pruefdatum" column="pruefdatum" type="java.util.Date" />
-        <property name="pruefer" column="pruefer" type="java.lang.String" />
-        <property name="pruefungabgeschlossen" column="pruefungabgeschlossen" type="java.lang.Boolean" />
-        <property name="nachpruefung" column="nachpruefung" type="java.lang.Boolean" />
-        <property name="nachpruefdatum" column="nachpruefdatum" type="java.util.Date" />
-        <property name="nachpruefer" column="nachpruefer" type="java.lang.String" />
-        <property name="naechstepruefung" column="naechstepruefung" type="java.util.Date" />
-        <property name="pruefergebnis" column="pruefergebnis" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <many-to-one name="vawsFachdaten" column="behaelterid" class="VawsFachdaten" />
+        <many-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" fetch="select">
+            <column name="behaelterid" />
+        </many-to-one>
+        <property name="grundderpruefung" type="java.lang.String">
+            <column name="grundderpruefung" />
+        </property>
+        <property name="pruefturnus" type="java.lang.Float">
+            <column name="pruefturnus" precision="4" scale="0" />
+        </property>
+        <property name="pruefdatum" type="java.util.Date">
+            <column name="pruefdatum" length="8" />
+        </property>
+        <property name="pruefer" type="java.lang.String">
+            <column name="pruefer" />
+        </property>
+        <property name="pruefungabgeschlossen" type="java.lang.Boolean">
+            <column name="pruefungabgeschlossen" />
+        </property>
+        <property name="nachpruefung" type="java.lang.Boolean">
+            <column name="nachpruefung" />
+        </property>
+        <property name="nachpruefdatum" type="java.util.Date">
+            <column name="nachpruefdatum" length="8" />
+        </property>
+        <property name="nachpruefer" type="java.lang.String">
+            <column name="nachpruefer" />
+        </property>
+        <property name="naechstepruefung" type="java.util.Date">
+            <column name="naechstepruefung" length="8" />
+        </property>
+        <property name="pruefergebnis" type="java.lang.String">
+            <column name="pruefergebnis" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>

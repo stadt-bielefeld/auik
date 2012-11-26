@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -37,6 +38,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGefaehrdungsstufen;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -78,6 +80,7 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
 // TODO: For some reason this throws strange exceptions.
 // Using the id directly is only a workaround and somebody should take a longer
 // look at this at some point in time... :(
+// And it seems to be working with the VawsKontrollen...
                     .add(Restrictions.eq("vawsFachdaten", fachdaten)),
 //                    .add(Restrictions.eq(
 //                        "behaelterid", fachdaten.getBehaelterid())),
@@ -326,5 +329,34 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
     /* Queries for package VAWS: class VawsKontrollen                         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
-//    public static List<VawsKontrollen> get
+    /**
+     * Get all VawsKontrollen with "naechstepruefung" in the past and not
+     * "pruefungabgeschlossen"
+     * @return <code>List&lt;VawsKontrollen&gt;</code>
+     */
+    public static List<VawsKontrollen> getWiedervorlageKontrollen() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(VawsKontrollen.class)
+                .add(Restrictions.lt("naechstepruefung", new Date()))
+                .add(Restrictions.eq("pruefungabgeschlossen", false))
+                .addOrder(Order.asc("naechstepruefung"))
+                .addOrder(Order.asc("vawsFachdaten")),
+            new VawsKontrollen());
+    }
+
+    /**
+     * Get VawsKontrollen for a VawsFachdaten object
+     * @param fachdaten VawsFachdaten
+     * @return <code>List&lt;VawsKontrollen&gt;</code>
+     */
+    public static List<VawsKontrollen> getKontrollen(VawsFachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(VawsKontrollen.class)
+                .add(Restrictions.eq("vawsFachdaten", fachdaten))
+                .addOrder(Order.desc("pruefungabgeschlossen"))
+                .addOrder(Order.asc("pruefdatum"))
+                .addOrder(Order.asc("naechstepruefung")),
+            new VawsKontrollen());
+    }
+
 }

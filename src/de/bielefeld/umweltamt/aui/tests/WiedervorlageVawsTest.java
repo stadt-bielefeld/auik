@@ -57,7 +57,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 
 public class WiedervorlageVawsTest extends TestCase {
@@ -87,7 +87,7 @@ public class WiedervorlageVawsTest extends TestCase {
         Session session = null;
         session = _sessionFactory.openSession();
 
-        List<?> list = VawsKontrollen.getAuswertung();
+        List<?> list = DatabaseQuery.getWiedervorlageKontrollen();
 
         List<?> listquery;
         String query = "from VawsKontrollen vk where "
