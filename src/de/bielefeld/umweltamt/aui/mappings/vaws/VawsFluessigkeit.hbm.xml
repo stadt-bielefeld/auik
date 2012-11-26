@@ -1,18 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws" schema="auik">
-
-    <class name="VawsFluessigkeit" table="vaws_fluessigkeit" mutable="false">
-        <id name="id" column="id" type="java.lang.Integer">
-            <generator class="assigned"/>
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit" table="vaws_fluessigkeit" schema="auik">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-
-		<property name="fluessigkeit" column="fluessigkeit" type="java.lang.String" />
-        <property name="idland" column="idland" type="java.lang.Integer" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
+        <property name="fluessigkeit" type="java.lang.String">
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="fluessigkeit" />
+        </property>
+        <property name="idland" type="java.lang.Integer">
+            <column name="idland" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>

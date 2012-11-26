@@ -102,7 +102,6 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGefaehrdungsstufen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
@@ -389,7 +388,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
         hnrFeld = new LimitedTextField(25);
 
-        fluessigkeitBox = new JComboBox(VawsFluessigkeit.getFluessigkeiten());
+        fluessigkeitBox = new JComboBox(DatabaseQuery.getVawsFluessigkeiten());
         fluessigkeitBox.setEditable(true);
         //fluessigkeitBox.setPrototypeDisplayValue("Lösungsmittelrückstände");
 

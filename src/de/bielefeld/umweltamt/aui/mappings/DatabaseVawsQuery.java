@@ -34,6 +34,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsBehaelterart;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -244,4 +245,26 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
             fachdaten.getAnlagenart().equals(
                 DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG)));
     }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsFluessigkeit                       */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static String[] vawsFluessigkeit = null;
+    /**
+     * Get all VawsFluessigkeit
+     * @return <code>VawsBehaelterart[]</code>
+     */
+    public static String[] getVawsFluessigkeiten() {
+        if (DatabaseVawsQuery.vawsFluessigkeit == null) {
+            DatabaseVawsQuery.vawsFluessigkeit =
+                new DatabaseAccess().executeCriteriaToArray(
+                    DetachedCriteria.forClass(VawsFluessigkeit.class)
+                        .setProjection(Projections.property("fluessigkeit"))
+                        .addOrder(Order.asc("fluessigkeit")),
+                    new String[0]);
+        }
+        return DatabaseVawsQuery.vawsFluessigkeit;
+    }
+
 }
