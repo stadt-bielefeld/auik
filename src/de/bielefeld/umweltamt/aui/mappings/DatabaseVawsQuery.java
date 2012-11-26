@@ -36,6 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsBehaelterart;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGefaehrdungsstufen;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -284,6 +285,28 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                     .toArray(new VawsGebuehrenarten[0]);
         }
         return DatabaseVawsQuery.vawsGebuehrenarten;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsGefaehrdungsstufen                 */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static String[] vawsGefaehrdungsstufen = null;
+    /**
+     * Get all VawsGefaehrdungsstufen
+     * @return <code>String[]</code>
+     */
+    public static String[] getVawsGefaehrdungsstufen() {
+        if (DatabaseVawsQuery.vawsGefaehrdungsstufen == null) {
+            DatabaseVawsQuery.vawsGefaehrdungsstufen =
+                new DatabaseAccess().executeCriteriaToArray(
+                    DetachedCriteria.forClass(VawsGefaehrdungsstufen.class)
+                        .setProjection(
+                            Projections.property("gefaehrdungsstufen"))
+                        .addOrder(Order.asc("gefaehrdungsstufen")),
+                    new String[0]);
+        }
+        return DatabaseVawsQuery.vawsGefaehrdungsstufen;
     }
 
 }

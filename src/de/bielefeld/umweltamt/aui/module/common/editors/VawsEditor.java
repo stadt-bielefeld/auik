@@ -103,7 +103,6 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGefaehrdungsstufen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsMaterial;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefer;
@@ -396,7 +395,7 @@ public class VawsEditor extends AbstractBaseEditor {
         vbfBox.setEditable(false);
         //vbfBox.setPrototypeDisplayValue(" A III ");
 
-        gefStufeBox = new JComboBox(VawsGefaehrdungsstufen.getVbfeinstufungen());
+        gefStufeBox = new JComboBox(DatabaseQuery.getVawsGefaehrdungsstufen());
         gefStufeBox.setEditable(false);
         //gefStufeBox.setPrototypeDisplayValue(" A ");
 
