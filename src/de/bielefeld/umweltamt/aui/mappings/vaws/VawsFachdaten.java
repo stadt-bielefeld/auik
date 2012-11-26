@@ -22,14 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'VAWS_FACHDATEN' table. This class may
@@ -38,8 +33,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class VawsFachdaten extends AbstractVawsFachdaten implements
     Serializable {
     private static final long serialVersionUID = -1602704238970146965L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of VawsFachdaten instances.
@@ -67,70 +60,12 @@ public class VawsFachdaten extends AbstractVawsFachdaten implements
         return DatabaseClassToString.toStringForClass(this);
     }
 
-    public String getStillegungsDatumString() {
-        if (getStillegungsdatum() != null) {
-            DateFormat f = DateFormat.getDateInstance(DateFormat.SHORT);
-            return f.format(getStillegungsdatum());
-        } else {
-            return null;
-        }
-//        return AuikUtils.getStringFromDate(getStillegungsdatum());
-    }
-
-    // Anlagenart:
-
-    public boolean isAbfuellflaeche() {
-        return ("Abfüllfläche".equals(getAnlagenart()));
-    }
-
-    public boolean isVAWSAbscheider() {
-        return ("VAwS-Abscheider".equals(getAnlagenart()));
-    }
-
-    public boolean isLageranlage() {
-        return (!(isAbfuellflaeche() || isRohrleitung()));
-    }
-
-    public boolean isRohrleitung() {
-        return ("Rohrleitung".equals(getAnlagenart()));
-    }
-
     /**
      * Liefert alle VAWS-Fachdatensätze zu einem bestimmten BasisObjekt.
      * @param objekt Das BasisObjekt.
      * @return Eine Liste mit VawsFachdaten.
      */
-    public static List<?> getVawsByObjekt(BasisObjekt objekt)
-        throws IllegalArgumentException {
-
-        if (!(objekt.getBasisObjektarten().getAbteilung().equals(
-            DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34))) {
-            throw new IllegalArgumentException(
-            "Zu diesem BasisObjekt existieren keine VAWS-Fachdaten-Objekte!");
-        }
-
-        List<?> vaws;
-        vaws = new DatabaseAccess()
-            .createQuery(
-                "FROM VawsFachdaten as v "
-                    + "WHERE v.basisObjekt = :objekt "
-                    + "ORDER BY v.stillegungsdatum desc, v.anlagenart asc, "
-                    + "v.herstellnr asc")
-            .setEntity("objekt", objekt)
-            .list();
-
-        log.debug(vaws.size() + " VawsFachdatensätze für BO " + objekt
-            + " gefunden!");
-
-        return vaws;
-    }
-
-    /**
-     * Liefert alle VAWS-Fachdatensätze zu einem bestimmten BasisObjekt.
-     * @param objekt Das BasisObjekt.
-     * @return Eine Liste mit VawsFachdaten.
-     */
-    public static VawsFachdaten getVawsByBehaelterId(Integer id) {
+    public static VawsFachdaten findById(Integer id) {
         VawsFachdaten fachdaten = null;
         fachdaten = (VawsFachdaten) new DatabaseAccess()
             .get(VawsFachdaten.class, id);
@@ -143,7 +78,7 @@ public class VawsFachdaten extends AbstractVawsFachdaten implements
      * @return <code>true</code>, falls beim Speichern kein Fehler auftritt,
      *         sonst <code>false</code>.
      */
-    public static boolean saveFachdaten(VawsFachdaten fachdaten) {
+    public static boolean merge(VawsFachdaten fachdaten) {
         return new DatabaseAccess().saveOrUpdate(fachdaten);
     }
 
@@ -154,36 +89,7 @@ public class VawsFachdaten extends AbstractVawsFachdaten implements
      *         <code>false</code> falls dabei ein Fehler auftrat (z.B. der
      *         Datensatz nicht in der Datenbank existiert).
      */
-    public static boolean removeFachdaten(VawsFachdaten fachdaten) {
+    public static boolean delete(VawsFachdaten fachdaten) {
         return new DatabaseAccess().delete(fachdaten);
-    }
-
-    /**
-     * Liefert alle VAWS-Ausführungen. <br>
-     * <b>ACHTUNG:</b> Liefert nicht alle VawsFachdaten, sondern alle in der
-     * Spalte "AUSFUEHRUNG" benutzten Werte!
-     * @return Ein Array mit den Namen aller Ausführungen.
-     */
-    public static String[] getAusfuehrungen() {
-        // FIXME: SELECT distinct nicht die beste Lösung
-        return (String[]) new DatabaseAccess()
-            .createQuery(
-                "SELECT distinct fd.ausfuehrung "
-                + "FROM VawsFachdaten fd "
-                + "ORDER BY fd.ausfuehrung")
-            .setCacheable(true)
-            .setCacheRegion("vawsausfliste")
-            .array(new String[0]);
-    }
-
-    /* Durchsucht VawsFachdaten nach einer bestimmten Herstellnummer und gibt
-     * das Ergebnis als List zurück */
-    public static List<?> findherstellnr(String herstellnr) {
-        return new DatabaseAccess()
-            .createQuery(
-                "FROM VawsFachdaten vaws "
-                + "WHERE vaws.herstellnr like :herstellnr")
-            .setString("herstellnr", herstellnr)
-            .list();
     }
 }

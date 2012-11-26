@@ -50,6 +50,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -104,7 +105,8 @@ public class VawsModel extends ListTableModel {
             break;
         // Stillgelegt:
         case 4:
-            tmp = fd.getStillegungsDatumString();
+            tmp = DateUtils.format(
+                fd.getStillegungsdatum(), DateUtils.FORMAT_DATE);
             break;
 
         // Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
@@ -113,7 +115,7 @@ public class VawsModel extends ListTableModel {
             break;
         }
 
-        if ((fd.getStillegungsdatum() != null) && (tmp != null)) {
+        if ((tmp != null) && (fd.getStillegungsdatum() != null)) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
 

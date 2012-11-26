@@ -57,7 +57,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 
@@ -128,31 +127,6 @@ public class WiedervorlageVawsTest extends TestCase {
         try {
             listquery = session.createQuery(query).setDate(0, new Date())
                 .setBoolean(1, false).list();
-        } catch (HibernateException e) {
-            throw new RuntimeException(e);
-        }
-
-        assertEquals(list.size(), listquery.size());
-        if (session != null && session.isConnected()) {
-            session.close();
-        }
-    }
-
-    /**
-     * Testen ob die Suche nach Herstellnr fehlerfrei funktioniert
-     */
-    public void testHerstelnr() {
-        Session session = null;
-        session = _sessionFactory.openSession();
-
-        List<?> list = VawsFachdaten.findherstellnr("");
-
-        List<?> listquery;
-        String query = "from VawsFachdaten vaws "
-            + "where vaws.herstellnr like ''";
-
-        try {
-            listquery = session.createQuery(query).list();
         } catch (HibernateException e) {
             throw new RuntimeException(e);
         }

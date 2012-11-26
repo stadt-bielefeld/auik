@@ -152,6 +152,21 @@ public class DatabaseConstants {
     /* BasisStandort */
     public static final int BASIS_STANDORT_KEIN_STANDORT = 41;
 
+    /* ********************************************************************** */
+    /* Constants for package INDEINL                                          */
+    /* ********************************************************************** */
+
     /* AnhEntsorger */
     public static final int ANH_ENTSORGER_ID_UNBEKANNT = 1;
+
+    /* ********************************************************************** */
+    /* Constants for package VAWS                                             */
+    /* ********************************************************************** */
+
+    /* VawsAnlagenart(en) */
+    public static final String VAWS_ANLAGENART_ABFUELLFLAECHE = "Abfüllfläche";
+    public static final String VAWS_ANLAGENART_ROHRLEITUNG = "Rohrleitung";
+    public static final String VAWS_ANLAGENART_VAWS_ABSCHEIDER =
+        "VAwS-Abscheider";
+
 }

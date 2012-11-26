@@ -96,6 +96,8 @@ import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
@@ -329,7 +331,7 @@ public class VawsEditor extends AbstractBaseEditor {
     protected String getEditedClassName() {
         String className = super.getEditedClassName();
 
-        if (getFachdaten().isLageranlage()) {
+        if (DatabaseQuery.isLageranlage(getFachdaten())) {
             className += "-Lageranlage";
         } else {
             className += "-" + getFachdaten().getAnlagenart();
@@ -442,7 +444,7 @@ public class VawsEditor extends AbstractBaseEditor {
         mengeFeld = new DoubleField(0);
 
         // Daten (Rohrleitungen)
-        ausfuehrungBox = new JComboBox(VawsFachdaten.getAusfuehrungen());
+        ausfuehrungBox = new JComboBox(DatabaseQuery.getVawsAusfuehrungen());
         ausfuehrungBox.setEditable(false);
         // TODO: Ausführung aus anderer Tabelle / Vorgaben? Welche noch?
 
@@ -719,7 +721,8 @@ public class VawsEditor extends AbstractBaseEditor {
 
         anlagenChronoModel.setFachdaten(getFachdaten());
 
-        if (getFachdaten().isVAWSAbscheider()) {
+        if (getFachdaten().getAnlagenart().equals(
+            DatabaseConstants.VAWS_ANLAGENART_VAWS_ABSCHEIDER)) {
             tabbedPane.addTab("Daten", getDatenVAWSAbscheiderTab());
             tabbedPane.addTab("Ausführung", getAusfuehrungVAWSAbscheiderTab());
             tabbedPane.addTab("Schutzvorkehrungen", getSchutzvorkehrungenVAWSAbscheiderTab());
@@ -809,7 +812,7 @@ public class VawsEditor extends AbstractBaseEditor {
             else
                 rueckCheck.setSelected(false);
         }
-        else if (getFachdaten().isLageranlage()) {
+        else if (DatabaseQuery.isLageranlage(getFachdaten())) {
             tabbedPane.addTab("Daten", getDatenLageranlagenTab());
             tabbedPane.addTab("Schutzvorkehrungen", getSchutzLageranlagenTab());
             tabbedPane.addTab("Leitungen", getLeitungenLageranlagenTab());
@@ -916,12 +919,14 @@ public class VawsEditor extends AbstractBaseEditor {
 
             beschreibungRFeld.setText(getFachdaten().getBeschreibung_r());
 
-        } else if (getFachdaten().isRohrleitung()) {
+        } else if (getFachdaten().getAnlagenart().equals(
+            DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG)) {
             tabbedPane.addTab("Daten", getDatenRohrleitungenTab());
 
             ausfuehrungBox.setSelectedItem(getFachdaten().getAusfuehrung());
 
-        } else if (getFachdaten().isAbfuellflaeche()) {
+        } else if (getFachdaten().getAnlagenart().equals(
+            DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)) {
             tabbedPane.addTab("Daten", getDatenAbfuellflaechenTab());
             tabbedPane.addTab("Ausführung", getAusfuehrungAbfuellflaechenTab());
 
@@ -1037,7 +1042,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
         boolean success = true;
 
-        if (getFachdaten().isLageranlage()) {
+        if (DatabaseQuery.isLageranlage(getFachdaten())) {
             getFachdaten().setMenge(mengeFeld.getDoubleValue());
 
             getFachdaten().setDoppelwandig(doppelWandigCheck.isSelected());
@@ -1064,15 +1069,17 @@ public class VawsEditor extends AbstractBaseEditor {
             getFachdaten().setDruckleitung(druckleitungCheck.isSelected());
             getFachdaten().setBeschreibung_r(beschreibungRFeld.getText());
 
-        } else if (getFachdaten().isRohrleitung()) {
+        } else if (getFachdaten().getAnlagenart().equals(
+            DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG)) {
             getFachdaten().setAusfuehrung((String)ausfuehrungBox.getSelectedItem());
         }
 
-        success = success && VawsFachdaten.saveFachdaten(getFachdaten());
-        setEditedObject(VawsFachdaten.getVawsByBehaelterId(getFachdaten().getBehaelterId()));
+        success = success && VawsFachdaten.merge(getFachdaten());
+        setEditedObject(VawsFachdaten.findById(getFachdaten().getBehaelterId()));
 
         // Für Abfüllflächen (wg. dem VawsAbfuellflaechen-Objekt)
-        if (getFachdaten().isAbfuellflaeche()) {
+        if (getFachdaten().getAnlagenart().equals(
+            DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)) {
             getAbfuellflaeche().setEoh(eohCheck.isSelected());
             getAbfuellflaeche().setEf(efCheck.isSelected());
             if (unbktCheck.isSelected()) {
@@ -1095,7 +1102,8 @@ public class VawsEditor extends AbstractBaseEditor {
 
             success = success && VawsAbfuellflaeche.saveAbfuellflaeche(getAbfuellflaeche());
         }
-        if (getFachdaten().isVAWSAbscheider()) {
+        if (getFachdaten().getAnlagenart().equals(
+            DatabaseConstants.VAWS_ANLAGENART_VAWS_ABSCHEIDER)) {
             getAbscheider().setAbgabe(abgabeCheck.isSelected());
             getAbscheider().setBelvonlagerbh(belueftCheck.isSelected());
             getAbscheider().setHlzapfanl(hochCheck.isSelected());

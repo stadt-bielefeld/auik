@@ -96,6 +96,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ReportManager;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -195,7 +196,7 @@ public class VawsPanel extends JPanel {
      */
     public void fetchFormData() {
         vawsModel.setList(
-                VawsFachdaten.getVawsByObjekt(hauptModul.getObjekt())
+            DatabaseQuery.getVawsFachdatenByObjekt(hauptModul.getObjekt())
         );
     }
 
@@ -239,25 +240,25 @@ public class VawsPanel extends JPanel {
 
     /**
      * Löscht einen Vaws-Datensatz (mit Nachfrage).
-     * @param fd Der Datensatz.
+     * @param fachdaten Der Datensatz.
      */
-    public void loescheDatensatz(VawsFachdaten fd) {
-        String art = fd.getAnlagenart();
-        if (fd.isLageranlage()) {
+    public void loescheDatensatz(VawsFachdaten fachdaten) {
+        String art = fachdaten.getAnlagenart();
+        if (DatabaseQuery.isLageranlage(fachdaten)) {
             art = "Lageranlage";
         }
 
         if (GUIManager.getInstance().showQuestion(
                 "Soll die ausgewählte "+art+" wirklich gelöscht werden?",
                 "Löschen bestätigen")) {
-            if (VawsFachdaten.removeFachdaten(fd)) {
-                hauptModul.getFrame().changeStatus("Fachdatensatz '" + fd + "' erfolgreich gelöscht!", HauptFrame.SUCCESS_COLOR);
+            if (VawsFachdaten.delete(fachdaten)) {
+                hauptModul.getFrame().changeStatus("Fachdatensatz '" + fachdaten + "' erfolgreich gelöscht!", HauptFrame.SUCCESS_COLOR);
 
                 // Tabelle updaten:
                 fetchFormData();
                 updateForm();
             } else {
-                GUIManager.getInstance().showErrorMessage("Konnte Fachdatensatz '" + fd + "' nicht löschen!");
+                GUIManager.getInstance().showErrorMessage("Konnte Fachdatensatz '" + fachdaten + "' nicht löschen!");
             }
         }
     }
