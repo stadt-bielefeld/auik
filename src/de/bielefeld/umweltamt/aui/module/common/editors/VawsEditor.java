@@ -104,7 +104,6 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsMaterial;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefer;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefergebnisse;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
@@ -418,7 +417,7 @@ public class VawsEditor extends AbstractBaseEditor {
         behaelterArtBox = new JComboBox(DatabaseQuery.getVawsBehaelterarten());
         behaelterArtBox.setEditable(false);
 
-        materialBox = new JComboBox(VawsMaterial.getMaterialien());
+        materialBox = new JComboBox(DatabaseQuery.getVawsMaterialien());
         // TODO: Material-Box editable / Tabelleninhalt?
         materialBox.setEditable(true);
         bemerkungArea = new LimitedTextArea(255);

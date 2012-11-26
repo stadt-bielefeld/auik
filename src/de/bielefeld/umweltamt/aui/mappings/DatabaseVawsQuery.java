@@ -39,6 +39,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGefaehrdungsstufen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsMaterial;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -357,6 +358,27 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                 .addOrder(Order.asc("pruefdatum"))
                 .addOrder(Order.asc("naechstepruefung")),
             new VawsKontrollen());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsMaterial                           */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static String[] vawsMaterial = null;
+    /**
+     * Get all VawsMaterial
+     * @return <code>String[]</code>
+     */
+    public static String[] getVawsMaterialien() {
+        if (DatabaseVawsQuery.vawsMaterial == null) {
+            DatabaseVawsQuery.vawsMaterial =
+                new DatabaseAccess().executeCriteriaToArray(
+                    DetachedCriteria.forClass(VawsMaterial.class)
+                        .setProjection(Projections.property("material"))
+                        .addOrder(Order.asc("material")),
+                    new String[0]);
+        }
+        return DatabaseVawsQuery.vawsMaterial;
     }
 
 }
