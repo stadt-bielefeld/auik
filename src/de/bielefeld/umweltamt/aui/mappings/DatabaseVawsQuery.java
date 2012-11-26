@@ -41,6 +41,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGefaehrdungsstufen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsMaterial;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefer;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefergebnisse;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -401,6 +402,27 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                     new String[0]);
         }
         return DatabaseVawsQuery.vawsPruefer;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsPruefergebnisse                    */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static String[] vawsPruefergebnisse = null;
+    /**
+     * Get all VawsPruefergebnisse
+     * @return <code>String[]</code>
+     */
+    public static String[] getVawsPruefergebnisse() {
+        if (DatabaseVawsQuery.vawsPruefergebnisse == null) {
+            DatabaseVawsQuery.vawsPruefergebnisse =
+                new DatabaseAccess().executeCriteriaToArray(
+                    DetachedCriteria.forClass(VawsPruefergebnisse.class)
+                        .setProjection(Projections.property("pruefergebnis"))
+                        .addOrder(Order.asc("pruefergebnis")),
+                    new String[0]);
+        }
+        return DatabaseVawsQuery.vawsPruefergebnisse;
     }
 
 }

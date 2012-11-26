@@ -71,6 +71,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGefaehrdungsstufen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsMaterial;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefer;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefergebnisse;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
@@ -465,6 +466,11 @@ public class DatabaseClassToString {
 
     /** @return "VawsPruefer.toGuiString() */
     public static String toStringForClass(VawsPruefer clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return "VawsPruefergebnisse.toGuiString() */
+    public static String toStringForClass(VawsPruefergebnisse clazz) {
         return clazz.toGuiString();
     }
 

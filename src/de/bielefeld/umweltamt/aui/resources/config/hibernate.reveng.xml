@@ -338,6 +338,11 @@
             <meta attribute="use-in-tostring">true</meta>
         </column>
     </table>
+    <table schema="auik" name="vaws_pruefergebnisse">
+        <column name="pruefergebnis">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
     <table schema="auik" name="vaws_standortgghwsg">
         <column name="standortgg">
             <meta attribute="use-in-tostring">true</meta>

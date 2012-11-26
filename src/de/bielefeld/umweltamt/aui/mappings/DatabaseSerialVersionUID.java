@@ -91,7 +91,7 @@ public class DatabaseSerialVersionUID {
     public static final long forVawsKontrollen          = 7151680384864528912L;
     public static final long forVawsMaterial            = 877428098249100951L;
     public static final long forVawsPruefer             = -8186136740692550007L;
-    public static final long forVawsPruefergebnis       = 8818576480714655006L;
+    public static final long forVawsPruefergebnisse     = 8818576480714655006L;
     public static final long forVawsStandortgghwsg      = 1741294639861761005L;
     public static final long forVawsVbfeinstufung       = -6790140057582801754L;
     public static final long forVawsVerwaltungsgebuehren = 2246682815656123749L;
