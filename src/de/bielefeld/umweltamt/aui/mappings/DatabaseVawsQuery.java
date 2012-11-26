@@ -42,6 +42,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsMaterial;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefer;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefergebnisse;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -423,6 +424,24 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                     new String[0]);
         }
         return DatabaseVawsQuery.vawsPruefergebnisse;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsStandortgghwsg                     */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static VawsStandortgghwsg[] vawsStandortgghwsg = null;
+    /**
+     * Get all VawsStandortgghwsg
+     * @return <code>VawsStandortgghwsg[]</code>
+     */
+    public static VawsStandortgghwsg[] getVawsStandortgghwsg() {
+        if (DatabaseVawsQuery.vawsStandortgghwsg == null) {
+            DatabaseVawsQuery.vawsStandortgghwsg =
+                DatabaseQuery.getOrderedAll(new VawsStandortgghwsg())
+                    .toArray(new VawsStandortgghwsg[0]);
+        }
+        return DatabaseVawsQuery.vawsStandortgghwsg;
     }
 
 }

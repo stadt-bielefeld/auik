@@ -393,4 +393,5 @@
     <!-- auik.vaws: -->
     <!--            vaws_fachdaten -->
     <!--            vaws_gebuehrenarten -->
+    <!--            vaws_standortgghwsg -->
 </hibernate-reverse-engineering>

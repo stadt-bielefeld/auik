@@ -320,7 +320,7 @@ public class StandortEditor extends AbstractBaseEditor {
                     gemarkungen = DatabaseQuery.getBasisGemarkungen();
                 }
                 if (standortggs == null) {
-                    standortggs = VawsStandortgghwsg.getStandortGg();
+                    standortggs = DatabaseQuery.getVawsStandortgghwsg();
                 }
                 if (entwgebiete == null) {
                     entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();

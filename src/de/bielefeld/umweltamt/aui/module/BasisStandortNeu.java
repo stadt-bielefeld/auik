@@ -436,7 +436,7 @@ public class BasisStandortNeu extends AbstractModul {
                     gemarkungen = DatabaseQuery.getBasisGemarkungen();
                 }
                 if (standortggs == null) {
-                    standortggs = VawsStandortgghwsg.getStandortGg();
+                    standortggs = DatabaseQuery.getVawsStandortgghwsg();
                 }
                 if (entwgebiete == null) {
                     entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
