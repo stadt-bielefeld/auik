@@ -29,8 +29,9 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
-
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * This is a service class for all custom queries from the vaws package.
@@ -40,9 +41,91 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
  */
 abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
 
+    /** Logging */
+    private static final AuikLogger log = AuikLogger.getLogger();
+
     /* ********************************************************************** */
     /* Queries for package VAWS                                               */
     /* ********************************************************************** */
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsAbfuellflaeche                     */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get a VawsAbfluellflaeche (create a new one if needed)
+     * @param fachdaten VawsFachdaten
+     * @return VawsAbfuellflaeche
+     */
+    public static VawsAbfuellflaeche getAbfuellflaeche(
+        VawsFachdaten fachdaten) {
+        if (fachdaten == null
+            || !fachdaten.getAnlagenart().equals(
+                DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)) {
+            return null;
+        }
+        VawsAbfuellflaeche flaeche = new DatabaseAccess()
+            .executeCriteriaToUniqueResult(
+                DetachedCriteria.forClass(VawsAbfuellflaeche.class)
+// TODO: For some reason this throws strange exceptions.
+// Using the id directly is only a workaround and somebody should take a longer
+// look at this at some point in time... :(
+//                    .add(Restrictions.eq("vawsFachdaten", fachdaten)),
+                    .add(Restrictions.eq(
+                        "behaelterid", fachdaten.getBehaelterid())),
+                new VawsAbfuellflaeche());
+        if (flaeche == null) {
+            // Bei so ziemlich 95% aller Tankstellen gibts ein VawsFachdaten-
+            // Objekt, aber kein VawsAbfuellflaechen-Objekt.
+            // Seems like it's not a bug, it's a feature...
+
+            // Also legen wir in diesen Füllen einfach ein neues
+            // VawsAbfuellflaechen-Objekt an.
+
+            // Das selbe tun wir bei einem noch ungespeicherten
+            // neuen VawsFachdaten-Objekt.
+            flaeche = new VawsAbfuellflaeche();
+            flaeche.setVawsFachdaten(fachdaten);
+            log.debug("Neue Fläche für '" + fachdaten + "' erzeugt!");
+        }
+        return flaeche;
+    }
+
+    private static String[] vawsBodenflaechenausf = null;
+    /**
+     * Get all used Bodenflaechenausf from VawsAbfuellflaeche
+     * @return <code>String[]</code>
+     */
+    public static String[] getVawsBodenflaechenausf() {
+        if (DatabaseVawsQuery.vawsBodenflaechenausf == null) {
+            DatabaseVawsQuery.vawsBodenflaechenausf = new DatabaseAccess()
+                .executeCriteriaToArray(
+                    DetachedCriteria.forClass(VawsAbfuellflaeche.class)
+                        .setProjection(Projections.distinct(
+                            Projections.property("bodenflaechenausf")))
+                        .addOrder(Order.asc("bodenflaechenausf")),
+                    new String[0]);
+        }
+        return DatabaseVawsQuery.vawsBodenflaechenausf;
+    }
+
+    private static String[] vawsNiederschlagschutz = null;
+    /**
+     * Get all used Niederschlagschutz from VawsAbfuellflaeche
+     * @return <code>String[]</code>
+     */
+    public static String[] getVawsNiederschlagschutz() {
+        if (DatabaseVawsQuery.vawsNiederschlagschutz == null) {
+            DatabaseVawsQuery.vawsNiederschlagschutz = new DatabaseAccess()
+                .executeCriteriaToArray(
+                    DetachedCriteria.forClass(VawsAbfuellflaeche.class)
+                        .setProjection(Projections.distinct(
+                            Projections.property("niederschlagschutz")))
+                        .addOrder(Order.asc("niederschlagschutz")),
+                    new String[0]);
+        }
+        return DatabaseVawsQuery.vawsNiederschlagschutz;
+    }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package VAWS: class VawsFachdaten                          */

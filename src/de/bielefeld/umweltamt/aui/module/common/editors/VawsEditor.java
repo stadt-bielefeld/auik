@@ -361,7 +361,7 @@ public class VawsEditor extends AbstractBaseEditor {
      */
     private VawsAbfuellflaeche getAbfuellflaeche() {
         if (abfuellflaeche == null) {
-            abfuellflaeche = VawsAbfuellflaeche.getAbfuellflaeche(getFachdaten());
+            abfuellflaeche = DatabaseQuery.getAbfuellflaeche(getFachdaten());
         }
 
         return abfuellflaeche;
@@ -488,12 +488,14 @@ public class VawsEditor extends AbstractBaseEditor {
         beschreibungRFeld = new LimitedTextArea(255);
 
         // Ausführung (Abfüllflächen)
-        bodenflaechenAusfBox = new JComboBox(VawsAbfuellflaeche.getBodenflaechenausfArray());
+        bodenflaechenAusfBox = new JComboBox(
+            DatabaseQuery.getVawsBodenflaechenausf());
         bodenflaechenAusfBox.setEditable(false);
         dickeFeld = new DoubleField(0);
         gueteFeld = new LimitedTextField(50);
         fugenMaterialFeld = new LimitedTextField(50);
-        niederschlagSchutzBox = new JComboBox(VawsAbfuellflaeche.getNiederschlagschutzArray());
+        niederschlagSchutzBox = new JComboBox(
+            DatabaseQuery.getVawsNiederschlagschutz());
         niederschlagSchutzBox.setEditable(false);
         abscheiderVorhandenCheck = new JCheckBox("Abscheider vorhanden?");
         beschrBodenflaecheArea = new LimitedTextArea(255);
@@ -1100,7 +1102,7 @@ public class VawsEditor extends AbstractBaseEditor {
             getAbfuellflaeche().setBeschfugenmat(beschrFugenmaterialArea.getText());
             getAbfuellflaeche().setBeschableitung(beschrAblNiederschlArea.getText());
 
-            success = success && VawsAbfuellflaeche.saveAbfuellflaeche(getAbfuellflaeche());
+            success = success && getAbfuellflaeche().merge();
         }
         if (getFachdaten().getAnlagenart().equals(
             DatabaseConstants.VAWS_ANLAGENART_VAWS_ABSCHEIDER)) {

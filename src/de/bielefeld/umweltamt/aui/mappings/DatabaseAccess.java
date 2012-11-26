@@ -525,7 +525,7 @@ public class DatabaseAccess {
      * ...
      * Anh49Verwaltungsverfahren result = new DatabaseAccess()
      *     .executeCriteriaToUniqueResult(
-     *         criteria, Anh49Verwaltungsverfahren.class);
+     *         criteria, new Anh49Verwaltungsverfahren());
      * </pre></code>
      * @param <T> type of the result
      * @param detachedCriteria query/criteria to execute

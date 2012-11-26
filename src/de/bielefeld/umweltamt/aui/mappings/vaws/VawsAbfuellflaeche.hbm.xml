@@ -1,34 +1,59 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws" schema="auik">
-
-    <class name="VawsAbfuellflaeche" table="vaws_abfuellflaeche">
-        <id name="behaelterid" column="behaelterid" type="java.lang.Integer">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche" table="vaws_abfuellflaeche" schema="auik">
+        <id name="behaelterid" type="java.lang.Integer">
+            <column name="behaelterid" />
             <generator class="foreign">
-            	<param name="property">vawsFachdaten</param>
+                <param name="property">vawsFachdaten</param>
             </generator>
         </id>
-
-        <one-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" />
-
-        <property name="eoh" column="eoh" type="java.lang.Boolean" />
-        <property name="ef" column="ef" type="java.lang.Boolean" />
-        <property name="abfsaniert" column="abfsaniert" type="java.lang.Boolean" />
-        <property name="abfneuerstellt" column="abfneuerstellt" type="java.lang.Boolean" />
-        <property name="bodenflaechenausf" column="bodenflaechenausf" type="java.lang.String" />
-        <property name="beschbodenfl" column="beschbodenfl" type="java.lang.String" />
-        <property name="dicke" column="dicke" type="java.lang.Float" />
-        <property name="guete" column="guete" type="java.lang.String" />
-        <property name="fugenmaterial" column="fugenmaterial" type="java.lang.String" />
-        <property name="beschfugenmat" column="beschfugenmat" type="java.lang.String" />
-        <property name="niederschlagschutz" column="niederschlagschutz" type="java.lang.String" />
-        <property name="abscheidervorh" column="abscheidervorh" type="java.lang.Boolean" />
-        <property name="beschableitung" column="beschableitung" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
+        <one-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" constrained="true"></one-to-one>
+        <property name="eoh" type="java.lang.Boolean">
+            <column name="eoh" />
+        </property>
+        <property name="ef" type="java.lang.Boolean">
+            <column name="ef" />
+        </property>
+        <property name="abfsaniert" type="java.lang.Boolean">
+            <column name="abfsaniert" />
+        </property>
+        <property name="abfneuerstellt" type="java.lang.Boolean">
+            <column name="abfneuerstellt" />
+        </property>
+        <property name="bodenflaechenausf" type="java.lang.String">
+            <column name="bodenflaechenausf" />
+        </property>
+        <property name="beschbodenfl" type="java.lang.String">
+            <column name="beschbodenfl" />
+        </property>
+        <property name="dicke" type="java.lang.Float">
+            <column name="dicke" precision="4" scale="0" />
+        </property>
+        <property name="guete" type="java.lang.String">
+            <column name="guete" />
+        </property>
+        <property name="fugenmaterial" type="java.lang.String">
+            <column name="fugenmaterial" />
+        </property>
+        <property name="beschfugenmat" type="java.lang.String">
+            <column name="beschfugenmat" />
+        </property>
+        <property name="niederschlagschutz" type="java.lang.String">
+            <column name="niederschlagschutz" />
+        </property>
+        <property name="abscheidervorh" type="java.lang.Boolean">
+            <column name="abscheidervorh" />
+        </property>
+        <property name="beschableitung" type="java.lang.String">
+            <column name="beschableitung" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>
