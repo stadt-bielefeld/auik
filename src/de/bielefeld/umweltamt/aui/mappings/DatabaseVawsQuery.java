@@ -248,6 +248,19 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                 DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG)));
     }
 
+    /**
+     * Durchsucht VawsFachdaten nach einer bestimmten Herstellnummer und gibt
+     * das Ergebnis als List zurück
+     * @param search String
+     * @return <code>List&lt;VawsFachdaten&gt;</code>
+     */
+    public static List<VawsFachdaten> findHerstellNr(String search) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(VawsFachdaten.class)
+                .add(Restrictions.like("herstellnr", search)),
+            new VawsFachdaten());
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package VAWS: class VawsFluessigkeit                       */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
@@ -309,4 +322,9 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
         return DatabaseVawsQuery.vawsGefaehrdungsstufen;
     }
 
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsKontrollen                         */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+//    public static List<VawsKontrollen> get
 }
