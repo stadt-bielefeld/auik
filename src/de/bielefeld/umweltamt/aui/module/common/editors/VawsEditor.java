@@ -350,10 +350,15 @@ public class VawsEditor extends AbstractBaseEditor {
 
     public VawsAbscheider getAbscheider() {
         if (abscheider == null) {
-            abscheider = VawsAbscheider.getAbscheider(getFachdaten());
+            abscheider = getFachdaten().getVawsAbscheider();
+            if (abscheider == null) {
+                abscheider = new VawsAbscheider();
+                abscheider.setVawsFachdaten(getFachdaten());
+            }
         }
         return abscheider;
     }
+
     /**
      * Liefert die Abfüllflächen-Fachdaten zum bearbeiteten Objekt.
      * Achtung: Nur bei Abfüllflächen-Objekten aufrufen!
@@ -362,8 +367,11 @@ public class VawsEditor extends AbstractBaseEditor {
     private VawsAbfuellflaeche getAbfuellflaeche() {
         if (abfuellflaeche == null) {
             abfuellflaeche = getFachdaten().getVawsAbfuellflaeche();
+            if (abfuellflaeche == null) {
+                abfuellflaeche = new VawsAbfuellflaeche();
+                abfuellflaeche.setVawsFachdaten(getFachdaten());
+            }
         }
-
         return abfuellflaeche;
     }
 
@@ -1140,7 +1148,7 @@ public class VawsEditor extends AbstractBaseEditor {
             getAbscheider().setSonlaenge(sonsLField.getText());
             getAbscheider().setSonmaterial(sonsMatField.getText());
 
-            success = success && VawsAbscheider.saveAbscheider(getAbscheider());
+            success = success && getAbscheider().merge();
 
         }
         // Anlagenchronologie speichern:

@@ -168,6 +168,7 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen" />
         </set>
+        <one-to-one name="vawsAbscheider" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider"></one-to-one>
         <set name="vawsAnlagenchronos" table="vaws_anlagenchrono" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="behaelterid" not-null="true" />

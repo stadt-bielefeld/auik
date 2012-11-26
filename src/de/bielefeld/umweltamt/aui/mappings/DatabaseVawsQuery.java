@@ -59,7 +59,7 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
      */
 // TODO: I replaced this hole method by fachdaten.getVawsAbfuellflaeche()
 // BUT: Someone should still find out why this does not work... :(
-    public static VawsAbfuellflaeche getAbfuellflaeche(
+    private static VawsAbfuellflaeche getAbfuellflaeche(
         VawsFachdaten fachdaten) {
         if (fachdaten == null
             || !fachdaten.getAnlagenart().equals(

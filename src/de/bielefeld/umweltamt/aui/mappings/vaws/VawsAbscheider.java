@@ -22,12 +22,9 @@
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the 'VAWS_Abscheider' table. This class may
@@ -36,8 +33,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class VawsAbscheider extends AbstractVawsAbscheider implements
     Serializable {
     private static final long serialVersionUID = -8362004833711418556L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Simple constructor of VawsAbscheider instances.
@@ -69,67 +64,20 @@ public class VawsAbscheider extends AbstractVawsAbscheider implements
 
     // Statischer Teil:
 
-    public static VawsAbscheider getAbscheider(VawsFachdaten fachdaten)
-        throws IllegalArgumentException {
-        VawsAbscheider abscheider;
-        List<?> list;
-
-        if (fachdaten == null
-            || !fachdaten.getAnlagenart().equals("VAwS-Abscheider")) {
-            throw new IllegalArgumentException(
-                "Fachdaten-Objekt ist kein VAwS-Abscheider!");
-        }
-
-        if (fachdaten.getBehaelterid() == null) {
-            list = new ArrayList<VawsAbscheider>();
-        } else {
-            list = new DatabaseAccess()
-                .createQuery(
-                    "FROM VawsAbscheider abff "
-                        + "WHERE abff.vawsFachdaten = :fachdaten ")
-                .setEntity("fachdaten", fachdaten)
-                .list();
-        }
-
-        // TODO: Here we also could use uniqueResult instead of list, but I am
-        // not to sure about the logic here...
-
-        if (list.size() > 0) {
-            abscheider = (VawsAbscheider) list.get(0);
-            log.debug("Fläche '" + abscheider + "' geladen!");
-        } else {
-            // Bei so ziemlich 95% aller Tankstellen gibts ein VawsFachdaten-
-            // Objekt, aber kein VawsAbscheidern-Objekt.
-            // Seems like it's not a bug, it's a feature...
-
-            // Also legen wir in diesen Füllen einfach ein neues
-            // VawsAbscheidern-Objekt an.
-
-            // Das selbe tun wir bei einem noch ungespeicherten
-            // neuen VawsFachdaten-Objekt.
-
-            abscheider = new VawsAbscheider();
-            abscheider.setVawsFachdaten(fachdaten);
-            log.debug("Neuer Abscheider für '" + fachdaten + "' erzeugt!");
-        }
-
-        return abscheider;
-    }
-
     /**
      * Speichert einen VAWS-Abfüllflächen-Datensatz in der Datenbank.
      * @param flaeche Der zu speichernde Datensatz.
      * @return <code>true</code>, falls beim Speichern kein Fehler auftritt,
      *         sonst <code>false</code>.
      */
-    public static boolean saveAbscheider(VawsAbscheider abscheider)
+    public boolean merge()
         throws IllegalArgumentException {
 
-        if (abscheider.getVawsFachdaten() == null) {
+        if (this.getVawsFachdaten() == null) {
             throw new IllegalArgumentException(
                 "Die VawsAbscheider muss einem VawsFachdaten-Objekt zugeordnet sein!");
         }
 
-        return new DatabaseAccess().saveOrUpdate(abscheider);
+        return new DatabaseAccess().saveOrUpdate(this);
     }
 }
