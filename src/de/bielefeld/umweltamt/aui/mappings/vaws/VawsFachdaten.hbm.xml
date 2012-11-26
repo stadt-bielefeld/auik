@@ -180,5 +180,6 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren" />
         </set>
+        <one-to-one name="vawsAbfuellflaeche" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche"></one-to-one>
     </class>
 </hibernate-mapping>

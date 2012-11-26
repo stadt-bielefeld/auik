@@ -57,6 +57,8 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
      * @param fachdaten VawsFachdaten
      * @return VawsAbfuellflaeche
      */
+// TODO: I replaced this hole method by fachdaten.getVawsAbfuellflaeche()
+// BUT: Someone should still find out why this does not work... :(
     public static VawsAbfuellflaeche getAbfuellflaeche(
         VawsFachdaten fachdaten) {
         if (fachdaten == null
@@ -70,9 +72,9 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
 // TODO: For some reason this throws strange exceptions.
 // Using the id directly is only a workaround and somebody should take a longer
 // look at this at some point in time... :(
-//                    .add(Restrictions.eq("vawsFachdaten", fachdaten)),
-                    .add(Restrictions.eq(
-                        "behaelterid", fachdaten.getBehaelterid())),
+                    .add(Restrictions.eq("vawsFachdaten", fachdaten)),
+//                    .add(Restrictions.eq(
+//                        "behaelterid", fachdaten.getBehaelterid())),
                 new VawsAbfuellflaeche());
         if (flaeche == null) {
             // Bei so ziemlich 95% aller Tankstellen gibts ein VawsFachdaten-

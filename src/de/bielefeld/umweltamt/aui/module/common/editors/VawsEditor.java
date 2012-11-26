@@ -361,7 +361,7 @@ public class VawsEditor extends AbstractBaseEditor {
      */
     private VawsAbfuellflaeche getAbfuellflaeche() {
         if (abfuellflaeche == null) {
-            abfuellflaeche = DatabaseQuery.getAbfuellflaeche(getFachdaten());
+            abfuellflaeche = getFachdaten().getVawsAbfuellflaeche();
         }
 
         return abfuellflaeche;

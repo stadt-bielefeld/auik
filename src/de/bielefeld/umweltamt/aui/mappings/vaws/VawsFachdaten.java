@@ -101,6 +101,7 @@ public class VawsFachdaten  implements java.io.Serializable {
     private Set<VawsKontrollen> vawsKontrollens = new HashSet<VawsKontrollen>(0);
     private Set<VawsAnlagenchrono> vawsAnlagenchronos = new HashSet<VawsAnlagenchrono>(0);
     private Set<VawsVerwaltungsgebuehren> vawsVerwaltungsgebuehrens = new HashSet<VawsVerwaltungsgebuehren>(0);
+    private VawsAbfuellflaeche vawsAbfuellflaeche;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -120,7 +121,7 @@ public class VawsFachdaten  implements java.io.Serializable {
 
     /** Full constructor */
     public VawsFachdaten(
-        BasisObjekt basisObjekt, String herstellnr, String hersteller, Date datuminbetriebnahme, Date datumerfassung, Date datumaenderung, Date datumgenehmigung, String anlagenart, String behaelterart, String material, String fluessigkeit, String vbfeinstufung, Double menge, Integer wgk, String gefaehrdungsstufe, Integer baujahr, Boolean doppelwandig, Boolean leckanzeige, Boolean auffangraum, Boolean grenzwertgeber, Boolean leckschutzauskleidung, Boolean kellerlagerung, Boolean innenbeschichtung, String beschreibungA, String beschreibungS, Boolean oberirdisch, Boolean unterirdisch, Boolean saugleitung, Boolean rohrKathodenschutz, Boolean ausKupfer, Boolean ausStahl, Boolean mitSchutzrohr, String beschreibungR, Double pruefturnus, Boolean angemahntkz, Date mahnfrist, Date wiedervorlage, Date stillegungsdatum, String bemerkungen, String ausfuehrung, String pruefumfang, String verwendung, boolean enabled, boolean deleted, Boolean ausHdpe, Boolean druckleitung, Boolean schutzSensor, Boolean schutzFolie, Boolean schutzAntiheber, Set<VawsVerwaltungsverf> vawsVerwaltungsverfs, Set<VawsKontrollen> vawsKontrollens, Set<VawsAnlagenchrono> vawsAnlagenchronos, Set<VawsVerwaltungsgebuehren> vawsVerwaltungsgebuehrens) {
+        BasisObjekt basisObjekt, String herstellnr, String hersteller, Date datuminbetriebnahme, Date datumerfassung, Date datumaenderung, Date datumgenehmigung, String anlagenart, String behaelterart, String material, String fluessigkeit, String vbfeinstufung, Double menge, Integer wgk, String gefaehrdungsstufe, Integer baujahr, Boolean doppelwandig, Boolean leckanzeige, Boolean auffangraum, Boolean grenzwertgeber, Boolean leckschutzauskleidung, Boolean kellerlagerung, Boolean innenbeschichtung, String beschreibungA, String beschreibungS, Boolean oberirdisch, Boolean unterirdisch, Boolean saugleitung, Boolean rohrKathodenschutz, Boolean ausKupfer, Boolean ausStahl, Boolean mitSchutzrohr, String beschreibungR, Double pruefturnus, Boolean angemahntkz, Date mahnfrist, Date wiedervorlage, Date stillegungsdatum, String bemerkungen, String ausfuehrung, String pruefumfang, String verwendung, boolean enabled, boolean deleted, Boolean ausHdpe, Boolean druckleitung, Boolean schutzSensor, Boolean schutzFolie, Boolean schutzAntiheber, Set<VawsVerwaltungsverf> vawsVerwaltungsverfs, Set<VawsKontrollen> vawsKontrollens, Set<VawsAnlagenchrono> vawsAnlagenchronos, Set<VawsVerwaltungsgebuehren> vawsVerwaltungsgebuehrens, VawsAbfuellflaeche vawsAbfuellflaeche) {
         this.basisObjekt = basisObjekt;
         this.herstellnr = herstellnr;
         this.hersteller = hersteller;
@@ -174,6 +175,7 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.vawsKontrollens = vawsKontrollens;
         this.vawsAnlagenchronos = vawsAnlagenchronos;
         this.vawsVerwaltungsgebuehrens = vawsVerwaltungsgebuehrens;
+        this.vawsAbfuellflaeche = vawsAbfuellflaeche;
     }
 
     /* Setter and getter methods */
@@ -609,6 +611,14 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.vawsVerwaltungsgebuehrens = vawsVerwaltungsgebuehrens;
     }
 
+    public VawsAbfuellflaeche getVawsAbfuellflaeche() {
+        return this.vawsAbfuellflaeche;
+    }
+
+    public void setVawsAbfuellflaeche(VawsAbfuellflaeche vawsAbfuellflaeche) {
+        this.vawsAbfuellflaeche = vawsAbfuellflaeche;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -682,6 +692,7 @@ public class VawsFachdaten  implements java.io.Serializable {
         buffer.append("vawsKontrollens").append("='").append(getVawsKontrollens()).append("' ");
         buffer.append("vawsAnlagenchronos").append("='").append(getVawsAnlagenchronos()).append("' ");
         buffer.append("vawsVerwaltungsgebuehrens").append("='").append(getVawsVerwaltungsgebuehrens()).append("' ");
+        buffer.append("vawsAbfuellflaeche").append("='").append(getVawsAbfuellflaeche()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -787,6 +798,7 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.vawsKontrollens = copy.getVawsKontrollens();
         this.vawsAnlagenchronos = copy.getVawsAnlagenchronos();
         this.vawsVerwaltungsgebuehrens = copy.getVawsVerwaltungsgebuehrens();
+        this.vawsAbfuellflaeche = copy.getVawsAbfuellflaeche();
     }
 
     /**
