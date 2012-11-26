@@ -1,24 +1,31 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.vaws" schema="auik">
-
-    <class name="VawsAnlagenchrono" table="vaws_anlagenchrono">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono" table="vaws_anlagenchrono" schema="auik">
         <id name="id" type="java.lang.Integer">
-        	<column name="id" sql-type="serial"/>
+            <column name="id" />
             <generator class="native">
-            	<param name="sequence">vaws_anlagenchrono_id_seq</param>
+                <param name="sequence">auik.vaws_anlagenchrono_id_seq</param>
             </generator>
         </id>
-
-        <property name="datum" column="datum" type="java.util.Date" />
-        <property name="sachverhalt" column="sachverhalt" type="java.lang.String" />
-        <property name="wv" column="wv" type="java.util.Date" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-
-        <many-to-one name="vawsFachdaten" column="behaelterid" class="VawsFachdaten" not-null="true" />
+        <many-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" fetch="select">
+            <column name="behaelterid" not-null="true" />
+        </many-to-one>
+        <property name="datum" type="java.util.Date">
+            <column name="datum" length="8" />
+        </property>
+        <property name="sachverhalt" type="java.lang.String">
+            <column name="sachverhalt" />
+        </property>
+        <property name="wv" type="java.util.Date">
+            <column name="wv" length="8" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
-
 </hibernate-mapping>

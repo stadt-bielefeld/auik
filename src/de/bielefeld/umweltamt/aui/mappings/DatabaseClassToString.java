@@ -62,6 +62,7 @@ import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsBehaelterart;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
@@ -413,6 +414,11 @@ public class DatabaseClassToString {
     /** @return "VawsAnlagenarten.toGuiString() */
     public static String toStringForClass(VawsAnlagenarten clazz) {
         return clazz.toGuiString();
+    }
+
+    /** @return "VawsAnlagenchrono.toDebugString() */
+    public static String toStringForClass(VawsAnlagenchrono clazz) {
+        return clazz.toDebugString();
     }
 
     /** @return "VawsBehaelterart.toGuiString() */

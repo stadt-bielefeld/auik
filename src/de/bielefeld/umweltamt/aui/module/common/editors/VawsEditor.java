@@ -1153,10 +1153,10 @@ public class VawsEditor extends AbstractBaseEditor {
         }
         // Anlagenchronologie speichern:
         for (Iterator<?> it = anlagenChronoModel.getList().iterator(); it.hasNext();) {
-            success = success && VawsAnlagenchrono.saveAnlagenChrono((VawsAnlagenchrono) it.next());
+            success = success && ((VawsAnlagenchrono) it.next()).merge();
         }
-        for (Iterator<?> it = anlagenChronoModel.getGeloeschte().iterator(); it.hasNext();) {
-            success = success && VawsAnlagenchrono.removeAnlagenChrono((VawsAnlagenchrono) it.next());
+        for (Iterator<VawsAnlagenchrono> it = anlagenChronoModel.getGeloeschte().iterator(); it.hasNext();) {
+            success = success && it.next().delete();
         }
         log.debug(anlagenChronoModel.getList().size()
                 + " AnlagenChrono-Einträge neu/behalten, "
@@ -1722,7 +1722,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
         this.fachdaten = fachdaten;
 
         if (fachdaten != null) {
-            setList(VawsAnlagenchrono.getAnlagenChrono(fachdaten));
+            setList(DatabaseQuery.getAnlagenChronos(fachdaten));
             fireTableDataChanged();
         }
     }
@@ -1785,7 +1785,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
         return true;
     }
 
-    public List<?> getGeloeschte() {
+    public List<VawsAnlagenchrono> getGeloeschte() {
         return geloeschte;
     }
 

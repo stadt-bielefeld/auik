@@ -31,6 +31,7 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -146,6 +147,25 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                     .toArray(new VawsAnlagenarten[0]);
         }
         return DatabaseVawsQuery.vawsAnlagenarten;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsAnlagenchrono                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get VawsAnlagenchrono for VawsFachdaten
+     * @param fachdaten VawsFachdaten
+     * @return <code>List&lt;VawsAnlagenchrono&gt;</code>
+     */
+    public static List<VawsAnlagenchrono> getAnlagenChronos(
+        VawsFachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(VawsAnlagenchrono.class)
+                .add(Restrictions.eq("vawsFachdaten", fachdaten))
+                .addOrder(Order.asc("datum"))
+                .addOrder(Order.asc("wv")),
+            new VawsAnlagenchrono());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
