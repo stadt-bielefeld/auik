@@ -30,6 +30,7 @@ import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -127,6 +128,24 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                     new String[0]);
         }
         return DatabaseVawsQuery.vawsNiederschlagschutz;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsAnlagenarten                       */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static VawsAnlagenarten[] vawsAnlagenarten = null;
+    /**
+     * Get all VawsAnlagenarten
+     * @return <code>VawsAnlagenarten[]</code>
+     */
+    public static VawsAnlagenarten[] getVawsAnlagenarten() {
+        if (DatabaseVawsQuery.vawsAnlagenarten == null) {
+            DatabaseVawsQuery.vawsAnlagenarten =
+                DatabaseQuery.getOrderedAll(new VawsAnlagenarten())
+                    .toArray(new VawsAnlagenarten[0]);
+        }
+        return DatabaseVawsQuery.vawsAnlagenarten;
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

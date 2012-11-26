@@ -142,7 +142,7 @@ public class VawsPanel extends JPanel {
 
         JScrollPane vawsScroller = new JScrollPane(getVawsTable());
 
-        anlagenartBox = new JComboBox(VawsAnlagenarten.getAnlagenarten());
+        anlagenartBox = new JComboBox(DatabaseQuery.getVawsAnlagenarten());
         anlegenButton = new JButton("Anlegen");
         anlegenButton.addActionListener(new ActionListener() {
             @Override
@@ -215,7 +215,12 @@ public class VawsPanel extends JPanel {
     public void neuerDatensatz() {
         VawsFachdaten neu = new VawsFachdaten();
         neu.setBasisObjekt(hauptModul.getObjekt());
-        neu.setAnlagenart((String)anlagenartBox.getSelectedItem());
+        neu.setAnlagenart(
+            ((VawsAnlagenarten)anlagenartBox.getSelectedItem())
+                .getAnlagenart());
+// TODO: This would be even better: (add foreign keys...)
+//        neu.setVawsAnlagenarten(
+//            (VawsAnlagenarten)anlagenartBox.getSelectedItem());
 
         editDatensatz(neu);
     }
