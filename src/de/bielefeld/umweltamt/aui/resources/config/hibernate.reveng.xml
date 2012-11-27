@@ -353,6 +353,11 @@
             <meta attribute="use-in-tostring">true</meta>
         </column>
     </table>
+    <table schema="auik" name="vaws_verwmassnahmen">
+        <column name="massnahmen">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
     <table schema="auik" name="vaws_wassereinzugsgebiete">
         <column name="ezgbname">
             <meta attribute="use-in-tostring">true</meta>

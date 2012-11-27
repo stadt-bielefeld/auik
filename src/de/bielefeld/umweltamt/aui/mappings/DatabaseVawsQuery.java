@@ -46,6 +46,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwmassnahmen;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -521,6 +522,27 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                 .addOrder(Order.asc("wiedervorlage"))
                 .addOrder(Order.asc("vawsFachdaten")),
             new VawsVerwaltungsverf());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsVerwmassnahmen                     */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static String[] vawsVerwaltungsMassnahmen = null;
+    /**
+     * Get all VawsVerwmassnahmen
+     * @return <code>String[]</code>
+     */
+    public static String[] getVawsVerwaltungsMassnahmen() {
+        if (DatabaseVawsQuery.vawsVerwaltungsMassnahmen == null) {
+            DatabaseVawsQuery.vawsVerwaltungsMassnahmen =
+                new DatabaseAccess().executeCriteriaToArray(
+                    DetachedCriteria.forClass(VawsVerwmassnahmen.class)
+                        .setProjection(Projections.property("massnahmen"))
+                        .addOrder(Order.asc("massnahmen")),
+                    new String[0]);
+        }
+        return DatabaseVawsQuery.vawsVerwaltungsMassnahmen;
     }
 
 }

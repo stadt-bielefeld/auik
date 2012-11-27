@@ -106,7 +106,6 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwmassnahmen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWgk;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -608,7 +607,8 @@ public class VawsEditor extends AbstractBaseEditor {
         verwVerfahrenTabelle.getColumnModel().getColumn(3).setPreferredWidth(50);
 
         // Für die ComboBox bei "Maßnahme"
-        massnahmenBox = new JComboBox(VawsVerwmassnahmen.getAllMassnahmen());
+        massnahmenBox = new JComboBox(
+            DatabaseQuery.getVawsVerwaltungsMassnahmen());
         massnahmenBox.setEditable(true);
         massnahmenBox.addFocusListener(new FocusAdapter() {
             @Override
