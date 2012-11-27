@@ -47,6 +47,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwmassnahmen;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -543,6 +544,24 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                     new String[0]);
         }
         return DatabaseVawsQuery.vawsVerwaltungsMassnahmen;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsWassereinzugsgebiete               */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static VawsWassereinzugsgebiete[] vawsWassereinzugsgebiete = null;
+    /**
+     * Get all VawsWassereinzugsgebiete
+     * @return <code>VawsWassereinzugsgebiete[]</code>
+     */
+    public static VawsWassereinzugsgebiete[] getWassereinzugsgebiete() {
+        if (DatabaseVawsQuery.vawsWassereinzugsgebiete == null) {
+            DatabaseVawsQuery.vawsWassereinzugsgebiete =
+                DatabaseQuery.getOrderedAll(new VawsWassereinzugsgebiete())
+                    .toArray(new VawsWassereinzugsgebiete[0]);
+        }
+        return DatabaseVawsQuery.vawsWassereinzugsgebiete;
     }
 
 }

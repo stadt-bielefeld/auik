@@ -399,4 +399,5 @@
     <!--            vaws_fachdaten -->
     <!--            vaws_gebuehrenarten -->
     <!--            vaws_standortgghwsg -->
+    <!--            vaws_wassereinzugsgebiete -->
 </hibernate-reverse-engineering>

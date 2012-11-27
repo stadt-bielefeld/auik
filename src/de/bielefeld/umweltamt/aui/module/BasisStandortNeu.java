@@ -442,7 +442,7 @@ public class BasisStandortNeu extends AbstractModul {
                     entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
                 }
                 if (wEinzugsgebiete == null) {
-                    wEinzugsgebiete = VawsWassereinzugsgebiete.getWEinzugsgebiete();
+                    wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiete();
                 }
             }
 

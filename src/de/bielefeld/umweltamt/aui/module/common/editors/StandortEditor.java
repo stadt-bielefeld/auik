@@ -326,7 +326,7 @@ public class StandortEditor extends AbstractBaseEditor {
                     entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
                 }
                 if (wEinzugsgebiete == null) {
-                    wEinzugsgebiete = VawsWassereinzugsgebiete.getWEinzugsgebiete();
+                    wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiete();
                 }
             }
 
