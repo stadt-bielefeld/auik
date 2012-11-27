@@ -48,6 +48,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwmassnahmen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWgk;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -562,6 +563,27 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                     .toArray(new VawsWassereinzugsgebiete[0]);
         }
         return DatabaseVawsQuery.vawsWassereinzugsgebiete;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsWgk                                */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static Integer[] vawsWgk = null;
+    /**
+     * Get all VawsWgk
+     * @return <code>Integer[]</code>
+     */
+    public static Integer[] getVawsWgk() {
+        if (DatabaseVawsQuery.vawsWgk == null) {
+            DatabaseVawsQuery.vawsWgk =
+                new DatabaseAccess().executeCriteriaToArray(
+                    DetachedCriteria.forClass(VawsWgk.class)
+                        .setProjection(Projections.property("wassergef"))
+                        .addOrder(Order.asc("wassergef")),
+                    new Integer[0]);
+        }
+        return DatabaseVawsQuery.vawsWgk;
     }
 
 }

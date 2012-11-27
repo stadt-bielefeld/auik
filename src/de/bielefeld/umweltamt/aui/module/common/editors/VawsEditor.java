@@ -106,7 +106,6 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWgk;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
@@ -394,7 +393,7 @@ public class VawsEditor extends AbstractBaseEditor {
         gefStufeBox.setEditable(false);
         //gefStufeBox.setPrototypeDisplayValue(" A ");
 
-        wgkBox = new JComboBox(VawsWgk.getWgk());
+        wgkBox = new JComboBox(DatabaseQuery.getVawsWgk());
         wgkBox.setEditable(false);
         //wgkBox.setPrototypeDisplayValue(" 3 ");
 
