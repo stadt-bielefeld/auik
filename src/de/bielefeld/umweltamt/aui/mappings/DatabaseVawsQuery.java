@@ -44,6 +44,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefer;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefergebnisse;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -464,6 +465,25 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                     new String[0]);
         }
         return DatabaseVawsQuery.vawsVbfeinstufung;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsVerwaltungsgebuehren               */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get all VawsVerwaltungsgebuehren
+     * @return <code>List&lt;VawsVerwaltungsgebuehren&gt;</code>
+     */
+    public static List<VawsVerwaltungsgebuehren> getVawsVerwaltungsgebuehren(
+        VawsFachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(VawsVerwaltungsgebuehren.class)
+                .add(Restrictions.eq("vawsFachdaten", fachdaten))
+                .addOrder(Order.asc("datum"))
+                .addOrder(Order.asc("abschnitt"))
+                .addOrder(Order.asc("betrag")),
+            new VawsVerwaltungsgebuehren());
     }
 
 }

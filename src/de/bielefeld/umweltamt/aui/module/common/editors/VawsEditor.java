@@ -1174,8 +1174,8 @@ public class VawsEditor extends AbstractBaseEditor {
         for (Iterator<?> it = verwVerfahrenModel.getList().iterator(); it.hasNext();) {
             success = success && VawsVerwaltungsverf.saveVerfahren((VawsVerwaltungsverf) it.next());
         }
-        for (Iterator<?> it = verwVerfahrenModel.getGeloeschte().iterator(); it.hasNext();) {
-            success = success && VawsVerwaltungsverf.removeVerfahren((VawsVerwaltungsverf) it.next());
+        for (Iterator<VawsVerwaltungsverf> it = verwVerfahrenModel.getGeloeschte().iterator(); it.hasNext();) {
+            success = success && VawsVerwaltungsverf.removeVerfahren(it.next());
         }
         log.debug(verwVerfahrenModel.getList().size()
         		+ " Verwaltungsverfahren-Einträge neu/behalten, "
@@ -1184,10 +1184,10 @@ public class VawsEditor extends AbstractBaseEditor {
 
         // Verwaltunggebühren speichern:
         for (Iterator<?> it = verwGebuehrenModel.getList().iterator(); it.hasNext();) {
-            success = success && VawsVerwaltungsgebuehren.saveGebuehr((VawsVerwaltungsgebuehren) it.next());
+            success = success && ((VawsVerwaltungsgebuehren) it.next()).merge();
         }
-        for (Iterator<?> it = verwGebuehrenModel.getGeloeschte().iterator(); it.hasNext();) {
-            success = success && VawsVerwaltungsgebuehren.removeGebuehr((VawsVerwaltungsgebuehren) it.next());
+        for (Iterator<VawsVerwaltungsgebuehren> it = verwGebuehrenModel.getGeloeschte().iterator(); it.hasNext();) {
+            success = success && it.next().delete();
         }
         log.debug(verwGebuehrenModel.getList().size()
         		+ " Verwaltungsgebühren-Einträge neu/behalten, "
@@ -2104,7 +2104,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
         return true;
     }
 
-    public List<?> getGeloeschte() {
+    public List<VawsVerwaltungsverf> getGeloeschte() {
         return geloeschte;
     }
 
@@ -2202,7 +2202,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
         this.fachdaten = fachdaten;
 
         if (fachdaten != null) {
-            setList(VawsVerwaltungsgebuehren.getVerwaltungsgebuehren(fachdaten));
+            setList(DatabaseQuery.getVawsVerwaltungsgebuehren(fachdaten));
             fireTableDataChanged();
         }
     }
@@ -2227,7 +2227,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
             }
             break;
         case 1:
-            gebuehr.setVawsGebuehrenart((VawsGebuehrenarten) newValue);
+            gebuehr.setVawsGebuehrenarten((VawsGebuehrenarten) newValue);
             break;
         case 2:
             Float tmpWert = null;
@@ -2253,6 +2253,8 @@ class VerwGebuehrenModel extends EditableListTableModel {
     @Override
     public Object newObject() {
         VawsVerwaltungsgebuehren gebuehr = new VawsVerwaltungsgebuehren();
+        gebuehr.setBetrag(new Float(0.0));
+        gebuehr.setAbschnitt("360.12 LW");
         gebuehr.setVawsFachdaten(fachdaten);
         gebuehr.setDatum(new Date());
         return gebuehr;
@@ -2267,7 +2269,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
         return true;
     }
 
-    public List<?> getGeloeschte() {
+    public List<VawsVerwaltungsgebuehren> getGeloeschte() {
         return geloeschte;
     }
 
@@ -2286,7 +2288,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
             break;
         // Gebührenart:
         case 1:
-            tmp = gebuehr.getVawsGebuehrenart();
+            tmp = gebuehr.getVawsGebuehrenarten();
             break;
         // Betrag:
         case 2:
