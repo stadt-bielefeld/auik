@@ -43,6 +43,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsMaterial;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefer;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefergebnisse;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -442,6 +443,27 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                     .toArray(new VawsStandortgghwsg[0]);
         }
         return DatabaseVawsQuery.vawsStandortgghwsg;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsVbfeinstufung                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static String[] vawsVbfeinstufung = null;
+    /**
+     * Get all VawsVbfeinstufung
+     * @return <code>String[]</code>
+     */
+    public static String[] getVawsVbfEinstufungen() {
+        if (DatabaseVawsQuery.vawsVbfeinstufung == null) {
+            DatabaseVawsQuery.vawsVbfeinstufung =
+                new DatabaseAccess().executeCriteriaToArray(
+                    DetachedCriteria.forClass(VawsVbfeinstufung.class)
+                        .setProjection(Projections.property("vbfeinstufung"))
+                        .addOrder(Order.asc("vbfeinstufung")),
+                    new String[0]);
+        }
+        return DatabaseVawsQuery.vawsVbfeinstufung;
     }
 
 }

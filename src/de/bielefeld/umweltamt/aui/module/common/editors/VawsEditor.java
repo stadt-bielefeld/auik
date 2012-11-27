@@ -104,7 +104,6 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwmassnahmen;
@@ -388,7 +387,7 @@ public class VawsEditor extends AbstractBaseEditor {
         fluessigkeitBox.setEditable(true);
         //fluessigkeitBox.setPrototypeDisplayValue("Lösungsmittelrückstände");
 
-        vbfBox = new JComboBox(VawsVbfeinstufung.getVbfeinstufungen());
+        vbfBox = new JComboBox(DatabaseQuery.getVawsVbfEinstufungen());
         vbfBox.setEditable(false);
         //vbfBox.setPrototypeDisplayValue(" A III ");
 
