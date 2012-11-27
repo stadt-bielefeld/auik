@@ -349,7 +349,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
                     strassen = DatabaseQuery.getStrassen();
                 }
                 if (wirtschaftszweige == null) {
-                    wirtschaftszweige = VawsWirtschaftszweige.getWirtschaftszweige();
+                    wirtschaftszweige = DatabaseQuery.getVawsWirtschaftszweige();
                 }
             }
 

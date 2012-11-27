@@ -400,4 +400,5 @@
     <!--            vaws_gebuehrenarten -->
     <!--            vaws_standortgghwsg -->
     <!--            vaws_wassereinzugsgebiete -->
+    <!--            vaws_wirtschaftszweige -->
 </hibernate-reverse-engineering>

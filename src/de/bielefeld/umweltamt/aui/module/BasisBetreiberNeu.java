@@ -549,7 +549,7 @@ public class BasisBetreiberNeu extends AbstractModul {
                     strassen = DatabaseQuery.getStrassen();
                 }
                 if (wirtschaftszweige == null) {
-                    wirtschaftszweige = VawsWirtschaftszweige.getWirtschaftszweige();
+                    wirtschaftszweige = DatabaseQuery.getVawsWirtschaftszweige();
                 }
             }
 

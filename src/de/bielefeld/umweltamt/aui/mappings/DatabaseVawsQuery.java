@@ -49,6 +49,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwmassnahmen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWgk;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -586,4 +587,21 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
         return DatabaseVawsQuery.vawsWgk;
     }
 
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsWirtschaftszweige                  */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    private static VawsWirtschaftszweige[] vawsWirtschaftszweige = null;
+    /**
+     * Get all VawsWirtschaftszweige
+     * @return <code>VawsWirtschaftszweige[]</code>
+     */
+    public static VawsWirtschaftszweige[] getVawsWirtschaftszweige() {
+        if (DatabaseVawsQuery.vawsWirtschaftszweige == null) {
+            DatabaseVawsQuery.vawsWirtschaftszweige =
+                DatabaseQuery.getOrderedAll(new VawsWirtschaftszweige())
+                    .toArray(new VawsWirtschaftszweige[0]);
+        }
+        return DatabaseVawsQuery.vawsWirtschaftszweige;
+    }
 }
