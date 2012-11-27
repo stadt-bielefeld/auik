@@ -50,6 +50,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
@@ -206,11 +207,9 @@ class WiedervorlageVVModel extends ListTableModel {
         return tmp;
     }
 
-
     @Override
     public void updateList() {
-        setList(VawsVerwaltungsverf.getAuswertung());
-//        HibernateSessionFactory.closeSession();
+        setList(DatabaseQuery.getWiedervorlageVerwaltungsverf());
 //        fireTableDataChanged();
     }
 }

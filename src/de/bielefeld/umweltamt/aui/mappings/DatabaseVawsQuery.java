@@ -45,6 +45,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefergebnisse;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -484,6 +485,42 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
                 .addOrder(Order.asc("abschnitt"))
                 .addOrder(Order.asc("betrag")),
             new VawsVerwaltungsgebuehren());
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS: class VawsVerwaltungsverf                    */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get all VawsVerwaltungsverf
+     * @return <code>List&lt;VawsVerwaltungsverf&gt;</code>
+     */
+    public static List<VawsVerwaltungsverf> getVawsVerwaltungsverf(
+        VawsFachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(VawsVerwaltungsverf.class)
+                .add(Restrictions.eq("vawsFachdaten", fachdaten))
+                .addOrder(Order.desc("wvverwverf"))
+                .addOrder(Order.asc("datum"))
+                .addOrder(Order.asc("wiedervorlage")),
+            new VawsVerwaltungsverf());
+    }
+
+    /**
+     * Get all VawsVerwaltungsverf with "wiedervorlage" in the past and
+     * "wvverwverf" either <code>false</code> or <code>null</code>
+     * @return <code>List&lt;VawsVerwaltungsverf&gt;</code>
+     */
+    public static List<VawsVerwaltungsverf> getWiedervorlageVerwaltungsverf() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(VawsVerwaltungsverf.class)
+                .add(Restrictions.lt("wiedervorlage", new Date()))
+                .add(Restrictions.or(
+                    Restrictions.isNull("wvverwverf"),
+                    Restrictions.eq("wvverwverf", false)))
+                .addOrder(Order.asc("wiedervorlage"))
+                .addOrder(Order.asc("vawsFachdaten")),
+            new VawsVerwaltungsverf());
     }
 
 }

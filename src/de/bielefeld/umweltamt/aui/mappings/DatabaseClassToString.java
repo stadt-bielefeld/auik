@@ -75,6 +75,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefergebnisse;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWgk;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
@@ -487,6 +488,11 @@ public class DatabaseClassToString {
 
     /** @return "VawsVerwaltungsgebuehren.toDebugString() */
     public static String toStringForClass(VawsVerwaltungsgebuehren clazz) {
+        return clazz.toDebugString();
+    }
+
+    /** @return "VawsVerwaltungsverf.toDebugString() */
+    public static String toStringForClass(VawsVerwaltungsverf clazz) {
         return clazz.toDebugString();
     }
 

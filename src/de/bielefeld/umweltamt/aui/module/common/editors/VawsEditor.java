@@ -1172,10 +1172,10 @@ public class VawsEditor extends AbstractBaseEditor {
 
         // Verwaltungsverfahren speichern:
         for (Iterator<?> it = verwVerfahrenModel.getList().iterator(); it.hasNext();) {
-            success = success && VawsVerwaltungsverf.saveVerfahren((VawsVerwaltungsverf) it.next());
+            success = success && ((VawsVerwaltungsverf) it.next()).merge();
         }
         for (Iterator<VawsVerwaltungsverf> it = verwVerfahrenModel.getGeloeschte().iterator(); it.hasNext();) {
-            success = success && VawsVerwaltungsverf.removeVerfahren(it.next());
+            success = success && it.next().delete();
         }
         log.debug(verwVerfahrenModel.getList().size()
         		+ " Verwaltungsverfahren-Einträge neu/behalten, "
@@ -2037,7 +2037,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
         this.fachdaten = fachdaten;
 
         if (fachdaten != null) {
-            setList(VawsVerwaltungsverf.getVerwaltungsverf(fachdaten));
+            setList(DatabaseQuery.getVawsVerwaltungsverf(fachdaten));
             fireTableDataChanged();
         }
     }
