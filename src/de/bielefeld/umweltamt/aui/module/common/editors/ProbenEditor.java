@@ -217,7 +217,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 // }
                 // positionen = probe.getAtlAnalysepositionen();
                 this.probe = AtlProbenahmen.getProbenahme(this.probe.getId(),
-                    true);
+                    false);
                 setList(DatabaseQuery.getSortedAnalysepositionen(this.probe));
             } else { // isNew
                 if (this.isSchlamm) {
@@ -733,7 +733,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     probe.setAtlStatus(
                         DatabaseConstants.ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT);
 
-                    AtlProbenahmen.merge(probe);
+                    probe.merge();
 
                     GUIManager.getInstance().showInfoMessage(
                         "Der Probenahmeauftrag wurde erfolgreich unter '"
@@ -833,7 +833,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     probe.setAtlStatus(
                         DatabaseConstants.ATL_STATUS_BESCHEID_GEDRUCKT);
 
-                    AtlProbenahmen.merge(probe);
+                    probe.merge();
 
                     GUIManager.getInstance().showInfoMessage(
                         "Der Gebührenbescheid wurde erfolgreich unter ' "
@@ -1474,7 +1474,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         if (this.isNew) {
             this.isNew = false;
         }
-        success = AtlProbenahmen.merge(getProbe());
+        success = getProbe().merge();
 
         return success;
     }

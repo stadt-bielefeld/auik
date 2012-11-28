@@ -97,7 +97,7 @@ public class AnalyseProcessor {
             pos.setAnalyseVon("E-Satzung");
 
             probe.setAtlStatus(DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN);
-            AtlProbenahmen.merge(probe);
+            probe.merge();
         }
 
         return true;

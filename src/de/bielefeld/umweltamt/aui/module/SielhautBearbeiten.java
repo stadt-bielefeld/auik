@@ -2103,7 +2103,7 @@ class SielhautProbeModel extends ListTableModel {
         boolean removed;
 
         if (removedProbe.getKennummer() != null) {
-            removed = AtlProbenahmen.delete(removedProbe);
+            removed = removedProbe.delete();
         } else {
             removed = true;
         }

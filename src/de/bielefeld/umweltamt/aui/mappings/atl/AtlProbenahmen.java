@@ -97,12 +97,12 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         }
     }
 
-    public static boolean merge(AtlProbenahmen probe) {
-        return new DatabaseAccess().saveOrUpdate(probe);
+    public boolean merge() {
+        return (new DatabaseAccess().merge(this) != null);
     }
 
-    public static boolean delete(AtlProbenahmen probe) {
-        return new DatabaseAccess().delete(probe);
+    public boolean delete() {
+        return new DatabaseAccess().delete(this);
     }
 
     /**

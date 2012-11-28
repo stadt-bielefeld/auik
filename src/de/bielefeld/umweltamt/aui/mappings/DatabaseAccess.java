@@ -25,14 +25,12 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
@@ -61,8 +59,6 @@ public class DatabaseAccess {
     private Session session = null;
     /** The transaction */
     private Transaction transaction = null;
-    /** A query */
-    private Query query = null;
     /** A Criteria */
     private Criteria criteria = null;
 
@@ -163,35 +159,6 @@ public class DatabaseAccess {
     }
 
     /**
-     * Save or update an Object from the database (within a Transaction)<br>
-     * Usage:<br>
-     * <code>
-     * boolean success = new DatabaseAccess().saveOrUpdate(myToModifyObject);
-     * </code>
-     * @param object The Object to save or update
-     * @return boolean True, if everything went as planned, false otherwise
-     */
-    public boolean saveOrUpdate(Object object) {
-        boolean success = false;
-        /* Begin a new Transaction */
-        if (this.beginTransaction()) {
-            try {
-                /* Save or update the object */
-                this.getSession().saveOrUpdate(object);
-                /* Commit the transaction */
-                if (this.commitTransaction()) {
-                    success = true;
-                }
-            } catch (HibernateException he) {
-                this.handleDBException(he, true);
-            } finally {
-                this.closeSession();
-            }
-        }
-        return success;
-    }
-
-    /**
      * Merge an Object from the database (within a Transaction)<br>
      * Usage:<br>
      * <code>
@@ -234,7 +201,7 @@ public class DatabaseAccess {
     public boolean delete(Object object) {
         /* Only mark the object as deleted and save that */
         this.markedAsDeleted(object);
-        return this.saveOrUpdate(object);
+        return (this.merge(object) != null);
 
         /* Really delete the object */
 //        boolean success = false;
@@ -276,170 +243,6 @@ public class DatabaseAccess {
             }
             clazz = clazz.getSuperclass();
         }
-    }
-
-    /**
-     * Create a new instance of Query for the given query String<br>
-     * Usage:<br>
-     * <code><pre>
-     * List<?> result = new DatabaseAccess().createQuery(
-     *     "from Anh49Verwaltungsverfahren as verfahren "
-     *         + "where verfahren.anh49Fachdaten = :fachdaten "
-     *         + "order by verfahren.datum")
-     *     .setEntity("fachdaten", fachdaten)
-     *     .list();</pre></code>
-     * @param queryString The query String
-     * @return DatabaseAccess this
-     */
-    public DatabaseAccess createQuery(String queryString) {
-        try {
-            this.query = this.getSession().createQuery(queryString);
-        } catch (HibernateException he) {
-            this.handleDBException(he, false);
-        } finally {
-            // This place is intentionally left blank.
-        }
-        return this;
-    }
-
-    /* Setter for named parameters */
-    public DatabaseAccess setBoolean(String name, boolean val) {
-        this.query.setBoolean(name, val);
-        return this;
-    }
-
-    public DatabaseAccess setDate(String name, Date date) {
-        this.query.setDate(name, date);
-        return this;
-    }
-
-    public DatabaseAccess setEntity(String name, Object val) {
-        this.query.setEntity(name, val);
-        return this;
-    }
-
-    public DatabaseAccess setInteger(String name, int val) {
-        this.query.setInteger(name, val);
-        return this;
-    }
-
-    public DatabaseAccess setString(String name, String val) {
-        this.query.setString(name, val);
-        return this;
-    }
-
-    /* More query configuration */
-    /**
-     * Set the maximum number of rows to retrieve. If not set, there is no limit
-     * to the number of rows retrieved.
-     * @param maxResults the maximum number of rows
-     * @return DatabaseAccess this
-     */
-    public DatabaseAccess setMaxResults(int maxResults) {
-        this.query.setMaxResults(maxResults);
-        return this;
-    }
-
-    // TODO: Do we really need this? (Cache needs to be set in config as well)
-    public DatabaseAccess setCacheable(boolean cacheable) {
-        this.query.setCacheable(cacheable);
-        return this;
-    }
-
-    // TODO: Do we really need this?
-    public DatabaseAccess setCacheRegion(String cacheRegion) {
-        this.query.setCacheRegion(cacheRegion);
-        return this;
-    }
-
-    /**
-     * Execute the query and get the result as a List<?>
-     * @return List<?> The result of the Query
-     */
-    /* Note: The result of the query only lives as long as the session! */
-    public List<?> list() {
-        List<?> queryResult = null;
-        List<Object> notDeletedResult = new ArrayList<Object>();
-
-        try {
-            queryResult = this.query.list();
-        } catch (HibernateException he) {
-            this.handleDBException(he, false);
-        } finally {
-            this.closeSession();
-        }
-
-        // No results? Return empty list
-        if (queryResult.isEmpty()) {
-            return queryResult;
-        }
-
-        for (Object object : queryResult) {
-            if (!(this.isMarkedAsDeleted(object))) {
-                notDeletedResult.add(object);
-            }
-        }
-        return notDeletedResult;
-
-//        // Not a VirtDelDBTable? Return queryResult
-//        Object firstObject = queryResult.get(0);
-//        if (!(firstObject instanceof AbstractVirtuallyDeletableDatabaseTable)) {
-//            return queryResult;
-//        }
-//
-//        // VirtDelDBTable? Build a new result with just the not deleted rows
-//        // TODO: This is the most dirty solution...
-//        // Add the "where xyz._deleted = FALSE" to all the querys?
-//        // Can we let the database do that? Maybe with an Index? Or many...
-//        AbstractVirtuallyDeletableDatabaseTable virtDelObjekt = null;
-//        for (Object object : queryResult) {
-//            virtDelObjekt = (AbstractVirtuallyDeletableDatabaseTable) object;
-//            if (!virtDelObjekt.is_deleted()) {
-//                virtDelResult.add(object);
-//            }
-//        }
-//        return virtDelResult;
-    }
-
-    /**
-     * Execute the query and get the result as an array
-     * @return Object[] The result of the Query
-     */
-    public <T> T[] array(T[] arrayType) {
-        return this.list().toArray(arrayType);
-    }
-
-    /**
-     * Convenience method to return a single instance that matches the query, or
-     * null if the query returns no results.
-     * @return The single result or <code>null</code>
-     */
-    public Object uniqueResult() {
-        Object result = null;
-        List<?> queryResult = null;
-        try {
-            // Can't use this:
-            // result = this.query.uniqueResult();
-            // because of the virt. deleted objects
-
-            // Get filtered results (no virt.deleted objects)
-            queryResult = this.list();
-            // If there is one result, return it
-            // If there is none, return null
-            // If there are more, throw an Exception
-            switch (queryResult.size()) {
-                case 1: result = queryResult.get(0);  break;
-                case 0: result = null;                break;
-                default:
-                    throw new HibernateException(
-                        "More than one result in unique request!");
-            }
-        } catch (HibernateException he) {
-            this.handleDBException(he, false);
-        } finally {
-            this.closeSession();
-        }
-        return result;
     }
 
     /**
