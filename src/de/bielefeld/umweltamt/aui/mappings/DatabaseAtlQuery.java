@@ -382,6 +382,20 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
     /**
+     * Liefert alle Probenahmen eines bestimmten Probepunktes.
+     * @param punkt Der Probepunkt.
+     * @return List&lt;AtlProbenahmen&gt;
+     */
+    public static List<AtlProbenahmen> findProbenahmen(AtlProbepkt punkt) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbenahmen.class)
+                .add(Restrictions.eq("atlProbepkt", punkt))
+                .addOrder(Order.desc("datumDerEntnahme"))
+                .addOrder(Order.asc("kennummer")),
+            new AtlProbenahmen());
+    }
+
+    /**
      * Liefert eine bestimmte Probenahme.
      * @param kennummer Die Kennummer der Probenahme
      * @return Die Probe mit der gegebenen ID oder <code>null</code> falls diese

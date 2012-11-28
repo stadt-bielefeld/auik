@@ -88,38 +88,25 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
         return (AtlProbepkt) new DatabaseAccess().get(AtlProbepkt.class, id);
     }
 
-    public static AtlProbepkt getSielhautProbepunkt(AtlSielhaut siel) {
-        AtlProbepkt punkt = null;
-        punkt = (AtlProbepkt) new DatabaseAccess()
-            .createQuery(
-                "FROM AtlProbepkt as probepkt WHERE "
-                    + "probepkt.atlSielhaut = :siel")
-                .setEntity("siel", siel)
-                .uniqueResult();
-        log.debug("SielhautBearbeiten-Probepunkt " + punkt
-                + " aus DB geholt.");
-        return punkt;
-    }
-
-    public static boolean merge(AtlProbepkt punkt) {
+    public boolean merge() {
         boolean saved = false;
-        saved = new DatabaseAccess().saveOrUpdate(punkt);
+        saved = new DatabaseAccess().saveOrUpdate(this);
         if (saved) {
-            log.debug("Probepunkt " + punkt + " gespeichert.");
+            log.debug("Probepunkt " + this + " gespeichert.");
         } else {
-            log.debug("Probepunkt " + punkt
+            log.debug("Probepunkt " + this
                     + " konnte nicht gespeichert werden!");
         }
         return saved;
     }
 
-    public static boolean delete(AtlProbepkt punkt) {
+    public boolean delete() {
         boolean removed = false;
-        removed = new DatabaseAccess().delete(punkt);
+        removed = new DatabaseAccess().delete(this);
         if (removed) {
-            log.debug("Probepunkt " + punkt + " gelöscht.");
+            log.debug("Probepunkt " + this + " gelöscht.");
         } else {
-            log.debug("Probepunkt " + punkt + " konnte nicht gelöscht werden!");
+            log.debug("Probepunkt " + this + " konnte nicht gelöscht werden!");
         }
         return removed;
     }

@@ -289,7 +289,8 @@ public class SielhautBearbeiten extends AbstractModul {
     public void setSielhautPunkt(AtlSielhaut sp) {
         this.spunkt = sp;
         if (this.spunkt.getId() != null) {
-            this.sprobePkt = AtlProbepkt.getSielhautProbepunkt(this.spunkt);
+            this.sprobePkt = AtlProbepkt.findById(
+                this.spunkt.getBasisObjekt().getObjektid());
             getPrAnlegenButton().setEnabled(true);
             getTabelleExportButton().setEnabled(true);
         } else {
@@ -409,7 +410,7 @@ public class SielhautBearbeiten extends AbstractModul {
 //        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
 //        this.sprobePkt.setAtlSielhaut(this.spunkt);
 
-        AtlProbepkt.merge(this.sprobePkt);
+        this.sprobePkt.merge();
 
         saved = true;
 
@@ -484,7 +485,7 @@ public class SielhautBearbeiten extends AbstractModul {
                         // TODO: This needs to be changed more consistent...
                         this.spunkt = AtlSielhaut.findById(this.spunkt.getId());
                         this.sprobePkt.setAtlSielhaut(this.spunkt);
-                        AtlProbepkt.merge(this.sprobePkt);
+                        this.sprobePkt.merge();
 
                         this.frame.changeStatus(
                             "Sielhaut-Messpunkt erfolgreich gespeichert.",
@@ -844,11 +845,11 @@ public class SielhautBearbeiten extends AbstractModul {
             this.punktEditButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    AtlProbepkt sielprobepkt = AtlProbepkt
-                        .getSielhautProbepunkt(SielhautBearbeiten.this.spunkt);
                     SielhautBearbeiten.this.manager.getSettingsManager()
                         .setSetting("auik.imc.edit_object",
-                            sielprobepkt.getObjektid().intValue(), false);
+                            SielhautBearbeiten.this.spunkt
+                                .getBasisObjekt().getObjektid().intValue()
+                            , false);
                     SielhautBearbeiten.this.manager
                         .switchModul("m_objekt_bearbeiten");
                 }
@@ -2052,7 +2053,7 @@ class SielhautProbeModel extends ListTableModel {
     @Override
     public void updateList() {
         if (this.probepkt != null) {
-            setList(AtlProbenahmen.getProbenahmen(this.probepkt, true));
+            setList(DatabaseQuery.findProbenahmen(this.probepkt));
 
             this.wertMap.clear();
             for (int i = 0; i < getList().size(); i++) {

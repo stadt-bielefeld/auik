@@ -67,7 +67,7 @@ public class ProbenahmenModel extends ListTableModel {
     @Override
     public void updateList() {
         if (probepkt != null) {
-            setList(AtlProbenahmen.getProbenahmen(probepkt, false));
+            setList(DatabaseQuery.findProbenahmen(probepkt));
 
             fireTableDataChanged();
         }

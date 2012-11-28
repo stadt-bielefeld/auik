@@ -22,10 +22,8 @@
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
@@ -71,28 +69,6 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     }
 
     /* Add customized code below */
-
-    /**
-     * Liefert alle Probenahmen eines bestimmten Probepunktes.
-     * @param pkt Der Probepunkt.
-     * @param loadPos Sollen die Analysepositionen auch geholt werden?
-     */
-    public static List<?> getProbenahmen(AtlProbepkt pkt, boolean loadPos) {
-        if (pkt.getObjektid() == null) {
-            return new ArrayList<AtlProbenahmen>();
-        }
-        List<?> proben = null;
-        proben = new DatabaseAccess()
-            .createQuery(
-                "FROM AtlProbenahmen as probenahme "
-                    + "WHERE probenahme.atlProbepkt = :pkt "
-                    + "ORDER BY probenahme.datumDerEntnahme desc, "
-                    + "probenahme.kennummer desc")
-            .setEntity("pkt", pkt)
-            .list();
-
-        return proben;
-    }
 
     /**
      * Liefert eine bestimmte Probenahme.
