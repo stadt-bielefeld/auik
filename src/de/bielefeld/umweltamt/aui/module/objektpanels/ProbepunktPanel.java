@@ -237,8 +237,8 @@ public class ProbepunktPanel extends JPanel {
             getSachbearbeiterBox().setSelectedItem(
                 this.probepkt.getBasisSachbearbeiter());
 
-            if (this.probepkt.getNummer() != null) {
-                getProbePktNrFeld().setValue(this.probepkt.getNummer());
+            if (this.probepkt.getNrProbepkt() != null) {
+                getProbePktNrFeld().setValue(this.probepkt.getNrProbepkt());
             }
 
             getBrancheFeld().setText(this.probepkt.getBranche());
@@ -351,7 +351,7 @@ public class ProbepunktPanel extends JPanel {
             }
 
             if (getProbePktNrFeld().getValue() != null) {
-                this.probepkt.setNummer(((IntegerField) getProbePktNrFeld())
+                this.probepkt.setNrProbepkt(((IntegerField) getProbePktNrFeld())
                     .getIntValue());
             }
 

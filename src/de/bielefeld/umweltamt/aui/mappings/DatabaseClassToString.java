@@ -263,7 +263,7 @@ public class DatabaseClassToString {
     public static String toStringForClass(AtlProbepkt clazz) {
         return "[Probepunkt:" + clazz.getObjektid() +
             ", Art:" + clazz.getAtlProbeart() +
-            ", Nr:" + clazz.getNummer() + "]";
+            ", Nr:" + clazz.getNrProbepkt() + "]";
     }
 
     /** @return Custom AtlSielhaut.toString() */

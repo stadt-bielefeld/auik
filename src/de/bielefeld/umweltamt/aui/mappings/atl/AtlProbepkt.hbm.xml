@@ -1,39 +1,56 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<hibernate-mapping package="de.bielefeld.umweltamt.aui.mappings.atl" schema="auik">
-
-    <class name="AtlProbepkt" table="atl_probepkt" lazy="false">
-        <id name="objektid" column="objektid" type="java.lang.Integer">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" table="atl_probepkt" lazy="false" schema="auik">
+        <id name="objektid" type="java.lang.Integer">
+            <column name="objektid" />
             <generator class="foreign">
-            	<param name="property">basisObjekt</param>
+                <param name="property">basisObjekt</param>
             </generator>
         </id>
-
-        <property name="beschreibung" column="beschreibung" type="java.lang.String" />
-        <property name="nummer" column="nr_probepkt" type="java.lang.Integer" />
-        <property name="branche" column="branche" type="java.lang.String" />
-        <property name="enabled" column="_enabled" type="java.lang.Boolean" />
-        <property name="deleted" column="_deleted" type="java.lang.Boolean" />
-        
-        <property name="atlFirmen" column="firmen_id" type="java.lang.Integer" />
-
-        <many-to-one name="atlKlaeranlagen" column="ka_id" class="AtlKlaeranlagen" />
-
-        <many-to-one name="atlProbeart" column="art_id" class="AtlProbeart" />
-
-        <many-to-one name="atlSielhaut" column="sielhaut_id" class="AtlSielhaut" lazy="false" />
-
-        <many-to-one name="basisSachbearbeiter" column="sachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" lazy="false" />
-
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"/>
-                                
-        <set name="atlProbenahmen" cascade="all">
-            <key column="objektid"/>
-            <one-to-many class="AtlProbenahmen"/>
+        <many-to-one name="atlProbeart" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart" fetch="select">
+            <column name="art_id" />
+        </many-to-one>
+        <many-to-one name="atlKlaeranlagen" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen" fetch="select">
+            <column name="ka_id" />
+        </many-to-one>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"></one-to-one>
+        <many-to-one name="basisSachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" fetch="select">
+            <column name="sachbearbeiter" />
+        </many-to-one>
+        <many-to-one name="atlSielhaut" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut" fetch="select">
+            <column name="sielhaut_id" />
+        </many-to-one>
+        <property name="beschreibung" type="java.lang.String">
+            <column name="beschreibung" />
+        </property>
+        <property name="nrProbepkt" type="java.lang.Integer">
+            <column name="nr_probepkt" />
+        </property>
+        <property name="firmenId" type="java.lang.Integer">
+            <column name="firmen_id" />
+        </property>
+        <property name="branche" type="java.lang.String">
+            <column name="branche" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="atlSielhauts" table="atl_sielhaut" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut" />
         </set>
-        
+        <set name="atlProbenahmens" table="atl_probenahmen" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen" />
+        </set>
     </class>
-
 </hibernate-mapping>

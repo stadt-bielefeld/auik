@@ -24,7 +24,6 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 import java.io.Serializable;
 import java.util.Set;
 
-import de.bielefeld.umweltamt.aui.mappings.StupidHelperClassWhichWillBeGoneSoon;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseTableWithCollection;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 
@@ -32,8 +31,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
  * A class that represents a row in the ATL_PROBENAHMEN table. You can customize
  * the behavior of this class by editing the class, {@link AtlProbenahmen}.
  */
-public abstract class AbstractAtlProbenahmen extends
-    StupidHelperClassWhichWillBeGoneSoon implements Serializable,
+public abstract class AbstractAtlProbenahmen implements Serializable,
     DatabaseTableWithCollection {
     private static final long serialVersionUID = -8219312709181534758L;
 
@@ -135,6 +133,20 @@ public abstract class AbstractAtlProbenahmen extends
 
     /** The value of the simple bezeichnung property. */
     private java.lang.String bezeichnung;
+
+    /**
+     * The value of the simple _enabled property.<br>
+     * If a data record is _enabled, it can come up in the views, but will be
+     * marked as being not active.
+     */
+    private java.lang.Boolean enabled = true;
+
+    /**
+     * The value of the simple _deleted property.<br>
+     * If a data record is _deleted, it will not show up anywhere but in the
+     * database itself.
+     */
+    private java.lang.Boolean deleted = false;
 
     /**
      * Simple constructor of AbstractAtlProbenahmen instances.
@@ -648,6 +660,38 @@ public abstract class AbstractAtlProbenahmen extends
      */
     public void setBezeichnung(java.lang.String bezeichnung) {
         this.bezeichnung = bezeichnung;
+    }
+
+    /**
+     * Return the value of the _ENABLED column.
+     * @return java.lang.Boolean
+     */
+    public java.lang.Boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * Set the value of the _ENABLED column.
+     * @param _enabled the _enabled to set
+     */
+    public void setEnabled(boolean _enabled) {
+        this.enabled = _enabled;
+    }
+
+    /**
+     * Return the value of the _DELETED column.
+     * @return java.lang.Boolean
+     */
+    public java.lang.Boolean isDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Set the value of the _DELETED column.
+     * @param _deleted the _deleted to set
+     */
+    public void setDeleted(boolean _deleted) {
+        this.deleted = _deleted;
     }
 
     /**
