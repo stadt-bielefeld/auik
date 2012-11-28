@@ -9,7 +9,7 @@
                 <param name="property">vawsFachdaten</param>
             </generator>
         </id>
-        <one-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" constrained="true"></one-to-one>
+        <one-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" constrained="true" cascade="all"</one-to-one>
         <property name="eoh" type="java.lang.Boolean">
             <column name="eoh" />
         </property>
