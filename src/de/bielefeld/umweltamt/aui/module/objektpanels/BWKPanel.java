@@ -196,7 +196,8 @@ public class BWKPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.bwk = this.hauptModul.getObjekt().getAnhBwkFachdaten();
+        this.bwk = AnhBwkFachdaten.findById(
+            this.hauptModul.getObjekt().getObjektid());
         log.debug("Brennwertkessel aus DB geholt: " + this.bwk);
     }
 

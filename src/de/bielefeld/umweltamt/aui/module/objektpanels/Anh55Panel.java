@@ -699,7 +699,8 @@ public class Anh55Panel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = this.hauptModul.getObjekt().getAnh55Fachdaten();
+        this.fachdaten = Anh55Fachdaten.findById(
+            this.hauptModul.getObjekt().getObjektid());
         log.debug("Anhang 55 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 

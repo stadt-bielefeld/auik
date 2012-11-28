@@ -163,7 +163,8 @@ public class Anh50Panel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = this.hauptModul.getObjekt().getAnh50Fachdaten();
+        this.fachdaten = Anh50Fachdaten.findById(
+            this.hauptModul.getObjekt().getObjektid());
         log.debug("Zahnarzt aus DB geholt: " + this.fachdaten);
 
         if (this.entsorg == null || this.entsorg.length == 0) {

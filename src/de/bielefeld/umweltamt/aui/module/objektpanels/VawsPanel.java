@@ -196,7 +196,8 @@ public class VawsPanel extends JPanel {
      */
     public void fetchFormData() {
         vawsModel.setList(
-            DatabaseQuery.getVawsFachdatenByObjekt(hauptModul.getObjekt())
+            DatabaseQuery.getVawsFachdatenByObjekt(
+                hauptModul.getObjekt())
         );
     }
 

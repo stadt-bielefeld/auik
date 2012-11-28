@@ -147,7 +147,8 @@ public class SuevPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = this.hauptModul.getObjekt().getAnhSuevFachdaten();
+        this.fachdaten = AnhSuevFachdaten.findById(
+            this.hauptModul.getObjekt().getObjektid());
         log.debug("SuevKan-Verfahren aus DB geholt: " + this.fachdaten);
     }
 

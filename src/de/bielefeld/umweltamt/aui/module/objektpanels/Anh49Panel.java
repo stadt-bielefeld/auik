@@ -269,7 +269,8 @@ public class Anh49Panel extends AbstractAnhangPanel {
     }
 
     public void fetchFormData() {
-        this.fachdaten = this.hauptModul.getObjekt().getAnh49Fachdaten();
+        this.fachdaten = Anh49Fachdaten.findById(
+            this.hauptModul.getObjekt().getObjektid());
         this.log.debug("Anhang 49 Objekt aus DB geholt: " + this.fachdaten);
     }
 

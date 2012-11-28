@@ -167,7 +167,8 @@ public class GenehmigungPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = this.hauptModul.getObjekt().getIndeinlGenehmigung();
+        this.fachdaten = IndeinlGenehmigung.findById(
+            this.hauptModul.getObjekt().getObjektid());
         log.debug("Genehmigung Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
@@ -363,7 +364,7 @@ public class GenehmigungPanel extends JPanel {
             this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Uebergabestelle speichern
-            IndeinlGenehmigung.merge(this.fachdaten);
+            this.fachdaten = IndeinlGenehmigung.merge(this.fachdaten);
             log.debug("Neues Genehmigung Objekt " + this.fachdaten
                 + " gespeichert.");
         }
