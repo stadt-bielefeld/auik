@@ -699,6 +699,34 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
             new AtlProbepkt());
     }
 
+    /**
+     * Get the one(!) AtlProbepkt for the Klärschlamm
+     * @param art AtlProbe(punkt)art
+     * @param ka AtlKlaeranlage
+     * @return AtlProbepkt
+     */
+    // TODO: Add DatabaseConstants for these Probepunkte
+    // These values here are what we got with the original query which also
+    // matched art and ka, but then sorted by objektid and took the first result
+    public static AtlProbepkt getKlaerschlammProbepunkt(
+        AtlProbeart art, AtlKlaeranlagen ka) {
+        Integer objektIDs[] =
+              // Probe(punkt)art:
+            { // Anlieferung | Faulschlamm | Rohschlamm | Zulauf // Kläranlage:
+                               24546,        24603,       17796, // Heepen
+                                             24602,       17797, // Brake
+                                             24605,              // Obere Lutter
+                 24504,        24547,        24604,       24584  // Sennestadt
+                                                                 // Verl-Sende
+            };
+        return new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(AtlProbepkt.class)
+                .add(Restrictions.eq("atlProbeart", art))
+                .add(Restrictions.eq("atlKlaeranlagen", ka))
+                .add(Restrictions.in("objektid", objektIDs)),
+            new AtlProbepkt());
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package ATL : class AtlSielhaut                            */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

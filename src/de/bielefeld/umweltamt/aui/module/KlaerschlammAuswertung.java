@@ -798,7 +798,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
         AtlEinheiten einheit, JList paramList, String analyseVon,
         Calendar vonDate, Calendar bisDate, TimeSeriesCollection col) {
 
-        AtlProbepkt pkt = AtlProbepkt.getKlaerschlammProbepunkt(art, ka);
+        AtlProbepkt pkt = DatabaseQuery.getKlaerschlammProbepunkt(art, ka);
 
         if (pkt != null) {
 

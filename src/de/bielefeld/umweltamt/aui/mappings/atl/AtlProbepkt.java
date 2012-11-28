@@ -64,26 +64,6 @@ public class AtlProbepkt extends AbstractAtlProbepkt implements Serializable {
 
     /* Add customized code below */
 
-    /**
-     * Liefert den ersten Probepunkt einer bestimmten Art und Kläranlage.
-     * @return Den Probepunkt oder <code>null</code>, falls kein Probepunkt
-     *         dieser Art mit dieser Kläranlage existiert.
-     */
-    // TODO: This does not seem to be what we really want here???
-    public static AtlProbepkt getKlaerschlammProbepunkt(
-            AtlProbeart art, AtlKlaeranlagen ka) {
-        return (AtlProbepkt) new DatabaseAccess()
-            .createQuery(
-                "FROM AtlProbepkt as probepkt WHERE "
-                    + "probepkt.atlProbeart = :art "
-                    + "and probepkt.atlKlaeranlagen = :ka "
-                    + "ORDER BY probepkt.objektid asc")
-                .setEntity("art", art)
-                .setEntity("ka", ka)
-                .setMaxResults(1)
-                .uniqueResult();
-    }
-
     public static AtlProbepkt findById(Integer id) {
         return (AtlProbepkt) new DatabaseAccess().get(AtlProbepkt.class, id);
     }

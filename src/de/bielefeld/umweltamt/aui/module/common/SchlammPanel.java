@@ -240,7 +240,7 @@ public class SchlammPanel extends JPanel {
             AtlProbepkt pkt;
             AtlKlaeranlagen ka = (AtlKlaeranlagen) getAnlageBox()
                     .getSelectedItem();
-            pkt = AtlProbepkt.getKlaerschlammProbepunkt(art, ka);
+            pkt = DatabaseQuery.getKlaerschlammProbepunkt(art, ka);
 
             if (pkt != null) {
                 probe.setAtlProbepkt(pkt);
