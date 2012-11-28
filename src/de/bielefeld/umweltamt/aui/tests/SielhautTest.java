@@ -128,7 +128,11 @@ public class SielhautTest extends TestCase {
         AtlSielhaut sielhaut = testQuery();
         Transaction transaction = session.beginTransaction();
         sielhaut.setBemerkungen("neue");
-        AtlSielhaut.saveSielhautPunkt(sielhaut, new BasisObjekt(), new AtlProbepkt());
+
+        sielhaut.setBasisObjekt(new BasisObjekt());
+        sielhaut.setAtlProbepkt(new AtlProbepkt());
+        sielhaut.merge();
+
         transaction.commit();
         session.close();
         session = _sessionFactory.openSession();
@@ -179,7 +183,10 @@ public class SielhautTest extends TestCase {
             session = _sessionFactory.openSession();
             transaction = session.beginTransaction();
 
-            AtlSielhaut.saveSielhautPunkt(sielhaut, new BasisObjekt(), new AtlProbepkt());
+            sielhaut.setBasisObjekt(new BasisObjekt());
+            sielhaut.setAtlProbepkt(new AtlProbepkt());
+            sielhaut.merge();
+
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {

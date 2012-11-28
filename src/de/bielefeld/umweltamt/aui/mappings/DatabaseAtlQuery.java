@@ -697,8 +697,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(AtlSielhaut.class)
                 .add(Restrictions.ilike("bezeichnung", search, MatchMode.START))
-                .addOrder(Order.desc("psielhaut"))
-                .addOrder(Order.desc("pfirmenprobe"))
+                .addOrder(Order.desc("PSielhaut"))
+                .addOrder(Order.desc("PFirmenprobe"))
                 .addOrder(Order.asc("bezeichnung")),
             new AtlSielhaut());
     }

@@ -337,20 +337,20 @@ public class SielhautBearbeiten extends AbstractModul {
         getSpHaltungsnrFeld().setText(this.spunkt.getHaltungsnr());
         getSpAlarmplannrFeld().setText(this.spunkt.getAlarmplannr());
 
-        if (this.spunkt.getPsielhaut() == null) {
+        if (this.spunkt.getPSielhaut() == null) {
             getSpSielhautCheck().setSelected(false);
         } else
-            getSpSielhautCheck().setSelected(this.spunkt.getPsielhaut());
+            getSpSielhautCheck().setSelected(this.spunkt.getPSielhaut());
 
-        if (this.spunkt.getPnachprobe() == null) {
+        if (this.spunkt.getPNachprobe() == null) {
             getSpNachprobeCheck().setSelected(false);
         } else
-            getSpNachprobeCheck().setSelected(this.spunkt.getPnachprobe());
+            getSpNachprobeCheck().setSelected(this.spunkt.getPNachprobe());
 
-        if (this.spunkt.getPfirmenprobe() == null) {
+        if (this.spunkt.getPFirmenprobe() == null) {
             getSpFirmenprobeCheck().setSelected(false);
         } else
-            getSpFirmenprobeCheck().setSelected(this.spunkt.getPfirmenprobe());
+            getSpFirmenprobeCheck().setSelected(this.spunkt.getPFirmenprobe());
 
         this.probeModel.setProbepunkt(this.sprobePkt);
 
@@ -378,8 +378,9 @@ public class SielhautBearbeiten extends AbstractModul {
      * Legt einen neuen Sielhaut-Punkt an.
      */
     public void neuerSielhautPunkt() {
-        // Einige sinnvolle Default-Werte werdem im Konstruktor gesetzt
         AtlSielhaut neuerPunkt = new AtlSielhaut();
+        neuerPunkt.setRechtswert(new Double(0.0));
+        neuerPunkt.setHochwert(new Double(0.0));
         neuerPunkt.setBezeichnung("Neuer Sielhaut-Punkt");
         setSielhautPunkt(neuerPunkt);
     }
@@ -469,24 +470,27 @@ public class SielhautBearbeiten extends AbstractModul {
             }
 
             // SielhautBearbeiten, Nachprobe & Alarmplan
-            this.spunkt.setPsielhaut(getSpSielhautCheck().isSelected());
-            this.spunkt.setPnachprobe(getSpNachprobeCheck().isSelected());
-            this.spunkt.setPfirmenprobe(getSpFirmenprobeCheck().isSelected());
+            this.spunkt.setPSielhaut(getSpSielhautCheck().isSelected());
+            this.spunkt.setPNachprobe(getSpNachprobeCheck().isSelected());
+            this.spunkt.setPFirmenprobe(getSpFirmenprobeCheck().isSelected());
 
             if (saveObjekt()) {
-                if (saveProbepunkt(this.objekt) &&
-                    AtlSielhaut.saveSielhautPunkt(this.spunkt, this.objekt,
-                    this.sprobePkt)) {
+                if (saveProbepunkt(this.objekt)) {
 
-                    // TODO: This needs to be changed more consistent...
-                    this.spunkt = AtlSielhaut.findById(this.spunkt.getId());
-                    this.sprobePkt.setAtlSielhaut(this.spunkt);
-                    AtlProbepkt.merge(this.sprobePkt);
+                    this.spunkt.setBasisObjekt(this.objekt);
+                    this.spunkt.setAtlProbepkt(this.sprobePkt);
 
-                    this.frame.changeStatus(
-                        "Sielhaut-Messpunkt erfolgreich gespeichert.",
-                        HauptFrame.SUCCESS_COLOR);
-                    setSielhautPunkt(this.spunkt);
+                    if (this.spunkt.merge()) {
+                        // TODO: This needs to be changed more consistent...
+                        this.spunkt = AtlSielhaut.findById(this.spunkt.getId());
+                        this.sprobePkt.setAtlSielhaut(this.spunkt);
+                        AtlProbepkt.merge(this.sprobePkt);
+
+                        this.frame.changeStatus(
+                            "Sielhaut-Messpunkt erfolgreich gespeichert.",
+                            HauptFrame.SUCCESS_COLOR);
+                        setSielhautPunkt(this.spunkt);
+                    }
                 }
             } else {
                 this.frame.changeStatus(
@@ -2329,24 +2333,24 @@ class SielhautModel extends ListTableModel {
                 tmp = spunkt.getLage();
                 break;
             case 2:
-                if (spunkt.getPsielhaut() == null) {
+                if (spunkt.getPSielhaut() == null) {
                     tmp = new Boolean(false);
                 } else {
-                    tmp = new Boolean(spunkt.getPsielhaut());
+                    tmp = new Boolean(spunkt.getPSielhaut());
                 }
                 break;
             case 3:
-                if (spunkt.getPfirmenprobe() == null) {
+                if (spunkt.getPFirmenprobe() == null) {
                     tmp = new Boolean(false);
                 } else {
-                    tmp = new Boolean(spunkt.getPfirmenprobe());
+                    tmp = new Boolean(spunkt.getPFirmenprobe());
                 }
                 break;
             case 4:
-                if (spunkt.getPnachprobe() == null) {
+                if (spunkt.getPNachprobe() == null) {
                     tmp = new Boolean(false);
                 } else {
-                    tmp = new Boolean(spunkt.getPnachprobe());
+                    tmp = new Boolean(spunkt.getPNachprobe());
                 }
                 break;
             default:

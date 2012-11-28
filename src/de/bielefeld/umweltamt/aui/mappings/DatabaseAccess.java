@@ -732,7 +732,7 @@ public class DatabaseAccess {
         /* via message dialog */
         GUIManager.getInstance().showErrorMessage(message, "DB-Fehler");
         /* via stdout */
-        log.error(message); // + "\n" + exception.getMessage());
+        log.error(message + "\n" + exception.getMessage());
 
         /* Hand the exception to the DatabaseManager */
         DatabaseManager.getInstance().handleDBException(
