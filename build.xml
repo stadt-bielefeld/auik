@@ -37,7 +37,7 @@
     <!--      [1] ${config}/generated/hibernate.cfg.xml [1],                 -->
     <!--      [2] ${src}/[package]/{class-name}.java,                        -->
     <!-- =================================================================== -->
-    <target name="db2hbm2java"
+    <target name="db2hbmxml"
         description="Generate hibernate xml files from database via reverse 
             engineering">
         <taskdef name="hibernatetool"
@@ -50,6 +50,19 @@
             </jdbcconfiguration>
             <hbm2hbmxml /> <!-- [0] -->
             <hbm2cfgxml destdir="${config}/generated" /> <!-- [1] -->
+        </hibernatetool>
+    </target>
+    <target name="db2java"
+        description="Generate java mapping classes from database via reverse 
+        engineering">
+        <taskdef name="hibernatetool"
+             classname="org.hibernate.tool.ant.HibernateToolTask"
+             classpathref="classpath" />
+        <hibernatetool destdir="${src}">
+            <jdbcconfiguration
+                propertyfile="${config}/hibernate.properties"
+                revengfile="${config}/hibernate.reveng.xml">
+            </jdbcconfiguration>
             <!-- This (below) is a costum version of hbm2java /--> 
             <!-- [2] -->
             <hbmtemplate
