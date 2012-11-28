@@ -76,6 +76,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaUeberwachErgebni
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.InkaUeberwachungswertModel;
 import de.bielefeld.umweltamt.aui.tipi.CredentialsDialog;
 import de.bielefeld.umweltamt.aui.tipi.ServiceManager;
+import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.nrw.lds.tipi.inka.Dea_Adresse;
 import de.nrw.lds.tipi.inka.Inka_Anfallst_Anlage;
 import de.nrw.lds.tipi.inka.Inka_Anfallst_Messst;
@@ -444,62 +445,219 @@ public class DBSyncModul extends AbstractModul {
                 }
             });
 
-            JButton get = new JButton("Daten von ext. Dienst holen");
-            get.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    CredentialsDialog dialog = new CredentialsDialog(
-                        DBSyncModul.this);
-                    dialog.setVisible(true);
-                }
-            });
+			final JButton get = new JButton("Alle Daten von ext. Dienst holen");
+			get.addActionListener(new ActionListener() {
+				CredentialsDialog dialog = new CredentialsDialog(
+						DBSyncModul.this);
 
-            JButton set = new JButton("Alle Daten übertragen");
-            set.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent ae) {
+					SwingWorkerVariant worker = new SwingWorkerVariant(get) {
+						@Override
+						protected void doNonUILogic() {
+							dialog.setVisible(true);
+							requestData();
+						}
+
+						@Override
+						protected void doUIUpdateLogic() {
+						}
+					};
+					worker.start();
+				}
+			});
+			
+			
+
+			final JButton getSelected = new JButton(
+					"nur gewählte Tabelle holen");
+			getSelected.addActionListener(new ActionListener() {
+				CredentialsDialog dialog = new CredentialsDialog(
+						DBSyncModul.this);
+
+				@Override
+				public void actionPerformed(ActionEvent ae) {
+					SwingWorkerVariant worker = new SwingWorkerVariant(getSelected) {
+						@Override
+						protected void doNonUILogic() {
+							dialog.setVisible(true);
+							requestData(selection.getSelectedItem().toString());
+						}
+
+						@Override
+						protected void doUIUpdateLogic() {
+						}
+					};
+					worker.start();
+				}
+			});
+
+            final JButton setSelected = new JButton("nur gewählte Tabelle übertragen");
+            setSelected.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent ae) {
-                    if (url != null && user != null && password != null) {
-                        dbToService();
-                        // Note: Take care to transmit in the right order!
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendAddr);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendBetrieb);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendGenehmigung);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendBetriebseinrichtung);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendUebergabestelle);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendMessstelle);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendAnfallstelle);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendAnlage);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendMessstAnlage);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendAnfallstMessst);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendAnfallstAnlage);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendAnfallstStoffe);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendProbenahme);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendUeberwachErgebnis);
-                        DBSyncModul.this.service.setInkaDataRecords(
-                            user, password, DBSyncModul.this.sendUeberwachungswert);
-                    } else {
-                        GUIManager.getInstance().showInfoMessage(
-                            "Bitte holen Sie zuerst Daten ab!", "Info");
-                    }
-                }
-            });
+				public void actionPerformed(ActionEvent ae) {
+					SwingWorkerVariant worker = new SwingWorkerVariant(setSelected) {
+						@Override
+						protected void doNonUILogic() {
+					String sel = (String) selection.getSelectedItem();
+					if (url != null && user != null && password != null) {
+						dbToService();
+						if (sel.equals("dea_adresse")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password, DBSyncModul.this.sendAddr);
+						}
+						if (sel.equals("inka_betrieb")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password, DBSyncModul.this.sendBetrieb);
+						}
+						if (sel.equals("inka_genehmigung")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password, DBSyncModul.this.sendGenehmigung);
+						}
+						if (sel.equals("inka_betriebseinrichtung")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password,
+									DBSyncModul.this.sendBetriebseinrichtung);
+						}
+						if (sel.equals("inka_uebergabestelle")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password,
+									DBSyncModul.this.sendUebergabestelle);
+						}
+						if (sel.equals("inka_messstelle")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password, DBSyncModul.this.sendMessstelle);
+						}
+						if (sel.equals("inka_anfallstelle")) {
+							DBSyncModul.this.service
+									.setInkaDataRecords(user, password,
+											DBSyncModul.this.sendAnfallstelle);
+						}
+						if (sel.equals("inka_anlage")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password, DBSyncModul.this.sendAnlage);
+						}
+						if (sel.equals("inka_messst_anlage")) {
+							DBSyncModul.this.service
+									.setInkaDataRecords(user, password,
+											DBSyncModul.this.sendMessstAnlage);
+						}
+						if (sel.equals("inka_anfallst_messst")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password,
+									DBSyncModul.this.sendAnfallstMessst);
+						}
+						if (sel.equals("inka_anfallst_anlage")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password,
+									DBSyncModul.this.sendAnfallstAnlage);
+						}
+						if (sel.equals("inka_anfallst_stoffe")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password,
+									DBSyncModul.this.sendAnfallstStoffe);
+						}
+						if (sel.equals("inka_probenahme")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password, DBSyncModul.this.sendProbenahme);
+						}
+						if (sel.equals("inka_ueberwach_ergebnis")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password,
+									DBSyncModul.this.sendUeberwachErgebnis);	
+						}
+						if (sel.equals("inka_ueberwachungswert")) {
+							DBSyncModul.this.service.setInkaDataRecords(user,
+									password,
+									DBSyncModul.this.sendUeberwachungswert);	
+						}
+					} else {
+						GUIManager.getInstance().showInfoMessage(
+								"Bitte holen Sie zuerst Daten ab!", "Info");
+					}
+						}
+					@Override
+					protected void doUIUpdateLogic() {
+					}
+				};
+				worker.start();
+			}
+		});
+
+			final JButton set = new JButton("Alle Daten übertragen");
+			set.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent ae) {
+					SwingWorkerVariant worker = new SwingWorkerVariant(
+							set) {
+						@Override
+						protected void doNonUILogic() {
+							if (url != null && user != null && password != null) {
+								dbToService();
+								// Note: Take care to transmit in the right
+								// order!
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendAddr);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendBetrieb);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendGenehmigung);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendBetriebseinrichtung);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendUebergabestelle);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendMessstelle);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendAnfallstelle);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendAnlage);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendMessstAnlage);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendAnfallstMessst);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendAnfallstAnlage);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendAnfallstStoffe);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendProbenahme);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendUeberwachErgebnis);
+								DBSyncModul.this.service.setInkaDataRecords(
+										user, password,
+										DBSyncModul.this.sendUeberwachungswert);
+							} else {
+								GUIManager.getInstance().showInfoMessage(
+										"Bitte holen Sie zuerst Daten ab!",
+										"Info");
+							}
+						}
+
+						@Override
+						protected void doUIUpdateLogic() {
+						}
+					};
+					worker.start();
+				}
+			});
 
             FormLayout layout = new FormLayout(
-                "pref, 3dlu, 90dlu, 3dlu, 90dlu, 3dlu:grow(1.0)",
+                "pref, 3dlu, pref, 3dlu, pref, 3dlu:grow(1.0)",
                 "pref, 3dlu, pref, 3dlu, pref, 3dlu, 150dlu:grow(1.0), 3dlu, pref");
             PanelBuilder builder = new PanelBuilder(layout);
             builder.setDefaultDialogBorder();
@@ -515,6 +673,8 @@ public class DBSyncModul extends AbstractModul {
             builder.add(compare, cc.xy(5, 1));
             builder.add(get, cc.xy(1, 3));
             builder.add(set, cc.xy(1, 5));
+            builder.add(getSelected, cc.xy(3, 3));
+            builder.add(setSelected, cc.xy(3, 5));
             builder.add(dbScroller, cc.xyw(1, 7, 6));
             builder.addLabel("Anzahl der Elemente: ", cc.xy(1, 9));
             builder.add(this.rowCount, cc.xy(3, 9));
@@ -528,7 +688,7 @@ public class DBSyncModul extends AbstractModul {
 
     /**
      * Liest die synchronisierbaren Tabellen aus den Settings und liest die
-     * Datensätzeaus.
+     * Datensätze aus.
      */
     private String[] readSyncableEntities() {
         SettingsManager sm = this.manager.getSettingsManager();
@@ -661,6 +821,91 @@ public class DBSyncModul extends AbstractModul {
             this.ueberwachungswertServiceModel.setList(
                 this.service.getInkaDataRecords(
                     user, password, new Inka_Ueberwachungswert()));
+            // Add new DEA/INKA-Table here
+        }
+    }
+
+    /**
+     * Holt nur die Daten der selektierten Tabelle von dem Dienst
+     * und speichert diese in dem dafür vorgesehen Model.
+     */
+    public void requestData(String selection) {
+        // TODO validation, exception handling etc.
+        if (user != null && password != null && url != null) {
+            this.service.setInkaEndpointAdress(url);
+			if (selection.equals(new String("dea_adresse"))) {
+				this.addrServiceModel.setList(this.service.getInkaDataRecords(
+						user, password, new Dea_Adresse()));
+			}
+			if (selection.equals(new String("inka_betrieb"))) {
+				this.betriebServiceModel
+						.setList(this.service.getInkaDataRecords(user,
+								password, new Inka_Betrieb()));
+			}
+			if (selection.equals(new String("inka_genehmigung"))) {
+				this.genehmigungServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Genehmigung()));
+			}
+			if (selection.equals(new String("inka_betriebseinrichtung"))) {
+				this.betriebseinrServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Betriebseinrichtung()));
+			}
+			if (selection.equals(new String("inka_uebergabestelle"))) {
+				this.uebergabestelleServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Uebergabestelle()));
+			}
+			if (selection.equals(new String("inka_messstelle"))) {
+				this.messstelleServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Messstelle()));
+			}
+			if (selection.equals(new String("inka_anfallstelle"))) {
+				this.anfallstelleServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Anfallstelle()));
+			}
+			if (selection.equals(new String("inka_anlage"))) {
+				this.anlageServiceModel.setList(this.service
+						.getInkaDataRecords(user, password, new Inka_Anlage()));
+			}
+			if (selection.equals(new String("inka_messst_anlage"))) {
+				this.messstAnlageServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Messst_Anlage()));
+			}
+			if (selection.equals(new String("inka_anfallst_messst"))) {
+				this.anfallstMessstServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Anfallst_Messst()));
+			}
+			if (selection.equals(new String("inka_anfallst_anlage"))) {
+				this.anfallstAnlageServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Anfallst_Anlage()));
+			}
+			if (selection.equals(new String("inka_anfallst_stoffe"))) {
+				this.anfallstStoffeServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Anfallst_Stoffe()));
+			}
+			if (selection.equals(new String("inka_probenahme"))) {
+				this.probenahmeServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Probenahme()));
+			}
+			if (selection.equals(new String("inka_ueberwach_ergebnis"))) {
+				this.ueberwachErgebnisServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Ueberwach_Ergebnis()));
+			}
+			if (selection.equals(new String("inka_ueberwachungswert"))) {
+				this.ueberwachungswertServiceModel.setList(this.service
+						.getInkaDataRecords(user, password,
+								new Inka_Ueberwachungswert()));
+			}
             // Add new DEA/INKA-Table here
         }
     }

@@ -47,6 +47,7 @@ public class CredentialsDialog extends JDialog {
 
     private SettingsManager settings;
     private DBSyncModul modul;
+    private String selection;
 
     private JLabel textLabel;
     private JTextField benutzerFeld;
@@ -139,8 +140,7 @@ public class CredentialsDialog extends JDialog {
                 settings.setSetting("auik.tipi.lastuser", user, true);
                 settings.setSetting("auik.tipi.lasturl", url, true);
                 CredentialsDialog.this.close();
-                modul.requestData();
-            }
+			}
         });
 
         FormLayout layout = new FormLayout(

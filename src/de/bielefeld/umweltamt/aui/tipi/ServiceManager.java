@@ -27,6 +27,7 @@ import java.util.List;
 
 import javax.xml.rpc.ServiceException;
 
+
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.nrw.lds.tipi.general.HistoryObject;
 import de.nrw.lds.tipi.inka.Dea_Adresse;
@@ -116,6 +117,7 @@ public final class ServiceManager {
             request.setKennung(user);
             request.setPassword(password);
             resultArray = this.getResponseArrayFromIIP(type, request, iip);
+            log.debug(request.toString());
         } catch(RemoteException re) {
             log.error("Error while requesting "
                 + type.getClass().getSimpleName() +  ".");
@@ -148,6 +150,7 @@ public final class ServiceManager {
                 request.setKennung(user);
                 request.setPassword(password);
                 this.setRecordToRequestToIIP(record, request, iip);
+                log.debug(request.toString());
             }
         } catch(RemoteException re) {
             log.error("Error while sending "

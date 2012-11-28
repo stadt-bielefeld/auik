@@ -7,11 +7,16 @@
 
 package de.nrw.lds.tipi.inka.webservice;
 
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 public class InkaInterfaceSoapBindingStub extends org.apache.axis.client.Stub implements de.nrw.lds.tipi.inka.webservice.InkaInterfacePortType {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();
     private java.util.Vector cachedDeserFactories = new java.util.Vector();
+    
+    /** Logging */
+    private static final AuikLogger log = AuikLogger.getLogger();
 
     static org.apache.axis.description.OperationDesc [] _operations;
 
@@ -3201,6 +3206,7 @@ public class InkaInterfaceSoapBindingStub extends org.apache.axis.client.Stub im
         }
         else {
             extractAttachments(_call);
+            log.debug(_resp);
             try {
                 return (de.nrw.lds.tipi.inka.general.ResStandard) _resp;
             } catch (java.lang.Exception _exception) {
