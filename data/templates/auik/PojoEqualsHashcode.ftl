@@ -13,13 +13,17 @@
             ((${pojo.getDeclarationName()}) other).${pojo.getGetterSignature(clazz.identifierProperty)}()));
     }
 
-</#if>
-<#if pojo.needsEqualsHashCode() && !clazz.superclass?exists>
+    /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
     public int hashCode() {
         int result = 17;
-<#foreach property in pojo.getAllPropertiesIterator()>
-        ${pojo.generateHashCode(property, "result", "this", jdk5)}
-</#foreach>
+        int idValue = this.${pojo.getGetterSignature(clazz.identifierProperty)}() == null ?
+            0 : this.${pojo.getGetterSignature(clazz.identifierProperty)}().hashCode();
+        result = result * 37 + idValue;
         return result;
     }
+    
 </#if>

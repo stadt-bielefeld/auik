@@ -324,12 +324,17 @@ public class AtlParameter  implements java.io.Serializable {
             ((AtlParameter) other).getOrdnungsbegriff()));
     }
 
+    /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
     @Override
     public int hashCode() {
         int result = 17;
-        int idValue = this.getOrdnungsbegriff() == null ? 0 : this
-                .getOrdnungsbegriff().hashCode();
-        return (result * 37 + idValue);
+        int idValue = this.getOrdnungsbegriff() == null ?
+            0 : this.getOrdnungsbegriff().hashCode();
+        result = result * 37 + idValue;
+        return result;
     }
 
     /**
@@ -350,7 +355,40 @@ public class AtlParameter  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (AtlParameter.merge(this) != null);
+        AtlParameter saved = AtlParameter.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this AtlParameter with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy AtlParameter
+     */
+    private void copy(AtlParameter copy) {
+        this.ordnungsbegriff = copy.getOrdnungsbegriff();
+        this.atlParametergruppen = copy.getAtlParametergruppen();
+        this.analyseverfahren = copy.getAnalyseverfahren();
+        this.bezeichnung = copy.getBezeichnung();
+        this.wirdgemessenineinheit = copy.getWirdgemessenineinheit();
+        this.grenzwert = copy.getGrenzwert();
+        this.grenzwertname = copy.getGrenzwertname();
+        this.sielhautGw = copy.getSielhautGw();
+        this.klaerschlammGw = copy.getKlaerschlammGw();
+        this.preisfueranalyse = copy.getPreisfueranalyse();
+        this.einzelnbeauftragbar = copy.getEinzelnbeauftragbar();
+        this.kennzeichnung = copy.getKennzeichnung();
+        this.konservierung = copy.getKonservierung();
+        this.reihenfolge = copy.getReihenfolge();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.deaStoffeStoffNr = copy.getDeaStoffeStoffNr();
+        this.atlMetaParameters = copy.getAtlMetaParameters();
+        this.atlAnalysepositions = copy.getAtlAnalysepositions();
     }
 
     /**
