@@ -132,8 +132,9 @@ public class AnalyseImport extends AbstractModul {
             if (this.status[row] == 0) {
                 String[] columns = (String[]) getObjectAtRow(row);
 
-                this.status[row] = (columns.length < 8) ? -1 : AnalyseProcessor
-                    .importStatus(AnalyseProcessor.unquote(columns[0]),
+                this.status[row] = (columns.length < 8) ? -1 :
+                    AnalyseProcessor.importStatus(
+                        AnalyseProcessor.unquote(columns[0]),
                         AnalyseProcessor.unquote(columns[2]),
                         AnalyseProcessor.unquote(columns[6]));
             }

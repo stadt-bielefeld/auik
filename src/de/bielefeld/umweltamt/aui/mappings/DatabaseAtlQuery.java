@@ -26,10 +26,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
@@ -71,22 +69,40 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
     /**
-     * This is used to load the AtlAnalysepositions for the set within the
-     * Probenahme. I am not sure if they will be auto-loaded with the new
-     * generated classes. TODO: Test that!
-     * @param probe
-     * @return Set&lt;AtlAnalyseposition&gt;
+     * Get AtlProbenahmen their AtlAnalyseposition for an AtlProbepkt
+     * @param probepunkt AtlProbpkt
+     * @return <code>Map&lt;AtlProbenahmen,
+     *         Map&lt;AtlParameter, AtlAnalyseposition&gt;&gt;</code>
      */
-    public static Set<AtlAnalyseposition> getAnalysepositionen(
-        AtlProbenahmen probe) {
-        Set<AtlAnalyseposition> resultSet = new HashSet<AtlAnalyseposition>();
-        List<AtlAnalyseposition> resultList = new DatabaseAccess()
+    public static Map<AtlProbenahmen, Map<AtlParameter, AtlAnalyseposition>>
+        getAnalysepositionen(AtlProbepkt probepkt) {
+        Map<AtlProbenahmen, Map<AtlParameter, AtlAnalyseposition>> probeMap =
+            new HashMap<AtlProbenahmen,
+                Map<AtlParameter, AtlAnalyseposition>>();
+        Map<AtlParameter, AtlAnalyseposition> parameterMap;
+        // For each Probe add an empty parameterMap to the probeMap
+        List<AtlProbenahmen> proben = DatabaseQuery.findProbenahmen(probepkt);
+        for (AtlProbenahmen probe : proben) {
+            parameterMap = new HashMap<AtlParameter, AtlAnalyseposition>();
+            probeMap.put(probe, parameterMap);
+        }
+        // Get all AtlAnalysepositions (really all!)
+        List<AtlAnalyseposition> positions = new DatabaseAccess()
             .executeCriteriaToList(
                 DetachedCriteria.forClass(AtlAnalyseposition.class)
-                    .add(Restrictions.eq("atlProbenahmen", probe)),
+                    .createAlias("atlProbenahmen", "probe")
+                    .add(Restrictions.eq("probe.atlProbepkt", probepkt))
+                    .addOrder(Order.asc("probe.kennummer"))
+                    ,
                 new AtlAnalyseposition());
-        resultSet.addAll(resultList);
-        return resultSet;
+        // Sort the AtlAnalysepositions into the maps
+        for (AtlAnalyseposition position : positions) {
+            // Get the parameterMap for the Probe
+            probeMap.get(position.getAtlProbenahmen())
+                // Add this position to it with the parameter as key
+                .put(position.getAtlParameter(), position);
+        }
+        return probeMap;
     }
 
     /**
@@ -99,25 +115,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
                 .setProjection(Projections.distinct(
                     Projections.property("analyseVon"))),
             new String[0]);
-    }
-
-    /**
-     * Liefert eine Analyseposition mit einem gegebenen Parameter
-     * aus einer gegebenen Probenahme.
-     * @param probe Die Probenahme
-     * @param param Der Parameter
-     * @return AtlAnalyseposition
-     */
-    public static AtlAnalyseposition getAnalyseposition(
-            AtlProbenahmen probe, AtlParameter param) {
-        Set<AtlAnalyseposition> set = probe.loadAtlAnalysepositionen();
-        for (AtlAnalyseposition pos : set) {
-            if (pos.getAtlParameter().getOrdnungsbegriff().equals(
-                    param.getOrdnungsbegriff())) {
-                return pos;
-            }
-        }
-        return null;
     }
 
     /**
@@ -157,6 +154,34 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
                 .add(Restrictions.eq("atlProbenahmen", probe))
                 .addOrder(Order.asc("parameter.reihenfolge")),
             new AtlAnalyseposition());
+    }
+
+    /**
+     * Find an AtlAnalyseposition from a given AtlProbenahmen with the given
+     * AtlParameter.
+     * If there is none and createNew is true, create a new one.
+     * @param probe AtlProbenahmen
+     * @param parameter AtlParameter
+     * @param einheit AtlEinheit
+     * @param createNew boolean
+     * @return AtlAnalyseposition
+     */
+    public static AtlAnalyseposition findAnalyseposition(
+        AtlProbenahmen probe, AtlParameter parameter, AtlEinheiten einheit,
+        boolean createNew) {
+        AtlAnalyseposition position = new DatabaseAccess()
+            .executeCriteriaToUniqueResult(
+                DetachedCriteria.forClass(AtlAnalyseposition.class)
+                    .add(Restrictions.eq("atlProbenahmen", probe))
+                    .add(Restrictions.eq("atlParameter", parameter)),
+                new AtlAnalyseposition());
+        if (position == null && createNew) {
+            position = new AtlAnalyseposition();
+            position.setAtlProbenahmen(probe);
+            position.setAtlParameter(parameter);
+            position.setAtlEinheiten(einheit);
+        }
+        return position;
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

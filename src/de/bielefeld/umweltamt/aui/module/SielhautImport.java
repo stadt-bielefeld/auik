@@ -301,7 +301,7 @@ public class SielhautImport extends AbstractModul {
                             // Sollte eigentlich nicht vorkommen, nötig?
                             throw new Exception("Probenahme nicht gefunden!");
                         }
-                        probe.addAnalyseposition(pos);
+                        pos.setAtlProbenahmen(probe);
 
                         // Wert
                         Float wert;

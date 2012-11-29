@@ -2053,7 +2053,13 @@ class SielhautProbeModel extends ListTableModel {
     @Override
     public void updateList() {
         if (this.probepkt != null) {
-            setList(DatabaseQuery.findProbenahmen(this.probepkt));
+            List<AtlProbenahmen> proben =
+                DatabaseQuery.findProbenahmen(this.probepkt);
+            setList(proben);
+
+            // Do all the database stuff first...
+            Map<AtlProbenahmen, Map<AtlParameter, AtlAnalyseposition>> bigMap =
+                DatabaseQuery.getAnalysepositionen(this.probepkt);
 
             this.wertMap.clear();
             for (int i = 0; i < getList().size(); i++) {
@@ -2062,9 +2068,7 @@ class SielhautProbeModel extends ListTableModel {
                     new ArrayList<AtlAnalyseposition>(this.params.length);
 
                 for (int j = 0; j < this.params.length; j++) {
-                    wertList.add(j,
-                        DatabaseQuery.getAnalyseposition(
-                            probe, this.params[j]));
+                    wertList.add(j, bigMap.get(probe).get(this.params[j]));
                 }
 
                 this.wertMap.put((AtlProbenahmen) getList().get(i), wertList);

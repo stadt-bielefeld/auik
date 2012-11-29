@@ -23,13 +23,10 @@ package de.bielefeld.umweltamt.aui.mappings.atl;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.Vector;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 
 /**
  * A class that represents a row in the 'ATL_PROBENAHMEN' table. This class may
@@ -38,8 +35,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     Serializable {
     private static final long serialVersionUID = 950596109574293371L;
-
-    private boolean loadedAtlAnalysepositionen = false;
 
     /**
      * Simple constructor of AtlProbenahmen instances.
@@ -106,82 +101,6 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
     }
 
     /**
-     * Fügt dieser Probenahme eine Analyseposition hinzu (und sorgt für die
-     * richtigen Fremdschlüssel in den Tabellen).
-     * @param pos Die neue Analyseposition
-     */
-    public void addAnalyseposition(AtlAnalyseposition pos) {
-        pos.setAtlProbenahmen(this);
-        this.loadAtlAnalysepositionen().add(pos);
-    }
-
-    /**
-     * Suche eine bestimmte AtlAnalyseposition anhand des Ordnungsbegriffs eines
-     * Parameters.
-     * @param ordnungsbegriff Der Ordnungsbegriff eines AtlParameter der zu der
-     *            AtlAnalyseposition geh&ouml;rt.
-     * @return eine bereits existente {@link AtlAnalyseposition} oder eine neue
-     *         {@link AtlAnalyseposition}.
-     */
-    public AtlAnalyseposition findAtlAnalyseposition(AtlParameter parameter,
-        AtlEinheiten einheit, boolean createNew) {
-        String ordnungsbegriff = parameter.getOrdnungsbegriff();
-        Set<AtlAnalyseposition> positionen =
-            (Set<AtlAnalyseposition>) loadAtlAnalysepositionen();
-        Iterator<AtlAnalyseposition> iter = positionen.iterator();
-
-        // TODO: Why don't we use a query here?
-        while (iter.hasNext()) {
-            AtlAnalyseposition tmp = (AtlAnalyseposition) iter.next();
-            AtlParameter param = tmp.getAtlParameter();
-
-            if (ordnungsbegriff.equals(param.getOrdnungsbegriff())) {
-                return tmp;
-            }
-        }
-
-        if (!createNew) {
-            return null;
-        }
-
-        AtlAnalyseposition neu = new AtlAnalyseposition();
-        neu.setAtlProbenahmen(this);
-        neu.setAtlParameter(parameter);
-        neu.setAtlEinheiten(einheit);
-
-        addAnalyseposition(neu);
-
-        return neu;
-    }
-
-    /**
-     * Diese Methode ruft {@link findAtlAnalyseposition(AtlParameter,
-     * AtlEinheiten, boolean)} mit einem gesetzten <code>createNew</code>
-     * Parameter auf.
-     */
-    public AtlAnalyseposition findAtlAnalyseposition(AtlParameter parameter,
-        AtlEinheiten einheit) {
-        return findAtlAnalyseposition(parameter, einheit, true);
-    }
-
-    /**
-     * Load and return AtlAnalysepositionen<br>
-     * Will only work on a saved AtlProbenahme.
-     * @return
-     */
-    public Set<AtlAnalyseposition> loadAtlAnalysepositionen() {
-      // TODO: This is not an optimal solution...
-      if (!loadedAtlAnalysepositionen) {
-          super.setAtlAnalysepositionen(
-              DatabaseQuery.getAnalysepositionen(this));
-          loadedAtlAnalysepositionen = true;
-      }
-//      super.setAtlAnalysepositionen(
-//          AtlAnalyseposition.getAnalysepositionen(this));
-      return super.getAtlAnalysepositionen();
-    }
-
-    /**
      * Return all Collections which need to be initialized.
      * @return An array of all Collections
      */
@@ -190,5 +109,13 @@ public class AtlProbenahmen extends AbstractAtlProbenahmen implements
         Vector<Collection<?>> collections = new Vector<Collection<?>>();
         collections.add(getAtlAnalysepositionen());
         return collections;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int kennummerValue = this.getKennummer() == null ? 0 : this
+                .getKennummer().hashCode();
+        return result * 37 + kennummerValue;
     }
 }

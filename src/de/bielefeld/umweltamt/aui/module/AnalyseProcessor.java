@@ -86,15 +86,17 @@ public class AnalyseProcessor {
 
         AtlParameter parameter = AtlParameter.findById(ordnungsbegriff);
         AtlEinheiten einheit   = AtlEinheiten.findById(id);
-        AtlAnalyseposition pos = probe.findAtlAnalyseposition(
-            parameter, einheit);
 
-        if (pos != null) {
+        AtlAnalyseposition position = DatabaseQuery.findAnalyseposition(
+            probe, parameter, einheit, true);
 
-            pos.setWert(Float.parseFloat(wert));
-            pos.setGrkl(grkl);
-            pos.setAtlEinheiten(einheit);
-            pos.setAnalyseVon("E-Satzung");
+        if (position != null) {
+
+            position.setWert(Float.parseFloat(wert));
+            position.setGrkl(grkl);
+            position.setAtlEinheiten(einheit);
+            position.setAnalyseVon("E-Satzung");
+            position.merge();
 
             probe.setAtlStatus(DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN);
             probe.merge();
@@ -121,7 +123,7 @@ public class AnalyseProcessor {
      * Diese Methode liefert den Status eines Analyseimports.
      *
      * @param param Der Ordnungsbegriff eines {@link AtlParameter}.
-     * @param einheit Die ID einer {@link AtlEinheiten}.
+     * @param einh Die ID einer {@link AtlEinheiten}.
      *
      * @return <b>-1</b>, falls es keine {@link AtlProbenahmen} mit einer
      * Kennnummer <i>kenn</i> existiert oder kein {@link AtlParameter} oder
@@ -130,28 +132,28 @@ public class AnalyseProcessor {
      * {@link AtlProbenahmen} gibt, die jedoch keinen passenden
      * {@link AtlParameter} besitzt.
      */
-    public static int importStatus(String kenn, String param, String einheit) {
+    public static int importStatus(String kenn, String param, String einh) {
         AtlProbenahmen probe = DatabaseQuery.findProbenahme(kenn);
 
         if (probe == null) {
             return -1;
         }
 
-        if (param == null || einheit == null) {
+        if (param == null || einh == null) {
             return 2;
         }
 
-        int               id   = Integer.parseInt(einheit);
-        AtlParameter       p   = AtlParameter.findById(param);
-        AtlEinheiten       e   = AtlEinheiten.findById(id);
+        AtlParameter parameter = AtlParameter.findById(param);
+        AtlEinheiten   einheit = AtlEinheiten.findById(Integer.parseInt(einh));
 
-        if (p == null || e == null) {
+        if (parameter == null || einheit == null) {
             return -1;
         }
 
-        AtlAnalyseposition pos = probe.findAtlAnalyseposition(p, e, false);
+        AtlAnalyseposition position = DatabaseQuery.findAnalyseposition(
+            probe, parameter, einheit, false);
 
-        return pos != null ? 1 : 2;
+        return position != null ? 1 : 2;
     }
 }
 // vim:set ts=4 sw=4 si et sta sts=4 fenc=utf8:

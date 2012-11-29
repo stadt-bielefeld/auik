@@ -324,6 +324,14 @@ public class AtlParameter  implements java.io.Serializable {
             ((AtlParameter) other).getOrdnungsbegriff()));
     }
 
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getOrdnungsbegriff() == null ? 0 : this
+                .getOrdnungsbegriff().hashCode();
+        return (result * 37 + idValue);
+    }
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
