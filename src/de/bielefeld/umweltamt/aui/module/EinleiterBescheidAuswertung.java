@@ -51,7 +51,6 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Method;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -61,7 +60,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BescheidModel;
@@ -223,34 +222,9 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
         }
         return tmodel;
     }
-    
+
+    @Override
     protected BasisObjekt getBasisObjektFromFachdaten(Object probenahme) {
-        BasisObjekt tmp;
-        AtlProbepkt pkt;
-
-        // Die "getBasisObjekt" Methode des jeweiligen
-        // Fachdaten-Objekts wird jetzt, unabhängig von
-        // seiner Klasse, mit Hilfe der Reflection-Methoden
-        // nach ihrem Namen gesucht. Sollte keine Methode
-        // diesen Namens existieren, wird null zurück geliefert.
-        try {
-            Method getPKT = probenahme.getClass().getMethod("getAtlProbepkt");
-            pkt = (AtlProbepkt) getPKT.invoke(probenahme);
-            Method getBO = pkt.getClass().getMethod("getBasisObjekt");
-            tmp = (BasisObjekt) getBO.invoke(pkt);
-        } catch (Exception e) {
-            //e.printStackTrace();
-            tmp = null;
-        }
-
-//        if (fachdaten instanceof Anh50Fachdaten) {
-//            tmp = ((Anh50Fachdaten) fachdaten).getBasisObjekt();
-//        } else if (fachdaten instanceof Anh49Fachdaten) {
-//            tmp = ((Anh49Fachdaten) fachdaten).getBasisObjekt();
-//        } else {
-//            tmp = null;
-//        }
-
-        return tmp;
+        return ((AtlProbenahmen) probenahme).getAtlProbepkt().getBasisObjekt();
     }
 }
