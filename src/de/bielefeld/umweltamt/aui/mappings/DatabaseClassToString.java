@@ -254,8 +254,8 @@ public class DatabaseClassToString {
                 " " + clazz.getZeitDerEntnahmen() : "")
             + ", "
             + (DatabaseAccess.isInitialized(
-                clazz.getAtlAnalysepositionen()) ?
-                    clazz.getAtlAnalysepositionen().size() : "N/A")
+                clazz.getAtlAnalysepositions()) ?
+                    clazz.getAtlAnalysepositions().size() : "N/A")
             + "]";
     }
 

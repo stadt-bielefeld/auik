@@ -82,7 +82,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -216,8 +215,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 // + probe);
                 // }
                 // positionen = probe.getAtlAnalysepositionen();
-                this.probe = AtlProbenahmen.getProbenahme(this.probe.getId(),
-                    false);
+                this.probe = AtlProbenahmen.findById(this.probe.getId());
                 setList(DatabaseQuery.getSortedAnalysepositionen(this.probe));
             } else { // isNew
                 if (this.isSchlamm) {
@@ -567,8 +565,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         @Override
         public boolean objectRemoved(Object objectAtRow) {
-            // AtlAnalyseposition tmp = (AtlAnalyseposition) objectAtRow;
-            // getList().remove(tmp);
+            AtlAnalyseposition tmp = (AtlAnalyseposition) objectAtRow;
+            tmp.delete();
 
             return true;// probe.getAtlAnalysepositionen().remove(tmp);
         }
@@ -655,7 +653,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         if (!isNew /*probe.isAnalysepositionenInitialized()*/) {
-            setEditedObject(AtlProbenahmen.getProbenahme(probe.getId(), true));
+            // TODO: Here we want to get rid of getProbenahmeAndInit
+            setEditedObject(AtlProbenahmen.findById(probe.getId()));
         }
 
         if (isNew) {
@@ -1456,25 +1455,34 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         if (!"".equals(newBemerkung)) {
-            getProbe().setBemerkung(newBemerkung);
+            probe.setBemerkung(newBemerkung);
         } else {
-            getProbe().setBemerkung(null);
+            probe.setBemerkung(null);
         }
 
-        // Analysepositionen
-        Set<AtlAnalyseposition> newPositionen = new HashSet<AtlAnalyseposition>(
-            this.parameterModel.getList());
-        getProbe().getAtlAnalysepositionen().clear();
-        getProbe().getAtlAnalysepositionen().addAll(newPositionen);
-        // getProbe().setAtlAnalysepositionen(newPositionen);
-        log.debug("Analysepositionen geändert: "
-            + getProbe().getAtlAnalysepositionen());
+        boolean success = true;
 
-        boolean success;
+        probe = AtlProbenahmen.merge(probe);
+        success = (probe != null);
         if (this.isNew) {
             this.isNew = false;
         }
-        success = getProbe().merge();
+
+        // Analysepositionen
+//        Set<AtlAnalyseposition> newPositionen = new HashSet<AtlAnalyseposition>(
+//            this.parameterModel.getList());
+//        getProbe().getAtlAnalysepositionen().clear();
+//        getProbe().getAtlAnalysepositionen().addAll(newPositionen);
+//        // getProbe().setAtlAnalysepositionen(newPositionen);
+//        log.debug("Analysepositionen geändert: "
+//            + getProbe().getAtlAnalysepositionen());
+        List<?> objects = this.parameterModel.getList();
+        AtlAnalyseposition position;
+        for (Object object : objects) {
+            position = (AtlAnalyseposition) object;
+            position.setAtlProbenahmen(probe);
+            success = success && position.merge();
+        }
 
         return success;
     }

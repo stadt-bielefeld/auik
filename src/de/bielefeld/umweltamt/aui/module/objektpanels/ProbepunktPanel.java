@@ -303,7 +303,7 @@ public class ProbepunktPanel extends JPanel {
                 probe.setKennummer(kennNummer);
                 probe.setDatumDerEntnahme(datum);
                 probe
-                    .setAtlAnalysepositionen(new HashSet<AtlAnalyseposition>());
+                    .setAtlAnalysepositions(new HashSet<AtlAnalyseposition>());
                 probe.setAtlProbepkt(this.probepkt);
 
                 ProbenEditor editDialog = new ProbenEditor(probe,

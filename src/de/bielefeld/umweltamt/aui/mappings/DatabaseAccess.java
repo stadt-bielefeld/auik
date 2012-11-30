@@ -24,9 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Vector;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -89,38 +87,9 @@ public class DatabaseAccess {
      * @return Object The requested object
      */
     public Object get(Class<?> clazz, Serializable id) {
-        return this.get(clazz, id, false);
-    }
-
-    /**
-     * Get the entity of clazz with the id and initialize all Collections
-     * @param clazz The requested Class
-     * @param id The requested id
-     * @return Object The requested object
-     */
-    public Object getAndInitCollections(Class<?> clazz, Serializable id) {
-        return this.get(clazz, id, true);
-    }
-
-    /**
-     * Get the entity of clazz with the id (and initialize all Collections)
-     * @param clazz The requested Class
-     * @param id The requested id
-     * @param init boolean Initialize the Collections of the Class
-     * @return Object The requested object
-     */
-    private Object get(Class<?> clazz, Serializable id, boolean init) {
         Object result = null;
         try {
             result = this.getSession().get(clazz, id);
-
-            if (init) {
-                Vector<Collection<?>> collections =
-                    ((DatabaseTableWithCollection) result).getToInitCollections();
-                for (Collection<?> collection : collections) {
-                    Hibernate.initialize(collection);
-                }
-            }
         } catch (HibernateException he) {
             this.handleDBException(he, false);
         } finally {

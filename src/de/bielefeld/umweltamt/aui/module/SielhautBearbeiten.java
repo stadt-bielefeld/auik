@@ -533,7 +533,7 @@ public class SielhautBearbeiten extends AbstractModul {
                     probe.setKennummer(kennNummer);
                     probe.setDatumDerEntnahme((Timestamp) datum);
                     probe
-                        .setAtlAnalysepositionen(new HashSet<AtlAnalyseposition>());
+                        .setAtlAnalysepositions(new HashSet<AtlAnalyseposition>());
                     probe.setAtlProbepkt(this.sprobePkt);
                     probe.setArt("Sielhaut");
 

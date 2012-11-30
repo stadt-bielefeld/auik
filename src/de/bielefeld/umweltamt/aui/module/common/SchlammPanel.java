@@ -236,7 +236,7 @@ public class SchlammPanel extends JPanel {
             AtlProbenahmen probe = new AtlProbenahmen();
             probe.setKennummer(kennNummer);
             probe.setDatumDerEntnahme(datum);
-            probe.setAtlAnalysepositionen(new HashSet<AtlAnalyseposition>());
+            probe.setAtlAnalysepositions(new HashSet<AtlAnalyseposition>());
             AtlProbepkt pkt;
             AtlKlaeranlagen ka = (AtlKlaeranlagen) getAnlageBox()
                     .getSelectedItem();
