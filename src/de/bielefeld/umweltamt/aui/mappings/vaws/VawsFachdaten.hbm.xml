@@ -9,7 +9,7 @@
                 <param name="sequence">auik.vaws_fachdaten_behaelterid_seq</param>
             </generator>
         </id>
-        <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select">
+        <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select" cascade="all">
             <column name="objektid" not-null="true" />
         </many-to-one>
         <property name="herstellnr" type="java.lang.String">

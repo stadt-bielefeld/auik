@@ -223,6 +223,7 @@ public class VawsPanel extends JPanel {
 //        neu.setVawsAnlagenarten(
 //            (VawsAnlagenarten)anlagenartBox.getSelectedItem());
 
+        neu = VawsFachdaten.merge(neu);
         editDatensatz(neu);
     }
 
