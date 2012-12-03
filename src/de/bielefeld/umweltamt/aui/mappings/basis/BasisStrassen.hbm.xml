@@ -7,11 +7,11 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="strasse" type="string">
+        <property name="strasse" type="java.lang.String">
             <meta attribute="use-in-tostring" inherit="false">true</meta>
             <column name="strasse" />
         </property>
-        <property name="plz" type="string">
+        <property name="plz" type="java.lang.String">
             <column name="plz" />
         </property>
         <property name="enabled" type="boolean">

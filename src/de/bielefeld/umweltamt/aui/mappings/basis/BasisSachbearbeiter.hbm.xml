@@ -3,26 +3,26 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" table="basis_sachbearbeiter" lazy="false" schema="auik">
-        <id name="kennummer" type="string">
+        <id name="kennummer" type="java.lang.String">
             <column name="kennummer" />
             <generator class="assigned" />
         </id>
-        <property name="name" type="string">
+        <property name="name" type="java.lang.String">
             <column name="name" not-null="true" />
         </property>
-        <property name="zeichen" type="string">
+        <property name="zeichen" type="java.lang.String">
             <column name="zeichen" />
         </property>
-        <property name="zimmer" type="string">
+        <property name="zimmer" type="java.lang.String">
             <column name="zimmer" />
         </property>
-        <property name="telefon" type="string">
+        <property name="telefon" type="java.lang.String">
             <column name="telefon" />
         </property>
-        <property name="email" type="string">
+        <property name="email" type="java.lang.String">
             <column name="email" />
         </property>
-        <property name="gehoertzuarbeitsgr" type="string">
+        <property name="gehoertzuarbeitsgr" type="java.lang.String">
             <column name="gehoertzuarbeitsgr" length="0" />
         </property>
         <property name="enabled" type="boolean">

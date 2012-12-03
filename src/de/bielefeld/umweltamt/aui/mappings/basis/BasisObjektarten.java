@@ -185,6 +185,19 @@ public class BasisObjektarten  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>BasisObjektarten</code> the merged instance,
@@ -202,7 +215,28 @@ public class BasisObjektarten  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (BasisObjektarten.merge(this) != null);
+        BasisObjektarten saved = BasisObjektarten.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this BasisObjektarten with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy BasisObjektarten
+     */
+    private void copy(BasisObjektarten copy) {
+        this.id = copy.getId();
+        this.objektart = copy.getObjektart();
+        this.abteilung = copy.getAbteilung();
+        this.kategorie = copy.getKategorie();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.basisObjekts = copy.getBasisObjekts();
     }
 
     /**

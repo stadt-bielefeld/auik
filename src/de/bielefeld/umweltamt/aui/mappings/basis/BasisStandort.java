@@ -394,6 +394,19 @@ public class BasisStandort  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>BasisStandort</code> the merged instance,
@@ -411,7 +424,46 @@ public class BasisStandort  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (BasisStandort.merge(this) != null);
+        BasisStandort saved = BasisStandort.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this BasisStandort with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy BasisStandort
+     */
+    private void copy(BasisStandort copy) {
+        this.basisGemarkung = copy.getBasisGemarkung();
+        this.vawsWassereinzugsgebiete = copy.getVawsWassereinzugsgebiete();
+        this.vawsStandortgghwsg = copy.getVawsStandortgghwsg();
+        this.strasse = copy.getStrasse();
+        this.hausnr = copy.getHausnr();
+        this.hausnrzus = copy.getHausnrzus();
+        this.plz = copy.getPlz();
+        this.rechtswert = copy.getRechtswert();
+        this.hochwert = copy.getHochwert();
+        this.flur = copy.getFlur();
+        this.flurstueck = copy.getFlurstueck();
+        this.entgebid = copy.getEntgebid();
+        this.vornameeigent = copy.getVornameeigent();
+        this.nameeigent = copy.getNameeigent();
+        this.strasseeigent = copy.getStrasseeigent();
+        this.hausnreigent = copy.getHausnreigent();
+        this.hausnrzuseigent = copy.getHausnrzuseigent();
+        this.revidatum = copy.getRevidatum();
+        this.revihandz = copy.getRevihandz();
+        this.wassermenge = copy.getWassermenge();
+        this.sachbe33rav = copy.getSachbe33rav();
+        this.sachbe33hee = copy.getSachbe33hee();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.basisObjekts = copy.getBasisObjekts();
     }
 
     /**

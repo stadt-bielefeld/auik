@@ -383,6 +383,19 @@ public class BasisBetreiber  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>BasisBetreiber</code> the merged instance,
@@ -400,7 +413,45 @@ public class BasisBetreiber  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (BasisBetreiber.merge(this) != null);
+        BasisBetreiber saved = BasisBetreiber.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this BasisBetreiber with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy BasisBetreiber
+     */
+    private void copy(BasisBetreiber copy) {
+        this.auikWzCode = copy.getAuikWzCode();
+        this.vawsWirtschaftszweige = copy.getVawsWirtschaftszweige();
+        this.betranrede = copy.getBetranrede();
+        this.betrname = copy.getBetrname();
+        this.betrnamezus = copy.getBetrnamezus();
+        this.namebetrbeauf = copy.getNamebetrbeauf();
+        this.vornamebetrbeauf = copy.getVornamebetrbeauf();
+        this.strasse = copy.getStrasse();
+        this.hausnr = copy.getHausnr();
+        this.hausnrzus = copy.getHausnrzus();
+        this.plzzs = copy.getPlzzs();
+        this.plz = copy.getPlz();
+        this.ort = copy.getOrt();
+        this.telefon = copy.getTelefon();
+        this.telefax = copy.getTelefax();
+        this.email = copy.getEmail();
+        this.bemerkungen = copy.getBemerkungen();
+        this.revidatum = copy.getRevidatum();
+        this.revihandz = copy.getRevihandz();
+        this.kassenzeichen = copy.getKassenzeichen();
+        this.betrvorname = copy.getBetrvorname();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.basisObjekts = copy.getBasisObjekts();
     }
 
     /**

@@ -169,6 +169,19 @@ public class BasisStrassen  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>BasisStrassen</code> the merged instance,
@@ -186,7 +199,26 @@ public class BasisStrassen  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (BasisStrassen.merge(this) != null);
+        BasisStrassen saved = BasisStrassen.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this BasisStrassen with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy BasisStrassen
+     */
+    private void copy(BasisStrassen copy) {
+        this.id = copy.getId();
+        this.strasse = copy.getStrasse();
+        this.plz = copy.getPlz();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
     }
 
     /**

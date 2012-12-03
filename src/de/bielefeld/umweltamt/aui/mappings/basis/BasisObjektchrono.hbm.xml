@@ -15,13 +15,13 @@
         <property name="datum" type="java.util.Date">
             <column name="datum" length="8" />
         </property>
-        <property name="sachverhalt" type="string">
+        <property name="sachverhalt" type="java.lang.String">
             <column name="sachverhalt" />
         </property>
         <property name="wv" type="java.util.Date">
             <column name="wv" length="8" />
         </property>
-        <property name="sachbearbeiter" type="string">
+        <property name="sachbearbeiter" type="java.lang.String">
             <column name="sachbearbeiter" />
         </property>
         <property name="enabled" type="boolean">

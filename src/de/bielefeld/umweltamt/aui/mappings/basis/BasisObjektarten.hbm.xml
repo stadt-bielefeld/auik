@@ -7,13 +7,13 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="objektart" type="string">
+        <property name="objektart" type="java.lang.String">
             <column name="objektart" />
         </property>
-        <property name="abteilung" type="string">
+        <property name="abteilung" type="java.lang.String">
             <column name="abteilung" />
         </property>
-        <property name="kategorie" type="string">
+        <property name="kategorie" type="java.lang.String">
             <column name="kategorie" />
         </property>
         <property name="enabled" type="boolean">

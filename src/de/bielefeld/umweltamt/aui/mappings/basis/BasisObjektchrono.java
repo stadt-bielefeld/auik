@@ -192,6 +192,19 @@ public class BasisObjektchrono  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>BasisObjektchrono</code> the merged instance,
@@ -209,7 +222,28 @@ public class BasisObjektchrono  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (BasisObjektchrono.merge(this) != null);
+        BasisObjektchrono saved = BasisObjektchrono.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this BasisObjektchrono with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy BasisObjektchrono
+     */
+    private void copy(BasisObjektchrono copy) {
+        this.basisObjekt = copy.getBasisObjekt();
+        this.datum = copy.getDatum();
+        this.sachverhalt = copy.getSachverhalt();
+        this.wv = copy.getWv();
+        this.sachbearbeiter = copy.getSachbearbeiter();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
     }
 
     /**

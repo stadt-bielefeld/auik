@@ -158,6 +158,19 @@ public class BasisObjektverknuepfung  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>BasisObjektverknuepfung</code> the merged instance,
@@ -175,7 +188,25 @@ public class BasisObjektverknuepfung  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (BasisObjektverknuepfung.merge(this) != null);
+        BasisObjektverknuepfung saved = BasisObjektverknuepfung.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this BasisObjektverknuepfung with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy BasisObjektverknuepfung
+     */
+    private void copy(BasisObjektverknuepfung copy) {
+        this.basisObjektByIstVerknuepftMit = copy.getBasisObjektByIstVerknuepftMit();
+        this.basisObjektByObjekt = copy.getBasisObjektByObjekt();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
     }
 
     /**

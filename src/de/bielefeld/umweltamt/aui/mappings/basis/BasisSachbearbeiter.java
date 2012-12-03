@@ -243,6 +243,19 @@ public class BasisSachbearbeiter  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getKennummer() == null ?
+            0 : this.getKennummer().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>BasisSachbearbeiter</code> the merged instance,
@@ -260,7 +273,33 @@ public class BasisSachbearbeiter  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (BasisSachbearbeiter.merge(this) != null);
+        BasisSachbearbeiter saved = BasisSachbearbeiter.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this BasisSachbearbeiter with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy BasisSachbearbeiter
+     */
+    private void copy(BasisSachbearbeiter copy) {
+        this.kennummer = copy.getKennummer();
+        this.name = copy.getName();
+        this.zeichen = copy.getZeichen();
+        this.zimmer = copy.getZimmer();
+        this.telefon = copy.getTelefon();
+        this.email = copy.getEmail();
+        this.gehoertzuarbeitsgr = copy.getGehoertzuarbeitsgr();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.atlProbepkts = copy.getAtlProbepkts();
+        this.basisObjekts = copy.getBasisObjekts();
+        this.atlProbenahmens = copy.getAtlProbenahmens();
     }
 
     /**

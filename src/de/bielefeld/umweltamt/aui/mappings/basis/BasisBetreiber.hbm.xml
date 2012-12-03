@@ -15,61 +15,61 @@
         <many-to-one name="vawsWirtschaftszweige" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige" fetch="select">
             <column name="wirtschaftszweigid" />
         </many-to-one>
-        <property name="betranrede" type="string">
+        <property name="betranrede" type="java.lang.String">
             <column name="betranrede" />
         </property>
-        <property name="betrname" type="string">
+        <property name="betrname" type="java.lang.String">
             <column name="betrname" />
         </property>
-        <property name="betrnamezus" type="string">
+        <property name="betrnamezus" type="java.lang.String">
             <column name="betrnamezus" />
         </property>
-        <property name="namebetrbeauf" type="string">
+        <property name="namebetrbeauf" type="java.lang.String">
             <column name="namebetrbeauf" />
         </property>
-        <property name="vornamebetrbeauf" type="string">
+        <property name="vornamebetrbeauf" type="java.lang.String">
             <column name="vornamebetrbeauf" />
         </property>
-        <property name="strasse" type="string">
+        <property name="strasse" type="java.lang.String">
             <column name="strasse" />
         </property>
         <property name="hausnr" type="java.lang.Integer">
             <column name="hausnr" />
         </property>
-        <property name="hausnrzus" type="string">
+        <property name="hausnrzus" type="java.lang.String">
             <column name="hausnrzus" />
         </property>
-        <property name="plzzs" type="string">
+        <property name="plzzs" type="java.lang.String">
             <column name="plzzs" />
         </property>
-        <property name="plz" type="string">
+        <property name="plz" type="java.lang.String">
             <column name="plz" />
         </property>
-        <property name="ort" type="string">
+        <property name="ort" type="java.lang.String">
             <column name="ort" />
         </property>
-        <property name="telefon" type="string">
+        <property name="telefon" type="java.lang.String">
             <column name="telefon" />
         </property>
-        <property name="telefax" type="string">
+        <property name="telefax" type="java.lang.String">
             <column name="telefax" />
         </property>
-        <property name="email" type="string">
+        <property name="email" type="java.lang.String">
             <column name="email" />
         </property>
-        <property name="bemerkungen" type="string">
+        <property name="bemerkungen" type="java.lang.String">
             <column name="bemerkungen" />
         </property>
         <property name="revidatum" type="java.util.Date">
             <column name="revidatum" length="8" />
         </property>
-        <property name="revihandz" type="string">
+        <property name="revihandz" type="java.lang.String">
             <column name="revihandz" />
         </property>
-        <property name="kassenzeichen" type="string">
+        <property name="kassenzeichen" type="java.lang.String">
             <column name="kassenzeichen" />
         </property>
-        <property name="betrvorname" type="string">
+        <property name="betrvorname" type="java.lang.String">
             <column name="betrvorname" />
         </property>
         <property name="enabled" type="boolean">
