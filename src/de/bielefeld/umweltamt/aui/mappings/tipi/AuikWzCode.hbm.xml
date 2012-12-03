@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" table="auik_wz_code" lazy="false" schema="tipi">
-        <id name="bezeichnung" type="string">
+        <id name="bezeichnung" type="java.lang.String">
             <meta attribute="use-in-tostring" inherit="false">true</meta>
             <column name="bezeichnung" />
             <generator class="assigned" />
@@ -15,7 +15,7 @@
         <property name="inKurzAuswahl" type="boolean">
             <column name="in_kurz_auswahl" not-null="true" />
         </property>
-        <property name="ebene" type="int">
+        <property name="ebene" type="java.lang.Integer">
             <column name="ebene" not-null="true" />
         </property>
         <set name="basisBetreibers" table="basis_betreiber" schema="auik" inverse="true" lazy="true" fetch="select">

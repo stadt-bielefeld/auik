@@ -49,7 +49,7 @@ public class AuikWzCode  implements java.io.Serializable {
     private String bezeichnung;
     private DeaWzCode deaWzCode;
     private boolean inKurzAuswahl;
-    private int ebene;
+    private Integer ebene;
     private Set<BasisBetreiber> basisBetreibers = new HashSet<BasisBetreiber>(0);
 
     /** Logging */
@@ -62,7 +62,7 @@ public class AuikWzCode  implements java.io.Serializable {
 
     /** Minimal constructor */
     public AuikWzCode(
-        String bezeichnung, boolean inKurzAuswahl, int ebene) {
+        String bezeichnung, boolean inKurzAuswahl, Integer ebene) {
         this.bezeichnung = bezeichnung;
         this.inKurzAuswahl = inKurzAuswahl;
         this.ebene = ebene;
@@ -70,7 +70,7 @@ public class AuikWzCode  implements java.io.Serializable {
 
     /** Full constructor */
     public AuikWzCode(
-        String bezeichnung, DeaWzCode deaWzCode, boolean inKurzAuswahl, int ebene, Set<BasisBetreiber> basisBetreibers) {
+        String bezeichnung, DeaWzCode deaWzCode, boolean inKurzAuswahl, Integer ebene, Set<BasisBetreiber> basisBetreibers) {
         this.bezeichnung = bezeichnung;
         this.deaWzCode = deaWzCode;
         this.inKurzAuswahl = inKurzAuswahl;
@@ -103,11 +103,11 @@ public class AuikWzCode  implements java.io.Serializable {
         this.inKurzAuswahl = inKurzAuswahl;
     }
 
-    public int getEbene() {
+    public Integer getEbene() {
         return this.ebene;
     }
 
-    public void setEbene(int ebene) {
+    public void setEbene(Integer ebene) {
         this.ebene = ebene;
     }
 
@@ -158,6 +158,33 @@ public class AuikWzCode  implements java.io.Serializable {
     }
 
     /**
+     * @param other
+     * @return <code>true</code>, if this and other are equal,
+     *         <code>false</code> otherwise
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        if (!(other instanceof AuikWzCode)) return false;
+        return (this.getBezeichnung().equals(
+            ((AuikWzCode) other).getBezeichnung()));
+    }
+
+    /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getBezeichnung() == null ?
+            0 : this.getBezeichnung().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>AuikWzCode</code> the merged instance,
@@ -175,7 +202,26 @@ public class AuikWzCode  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return AuikWzCode.merge(this).equals(this);
+        AuikWzCode saved = AuikWzCode.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this AuikWzCode with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy AuikWzCode
+     */
+    private void copy(AuikWzCode copy) {
+        this.bezeichnung = copy.getBezeichnung();
+        this.deaWzCode = copy.getDeaWzCode();
+        this.inKurzAuswahl = copy.isInKurzAuswahl();
+        this.ebene = copy.getEbene();
+        this.basisBetreibers = copy.getBasisBetreibers();
     }
 
     /**
