@@ -160,6 +160,33 @@ public class AtlParametergruppen  implements java.io.Serializable {
     }
 
     /**
+     * @param other
+     * @return <code>true</code>, if this and other are equal,
+     *         <code>false</code> otherwise
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        if (!(other instanceof AtlParametergruppen)) return false;
+        return (this.getId().equals(
+            ((AtlParametergruppen) other).getId()));
+    }
+
+    /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>AtlParametergruppen</code> the merged instance,
@@ -177,7 +204,27 @@ public class AtlParametergruppen  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (AtlParametergruppen.merge(this) != null);
+        AtlParametergruppen saved = AtlParametergruppen.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this AtlParametergruppen with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy AtlParametergruppen
+     */
+    private void copy(AtlParametergruppen copy) {
+        this.id = copy.getId();
+        this.name = copy.getName();
+        this.preisfueranalyse = copy.getPreisfueranalyse();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.atlParameters = copy.getAtlParameters();
     }
 
     /**

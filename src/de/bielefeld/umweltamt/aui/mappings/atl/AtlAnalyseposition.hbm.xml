@@ -18,16 +18,16 @@
         <many-to-one name="atlEinheiten" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten" fetch="select">
             <column name="einheiten_id" />
         </many-to-one>
-        <property name="grkl" type="string">
+        <property name="grkl" type="java.lang.String">
             <column name="grkl" />
         </property>
         <property name="wert" type="java.lang.Float">
             <column name="wert" precision="4" scale="0" not-null="true" />
         </property>
-        <property name="analyseVon" type="string">
+        <property name="analyseVon" type="java.lang.String">
             <column name="analyse_von" />
         </property>
-        <property name="bericht" type="string">
+        <property name="bericht" type="java.lang.String">
             <column name="bericht" />
         </property>
         <property name="normwert" type="java.lang.Double">

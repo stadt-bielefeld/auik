@@ -171,6 +171,19 @@ public class AtlStatus  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>AtlStatus</code> the merged instance,
@@ -188,7 +201,26 @@ public class AtlStatus  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (AtlStatus.merge(this) != null);
+        AtlStatus saved = AtlStatus.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this AtlStatus with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy AtlStatus
+     */
+    private void copy(AtlStatus copy) {
+        this.id = copy.getId();
+        this.bezeichnung = copy.getBezeichnung();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.atlProbenahmens = copy.getAtlProbenahmens();
     }
 
     /**

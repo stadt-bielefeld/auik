@@ -213,6 +213,33 @@ public class AtlAnalyseposition  implements java.io.Serializable {
     }
 
     /**
+     * @param other
+     * @return <code>true</code>, if this and other are equal,
+     *         <code>false</code> otherwise
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        if (!(other instanceof AtlAnalyseposition)) return false;
+        return (this.getId().equals(
+            ((AtlAnalyseposition) other).getId()));
+    }
+
+    /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>AtlAnalyseposition</code> the merged instance,
@@ -230,7 +257,31 @@ public class AtlAnalyseposition  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (AtlAnalyseposition.merge(this) != null);
+        AtlAnalyseposition saved = AtlAnalyseposition.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this AtlAnalyseposition with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy AtlAnalyseposition
+     */
+    private void copy(AtlAnalyseposition copy) {
+        this.atlParameter = copy.getAtlParameter();
+        this.atlProbenahmen = copy.getAtlProbenahmen();
+        this.atlEinheiten = copy.getAtlEinheiten();
+        this.grkl = copy.getGrkl();
+        this.wert = copy.getWert();
+        this.analyseVon = copy.getAnalyseVon();
+        this.bericht = copy.getBericht();
+        this.normwert = copy.getNormwert();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
     }
 
     /**

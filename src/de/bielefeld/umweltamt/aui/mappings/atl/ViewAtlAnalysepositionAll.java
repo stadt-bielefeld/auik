@@ -23,7 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
@@ -55,7 +55,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
     private Integer probenahmeId;
     private Boolean enabled;
     private Boolean deleted;
-    private Calendar datumDerEntnahme;
+    private Date datumDerEntnahme;
     private Integer probepktId;
 
     /** Logging */
@@ -74,7 +74,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
 
     /** Full constructor */
     public ViewAtlAnalysepositionAll(
-        Integer id, String grkl, Float wert, String analyseVon, String bericht, Double normwert, Integer einheitenId, String parameterId, Integer probenahmeId, Boolean enabled, Boolean deleted, Calendar datumDerEntnahme, Integer probepktId) {
+        Integer id, String grkl, Float wert, String analyseVon, String bericht, Double normwert, Integer einheitenId, String parameterId, Integer probenahmeId, Boolean enabled, Boolean deleted, Date datumDerEntnahme, Integer probepktId) {
         this.id = id;
         this.grkl = grkl;
         this.wert = wert;
@@ -179,11 +179,11 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    public Calendar getDatumDerEntnahme() {
+    public Date getDatumDerEntnahme() {
         return this.datumDerEntnahme;
     }
 
-    public void setDatumDerEntnahme(Calendar datumDerEntnahme) {
+    public void setDatumDerEntnahme(Date datumDerEntnahme) {
         this.datumDerEntnahme = datumDerEntnahme;
     }
 
@@ -248,6 +248,19 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>ViewAtlAnalysepositionAll</code> the merged instance,
@@ -265,7 +278,34 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (ViewAtlAnalysepositionAll.merge(this) != null);
+        ViewAtlAnalysepositionAll saved = ViewAtlAnalysepositionAll.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this ViewAtlAnalysepositionAll with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy ViewAtlAnalysepositionAll
+     */
+    private void copy(ViewAtlAnalysepositionAll copy) {
+        this.id = copy.getId();
+        this.grkl = copy.getGrkl();
+        this.wert = copy.getWert();
+        this.analyseVon = copy.getAnalyseVon();
+        this.bericht = copy.getBericht();
+        this.normwert = copy.getNormwert();
+        this.einheitenId = copy.getEinheitenId();
+        this.parameterId = copy.getParameterId();
+        this.probenahmeId = copy.getProbenahmeId();
+        this.enabled = copy.getEnabled();
+        this.deleted = copy.getDeleted();
+        this.datumDerEntnahme = copy.getDatumDerEntnahme();
+        this.probepktId = copy.getProbepktId();
     }
 
     /**

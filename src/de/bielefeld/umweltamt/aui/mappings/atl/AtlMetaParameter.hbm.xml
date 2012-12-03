@@ -13,13 +13,13 @@
         <many-to-one name="atlEinheiten" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten" fetch="select">
             <column name="einheit_id" />
         </many-to-one>
-        <property name="deaRegelwerkNr" type="string">
+        <property name="deaRegelwerkNr" type="java.lang.String">
             <column name="dea_regelwerk_nr" length="2" />
         </property>
-        <property name="deaGruppeDev" type="string">
+        <property name="deaGruppeDev" type="java.lang.String">
             <column name="dea_gruppe_dev" length="3" />
         </property>
-        <property name="deaVariantenNr" type="string">
+        <property name="deaVariantenNr" type="java.lang.String">
             <column name="dea_varianten_nr" length="1" />
         </property>
         <property name="deaTrennNrOpt" type="java.lang.Integer">

@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -826,7 +825,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
      */
     public static List<AtlAnalyseposition> getAnalysepositionFromView(
             AtlParameter param, AtlEinheiten einheit, AtlProbepkt punkt,
-            Calendar beginDate, Calendar endDate, String analyseVon) {
+            Date beginDate, Date endDate, String analyseVon) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(ViewAtlAnalysepositionAll.class)
                 .add(Restrictions.eq("parameterId", param.getOrdnungsbegriff()))

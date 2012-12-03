@@ -7,7 +7,7 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="anlage" type="string">
+        <property name="anlage" type="java.lang.String">
             <meta attribute="use-in-tostring" inherit="false">true</meta>
             <column name="anlage" not-null="true" />
         </property>

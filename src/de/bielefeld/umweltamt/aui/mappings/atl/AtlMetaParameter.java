@@ -202,6 +202,33 @@ public class AtlMetaParameter  implements java.io.Serializable {
     }
 
     /**
+     * @param other
+     * @return <code>true</code>, if this and other are equal,
+     *         <code>false</code> otherwise
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        if (!(other instanceof AtlMetaParameter)) return false;
+        return (this.getId().equals(
+            ((AtlMetaParameter) other).getId()));
+    }
+
+    /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>AtlMetaParameter</code> the merged instance,
@@ -219,7 +246,31 @@ public class AtlMetaParameter  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (AtlMetaParameter.merge(this) != null);
+        AtlMetaParameter saved = AtlMetaParameter.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this AtlMetaParameter with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy AtlMetaParameter
+     */
+    private void copy(AtlMetaParameter copy) {
+        this.id = copy.getId();
+        this.atlParameter = copy.getAtlParameter();
+        this.atlEinheiten = copy.getAtlEinheiten();
+        this.deaRegelwerkNr = copy.getDeaRegelwerkNr();
+        this.deaGruppeDev = copy.getDeaGruppeDev();
+        this.deaVariantenNr = copy.getDeaVariantenNr();
+        this.deaTrennNrOpt = copy.getDeaTrennNrOpt();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.ueberwachungswert = copy.getUeberwachungswert();
     }
 
     /**

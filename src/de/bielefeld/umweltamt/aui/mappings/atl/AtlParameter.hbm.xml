@@ -3,17 +3,17 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter" table="atl_parameter" lazy="false" schema="auik">
-        <id name="ordnungsbegriff" type="string">
+        <id name="ordnungsbegriff" type="java.lang.String">
             <column name="ordnungsbegriff" />
             <generator class="assigned" />
         </id>
         <many-to-one name="atlParametergruppen" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen" fetch="select">
             <column name="parametergruppe_id" />
         </many-to-one>
-        <property name="analyseverfahren" type="string">
+        <property name="analyseverfahren" type="java.lang.String">
             <column name="analyseverfahren" />
         </property>
-        <property name="bezeichnung" type="string">
+        <property name="bezeichnung" type="java.lang.String">
             <meta attribute="use-in-tostring" inherit="false">true</meta>
             <column name="bezeichnung" />
         </property>
@@ -23,7 +23,7 @@
         <property name="grenzwert" type="java.lang.Double">
             <column name="grenzwert" precision="8" scale="0" />
         </property>
-        <property name="grenzwertname" type="string">
+        <property name="grenzwertname" type="java.lang.String">
             <column name="grenzwertname" />
         </property>
         <property name="sielhautGw" type="java.lang.Double">
@@ -38,10 +38,10 @@
         <property name="einzelnbeauftragbar" type="java.lang.Boolean">
             <column name="einzelnbeauftragbar" />
         </property>
-        <property name="kennzeichnung" type="string">
+        <property name="kennzeichnung" type="java.lang.String">
             <column name="kennzeichnung" />
         </property>
-        <property name="konservierung" type="string">
+        <property name="konservierung" type="java.lang.String">
             <column name="konservierung" />
         </property>
         <property name="reihenfolge" type="java.lang.Integer">

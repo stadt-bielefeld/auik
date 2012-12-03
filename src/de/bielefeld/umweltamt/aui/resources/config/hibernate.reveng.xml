@@ -401,4 +401,8 @@
     <!--            vaws_standortgghwsg -->
     <!--            vaws_wassereinzugsgebiete -->
     <!--            vaws_wirtschaftszweige -->
+    <!-- Classes which need cascade="all" for the BasisObjekt relation ===== -->
+    <!-- I did not find a way to generate this. :( ========================= -->
+    <!-- auik.atl: -->
+    <!--           atl_probepkt -->
 </hibernate-reverse-engineering>

@@ -37,7 +37,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -774,10 +773,8 @@ public class ProbepktAuswPanel extends JPanel {
 
         }
 
-        Calendar vonDate = Calendar.getInstance();
-        vonDate.setTime(getVonDateChooser().getDate());
-        Calendar bisDate = Calendar.getInstance();
-        bisDate.setTime(getBisDateChooser().getDate());
+        Date vonDate = getVonDateChooser().getDate();
+        Date bisDate = getBisDateChooser().getDate();
 
         String analyeVon = "";
         if (this.analyseVonBox.getSelectedItem() != null) {
@@ -794,7 +791,7 @@ public class ProbepktAuswPanel extends JPanel {
     }
 
     private void createSeries(JList paramList, AtlProbepkt pkt,
-        AtlEinheiten einheit, Calendar vonDate, Calendar bisDate,
+        AtlEinheiten einheit, Date vonDate, Date bisDate,
         String analyseVon, TimeSeriesCollection col) {
 
         if (pkt != null) {
