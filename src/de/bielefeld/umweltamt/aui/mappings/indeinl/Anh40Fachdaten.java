@@ -326,6 +326,19 @@ public class Anh40Fachdaten  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getObjektid() == null ?
+            0 : this.getObjektid().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>Anh40Fachdaten</code> the merged instance,
@@ -343,7 +356,40 @@ public class Anh40Fachdaten  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (Anh40Fachdaten.merge(this) != null);
+        Anh40Fachdaten saved = Anh40Fachdaten.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this Anh40Fachdaten with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy Anh40Fachdaten
+     */
+    private void copy(Anh40Fachdaten copy) {
+        this.basisObjekt = copy.getBasisObjekt();
+        this.bemerkungen = copy.getBemerkungen();
+        this.ansprechpartner = copy.getAnsprechpartner();
+        this.sachbearbeiterrav = copy.getSachbearbeiterrav();
+        this.sachbearbeiterheepen = copy.getSachbearbeiterheepen();
+        this.klaeranlage = copy.getKlaeranlage();
+        this.herkunftsbereich = copy.getHerkunftsbereich();
+        this.wsg = copy.getWsg();
+        this.prioritaet = copy.getPrioritaet();
+        this.genehmigungspflicht = copy.getGenehmigungspflicht();
+        this.nachtrag = copy.getNachtrag();
+        this.bimsch = copy.getBimsch();
+        this.abwmengegenehmigt = copy.getAbwmengegenehmigt();
+        this.abwmengeprodspez = copy.getAbwmengeprodspez();
+        this.abwmengegesamt = copy.getAbwmengegesamt();
+        this.gen58 = copy.getGen58();
+        this.gen59 = copy.getGen59();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
     }
 
     /**

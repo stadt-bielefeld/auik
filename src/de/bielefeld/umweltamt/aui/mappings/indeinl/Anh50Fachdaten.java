@@ -238,6 +238,19 @@ public class Anh50Fachdaten  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getObjektid() == null ?
+            0 : this.getObjektid().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>Anh50Fachdaten</code> the merged instance,
@@ -255,7 +268,32 @@ public class Anh50Fachdaten  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (Anh50Fachdaten.merge(this) != null);
+        Anh50Fachdaten saved = Anh50Fachdaten.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this Anh50Fachdaten with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy Anh50Fachdaten
+     */
+    private void copy(Anh50Fachdaten copy) {
+        this.basisObjekt = copy.getBasisObjekt();
+        this.anhEntsorger = copy.getAnhEntsorger();
+        this.telefon = copy.getTelefon();
+        this.erloschen = copy.getErloschen();
+        this.datumantrag = copy.getDatumantrag();
+        this.bemerkungen = copy.getBemerkungen();
+        this.genehmigung = copy.getGenehmigung();
+        this.wiedervorlage = copy.getWiedervorlage();
+        this.gefaehrdungsklasse = copy.getGefaehrdungsklasse();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
     }
 
     /**

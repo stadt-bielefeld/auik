@@ -636,6 +636,19 @@ public class Anh49Fachdaten  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getObjektid() == null ?
+            0 : this.getObjektid().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>Anh49Fachdaten</code> the merged instance,
@@ -653,7 +666,68 @@ public class Anh49Fachdaten  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (Anh49Fachdaten.merge(this) != null);
+        Anh49Fachdaten saved = Anh49Fachdaten.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this Anh49Fachdaten with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy Anh49Fachdaten
+     */
+    private void copy(Anh49Fachdaten copy) {
+        this.basisObjekt = copy.getBasisObjekt();
+        this.klaeranlage = copy.getKlaeranlage();
+        this.name = copy.getName();
+        this.bemerkungen = copy.getBemerkungen();
+        this.planquadrat = copy.getPlanquadrat();
+        this.abgemeldet = copy.getAbgemeldet();
+        this.technikAnh49 = copy.getTechnikAnh49();
+        this.technikAnh49Nr = copy.getTechnikAnh49Nr();
+        this.sachkundelfa = copy.getSachkundelfa();
+        this.werkstatt = copy.getWerkstatt();
+        this.bodeneinlaeufe = copy.getBodeneinlaeufe();
+        this.waschanlagen = copy.getWaschanlagen();
+        this.sonstiges = copy.getSonstiges();
+        this.analysemonat = copy.getAnalysemonat();
+        this.abwasserfrei = copy.getAbwasserfrei();
+        this.anredeantragst = copy.getAnredeantragst();
+        this.nameantragst = copy.getNameantragst();
+        this.zusantragst = copy.getZusantragst();
+        this.strasseantragst = copy.getStrasseantragst();
+        this.hausnrantragst = copy.getHausnrantragst();
+        this.hausnrzusantragst = copy.getHausnrzusantragst();
+        this.plzantragst = copy.getPlzantragst();
+        this.ortantragst = copy.getOrtantragst();
+        this.sachbearbeiterIn = copy.getSachbearbeiterIn();
+        this.ansprechpartnerIn = copy.getAnsprechpartnerIn();
+        this.antragvom = copy.getAntragvom();
+        this.genehmigung = copy.getGenehmigung();
+        this.wiedervorlage = copy.getWiedervorlage();
+        this.aenderungsgenehmigung = copy.getAenderungsgenehmigung();
+        this.letztesAnschreiben = copy.getLetztesAnschreiben();
+        this.anschreiben = copy.getAnschreiben();
+        this.waschanlage = copy.getWaschanlage();
+        this.ESatzung = copy.getESatzung();
+        this.seitwann = copy.getSeitwann();
+        this.sonstigestechnik = copy.getSonstigestechnik();
+        this.maengel = copy.getMaengel();
+        this.behoben = copy.getBehoben();
+        this.frist = copy.getFrist();
+        this.durchgefuehrt = copy.getDurchgefuehrt();
+        this.dekraTuevDatum = copy.getDekraTuevDatum();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.anh49Kontrollens = copy.getAnh49Kontrollens();
+        this.anh49Abscheiderdetailses = copy.getAnh49Abscheiderdetailses();
+        this.anh49Analysens = copy.getAnh49Analysens();
+        this.anh49Verwaltungsverfs = copy.getAnh49Verwaltungsverfs();
+        this.anh49Ortstermines = copy.getAnh49Ortstermines();
     }
 
     /**

@@ -405,4 +405,17 @@
     <!-- I did not find a way to generate this. :( ========================= -->
     <!-- auik.atl: -->
     <!--           atl_probepkt -->
+    <!-- auik.basis: -->
+    <!-- auik.indeinl: -->
+    <!--             anh_40_fachdaten -->
+    <!--             anh_49_fachdaten -->
+    <!--             anh_50_fachdaten -->
+    <!--             anh_52_fachdaten -->
+    <!--             anh_53_fachdaten -->
+    <!--             anh_55_fachdaten -->
+    <!--             anh_56_fachdaten -->
+    <!--             anh_bwk_fachdaten -->
+    <!--             anh_suev_fachdaten -->
+    <!--             indeinl_genehmigung -->
+    <!-- auik.vaws: -->
 </hibernate-reverse-engineering>

@@ -203,6 +203,19 @@ public class Anh49Verwaltungsverf  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>Anh49Verwaltungsverf</code> the merged instance,
@@ -220,7 +233,29 @@ public class Anh49Verwaltungsverf  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (Anh49Verwaltungsverf.merge(this) != null);
+        Anh49Verwaltungsverf saved = Anh49Verwaltungsverf.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this Anh49Verwaltungsverf with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy Anh49Verwaltungsverf
+     */
+    private void copy(Anh49Verwaltungsverf copy) {
+        this.anh49Fachdaten = copy.getAnh49Fachdaten();
+        this.datum = copy.getDatum();
+        this.massnahme = copy.getMassnahme();
+        this.sachbearbeiterIn = copy.getSachbearbeiterIn();
+        this.wiedervorlage = copy.getWiedervorlage();
+        this.abgeschlossen = copy.getAbgeschlossen();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
     }
 
     /**

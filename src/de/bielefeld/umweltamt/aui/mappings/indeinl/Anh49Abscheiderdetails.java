@@ -599,6 +599,19 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>Anh49Abscheiderdetails</code> the merged instance,
@@ -616,7 +629,65 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (Anh49Abscheiderdetails.merge(this) != null);
+        Anh49Abscheiderdetails saved = Anh49Abscheiderdetails.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this Anh49Abscheiderdetails with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy Anh49Abscheiderdetails
+     */
+    private void copy(Anh49Abscheiderdetails copy) {
+        this.anh49Fachdaten = copy.getAnh49Fachdaten();
+        this.abscheidernr = copy.getAbscheidernr();
+        this.von = copy.getVon();
+        this.lage = copy.getLage();
+        this.nenngroesse = copy.getNenngroesse();
+        this.tankstelle = copy.getTankstelle();
+        this.waschplatzHalle = copy.getWaschplatzHalle();
+        this.kfzBetrieb = copy.getKfzBetrieb();
+        this.lebensmittelbetrieb = copy.getLebensmittelbetrieb();
+        this.wohnhaus = copy.getWohnhaus();
+        this.oberflaechenentwaesserung = copy.getOberflaechenentwaesserung();
+        this.produktionsabwasser = copy.getProduktionsabwasser();
+        this.schlammfang = copy.getSchlammfang();
+        this.benzinOelabscheider = copy.getBenzinOelabscheider();
+        this.koaleszenzfilter = copy.getKoaleszenzfilter();
+        this.integriert = copy.getIntegriert();
+        this.emulsionsspaltanlage = copy.getEmulsionsspaltanlage();
+        this.fettabscheider = copy.getFettabscheider();
+        this.baujahr = copy.getBaujahr();
+        this.din1999 = copy.getDin1999();
+        this.bauartzulassungsnummer = copy.getBauartzulassungsnummer();
+        this.ngSf = copy.getNgSf();
+        this.ngBa = copy.getNgBa();
+        this.ngKa = copy.getNgKa();
+        this.schwimmer = copy.getSchwimmer();
+        this.warnsignal = copy.getWarnsignal();
+        this.wartungsvertrag = copy.getWartungsvertrag();
+        this.vertragspartner = copy.getVertragspartner();
+        this.letzteWartung = copy.getLetzteWartung();
+        this.letzteLeerung = copy.getLetzteLeerung();
+        this.hersteller = copy.getHersteller();
+        this.schmutzwasserkanal = copy.getSchmutzwasserkanal();
+        this.regenwasserkanal = copy.getRegenwasserkanal();
+        this.mischwasserkanal = copy.getMischwasserkanal();
+        this.direkteinleiter = copy.getDirekteinleiter();
+        this.entsorgungnachweis = copy.getEntsorgungnachweis();
+        this.entsorgungsvertrag = copy.getEntsorgungsvertrag();
+        this.entsorgungsintervalle = copy.getEntsorgungsintervalle();
+        this.flaeche = copy.getFlaeche();
+        this.bemerkung = copy.getBemerkung();
+        this.entsorgungsnachweis = copy.getEntsorgungsnachweis();
+        this.entsorgungsnachweisDurch = copy.getEntsorgungsnachweisDurch();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
     }
 
     /**

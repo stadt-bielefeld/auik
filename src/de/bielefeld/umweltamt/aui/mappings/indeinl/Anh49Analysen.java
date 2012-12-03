@@ -335,6 +335,19 @@ public class Anh49Analysen  implements java.io.Serializable {
     }
 
     /**
+     * Calculate a unique hashCode
+     * @return <code>int</code>
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
+        result = result * 37 + idValue;
+        return result;
+    }
+
+    /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
      * @return <code>Anh49Analysen</code> the merged instance,
@@ -352,7 +365,41 @@ public class Anh49Analysen  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public boolean merge() {
-        return (Anh49Analysen.merge(this) != null);
+        Anh49Analysen saved = Anh49Analysen.merge(this);
+        if (saved == null) {
+            return false;
+        } else {
+            this.copy(saved);
+            return true;
+        }
+    }
+
+    /**
+     * Update this Anh49Analysen with its new values.<br>
+     * This is meant to be used after merging!
+     * @param copy Anh49Analysen
+     */
+    private void copy(Anh49Analysen copy) {
+        this.anh49Fachdaten = copy.getAnh49Fachdaten();
+        this.datum = copy.getDatum();
+        this.institut = copy.getInstitut();
+        this.csbWert = copy.getCsbWert();
+        this.csbGrenzwert = copy.getCsbGrenzwert();
+        this.aoxWert = copy.getAoxWert();
+        this.aoxGrenzwert = copy.getAoxGrenzwert();
+        this.kwWert = copy.getKwWert();
+        this.kwGrenzwert = copy.getKwGrenzwert();
+        this.zinkWert = copy.getZinkWert();
+        this.zinkGrenzwert = copy.getZinkGrenzwert();
+        this.bsb5Wert = copy.getBsb5Wert();
+        this.bsb5CsbRelation = copy.getBsb5CsbRelation();
+        this.bemerkungen = copy.getBemerkungen();
+        this.bikGrenzwert = copy.getBikGrenzwert();
+        this.bikWert = copy.getBikWert();
+        this.phWert = copy.getPhWert();
+        this.phGrenzwert = copy.getPhGrenzwert();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
     }
 
     /**
