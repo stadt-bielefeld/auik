@@ -58,7 +58,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 /**
  * A panel for "Anhang 49" with "Anschreiben und Verwaltungsverfahren"
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class Anh49VerwaltungsverfahrenPanel extends JPanel {
     private static final long serialVersionUID = -35108917703012183L;

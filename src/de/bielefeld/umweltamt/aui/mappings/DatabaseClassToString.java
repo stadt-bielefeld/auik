@@ -93,7 +93,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
  * should be revised in time
  * (e.g. choosing between toDebugString() and toGuiString())!
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class DatabaseClassToString {
 

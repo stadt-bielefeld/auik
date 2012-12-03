@@ -39,7 +39,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * and methods for the classes in our five packages).<br>
  * I did this with an inheritance chain. Do forgive me...
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public abstract class DatabaseQuery extends DatabaseAtlQuery {
 // Essentially this is somewhat like this:

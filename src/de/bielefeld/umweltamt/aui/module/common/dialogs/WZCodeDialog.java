@@ -19,7 +19,7 @@ import de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog;
 /**
  * Select a WZ-Code from the complete list of WZ-Codes
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class WZCodeDialog extends SimpleDialog {
 

@@ -31,7 +31,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
  * Ein TableModel für eine Tabelle mit Abscheider-Ortsterminen.
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class Anh49VerwaltungsverfahrenModel extends EditableListTableModel {
     private static final long serialVersionUID = -7162535797673486082L;

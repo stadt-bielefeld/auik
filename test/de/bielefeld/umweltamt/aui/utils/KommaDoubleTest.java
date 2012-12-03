@@ -37,7 +37,7 @@ import com.ibm.icu.text.NumberFormat;
 /**
  * As this is my first ever JUnit test, I have picked out a simple class, which
  * actually does not really need a test.
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class KommaDoubleTest {
 

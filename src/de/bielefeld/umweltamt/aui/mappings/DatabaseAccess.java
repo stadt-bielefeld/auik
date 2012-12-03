@@ -46,7 +46,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * functionality to the user/programmer, handles database exceptions and makes
  * sure modifying access is run within a transaction.<br>
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class DatabaseAccess {
 
@@ -494,10 +494,9 @@ public class DatabaseAccess {
      */
     private void handleDBException(Throwable exception, boolean fatal) {
         /* For testing talk with the user... */
-        String message = "TESTPHASE: Hier /könnte/ etwas schief gegangen sein. "
-            + "Wenn sich das AUIK ab jetzt anders als sonst verhält, "
-            + "bitte die Stelle im Programm notieren und bei mir (Conny) "
-            + "oder Gerd melden! Danke!";
+        String message = "Uuups, hier ist etwas schief gegangen. "
+            + "Bitte die Stelle im Programm notieren und bei Gerd melden! "
+            + "Danke!";
 
         /* via GUI */
         GUIManager.getInstance().setErrorStatus(message);

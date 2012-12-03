@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.AUIKataster;
 /**
  * AuikLogger factory which sets different logging levels for different users.
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class AuikLoggerFactory implements LoggerFactory {
 

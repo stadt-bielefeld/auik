@@ -65,7 +65,7 @@ import de.nrw.lds.tipi.inka.Inka_Ueberwachungswert;
  * of not-generated code as possible.
  * This may not be the best solution... :-/<br><br>
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
 abstract class DatabaseTipiQuery {

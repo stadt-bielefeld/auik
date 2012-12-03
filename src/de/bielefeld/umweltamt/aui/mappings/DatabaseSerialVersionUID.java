@@ -29,7 +29,7 @@ package de.bielefeld.umweltamt.aui.mappings;
  * of not-generated code as possible.
  * This may not be the best solution... :-/<br><br>
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class DatabaseSerialVersionUID {
 

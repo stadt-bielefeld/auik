@@ -29,7 +29,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * <br>
  * TODO: Most of the stuff which should be here is still scattered across the
  * project and should move here bit by bit.
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public final class DatabaseManager {
 

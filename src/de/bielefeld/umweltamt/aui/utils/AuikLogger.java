@@ -26,17 +26,17 @@ import org.apache.log4j.Logger;
 /**
  * Specialized logging class which has different logging levels for different
  * users and offers a method for getting the class logger directly and
- * create log entries with an added source field (only for level debug so far). 
- * 
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * create log entries with an added source field (only for level debug so far).
+ *
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class AuikLogger extends Logger {
-	
+
 	/** Constructor */
 	protected AuikLogger(String name) {
 		super(name);
 	}
-	
+
 	/** Get a class specific logger */
 	public static AuikLogger getLogger() {
 		return (AuikLogger) Logger.getLogger(AuikLogger.getCallingClassName(),
@@ -52,7 +52,7 @@ public class AuikLogger extends Logger {
 	public void debug(Object message, String src) {
 		super.debug("(" + src + ")" + message);
 	}
-    
+
     /**
      * Get the class name of the class which called the method / logger<br>
      * And... well yes, this is kind of a bit of rather dirty code...

@@ -52,7 +52,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 /**
  * This is a service class for all custom queries from the indeinl package.
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
 abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {

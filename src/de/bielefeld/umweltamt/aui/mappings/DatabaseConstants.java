@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
  * them as clean of not-generated code as possible. As most of the constants
  * were static anyway, they can just as fine live here.
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 // TODO: Only save the IDs here and not the objects!
 public class DatabaseConstants {

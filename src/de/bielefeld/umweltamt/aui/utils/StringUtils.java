@@ -24,7 +24,7 @@ package de.bielefeld.umweltamt.aui.utils;
 /**
  * A little utility class for String operations.
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class StringUtils {
 

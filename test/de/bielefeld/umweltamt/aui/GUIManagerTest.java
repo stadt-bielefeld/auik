@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 /**
  * Unit test for the GUI Manager
  *
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public class GUIManagerTest {
 

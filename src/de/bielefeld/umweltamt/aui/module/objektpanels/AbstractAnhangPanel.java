@@ -38,8 +38,8 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 /**
  * An abstract class for the "Anhang" panels which holds all components in a
  * map and is used to handle things which have to be done to all components.
- * 
- * @author <a href="mailto:Conny.Pearce@bielefeld.de">Conny Pearce (u633z)</a>
+ *
+ * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
 public abstract class AbstractAnhangPanel extends JPanel {
 	private static final long serialVersionUID = 783029677516911773L;
@@ -51,7 +51,7 @@ public abstract class AbstractAnhangPanel extends JPanel {
     protected String name;
     /** The main view module */
     protected BasisObjektBearbeiten hauptModul;
-    
+
     /** HashMap for all the components */
     private HashMap<String, JComponent> componentMap;
 
@@ -70,8 +70,8 @@ public abstract class AbstractAnhangPanel extends JPanel {
      * Add a new component to the map.<br>
      * If we did not have a component with the given name before, true is
      * returned, otherwise the old component is replaced with the new component
-     * and false is returned. 
-     * 
+     * and false is returned.
+     *
      * @param name The name of the new component
      * @param component The new component
      * @return if the component was new
@@ -86,9 +86,9 @@ public abstract class AbstractAnhangPanel extends JPanel {
     	}
     	return wasNewComponent;
     	*/
-    	return (this.componentMap.put(name, component) == null ? true : false);	
+    	return (this.componentMap.put(name, component) == null ? true : false);
     }
-    
+
     /**
      * Clear all components in the map, that is set them to null or equivalent
      * @return True if all component were known
@@ -114,7 +114,7 @@ public abstract class AbstractAnhangPanel extends JPanel {
     	}
     	return true;
     }
-    
+
     /**
      * Set all components of the map to {@link enabled}
      * @param enabled true if the components of the map should be enabled
@@ -125,7 +125,7 @@ public abstract class AbstractAnhangPanel extends JPanel {
     		component.setEnabled(enabled);
     	}
     }
-    
+
     /**
      * Get the value of a component.
      * @param name The name of the component
@@ -149,7 +149,7 @@ public abstract class AbstractAnhangPanel extends JPanel {
 		}
 		return null;
     }
-    
+
     /**
      * Set the value of a component
      * @param name The name of the component to modify
@@ -191,10 +191,10 @@ public abstract class AbstractAnhangPanel extends JPanel {
 
     /**
      * If the given string is "" null is returned otherwise the string itself
-     * 
+     *
      * TODO: This handling of "" values should be shorted out in the database
      * part and not the GUI (MVC and so...)
-     * 
+     *
      * @param string The input string
      * @return (string == "") ? null : string
      */
@@ -206,6 +206,7 @@ public abstract class AbstractAnhangPanel extends JPanel {
     }
 
     /* Getter */
+    @Override
     public String getName() {
         return name;
     }
