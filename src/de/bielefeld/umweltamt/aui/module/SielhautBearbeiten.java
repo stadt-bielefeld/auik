@@ -410,7 +410,7 @@ public class SielhautBearbeiten extends AbstractModul {
 //        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
 //        this.sprobePkt.setAtlSielhaut(this.spunkt);
 
-        this.sprobePkt.merge();
+        this.sprobePkt = AtlProbepkt.merge(this.sprobePkt);
 
         saved = true;
 
@@ -481,7 +481,9 @@ public class SielhautBearbeiten extends AbstractModul {
                     this.spunkt.setBasisObjekt(this.objekt);
                     this.spunkt.setAtlProbepkt(this.sprobePkt);
 
-                    if (this.spunkt.merge()) {
+                    this.spunkt = AtlSielhaut.merge(this.spunkt);
+
+                    if (this.spunkt != null) {
                         // TODO: This needs to be changed more consistent...
                         this.spunkt = AtlSielhaut.findById(this.spunkt.getId());
                         this.sprobePkt.setAtlSielhaut(this.spunkt);
