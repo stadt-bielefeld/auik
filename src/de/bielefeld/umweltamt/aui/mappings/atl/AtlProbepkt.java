@@ -52,14 +52,13 @@ public class AtlProbepkt  implements java.io.Serializable {
     private AtlKlaeranlagen atlKlaeranlagen;
     private BasisObjekt basisObjekt;
     private BasisSachbearbeiter basisSachbearbeiter;
-    private AtlSielhaut atlSielhaut;
     private String beschreibung;
     private Integer nrProbepkt;
     private Integer firmenId;
     private String branche;
     private boolean enabled;
     private boolean deleted;
-    private Set<AtlSielhaut> atlSielhauts = new HashSet<AtlSielhaut>(0);
+    private AtlSielhaut atlSielhaut;
     private Set<AtlProbenahmen> atlProbenahmens = new HashSet<AtlProbenahmen>(0);
 
     /** Logging */
@@ -80,19 +79,18 @@ public class AtlProbepkt  implements java.io.Serializable {
 
     /** Full constructor */
     public AtlProbepkt(
-        AtlProbeart atlProbeart, AtlKlaeranlagen atlKlaeranlagen, BasisObjekt basisObjekt, BasisSachbearbeiter basisSachbearbeiter, AtlSielhaut atlSielhaut, String beschreibung, Integer nrProbepkt, Integer firmenId, String branche, boolean enabled, boolean deleted, Set<AtlSielhaut> atlSielhauts, Set<AtlProbenahmen> atlProbenahmens) {
+        AtlProbeart atlProbeart, AtlKlaeranlagen atlKlaeranlagen, BasisObjekt basisObjekt, BasisSachbearbeiter basisSachbearbeiter, String beschreibung, Integer nrProbepkt, Integer firmenId, String branche, boolean enabled, boolean deleted, AtlSielhaut atlSielhaut, Set<AtlProbenahmen> atlProbenahmens) {
         this.atlProbeart = atlProbeart;
         this.atlKlaeranlagen = atlKlaeranlagen;
         this.basisObjekt = basisObjekt;
         this.basisSachbearbeiter = basisSachbearbeiter;
-        this.atlSielhaut = atlSielhaut;
         this.beschreibung = beschreibung;
         this.nrProbepkt = nrProbepkt;
         this.firmenId = firmenId;
         this.branche = branche;
         this.enabled = enabled;
         this.deleted = deleted;
-        this.atlSielhauts = atlSielhauts;
+        this.atlSielhaut = atlSielhaut;
         this.atlProbenahmens = atlProbenahmens;
     }
 
@@ -135,14 +133,6 @@ public class AtlProbepkt  implements java.io.Serializable {
 
     public void setBasisSachbearbeiter(BasisSachbearbeiter basisSachbearbeiter) {
         this.basisSachbearbeiter = basisSachbearbeiter;
-    }
-
-    public AtlSielhaut getAtlSielhaut() {
-        return this.atlSielhaut;
-    }
-
-    public void setAtlSielhaut(AtlSielhaut atlSielhaut) {
-        this.atlSielhaut = atlSielhaut;
     }
 
     public String getBeschreibung() {
@@ -193,12 +183,12 @@ public class AtlProbepkt  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    public Set<AtlSielhaut> getAtlSielhauts() {
-        return this.atlSielhauts;
+    public AtlSielhaut getAtlSielhaut() {
+        return this.atlSielhaut;
     }
 
-    public void setAtlSielhauts(Set<AtlSielhaut> atlSielhauts) {
-        this.atlSielhauts = atlSielhauts;
+    public void setAtlSielhaut(AtlSielhaut atlSielhaut) {
+        this.atlSielhaut = atlSielhaut;
     }
 
     public Set<AtlProbenahmen> getAtlProbenahmens() {
@@ -233,14 +223,13 @@ public class AtlProbepkt  implements java.io.Serializable {
         buffer.append("atlKlaeranlagen").append("='").append(getAtlKlaeranlagen()).append("' ");
         buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");
         buffer.append("basisSachbearbeiter").append("='").append(getBasisSachbearbeiter()).append("' ");
-        buffer.append("atlSielhaut").append("='").append(getAtlSielhaut()).append("' ");
         buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");
         buffer.append("nrProbepkt").append("='").append(getNrProbepkt()).append("' ");
         buffer.append("firmenId").append("='").append(getFirmenId()).append("' ");
         buffer.append("branche").append("='").append(getBranche()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");
-        buffer.append("atlSielhauts").append("='").append(getAtlSielhauts()).append("' ");
+        buffer.append("atlSielhaut").append("='").append(getAtlSielhaut()).append("' ");
         buffer.append("atlProbenahmens").append("='").append(getAtlProbenahmens()).append("' ");
         buffer.append("]");
 
@@ -311,14 +300,13 @@ public class AtlProbepkt  implements java.io.Serializable {
         this.atlKlaeranlagen = copy.getAtlKlaeranlagen();
         this.basisObjekt = copy.getBasisObjekt();
         this.basisSachbearbeiter = copy.getBasisSachbearbeiter();
-        this.atlSielhaut = copy.getAtlSielhaut();
         this.beschreibung = copy.getBeschreibung();
         this.nrProbepkt = copy.getNrProbepkt();
         this.firmenId = copy.getFirmenId();
         this.branche = copy.getBranche();
         this.enabled = copy.isEnabled();
         this.deleted = copy.isDeleted();
-        this.atlSielhauts = copy.getAtlSielhauts();
+        this.atlSielhaut = copy.getAtlSielhaut();
         this.atlProbenahmens = copy.getAtlProbenahmens();
     }
 

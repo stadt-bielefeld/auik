@@ -268,7 +268,7 @@ public class DatabaseClassToString {
 
     /** @return Custom AtlSielhaut.toString() */
     public static String toStringForClass(AtlSielhaut clazz) {
-        return "[SielhautBearbeiten:" + clazz.getId() + ", "
+        return "[SielhautBearbeiten:" + clazz.getObjektid() + ", "
             + clazz.getBezeichnung() + "]";
     }
 

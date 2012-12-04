@@ -23,9 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -46,7 +44,7 @@ public class AtlSielhaut  implements java.io.Serializable {
         DatabaseSerialVersionUID.forAtlSielhaut;
 
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer id;
+    private Integer objektid;
     private BasisObjekt basisObjekt;
     private AtlProbepkt atlProbepkt;
     private String bezeichnung;
@@ -68,7 +66,6 @@ public class AtlSielhaut  implements java.io.Serializable {
     private Boolean PFirmenprobe;
     private boolean enabled;
     private boolean deleted;
-    private Set<AtlProbepkt> atlProbepkts = new HashSet<AtlProbepkt>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -89,7 +86,7 @@ public class AtlSielhaut  implements java.io.Serializable {
 
     /** Full constructor */
     public AtlSielhaut(
-        BasisObjekt basisObjekt, AtlProbepkt atlProbepkt, String bezeichnung, String haltungsnr, String alarmplannr, String entgeb, Double rechtswert, Double hochwert, String lage, String bemerkungen, String twabfluss, String bsb, String ew, String gebiet, Boolean PSielhaut, Boolean PAlarmplan, Boolean PNachprobe, Boolean schlammprobe, Boolean PFirmenprobe, boolean enabled, boolean deleted, Set<AtlProbepkt> atlProbepkts) {
+        BasisObjekt basisObjekt, AtlProbepkt atlProbepkt, String bezeichnung, String haltungsnr, String alarmplannr, String entgeb, Double rechtswert, Double hochwert, String lage, String bemerkungen, String twabfluss, String bsb, String ew, String gebiet, Boolean PSielhaut, Boolean PAlarmplan, Boolean PNachprobe, Boolean schlammprobe, Boolean PFirmenprobe, boolean enabled, boolean deleted) {
         this.basisObjekt = basisObjekt;
         this.atlProbepkt = atlProbepkt;
         this.bezeichnung = bezeichnung;
@@ -111,16 +108,15 @@ public class AtlSielhaut  implements java.io.Serializable {
         this.PFirmenprobe = PFirmenprobe;
         this.enabled = enabled;
         this.deleted = deleted;
-        this.atlProbepkts = atlProbepkts;
     }
 
     /* Setter and getter methods */
-    public Integer getId() {
-        return this.id;
+    public Integer getObjektid() {
+        return this.objektid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setObjektid(Integer objektid) {
+        this.objektid = objektid;
     }
 
     public BasisObjekt getBasisObjekt() {
@@ -291,14 +287,6 @@ public class AtlSielhaut  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    public Set<AtlProbepkt> getAtlProbepkts() {
-        return this.atlProbepkts;
-    }
-
-    public void setAtlProbepkts(Set<AtlProbepkt> atlProbepkts) {
-        this.atlProbepkts = atlProbepkts;
-    }
-
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -340,7 +328,6 @@ public class AtlSielhaut  implements java.io.Serializable {
         buffer.append("PFirmenprobe").append("='").append(getPFirmenprobe()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");
-        buffer.append("atlProbepkts").append("='").append(getAtlProbepkts()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -356,8 +343,8 @@ public class AtlSielhaut  implements java.io.Serializable {
         if (this == other) return true;
         if (other == null) return false;
         if (!(other instanceof AtlSielhaut)) return false;
-        return (this.getId().equals(
-            ((AtlSielhaut) other).getId()));
+        return (this.getObjektid().equals(
+            ((AtlSielhaut) other).getObjektid()));
     }
 
     /**
@@ -367,8 +354,8 @@ public class AtlSielhaut  implements java.io.Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        int idValue = this.getId() == null ?
-            0 : this.getId().hashCode();
+        int idValue = this.getObjektid() == null ?
+            0 : this.getObjektid().hashCode();
         result = result * 37 + idValue;
         return result;
     }
@@ -427,7 +414,6 @@ public class AtlSielhaut  implements java.io.Serializable {
         this.PFirmenprobe = copy.getPFirmenprobe();
         this.enabled = copy.isEnabled();
         this.deleted = copy.isDeleted();
-        this.atlProbepkts = copy.getAtlProbepkts();
     }
 
     /**

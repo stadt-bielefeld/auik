@@ -272,15 +272,13 @@ public class SielhautBearbeiten extends AbstractModul {
             this.manager.getSettingsManager().removeSetting(
                 "auik.imc.edit_object");
             this.sprobePkt = AtlProbepkt.findById(this.objekt.getObjektid());
-            this.spunkt = AtlSielhaut.findById(this.sprobePkt
-                .getAtlSielhaut().getId());
+            this.spunkt = AtlSielhaut.findById(this.objekt.getObjektid());
             setSielhautPunkt(this.spunkt);
         } else if (BasisObjekt.findById(24856) != null) {
             //FIXME: A constant id? In the code? -.-
             this.objekt = BasisObjekt.findById(24856);
             this.sprobePkt = AtlProbepkt.findById(this.objekt.getObjektid());
-            this.spunkt = AtlSielhaut.findById(this.sprobePkt
-                .getAtlSielhaut().getId());
+            this.spunkt = AtlSielhaut.findById(this.objekt.getObjektid());
             setSielhautPunkt(this.spunkt);
         }
 
@@ -288,7 +286,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
     public void setSielhautPunkt(AtlSielhaut sp) {
         this.spunkt = sp;
-        if (this.spunkt.getId() != null) {
+        if (this.spunkt.getObjektid() != null) {
             this.sprobePkt = AtlProbepkt.findById(
                 this.spunkt.getBasisObjekt().getObjektid());
             getPrAnlegenButton().setEnabled(true);
@@ -300,7 +298,7 @@ public class SielhautBearbeiten extends AbstractModul {
             this.betreiber = BasisBetreiber.findById(
                 DatabaseConstants.BASIS_BETREIBER_ID_KEINE_BETREIBER);
             this.art = BasisObjektarten.findById(
-                DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
+                DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE);
             this.objekt.setBasisStandort(this.standort);
             this.objekt.setBasisBetreiber(this.betreiber);
             this.objekt.setBasisObjektarten(this.art);
@@ -484,10 +482,7 @@ public class SielhautBearbeiten extends AbstractModul {
                     this.spunkt = AtlSielhaut.merge(this.spunkt);
 
                     if (this.spunkt != null) {
-                        // TODO: This needs to be changed more consistent...
-                        this.spunkt = AtlSielhaut.findById(this.spunkt.getId());
-                        this.sprobePkt.setAtlSielhaut(this.spunkt);
-                        this.sprobePkt.merge();
+                        this.spunkt = AtlSielhaut.findById(this.spunkt.getObjektid());
 
                         this.frame.changeStatus(
                             "Sielhaut-Messpunkt erfolgreich gespeichert.",
@@ -504,9 +499,9 @@ public class SielhautBearbeiten extends AbstractModul {
     }
 
     public void showReport() throws EngineException {
-        if (this.spunkt.getId() != null || this.spunkt.getHaltungsnr() != null) {
+        if (this.spunkt.getObjektid() != null || this.spunkt.getHaltungsnr() != null) {
             ReportManager.getInstance().startReportWorker("SielhautBearbeiten",
-                this.spunkt.getId(), this.spunkt.getBezeichnung(),
+                this.spunkt.getObjektid(), this.spunkt.getBezeichnung(),
                 this.punktPrintButton);
         } else {
             log.debug("Dem zu druckenden Sielhaut-Probenahmepunkt fehlen Eingaben!");
@@ -1851,7 +1846,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 @Override
                 public void opening() {
                     if (SielhautBearbeiten.this.spunkt != null
-                        && SielhautBearbeiten.this.spunkt.getId() != null) {
+                        && SielhautBearbeiten.this.spunkt.getObjektid() != null) {
                         String imgPath = SielhautBearbeiten.this.manager
                             .getSettingsManager().getSetting(
                                 "auik.system.spath_fotos")
@@ -1910,7 +1905,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 @Override
                 public void opening() {
                     if (SielhautBearbeiten.this.spunkt != null
-                        && SielhautBearbeiten.this.spunkt.getId() != null) {
+                        && SielhautBearbeiten.this.spunkt.getObjektid() != null) {
                         String imgPath = SielhautBearbeiten.this.manager
                             .getSettingsManager().getSetting(
                                 "auik.system.spath_karten")

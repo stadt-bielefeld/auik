@@ -447,6 +447,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 // Daten für verschiedene Objektarten holen
                 if (objekt.getBasisObjektarten() != null) {
                     switch (objekt.getBasisObjektarten().getId()) {
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE:
                         case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                             getChronoTab().fetchFormData();
                             getProbepunktTab().fetchFormData();
@@ -547,6 +548,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     // Einzelne Objektarten behandeln
                     if (objekt.getBasisObjektarten() != null) {
                         switch (objekt.getBasisObjektarten().getId()) {
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE:
                             case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                                 getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                 getTabbedPane().addTab(getProbepunktTab().getName(), getProbepunktTab());
@@ -679,6 +681,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
         if (objekt.getBasisObjektarten() != null) {
             switch (objekt.getBasisObjektarten().getId()) {
+                case DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                     getProbepunktTab().clearForm();
                     getProbepktAuswTab().clearForm();
@@ -734,6 +737,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         if (objekt.getBasisObjektarten() != null) {
 
             switch (objekt.getBasisObjektarten().getId()) {
+                case DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                     getProbepunktTab().enableAll(enabled);
                     break;
@@ -793,6 +797,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         if (objekt.getBasisObjektarten() != null) {
             // Verschiedene Fachdaten bei neuem Objekt neu anlegen
             switch (objekt.getBasisObjektarten().getId()) {
+                case DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                     getProbepunktTab().completeObjekt();
                     break;

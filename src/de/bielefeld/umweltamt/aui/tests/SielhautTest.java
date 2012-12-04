@@ -199,6 +199,6 @@ public class SielhautTest extends TestCase {
             }
         }
 
-        return sielhaut.getId();
+        return sielhaut.getObjektid();
     }
 }

@@ -19,9 +19,6 @@
         <many-to-one name="basisSachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" fetch="select">
             <column name="sachbearbeiter" />
         </many-to-one>
-        <many-to-one name="atlSielhaut" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut" fetch="select">
-            <column name="sielhaut_id" />
-        </many-to-one>
         <property name="beschreibung" type="java.lang.String">
             <column name="beschreibung" />
         </property>
@@ -40,12 +37,7 @@
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
-        <set name="atlSielhauts" table="atl_sielhaut" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="objektid" not-null="true" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut" />
-        </set>
+        <one-to-one name="atlSielhaut" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut"></one-to-one>
         <set name="atlProbenahmens" table="atl_probenahmen" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="objektid" />

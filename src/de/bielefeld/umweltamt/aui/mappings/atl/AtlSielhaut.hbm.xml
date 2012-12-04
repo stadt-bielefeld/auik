@@ -3,18 +3,14 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut" table="atl_sielhaut" schema="auik">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
-            <generator class="native">
-                <param name="sequence">auik.atl_sielhaut_id_seq</param>
+        <id name="objektid" type="java.lang.Integer">
+            <column name="objektid" />
+            <generator class="foreign">
+                <param name="property">basisObjekt</param>
             </generator>
         </id>
-        <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select">
-            <column name="objektid" not-null="true" />
-        </many-to-one>
-        <many-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" update="false" insert="false" fetch="select">
-            <column name="objektid" not-null="true" />
-        </many-to-one>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"></one-to-one>
+        <one-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" constrained="true" cascade="all"></one-to-one>
         <property name="bezeichnung" type="java.lang.String">
             <column name="bezeichnung" />
         </property>
@@ -72,11 +68,5 @@
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
-        <set name="atlProbepkts" table="atl_probepkt" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="sielhaut_id" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" />
-        </set>
     </class>
 </hibernate-mapping>
