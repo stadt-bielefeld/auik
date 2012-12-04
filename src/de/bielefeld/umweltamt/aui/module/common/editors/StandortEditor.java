@@ -83,8 +83,8 @@ public class StandortEditor extends AbstractBaseEditor {
     private JTextField plzFeld;
     private JTextField flurFeld;
     private JTextField flurStkFeld;
-    private JFormattedTextField rechtsWFeld;
-    private JFormattedTextField hochWFeld;
+    private JFormattedTextField e32Feld;
+    private JFormattedTextField n32Feld;
     private JButton ausAblageButton;
     private JTextField datumFeld;
     private JLabel handzeichenLabel;
@@ -121,8 +121,8 @@ public class StandortEditor extends AbstractBaseEditor {
         sachbe33heeFeld = new LimitedTextField(50);
         wassermengeFeld = new IntegerField();
 
-        rechtsWFeld = new DoubleField(1);
-        hochWFeld = new DoubleField(1);
+        e32Feld = new DoubleField(1);
+        n32Feld = new DoubleField(1);
 
         datumFeld = new JTextField();
         datumFeld.setEditable(false);
@@ -176,8 +176,8 @@ public class StandortEditor extends AbstractBaseEditor {
         wEinzugsGebBox.addKeyListener(escEnterListener);
         flurFeld.addKeyListener(escEnterListener);
         flurStkFeld.addKeyListener(escEnterListener);
-        rechtsWFeld.addKeyListener(escEnterListener);
-        hochWFeld.addKeyListener(escEnterListener);
+        e32Feld.addKeyListener(escEnterListener);
+        n32Feld.addKeyListener(escEnterListener);
         handzeichenNeuFeld.addKeyListener(escEnterListener);
         sachbe33ravFeld.addKeyListener(escEnterListener);
         sachbe33heeFeld.addKeyListener(escEnterListener);
@@ -229,10 +229,10 @@ public class StandortEditor extends AbstractBaseEditor {
         builder.add(plzFeld,                cc.xy(  3, 5 ));
 
         // Koordinaten
-        builder.addLabel("Rechtswert:",        cc.xy(  1, 7 ));
-        builder.add(rechtsWFeld,            cc.xy( 3, 7 ));
-        builder.addLabel("Hochwert:",        cc.xy(  1, 9 ));
-        builder.add(hochWFeld,                cc.xy( 3, 9 ));
+        builder.addLabel("E32:",        cc.xy(  1, 7 ));
+        builder.add(e32Feld,            cc.xy( 3, 7 ));
+        builder.addLabel("N32:",        cc.xy(  1, 9 ));
+        builder.add(n32Feld,                cc.xy( 3, 9 ));
         builder.add(getAusAblageButton(),    cc.xywh( 5, 7, 1, 3 ));
 
         //
@@ -362,8 +362,8 @@ public class StandortEditor extends AbstractBaseEditor {
                 }
                 flurFeld.setText(getStandort().getFlur());
                 flurStkFeld.setText(getStandort().getFlurstueck());
-                rechtsWFeld.setValue(getStandort().getRechtswert());
-                hochWFeld.setValue(getStandort().getHochwert());
+                e32Feld.setValue(getStandort().getE32());
+                n32Feld.setValue(getStandort().getN32());
                 Date datum = getStandort().getRevidatum();
                 datumFeld.setText(AuikUtils.getStringFromDate(datum));
                 handzeichenAltFeld.setText(getStandort().getRevihandz());
@@ -465,13 +465,13 @@ public class StandortEditor extends AbstractBaseEditor {
             }
         }
 
-        // Rechtswert
-        Float rechtsWert = ((DoubleField)rechtsWFeld).getFloatValue();
-        getStandort().setRechtswert(rechtsWert);
+        // E32
+        Float e32Wert = ((DoubleField)e32Feld).getFloatValue();
+        getStandort().setE32(e32Wert);
 
-        // Hochwert
-        Float hochWert= ((DoubleField)hochWFeld).getFloatValue();
-        getStandort().setHochwert(hochWert);
+        // N32
+        Float n32Wert= ((DoubleField)n32Feld).getFloatValue();
+        getStandort().setN32(n32Wert);
 
         // Handzeichen
         String handzeichen = handzeichenNeuFeld.getText().trim();
@@ -536,11 +536,11 @@ public class StandortEditor extends AbstractBaseEditor {
 
                 String[] tmp = content.toString().split(",");
                 if (tmp.length == 4) {
-                    String rechtswertAusZeile = tmp[2];
-                    String hochwertAusZeile = tmp[3];
-                    rechtsWFeld.setText(rechtswertAusZeile.substring(0, 7));
-                    hochWFeld.setText(hochwertAusZeile.substring(0, 7));
-                    frame.changeStatus("Rechts- und Hochwert eingetragen",
+                    String e32AusZeile = tmp[2];
+                    String n32AusZeile = tmp[3];
+                    e32Feld.setText(e32AusZeile.substring(0, 7));
+                    n32Feld.setText(n32AusZeile.substring(0, 7));
+                    frame.changeStatus("E32- und N32 eingetragen",
                             HauptFrame.SUCCESS_COLOR);
                 } else {
                     frame.changeStatus(

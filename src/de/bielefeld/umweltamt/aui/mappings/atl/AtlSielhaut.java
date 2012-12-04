@@ -23,14 +23,13 @@
 
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
-import java.util.List;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import java.util.List;
 
 /**
  * A class that represents a row in the AtlSielhaut database table.<br>
@@ -42,7 +41,7 @@ public class AtlSielhaut  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAtlSielhaut;
-
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer objektid;
     private BasisObjekt basisObjekt;
@@ -51,8 +50,8 @@ public class AtlSielhaut  implements java.io.Serializable {
     private String haltungsnr;
     private String alarmplannr;
     private String entgeb;
-    private Double rechtswert;
-    private Double hochwert;
+    private Double e32;
+    private Double n32;
     private String lage;
     private String bemerkungen;
     private String twabfluss;
@@ -86,15 +85,15 @@ public class AtlSielhaut  implements java.io.Serializable {
 
     /** Full constructor */
     public AtlSielhaut(
-        BasisObjekt basisObjekt, AtlProbepkt atlProbepkt, String bezeichnung, String haltungsnr, String alarmplannr, String entgeb, Double rechtswert, Double hochwert, String lage, String bemerkungen, String twabfluss, String bsb, String ew, String gebiet, Boolean PSielhaut, Boolean PAlarmplan, Boolean PNachprobe, Boolean schlammprobe, Boolean PFirmenprobe, boolean enabled, boolean deleted) {
+        BasisObjekt basisObjekt, AtlProbepkt atlProbepkt, String bezeichnung, String haltungsnr, String alarmplannr, String entgeb, Double e32, Double n32, String lage, String bemerkungen, String twabfluss, String bsb, String ew, String gebiet, Boolean PSielhaut, Boolean PAlarmplan, Boolean PNachprobe, Boolean schlammprobe, Boolean PFirmenprobe, boolean enabled, boolean deleted) {
         this.basisObjekt = basisObjekt;
         this.atlProbepkt = atlProbepkt;
         this.bezeichnung = bezeichnung;
         this.haltungsnr = haltungsnr;
         this.alarmplannr = alarmplannr;
         this.entgeb = entgeb;
-        this.rechtswert = rechtswert;
-        this.hochwert = hochwert;
+        this.e32 = e32;
+        this.n32 = n32;
         this.lage = lage;
         this.bemerkungen = bemerkungen;
         this.twabfluss = twabfluss;
@@ -167,20 +166,20 @@ public class AtlSielhaut  implements java.io.Serializable {
         this.entgeb = entgeb;
     }
 
-    public Double getRechtswert() {
-        return this.rechtswert;
+    public Double getE32() {
+        return this.e32;
     }
 
-    public void setRechtswert(Double rechtswert) {
-        this.rechtswert = rechtswert;
+    public void setE32(Double e32) {
+        this.e32 = e32;
     }
 
-    public Double getHochwert() {
-        return this.hochwert;
+    public Double getN32() {
+        return this.n32;
     }
 
-    public void setHochwert(Double hochwert) {
-        this.hochwert = hochwert;
+    public void setN32(Double n32) {
+        this.n32 = n32;
     }
 
     public String getLage() {
@@ -296,7 +295,7 @@ public class AtlSielhaut  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this);
+        return DatabaseClassToString.toStringForClass(this); 
     }
 
     /**
@@ -305,29 +304,29 @@ public class AtlSielhaut  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-
+        
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");
-        buffer.append("atlProbepkt").append("='").append(getAtlProbepkt()).append("' ");
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
-        buffer.append("haltungsnr").append("='").append(getHaltungsnr()).append("' ");
-        buffer.append("alarmplannr").append("='").append(getAlarmplannr()).append("' ");
-        buffer.append("entgeb").append("='").append(getEntgeb()).append("' ");
-        buffer.append("rechtswert").append("='").append(getRechtswert()).append("' ");
-        buffer.append("hochwert").append("='").append(getHochwert()).append("' ");
-        buffer.append("lage").append("='").append(getLage()).append("' ");
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
-        buffer.append("twabfluss").append("='").append(getTwabfluss()).append("' ");
-        buffer.append("bsb").append("='").append(getBsb()).append("' ");
-        buffer.append("ew").append("='").append(getEw()).append("' ");
-        buffer.append("gebiet").append("='").append(getGebiet()).append("' ");
-        buffer.append("PSielhaut").append("='").append(getPSielhaut()).append("' ");
-        buffer.append("PAlarmplan").append("='").append(getPAlarmplan()).append("' ");
-        buffer.append("PNachprobe").append("='").append(getPNachprobe()).append("' ");
-        buffer.append("schlammprobe").append("='").append(getSchlammprobe()).append("' ");
-        buffer.append("PFirmenprobe").append("='").append(getPFirmenprobe()).append("' ");
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");			
+        buffer.append("atlProbepkt").append("='").append(getAtlProbepkt()).append("' ");			
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
+        buffer.append("haltungsnr").append("='").append(getHaltungsnr()).append("' ");			
+        buffer.append("alarmplannr").append("='").append(getAlarmplannr()).append("' ");			
+        buffer.append("entgeb").append("='").append(getEntgeb()).append("' ");			
+        buffer.append("e32").append("='").append(getE32()).append("' ");			
+        buffer.append("n32").append("='").append(getN32()).append("' ");			
+        buffer.append("lage").append("='").append(getLage()).append("' ");			
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
+        buffer.append("twabfluss").append("='").append(getTwabfluss()).append("' ");			
+        buffer.append("bsb").append("='").append(getBsb()).append("' ");			
+        buffer.append("ew").append("='").append(getEw()).append("' ");			
+        buffer.append("gebiet").append("='").append(getGebiet()).append("' ");			
+        buffer.append("PSielhaut").append("='").append(getPSielhaut()).append("' ");			
+        buffer.append("PAlarmplan").append("='").append(getPAlarmplan()).append("' ");			
+        buffer.append("PNachprobe").append("='").append(getPNachprobe()).append("' ");			
+        buffer.append("schlammprobe").append("='").append(getSchlammprobe()).append("' ");			
+        buffer.append("PFirmenprobe").append("='").append(getPFirmenprobe()).append("' ");			
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -359,7 +358,7 @@ public class AtlSielhaut  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-
+    
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -393,28 +392,28 @@ public class AtlSielhaut  implements java.io.Serializable {
      * @param copy AtlSielhaut
      */
     private void copy(AtlSielhaut copy) {
-        this.basisObjekt = copy.getBasisObjekt();
-        this.atlProbepkt = copy.getAtlProbepkt();
-        this.bezeichnung = copy.getBezeichnung();
-        this.haltungsnr = copy.getHaltungsnr();
-        this.alarmplannr = copy.getAlarmplannr();
-        this.entgeb = copy.getEntgeb();
-        this.rechtswert = copy.getRechtswert();
-        this.hochwert = copy.getHochwert();
-        this.lage = copy.getLage();
-        this.bemerkungen = copy.getBemerkungen();
-        this.twabfluss = copy.getTwabfluss();
-        this.bsb = copy.getBsb();
-        this.ew = copy.getEw();
-        this.gebiet = copy.getGebiet();
-        this.PSielhaut = copy.getPSielhaut();
-        this.PAlarmplan = copy.getPAlarmplan();
-        this.PNachprobe = copy.getPNachprobe();
-        this.schlammprobe = copy.getSchlammprobe();
-        this.PFirmenprobe = copy.getPFirmenprobe();
-        this.enabled = copy.isEnabled();
-        this.deleted = copy.isDeleted();
-    }
+        this.basisObjekt = copy.getBasisObjekt();            
+        this.atlProbepkt = copy.getAtlProbepkt();            
+        this.bezeichnung = copy.getBezeichnung();            
+        this.haltungsnr = copy.getHaltungsnr();            
+        this.alarmplannr = copy.getAlarmplannr();            
+        this.entgeb = copy.getEntgeb();            
+        this.e32 = copy.getE32();            
+        this.n32 = copy.getN32();            
+        this.lage = copy.getLage();            
+        this.bemerkungen = copy.getBemerkungen();            
+        this.twabfluss = copy.getTwabfluss();            
+        this.bsb = copy.getBsb();            
+        this.ew = copy.getEw();            
+        this.gebiet = copy.getGebiet();            
+        this.PSielhaut = copy.getPSielhaut();            
+        this.PAlarmplan = copy.getPAlarmplan();            
+        this.PNachprobe = copy.getPNachprobe();            
+        this.schlammprobe = copy.getSchlammprobe();            
+        this.PFirmenprobe = copy.getPFirmenprobe();            
+        this.enabled = copy.isEnabled();            
+        this.deleted = copy.isDeleted();            
+    }    
 
     /**
      * Delete (mark as deleted) a detached instance

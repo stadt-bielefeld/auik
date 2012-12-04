@@ -1073,8 +1073,8 @@ public class BasisStandortSuchen extends AbstractModul {
                         proj);
 
                     Map<String, String> env = pb.environment();
-                    env.put("RECHTS", bsta.getRechtswert().toString());
-                    env.put("HOCH", bsta.getHochwert().toString());
+                    env.put("RECHTS", bsta.getE32().toString());
+                    env.put("HOCH", bsta.getN32().toString());
 
                     try {
 

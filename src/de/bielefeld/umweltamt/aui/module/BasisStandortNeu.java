@@ -97,8 +97,8 @@ public class BasisStandortNeu extends AbstractModul {
     private JTextField plzFeld;
     private JTextField flurFeld;
     private JTextField flurStkFeld;
-    private JFormattedTextField rechtsWFeld;
-    private JFormattedTextField hochWFeld;
+    private JFormattedTextField e32Feld;
+    private JFormattedTextField n32Feld;
     private JTextField datumFeld;
     private JLabel handzeichenLabel;
     private JTextField handzeichenNeuFeld;
@@ -166,10 +166,10 @@ public class BasisStandortNeu extends AbstractModul {
             flurFeld = new LimitedTextField(50);
             flurStkFeld = new LimitedTextField(50);
 
-            rechtsWFeld = new DoubleField(1);
-            rechtsWFeld.setValue(new Float(0.0f));
-            hochWFeld = new DoubleField(1);
-            hochWFeld.setValue(new Float(0.0f));
+            e32Feld = new DoubleField(1);
+            e32Feld.setValue(new Float(0.0f));
+            n32Feld = new DoubleField(1);
+            n32Feld.setValue(new Float(0.0f));
 
             datumFeld = new JTextField();
             datumFeld.setEditable(false);
@@ -255,10 +255,10 @@ public class BasisStandortNeu extends AbstractModul {
             builder.add(plzFeld,                cc.xy(  3, 5 ));
 
             // Koordinaten
-            builder.addLabel("Rechtswert:",        cc.xy(  1, 7 ));
-            builder.add(rechtsWFeld,            cc.xyw( 3, 7, 3 ));
-            builder.addLabel("Hochwert:",        cc.xy(  1, 9 ));
-            builder.add(hochWFeld,                cc.xyw( 3, 9, 3 ));
+            builder.addLabel("E32:",        cc.xy(  1, 7 ));
+            builder.add(e32Feld,            cc.xyw( 3, 7, 3 ));
+            builder.addLabel("N32:",        cc.xy(  1, 9 ));
+            builder.add(n32Feld,                cc.xyw( 3, 9, 3 ));
 
             //
             builder.addLabel("Gemarkung:",        cc.xy(  1, 11 ));
@@ -389,12 +389,12 @@ public class BasisStandortNeu extends AbstractModul {
             }
 
             // Rechtswert
-            Float rechtsWert = ((DoubleField)rechtsWFeld).getFloatValue();
-            bsta.setRechtswert(rechtsWert);
+            Float e32Wert = ((DoubleField)e32Feld).getFloatValue();
+            bsta.setE32(e32Wert);
 
             // Hochwert
-            Float hochWert = ((DoubleField)hochWFeld).getFloatValue();
-            bsta.setHochwert(hochWert);
+            Float n32Wert = ((DoubleField)n32Feld).getFloatValue();
+            bsta.setN32(n32Wert);
 
             bsta.setRevidatum(new Date());
             bsta.setRevihandz(handzeichenNeuFeld.getText().trim());
@@ -472,8 +472,8 @@ public class BasisStandortNeu extends AbstractModul {
                 plzFeld.setText("");
                 flurFeld.setText("");
                 flurStkFeld.setText("");
-                rechtsWFeld.setValue(new Float(0.0f));
-                hochWFeld.setValue(new Float(0.0f));
+                e32Feld.setValue(new Float(0.0f));
+                n32Feld.setValue(new Float(0.0f));
                 datumFeld.setText(DateUtils.getCurrentDateString());
                 handzeichenNeuFeld.setText("");
                 handzeichenLabel.setForeground(panel.getForeground());
@@ -504,8 +504,8 @@ public class BasisStandortNeu extends AbstractModul {
         wEinzugsGebBox.setEnabled(enabled);
         flurFeld.setEditable(enabled);
         flurStkFeld.setEditable(enabled);
-        rechtsWFeld.setEditable(enabled);
-        hochWFeld.setEditable(enabled);
+        e32Feld.setEditable(enabled);
+        n32Feld.setEditable(enabled);
         handzeichenNeuFeld.setEditable(enabled);
     }
 

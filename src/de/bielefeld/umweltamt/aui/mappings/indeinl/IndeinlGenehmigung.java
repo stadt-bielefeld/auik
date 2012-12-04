@@ -23,15 +23,14 @@
 
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
-import java.util.Date;
-import java.util.List;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A class that represents a row in the IndeinlGenehmigung database table.<br>
@@ -43,7 +42,7 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forIndeinlGenehmigung;
-
+    
     /* Primary key, foreign keys (relations) and table columns */
     private Integer objektid;
     private BasisObjekt basisObjekt;
@@ -61,8 +60,8 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
     private Boolean ESatzung;
     private boolean enabled;
     private boolean deleted;
-    private Integer uebergabestelleRechtswert;
-    private Integer uebergabestelleHochwert;
+    private Integer uebergabestelleE32;
+    private Integer uebergabestelleN32;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -82,7 +81,7 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
 
     /** Full constructor */
     public IndeinlGenehmigung(
-        BasisObjekt basisObjekt, String bemerkungen, Date erstellungsDatum, Date aenderungsDatum, Date antragDatum, Boolean befristet, Date befristetBis, Integer anhang, Integer genMenge, Boolean gen58, Boolean gen59, Boolean selbstueberw, Boolean ESatzung, boolean enabled, boolean deleted, Integer uebergabestelleRechtswert, Integer uebergabestelleHochwert) {
+        BasisObjekt basisObjekt, String bemerkungen, Date erstellungsDatum, Date aenderungsDatum, Date antragDatum, Boolean befristet, Date befristetBis, Integer anhang, Integer genMenge, Boolean gen58, Boolean gen59, Boolean selbstueberw, Boolean ESatzung, boolean enabled, boolean deleted, Integer uebergabestelleE32, Integer uebergabestelleN32) {
         this.basisObjekt = basisObjekt;
         this.bemerkungen = bemerkungen;
         this.erstellungsDatum = erstellungsDatum;
@@ -98,8 +97,8 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
         this.ESatzung = ESatzung;
         this.enabled = enabled;
         this.deleted = deleted;
-        this.uebergabestelleRechtswert = uebergabestelleRechtswert;
-        this.uebergabestelleHochwert = uebergabestelleHochwert;
+        this.uebergabestelleE32 = uebergabestelleE32;
+        this.uebergabestelleN32 = uebergabestelleN32;
     }
 
     /* Setter and getter methods */
@@ -231,20 +230,20 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    public Integer getUebergabestelleRechtswert() {
-        return this.uebergabestelleRechtswert;
+    public Integer getUebergabestelleE32() {
+        return this.uebergabestelleE32;
     }
 
-    public void setUebergabestelleRechtswert(Integer uebergabestelleRechtswert) {
-        this.uebergabestelleRechtswert = uebergabestelleRechtswert;
+    public void setUebergabestelleE32(Integer uebergabestelleE32) {
+        this.uebergabestelleE32 = uebergabestelleE32;
     }
 
-    public Integer getUebergabestelleHochwert() {
-        return this.uebergabestelleHochwert;
+    public Integer getUebergabestelleN32() {
+        return this.uebergabestelleN32;
     }
 
-    public void setUebergabestelleHochwert(Integer uebergabestelleHochwert) {
-        this.uebergabestelleHochwert = uebergabestelleHochwert;
+    public void setUebergabestelleN32(Integer uebergabestelleN32) {
+        this.uebergabestelleN32 = uebergabestelleN32;
     }
 
     /**
@@ -256,7 +255,7 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this);
+        return DatabaseClassToString.toStringForClass(this); 
     }
 
     /**
@@ -265,25 +264,25 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-
+        
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
-        buffer.append("erstellungsDatum").append("='").append(getErstellungsDatum()).append("' ");
-        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
-        buffer.append("antragDatum").append("='").append(getAntragDatum()).append("' ");
-        buffer.append("befristet").append("='").append(getBefristet()).append("' ");
-        buffer.append("befristetBis").append("='").append(getBefristetBis()).append("' ");
-        buffer.append("anhang").append("='").append(getAnhang()).append("' ");
-        buffer.append("genMenge").append("='").append(getGenMenge()).append("' ");
-        buffer.append("gen58").append("='").append(getGen58()).append("' ");
-        buffer.append("gen59").append("='").append(getGen59()).append("' ");
-        buffer.append("selbstueberw").append("='").append(getSelbstueberw()).append("' ");
-        buffer.append("ESatzung").append("='").append(getESatzung()).append("' ");
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
-        buffer.append("uebergabestelleRechtswert").append("='").append(getUebergabestelleRechtswert()).append("' ");
-        buffer.append("uebergabestelleHochwert").append("='").append(getUebergabestelleHochwert()).append("' ");
+        buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");			
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
+        buffer.append("erstellungsDatum").append("='").append(getErstellungsDatum()).append("' ");			
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
+        buffer.append("antragDatum").append("='").append(getAntragDatum()).append("' ");			
+        buffer.append("befristet").append("='").append(getBefristet()).append("' ");			
+        buffer.append("befristetBis").append("='").append(getBefristetBis()).append("' ");			
+        buffer.append("anhang").append("='").append(getAnhang()).append("' ");			
+        buffer.append("genMenge").append("='").append(getGenMenge()).append("' ");			
+        buffer.append("gen58").append("='").append(getGen58()).append("' ");			
+        buffer.append("gen59").append("='").append(getGen59()).append("' ");			
+        buffer.append("selbstueberw").append("='").append(getSelbstueberw()).append("' ");			
+        buffer.append("ESatzung").append("='").append(getESatzung()).append("' ");			
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("uebergabestelleE32").append("='").append(getUebergabestelleE32()).append("' ");			
+        buffer.append("uebergabestelleN32").append("='").append(getUebergabestelleN32()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -315,7 +314,7 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-
+    
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -349,24 +348,24 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
      * @param copy IndeinlGenehmigung
      */
     private void copy(IndeinlGenehmigung copy) {
-        this.basisObjekt = copy.getBasisObjekt();
-        this.bemerkungen = copy.getBemerkungen();
-        this.erstellungsDatum = copy.getErstellungsDatum();
-        this.aenderungsDatum = copy.getAenderungsDatum();
-        this.antragDatum = copy.getAntragDatum();
-        this.befristet = copy.getBefristet();
-        this.befristetBis = copy.getBefristetBis();
-        this.anhang = copy.getAnhang();
-        this.genMenge = copy.getGenMenge();
-        this.gen58 = copy.getGen58();
-        this.gen59 = copy.getGen59();
-        this.selbstueberw = copy.getSelbstueberw();
-        this.ESatzung = copy.getESatzung();
-        this.enabled = copy.isEnabled();
-        this.deleted = copy.isDeleted();
-        this.uebergabestelleRechtswert = copy.getUebergabestelleRechtswert();
-        this.uebergabestelleHochwert = copy.getUebergabestelleHochwert();
-    }
+        this.basisObjekt = copy.getBasisObjekt();            
+        this.bemerkungen = copy.getBemerkungen();            
+        this.erstellungsDatum = copy.getErstellungsDatum();            
+        this.aenderungsDatum = copy.getAenderungsDatum();            
+        this.antragDatum = copy.getAntragDatum();            
+        this.befristet = copy.getBefristet();            
+        this.befristetBis = copy.getBefristetBis();            
+        this.anhang = copy.getAnhang();            
+        this.genMenge = copy.getGenMenge();            
+        this.gen58 = copy.getGen58();            
+        this.gen59 = copy.getGen59();            
+        this.selbstueberw = copy.getSelbstueberw();            
+        this.ESatzung = copy.getESatzung();            
+        this.enabled = copy.isEnabled();            
+        this.deleted = copy.isDeleted();            
+        this.uebergabestelleE32 = copy.getUebergabestelleE32();            
+        this.uebergabestelleN32 = copy.getUebergabestelleN32();            
+    }    
 
     /**
      * Delete (mark as deleted) a detached instance

@@ -23,11 +23,11 @@
         <property name="entgeb" type="java.lang.String">
             <column name="entgeb" />
         </property>
-        <property name="rechtswert" type="java.lang.Double">
-            <column name="rechtswert" precision="8" scale="0" />
+        <property name="e32" type="java.lang.Double">
+            <column name="e32" precision="8" scale="0" />
         </property>
-        <property name="hochwert" type="java.lang.Double">
-            <column name="hochwert" precision="8" scale="0" />
+        <property name="n32" type="java.lang.Double">
+            <column name="n32" precision="8" scale="0" />
         </property>
         <property name="lage" type="java.lang.String">
             <column name="lage" />

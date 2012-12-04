@@ -30,11 +30,11 @@
         <property name="plz" type="java.lang.String">
             <column name="plz" />
         </property>
-        <property name="rechtswert" type="java.lang.Float">
-            <column name="rechtswert" precision="4" scale="0" />
+        <property name="e32" type="java.lang.Float">
+            <column name="e32" precision="4" scale="0" />
         </property>
-        <property name="hochwert" type="java.lang.Float">
-            <column name="hochwert" precision="4" scale="0" />
+        <property name="n32" type="java.lang.Float">
+            <column name="n32" precision="4" scale="0" />
         </property>
         <property name="flur" type="java.lang.String">
             <column name="flur" />

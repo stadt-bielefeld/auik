@@ -330,8 +330,8 @@ public class SielhautBearbeiten extends AbstractModul {
 
         getSpBemerkungsArea().setText(this.spunkt.getBemerkungen());
 
-        getSpRechtsWertFeld().setValue(this.spunkt.getRechtswert());
-        getSpHochWertFeld().setValue(this.spunkt.getHochwert());
+        getSpRechtsWertFeld().setValue(this.spunkt.getE32());
+        getSpHochWertFeld().setValue(this.spunkt.getN32());
 
         getSpHaltungsnrFeld().setText(this.spunkt.getHaltungsnr());
         getSpAlarmplannrFeld().setText(this.spunkt.getAlarmplannr());
@@ -378,8 +378,8 @@ public class SielhautBearbeiten extends AbstractModul {
      */
     public void neuerSielhautPunkt() {
         AtlSielhaut neuerPunkt = new AtlSielhaut();
-        neuerPunkt.setRechtswert(new Double(0.0));
-        neuerPunkt.setHochwert(new Double(0.0));
+        neuerPunkt.setE32(new Double(0.0));
+        neuerPunkt.setN32(new Double(0.0));
         neuerPunkt.setBezeichnung("Neuer Sielhaut-Punkt");
         setSielhautPunkt(neuerPunkt);
     }
@@ -451,8 +451,8 @@ public class SielhautBearbeiten extends AbstractModul {
             }
 
             // Rechts- und Hochwert
-            this.spunkt.setRechtswert(getSpRechtsWertFeld().getDoubleValue());
-            this.spunkt.setHochwert(getSpHochWertFeld().getDoubleValue());
+            this.spunkt.setE32(getSpRechtsWertFeld().getDoubleValue());
+            this.spunkt.setN32(getSpHochWertFeld().getDoubleValue());
 
             // Haltungs-Nr.
             if ("".equals(getSpHaltungsnrFeld().getText())) {

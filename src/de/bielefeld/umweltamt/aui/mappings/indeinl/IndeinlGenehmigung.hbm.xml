@@ -52,11 +52,11 @@
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
-        <property name="uebergabestelleRechtswert" type="java.lang.Integer">
-            <column name="uebergabestelle_rechtswert" />
+        <property name="uebergabestelleE32" type="java.lang.Integer">
+            <column name="uebergabestelle_e32" />
         </property>
-        <property name="uebergabestelleHochwert" type="java.lang.Integer">
-            <column name="uebergabestelle_hochwert" />
+        <property name="uebergabestelleN32" type="java.lang.Integer">
+            <column name="uebergabestelle_n32" />
         </property>
     </class>
 </hibernate-mapping>
