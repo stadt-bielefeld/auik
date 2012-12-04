@@ -212,8 +212,8 @@ public class SielhautBearbeiten extends AbstractModul {
     private JTextField spEntgebFeld;
     private JTextField spLageFeld;
     private JTextArea spBemerkungsArea;
-    private DoubleField spRechtsWertFeld;
-    private DoubleField spHochWertFeld;
+    private DoubleField spE32Feld;
+    private DoubleField spN32Feld;
     private JTextField spHaltungsnrFeld;
     private JTextField spAlarmplannrFeld;
     private JButton ausAblageButton;
@@ -330,8 +330,8 @@ public class SielhautBearbeiten extends AbstractModul {
 
         getSpBemerkungsArea().setText(this.spunkt.getBemerkungen());
 
-        getSpRechtsWertFeld().setValue(this.spunkt.getE32());
-        getSpHochWertFeld().setValue(this.spunkt.getN32());
+        getSpE32Feld().setValue(this.spunkt.getE32());
+        getSpN32Feld().setValue(this.spunkt.getN32());
 
         getSpHaltungsnrFeld().setText(this.spunkt.getHaltungsnr());
         getSpAlarmplannrFeld().setText(this.spunkt.getAlarmplannr());
@@ -451,8 +451,8 @@ public class SielhautBearbeiten extends AbstractModul {
             }
 
             // Rechts- und Hochwert
-            this.spunkt.setE32(getSpRechtsWertFeld().getDoubleValue());
-            this.spunkt.setN32(getSpHochWertFeld().getDoubleValue());
+            this.spunkt.setE32(getSpE32Feld().getDoubleValue());
+            this.spunkt.setN32(getSpN32Feld().getDoubleValue());
 
             // Haltungs-Nr.
             if ("".equals(getSpHaltungsnrFeld().getText())) {
@@ -949,12 +949,12 @@ public class SielhautBearbeiten extends AbstractModul {
             builder.add(getSpLageFeld(), cc.xy(3, 5));
             builder.addLabel("Bemerkungen:", cc.xy(1, 7));
             builder.add(bemerkungsScroller, cc.xyw(3, 7, 5));
-            builder.addLabel("Rechtswert:", cc.xy(1, 9));
-            builder.add(getSpRechtsWertFeld(), cc.xy(3, 9));
+            builder.addLabel("E32:", cc.xy(1, 9));
+            builder.add(getSpE32Feld(), cc.xy(3, 9));
             builder.add(getAusAblageButton(), cc.xywh(5, 9, 1, 3));
             builder.add(getSpSielhautCheck(), cc.xy(7, 9));
-            builder.addLabel("Hochwert:", cc.xy(1, 11));
-            builder.add(getSpHochWertFeld(), cc.xy(3, 11));
+            builder.addLabel("N32:", cc.xy(1, 11));
+            builder.add(getSpN32Feld(), cc.xy(3, 11));
             builder.add(getSpFirmenprobeCheck(), cc.xy(7, 11));
             builder.addLabel("Schacht-Nr.:", cc.xy(1, 13));
             builder.add(getSpHaltungsnrFeld(), cc.xyw(3, 13, 3));
@@ -999,11 +999,11 @@ public class SielhautBearbeiten extends AbstractModul {
         return this.spHaltungsnrFeld;
     }
 
-    private DoubleField getSpHochWertFeld() {
-        if (this.spHochWertFeld == null) {
-            this.spHochWertFeld = new DoubleField(1);
+    private DoubleField getSpN32Feld() {
+        if (this.spN32Feld == null) {
+            this.spN32Feld = new DoubleField(1);
         }
-        return this.spHochWertFeld;
+        return this.spN32Feld;
     }
 
     private JTextField getSpLageFeld() {
@@ -1034,11 +1034,11 @@ public class SielhautBearbeiten extends AbstractModul {
         return this.spNamenFeld;
     }
 
-    private DoubleField getSpRechtsWertFeld() {
-        if (this.spRechtsWertFeld == null) {
-            this.spRechtsWertFeld = new DoubleField(1);
+    private DoubleField getSpE32Feld() {
+        if (this.spE32Feld == null) {
+            this.spE32Feld = new DoubleField(1);
         }
-        return this.spRechtsWertFeld;
+        return this.spE32Feld;
     }
 
     private JCheckBox getSpSielhautCheck() {
@@ -1968,11 +1968,11 @@ public class SielhautBearbeiten extends AbstractModul {
 
                 String[] tmp = content.toString().split(",");
                 if (tmp.length == 4) {
-                    String rechtswertAusZeile = tmp[2];
-                    String hochwertAusZeile = tmp[3];
-                    this.spRechtsWertFeld.setText(rechtswertAusZeile.substring(
+                    String e32AusZeile = tmp[2];
+                    String n32AusZeile = tmp[3];
+                    this.spE32Feld.setText(e32AusZeile.substring(
                         0, 7));
-                    this.spHochWertFeld.setText(hochwertAusZeile
+                    this.spN32Feld.setText(n32AusZeile
                         .substring(0, 7));
                     this.frame.changeStatus("Rechts- und Hochwert eingetragen",
                         HauptFrame.SUCCESS_COLOR);
