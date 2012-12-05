@@ -688,9 +688,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         this.auftragDrucken.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AtlProbenahmen probe = getProbe();
-
                 doSave();
+
+                AtlProbenahmen probe = getProbe();
 
                 Map<String, Object> params = getAuftragDruckMap(probe);
 
@@ -1463,6 +1463,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         boolean success = true;
 
         probe = AtlProbenahmen.merge(probe);
+        setProbe(probe);
         success = (probe != null);
         if (this.isNew) {
             this.isNew = false;
@@ -1818,6 +1819,10 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     public AtlProbenahmen getProbe() {
         return (AtlProbenahmen) getEditedObject();
+    }
+
+    public void setProbe(AtlProbenahmen probe) {
+        setEditedObject(probe);
     }
 
 }
