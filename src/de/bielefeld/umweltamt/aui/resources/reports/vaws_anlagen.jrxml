@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vaws_anlagen" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="48" bottomMargin="42" uuid="4203fab1-3d54-43b0-a714-8b74a493f35f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="153"/>
+	<property name="ireport.y" value="9"/>
 	<style name="table" mode="Opaque" fill="Solid">
 		<pen lineWidth="2.5" lineColor="#B9B9B9"/>
 		<box>
@@ -131,19 +131,6 @@ where behaelterid=$P{BehaelterId}]]>
 	</title>
 	<pageHeader>
 		<band height="260" splitType="Stretch">
-			<line>
-				<reportElement uuid="33327869-ed67-4762-b6b0-3a7df73ec01f" x="1" y="38" width="482" height="1"/>
-				<graphicElement>
-					<pen lineWidth="0.5"/>
-				</graphicElement>
-			</line>
-			<staticText>
-				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="10" y="18" width="100" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Beschreibung]]></text>
-			</staticText>
 			<elementGroup>
 				<textField isBlankWhenNull="true">
 					<reportElement uuid="bb7ea65b-bf76-41fc-8cd7-d2a91ff6e4a4" x="339" y="151" width="144" height="20"/>
@@ -440,19 +427,15 @@ where behaelterid=$P{BehaelterId}]]>
 					<text><![CDATA[Genehmigung]]></text>
 				</staticText>
 			</elementGroup>
-			<line>
-				<reportElement uuid="33327869-ed67-4762-b6b0-3a7df73ec01f" x="0" y="225" width="483" height="1"/>
-				<graphicElement>
-					<pen lineWidth="0.5"/>
-				</graphicElement>
-			</line>
 			<staticText>
-				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="10" y="206" width="140" height="20"/>
+				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="205" width="483" height="20"/>
 				<box>
 					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<text><![CDATA[Bemerkungen]]></text>
 			</staticText>
@@ -477,26 +460,22 @@ where behaelterid=$P{BehaelterId}]]>
 					<pen lineWidth="2.5" lineColor="#B9B9B9"/>
 				</graphicElement>
 			</rectangle>
+			<staticText>
+				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="15" width="483" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Beschreibung]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="124" splitType="Stretch">
-			<line>
-				<reportElement uuid="33327869-ed67-4762-b6b0-3a7df73ec01f" x="0" y="27" width="483" height="1"/>
-				<graphicElement>
-					<pen lineWidth="0.5"/>
-				</graphicElement>
-			</line>
-			<staticText>
-				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="10" y="8" width="209" height="20"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Sachverständigenprüfungen]]></text>
-			</staticText>
 			<componentElement>
 				<reportElement uuid="d768b76f-498d-433c-90b9-08f5661eab65" key="table 1" style="table" x="0" y="42" width="483" height="80"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
@@ -613,6 +592,18 @@ where behaelterid=$P{BehaelterId}]]>
 					</jr:column>
 				</jr:table>
 			</componentElement>
+			<staticText>
+				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="10" width="483" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Sachverständigenprüfungen]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<pageFooter>
