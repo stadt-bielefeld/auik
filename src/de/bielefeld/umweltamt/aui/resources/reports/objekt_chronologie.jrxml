@@ -212,7 +212,7 @@ where basis_objektchrono.objektid=$P{ObjektId} order by datum asc;]]>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
-							<textField isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="bb069730-6585-4b5c-87e3-67b7caca72ce" x="0" y="0" width="302" height="20"/>
 								<box>
 									<bottomPen lineWidth="0.5" lineColor="#B9B9B9"/>
