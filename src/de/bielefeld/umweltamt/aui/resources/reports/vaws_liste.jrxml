@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vaws_liste" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="48" bottomMargin="42" uuid="bb16e809-8cfa-44f5-8373-13d589070031">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table" mode="Opaque" fill="Solid">
+		<pen lineWidth="2.5" lineColor="#B9B9B9"/>
+		<box>
+			<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+			<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+			<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+			<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" forecolor="#FFFFFF" backcolor="#D8D8D8">
+		<box>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH"/>
+	<style name="table_TD">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="fachdaten" uuid="ad50c6fc-4910-4c97-97c9-b737bbb167e2">
+		<parameter name="ObjektId" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select *
+from auik.vaws_fachdaten
+where objektid = $P{ObjektId}
+order by stillegungsdatum ASC]]>
+		</queryString>
+		<field name="behaelterid" class="java.lang.Integer"/>
+		<field name="objektid" class="java.lang.Integer"/>
+		<field name="herstellnr" class="java.lang.String"/>
+		<field name="hersteller" class="java.lang.String"/>
+		<field name="datuminbetriebnahme" class="java.sql.Timestamp"/>
+		<field name="datumerfassung" class="java.sql.Timestamp"/>
+		<field name="datumaenderung" class="java.sql.Timestamp"/>
+		<field name="datumgenehmigung" class="java.sql.Timestamp"/>
+		<field name="anlagenart" class="java.lang.String"/>
+		<field name="behaelterart" class="java.lang.String"/>
+		<field name="material" class="java.lang.String"/>
+		<field name="fluessigkeit" class="java.lang.String"/>
+		<field name="vbfeinstufung" class="java.lang.String"/>
+		<field name="menge" class="java.lang.Double"/>
+		<field name="wgk" class="java.lang.Integer"/>
+		<field name="gefaehrdungsstufe" class="java.lang.String"/>
+		<field name="baujahr" class="java.lang.Integer"/>
+		<field name="doppelwandig" class="java.lang.Boolean"/>
+		<field name="leckanzeige" class="java.lang.Boolean"/>
+		<field name="auffangraum" class="java.lang.Boolean"/>
+		<field name="grenzwertgeber" class="java.lang.Boolean"/>
+		<field name="leckschutzauskleidung" class="java.lang.Boolean"/>
+		<field name="kellerlagerung" class="java.lang.Boolean"/>
+		<field name="innenbeschichtung" class="java.lang.Boolean"/>
+		<field name="beschreibung_a" class="java.lang.String"/>
+		<field name="beschreibung_s" class="java.lang.String"/>
+		<field name="oberirdisch" class="java.lang.Boolean"/>
+		<field name="unterirdisch" class="java.lang.Boolean"/>
+		<field name="saugleitung" class="java.lang.Boolean"/>
+		<field name="rohr_kathodenschutz" class="java.lang.Boolean"/>
+		<field name="aus_kupfer" class="java.lang.Boolean"/>
+		<field name="aus_stahl" class="java.lang.Boolean"/>
+		<field name="mit_schutzrohr" class="java.lang.Boolean"/>
+		<field name="beschreibung_r" class="java.lang.String"/>
+		<field name="pruefturnus" class="java.lang.Double"/>
+		<field name="angemahntkz" class="java.lang.Boolean"/>
+		<field name="mahnfrist" class="java.sql.Timestamp"/>
+		<field name="wiedervorlage" class="java.sql.Timestamp"/>
+		<field name="stillegungsdatum" class="java.sql.Timestamp"/>
+		<field name="bemerkungen" class="java.lang.String"/>
+		<field name="ausfuehrung" class="java.lang.String"/>
+		<field name="pruefumfang" class="java.lang.String"/>
+		<field name="verwendung" class="java.lang.String"/>
+		<field name="_enabled" class="java.lang.Boolean"/>
+		<field name="_deleted" class="java.lang.Boolean"/>
+		<field name="aus_hdpe" class="java.lang.Boolean"/>
+		<field name="druckleitung" class="java.lang.Boolean"/>
+		<field name="schutz_sensor" class="java.lang.Boolean"/>
+		<field name="schutz_folie" class="java.lang.Boolean"/>
+		<field name="schutz_antiheber" class="java.lang.Boolean"/>
+	</subDataset>
+	<parameter name="ObjektId" class="java.lang.Integer"/>
+	<parameter name="Betreiber" class="java.lang.String"/>
+	<parameter name="Standort" class="java.lang.String"/>
+	<parameter name="Art" class="java.lang.String"/>
+	<variable name="DATE" class="java.util.Date">
+		<variableExpression><![CDATA[new Date()]]></variableExpression>
+		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f889b2ec-d898-4a33-9d40-c6dacb0844bc" mode="Opaque" x="0" y="29" width="483" height="32" backcolor="#D8D8D8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Betreiber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="30ba4762-9f22-4e40-a90d-6f4c8bc7cde0" mode="Opaque" x="0" y="0" width="483" height="32" backcolor="#D8D8D8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[VAwS-Liste von Betreiber]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="108" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" x="3" y="66" width="479" height="13"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="21" width="483" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d" mode="Opaque" x="1" y="51" width="56" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Standort]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="60b1a670-0991-429e-88c5-f38019ac7ab9" x="56" y="70" width="426" height="20"/>
+				<box>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Art}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="1" y="70" width="56" height="20"/>
+				<box>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Art]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64" mode="Opaque" x="56" y="51" width="426" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Standort}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="93" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="0a4983f9-b25e-4a3d-ad50-3d01ba7cbf52" key="table 1" style="table" x="0" y="0" width="483" height="53"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="fachdaten" uuid="018e6a70-9d64-4e38-bda9-74d889f5a2bc">
+						<datasetParameter name="ObjektId">
+							<datasetParameterExpression><![CDATA[$P{ObjektId}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="96" uuid="fe4f79d2-d14e-449d-9bf0-0e91c2bb903c">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="56796b65-e1a8-43d7-88ae-a4c3c1289036" style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000"/>
+								<box>
+									<bottomPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Anlagenart]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="22d29f1c-0def-4e9c-b11e-dfa95e5f3b35" x="0" y="0" width="96" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{anlagenart}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="96" uuid="005239d4-94d8-43fb-aa47-b3f4db7ceab4">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="1ec155da-f7e2-45d8-ac77-41112f96e154" style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000"/>
+								<box>
+									<bottomPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Herst. Nr.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="10e77e88-bbcc-490d-bb5d-aa90fe03954c" x="0" y="0" width="96" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{herstellnr}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="96" uuid="d39ed8ae-81b8-4ba2-877e-f228dd039e61">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="be457047-686f-44bb-859c-5c9f6a899507" style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000"/>
+								<box>
+									<bottomPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Flüssigkeit]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="f43eb1f7-49dc-480d-9eb9-b6599f3eb828" x="0" y="0" width="96" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{fluessigkeit}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="99" uuid="ca1a343f-d376-44df-809e-a9ff90908d05">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="951401c3-c231-4ebd-aa74-0cf2d7e2b025" style="table_TH" x="0" y="0" width="99" height="20" forecolor="#000000"/>
+								<box>
+									<bottomPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Menge]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="a8860501-22bc-4b86-9f74-a4159919740f" x="0" y="0" width="99" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{menge}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="96" uuid="1def5e78-754b-49e1-85a5-4c992f15c653">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="0745d82b-d6ff-4468-b418-17978d79e81b" style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000"/>
+								<box>
+									<bottomPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Stillgelegt]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="dd.MM.yy" isBlankWhenNull="true">
+								<reportElement uuid="75a87972-6eae-4c6e-b0c4-d71633c03928" x="0" y="0" width="96" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{stillegungsdatum}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="11" splitType="Stretch">
+			<textField pattern="dd.MM.yyyy HH:mm">
+				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" x="344" y="0" width="93" height="11"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7b5e7c42-773b-4194-85ab-398cde121227" x="0" y="0" width="334" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[© Copyright 2012 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>
