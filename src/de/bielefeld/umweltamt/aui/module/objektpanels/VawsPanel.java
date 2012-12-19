@@ -99,7 +99,6 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
@@ -276,18 +275,22 @@ public class VawsPanel extends JPanel {
     }
 
     public void showReportListe() {
-        betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
-        standort = hauptModul.getObjekt().getBasisStandort().toString();
-        art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
-        objektid = hauptModul.getObjekt().getObjektid();
-
-        //scriptables.put("liste", vawsModel.getList());
-        if (betreiber != null || standort != null || objektid != null || art != null)
-        {
-            ReportManager.getInstance().startReportWorker("VAwS-Liste", objektid, betreiber, standort, art, reportListeButton);
-
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("Betreiber", hauptModul.getObjekt().getBasisBetreiber().toString());
+        params.put("Standort", hauptModul.getObjekt().getBasisStandort().toString());
+        params.put("Art", hauptModul.getObjekt().getBasisObjektarten().getObjektart());
+        params.put("ObjektId", hauptModul.getObjekt().getObjektid());
+        try {
+            File pdfFile = File.createTempFile("vaws_liste", ".pdf");
+            pdfFile.deleteOnExit();
+            PDFExporter.getInstance().exportReport(params,
+                    PDFExporter.VAWS_LISTE, pdfFile.getAbsolutePath());
+        } catch (Exception ex) {
+            GUIManager.getInstance().showErrorMessage(
+                "PDF-Liste generieren fehlgeschlagen."
+                    + "\n" + ex.getLocalizedMessage(),
+                "PDF-Liste generieren fehlgeschlagen");
         }
-//        ReportManager.getInstance().startReportWorker("vawsliste", params, scriptables, reportListeButton);
     }
 
     public void showReportAnlage() {
