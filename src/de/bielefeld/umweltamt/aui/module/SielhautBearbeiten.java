@@ -154,7 +154,7 @@ import com.toedter.calendar.JDateChooser;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.ReportManager;
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
@@ -183,6 +183,7 @@ import de.bielefeld.umweltamt.aui.utils.charts.ChartDataSets;
 import de.bielefeld.umweltamt.aui.utils.charts.Charts;
 import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 
 /**
  * Ein Modul zum Anzeigen und Bearbeiten von SielhautBearbeiten-Punkten.
@@ -499,10 +500,38 @@ public class SielhautBearbeiten extends AbstractModul {
     }
 
     public void showReport() throws EngineException {
-        if (this.spunkt.getObjektid() != null || this.spunkt.getHaltungsnr() != null) {
-            ReportManager.getInstance().startReportWorker("SielhautBearbeiten",
-                this.spunkt.getObjektid(), this.spunkt.getBezeichnung(),
-                this.punktPrintButton);
+        if (spunkt.getObjektid() != null) {
+            SettingsManager sm = SettingsManager.getInstance();
+            String fotoPath = sm.getSetting("auik.system.spath_fotos");
+            String mapPath = sm.getSetting("auik.system.spath_karten");
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("id", spunkt.getObjektid());
+
+            String bezeichnung=spunkt.getBezeichnung();
+            if (bezeichnung != null
+                    && new File(fotoPath + bezeichnung + ".jpg").canRead()) {
+                params.put("foto", new String(fotoPath + bezeichnung + ".jpg"));
+            } else {
+                params.put("foto", new String(fotoPath + "kein_foto.jpg"));
+            }
+
+            if (bezeichnung != null
+                    && new File(mapPath + bezeichnung + ".jpg").canRead()) {
+                params.put("karte", new String(mapPath + bezeichnung + ".jpg"));
+            } else {
+                params.put("karte", new String(mapPath + "keine_karte.jpg"));
+            }
+            try {
+                File pdfFile = File.createTempFile(bezeichnung, ".pdf");
+                pdfFile.deleteOnExit();
+                PDFExporter.getInstance().exportReport(params,
+                        PDFExporter.SIELHAUT_BEARBEITEN, pdfFile.getAbsolutePath());
+            } catch (Exception ex) {
+                GUIManager.getInstance().showErrorMessage(
+                        "PDF generieren fehlgeschlagen."
+                        + "\n" + ex.getLocalizedMessage(),
+                        "PDF generieren fehlgeschlagen");
+            }
         } else {
             log.debug("Dem zu druckenden Sielhaut-Probenahmepunkt fehlen Eingaben!");
         }
