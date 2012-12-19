@@ -72,6 +72,10 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.io.File;
+import java.util.Map;
+import java.util.HashMap;
+
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -103,6 +107,7 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.VawsModel;
 
+import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 /**
  * Das "Vaws"-Panel des Objekt-Bearbeiten-Moduls.
  * @author David Klotz
@@ -288,66 +293,26 @@ public class VawsPanel extends JPanel {
     public void showReportAnlage() {
         int row = getVawsTable().getSelectedRow();
         if (row != -1) {
+            Map<String, Object> params = new HashMap<String, Object>();
             VawsFachdaten anlage = vawsModel.getDatenSatz(row);
-            betreiber = hauptModul.getObjekt().getBasisBetreiber().toString();
-            standort = hauptModul.getObjekt().getBasisStandort().toString();
-            art = hauptModul.getObjekt().getBasisObjektarten().getObjektart();
-            behaelterid = anlage.getBehaelterid();
+            params.put("Betreiber", hauptModul.getObjekt().getBasisBetreiber().toString());
+            params.put("Standort", hauptModul.getObjekt().getBasisStandort().toString());
+            params.put("Objektart", hauptModul.getObjekt().getBasisObjektarten().getObjektart());
+            params.put("BehaelterId", anlage.getBehaelterid());
 
-            //scriptables.put("liste", vawsModel.getList());
-            if (betreiber != null || standort != null || behaelterid != null)
-            {
-                ReportManager.getInstance().startReportWorker("VAwS-Anlage", behaelterid, betreiber, standort, reportAnlageButton, art );
+            try {
+                File pdfFile = File.createTempFile("vaws_anlage", ".pdf");
+                pdfFile.deleteOnExit();
+                PDFExporter.getInstance().exportReport(params,
+                        PDFExporter.VAWS_ANLAGEN, pdfFile.getAbsolutePath());
+            } catch (Exception ex) {
+                GUIManager.getInstance().showErrorMessage(
+                    "PDF-Datenblatt generieren fehlgeschlagen."
+                        + "\n" + ex.getLocalizedMessage(),
+                    "PDF-Datenblatt generieren fehlgeschlagen");
             }
-//        int row = getVawsTable().getSelectedRow();
-//        if (row != -1) {
-//            DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-//
-//            VawsFachdaten anlage = vawsModel.getDatenSatz(row);
-//            HashMap params = new HashMap();
-//            params.put("anlagenart", anlage.getAnlagenart());
-//            params.put("hnr", anlage.getHerstellnr());
-//            params.put("vbf", anlage.getVbfeinstufung());
-//
-//            params.put("fluessigkeit", anlage.getFluessigkeit());
-//            params.put("gefstufe", anlage.getGefaehrdungsstufe());
-//            params.put("wgk", anlage.getWgk());
-//
-//            params.put("baujahr", anlage.getBaujahr());
-//
-//            if (anlage.getDatumInbetriebnahme() != null) {
-//                params.put("inbetriebnahme", df.format(anlage.getDatumInbetriebnahme()));
-//            } else {
-//                params.put("inbetriebnahme", " ");
-//            }
-//            if (anlage.getDatumGenehmigung() != null) {
-//                params.put("genehmigung", df.format(anlage.getDatumGenehmigung()));
-//            } else {
-//                params.put("genehmigung", " ");
-//            }
-//            if (anlage.getDatumErfassung() != null) {
-//                params.put("erfassung", df.format(anlage.getDatumErfassung()));
-//            } else {
-//                params.put("erfassung", " ");
-//            }
-//            if (anlage.getStillegungsdatum() != null) {
-//                params.put("stillegung", df.format(anlage.getStillegungsdatum()));
-//            } else {
-//                params.put("stillegung", " ");
-//            }
-//
-//            params.put("bemerkungen", ((anlage.getBemerkungen() != null) ? anlage.getBemerkungen() : " "));
-//
-//            HashMap scriptables = new HashMap();
-//            List liste = VawsKontrollen.getKontrollen(anlage);
-////            log.debug("%!%!% liste.size: " + liste.size());
-//            scriptables.put("liste", liste);
-//
-////            ReportManager.getInstance().startReportWorker("vawsanlage", params, scriptables, reportAnlageButton);
-            else
-            {
-                hauptModul.getFrame().changeStatus("Keine Anlage ausgewählt!", HauptFrame.ERROR_COLOR);
-            }
+        } else {
+            hauptModul.getFrame().changeStatus("Keine Anlage ausgewählt!", HauptFrame.ERROR_COLOR);
         }
     }
 
