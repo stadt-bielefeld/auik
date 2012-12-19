@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sielhaut_bearbeiten" language="groovy" pageWidth="595" pageHeight="842" columnWidth="514" leftMargin="39" rightMargin="42" topMargin="14" bottomMargin="42" uuid="74726fd8-4acb-49de-bf6b-602a7e2af24e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
+	<style name="table">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#B9B9B9"/>
+			<bottomPen lineWidth="1.0" lineColor="#B9B9B9"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#B9B9B9"/>
+			<bottomPen lineWidth="0.5" lineColor="#B9B9B9"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#B9B9B9"/>
+			<bottomPen lineWidth="0.5" lineColor="#B9B9B9"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#B9B9B9"/>
+			<bottomPen lineWidth="0.5" lineColor="#B9B9B9"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#FFEFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="id" class="java.lang.Integer"/>
+	<parameter name="karte" class="java.lang.String"/>
+	<parameter name="foto" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from auik.atl_sielhaut where objektid = $P{id};]]>
+	</queryString>
+	<field name="bezeichnung" class="java.lang.String"/>
+	<field name="haltungsnr" class="java.lang.String"/>
+	<field name="alarmplannr" class="java.lang.String"/>
+	<field name="entgeb" class="java.lang.String"/>
+	<field name="e32" class="java.lang.Double"/>
+	<field name="n32" class="java.lang.Double"/>
+	<field name="lage" class="java.lang.String"/>
+	<field name="bemerkungen" class="java.lang.String"/>
+	<field name="twabfluss" class="java.lang.String"/>
+	<field name="bsb" class="java.lang.String"/>
+	<field name="ew" class="java.lang.String"/>
+	<field name="gebiet" class="java.lang.String"/>
+	<field name="p_sielhaut" class="java.lang.Boolean"/>
+	<field name="p_alarmplan" class="java.lang.Boolean"/>
+	<field name="p_nachprobe" class="java.lang.Boolean"/>
+	<field name="schlammprobe" class="java.lang.Boolean"/>
+	<field name="p_firmenprobe" class="java.lang.Boolean"/>
+	<field name="the_geom" class="java.lang.Object"/>
+	<field name="_enabled" class="java.lang.Boolean"/>
+	<field name="_deleted" class="java.lang.Boolean"/>
+	<field name="objektid" class="java.lang.Integer"/>
+	<variable name="DATE" class="java.lang.String">
+		<variableExpression><![CDATA[new Date()]]></variableExpression>
+		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="126" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3af8e5cc-fdb2-466e-b18f-6b01645dfcd7" x="125" y="44" width="264" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sielhaut-Probenahmepunkt]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="d7c4da46-ed80-457a-a0cf-6ae4c584e5a8" x="10" y="25" width="81" height="90"/>
+				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/resources/reports/images/stadtwappen.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="f9c78651-190e-4e15-81fc-8bb90a7756cb" x="427" y="32" width="76" height="76" isRemoveLineWhenBlank="true"/>
+				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/resources/reports/images/iso_cert_grau.jpg"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="31837331-6569-4cc5-9ae7-8486fda06d9d" x="95" y="75" width="325" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lage}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="309" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="e262636a-cb49-458f-a2f3-eaf7a5e304bd" x="3" y="49" width="120" height="20"/>
+				<box>
+					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="611c7af2-4747-425d-9c34-5c987ee6c0fa" mode="Opaque" x="3" y="69" width="120" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Schachtnummer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ee02e30b-1f04-4120-8370-5e8e762809a5" x="3" y="89" width="120" height="20"/>
+				<box>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Alarmplannummer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9fdcf7ba-9d22-4981-bb41-42e35636d037" mode="Opaque" x="3" y="109" width="120" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Entwässerungsgebiet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="38fb565c-e280-4ad7-b73f-b0f3d19ee6e0" x="3" y="129" width="120" height="20"/>
+				<box>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Rechtswert]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ade1048f-342e-4ddd-b7c3-614431318c37" mode="Opaque" x="3" y="149" width="120" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<pen lineWidth="2.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Hochwert]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="eecc713e-d2aa-42d3-8707-f313dbd1c2e6" x="123" y="49" width="90" height="20"/>
+				<box>
+					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bezeichnung}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="71bc25e6-b935-4d17-9427-05f84bb4e35f" mode="Opaque" x="123" y="69" width="90" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{haltungsnr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="14501281-4577-4c36-9bc1-1ce013c92deb" x="123" y="89" width="90" height="20"/>
+				<box>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alarmplannr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="32a51f32-7326-40e7-b366-fc0718a385e0" mode="Opaque" x="123" y="109" width="90" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entgeb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bb7ea65b-bf76-41fc-8cd7-d2a91ff6e4a4" x="123" y="129" width="90" height="20"/>
+				<box>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{e32}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="761ae489-3a1c-46bd-aff4-cd46bb918092" mode="Opaque" x="123" y="149" width="90" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{n32}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Right">
+				<reportElement uuid="a57e5952-116a-42a5-ad5a-bfd9e4f31562" x="216" y="49" width="298" height="217">
+					<printWhenExpression><![CDATA[!$P{foto}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{foto}]]></imageExpression>
+			</image>
+			<elementGroup>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="f15d77cc-013c-4471-b0fc-b15fc24fc32b" x="1" y="278" width="513" height="20" isRemoveLineWhenBlank="true"/>
+					<box>
+						<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+						<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+						<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+						<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bemerkungen}]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<staticText>
+				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="16" width="514" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Beschreibung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="246" width="216" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Lagebeschreibung]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="305">
+			<image>
+				<reportElement uuid="a57e5952-116a-42a5-ad5a-bfd9e4f31562" x="0" y="0" width="345" height="288">
+					<printWhenExpression><![CDATA[! $P{karte}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{karte}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="342e2396-b95e-4b80-a9ec-97a5df701443" x="403" y="19" width="70" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Routinepunkt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="259abfd0-aef4-40cf-88e5-335166babcec" x="403" y="79" width="70" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Perspektive]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="9a322662-bfc3-49ff-94a9-7e20c6e2b062" x="382" y="44" width="12" height="12"/>
+				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/resources/reports/images/firma.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="00c17386-c392-4ef1-910a-b8f2952bcd64" x="403" y="59" width="70" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nachbeprobung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="56cd5443-d850-4c9c-936f-498883a0f5a3" x="403" y="39" width="70" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Firmenpunkt]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="5b3441d4-9963-4e8b-a5d3-d6e45db0b5a5" x="382" y="64" width="12" height="12"/>
+				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/resources/reports/images/nachprobe.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="96e58ae8-5e08-4f0e-9099-0e299cf71105" x="382" y="83" width="14" height="16"/>
+				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/resources/reports/images/pfeil.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="6373decf-2273-4211-810a-be33330189f7" x="382" y="24" width="12" height="12"/>
+				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/resources/reports/images/routine.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="9963fc7e-edcd-408d-b157-50ab21d61ea4" x="381" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Legende]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="14">
+			<staticText>
+				<reportElement uuid="7b5e7c42-773b-4194-85ab-398cde121227" x="3" y="2" width="419" height="11"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[© Copyright 2012 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am:]]></text>
+			</staticText>
+			<textField pattern="dd.MM.yyyy HH:mm">
+				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" x="422" y="2" width="87" height="11"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
