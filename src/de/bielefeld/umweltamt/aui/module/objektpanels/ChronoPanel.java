@@ -78,6 +78,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.io.File;
+import java.util.Map;
+import java.util.HashMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -95,7 +98,6 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
@@ -103,6 +105,7 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
+import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 
 /**
  * Das "Objekt-Chronologie"-Panel des Objekt-Bearbeiten-Moduls.
@@ -383,14 +386,25 @@ public class ChronoPanel extends JPanel {
             .toString();
         this.art = this.hauptModul.getObjekt().getBasisObjektarten()
             .getObjektart();
+        Map<String, Object> params = new HashMap<String, Object>();
 
-        if (this.objektid != null && this.betreiber != null
-            && this.standort != null && this.art != null) {
-            log.debug("Starte Objekt-Chronologie Report für ObjektId = "
-                + this.objektid);
-            ReportManager.getInstance().startReportWorker("Objekt-Chronologie",
-                this.objektid, this.betreiber, this.standort, this.art,
-                this.reportListeButton);
+        params.put("ObjektId", objektid);
+        params.put("Betreiber", betreiber);
+        params.put("Standort", standort);
+        params.put("Art", art);
+        if (objektid != null && betreiber != null
+            && standort != null && art != null) {
+            try {
+                File pdfFile = File.createTempFile("objekt_chronologie", ".pdf");
+                pdfFile.deleteOnExit();
+                PDFExporter.getInstance().exportReport(params,
+                        PDFExporter.OBJEKTCHRONOLOGIE, pdfFile.getAbsolutePath());
+            } catch (Exception ex) {
+                GUIManager.getInstance().showErrorMessage(
+                    "PDF-Liste generieren fehlgeschlagen."
+                        + "\n" + ex.getLocalizedMessage(),
+                    "PDF-Liste generieren fehlgeschlagen");
+            }
         } else {
             log.debug("ObjektID, Betreiber, Standort oder Art == NULL");
         }
