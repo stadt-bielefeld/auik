@@ -90,8 +90,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.File;
 import java.util.Collections;
 import java.util.Map;
+import java.util.HashMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -122,7 +124,6 @@ import com.jgoodies.uif_lite.component.Factory;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -138,6 +139,7 @@ import de.bielefeld.umweltamt.aui.utils.BasicEntryField;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
+import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 
 /**
  * Ein Modul zum Suchen und Bearbeiten eines Standorts.
@@ -551,11 +553,20 @@ public class BasisStandortSuchen extends AbstractModul {
 
         log.debug(adresse + " mit ID: " + this.standortID + " ausgewaehlt");
 
-        ReportManager.getInstance().startReportWorker("VAwS-StandortListe",
-            adresse, this.standortID, this.reportStandortListeButton);
-        // ReportManager.getInstance().startReportWorker("Suev-Kan", standortID,
-        // reportStandortListeButton);
-
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("Standort", adresse);
+        params.put("StandortId", standort.getId());
+        try {
+            File pdfFile = File.createTempFile("VAwS_StandortListe", ".pdf");
+            pdfFile.deleteOnExit();
+            PDFExporter.getInstance().exportReport(params,
+                    PDFExporter.VAWS_STANDORTLISTE, pdfFile.getAbsolutePath());
+        } catch (Exception ex) {
+            GUIManager.getInstance().showErrorMessage(
+                "Generieren der Standort Liste fehlgeschlagen."
+                    + "\n" + ex.getLocalizedMessage(),
+                "Generieren der Standort Liste fehlgeschlagen");
+        }
     }
 
     private Timer getSuchTimer() {
