@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sielhaut_bearbeiten" language="groovy" pageWidth="595" pageHeight="842" columnWidth="514" leftMargin="39" rightMargin="42" topMargin="14" bottomMargin="42" uuid="74726fd8-4acb-49de-bf6b-602a7e2af24e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="273"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#B9B9B9"/>
@@ -58,7 +58,7 @@
 	<field name="_enabled" class="java.lang.Boolean"/>
 	<field name="_deleted" class="java.lang.Boolean"/>
 	<field name="objektid" class="java.lang.Integer"/>
-	<variable name="DATE" class="java.lang.String">
+	<variable name="DATE" class="java.util.Date">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
 		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
 	</variable>
@@ -344,7 +344,7 @@
 				<text><![CDATA[© Copyright 2012 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am:]]></text>
 			</staticText>
 			<textField pattern="dd.MM.yyyy HH:mm">
-				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" x="422" y="2" width="87" height="11"/>
+				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" x="424" y="2" width="87" height="11"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>

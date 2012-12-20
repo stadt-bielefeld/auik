@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vaws_liste" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="48" bottomMargin="42" uuid="bb16e809-8cfa-44f5-8373-13d589070031">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vaws_standortliste" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="48" bottomMargin="42" uuid="bb16e809-8cfa-44f5-8373-13d589070031">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -83,9 +83,9 @@ order by stillegungsdatum ASC]]>
 		<field name="schutz_folie" class="java.lang.Boolean"/>
 		<field name="schutz_antiheber" class="java.lang.Boolean"/>
 	</subDataset>
+	<parameter name="Standort" class="java.lang.String"/>
 	<parameter name="ObjektId" class="java.lang.Integer"/>
 	<parameter name="Betreiber" class="java.lang.String"/>
-	<parameter name="Standort" class="java.lang.String"/>
 	<parameter name="Art" class="java.lang.String"/>
 	<variable name="DATE" class="java.util.Date">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
@@ -95,9 +95,9 @@ order by stillegungsdatum ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="61" splitType="Stretch">
+		<band height="60" splitType="Stretch">
 			<textField>
-				<reportElement uuid="f889b2ec-d898-4a33-9d40-c6dacb0844bc" mode="Opaque" x="0" y="29" width="483" height="32" backcolor="#D8D8D8"/>
+				<reportElement uuid="f889b2ec-d898-4a33-9d40-c6dacb0844bc" mode="Opaque" x="0" y="30" width="483" height="30" backcolor="#D8D8D8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="16"/>
 					<paragraph leftIndent="10"/>
@@ -105,7 +105,7 @@ order by stillegungsdatum ASC]]>
 				<textFieldExpression><![CDATA[$P{Betreiber}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="30ba4762-9f22-4e40-a90d-6f4c8bc7cde0" mode="Opaque" x="0" y="0" width="483" height="32" backcolor="#D8D8D8"/>
+				<reportElement uuid="30ba4762-9f22-4e40-a90d-6f4c8bc7cde0" mode="Opaque" x="0" y="0" width="483" height="30" backcolor="#D8D8D8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="15" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -305,7 +305,7 @@ order by stillegungsdatum ASC]]>
 	<pageFooter>
 		<band height="11" splitType="Stretch">
 			<textField pattern="dd.MM.yyyy HH:mm">
-				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" x="344" y="0" width="93" height="11"/>
+				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" mode="Transparent" x="318" y="0" width="97" height="11"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>

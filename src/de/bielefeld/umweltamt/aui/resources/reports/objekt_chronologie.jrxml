@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="objekt_chronologie" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="51" bottomMargin="70" uuid="49b09d7f-e6cd-4615-a388-937a25d41651">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="42"/>
+	<property name="ireport.y" value="51"/>
 	<style name="table" mode="Opaque" fill="Solid">
 		<pen lineWidth="2.5" lineColor="#B9B9B9"/>
 		<box>
@@ -74,13 +74,13 @@ where basis_objektchrono.objektid=$P{ObjektId} order by datum asc;]]>
 	<pageHeader>
 		<band height="94">
 			<rectangle>
-				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" x="3" y="56" width="479" height="13"/>
+				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" x="3" y="57" width="479" height="13"/>
 				<graphicElement>
 					<pen lineColor="#FFFFFF"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d" mode="Opaque" x="0" y="41" width="56" height="20" backcolor="#D8D8D8"/>
+				<reportElement uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d" mode="Opaque" x="0" y="42" width="56" height="20" backcolor="#D8D8D8"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -91,7 +91,7 @@ where basis_objektchrono.objektid=$P{ObjektId} order by datum asc;]]>
 				<text><![CDATA[Standort]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="0" y="60" width="56" height="20"/>
+				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="0" y="61" width="56" height="20"/>
 				<box>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -102,7 +102,7 @@ where basis_objektchrono.objektid=$P{ObjektId} order by datum asc;]]>
 				<text><![CDATA[Art]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64" mode="Opaque" x="56" y="41" width="426" height="20" backcolor="#D8D8D8"/>
+				<reportElement uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64" mode="Opaque" x="56" y="42" width="426" height="20" backcolor="#D8D8D8"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -114,7 +114,7 @@ where basis_objektchrono.objektid=$P{ObjektId} order by datum asc;]]>
 				<textFieldExpression><![CDATA[$P{Standort}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="60b1a670-0991-429e-88c5-f38019ac7ab9" x="56" y="60" width="426" height="20"/>
+				<reportElement uuid="60b1a670-0991-429e-88c5-f38019ac7ab9" x="56" y="61" width="426" height="20"/>
 				<box>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -126,7 +126,7 @@ where basis_objektchrono.objektid=$P{ObjektId} order by datum asc;]]>
 				<textFieldExpression><![CDATA[$P{Art}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="11" width="483" height="20"/>
+				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="12" width="483" height="20"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
@@ -236,7 +236,7 @@ where basis_objektchrono.objektid=$P{ObjektId} order by datum asc;]]>
 				<text><![CDATA[© Copyright 2012 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am:]]></text>
 			</staticText>
 			<textField pattern="dd.MM.yyyy HH:mm">
-				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" x="338" y="13" width="136" height="11"/>
+				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" x="296" y="13" width="169" height="11"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
