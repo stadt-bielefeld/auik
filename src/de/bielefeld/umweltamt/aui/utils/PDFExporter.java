@@ -75,6 +75,10 @@ public class PDFExporter {
     public static final String VAWS_LISTE
         = "vaws_liste.jasper";
 
+    /** VAwS-StandortListe. */
+    public static final String VAWS_STANDORTLISTE
+        = "vaws_standortliste.jasper";
+
     /**
      * Dieser Konstruktor soll nicht aufgerufen werden, um zu verhindern, dass
      * mehr als nur eine Instanz dieser Klasse erstellt wird. Stattdessen soll
