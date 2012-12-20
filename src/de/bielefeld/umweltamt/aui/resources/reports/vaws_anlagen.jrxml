@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vaws_anlagen" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="48" bottomMargin="42" uuid="4203fab1-3d54-43b0-a714-8b74a493f35f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="9"/>
+	<property name="ireport.y" value="144"/>
 	<style name="table" mode="Opaque" fill="Solid">
 		<pen lineWidth="2.5" lineColor="#B9B9B9"/>
 		<box>
@@ -109,326 +109,68 @@ where behaelterid=$P{BehaelterId}]]>
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
 	</variable>
 	<title>
-		<band height="59" splitType="Stretch">
-			<rectangle>
-				<reportElement uuid="f92c4e5e-91f6-45d7-99b3-4d0592d23c19" x="0" y="0" width="483" height="59" forecolor="#D8D8D8" backcolor="#D8D8D8"/>
-			</rectangle>
+		<band height="321" splitType="Stretch">
 			<textField>
-				<reportElement uuid="854524c2-4760-4d99-b77c-92ea34e678e7" x="11" y="8" width="472" height="20"/>
-				<textElement>
+				<reportElement uuid="854524c2-4760-4d99-b77c-92ea34e678e7" mode="Opaque" x="0" y="0" width="483" height="30" backcolor="#D8D8D8"/>
+				<textElement verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{Objektart}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="f561ef74-0121-48de-8bdf-7e6b799979e0" x="11" y="33" width="472" height="20"/>
-				<textElement>
+				<reportElement uuid="f561ef74-0121-48de-8bdf-7e6b799979e0" mode="Opaque" x="0" y="30" width="483" height="30" backcolor="#D8D8D8"/>
+				<textElement verticalAlignment="Middle">
 					<font size="16" isBold="false"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{Betreiber}]]></textFieldExpression>
 			</textField>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="260" splitType="Stretch">
-			<elementGroup>
-				<textField isBlankWhenNull="true">
-					<reportElement uuid="bb7ea65b-bf76-41fc-8cd7-d2a91ff6e4a4" x="339" y="151" width="144" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{gefaehrdungsstufe}]]></textFieldExpression>
-				</textField>
-				<textField pattern="" isBlankWhenNull="true">
-					<reportElement uuid="71bc25e6-b935-4d17-9427-05f84bb4e35f" mode="Opaque" x="339" y="91" width="144" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{baujahr}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement uuid="761ae489-3a1c-46bd-aff4-cd46bb918092" mode="Opaque" x="339" y="171" width="144" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{wgk}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement uuid="eecc713e-d2aa-42d3-8707-f313dbd1c2e6" mode="Transparent" x="339" y="71" width="144" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{behaelterart}]]></textFieldExpression>
-				</textField>
-				<textField pattern="dd.MM.yy" isBlankWhenNull="true">
-					<reportElement uuid="32a51f32-7326-40e7-b366-fc0718a385e0" mode="Opaque" x="339" y="131" width="144" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{stillegungsdatum}]]></textFieldExpression>
-				</textField>
-				<textField pattern="dd.MM.yy" isBlankWhenNull="true">
-					<reportElement uuid="14501281-4577-4c36-9bc1-1ce013c92deb" x="339" y="111" width="144" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{datumerfassung}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement uuid="68b0afbc-077b-4322-b5cd-4163dbd7d0c2" mode="Opaque" x="339" y="51" width="144" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{anlagenart}]]></textFieldExpression>
-				</textField>
-				<textField pattern="dd.MM.yy" isBlankWhenNull="true">
-					<reportElement uuid="14501281-4577-4c36-9bc1-1ce013c92deb" x="110" y="111" width="120" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{datuminbetriebnahme}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement uuid="71bc25e6-b935-4d17-9427-05f84bb4e35f" mode="Opaque" x="110" y="91" width="120" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{menge}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement uuid="761ae489-3a1c-46bd-aff4-cd46bb918092" mode="Opaque" x="110" y="171" width="120" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{vbfeinstufung}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement uuid="eecc713e-d2aa-42d3-8707-f313dbd1c2e6" mode="Transparent" x="110" y="71" width="120" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{fluessigkeit}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement uuid="bb7ea65b-bf76-41fc-8cd7-d2a91ff6e4a4" x="110" y="151" width="120" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{herstellnr}]]></textFieldExpression>
-				</textField>
-				<textField pattern="dd.MM.yy" isBlankWhenNull="true">
-					<reportElement uuid="32a51f32-7326-40e7-b366-fc0718a385e0" mode="Opaque" x="110" y="131" width="120" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{datumgenehmigung}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement uuid="68b0afbc-077b-4322-b5cd-4163dbd7d0c2" mode="Opaque" x="110" y="51" width="120" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{Standort}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement uuid="ade1048f-342e-4ddd-b7c3-614431318c37" mode="Opaque" x="230" y="51" width="110" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Anlagenart]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="611c7af2-4747-425d-9c34-5c987ee6c0fa" mode="Opaque" x="1" y="91" width="110" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Menge]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="9fdcf7ba-9d22-4981-bb41-42e35636d037" mode="Opaque" x="230" y="131" width="110" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Stillegung]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="ade1048f-342e-4ddd-b7c3-614431318c37" mode="Opaque" x="1" y="171" width="110" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[VbF]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="ee02e30b-1f04-4120-8370-5e8e762809a5" x="1" y="111" width="110" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Inbetriebnahme]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="38fb565c-e280-4ad7-b73f-b0f3d19ee6e0" x="1" y="151" width="110" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Herst. Nr.]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="ee02e30b-1f04-4120-8370-5e8e762809a5" x="230" y="111" width="110" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Erfassung]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="38fb565c-e280-4ad7-b73f-b0f3d19ee6e0" x="230" y="151" width="110" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Gefährdungstufe]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="ade1048f-342e-4ddd-b7c3-614431318c37" mode="Opaque" x="1" y="51" width="110" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Standort]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="ade1048f-342e-4ddd-b7c3-614431318c37" mode="Opaque" x="230" y="171" width="110" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[WGK]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="e262636a-cb49-458f-a2f3-eaf7a5e304bd" x="230" y="71" width="110" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Behälterart]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="e262636a-cb49-458f-a2f3-eaf7a5e304bd" x="1" y="71" width="110" height="20"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Flüssigkeit]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="611c7af2-4747-425d-9c34-5c987ee6c0fa" mode="Opaque" x="230" y="91" width="110" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Baujahr]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="9fdcf7ba-9d22-4981-bb41-42e35636d037" mode="Opaque" x="1" y="131" width="110" height="20" backcolor="#D8D8D8"/>
-					<box>
-						<topPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="10"/>
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Genehmigung]]></text>
-				</staticText>
-			</elementGroup>
+			<textField pattern="dd.MM.yy" isBlankWhenNull="true">
+				<reportElement uuid="14501281-4577-4c36-9bc1-1ce013c92deb" x="110" y="164" width="120" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datuminbetriebnahme}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="bb7ea65b-bf76-41fc-8cd7-d2a91ff6e4a4" x="110" y="204" width="120" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{herstellnr}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="761ae489-3a1c-46bd-aff4-cd46bb918092" mode="Opaque" x="110" y="224" width="120" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vbfeinstufung}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="205" width="483" height="20"/>
+				<reportElement uuid="38fb565c-e280-4ad7-b73f-b0f3d19ee6e0" x="1" y="204" width="110" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Herst. Nr.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="258" width="483" height="20"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
@@ -439,29 +181,109 @@ where behaelterid=$P{BehaelterId}]]>
 				</textElement>
 				<text><![CDATA[Bemerkungen]]></text>
 			</staticText>
-			<elementGroup>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement uuid="f15d77cc-013c-4471-b0fc-b15fc24fc32b" style="table" x="2" y="238" width="480" height="20" isRemoveLineWhenBlank="true"/>
-					<box>
-						<topPen lineWidth="2.5" lineStyle="Solid" lineColor="#B9B9B9"/>
-						<leftPen lineWidth="2.5" lineStyle="Solid" lineColor="#B9B9B9"/>
-						<bottomPen lineWidth="2.5" lineStyle="Solid" lineColor="#B9B9B9"/>
-						<rightPen lineWidth="2.5" lineStyle="Solid" lineColor="#B9B9B9"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{bemerkungen}]]></textFieldExpression>
-				</textField>
-			</elementGroup>
-			<rectangle>
-				<reportElement uuid="b8b8d283-a8a0-4356-95e9-75d81a21ef8c" mode="Transparent" x="2" y="51" width="480" height="140"/>
-				<graphicElement>
-					<pen lineWidth="2.5" lineColor="#B9B9B9"/>
-				</graphicElement>
-			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="f15d77cc-013c-4471-b0fc-b15fc24fc32b" style="table" x="2" y="291" width="480" height="20" isRemoveLineWhenBlank="true"/>
+				<box>
+					<topPen lineWidth="2.5" lineStyle="Solid" lineColor="#B9B9B9"/>
+					<leftPen lineWidth="2.5" lineStyle="Solid" lineColor="#B9B9B9"/>
+					<bottomPen lineWidth="2.5" lineStyle="Solid" lineColor="#B9B9B9"/>
+					<rightPen lineWidth="2.5" lineStyle="Solid" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bemerkungen}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yy" isBlankWhenNull="true">
+				<reportElement uuid="14501281-4577-4c36-9bc1-1ce013c92deb" x="339" y="164" width="144" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datumerfassung}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="15" width="483" height="20"/>
+				<reportElement uuid="e262636a-cb49-458f-a2f3-eaf7a5e304bd" x="1" y="124" width="110" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Flüssigkeit]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="71bc25e6-b935-4d17-9427-05f84bb4e35f" mode="Opaque" x="110" y="144" width="120" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{menge}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="68b0afbc-077b-4322-b5cd-4163dbd7d0c2" mode="Opaque" x="110" y="104" width="120" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Standort}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ade1048f-342e-4ddd-b7c3-614431318c37" mode="Opaque" x="230" y="224" width="110" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[WGK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="611c7af2-4747-425d-9c34-5c987ee6c0fa" mode="Opaque" x="230" y="144" width="110" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Baujahr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ee02e30b-1f04-4120-8370-5e8e762809a5" x="230" y="164" width="110" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Erfassung]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="68b0afbc-077b-4322-b5cd-4163dbd7d0c2" mode="Opaque" x="339" y="104" width="144" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{anlagenart}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="68" width="483" height="20"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
@@ -472,8 +294,189 @@ where behaelterid=$P{BehaelterId}]]>
 				</textElement>
 				<text><![CDATA[Beschreibung]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="e262636a-cb49-458f-a2f3-eaf7a5e304bd" x="230" y="124" width="110" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Behälterart]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="eecc713e-d2aa-42d3-8707-f313dbd1c2e6" mode="Transparent" x="110" y="124" width="120" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fluessigkeit}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9fdcf7ba-9d22-4981-bb41-42e35636d037" mode="Opaque" x="1" y="184" width="110" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Genehmigung]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="eecc713e-d2aa-42d3-8707-f313dbd1c2e6" mode="Transparent" x="339" y="124" width="144" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{behaelterart}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="761ae489-3a1c-46bd-aff4-cd46bb918092" mode="Opaque" x="339" y="224" width="144" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{wgk}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ee02e30b-1f04-4120-8370-5e8e762809a5" x="1" y="164" width="110" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Inbetriebnahme]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="71bc25e6-b935-4d17-9427-05f84bb4e35f" mode="Opaque" x="339" y="144" width="144" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{baujahr}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yy" isBlankWhenNull="true">
+				<reportElement uuid="32a51f32-7326-40e7-b366-fc0718a385e0" mode="Opaque" x="339" y="184" width="144" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{stillegungsdatum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ade1048f-342e-4ddd-b7c3-614431318c37" mode="Opaque" x="1" y="224" width="110" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[VbF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="38fb565c-e280-4ad7-b73f-b0f3d19ee6e0" x="230" y="204" width="110" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Gefährdungstufe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9fdcf7ba-9d22-4981-bb41-42e35636d037" mode="Opaque" x="230" y="184" width="110" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Stillegung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="611c7af2-4747-425d-9c34-5c987ee6c0fa" mode="Opaque" x="1" y="144" width="110" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Menge]]></text>
+			</staticText>
+			<textField pattern="dd.MM.yy" isBlankWhenNull="true">
+				<reportElement uuid="32a51f32-7326-40e7-b366-fc0718a385e0" mode="Opaque" x="110" y="184" width="120" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datumgenehmigung}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ade1048f-342e-4ddd-b7c3-614431318c37" mode="Opaque" x="230" y="104" width="110" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Anlagenart]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ade1048f-342e-4ddd-b7c3-614431318c37" mode="Opaque" x="1" y="104" width="110" height="20" backcolor="#D8D8D8"/>
+				<box>
+					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Standort]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="bb7ea65b-bf76-41fc-8cd7-d2a91ff6e4a4" x="339" y="204" width="144" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gefaehrdungsstufe}]]></textFieldExpression>
+			</textField>
 		</band>
-	</pageHeader>
+	</title>
 	<columnHeader>
 		<band height="124" splitType="Stretch">
 			<componentElement>
@@ -616,7 +619,7 @@ where behaelterid=$P{BehaelterId}]]>
 				<text><![CDATA[© Copyright 2012 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am: ]]></text>
 			</staticText>
 			<textField pattern="dd.MM.yyyy HH:mm">
-				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" x="328" y="3" width="154" height="11"/>
+				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" x="295" y="3" width="177" height="11"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
