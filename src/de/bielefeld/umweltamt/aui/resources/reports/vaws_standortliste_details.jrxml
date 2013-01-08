@@ -7,9 +7,17 @@
 	<parameter name="StandortId" class="java.lang.Integer"/>
 	<parameter name="BetreiberId" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select vaws_fachdaten.anlagenart, vaws_fachdaten.herstellnr, vaws_fachdaten.fluessigkeit,
+        <![CDATA[select vaws_fachdaten.anlagenart, vaws_fachdaten.herstellnr, vaws_fachdaten.fluessigkeit,
 vaws_fachdaten.menge, vaws_fachdaten.stillegungsdatum, basis_objektarten.objektart,
-basis_betreiber.betrname, count (*) over() AS anzahl
+basis_betreiber.betrname, vaws_fachdaten.objektid, (select count(*)
+    from auik.basis_standort
+    inner join auik.basis_objekt on basis_objekt.standortid = basis_standort.id
+    inner join auik.basis_betreiber on basis_betreiber.id = basis_objekt.betreiberid
+    inner join auik.vaws_fachdaten on vaws_fachdaten.objektid = basis_objekt.objektid
+    inner join auik.basis_objektarten on basis_objektarten.id = basis_objekt.objektartid
+    where basis_standort.id = $P{StandortId}
+          and basis_objekt.betreiberid = $P{BetreiberId}
+          and basis_objektarten.abteilung = '360.34') as anzahl
 from auik.basis_standort
 inner join auik.basis_objekt on basis_objekt.standortid = basis_standort.id
 inner join auik.basis_betreiber on basis_betreiber.id = basis_objekt.betreiberid
@@ -19,6 +27,19 @@ where basis_standort.id = $P{StandortId}
       and basis_objekt.betreiberid = $P{BetreiberId}
       and basis_objektarten.abteilung = '360.34']]>
 	</queryString>
+      <!-- TODO: Use query below on postgresql >= 8.4
+        select vaws_fachdaten.anlagenart, vaws_fachdaten.herstellnr, vaws_fachdaten.fluessigkeit,
+vaws_fachdaten.menge, vaws_fachdaten.stillegungsdatum, basis_objektarten.objektart,
+basis_betreiber.betrname, count (*) over() AS anzahl
+from auik.basis_standort
+inner join auik.basis_objekt on basis_objekt.standortid = basis_standort.id
+inner join auik.basis_betreiber on basis_betreiber.id = basis_objekt.betreiberid
+inner join auik.vaws_fachdaten on vaws_fachdaten.objektid = basis_objekt.objektid
+inner join auik.basis_objektarten on basis_objektarten.id = basis_objekt.objektartid
+where basis_standort.id = $P{StandortId}
+      and basis_objekt.betreiberid = $P{BetreiberId}
+      and basis_objektarten.abteilung = '360.34'
+      -->
 	<field name="anlagenart" class="java.lang.String"/>
 	<field name="herstellnr" class="java.lang.String"/>
 	<field name="fluessigkeit" class="java.lang.String"/>
