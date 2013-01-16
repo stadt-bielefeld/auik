@@ -628,6 +628,9 @@ public class Anh49AnalysenPanel extends JPanel {
     }
 
     public void speichernAnalyse() {
+        if (this.analysenTabelle.getCellEditor() != null) {
+            this.analysenTabelle.getCellEditor().stopCellEditing();
+        }
         List<?> anaListe = analysenModel.getList();
         for (int i = 0; i < anaListe.size(); i++) {
             Anh49Analysen analyse = (Anh49Analysen) anaListe.get(i);
@@ -637,6 +640,9 @@ public class Anh49AnalysenPanel extends JPanel {
     }
 
     public void speichernKontrollen() {
+        if (this.kontrollenTabelle.getCellEditor() != null) {
+            this.kontrollenTabelle.getCellEditor().stopCellEditing();
+        }
         List<?> konListe = kontrollenModel.getList();
         for (int i = 0; i < konListe.size(); i++) {
             Anh49Kontrollen kontrolle = (Anh49Kontrollen) konListe.get(i);
