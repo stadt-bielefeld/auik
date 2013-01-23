@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56" uuid="64078b94-0af8-4f19-a992-4e90f5a9f28f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="614"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -430,8 +430,8 @@
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe Klage erhoben werden. Die Klage ist entweder schriftlich beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden, oder dort zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungs-gerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrs-verordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG) vom 23.11.2005 (GV. NRW. S. 926) einzureichen.
-Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten versäumt werden, so würde deren / dessen Verschulden Ihnen zugerechnet werden.]]></text>
+				<text><![CDATA[Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe Klage erhoben werden. Die Klage ist entweder schriftlich beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden, oder dort zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungs-gerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrs-verordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG) vom 07.11.2012 (GV. NRW. S. 548) einzureichen.
+Sollte die Frist durch das Verschulden einer von Ihnen bevollmächtigten Person versäumt werden, so würde deren  Verschulden Ihnen zugerechnet werden.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="d36c1ddb-9e5a-4609-96c9-5d8dbd909849" x="0" y="1" width="159" height="14"/>
@@ -458,7 +458,7 @@ Sollte die Frist durch das Verschulden einer / eines von Ihnen Bevollmächtigten
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Sie können jedoch gemäß § 80 Abs. 4 VwGO einen Antrag auf Aussetzung der sofortigen Vollziehung (ohne Einhaltung einer Frist) bei dem Oberbürgermeister der Stadt Bielefeld in Bielefeld stellen.
-Ferner können Sie gemäß § 80 Abs. 5 VwGO einen Antrag auf Anordnung der aufschiebenden Wirkung der Klage beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden schriftlich, zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungsgerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrsverordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG vom 23.11.2005 (GV. NRW. S. 926) einreichen.
+Ferner können Sie gemäß § 80 Abs. 5 VwGO einen Antrag auf Anordnung der aufschiebenden Wirkung der Klage beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden schriftlich, zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungsgerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrsverordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG vom 07.11.2012 (GV. NRW. S. 548) einreichen.
 ]]></text>
 			</staticText>
 		</band>
