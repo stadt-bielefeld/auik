@@ -79,6 +79,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
     private JButton probenehmerButton;
     private JButton eSatzungButton;
     private JButton uwbButton;
+    private JButton selbstueberwButton;
     private JButton inaktivButton;
 
     /** Das TableModel für die Ergebnis-Tabelle */
@@ -111,6 +112,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         	probenehmerButton = new JButton("Probenehmereinsätze");
         	inaktivButton = new JButton("inaktive Probepunkte");
         	uwbButton = new JButton("UWB-Punkte");
+        	selbstueberwButton = new JButton("Selbstüberwachungspunkte");
         	eSatzungButton = new JButton("E-Satzungspunkte");
 
             // Ein ActionListener für den Button,
@@ -142,8 +144,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                         @Override
                         protected void doNonUILogic() {
                             ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getProbepktByArtID(
-                                    DatabaseConstants.ATL_PROBEART_ID_ABWASSER_E_SATZUNG));
+                                DatabaseQuery.getESatzungsPunkte());
                         }
 
                         @Override
@@ -164,9 +165,28 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                         @Override
                         protected void doNonUILogic() {
                             ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getProbepktByArtID(
-                                    DatabaseConstants
-                                        .ATL_PROBEART_ID_ABWASSER_UWB));
+                                DatabaseQuery.getUWBPunkte());
+                        }
+
+                        @Override
+                        protected void doUIUpdateLogic(){
+                            ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
+
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+
+        	selbstueberwButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
+                        @Override
+                        protected void doNonUILogic() {
+                            ((ProbepunkteModel)getTableModel()).setList(
+                                DatabaseQuery.getSelbstueberwPunkte());
                         }
 
                         @Override
@@ -206,7 +226,8 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append(eSatzungButton, uwbButton);
-            builder.append(inaktivButton, probenehmerButton);
+            builder.append(selbstueberwButton, inaktivButton);
+            builder.append(probenehmerButton);
 
             queryPanel = builder.getPanel();
         }

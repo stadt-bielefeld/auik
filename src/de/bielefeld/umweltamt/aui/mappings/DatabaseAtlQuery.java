@@ -713,12 +713,63 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(AtlProbepkt.class)
                 .createAlias("basisObjekt", "objekt")
-                .createAlias("atlProbenahmen", "probe")
+                .createAlias("atlProbenahmens", "probe")
                 .add(Restrictions.eq("objekt.inaktiv", false))
                 .add(Restrictions.like(
                     "probe.kennummer", "3", MatchMode.START))
                 // YAY! Finally found the right way to do distinct and get
                 // the complete objects! :D
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
+            new AtlProbepkt());
+    }
+
+    /**
+     * Get all AtlProbepkt which have AtlProbenahmen from ESatzung
+     * (kennummer starts with "E").
+     * @return <code>List&lt;AtlProbepkt&gt;</code>
+     */
+    public static List<AtlProbepkt> getESatzungsPunkte() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbepkt.class)
+                .createAlias("basisObjekt", "objekt")
+                .createAlias("atlProbenahmens", "probe")
+                .add(Restrictions.eq("objekt.inaktiv", false))
+                .add(Restrictions.like(
+                    "probe.kennummer", "E", MatchMode.START))
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
+            new AtlProbepkt());
+    }
+
+    /**
+     * Get all AtlProbepkt which have AtlProbenahmen from UWB
+     * (kennummer starts with "2").
+     * @return <code>List&lt;AtlProbepkt&gt;</code>
+     */
+    public static List<AtlProbepkt> getUWBPunkte() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbepkt.class)
+                .createAlias("basisObjekt", "objekt")
+                .createAlias("atlProbenahmens", "probe")
+                .add(Restrictions.eq("objekt.inaktiv", false))
+                .add(Restrictions.like(
+                    "probe.kennummer", "2", MatchMode.START))
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
+            new AtlProbepkt());
+    }
+
+    /**
+     * Get all AtlProbepkt which have AtlProbenahmen from Selbstueberwachung
+     * (kennummer starts with "E").
+     * @return <code>List&lt;AtlProbepkt&gt;</code>
+     */
+    public static List<AtlProbepkt> getSelbstueberwPunkte() {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(AtlProbepkt.class)
+                .createAlias("basisObjekt", "objekt")
+                .createAlias("atlProbenahmens", "probe")
+                .add(Restrictions.eq("objekt.inaktiv", false))
+                .add(Restrictions.like(
+                    "probe.kennummer", "7", MatchMode.START))
                 .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
             new AtlProbepkt());
     }
