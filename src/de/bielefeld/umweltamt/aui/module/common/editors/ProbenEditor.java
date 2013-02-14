@@ -1659,7 +1659,10 @@ public class ProbenEditor extends AbstractApplyEditor {
      * @return die Personal- und Sachkosten.
      */
     public double getSachUndPersonalkosten() throws ParseException {
-        return PERSONAL_UND_SACHKOSTEN * getDauer() * getAnzahl();
+    	double kosten = PERSONAL_UND_SACHKOSTEN * getDauer() * getAnzahl();
+    	double toround = (kosten*1000)/10;
+    	double round = Math.round(toround);
+    	return round/100;
     }
 
     /**
