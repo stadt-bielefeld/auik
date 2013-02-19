@@ -482,7 +482,7 @@ public class AtlProbenahmen  implements java.io.Serializable {
         if (saved == null) {
             return false;
         } else {
-            this.copy(saved);
+//            this.copy(saved);
             return true;
         }
     }
@@ -492,38 +492,38 @@ public class AtlProbenahmen  implements java.io.Serializable {
      * This is meant to be used after merging!
      * @param copy AtlProbenahmen
      */
-    private void copy(AtlProbenahmen copy) {
-        this.atlStatus = copy.getAtlStatus();
-        this.atlProbepkt = copy.getAtlProbepkt();
-        this.basisSachbearbeiter = copy.getBasisSachbearbeiter();
-        this.kennummer = copy.getKennummer();
-        this.art = copy.getArt();
-        this.datumDerEntnahme = copy.getDatumDerEntnahme();
-        this.zeitAnfang = copy.getZeitAnfang();
-        this.bisDatum = copy.getBisDatum();
-        this.zeitDerEntnahmen = copy.getZeitDerEntnahmen();
-        this.einwaage = copy.getEinwaage();
-        this.VM3 = copy.getVM3();
-        this.fahrer = copy.getFahrer();
-        this.objektNr = copy.getObjektNr();
-        this.datumIcp = copy.getDatumIcp();
-        this.sonderparameter = copy.getSonderparameter();
-        this.bemerkung = copy.getBemerkung();
-        this.an360x11 = copy.getAn360x11();
-        this.ueberschreitung = copy.getUeberschreitung();
-        this.anzahlbeteiligte = copy.getAnzahlbeteiligte();
-        this.uhrzeitbeginn = copy.getUhrzeitbeginn();
-        this.uhrzeitende = copy.getUhrzeitende();
-        this.fahrtzeit = copy.getFahrtzeit();
-        this.bescheid = copy.getBescheid();
-        this.kosten = copy.getKosten();
-        this.massnahmen = copy.getMassnahmen();
-        this.bezeichnung = copy.getBezeichnung();
-        this.uschivorg = copy.getUschivorg();
-        this.enabled = copy.isEnabled();
-        this.deleted = copy.isDeleted();
-        this.atlAnalysepositions = copy.getAtlAnalysepositions();
-    }
+//    private void copy(AtlProbenahmen copy) {
+//        this.atlStatus = copy.getAtlStatus();
+//        this.atlProbepkt = copy.getAtlProbepkt();
+//        this.basisSachbearbeiter = copy.getBasisSachbearbeiter();
+//        this.kennummer = copy.getKennummer();
+//        this.art = copy.getArt();
+//        this.datumDerEntnahme = copy.getDatumDerEntnahme();
+//        this.zeitAnfang = copy.getZeitAnfang();
+//        this.bisDatum = copy.getBisDatum();
+//        this.zeitDerEntnahmen = copy.getZeitDerEntnahmen();
+//        this.einwaage = copy.getEinwaage();
+//        this.VM3 = copy.getVM3();
+//        this.fahrer = copy.getFahrer();
+//        this.objektNr = copy.getObjektNr();
+//        this.datumIcp = copy.getDatumIcp();
+//        this.sonderparameter = copy.getSonderparameter();
+//        this.bemerkung = copy.getBemerkung();
+//        this.an360x11 = copy.getAn360x11();
+//        this.ueberschreitung = copy.getUeberschreitung();
+//        this.anzahlbeteiligte = copy.getAnzahlbeteiligte();
+//        this.uhrzeitbeginn = copy.getUhrzeitbeginn();
+//        this.uhrzeitende = copy.getUhrzeitende();
+//        this.fahrtzeit = copy.getFahrtzeit();
+//        this.bescheid = copy.getBescheid();
+//        this.kosten = copy.getKosten();
+//        this.massnahmen = copy.getMassnahmen();
+//        this.bezeichnung = copy.getBezeichnung();
+//        this.uschivorg = copy.getUschivorg();
+//        this.enabled = copy.isEnabled();
+//        this.deleted = copy.isDeleted();
+//        this.atlAnalysepositions = copy.getAtlAnalysepositions();
+//    }
 
     /**
      * Delete (mark as deleted) a detached instance

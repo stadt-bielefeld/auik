@@ -1437,17 +1437,6 @@ public class ProbenEditor extends AbstractApplyEditor {
             probe.setKennummer(kennnummer);
         }
 
-        // ICP
-        Date icpDate = this.icpDatum.getDate();
-        if (icpDate != null) {
-            probe.setDatumIcp(icpDate);
-        }
-
-        Double einwaage = this.icpEinwaageFeld.getDoubleValue();
-        if (einwaage != null) {
-            probe.setEinwaage(new Float(einwaage));
-        }
-
         // Bemerkung
         String newBemerkung = this.bemerkungsArea.getText();
         if (newBemerkung != null) {
