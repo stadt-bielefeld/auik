@@ -430,6 +430,37 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         return new DatabaseAccess().executeCriteriaToList(
             detachedCriteria, new AnhBwkFachdaten());
     }
+    /**
+     * Get AnhBwkFachdaten for Objektart BHKW.
+     * @return <code>List&lt;AnhBwkFachdaten&gt;</code>
+     */
+    public static List<AnhBwkFachdaten> getBHKW() {
+		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
+				AnhBwkFachdaten.class)
+				.createAlias("basisObjekt.basisStandort", "standort")
+                .createAlias("basisObjekt.basisObjektarten", "art")
+				.addOrder(Order.asc("standort.strasse"))
+				.addOrder(Order.asc("standort.hausnr"))
+				.add(Restrictions.eq("art.id", 36));
+
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new AnhBwkFachdaten());
+    }
+    /**
+     * Get AnhBwkFachdaten for ABA = true.
+     * @return <code>List&lt;AnhBwkFachdaten&gt;</code>
+     */
+    public static List<AnhBwkFachdaten> getABA() {
+		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
+				AnhBwkFachdaten.class)
+				.createAlias("basisObjekt.basisStandort", "standort")
+				.addOrder(Order.asc("standort.strasse"))
+				.addOrder(Order.asc("standort.hausnr"))
+				.add(Restrictions.eq("aba", true));
+
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new AnhBwkFachdaten());
+    }
 
     /**
      * Get a list of all recording years

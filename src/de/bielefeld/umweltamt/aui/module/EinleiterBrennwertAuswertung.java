@@ -76,6 +76,8 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
     // Widgets für die Abfrage
     private JComboBox jahrBox;
     private JButton submitButton;
+    private JButton bhkwButton;
+    private JButton abaButton;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private AnhBwkModel tmodel;
@@ -119,6 +121,8 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
 //            jahrBox.setEditable(true);
 
             submitButton = new JButton("Suchen");
+            bhkwButton = new JButton("BHKW");
+            abaButton = new JButton("ABA");
 
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
@@ -158,11 +162,57 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
                 }
             });
 
+            // Ein ActionListener für den Button,
+            // der die Suche nach BHKW auslöst:
+            bhkwButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        @Override
+                        protected void doNonUILogic() {
+                            ((AnhBwkModel)getTableModel()).setList(
+                                DatabaseQuery.getBHKW());
+                        }
+
+                        @Override
+                        protected void doUIUpdateLogic(){
+                            ((AnhBwkModel)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+
+            // Ein ActionListener für den Button,
+            // der die Suche nach ABA auslöst:
+            abaButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
+                        @Override
+                        protected void doNonUILogic() {
+                            ((AnhBwkModel)getTableModel()).setList(
+                                DatabaseQuery.getABA());
+                        }
+
+                        @Override
+                        protected void doUIUpdateLogic(){
+                            ((AnhBwkModel)getTableModel()).fireTableDataChanged();
+                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                        }
+                    };
+                    worker.start();
+                }
+            });
+
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref");
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append("Erfassungsjahr:", jahrBox, submitButton);
+            builder.append("Erfassungsjahr:", jahrBox, submitButton, bhkwButton, abaButton);
 
             queryPanel = builder.getPanel();
         }

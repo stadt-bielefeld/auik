@@ -26,7 +26,8 @@
 		</parameter>
 		<queryString>
 			<![CDATA[select * from auik.basis_objektchrono
-where basis_objektchrono.objektid=$P{ObjektId} order by datum asc;]]>
+where basis_objektchrono.objektid=$P{ObjektId}
+and basis_objektchrono._deleted=false order by datum asc;]]>
 		</queryString>
 		<field name="id" class="java.lang.Integer"/>
 		<field name="datum" class="java.sql.Timestamp"/>
@@ -41,9 +42,14 @@ where basis_objektchrono.objektid=$P{ObjektId} order by datum asc;]]>
 	<parameter name="Betreiber" class="java.lang.String"/>
 	<parameter name="Standort" class="java.lang.String"/>
 	<parameter name="Art" class="java.lang.String"/>
-	<queryString>
-		<![CDATA[]]>
-	</queryString>
+	<field name="basis_objektchrono_id" class="java.lang.Integer"/>
+	<field name="basis_objektchrono_datum" class="java.sql.Timestamp"/>
+	<field name="basis_objektchrono_sachverhalt" class="java.lang.String"/>
+	<field name="basis_objektchrono_wv" class="java.sql.Timestamp"/>
+	<field name="basis_objektchrono_sachbearbeiter" class="java.lang.String"/>
+	<field name="basis_objektchrono_objektid" class="java.lang.Integer"/>
+	<field name="basis_objektchrono__enabled" class="java.lang.Boolean"/>
+	<field name="basis_objektchrono__deleted" class="java.lang.Boolean"/>
 	<variable name="DATE" class="java.util.Date">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
 		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
