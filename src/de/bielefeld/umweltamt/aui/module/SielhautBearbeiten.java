@@ -1030,7 +1030,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
     private DoubleField getSpN32Feld() {
         if (this.spN32Feld == null) {
-            this.spN32Feld = new DoubleField(1);
+            this.spN32Feld = new DoubleField(0, 0);
         }
         return this.spN32Feld;
     }
@@ -1065,7 +1065,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
     private DoubleField getSpE32Feld() {
         if (this.spE32Feld == null) {
-            this.spE32Feld = new DoubleField(1);
+            this.spE32Feld = new DoubleField(0, 0);
         }
         return this.spE32Feld;
     }

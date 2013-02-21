@@ -738,6 +738,9 @@ public class ProbenEditor extends AbstractApplyEditor {
                         "Der Probenahmeauftrag wurde erfolgreich unter '"
                             + path.getAbsolutePath() + "' gespeichert.",
                         "Probenahmeauftrag erfolgreich");
+                    
+                    close();
+                    
                 } catch (Exception ex) {
                     log.error("Druck schlug fehlt: " + ex.getMessage());
                     GUIManager.getInstance().showErrorMessage(
