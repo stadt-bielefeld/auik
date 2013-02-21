@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="objekt_chronologie" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="51" bottomMargin="70" uuid="49b09d7f-e6cd-4615-a388-937a25d41651">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="51"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table" mode="Opaque" fill="Solid">
 		<pen lineWidth="2.5" lineColor="#B9B9B9"/>
 		<box>
@@ -42,6 +42,21 @@ and basis_objektchrono._deleted=false order by datum asc;]]>
 	<parameter name="Betreiber" class="java.lang.String"/>
 	<parameter name="Standort" class="java.lang.String"/>
 	<parameter name="Art" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     basis_objektchrono."id" AS basis_objektchrono_id,
+     basis_objektchrono."datum" AS basis_objektchrono_datum,
+     basis_objektchrono."sachverhalt" AS basis_objektchrono_sachverhalt,
+     basis_objektchrono."wv" AS basis_objektchrono_wv,
+     basis_objektchrono."sachbearbeiter" AS basis_objektchrono_sachbearbeiter,
+     basis_objektchrono."objektid" AS basis_objektchrono_objektid,
+     basis_objektchrono."_enabled" AS basis_objektchrono__enabled,
+     basis_objektchrono."_deleted" AS basis_objektchrono__deleted
+FROM
+     "auik"."basis_objektchrono" basis_objektchrono
+     where basis_objektchrono.objektid=$P{ObjektId}
+     and basis_objektchrono._deleted=false order by datum asc;]]>
+	</queryString>
 	<field name="basis_objektchrono_id" class="java.lang.Integer"/>
 	<field name="basis_objektchrono_datum" class="java.sql.Timestamp"/>
 	<field name="basis_objektchrono_sachverhalt" class="java.lang.String"/>
@@ -78,7 +93,7 @@ and basis_objektchrono._deleted=false order by datum asc;]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="94">
+		<band height="92">
 			<rectangle>
 				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" x="3" y="57" width="479" height="13"/>
 				<graphicElement>
@@ -146,92 +161,64 @@ and basis_objektchrono._deleted=false order by datum asc;]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="66">
-			<componentElement>
-				<reportElement uuid="988d3ec8-66ab-4ea8-91f0-836457b9b6f6" key="table" style="table" x="0" y="0" width="482" height="60"/>
-				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="chrono" uuid="c47f7210-e315-4489-b755-7b4803685fba">
-						<datasetParameter name="ObjektId">
-							<datasetParameterExpression><![CDATA[$P{ObjektId}]]></datasetParameterExpression>
-						</datasetParameter>
-						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					</datasetRun>
-					<jr:column width="90" uuid="ed18df33-b44f-4c78-8b3c-0ef75b161231">
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement uuid="59108b43-5f93-422b-8d89-9063a984e46f" style="table_CH" mode="Opaque" x="0" y="0" width="90" height="30" backcolor="#D8D8D8"/>
-								<box>
-									<bottomPen lineWidth="0.5"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Datum]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell height="20" rowSpan="1">
-							<textField pattern="dd.MM.yy" isBlankWhenNull="true">
-								<reportElement uuid="255ef126-fd02-48f5-a83d-9c569508fa72" x="0" y="0" width="90" height="20"/>
-								<box>
-									<bottomPen lineWidth="0.5" lineColor="#B9B9B9"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{datum}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="90" uuid="ad44fff7-f9e3-46a8-89a1-b813bdb96267">
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement uuid="630e13b6-5223-4adf-a15c-bbaa9194d86c" style="table_CH" mode="Opaque" x="0" y="0" width="90" height="30" backcolor="#D8D8D8"/>
-								<box>
-									<bottomPen lineWidth="0.5"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Sachbearb.]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell height="20" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="9f52ffe6-081c-4852-9e7e-e91216d321ed" x="0" y="0" width="90" height="20"/>
-								<box>
-									<bottomPen lineWidth="0.5" lineColor="#B9B9B9"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{sachbearbeiter}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="302" uuid="7a7d11b4-b772-4dfd-a86b-55e6fdfadc02">
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement uuid="d10fb55d-c01e-4913-bc27-1aafde6a3a7d" style="table_CH" mode="Opaque" x="0" y="0" width="302" height="30" backcolor="#D8D8D8"/>
-								<box>
-									<bottomPen lineWidth="0.5"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Sachverhalt]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell height="20" rowSpan="1">
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="bb069730-6585-4b5c-87e3-67b7caca72ce" x="0" y="0" width="302" height="20"/>
-								<box>
-									<bottomPen lineWidth="0.5" lineColor="#B9B9B9"/>
-								</box>
-								<textElement verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{sachverhalt}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-				</jr:table>
-			</componentElement>
+		<band height="22">
+			<staticText>
+				<reportElement uuid="151144d4-8ea7-42e4-99f0-ce1a57018373" mode="Opaque" x="0" y="0" width="56" height="22" backcolor="#D8D8D8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Datum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="49ff9a42-2e0a-4737-9087-d0405b0f3af1" mode="Opaque" x="56" y="0" width="100" height="22" backcolor="#D8D8D8"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Sachbearbeiter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="97e66faf-74ad-47cf-8ad0-a3ad3b6b027a" mode="Opaque" x="156" y="0" width="326" height="22" backcolor="#D8D8D8"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Sachverhalt]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9daffab1-1ed4-4d50-b4f3-549d0ea24200" x="0" y="21" width="482" height="1"/>
+			</line>
 		</band>
 	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="7980267d-0be2-4845-a2fb-f23da14cf39d" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="482" height="18" forecolor="#D8D8D8" backcolor="#D8D8D8"/>
+			</rectangle>
+			<textField pattern="dd.MM.yyyy" isBlankWhenNull="true">
+				<reportElement uuid="a565480c-975a-41a7-82d1-2305d950f3e9" x="0" y="1" width="56" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{basis_objektchrono_datum}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fdaea220-9984-44ec-b882-9567cd8de8f9" x="56" y="1" width="100" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{basis_objektchrono_sachbearbeiter}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="d716eaa0-1d73-4ccd-b4c1-329f26e3ef38" x="156" y="1" width="326" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{basis_objektchrono_sachverhalt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
 	<pageFooter>
 		<band height="24">
 			<staticText>

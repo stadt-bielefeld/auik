@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sielhaut_bearbeiten" language="groovy" pageWidth="595" pageHeight="842" columnWidth="514" leftMargin="39" rightMargin="42" topMargin="14" bottomMargin="42" uuid="74726fd8-4acb-49de-bf6b-602a7e2af24e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="273"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#B9B9B9"/>
@@ -68,7 +68,7 @@
 	<title>
 		<band height="126" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="3af8e5cc-fdb2-466e-b18f-6b01645dfcd7" x="125" y="44" width="264" height="20"/>
+				<reportElement uuid="3af8e5cc-fdb2-466e-b18f-6b01645dfcd7" x="125" y="38" width="264" height="25"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
@@ -83,7 +83,7 @@
 				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/resources/reports/images/iso_cert_grau.jpg"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="31837331-6569-4cc5-9ae7-8486fda06d9d" x="95" y="75" width="325" height="20"/>
+				<reportElement uuid="31837331-6569-4cc5-9ae7-8486fda06d9d" x="95" y="70" width="325" height="56"/>
 				<textElement textAlignment="Center">
 					<font size="16"/>
 				</textElement>
@@ -147,7 +147,7 @@
 					<font size="10"/>
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<text><![CDATA[Rechtswert]]></text>
+				<text><![CDATA[E32 (Rechtswert)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="ade1048f-342e-4ddd-b7c3-614431318c37" mode="Opaque" x="3" y="149" width="120" height="20" backcolor="#D8D8D8"/>
@@ -162,7 +162,7 @@
 					<font size="10"/>
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<text><![CDATA[Hochwert]]></text>
+				<text><![CDATA[N32 (Hochwert)]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="eecc713e-d2aa-42d3-8707-f313dbd1c2e6" x="123" y="49" width="90" height="20"/>
@@ -205,7 +205,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{entgeb}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0">
 				<reportElement uuid="bb7ea65b-bf76-41fc-8cd7-d2a91ff6e4a4" x="123" y="129" width="90" height="20"/>
 				<box>
 					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -215,7 +215,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e32}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0" isBlankWhenNull="false">
 				<reportElement uuid="761ae489-3a1c-46bd-aff4-cd46bb918092" mode="Opaque" x="123" y="149" width="90" height="20" backcolor="#D8D8D8"/>
 				<box>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
