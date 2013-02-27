@@ -80,6 +80,7 @@ public class DatabaseConstants {
     public static final String ATL_PARAMETER_ID_THALLIUM = "B00384";
     public static final String ATL_PARAMETER_ID_TROCKENSUBSTANZ = "B00107";
     public static final String ATL_PARAMETER_ID_ZINK = "L11640";
+    public static final String ATL_PARAMETER_ID_PFT = "P00002";
 
     public static final String ATL_PARAMETER_ID_TOC = "L15230";
     public static final String ATL_PARAMETER_ID_ABWASSERMENGE = "P00013";

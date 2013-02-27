@@ -48,6 +48,9 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -55,10 +58,12 @@ import javax.swing.JPanel;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.ReportManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SuevModel;
+import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -141,8 +146,19 @@ public class EinleiterSuevkanAuswertung extends AbstractQueryModul {
     }
 
     public void showReportListe() {
-        ReportManager.getInstance().startReportWorker("Suev-Kan", printButton);
+        try {
+            File pdfFile = File.createTempFile("suevkan_objekte", ".pdf");
+            pdfFile.deleteOnExit();
+            PDFExporter.getInstance().exportReport(null,
+                    PDFExporter.SUEV_LISTE, pdfFile.getAbsolutePath());
+        } catch (Exception ex) {
+            GUIManager.getInstance().showErrorMessage(
+                    "PDF generieren fehlgeschlagen."
+                    + "\n" + ex.getLocalizedMessage(),
+                    "PDF generieren fehlgeschlagen");
+        }
     }
+    
 
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
