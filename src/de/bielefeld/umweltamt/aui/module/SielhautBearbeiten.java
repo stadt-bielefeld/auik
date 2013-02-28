@@ -135,7 +135,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import org.eclipse.birt.report.engine.api.EngineException;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Minute;
@@ -499,7 +498,7 @@ public class SielhautBearbeiten extends AbstractModul {
         }
     }
 
-    public void showReport() throws EngineException {
+    public void showReport() {
         if (spunkt.getObjektid() != null) {
             SettingsManager sm = SettingsManager.getInstance();
             String fotoPath = sm.getSetting("auik.system.spath_fotos");
@@ -897,9 +896,8 @@ public class SielhautBearbeiten extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     try {
                         showReport();
-                    } catch (EngineException e1) {
+                    } catch (Exception e1) {
                         // TODO Auto-generated catch block
-                        e1.printStackTrace();
                     }
                 }
             });
