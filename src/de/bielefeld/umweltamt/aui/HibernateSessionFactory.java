@@ -99,6 +99,7 @@ public class HibernateSessionFactory {
                     // Then overwrite the user / password property
                     cfg.setProperty("hibernate.connection.username", DB_USER);
                     cfg.setProperty("hibernate.connection.password", DB_PASS);
+                    cfg.setProperty("hibernate.connection.url", DB_URL);
                     sessionFactory = cfg.buildSessionFactory();
                 }
                 catch (Exception e) {
