@@ -167,9 +167,9 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     /**
      * Dieser Wert stellt den Preis einer Stunde f&uuml;r Personal- und
-     * Sachkosten dar.
+     * Sachkosten in Cent dar.
      **/
-    public static final double PERSONAL_UND_SACHKOSTEN = 50.91;
+    public static final double PERSONAL_UND_SACHKOSTEN = 5091;
 
     /**
      * Dieser Wert gibt an, wieviele Stellen das Feld in der Datei kasse.txt
@@ -1569,7 +1569,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("maxdatum", DateUtils.format(DateUtils.getDateOfBill(now),
             DateUtils.FORMAT_DATE));
         params.put("kosten",
-            Double.toString(PERSONAL_UND_SACHKOSTEN).replace(".", ","));
+            Double.toString(PERSONAL_UND_SACHKOSTEN/100).replace(".", ","));
         params.put("kassenzeichen", betr.getKassenzeichen());
         params.put("firmaAnrede", betr.getBetranrede());
         if (betr.getBetrvorname() != null)
@@ -1652,8 +1652,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public double getSachUndPersonalkosten() throws ParseException {
     	double kosten = PERSONAL_UND_SACHKOSTEN * getDauer() * getAnzahl();
-    	double toround = (kosten*1000)/10;
-    	double round = Math.round(toround);
+    	double round = Math.round(kosten);
     	return round/100;
     }
 
