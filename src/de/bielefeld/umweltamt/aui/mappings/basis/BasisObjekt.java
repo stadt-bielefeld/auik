@@ -72,6 +72,7 @@ public class BasisObjekt  implements java.io.Serializable {
     private Date aenderungsdatum;
     private Date gueltigBis;
     private boolean inaktiv;
+    private boolean abwasserfrei;
     private String prioritaet;
     private boolean enabled;
     private boolean deleted;
@@ -110,7 +111,7 @@ public class BasisObjekt  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisObjekt(
-        BasisBetreiber basisBetreiber, BasisStandort basisStandort, BasisSachbearbeiter basisSachbearbeiter, BasisObjektarten basisObjektarten, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, IndeinlGenehmigung indeinlGenehmigung, Anh53Fachdaten anh53Fachdaten, AnhSuevFachdaten anhSuevFachdaten, AnhBwkFachdaten anhBwkFachdaten, AtlProbepkt atlProbepkt, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt, Set<VawsFachdaten> vawsFachdatens, Anh55Fachdaten anh55Fachdaten, Anh52Fachdaten anh52Fachdaten, Anh56Fachdaten anh56Fachdaten, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit, Anh40Fachdaten anh40Fachdaten, Set<BasisObjektchrono> basisObjektchronos, Set<AtlSielhaut> atlSielhauts, Anh49Fachdaten anh49Fachdaten, Anh50Fachdaten anh50Fachdaten) {
+        BasisBetreiber basisBetreiber, BasisStandort basisStandort, BasisSachbearbeiter basisSachbearbeiter, BasisObjektarten basisObjektarten, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, boolean abwasserfrei, String prioritaet, boolean enabled, boolean deleted, IndeinlGenehmigung indeinlGenehmigung, Anh53Fachdaten anh53Fachdaten, AnhSuevFachdaten anhSuevFachdaten, AnhBwkFachdaten anhBwkFachdaten, AtlProbepkt atlProbepkt, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt, Set<VawsFachdaten> vawsFachdatens, Anh55Fachdaten anh55Fachdaten, Anh52Fachdaten anh52Fachdaten, Anh56Fachdaten anh56Fachdaten, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit, Anh40Fachdaten anh40Fachdaten, Set<BasisObjektchrono> basisObjektchronos, Set<AtlSielhaut> atlSielhauts, Anh49Fachdaten anh49Fachdaten, Anh50Fachdaten anh50Fachdaten) {
         this.basisBetreiber = basisBetreiber;
         this.basisStandort = basisStandort;
         this.basisSachbearbeiter = basisSachbearbeiter;
@@ -123,6 +124,7 @@ public class BasisObjekt  implements java.io.Serializable {
         this.aenderungsdatum = aenderungsdatum;
         this.gueltigBis = gueltigBis;
         this.inaktiv = inaktiv;
+        this.abwasserfrei = abwasserfrei;
         this.prioritaet = prioritaet;
         this.enabled = enabled;
         this.deleted = deleted;
@@ -247,6 +249,14 @@ public class BasisObjekt  implements java.io.Serializable {
 
     public void setInaktiv(boolean inaktiv) {
         this.inaktiv = inaktiv;
+    }
+
+    public boolean isAbwasserfrei() {
+        return this.abwasserfrei;
+    }
+
+    public void setAbwasserfrei(boolean abwasserfrei) {
+        this.abwasserfrei = abwasserfrei;
     }
 
     public String getPrioritaet() {
@@ -433,6 +443,7 @@ public class BasisObjekt  implements java.io.Serializable {
         buffer.append("aenderungsdatum").append("='").append(getAenderungsdatum()).append("' ");
         buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
         buffer.append("inaktiv").append("='").append(isInaktiv()).append("' ");
+        buffer.append("abwasserfrei").append("='").append(isAbwasserfrei()).append("' ");
         buffer.append("prioritaet").append("='").append(getPrioritaet()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");
@@ -529,6 +540,7 @@ public class BasisObjekt  implements java.io.Serializable {
         this.aenderungsdatum = copy.getAenderungsdatum();
         this.gueltigBis = copy.getGueltigBis();
         this.inaktiv = copy.isInaktiv();
+        this.abwasserfrei = copy.isAbwasserfrei();
         this.prioritaet = copy.getPrioritaet();
         this.enabled = copy.isEnabled();
         this.deleted = copy.isDeleted();

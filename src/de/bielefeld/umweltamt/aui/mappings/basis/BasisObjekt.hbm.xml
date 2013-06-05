@@ -45,6 +45,9 @@
         <property name="inaktiv" type="boolean">
             <column name="inaktiv" not-null="true" />
         </property>
+        <property name="abwasserfrei" type="boolean">
+            <column name="abwasserfrei" not-null="true" />
+        </property>
         <property name="prioritaet" type="java.lang.String">
             <column name="prioritaet" length="0" />
         </property>
