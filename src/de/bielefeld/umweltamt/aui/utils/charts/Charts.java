@@ -52,6 +52,7 @@
 package de.bielefeld.umweltamt.aui.utils.charts;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -187,7 +188,7 @@ public class Charts {
         datumsAchse.setVerticalTickLabels(true);
         //datumsAchse.setTickLabelsVisible(false);
         //datumsAchse.setTickMarksVisible(false);
-        //datumsAchse.setDateFormatOverride(new SimpleDateFormat("MM/yy"));
+        datumsAchse.setDateFormatOverride(new SimpleDateFormat("dd.MM.yy"));
         return chart;
     }
 
