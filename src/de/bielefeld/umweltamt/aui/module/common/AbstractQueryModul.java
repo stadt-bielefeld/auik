@@ -149,16 +149,20 @@ public abstract class AbstractQueryModul extends AbstractModul {
      * @return Das zugehörige BasisObjekt (oder <code>null</code>, falls keins existiert).
      */
     protected BasisObjekt getBasisObjektFromFachdaten(Object fachdaten) {
-        BasisObjekt tmp;
+        BasisObjekt tmp = null;
 
         // Die "getBasisObjekt" Methode des jeweiligen
         // Fachdaten-Objekts wird jetzt, unabhängig von
         // seiner Klasse, mit Hilfe der Reflection-Methoden
         // nach ihrem Namen gesucht. Sollte keine Methode
         // diesen Namens existieren, wird null zurück geliefert.
-        try {
-            Method getBO = fachdaten.getClass().getMethod("getBasisObjekt");
-            tmp = (BasisObjekt) getBO.invoke(fachdaten);
+		try {
+			if (fachdaten instanceof BasisObjekt) {
+				tmp = (BasisObjekt) fachdaten;
+			} else {
+				Method getBO = fachdaten.getClass().getMethod("getBasisObjekt");
+				tmp = (BasisObjekt) getBO.invoke(fachdaten);
+			}
         } catch (Exception e) {
             //e.printStackTrace();
             tmp = null;

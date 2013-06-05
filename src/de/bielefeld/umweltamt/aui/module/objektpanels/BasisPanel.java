@@ -78,6 +78,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -399,7 +400,10 @@ public class BasisPanel extends JPanel {
     private JComboBox artBox;
     private JComboBox sachbearbeiterBox;
     private JCheckBox inaktivBox;
+    private JCheckBox abwasserfreiBox;
     private JFormattedTextField prioritaetFeld;
+    private JLabel prioritaetLabel;
+    private JLabel abwasserfreiLabel;
     private JTextArea beschreibungsArea;
     private JButton saveButton;
 
@@ -455,9 +459,12 @@ public class BasisPanel extends JPanel {
         builder.append("Inaktiv:", getInaktivBox());
         builder.nextLine();
 
-        builder.append("Priorität:", getPrioritaetFeld());
-        builder.nextLine();
+        builder.append(getAbwasserfreiLabel(), getAbwasserfreiBox());	
+		builder.nextLine();
 
+		builder.append(getPrioritaetLabel(), getPrioritaetFeld());		
+		builder.nextLine();
+   
         builder.appendSeparator("Beschreibung");
         builder.appendRow("3dlu");
         builder.nextLine(2);
@@ -628,6 +635,9 @@ public class BasisPanel extends JPanel {
 
             getInaktivBox().setSelected(
                 this.hauptModul.getObjekt().isInaktiv());
+            
+            getAbwasserfreiBox().setSelected(
+                    this.hauptModul.getObjekt().isAbwasserfrei());
 
             if (!neu) {
                 if (this.hauptModul.getObjekt().getPrioritaet() != null) {
@@ -635,6 +645,21 @@ public class BasisPanel extends JPanel {
                         this.hauptModul.getObjekt().getPrioritaet().toString());
                 }
             }
+            
+			if (!neu) {
+				if (this.hauptModul.getObjekt().getBasisObjektarten()
+						.getAbteilung().equals("360.33")) {
+					getPrioritaetFeld().setVisible(true);
+					getPrioritaetLabel().setVisible(true);
+					getAbwasserfreiBox().setVisible(true);
+					getAbwasserfreiLabel().setVisible(true);
+				} else {
+					getPrioritaetFeld().setVisible(false);
+					getPrioritaetLabel().setVisible(false);
+					getAbwasserfreiBox().setVisible(false);
+					getAbwasserfreiLabel().setVisible(false);
+				}
+			}
 
             if (this.hauptModul.getObjekt().getBeschreibung() != null) {
                 getBeschreibungsArea().setText(
@@ -697,6 +722,7 @@ public class BasisPanel extends JPanel {
         this.hauptModul.getObjekt().setBasisSachbearbeiter(
             (BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
         this.hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
+        this.hauptModul.getObjekt().setAbwasserfrei(getAbwasserfreiBox().isSelected());
 
 //        BasisObjekt tmp = BasisObjekt.saveBasisObjekt(
 //            this.hauptModul.getObjekt(), prio);
@@ -1022,11 +1048,35 @@ public class BasisPanel extends JPanel {
         return this.inaktivBox;
     }
 
+    private JCheckBox getAbwasserfreiBox() {
+        if (this.abwasserfreiBox == null) {
+            this.abwasserfreiBox = new JCheckBox();
+        }
+        return this.abwasserfreiBox;
+    }
+
     private JFormattedTextField getPrioritaetFeld() {
         if (this.prioritaetFeld == null) {
             this.prioritaetFeld = new JFormattedTextField();
+            this.prioritaetFeld.setVisible(false);
         }
         return this.prioritaetFeld;
+    }
+
+    private JLabel getPrioritaetLabel() {
+        if (this.prioritaetLabel == null) {
+            this.prioritaetLabel = new JLabel("Priorität:");
+            this.prioritaetLabel.setVisible(false);
+        }
+        return this.prioritaetLabel;
+    }
+
+    private JLabel getAbwasserfreiLabel() {
+        if (this.abwasserfreiLabel == null) {
+            this.abwasserfreiLabel = new JLabel("abwasserfrei:");
+            this.abwasserfreiLabel.setVisible(false);
+        }
+        return this.abwasserfreiLabel;
     }
 
     public JTextArea getBeschreibungsArea() {
