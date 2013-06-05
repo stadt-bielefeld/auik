@@ -76,14 +76,28 @@
  */
 package de.bielefeld.umweltamt.aui;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
+import java.util.TreeMap;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.SortedProperties;
 
 /**
  * Diese Klasse verwaltet alle Programm-Einstellungen.
@@ -98,7 +112,7 @@ public class SettingsManager {
 
     private BasisStandort standort;
     private Properties instanceSettings;
-    private Properties appSettings;
+    private SortedProperties appSettings;
 
     private static SettingsManager _instance;
 
@@ -127,20 +141,36 @@ public class SettingsManager {
     }
 
     /**
+     * Überschreibt die Settings mit den Werten aus dem EinstellungenEditor
+     * @param instance Eine Settingsmanager Instanz.
+     * @return boolean True, wenn das Speichern erfolgreich war.
+     */
+    public static Boolean  setInstance(SettingsManager instance) {
+        try {
+			if (_instance != null) {
+			    _instance.appSettings = instance.appSettings;
+			    _instance.saveSettings();			    
+			}
+		} catch (Exception e) {
+			return false;
+		}
+
+        return true;
+    }
+
+    /**
      * Initialisiert die Standard-Werte der Einstellungen und liest die Werte der Datei
      * auik.properties im aktuellen Verzeichnis ein.
      */
     private void initAppSettings() {
-        Properties defaults = new Properties();
-        defaults.setProperty("auik.prefs.res_x", "700");
-        defaults.setProperty("auik.prefs.res_y", "525");
-        defaults.setProperty("auik.prefs.maximized", "false");
-        defaults.setProperty("auik.prefs.save_size", "true");
+        appSettings = new SortedProperties();
+//    	SortedProperties defaults = new SortedProperties();
+    	appSettings.setProperty("auik.prefs.res_x", "700");
+    	appSettings.setProperty("auik.prefs.res_y", "525");
+    	appSettings.setProperty("auik.prefs.maximized", "false");
+    	appSettings.setProperty("auik.prefs.save_size", "true");
 
-        defaults.setProperty("auik.system.spath_fotos","X:/Applikationen/Anlagenkataster/SielhautBearbeiten/fotos/");
-        defaults.setProperty("auik.system.spath_karten", "X:/Applikationen/Anlagenkataster/SielhautBearbeiten/karten/");
-
-        defaults.setProperty(
+    	appSettings.setProperty(
                 "auik.system.module",
 
                 "BasisStandortSuchen, BasisStandortNeu, " +
@@ -153,18 +183,16 @@ public class SettingsManager {
                 "AnalyseImport, EinleiterBescheidAuswertung"
         );
 
-        defaults.setProperty("auik.prefs.status_time", "40");
-        defaults.setProperty("auik.prefs.sielhaut_labor", "OWL");
+    	appSettings.setProperty("auik.prefs.status_time", "40");
+    	appSettings.setProperty("auik.prefs.sielhaut_labor", "OWL");
+    	appSettings.setProperty("auik.system.spath_fotos","X:/Applikationen/Anlagenkataster/Sielhaut/fotos/");
+    	appSettings.setProperty("auik.system.spath_karten", "X:/Applikationen/Anlagenkataster/Sielhaut/karten/");
+    	appSettings.setProperty("auik.gis.programmpath", "C:\\appz\\qgis\\bin\\qgis.bat.lnk");
+    	appSettings.setProperty("auik.gis.projectpath", "D:\\\\data\\qgis\\MyProject.qgs");
+        appSettings.setProperty("auik.probenahme.auftraege", "D:\\Data\\auik\\auftraege");
+        appSettings.setProperty("auik.probenahme.bescheide", "X:\\Orga\\360\\360-1\\360-1-1\\Alle\\Texte\\Indirekteinleiter");
 
-        defaults.setProperty("auik.birt.enginepath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\birt-runtime-2_3_2\\ReportEngine\\");
-        defaults.setProperty("auik.birt.reportpath", "X:\\Applikationen\\Anlagenkataster\\auik\\birt\\designs\\");
-
-        defaults.setProperty("auik.gis.programmpath", "C:\\appz\\qgis\\bin\\qgis.bat.lnk");
-        defaults.setProperty("auik.gis.projectpath", "D:\\\\data\\qgis\\MyProject.qgs");
-        defaults.setProperty("auik.probenahme.auftraege", "D:\\Data\\auik\\auftraege");
-        defaults.setProperty("auik.probenahme.bescheide", "X:\\Orga\\360\\360-1\\360-1-1\\Alle\\Texte\\Indirekteinleiter");
-
-        appSettings = new Properties(defaults);
+//        appSettings = new SortedProperties();
 
         try {
             appSettings.load(new FileInputStream("auik.properties"));
@@ -179,6 +207,7 @@ public class SettingsManager {
             log.debug("Fehler beim laden der Benutzer-Einstellungen");
             e.printStackTrace();
         }
+        getSettingList();
     }
 
     /**
@@ -186,6 +215,7 @@ public class SettingsManager {
      */
     public void saveSettings() {
         try {
+        	
             appSettings.store(new FileOutputStream("auik.properties"), "Allgemeine Einstellungen für " + GUIManager.SHORT_NAME + " v" + guiManager.getVersion());
         } catch (IOException e) {
             // Tritt auf, wenn aus irgend einem Grund keine
@@ -238,6 +268,31 @@ public class SettingsManager {
     public void setStandort(BasisStandort std) {
         this.standort = std;
     }
+
+    /**
+     * Liefert alle Einstellungen.
+     * @return Liste aller Einstellungen.
+     */
+    public String[][] getSettingList() {
+
+        String[][] result;
+        Enumeration<String> keys = appSettings.keys();
+        ArrayList<String> temp = new ArrayList<String>();
+
+        for (Enumeration<String> e = keys; keys.hasMoreElements();) {
+        	String key = e.nextElement();
+        	temp.add(key);
+        }
+        result = new String[temp.size()][2];
+
+        for (int i = 0; i < temp.size(); i++) {
+        	result[i][0] = temp.get(i);
+        	result[i][1] = appSettings.getProperty(temp.get(i));
+        }
+
+        return result;
+    }
+    
 
     /**
      * Liefert den aktuellen Wert einer Einstellung.

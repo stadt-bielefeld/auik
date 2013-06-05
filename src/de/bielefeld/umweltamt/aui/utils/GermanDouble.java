@@ -63,6 +63,7 @@ public class GermanDouble {
         if (format == null) {
             format = NumberFormat.getNumberInstance(Locale.GERMAN);
             format.setGroupingUsed(true);
+            format.setMinimumFractionDigits(2);
         }
 
         return format.format(value);

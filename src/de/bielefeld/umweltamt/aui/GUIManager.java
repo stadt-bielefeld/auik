@@ -197,7 +197,7 @@ public final class GUIManager {
             return GUIManager.VERSION;
         }
 
-        String version = "there be dragons";
+        String version = "0.3";
 
         // Get an url to an arbitrary class
         String urlToClass = this
@@ -299,4 +299,9 @@ public final class GUIManager {
 
         return sb.toString();
     }
+
+	public final HauptFrame getRunningFrame() {
+		// TODO Auto-generated method stub
+		return this.runningFrame;
+	}
 }

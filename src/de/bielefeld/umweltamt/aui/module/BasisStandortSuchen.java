@@ -1080,7 +1080,7 @@ public class BasisStandortSuchen extends AbstractModul {
                     BasisStandort bsta = BasisStandortSuchen.this.standortModel
                         .getRow(row);
 
-                    ProcessBuilder pb = new ProcessBuilder("cmd", "/K", prog,
+                    ProcessBuilder pb = new ProcessBuilder("cmd", "/C", prog,
                         proj);
 
                     Map<String, String> env = pb.environment();

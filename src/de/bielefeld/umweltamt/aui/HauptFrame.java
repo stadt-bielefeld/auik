@@ -123,6 +123,7 @@ import com.jgoodies.plaf.Options;
 import com.jgoodies.uif_lite.component.Factory;
 import com.jgoodies.uif_lite.panel.SimpleInternalFrame;
 
+import de.bielefeld.umweltamt.aui.module.common.editors.EinstellungenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.GradientPanel;
@@ -594,8 +595,15 @@ public class HauptFrame extends JFrame {
             settingsMenuItem = new JMenuItem();
             settingsMenuItem.setText("Einstellungen");
             settingsMenuItem.setMnemonic(KeyEvent.VK_E);
-            settingsMenuItem.setEnabled(false);
-            // TODO: Einstellungs-Dialog
+            settingsMenuItem.setEnabled(true);
+            settingsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                	EinstellungenEditor editor = new EinstellungenEditor(settings.getSettingList(), GUIManager.getInstance().getRunningFrame());
+                	editor.setVisible(true);
+                	editor.setEnabled(true);
+                }
+            });
         }
         return settingsMenuItem;
     }
