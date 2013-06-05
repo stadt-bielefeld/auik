@@ -61,6 +61,7 @@ public class Anh40Model extends ListTableModel {
         super(new String[]{
                 "Betreiber",
                 "Standort",
+                "Sachbearbeiter",
                 "Bemerkungen"
         },
         false);
@@ -82,6 +83,12 @@ public class Anh40Model extends ListTableModel {
             tmp = fd.getBasisObjekt().getBasisStandort();
             break;
         case 2:
+			tmp = "";
+			if (fd.getBasisObjekt().getBasisSachbearbeiter() != null) {
+				tmp = fd.getBasisObjekt().getBasisSachbearbeiter().getName();
+			}
+			break;
+        case 3:
 			tmp = "";
 			if (fd.getBemerkungen() != null) {
 				tmp = fd.getBemerkungen();
