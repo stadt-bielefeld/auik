@@ -28,9 +28,12 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.SettingsManager;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
@@ -197,6 +200,27 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
     }
 
     /**
+     * Liefert eine Liste von Objekten einer Objektart
+     * sind.
+     * @param artid Die Objektart, die (nicht) dargestellt werden soll.
+     * @return Eine Liste von BasisObjekten an diesem Standort.
+     */
+    public static List<BasisObjekt> getObjekteByArt(
+            Integer artid) {
+        DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(BasisObjekt.class)
+            .createAlias("basisBetreiber", "betreiber")
+            .createAlias("basisObjektarten", "art")
+            .add(Restrictions.eq("art.id", artid))
+            .addOrder(Order.asc("inaktiv"))
+            .addOrder(Order.asc("betreiber.betrname"))
+            .addOrder(Order.asc("art.objektart"));
+
+        return new DatabaseAccess().executeCriteriaToList(
+            detachedCriteria, new BasisObjekt());
+    }
+
+    /**
      * Cascade a priority to all objects from the same BasisBetreiber and
      * BasisStandort
      * @param prioritaet String
@@ -263,6 +287,30 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
         }
         return DatabaseBasisQuery.objektarten;
     }
+    /**
+     * Get all BasisObjektarten and sort them by their name and kind
+     * @return <code>BasisObjektarten[]</code>
+     */
+    public static List <BasisObjektarten> getObjektartenlist() {
+	    List<BasisObjektarten> objektartenlist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(BasisObjektarten.class)
+	                .addOrder(Order.asc("abteilung"))
+	                .addOrder(Order.asc("objektart")),
+	            new BasisObjektarten());
+        return objektartenlist;
+    }
+
+	/**
+	 * Get next id for new BasisObjektarten
+	 * @return <code>BasisObjektartenID</code>
+	 */
+	public static Integer newObjektartenID() {
+	    Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+	    		DetachedCriteria.forClass(BasisObjektarten.class)
+	    			.setProjection(Property.forName("id").max()),
+	    		new Integer(0));
+		return id+1;
+		}
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisObjektchrono                    */
@@ -435,9 +483,21 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
         }
         return DatabaseBasisQuery.strassen;
     }
+	/**
+	 * Get all BasisStrassen and sort them by their name
+	 * @return <code>Eine Liste aller Stassen</code>
+	 */
+	public static List<BasisStrassen> getStrassenlist() {
+	    List<BasisStrassen> strassenlist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(BasisStrassen.class)
+	                .addOrder(Order.asc("strasse")),
+	            new BasisStrassen());
+		return strassenlist;
+	
+	}
 
-    /**
-     * Get the first matching BasisStrasse for the serach String
+	/**
+     * Get the first matching BasisStrasse for the search String
      * @param search String
      * @return <code>BasisStrassen</code>
      */
@@ -450,4 +510,66 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
         // If we got something, just return the first result
         return (list.isEmpty() ? null : list.get(0));
     }
+	/**
+	 * Get next id for new BasisStrassen
+	 * @return <code>BasisStrassenID</code>
+	 */
+	public static Integer newStrassenID() {
+	    Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+	    		DetachedCriteria.forClass(BasisStrassen.class)
+	    			.setProjection(Property.forName("id").max()),
+	    		new Integer(0));
+		return id+1;
+		}
+
+    /* ********************************************************************** */
+    /* Queries for package ATL                                              */
+    /* ********************************************************************** */
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlEinheiten                       */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+	/**
+	 * Get next id for new AtlEinheiten
+	 * @return <code>AtlEinheitenID</code>
+	 */
+	public static Integer newEinheitenID() {
+	    Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+	    		DetachedCriteria.forClass(AtlEinheiten.class)
+	    			.setProjection(Property.forName("id").max()),
+	    		new Integer(0));
+		return id+1;
+		}
+
+	/**
+	 * Get all AtlEinheiten and sort them by their name
+	 * @return <code>Eine Liste aller Einheiten</code>
+	 */
+	public static List<AtlEinheiten> getEinheitenlist() {
+	    List<AtlEinheiten> strassenlist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(AtlEinheiten.class)
+	                .addOrder(Order.asc("bezeichnung")),
+	            new AtlEinheiten());
+		return strassenlist;
+	
+	}
+	
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlParameter                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+
+	/**
+	 * Get all AtlParameter and sort them by their name
+	 * @return <code>Eine Liste aller Parameter</code>
+	 */
+	public static List<AtlParameter> getParameterlist() {
+	    List<AtlParameter> parameterlist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(AtlParameter.class)
+	                .addOrder(Order.asc("bezeichnung")),
+	            new AtlParameter());
+		return parameterlist;
+	}
+	
 }

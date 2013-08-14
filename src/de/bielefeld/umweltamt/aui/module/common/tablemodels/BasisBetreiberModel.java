@@ -78,7 +78,12 @@ public class BasisBetreiberModel extends ListTableModel {
         BasisBetreiber betr = (BasisBetreiber) objectAtRow;
         switch(columnIndex) {
             case 0:
-                value = betr.getBetrname();
+            	if (betr.getKassenzeichen() != null) {
+            		String tmp = betr.getBetrname() + " (" + betr.getKassenzeichen() + ")";
+            		value = tmp;
+            	} else {
+            		value = betr.getBetrname();
+            	}
                 break;
             case 1:
                 value = betr.getBetranrede();

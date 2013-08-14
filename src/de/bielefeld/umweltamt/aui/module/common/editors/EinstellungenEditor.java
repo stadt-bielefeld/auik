@@ -197,6 +197,31 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 		TabAction ta = new TabAction();
 		ta.addComp(this.einstellungenTabelle);
 		
+
+        Action einstRemoveAction = new AbstractAction("Einstellung löschen") {
+            private static final long serialVersionUID = -5755536713201543469L;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = EinstellungenEditor.this.einstellungenTabelle.getSelectedRow();
+                if (row != -1
+                    && EinstellungenEditor.this.einstellungenTabelle.getEditingRow() == -1) {
+                	EinstellungenEditor.this.einstModel.removeRow(row);
+                }
+            }
+		};
+
+		KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
+				0, false);
+
+		einstRemoveAction.putValue(Action.ACCELERATOR_KEY, deleteKeyStroke);
+
+		this.einstellungenTabelle.getInputMap().put(deleteKeyStroke,
+				einstRemoveAction.getValue(Action.NAME));
+
+		this.einstellungenTabelle.getActionMap().put(
+				einstRemoveAction.getValue(Action.NAME), einstRemoveAction);
+
 		titel = new JLabel("<html><body>An dieser Stelle können die Einstellungen des AUIK verändert werden.<br>"
 				+"Einige Einstellungen werden erst nach einem Neustart des AUIK wirksam (172.20.70.24)</body></html>");
 
