@@ -33,6 +33,7 @@ import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
@@ -43,6 +44,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -134,6 +136,23 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
         }
         return DatabaseBasisQuery.gemarkungen;
     }
+	
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisGemarkung                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+
+	/**
+	 * Get all BasisGemarkungen and sort them by their name
+	 * @return <code>Eine Liste aller Gemarkungen</code>
+	 */
+	public static List<BasisGemarkung> getGemarkungenlist() {
+	    List<BasisGemarkung> gemarkungenlist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(BasisGemarkung.class)
+	                .addOrder(Order.asc("gemarkung")),
+	            new BasisGemarkung());
+		return gemarkungenlist;
+	}
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisObjekt                          */
@@ -399,6 +418,24 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
         return BasisSachbearbeiter.findById(
             SettingsManager.getInstance().getSetting("auik.prefs.lastuser"));
     }
+	
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package BASIS : class BasisSachbearbeiter                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+
+	/**
+	 * Get all BasisSachbearbeiter and sort them by their name
+	 * @return <code>Eine Liste aller Parameter</code>
+	 */
+	public static List<BasisSachbearbeiter> getSachbearbeiterlist() {
+	    List<BasisSachbearbeiter> sachbearbeiterlist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(BasisSachbearbeiter.class)
+	                .addOrder(Order.asc("name")),
+	            new BasisSachbearbeiter());
+		return sachbearbeiterlist;
+	}
+	
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package BASIS : class BasisStandort                        */
@@ -570,6 +607,44 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	                .addOrder(Order.asc("bezeichnung")),
 	            new AtlParameter());
 		return parameterlist;
+	}
+	
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package ATL : class AtlKlaeranlage                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+
+	/**
+	 * Get all AtlKlaeranlagen and sort them by their name
+	 * @return <code>Eine Liste aller Parameter</code>
+	 */
+	public static List<AtlKlaeranlagen> getKlaeranlagenlist() {
+	    List<AtlKlaeranlagen> klaeranlagenlist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(AtlKlaeranlagen.class)
+	                .addOrder(Order.asc("anlage")),
+	            new AtlKlaeranlagen());
+		return klaeranlagenlist;
+	}
+
+    /* ********************************************************************** */
+    /* Queries for package VAWS                                              */
+    /* ********************************************************************** */
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package VAWS : class VawsWasserschutzgebiete                       */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+	/**
+	 * Get all VawsWasserschutzgebiete and sort them by their name
+	 * @return <code>Eine Liste aller Wasserschutzgebiete</code>
+	 */
+	public static List<VawsWassereinzugsgebiete> getWasserschutzgebietelist() {
+	    List<VawsWassereinzugsgebiete> wsglist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(VawsWassereinzugsgebiete.class)
+	                .addOrder(Order.asc("ezgbname")),
+	            new VawsWassereinzugsgebiete());
+		return wsglist;
+	
 	}
 	
 }

@@ -141,8 +141,10 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             dekraTuevBox = new JComboBox();
             dekraTuevBox.setModel(new DefaultComboBoxModel(
                 DatabaseQuery.getOldDekraTuevYears()));
-            dekraTuevBox.setSelectedIndex(
-                dekraTuevBox.getModel().getSize() - 6);
+			if (dekraTuevBox.getModel().getSize() != 0) {
+				dekraTuevBox
+						.setSelectedIndex(dekraTuevBox.getModel().getSize() - 6);
+			}
 
             auswahlButton = new JButton("Auswahl anwenden");
 
