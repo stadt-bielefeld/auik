@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56" uuid="3e42c968-6230-4d71-b690-a3ead7f68061">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="25" uuid="3e42c968-6230-4d71-b690-a3ead7f68061">
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="581"/>
+	<property name="ireport.y" value="1469"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -202,7 +202,7 @@
 				<text><![CDATA[Stadt Bielefeld · 360.11 · D-33597 Bielefeld]]></text>
 			</staticText>
 			<image>
-				<reportElement uuid="b0f945d7-c89e-4d01-a8e7-8e3f21e5f309" x="399" y="176" width="75" height="101"/>
+				<reportElement uuid="b0f945d7-c89e-4d01-a8e7-8e3f21e5f309" x="400" y="175" width="75" height="101"/>
 				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/gui/images/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
 			</image>
 			<frame>
@@ -375,7 +375,7 @@
 				<reportElement uuid="241a1789-01a2-4f08-a590-8c6922b02b50" x="408" y="36" width="60" height="1"/>
 			</line>
 		</band>
-		<band height="40">
+		<band height="126">
 			<textField pattern="">
 				<reportElement uuid="e5a1a32b-8dbb-4aea-8d68-6abd3411771c" stretchType="RelativeToBandHeight" x="0" y="0" width="483" height="34"/>
 				<textElement markup="styled">
@@ -388,8 +388,15 @@
 					<printWhenExpression><![CDATA[$P{SUBDATA}.size() > 8 && $P{SUBDATA}.size() <= 12]]></printWhenExpression>
 				</reportElement>
 			</break>
+			<textField>
+				<reportElement uuid="6797eeeb-472e-40be-a630-5a9c80d78ecd" x="0" y="34" width="483" height="91"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>Den folgenden Absatz bitte beachten, wenn Sie eine Lastschrifteinzugsermächtigung erteilt haben oder erteilen möchten</style>\n<style isUnderline='true'>Einsatz des SEPA Lastschriftverfahrens bei der Stadtkasse Bielefeld ab 01.02.2014 </style>\nParallel zum nationalen Lastschriftverfahren wird schrittweise das SEPA-Basis-Lastschriftverfahren eingeführt. SEPA steht dabei für den neuen einheitlichen Euro-Zahlungsverkehrsraum (englisch: Single Euro Payment Area). Das bisherige Lastschriftverfahren läuft zunächst unverändert weiter und wird bei der Stadt Bielefeld zum 01.02.2014 auf das SEPA-Basis-Lastschriftverfahren umgestellt. <style isUnderline='true'>Wenn Sie bereits eine Lastschrifteinzugsermächtigung erteilt haben, ist von Ihnen nichts weiter zu veranlassen.</style> Alle in diesem Bescheid aufgeführten Beträge werden in diesem Fall zu den angegebenen Fälligkeitsterminen unter Angabe der Mandatsreferenz <style isBold='true'>" + $P{kassenzeichen} + "</style> und ab 01.02.2014 zusätzlich der Gläubiger-Identifikationsnummer der Stadtkasse Bielefeld abgebucht. Sie lautet: DE1920000000017669.\nSollten Sie zukünftig eine Einzugsermächtigung erteilen, gelten die vorherigen Ausführungen entsprechend. Bei Rückfragen wenden Sie sich bitte an die Stadtkasse Bielefeld."]]></textFieldExpression>
+			</textField>
 		</band>
-		<band height="63">
+		<band height="63" splitType="Prevent">
 			<staticText>
 				<reportElement uuid="733e4d33-b06c-47e3-9534-15d2e7cabb80" x="0" y="12" width="483" height="50"/>
 				<textElement textAlignment="Justified" markup="styled">
@@ -404,11 +411,6 @@
 				</textElement>
 				<text><![CDATA[Hinweis:]]></text>
 			</staticText>
-			<break>
-				<reportElement uuid="dc28f885-b984-48d3-bf0d-08af58b94393" x="0" y="62" width="443" height="1">
-					<printWhenExpression><![CDATA[$P{SUBDATA}.size() <= 5]]></printWhenExpression>
-				</reportElement>
-			</break>
 		</band>
 		<band height="115" splitType="Prevent">
 			<staticText>
@@ -460,11 +462,11 @@ Ist der Verwaltungsakt zum Zeitpunkt der Entscheidung schon vollzogen, können S
 ]]></text>
 			</staticText>
 		</band>
-		<band height="160">
+		<band height="150">
 			<staticText>
-				<reportElement uuid="4e421ad7-204f-4e64-91c1-9b383a7e3d6f" x="0" y="12" width="483" height="86"/>
+				<reportElement uuid="4e421ad7-204f-4e64-91c1-9b383a7e3d6f" x="0" y="9" width="483" height="68"/>
 				<textElement textAlignment="Justified">
-					<font fontName="DejaVu Sans" size="8"/>
+					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Personenbezogene Daten, d. h. Einzelangaben über persönliche und sachliche Verhältnisse einer bestimmten oder bestimmbaren natürlichen Person, können gemäß § 12 (1) DSG NW erhoben werden.
 Die Angaben werden aufgrund einer Auskunftspflicht gemäß § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchung in der Stadt Bielefeld in Verbindung mit §§ 19 und 20 der Satzung der Stadt Bielefeld über die Entwässerung der Grundstücke erhoben und dienen dem Zweck der Überwachung der Benutzung der öffentlichen Abwasseranlagen.
@@ -474,19 +476,19 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 			<staticText>
 				<reportElement uuid="30a2f23e-6af1-4f87-b2b0-3e9a083b1af8" x="0" y="0" width="483" height="12"/>
 				<textElement>
-					<font fontName="DejaVu Sans" size="9" isUnderline="true"/>
+					<font fontName="DejaVu Sans" size="7" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Hinweis nach § 12 (2) Datenschutzgesetz NW (DSG NW):]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f322f67e-bb47-425b-af51-b78fae0272d8" x="0" y="147" width="100" height="12"/>
+				<reportElement uuid="f322f67e-bb47-425b-af51-b78fae0272d8" x="0" y="132" width="100" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Gößling]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5a9c6d74-49e9-46be-8c5b-0efea6bc63fa" x="0" y="99" width="100" height="12"/>
+				<reportElement uuid="5a9c6d74-49e9-46be-8c5b-0efea6bc63fa" x="0" y="84" width="100" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -495,7 +497,7 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="45" splitType="Stretch">
+		<band height="77" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 			<staticText>
 				<reportElement uuid="27e3ba89-1973-481a-9538-0eb39b329314" x="346" y="11" width="66" height="9"/>
@@ -512,14 +514,14 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<text><![CDATA[Konten der Stadtkasse Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9683b7a5-5d37-4c20-a905-65edbe53a66f" x="346" y="35" width="97" height="9"/>
+				<reportElement uuid="9683b7a5-5d37-4c20-a905-65edbe53a66f" x="346" y="35" width="127" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[im übrigen nach Vereinbarung]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="27" width="159" height="9"/>
+				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="35" width="172" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
@@ -533,7 +535,7 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<text><![CDATA[08.00 - 12.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bbaa093a-1141-4d2f-9f54-681445c82390" x="0" y="11" width="159" height="9"/>
+				<reportElement uuid="bbaa093a-1141-4d2f-9f54-681445c82390" x="0" y="11" width="172" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
@@ -575,11 +577,11 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<text><![CDATA[D-33602 Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e" x="0" y="19" width="159" height="9"/>
+				<reportElement uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e" x="0" y="19" width="172" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
-				<text><![CDATA[und bei weiteren Bielefelder Geldinstituten]]></text>
+				<text><![CDATA[IBAN: DE09 4805 0161 0000 0000 26]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="7de3fd29-1bd3-4779-895a-f6ef10f3a7f5" x="186" y="3" width="105" height="9"/>
@@ -601,6 +603,41 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Stadt Bielefeld]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e" x="0" y="27" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[BIC: SPBIDE3BXXX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="43" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[IBAN: DE52 2501 0030 0000 0203 07]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="51" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[BIC: PBNKDEFF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="59" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Gläubiger-Identifikationsnummer:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="67" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[DE1920000000017669]]></text>
 			</staticText>
 		</band>
 	</pageFooter>

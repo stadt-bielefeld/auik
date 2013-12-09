@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="56" uuid="64078b94-0af8-4f19-a992-4e90f5a9f28f">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="25" uuid="64078b94-0af8-4f19-a992-4e90f5a9f28f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="614"/>
+	<property name="ireport.y" value="245"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -202,7 +202,7 @@
 				<text><![CDATA[Stadt Bielefeld · 360.11 · D-33597 Bielefeld]]></text>
 			</staticText>
 			<image>
-				<reportElement uuid="0348806a-164a-4c07-8e1c-6ae7321915ed" x="408" y="185" width="75" height="101"/>
+				<reportElement uuid="0348806a-164a-4c07-8e1c-6ae7321915ed" x="400" y="175" width="75" height="101"/>
 				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/gui/images/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
 			</image>
 			<staticText>
@@ -389,7 +389,7 @@
 				<reportElement uuid="fbe620a3-bdf9-4631-8dcd-5443274ba199" x="408" y="36" width="60" height="1"/>
 			</line>
 		</band>
-		<band height="40">
+		<band height="126">
 			<textField pattern="">
 				<reportElement uuid="2fe815a5-d109-4ed3-9ed0-37be633fae11" x="0" y="0" width="483" height="34"/>
 				<textElement markup="styled">
@@ -402,8 +402,15 @@
 					<printWhenExpression><![CDATA[$P{SUBDATA}.size() > 8 && $P{SUBDATA}.size() <= 12]]></printWhenExpression>
 				</reportElement>
 			</break>
+			<textField>
+				<reportElement uuid="6797eeeb-472e-40be-a630-5a9c80d78ecd" x="0" y="34" width="483" height="91"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>Den folgenden Absatz bitte beachten, wenn Sie eine Lastschrifteinzugsermächtigung erteilt haben oder erteilen möchten</style>\n<style isUnderline='true'>Einsatz des SEPA Lastschriftverfahrens bei der Stadtkasse Bielefeld ab 01.02.2014 </style>\nParallel zum nationalen Lastschriftverfahren wird schrittweise das SEPA-Basis-Lastschriftverfahren eingeführt. SEPA steht dabei für den neuen einheitlichen Euro-Zahlungsverkehrsraum (englisch: Single Euro Payment Area). Das bisherige Lastschriftverfahren läuft zunächst unverändert weiter und wird bei der Stadt Bielefeld zum 01.02.2014 auf das SEPA-Basis-Lastschriftverfahren umgestellt. <style isUnderline='true'>Wenn Sie bereits eine Lastschrifteinzugsermächtigung erteilt haben, ist von Ihnen nichts weiter zu veranlassen.</style> Alle in diesem Bescheid aufgeführten Beträge werden in diesem Fall zu den angegebenen Fälligkeitsterminen unter Angabe der Mandatsreferenz <style isBold='true'>" + $P{kassenzeichen} + "</style> und ab 01.02.2014 zusätzlich der Gläubiger-Identifikationsnummer der Stadtkasse Bielefeld abgebucht. Sie lautet: DE1920000000017669.\nSollten Sie zukünftig eine Einzugsermächtigung erteilen, gelten die vorherigen Ausführungen entsprechend. Bei Rückfragen wenden Sie sich bitte an die Stadtkasse Bielefeld."]]></textFieldExpression>
+			</textField>
 		</band>
-		<band height="63">
+		<band height="63" splitType="Prevent">
 			<staticText>
 				<reportElement uuid="b8e6cca1-35ec-4a11-8bc5-f7e0fa7ecd26" x="0" y="12" width="483" height="50"/>
 				<textElement textAlignment="Justified" markup="styled">
@@ -418,11 +425,6 @@
 				</textElement>
 				<text><![CDATA[Hinweis:]]></text>
 			</staticText>
-			<break>
-				<reportElement uuid="268de4d5-a61c-494c-94bb-54cfa660e15c" x="0" y="62" width="443" height="1">
-					<printWhenExpression><![CDATA[$P{SUBDATA}.size() <= 5]]></printWhenExpression>
-				</reportElement>
-			</break>
 		</band>
 		<band height="115" splitType="Prevent">
 			<staticText>
@@ -546,12 +548,12 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<textElement>
 					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
-				<text><![CDATA[1200 _ _ _ _ _ _ _]]></text>
+				<text><![CDATA[1201 _ _ _ _ _ _ _]]></text>
 			</staticText>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="44" splitType="Stretch">
+		<band height="77" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 			<staticText>
 				<reportElement uuid="8c2b3e23-e2ab-49dc-8aec-1b3f46516197" x="346" y="10" width="66" height="9"/>
@@ -575,25 +577,11 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<text><![CDATA[im übrigen nach Vereinbarung]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0dd81901-db92-48c3-aba0-9ad9876afa37" x="0" y="26" width="139" height="9"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="6"/>
-				</textElement>
-				<text><![CDATA[Postbank Hannover Kto.-Nr. 20-307 (BLZ 250 100 30)]]></text>
-			</staticText>
-			<staticText>
 				<reportElement uuid="067e1ced-84e2-43ba-b289-ec8eed952b52" x="407" y="18" width="66" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[08.00 - 12.00 Uhr]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="31945c1e-37f5-4c8a-ac48-d981ca622489" x="0" y="10" width="139" height="9"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="6"/>
-				</textElement>
-				<text><![CDATA[Sparkasse Bielefeld Kto.-Nr. 26 (BLZ 480 501 61)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="e7298d97-25a2-4d33-aa75-ddc8b91cf66f" x="346" y="18" width="66" height="9"/>
@@ -631,13 +619,6 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<text><![CDATA[D-33602 Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2555e0a1-7aec-4f77-81d8-0140bc6ea622" x="0" y="18" width="139" height="9"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="6"/>
-				</textElement>
-				<text><![CDATA[und bei weiteren Bielefelder Geldinstituten]]></text>
-			</staticText>
-			<staticText>
 				<reportElement uuid="56149ca0-5c9d-4a70-8aa6-356b969a5cc9" x="186" y="2" width="105" height="9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
@@ -657,6 +638,62 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Stadt Bielefeld]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bbaa093a-1141-4d2f-9f54-681445c82390" x="0" y="10" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Sparkasse Bielefeld Kto.-Nr. 26 (BLZ 480 501 61)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="58" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Gläubiger-Identifikationsnummer:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="50" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[BIC: PBNKDEFF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="34" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Postbank Hannover Kto.-Nr. 20-307 (BLZ 250 100 30)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e" x="0" y="18" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[IBAN: DE09 4805 0161 0000 0000 26]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="66" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[DE1920000000017669]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="42" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[IBAN: DE52 2501 0030 0000 0203 07]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e" x="0" y="26" width="172" height="9"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[BIC: SPBIDE3BXXX]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
