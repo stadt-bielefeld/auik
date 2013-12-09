@@ -412,7 +412,8 @@ public class ModulManager {
             cl.show(frame.getLeftCardPanel(), title);
             frame.getViewMenuButton().setText(title);
             currentCategory = title;
-
+            frame.resetLeftScroller();
+            
             if (switchToFirstMask) {
                 ModulKategorie mk = getCategory(title);
                 switchModul(mk.getFirstModul().getIdentifier());

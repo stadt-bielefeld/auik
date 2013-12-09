@@ -80,6 +80,7 @@ import java.awt.HeadlessException;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -104,6 +105,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
@@ -804,6 +806,7 @@ public class HauptFrame extends JFrame {
         }
         return leftScroller;
     }
+    
 
     /**
      * @return Returns the leftCardPanel.
@@ -1097,6 +1100,16 @@ public class HauptFrame extends JFrame {
             super.setVisible(true);
             return success;
         }
+    }
+    
+
+    /* setzt das Modulfenster zurück nach oben
+     * panel neu aufbauen und scrollbar nur wenn nötig anzeigen wäre evtl. sinnvoller
+    */
+    
+    public void resetLeftScroller(){
+    	JScrollBar vertSB = leftScroller.getVerticalScrollBar();
+    	vertSB.setValue(vertSB.getMinimum());
     }
 
     // This was never used locally.
