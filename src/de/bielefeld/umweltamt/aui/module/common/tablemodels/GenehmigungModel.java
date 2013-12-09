@@ -42,6 +42,7 @@ public class GenehmigungModel extends ListTableModel {
                 "Anhang",
                 "58er",
                 "59er",
+                "Priorität",
                 "Bemerkungen"
         },
         false);
@@ -81,6 +82,9 @@ public class GenehmigungModel extends ListTableModel {
                 tmp = new Boolean(false);
             break;
         case 6:
+            tmp = fd.getBasisObjekt().getPrioritaet();
+            break;
+        case 7:
             tmp = fd.getBemerkungen();
             break;
 
@@ -104,6 +108,7 @@ public class GenehmigungModel extends ListTableModel {
 			case 4: return Boolean.class;
 			case 5: return Boolean.class;
 			case 6: return String.class;
+			case 7: return String.class;
 			default: return null;
 		}
 	}
