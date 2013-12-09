@@ -147,6 +147,7 @@ public class DatabaseConstants {
     public static final int BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE = 40;
     public static final int BASIS_OBJEKTART_ID_GENEHMIGUNG = 42;
     public static final int BASIS_OBJEKTART_ID_ABSCHEIDER34 = 58;
+    public static final int BASIS_OBJEKTART_ID_ABSCHEIDER_ES = 60;
     public static final String BASIS_OBJEKTART_ABTEILUNG_33 = "360.33";
     public static final String BASIS_OBJEKTART_ABTEILUNG_34 = "360.34";
 

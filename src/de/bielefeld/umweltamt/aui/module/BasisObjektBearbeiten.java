@@ -464,6 +464,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER_ES:
                             getChronoTab().fetchFormData();
                             getAnhang49Tab().fetchFormData();
                             getAnh49DetailTab().setFachdaten(
