@@ -39,7 +39,8 @@ public class EditorParameterModel extends EditableListTableModel {
         super(new String[]{
                 "ID",
                 "Parameter",
-                "Grenzwert"
+                "Abwasser-Grenzwert",
+                "Sielhaut-Grenzwert"
         },
         false);
     }
@@ -60,8 +61,9 @@ public class EditorParameterModel extends EditableListTableModel {
             tmp = para.getBezeichnung();
             break;
         case 2:
-            tmp = para.getGrenzwert();
-            break;
+        	return para.getGrenzwert();
+        case 3:
+        	return para.getSielhautGw();
 
         default:
             tmp = "ERROR";
@@ -91,8 +93,13 @@ public class EditorParameterModel extends EditableListTableModel {
         	break;
         	
         case 2:
-        	Double tmpAbt = (Double) newValue;
-        	tmp.setGrenzwert(tmpAbt);
+        	Double tmpGW = (Double) newValue;
+        	tmp.setGrenzwert(tmpGW);
+        	break;
+        	
+        case 3:
+        	Double tmpSielGW = (Double) newValue;
+        	tmp.setSielhautGw(tmpSielGW);
         	break;
 
         default:
@@ -110,8 +117,8 @@ public class EditorParameterModel extends EditableListTableModel {
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	AtlParameter removedArt = (AtlParameter) objectAtRow;
-        return AtlParameter.delete(removedArt);
+    	AtlParameter removedPara = (AtlParameter) objectAtRow;
+        return AtlParameter.delete(removedPara);
     }
 
     /**
@@ -122,4 +129,31 @@ public class EditorParameterModel extends EditableListTableModel {
     public AtlParameter getRow(int rowIndex) {
         return (AtlParameter) getObjectAtRow(rowIndex);
     }
+
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+	    Class<?> tmp;
+	    switch (columnIndex) {
+	        case 0:
+	            tmp = String.class;
+	            break;
+	
+	        case 1:
+	            tmp = String.class;
+	            break;
+	
+	        case 2:
+	            tmp = Double.class;
+	            break;
+	
+	        case 3:
+	            tmp = Double.class;
+	            break;
+	
+	        default:
+	            tmp = super.getColumnClass(columnIndex);
+	            break;
+	    }
+	    return tmp;
+	}
 }
