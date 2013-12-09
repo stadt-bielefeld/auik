@@ -92,7 +92,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -167,6 +166,8 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautProbeModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -175,13 +176,9 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.RetractablePanel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
-import de.bielefeld.umweltamt.aui.utils.TabAction;
-import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 import de.bielefeld.umweltamt.aui.utils.charts.APosDataItem;
 import de.bielefeld.umweltamt.aui.utils.charts.ChartDataSets;
 import de.bielefeld.umweltamt.aui.utils.charts.Charts;
-import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
-import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 
 /**
@@ -274,14 +271,33 @@ public class SielhautBearbeiten extends AbstractModul {
             this.sprobePkt = AtlProbepkt.findById(this.objekt.getObjektid());
             this.spunkt = AtlSielhaut.findById(this.objekt.getObjektid());
             setSielhautPunkt(this.spunkt);
-        } else if (BasisObjekt.findById(24856) != null) {
+        }	
+        
+        else{
+        	List<AtlSielhaut> list1 = AtlSielhaut.getAll();
+        	if(list1.isEmpty() != true){
+        		objekt = list1.get(0).getBasisObjekt();
+        		sprobePkt = list1.get(0).getAtlProbepkt();
+        		spunkt = list1.get(0);
+                setSielhautPunkt(this.spunkt);
+        	}
+        	
+        }
+        /*
+        else if (BasisObjekt.findById(24856) != null) {
             //FIXME: A constant id? In the code? -.-
             this.objekt = BasisObjekt.findById(24856);
             this.sprobePkt = AtlProbepkt.findById(this.objekt.getObjektid());
             this.spunkt = AtlSielhaut.findById(this.objekt.getObjektid());
             setSielhautPunkt(this.spunkt);
         }
-
+		*/
+    }
+    
+    private BasisObjekt getB1(){
+    	SielhautModel tmp = new SielhautModel();
+    	AtlSielhaut t1 =(AtlSielhaut) tmp.getObjectAtRow(0);
+    	return t1.getBasisObjekt();
     }
 
     public void setSielhautPunkt(AtlSielhaut sp) {
@@ -2028,392 +2044,5 @@ public class SielhautBearbeiten extends AbstractModul {
         }
 
         return this.ausAblageButton;
-    }
-}
-
-/**
- * Ein TableModel für eine Tabelle mit Probenahmen zu einem Sielhautpunkt.
- * @author David Klotz
- */
-class SielhautProbeModel extends ListTableModel {
-    private static final long serialVersionUID = -7308141358160583962L;
-    private AtlProbepkt probepkt;
-    private Map<AtlProbenahmen, List<AtlAnalyseposition>> wertMap;
-    private AtlParameter[] params;
-
-    public SielhautProbeModel() {
-        super(new String[] {"Kennnummer", "Datum"}, false, true);
-
-        String[] paramIDs = new String[] {
-            DatabaseConstants.ATL_PARAMETER_ID_BLEI,
-            DatabaseConstants.ATL_PARAMETER_ID_CADMIUM,
-            DatabaseConstants.ATL_PARAMETER_ID_CHROM,
-            DatabaseConstants.ATL_PARAMETER_ID_KUPFER,
-            DatabaseConstants.ATL_PARAMETER_ID_NICKEL,
-            DatabaseConstants.ATL_PARAMETER_ID_QUECKSILBER,
-            DatabaseConstants.ATL_PARAMETER_ID_ZINK
-        };
-        this.params = new AtlParameter[paramIDs.length];
-        for (int i = 0; i < paramIDs.length; i++) {
-            this.params[i] = AtlParameter.findById(paramIDs[i]);
-        }
-
-        this.columns = new String[this.params.length + 2];
-        this.columns[0] = "Kennnummer";
-        this.columns[1] = "Datum";
-        for (int i = 0; i < this.params.length; i++) {
-            if (this.params[i] != null) {
-                this.columns[i + 2] = this.params[i].getBezeichnung();
-            }
-        }
-
-        this.wertMap = new HashMap<AtlProbenahmen, List<AtlAnalyseposition>>();
-    }
-
-    public void setProbepunkt(AtlProbepkt probepkt) {
-        this.probepkt = probepkt;
-    }
-
-    @Override
-    public void updateList() {
-        if (this.probepkt != null) {
-            List<AtlProbenahmen> proben =
-                DatabaseQuery.findProbenahmen(this.probepkt);
-            setList(proben);
-
-            // Do all the database stuff first...
-            Map<AtlProbenahmen, Map<AtlParameter, AtlAnalyseposition>> bigMap =
-                DatabaseQuery.getAnalysepositionen(this.probepkt);
-
-            this.wertMap.clear();
-            for (int i = 0; i < getList().size(); i++) {
-                AtlProbenahmen probe = getRow(i);
-                List<AtlAnalyseposition> wertList =
-                    new ArrayList<AtlAnalyseposition>(this.params.length);
-
-                for (int j = 0; j < this.params.length; j++) {
-                    wertList.add(j, bigMap.get(probe).get(this.params[j]));
-                }
-
-                this.wertMap.put((AtlProbenahmen) getList().get(i), wertList);
-            }
-
-            // fireTableDataChanged();
-        }
-    }
-
-    @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Object value;
-        AtlProbenahmen probe = (AtlProbenahmen) objectAtRow;
-
-        if (columnIndex == 0) {
-            value = probe.getKennummer();
-        } else if (columnIndex == 1) {
-            value = AuikUtils.getStringFromDate(probe.getDatumDerEntnahme());
-        } else {
-            List<AtlAnalyseposition> wertList = this.wertMap.get(probe);
-            AtlAnalyseposition pos = wertList.get(columnIndex - 2);
-            if (pos != null) {
-                String tmp = pos.getWert().toString().replace(".", ",");
-                value = tmp;
-            } else {
-                value = "-";
-            }
-        }
-
-        return value;
-    }
-
-    @Override
-    public boolean objectRemoved(Object objectAtRow) {
-        AtlProbenahmen removedProbe = (AtlProbenahmen) objectAtRow;
-        boolean removed;
-
-        if (removedProbe.getKennummer() != null) {
-            removed = removedProbe.delete();
-        } else {
-            removed = true;
-        }
-
-        return removed;
-    }
-
-    /**
-     * Liefert das Objekt aus einer bestimmten Zeile.
-     * @param rowIndex Die Zeile
-     * @return Das Objekt bei rowIndex oder <code>null</code>, falls die Zeile
-     *         nicht existiert
-     */
-    public AtlProbenahmen getRow(int rowIndex) {
-        return (AtlProbenahmen) getObjectAtRow(rowIndex);
-    }
-}
-
-class SielhautChooser extends OkCancelDialog {
-    private static final long serialVersionUID = -8611205076943773598L;
-
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-
-    private JTextField suchFeld;
-    private JButton submitButton;
-    private JTable ergebnisTabelle;
-
-    private SielhautModel sielhautModel;
-    private AtlSielhaut chosenSielhaut = null;
-
-    public SielhautChooser(HauptFrame owner) {
-        super("Sielhautpunkt auswählen", owner);
-
-        this.sielhautModel = new SielhautModel();
-        getErgebnisTabelle().setModel(this.sielhautModel);
-
-        this.ergebnisTabelle.getColumnModel().getColumn(0)
-            .setPreferredWidth(80);
-        this.ergebnisTabelle.getColumnModel().getColumn(1)
-            .setPreferredWidth(230);
-        this.ergebnisTabelle.getColumnModel().getColumn(2).setPreferredWidth(8);
-        this.ergebnisTabelle.getColumnModel().getColumn(3).setPreferredWidth(8);
-        this.ergebnisTabelle.getColumnModel().getColumn(4).setPreferredWidth(8);
-
-        setResizable(true);
-
-        this.sielhautModel.filterList("");
-        this.sielhautModel.fireTableDataChanged();
-    }
-
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog#doOk()
-     */
-    @Override
-    protected void doOk() {
-        int row = getErgebnisTabelle().getSelectedRow();
-        choose(row);
-    }
-
-    protected void doSearch() {
-        final String suche = getSuchFeld().getText();
-
-        SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
-            @Override
-            protected void doNonUILogic() throws RuntimeException {
-                SielhautChooser.this.sielhautModel.filterList(suche);
-            }
-
-            @Override
-            protected void doUIUpdateLogic() throws RuntimeException {
-                SielhautChooser.this.sielhautModel.fireTableDataChanged();
-            }
-        };
-
-        worker.start();
-    }
-
-    private void choose(int row) {
-        if (row != -1) {
-            this.chosenSielhaut = (AtlSielhaut) this.sielhautModel
-                .getObjectAtRow(row);
-            dispose();
-        }
-    }
-
-    public AtlSielhaut getChosenSielhaut() {
-        return this.chosenSielhaut;
-    }
-
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog#buildContentArea()
-     */
-    @Override
-    protected JComponent buildContentArea() {
-        JScrollPane tabellenScroller = new JScrollPane(getErgebnisTabelle(),
-            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        TabAction ta = new TabAction();
-        ta.addComp(this.ergebnisTabelle);
-        ta.addComp(this.button1);
-        // ta.addComp(button2);
-        JToolBar submitToolBar = new JToolBar();
-        submitToolBar.setFloatable(false);
-        submitToolBar.setRollover(true);
-        submitToolBar.add(getSubmitButton());
-
-        FormLayout layout = new FormLayout("180dlu:g, 3dlu, min(16dlu;p)", // spalten
-            "20dlu, 3dlu, 300dlu:g"); // zeilen
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-
-        builder.add(getSuchFeld(), cc.xy(1, 1));
-        builder.add(submitToolBar, cc.xy(3, 1));
-        builder.add(tabellenScroller, cc.xyw(1, 3, 3));
-
-        return builder.getPanel();
-    }
-
-    private JTextField getSuchFeld() {
-        if (this.suchFeld == null) {
-            this.suchFeld = new JTextField();
-
-            this.suchFeld.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    doSearch();
-                }
-            });
-
-            this.suchFeld.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    String text = SielhautChooser.this.suchFeld.getText();
-                    log.debug("(SielhautChooser) " + "keyChar: "
-                        + e.getKeyChar() + ", Text: " + text);
-                    if (Character.isLetterOrDigit(e.getKeyChar())) {
-                        text = text + e.getKeyChar();
-                    }
-                    SielhautChooser.this.sielhautModel.filterList(text);
-                    SielhautChooser.this.sielhautModel.fireTableDataChanged();
-                }
-            });
-        }
-
-        return this.suchFeld;
-    }
-
-    private JButton getSubmitButton() {
-        if (this.submitButton == null) {
-            this.submitButton = new JButton(AuikUtils.getIcon(16,
-                "key_enter.png"));
-            this.submitButton.setToolTipText("Suche starten");
-            this.submitButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    doSearch();
-                }
-            });
-        }
-
-        return this.submitButton;
-    }
-
-    private JTable getErgebnisTabelle() {
-        if (this.ergebnisTabelle == null) {
-            this.ergebnisTabelle = new JTable();
-
-            Action submitAction = new AbstractAction("Auswählen") {
-                private static final long serialVersionUID = 5609569229635452436L;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    doOk();
-                }
-            };
-            submitAction.putValue(Action.ACCELERATOR_KEY,
-                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
-
-            this.ergebnisTabelle.getInputMap().put(
-                (KeyStroke) submitAction.getValue(Action.ACCELERATOR_KEY),
-                submitAction.getValue(Action.NAME));
-            this.ergebnisTabelle.getActionMap().put(
-                submitAction.getValue(Action.NAME), submitAction);
-
-            this.ergebnisTabelle.addFocusListener(TableFocusListener
-                .getInstance());
-            this.ergebnisTabelle.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                        Point origin = e.getPoint();
-                        int row = SielhautChooser.this.ergebnisTabelle
-                            .rowAtPoint(origin);
-                        choose(row);
-                    }
-                }
-            });
-        }
-
-        return this.ergebnisTabelle;
-    }
-
-}
-
-class SielhautModel extends ListTableModel {
-    private static final long serialVersionUID = -5313844117284881446L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-
-    public SielhautModel() {
-        super(new String[] {"Bezeichnung", "Lage", "R", "F", "N"}, false);
-    }
-
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
-     */
-    @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        AtlSielhaut spunkt = (AtlSielhaut) objectAtRow;
-        Object tmp;
-
-        switch (columnIndex) {
-            case 0:
-                tmp = spunkt.getBezeichnung();
-                break;
-            case 1:
-                tmp = spunkt.getLage();
-                break;
-            case 2:
-                if (spunkt.getPSielhaut() == null) {
-                    tmp = new Boolean(false);
-                } else {
-                    tmp = new Boolean(spunkt.getPSielhaut());
-                }
-                break;
-            case 3:
-                if (spunkt.getPFirmenprobe() == null) {
-                    tmp = new Boolean(false);
-                } else {
-                    tmp = new Boolean(spunkt.getPFirmenprobe());
-                }
-                break;
-            case 4:
-                if (spunkt.getPNachprobe() == null) {
-                    tmp = new Boolean(false);
-                } else {
-                    tmp = new Boolean(spunkt.getPNachprobe());
-                }
-                break;
-            default:
-                tmp = "FEHLER!";
-                break;
-        }
-
-        // This is too slooow... :(
-//        if (tmp instanceof String && spunkt.getBasisObjekt().getInaktiv()) {
-//            tmp = StringUtils.setStrike((String) tmp);
-//        }
-
-        return tmp;
-    }
-
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        if (columnIndex > 1) {
-            return Boolean.class;
-        } else {
-            return super.getColumnClass(columnIndex);
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#updateList()
-     */
-    @Override
-    public void updateList() {
-    }
-
-    public void filterList(String suche) {
-        setList(DatabaseQuery.findSielhaut(suche));
-        log.debug("Suche nach '" + suche + "' (" + getList().size()
-            + " Ergebnisse)");
     }
 }
