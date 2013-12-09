@@ -274,6 +274,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
     public static List<?> getObjektsWithPriority() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(BasisObjekt.class)
+        		.add(Restrictions.eq("inaktiv", false))
+            	.add(Restrictions.eq("deleted", false))
                 .add(Restrictions.isNotNull("prioritaet"))
                 .add(Restrictions.isNotNull("basisSachbearbeiter"))
                 .setProjection(Projections.distinct(
