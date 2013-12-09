@@ -1096,6 +1096,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         String addr = DatabaseQuery.getBetriebsgrundstueck(basisBetr);
+        if (addr.length()>28) {
+        	addr = addr.substring(0, 28);
+        }
         sb.append(addr);
         for (int i = 1; i <= 28 - addr.length(); i++) {
             sb.append(" ");
@@ -1474,6 +1477,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         for (Object object : objects) {
             position = (AtlAnalyseposition) object;
             position.setAtlProbenahmen(probe);
+            if (position.getAtlParameter().getSielhautGw() != null) {
+            	position.setNormwert(position.getWert()/position.getAtlParameter().getSielhautGw());
+            }            
             success = success && position.merge();
         }
 
