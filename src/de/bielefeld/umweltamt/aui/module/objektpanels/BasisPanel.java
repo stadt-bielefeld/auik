@@ -80,6 +80,7 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -388,6 +389,7 @@ public class BasisPanel extends JPanel {
     private JButton betreiberChooseButton;
     private JButton betreiberEditButton;
     private JButton betreiberNewButton;
+    private JButton betreiberDeleteButton;
 
     // Standort
     private JTextField standortFeld;
@@ -395,6 +397,7 @@ public class BasisPanel extends JPanel {
     private JButton standortChooseButton;
     private JButton standortEditButton;
     private JButton standortNewButton;
+    private JButton standortDeleteButton;
 
     // Art, Sachbearbeiter, Inaktiv, Priorität, Beschreibung, Speichern
     private JComboBox artBox;
@@ -427,6 +430,9 @@ public class BasisPanel extends JPanel {
     private JButton selectObjektButton = null;
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
+    
+    
+	private ActionListener deleteButtonListener;
 
     public BasisPanel(BasisObjektBearbeiten hauptModul) {
 
@@ -572,8 +578,10 @@ public class BasisPanel extends JPanel {
         }
 
         if (this.hauptModul.getObjekt() != null) {
+            
             if (this.hauptModul.getObjekt().getBasisBetreiber() != null) {
                 // TODO: Why are we using html here? :-/
+            	
                 BasisBetreiber betr = this.hauptModul.getObjekt()
                     .getBasisBetreiber();
                 getBetreiberFeld().setText(betr.toString());
@@ -602,6 +610,7 @@ public class BasisPanel extends JPanel {
                 }
                 toolTip += "</html>";
                 getBetreiberFeld().setToolTipText(toolTip);
+            
             }
             if (this.hauptModul.getObjekt().getBasisStandort() != null) {
                 BasisStandort sta = this.hauptModul.getObjekt()
@@ -809,6 +818,7 @@ public class BasisPanel extends JPanel {
             this.betreiberToolBar.add(getBetreiberChooseButton());
             this.betreiberToolBar.add(getBetreiberNewButton());
             this.betreiberToolBar.add(getBetreiberEditButton());
+            this.betreiberToolBar.add(getBetreiberDeleteButton());
         }
         return this.betreiberToolBar;
     }
@@ -920,6 +930,7 @@ public class BasisPanel extends JPanel {
             this.standortToolBar.add(getStandortChooseButton());
             this.standortToolBar.add(getStandortNewButton());
             this.standortToolBar.add(getStandortEditButton());
+            this.standortToolBar.add(getStandortDeleteButton());
         }
         return this.standortToolBar;
     }
@@ -1295,5 +1306,126 @@ public class BasisPanel extends JPanel {
             });
         }
         return this.selectObjektButton;
+    }
+
+
+
+	public JButton getStandortDeleteButton() {
+		if (this.standortDeleteButton == null) {
+            this.standortDeleteButton = new JButton(AuikUtils.getIcon(16,"exit.png",""));
+            this.standortDeleteButton
+                .setHorizontalAlignment(SwingConstants.CENTER);
+            this.standortDeleteButton.setToolTipText("Standort löschen");
+            this.standortDeleteButton.setActionCommand("standort_delete");
+
+            this.standortDeleteButton.addActionListener(getDeleteButtonListener());
+            
+        }
+
+        return this.standortDeleteButton;
+    }
+	
+	
+
+
+
+	private ActionListener getDeleteButtonListener() {
+        if (this.deleteButtonListener == null) {
+            this.deleteButtonListener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String action = e.getActionCommand();
+
+                    BasisBetreiber betreiber = BasisPanel.this.hauptModul
+                        .getObjekt().getBasisBetreiber();
+                    BasisStandort standort = BasisPanel.this.hauptModul
+                        .getObjekt().getBasisStandort();
+
+                    if ("betreiber_delete".equals(action) && betreiber != null) {
+                        
+                    	boolean dCheck = delCheck(true);
+                    	if (dCheck == true){
+                    		deleteBetreiber();
+                    		 getBetreiberFeld().setText("");
+                    	     getBetreiberFeld().setToolTipText(null);
+                    	}
+                    	
+                    } else if ("standort_delete".equals(action)
+                        && standort != null) {
+                    	
+                    	boolean dCheck = delCheck(false);
+                    	if (dCheck == true){
+                    		deleteStandort();
+                    		getStandortFeld().setText("");
+                            getStandortFeld().setToolTipText(null);
+                    	}
+                     
+                        
+                    }
+
+                    updateForm();
+                }
+            };
+        }
+		return deleteButtonListener;
+	}
+
+	
+
+	public JButton getBetreiberDeleteButton() {
+		if (this.betreiberDeleteButton == null) {
+            this.betreiberDeleteButton = new JButton(AuikUtils.getIcon(16,"exit.png",""));
+            this.betreiberDeleteButton
+                .setHorizontalAlignment(SwingConstants.CENTER);
+            this.betreiberDeleteButton.setToolTipText("Betreiber löschen");
+            this.betreiberDeleteButton.setActionCommand("betreiber_delete");
+
+            this.betreiberDeleteButton.addActionListener(getDeleteButtonListener());
+            
+        }
+
+        return this.betreiberDeleteButton;
+	}
+	
+    private void deleteStandort(){
+    	
+    	BasisStandort tmp = this.hauptModul.getObjekt().getBasisStandort();
+    	tmp.setDeleted(true);
+    	tmp.merge();
+    	this.hauptModul.getObjekt().setBasisStandort(null);
+    	
+    }
+    
+    private void deleteBetreiber(){
+    	
+    	BasisBetreiber tmp = this.hauptModul.getObjekt().getBasisBetreiber();
+    	tmp.setDeleted(true);
+    	tmp.merge();
+    	this.hauptModul.getObjekt().setBasisBetreiber(null);
+    }
+    
+    private boolean delCheck(boolean betr){
+    	
+    	if(betr == true){
+    		JOptionPane dcp = new JOptionPane ("Betreiber löschen");
+        	Object[] options = new String[]{"Ja", "Nein"};
+        	JDialog dia = dcp.createDialog("Wirklich löschen?");
+        	int a = JOptionPane.showOptionDialog(dia, "Soll der Betreiber gelöscht werden?",
+        			"Wirklich löschen?", JOptionPane.YES_NO_OPTION,
+        			JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+        	if (a == JOptionPane.YES_OPTION) return true;
+        	else return false;
+    	}
+    	else{
+    	JOptionPane dcp = new JOptionPane ("Standort löschen");
+    	Object[] options = new String[]{"Ja", "Nein"};
+    	JDialog dia = dcp.createDialog("Wirklich löschen?");
+    	int a = JOptionPane.showOptionDialog(dia, "Soll der Standort gelöscht werden?",
+    			"Wirklich löschen?", JOptionPane.YES_NO_OPTION,
+    			JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+    		if (a == JOptionPane.YES_OPTION) return true;
+    		else return false;
+    	}
+    	    	
     }
 }
