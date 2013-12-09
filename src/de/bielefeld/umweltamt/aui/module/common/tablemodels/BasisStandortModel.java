@@ -44,6 +44,7 @@ public class BasisStandortModel extends ListTableModel {
                 "Hausnr.",
         		"PLZ",
         		"Entw.-Gebiet",
+        		"Übersch.-Gebiet",
         		"VAwS-Gebiet"}, true);
     }
 
@@ -122,6 +123,13 @@ public class BasisStandortModel extends ListTableModel {
                 value = bsta.getEntgebid();
                 break;
             case 4:
+            	Integer sggh = bsta.getVawsStandortgghwsg().getId();
+                if (sggh.equals(6))
+                	value = new Boolean(true);
+                else
+                	value = new Boolean(false);
+                break;
+            case 5:
                 value = bsta.getVawsWassereinzugsgebiete();
                 break;
             default:
@@ -129,4 +137,19 @@ public class BasisStandortModel extends ListTableModel {
         }
         return value;
     }
+
+	
+	
+	  @Override
+	public Class<?> getColumnClass( int columnIndex ){
+		switch( columnIndex ){
+			case 0: return String.class;
+			case 1: return String.class;
+			case 2: return String.class;
+			case 3: return String.class;
+			case 4: return Boolean.class;
+			case 5: return String.class;
+			default: return null;
+		}
+	}
 }
