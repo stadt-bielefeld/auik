@@ -93,18 +93,20 @@ FROM
 		</band>
 	</title>
 	<pageHeader>
-		<band height="92">
+		<band height="127">
 			<rectangle>
-				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" x="3" y="57" width="479" height="13"/>
+				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" x="0" y="57" width="482" height="13"/>
 				<graphicElement>
 					<pen lineColor="#FFFFFF"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d" mode="Opaque" x="0" y="42" width="56" height="20" backcolor="#D8D8D8"/>
+				<reportElement uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d" mode="Opaque" x="0" y="42" width="94" height="20" backcolor="#D8D8D8"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="10"/>
@@ -112,7 +114,7 @@ FROM
 				<text><![CDATA[Standort]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="0" y="61" width="56" height="20"/>
+				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="0" y="61" width="94" height="20"/>
 				<box>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -123,9 +125,11 @@ FROM
 				<text><![CDATA[Art]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64" mode="Opaque" x="56" y="42" width="426" height="20" backcolor="#D8D8D8"/>
+				<reportElement uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64" mode="Opaque" x="94" y="42" width="388" height="20" backcolor="#D8D8D8"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
 				</box>
 				<textElement verticalAlignment="Middle">
@@ -135,8 +139,9 @@ FROM
 				<textFieldExpression><![CDATA[$P{Standort}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="60b1a670-0991-429e-88c5-f38019ac7ab9" x="56" y="61" width="426" height="20"/>
+				<reportElement uuid="60b1a670-0991-429e-88c5-f38019ac7ab9" x="94" y="61" width="388" height="20"/>
 				<box>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
 				</box>
@@ -158,6 +163,40 @@ FROM
 				</textElement>
 				<text><![CDATA[Details]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="0" y="81" width="94" height="20"/>
+				<box>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Ansprechpartner]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="0" y="101" width="94" height="20"/>
+				<box>
+					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
+					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Telefon]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" mode="Transparent" x="94" y="81" width="388" height="20"/>
+				<graphicElement>
+					<pen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" mode="Transparent" x="94" y="101" width="388" height="20"/>
+				<graphicElement>
+					<pen lineWidth="2.5" lineColor="#B9B9B9"/>
+				</graphicElement>
+			</rectangle>
 		</band>
 	</pageHeader>
 	<columnHeader>

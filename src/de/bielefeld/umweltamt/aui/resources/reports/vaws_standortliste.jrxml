@@ -89,7 +89,7 @@ where basis_standort.id = $P{StandortId} and vaws_fachdaten.objektid > 0;  ]]>
 					<subreportParameterExpression><![CDATA[$P{StandortId}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["de/bielefeld/umweltamt/aui/resources/reports/vaws_standortliste_details.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("de/bielefeld/umweltamt/aui/resources/reports/vaws_standortliste_details.jasper"))]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
