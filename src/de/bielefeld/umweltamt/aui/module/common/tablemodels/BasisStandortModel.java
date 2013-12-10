@@ -98,45 +98,50 @@ public class BasisStandortModel extends ListTableModel {
      * @return Den Wert der Zelle oder null (falls die Zelle nicht existiert)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Object value;
-        BasisStandort bsta = (BasisStandort) objectAtRow;
-        switch(columnIndex) {
-            /*case 0:
-             value = bsta.getStandortid();
-             break;*/
-            case 0:
-                value = bsta.getStrasse();
-                break;
-            case 1:
-                if (bsta.getHausnrzus() != null) {
-                    String tmp = bsta.getHausnr() + bsta.getHausnrzus();
-                    value = tmp;
-                } else {
-                    value = bsta.getHausnr();
-                }
-                break;
-            case 2:
-                value = bsta.getPlz();
-                break;
-            case 3:
-                value = bsta.getEntgebid();
-                break;
-            case 4:
-            	Integer sggh = bsta.getVawsStandortgghwsg().getId();
-                if (sggh.equals(6))
-                	value = new Boolean(true);
-                else
-                	value = new Boolean(false);
-                break;
-            case 5:
-                value = bsta.getVawsWassereinzugsgebiete();
-                break;
-            default:
-                value = null;
-        }
-        return value;
-    }
+	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+		Object value;
+		BasisStandort bsta = (BasisStandort) objectAtRow;
+		switch (columnIndex) {
+		/*
+		 * case 0: value = bsta.getStandortid(); break;
+		 */
+		case 0:
+			value = bsta.getStrasse();
+			break;
+		case 1:
+			if (bsta.getHausnrzus() != null) {
+				String tmp = bsta.getHausnr() + bsta.getHausnrzus();
+				value = tmp;
+			} else {
+				value = bsta.getHausnr();
+			}
+			break;
+		case 2:
+			value = bsta.getPlz();
+			break;
+		case 3:
+			value = bsta.getEntgebid();
+			break;
+		case 4:
+			if (bsta.getVawsStandortgghwsg() != null) {
+				Integer sggh = bsta.getVawsStandortgghwsg().getId();
+				if (sggh.equals(6)) {
+					value = new Boolean(true);
+				} else {
+					value = new Boolean(false);
+				}
+			} else {
+				value = new Boolean(false);
+			}
+			break;
+		case 5:
+			value = bsta.getVawsWassereinzugsgebiete();
+			break;
+		default:
+			value = null;
+		}
+		return value;
+	}
 
 	
 	
