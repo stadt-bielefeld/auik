@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -376,8 +377,9 @@ public class AnalyseImport extends AbstractModul {
 
                 log.debug("Beginne Analyseergebnisse aus '" + name
                     + "' zu lesen.");
-
+                panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 updateList();
+                panel.setCursor(Cursor.getDefaultCursor());
                 List<?> data = getList();
 
                 if (data.size() > 0) {
@@ -445,7 +447,9 @@ public class AnalyseImport extends AbstractModul {
                     .openFile(new String[] {"txt"});
 
                 if (file != null) {
+                	panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                     doImport(file);
+                	panel.setCursor(Cursor.getDefaultCursor());
                 }
             }
         });

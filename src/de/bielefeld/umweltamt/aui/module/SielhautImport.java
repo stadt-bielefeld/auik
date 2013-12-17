@@ -49,6 +49,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -248,6 +249,7 @@ public class SielhautImport extends AbstractModul {
 
         public void openFile(File file) {
             if (file.isFile() && file.canRead()) {
+            	
                 getDateiLabel().setText("Datei: " + file.getName());
                 this.importFile = file;
                 try {
@@ -533,8 +535,10 @@ public class SielhautImport extends AbstractModul {
                     File file = SielhautImport.this.frame
                         .openFile(new String[] {"csv"});
                     if (file != null) {
+                    	panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                         switchToStep(1);
                         SielhautImport.this.fileImporter.openFile(file);
+                    	panel.setCursor(Cursor.getDefaultCursor());
                     }
                 }
             });
@@ -558,7 +562,9 @@ public class SielhautImport extends AbstractModul {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
+                    	panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                         SielhautImport.this.fileImporter.doImport();
+                    	panel.setCursor(Cursor.getDefaultCursor());
                     } catch (Exception e1) {
                         GUIManager.getInstance().showErrorMessage(
                             "<html>Beim importieren ist ein Fehler aufgetreten:<br>"
