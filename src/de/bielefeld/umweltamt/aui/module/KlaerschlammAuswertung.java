@@ -572,11 +572,7 @@ public class KlaerschlammAuswertung extends AbstractModul {
         }
     }
 
-    private JCheckBox heepenCheck;
-    private JCheckBox brakeCheck;
-    private JCheckBox sennestCheck;
-    private JCheckBox olutterCheck;
-    private JCheckBox verlCheck;
+    private JList klaeranlagen;
     private JComboBox artBox;
     private JDateChooser vonDateChooser;
     private JDateChooser bisDateChooser;
@@ -645,9 +641,10 @@ public class KlaerschlammAuswertung extends AbstractModul {
                 + ", " + // 1,2 Kläranlagen---- Zeitraum----
                 zeileLuecke + ", " + // 3,4
                 zeileLuecke + ", " + // 5,6
-                zeileLuecke + ", " + // 7,8 Parameter -------------------
-                "pref, 10dlu, " + // 9,10
-                "pref"); // 11
+                zeileLuecke + ", " + // 7,8
+                zeileLuecke + ", " + // 9,10 Parameter -------------------
+                "pref, 10dlu, " + // 11,12
+                "pref"); // 13
 
             gesamtLayout.setColumnGroups(new int[][] {{1, 3, 5, 9}});
             gesamtLayout.setRowGroups(new int[][] {{3, 5}});
@@ -656,14 +653,9 @@ public class KlaerschlammAuswertung extends AbstractModul {
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
             CellConstraints cc2 = (CellConstraints) cc.clone();
-
             builder.addSeparator("Kläranlagen / Art", cc.xyw(1, 1, 5));
-            builder.add(getHeepenCheck(), cc.xy(1, 3));
-            builder.add(getBrakeCheck(), cc.xy(3, 3));
-            builder.add(getSennestCheck(), cc.xy(5, 3));
-            builder.add(getOlutterCheck(), cc.xy(1, 5));
-            builder.add(getVerlCheck(), cc.xy(3, 5));
-            builder.add(getArtBox(), cc.xy(5, 5, "l,d"));
+            builder.add(new JScrollPane(getKlaeranlagen()), cc.xywh(1, 3, 3, 5));
+            builder.add(getArtBox(), cc.xy(5, 7, "l,d"));
 
             builder.addSeparator("Zeitraum", cc.xyw(7, 1, 3));
             builder.add(new JLabel("Von:"), cc.xy(7, 3, "r,d"),
@@ -671,10 +663,10 @@ public class KlaerschlammAuswertung extends AbstractModul {
             builder.add(new JLabel("Bis:"), cc.xy(7, 5, "r,d"),
                 getBisDateChooser(), cc2.xy(9, 5, "l,d"));
 
-            builder.addSeparator("Parameter", cc.xyw(1, 7, 9));
-            builder.add(getParameterPanel(), cc.xyw(1, 9, 9, "fill, fill"));
+            builder.addSeparator("Parameter", cc.xyw(1, 9, 9));
+            builder.add(getParameterPanel(), cc.xyw(1, 11, 9, "fill, fill"));
             JPanel buttonPanel = ButtonBarFactory.buildOKBar(getSubmitButton());
-            builder.add(buttonPanel, cc.xyw(1, 11, 9, "fill, fill"));
+            builder.add(buttonPanel, cc.xyw(1, 13, 9, "fill, fill"));
 
             this.panel = builder.getPanel();
         }
@@ -767,27 +759,23 @@ public class KlaerschlammAuswertung extends AbstractModul {
         Date vonDate = getVonDateChooser().getDate();
         Date bisDate = getBisDateChooser().getDate();
 
-        if (getHeepenCheck().isSelected()) {
-            createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_HEEPEN,
-                einheit, paramList, analyseVon, vonDate, bisDate, col);
-        }
-        if (getBrakeCheck().isSelected()) {
-            createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_BRAKE,
-                einheit, paramList, analyseVon, vonDate, bisDate, col);
-        }
-        if (getSennestCheck().isSelected()) {
-            createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_SENNESTADT,
-                einheit, paramList, analyseVon, vonDate, bisDate, col);
-        }
-        if (getOlutterCheck().isSelected()) {
-            createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_OBERE_LUTTER,
-                einheit, paramList, analyseVon, vonDate, bisDate, col);
-        }
-        if (getVerlCheck().isSelected()) {
-            createSeries(art, DatabaseConstants.ATL_KLAERANLAGE_VERL_SENDE,
-                einheit, paramList, analyseVon, vonDate, bisDate, col);
-        }
 
+        if (this.klaeranlagen.getSelectedIndices().length > 0) {
+        	for (int ndx : this.klaeranlagen.getSelectedIndices()) {
+        		AtlKlaeranlagen anlage = 
+        			(AtlKlaeranlagen)
+        				this.klaeranlagen.getModel().getElementAt(ndx);
+        		createSeries(art,
+        			anlage,
+        			einheit,
+        			paramList,
+        			analyseVon,
+        			vonDate,
+        			bisDate,
+        			col);
+        	}
+        }
+        
         return col;
     }
 
@@ -835,39 +823,19 @@ public class KlaerschlammAuswertung extends AbstractModul {
         return this.bisDateChooser;
     }
 
-    private JCheckBox getBrakeCheck() {
-        if (this.brakeCheck == null) {
-            this.brakeCheck = new JCheckBox("Brake");
-        }
-        return this.brakeCheck;
-    }
-
-    private JCheckBox getHeepenCheck() {
-        if (this.heepenCheck == null) {
-            this.heepenCheck = new JCheckBox("Heepen", true);
-        }
-        return this.heepenCheck;
-    }
-
-    private JCheckBox getOlutterCheck() {
-        if (this.olutterCheck == null) {
-            this.olutterCheck = new JCheckBox("Obere Lutter");
-        }
-        return this.olutterCheck;
-    }
-
-    private JCheckBox getSennestCheck() {
-        if (this.sennestCheck == null) {
-            this.sennestCheck = new JCheckBox("Sennestadt");
-        }
-        return this.sennestCheck;
-    }
-
-    private JCheckBox getVerlCheck() {
-        if (this.verlCheck == null) {
-            this.verlCheck = new JCheckBox("Verl-Sende");
-        }
-        return this.verlCheck;
+    private JList getKlaeranlagen() {
+    	if (this.klaeranlagen == null) {
+    		List<AtlKlaeranlagen> all = AtlKlaeranlagen.getAll();
+    		DefaultListModel model = new DefaultListModel();
+    		this.klaeranlagen = new JList(model);
+    		this.klaeranlagen.setPrototypeCellValue("test");
+    		this.klaeranlagen.setSelectionMode(
+    			ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    		for (AtlKlaeranlagen element: all) {
+    			model.addElement(element);
+    		}
+    	}
+        return this.klaeranlagen;
     }
 
     private JComboBox getArtBox() {
