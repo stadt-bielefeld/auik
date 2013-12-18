@@ -143,6 +143,12 @@ public class BasisStandortModel extends ListTableModel {
 		return value;
 	}
 
+    
+    @Override
+    public boolean objectRemoved(Object objectAtRow) {
+        BasisStandort removedStandort = (BasisStandort) objectAtRow;
+        return BasisStandort.delete(removedStandort);
+    }
 	
 	
 	  @Override

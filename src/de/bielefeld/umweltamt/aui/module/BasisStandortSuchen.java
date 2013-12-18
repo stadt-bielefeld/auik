@@ -87,13 +87,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.File;
 import java.util.Collections;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -136,10 +136,10 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandortModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.BasicEntryField;
+import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
-import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 
 /**
  * Ein Modul zum Suchen und Bearbeiten eines Standorts.
@@ -160,6 +160,7 @@ public class BasisStandortSuchen extends AbstractModul {
     private JSplitPane tabellenSplit;
 
     private Action standortEditAction;
+    private Action standortLoeschAction;
     private Action objektNeuAction;
     private JPopupMenu standortPopup;
 
@@ -935,9 +936,11 @@ public class BasisStandortSuchen extends AbstractModul {
             JMenuItem bearbItem = new JMenuItem(getStandortEditAction());
             JMenuItem neuItem = new JMenuItem(getObjektNeuAction());
             JMenuItem gisItem = new JMenuItem(getGisAction());
+            JMenuItem delItem = new JMenuItem(getStandortLoeschAction());
             this.standortPopup.add(bearbItem);
             this.standortPopup.add(neuItem);
             this.standortPopup.add(gisItem);
+            this.standortPopup.add(delItem);
         }
 
         if (e.isPopupTrigger()) {
@@ -1197,5 +1200,56 @@ public class BasisStandortSuchen extends AbstractModul {
                 getObjektLoeschAction());
         }
         return this.objektTabelle;
+    }
+    
+    private Action getStandortLoeschAction() {
+        if (this.standortLoeschAction == null) {
+            this.standortLoeschAction = new AbstractAction("Löschen") {
+                private static final long serialVersionUID = 6709934716520847123L;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int row = getStandortTabelle().getSelectedRow();
+                    if (row != -1
+                        && getStandortTabelle().getEditingRow() == -1) {
+                        if (BasisStandortSuchen.this.objektModel.getRowCount() != 0) {
+                            BasisStandortSuchen.this.frame
+                                .changeStatus(
+                                    "Kann Standort nicht löschen: Zu erst alle zugehörigen Objekte löschen!",
+                                    HauptFrame.ERROR_COLOR);
+                        } else {
+                            BasisStandort str = BasisStandortSuchen.this.standortModel
+                                .getRow(row);
+
+                            if (GUIManager.getInstance().showQuestion(
+                                "Soll der Standort '" + str
+                                    + "' wirklich gelöscht werden?",
+                                "Löschen bestätigen")) {
+                                if (BasisStandortSuchen.this.standortModel
+                                    .removeRow(row)) {
+                                    BasisStandortSuchen.this.frame
+                                        .changeStatus("Standort gelöscht.",
+                                            HauptFrame.SUCCESS_COLOR);
+                                    log.debug("Betreiber "
+                                        + str.getId()
+                                        + " wurde gelöscht!");
+                                } else {
+                                    BasisStandortSuchen.this.frame
+                                        .changeStatus(
+                                            "Konnte den Standort nicht löschen!",
+                                            HauptFrame.ERROR_COLOR);
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            this.standortLoeschAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.standortLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+        }
+
+        return this.standortLoeschAction;
     }
 }
