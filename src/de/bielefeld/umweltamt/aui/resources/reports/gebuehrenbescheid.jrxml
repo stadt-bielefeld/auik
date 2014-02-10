@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="25" uuid="3e42c968-6230-4d71-b690-a3ead7f68061">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1469"/>
+	<property name="ireport.x" value="109"/>
+	<property name="ireport.y" value="269"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -257,7 +257,7 @@
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 35. Änderungssatzung vom 21.12.2012 (KdS)]]></text>
+				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 37. Änderungssatzung vom 16.12.2013 (KdS)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="48d3b3ff-baa2-4e72-9ac2-ed45fe2ab424" x="20" y="51" width="360" height="15"/>
@@ -375,7 +375,7 @@
 				<reportElement uuid="241a1789-01a2-4f08-a590-8c6922b02b50" x="408" y="36" width="60" height="1"/>
 			</line>
 		</band>
-		<band height="126">
+		<band height="70">
 			<textField pattern="">
 				<reportElement uuid="e5a1a32b-8dbb-4aea-8d68-6abd3411771c" stretchType="RelativeToBandHeight" x="0" y="0" width="483" height="34"/>
 				<textElement markup="styled">
@@ -389,11 +389,11 @@
 				</reportElement>
 			</break>
 			<textField>
-				<reportElement uuid="6797eeeb-472e-40be-a630-5a9c80d78ecd" x="0" y="34" width="483" height="91"/>
+				<reportElement uuid="6797eeeb-472e-40be-a630-5a9c80d78ecd" x="0" y="36" width="483" height="34"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style isBold='true'>Den folgenden Absatz bitte beachten, wenn Sie eine Lastschrifteinzugsermächtigung erteilt haben oder erteilen möchten</style>\n<style isUnderline='true'>Einsatz des SEPA Lastschriftverfahrens bei der Stadtkasse Bielefeld ab 01.02.2014 </style>\nParallel zum nationalen Lastschriftverfahren wird schrittweise das SEPA-Basis-Lastschriftverfahren eingeführt. SEPA steht dabei für den neuen einheitlichen Euro-Zahlungsverkehrsraum (englisch: Single Euro Payment Area). Das bisherige Lastschriftverfahren läuft zunächst unverändert weiter und wird bei der Stadt Bielefeld zum 01.02.2014 auf das SEPA-Basis-Lastschriftverfahren umgestellt. <style isUnderline='true'>Wenn Sie bereits eine Lastschrifteinzugsermächtigung erteilt haben, ist von Ihnen nichts weiter zu veranlassen.</style> Alle in diesem Bescheid aufgeführten Beträge werden in diesem Fall zu den angegebenen Fälligkeitsterminen unter Angabe der Mandatsreferenz <style isBold='true'>" + $P{kassenzeichen} + "</style> und ab 01.02.2014 zusätzlich der Gläubiger-Identifikationsnummer der Stadtkasse Bielefeld abgebucht. Sie lautet: DE1920000000017669.\nSollten Sie zukünftig eine Einzugsermächtigung erteilen, gelten die vorherigen Ausführungen entsprechend. Bei Rückfragen wenden Sie sich bitte an die Stadtkasse Bielefeld."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style isUnderline='true'>Hinweis zum SEPA-Lastschriftverfahren</style>\nWenn Sie der Stadtkasse Bielefeld ein SEPA-Lastschriftmandat erteilen, werden alle in diesem Bescheid aufgeführten Beträge zu den angegebenen Fälligkeitsterminen unter Angabe der Mandatsreferenz <style isBold='true'>" + $P{kassenzeichen} + "</style> und der Gläubiger-Identifikationsnummer DE1920000000017669 abgebucht."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="63" splitType="Prevent">
