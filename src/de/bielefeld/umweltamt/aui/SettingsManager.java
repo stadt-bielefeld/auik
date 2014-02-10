@@ -173,14 +173,22 @@ public class SettingsManager {
     	appSettings.setProperty(
                 "auik.system.module",
 
-                "BasisStandortSuchen, BasisStandortNeu, " +
-                "KlaerschlammRohschlammproben, KlaerschlammFaulschlammproben, LaborProbeSuchen, KlaerschlammAuswertung, LaborIcpImport, " +
-                "EinleiterAnh50Auswertung, EinleiterAnh49Auswertung, EinleiterBrennwertAuswertung, EinleiterSuevkanAuswertung, EinleiterAnh40Auswertung, EinleiterAnh56Auswertung, " +
-                "VawsHerstellernummerSuchen, VawsKontrollenAuswertung, VawsVerwaltungsverfAuswertung, " +
-                "BasisBetreiberSuchen, BasisBetreiberNeu, ProbepunkteAuswertung, " +
-                "BasisObjektBearbeiten, " +
-                "SielhautBearbeiten, SielhautImport, " +
-                "AnalyseImport, EinleiterBescheidAuswertung"
+                "BasisStandortSuchen, BasisBetreiberSuchen, BasisStandortNeu, " +
+                "BasisBetreiberNeu, BasisObjektBearbeiten, EinleiterAnh31Auswertung, " +
+                "EinleiterAnh40Auswertung, EinleiterAnh49Auswertung, " +
+                "EinleiterAnh50Auswertung, EinleiterAnh52Auswertung, " +
+                "EinleiterAnh53Auswertung, EinleiterAnh55Auswertung, " +
+                "EinleiterAnh56Auswertung, EinleiterBescheidAuswertung, " +
+                "EinleiterBrennwertAuswertung, EinleiterFettabscheiderAuswertung, " +
+                "EinleiterGenehmigungAuswertung, EinleiterPrioritaetAuswertung, " +
+                "EinleiterSuevkanAuswertung, EinleiterUebergabestellenAuswertung, " +
+                "KlaerschlammAuswertung, KlaerschlammFaulschlammproben, " +
+                "KlaerschlammRohschlammproben, LaborProbeSuchen, LaborIcpImport, " +
+                "ProbepunkteAuswertung, SielhautBearbeiten, SielhautImport, " +
+                "VawsHerstellernummerSuchen, VawsKontrollenAuswertung, " +
+                "VawsVerwaltungsverfAuswertung, EditorEinheiten, " +
+                "EditorParameter, EditorStrassen, EditorObjektarten, " +
+                "AnalyseImport, DBSyncModul"
         );
 
     	appSettings.setProperty("auik.prefs.status_time", "40");
