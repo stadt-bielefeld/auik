@@ -1095,13 +1095,12 @@ public class SielhautBearbeiten extends AbstractModul {
     private RetractablePanel getProbenRtPanel() {
         if (this.probenRtPanel == null) {
             FormLayout layout = new FormLayout(
-
-                "p, 4dlu, p:g, 7dlu, p, 4dlu, max(60dlu;p), 7dlu,max(60dlu;p),7dlu,max(60dlu;p) ");
+                "p:g");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             builder.setDefaultDialogBorder();
 
             builder.appendRow("f:65dlu:g");
-            builder.append(new JScrollPane(getPrTabelle()), 11);
+            builder.append(new JScrollPane(getPrTabelle()));
 
             builder.appendSeparator("Neue Probenahme");
             builder.append(getNeuProbPanel());
@@ -1206,8 +1205,7 @@ public class SielhautBearbeiten extends AbstractModul {
     private JTable getPrTabelle() {
         if (this.prTabelle == null) {
             this.prTabelle = new JTable(this.probeModel);
-            this.prTabelle.getColumnModel().getColumn(0).setWidth(40);
-            this.prTabelle.getColumnModel().getColumn(1).setWidth(75);
+            this.prTabelle.getColumnModel().getColumn(0).setWidth(10);
 
             this.prTabelle
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
