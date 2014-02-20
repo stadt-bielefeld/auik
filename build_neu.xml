@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project auik_prod with Jar-in-Jar Loader">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <property name="lib"        location="lib" />
+    <property name="bin"        location="bin" />
+    <target name="create_run_jar">
+        <tstamp><format property="TODAY" pattern="yyyyMMdd" /></tstamp>
+        <jar destfile="X:/Applikationen/Anlagenkataster/AUIK/auik${TODAY}.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="de.bielefeld.umweltamt.aui.AUIKataster"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ c3p0-0.9.0.jar commons-codec-1.3.jar commons-collections-2.1.1.jar commons-logging-1.0.4.jar concurrent-1.3.2.jar connector.jar dom4j-1.6.1.jar ehcache-1.2.3.jar hibernate3.jar jdbc2_0-stdext.jar log4j-1.2.11.jar oscache-2.1.jar proxool-0.8.3.jar xml-apis.jar forms-1.0.5.jar l2fprod-common-all.jar jfreechart-1.0.0-pre2.jar jcommon-1.0.0-pre2.jar jcalendar.jar asm.jar asm-attrs.jar cglib-2.1.3.jar antlr-2.7.6.jar sac.jar jta.jar coreapi.jar dataadapterapi.jar commons-cli-1.0.jar com.ibm.icu_3.8.1.v20080530.jar dteapi.jar engineapi.jar flute.jar js.jar modelapi.jar scriptapi.jar postgresql-8.3-605.jdbc3.jar chartengineapi.jar jaxrpc.jar axis.jar commons-digester-1.7.jar iText-2.1.7.jar groovy-all-1.7.5.jar commons-discovery-0.5.jar axis-wsdl4j-1.5.1.jar looks-1.2.2.jar com.jgoodies.uif_lite.jar jasperreports-5.0.0.jar jasperreports-fonts-5.0.0.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="${bin}"/>
+            <zipfileset dir="${lib}" includes="c3p0-0.9.0.jar"/>
+            <zipfileset dir="${lib}" includes="commons-codec-1.3.jar"/>
+            <zipfileset dir="${lib}" includes="commons-collections-2.1.1.jar"/>
+            <zipfileset dir="${lib}" includes="commons-logging-1.0.4.jar"/>
+            <zipfileset dir="${lib}" includes="concurrent-1.3.2.jar"/>
+            <zipfileset dir="${lib}" includes="connector.jar"/>
+            <zipfileset dir="${lib}" includes="dom4j-1.6.1.jar"/>
+            <zipfileset dir="${lib}" includes="ehcache-1.2.3.jar"/>
+            <zipfileset dir="${lib}" includes="hibernate3.jar"/>
+            <zipfileset dir="${lib}" includes="jdbc2_0-stdext.jar"/>
+            <zipfileset dir="${lib}" includes="log4j-1.2.11.jar"/>
+            <zipfileset dir="${lib}" includes="oscache-2.1.jar"/>
+            <zipfileset dir="${lib}" includes="proxool-0.8.3.jar"/>
+            <zipfileset dir="${lib}" includes="xml-apis.jar"/>
+            <zipfileset dir="${lib}" includes="forms-1.0.5.jar"/>
+            <zipfileset dir="${lib}" includes="l2fprod-common-all.jar"/>
+            <zipfileset dir="${lib}" includes="jfreechart-1.0.0-pre2.jar"/>
+            <zipfileset dir="${lib}" includes="jcommon-1.0.0-pre2.jar"/>
+            <zipfileset dir="${lib}" includes="jcalendar.jar"/>
+            <zipfileset dir="${lib}" includes="asm.jar"/>
+            <zipfileset dir="${lib}" includes="asm-attrs.jar"/>
+            <zipfileset dir="${lib}" includes="cglib-2.1.3.jar"/>
+            <zipfileset dir="${lib}" includes="antlr-2.7.6.jar"/>
+            <zipfileset dir="${lib}" includes="sac.jar"/>
+            <zipfileset dir="${lib}" includes="jta.jar"/>
+            <zipfileset dir="${lib}" includes="coreapi.jar"/>
+            <zipfileset dir="${lib}" includes="dataadapterapi.jar"/>
+            <zipfileset dir="${lib}" includes="commons-cli-1.0.jar"/>
+            <zipfileset dir="${lib}" includes="com.ibm.icu_3.8.1.v20080530.jar"/>
+            <zipfileset dir="${lib}" includes="dteapi.jar"/>
+            <zipfileset dir="${lib}" includes="engineapi.jar"/>
+            <zipfileset dir="${lib}" includes="flute.jar"/>
+            <zipfileset dir="${lib}" includes="js.jar"/>
+            <zipfileset dir="${lib}" includes="modelapi.jar"/>
+            <zipfileset dir="${lib}" includes="scriptapi.jar"/>
+            <zipfileset dir="${lib}" includes="postgresql-8.3-605.jdbc3.jar"/>
+            <zipfileset dir="${lib}" includes="chartengineapi.jar"/>
+            <zipfileset dir="${lib}" includes="jaxrpc.jar"/>
+            <zipfileset dir="${lib}" includes="axis.jar"/>
+            <zipfileset dir="${lib}" includes="commons-digester-1.7.jar"/>
+            <zipfileset dir="${lib}" includes="iText-2.1.7.jar"/>
+            <zipfileset dir="${lib}" includes="groovy-all-1.7.5.jar"/>
+            <zipfileset dir="${lib}" includes="commons-discovery-0.5.jar"/>
+            <zipfileset dir="${lib}" includes="axis-wsdl4j-1.5.1.jar"/>
+            <zipfileset dir="${lib}" includes="looks-1.2.2.jar"/>
+            <zipfileset dir="${lib}" includes="com.jgoodies.uif_lite.jar"/>
+            <zipfileset dir="${lib}" includes="jasperreports-5.0.0.jar"/>
+            <zipfileset dir="${lib}" includes="jasperreports-fonts-5.0.0.jar"/>
+        </jar>
+    </target>
+</project>
