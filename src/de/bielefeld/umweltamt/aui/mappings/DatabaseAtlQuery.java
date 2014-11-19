@@ -790,7 +790,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
             { // Anlieferung | Faulschlamm | Rohschlamm | Zulauf // Kläranlage:
                                24546,        24603,       17796, // Heepen
                                              24602,       17797, // Brake
-                                             24605,              // Obere Lutter
+                               42904,        24605,              // Obere Lutter
                  24504,        24547,        24604,       24584  // Sennestadt
                                                                  // Verl-Sende
             };
@@ -813,9 +813,11 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
     public static List<AtlSielhaut> findSielhaut(String search) {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(AtlSielhaut.class)
+            	.createAlias("basisObjekt", "objekt")
                 .add(Restrictions.ilike("bezeichnung", search, MatchMode.START))
                 .addOrder(Order.desc("PSielhaut"))
                 .addOrder(Order.desc("PFirmenprobe"))
+                .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("bezeichnung")),
             new AtlSielhaut());
     }
@@ -882,10 +884,15 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery {
                 .add(Restrictions.eq("parameterId", param.getOrdnungsbegriff()))
                 .add(Restrictions.eq("einheitenId", einheit.getId()))
                 .add(Restrictions.eq("probepktId", punkt.getObjektid()))
+                .add(Restrictions.gt("wert", new Float(0)))
                 .add(Restrictions.between(
                     "datumDerEntnahme", beginDate, endDate))
-                .addOrder(Order.asc("datumDerEntnahme"));
-        if (analyseVon != null && !analyseVon.equals("")) {
+                .addOrder(Order.asc("datumDerEntnahme"));        
+        if (analyseVon.equals("Selbstüberwachung")) {
+        	detachedCriteria.add(Restrictions.like(
+                    "kennummer", "7", MatchMode.START));
+        }
+        else if (analyseVon != null && !analyseVon.equals("")) {
             detachedCriteria.add(Restrictions.like("analyseVon", analyseVon));
         }
         List<ViewAtlAnalysepositionAll> viewResult =
