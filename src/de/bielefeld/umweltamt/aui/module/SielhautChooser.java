@@ -57,6 +57,7 @@ class SielhautChooser extends OkCancelDialog {
         this.ergebnisTabelle.getColumnModel().getColumn(2).setPreferredWidth(8);
         this.ergebnisTabelle.getColumnModel().getColumn(3).setPreferredWidth(8);
         this.ergebnisTabelle.getColumnModel().getColumn(4).setPreferredWidth(8);
+        this.ergebnisTabelle.getColumnModel().getColumn(5).setPreferredWidth(8);
 
         setResizable(true);
 

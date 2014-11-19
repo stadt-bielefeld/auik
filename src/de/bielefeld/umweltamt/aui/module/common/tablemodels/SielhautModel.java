@@ -12,7 +12,7 @@ public class SielhautModel extends ListTableModel {
     private static final AuikLogger log = AuikLogger.getLogger();
 
     public SielhautModel() {
-        super(new String[] {"Bezeichnung", "Lage", "R", "F", "N"}, false);
+        super(new String[] {"Bezeichnung", "Lage", "R", "F", "N", "I"}, false);
     }
 
     /* (non-Javadoc)
@@ -49,6 +49,13 @@ public class SielhautModel extends ListTableModel {
                     tmp = new Boolean(false);
                 } else {
                     tmp = new Boolean(spunkt.getPNachprobe());
+                }
+                break;
+            case 5:
+                if (spunkt.getBasisObjekt().isInaktiv() == true) {
+                    tmp = new Boolean(true);
+                } else {
+                    tmp = new Boolean(false);
                 }
                 break;
             default:
