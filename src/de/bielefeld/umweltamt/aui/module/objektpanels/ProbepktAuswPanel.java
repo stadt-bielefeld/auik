@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -831,10 +832,19 @@ public class ProbepktAuswPanel extends JPanel {
     }
 
     private JComboBox getAnalyseVonBox() {
+    	List<String> list1 = Arrays.asList(DatabaseQuery.getAnalysierer());
+    	List<String> list2 = new ArrayList<String>();
+    	list2.add(new String("Selbstüberwachung"));
+    	list2.addAll(1, list1);
+    	String[] array = new String[list2.size()];
+    	int i=0;
+    	for(String s: list2){
+    	  array[i++] = s;
+    	}
         if (this.analyseVonBox == null) {
             this.analyseVonBox = new JComboBox();
             this.analyseVonBox.setModel(
-                new DefaultComboBoxModel(DatabaseQuery.getAnalysierer()));
+                new DefaultComboBoxModel(array));
             this.analyseVonBox.setSelectedIndex(-1);
         }
 
