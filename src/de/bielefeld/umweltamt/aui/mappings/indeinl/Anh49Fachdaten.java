@@ -95,6 +95,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
     private Set<Anh49Analysen> anh49Analysens = new HashSet<Anh49Analysen>(0);
     private Set<Anh49Verwaltungsverf> anh49Verwaltungsverfs = new HashSet<Anh49Verwaltungsverf>(0);
     private Set<Anh49Ortstermine> anh49Ortstermines = new HashSet<Anh49Ortstermine>(0);
+    private Set<Anh49Abfuhr> anh49Abfuhr = new HashSet<Anh49Abfuhr>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -114,7 +115,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
 
     /** Full constructor */
     public Anh49Fachdaten(
-        BasisObjekt basisObjekt, String klaeranlage, String name, String bemerkungen, String planquadrat, Boolean abgemeldet, String technikAnh49, String technikAnh49Nr, String sachkundelfa, Boolean werkstatt, Boolean bodeneinlaeufe, Boolean waschanlagen, String sonstiges, String analysemonat, Boolean abwasserfrei, String anredeantragst, String nameantragst, String zusantragst, String strasseantragst, Integer hausnrantragst, String hausnrzusantragst, String plzantragst, String ortantragst, String sachbearbeiterIn, String ansprechpartnerIn, Date antragvom, Date genehmigung, Date wiedervorlage, Date aenderungsgenehmigung, Date letztesAnschreiben, String anschreiben, Boolean waschanlage, Boolean ESatzung, Date seitwann, String sonstigestechnik, Boolean maengel, Boolean behoben, Date frist, Integer durchgefuehrt, Date dekraTuevDatum, boolean enabled, boolean deleted, Set<Anh49Kontrollen> anh49Kontrollens, Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses, Set<Anh49Analysen> anh49Analysens, Set<Anh49Verwaltungsverf> anh49Verwaltungsverfs, Set<Anh49Ortstermine> anh49Ortstermines) {
+        BasisObjekt basisObjekt, String klaeranlage, String name, String bemerkungen, String planquadrat, Boolean abgemeldet, String technikAnh49, String technikAnh49Nr, String sachkundelfa, Boolean werkstatt, Boolean bodeneinlaeufe, Boolean waschanlagen, String sonstiges, String analysemonat, Boolean abwasserfrei, String anredeantragst, String nameantragst, String zusantragst, String strasseantragst, Integer hausnrantragst, String hausnrzusantragst, String plzantragst, String ortantragst, String sachbearbeiterIn, String ansprechpartnerIn, Date antragvom, Date genehmigung, Date wiedervorlage, Date aenderungsgenehmigung, Date letztesAnschreiben, String anschreiben, Boolean waschanlage, Boolean ESatzung, Date seitwann, String sonstigestechnik, Boolean maengel, Boolean behoben, Date frist, Integer durchgefuehrt, Date dekraTuevDatum, boolean enabled, boolean deleted, Set<Anh49Kontrollen> anh49Kontrollens, Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses, Set<Anh49Analysen> anh49Analysens, Set<Anh49Verwaltungsverf> anh49Verwaltungsverfs, Set<Anh49Ortstermine> anh49Ortstermines, Set<Anh49Abfuhr> anh49Abfuhr) {
         this.basisObjekt = basisObjekt;
         this.klaeranlage = klaeranlage;
         this.name = name;
@@ -162,6 +163,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.anh49Analysens = anh49Analysens;
         this.anh49Verwaltungsverfs = anh49Verwaltungsverfs;
         this.anh49Ortstermines = anh49Ortstermines;
+        this.anh49Abfuhr = anh49Abfuhr;
     }
 
     /* Setter and getter methods */
@@ -549,6 +551,14 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.anh49Ortstermines = anh49Ortstermines;
     }
 
+    public Set<Anh49Abfuhr> getAnh49Abfuhr() {
+        return this.anh49Abfuhr;
+    }
+
+    public void setAnh49Abfuhr(Set<Anh49Abfuhr> anh49Abfuhr) {
+        this.anh49Abfuhr = anh49Abfuhr;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -616,6 +626,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         buffer.append("anh49Analysens").append("='").append(getAnh49Analysens()).append("' ");
         buffer.append("anh49Verwaltungsverfs").append("='").append(getAnh49Verwaltungsverfs()).append("' ");
         buffer.append("anh49Ortstermines").append("='").append(getAnh49Ortstermines()).append("' ");
+        buffer.append("anh49Abfuhr").append("='").append(getAnh49Abfuhr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -728,6 +739,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.anh49Analysens = copy.getAnh49Analysens();
         this.anh49Verwaltungsverfs = copy.getAnh49Verwaltungsverfs();
         this.anh49Ortstermines = copy.getAnh49Ortstermines();
+        this.anh49Abfuhr = copy.getAnh49Abfuhr();
     }
 
     /**

@@ -171,7 +171,7 @@ public class Anh49DetailsPanel extends JPanel {
          * "Abscheider", "Von", "Lage" und "Bemerkung".
          */
         public Anh49AbscheiderModel() {
-            super(new String[] {"Abscheider", "Von", "Lage", "Bemerkung"},
+            super(new String[] {"Abscheider", "Von", "Lage", "Nenngröße", "Hersteller", "Bemerkung"},
                 false, true);
         }
 
@@ -202,6 +202,12 @@ public class Anh49DetailsPanel extends JPanel {
                     tmp = details.getLage();
                     break;
                 case 3:
+                    tmp = details.getNenngroesse();
+                    break;
+                case 4:
+                    tmp = details.getHersteller();
+                    break;
+                case 5:
                     tmp = details.getBemerkung();
                     break;
                 default:
@@ -511,13 +517,13 @@ public class Anh49DetailsPanel extends JPanel {
             abscheiderModel.updateList();
 
             // Den bearbeiteten Abscheider wieder in der Tabelle auswählen
-            Anh49Abscheiderdetails details = editDialog.getDetails();
-            int row = abscheiderModel.getList().indexOf(details);
-            if (row != -1) {
-                getAbscheiderTabelle().setRowSelectionInterval(row, row);
-                getAbscheiderTabelle().scrollRectToVisible(
-                    getAbscheiderTabelle().getCellRect(row, 0, true));
-            }
+//            Anh49Abscheiderdetails details = editDialog.getDetails();
+//            int row = abscheiderModel.getList().indexOf(details);
+//            if (row != -1) {
+//                getAbscheiderTabelle().setRowSelectionInterval(row, row);
+//                getAbscheiderTabelle().scrollRectToVisible(
+//                    getAbscheiderTabelle().getCellRect(row, 0, true));
+//            }
         }
     }
 

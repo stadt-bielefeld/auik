@@ -94,7 +94,6 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     private JFormattedTextField nrFeld;
     private JFormattedTextField vonFeld;
     private JFormattedTextField ngsfFeld;
-    private JFormattedTextField ngbaFeld;
     private JFormattedTextField ngkaFeld;
     private JFormattedTextField ngfaFeld;
     private JCheckBox tankstelleCheck;
@@ -125,7 +124,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     @Override
     protected JComponent buildContentArea() {
 
-        String columnString = "right:pref, 3dlu, 30dlu, 10dlu:g, left:max(pref;60dlu):grow";
+        String columnString = "right:pref, 3dlu, 30dlu, 3dlu:g, right:pref:g, 3dlu, 30dlu";
         FormLayout layout = new FormLayout(
                 // Spalten
                 columnString,
@@ -149,36 +148,36 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         CellConstraints cc = new CellConstraints();
 
         // Stamdaten ------------------------------------
-        builder.addSeparator("Stammdaten",    cc.xyw(1, 1, 5));
-        builder.addLabel("Lage:",            cc.xy( 1, 3));
-        builder.add(getLageFeld(),            cc.xyw(3, 3, 3));
-        builder.addLabel("Hersteller:",        cc.xy( 1, 5));
-        builder.add(getHerstellerFeld(),    cc.xyw(3, 5, 3));
-        builder.addLabel("Nr.:",            cc.xy( 1, 7));
-        builder.add(getNrFeld(),             cc.xy( 3, 7));
-        builder.add(getTankstelleCheck(),    cc.xy( 5, 7));
-        builder.addLabel("Von:",            cc.xy( 1, 9));
-        builder.add(getVonFeld(),             cc.xy( 3, 9));
-        builder.add(getSchlammfangCheck(),    cc.xy( 5, 9));
-        builder.add(getBenzinabscheiderCheck(),    cc.xy( 5,11));
+        builder.addSeparator("Stammdaten",    cc.xyw(1, 1, 7));
+        builder.addLabel("Nr.:",            cc.xy( 1, 3));
+        builder.add(getNrFeld(),             cc.xy( 3, 3));
+        builder.addLabel("Von:",            cc.xy( 5, 3));
+        builder.add(getVonFeld(),             cc.xy( 7, 3));
+        builder.addLabel("Lage:",            cc.xy( 1, 5));
+        builder.add(getLageFeld(),            cc.xyw(3, 5, 5));
+        builder.addLabel("Hersteller:",        cc.xy( 1, 7));
+        builder.add(getHerstellerFeld(),    cc.xyw(3, 7, 5));
+        builder.addLabel("Nenngröße:",            cc.xy( 1,9));
+        builder.add(getNgfaFeld(),            cc.xy( 3,9));
+        builder.addSeparator("Ölabscheider",    cc.xyw(1, 11, 7));
         builder.addLabel("NG SF:",            cc.xy( 1,13));
         builder.add(getNgsfFeld(),             cc.xy( 3,13));
-        builder.add(getKoalenszenzfilterCheck(), cc.xy( 5,13));
-        builder.addLabel("NG BA:",            cc.xy( 1,15));
-        builder.add(getNgbaFeld(),            cc.xy( 3,15));
-        builder.add(getIntegriertCheck(),    cc.xy( 5,15));
-        builder.addLabel("NG KA:",            cc.xy( 1,17));
-        builder.add(getNgkaFeld(),            cc.xy( 3,17));
-        builder.add(getEmulsionCheck(),        cc.xy(5,17));
-        builder.addLabel("NG FA:",            cc.xy( 1,19));
-        builder.add(getNgfaFeld(),            cc.xy( 3,19));
-        builder.add(getSchwimmerCheck(),    cc.xy(5,19));
-        builder.add(getWohnhausCheck(),        cc.xy(5,21));
-        builder.addSeparator("Bemerkungen",    cc.xyw(1,23,5));
+        builder.addLabel("NG KA:",            cc.xy( 5,13));
+        builder.add(getNgkaFeld(),            cc.xy( 7,13));
+        builder.add(getTankstelleCheck(),    cc.xyw( 1, 15, 3, "l, b"));
+        builder.add(getSchlammfangCheck(),    cc.xyw( 5, 15, 3, "l, b"));
+        builder.add(getBenzinabscheiderCheck(),    cc.xyw( 1,17, 3, "l, b"));
+        builder.add(getKoalenszenzfilterCheck(), cc.xyw( 5,17, 3, "l, b"));
+        builder.add(getIntegriertCheck(),    cc.xyw( 1,19, 3, "l, b"));
+        builder.add(getEmulsionCheck(),        cc.xyw(5,19, 3, "l, b"));
+        builder.add(getSchwimmerCheck(),    cc.xyw(1,21, 3, "l, b"));
+        builder.add(getWohnhausCheck(),        cc.xyw(5,21, 3, "l, b"));
+        builder.addSeparator("Bemerkungen",    cc.xyw(1,23,7));
         JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(bemerkungsScroller,        cc.xyw(1,25,5, "fill, fill"));
-
+        builder.add(bemerkungsScroller,        cc.xyw(1,25,7, "fill, fill"));
+    	
         return builder.getPanel();
+    	
     }
 
     /* (non-Javadoc)
@@ -186,7 +185,8 @@ public class AbscheiderEditor extends AbstractBaseEditor{
      */
     @Override
     protected void fillForm() {
-    	Anh49Abscheiderdetails details = this.getDetails();
+        
+        Anh49Abscheiderdetails details = this.getDetails();
     	// Nur für vorhandene Abscheider Werte laden.
     	if (details.getId() != null) {
             getLageFeld().setText(details.getLage());
@@ -194,7 +194,6 @@ public class AbscheiderEditor extends AbstractBaseEditor{
             getNrFeld().setValue(details.getAbscheidernr());
             getVonFeld().setValue(details.getVon());
             getNgsfFeld().setValue(details.getNgSf());
-            getNgbaFeld().setValue(details.getNgBa());
             getNgkaFeld().setValue(details.getNgKa());
             getNgfaFeld().setValue(details.getNenngroesse());
             getBemerkungsArea().setText(details.getBemerkung());
@@ -244,10 +243,6 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         // Nenngroesse Sandfang:
         Integer ngsf = ((IntegerField)ngsfFeld).getIntValue();
         details.setNgSf(ngsf);
-
-        // Nenngroesse Benzinabscheider:
-        Integer ngba = ((IntegerField)ngbaFeld).getIntValue();
-        details.setNgBa(ngba);
 
         // Nenngroesse Koaleszenzabscheider:
         Integer ngka = ((IntegerField)ngkaFeld).getIntValue();
@@ -331,12 +326,6 @@ public class AbscheiderEditor extends AbstractBaseEditor{
             lageFeld = new LimitedTextField(50);
         }
         return lageFeld;
-    }
-    private JFormattedTextField getNgbaFeld() {
-        if (ngbaFeld == null) {
-            ngbaFeld = new IntegerField();
-        }
-        return ngbaFeld;
     }
     private JFormattedTextField getNgkaFeld() {
         if (ngkaFeld == null) {

@@ -33,6 +33,7 @@ import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -102,21 +103,20 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     }
 
     /**
-     * Get all Anh49Abscheiderdetails that are Fettabscheider
-     * @return <code>List&lt;Anh49Abscheiderdetails&gt;</code>
+     * Get all Anh49Fachdaten that are Fettabscheider
+     * @return <code>List&lt;Anh49Fachdaten&gt;</code>
      */
-    public static List<Anh49Abscheiderdetails> getFettabscheider() {
+    public static List<Anh49Fachdaten> getFettabscheider() {
         return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anh49Abscheiderdetails.class)
-                .createAlias("anh49Fachdaten", "anhang")
-                .createAlias("anhang.basisObjekt", "objekt")
+            DetachedCriteria.forClass(Anh49Fachdaten.class)
+                .createAlias("basisObjekt", "objekt")
                 .createAlias("objekt.basisObjektarten", "art")
                 .createAlias("objekt.basisBetreiber", "betreiber")
                 .add(Restrictions.eq("art.id",
                     DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("betreiber.betrname")),
-            new Anh49Abscheiderdetails());
+            new Anh49Fachdaten());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
@@ -162,8 +162,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
      * @returns <code>List&lt;Anh49Fachdaten&gt;</code>
      */
     public static List<Anh49Fachdaten> getAnh49FachdatenAuswahl(
-        Boolean aktiv, Boolean abgemeldet, Boolean abwasserfrei,
-        Boolean abgelWdrVorlage, Integer tuev,
+        Boolean inaktiv, Boolean abgemeldet, Boolean abwasserfrei,
+        Boolean abgelWdrVorlage,
         BasisSachbearbeiter sachbearbeiter) {
 
         DetachedCriteria criteria =
@@ -171,26 +171,26 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .createAlias("basisObjekt", "obj")
                 .createAlias("basisObjekt.basisObjektarten", "art");
 
-        if (aktiv != null) {
-            criteria.add(Restrictions.eq("obj.inaktiv", !aktiv));
+        if (inaktiv == true) {
+            criteria.add(Restrictions.eq("obj.inaktiv", inaktiv));
         }
-        if (abgemeldet != null) {
+        if (abgemeldet == true) {
             criteria.add(Restrictions.eq("abgemeldet", abgemeldet));
         }
-        if (abwasserfrei != null) {
+        if (abwasserfrei == true) {
             criteria.add(Restrictions.eq("abwasserfrei", abwasserfrei));
         }
-        if (abgelWdrVorlage != null && abgelWdrVorlage) {
+        if (abgelWdrVorlage == true && abgelWdrVorlage) {
             criteria.add(Restrictions.le("wiedervorlage", new Date()));
         }
-        if (tuev != null) {
-            Calendar start = Calendar.getInstance();
-            start.set(tuev, 1, 1, 0, 0, 0); // start = 'tuev-01-01 00:00:00'
-            Calendar end = Calendar.getInstance();
-            end.set(tuev, 12, 31, 23, 59, 59); // end = 'tuev-12-31 23:59:59'
-            criteria.add(Restrictions.between(
-                "dekraTuevDatum", start.getTime(), end.getTime()));
-        }
+//        if (tuev != null) {
+//            Calendar start = Calendar.getInstance();
+//            start.set(tuev, 1, 1, 0, 0, 0); // start = 'tuev-01-01 00:00:00'
+//            Calendar end = Calendar.getInstance();
+//            end.set(tuev, 12, 31, 23, 59, 59); // end = 'tuev-12-31 23:59:59'
+//            criteria.add(Restrictions.between(
+//                "dekraTuevDatum", start.getTime(), end.getTime()));
+//        }
         if (sachbearbeiter != null) {
             criteria.add(
                 Restrictions.eq("obj.basisSachbearbeiter", sachbearbeiter));
@@ -199,7 +199,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         criteria.add(Restrictions.ne("art.id",
                 DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER));
 
-        criteria.addOrder(Order.asc("dekraTuevDatum"));
+        criteria.addOrder(Order.asc("obj.inaktiv"));
 
         return new DatabaseAccess().executeCriteriaToList(
             criteria, new Anh49Fachdaten());
@@ -208,30 +208,30 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     // This is used for a drop down box. When the time comes and we are not
     // using the dekra_tuev_datum anymore, this should be replaced by the last
     // analyse datum
-    public static Integer[] getOldDekraTuevYears() {
-        Integer years[] = null;
-        Timestamp times[] = new DatabaseAccess().executeCriteriaToArray(
-            DetachedCriteria.forClass(Anh49Fachdaten.class)
-                .createAlias("basisObjekt", "objekt")
-                .createAlias("basisObjekt.basisObjektarten", "art")
-                .add(Restrictions.ne("art.id",
-                    DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
-                .setProjection(Projections.distinct(
-                    Projections.property("dekraTuevDatum")))
-                .addOrder(Order.asc("dekraTuevDatum")),
-            new Timestamp[0]);
-        years = new Integer[times.length];
-        Calendar cal = Calendar.getInstance();
-        for (int i = 0; i < times.length; i++) {
-            if (times[i] != null) {
-                cal.setTime(times[i]);
-                years[i] = cal.get(Calendar.YEAR);
-            } else {
-                years[i] = null;
-            }
-        }
-        return years;
-    }
+//    public static Integer[] getOldDekraTuevYears() {
+//        Integer years[] = null;
+//        Timestamp times[] = new DatabaseAccess().executeCriteriaToArray(
+//            DetachedCriteria.forClass(Anh49Fachdaten.class)
+//                .createAlias("basisObjekt", "objekt")
+//                .createAlias("basisObjekt.basisObjektarten", "art")
+//                .add(Restrictions.ne("art.id",
+//                    DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
+//                .setProjection(Projections.distinct(
+//                    Projections.property("dekraTuevDatum")))
+//                .addOrder(Order.asc("dekraTuevDatum")),
+//            new Timestamp[0]);
+//        years = new Integer[times.length];
+//        Calendar cal = Calendar.getInstance();
+//        for (int i = 0; i < times.length; i++) {
+//            if (times[i] != null) {
+//                cal.setTime(times[i]);
+//                years[i] = cal.get(Calendar.YEAR);
+//            } else {
+//                years[i] = null;
+//            }
+//        }
+//        return years;
+//    }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class Anh49Kontrollen                     */
@@ -257,6 +257,23 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .add(Restrictions.eq("anh49Fachdaten", fachdaten))
                 .setProjection(Projections.max("naechstepruefung")),
             new Timestamp(0));
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anh49Abfuhr                    */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get all Anh49Abfuhr for an Anh49Fachdaten and sort them by date
+     * @param fachdaten Anh49Fachdaten
+     * @return <code>List&lt;Anh49Kontrollen&gt;</code>
+     */
+    public static List<Anh49Abfuhr> getAbfuhr(Anh49Fachdaten fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(Anh49Abfuhr.class)
+                .add(Restrictions.eq("anh49Fachdaten", fachdaten))
+                .addOrder(Order.asc("abfuhrdatum")),
+            new Anh49Abfuhr());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

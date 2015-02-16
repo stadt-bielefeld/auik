@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="25" uuid="3e42c968-6230-4d71-b690-a3ead7f68061">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="109"/>
-	<property name="ireport.y" value="269"/>
+	<property name="ireport.y" value="1382"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -35,7 +35,7 @@
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
-				<text><![CDATA[Frau Gößling]]></text>
+				<text><![CDATA[Frau Melcher]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="6074d07b-e8a0-41c9-9369-597bba42c3b4" x="348" y="147" width="40" height="10"/>
@@ -70,7 +70,7 @@
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
-				<text><![CDATA[Ehemaliges Ankergebäude]]></text>
+				<text><![CDATA[August-Bebel-Straße 75-77]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="9d8daa06-9970-4976-9ff9-780f43535cbe" x="390" y="156" width="83" height="10"/>
@@ -87,13 +87,6 @@
 				<text><![CDATA[0521 51-3395]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b2c568f5-d36a-44c4-983b-bd0c145acfd1" x="348" y="76" width="125" height="10"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="7"/>
-				</textElement>
-				<text><![CDATA[Ravensberger Straße 12]]></text>
-			</staticText>
-			<staticText>
 				<reportElement uuid="746b76e2-c302-4e6d-8fd0-af71d940ed42" x="348" y="15" width="125" height="15"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10" isBold="true"/>
@@ -105,7 +98,7 @@
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
-				<text><![CDATA[Zimmer 10]]></text>
+				<text><![CDATA[Zimmer 309]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="47b19af0-53e7-42b4-a472-816d3f62833b" x="348" y="29" width="125" height="15"/>
@@ -381,7 +374,7 @@
 				<textElement markup="styled">
 					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Bitte überweisen Sie die Gesamtgebühr von <style isBold='true'>"+ $P{gesamtkosten} +"</style> bis zum <style isBold='true'>" + $P{maxdatum} + "</style> unter Angabe des Kassenzeichens <style isBold='true'>" + $P{kassenzeichen} + "</style> an die Stadtkasse Bielefeld, Konto-Nr. 26 bei der Sparkasse Bielefeld, Bankleitzahl 480 501 61."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Bitte überweisen Sie die Gesamtgebühr von <style isBold='true'>"+ $P{gesamtkosten} +"</style> bis zum <style isBold='true'>" + $P{maxdatum} + "</style> unter Angabe des Kassenzeichens <style isBold='true'>" + $P{kassenzeichen} + "</style> auf eines der unten genannten Konten."]]></textFieldExpression>
 			</textField>
 			<break>
 				<reportElement uuid="8860ba0b-aa15-4e82-a685-48ebb6d8d743" x="0" y="35" width="100" height="1">
@@ -485,7 +478,7 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
-				<text><![CDATA[Gößling]]></text>
+				<text><![CDATA[Melcher]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="5a9c6d74-49e9-46be-8c5b-0efea6bc63fa" x="0" y="84" width="100" height="12"/>

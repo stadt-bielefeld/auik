@@ -95,7 +95,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
     private JCheckBox aktivCheck;
     private JCheckBox wiedervorlageCheck;
     private JComboBox sachbBox;
-    private JComboBox dekraTuevBox;
+//    private JComboBox dekraTuevBox;
     private JButton auswahlButton;
     private JButton tabelleExportButton;
 
@@ -129,22 +129,22 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage");
             abgemeldetCheck = new JCheckBox("Abgemeldet");
             abwasserfreiCheck = new JCheckBox("Abwasserfrei");
-            aktivCheck = new JCheckBox("Aktiv");
+            aktivCheck = new JCheckBox("Inaktiv");
             abgemeldetCheck.setSelected(false);
             abwasserfreiCheck.setSelected(false);
-            aktivCheck.setSelected(true);
+            aktivCheck.setSelected(false);
             sachbBox = new JComboBox();
             sachbBox.setModel(new DefaultComboBoxModel(
                 DatabaseQuery.getOrderedAll(new BasisSachbearbeiter(), "name")
                     .toArray(new BasisSachbearbeiter[0])));
             sachbBox.setSelectedItem(DatabaseQuery.getCurrentSachbearbeiter());
-            dekraTuevBox = new JComboBox();
-            dekraTuevBox.setModel(new DefaultComboBoxModel(
-                DatabaseQuery.getOldDekraTuevYears()));
-			if (dekraTuevBox.getModel().getSize() != 0) {
-				dekraTuevBox
-						.setSelectedIndex(dekraTuevBox.getModel().getSize() - 6);
-			}
+//            dekraTuevBox = new JComboBox();
+//            dekraTuevBox.setModel(new DefaultComboBoxModel(
+//                DatabaseQuery.getOldDekraTuevYears()));
+//			if (dekraTuevBox.getModel().getSize() != 0) {
+//				dekraTuevBox
+//						.setSelectedIndex(dekraTuevBox.getModel().getSize() - 1);
+//			}
 
             auswahlButton = new JButton("Auswahl anwenden");
 
@@ -157,7 +157,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                         abgemeldetCheck.isSelected(),
                         abwasserfreiCheck.isSelected(),
                         wiedervorlageCheck.isSelected(),
-                        (Integer) dekraTuevBox.getSelectedItem(),
+//                        (Integer) dekraTuevBox.getSelectedItem(),
                         (BasisSachbearbeiter) sachbBox.getSelectedItem()));
                     model.fireTableDataChanged();
                     frame.changeStatus("" + model.getRowCount()
@@ -170,15 +170,17 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                 "pref, 20dlu, pref, 20dlu, pref, 3dlu, pref, 20dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(abgemeldetCheck);
-            builder.append(aktivCheck);
             builder.append("SachbearbeiterIn:", sachbBox);
             builder.append(auswahlButton);
+            builder.append(abgemeldetCheck);
+            builder.append(aktivCheck);
             builder.nextLine();
-            builder.append(abwasserfreiCheck);
-            builder.append(wiedervorlageCheck);
-            builder.append("TÜV/DEKRA Termin:", dekraTuevBox);
+            builder.append("");
+            builder.append("");
+//            builder.append("TÜV/DEKRA Termin:", dekraTuevBox);
             builder.append(getTabelleExportButton());
+            builder.append(wiedervorlageCheck);
+            builder.append(abwasserfreiCheck);
 
             queryPanel = builder.getPanel();
         }

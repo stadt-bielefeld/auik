@@ -43,6 +43,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -324,6 +325,16 @@ public class DatabaseClassToString {
         return "[Prüfdatum: "
             + AuikUtils.getStringFromDate(clazz.getPruefdatum())
             + ", Ergebnis: " + clazz.getPruefergebnis() + "]";
+    }
+
+    /**
+     * @return Custom Anh49Abfuhr.toString()
+     * Liefert einen String der Form "[Datum: Abfuhrdatum und Entsorger]".
+     */
+    public static String toStringForClass(Anh49Abfuhr clazz) {
+        return "[Abfuhrdatum: "
+            + AuikUtils.getStringFromDate(clazz.getAbfuhrdatum())
+            + ", Entsorger: " + clazz.getEntsorger() + "]";
     }
 
     /**

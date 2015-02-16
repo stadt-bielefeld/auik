@@ -170,5 +170,6 @@ public class DatabaseConstants {
     public static final String VAWS_ANLAGENART_ROHRLEITUNG = "Rohrleitung";
     public static final String VAWS_ANLAGENART_VAWS_ABSCHEIDER =
         "VAwS-Abscheider";
+    public static final String VAWS_ANLAGENART_FAHRSILO = "Fahrsilo";
 
 }

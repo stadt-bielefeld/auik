@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 /**
@@ -36,8 +37,9 @@ public class FettabschModel extends ListTableModel {
         super(new String[]{
                 "Betreiber",
                 "Standort",
-                "Nenngröße",
                 "Bemerkungen",
+                "Abfuhrdatum",
+                "nächste Abfuhr",
                 "letztes Chrono-Datum"
         },
         false);
@@ -48,34 +50,36 @@ public class FettabschModel extends ListTableModel {
      */
 	@Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Anh49Abscheiderdetails ad = (Anh49Abscheiderdetails) objectAtRow;
+		Anh49Fachdaten fd = (Anh49Fachdaten) objectAtRow;
 		Object tmp = null;
 		switch (columnIndex) {
     		case 0:
-    			tmp = ad.getAnh49Fachdaten().getBasisObjekt().getBasisBetreiber();
+    			tmp = fd.getBasisObjekt().getBasisBetreiber();
     			break;
     		case 1:
-    			tmp = ad.getAnh49Fachdaten().getBasisObjekt().getBasisStandort();
+    			tmp = fd.getBasisObjekt().getBasisStandort();
     			break;
     		case 2:
-    			tmp = ad.getNenngroesse();
-    			if (tmp == null) {
-    				tmp = "Keine Nenngröße angegeben";
-    			}
+    			tmp = fd.getBemerkungen();
     			break;
     		case 3:
-    			tmp = ad.getAnh49Fachdaten().getBemerkungen();
+    			tmp = DatabaseQuery.getLastAbfuhrDateForObjekt(
+    		    		fd);
     			break;
     		case 4:
+    			tmp = DatabaseQuery.getNextAbfuhrDateForObjekt(
+    		    		fd);
+    			break;
+    		case 5:
     		    tmp = DatabaseQuery.getLastChronoDateForObjekt(
-    		        ad.getAnh49Fachdaten().getBasisObjekt());
+    		    		fd.getBasisObjekt());
     		    break;
     		default:
     			tmp = "ERROR";
 		}
 
 		if (tmp != null &&
-		    ad.getAnh49Fachdaten().getBasisObjekt().isInaktiv()) {
+			fd.getBasisObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
 		}
 		return tmp;

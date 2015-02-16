@@ -44,6 +44,8 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -359,6 +361,42 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
             DetachedCriteria.forClass(BasisObjektchrono.class)
                 .add(Restrictions.eq("basisObjekt", objekt))
                 .setProjection(Projections.distinct(Projections.max("datum"))),
+            new Timestamp(0));
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package indeinl : class Anh49Abfuhr                    */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Go throw the Anh49Abfuhr Set and grep the earliest abfuhrdatum.
+     * @param objekt Anh49Fachdaten
+     * @return Anh49Abfuhr
+     */
+    public static Timestamp getLastAbfuhrDateForObjekt(Anh49Fachdaten objekt) {
+
+        return new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(Anh49Abfuhr.class)
+                .add(Restrictions.eq("anh49Fachdaten", objekt))
+                .setProjection(Projections.distinct(Projections.max("abfuhrdatum"))),
+            new Timestamp(0));
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package indeinl : class Anh49Abfuhr                    */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Go throw the Anh49Abfuhr Set and grep the earliest naechsteabfuhr.
+     * @param objekt Anh49Fachdaten
+     * @return Anh49Abfuhr
+     */
+    public static Timestamp getNextAbfuhrDateForObjekt(Anh49Fachdaten objekt) {
+
+        return new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(Anh49Abfuhr.class)
+                .add(Restrictions.eq("anh49Fachdaten", objekt))
+                .setProjection(Projections.distinct(Projections.max("naechsteabfuhr"))),
             new Timestamp(0));
     }
 

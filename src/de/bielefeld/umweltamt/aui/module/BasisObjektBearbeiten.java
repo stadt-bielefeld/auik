@@ -113,6 +113,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AbfuhrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49DetailsPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49VerwaltungsverfahrenPanel;
@@ -155,6 +156,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private SuevPanel suevTab;
     private Anh40Panel anhang40Tab;
     private Anh49Panel anhang49Tab;
+    private Anh49AbfuhrenPanel anh49abfuhrTab;
     private Anh49DetailsPanel anh49detailTab;
     private Anh49AnalysenPanel anh49analyseTab;
     private Anh49VerwaltungsverfahrenPanel anh49VerwaltungsverfahrenTab;
@@ -307,6 +309,13 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return anhang49Tab;
     }
 
+    public Anh49AnalysenPanel getAnh49AnalyseTab() {
+        if (anh49analyseTab == null) {
+        	anh49analyseTab = new Anh49AnalysenPanel(this);
+        }
+        return anh49analyseTab;
+    }
+
     public Anh49DetailsPanel getAnh49DetailTab() {
         if (anh49detailTab == null) {
             anh49detailTab = new Anh49DetailsPanel(this);
@@ -314,11 +323,11 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return anh49detailTab;
     }
 
-    public Anh49AnalysenPanel getAnh49AnalyseTab() {
-        if (anh49analyseTab == null) {
-            anh49analyseTab = new Anh49AnalysenPanel(this);
+    public Anh49AbfuhrenPanel getAnh49AbfuhrTab() {
+        if (anh49abfuhrTab == null) {
+            anh49abfuhrTab = new Anh49AbfuhrenPanel(this);
         }
-        return anh49analyseTab;
+        return anh49abfuhrTab;
     }
 
     public Anh49VerwaltungsverfahrenPanel getAnh49VerwaltungsverfahrenTab() {
@@ -479,6 +488,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             getAnhang49Tab().fetchFormData();
                             getAnh49DetailTab().setFachdaten(
                                 getAnhang49Tab().getFachdaten());
+                            getAnh49AbfuhrTab().setFachdaten(
+                                    getAnhang49Tab().getFachdaten());
                             getAnh49VerwaltungsverfahrenTab().setFachdaten(
                                 getAnhang49Tab().getFachdaten());
                             break;
@@ -592,10 +603,12 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                 getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                 getTabbedPane().addTab("Fettabscheider", getAnhang49Tab());
                                 getTabbedPane().addTab(getAnh49DetailTab().getName(), getAnh49DetailTab());
+                                getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
                                 getTabbedPane().addTab(getAnh49VerwaltungsverfahrenTab().getName(), getAnh49VerwaltungsverfahrenTab());
                                 getChronoTab().updateForm();
                                 getAnhang49Tab().updateForm();
                                 getAnh49DetailTab().updateForm();
+                                getAnh49AbfuhrTab().updateForm();
                                 getAnh49VerwaltungsverfahrenTab().updateForm();
                                 getTabbedPane().setSelectedComponent(getAnhang49Tab());
                                 break;

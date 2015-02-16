@@ -57,6 +57,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
     private Boolean deleted;
     private Date datumDerEntnahme;
     private Integer probepktId;
+    private String kennummer;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -74,7 +75,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
 
     /** Full constructor */
     public ViewAtlAnalysepositionAll(
-        Integer id, String grkl, Float wert, String analyseVon, String bericht, Double normwert, Integer einheitenId, String parameterId, Integer probenahmeId, Boolean enabled, Boolean deleted, Date datumDerEntnahme, Integer probepktId) {
+        Integer id, String grkl, Float wert, String analyseVon, String bericht, Double normwert, Integer einheitenId, String parameterId, Integer probenahmeId, Boolean enabled, Boolean deleted, Date datumDerEntnahme, Integer probepktId, String kennummer) {
         this.id = id;
         this.grkl = grkl;
         this.wert = wert;
@@ -88,6 +89,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
         this.deleted = deleted;
         this.datumDerEntnahme = datumDerEntnahme;
         this.probepktId = probepktId;
+        this.kennummer = kennummer;
     }
 
     /* Setter and getter methods */
@@ -195,6 +197,14 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
         this.probepktId = probepktId;
     }
 
+    public String getKennummer() {
+        return this.kennummer;
+    }
+
+    public void setKennummer(String kennummer) {
+        this.kennummer = kennummer;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -228,6 +238,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
         buffer.append("deleted").append("='").append(getDeleted()).append("' ");
         buffer.append("datumDerEntnahme").append("='").append(getDatumDerEntnahme()).append("' ");
         buffer.append("probepktId").append("='").append(getProbepktId()).append("' ");
+        buffer.append("kennummer").append("='").append(getKennummer()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -306,6 +317,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
         this.deleted = copy.getDeleted();
         this.datumDerEntnahme = copy.getDatumDerEntnahme();
         this.probepktId = copy.getProbepktId();
+        this.kennummer = copy.getKennummer();
     }
 
     /**

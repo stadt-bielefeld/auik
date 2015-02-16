@@ -40,7 +40,11 @@ public class KommaDouble {
     }
 
     public KommaDouble(Double value) {
-        this.value = value;
+        if (value == null) {
+            this.value = 0.0;
+        } else {
+            this.value = value.doubleValue();
+        }
     }
 
     public KommaDouble(Float value) {

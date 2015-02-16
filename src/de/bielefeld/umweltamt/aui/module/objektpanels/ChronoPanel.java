@@ -76,6 +76,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.io.File;
@@ -330,7 +331,11 @@ public class ChronoPanel extends JPanel {
     public void updateForm() {
         this.chronoModel.fireTableDataChanged();
     }
-
+    
+    public void clearForm() {
+        // Hier füllen wir das Abscheider-TableModel mit einer leeren Liste
+    	chronoModel.setList(new ArrayList<BasisObjektchrono>());
+    }
     /**
      * Speichert die Objekt-Chronologie-Einträge und löscht gelöschte Datensätze
      * aus der Datenbank.

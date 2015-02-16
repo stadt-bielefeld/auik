@@ -63,6 +63,7 @@ public class DatabaseSerialVersionUID {
     /* Generated serialVersionUID for indeinl package */
     public static final long forAnh40Fachdaten          = 8959882532257266750L;
     public static final long forAnh49Abscheiderdetails  = -7129534671978623498L;
+    public static final long forAnh49Abfuhren           = -7729044660638315321L;
     public static final long forAnh49Analysen           = 2452591869709833506L;
     public static final long forAnh49Fachdaten          = 1996484061739446871L;
     public static final long forAnh49Kontrollen         = 6385012584069870464L;

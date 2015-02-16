@@ -163,5 +163,11 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine" />
         </set>
+        <set name="anh49Abfuhr" table="anh_49_abfuhr" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="anh49id" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr" />
+        </set>
     </class>
 </hibernate-mapping>

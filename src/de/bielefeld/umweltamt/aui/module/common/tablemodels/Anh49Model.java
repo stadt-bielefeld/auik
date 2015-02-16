@@ -47,6 +47,7 @@ import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -62,7 +63,6 @@ public class Anh49Model extends ListTableModel {
             "Standort",
             "Letzte Analyse",
             "Nächste Prüfung",
-            "(Alter) TÜV/DEKRA Termin",
             "Sonstiges Technik",
             "SachbearbeiterIn"
         },
@@ -75,16 +75,35 @@ public class Anh49Model extends ListTableModel {
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Anh49Fachdaten fd = (Anh49Fachdaten) objectAtRow;
+        Object tmp;
+
         switch (columnIndex) {
-            case 0: return fd.getBasisObjekt().getBasisBetreiber().toString();
-            case 1: return fd.getBasisObjekt().getBasisStandort().toString();
-            case 2: return DatabaseQuery.getLetzteAnalyse(fd);
-            case 3: return DatabaseQuery.getNaechsteKontrolle(fd);
-            case 4: return fd.getDekraTuevDatum();
-            case 5: return fd.getSonstigestechnik();
-            case 6: return fd.getBasisObjekt().getBasisSachbearbeiter().toString();
-            default: return "ERROR";
+            case 0: 
+            	tmp = fd.getBasisObjekt().getBasisBetreiber().toString();
+                break;
+            case 1: 
+            	tmp = fd.getBasisObjekt().getBasisStandort().toString();
+                break;
+            case 2: 
+            	tmp = DatabaseQuery.getLetzteAnalyse(fd);
+                break;
+            case 3: 
+            	tmp = DatabaseQuery.getNaechsteKontrolle(fd);
+                break;
+            case 4: 
+            	tmp = fd.getSonstigestechnik();
+                break;
+            case 5: 
+            	tmp = fd.getBasisObjekt().getBasisSachbearbeiter().toString();
+                break;
+            default: 
+            	tmp = "ERROR";
+            break;
         }
+        if (fd.getBasisObjekt().isInaktiv() && tmp != null && tmp instanceof Date == false) {
+            tmp = StringUtils.setStrike(tmp.toString());
+        }
+        return tmp;
     }
 
     @Override
@@ -94,9 +113,8 @@ public class Anh49Model extends ListTableModel {
 			case 1: return String.class;
 			case 2: return Date.class;
             case 3: return Date.class;
-            case 4: return Date.class;
+			case 4: return String.class;
 			case 5: return String.class;
-			case 6: return String.class;
 			default: return null;
 		}
 	}

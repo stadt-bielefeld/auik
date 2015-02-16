@@ -247,7 +247,7 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
     }
 
     /**
-     * Everything that is NOT (Abfüllfläche OR Rohrleitung) is Lageranlage.
+     * Everything that is NOT (Abfüllfläche OR Rohrleitung OR Fahrsilo) is Lageranlage.
      * TODO: Check this. We have a Anlagenart Lageranlage, but also some others
      * @param fachdaten VawsFachdaten
      * @return <code>true</code>, if Anlagenart is NOT
@@ -259,7 +259,9 @@ abstract class DatabaseVawsQuery extends DatabaseTipiQuery {
             fachdaten.getAnlagenart().equals(
                 DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE) ||
             fachdaten.getAnlagenart().equals(
-                DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG)));
+                DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG) ||
+                fachdaten.getAnlagenart().equals(
+                        DatabaseConstants.VAWS_ANLAGENART_FAHRSILO)));
     }
 
     /**

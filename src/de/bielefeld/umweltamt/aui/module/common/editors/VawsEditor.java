@@ -968,6 +968,47 @@ public class VawsEditor extends AbstractBaseEditor {
             beschrBodenflaecheArea.setText(getAbfuellflaeche().getBeschbodenfl());
             beschrFugenmaterialArea.setText(getAbfuellflaeche().getBeschfugenmat());
             beschrAblNiederschlArea.setText(getAbfuellflaeche().getBeschableitung());
+        } else if (getFachdaten().getAnlagenart().equals(
+            DatabaseConstants.VAWS_ANLAGENART_FAHRSILO)) {
+            tabbedPane.addTab("Daten", getDatenAbfuellflaechenTab());
+            tabbedPane.addTab("Ausführung", getAusfuehrungAbfuellflaechenTab());
+            tabbedPane.addTab("Leitungen", getLeitungenLageranlagenTab());
+
+            if(getAbfuellflaeche().getEoh()!=null)
+                eohCheck.setSelected(getAbfuellflaeche().getEoh());
+            else
+                eohCheck.setSelected(false);
+
+            if(getAbfuellflaeche().getEf()!=null)
+                efCheck.setSelected(getAbfuellflaeche().getEf());
+            else
+                efCheck.setSelected(false);
+
+            if(getAbfuellflaeche().getAbfsaniert()!=null)
+                saniertCheck.setSelected(getAbfuellflaeche().getAbfsaniert());
+            else
+                saniertCheck.setSelected(false);
+
+            if(getAbfuellflaeche().getAbfneuerstellt()!=null)
+                neuErstelltCheck.setSelected(getAbfuellflaeche().getAbfneuerstellt());
+            else
+                neuErstelltCheck.setSelected(false);
+
+
+            bodenflaechenAusfBox.setSelectedItem(getAbfuellflaeche().getBodenflaechenausf());
+            dickeFeld.setValue(getAbfuellflaeche().getDicke());
+            gueteFeld.setText(getAbfuellflaeche().getGuete());
+            fugenMaterialFeld.setText(getAbfuellflaeche().getFugenmaterial());
+            niederschlagSchutzBox.setSelectedItem(getAbfuellflaeche().getNiederschlagschutz());
+
+            if(getFachdaten().getDoppelwandig()!=null)
+                abscheiderVorhandenCheck.setSelected(getFachdaten().getDoppelwandig());
+            else
+                abscheiderVorhandenCheck.setSelected(false);
+
+            beschrBodenflaecheArea.setText(getAbfuellflaeche().getBeschbodenfl());
+            beschrFugenmaterialArea.setText(getAbfuellflaeche().getBeschfugenmat());
+            beschrAblNiederschlArea.setText(getAbfuellflaeche().getBeschableitung());
         }
         tabbedPane.addTab("Sachverständigenprüfung", getSvPruefungTab());
         svPruefungModel.setFachdaten(getFachdaten());

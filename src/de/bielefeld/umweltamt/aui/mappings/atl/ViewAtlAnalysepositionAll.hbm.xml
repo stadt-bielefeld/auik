@@ -43,5 +43,8 @@
         <property name="probepktId" type="java.lang.Integer">
             <column name="probepkt_id" />
         </property>
+        <property name="kennummer" type="java.lang.String">
+            <column name="kennummer" />
+        </property>
     </class>
 </hibernate-mapping>

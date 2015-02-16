@@ -90,8 +90,7 @@ public class StandortEditor extends AbstractBaseEditor {
     private JLabel handzeichenLabel;
     private JTextField handzeichenAltFeld;
     private JTextField handzeichenNeuFeld;
-    private JTextField sachbe33ravFeld;
-    private JTextField sachbe33heeFeld;
+    private JTextField sachbeFeld;
     private JFormattedTextField wassermengeFeld;
 
     private JComboBox strassenBox;
@@ -117,8 +116,7 @@ public class StandortEditor extends AbstractBaseEditor {
 
         flurFeld = new LimitedTextField(50);
         flurStkFeld = new LimitedTextField(50);
-        sachbe33ravFeld = new LimitedTextField(50);
-        sachbe33heeFeld = new LimitedTextField(50);
+        sachbeFeld = new LimitedTextField(50);
         wassermengeFeld = new IntegerField();
 
         e32Feld = new DoubleField(1);
@@ -179,8 +177,7 @@ public class StandortEditor extends AbstractBaseEditor {
         e32Feld.addKeyListener(escEnterListener);
         n32Feld.addKeyListener(escEnterListener);
         handzeichenNeuFeld.addKeyListener(escEnterListener);
-        sachbe33ravFeld.addKeyListener(escEnterListener);
-        sachbe33heeFeld.addKeyListener(escEnterListener);
+        sachbeFeld.addKeyListener(escEnterListener);
         wassermengeFeld.addKeyListener(escEnterListener);
 
         String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
@@ -256,12 +253,10 @@ public class StandortEditor extends AbstractBaseEditor {
 
         // Indirekteinleiter
         builder.addSeparator("Indirekteinleiter",         cc.xyw(1+rS, 9, 5));
-        builder.addLabel("Sachbearbeiter Rav.:",    cc.xy( 1+rS, 11));
-        builder.add(sachbe33ravFeld,            cc.xyw( 3+rS, 11, 3));
-        builder.addLabel("Sachbearbeiter Heepen:",cc.xy(  1+rS, 13 ));
-        builder.add(sachbe33heeFeld,            cc.xyw( 3+rS, 13, 3));
-        builder.addLabel("Wasserverbrauch:",cc.xy(  1+rS, 15 ));
-        builder.add(wassermengeFeld,            cc.xyw( 3+rS, 15, 3));
+        builder.addLabel("Sachbearbeiter:",    cc.xy( 1+rS, 11));
+        builder.add(sachbeFeld,            cc.xyw( 3+rS, 11, 3));
+        builder.addLabel("Wasserverbrauch:",cc.xy(  1+rS, 13 ));
+        builder.add(wassermengeFeld,            cc.xyw( 3+rS, 13, 3));
 
         // Letzte Revision
         builder.addSeparator("Letzte Revision",    cc.xyw(1, 19, 5));
@@ -367,8 +362,7 @@ public class StandortEditor extends AbstractBaseEditor {
                 Date datum = getStandort().getRevidatum();
                 datumFeld.setText(AuikUtils.getStringFromDate(datum));
                 handzeichenAltFeld.setText(getStandort().getRevihandz());
-                sachbe33ravFeld.setText(getStandort().getSachbe33rav());
-                sachbe33heeFeld.setText(getStandort().getSachbe33hee());
+                sachbeFeld.setText(getStandort().getSachbe33rav());
                 wassermengeFeld.setValue(getStandort().getWassermenge());
 
                 frame.clearStatus();
@@ -480,21 +474,12 @@ public class StandortEditor extends AbstractBaseEditor {
         getStandort().setRevidatum(new Date());
 
         // Indirekteinleiter
-        String sachrav = sachbe33ravFeld.getText();
-        if (sachrav != null) {
-            if (sachrav.equals("")) {
+        String sach = sachbeFeld.getText();
+        if (sach != null) {
+            if (sach.equals("")) {
                 getStandort().setSachbe33rav(null);
             } else {
-                getStandort().setSachbe33rav(sachrav);
-            }
-        }
-
-        String sachhee = sachbe33heeFeld.getText();
-        if (sachhee != null) {
-            if (sachhee.equals("")) {
-                getStandort().setSachbe33hee(null);
-            } else {
-                getStandort().setSachbe33hee(sachhee);
+                getStandort().setSachbe33rav(sach);
             }
         }
 
