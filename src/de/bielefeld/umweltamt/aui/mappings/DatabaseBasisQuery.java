@@ -205,7 +205,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
             .add(Restrictions.eq("basisStandort", standort))
             .addOrder(Order.asc("inaktiv"))
             .addOrder(Order.asc("betreiber.betrname"))
-            .addOrder(Order.asc("art.objektart"));
+            .addOrder(Order.asc("art.objektart"))
+            .addOrder(Order.asc("beschreibung"));
         if (abteilung != null) {
             detachedCriteria.add(Restrictions.eq("art.abteilung", abteilung));
         }
@@ -406,6 +407,16 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(BasisObjektchrono.class)
                 .add(Restrictions.eq("basisObjekt", objekt))
+                .addOrder(Order.asc("datum")),
+            new BasisObjektchrono());
+    }
+
+    public static List<BasisObjektchrono> getAllChronos(BasisObjekt objekt) {
+        return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(BasisObjektchrono.class)
+            	.createAlias("basisObjekt", "objekt")
+                .add(Restrictions.eq("objekt.basisBetreiber", objekt.getBasisBetreiber()))
+                .add(Restrictions.eq("objekt.basisStandort", objekt.getBasisStandort()))
                 .addOrder(Order.asc("datum")),
             new BasisObjektchrono());
     }

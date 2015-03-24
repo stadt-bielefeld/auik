@@ -31,6 +31,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
@@ -62,6 +64,28 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     /* Queries for package INDEINL                                            */
     /* ********************************************************************** */
 
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class BasisObjekt                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Sucht alle Objekte einer Objektart,  die nicht erloschen sind.
+     * @param Objektart Es sollen nur Datensätze dieser Artangezeigt werden.
+     * @return <code>List&lt;BasisObjekt&gt;</code>
+     *         Eine Liste mit den entstprechenden Objekte.
+     */
+    public static List<BasisObjekt> getBasisObjektByArt(
+    		BasisObjektarten art) {
+    	return new DatabaseAccess().executeCriteriaToList(
+            DetachedCriteria.forClass(BasisObjekt.class)
+            	.add(Restrictions.eq("basisObjektarten", art))
+                .add(Restrictions.eq("inaktiv", false)),
+            new BasisObjekt());
+                
+        
+    }
+    
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class Anh40Fachdaten                      */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
