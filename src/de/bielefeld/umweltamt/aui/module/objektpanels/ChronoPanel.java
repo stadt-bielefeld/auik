@@ -134,6 +134,7 @@ public class ChronoPanel extends JPanel {
     private JTable chronoTable;
     private JButton saveButton;
     private JButton reportListeButton;
+    private JButton allButton;
 
     /**
      * Erzeugt das Vaws-Panel für das BasisObjektBearbeiten-Modul.
@@ -155,14 +156,14 @@ public class ChronoPanel extends JPanel {
 
         JScrollPane chronoScroller = new JScrollPane(getChronoTable());
 
-        FormLayout layout = new FormLayout("pref 3dlu, pref, 3dlu, pref:g",
-            "f:100dlu:g, 3dlu, pref");
+        FormLayout layout = new FormLayout("pref 3dlu, pref, 3dlu, pref, 3dlu, pref:g",
+            "f:80dlu:g, 3dlu, pref");
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
         builder.setDefaultDialogBorder();
 
-        builder.append(chronoScroller, 5);
+        builder.append(chronoScroller, 7);
         builder.nextLine(2);
-        builder.append(this.reportListeButton, getSaveButton());
+        builder.append(this.reportListeButton, getSaveButton(), getAllButton());
     }
 
     public class ChronoModel extends EditableListTableModel {
@@ -323,6 +324,13 @@ public class ChronoPanel extends JPanel {
     public void fetchFormData() {
         this.chronoModel.setList(
             DatabaseQuery.getChronos(this.hauptModul.getObjekt()));
+    }
+    /**
+     * Holt all Chronologien aus der Datenbank.
+     */
+    public void fetchAllFormData() {
+        this.chronoModel.setList(
+            DatabaseQuery.getAllChronos(this.hauptModul.getObjekt()));
     }
 
     /**
@@ -539,5 +547,20 @@ public class ChronoPanel extends JPanel {
         }
 
         return this.saveButton;
+    }
+
+    private JButton getAllButton() {
+        if (this.allButton == null) {
+            this.allButton = new JButton("Alle Chronologieeinträge");
+            this.allButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    fetchAllFormData();
+                    chronoModel.fireTableDataChanged();
+                }
+            });
+        }
+
+        return this.allButton;
     }
 }
