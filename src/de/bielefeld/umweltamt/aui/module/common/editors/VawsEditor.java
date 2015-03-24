@@ -254,6 +254,10 @@ public class VawsEditor extends AbstractBaseEditor {
     private JRadioButton saniertCheck;
     private JRadioButton neuErstelltCheck;
     private JRadioButton unbktCheck;
+
+    // Daten (Abfüllflächen)
+    private JPanel datenFahrsiloTab;
+    
     // Ausführung (Abfüllflächen)
     private JPanel ausfuehrungAbfuellflaechenTab;
     private JComboBox bodenflaechenAusfBox;
@@ -970,10 +974,12 @@ public class VawsEditor extends AbstractBaseEditor {
             beschrAblNiederschlArea.setText(getAbfuellflaeche().getBeschableitung());
         } else if (getFachdaten().getAnlagenart().equals(
             DatabaseConstants.VAWS_ANLAGENART_FAHRSILO)) {
-            tabbedPane.addTab("Daten", getDatenAbfuellflaechenTab());
+            tabbedPane.addTab("Daten", getDatenFahrsiloTab());
             tabbedPane.addTab("Ausführung", getAusfuehrungAbfuellflaechenTab());
             tabbedPane.addTab("Leitungen", getLeitungenLageranlagenTab());
 
+            mengeFeld.setValue(getFachdaten().getMenge());
+            
             if(getAbfuellflaeche().getEoh()!=null)
                 eohCheck.setSelected(getAbfuellflaeche().getEoh());
             else
@@ -1072,6 +1078,7 @@ public class VawsEditor extends AbstractBaseEditor {
         getFachdaten().setVbfeinstufung((String)vbfBox.getSelectedItem());
         getFachdaten().setGefaehrdungsstufe((String)gefStufeBox.getSelectedItem());
         getFachdaten().setWgk((Integer)wgkBox.getSelectedItem());
+        getFachdaten().setMenge(mengeFeld.getDoubleValue());
 
         getFachdaten().setBaujahr(baujahrFeld.getIntValue());
         getFachdaten().setDatuminbetriebnahme(inbetriebnahmeChooser.getDate());
@@ -1088,7 +1095,6 @@ public class VawsEditor extends AbstractBaseEditor {
         boolean success = true;
 
         if (DatabaseQuery.isLageranlage(getFachdaten())) {
-            getFachdaten().setMenge(mengeFeld.getDoubleValue());
 
             getFachdaten().setDoppelwandig(doppelWandigCheck.isSelected());
             getFachdaten().setLeckanzeige(leckAnzeigeCheck.isSelected());
@@ -1631,6 +1637,56 @@ public class VawsEditor extends AbstractBaseEditor {
             datenAbfuellflaechenTab = builder.getPanel();
         }
         return datenAbfuellflaechenTab;
+    }
+
+    private JPanel getDatenFahrsiloTab() {
+        if (datenFahrsiloTab == null) {
+            FormLayout layout = new FormLayout(
+                    "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
+            );
+            layout.setColumnGroups(new int[][]{{1,5},{3,7}});
+            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+            builder.setDefaultDialogBorder();
+
+            builder.appendSeparator("Stammdaten");
+            builder.append("Behälterart:", behaelterArtBox);
+            builder.append("Behältergröße [m³]:", mengeFeld);
+            
+            builder.appendSeparator("");
+            builder.append("Baujahr:", baujahrFeld);
+            builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
+
+            builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
+            builder.append("Erfassung:", erfassungChooser);
+
+            builder.append("Genehmigung:", genehmigungChooser);
+            builder.append("Stillegung:", stillegungChooser);
+
+            builder.appendSeparator("Abfüllfläche");
+
+            builder.append("", neuErstelltCheck);
+            builder.append("", eohCheck);
+            builder.append("", saniertCheck);
+            builder.append("", efCheck);
+            builder.append("", unbktCheck);
+            builder.append("", svbCheck);
+
+            builder.appendSeparator("Beschreibung der Abfüllfläche");
+            builder.appendRow("3dlu");
+            builder.appendRow("fill:25dlu:grow(0.3)");
+            builder.nextLine(2);
+            builder.append(new JScrollPane(bemerkungArea), 7);
+            builder.nextLine();
+
+            builder.appendSeparator("Anlagen-Chronologie");
+            builder.appendRow("3dlu");
+            builder.appendRow("fill:40dlu:grow");
+            builder.nextLine(2);
+            builder.append(new JScrollPane(anlagenChronoTabelle),7);
+
+            datenFahrsiloTab = builder.getPanel();
+        }
+        return datenFahrsiloTab;
     }
 
     private JPanel getAusfuehrungAbfuellflaechenTab() {
