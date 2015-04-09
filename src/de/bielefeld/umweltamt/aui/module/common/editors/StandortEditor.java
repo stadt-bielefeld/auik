@@ -42,6 +42,8 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.hibernate.criterion.MatchMode;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -49,6 +51,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
@@ -59,497 +62,609 @@ import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 /**
  * Ein Dialog zum Bearbeiten eines Standorts.
+ * 
  * @author David Klotz
  */
-public class StandortEditor extends AbstractBaseEditor {
-    private static final long serialVersionUID = 2023212804506559226L;
+public class StandortEditor extends AbstractBaseEditor
+{
+	private static final long serialVersionUID = 2023212804506559226L;
 
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
+	/** Logging */
+	private static final AuikLogger log = AuikLogger.getLogger();
 
-    // Für die Comboboxen beim Bearbeiten
-    private static String[] strassen = null;
-    private static BasisGemarkung[] gemarkungen = null;
-    private static VawsStandortgghwsg[] standortggs = null;
-    private static String[] entwgebiete = null;
-    private static VawsWassereinzugsgebiete[] wEinzugsgebiete = null;
+	// Für die Comboboxen beim Bearbeiten
+	private static BasisOrte[] orte = null;
+	private static BasisGemarkung[] gemarkungen = null;
+	private static VawsStandortgghwsg[] standortggs = null;
+	private static String[] entwgebiete = null;
+	private static VawsWassereinzugsgebiete[] wEinzugsgebiete = null;
 
-    private JFormattedTextField hausnrEditFeld;
-    private JTextField hausnrZusFeld;
-    private JTextField plzFeld;
-    private JTextField flurFeld;
-    private JTextField flurStkFeld;
-    private JFormattedTextField e32Feld;
-    private JFormattedTextField n32Feld;
-    private JButton ausAblageButton;
-    private JTextField datumFeld;
-    private JLabel handzeichenLabel;
-    private JTextField handzeichenAltFeld;
-    private JTextField handzeichenNeuFeld;
-    private JTextField sachbeFeld;
-    private JFormattedTextField wassermengeFeld;
+	private JFormattedTextField hausnrEditFeld;
+	private JTextField hausnrZusFeld;
+	private JTextField flurFeld;
+	private JTextField flurStkFeld;
+	private JFormattedTextField e32Feld;
+	private JFormattedTextField n32Feld;
+	private JButton ausAblageButton;
+	private JTextField datumFeld;
+	private JLabel handzeichenLabel;
+	private JTextField handzeichenAltFeld;
+	private JTextField handzeichenNeuFeld;
+	private JTextField sachbeFeld;
+	private JFormattedTextField wassermengeFeld;
 
-    private JComboBox strassenBox;
-    private JComboBox gemarkungBox;
-    private JComboBox standortGgBox;
-    private JComboBox entwGebBox;
-    private JComboBox wEinzugsGebBox;
+	private JComboBox orteBox;
+	private JComboBox strassenBox;
+	private JComboBox gemarkungBox;
+	private JComboBox standortGgBox;
+	private JComboBox entwGebBox;
+	private JComboBox wEinzugsGebBox;
 
-    /**
-     * Erzeugt einen neuen Dialog zum Bearbeiten eines Standorts.
-     */
-    public StandortEditor(BasisStandort bsta, HauptFrame owner) {
-        super("Standort ("+ bsta.getId() +")", bsta, owner);
-    }
+	/**
+	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Standorts.
+	 */
+	public StandortEditor(BasisStandort bsta, HauptFrame owner)
+	{
+		super("Standort (" + bsta.getId() + ")", bsta, owner);
+	}
 
-    @Override
-    protected JComponent buildContentArea() {
-        strassenBox = new SearchBox();
+	@Override
+	protected JComponent buildContentArea()
+	{
+		orteBox = new SearchBox();
+		strassenBox = new SearchBox();
 
-        hausnrEditFeld = new IntegerField();
-        hausnrZusFeld = new JTextField();
-        plzFeld = new LimitedTextField(10, "");
+		hausnrEditFeld = new IntegerField();
+		hausnrZusFeld = new JTextField();
 
-        flurFeld = new LimitedTextField(50);
-        flurStkFeld = new LimitedTextField(50);
-        sachbeFeld = new LimitedTextField(50);
-        wassermengeFeld = new IntegerField();
+		flurFeld = new LimitedTextField(50);
+		flurStkFeld = new LimitedTextField(50);
+		sachbeFeld = new LimitedTextField(50);
+		wassermengeFeld = new IntegerField();
 
-        e32Feld = new DoubleField(1);
-        n32Feld = new DoubleField(1);
+		e32Feld = new DoubleField(1);
+		n32Feld = new DoubleField(1);
 
-        datumFeld = new JTextField();
-        datumFeld.setEditable(false);
-        datumFeld.setFocusable(false);
-        datumFeld.setToolTipText("Wird bei Änderungen automatisch aktualisiert.");
+		datumFeld = new JTextField();
+		datumFeld.setEditable(false);
+		datumFeld.setFocusable(false);
+		datumFeld.setToolTipText("Wird bei Änderungen automatisch aktualisiert.");
 
-        handzeichenLabel = new JLabel("Handzeichen:");
-        handzeichenAltFeld = new JTextField();
-        handzeichenAltFeld.setEditable(false);
-        handzeichenAltFeld.setFocusable(false);
-        handzeichenAltFeld.setToolTipText("Handzeichen der letzten Revision");
-        handzeichenNeuFeld = new LimitedTextField(10);
-        handzeichenNeuFeld.setToolTipText("Neues Handzeichen bei Änderungen obligatorisch!");
+		handzeichenLabel = new JLabel("Handzeichen:");
+		handzeichenAltFeld = new JTextField();
+		handzeichenAltFeld.setEditable(false);
+		handzeichenAltFeld.setFocusable(false);
+		handzeichenAltFeld.setToolTipText("Handzeichen der letzten Revision");
+		handzeichenNeuFeld = new LimitedTextField(10);
+		handzeichenNeuFeld.setToolTipText("Neues Handzeichen bei Änderungen obligatorisch!");
 
-        gemarkungBox = new JComboBox();
-        standortGgBox = new JComboBox();
-        entwGebBox = new JComboBox();
-        entwGebBox.setEditable(true);
-        wEinzugsGebBox = new JComboBox();
+		gemarkungBox = new JComboBox();
+		standortGgBox = new JComboBox();
+		entwGebBox = new JComboBox();
+		entwGebBox.setEditable(true);
+		wEinzugsGebBox = new JComboBox();
 
-        // Der folgende KeyListener wird benutzt um mit Escape
-        // das Bearbeiten abzubrechen und bei Enter im
-        // Handzeichen-Feld (wenn das Feld nicht leer ist) zum
-        // Speichern-Button zu springen.
-        KeyListener escEnterListener = new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getSource().equals(handzeichenNeuFeld)) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        if (handzeichenNeuFeld.getText().equals("")) {
-                            handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
-                            handzeichenNeuFeld.requestFocus();
-                        } else {
-                            button1.requestFocus();
-                        }
-                    }
-                }
+		// Der folgende KeyListener wird benutzt um mit Escape
+		// das Bearbeiten abzubrechen und bei Enter im
+		// Handzeichen-Feld (wenn das Feld nicht leer ist) zum
+		// Speichern-Button zu springen.
+		KeyListener escEnterListener = new KeyAdapter()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if (e.getSource().equals(handzeichenNeuFeld))
+				{
+					if (e.getKeyCode() == KeyEvent.VK_ENTER)
+					{
+						if (handzeichenNeuFeld.getText().equals(""))
+						{
+							handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
+							handzeichenNeuFeld.requestFocus();
+						}
+						else
+						{
+							button1.requestFocus();
+						}
+					}
+				}
 
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    doCancel();
-                }
-            }
-        };
-        strassenBox.addKeyListener(escEnterListener);
-        hausnrEditFeld.addKeyListener(escEnterListener);
-        hausnrZusFeld.addKeyListener(escEnterListener);
-        plzFeld.addKeyListener(escEnterListener);
-        gemarkungBox.addKeyListener(escEnterListener);
-        standortGgBox.addKeyListener(escEnterListener);
-        entwGebBox.addKeyListener(escEnterListener);
-        wEinzugsGebBox.addKeyListener(escEnterListener);
-        flurFeld.addKeyListener(escEnterListener);
-        flurStkFeld.addKeyListener(escEnterListener);
-        e32Feld.addKeyListener(escEnterListener);
-        n32Feld.addKeyListener(escEnterListener);
-        handzeichenNeuFeld.addKeyListener(escEnterListener);
-        sachbeFeld.addKeyListener(escEnterListener);
-        wassermengeFeld.addKeyListener(escEnterListener);
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+				{
+					doCancel();
+				}
+			}
+		};
+		orteBox.addKeyListener(escEnterListener);
+		strassenBox.addKeyListener(escEnterListener);
+		hausnrEditFeld.addKeyListener(escEnterListener);
+		hausnrZusFeld.addKeyListener(escEnterListener);
+		gemarkungBox.addKeyListener(escEnterListener);
+		standortGgBox.addKeyListener(escEnterListener);
+		entwGebBox.addKeyListener(escEnterListener);
+		wEinzugsGebBox.addKeyListener(escEnterListener);
+		flurFeld.addKeyListener(escEnterListener);
+		flurStkFeld.addKeyListener(escEnterListener);
+		e32Feld.addKeyListener(escEnterListener);
+		n32Feld.addKeyListener(escEnterListener);
+		handzeichenNeuFeld.addKeyListener(escEnterListener);
+		sachbeFeld.addKeyListener(escEnterListener);
+		wassermengeFeld.addKeyListener(escEnterListener);
 
-        String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
-        String rechteSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g";
-        int rS = 10;
+		String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
+		String rechteSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g";
+		int rS = 10;
 
-        FormLayout layout = new FormLayout(
-                linkeSpalten + ", 10dlu, " + rechteSpalten,    // Spalten
-                "pref, " +    //1
-                "3dlu, " +    //2
-                "pref, " +    //3
-                "3dlu, " +    //4
-                "pref, " +    //5
-                "10dlu, " +    //6
-                "pref, " +    //7
-                "3dlu, " +    //8
-                "pref, " +    //9
-                "3dlu, " +    //10
-                "pref, " +    //11
-                "3dlu, " +    //12
-                "pref, " +    //13
-                "10dlu, " +    //14
-                "pref, " +    //15
-                "3dlu, " +    //16
-                "pref, " +    //17
-                "3dlu, " +    //18
-                "pref, " +    //19
-                "10dlu, " +    //20
-                "pref, " +    //21
-                "3dlu, " +    //22
-                "pref, " +    //23
-                "10dlu, " +    //24
-        "bottom:pref:grow");    //25
+		FormLayout layout = new FormLayout(
+				linkeSpalten + ", 10dlu, " + rechteSpalten, // Spalten
+				"pref, " + //1
+						"3dlu, " + //2
+						"pref, " + //3
+						"3dlu, " + //4
+						"pref, " + //5
+						"10dlu, " + //6
+						"pref, " + //7
+						"3dlu, " + //8
+						"pref, " + //9
+						"3dlu, " + //10
+						"pref, " + //11
+						"3dlu, " + //12
+						"pref, " + //13
+						"10dlu, " + //14
+						"pref, " + //15
+						"3dlu, " + //16
+						"pref, " + //17
+						"3dlu, " + //18
+						"pref, " + //19
+						"10dlu, " + //20
+						"pref, " + //21
+						"3dlu, " + //22
+						"pref, " + //23
+						"10dlu, " + //24
+						"bottom:pref:grow"); //25
 
-        PanelBuilder builder = new PanelBuilder(layout);
-        builder.setDefaultDialogBorder();
-        CellConstraints cc = new CellConstraints();
+		PanelBuilder builder = new PanelBuilder(layout);
+		builder.setDefaultDialogBorder();
+		CellConstraints cc = new CellConstraints();
 
-        // Adresse
-        builder.addSeparator("Stammdaten",     cc.xyw( 1, 1, 9));
-        builder.addLabel("Straße:",            cc.xy(  1, 3 ));
-        builder.add(strassenBox,            cc.xyw( 3, 3 , 3 ));
-        builder.add(hausnrEditFeld,            cc.xy(  7, 3 ));
-        builder.add(hausnrZusFeld,            cc.xy(  9, 3 ));
-        builder.addLabel("PLZ:",            cc.xy(  1, 5 ));
-        builder.add(plzFeld,                cc.xy(  3, 5 ));
+		// Adresse
+		builder.addSeparator("Stammdaten", cc.xyw(1, 1, 9));
+		builder.addLabel("PLZ, Ort:", cc.xy(1, 3));
+		builder.add(orteBox, cc.xyw(3, 3, 7));
+		builder.addLabel("Straße:", cc.xy(1, 5));
+		builder.add(strassenBox, cc.xyw(3, 5, 3));
+		builder.add(hausnrEditFeld, cc.xy(7, 5));
+		builder.add(hausnrZusFeld, cc.xy(9, 5));
 
-        // Koordinaten
-        builder.addLabel("E32:",        cc.xy(  1, 7 ));
-        builder.add(e32Feld,            cc.xy( 3, 7 ));
-        builder.addLabel("N32:",        cc.xy(  1, 9 ));
-        builder.add(n32Feld,                cc.xy( 3, 9 ));
-        builder.add(getAusAblageButton(),    cc.xywh( 5, 7, 1, 3 ));
+		// Koordinaten
+		builder.addLabel("E32:", cc.xy(1, 7));
+		builder.add(e32Feld, cc.xy(3, 7));
+		builder.addLabel("N32:", cc.xy(1, 9));
+		builder.add(n32Feld, cc.xy(3, 9));
+		builder.add(getAusAblageButton(), cc.xywh(5, 7, 1, 3));
 
-        //
-        builder.addLabel("Gemarkung:",        cc.xy(  1, 11 ));
-        builder.add(gemarkungBox,            cc.xyw( 3, 11, 3 ));
-        builder.addLabel("Entwässerungsgebiet:",    cc.xy(  1, 13 ));
-        builder.add(entwGebBox,                cc.xyw( 3, 13, 3 ));
+		//
+		builder.addLabel("Gemarkung:", cc.xy(1, 11));
+		builder.add(gemarkungBox, cc.xyw(3, 11, 3));
+		builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 13));
+		builder.add(entwGebBox, cc.xyw(3, 13, 3));
 
-        // Flur
-        builder.addLabel("Flur:",            cc.xy(  1, 15 ));
-        builder.add(flurFeld,                cc.xy(  3, 15 ));
-        builder.addLabel("Flurstück:",        cc.xy(  1, 17 ));
-        builder.add(flurStkFeld,            cc.xy(  3, 17 ));
+		// Flur
+		builder.addLabel("Flur:", cc.xy(1, 15));
+		builder.add(flurFeld, cc.xy(3, 15));
+		builder.addLabel("Flurstück:", cc.xy(1, 17));
+		builder.add(flurStkFeld, cc.xy(3, 17));
 
-        // VAWS
-        builder.addSeparator("VAWS",         cc.xyw(1+rS, 1, 5));
-        builder.addLabel("Standortgegebenheit:",    cc.xy( 1+rS, 3));
-        builder.add(standortGgBox,            cc.xyw( 3+rS, 3, 3));
-        builder.addLabel("W.Einzugsgebiet:",cc.xy(  1+rS, 5 ));
-        builder.add(wEinzugsGebBox,            cc.xyw( 3+rS, 5, 3));
+		// VAWS
+		builder.addSeparator("VAWS", cc.xyw(1 + rS, 1, 5));
+		builder.addLabel("Standortgegebenheit:", cc.xy(1 + rS, 3));
+		builder.add(standortGgBox, cc.xyw(3 + rS, 3, 3));
+		builder.addLabel("W.Einzugsgebiet:", cc.xy(1 + rS, 5));
+		builder.add(wEinzugsGebBox, cc.xyw(3 + rS, 5, 3));
 
-        // Indirekteinleiter
-        builder.addSeparator("Indirekteinleiter",         cc.xyw(1+rS, 9, 5));
-        builder.addLabel("Sachbearbeiter:",    cc.xy( 1+rS, 11));
-        builder.add(sachbeFeld,            cc.xyw( 3+rS, 11, 3));
-        builder.addLabel("Wasserverbrauch:",cc.xy(  1+rS, 13 ));
-        builder.add(wassermengeFeld,            cc.xyw( 3+rS, 13, 3));
+		// Indirekteinleiter
+		builder.addSeparator("Indirekteinleiter", cc.xyw(1 + rS, 9, 5));
+		builder.addLabel("Sachbearbeiter:", cc.xy(1 + rS, 11));
+		builder.add(sachbeFeld, cc.xyw(3 + rS, 11, 3));
+		builder.addLabel("Wasserverbrauch:", cc.xy(1 + rS, 13));
+		builder.add(wassermengeFeld, cc.xyw(3 + rS, 13, 3));
 
-        // Letzte Revision
-        builder.addSeparator("Letzte Revision",    cc.xyw(1, 19, 5));
-        builder.addLabel("Datum:",            cc.xy(  1, 21 ));
-        builder.add(datumFeld,                cc.xyw( 3, 21, 3 ));
-        builder.addLabel("Handzeichen:",    cc.xy(  1, 23 ));
-        builder.add(handzeichenAltFeld,        cc.xyw( 3, 23, 3 ));
+		// Letzte Revision
+		builder.addSeparator("Letzte Revision", cc.xyw(1, 19, 5));
+		builder.addLabel("Datum:", cc.xy(1, 21));
+		builder.add(datumFeld, cc.xyw(3, 21, 3));
+		builder.addLabel("Handzeichen:", cc.xy(1, 23));
+		builder.add(handzeichenAltFeld, cc.xyw(3, 23, 3));
 
-        // Neue Revision
-        builder.addSeparator("Neue Revision",cc.xyw(1+rS, 19, 5));
-        builder.add(handzeichenLabel,         cc.xy(  1+rS, 21));
-        builder.add(handzeichenNeuFeld,        cc.xyw( 3+rS, 21, 3 ));
+		// Neue Revision
+		builder.addSeparator("Neue Revision", cc.xyw(1 + rS, 19, 5));
+		builder.add(handzeichenLabel, cc.xy(1 + rS, 21));
+		builder.add(handzeichenNeuFeld, cc.xyw(3 + rS, 21, 3));
 
-        strassenBox.addActionListener(new ActionListener() {
-            private int strassenCounter = 0;
+		orteBox.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				if (e.getSource() == orteBox)
+				{
+					reloadStrassen();
+				}
+			}
+		});
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == strassenBox) {
-                    if (plzFeld.getText().equals("") || strassenCounter > 0) {
-                        // Wenn wir eine Straße auswählen, wird die PLZ upgedatet.
-                        BasisStrassen stra = DatabaseQuery.findStrasse(
-                            (String) strassenBox.getSelectedItem());
-                        if (stra != null) {
-                            if (stra.getPlz() != null) {
-                                frame.clearStatus();
-                                plzFeld.setText(stra.getPlz().toString());
-                                //AUIKataster.debugOutput("Die Straße '"+stra+"' hat die eindeutige PLZ: " + stra.getPlz(), "strassenBox.focusLost("+e.getActionCommand()+", Nr: "+strassenCounter+")");
-                            } else {
-                                frame.changeStatus("Die Straße '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
-                                //AUIKataster.debugOutput("Die Straße '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!", "strassenBox.focusLost("+e.getActionCommand()+", Nr: "+strassenCounter+")");
-                                plzFeld.setText("");
-                            }
-                        }
-                    }
-                    strassenCounter++;
-                }
-            }
-        });
+		return builder.getPanel();
+	}
 
-        return builder.getPanel();
-    }
+	/**
+	 * Method reloads the streetlist for a given city
+	 */
+	private void reloadStrassen()
+	{
+		BasisOrte selort = (BasisOrte) orteBox.getSelectedItem();
+		if (selort != null)
+		{
+			// Wenn wir einen Ort auswählen, aktualisieren wir die
+			// Straßenliste
+			BasisStrassen[] strassen = DatabaseQuery.getStrassen(selort.getPlz(), selort.getOrt(), MatchMode.EXACT);
+			if (strassen != null)
+			{
+				strassenBox.setModel(new DefaultComboBoxModel(strassen));
 
-    @Override
-    protected void fillForm() {
-        frame.changeStatus("Beschäftigt...");
+				BasisStrassen selstrasse = (BasisStrassen) strassenBox.getSelectedItem();
+				if (selstrasse != null)
+				{
+					// Ort hat sich geändert => Strasse zurücksetzen
+					if (!StringUtils.equals(selstrasse.getPlz(), selort.getPlz(), true)
+							|| !StringUtils.equals(selstrasse.getOrt(), selort.getOrt(), true))
+					{
+						strassenBox.setSelectedItem(null);
+					}
+				}
 
-        SwingWorkerVariant worker = new SwingWorkerVariant(this) {
+				strassenBox.setEnabled(true);
+			}
+			else
+			{
+				// ohne gültigen Ort gibt's keine Strasse
+				strassenBox.setSelectedItem(null);
+				strassenBox.setEnabled(false);
+			}
+		}
+		else
+		{
+			// ohne gültigen Ort gibt's keine Strasse
+			strassenBox.setSelectedItem(null);
+			strassenBox.setEnabled(false);
+		}
+	}
 
-            @Override
-            protected void doNonUILogic() throws RuntimeException {
-                if (strassen == null) {
-                    strassen = DatabaseQuery.getStrassen();
-                }
-                if (gemarkungen == null) {
-                    gemarkungen = DatabaseQuery.getBasisGemarkungen();
-                }
-                if (standortggs == null) {
-                    standortggs = DatabaseQuery.getVawsStandortgghwsg();
-                }
-                if (entwgebiete == null) {
-                    entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
-                }
-                if (wEinzugsgebiete == null) {
-                    wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiete();
-                }
-            }
+	@Override
+	protected void fillForm()
+	{
+		frame.changeStatus("Beschäftigt...");
 
-            @Override
-            protected void doUIUpdateLogic() throws RuntimeException {
-                if (strassen != null) {
-                    strassenBox.setModel(new DefaultComboBoxModel(strassen));
-                    strassenBox.setSelectedItem(getStandort().getStrasse());
-                }
-                if (gemarkungen != null) {
-                    gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
-                    gemarkungBox.setSelectedItem(getStandort().getBasisGemarkung());
-                }
-                if (standortggs != null) {
-                    standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
-                    standortGgBox.setSelectedItem(getStandort().getVawsStandortgghwsg());
-                }
+		SwingWorkerVariant worker = new SwingWorkerVariant(this)
+		{
 
-                if (entwgebiete != null) {
-                    entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
-                    entwGebBox.setSelectedItem(getStandort().getEntgebid());
-                }
+			@Override
+			protected void doNonUILogic() throws RuntimeException
+			{
+				if (orte == null)
+				{
+					orte = DatabaseQuery.getOrte();
+				}
+				if (gemarkungen == null)
+				{
+					gemarkungen = DatabaseQuery.getBasisGemarkungen();
+				}
+				if (standortggs == null)
+				{
+					standortggs = DatabaseQuery.getVawsStandortgghwsg();
+				}
+				if (entwgebiete == null)
+				{
+					entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
+				}
+				if (wEinzugsgebiete == null)
+				{
+					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiete();
+				}
+			}
 
-                if (wEinzugsgebiete != null) {
-                    wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
-                    wEinzugsGebBox.setSelectedItem(getStandort().getVawsWassereinzugsgebiete());
-                }
+			@Override
+			protected void doUIUpdateLogic() throws RuntimeException
+			{
+				strassenBox.setModel(new DefaultComboBoxModel());
 
-                hausnrEditFeld.setValue(getStandort().getHausnr());
-                hausnrZusFeld.setText(getStandort().getHausnrzus());
-                if (getStandort().getPlz() != null) {
-                    plzFeld.setText(getStandort().getPlz());
-                }
-                flurFeld.setText(getStandort().getFlur());
-                flurStkFeld.setText(getStandort().getFlurstueck());
-                e32Feld.setValue(getStandort().getE32());
-                n32Feld.setValue(getStandort().getN32());
-                Date datum = getStandort().getRevidatum();
-                datumFeld.setText(AuikUtils.getStringFromDate(datum));
-                handzeichenAltFeld.setText(getStandort().getRevihandz());
-                sachbeFeld.setText(getStandort().getSachbe33rav());
-                wassermengeFeld.setValue(getStandort().getWassermenge());
+				if (orte != null)
+				{
+					orteBox.setModel(new DefaultComboBoxModel(orte));
+				}
 
-                frame.clearStatus();
-            }
-        };
-        worker.start();
-    }
+				if (gemarkungen != null)
+				{
+					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
+					gemarkungBox.setSelectedItem(getStandort().getBasisGemarkung());
+				}
+				if (standortggs != null)
+				{
+					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
+					standortGgBox.setSelectedItem(getStandort().getVawsStandortgghwsg());
+				}
 
-    @Override
-    protected boolean canSave() {
-        // Eingaben überprüfen:
-        // Das Handzeichen darf nicht leer sein
-        if (handzeichenNeuFeld.getText() == null || handzeichenNeuFeld.getText().equals("")) {
-            handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
-            handzeichenNeuFeld.requestFocus();
-            frame.changeStatus("Neues Handzeichen erforderlich!", HauptFrame.ERROR_COLOR);
-            //AUIKataster.debugOutput("Neues Handzeichen erforderlich!", "doSave");
-            return false;
-        } else {
-            return true;
-        }
-    }
+				if (entwgebiete != null)
+				{
+					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+					entwGebBox.setSelectedItem(getStandort().getEntgebid());
+				}
 
-    /**
-     * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
-     */
-    @Override
-    protected boolean doSave() {
-        // Straße:
-        String stra = (String) strassenBox.getSelectedItem();
-        getStandort().setStrasse(stra);
+				if (wEinzugsgebiete != null)
+				{
+					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
+					wEinzugsGebBox.setSelectedItem(getStandort().getVawsWassereinzugsgebiete());
+				}
 
-        // Hausnummer:
-        Integer hausnr = ((IntegerField)hausnrEditFeld).getIntValue();
-        getStandort().setHausnr(hausnr);
+				if (!StringUtils.isNullOrEmpty(getStandort().getPlz()))
+				{
+					orteBox.setSelectedItem(new BasisOrte(getStandort().getPlz(), getStandort().getOrt()));
+				}
 
-        // Hausnummer-Zusatz:
-        String hausnrZus = hausnrZusFeld.getText();
-        if ("".equals(hausnrZus)) {
-            getStandort().setHausnrzus(null);
-        } else {
-            getStandort().setHausnrzus(hausnrZus);
-        }
-        // PLZ:
-        String plz = plzFeld.getText().trim();
-        if ("".equals(plz)) {
-            getStandort().setPlz(null);
-        } else {
-            getStandort().setPlz(plz);
-        }
-        // Gemarkung
-        BasisGemarkung bgem = (BasisGemarkung) gemarkungBox.getSelectedItem();
-        getStandort().setBasisGemarkung(bgem);
+				if (!StringUtils.isNullOrEmpty(getStandort().getStrasse()))
+				{
+					strassenBox.setSelectedItem(new BasisStrassen(getStandort().getStrasse()));
+				}
 
-        // Standortgg
-        VawsStandortgghwsg stgg = (VawsStandortgghwsg) standortGgBox.getSelectedItem();
-        getStandort().setVawsStandortgghwsg(stgg);
+				hausnrEditFeld.setValue(getStandort().getHausnr());
+				hausnrZusFeld.setText(getStandort().getHausnrzus());
+				flurFeld.setText(getStandort().getFlur());
+				flurStkFeld.setText(getStandort().getFlurstueck());
+				e32Feld.setValue(getStandort().getE32());
+				n32Feld.setValue(getStandort().getN32());
+				Date datum = getStandort().getRevidatum();
+				datumFeld.setText(AuikUtils.getStringFromDate(datum));
+				handzeichenAltFeld.setText(getStandort().getRevihandz());
+				sachbeFeld.setText(getStandort().getSachbe33rav());
+				wassermengeFeld.setValue(getStandort().getWassermenge());
 
-        // Entwässerungsgebiet
-        String entgb = (String) entwGebBox.getSelectedItem();
+				frame.clearStatus();
+			}
+		};
+		worker.start();
+	}
 
-        // Nötig, weil getSelectedItem bei editierbarer ComboBox auch NULL liefern kann
-        if (entgb != null) {
-            entgb = entgb.trim();
-        }
-        if ("".equals(entgb)) {
-            getStandort().setEntgebid(null);
-        } else {
-            getStandort().setEntgebid(entgb);
-        }
+	@Override
+	protected boolean canSave()
+	{
+		// Eingaben überprüfen:
+		// Das Handzeichen darf nicht leer sein
+		if (handzeichenNeuFeld.getText() == null || handzeichenNeuFeld.getText().equals(""))
+		{
+			handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
+			handzeichenNeuFeld.requestFocus();
+			frame.changeStatus("Neues Handzeichen erforderlich!", HauptFrame.ERROR_COLOR);
+			//AUIKataster.debugOutput("Neues Handzeichen erforderlich!", "doSave");
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 
-        // VAWS-Einzugsgebiet
-        VawsWassereinzugsgebiete wezg = (VawsWassereinzugsgebiete) wEinzugsGebBox.getSelectedItem();
-        getStandort().setVawsWassereinzugsgebiete(wezg);
+	/**
+	 * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
+	 */
+	@Override
+	protected boolean doSave()
+	{
+		// Hausnummer:
+		Integer hausnr = ((IntegerField) hausnrEditFeld).getIntValue();
+		getStandort().setHausnr(hausnr);
 
-        // Flur
-        String flur = flurFeld.getText();
-        if (flur != null) {
-            flur = flur.trim();
-            if (flur.equals("")) {
-                getStandort().setFlur(null);
-            } else {
-                getStandort().setFlur(flur);
-            }
-        }
+		// Hausnummer-Zusatz:
+		String hausnrZus = hausnrZusFeld.getText();
+		if ("".equals(hausnrZus))
+		{
+			getStandort().setHausnrzus(null);
+		}
+		else
+		{
+			getStandort().setHausnrzus(hausnrZus);
+		}
 
-        // Flurstueck
-        String flurstk = flurStkFeld.getText();
-        if (flurstk != null) {
-            if (flurstk.equals("")) {
-                getStandort().setFlurstueck(null);
-            } else {
-                getStandort().setFlurstueck(flurstk);
-            }
-        }
+		// Straße, PLZ, Ort:
+		BasisStrassen strasse = ((BasisStrassen) strassenBox.getSelectedItem());
+		if (strasse == null)
+		{
+			getStandort().setStrasse(null);
+			getStandort().setPlz(null);
+			getStandort().setOrt(null);
+		}
+		else
+		{
+			getStandort().setStrasse(strasse.getStrasse());
+			getStandort().setPlz(strasse.getPlz());
+			getStandort().setOrt(strasse.getOrt());
+		}
 
-        // E32
-        Float e32Wert = ((DoubleField)e32Feld).getFloatValue();
-        getStandort().setE32(e32Wert);
+		// Gemarkung
+		BasisGemarkung bgem = (BasisGemarkung) gemarkungBox.getSelectedItem();
+		getStandort().setBasisGemarkung(bgem);
 
-        // N32
-        Float n32Wert= ((DoubleField)n32Feld).getFloatValue();
-        getStandort().setN32(n32Wert);
+		// Standortgg
+		VawsStandortgghwsg stgg = (VawsStandortgghwsg) standortGgBox.getSelectedItem();
+		getStandort().setVawsStandortgghwsg(stgg);
 
-        // Handzeichen
-        String handzeichen = handzeichenNeuFeld.getText().trim();
-        getStandort().setRevihandz(handzeichen);
+		// Entwässerungsgebiet
+		String entgb = (String) entwGebBox.getSelectedItem();
 
-        getStandort().setRevidatum(new Date());
+		// Nötig, weil getSelectedItem bei editierbarer ComboBox auch NULL liefern kann
+		if (entgb != null)
+		{
+			entgb = entgb.trim();
+		}
+		if ("".equals(entgb))
+		{
+			getStandort().setEntgebid(null);
+		}
+		else
+		{
+			getStandort().setEntgebid(entgb);
+		}
 
-        // Indirekteinleiter
-        String sach = sachbeFeld.getText();
-        if (sach != null) {
-            if (sach.equals("")) {
-                getStandort().setSachbe33rav(null);
-            } else {
-                getStandort().setSachbe33rav(sach);
-            }
-        }
+		// VAWS-Einzugsgebiet
+		VawsWassereinzugsgebiete wezg = (VawsWassereinzugsgebiete) wEinzugsGebBox.getSelectedItem();
+		getStandort().setVawsWassereinzugsgebiete(wezg);
 
-        // Wassermenge:
-        Integer wassermng = ((IntegerField)wassermengeFeld).getIntValue();
-        getStandort().setWassermenge(wassermng);
+		// Flur
+		String flur = flurFeld.getText();
+		if (flur != null)
+		{
+			flur = flur.trim();
+			if (flur.equals(""))
+			{
+				getStandort().setFlur(null);
+			}
+			else
+			{
+				getStandort().setFlur(flur);
+			}
+		}
 
-        BasisStandort bsta = BasisStandort.merge(getStandort());
-        if (bsta != null) {
-            setEditedObject(bsta);
-            log.debug("Änderungen gespeichert!");
-            return true;
-        } else {
-            return false;
-        }
-    }
+		// Flurstueck
+		String flurstk = flurStkFeld.getText();
+		if (flurstk != null)
+		{
+			if (flurstk.equals(""))
+			{
+				getStandort().setFlurstueck(null);
+			}
+			else
+			{
+				getStandort().setFlurstueck(flurstk);
+			}
+		}
 
-    public BasisStandort getStandort() {
-        return (BasisStandort) getEditedObject();
-    }
+		// E32
+		Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
+		getStandort().setE32(e32Wert);
 
-    private void readClipboard() {
+		// N32
+		Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
+		getStandort().setN32(n32Wert);
 
-        Clipboard systemClipboard;
-        systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Transferable transferData = systemClipboard.getContents(null);
-        for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
-            Object content = null;
-            try {
-                content = transferData.getTransferData(dataFlavor);
-            } catch (UnsupportedFlavorException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            if (content instanceof String) {
+		// Handzeichen
+		String handzeichen = handzeichenNeuFeld.getText().trim();
+		getStandort().setRevihandz(handzeichen);
 
-                String[] tmp = content.toString().split(",");
-                if (tmp.length == 4) {
-                    String e32AusZeile = tmp[2];
-                    String n32AusZeile = tmp[3];
-                    e32Feld.setText(e32AusZeile.substring(0, 7));
-                    n32Feld.setText(n32AusZeile.substring(0, 7));
-                    frame.changeStatus("E32- und N32 eingetragen",
-                            HauptFrame.SUCCESS_COLOR);
-                } else {
-                    frame.changeStatus(
-                            "Zwischenablage enthält keine verwertbaren Daten",
-                            HauptFrame.ERROR_COLOR);
-                }
-                break;
-            }
-        }
-    }
+		getStandort().setRevidatum(new Date());
 
-    public JButton getAusAblageButton() {
-        if (ausAblageButton == null) {
+		// Indirekteinleiter
+		String sach = sachbeFeld.getText();
+		if (sach != null)
+		{
+			if (sach.equals(""))
+			{
+				getStandort().setSachbe33rav(null);
+			}
+			else
+			{
+				getStandort().setSachbe33rav(sach);
+			}
+		}
 
-            ausAblageButton = new JButton("aus QGis");
-            ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
-            ausAblageButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    readClipboard();
-                }
-            });
-        }
+		// Wassermenge:
+		Integer wassermng = ((IntegerField) wassermengeFeld).getIntValue();
+		getStandort().setWassermenge(wassermng);
 
-        return ausAblageButton;
-    }
+		BasisStandort bsta = BasisStandort.merge(getStandort());
+		if (bsta != null)
+		{
+			setEditedObject(bsta);
+			log.debug("Änderungen gespeichert!");
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public BasisStandort getStandort()
+	{
+		return (BasisStandort) getEditedObject();
+	}
+
+	private void readClipboard()
+	{
+
+		Clipboard systemClipboard;
+		systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		Transferable transferData = systemClipboard.getContents(null);
+		for (DataFlavor dataFlavor : transferData.getTransferDataFlavors())
+		{
+			Object content = null;
+			try
+			{
+				content = transferData.getTransferData(dataFlavor);
+			}
+			catch (UnsupportedFlavorException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (content instanceof String)
+			{
+
+				String[] tmp = content.toString().split(",");
+				if (tmp.length == 4)
+				{
+					String e32AusZeile = tmp[2];
+					String n32AusZeile = tmp[3];
+					e32Feld.setText(e32AusZeile.substring(0, 7));
+					n32Feld.setText(n32AusZeile.substring(0, 7));
+					frame.changeStatus("E32- und N32 eingetragen",
+										HauptFrame.SUCCESS_COLOR);
+				}
+				else
+				{
+					frame.changeStatus(
+										"Zwischenablage enthält keine verwertbaren Daten",
+										HauptFrame.ERROR_COLOR);
+				}
+				break;
+			}
+		}
+	}
+
+	public JButton getAusAblageButton()
+	{
+		if (ausAblageButton == null)
+		{
+
+			ausAblageButton = new JButton("aus QGis");
+			ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
+			ausAblageButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					readClipboard();
+				}
+			});
+		}
+
+		return ausAblageButton;
+	}
 }

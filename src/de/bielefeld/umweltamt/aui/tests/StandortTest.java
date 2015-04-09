@@ -62,6 +62,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 public class StandortTest extends TestCase {
 
     private static final String Strasse = "Standorttest";
+    private static final String Ort = "Standorttest";
     private static final int Hausnr = 10;
     private int _id;
 
@@ -93,7 +94,7 @@ public class StandortTest extends TestCase {
      * Und hier versuchen wir ihn über eine Datenbankabfrage zu finden.
      */
     public BasisStandort testQuery() {
-        List<?> result = DatabaseQuery.findStandorte(Strasse, Hausnr);
+        List<?> result = DatabaseQuery.findStandorte(Strasse, Hausnr, Ort);
 
         assertEquals(1, result.size());
 

@@ -35,6 +35,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 public class BasisStandortModel extends ListTableModel {
     private static final long serialVersionUID = 3532697905957103920L;
     private String lastStrasse = null;
+    private String lastOrt = null;
     private int lastHausNr = -1;
 
     public BasisStandortModel() {
@@ -43,6 +44,7 @@ public class BasisStandortModel extends ListTableModel {
                 "Straße",
                 "Hausnr.",
         		"PLZ",
+        		"Ort",
         		"Entw.-Gebiet",
         		"Übersch.-Gebiet",
         		"VAwS-Gebiet"}, true);
@@ -56,7 +58,7 @@ public class BasisStandortModel extends ListTableModel {
     @Override
     public void updateList() {
         if (lastStrasse != null) {
-            filterList(lastStrasse, lastHausNr);
+            filterList(lastStrasse, lastHausNr, lastOrt);
         }
     }
 
@@ -74,8 +76,9 @@ public class BasisStandortModel extends ListTableModel {
      * @param strasse Der Straßenname
      * @param hausnr Die Hausnr (oder -1 falls alle Standorte in dieser Straßen gesucht werden sollen)
      */
-    public void filterList(String strasse, int hausnr) {
-        setList(DatabaseQuery.findStandorte(strasse, hausnr));
+    public void filterList(String strasse, int hausnr, String ort) {
+        setList(DatabaseQuery.findStandorte(strasse, hausnr, ort));
+        lastOrt = ort;
         lastStrasse = strasse;
         lastHausNr = hausnr;
     }
@@ -120,9 +123,12 @@ public class BasisStandortModel extends ListTableModel {
 			value = bsta.getPlz();
 			break;
 		case 3:
-			value = bsta.getEntgebid();
+			value = bsta.getOrt();
 			break;
 		case 4:
+			value = bsta.getEntgebid();
+			break;
+		case 5:
 			if (bsta.getVawsStandortgghwsg() != null) {
 				Integer sggh = bsta.getVawsStandortgghwsg().getId();
 				if (sggh.equals(6)) {
@@ -134,7 +140,7 @@ public class BasisStandortModel extends ListTableModel {
 				value = new Boolean(false);
 			}
 			break;
-		case 5:
+		case 6:
 			value = bsta.getVawsWassereinzugsgebiete();
 			break;
 		default:
@@ -158,8 +164,9 @@ public class BasisStandortModel extends ListTableModel {
 			case 1: return String.class;
 			case 2: return String.class;
 			case 3: return String.class;
-			case 4: return Boolean.class;
-			case 5: return String.class;
+			case 4: return String.class;
+			case 5: return Boolean.class;
+			case 6: return String.class;
 			default: return null;
 		}
 	}

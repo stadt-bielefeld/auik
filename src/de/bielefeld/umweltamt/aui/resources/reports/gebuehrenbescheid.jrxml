@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2015-04-01T13:35:01 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="25" uuid="3e42c968-6230-4d71-b690-a3ead7f68061">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="104"/>
@@ -31,175 +33,175 @@
 	<detail>
 		<band height="298" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="2f9bffd4-695c-4b24-9e29-ee1f1f80828c" x="348" y="110" width="130" height="10"/>
+				<reportElement x="348" y="110" width="130" height="10" uuid="2f9bffd4-695c-4b24-9e29-ee1f1f80828c"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Frau Melcher]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6074d07b-e8a0-41c9-9369-597bba42c3b4" x="348" y="147" width="40" height="10"/>
+				<reportElement x="348" y="147" width="40" height="10" uuid="6074d07b-e8a0-41c9-9369-597bba42c3b4"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Telefax]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="052ab633-4485-4b5a-8613-5b35217a9896" x="348" y="53" width="125" height="15"/>
+				<reportElement x="348" y="53" width="125" height="15" uuid="052ab633-4485-4b5a-8613-5b35217a9896"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Umweltamt]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8d721e67-da04-4a16-9b18-f058ec7e61e7" x="348" y="138" width="40" height="10"/>
+				<reportElement x="348" y="138" width="40" height="10" uuid="8d721e67-da04-4a16-9b18-f058ec7e61e7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Telefon]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c0902267-8b6c-440e-825e-1eb5ef2ffd63" x="348" y="156" width="40" height="10"/>
+				<reportElement x="348" y="156" width="40" height="10" uuid="c0902267-8b6c-440e-825e-1eb5ef2ffd63"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Internet]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5d3a823e-bc94-47b0-ab68-d84211336784" x="348" y="67" width="130" height="10"/>
+				<reportElement x="348" y="67" width="130" height="10" uuid="5d3a823e-bc94-47b0-ab68-d84211336784"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[August-Bebel-Straße 75-77]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9d8daa06-9970-4976-9ff9-780f43535cbe" x="390" y="156" width="83" height="10"/>
+				<reportElement x="390" y="156" width="83" height="10" uuid="9d8daa06-9970-4976-9ff9-780f43535cbe"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[www.bielefeld.de]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b048496c-0268-4c68-b067-08ff0a49c7c1" x="390" y="147" width="83" height="10"/>
+				<reportElement x="390" y="147" width="83" height="10" uuid="b048496c-0268-4c68-b067-08ff0a49c7c1"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[0521 51-3395]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="746b76e2-c302-4e6d-8fd0-af71d940ed42" x="348" y="15" width="125" height="15"/>
+				<reportElement x="348" y="15" width="125" height="15" uuid="746b76e2-c302-4e6d-8fd0-af71d940ed42"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Stadt Bielefeld]]></text>
+				<text><![CDATA[Stadt Bielefelt]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1098ac4a-0de0-45ae-b348-fa78339af414" x="348" y="119" width="125" height="10"/>
+				<reportElement x="348" y="119" width="125" height="10" uuid="1098ac4a-0de0-45ae-b348-fa78339af414"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Zimmer 309]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="47b19af0-53e7-42b4-a472-816d3f62833b" x="348" y="29" width="125" height="15"/>
+				<reportElement x="348" y="29" width="125" height="15" uuid="47b19af0-53e7-42b4-a472-816d3f62833b"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Der Oberbürgermeister]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="126a63bc-71a0-47a3-a602-2b1c78b94cb9" x="348" y="96" width="125" height="15"/>
+				<reportElement x="348" y="96" width="125" height="15" uuid="126a63bc-71a0-47a3-a602-2b1c78b94cb9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Auskunft gibt Ihnen:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8d909271-693d-4698-b21b-f1c44d0cdeb7" x="390" y="138" width="83" height="10"/>
+				<reportElement x="390" y="138" width="83" height="10" uuid="8d909271-693d-4698-b21b-f1c44d0cdeb7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[0521 51-6561]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fa04a39c-7d49-4747-8aa0-5f81e56d39d4" x="348" y="166" width="40" height="10"/>
+				<reportElement x="348" y="166" width="40" height="10" uuid="fa04a39c-7d49-4747-8aa0-5f81e56d39d4"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[E-Mail]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f012ec26-289f-4fb1-9098-2a1c79dadbb5" x="390" y="166" width="93" height="10"/>
+				<reportElement x="390" y="166" width="93" height="10" uuid="f012ec26-289f-4fb1-9098-2a1c79dadbb5"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[umweltamt@bielefeld.de]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="9e6615bf-cf68-436f-9b6c-185484e20ca3" x="291" y="271" width="71" height="15"/>
+				<reportElement x="291" y="271" width="71" height="15" uuid="9e6615bf-cf68-436f-9b6c-185484e20ca3"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{datum}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="ed37ea8d-85ec-4261-a9d3-e2f3db02357e" x="150" y="249" width="135" height="10"/>
+				<reportElement x="150" y="249" width="135" height="10" uuid="ed37ea8d-85ec-4261-a9d3-e2f3db02357e"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Bitte bei Antwort und Zahlung]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4a9d9722-cc7a-4cb3-b06a-cbc80265e852" x="291" y="259" width="71" height="13"/>
+				<reportElement x="291" y="259" width="71" height="13" uuid="4a9d9722-cc7a-4cb3-b06a-cbc80265e852"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8c34df7d-70c1-4df3-b6cc-b56eb49cd1d6" x="3" y="259" width="136" height="13"/>
+				<reportElement x="3" y="259" width="136" height="13" uuid="8c34df7d-70c1-4df3-b6cc-b56eb49cd1d6"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Datum und Zeichen ihres Schreibens]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="30e53069-4b1a-496b-a8f9-79374bb32326" x="150" y="259" width="121" height="13"/>
+				<reportElement x="150" y="259" width="121" height="13" uuid="30e53069-4b1a-496b-a8f9-79374bb32326"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Kassenzeichen angeben:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="3827209f-f070-4fbc-9b18-a2ca5243f9ba" x="150" y="273" width="121" height="15"/>
+				<reportElement x="150" y="273" width="121" height="15" uuid="3827209f-f070-4fbc-9b18-a2ca5243f9ba"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{kassenzeichen}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement uuid="c114a791-8794-41b8-ab0a-46517efd7720" x="-13" y="276" width="9" height="6" backcolor="#000000"/>
+				<reportElement x="-13" y="276" width="9" height="6" backcolor="#000000" uuid="c114a791-8794-41b8-ab0a-46517efd7720"/>
 			</rectangle>
 			<image>
-				<reportElement uuid="b992418f-f82b-4c20-95e6-3355ff06222f" x="146" y="1" width="185" height="65"/>
+				<reportElement x="146" y="1" width="185" height="65" uuid="b992418f-f82b-4c20-95e6-3355ff06222f"/>
 				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/gui/images/icons/gebuehrenbescheid.png"]]></imageExpression>
 			</image>
 			<rectangle>
-				<reportElement uuid="50f505a8-8d90-4891-9d19-7556656e5b54" x="-13" y="118" width="9" height="6" backcolor="#000000"/>
+				<reportElement x="-13" y="118" width="9" height="6" backcolor="#000000" uuid="50f505a8-8d90-4891-9d19-7556656e5b54"/>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="b7f9d443-a793-4edc-bb63-09620a1b1d5c" x="3" y="98" width="156" height="13"/>
+				<reportElement x="3" y="98" width="156" height="13" uuid="b7f9d443-a793-4edc-bb63-09620a1b1d5c"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Stadt Bielefeld · 360.11 · D-33597 Bielefeld]]></text>
 			</staticText>
 			<image>
-				<reportElement uuid="b0f945d7-c89e-4d01-a8e7-8e3f21e5f309" x="400" y="175" width="75" height="101"/>
+				<reportElement x="400" y="175" width="75" height="101" uuid="b0f945d7-c89e-4d01-a8e7-8e3f21e5f309"/>
 				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/gui/images/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
 			</image>
 			<frame>
-				<reportElement uuid="c084cc11-fb77-43f2-9859-99eb5ce6f5b8" x="1" y="117" width="331" height="65" forecolor="#FFFFFF"/>
+				<reportElement x="1" y="117" width="331" height="65" forecolor="#FFFFFF" uuid="c084cc11-fb77-43f2-9859-99eb5ce6f5b8"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
 					<topPen lineWidth="1.0" lineStyle="Dashed"/>
@@ -208,35 +210,35 @@
 					<rightPen lineWidth="1.0" lineStyle="Dashed"/>
 				</box>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="d3cc0619-7ba2-4dce-8db8-b2d32cf1753a" positionType="Float" x="0" y="0" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement positionType="Float" x="0" y="0" width="291" height="12" isRemoveLineWhenBlank="true" uuid="d3cc0619-7ba2-4dce-8db8-b2d32cf1753a"/>
 					<textElement>
 						<font fontName="DejaVu Sans" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{firmaAnrede}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="fcedf8d2-0c41-4741-9d69-e079542e4880" positionType="Float" x="0" y="12" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement positionType="Float" x="0" y="12" width="291" height="12" isRemoveLineWhenBlank="true" uuid="fcedf8d2-0c41-4741-9d69-e079542e4880"/>
 					<textElement>
 						<font fontName="DejaVu Sans" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{firmaName}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="1990d54f-64dd-4025-97de-87f0ebe55f9b" positionType="Float" x="0" y="24" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement positionType="Float" x="0" y="24" width="291" height="12" isRemoveLineWhenBlank="true" uuid="1990d54f-64dd-4025-97de-87f0ebe55f9b"/>
 					<textElement>
 						<font fontName="DejaVu Sans" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{firmaNameZus}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="893d3e3a-8ba8-45d5-9ef4-8870a2d73e38" positionType="Float" x="0" y="36" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement positionType="Float" x="0" y="36" width="291" height="12" isRemoveLineWhenBlank="true" uuid="893d3e3a-8ba8-45d5-9ef4-8870a2d73e38"/>
 					<textElement>
 						<font fontName="DejaVu Sans" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{firmaStrasse}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="af32ea14-5a53-41b7-b068-b03f18903fb6" positionType="Float" x="0" y="48" width="291" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement positionType="Float" x="0" y="48" width="291" height="12" isRemoveLineWhenBlank="true" uuid="af32ea14-5a53-41b7-b068-b03f18903fb6"/>
 					<textElement>
 						<font fontName="DejaVu Sans" size="10"/>
 					</textElement>
@@ -246,35 +248,35 @@
 		</band>
 		<band height="84">
 			<staticText>
-				<reportElement uuid="19ebc68b-4f13-4d64-8954-cc97ccab8ea9" x="0" y="0" width="479" height="40"/>
+				<reportElement x="0" y="0" width="479" height="40" uuid="19ebc68b-4f13-4d64-8954-cc97ccab8ea9"/>
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 38. Änderungssatzung vom 15.12.2014 (KdS)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="48d3b3ff-baa2-4e72-9ac2-ed45fe2ab424" x="20" y="51" width="360" height="15"/>
+				<reportElement x="20" y="51" width="360" height="15" uuid="48d3b3ff-baa2-4e72-9ac2-ed45fe2ab424"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Abdeckung der Personal- und Sachkosten gem. § 10 (2) KdS:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="b504be01-fc14-4358-a172-7751948ceacf" x="20" y="69" width="370" height="12"/>
+				<reportElement x="20" y="69" width="370" height="12" uuid="b504be01-fc14-4358-a172-7751948ceacf"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{probenehmer} + " Probenehmer * " + $P{dauer} + " Stunden ¹* " + $P{kosten} + " € = "]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="10a21a3c-a279-486b-83f2-5bfa82198b33" x="0" y="51" width="14" height="15"/>
+				<reportElement x="0" y="51" width="14" height="15" uuid="10a21a3c-a279-486b-83f2-5bfa82198b33"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1.]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="c5603f31-81de-4f79-87ad-b0d8494f3729" x="408" y="69" width="60" height="12"/>
+				<reportElement x="408" y="69" width="60" height="12" uuid="c5603f31-81de-4f79-87ad-b0d8494f3729"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
@@ -283,42 +285,42 @@
 		</band>
 		<band height="54" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement uuid="d3430ce5-44b3-4a2d-bcf1-f24c4ba17fae" stretchType="RelativeToBandHeight" x="20" y="42" width="400" height="12"/>
+				<reportElement stretchType="RelativeToBandHeight" x="20" y="42" width="400" height="12" uuid="d3430ce5-44b3-4a2d-bcf1-f24c4ba17fae"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{entnahmestelle}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="d16497cd-57df-4d83-9e45-ff64d676a1b0" x="20" y="18" width="202" height="12"/>
+				<reportElement x="20" y="18" width="202" height="12" uuid="d16497cd-57df-4d83-9e45-ff64d676a1b0"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Datum, Zeit und Ort der Probeentnahme:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6d0578bc-2e20-4641-9e09-c45749308aa2" x="20" y="30" width="400" height="12"/>
+				<reportElement x="20" y="30" width="400" height="12" uuid="6d0578bc-2e20-4641-9e09-c45749308aa2"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{entnahmeort}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="80c60b76-49a2-4cf1-8b26-3f3cc6b3a6bf" x="222" y="18" width="202" height="12"/>
+				<reportElement x="222" y="18" width="202" height="12" uuid="80c60b76-49a2-4cf1-8b26-3f3cc6b3a6bf"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{entnahmedatum}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="ce32da9f-3d79-4701-9465-752b512822b0" x="0" y="1" width="14" height="15"/>
+				<reportElement x="0" y="1" width="14" height="15" uuid="ce32da9f-3d79-4701-9465-752b512822b0"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[2.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2cff45e0-9af5-4b15-a696-8a80338bc105" x="20" y="1" width="463" height="15"/>
+				<reportElement x="20" y="1" width="463" height="15" uuid="2cff45e0-9af5-4b15-a696-8a80338bc105"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
@@ -327,62 +329,62 @@
 		</band>
 		<band height="55">
 			<subreport>
-				<reportElement uuid="ebbbe668-fab4-4d24-bdeb-f3e51e2f7908" x="1" y="0" width="482" height="55"/>
+				<reportElement x="1" y="0" width="482" height="55" uuid="ebbbe668-fab4-4d24-bdeb-f3e51e2f7908"/>
 				<dataSourceExpression><![CDATA[$P{SUBDATA}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("de/bielefeld/umweltamt/aui/resources/reports/gebuehren_parameterliste.jasper"))]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="45">
 			<textField>
-				<reportElement uuid="19d5627c-5773-4118-b19e-ca77a6a86145" x="408" y="0" width="60" height="12"/>
+				<reportElement x="408" y="0" width="60" height="12" uuid="19d5627c-5773-4118-b19e-ca77a6a86145"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{analysekosten}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="1fdd90f8-fa75-4822-9481-dd4c55224cd1" x="20" y="0" width="139" height="12"/>
+				<reportElement x="20" y="0" width="139" height="12" uuid="1fdd90f8-fa75-4822-9481-dd4c55224cd1"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Analysekosten  gesamt:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1b8e7981-9430-46c6-a7b1-8d719f49c724" x="1" y="22" width="260" height="12"/>
+				<reportElement x="1" y="22" width="260" height="12" uuid="1b8e7981-9430-46c6-a7b1-8d719f49c724"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Gesamtgebühr (Summe aus 1. und 2.):]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="b1a8740c-6aa7-4498-856c-fa9a6520b004" x="408" y="22" width="60" height="12"/>
+				<reportElement x="408" y="22" width="60" height="12" uuid="b1a8740c-6aa7-4498-856c-fa9a6520b004"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9" isBold="true" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{gesamtkosten}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="cb9525c3-fc3d-434b-801c-932642c55228" x="408" y="34" width="60" height="1"/>
+				<reportElement x="408" y="34" width="60" height="1" uuid="cb9525c3-fc3d-434b-801c-932642c55228"/>
 			</line>
 			<line>
-				<reportElement uuid="241a1789-01a2-4f08-a590-8c6922b02b50" x="408" y="36" width="60" height="1"/>
+				<reportElement x="408" y="36" width="60" height="1" uuid="241a1789-01a2-4f08-a590-8c6922b02b50"/>
 			</line>
 		</band>
 		<band height="70">
 			<textField pattern="">
-				<reportElement uuid="e5a1a32b-8dbb-4aea-8d68-6abd3411771c" stretchType="RelativeToBandHeight" x="0" y="0" width="483" height="34"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="483" height="34" uuid="e5a1a32b-8dbb-4aea-8d68-6abd3411771c"/>
 				<textElement markup="styled">
 					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Bitte überweisen Sie die Gesamtgebühr von <style isBold='true'>"+ $P{gesamtkosten} +"</style> bis zum <style isBold='true'>" + $P{maxdatum} + "</style> unter Angabe des Kassenzeichens <style isBold='true'>" + $P{kassenzeichen} + "</style> auf eines der unten genannten Konten."]]></textFieldExpression>
 			</textField>
 			<break>
-				<reportElement uuid="8860ba0b-aa15-4e82-a685-48ebb6d8d743" x="0" y="35" width="100" height="1">
+				<reportElement x="0" y="35" width="100" height="1" uuid="8860ba0b-aa15-4e82-a685-48ebb6d8d743">
 					<printWhenExpression><![CDATA[$P{SUBDATA}.size() > 8 && $P{SUBDATA}.size() <= 12]]></printWhenExpression>
 				</reportElement>
 			</break>
 			<textField>
-				<reportElement uuid="6797eeeb-472e-40be-a630-5a9c80d78ecd" x="0" y="36" width="483" height="34"/>
+				<reportElement x="0" y="36" width="483" height="34" uuid="6797eeeb-472e-40be-a630-5a9c80d78ecd"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
@@ -391,14 +393,14 @@
 		</band>
 		<band height="63" splitType="Prevent">
 			<staticText>
-				<reportElement uuid="733e4d33-b06c-47e3-9534-15d2e7cabb80" x="0" y="12" width="483" height="50"/>
+				<reportElement x="0" y="12" width="483" height="50" uuid="733e4d33-b06c-47e3-9534-15d2e7cabb80"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="DejaVu Sans" size="7" isItalic="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Bitte überprüfen Sie die diesem Bescheid zugrunde liegenden Tatsachen. Wenn diese nach Ihrer Auffassung fehlerhaft sein sollten, können Sie sich zur schnellen Klärung direkt an mich wenden. <style isBold='true'>Dies führt <style isUnderline='true'>nicht</style> zu einer Verlängerung der einmonatigen Klagefrist nach Bekanntgabe dieses Bescheides (s. folgende Rechtsbehelfsbelehrung).</style> Falls ich meine Entscheidung nicht ändern kann, müssen Sie trotzdem innerhalb eines Monats nach Bekanntgabe des Bescheides Klage erheben, wenn Sie Ihre Beschwerde weiterverfolgen wollen.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8e5b2ae8-c98a-4831-9414-cc6ee1c29d57" x="0" y="1" width="100" height="10"/>
+				<reportElement x="0" y="1" width="100" height="10" uuid="8e5b2ae8-c98a-4831-9414-cc6ee1c29d57"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="8" isBold="true" isUnderline="true"/>
 				</textElement>
@@ -407,7 +409,7 @@
 		</band>
 		<band height="115" splitType="Prevent">
 			<staticText>
-				<reportElement uuid="389a9e5c-b286-40ee-9655-06ca95341901" x="0" y="14" width="483" height="96"/>
+				<reportElement x="0" y="14" width="483" height="96" uuid="389a9e5c-b286-40ee-9655-06ca95341901"/>
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isUnderline="false"/>
 				</textElement>
@@ -415,7 +417,7 @@
 Sollte die Frist durch das Verschulden einer von Ihnen bevollmächtigten Person versäumt werden, so würde deren  Verschulden Ihnen zugerechnet werden.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="460b3fff-af93-4baf-b767-2bfed5cbc4db" x="0" y="1" width="159" height="14"/>
+				<reportElement x="0" y="1" width="159" height="14" uuid="460b3fff-af93-4baf-b767-2bfed5cbc4db"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true" isUnderline="true"/>
 				</textElement>
@@ -424,7 +426,7 @@ Sollte die Frist durch das Verschulden einer von Ihnen bevollmächtigten Person 
 		</band>
 		<band height="55">
 			<staticText>
-				<reportElement uuid="529bf22e-7d1e-493a-ab5d-ee1b61f8ecdc" x="0" y="0" width="483" height="55"/>
+				<reportElement x="0" y="0" width="483" height="55" uuid="529bf22e-7d1e-493a-ab5d-ee1b61f8ecdc"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
@@ -434,7 +436,7 @@ Sollte die Frist durch das Verschulden einer von Ihnen bevollmächtigten Person 
 		</band>
 		<band height="91">
 			<staticText>
-				<reportElement uuid="376a3d01-4f7f-49e4-86f1-9f28c25bf2f3" x="0" y="0" width="483" height="91"/>
+				<reportElement x="0" y="0" width="483" height="91" uuid="376a3d01-4f7f-49e4-86f1-9f28c25bf2f3"/>
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
@@ -445,7 +447,7 @@ Ferner können Sie gemäß § 80 Abs. 5 VwGO einen Antrag auf Anordnung der aufs
 		</band>
 		<band height="75">
 			<staticText>
-				<reportElement uuid="a6677762-a7c5-4e0f-ba4b-43f017e87437" x="0" y="0" width="483" height="72"/>
+				<reportElement x="0" y="0" width="483" height="72" uuid="a6677762-a7c5-4e0f-ba4b-43f017e87437"/>
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
@@ -457,7 +459,7 @@ Ist der Verwaltungsakt zum Zeitpunkt der Entscheidung schon vollzogen, können S
 		</band>
 		<band height="150">
 			<staticText>
-				<reportElement uuid="4e421ad7-204f-4e64-91c1-9b383a7e3d6f" x="0" y="9" width="483" height="68"/>
+				<reportElement x="0" y="9" width="483" height="68" uuid="4e421ad7-204f-4e64-91c1-9b383a7e3d6f"/>
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
@@ -467,21 +469,21 @@ Das Erheben, Speichern, Verändern und Nutzen dieser Daten ist somit nach § 12 
 Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="30a2f23e-6af1-4f87-b2b0-3e9a083b1af8" x="0" y="0" width="483" height="12"/>
+				<reportElement x="0" y="0" width="483" height="12" uuid="30a2f23e-6af1-4f87-b2b0-3e9a083b1af8"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Hinweis nach § 12 (2) Datenschutzgesetz NW (DSG NW):]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f322f67e-bb47-425b-af51-b78fae0272d8" x="0" y="132" width="100" height="12"/>
+				<reportElement x="0" y="132" width="100" height="12" uuid="f322f67e-bb47-425b-af51-b78fae0272d8"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Melcher]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5a9c6d74-49e9-46be-8c5b-0efea6bc63fa" x="0" y="84" width="100" height="12"/>
+				<reportElement x="0" y="84" width="100" height="12" uuid="5a9c6d74-49e9-46be-8c5b-0efea6bc63fa"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -493,140 +495,140 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 		<band height="77" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 			<staticText>
-				<reportElement uuid="27e3ba89-1973-481a-9538-0eb39b329314" x="346" y="11" width="66" height="9"/>
+				<reportElement x="346" y="11" width="66" height="9" uuid="27e3ba89-1973-481a-9538-0eb39b329314"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Montag - Freitag]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="51c81a07-d602-48d8-9c1a-7f296ecdd7a9" x="0" y="3" width="139" height="9"/>
+				<reportElement x="0" y="3" width="139" height="9" uuid="51c81a07-d602-48d8-9c1a-7f296ecdd7a9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Konten der Stadtkasse Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9683b7a5-5d37-4c20-a905-65edbe53a66f" x="346" y="35" width="127" height="9"/>
+				<reportElement x="346" y="35" width="127" height="9" uuid="9683b7a5-5d37-4c20-a905-65edbe53a66f"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[im übrigen nach Vereinbarung]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="35" width="172" height="9"/>
+				<reportElement x="0" y="35" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Postbank Hannover Kto.-Nr. 20-307 (BLZ 250 100 30)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7a6d6d4a-99a4-4678-8637-f4e4538abcb0" x="407" y="19" width="66" height="9"/>
+				<reportElement x="407" y="19" width="66" height="9" uuid="7a6d6d4a-99a4-4678-8637-f4e4538abcb0"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[08.00 - 12.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bbaa093a-1141-4d2f-9f54-681445c82390" x="0" y="11" width="172" height="9"/>
+				<reportElement x="0" y="11" width="172" height="9" uuid="bbaa093a-1141-4d2f-9f54-681445c82390"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Sparkasse Bielefeld Kto.-Nr. 26 (BLZ 480 501 61)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f31015a3-98f8-436d-992d-188a120e1e30" x="346" y="19" width="66" height="9"/>
+				<reportElement x="346" y="19" width="66" height="9" uuid="f31015a3-98f8-436d-992d-188a120e1e30"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Donnerstag]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="01f6d758-7fa3-48de-be2a-898646d8f823" x="346" y="3" width="120" height="9"/>
+				<reportElement x="346" y="3" width="120" height="9" uuid="01f6d758-7fa3-48de-be2a-898646d8f823"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sprechzeiten:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fbda04b3-0b55-4d16-b99d-274d10917ea1" x="407" y="11" width="66" height="9"/>
+				<reportElement x="407" y="11" width="66" height="9" uuid="fbda04b3-0b55-4d16-b99d-274d10917ea1"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[08.00 - 12.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="707aaa76-81e1-40cd-81a7-4d822f4d7b2e" x="407" y="27" width="66" height="9"/>
+				<reportElement x="407" y="27" width="66" height="9" uuid="707aaa76-81e1-40cd-81a7-4d822f4d7b2e"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[14.30 - 18.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="93e0730b-51d3-4965-9ee2-91169d9fb27b" x="186" y="27" width="105" height="9"/>
+				<reportElement x="186" y="27" width="105" height="9" uuid="93e0730b-51d3-4965-9ee2-91169d9fb27b"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[D-33602 Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e" x="0" y="19" width="172" height="9"/>
+				<reportElement x="0" y="19" width="172" height="9" uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[IBAN: DE09 4805 0161 0000 0000 26]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7de3fd29-1bd3-4779-895a-f6ef10f3a7f5" x="186" y="3" width="105" height="9"/>
+				<reportElement x="186" y="3" width="105" height="9" uuid="7de3fd29-1bd3-4779-895a-f6ef10f3a7f5"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lieferanschrift:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1ec954ed-d49b-45e9-a495-6e137a62bc1b" x="186" y="19" width="105" height="9"/>
+				<reportElement x="186" y="19" width="105" height="9" uuid="1ec954ed-d49b-45e9-a495-6e137a62bc1b"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Neues Rathaus (Niederwall 23)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b525b126-7018-47ed-a9d0-62dcee46d9c7" x="186" y="11" width="105" height="9"/>
+				<reportElement x="186" y="11" width="105" height="9" uuid="b525b126-7018-47ed-a9d0-62dcee46d9c7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Stadt Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e" x="0" y="27" width="172" height="9"/>
+				<reportElement x="0" y="27" width="172" height="9" uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[BIC: SPBIDE3BXXX]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="43" width="172" height="9"/>
+				<reportElement x="0" y="43" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[IBAN: DE52 2501 0030 0000 0203 07]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="51" width="172" height="9"/>
+				<reportElement x="0" y="51" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[BIC: PBNKDEFF]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="59" width="172" height="9"/>
+				<reportElement x="0" y="59" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Gläubiger-Identifikationsnummer:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7" x="0" y="67" width="172" height="9"/>
+				<reportElement x="0" y="67" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
@@ -637,19 +639,18 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 	<lastPageFooter>
 		<band height="35">
 			<staticText>
-				<reportElement uuid="476ff992-b1a1-47b7-b0b6-d5f5dff01882" x="7" y="5" width="453" height="25"/>
+				<reportElement x="7" y="5" width="453" height="25" uuid="476ff992-b1a1-47b7-b0b6-d5f5dff01882"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
 				<text><![CDATA[Aus Gründen der Gleichbehandlung wird bei Probenahmen im Bielefelder Stadtgebiet für An- und Abfahrt einschl. Transport der Proben zum Labor pauschal 1 Stunde berechnet.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d136b140-7565-46c3-ba2d-8490dcd6a72d" x="1" y="2" width="6" height="15"/>
-				<textElement/>
+				<reportElement x="1" y="2" width="6" height="15" uuid="d136b140-7565-46c3-ba2d-8490dcd6a72d"/>
 				<text><![CDATA[¹]]></text>
 			</staticText>
 			<break>
-				<reportElement uuid="9d0c3d03-7a8f-4770-9a34-98aa8903680f" x="0" y="31" width="100" height="1"/>
+				<reportElement x="0" y="31" width="100" height="1" uuid="9d0c3d03-7a8f-4770-9a34-98aa8903680f"/>
 			</break>
 		</band>
 	</lastPageFooter>

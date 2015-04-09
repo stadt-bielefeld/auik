@@ -26,14 +26,109 @@ package de.bielefeld.umweltamt.aui.utils;
  *
  * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
-public class StringUtils {
+public class StringUtils
+{
 
-    /**
-     * Little helper method to set a strike through the text via HTML.<br>
-     * @param text
-     * @return String The text with HTML formatting for a strike
-     */
-    public static String setStrike(String text) {
-        return ("<html><strike>" + text + "</strike></html>");
-    }
+	/**
+	 * Little helper method to set a strike through the text via HTML.<br>
+	 * 
+	 * @param text
+	 * @return String The text with HTML formatting for a strike
+	 */
+	public static String setStrike(String text)
+	{
+		return ("<html><strike>" + text + "</strike></html>");
+	}
+
+	// ****************************************************************************************************************
+
+	/**
+	 * Methode vergleicht die beiden übergebenenen Strings
+	 * 
+	 * @return
+	 */
+	public static int compare(String op1, String op2, boolean ignorecase)
+	{
+		if (op1 == null)
+		{
+			op1 = ""; 
+		}
+
+		if (op2 == null)
+		{
+			op2 = "";
+		}
+
+		if (ignorecase)
+		{
+			return op1.compareToIgnoreCase(op2);
+		}
+		else
+		{
+			return op1.compareTo(op2);
+		}
+	}
+
+	// ****************************************************************************************************************
+
+	/**
+	 * Methode vergleicht die beiden übergebenenen Strings
+	 * 
+	 * @return
+	 */
+	public static boolean equals(String op1, String op2, boolean ignorecase)
+	{
+		if (isNullOrEmpty(op1))
+		{
+			if (isNullOrEmpty(op2))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			if (isNullOrEmpty(op2))
+			{
+				return false;
+			}
+			else
+			{
+				if (ignorecase)
+				{
+					return op1.compareToIgnoreCase(op2) == 0;
+				}
+				else
+				{
+					return op1.compareTo(op2) == 0;
+				}
+			}
+		}
+	}
+
+	// ****************************************************************************************************************
+
+	/**
+	 * Methode liefert true, wenn der String leer oder null ist
+	 * 
+	 * @param txt
+	 * @return
+	 */
+	public static boolean isNullOrEmpty(String txt)
+	{
+		if (txt == null)
+		{
+			return true;
+		}
+		else if (txt.trim().isEmpty())
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 }

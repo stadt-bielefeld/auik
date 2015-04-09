@@ -27,22 +27,12 @@
 	<classpathentry kind="lib" path="lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="lib/sac.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
-	<classpathentry kind="lib" path="lib/coreapi.jar"/>
-	<classpathentry kind="lib" path="lib/dataadapterapi.jar"/>
 	<classpathentry kind="lib" path="lib/commons-cli-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/com.ibm.icu_3.8.1.v20080530.jar"/>
-	<classpathentry kind="lib" path="lib/dteapi.jar"/>
-	<classpathentry kind="lib" path="lib/engineapi.jar"/>
-	<classpathentry kind="lib" path="lib/flute.jar"/>
-	<classpathentry kind="lib" path="lib/js.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.5-bin.jar"/>
-	<classpathentry kind="lib" path="lib/modelapi.jar"/>
-	<classpathentry kind="lib" path="lib/scriptapi.jar"/>
 	<classpathentry kind="lib" path="lib/postgresql-8.3-605.jdbc3.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
-	<classpathentry kind="lib" path="lib/jasperreports-3.7.6.jar"/>
-	<classpathentry kind="lib" path="lib/jasperreports-fonts-3.7.6.jar"/>
-	<classpathentry kind="lib" path="lib/chartengineapi.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_20"/>
+	<classpathentry kind="lib" path="lib/jasperreports-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/jasperreports-fonts-5.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/jaxrpc.jar"/>
 	<classpathentry kind="lib" path="lib/axis.jar"/>
 	<classpathentry kind="lib" path="lib/commons-digester-1.7.jar"/>

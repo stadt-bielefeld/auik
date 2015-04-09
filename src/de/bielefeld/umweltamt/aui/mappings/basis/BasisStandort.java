@@ -55,6 +55,7 @@ public class BasisStandort  implements java.io.Serializable {
     private Integer hausnr;
     private String hausnrzus;
     private String plz;
+    private String ort;
     private Float e32;
     private Float n32;
     private String flur;
@@ -182,6 +183,14 @@ public class BasisStandort  implements java.io.Serializable {
 
     public void setPlz(String plz) {
         this.plz = plz;
+    }
+
+    public String getOrt() {
+        return this.ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
     }
 
     public Float getE32() {

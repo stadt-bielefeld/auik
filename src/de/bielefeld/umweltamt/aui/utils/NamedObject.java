@@ -52,6 +52,10 @@ public class NamedObject {
     private String name;
     private Object value;
 
+    public NamedObject() {
+		// TODO Auto-generated constructor stub
+	}
+
     /**
      * Erzeugt ein neues benanntes Objekt mit diesem Namen.
      * @param name Der Name des benannten Objekts
@@ -62,7 +66,7 @@ public class NamedObject {
         this.value = value;
     }
 
-    /**
+	/**
      * @return Returns the name of this named Object.
      */
     public String getName() {

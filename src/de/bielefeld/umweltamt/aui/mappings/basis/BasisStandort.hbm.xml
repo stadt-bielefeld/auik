@@ -14,10 +14,13 @@
         </many-to-one>
         <many-to-one name="vawsWassereinzugsgebiete" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete" fetch="select">
             <column name="wassereinzgebid" />
-        </many-to-one>
+        </many-to-one> 
         <many-to-one name="vawsStandortgghwsg" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg" fetch="select">
             <column name="standortgegebid" />
         </many-to-one>
+        <property name="ort" type="java.lang.String">
+            <column name="ort" />
+        </property>
         <property name="strasse" type="java.lang.String">
             <column name="strasse" />
         </property>

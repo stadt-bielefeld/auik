@@ -57,6 +57,8 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
+import org.hibernate.criterion.MatchMode;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -73,214 +75,258 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Das Modul um die Straßentabelle zu bearbeiten.
+ * 
  * @author Gerd Genuit
  */
-public class EditorStrassen extends AbstractModul {
+public class EditorStrassen extends AbstractModul
+{
 	/** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
+	private static final AuikLogger log = AuikLogger.getLogger();
 
-    private JScrollPane tableScroller;
-    private JTable resultTable;
+	private JScrollPane tableScroller;
+	private JTable resultTable;
 
-    // Widgets für die Abfrage
-    private JButton submitButton;
+	// Widgets für die Abfrage
+	private JButton submitButton;
 
-    /** Das TableModel für die Ergebnis-Tabelle */
-    private EditorStrassenModel tmodel;
-    
-    private Action resultLoeschAction;
-    private JPopupMenu resultPopup;
+	/** Das TableModel für die Ergebnis-Tabelle */
+	private EditorStrassenModel tmodel;
 
-	
-	
-    @Override
-    public Icon getIcon() {
-        return super.getIcon("edit32.png");
-    }
+	private Action resultLoeschAction;
+	private JPopupMenu resultPopup;
 
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.Modul#getName()
-     */
-    @Override
-    public String getName() {
-        return "Straßentabelle";
-    }
-
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
-     */
-    @Override
-    public String getIdentifier() {
-        return "m_strasse_edit";
-    }
-
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
-     */
-    @Override
-    public String getCategory() {
-        return "Editoren";
-    }
-
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
-     */
-    @Override
-    public JPanel getPanel() {
-        if (panel == null) {
-            // Die Widgets initialisieren
-            submitButton = new JButton("Alle Straßen anzeigen");
-
-            // Ein ActionListener für den Button,
-            // der die eigentliche Suche auslöst:
-            submitButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
-                        @Override
-                        protected void doNonUILogic() {
-                            ((EditorStrassenModel)getTableModel()).setList(
-                                DatabaseQuery.getStrassenlist());
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic(){
-                            ((EditorStrassenModel)getTableModel()).fireTableDataChanged();
-                            frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-            // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 4dlu, pref:grow", "pref, 3dlu, f:150dlu:grow");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            
-            builder.setDefaultDialogBorder();
-            CellConstraints cc = new CellConstraints();
-
-            builder.add(submitButton, cc.xy(1, 1));
-            builder.add(getTableScroller(), cc.xyw(1, 3, 3));
-
-            panel = builder.getPanel();
-        }
-
-        return panel;
-        
-    }
-
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
-     */
-    public ListTableModel getTableModel() {
-        if (tmodel == null) {
-            tmodel = new EditorStrassenModel();
-        }
-        return tmodel;
-    }
-
-    /**
-     * @return Eine Tabelle für die Ergebnisse der Abfrage.
-     */
-    protected JTable getResultTable() {
-        if (resultTable == null) {
-            resultTable = new JTable(getTableModel());
-            resultTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-            resultTable.getInputMap().put(
-                (KeyStroke) getResultLoeschAction().getValue(
-                    Action.ACCELERATOR_KEY),
-                    getResultLoeschAction().getValue(Action.NAME));
-            resultTable.getActionMap().put(
-            		getResultLoeschAction().getValue(Action.NAME),
-            		getResultLoeschAction());
-            resultTable
-            .addMouseListener(new java.awt.event.MouseAdapter() {
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    showResultPopup(e);
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                	showResultPopup(e);
-                }
-            });
-
-        }
-        return resultTable;
-    }
-
-
-    /**
-     * @return Das ScrollPane für die Ergebnis-Tabelle.
-     */
-    private JScrollPane getTableScroller() {
-        if (tableScroller == null) {
-            tableScroller = new JScrollPane(getResultTable());
-        }
-        return tableScroller;
-    }
-
-	private void showResultPopup(MouseEvent e) {
-	    if (this.resultPopup == null) {
-	        this.resultPopup = new JPopupMenu("Objekt");
-	        JMenuItem loeschItem = new JMenuItem(getResultLoeschAction());
-	        this.resultPopup.add(loeschItem);
-	    }
-	
-	    if (e.isPopupTrigger()) {
-	        Point origin = e.getPoint();
-	        int row = this.resultTable.rowAtPoint(origin);
-	
-	        if (row != -1) {
-	            this.resultTable.setRowSelectionInterval(row, row);
-	            this.resultPopup.show(e.getComponent(), e.getX(), e.getY());
-	        }
-	    }
+	@Override
+	public Icon getIcon()
+	{
+		return super.getIcon("edit32.png");
 	}
 
-    private Action getResultLoeschAction() {
-        if (this.resultLoeschAction == null) {
-            this.resultLoeschAction = new AbstractAction("Löschen") {
-                private static final long serialVersionUID = 5285618973743780113L;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
+	 */
+	@Override
+	public String getName()
+	{
+		return "Straßentabelle";
+	}
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int row = getResultTable().getSelectedRow();
-                    if (row != -1 && getResultTable().getEditingRow() == -1) {
-                        BasisStrassen strasse = EditorStrassen.this.tmodel
-                            .getRow(row);
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
+	 */
+	@Override
+	public String getIdentifier()
+	{
+		return "m_strasse_edit";
+	}
 
-                        if (GUIManager.getInstance().showQuestion(
-                            "Soll die Straße " + strasse.getStrasse()
-                                + " und alle seine Fachdaten "
-                                + "wirklich gelöscht werden?\n",
-                            "Löschen bestätigen")) {
-                            if (EditorStrassen.this.tmodel
-                                .removeRow(row)) {
-                            	EditorStrassen.this.frame.changeStatus(
-                                    "Objekt gelöscht.",
-                                    HauptFrame.SUCCESS_COLOR);
-                                log.debug("Objekt " + strasse.getStrasse()
-                                    + " wurde gelöscht!");
-                            } else {
-                            	EditorStrassen.this.frame.changeStatus(
-                                    "Konnte das Objekt nicht löschen!",
-                                    HauptFrame.ERROR_COLOR);
-                            }
-                        }
-                    }
-                }
-            };
-            this.resultLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                KeyEvent.VK_L));
-            this.resultLoeschAction.putValue(Action.ACCELERATOR_KEY,
-                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
-        }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
+	 */
+	@Override
+	public String getCategory()
+	{
+		return "Editoren";
+	}
 
-        return this.resultLoeschAction;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
+	 */
+	@Override
+	public JPanel getPanel()
+	{
+		if (panel == null)
+		{
+			// Die Widgets initialisieren
+			submitButton = new JButton("Alle Straßen anzeigen");
+
+			// Ein ActionListener für den Button,
+			// der die eigentliche Suche auslöst:
+			submitButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable())
+					{
+						@Override
+						protected void doNonUILogic()
+						{
+							((EditorStrassenModel) getTableModel()).setList(
+									DatabaseQuery.getStrassenlist(null, null, MatchMode.EXACT));
+						}
+
+						@Override
+						protected void doUIUpdateLogic()
+						{
+							((EditorStrassenModel) getTableModel()).fireTableDataChanged();
+							frame.changeStatus(+getTableModel().getRowCount() + " Objekte gefunden");
+						}
+					};
+					worker.start();
+				}
+			});
+
+			// Noch etwas Layout...
+			FormLayout layout = new FormLayout("pref, 4dlu, pref:grow", "pref, 3dlu, f:150dlu:grow");
+			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+
+			builder.setDefaultDialogBorder();
+			CellConstraints cc = new CellConstraints();
+
+			builder.add(submitButton, cc.xy(1, 1));
+			builder.add(getTableScroller(), cc.xyw(1, 3, 3));
+
+			panel = builder.getPanel();
+		}
+
+		return panel;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel
+	 * ()
+	 */
+	public ListTableModel getTableModel()
+	{
+		if (tmodel == null)
+		{
+			tmodel = new EditorStrassenModel();
+		}
+		return tmodel;
+	}
+
+	/**
+	 * @return Eine Tabelle für die Ergebnisse der Abfrage.
+	 */
+	protected JTable getResultTable()
+	{
+		if (resultTable == null)
+		{
+			resultTable = new JTable(getTableModel());
+			resultTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+			resultTable.getInputMap().put(
+											(KeyStroke) getResultLoeschAction().getValue(
+																							Action.ACCELERATOR_KEY),
+											getResultLoeschAction().getValue(Action.NAME));
+			resultTable.getActionMap().put(
+											getResultLoeschAction().getValue(Action.NAME),
+											getResultLoeschAction());
+			resultTable
+					.addMouseListener(new java.awt.event.MouseAdapter()
+					{
+
+						@Override
+						public void mousePressed(MouseEvent e)
+						{
+							showResultPopup(e);
+						}
+
+						@Override
+						public void mouseReleased(MouseEvent e)
+						{
+							showResultPopup(e);
+						}
+					});
+
+		}
+		return resultTable;
+	}
+
+	/**
+	 * @return Das ScrollPane für die Ergebnis-Tabelle.
+	 */
+	private JScrollPane getTableScroller()
+	{
+		if (tableScroller == null)
+		{
+			tableScroller = new JScrollPane(getResultTable());
+		}
+		return tableScroller;
+	}
+
+	private void showResultPopup(MouseEvent e)
+	{
+		if (this.resultPopup == null)
+		{
+			this.resultPopup = new JPopupMenu("Objekt");
+			JMenuItem loeschItem = new JMenuItem(getResultLoeschAction());
+			this.resultPopup.add(loeschItem);
+		}
+
+		if (e.isPopupTrigger())
+		{
+			Point origin = e.getPoint();
+			int row = this.resultTable.rowAtPoint(origin);
+
+			if (row != -1)
+			{
+				this.resultTable.setRowSelectionInterval(row, row);
+				this.resultPopup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		}
+	}
+
+	private Action getResultLoeschAction()
+	{
+		if (this.resultLoeschAction == null)
+		{
+			this.resultLoeschAction = new AbstractAction("Löschen")
+			{
+				private static final long serialVersionUID = 5285618973743780113L;
+
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					int row = getResultTable().getSelectedRow();
+					if (row != -1 && getResultTable().getEditingRow() == -1)
+					{
+						BasisStrassen strasse = EditorStrassen.this.tmodel
+								.getRow(row);
+
+						if (GUIManager.getInstance().showQuestion(
+																	"Soll die Straße " + strasse.getStrasse()
+																			+ " und alle seine Fachdaten "
+																			+ "wirklich gelöscht werden?\n",
+																	"Löschen bestätigen"))
+						{
+							if (EditorStrassen.this.tmodel
+									.removeRow(row))
+							{
+								EditorStrassen.this.frame.changeStatus(
+																		"Objekt gelöscht.",
+																		HauptFrame.SUCCESS_COLOR);
+								log.debug("Objekt " + strasse.getStrasse()
+										+ " wurde gelöscht!");
+							}
+							else
+							{
+								EditorStrassen.this.frame.changeStatus(
+																		"Konnte das Objekt nicht löschen!",
+																		HauptFrame.ERROR_COLOR);
+							}
+						}
+					}
+				}
+			};
+			this.resultLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+					KeyEvent.VK_L));
+			this.resultLoeschAction.putValue(Action.ACCELERATOR_KEY,
+												KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+		}
+
+		return this.resultLoeschAction;
+	}
 }

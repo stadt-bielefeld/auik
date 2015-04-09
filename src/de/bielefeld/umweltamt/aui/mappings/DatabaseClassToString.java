@@ -39,6 +39,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
@@ -119,6 +120,11 @@ public class DatabaseClassToString {
 
     /** @return BasisGemarkung.toGuiString() */
     public static String toStringForClass(BasisGemarkung clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return BasisOrte.toGuiString() */
+    public static String toStringForClass(BasisOrte clazz) {
         return clazz.toGuiString();
     }
 

@@ -7,6 +7,9 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
+        <property name="ort" type="java.lang.String">
+            <column name="ort" />
+        </property>
         <property name="strasse" type="java.lang.String">
             <meta attribute="use-in-tostring" inherit="false">true</meta>
             <column name="strasse" />

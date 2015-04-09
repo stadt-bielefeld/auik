@@ -267,18 +267,19 @@ public class BasisPanel extends JPanel {
                     @Override
                     protected void doNonUILogic() throws RuntimeException {
                         String[] test = suche.split(" ");
-                        String last = test[test.length - 1];
-                        int nr;
-                        String first;
+                        String hsnrtxt = test[test.length - 1];
+                        int hsnr = -1;
+                        String strasse;
+                        
                         try {
-                            nr = Integer.parseInt(last);
-                            first = suche.replaceAll(last, "");
+                        	hsnr = Integer.parseInt(hsnrtxt);
+                        	strasse = suche.replaceAll(hsnrtxt, "");
                         } catch (NumberFormatException e) {
-                            first = suche;
-                            nr = -1;
+                        	strasse = suche;
+                        	hsnr = -1;
                         }
 
-                        ChooseDialog.this.standortModel.filterList(first, nr);
+                        ChooseDialog.this.standortModel.filterList(strasse, hsnr, "");
                     }
 
                     @Override
