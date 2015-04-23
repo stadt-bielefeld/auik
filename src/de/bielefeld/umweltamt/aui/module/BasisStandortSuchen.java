@@ -146,7 +146,8 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  * 
  * @author David Klotz
  */
-public class BasisStandortSuchen extends AbstractModul {
+public class BasisStandortSuchen extends AbstractModul
+{
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -191,7 +192,8 @@ public class BasisStandortSuchen extends AbstractModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return "Standort suchen";
 	}
 
@@ -201,7 +203,8 @@ public class BasisStandortSuchen extends AbstractModul {
 	 * @return "m_standort_suchen"
 	 */
 	@Override
-	public String getIdentifier() {
+	public String getIdentifier()
+	{
 		return "m_standort_suchen";
 	}
 
@@ -211,7 +214,8 @@ public class BasisStandortSuchen extends AbstractModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
 	 */
 	@Override
-	public String getCategory() {
+	public String getCategory()
+	{
 		return "Betriebe";
 	}
 
@@ -219,7 +223,8 @@ public class BasisStandortSuchen extends AbstractModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getIcon()
 	 */
 	@Override
-	public Icon getIcon() {
+	public Icon getIcon()
+	{
 		return super.getIcon("filefind32.png");
 	}
 
@@ -227,12 +232,14 @@ public class BasisStandortSuchen extends AbstractModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
 	 */
 	@Override
-	public JPanel getPanel() {
-		if (this.panel == null) {
+	public JPanel getPanel()
+	{
+		if (this.panel == null)
+		{
 			this.standortModel = new BasisStandortModel();
 			this.objektModel = new BasisObjektModel("Betreiber", this.manager
 					.getSettingsManager().getSetting(
-							"auik.prefs.abteilungsfilter"));
+														"auik.prefs.abteilungsfilter"));
 
 			TableFocusListener tfl = TableFocusListener.getInstance();
 			getStandortTabelle().addFocusListener(tfl);
@@ -255,12 +262,14 @@ public class BasisStandortSuchen extends AbstractModul {
 			JPanel restrictPanel = new JPanel(new BorderLayout());
 
 			JPanel restrictButtonBar = ButtonBarFactory.buildLeftAlignedBar(
-					getDreiButton(), getVierButton(), getProbepktButton());
+																			getDreiButton(),
+																			getVierButton(),
+																			getProbepktButton());
 			JPanel restrictButtonBar2 = ButtonBarFactory
 					.buildRightAlignedBar(getReportListeButton());
 
 			restrictPanel.add(new Label("Objekte einschränken:"),
-					BorderLayout.WEST);
+								BorderLayout.WEST);
 			restrictPanel.add(restrictButtonBar, BorderLayout.CENTER);
 			restrictPanel.add(restrictButtonBar2, BorderLayout.EAST);
 
@@ -273,8 +282,8 @@ public class BasisStandortSuchen extends AbstractModul {
 			ta.addComp(getObjektTabelle());
 
 			this.tabellenSplit = Factory.createStrippedSplitPane(
-					JSplitPane.VERTICAL_SPLIT, standortScroller,
-					objektScroller, 0.6);
+																	JSplitPane.VERTICAL_SPLIT, standortScroller,
+																	objektScroller, 0.6);
 
 			FormLayout layout = new FormLayout(
 					"l:p, max(4dlu;p), p:g, 10dlu, p, 4dlu, max(30dlu;p), 10dlu, p, 4dlu,  p:g, 3dlu, min(16dlu;p)", // spalten
@@ -308,12 +317,14 @@ public class BasisStandortSuchen extends AbstractModul {
 	 */
 
 	@Override
-	public void show() {
+	public void show()
+	{
 		super.show();
 
 		// Gespeicherte Position des Dividers setzen
 		if (SettingsManager.getInstance().getSetting(
-				"auik.prefs.divloc_standort") != null) {
+														"auik.prefs.divloc_standort") != null)
+		{
 			double divloc = Double.parseDouble(SettingsManager.getInstance()
 					.getSetting("auik.prefs.divloc_standort"));
 			// AUIKataster.debugOutput("Lese divloc_standort als: " + divloc,
@@ -331,60 +342,76 @@ public class BasisStandortSuchen extends AbstractModul {
 	 * @see de.bielefeld.umweltamt.aui.Modul#hide()
 	 */
 	@Override
-	public void hide() {
+	public void hide()
+	{
 		super.hide();
-		if (this.suchTimer != null) {
+		if (this.suchTimer != null)
+		{
 			getSuchTimer().stop();
 		}
 
 		// Position des Dividers des SplitPanes speichern
 		if ((this.tabellenSplit != null)
-				&& (this.tabellenSplit.getDividerLocation() != -1)) {
+				&& (this.tabellenSplit.getDividerLocation() != -1))
+		{
 			double divloc = (float) (this.tabellenSplit.getDividerLocation())
 					/ (this.tabellenSplit.getHeight());
 			// AUIKataster.debugOutput("Setze divloc_standort auf: ("+
 			// tabellenSplit.getDividerLocation() +"/"+
 			// tabellenSplit.getHeight() +") = " + divloc,
 			// "BasisStandortSuchen.DIVIDER");
-			if (divloc >= 0.0 && divloc <= 1.0) {
+			if (divloc >= 0.0 && divloc <= 1.0)
+			{
 				SettingsManager.getInstance().setSetting(
-						"auik.prefs.divloc_standort", Double.toString(divloc),
-						true);
+															"auik.prefs.divloc_standort", Double.toString(divloc),
+															true);
 			}
 		}
 	}
 
-	public void updateStandortListe() {
-		SwingWorkerVariant worker = new SwingWorkerVariant(getStrassenFeld()) {
+	public void updateStandortListe()
+	{
+		SwingWorkerVariant worker = new SwingWorkerVariant(getStrassenFeld())
+		{
 			@Override
-			protected void doNonUILogic() {
+			protected void doNonUILogic()
+			{
 				BasisStandortSuchen.this.standortModel.updateList();
 			}
 
 			@Override
-			protected void doUIUpdateLogic() {
+			protected void doUIUpdateLogic()
+			{
 				BasisStandortSuchen.this.standortModel.fireTableDataChanged();
 
-				if (SettingsManager.getInstance().getStandort() != null) {
+				if (SettingsManager.getInstance().getStandort() != null)
+				{
 					filterStandortListe(getStandortTabelle());
-				} else if (BasisStandortSuchen.this.lastStandort != null) {
+				}
+				else if (BasisStandortSuchen.this.lastStandort != null)
+				{
 					// Wenn der Standort noch in der Liste ist, wird er
 					// ausgewählt.
 					int row = BasisStandortSuchen.this.standortModel.getList()
 							.indexOf(BasisStandortSuchen.this.lastStandort);
-					if (row != -1) {
+					if (row != -1)
+					{
 						getStandortTabelle().setRowSelectionInterval(row, row);
 						getStandortTabelle().scrollRectToVisible(
-								getStandortTabelle().getCellRect(row, 0, true));
+																	getStandortTabelle().getCellRect(row, 0, true));
 						getStandortTabelle().requestFocus();
 					}
-				} else {
+				}
+				else
+				{
 					int standortCount = BasisStandortSuchen.this.standortModel
 							.getRowCount();
-					if (standortCount > 0) {
+					if (standortCount > 0)
+					{
 						String statusMsg = "Suche: " + standortCount
 								+ " Ergebnis";
-						if (standortCount != 1) {
+						if (standortCount != 1)
+						{
 							statusMsg += "se";
 						}
 						statusMsg += ".";
@@ -399,9 +426,11 @@ public class BasisStandortSuchen extends AbstractModul {
 		worker.start();
 	}
 
-	public void updateObjekte() {
+	public void updateObjekte()
+	{
 		ListSelectionModel lsm = getStandortTabelle().getSelectionModel();
-		if (!lsm.isSelectionEmpty()) {
+		if (!lsm.isSelectionEmpty())
+		{
 			int selectedRow = lsm.getMinSelectionIndex();
 			BasisStandort standort = this.standortModel.getRow(selectedRow);
 			log.debug("Standort " + standort + " angewählt.");
@@ -415,7 +444,8 @@ public class BasisStandortSuchen extends AbstractModul {
 	 * @param standort
 	 *            Der Standort
 	 */
-	public void editStandort(BasisStandort standort) {
+	public void editStandort(BasisStandort standort)
+	{
 		StandortEditor editDialog = null;
 
 		editDialog = new StandortEditor(standort, this.frame);
@@ -425,7 +455,8 @@ public class BasisStandortSuchen extends AbstractModul {
 
 		this.lastStandort = standort;
 
-		if (editDialog.wasSaved()) {
+		if (editDialog.wasSaved())
+		{
 			// Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen
 			// auch angezeigt werden.
 			updateStandortListe();
@@ -442,18 +473,22 @@ public class BasisStandortSuchen extends AbstractModul {
 	 *            33 oder 34
 	 */
 	public void searchObjekteByStandort(final BasisStandort standort,
-			final String abteilung, final Integer nichtartid) {
+		final String abteilung, final Integer nichtartid)
+	{
 
 		// ... siehe show()
-		SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle()) {
+		SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle())
+		{
 			@Override
-			protected void doNonUILogic() {
+			protected void doNonUILogic()
+			{
 				BasisStandortSuchen.this.objektModel.searchByStandort(standort,
-						abteilung, nichtartid);
+																		abteilung, nichtartid);
 			}
 
 			@Override
-			protected void doUIUpdateLogic() {
+			protected void doUIUpdateLogic()
+			{
 				BasisStandortSuchen.this.objektModel.fireTableDataChanged();
 			}
 		};
@@ -467,17 +502,21 @@ public class BasisStandortSuchen extends AbstractModul {
 	 * @param standortid
 	 *            Die Standort-Id
 	 */
-	public void searchObjekteByStandort(final BasisStandort standort) {
+	public void searchObjekteByStandort(final BasisStandort standort)
+	{
 
 		// ... siehe show()
-		SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle()) {
+		SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle())
+		{
 			@Override
-			protected void doNonUILogic() {
+			protected void doNonUILogic()
+			{
 				BasisStandortSuchen.this.objektModel.searchByStandort(standort);
 			}
 
 			@Override
-			protected void doUIUpdateLogic() {
+			protected void doUIUpdateLogic()
+			{
 				BasisStandortSuchen.this.objektModel.fireTableDataChanged();
 			}
 		};
@@ -492,18 +531,22 @@ public class BasisStandortSuchen extends AbstractModul {
 	 *            Die Standort-Id
 	 */
 	public void searchObjekteByStandort(final BasisStandort standort,
-			final Integer istartid) {
+		final Integer istartid)
+	{
 
 		// ... siehe show()
-		SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle()) {
+		SwingWorkerVariant worker = new SwingWorkerVariant(getStandortTabelle())
+		{
 			@Override
-			protected void doNonUILogic() {
+			protected void doNonUILogic()
+			{
 				BasisStandortSuchen.this.objektModel.searchByStandort(standort,
-						istartid);
+																		istartid);
 			}
 
 			@Override
-			protected void doUIUpdateLogic() {
+			protected void doUIUpdateLogic()
+			{
 				BasisStandortSuchen.this.objektModel.fireTableDataChanged();
 			}
 		};
@@ -516,24 +559,35 @@ public class BasisStandortSuchen extends AbstractModul {
 	 * @param focusComp
 	 *            Welche Komponente soll nach der Suche den Fokus bekommen.
 	 */
-	public void filterStandortListe(Component focusComp) {
+	public void filterStandortListe(Component focusComp)
+	{
 		int hausnr;
-		try {
+		try
+		{
 			hausnr = Integer.parseInt(getHausnrFeld().getText());
-		} catch (NumberFormatException e1) {
+		}
+		catch (NumberFormatException e1)
+		{
 			hausnr = -1;
 		}
 		final int fhausnr = hausnr;
 
-		SwingWorkerVariant worker = new SwingWorkerVariant(focusComp) {
+		SwingWorkerVariant worker = new SwingWorkerVariant(focusComp)
+		{
 
 			@Override
-			protected void doNonUILogic() {
-				if (SettingsManager.getInstance().getStandort() == null) {
+			protected void doNonUILogic()
+			{
+				if (SettingsManager.getInstance().getStandort() == null)
+				{
 					BasisStandortSuchen.this.standortModel.filterList(
-							getStrassenFeld().getText(), fhausnr, getOrtFeld()
-									.getText());
-				} else {
+																		getStrassenFeld().getText(),
+																		fhausnr,
+																		getOrtFeld()
+																				.getText());
+				}
+				else
+				{
 					BasisStandortSuchen.this.standortModel
 							.filterList(SettingsManager.getInstance()
 									.getStandort());
@@ -544,14 +598,16 @@ public class BasisStandortSuchen extends AbstractModul {
 			}
 
 			@Override
-			protected void doUIUpdateLogic() {
+			protected void doUIUpdateLogic()
+			{
 				getStandortTabelle().clearSelection();
 
 				BasisStandortSuchen.this.standortModel.fireTableDataChanged();
 				String statusMsg = "Suche: "
 						+ BasisStandortSuchen.this.standortModel.getRowCount()
 						+ " Ergebnis";
-				if (BasisStandortSuchen.this.standortModel.getRowCount() != 1) {
+				if (BasisStandortSuchen.this.standortModel.getRowCount() != 1)
+				{
 					statusMsg += "se";
 				}
 				statusMsg += ".";
@@ -563,7 +619,8 @@ public class BasisStandortSuchen extends AbstractModul {
 		worker.start();
 	}
 
-	public void showReportListe() {
+	public void showReportListe()
+	{
 
 		ListSelectionModel lsm = getStandortTabelle().getSelectionModel();
 		int selectedRow = lsm.getMinSelectionIndex();
@@ -572,9 +629,12 @@ public class BasisStandortSuchen extends AbstractModul {
 
 		String adresse = "" + standort;
 
-		if (standort == null) {
+		if (standort == null)
+		{
 			this.frame.changeStatus("Bitte einen Standort markieren");
-		} else {
+		}
+		else
+		{
 			this.frame.changeStatus("PDF-Datei wird erstellt");
 		}
 
@@ -585,60 +645,76 @@ public class BasisStandortSuchen extends AbstractModul {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("Standort", adresse);
 		params.put("StandortId", standort.getId());
-		try {
+		try
+		{
 			File pdfFile = File.createTempFile("VAwS_StandortListe", ".pdf");
 			pdfFile.deleteOnExit();
 			PDFExporter.getInstance().exportReport(params,
-					PDFExporter.VAWS_STANDORTLISTE, pdfFile.getAbsolutePath());
-		} catch (Exception ex) {
+													PDFExporter.VAWS_STANDORTLISTE, pdfFile.getAbsolutePath());
+		}
+		catch (Exception ex)
+		{
 			GUIManager.getInstance().showErrorMessage(
-					"Generieren der Standort Liste fehlgeschlagen." + "\n"
-							+ ex.getLocalizedMessage(),
-					"Generieren der Standort Liste fehlgeschlagen");
+														"Generieren der Standort Liste fehlgeschlagen." + "\n"
+																+ ex.getLocalizedMessage(),
+														"Generieren der Standort Liste fehlgeschlagen");
 		}
 	}
 
-	private Timer getSuchTimer() {
-		if (this.suchTimer == null) {
-			this.suchTimer = new Timer(900, new ActionListener() {
+	private Timer getSuchTimer()
+	{
+		if (this.suchTimer == null)
+		{
+			this.suchTimer = new Timer(900, new ActionListener()
+			{
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 
 					// Was diese ganze "SwingWorkerVariant"-Geschichte
 					// soll, steht unter
 					// http://www.javaworld.com/javaworld/jw-06-2003/jw-0606-swingworker.html
 					// Ist auch ausgedruckt im Ordner im Regal. -DK
 					SwingWorkerVariant worker = new SwingWorkerVariant(
-							getStrassenFeld()) {
+							getStrassenFeld())
+					{
 						protected String oldText = "";
 						private String newText = "";
 
 						@Override
-						protected void doNonUILogic() {
+						protected void doNonUILogic()
+						{
 							this.oldText = getStrassenFeld().getText();
-							if (this.oldText.equals("")) {
+							if (this.oldText.equals(""))
+							{
 								this.newText = "";
-							} else {
+							}
+							else
+							{
 								String suchText = AuikUtils
 										.sanitizeQueryInput(this.oldText);
 								BasisStrassen str = DatabaseQuery
 										.findStrasse(suchText);
 
-								if (str != null) {
+								if (str != null)
+								{
 									this.newText = str.getStrasse();
-								} else {
+								}
+								else
+								{
 									this.newText = this.oldText;
 								}
 							}
 						}
 
 						@Override
-						protected void doUIUpdateLogic() {
+						protected void doUIUpdateLogic()
+						{
 							getStrassenFeld().setText(this.newText);
 							getStrassenFeld().setSelectionStart(
-									this.oldText.length());
+																this.oldText.length());
 							getStrassenFeld().setSelectionEnd(
-									this.newText.length());
+																this.newText.length());
 						}
 					};
 					worker.start();
@@ -650,36 +726,48 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.suchTimer;
 	}
 
-	private JTextField getStrassenFeld() {
-		if (this.strassenFeld == null) {
+	private JTextField getStrassenFeld()
+	{
+		if (this.strassenFeld == null)
+		{
 			this.strassenFeld = new JTextField("");
 			this.strassenFeld.setFocusTraversalKeys(
-					KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-					Collections.EMPTY_SET);
+													KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+													Collections.EMPTY_SET);
 
-			this.strassenFeld.addActionListener(new ActionListener() {
+			this.strassenFeld.addActionListener(new ActionListener()
+			{
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					getSuchTimer().stop();
 					filterStandortListe(getStandortTabelle());
 				}
 			});
 
-			this.strassenFeld.addKeyListener(new KeyAdapter() {
+			this.strassenFeld.addKeyListener(new KeyAdapter()
+			{
 				@Override
-				public void keyPressed(KeyEvent e) {
-					if (e.getKeyCode() == KeyEvent.VK_TAB) {
+				public void keyPressed(KeyEvent e)
+				{
+					if (e.getKeyCode() == KeyEvent.VK_TAB)
+					{
 						getSuchTimer().stop();
 						filterStandortListe(getHausnrFeld());
 					}
 				}
 
 				@Override
-				public void keyTyped(KeyEvent e) {
-					if (Character.isLetterOrDigit(e.getKeyChar())) {
-						if (getSuchTimer().isRunning()) {
+				public void keyTyped(KeyEvent e)
+				{
+					if (Character.isLetterOrDigit(e.getKeyChar()))
+					{
+						if (getSuchTimer().isRunning())
+						{
 							getSuchTimer().restart();
-						} else {
+						}
+						else
+						{
 							getSuchTimer().start();
 						}
 					}
@@ -689,36 +777,48 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.strassenFeld;
 	}
 
-	private JTextField getOrtFeld() {
-		if (this.ortFeld == null) {
+	private JTextField getOrtFeld()
+	{
+		if (this.ortFeld == null)
+		{
 			this.ortFeld = new JTextField("");
 			this.ortFeld.setFocusTraversalKeys(
-					KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-					Collections.EMPTY_SET);
+												KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+												Collections.EMPTY_SET);
 
-			this.ortFeld.addActionListener(new ActionListener() {
+			this.ortFeld.addActionListener(new ActionListener()
+			{
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					getSuchTimer().stop();
 					filterStandortListe(getStandortTabelle());
 				}
 			});
 
-			this.ortFeld.addKeyListener(new KeyAdapter() {
+			this.ortFeld.addKeyListener(new KeyAdapter()
+			{
 				@Override
-				public void keyPressed(KeyEvent e) {
-					if (e.getKeyCode() == KeyEvent.VK_TAB) {
+				public void keyPressed(KeyEvent e)
+				{
+					if (e.getKeyCode() == KeyEvent.VK_TAB)
+					{
 						getSuchTimer().stop();
 						filterStandortListe(getHausnrFeld());
 					}
 				}
 
 				@Override
-				public void keyTyped(KeyEvent e) {
-					if (Character.isLetterOrDigit(e.getKeyChar())) {
-						if (getSuchTimer().isRunning()) {
+				public void keyTyped(KeyEvent e)
+				{
+					if (Character.isLetterOrDigit(e.getKeyChar()))
+					{
+						if (getSuchTimer().isRunning())
+						{
 							getSuchTimer().restart();
-						} else {
+						}
+						else
+						{
 							getSuchTimer().start();
 						}
 					}
@@ -728,13 +828,17 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.ortFeld;
 	}
 
-	private JTextField getHausnrFeld() {
-		if (this.hausnrFeld == null) {
+	private JTextField getHausnrFeld()
+	{
+		if (this.hausnrFeld == null)
+		{
 			this.hausnrFeld = new BasicEntryField();
 
-			this.hausnrFeld.addActionListener(new ActionListener() {
+			this.hausnrFeld.addActionListener(new ActionListener()
+			{
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					filterStandortListe(getStandortTabelle());
 				}
 			});
@@ -742,14 +846,18 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.hausnrFeld;
 	}
 
-	private JButton getSubmitButton() {
-		if (this.submitButton == null) {
+	private JButton getSubmitButton()
+	{
+		if (this.submitButton == null)
+		{
 			this.submitButton = new JButton(AuikUtils.getIcon(16,
-					"key_enter.png"));
+																"key_enter.png"));
 			this.submitButton.setToolTipText("Suche starten");
-			this.submitButton.addActionListener(new ActionListener() {
+			this.submitButton.addActionListener(new ActionListener()
+			{
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					getSuchTimer().stop();
 					filterStandortListe(getStandortTabelle());
 				}
@@ -759,23 +867,28 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.submitButton;
 	}
 
-	private JButton getDreiButton() {
-		if (this.dreiButton == null) {
+	private JButton getDreiButton()
+	{
+		if (this.dreiButton == null)
+		{
 			this.dreiButton = new JButton("360.33");
 			this.dreiButton.setToolTipText("nur 33er Objekt");
-			this.dreiButton.addActionListener(new ActionListener() {
+			this.dreiButton.addActionListener(new ActionListener()
+			{
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					ListSelectionModel lsm = getStandortTabelle()
 							.getSelectionModel();
-					if (!lsm.isSelectionEmpty()) {
+					if (!lsm.isSelectionEmpty())
+					{
 						int selectedRow = lsm.getMinSelectionIndex();
 						BasisStandort standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
 						log.debug("Standort " + standort + " angewählt.");
 						searchObjekteByStandort(standort,
-								DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_33,
-								DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
+												DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_33,
+												DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
 					}
 				}
 			});
@@ -784,23 +897,28 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.dreiButton;
 	}
 
-	private JButton getVierButton() {
-		if (this.vierButton == null) {
+	private JButton getVierButton()
+	{
+		if (this.vierButton == null)
+		{
 			this.vierButton = new JButton("360.34");
 			this.vierButton.setToolTipText("nur 34er Objekte");
-			this.vierButton.addActionListener(new ActionListener() {
+			this.vierButton.addActionListener(new ActionListener()
+			{
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					ListSelectionModel lsm = getStandortTabelle()
 							.getSelectionModel();
-					if (!lsm.isSelectionEmpty()) {
+					if (!lsm.isSelectionEmpty())
+					{
 						int selectedRow = lsm.getMinSelectionIndex();
 						BasisStandort standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
 						log.debug("Standort " + standort + " angewählt.");
 						searchObjekteByStandort(standort,
-								DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34,
-								DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
+												DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34,
+												DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
 					}
 				}
 			});
@@ -809,23 +927,28 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.vierButton;
 	}
 
-	private JButton getProbepktButton() {
-		if (this.probepktButton == null) {
+	private JButton getProbepktButton()
+	{
+		if (this.probepktButton == null)
+		{
 			this.probepktButton = new JButton("Probepunkte");
 			this.probepktButton
 					.setToolTipText("nur die Probenahmepunkte anzeigen");
-			this.probepktButton.addActionListener(new ActionListener() {
+			this.probepktButton.addActionListener(new ActionListener()
+			{
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					ListSelectionModel lsm = getStandortTabelle()
 							.getSelectionModel();
-					if (!lsm.isSelectionEmpty()) {
+					if (!lsm.isSelectionEmpty())
+					{
 						int selectedRow = lsm.getMinSelectionIndex();
 						BasisStandort standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
 						log.debug("Standort " + standort + " angewählt.");
 						searchObjekteByStandort(standort,
-								DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
+												DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
 					}
 				}
 			});
@@ -834,17 +957,21 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.probepktButton;
 	}
 
-	private JButton getReportListeButton() {
-		if (this.reportStandortListeButton == null) {
+	private JButton getReportListeButton()
+	{
+		if (this.reportStandortListeButton == null)
+		{
 
 			this.reportStandortListeButton = new JButton("PDF-Liste generieren");
 			this.reportStandortListeButton
 					.setToolTipText("Liste der VAwS-Objekte am Standort");
 			this.reportStandortListeButton
-					.addActionListener(new ActionListener() {
+					.addActionListener(new ActionListener()
+					{
 
 						@Override
-						public void actionPerformed(ActionEvent e) {
+						public void actionPerformed(ActionEvent e)
+						{
 							showReportListe();
 						}
 						// }
@@ -853,17 +980,22 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.reportStandortListeButton;
 	}
 
-	private JTable getStandortTabelle() {
-		if (this.standortTabelle == null) {
+	private JTable getStandortTabelle()
+	{
+		if (this.standortTabelle == null)
+		{
 			this.standortTabelle = new JTable(this.standortModel);
 
 			// Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
 			ListSelectionModel rowSM = this.standortTabelle.getSelectionModel();
-			rowSM.addListSelectionListener(new ListSelectionListener() {
+			rowSM.addListSelectionListener(new ListSelectionListener()
+			{
 				@Override
-				public void valueChanged(ListSelectionEvent e) {
+				public void valueChanged(ListSelectionEvent e)
+				{
 					// überzählige Events ignorieren
-					if (e.getValueIsAdjusting()) {
+					if (e.getValueIsAdjusting())
+					{
 						return;
 					}
 
@@ -877,22 +1009,30 @@ public class BasisStandortSuchen extends AbstractModul {
 			// DefaultTableCellRenderer centerRenderer = new
 			// DefaultTableCellRenderer();
 			// centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-			for (int i = 0; i < this.standortModel.getColumnCount(); i++) {
+			for (int i = 0; i < this.standortModel.getColumnCount(); i++)
+			{
 				column = this.standortTabelle.getColumnModel().getColumn(i);
 				/*
 				 * if (i == 0) { column.setMaxWidth(60);
 				 * column.setPreferredWidth(column.getMaxWidth()-10); } else
 				 */
-				if (i == 0) {
+				if (i == 0)
+				{
 					column.setPreferredWidth(120);
 					// column.setCellRenderer(centerRenderer);
-				} else if (i == 1) {
+				}
+				else if (i == 1)
+				{
 					// column.setMaxWidth(70);
 					column.setPreferredWidth(80);
-				} else if (i == 2) {
+				}
+				else if (i == 2)
+				{
 					// column.setMaxWidth(70);
 					column.setPreferredWidth(80);
-				} else if (i == 3) {
+				}
+				else if (i == 3)
+				{
 					// column.setMaxWidth(70);
 					column.setPreferredWidth(200);
 				}
@@ -903,16 +1043,20 @@ public class BasisStandortSuchen extends AbstractModul {
 			this.standortTabelle.setColumnSelectionAllowed(false);
 			this.standortTabelle.setRowSelectionAllowed(true);
 
-			this.standortTabelle.addMouseListener(new MouseAdapter() {
+			this.standortTabelle.addMouseListener(new MouseAdapter()
+			{
 				@Override
-				public void mouseClicked(MouseEvent e) {
+				public void mouseClicked(MouseEvent e)
+				{
 					Point origin = e.getPoint();
 					int row = BasisStandortSuchen.this.standortTabelle
 							.rowAtPoint(origin);
 
-					if (row != -1) {
+					if (row != -1)
+					{
 						if ((e.getButton() == MouseEvent.BUTTON1)
-								&& (e.getClickCount() == 2)) {
+								&& (e.getClickCount() == 2))
+						{
 							BasisStandort bsta = BasisStandortSuchen.this.standortModel
 									.getRow(row);
 							editStandort(bsta);
@@ -921,41 +1065,49 @@ public class BasisStandortSuchen extends AbstractModul {
 				}
 
 				@Override
-				public void mousePressed(MouseEvent e) {
+				public void mousePressed(MouseEvent e)
+				{
 					showStandortPopup(e);
 				}
 
 				@Override
-				public void mouseReleased(MouseEvent e) {
+				public void mouseReleased(MouseEvent e)
+				{
 					showStandortPopup(e);
 				}
 			});
 
 			this.standortTabelle.getInputMap().put(
-					(KeyStroke) getStandortEditAction().getValue(
-							Action.ACCELERATOR_KEY),
-					getStandortEditAction().getValue(Action.NAME));
+													(KeyStroke) getStandortEditAction()
+															.getValue(
+																		Action.ACCELERATOR_KEY),
+													getStandortEditAction().getValue(Action.NAME));
 			this.standortTabelle.getActionMap().put(
-					getStandortEditAction().getValue(Action.NAME),
-					getStandortEditAction());
+													getStandortEditAction().getValue(Action.NAME),
+													getStandortEditAction());
 		}
 
 		return this.standortTabelle;
 	}
 
-	private Action getStandortEditAction() {
-		if (this.standortEditAction == null) {
-			this.standortEditAction = new AbstractAction("Bearbeiten") {
+	private Action getStandortEditAction()
+	{
+		if (this.standortEditAction == null)
+		{
+			this.standortEditAction = new AbstractAction("Bearbeiten")
+			{
 				private static final long serialVersionUID = 535733777827052581L;
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					int row = BasisStandortSuchen.this.standortTabelle
 							.getSelectedRow();
 
 					// Natürlich nur editieren, wenn wirklich eine Zeile
 					// ausgewählt ist
-					if (row != -1) {
+					if (row != -1)
+					{
 						BasisStandort bsta = BasisStandortSuchen.this.standortModel
 								.getRow(row);
 						editStandort(bsta);
@@ -965,28 +1117,33 @@ public class BasisStandortSuchen extends AbstractModul {
 			this.standortEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
 					KeyEvent.VK_B));
 			this.standortEditAction.putValue(Action.ACCELERATOR_KEY,
-					KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+												KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
 		}
 
 		return this.standortEditAction;
 	}
 
-	private Action getObjektNeuAction() {
-		if (this.objektNeuAction == null) {
-			this.objektNeuAction = new AbstractAction("Neues Objekt") {
+	private Action getObjektNeuAction()
+	{
+		if (this.objektNeuAction == null)
+		{
+			this.objektNeuAction = new AbstractAction("Neues Objekt")
+			{
 				private static final long serialVersionUID = 7043267119780363332L;
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					int row = BasisStandortSuchen.this.standortTabelle
 							.getSelectedRow();
 
-					if (row != -1) {
+					if (row != -1)
+					{
 						BasisStandort bsta = BasisStandortSuchen.this.standortModel
 								.getRow(row);
 						BasisStandortSuchen.this.manager.getSettingsManager()
 								.setSetting("auik.imc.use_standort",
-										bsta.getId().intValue(), false);
+											bsta.getId().intValue(), false);
 						BasisStandortSuchen.this.manager
 								.switchModul("m_objekt_bearbeiten");
 					}
@@ -999,8 +1156,10 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.objektNeuAction;
 	}
 
-	private void showStandortPopup(MouseEvent e) {
-		if (this.standortPopup == null) {
+	private void showStandortPopup(MouseEvent e)
+	{
+		if (this.standortPopup == null)
+		{
 			this.standortPopup = new JPopupMenu("Standort");
 			JMenuItem bearbItem = new JMenuItem(getStandortEditAction());
 			JMenuItem neuItem = new JMenuItem(getObjektNeuAction());
@@ -1012,44 +1171,53 @@ public class BasisStandortSuchen extends AbstractModul {
 			this.standortPopup.add(delItem);
 		}
 
-		if (e.isPopupTrigger()) {
+		if (e.isPopupTrigger())
+		{
 			Point origin = e.getPoint();
 			int row = this.standortTabelle.rowAtPoint(origin);
 
-			if (row != -1) {
+			if (row != -1)
+			{
 				this.standortTabelle.setRowSelectionInterval(row, row);
 				this.standortPopup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		}
 	}
 
-	private Action getObjektEditAction() {
-		if (this.objektEditAction == null) {
-			this.objektEditAction = new AbstractAction("Bearbeiten") {
+	private Action getObjektEditAction()
+	{
+		if (this.objektEditAction == null)
+		{
+			this.objektEditAction = new AbstractAction("Bearbeiten")
+			{
 				private static final long serialVersionUID = -3064610048336306709L;
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					int row = BasisStandortSuchen.this.objektTabelle
 							.getSelectedRow();
 					BasisObjekt obj = BasisStandortSuchen.this.objektModel
 							.getRow(row);
 					if ((row != -1)
 							|| (!(obj.getBasisObjektarten().getId()
-									.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)))) {
+									.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))))
+					{
 						BasisStandortSuchen.this.manager.getSettingsManager()
 								.setSetting("auik.imc.edit_object",
-										obj.getObjektid().intValue(), false);
+											obj.getObjektid().intValue(), false);
 
 						BasisStandortSuchen.this.manager
 								.switchModul("m_objekt_bearbeiten");
-					} else if (row != -1
+					}
+					else if (row != -1
 							|| obj.getBasisObjektarten()
 									.getId()
-									.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)) {
+									.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))
+					{
 						BasisStandortSuchen.this.manager.getSettingsManager()
 								.setSetting("auik.imc.edit_object",
-										obj.getObjektid().intValue(), false);
+											obj.getObjektid().intValue(), false);
 						BasisStandortSuchen.this.manager
 								.switchModul("m_sielhaut1");
 					}
@@ -1058,45 +1226,54 @@ public class BasisStandortSuchen extends AbstractModul {
 			this.objektEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
 					KeyEvent.VK_B));
 			this.objektEditAction.putValue(Action.ACCELERATOR_KEY,
-					KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+											KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
 		}
 
 		return this.objektEditAction;
 	}
 
-	private Action getObjektLoeschAction() {
-		if (this.objektLoeschAction == null) {
-			this.objektLoeschAction = new AbstractAction("Löschen") {
+	private Action getObjektLoeschAction()
+	{
+		if (this.objektLoeschAction == null)
+		{
+			this.objektLoeschAction = new AbstractAction("Löschen")
+			{
 				private static final long serialVersionUID = 2332382771711375896L;
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					int row = getObjektTabelle().getSelectedRow();
-					if (row != -1 && getObjektTabelle().getEditingRow() == -1) {
+					if (row != -1 && getObjektTabelle().getEditingRow() == -1)
+					{
 						BasisObjekt objekt = BasisStandortSuchen.this.objektModel
 								.getRow(row);
 						if (GUIManager
 								.getInstance()
 								.showQuestion(
-										"Soll das Objekt "
-												+ objekt.getObjektid()
-												+ " und alle seine Fachdaten wirklich "
-												+ "gelöscht werden?\n"
-												+ "Hinweis: Manche Objekte können auch erst"
-												+ " gelöscht werden, wenn für sie\n"
-												+ "keine Fachdaten mehr existieren.",
-										"Löschen bestätigen")) {
+												"Soll das Objekt "
+														+ objekt.getObjektid()
+														+ " und alle seine Fachdaten wirklich "
+														+ "gelöscht werden?\n"
+														+ "Hinweis: Manche Objekte können auch erst"
+														+ " gelöscht werden, wenn für sie\n"
+														+ "keine Fachdaten mehr existieren.",
+												"Löschen bestätigen"))
+						{
 							if (BasisStandortSuchen.this.objektModel
-									.removeRow(row)) {
+									.removeRow(row))
+							{
 								BasisStandortSuchen.this.frame.changeStatus(
-										"Objekt gelöscht.",
-										HauptFrame.SUCCESS_COLOR);
+																			"Objekt gelöscht.",
+																			HauptFrame.SUCCESS_COLOR);
 								log.debug("Objekt " + objekt.getObjektid()
 										+ " wurde gelöscht!");
-							} else {
+							}
+							else
+							{
 								BasisStandortSuchen.this.frame.changeStatus(
-										"Konnte das Objekt nicht löschen!",
-										HauptFrame.ERROR_COLOR);
+																			"Konnte das Objekt nicht löschen!",
+																			HauptFrame.ERROR_COLOR);
 							}
 						}
 					}
@@ -1105,51 +1282,61 @@ public class BasisStandortSuchen extends AbstractModul {
 			this.objektLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
 					KeyEvent.VK_L));
 			this.objektLoeschAction.putValue(Action.ACCELERATOR_KEY,
-					KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+												KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
 		}
 
 		return this.objektLoeschAction;
 	}
 
-	class StreamGobbler extends Thread {
+	class StreamGobbler extends Thread
+	{
 		InputStream is;
 
 		// reads everything from is until empty.
-		StreamGobbler(InputStream is) {
+		StreamGobbler(InputStream is)
+		{
 			this.is = is;
 		}
 
 		@Override
-		public void run() {
-			try {
+		public void run()
+		{
+			try
+			{
 				InputStreamReader isr = new InputStreamReader(this.is);
 				BufferedReader br = new BufferedReader(isr);
 				String line = null;
 				while ((line = br.readLine()) != null)
 					log.debug(line);
-			} catch (IOException ioe) {
+			}
+			catch (IOException ioe)
+			{
 				ioe.printStackTrace();
 			}
 		}
 	}
 
-	private Action getGisAction() {
+	private Action getGisAction()
+	{
 
-		if (this.gisAction == null) {
+		if (this.gisAction == null)
+		{
 
-			this.gisAction = new AbstractAction("GIS öffnen") {
+			this.gisAction = new AbstractAction("GIS öffnen")
+			{
 
 				private static final long serialVersionUID = 9117497990586218808L;
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 
 					String prog = BasisStandortSuchen.this.manager
 							.getSettingsManager().getSetting(
-									"auik.gis.programmpath");
+																"auik.gis.programmpath");
 					String proj = BasisStandortSuchen.this.manager
 							.getSettingsManager().getSetting(
-									"auik.gis.projectpath");
+																"auik.gis.projectpath");
 
 					int row = BasisStandortSuchen.this.standortTabelle
 							.getSelectedRow();
@@ -1163,7 +1350,8 @@ public class BasisStandortSuchen extends AbstractModul {
 					env.put("RECHTS", bsta.getE32().toString());
 					env.put("HOCH", bsta.getN32().toString());
 
-					try {
+					try
+					{
 
 						Process process = pb.start();
 						StreamGobbler errorGobbler = new StreamGobbler(
@@ -1173,7 +1361,9 @@ public class BasisStandortSuchen extends AbstractModul {
 						errorGobbler.start();
 						outputGobbler.start();
 
-					} catch (IOException e1) {
+					}
+					catch (IOException e1)
+					{
 						e1.printStackTrace();
 					}
 				}
@@ -1183,8 +1373,10 @@ public class BasisStandortSuchen extends AbstractModul {
 		return this.gisAction;
 	}
 
-	private void showObjektPopup(MouseEvent e) {
-		if (this.objektPopup == null) {
+	private void showObjektPopup(MouseEvent e)
+	{
+		if (this.objektPopup == null)
+		{
 			this.objektPopup = new JPopupMenu("Objekt");
 			JMenuItem bearbItem = new JMenuItem(getObjektEditAction());
 			JMenuItem loeschItem = new JMenuItem(getObjektLoeschAction());
@@ -1192,56 +1384,66 @@ public class BasisStandortSuchen extends AbstractModul {
 			this.objektPopup.add(loeschItem);
 		}
 
-		if (e.isPopupTrigger()) {
+		if (e.isPopupTrigger())
+		{
 			Point origin = e.getPoint();
 			int row = this.objektTabelle.rowAtPoint(origin);
 
-			if (row != -1) {
+			if (row != -1)
+			{
 				this.objektTabelle.setRowSelectionInterval(row, row);
 				this.objektPopup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		}
 	}
 
-	private JTable getObjektTabelle() {
-		if (this.objektTabelle == null) {
+	private JTable getObjektTabelle()
+	{
+		if (this.objektTabelle == null)
+		{
 			this.objektTabelle = new JTable(this.objektModel);
 			this.objektTabelle
 					.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 			TableColumn column = this.objektTabelle.getColumnModel().getColumn(
-					0);
+																				0);
 			column.setMaxWidth(60);
 			column.setPreferredWidth(column.getMaxWidth() - 10);
 
 			this.objektTabelle
-					.addMouseListener(new java.awt.event.MouseAdapter() {
+					.addMouseListener(new java.awt.event.MouseAdapter()
+					{
 						@Override
-						public void mouseClicked(java.awt.event.MouseEvent e) {
+						public void mouseClicked(java.awt.event.MouseEvent e)
+						{
 							if ((e.getClickCount() == 2)
-									&& (e.getButton() == 1)) {
+									&& (e.getButton() == 1))
+							{
 								Point origin = e.getPoint();
 								int row = getObjektTabelle().rowAtPoint(origin);
 								BasisObjekt obj = BasisStandortSuchen.this.objektModel
 										.getRow(row);
 								if ((row != -1)
 										&& (!(obj.getBasisObjektarten().getId()
-												.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)))) {
+												.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))))
+								{
 									BasisStandortSuchen.this.manager
 											.getSettingsManager().setSetting(
-													"auik.imc.edit_object",
-													obj.getObjektid()
-															.intValue(), false);
+																				"auik.imc.edit_object",
+																				obj.getObjektid()
+																						.intValue(), false);
 									BasisStandortSuchen.this.manager
 											.switchModul("m_objekt_bearbeiten");
-								} else if ((row != -1)
+								}
+								else if ((row != -1)
 										&& (obj.getBasisObjektarten().getId()
-												.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))) {
+												.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)))
+								{
 									BasisStandortSuchen.this.manager
 											.getSettingsManager().setSetting(
-													"auik.imc.edit_object",
-													obj.getObjektid()
-															.intValue(), false);
+																				"auik.imc.edit_object",
+																				obj.getObjektid()
+																						.intValue(), false);
 									BasisStandortSuchen.this.manager
 											.switchModul("m_sielhaut1");
 								}
@@ -1249,69 +1451,85 @@ public class BasisStandortSuchen extends AbstractModul {
 						}
 
 						@Override
-						public void mousePressed(MouseEvent e) {
+						public void mousePressed(MouseEvent e)
+						{
 							showObjektPopup(e);
 						}
 
 						@Override
-						public void mouseReleased(MouseEvent e) {
+						public void mouseReleased(MouseEvent e)
+						{
 							showObjektPopup(e);
 						}
 					});
 
-			this.objektTabelle.getInputMap().put(
-					(KeyStroke) getObjektEditAction().getValue(
-							Action.ACCELERATOR_KEY),
-					getObjektEditAction().getValue(Action.NAME));
+			this.objektTabelle.getInputMap()
+					.put(
+							(KeyStroke) getObjektEditAction().getValue(
+																		Action.ACCELERATOR_KEY),
+							getObjektEditAction().getValue(Action.NAME));
 			this.objektTabelle.getActionMap().put(
-					getObjektEditAction().getValue(Action.NAME),
-					getObjektEditAction());
+													getObjektEditAction().getValue(Action.NAME),
+													getObjektEditAction());
 
 			this.objektTabelle.getInputMap().put(
-					(KeyStroke) getObjektLoeschAction().getValue(
-							Action.ACCELERATOR_KEY),
-					getObjektLoeschAction().getValue(Action.NAME));
+													(KeyStroke) getObjektLoeschAction()
+															.getValue(
+																		Action.ACCELERATOR_KEY),
+													getObjektLoeschAction().getValue(Action.NAME));
 			this.objektTabelle.getActionMap().put(
-					getObjektLoeschAction().getValue(Action.NAME),
-					getObjektLoeschAction());
+													getObjektLoeschAction().getValue(Action.NAME),
+													getObjektLoeschAction());
 		}
 		return this.objektTabelle;
 	}
 
-	private Action getStandortLoeschAction() {
-		if (this.standortLoeschAction == null) {
-			this.standortLoeschAction = new AbstractAction("Löschen") {
+	private Action getStandortLoeschAction()
+	{
+		if (this.standortLoeschAction == null)
+		{
+			this.standortLoeschAction = new AbstractAction("Löschen")
+			{
 				private static final long serialVersionUID = 6709934716520847123L;
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					int row = getStandortTabelle().getSelectedRow();
-					if (row != -1 && getStandortTabelle().getEditingRow() == -1) {
-						if (BasisStandortSuchen.this.objektModel.getRowCount() != 0) {
+					if (row != -1 && getStandortTabelle().getEditingRow() == -1)
+					{
+						if (BasisStandortSuchen.this.objektModel.getRowCount() != 0)
+						{
 							BasisStandortSuchen.this.frame
 									.changeStatus(
-											"Kann Standort nicht löschen: Zu erst alle zugehörigen Objekte löschen!",
-											HauptFrame.ERROR_COLOR);
-						} else {
+													"Kann Standort nicht löschen: Zu erst alle zugehörigen Objekte löschen!",
+													HauptFrame.ERROR_COLOR);
+						}
+						else
+						{
 							BasisStandort str = BasisStandortSuchen.this.standortModel
 									.getRow(row);
 
 							if (GUIManager.getInstance().showQuestion(
-									"Soll der Standort '" + str
-											+ "' wirklich gelöscht werden?",
-									"Löschen bestätigen")) {
+																		"Soll der Standort '" + str
+																				+ "' wirklich gelöscht werden?",
+																		"Löschen bestätigen"))
+							{
 								if (BasisStandortSuchen.this.standortModel
-										.removeRow(row)) {
+										.removeRow(row))
+								{
 									BasisStandortSuchen.this.frame
 											.changeStatus("Standort gelöscht.",
-													HauptFrame.SUCCESS_COLOR);
-									log.debug("Betreiber " + str.getId()
+															HauptFrame.SUCCESS_COLOR);
+									log.debug("Standort " + str.getId()
 											+ " wurde gelöscht!");
-								} else {
+								}
+								else
+								{
 									BasisStandortSuchen.this.frame
 											.changeStatus(
-													"Konnte den Standort nicht löschen!",
-													HauptFrame.ERROR_COLOR);
+															"Konnte den Standort nicht löschen!",
+															HauptFrame.ERROR_COLOR);
 								}
 							}
 						}
@@ -1319,9 +1537,9 @@ public class BasisStandortSuchen extends AbstractModul {
 				}
 			};
 			this.standortLoeschAction.putValue(Action.MNEMONIC_KEY,
-					new Integer(KeyEvent.VK_L));
+												new Integer(KeyEvent.VK_L));
 			this.standortLoeschAction.putValue(Action.ACCELERATOR_KEY,
-					KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+												KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
 		}
 
 		return this.standortLoeschAction;

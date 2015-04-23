@@ -30,144 +30,184 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Ein TableModel für die Basis-Standortdaten.
+ * 
  * @author David Klotz
  */
-public class BasisStandortModel extends ListTableModel {
-    private static final long serialVersionUID = 3532697905957103920L;
-    private String lastStrasse = null;
-    private String lastOrt = null;
-    private int lastHausNr = -1;
+public class BasisStandortModel extends ListTableModel
+{
+	private static final long serialVersionUID = 3532697905957103920L;
+	private String lastStrasse = null;
+	private String lastOrt = null;
+	private int lastHausNr = -1;
 
-    public BasisStandortModel() {
-        super(new String[]{
-                /*"St.ID",*/
-                "Straße",
-                "Hausnr.",
-        		"PLZ",
-        		"Ort",
-        		"Entw.-Gebiet",
-        		"Übersch.-Gebiet",
-        		"VAwS-Gebiet"}, true);
-    }
+	public BasisStandortModel()
+	{
+		super(new String[] {
+				/* "St.ID", */
+				"Straße",
+				"Hausnr.",
+				"PLZ",
+				"Ort",
+				"Entw.-Gebiet",
+				"Übersch.-Gebiet",
+				"VAwS-Gebiet" }, true, true);
+	}
 
-    /**
-     * Aktualisiert die aktuell angezeigte Liste.
-     * Falls noch keine Suche durchgeführt wurde, werden die
-     * ersten 30 Einträge angezeigt.
-     */
-    @Override
-    public void updateList() {
-        if (lastStrasse != null) {
-            filterList(lastStrasse, lastHausNr, lastOrt);
-        }
-    }
+	/**
+	 * Aktualisiert die aktuell angezeigte Liste.
+	 * Falls noch keine Suche durchgeführt wurde, werden die
+	 * ersten 30 Einträge angezeigt.
+	 */
+	@Override
+	public void updateList()
+	{
+		if (lastStrasse != null)
+		{
+			filterList(lastStrasse, lastHausNr, lastOrt);
+		}
+	}
 
-    /**
-     * Liefert das Objekt aus einer bestimmten Zeile.
-     * @param rowIndex Die Zeile
-     * @return Das Objekt bei rowIndex
-     */
-    public BasisStandort getRow(int rowIndex) {
-        return (BasisStandort) getObjectAtRow(rowIndex);
-    }
+	/**
+	 * Liefert das Objekt aus einer bestimmten Zeile.
+	 * 
+	 * @param rowIndex
+	 *            Die Zeile
+	 * @return Das Objekt bei rowIndex
+	 */
+	public BasisStandort getRow(int rowIndex)
+	{
+		return (BasisStandort) getObjectAtRow(rowIndex);
+	}
 
-    /**
-     * Filtert den Tabelleninhalt nach der Straße und der Hausnr.
-     * @param strasse Der Straßenname
-     * @param hausnr Die Hausnr (oder -1 falls alle Standorte in dieser Straßen gesucht werden sollen)
-     */
-    public void filterList(String strasse, int hausnr, String ort) {
-        setList(DatabaseQuery.findStandorte(strasse, hausnr, ort));
-        lastOrt = ort;
-        lastStrasse = strasse;
-        lastHausNr = hausnr;
-    }
+	/**
+	 * Filtert den Tabelleninhalt nach der Straße und der Hausnr.
+	 * 
+	 * @param strasse
+	 *            Der Straßenname
+	 * @param hausnr
+	 *            Die Hausnr (oder -1 falls alle Standorte in dieser Straßen
+	 *            gesucht werden sollen)
+	 */
+	public void filterList(String strasse, int hausnr, String ort)
+	{
+		setList(DatabaseQuery.findStandorte(strasse, hausnr, ort));
+		lastOrt = ort;
+		lastStrasse = strasse;
+		lastHausNr = hausnr;
+	}
 
-    /**
-     * Filtert den Tabelleninhalt nach einem Standort.
-     * @param std BasisStandort
-     */
-    public void filterList(BasisStandort std) {
-        List<BasisStandort> oneItemList = new ArrayList<BasisStandort>();
-        oneItemList.add(std);
-        setList(oneItemList);
-    }
+	/**
+	 * Filtert den Tabelleninhalt nach einem Standort.
+	 * 
+	 * @param std
+	 *            BasisStandort
+	 */
+	public void filterList(BasisStandort std)
+	{
+		List<BasisStandort> oneItemList = new ArrayList<BasisStandort>();
+		oneItemList.add(std);
+		setList(oneItemList);
+	}
 
-    /**
-     * Liefert den Inhalt der Spalte mit den gegebenen Koordinaten.
-     * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(Object, int)
-     * @param objectAtRow Das Object in dieser Zeile
-     * @param columnIndex Die Spalte der Tabelle
-     * @return Den Wert der Zelle oder null (falls die Zelle nicht existiert)
-     */
-    @Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	/**
+	 * Liefert den Inhalt der Spalte mit den gegebenen Koordinaten.
+	 * 
+	 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(Object,
+	 *      int)
+	 * @param objectAtRow
+	 *            Das Object in dieser Zeile
+	 * @param columnIndex
+	 *            Die Spalte der Tabelle
+	 * @return Den Wert der Zelle oder null (falls die Zelle nicht existiert)
+	 */
+	@Override
+	public Object getColumnValue(Object objectAtRow, int columnIndex)
+	{
 		Object value;
 		BasisStandort bsta = (BasisStandort) objectAtRow;
-		switch (columnIndex) {
+		switch (columnIndex)
+		{
 		/*
 		 * case 0: value = bsta.getStandortid(); break;
 		 */
-		case 0:
-			value = bsta.getStrasse();
-			break;
-		case 1:
-			if (bsta.getHausnrzus() != null) {
-				String tmp = bsta.getHausnr() + bsta.getHausnrzus();
-				value = tmp;
-			} else {
-				value = bsta.getHausnr();
-			}
-			break;
-		case 2:
-			value = bsta.getPlz();
-			break;
-		case 3:
-			value = bsta.getOrt();
-			break;
-		case 4:
-			value = bsta.getEntgebid();
-			break;
-		case 5:
-			if (bsta.getVawsStandortgghwsg() != null) {
-				Integer sggh = bsta.getVawsStandortgghwsg().getId();
-				if (sggh.equals(6)) {
-					value = new Boolean(true);
-				} else {
+			case 0:
+				value = bsta.getStrasse();
+				break;
+			case 1:
+				if (bsta.getHausnrzus() != null)
+				{
+					String tmp = bsta.getHausnr() + bsta.getHausnrzus();
+					value = tmp;
+				}
+				else
+				{
+					value = bsta.getHausnr();
+				}
+				break;
+			case 2:
+				value = bsta.getPlz();
+				break;
+			case 3:
+				value = bsta.getOrt();
+				break;
+			case 4:
+				value = bsta.getEntgebid();
+				break;
+			case 5:
+				if (bsta.getVawsStandortgghwsg() != null)
+				{
+					Integer sggh = bsta.getVawsStandortgghwsg().getId();
+					if (sggh.equals(6))
+					{
+						value = new Boolean(true);
+					}
+					else
+					{
+						value = new Boolean(false);
+					}
+				}
+				else
+				{
 					value = new Boolean(false);
 				}
-			} else {
-				value = new Boolean(false);
-			}
-			break;
-		case 6:
-			value = bsta.getVawsWassereinzugsgebiete();
-			break;
-		default:
-			value = null;
+				break;
+			case 6:
+				value = bsta.getVawsWassereinzugsgebiete();
+				break;
+			default:
+				value = null;
 		}
 		return value;
 	}
 
-    
-    @Override
-    public boolean objectRemoved(Object objectAtRow) {
-        BasisStandort removedStandort = (BasisStandort) objectAtRow;
-        return BasisStandort.delete(removedStandort);
-    }
-	
-	
-	  @Override
-	public Class<?> getColumnClass( int columnIndex ){
-		switch( columnIndex ){
-			case 0: return String.class;
-			case 1: return String.class;
-			case 2: return String.class;
-			case 3: return String.class;
-			case 4: return String.class;
-			case 5: return Boolean.class;
-			case 6: return String.class;
-			default: return null;
+	@Override
+	public boolean objectRemoved(Object objectAtRow)
+	{
+		BasisStandort removedStandort = (BasisStandort) objectAtRow;
+		return BasisStandort.delete(removedStandort);
+	}
+
+	@Override
+	public Class<?> getColumnClass(int columnIndex)
+	{
+		switch (columnIndex)
+		{
+			case 0:
+				return String.class;
+			case 1:
+				return String.class;
+			case 2:
+				return String.class;
+			case 3:
+				return String.class;
+			case 4:
+				return String.class;
+			case 5:
+				return Boolean.class;
+			case 6:
+				return String.class;
+			default:
+				return null;
 		}
 	}
 }

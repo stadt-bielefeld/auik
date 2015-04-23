@@ -30,6 +30,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 
 /**
  * A class that represents a row in the BasisStrassen database table.<br>
@@ -207,8 +208,17 @@ public class BasisStrassen implements java.io.Serializable
 			return false;
 		if (!(other instanceof BasisStrassen))
 			return false;
-		return (this.getId().equals(
-				((BasisStrassen) other).getId()));
+
+		//Id haben wir nicht (als Text aus der Datenbank geladen) => String-Vergleich durchführen
+		if (this.getId() == null)
+		{
+			return StringUtils.compare(this.getStrasse(), ((BasisStrassen) other).getStrasse(), true) == 0;
+		}
+		else
+		{
+			return (this.getId().equals(
+					((BasisStrassen) other).getId()));
+		}
 	}
 
 	/**

@@ -812,6 +812,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 							.add(Projections.property("ort"), "ort")
 							.add(Projections.property("plz"), "plz")))
 					.setResultTransformer(Transformers.aliasToBean(BasisOrte.class))
+					.addOrder(Order.asc("ort"))
 					.addOrder(Order.asc("plz"));
 
 			orte = new DatabaseAccess().executeCriteriaToList(dc, new BasisOrte());
