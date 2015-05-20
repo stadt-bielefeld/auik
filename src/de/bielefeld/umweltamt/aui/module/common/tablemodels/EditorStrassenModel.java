@@ -37,7 +37,8 @@ public class EditorStrassenModel extends EditableListTableModel {
         super(new String[]{
                 "ID",
                 "Strassenname",
-                "Postleitzahl"
+                "Postleitzahl",
+                "Ort"
         },
         false);
     }
@@ -53,6 +54,7 @@ public class EditorStrassenModel extends EditableListTableModel {
             case 0: return Integer.class;
             case 1: return String.class;
             case 2: return String.class;
+            case 3: return String.class;
             default: return null;
         }
     }
@@ -74,6 +76,9 @@ public class EditorStrassenModel extends EditableListTableModel {
             break;
         case 2:
             tmp = str.getPlz();
+            break;
+        case 3:
+            tmp = str.getOrt();
             break;
 
         default:
@@ -106,6 +111,11 @@ public class EditorStrassenModel extends EditableListTableModel {
         case 2:
         	String tmpPLZ = (String) newValue;
         	tmp.setPlz(tmpPLZ);
+        	break;
+        	
+        case 3:
+        	String tmpOrt = (String) newValue;
+        	tmp.setOrt(tmpOrt);
         	break;
 
         default:
