@@ -9,9 +9,6 @@
                 <param name="sequence">auik.basis_betreiber_id_seq</param>
             </generator>
         </id>
-        <many-to-one name="auikWzCode" class="de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode" fetch="select">
-            <column name="auik_wz_code" />
-        </many-to-one>
         <many-to-one name="vawsWirtschaftszweige" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige" fetch="select">
             <column name="wirtschaftszweigid" />
         </many-to-one>

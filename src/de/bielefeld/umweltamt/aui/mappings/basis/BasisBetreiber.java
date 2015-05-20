@@ -32,7 +32,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -49,7 +48,6 @@ public class BasisBetreiber  implements java.io.Serializable {
 
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private AuikWzCode auikWzCode;
     private VawsWirtschaftszweige vawsWirtschaftszweige;
     private String betranrede;
     private String betrname;
@@ -91,8 +89,7 @@ public class BasisBetreiber  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisBetreiber(
-        AuikWzCode auikWzCode, VawsWirtschaftszweige vawsWirtschaftszweige, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, Set<BasisObjekt> basisObjekts) {
-        this.auikWzCode = auikWzCode;
+        VawsWirtschaftszweige vawsWirtschaftszweige, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, Set<BasisObjekt> basisObjekts) {
         this.vawsWirtschaftszweige = vawsWirtschaftszweige;
         this.betranrede = betranrede;
         this.betrname = betrname;
@@ -125,14 +122,6 @@ public class BasisBetreiber  implements java.io.Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public AuikWzCode getAuikWzCode() {
-        return this.auikWzCode;
-    }
-
-    public void setAuikWzCode(AuikWzCode auikWzCode) {
-        this.auikWzCode = auikWzCode;
     }
 
     public VawsWirtschaftszweige getVawsWirtschaftszweige() {
@@ -339,7 +328,6 @@ public class BasisBetreiber  implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("auikWzCode").append("='").append(getAuikWzCode()).append("' ");
         buffer.append("vawsWirtschaftszweige").append("='").append(getVawsWirtschaftszweige()).append("' ");
         buffer.append("betranrede").append("='").append(getBetranrede()).append("' ");
         buffer.append("betrname").append("='").append(getBetrname()).append("' ");
@@ -428,7 +416,6 @@ public class BasisBetreiber  implements java.io.Serializable {
      * @param copy BasisBetreiber
      */
     private void copy(BasisBetreiber copy) {
-        this.auikWzCode = copy.getAuikWzCode();
         this.vawsWirtschaftszweige = copy.getVawsWirtschaftszweige();
         this.betranrede = copy.getBetranrede();
         this.betrname = copy.getBetrname();

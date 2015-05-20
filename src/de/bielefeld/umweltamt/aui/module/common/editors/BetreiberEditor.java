@@ -51,9 +51,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
-import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
-import de.bielefeld.umweltamt.aui.module.common.dialogs.WZCodeDialog;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
@@ -107,13 +105,6 @@ public class BetreiberEditor extends AbstractBaseEditor
 	private JComboBox wirtschaftszweigBox;
 	private JComboBox wzCodeBox;
 
-	private JButton wzCodeButton;
-	private WZCodeDialog wzCodeDialog;
-
-	public interface OKListener
-	{
-		public void onOK(AuikWzCode selectedWZCode);
-	}
 
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Betreibers.
@@ -214,25 +205,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 
 		wirtschaftszweigBox = new JComboBox();
 		wirtschaftszweigBox.setRenderer(new LongNameComboBoxRenderer());
-		wzCodeBox = new JComboBox();
-		wzCodeBox.setModel(new DefaultComboBoxModel(
-				DatabaseQuery.getAuikWzCodesInKurzAuswahl()));
-		wzCodeButton = new JButton("Alle WZ-Codes anzeigen");
-		wzCodeDialog = new WZCodeDialog("WZ-Code auswählen", this.frame);
-		wzCodeDialog.addOKListener(new OKListener()
-		{
-			@Override
-			public void onOK(AuikWzCode selectedWZCode)
-			{
-				if (selectedWZCode != null)
-				{
-					BetreiberEditor.this.wzCodeBox.setEditable(true);
-					BetreiberEditor.this.wzCodeBox.setSelectedItem(
-							selectedWZCode);
-					BetreiberEditor.this.wzCodeBox.setEditable(false);
-				}
-			}
-		});
+
 
 		// Der folgende KeyListener wird benutzt um mit Escape
 		// das Bearbeiten abzubrechen und bei Enter im
@@ -285,15 +258,6 @@ public class BetreiberEditor extends AbstractBaseEditor
 		strassenBox.addKeyListener(escEnterListener);
 		//strassenFeld.addKeyListener(escEnterListener);
 		wirtschaftszweigBox.addKeyListener(escEnterListener);
-		wzCodeBox.addKeyListener(escEnterListener);
-		wzCodeButton.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-				wzCodeDialog.setVisible(true);
-			}
-		});
 
 		// Ermögliche TAB aus dem Bemerkungs-Feld zu springen
 		bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
@@ -352,10 +316,6 @@ public class BetreiberEditor extends AbstractBaseEditor
 		// Wirtschaftszweig
 		builder.addLabel("Wirtschaftszweig:", cc.xy(1, 13));
 		builder.add(wirtschaftszweigBox, cc.xyw(3, 13, 8));
-		// WZ-Code
-		builder.addLabel("WZ-Code:", cc.xy(1, 15));
-		builder.add(wzCodeBox, cc.xyw(3, 15, 8));
-		builder.add(wzCodeButton, cc.xyw(3, 17, 8));
 
 		// Adresse --------------------------------------
 		builder.addSeparator("Adresse", cc.xyw(1, 19, 10));
@@ -470,7 +430,6 @@ public class BetreiberEditor extends AbstractBaseEditor
 					wirtschaftszweigBox.setSelectedItem(getBetreiber().getVawsWirtschaftszweige());
 				}
 				wzCodeBox.setEditable(true);
-				wzCodeBox.setSelectedItem(getBetreiber().getAuikWzCode());
 				wzCodeBox.setEditable(false);
 				anredeFeld.setText(getBetreiber().getBetranrede());
 				vornamenFeld.setText(getBetreiber().getBetrvorname());
@@ -725,8 +684,6 @@ public class BetreiberEditor extends AbstractBaseEditor
 		// Wirtschaftszweig
 		VawsWirtschaftszweige wizw = (VawsWirtschaftszweige) wirtschaftszweigBox.getSelectedItem();
 		getBetreiber().setVawsWirtschaftszweige(wizw);
-		// WZ-Code
-		getBetreiber().setAuikWzCode((AuikWzCode) wzCodeBox.getSelectedItem());
 
 		// Bemerkungen
 		String bemerkungen = bemerkungsArea.getText();

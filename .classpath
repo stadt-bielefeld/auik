@@ -30,7 +30,7 @@
 	<classpathentry kind="lib" path="lib/commons-cli-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/com.ibm.icu_3.8.1.v20080530.jar"/>
 	<classpathentry kind="lib" path="lib/postgresql-8.3-605.jdbc3.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_20"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_40"/>
 	<classpathentry kind="lib" path="lib/jasperreports-5.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/jasperreports-fonts-5.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/jaxrpc.jar"/>

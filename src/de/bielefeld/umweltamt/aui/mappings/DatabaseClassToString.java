@@ -60,7 +60,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
-import de.bielefeld.umweltamt.aui.mappings.tipi.AuikWzCode;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
@@ -531,15 +530,6 @@ public class DatabaseClassToString {
 
     /** @return "VawsWirtschaftszweige.toGuiString() */
     public static String toStringForClass(VawsWirtschaftszweige clazz) {
-        return clazz.toGuiString();
-    }
-
-    /* ********************************************************************** */
-    /* toStrings for package TIPI                                             */
-    /* ********************************************************************** */
-
-    /** @return AuikWzCode.toGuiString() */
-    public static String toStringForClass(AuikWzCode clazz) {
         return clazz.toGuiString();
     }
 }
