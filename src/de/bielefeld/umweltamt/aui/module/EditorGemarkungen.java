@@ -56,6 +56,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumn;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -188,8 +189,34 @@ public class EditorGemarkungen extends AbstractModul {
     protected JTable getResultTable() {
         if (resultTable == null) {
             resultTable = new JTable(getTableModel());
+            resultTable.setAutoCreateRowSorter(true);
             resultTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+			this.resultTable
+					.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+			TableColumn column = null;
+			// DefaultTableCellRenderer centerRenderer = new
+			// DefaultTableCellRenderer();
+			// centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+			for (int i = 0; i < this.tmodel.getColumnCount(); i++)
+			{
+				column = this.resultTable.getColumnModel().getColumn(i);
+				/*
+				 * if (i == 0) { column.setMaxWidth(60);
+				 * column.setPreferredWidth(column.getMaxWidth()-10); } else
+				 */
+				if (i == 0)
+				{
+					column.setMaxWidth(50);
+					// column.setCellRenderer(centerRenderer);
+				}
+				else if (i == 1)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(200);
+				}
+			}
+			
             resultTable.getInputMap().put(
                 (KeyStroke) getResultLoeschAction().getValue(
                     Action.ACCELERATOR_KEY),

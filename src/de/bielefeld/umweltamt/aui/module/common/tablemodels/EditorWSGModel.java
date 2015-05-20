@@ -43,6 +43,20 @@ public class EditorWSGModel extends EditableListTableModel {
         false);
     }
 
+    /**
+     * Tell the model which column is of which class type.<br>
+     * @param columnIndex The index of the requested column
+     */
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 0: return Integer.class;
+            case 1: return String.class;
+            default: return null;
+        }
+    }
+
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */

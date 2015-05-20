@@ -857,7 +857,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(AtlEinheiten.class)
 												.addOrder(
-															Order.asc("bezeichnung")),
+															Order.asc("id")),
 										new AtlEinheiten());
 		return strassenlist;
 
@@ -878,7 +878,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(AtlParameter.class)
 												.addOrder(
-															Order.asc("bezeichnung")),
+															Order.asc("id")),
 										new AtlParameter());
 		return parameterlist;
 	}
@@ -897,7 +897,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		List<AtlKlaeranlagen> klaeranlagenlist = new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(AtlKlaeranlagen.class)
-												.addOrder(Order.asc("anlage")),
+												.addOrder(Order.asc("id")),
 										new AtlKlaeranlagen());
 		return klaeranlagenlist;
 	}
@@ -922,7 +922,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 										DetachedCriteria.forClass(
 																	VawsWassereinzugsgebiete.class)
 												.addOrder(
-															Order.asc("ezgbname")),
+															Order.asc("id")),
 										new VawsWassereinzugsgebiete());
 		return wsglist;
 
