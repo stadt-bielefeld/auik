@@ -47,7 +47,6 @@ public class AtlKlaeranlagen  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String anlage;
-    private Integer deaKlaeranlageKlaeranlageNr;
     private boolean enabled;
     private boolean deleted;
     private Set<AtlProbepkt> atlProbepkts = new HashSet<AtlProbepkt>(0);
@@ -65,7 +64,6 @@ public class AtlKlaeranlagen  implements java.io.Serializable {
         Integer id, String anlage, Integer deaKlaeranlageKlaeranlageNr, boolean enabled, boolean deleted) {
         this.id = id;
         this.anlage = anlage;
-        this.deaKlaeranlageKlaeranlageNr = deaKlaeranlageKlaeranlageNr;
         this.enabled = enabled;
         this.deleted = deleted;
     }
@@ -75,7 +73,6 @@ public class AtlKlaeranlagen  implements java.io.Serializable {
         Integer id, String anlage, Integer deaKlaeranlageKlaeranlageNr, boolean enabled, boolean deleted, Set<AtlProbepkt> atlProbepkts) {
         this.id = id;
         this.anlage = anlage;
-        this.deaKlaeranlageKlaeranlageNr = deaKlaeranlageKlaeranlageNr;
         this.enabled = enabled;
         this.deleted = deleted;
         this.atlProbepkts = atlProbepkts;
@@ -96,14 +93,6 @@ public class AtlKlaeranlagen  implements java.io.Serializable {
 
     public void setAnlage(String anlage) {
         this.anlage = anlage;
-    }
-
-    public Integer getDeaKlaeranlageKlaeranlageNr() {
-        return this.deaKlaeranlageKlaeranlageNr;
-    }
-
-    public void setDeaKlaeranlageKlaeranlageNr(Integer deaKlaeranlageKlaeranlageNr) {
-        this.deaKlaeranlageKlaeranlageNr = deaKlaeranlageKlaeranlageNr;
     }
 
     public boolean isEnabled() {
@@ -160,7 +149,6 @@ public class AtlKlaeranlagen  implements java.io.Serializable {
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");
         buffer.append("anlage").append("='").append(getAnlage()).append("' ");
-        buffer.append("deaKlaeranlageKlaeranlageNr").append("='").append(getDeaKlaeranlageKlaeranlageNr()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("atlProbepkts").append("='").append(getAtlProbepkts()).append("' ");
@@ -231,7 +219,6 @@ public class AtlKlaeranlagen  implements java.io.Serializable {
     private void copy(AtlKlaeranlagen copy) {
         this.id = copy.getId();
         this.anlage = copy.getAnlage();
-        this.deaKlaeranlageKlaeranlageNr = copy.getDeaKlaeranlageKlaeranlageNr();
         this.enabled = copy.isEnabled();
         this.deleted = copy.isDeleted();
         this.atlProbepkts = copy.getAtlProbepkts();

@@ -70,9 +70,8 @@ public class BasisSachbearbeiter  implements java.io.Serializable {
 
     /** Minimal constructor */
     public BasisSachbearbeiter(
-        String kennummer, String name, boolean enabled, boolean deleted) {
+        String kennummer, boolean enabled, boolean deleted) {
         this.kennummer = kennummer;
-        this.name = name;
         this.enabled = enabled;
         this.deleted = deleted;
     }

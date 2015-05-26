@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
@@ -110,6 +111,7 @@ public class EditorWSGModel extends EditableListTableModel {
 	@Override
 	public Object newObject() {
 		VawsWassereinzugsgebiete tmp = new VawsWassereinzugsgebiete();
+		tmp.setId(DatabaseQuery.newWSGID());
 		return tmp;
 	}
 

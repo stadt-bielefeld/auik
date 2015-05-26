@@ -29,8 +29,11 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 
+import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
@@ -532,6 +535,40 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         }
         return DatabaseIndeinlQuery.entsorger;
     }
+	
+
+	/**
+	 * Get all AtlEinheiten and sort them by their name
+	 * 
+	 * @return <code>Eine Liste aller Einheiten</code>
+	 */
+	public static List<AnhEntsorger> getEntsorgerlist()
+	{
+		List<AnhEntsorger> entsorgerlist = new DatabaseAccess()
+				.executeCriteriaToList(
+										DetachedCriteria.forClass(AnhEntsorger.class)
+												.addOrder(
+															Order.asc("id")),
+										new AnhEntsorger());
+		return entsorgerlist;
+
+	}
+
+	/**
+	 * Get next id for new AnhEntsorger
+	 * 
+	 * @return <code>AnhEntsorger</code>
+	 */
+	public static Integer newEntsorgerID()
+	{
+		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+																		DetachedCriteria.forClass(AnhEntsorger.class)
+																				.setProjection(
+																								Property.forName("id")
+																										.max()),
+																		new Integer(0));
+		return id + 1;
+	}
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class AnhSuevFachdaten                    */

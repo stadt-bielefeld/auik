@@ -124,6 +124,7 @@ import com.jgoodies.uif_lite.component.Factory;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.Messages;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -194,7 +195,7 @@ public class BasisStandortSuchen extends AbstractModul
 	@Override
 	public String getName()
 	{
-		return "Standort suchen";
+		return Messages.getString("BasisStandortSuchen.0"); //$NON-NLS-1$
 	}
 
 	/*
@@ -205,7 +206,7 @@ public class BasisStandortSuchen extends AbstractModul
 	@Override
 	public String getIdentifier()
 	{
-		return "m_standort_suchen";
+		return "m_standort_suchen"; //$NON-NLS-1$
 	}
 
 	/*
@@ -216,7 +217,7 @@ public class BasisStandortSuchen extends AbstractModul
 	@Override
 	public String getCategory()
 	{
-		return "Betriebe";
+		return Messages.getString("BasisStandortSuchen.2"); //$NON-NLS-1$
 	}
 
 	/*
@@ -225,7 +226,7 @@ public class BasisStandortSuchen extends AbstractModul
 	@Override
 	public Icon getIcon()
 	{
-		return super.getIcon("filefind32.png");
+		return super.getIcon("filefind32.png"); //$NON-NLS-1$
 	}
 
 	/*
@@ -237,9 +238,9 @@ public class BasisStandortSuchen extends AbstractModul
 		if (this.panel == null)
 		{
 			this.standortModel = new BasisStandortModel();
-			this.objektModel = new BasisObjektModel("Betreiber", this.manager
+			this.objektModel = new BasisObjektModel(Messages.getString("BasisStandortSuchen.4"), this.manager //$NON-NLS-1$
 					.getSettingsManager().getSetting(
-														"auik.prefs.abteilungsfilter"));
+														"auik.prefs.abteilungsfilter")); //$NON-NLS-1$
 
 			TableFocusListener tfl = TableFocusListener.getInstance();
 			getStandortTabelle().addFocusListener(tfl);
@@ -268,7 +269,7 @@ public class BasisStandortSuchen extends AbstractModul
 			JPanel restrictButtonBar2 = ButtonBarFactory
 					.buildRightAlignedBar(getReportListeButton());
 
-			restrictPanel.add(new Label("Objekte einschränken:"),
+			restrictPanel.add(new Label(Messages.getString("BasisStandortSuchen.6")), //$NON-NLS-1$
 								BorderLayout.WEST);
 			restrictPanel.add(restrictButtonBar, BorderLayout.CENTER);
 			restrictPanel.add(restrictButtonBar2, BorderLayout.EAST);
@@ -286,19 +287,19 @@ public class BasisStandortSuchen extends AbstractModul
 																	objektScroller, 0.6);
 
 			FormLayout layout = new FormLayout(
-					"l:p, max(4dlu;p), p:g, 10dlu, p, 4dlu, max(30dlu;p), 10dlu, p, 4dlu,  p:g, 3dlu, min(16dlu;p)", // spalten
-					"pref, 3dlu, 150dlu:grow, 3dlu, 30"); // zeilen
+					"l:p, max(4dlu;p), p:g, 10dlu, p, 4dlu, max(30dlu;p), 10dlu, p, 4dlu,  p:g, 3dlu, min(16dlu;p)", // spalten //$NON-NLS-1$
+					"pref, 3dlu, 150dlu:grow, 3dlu, 30"); // zeilen //$NON-NLS-1$
 			layout.setColumnGroups(new int[][] { { 1, 5 } });
 
 			PanelBuilder builder = new PanelBuilder(layout);
 			builder.setDefaultDialogBorder();
 			CellConstraints cc = new CellConstraints();
 
-			builder.addLabel("Straße:", cc.xy(1, 1));
+			builder.addLabel(Messages.getString("BasisStandortSuchen.9"), cc.xy(1, 1)); //$NON-NLS-1$
 			builder.add(getStrassenFeld(), cc.xy(3, 1));
-			builder.addLabel("Haus-Nr.:", cc.xy(5, 1));
+			builder.addLabel(Messages.getString("BasisStandortSuchen.10"), cc.xy(5, 1)); //$NON-NLS-1$
 			builder.add(getHausnrFeld(), cc.xy(7, 1));
-			builder.addLabel("Ort:", cc.xy(9, 1));
+			builder.addLabel(Messages.getString("BasisStandortSuchen.11"), cc.xy(9, 1)); //$NON-NLS-1$
 			builder.add(getOrtFeld(), cc.xy(11, 1));
 			builder.add(submitToolBar, cc.xy(13, 1));
 			builder.add(this.tabellenSplit, cc.xyw(1, 3, 13));
@@ -323,10 +324,10 @@ public class BasisStandortSuchen extends AbstractModul
 
 		// Gespeicherte Position des Dividers setzen
 		if (SettingsManager.getInstance().getSetting(
-														"auik.prefs.divloc_standort") != null)
+														"auik.prefs.divloc_standort") != null) //$NON-NLS-1$
 		{
 			double divloc = Double.parseDouble(SettingsManager.getInstance()
-					.getSetting("auik.prefs.divloc_standort"));
+					.getSetting("auik.prefs.divloc_standort")); //$NON-NLS-1$
 			// AUIKataster.debugOutput("Lese divloc_standort als: " + divloc,
 			// "BasisStandortSuchen.DIVIDER");
 			this.tabellenSplit.setDividerLocation(divloc);
@@ -363,7 +364,7 @@ public class BasisStandortSuchen extends AbstractModul
 			if (divloc >= 0.0 && divloc <= 1.0)
 			{
 				SettingsManager.getInstance().setSetting(
-															"auik.prefs.divloc_standort", Double.toString(divloc),
+															"auik.prefs.divloc_standort", Double.toString(divloc), //$NON-NLS-1$
 															true);
 			}
 		}
@@ -408,13 +409,13 @@ public class BasisStandortSuchen extends AbstractModul
 							.getRowCount();
 					if (standortCount > 0)
 					{
-						String statusMsg = "Suche: " + standortCount
-								+ " Ergebnis";
+						String statusMsg = Messages.getString("BasisStandortSuchen.15") + standortCount //$NON-NLS-1$
+								+ Messages.getString("BasisStandortSuchen.16"); //$NON-NLS-1$
 						if (standortCount != 1)
 						{
-							statusMsg += "se";
+							statusMsg += "se"; //$NON-NLS-1$
 						}
-						statusMsg += ".";
+						statusMsg += "."; //$NON-NLS-1$
 						BasisStandortSuchen.this.frame.changeStatus(statusMsg);
 					}
 				}
@@ -433,7 +434,7 @@ public class BasisStandortSuchen extends AbstractModul
 		{
 			int selectedRow = lsm.getMinSelectionIndex();
 			BasisStandort standort = this.standortModel.getRow(selectedRow);
-			log.debug("Standort " + standort + " angewählt.");
+			log.debug(Messages.getString("BasisStandortSuchen.19") + standort + Messages.getString("BasisStandortSuchen.20")); //$NON-NLS-1$ //$NON-NLS-2$
 			searchObjekteByStandort(standort);
 		}
 	}
@@ -592,8 +593,8 @@ public class BasisStandortSuchen extends AbstractModul
 							.filterList(SettingsManager.getInstance()
 									.getStandort());
 					SettingsManager.getInstance().setStandort(null);
-					getStrassenFeld().setText("");
-					getHausnrFeld().setText("");
+					getStrassenFeld().setText(""); //$NON-NLS-1$
+					getHausnrFeld().setText(""); //$NON-NLS-1$
 				}
 			}
 
@@ -603,19 +604,19 @@ public class BasisStandortSuchen extends AbstractModul
 				getStandortTabelle().clearSelection();
 
 				BasisStandortSuchen.this.standortModel.fireTableDataChanged();
-				String statusMsg = "Suche: "
+				String statusMsg = Messages.getString("BasisStandortSuchen.23") //$NON-NLS-1$
 						+ BasisStandortSuchen.this.standortModel.getRowCount()
-						+ " Ergebnis";
+						+ Messages.getString("BasisStandortSuchen.24"); //$NON-NLS-1$
 				if (BasisStandortSuchen.this.standortModel.getRowCount() != 1)
 				{
-					statusMsg += "se";
+					statusMsg += "se"; //$NON-NLS-1$
 				}
-				statusMsg += ".";
+				statusMsg += "."; //$NON-NLS-1$
 				BasisStandortSuchen.this.frame.changeStatus(statusMsg);
 			}
 		};
 
-		this.frame.changeStatus("Suche...");
+		this.frame.changeStatus(Messages.getString("BasisStandortSuchen.27")); //$NON-NLS-1$
 		worker.start();
 	}
 
@@ -627,27 +628,27 @@ public class BasisStandortSuchen extends AbstractModul
 
 		BasisStandort standort = this.standortModel.getRow(selectedRow);
 
-		String adresse = "" + standort;
+		String adresse = "" + standort; //$NON-NLS-1$
 
 		if (standort == null)
 		{
-			this.frame.changeStatus("Bitte einen Standort markieren");
+			this.frame.changeStatus(Messages.getString("BasisStandortSuchen.29")); //$NON-NLS-1$
 		}
 		else
 		{
-			this.frame.changeStatus("PDF-Datei wird erstellt");
+			this.frame.changeStatus(Messages.getString("BasisStandortSuchen.30")); //$NON-NLS-1$
 		}
 
 		this.standortID = standort.getId();
 
-		log.debug(adresse + " mit ID: " + this.standortID + " ausgewaehlt");
+		log.debug(adresse + Messages.getString("BasisStandortSuchen.31") + this.standortID + Messages.getString("BasisStandortSuchen.32")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("Standort", adresse);
-		params.put("StandortId", standort.getId());
+		params.put(Messages.getString("BasisStandortSuchen.33"), adresse); //$NON-NLS-1$
+		params.put(Messages.getString("BasisStandortSuchen.34"), standort.getId()); //$NON-NLS-1$
 		try
 		{
-			File pdfFile = File.createTempFile("VAwS_StandortListe", ".pdf");
+			File pdfFile = File.createTempFile(Messages.getString("BasisStandortSuchen.35"), ".pdf"); //$NON-NLS-1$ //$NON-NLS-2$
 			pdfFile.deleteOnExit();
 			PDFExporter.getInstance().exportReport(params,
 													PDFExporter.VAWS_STANDORTLISTE, pdfFile.getAbsolutePath());
@@ -655,9 +656,9 @@ public class BasisStandortSuchen extends AbstractModul
 		catch (Exception ex)
 		{
 			GUIManager.getInstance().showErrorMessage(
-														"Generieren der Standort Liste fehlgeschlagen." + "\n"
+														Messages.getString("BasisStandortSuchen.37") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
 																+ ex.getLocalizedMessage(),
-														"Generieren der Standort Liste fehlgeschlagen");
+														Messages.getString("BasisStandortSuchen.39")); //$NON-NLS-1$
 		}
 	}
 
@@ -678,16 +679,16 @@ public class BasisStandortSuchen extends AbstractModul
 					SwingWorkerVariant worker = new SwingWorkerVariant(
 							getStrassenFeld())
 					{
-						protected String oldText = "";
-						private String newText = "";
+						protected String oldText = ""; //$NON-NLS-1$
+						private String newText = ""; //$NON-NLS-1$
 
 						@Override
 						protected void doNonUILogic()
 						{
 							this.oldText = getStrassenFeld().getText();
-							if (this.oldText.equals(""))
+							if (this.oldText.equals("")) //$NON-NLS-1$
 							{
-								this.newText = "";
+								this.newText = ""; //$NON-NLS-1$
 							}
 							else
 							{
@@ -730,7 +731,7 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.strassenFeld == null)
 		{
-			this.strassenFeld = new JTextField("");
+			this.strassenFeld = new JTextField(""); //$NON-NLS-1$
 			this.strassenFeld.setFocusTraversalKeys(
 													KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
 													Collections.EMPTY_SET);
@@ -781,7 +782,7 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.ortFeld == null)
 		{
-			this.ortFeld = new JTextField("");
+			this.ortFeld = new JTextField(""); //$NON-NLS-1$
 			this.ortFeld.setFocusTraversalKeys(
 												KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
 												Collections.EMPTY_SET);
@@ -851,8 +852,8 @@ public class BasisStandortSuchen extends AbstractModul
 		if (this.submitButton == null)
 		{
 			this.submitButton = new JButton(AuikUtils.getIcon(16,
-																"key_enter.png"));
-			this.submitButton.setToolTipText("Suche starten");
+																"key_enter.png")); //$NON-NLS-1$
+			this.submitButton.setToolTipText(Messages.getString("BasisStandortSuchen.47")); //$NON-NLS-1$
 			this.submitButton.addActionListener(new ActionListener()
 			{
 				@Override
@@ -871,8 +872,8 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.dreiButton == null)
 		{
-			this.dreiButton = new JButton("360.33");
-			this.dreiButton.setToolTipText("nur 33er Objekt");
+			this.dreiButton = new JButton(Messages.getString("BasisStandortSuchen.48")); //$NON-NLS-1$
+			this.dreiButton.setToolTipText(Messages.getString("BasisStandortSuchen.49")); //$NON-NLS-1$
 			this.dreiButton.addActionListener(new ActionListener()
 			{
 				@Override
@@ -885,7 +886,7 @@ public class BasisStandortSuchen extends AbstractModul
 						int selectedRow = lsm.getMinSelectionIndex();
 						BasisStandort standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
-						log.debug("Standort " + standort + " angewählt.");
+						log.debug(Messages.getString("BasisStandortSuchen.50") + standort + Messages.getString("BasisStandortSuchen.51")); //$NON-NLS-1$ //$NON-NLS-2$
 						searchObjekteByStandort(standort,
 												DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_33,
 												DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
@@ -901,8 +902,8 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.vierButton == null)
 		{
-			this.vierButton = new JButton("360.34");
-			this.vierButton.setToolTipText("nur 34er Objekte");
+			this.vierButton = new JButton(Messages.getString("BasisStandortSuchen.52")); //$NON-NLS-1$
+			this.vierButton.setToolTipText(Messages.getString("BasisStandortSuchen.53")); //$NON-NLS-1$
 			this.vierButton.addActionListener(new ActionListener()
 			{
 				@Override
@@ -915,7 +916,7 @@ public class BasisStandortSuchen extends AbstractModul
 						int selectedRow = lsm.getMinSelectionIndex();
 						BasisStandort standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
-						log.debug("Standort " + standort + " angewählt.");
+						log.debug(Messages.getString("BasisStandortSuchen.54") + standort + Messages.getString("BasisStandortSuchen.55")); //$NON-NLS-1$ //$NON-NLS-2$
 						searchObjekteByStandort(standort,
 												DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34,
 												DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
@@ -931,9 +932,9 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.probepktButton == null)
 		{
-			this.probepktButton = new JButton("Probepunkte");
+			this.probepktButton = new JButton(Messages.getString("BasisStandortSuchen.56")); //$NON-NLS-1$
 			this.probepktButton
-					.setToolTipText("nur die Probenahmepunkte anzeigen");
+					.setToolTipText(Messages.getString("BasisStandortSuchen.57")); //$NON-NLS-1$
 			this.probepktButton.addActionListener(new ActionListener()
 			{
 				@Override
@@ -946,7 +947,7 @@ public class BasisStandortSuchen extends AbstractModul
 						int selectedRow = lsm.getMinSelectionIndex();
 						BasisStandort standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
-						log.debug("Standort " + standort + " angewählt.");
+						log.debug(Messages.getString("BasisStandortSuchen.58") + standort + Messages.getString("BasisStandortSuchen.59")); //$NON-NLS-1$ //$NON-NLS-2$
 						searchObjekteByStandort(standort,
 												DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
 					}
@@ -962,9 +963,9 @@ public class BasisStandortSuchen extends AbstractModul
 		if (this.reportStandortListeButton == null)
 		{
 
-			this.reportStandortListeButton = new JButton("PDF-Liste generieren");
+			this.reportStandortListeButton = new JButton(Messages.getString("BasisStandortSuchen.60")); //$NON-NLS-1$
 			this.reportStandortListeButton
-					.setToolTipText("Liste der VAwS-Objekte am Standort");
+					.setToolTipText(Messages.getString("BasisStandortSuchen.61")); //$NON-NLS-1$
 			this.reportStandortListeButton
 					.addActionListener(new ActionListener()
 					{
@@ -1094,7 +1095,7 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.standortEditAction == null)
 		{
-			this.standortEditAction = new AbstractAction("Bearbeiten")
+			this.standortEditAction = new AbstractAction(Messages.getString("BasisStandortSuchen.62")) //$NON-NLS-1$
 			{
 				private static final long serialVersionUID = 535733777827052581L;
 
@@ -1127,7 +1128,7 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.objektNeuAction == null)
 		{
-			this.objektNeuAction = new AbstractAction("Neues Objekt")
+			this.objektNeuAction = new AbstractAction(Messages.getString("BasisStandortSuchen.63")) //$NON-NLS-1$
 			{
 				private static final long serialVersionUID = 7043267119780363332L;
 
@@ -1142,10 +1143,10 @@ public class BasisStandortSuchen extends AbstractModul
 						BasisStandort bsta = BasisStandortSuchen.this.standortModel
 								.getRow(row);
 						BasisStandortSuchen.this.manager.getSettingsManager()
-								.setSetting("auik.imc.use_standort",
+								.setSetting("auik.imc.use_standort", //$NON-NLS-1$
 											bsta.getId().intValue(), false);
 						BasisStandortSuchen.this.manager
-								.switchModul("m_objekt_bearbeiten");
+								.switchModul("m_objekt_bearbeiten"); //$NON-NLS-1$
 					}
 				}
 			};
@@ -1160,7 +1161,7 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.standortPopup == null)
 		{
-			this.standortPopup = new JPopupMenu("Standort");
+			this.standortPopup = new JPopupMenu(Messages.getString("BasisStandortSuchen.66")); //$NON-NLS-1$
 			JMenuItem bearbItem = new JMenuItem(getStandortEditAction());
 			JMenuItem neuItem = new JMenuItem(getObjektNeuAction());
 			JMenuItem gisItem = new JMenuItem(getGisAction());
@@ -1188,7 +1189,7 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.objektEditAction == null)
 		{
-			this.objektEditAction = new AbstractAction("Bearbeiten")
+			this.objektEditAction = new AbstractAction(Messages.getString("BasisStandortSuchen.67")) //$NON-NLS-1$
 			{
 				private static final long serialVersionUID = -3064610048336306709L;
 
@@ -1204,11 +1205,11 @@ public class BasisStandortSuchen extends AbstractModul
 									.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))))
 					{
 						BasisStandortSuchen.this.manager.getSettingsManager()
-								.setSetting("auik.imc.edit_object",
+								.setSetting("auik.imc.edit_object", //$NON-NLS-1$
 											obj.getObjektid().intValue(), false);
 
 						BasisStandortSuchen.this.manager
-								.switchModul("m_objekt_bearbeiten");
+								.switchModul("m_objekt_bearbeiten"); //$NON-NLS-1$
 					}
 					else if (row != -1
 							|| obj.getBasisObjektarten()
@@ -1216,10 +1217,10 @@ public class BasisStandortSuchen extends AbstractModul
 									.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))
 					{
 						BasisStandortSuchen.this.manager.getSettingsManager()
-								.setSetting("auik.imc.edit_object",
+								.setSetting("auik.imc.edit_object", //$NON-NLS-1$
 											obj.getObjektid().intValue(), false);
 						BasisStandortSuchen.this.manager
-								.switchModul("m_sielhaut1");
+								.switchModul("m_sielhaut1"); //$NON-NLS-1$
 					}
 				}
 			};
@@ -1236,7 +1237,7 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.objektLoeschAction == null)
 		{
-			this.objektLoeschAction = new AbstractAction("Löschen")
+			this.objektLoeschAction = new AbstractAction(Messages.getString("BasisStandortSuchen.72")) //$NON-NLS-1$
 			{
 				private static final long serialVersionUID = 2332382771711375896L;
 
@@ -1251,28 +1252,28 @@ public class BasisStandortSuchen extends AbstractModul
 						if (GUIManager
 								.getInstance()
 								.showQuestion(
-												"Soll das Objekt "
+												Messages.getString("BasisStandortSuchen.73") //$NON-NLS-1$
 														+ objekt.getObjektid()
-														+ " und alle seine Fachdaten wirklich "
-														+ "gelöscht werden?\n"
-														+ "Hinweis: Manche Objekte können auch erst"
-														+ " gelöscht werden, wenn für sie\n"
-														+ "keine Fachdaten mehr existieren.",
-												"Löschen bestätigen"))
+														+ Messages.getString("BasisStandortSuchen.74") //$NON-NLS-1$
+														+ Messages.getString("BasisStandortSuchen.75") //$NON-NLS-1$
+														+ Messages.getString("BasisStandortSuchen.76") //$NON-NLS-1$
+														+ Messages.getString("BasisStandortSuchen.77") //$NON-NLS-1$
+														+ Messages.getString("BasisStandortSuchen.78"), //$NON-NLS-1$
+												Messages.getString("BasisStandortSuchen.79"))) //$NON-NLS-1$
 						{
 							if (BasisStandortSuchen.this.objektModel
 									.removeRow(row))
 							{
 								BasisStandortSuchen.this.frame.changeStatus(
-																			"Objekt gelöscht.",
+																			Messages.getString("BasisStandortSuchen.80"), //$NON-NLS-1$
 																			HauptFrame.SUCCESS_COLOR);
-								log.debug("Objekt " + objekt.getObjektid()
-										+ " wurde gelöscht!");
+								log.debug(Messages.getString("BasisStandortSuchen.81") + objekt.getObjektid() //$NON-NLS-1$
+										+ Messages.getString("BasisStandortSuchen.82")); //$NON-NLS-1$
 							}
 							else
 							{
 								BasisStandortSuchen.this.frame.changeStatus(
-																			"Konnte das Objekt nicht löschen!",
+																			Messages.getString("BasisStandortSuchen.83"), //$NON-NLS-1$
 																			HauptFrame.ERROR_COLOR);
 							}
 						}
@@ -1322,7 +1323,7 @@ public class BasisStandortSuchen extends AbstractModul
 		if (this.gisAction == null)
 		{
 
-			this.gisAction = new AbstractAction("GIS öffnen")
+			this.gisAction = new AbstractAction(Messages.getString("BasisStandortSuchen.84")) //$NON-NLS-1$
 			{
 
 				private static final long serialVersionUID = 9117497990586218808L;
@@ -1333,22 +1334,22 @@ public class BasisStandortSuchen extends AbstractModul
 
 					String prog = BasisStandortSuchen.this.manager
 							.getSettingsManager().getSetting(
-																"auik.gis.programmpath");
+																"auik.gis.programmpath"); //$NON-NLS-1$
 					String proj = BasisStandortSuchen.this.manager
 							.getSettingsManager().getSetting(
-																"auik.gis.projectpath");
+																"auik.gis.projectpath"); //$NON-NLS-1$
 
 					int row = BasisStandortSuchen.this.standortTabelle
 							.getSelectedRow();
 					BasisStandort bsta = BasisStandortSuchen.this.standortModel
 							.getRow(row);
 
-					ProcessBuilder pb = new ProcessBuilder("cmd", "/C", prog,
+					ProcessBuilder pb = new ProcessBuilder("cmd", "/C", prog, //$NON-NLS-1$ //$NON-NLS-2$
 							proj);
 
 					Map<String, String> env = pb.environment();
-					env.put("RECHTS", bsta.getE32().toString());
-					env.put("HOCH", bsta.getN32().toString());
+					env.put("RECHTS", bsta.getE32().toString()); //$NON-NLS-1$
+					env.put("HOCH", bsta.getN32().toString()); //$NON-NLS-1$
 
 					try
 					{
@@ -1377,7 +1378,7 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.objektPopup == null)
 		{
-			this.objektPopup = new JPopupMenu("Objekt");
+			this.objektPopup = new JPopupMenu(Messages.getString("BasisStandortSuchen.91")); //$NON-NLS-1$
 			JMenuItem bearbItem = new JMenuItem(getObjektEditAction());
 			JMenuItem loeschItem = new JMenuItem(getObjektLoeschAction());
 			this.objektPopup.add(bearbItem);
@@ -1429,11 +1430,11 @@ public class BasisStandortSuchen extends AbstractModul
 								{
 									BasisStandortSuchen.this.manager
 											.getSettingsManager().setSetting(
-																				"auik.imc.edit_object",
+																				"auik.imc.edit_object", //$NON-NLS-1$
 																				obj.getObjektid()
 																						.intValue(), false);
 									BasisStandortSuchen.this.manager
-											.switchModul("m_objekt_bearbeiten");
+											.switchModul("m_objekt_bearbeiten"); //$NON-NLS-1$
 								}
 								else if ((row != -1)
 										&& (obj.getBasisObjektarten().getId()
@@ -1441,11 +1442,11 @@ public class BasisStandortSuchen extends AbstractModul
 								{
 									BasisStandortSuchen.this.manager
 											.getSettingsManager().setSetting(
-																				"auik.imc.edit_object",
+																				"auik.imc.edit_object", //$NON-NLS-1$
 																				obj.getObjektid()
 																						.intValue(), false);
 									BasisStandortSuchen.this.manager
-											.switchModul("m_sielhaut1");
+											.switchModul("m_sielhaut1"); //$NON-NLS-1$
 								}
 							}
 						}
@@ -1488,7 +1489,7 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.standortLoeschAction == null)
 		{
-			this.standortLoeschAction = new AbstractAction("Löschen")
+			this.standortLoeschAction = new AbstractAction(Messages.getString("BasisStandortSuchen.96")) //$NON-NLS-1$
 			{
 				private static final long serialVersionUID = 6709934716520847123L;
 
@@ -1502,7 +1503,7 @@ public class BasisStandortSuchen extends AbstractModul
 						{
 							BasisStandortSuchen.this.frame
 									.changeStatus(
-													"Kann Standort nicht löschen: Zu erst alle zugehörigen Objekte löschen!",
+													Messages.getString("BasisStandortSuchen.97"), //$NON-NLS-1$
 													HauptFrame.ERROR_COLOR);
 						}
 						else
@@ -1511,24 +1512,24 @@ public class BasisStandortSuchen extends AbstractModul
 									.getRow(row);
 
 							if (GUIManager.getInstance().showQuestion(
-																		"Soll der Standort '" + str
-																				+ "' wirklich gelöscht werden?",
-																		"Löschen bestätigen"))
+																		Messages.getString("BasisStandortSuchen.98") + str //$NON-NLS-1$
+																				+ Messages.getString("BasisStandortSuchen.99"), //$NON-NLS-1$
+																		Messages.getString("BasisStandortSuchen.100"))) //$NON-NLS-1$
 							{
 								if (BasisStandortSuchen.this.standortModel
 										.removeRow(row))
 								{
 									BasisStandortSuchen.this.frame
-											.changeStatus("Standort gelöscht.",
+											.changeStatus(Messages.getString("BasisStandortSuchen.101"), //$NON-NLS-1$
 															HauptFrame.SUCCESS_COLOR);
-									log.debug("Standort " + str.getId()
-											+ " wurde gelöscht!");
+									log.debug(Messages.getString("BasisStandortSuchen.102") + str.getId() //$NON-NLS-1$
+											+ Messages.getString("BasisStandortSuchen.103")); //$NON-NLS-1$
 								}
 								else
 								{
 									BasisStandortSuchen.this.frame
 											.changeStatus(
-															"Konnte den Standort nicht löschen!",
+															Messages.getString("BasisStandortSuchen.104"), //$NON-NLS-1$
 															HauptFrame.ERROR_COLOR);
 								}
 							}

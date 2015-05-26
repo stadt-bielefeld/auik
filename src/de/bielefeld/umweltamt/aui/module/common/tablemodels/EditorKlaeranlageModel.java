@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
@@ -110,6 +111,7 @@ public class EditorKlaeranlageModel extends EditableListTableModel {
 	@Override
 	public Object newObject() {
 		AtlKlaeranlagen tmp = new AtlKlaeranlagen();
+		tmp.setId(DatabaseQuery.newKlaeranlagenID());
 		return tmp;
 	}
 

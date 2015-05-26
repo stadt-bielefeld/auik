@@ -182,6 +182,22 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		return gemarkungenlist;
 	}
 
+	/**
+	 * Get next id for new BasisGemarkung
+	 * 
+	 * @return <code>BasisGemarkung</code>
+	 */
+	public static Integer newGemarkungID()
+	{
+		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+																		DetachedCriteria.forClass(BasisGemarkung.class)
+																				.setProjection(
+																								Property.forName("id")
+																										.max()),
+																		new Integer(0));
+		return id + 1;
+	}
+
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package BASIS : class BasisObjekt */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -830,21 +846,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	/* Queries for package ATL : class AtlEinheiten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	/**
-	 * Get next id for new AtlEinheiten
-	 * 
-	 * @return <code>AtlEinheitenID</code>
-	 */
-	public static Integer newEinheitenID()
-	{
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-																		DetachedCriteria.forClass(AtlEinheiten.class)
-																				.setProjection(
-																								Property.forName("id")
-																										.max()),
-																		new Integer(0));
-		return id + 1;
-	}
+	
 
 	/**
 	 * Get all AtlEinheiten and sort them by their name
@@ -861,6 +863,22 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 										new AtlEinheiten());
 		return strassenlist;
 
+	}
+	
+	/**
+	 * Get next id for new AtlEinheiten
+	 * 
+	 * @return <code>AtlEinheitenID</code>
+	 */
+	public static Integer newEinheitenID()
+	{
+		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+																		DetachedCriteria.forClass(AtlEinheiten.class)
+																				.setProjection(
+																								Property.forName("id")
+																										.max()),
+																		new Integer(0));
+		return id + 1;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -902,6 +920,22 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		return klaeranlagenlist;
 	}
 
+	/**
+	 * Get next id for new AtlKlaeranlagen
+	 * 
+	 * @return <code>AtlKlaeranlagenID</code>
+	 */
+	public static Integer newKlaeranlagenID()
+	{
+		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+																		DetachedCriteria.forClass(AtlKlaeranlagen.class)
+																				.setProjection(
+																								Property.forName("id")
+																										.max()),
+																		new Integer(0));
+		return id + 1;
+	}
+
 	/* ********************************************************************** */
 	/* Queries for package VAWS */
 	/* ********************************************************************** */
@@ -926,6 +960,22 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 										new VawsWassereinzugsgebiete());
 		return wsglist;
 
+	}
+
+	/**
+	 * Get next id for new VawsWassereinzugsgebiete
+	 * 
+	 * @return <code>VawsWassereinzugsgebieteID</code>
+	 */
+	public static Integer newWSGID()
+	{
+		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+																		DetachedCriteria.forClass(VawsWassereinzugsgebiete.class)
+																				.setProjection(
+																								Property.forName("id")
+																										.max()),
+																		new Integer(0));
+		return id + 1;
 	}
 
 }

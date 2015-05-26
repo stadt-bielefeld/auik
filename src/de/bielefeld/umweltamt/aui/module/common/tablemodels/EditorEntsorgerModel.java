@@ -22,24 +22,30 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
- * Ein einfaches TableModel für die Einheitentabelle.
+ * Ein einfaches TableModel für die Entsorgertabelle.
  * @author Gerd Genuit
  */
-public class EditorGemarkungModel extends EditableListTableModel {
+public class EditorEntsorgerModel extends EditableListTableModel {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7170618777899362092L;
+	private static final long serialVersionUID = -1744282792751909508L;
 
-	public EditorGemarkungModel() {
+	public EditorEntsorgerModel() {
         super(new String[]{
                 "ID",
-                "Gemarkung"
+                "Name",
+                "Straße",
+                "Nr.",
+                "PLZ",
+                "Ort",
+                "Ansprechpartner",
+                "Telefon"
         },
         false);
     }
@@ -54,6 +60,12 @@ public class EditorGemarkungModel extends EditableListTableModel {
         switch (columnIndex) {
             case 0: return Integer.class;
             case 1: return String.class;
+            case 2: return String.class;
+            case 3: return Integer.class;
+            case 4: return String.class;
+            case 5: return String.class;
+            case 6: return String.class;
+            case 7: return String.class;
             default: return null;
         }
     }
@@ -63,15 +75,33 @@ public class EditorGemarkungModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        BasisGemarkung gemarkung = (BasisGemarkung) objectAtRow;
+    	AnhEntsorger entsorger = (AnhEntsorger) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            tmp = gemarkung.getId();
+            tmp = entsorger.getId();
             break;
         case 1:
-            tmp = gemarkung.getGemarkung();
+            tmp = entsorger.getEntsorger();
+            break;
+        case 2:
+            tmp = entsorger.getStrasse();
+            break;
+        case 3:
+            tmp = entsorger.getHausnr();
+            break;
+        case 4:
+            tmp = entsorger.getPlz();
+            break;
+        case 5:
+            tmp = entsorger.getOrt();
+            break;
+        case 6:
+            tmp = entsorger.getAnsprechpartner();
+            break;
+        case 7:
+            tmp = entsorger.getTelefon();
             break;
 
         default:
@@ -89,7 +119,7 @@ public class EditorGemarkungModel extends EditableListTableModel {
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
 		
-		BasisGemarkung tmp = (BasisGemarkung) objectAtRow;
+		AnhEntsorger tmp = (AnhEntsorger) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -97,36 +127,63 @@ public class EditorGemarkungModel extends EditableListTableModel {
         	break;
         	
         case 1:
-        	String tmpArt = (String) newValue;
-        	tmp.setGemarkung(tmpArt);
+        	String tmpName = (String) newValue;
+        	tmp.setEntsorger(tmpName);
+        	break;
+        case 2:
+        	String tmpstrasse = (String) newValue;
+        	tmp.setStrasse(tmpstrasse);
+        	break;
+        	
+        case 3:
+        	Integer tmpNr = (Integer) newValue;
+        	tmp.setHausnr(tmpNr);
+        	break;
+        case 4:
+        	String tmpPLZ = (String) newValue;
+        	tmp.setPlz(tmpPLZ);
+        	break;
+        	
+        case 5:
+        	String tmpOrt = (String) newValue;
+        	tmp.setOrt(tmpOrt);
+        	break;
+        case 6:
+        	String tmpAnsprech = (String) newValue;
+        	tmp.setAnsprechpartner(tmpAnsprech);
+        	break;
+        	
+        case 7:
+        	String tmpTel = (String) newValue;
+        	tmp.setTelefon(tmpTel);
         	break;
 
         default:
             break;        	
         	
 		}
-		BasisGemarkung.merge(tmp);
+		AnhEntsorger.merge(tmp);
 	}
 
 	@Override
 	public Object newObject() {
-		BasisGemarkung tmp = new BasisGemarkung();
-		tmp.setId(DatabaseQuery.newGemarkungID());
+		AnhEntsorger tmp = new AnhEntsorger();
+		tmp.setId(DatabaseQuery.newEntsorgerID());
 		return tmp;
 	}
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	BasisGemarkung removedGemarkung = (BasisGemarkung) objectAtRow;
-        return BasisGemarkung.delete(removedGemarkung);
+    	AnhEntsorger removedEntsorger = (AnhEntsorger) objectAtRow;
+        return AnhEntsorger.delete(removedEntsorger);
     }
 
     /**
-     * Liefert die Gemarkung einer bestimmten Zeile.
+     * Liefert den Entsorger einer bestimmten Zeile.
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public BasisGemarkung getRow(int rowIndex) {
-        return (BasisGemarkung) getObjectAtRow(rowIndex);
+    public AnhEntsorger getRow(int rowIndex) {
+        return (AnhEntsorger) getObjectAtRow(rowIndex);
     }
 }

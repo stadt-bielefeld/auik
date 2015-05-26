@@ -11,9 +11,6 @@
             <meta attribute="use-in-tostring" inherit="false">true</meta>
             <column name="anlage" not-null="true" />
         </property>
-        <property name="deaKlaeranlageKlaeranlageNr" type="java.lang.Integer">
-            <column name="dea_klaeranlage_klaeranlage_nr" not-null="true" />
-        </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
         </property>

@@ -8,7 +8,7 @@
             <generator class="assigned" />
         </id>
         <property name="name" type="java.lang.String">
-            <column name="name" not-null="true" />
+            <column name="name" />
         </property>
         <property name="zeichen" type="java.lang.String">
             <column name="zeichen" />
