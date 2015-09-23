@@ -717,15 +717,39 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	/* Queries for package BASIS : class BasisStrassen */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+	
+    private static String[] strassen = null;
+    /**
+     * Get all BasisStrassen sorted by strasse
+     * @return <code>BasisStrassen[]</code>
+     */
+    public static BasisStrassen[] getAllStrassen() {
+
+    	List<BasisStrassen> basisAllStrassen = getAllStrassenlist();
+    	
+        return basisAllStrassen.toArray(new BasisStrassen[0]);
+    }
+	/**
+	 * Get all BasisStrassen and sort them by their name
+	 * @return <code>Eine Liste aller Stassen</code>
+	 */
+	public static List<BasisStrassen> getAllStrassenlist() {
+	    List<BasisStrassen> strassenlist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(BasisStrassen.class)
+	                .addOrder(Order.asc("strasse")),
+	            new BasisStrassen());
+		return strassenlist;
+	
+	}
 	/**
 	 * Get BasisStrassen sorted by strasse
 	 * 
 	 * @return <code>BasisStrassen[]</code>
 	 */
-	public static BasisStrassen[] getStrassen(String plz, String ort, MatchMode mm)
+	public static BasisStrassen[] getStrassen(String ort, MatchMode mm)
 	{
 
-		List<BasisStrassen> basisStrassen = getStrassenlist(plz, ort, mm);
+		List<BasisStrassen> basisStrassen = getStrassenlist(ort, mm);
 
 		return basisStrassen.toArray(new BasisStrassen[0]);
 	}
@@ -735,16 +759,16 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 * 
 	 * @return <code>Eine Liste aller Stassen</code>
 	 */
-	public static List<BasisStrassen> getStrassenlist(String plz, String ort, MatchMode mm)
+	public static List<BasisStrassen> getStrassenlist(String ort, MatchMode mm)
 	{
 
 		DetachedCriteria dc = DetachedCriteria.forClass(BasisStrassen.class)
 				.addOrder(Order.asc("strasse"));
 
-		if (!StringUtils.isNullOrEmpty(plz))
-		{
-			dc = dc.add(Restrictions.like("plz", plz, mm));
-		}
+//		if (!StringUtils.isNullOrEmpty(plz))
+//		{
+//			dc = dc.add(Restrictions.like("plz", plz, mm));
+//		}
 
 		if (!StringUtils.isNullOrEmpty(ort))
 		{
@@ -826,15 +850,49 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 					.forClass(BasisStrassen.class)
 					.setProjection(Projections.distinct(Projections.projectionList()
 							.add(Projections.property("ort"), "ort")
-							.add(Projections.property("plz"), "plz")))
+//							.add(Projections.property("plz"), "plz")
+							))
 					.setResultTransformer(Transformers.aliasToBean(BasisOrte.class))
 					.addOrder(Order.asc("ort"))
-					.addOrder(Order.asc("plz"));
+//					.addOrder(Order.asc("plz"))
+					;
 
 			orte = new DatabaseAccess().executeCriteriaToList(dc, new BasisOrte());
 		}
 
 		return orte;
+
+	}
+	
+	private static BasisOrte ort = null;
+
+	/**
+	 * Get city for a given street
+	 * 
+	 * @return <code>Einen Ort</code>
+	 */
+	public static BasisOrte getOrt(String street)
+	{
+
+//		if (ort == null)
+		{
+			DetachedCriteria dc = DetachedCriteria
+					.forClass(BasisStrassen.class)
+					.setProjection(Projections.distinct(Projections.projectionList()
+							.add(Projections.property("ort"), "ort")
+//							.add(Projections.property("plz"), "plz")
+							))
+					.setResultTransformer(Transformers.aliasToBean(BasisOrte.class))
+					.add(Restrictions.ilike("strasse", street,
+							MatchMode.START))
+					.addOrder(Order.asc("ort"))
+//					.addOrder(Order.asc("plz"))
+					;
+
+			ort = (BasisOrte) new DatabaseAccess().executeCriteriaToUniqueResult(dc, new BasisOrte());
+		}
+
+		return ort;
 
 	}
 

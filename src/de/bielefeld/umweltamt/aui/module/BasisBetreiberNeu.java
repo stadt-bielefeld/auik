@@ -764,7 +764,7 @@ public class BasisBetreiberNeu extends AbstractModul
 		{
 			// Wenn wir einen Ort auswählen, aktualisieren wir die
 			// Straßenliste
-			strassen = DatabaseQuery.getStrassen(plz, null, MatchMode.EXACT);
+			strassen = DatabaseQuery.getStrassen(null, MatchMode.EXACT);
 			if (strassen != null)
 			{
 				strassenBox.setModel(new DefaultComboBoxModel(strassen));
@@ -777,7 +777,7 @@ public class BasisBetreiberNeu extends AbstractModul
 		{
 			// Wenn wir einen Ort auswählen, aktualisieren wir die
 			// Straßenliste
-			strassen = DatabaseQuery.getStrassen(null, ort, MatchMode.ANYWHERE);
+			strassen = DatabaseQuery.getStrassen(ort, MatchMode.ANYWHERE);
 			if (strassen != null)
 			{
 				strassenBox.setModel(new DefaultComboBoxModel(strassen));

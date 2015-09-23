@@ -38,7 +38,7 @@ public class BasisOrte implements java.io.Serializable
 			DatabaseSerialVersionUID.forBasisOrte;
 
 	/* Primary key, foreign keys (relations) and table columns */
-	private String plz;
+//	private String plz;
 	private String ort;
 
 	/** Default constructor */
@@ -48,22 +48,22 @@ public class BasisOrte implements java.io.Serializable
 	}
 
 	/** Full constructor */
-	public BasisOrte(String plz, String ort)
+	public BasisOrte(String ort)
 	{
 		// This place is intentionally left blank.
-		setPlz(plz);
+//		setPlz(plz);
 		setOrt(ort);
 	}
 
-	public String getPlz()
-	{
-		return this.plz;
-	}
-
-	public void setPlz(String plz)
-	{
-		this.plz = plz;
-	}
+//	public String getPlz()
+//	{
+//		return this.plz;
+//	}
+//
+//	public void setPlz(String plz)
+//	{
+//		this.plz = plz;
+//	}
 
 	public String getOrt()
 	{
@@ -97,7 +97,7 @@ public class BasisOrte implements java.io.Serializable
 	public String toGuiString()
 	{
 
-		return String.format("%s %s", getPlz(), getOrt());
+		return String.format(getOrt());
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class BasisOrte implements java.io.Serializable
 		StringBuffer buffer = new StringBuffer();
 
 		buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-		buffer.append("plz").append("='").append(getPlz()).append("' ");
+//		buffer.append("plz").append("='").append(getPlz()).append("' ");
 		buffer.append("ort").append("='").append(getOrt()).append("' ");
 		buffer.append("]");
 

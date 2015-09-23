@@ -100,6 +100,7 @@ public class BasisStandortNeu extends AbstractModul
 
 	private JFormattedTextField hausnrEditFeld;
 	private JTextField hausnrZusFeld;
+    private JTextField plzFeld;
 	private JTextField flurFeld;
 	private JTextField flurStkFeld;
 	private JFormattedTextField e32Feld;
@@ -177,12 +178,13 @@ public class BasisStandortNeu extends AbstractModul
 
 			JPanel buttonBar = ButtonBarFactory.buildOKBar(speichernButton);
 
-			orteBox = new SearchBox();
 			strassenBox = new SearchBox();
+			orteBox = new SearchBox();
 			// strassenBox.setKeySelectionManager(new MyKeySelectionManager());
 
 			hausnrEditFeld = new IntegerField();
 			hausnrZusFeld = new JTextField();
+            plzFeld = new LimitedTextField(10);
 			flurFeld = new LimitedTextField(50);
 			flurStkFeld = new LimitedTextField(50);
 
@@ -237,32 +239,34 @@ public class BasisStandortNeu extends AbstractModul
 							"pref, " + // 3
 							"3dlu, " + // 4
 							"pref, " + // 5
-							"10dlu, " + // 6
+							"3dlu, " + // 6
 							"pref, " + // 7
-							"3dlu, " + // 8
+							"10dlu, " + // 8
 							"pref, " + // 9
-							"10dlu, " + // 10
+							"3dlu, " + // 10
 							"pref, " + // 11
-							"3dlu, " + // 12
+							"10dlu, " + // 12
 							"pref, " + // 13
-							"10dlu, " + // 14
+							"3dlu, " + // 14
 							"pref, " + // 15
-							"3dlu, " + // 16
+							"10dlu, " + // 16
 							"pref, " + // 17
-							"10dlu, " + // 18
+							"3dlu, " + // 18
 							"pref, " + // 19
-							"3dlu, " + // 20
+							"10dlu, " + // 20
 							"pref, " + // 21
 							"3dlu, " + // 22
 							"pref, " + // 23
-							"10dlu, " + // 24
+							"3dlu, " + // 24
 							"pref, " + // 25
-							"3dlu, " + // 26
+							"10dlu, " + // 26
 							"pref, " + // 27
 							"3dlu, " + // 28
 							"pref, " + // 29
-							"10dlu, " + // 30
-							"bottom:pref:grow"); // 31
+							"3dlu, " + // 30
+							"pref, " + // 31
+							"10dlu, " + // 32
+							"bottom:pref:grow"); // 33
 			// layout.setRowGroups(new
 			// int[][]{{1,3,5,7,9,11,13,15,17,19,21,23}});
 
@@ -272,55 +276,67 @@ public class BasisStandortNeu extends AbstractModul
 
 			// Adresse
 			builder.addSeparator("Stammdaten", cc.xyw(1, 1, 9));
-			// Ort
-			builder.addLabel("PLZ, Ort:", cc.xy(1, 3));
-			builder.add(orteBox, cc.xyw(3, 3, 3));
 			// Strasse, HausNr
-			builder.addLabel("Straße:", cc.xy(1, 5));
-			builder.add(strassenBox, cc.xyw(3, 5, 3));
-			builder.add(hausnrEditFeld, cc.xy(7, 5));
-			builder.add(hausnrZusFeld, cc.xy(9, 5));
+			builder.addLabel("Straße:", cc.xy(1, 3));
+			builder.add(strassenBox, cc.xyw(3, 3, 3));
+			builder.add(hausnrEditFeld, cc.xy(7, 3));
+			builder.add(hausnrZusFeld, cc.xy(9, 3));
+			// PLZ
+            builder.addLabel("PLZ:", cc.xy(  1, 5 ));
+            builder.add(plzFeld, cc.xy(  3, 5 ));
+			// Ort
+			builder.addLabel("Ort:", cc.xy(1, 7));
+			builder.add(orteBox, cc.xyw(3, 7, 3));
 
 			// Koordinaten
-			builder.addLabel("E32:", cc.xy(1, 7));
-			builder.add(e32Feld, cc.xyw(3, 7, 3));
-			builder.addLabel("N32:", cc.xy(1, 9));
-			builder.add(n32Feld, cc.xyw(3, 9, 3));
+			builder.addLabel("E32:", cc.xy(1, 9));
+			builder.add(e32Feld, cc.xyw(3, 9, 3));
+			builder.addLabel("N32:", cc.xy(1, 11));
+			builder.add(n32Feld, cc.xyw(3, 11, 3));
 
 			//
-			builder.addLabel("Gemarkung:", cc.xy(1, 11));
-			builder.add(gemarkungBox, cc.xyw(3, 11, 3));
-			builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 13));
-			builder.add(entwGebBox, cc.xyw(3, 13, 3));
+			builder.addLabel("Gemarkung:", cc.xy(1, 13));
+			builder.add(gemarkungBox, cc.xyw(3, 13, 3));
+			builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 15));
+			builder.add(entwGebBox, cc.xyw(3, 15, 3));
 
 			// Flur
-			builder.addLabel("Flur:", cc.xy(1, 15));
-			builder.add(flurFeld, cc.xy(3, 15));
-			builder.addLabel("Flurstück:", cc.xy(1, 17));
-			builder.add(flurStkFeld, cc.xy(3, 17));
+			builder.addLabel("Flur:", cc.xy(1, 17));
+			builder.add(flurFeld, cc.xy(3, 17));
+			builder.addLabel("Flurstück:", cc.xy(1, 19));
+			builder.add(flurStkFeld, cc.xy(3, 19));
 
 			// VAWS
-			builder.addSeparator("VAWS", cc.xyw(1, 19, 9));
-			builder.addLabel("Standortgegebenheit:", cc.xy(1, 21));
-			builder.add(standortGgBox, cc.xyw(3, 21, 3));
-			builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 23));
-			builder.add(wEinzugsGebBox, cc.xyw(3, 23, 3));
+			builder.addSeparator("VAWS", cc.xyw(1, 21, 9));
+			builder.addLabel("Standortgegebenheit:", cc.xy(1, 23));
+			builder.add(standortGgBox, cc.xyw(3, 23, 3));
+			builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 25));
+			builder.add(wEinzugsGebBox, cc.xyw(3, 25, 3));
 
 			// Revision
-			builder.addSeparator("Revision", cc.xyw(1, 25, 9));
-			builder.addLabel("Datum:", cc.xy(1, 27));
-			builder.add(datumFeld, cc.xyw(3, 27, 3));
-			builder.add(handzeichenLabel, cc.xy(1, 29));
-			builder.add(handzeichenNeuFeld, cc.xyw(3, 29, 3));
+			builder.addSeparator("Revision", cc.xyw(1, 27, 9));
+			builder.addLabel("Datum:", cc.xy(1, 29));
+			builder.add(datumFeld, cc.xyw(3, 29, 3));
+			builder.add(handzeichenLabel, cc.xy(1, 31));
+			builder.add(handzeichenNeuFeld, cc.xyw(3, 31, 3));
 
-			builder.add(buttonBar, cc.xyw(1, 31, 9));
+			builder.add(buttonBar, cc.xyw(1, 33, 9));
 
 			StandortNeuListener listener = new StandortNeuListener();
 
 			speichernButton.addActionListener(listener);
 
-			orteBox.addActionListener(listener);
 			strassenBox.addActionListener(listener);
+//			strassenBox.getEditor().getEditorComponent().addKeyListener((new KeyAdapter() {
+//				public void keyPressed(final KeyEvent arg0) {
+//					if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+//						reloadOrte();
+//					} else if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
+//						System.out.println("VK_ESCAPE");
+//					}
+//				}
+//			}));
+			orteBox.addActionListener(listener);
 
 			panel = builder.getPanel();
 		}
@@ -580,7 +596,7 @@ public class BasisStandortNeu extends AbstractModul
 	{
 		speichernButton.setEnabled(enabled);
 		orteBox.setEnabled(enabled);
-		strassenBox.setEnabled(enabled && orteBox.getSelectedItem() != null);
+		strassenBox.setEnabled(enabled);
 		hausnrEditFeld.setEditable(enabled);
 		hausnrZusFeld.setEditable(enabled);
 		orteBox.setEditable(enabled);
@@ -621,7 +637,7 @@ public class BasisStandortNeu extends AbstractModul
 		{
 			// Wenn wir einen Ort auswählen, aktualisieren wir die
 			// Straßenliste
-			BasisStrassen[] strassen = DatabaseQuery.getStrassen(selort.getPlz(), selort.getOrt(), MatchMode.EXACT);
+			BasisStrassen[] strassen = DatabaseQuery.getStrassen(selort.getOrt(), MatchMode.EXACT);
 			if (strassen != null)
 			{
 				strassenBox.setModel(new DefaultComboBoxModel(strassen));
@@ -630,8 +646,7 @@ public class BasisStandortNeu extends AbstractModul
 				if (selstrasse != null)
 				{
 					// Ort hat sich geändert => Strasse zurücksetzen
-					if (!StringUtils.equals(selstrasse.getPlz(), selort.getPlz(), true)
-							|| !StringUtils.equals(selstrasse.getOrt(), selort.getOrt(), true))
+					if (!StringUtils.equals(selstrasse.getOrt(), selort.getOrt(), true))
 					{
 						strassenBox.setSelectedItem(null);
 					}
@@ -641,17 +656,45 @@ public class BasisStandortNeu extends AbstractModul
 			}
 			else
 			{
-				// ohne gültigen Ort gibt's keine Strasse
-				strassenBox.setSelectedItem(null);
-				strassenBox.setEnabled(false);
+				// ohne gültigen Ort gibt's alle Strasse
+				strassenBox.setModel(new DefaultComboBoxModel(DatabaseQuery.getAllStrassen()));
 			}
 		}
 		else
 		{
-			// ohne gültigen Ort gibt's keine Strasse
-			strassenBox.setSelectedItem(null);
-			strassenBox.setEnabled(false);
+			// ohne gültigen Ort gibt's alle Strasse
+			strassenBox.setModel(new DefaultComboBoxModel(DatabaseQuery.getAllStrassen()));
 		}
+	}
+
+	/**
+	 * Method reloads the ortelist for a given street
+	 */
+	private void reloadOrte()
+	{
+		BasisStrassen selstrasse = (BasisStrassen) strassenBox.getSelectedItem();
+		
+		if (selstrasse != null) {
+			// Wenn wir eine Starsse auswählen, aktualisieren wir die
+			// Orteliste
+			BasisStrassen stra = DatabaseQuery.findStrasse(strassenBox
+					.getSelectedItem().toString());
+			if (stra != null) {
+				// Natürlich nur, wenn die Straße eine eindeutige PLZ hat
+				if (stra.getPlz() != null) {
+					frame.clearStatus();
+					orteBox.setSelectedItem(DatabaseQuery.getOrt(stra
+							.toString()));
+					strassenBox.setSelectedItem(stra);
+				} else {
+					frame.changeStatus("Die Straße '"
+							+ stra
+							+ "' hat keine eindeutige PLZ, bitte selbst eintragen!");
+				}
+			}
+
+		}
+
 	}
 
 	/**
@@ -684,6 +727,59 @@ public class BasisStandortNeu extends AbstractModul
 			{
 				reloadStrassen();
 			}
+			else if (e.getSource() == strassenBox)
+			{
+				reloadOrte();
+				
+              // Wenn wir eine Straße auswählen, wird die PLZ upgedatet
+              BasisStrassen stra = DatabaseQuery.findStrasse(
+                  strassenBox.getSelectedItem().toString());
+              if (stra != null) {
+              }
+              // Natürlich nur, wenn die Straße eine eindeutige PLZ hat
+              if (stra.getPlz() != null) {
+                  frame.clearStatus();
+                  plzFeld.setText(stra.getPlz().toString());
+              } else {
+                  frame.changeStatus("Die Straße '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
+                  plzFeld.setText("");
+              }
+            }
 		}
 	}
+//    /**
+//     * Ein Listener für die Events des "Neuer Standort"-Moduls.
+//     * @author David Klotz
+//     */
+//    private final class StandortNeuListener implements ActionListener {
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            if (e.getSource() == speichernButton) {
+//                log.debug("(" + BasisStandortNeu.this.getIdentifier() + ") "
+//                		+ "Speichern gedrückt!");
+//                // Check if we already have this location
+//                if (standortExists()) {
+//                    frame.changeStatus("Standort existiert bereits!", Color.RED);
+//                    log.debug("Standort existiert bereits und wurde nicht gespeichert.");
+//                } else {
+//                    doSave();
+//                }
+//            } else if (e.getSource() == strassenBox) {
+//                // Wenn wir eine Straße auswählen, wird die PLZ upgedatet
+//                BasisStrassen stra = DatabaseQuery.findStrasse(
+//                    (String) strassenBox.getSelectedItem());
+//                if (stra != null) {
+//                    // Natürlich nur, wenn die Straße eine eindeutige PLZ hat
+//                    if (stra.getPlz() != null) {
+//                        frame.clearStatus();
+//                        plzFeld.setText(stra.getPlz().toString());
+//                    } else {
+//                        frame.changeStatus("Die Straße '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
+//                        plzFeld.setText("");
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

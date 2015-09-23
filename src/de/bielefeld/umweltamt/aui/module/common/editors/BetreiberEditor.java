@@ -381,7 +381,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 		{
 			// Wenn wir einen Ort auswählen, aktualisieren wir die
 			// Straßenliste
-			strassen = DatabaseQuery.getStrassen(plz, null, MatchMode.EXACT);
+			strassen = DatabaseQuery.getStrassen(null, MatchMode.EXACT);
 			if (strassen != null)
 			{
 				strassenBox.setModel(new DefaultComboBoxModel(strassen));
@@ -394,7 +394,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 		{
 			// Wenn wir einen Ort auswählen, aktualisieren wir die
 			// Straßenliste
-			strassen = DatabaseQuery.getStrassen(null, ort, MatchMode.ANYWHERE);
+			strassen = DatabaseQuery.getStrassen(ort, MatchMode.ANYWHERE);
 			if (strassen != null)
 			{
 				strassenBox.setModel(new DefaultComboBoxModel(strassen));
@@ -429,8 +429,8 @@ public class BetreiberEditor extends AbstractBaseEditor
 					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
 					wirtschaftszweigBox.setSelectedItem(getBetreiber().getVawsWirtschaftszweige());
 				}
-				wzCodeBox.setEditable(true);
-				wzCodeBox.setEditable(false);
+//				wzCodeBox.setEditable(true);
+//				wzCodeBox.setEditable(false);
 				anredeFeld.setText(getBetreiber().getBetranrede());
 				vornamenFeld.setText(getBetreiber().getBetrvorname());
 				namenFeld.setText(getBetreiber().getBetrname());

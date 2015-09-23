@@ -86,6 +86,7 @@ public class StandortEditor extends AbstractBaseEditor
 
 	private JFormattedTextField hausnrEditFeld;
 	private JTextField hausnrZusFeld;
+    private JTextField plzFeld;
 	private JTextField flurFeld;
 	private JTextField flurStkFeld;
 	private JFormattedTextField e32Feld;
@@ -121,6 +122,7 @@ public class StandortEditor extends AbstractBaseEditor
 
 		hausnrEditFeld = new IntegerField();
 		hausnrZusFeld = new JTextField();
+        plzFeld = new LimitedTextField(10, "");
 
 		flurFeld = new LimitedTextField(50);
 		flurStkFeld = new LimitedTextField(50);
@@ -184,6 +186,7 @@ public class StandortEditor extends AbstractBaseEditor
 		strassenBox.addKeyListener(escEnterListener);
 		hausnrEditFeld.addKeyListener(escEnterListener);
 		hausnrZusFeld.addKeyListener(escEnterListener);
+        plzFeld.addKeyListener(escEnterListener);
 		gemarkungBox.addKeyListener(escEnterListener);
 		standortGgBox.addKeyListener(escEnterListener);
 		entwGebBox.addKeyListener(escEnterListener);
@@ -234,12 +237,13 @@ public class StandortEditor extends AbstractBaseEditor
 
 		// Adresse
 		builder.addSeparator("Stammdaten", cc.xyw(1, 1, 9));
-		builder.addLabel("PLZ, Ort:", cc.xy(1, 3));
-		builder.add(orteBox, cc.xyw(3, 3, 7));
-		builder.addLabel("Straße:", cc.xy(1, 5));
-		builder.add(strassenBox, cc.xyw(3, 5, 3));
-		builder.add(hausnrEditFeld, cc.xy(7, 5));
-		builder.add(hausnrZusFeld, cc.xy(9, 5));
+		builder.addLabel("Straße:", cc.xy(1, 3));
+		builder.add(strassenBox, cc.xyw(3, 3, 3));
+		builder.add(hausnrEditFeld, cc.xy(7, 3));
+		builder.add(hausnrZusFeld, cc.xy(9, 3));
+		builder.addLabel("PLZ, Ort:", cc.xy(1, 5));
+        builder.add(plzFeld,cc.xy(3, 5 ));
+		builder.add(orteBox, cc.xyw(5, 5, 5));
 
 		// Koordinaten
 		builder.addLabel("E32:", cc.xy(1, 7));
@@ -311,7 +315,7 @@ public class StandortEditor extends AbstractBaseEditor
 		{
 			// Wenn wir einen Ort auswählen, aktualisieren wir die
 			// Straßenliste
-			BasisStrassen[] strassen = DatabaseQuery.getStrassen(selort.getPlz(), selort.getOrt(), MatchMode.EXACT);
+			BasisStrassen[] strassen = DatabaseQuery.getStrassen(selort.getOrt(), MatchMode.EXACT);
 			if (strassen != null)
 			{
 				strassenBox.setModel(new DefaultComboBoxModel(strassen));
@@ -320,8 +324,7 @@ public class StandortEditor extends AbstractBaseEditor
 				if (selstrasse != null)
 				{
 					// Ort hat sich geändert => Strasse zurücksetzen
-					if (!StringUtils.equals(selstrasse.getPlz(), selort.getPlz(), true)
-							|| !StringUtils.equals(selstrasse.getOrt(), selort.getOrt(), true))
+					if (!StringUtils.equals(selstrasse.getOrt(), selort.getOrt(), true))
 					{
 						strassenBox.setSelectedItem(null);
 					}
@@ -412,7 +415,7 @@ public class StandortEditor extends AbstractBaseEditor
 
 				if (!StringUtils.isNullOrEmpty(getStandort().getPlz()))
 				{
-					orteBox.setSelectedItem(new BasisOrte(getStandort().getPlz(), getStandort().getOrt()));
+					orteBox.setSelectedItem(new BasisOrte(getStandort().getOrt()));
 				}
 
 				if (!StringUtils.isNullOrEmpty(getStandort().getStrasse()))
@@ -422,6 +425,9 @@ public class StandortEditor extends AbstractBaseEditor
 
 				hausnrEditFeld.setValue(getStandort().getHausnr());
 				hausnrZusFeld.setText(getStandort().getHausnrzus());
+                if (getStandort().getPlz() != null) {
+                    plzFeld.setText(getStandort().getPlz());
+                }
 				flurFeld.setText(getStandort().getFlur());
 				flurStkFeld.setText(getStandort().getFlurstueck());
 				e32Feld.setValue(getStandort().getE32());
@@ -477,6 +483,14 @@ public class StandortEditor extends AbstractBaseEditor
 		{
 			getStandort().setHausnrzus(hausnrZus);
 		}
+		
+        // PLZ:
+        String plz = plzFeld.getText().trim();
+        if ("".equals(plz)) {
+            getStandort().setPlz(null);
+        } else {
+            getStandort().setPlz(plz);
+        }
 
 		// Straße, PLZ, Ort:
 		BasisStrassen strasse = ((BasisStrassen) strassenBox.getSelectedItem());

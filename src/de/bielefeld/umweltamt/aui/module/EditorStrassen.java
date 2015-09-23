@@ -161,7 +161,7 @@ public class EditorStrassen extends AbstractModul
 						protected void doNonUILogic()
 						{
 							((EditorStrassenModel) getTableModel()).setList(
-									DatabaseQuery.getStrassenlist(null, null, MatchMode.EXACT));
+									DatabaseQuery.getStrassenlist(null, MatchMode.EXACT));
 						}
 
 						@Override
