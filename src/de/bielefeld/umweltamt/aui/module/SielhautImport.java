@@ -146,7 +146,7 @@ public class SielhautImport extends AbstractModul {
             String line;
             int count = 0;
             while ((line = in.readLine()) != null) {
-                if (count == 0 && !line.startsWith("Probenahmedatum")) {
+                if (count == 0 && !line.startsWith("PROBENAHMEDATUM")) {
                     throw new IOException(
                         "Datei ist kein SielhautBearbeiten-CSV!");
                 }
@@ -156,7 +156,7 @@ public class SielhautImport extends AbstractModul {
                 }
                 // log.debug(count + ": " + line);
 
-                if (!tmp[0].startsWith("Probenahmedatum")) {
+                if (!tmp[0].startsWith("PROBENAHMEDATUM")) {
                     getList().add(tmp);
                 }
 
@@ -189,16 +189,16 @@ public class SielhautImport extends AbstractModul {
         }
 
         private String einheitAusZeile(String[] zeile) {
-            return zeile[7].trim();
+            return zeile[5].trim();
         }
 
         private String wertAusZeile(String[] zeile) {
             // log.debug("WERT: '" + zeile[6].trim() + "'");
-            return zeile[6].trim();
+            return zeile[4].trim();
         }
 
         private String kennummerAusZeile(String[] zeile) {
-            String tmp = zeile[3].trim();
+            String tmp = zeile[2].trim().substring(0, 7);
 
             // Für neueres Format, bei dem die Kennnummer in der
             // Form "Sielhautprobe 5071 (Adenauer)" angegeben ist:
@@ -211,7 +211,7 @@ public class SielhautImport extends AbstractModul {
 
         private String paramAusZeile(String[] zeile) {
 //            return zeile[5].replaceFirst(" \\(.*\\)", "");
-            return zeile[5].trim();
+            return zeile[3].trim();
         }
 
         // Schneidet einen String (aus einem Array) vor dem ersten Leerzeichen
