@@ -32,8 +32,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
@@ -88,6 +86,31 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 
         
     }
+    /**
+     * Sucht alle Objekte des angemeldeten Sachbearbeiters, die ein
+     * Wiedervorlagedatum haben.
+     * @param nurWiedervorlageAbgelaufen Sollen nur Datensätze angezeigt werden,
+     *            deren Wiedervorlage in der Vergangenheit liegt?
+     * @return <code>List&lt;BasisObjekt&gt;</code>
+     *         Eine Liste mit den entstprechenden Objekten.
+     */
+	public static List<BasisObjekt> getBasisObjektByWiedervorlage(
+			boolean nurWiedervorlageAbgelaufen) {
+		DetachedCriteria detachedCriteria = DetachedCriteria
+				.forClass(BasisObjekt.class)
+				.add(Restrictions.eq("basisSachbearbeiter",
+						DatabaseQuery.getCurrentSachbearbeiter()))
+				.add(Restrictions.isNotNull("wiedervorlage"))
+                .addOrder(Order.asc("basisObjektarten"))
+                .addOrder(Order.asc("wiedervorlage"));
+        if (nurWiedervorlageAbgelaufen) {
+            detachedCriteria.add(Restrictions.le("wiedervorlage", new Date()));
+        }
+
+		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
+				new BasisObjekt());
+
+	}
     
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class Anh40Fachdaten                      */

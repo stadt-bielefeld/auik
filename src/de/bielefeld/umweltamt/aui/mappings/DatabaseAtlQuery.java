@@ -1043,9 +1043,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 						.add(Restrictions.eq("parameterId", param.getOrdnungsbegriff()))
 						.add(Restrictions.eq("einheitenId", einheit.getId()))
 						.add(Restrictions.eq("probepktId", punkt.getObjektid()))
-						.add(Restrictions.gt("wert", new Float(0)))
-						.add(Restrictions.between(
-													"datumDerEntnahme", beginDate, endDate))
+//						.add(Restrictions.gt("wert", new Float(0)))
+						.add(Restrictions.between("datumDerEntnahme", beginDate, endDate))
 						.addOrder(Order.asc("datumDerEntnahme"));
 		if (analyseVon.equals("Selbstüberwachung"))
 		{

@@ -68,6 +68,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -123,6 +124,7 @@ import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
+import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
  * Das "Objekt"-Tab des BasisObjektBearbeiten-Moduls
@@ -403,6 +405,7 @@ public class BasisPanel extends JPanel {
     // Art, Sachbearbeiter, Inaktiv, Priorität, Beschreibung, Speichern
     private JComboBox artBox;
     private JComboBox sachbearbeiterBox;
+    private TextFieldDateChooser wiedervorlageDatum = null;
     private JCheckBox inaktivBox;
     private JCheckBox abwasserfreiBox;
     private JFormattedTextField prioritaetFeld;
@@ -461,6 +464,9 @@ public class BasisPanel extends JPanel {
         builder.nextLine();
 
         builder.append("Sachbearbeiter:", getSachbearbeiterBox(), 3);
+        builder.nextLine();
+
+        builder.append("Wiedervorlage:", getWiedervorlageDatum(), 3);
         builder.nextLine();
 
         builder.append("Inaktiv:", getInaktivBox());
@@ -642,6 +648,10 @@ public class BasisPanel extends JPanel {
                     DatabaseQuery.getCurrentSachbearbeiter());
                 getSachbearbeiterBox().setFont(this.italicFont);
             }
+            
+            if (this.hauptModul.getObjekt().getWiedervorlage() != null) {
+                getWiedervorlageDatum().setDate(this.hauptModul.getObjekt().getWiedervorlage());
+            }
 
             getInaktivBox().setSelected(
                 this.hauptModul.getObjekt().isInaktiv());
@@ -698,21 +708,27 @@ public class BasisPanel extends JPanel {
                 DatabaseQuery.getCurrentSachbearbeiter());
             getSachbearbeiterBox().setFont(this.italicFont);
         }
+        getWiedervorlageDatum().setDate(null);
         getInaktivBox().setSelected(false);
         getPrioritaetFeld().setText("");
         getBeschreibungsArea().setText(null);
     }
 
-    public void enableAll(boolean enabled) {
-        getSaveButton().setEnabled(enabled);
-        getBetreiberToolBar().setEnabled(enabled);
-        getStandortToolBar().setEnabled(enabled);
-        getArtBox().setEnabled(enabled);
-        getSachbearbeiterBox().setEnabled(enabled);
-        getInaktivBox().setEnabled(enabled);
-        getPrioritaetFeld().setEnabled(enabled);
-        getBeschreibungsArea().setEnabled(enabled);
-    }
+	public void enableAll(boolean enabled) {
+		getSaveButton().setEnabled(enabled);
+		getBetreiberToolBar().setEnabled(enabled);
+		getStandortToolBar().setEnabled(enabled);
+		getArtBox().setEnabled(enabled);
+		getSachbearbeiterBox().setEnabled(enabled);
+		if (this.hauptModul.getObjekt().getBasisSachbearbeiter()
+				.equals(DatabaseQuery.getCurrentSachbearbeiter())) {
+			getWiedervorlageDatum().setEnabled(enabled);
+		} else
+			getWiedervorlageDatum().setEnabled(false);
+		getInaktivBox().setEnabled(enabled);
+		getPrioritaetFeld().setEnabled(enabled);
+		getBeschreibungsArea().setEnabled(enabled);
+	}
 
     @Override
     public String getName() {
@@ -731,6 +747,8 @@ public class BasisPanel extends JPanel {
             getBeschreibungsArea().getText());
         this.hauptModul.getObjekt().setBasisSachbearbeiter(
             (BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
+        Date wiedervorlage = this.wiedervorlageDatum.getDate();
+        this.hauptModul.getObjekt().setWiedervorlage(wiedervorlage);
         this.hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
         this.hauptModul.getObjekt().setAbwasserfrei(getAbwasserfreiBox().isSelected());
 
@@ -1051,6 +1069,13 @@ public class BasisPanel extends JPanel {
 
         }
         return this.sachbearbeiterBox;
+    }
+
+    private TextFieldDateChooser getWiedervorlageDatum() {
+        if (this.wiedervorlageDatum == null) {
+            this.wiedervorlageDatum = new TextFieldDateChooser();
+        }
+        return this.wiedervorlageDatum;
     }
 
     private JCheckBox getInaktivBox() {
