@@ -120,7 +120,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         	probenehmerButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
                             ((ProbepunkteModel)getTableModel()).setList(
@@ -140,7 +140,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         	eSatzungButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
                             ((ProbepunkteModel)getTableModel()).setList(
@@ -161,7 +161,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         	uwbButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
                             ((ProbepunkteModel)getTableModel()).setList(
@@ -182,7 +182,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         	selbstueberwButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
                             ((ProbepunkteModel)getTableModel()).setList(
@@ -203,7 +203,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         	inaktivButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 50, 200, 100, 100)) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
                             ((ProbepunkteModel)getTableModel()).setList(
@@ -246,7 +246,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         return tmodel;
     }
 
-    private JTable getResultTable(int a, int b, int c, int d, int e, int f, int g) {
+    private JTable getResultTable(int a, int b, int c, int d, int e, int f, int g, int h) {
 
         JTable resultTable = getResultTable();
 
