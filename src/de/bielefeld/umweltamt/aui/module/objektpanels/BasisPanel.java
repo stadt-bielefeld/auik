@@ -712,7 +712,7 @@ public class BasisPanel extends JPanel {
         getInaktivBox().setSelected(false);
         getPrioritaetFeld().setText("");
         getBeschreibungsArea().setText(null);
-    }
+	}
 
 	public void enableAll(boolean enabled) {
 		getSaveButton().setEnabled(enabled);
@@ -720,8 +720,9 @@ public class BasisPanel extends JPanel {
 		getStandortToolBar().setEnabled(enabled);
 		getArtBox().setEnabled(enabled);
 		getSachbearbeiterBox().setEnabled(enabled);
-		if (this.hauptModul.getObjekt().getBasisSachbearbeiter()
-				.equals(DatabaseQuery.getCurrentSachbearbeiter())) {
+		if (DatabaseQuery.getCurrentSachbearbeiter() != null
+				|| this.hauptModul.getObjekt().getBasisSachbearbeiter()
+						.equals(DatabaseQuery.getCurrentSachbearbeiter())) {
 			getWiedervorlageDatum().setEnabled(enabled);
 		} else
 			getWiedervorlageDatum().setEnabled(false);

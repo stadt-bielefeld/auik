@@ -483,6 +483,21 @@ public class StandortEditor extends AbstractBaseEditor
 		{
 			getStandort().setHausnrzus(hausnrZus);
 		}
+
+		// Straße:
+		BasisStrassen strasse = ((BasisStrassen) strassenBox.getSelectedItem());
+		if (strasse == null)
+		{
+			getStandort().setStrasse(null);
+//			getStandort().setPlz(null);
+//			getStandort().setOrt(null);
+		}
+		else
+		{
+			getStandort().setStrasse(strasse.getStrasse());
+//			getStandort().setPlz(strasse.getPlz());
+//			getStandort().setOrt(strasse.getOrt());
+		}
 		
         // PLZ:
         String plz = plzFeld.getText().trim();
@@ -491,21 +506,14 @@ public class StandortEditor extends AbstractBaseEditor
         } else {
             getStandort().setPlz(plz);
         }
-
-		// Straße, PLZ, Ort:
-		BasisStrassen strasse = ((BasisStrassen) strassenBox.getSelectedItem());
-		if (strasse == null)
-		{
-			getStandort().setStrasse(null);
-			getStandort().setPlz(null);
-			getStandort().setOrt(null);
-		}
-		else
-		{
-			getStandort().setStrasse(strasse.getStrasse());
-			getStandort().setPlz(strasse.getPlz());
-			getStandort().setOrt(strasse.getOrt());
-		}
+		
+        // Ort:
+        String ort = orteBox.getSelectedItem().toString();
+        if ("".equals(ort)) {
+            getStandort().setOrt(null);
+        } else {
+            getStandort().setOrt(ort);
+        }
 
 		// Gemarkung
 		BasisGemarkung bgem = (BasisGemarkung) gemarkungBox.getSelectedItem();
