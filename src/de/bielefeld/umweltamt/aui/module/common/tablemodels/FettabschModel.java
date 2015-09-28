@@ -38,6 +38,7 @@ public class FettabschModel extends ListTableModel {
                 "Betreiber",
                 "Standort",
                 "Bemerkungen",
+                "Genehmigungsdatum",
                 "Abfuhrdatum",
                 "nächste Abfuhr",
                 "letztes Chrono-Datum"
@@ -63,14 +64,17 @@ public class FettabschModel extends ListTableModel {
     			tmp = fd.getBemerkungen();
     			break;
     		case 3:
+    			tmp = fd.getGenehmigung();
+    			break;
+    		case 4:
     			tmp = DatabaseQuery.getLastAbfuhrDateForObjekt(
     		    		fd);
     			break;
-    		case 4:
+    		case 5:
     			tmp = DatabaseQuery.getNextAbfuhrDateForObjekt(
     		    		fd);
     			break;
-    		case 5:
+    		case 6:
     		    tmp = DatabaseQuery.getLastChronoDateForObjekt(
     		    		fd.getBasisObjekt());
     		    break;
