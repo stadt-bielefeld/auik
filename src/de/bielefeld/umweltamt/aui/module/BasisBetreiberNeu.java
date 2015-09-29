@@ -111,7 +111,7 @@ public class BasisBetreiberNeu extends AbstractModul
 	//private JFormattedTextField plzZsFeld;
 	private JTextField plzZsFeld;
 	private JTextField plzFeld;
-	private JTextField ortsFeld;
+	private JComboBox orteBox;
 	private JTextField telefonFeld;
 	private JTextField telefaxFeld;
 	private JTextField emailFeld;
@@ -191,7 +191,7 @@ public class BasisBetreiberNeu extends AbstractModul
 			hausnrZusFeld = new LimitedTextField(10);
 			plzZsFeld = new LimitedTextField(3, "");
 			plzFeld = new JTextField();
-			ortsFeld = new LimitedTextField(50);
+			orteBox = new JComboBox();
 			telefonFeld = new LimitedTextField(50);
 			telefaxFeld = new LimitedTextField(50);
 			emailFeld = new LimitedTextField(50);
@@ -316,7 +316,7 @@ public class BasisBetreiberNeu extends AbstractModul
 			builder.addLabel("Ort:", cc.xy(1, 17));
 			builder.add(plzZsFeld, cc.xy(3, 17));
 			builder.add(plzFeld, cc.xy(4, 17));
-			builder.add(ortsFeld, cc.xyw(6, 17, 5));
+			builder.add(orteBox, cc.xyw(6, 17, 5));
 			// Straße
 			builder.addLabel("Straße:", cc.xy(1, 19));
 			builder.add(strassenBox, cc.xyw(3, 19, 4));
@@ -361,7 +361,7 @@ public class BasisBetreiberNeu extends AbstractModul
 
 			speichernButton.addActionListener(dialogListener);
 			plzFeld.addActionListener(dialogListener);
-			ortsFeld.addActionListener(dialogListener);
+			orteBox.addActionListener(dialogListener);
 			strassenBox.addActionListener(dialogListener);
 
 			panel = builder.getPanel();
@@ -513,14 +513,12 @@ public class BasisBetreiberNeu extends AbstractModul
 				betrn.setPlz(plz);
 			}
 			// Ort
-			String ort = ortsFeld.getText().trim();
-			if (ort.equals(""))
+			strassenBox.setModel(new DefaultComboBoxModel());
+
+			if (orte != null)
 			{
-				betrn.setOrt(null);
-			}
-			else
-			{
-				betrn.setOrt(ort);
+				orteBox.setModel(new DefaultComboBoxModel(orte));
+				orteBox.setSelectedItem(null);
 			}
 			// Telefon
 			String telefon = telefonFeld.getText().trim();
@@ -686,6 +684,11 @@ public class BasisBetreiberNeu extends AbstractModul
 					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
 				}
 
+				if (orte != null)
+				{
+					orteBox.setModel(new DefaultComboBoxModel(orte));
+					orteBox.setSelectedItem(null);
+				}
 				hausnrFeld.setValue(null);
 				hausnrZusFeld.setText("");
 				plzZsFeld.setText("D");
@@ -696,7 +699,6 @@ public class BasisBetreiberNeu extends AbstractModul
 				namenLabel.setForeground(panel.getForeground());
 				nameZusFeld.setText("");
 				kassenzeichenFeld.setText("");
-				ortsFeld.setText("");
 				telefonFeld.setText("");
 				telefaxFeld.setText("");
 				emailFeld.setText("");
@@ -729,6 +731,7 @@ public class BasisBetreiberNeu extends AbstractModul
 
 		strassenBox.setEnabled(enabled);
 		//strassenFeld.setEnabled(enabled);
+		orteBox.setEnabled(enabled);
 		wirtschaftszweigBox.setEnabled(enabled);
 
 		hausnrFeld.setEditable(enabled);
@@ -740,7 +743,7 @@ public class BasisBetreiberNeu extends AbstractModul
 		namenFeld.setEditable(enabled);
 		nameZusFeld.setEditable(enabled);
 		kassenzeichenFeld.setEditable(enabled);
-		ortsFeld.setEditable(enabled);
+		orteBox.setEditable(enabled);
 		telefonFeld.setEditable(enabled);
 		telefaxFeld.setEditable(enabled);
 		emailFeld.setEditable(enabled);
@@ -756,35 +759,71 @@ public class BasisBetreiberNeu extends AbstractModul
 	/**
 	 * Method reloads the streetlist for a given city
 	 */
-	private void reloadStrassen(String plz, String ort)
+	private void reloadStrassen() 
 	{
-		BasisStrassen[] strassen;
-
-		if (!StringUtils.isNullOrEmpty(plz))
-		{
-			// Wenn wir einen Ort auswählen, aktualisieren wir die
-			// Straßenliste
-			strassen = DatabaseQuery.getStrassen(null, MatchMode.EXACT);
-			if (strassen != null)
-			{
+		if (orteBox.getSelectedItem() instanceof BasisOrte) {
+			BasisOrte selort = (BasisOrte) orteBox.getSelectedItem();
+			BasisStrassen[] strassen = DatabaseQuery.getStrassen(
+					selort.getOrt(), MatchMode.EXACT);
+			if (strassen != null) {
 				strassenBox.setModel(new DefaultComboBoxModel(strassen));
-				plzFeld.setText(strassen[0].getPlz());
-				ortsFeld.setText(strassen[0].getOrt());
-			}
-		}
 
-		else if (!StringUtils.isNullOrEmpty(ort))
-		{
-			// Wenn wir einen Ort auswählen, aktualisieren wir die
-			// Straßenliste
-			strassen = DatabaseQuery.getStrassen(ort, MatchMode.ANYWHERE);
-			if (strassen != null)
-			{
-				strassenBox.setModel(new DefaultComboBoxModel(strassen));
-				plzFeld.setText(strassen[0].getPlz());
-				ortsFeld.setText(strassen[0].getOrt());
+				BasisStrassen selstrasse = (BasisStrassen) strassenBox
+						.getSelectedItem();
+				if (selstrasse != null) {
+					// Ort hat sich geändert => Strasse zurücksetzen
+					if (!StringUtils.equals(selstrasse.getOrt(),
+							selort.getOrt(), true)) {
+						strassenBox.setSelectedItem(null);
+					}
+				}
+
+				strassenBox.setEnabled(true);
+			} else {
+				// ohne gültigen Ort gibt's hier keine Strasse
+				strassenBox.setModel(new DefaultComboBoxModel());
 			}
+		} else {
+			// ohne gültigen Ort gibt's hier keine Strasse
+			strassenBox.setModel(new DefaultComboBoxModel());
 		}
+	}
+
+	/**
+	 * Methode reloads the ortelist for a given street
+	 */
+	private void reloadOrte() {
+		if (strassenBox.getSelectedItem() instanceof BasisStrassen) {
+			BasisStrassen selstrasse = (BasisStrassen) strassenBox
+					.getSelectedItem();
+			if (selstrasse != null) {
+				// Wenn wir eine Strasse auswählen, aktualisieren wir die
+				// Orteliste
+				BasisStrassen stra = DatabaseQuery.findStrasse(strassenBox
+						.getSelectedItem().toString());
+				if (stra != null) {
+					// Natürlich nur, wenn die Straße eine eindeutige PLZ hat
+					if (stra.getPlz() != null) {
+						frame.clearStatus();
+						orteBox.setSelectedItem(DatabaseQuery.getOrt(stra
+								.toString()));
+						strassenBox.setSelectedItem(stra);
+					} else {
+						frame.changeStatus("Die Straße '"
+								+ stra
+								+ "' hat keine eindeutige PLZ, bitte selbst eintragen!");
+					}
+				}else {
+					// ohne gültige Strasse gibt's keinen Ort
+					orteBox.setModel(new DefaultComboBoxModel());
+				}
+			} else {
+				// ohne gültigen Ort gibt's keine Strasse
+				orteBox.setModel(new DefaultComboBoxModel());
+			}
+
+			}
+		
 	}
 
 	/**
@@ -804,29 +843,29 @@ public class BasisBetreiberNeu extends AbstractModul
 						+ "Speichern gedrückt!");
 				doSave();
 			}
-			else if (e.getSource() == plzFeld)
+
+			else if (e.getSource() == orteBox)
 			{
-				reloadStrassen(plzFeld.getText(), null);
-			}
-			else if (e.getSource() == ortsFeld)
-			{
-				reloadStrassen(null, ortsFeld.getText());
+				reloadStrassen();
 			}
 			else if (e.getSource() == strassenBox)
 			{
-				if (strassenBox.getSelectedItem() != null)
-				{
-					if (strassenBox.getSelectedItem().getClass() == BasisStrassen.class)
-					{
-						BasisStrassen selstrasse = (BasisStrassen) strassenBox.getSelectedItem();
-						if (selstrasse != null)
-						{
-							plzFeld.setText(selstrasse.getPlz());
-							ortsFeld.setText(selstrasse.getOrt());
-						}
-					}
-				}
-			}
+				reloadOrte();
+				
+              // Wenn wir eine Straße auswählen, wird die PLZ upgedatet
+              BasisStrassen stra = DatabaseQuery.findStrasse(
+                  strassenBox.getSelectedItem().toString());
+              if (stra != null) {
+              }
+              // Natürlich nur, wenn die Straße eine eindeutige PLZ hat
+              if (stra.getPlz() != null) {
+                  frame.clearStatus();
+                  plzFeld.setText(stra.getPlz().toString());
+              } else {
+                  frame.changeStatus("Die Straße '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
+                  plzFeld.setText("");
+              }
+            }
 		}
 	}
 }
