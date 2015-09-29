@@ -64,6 +64,7 @@ public class ProbepunkteModel extends ListTableModel {
                 "Standort",
                 "Entgeb",
                 "Betreiber",
+                "Kassenzeichen",
                 "Branche",
                 "Beschreibung",
                 "Sachb.(Rav)",
@@ -91,15 +92,18 @@ public class ProbepunkteModel extends ListTableModel {
             tmp = fd.getBasisObjekt().getBasisBetreiber();
             break;
         case 3:
-            tmp = fd.getBranche();
+            tmp = fd.getBasisObjekt().getBasisBetreiber().getKassenzeichen();
             break;
         case 4:
-            tmp = fd.getBasisObjekt().getBeschreibung();
+            tmp = fd.getBranche();
             break;
         case 5:
-            tmp = fd.getBasisObjekt().getBasisSachbearbeiter();
+            tmp = fd.getBasisObjekt().getBeschreibung();
             break;
         case 6:
+            tmp = fd.getBasisObjekt().getBasisSachbearbeiter();
+            break;
+        case 7:
             tmp = fd.getBasisSachbearbeiter();
             break;
         default:
