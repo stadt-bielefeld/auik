@@ -100,7 +100,7 @@ public class BasisStandortNeu extends AbstractModul
 
 	private JFormattedTextField hausnrEditFeld;
 	private JTextField hausnrZusFeld;
-    private JTextField plzFeld;
+	private JTextField plzFeld;
 	private JTextField flurFeld;
 	private JTextField flurStkFeld;
 	private JFormattedTextField e32Feld;
@@ -184,7 +184,7 @@ public class BasisStandortNeu extends AbstractModul
 
 			hausnrEditFeld = new IntegerField();
 			hausnrZusFeld = new JTextField();
-            plzFeld = new LimitedTextField(10);
+			plzFeld = new LimitedTextField(10);
 			flurFeld = new LimitedTextField(50);
 			flurStkFeld = new LimitedTextField(50);
 
@@ -282,8 +282,8 @@ public class BasisStandortNeu extends AbstractModul
 			builder.add(hausnrEditFeld, cc.xy(7, 3));
 			builder.add(hausnrZusFeld, cc.xy(9, 3));
 			// PLZ
-            builder.addLabel("PLZ:", cc.xy(  1, 5 ));
-            builder.add(plzFeld, cc.xy(  3, 5 ));
+			builder.addLabel("PLZ:", cc.xy(1, 5));
+			builder.add(plzFeld, cc.xy(3, 5));
 			// Ort
 			builder.addLabel("Ort:", cc.xy(1, 7));
 			builder.add(orteBox, cc.xyw(3, 7, 3));
@@ -327,15 +327,15 @@ public class BasisStandortNeu extends AbstractModul
 			speichernButton.addActionListener(listener);
 
 			strassenBox.addActionListener(listener);
-//			strassenBox.getEditor().getEditorComponent().addKeyListener((new KeyAdapter() {
-//				public void keyPressed(final KeyEvent arg0) {
-//					if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-//						reloadOrte();
-//					} else if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
-//						System.out.println("VK_ESCAPE");
-//					}
-//				}
-//			}));
+			//			strassenBox.getEditor().getEditorComponent().addKeyListener((new KeyAdapter() {
+			//				public void keyPressed(final KeyEvent arg0) {
+			//					if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+			//						reloadOrte();
+			//					} else if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			//						System.out.println("VK_ESCAPE");
+			//					}
+			//				}
+			//			}));
 			orteBox.addActionListener(listener);
 
 			panel = builder.getPanel();
@@ -673,20 +673,25 @@ public class BasisStandortNeu extends AbstractModul
 	private void reloadOrte()
 	{
 		BasisStrassen selstrasse = (BasisStrassen) strassenBox.getSelectedItem();
-		
-		if (selstrasse != null) {
+
+		if (selstrasse != null)
+		{
 			// Wenn wir eine Starsse auswählen, aktualisieren wir die
 			// Orteliste
 			BasisStrassen stra = DatabaseQuery.findStrasse(strassenBox
 					.getSelectedItem().toString());
-			if (stra != null) {
+			if (stra != null)
+			{
 				// Natürlich nur, wenn die Straße eine eindeutige PLZ hat
-				if (stra.getPlz() != null) {
+				if (stra.getPlz() != null)
+				{
 					frame.clearStatus();
 					orteBox.setSelectedItem(DatabaseQuery.getOrt(stra
 							.toString()));
 					strassenBox.setSelectedItem(stra);
-				} else {
+				}
+				else
+				{
 					frame.changeStatus("Die Straße '"
 							+ stra
 							+ "' hat keine eindeutige PLZ, bitte selbst eintragen!");
@@ -730,56 +735,60 @@ public class BasisStandortNeu extends AbstractModul
 			else if (e.getSource() == strassenBox)
 			{
 				reloadOrte();
-				
-              // Wenn wir eine Straße auswählen, wird die PLZ upgedatet
-              BasisStrassen stra = DatabaseQuery.findStrasse(
-                  strassenBox.getSelectedItem().toString());
-              if (stra != null) {
-              }
-              // Natürlich nur, wenn die Straße eine eindeutige PLZ hat
-              if (stra.getPlz() != null) {
-                  frame.clearStatus();
-                  plzFeld.setText(stra.getPlz().toString());
-              } else {
-                  frame.changeStatus("Die Straße '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
-                  plzFeld.setText("");
-              }
-            }
+
+				// Wenn wir eine Straße auswählen, wird die PLZ upgedatet
+				BasisStrassen stra = DatabaseQuery.findStrasse(
+						strassenBox.getSelectedItem().toString());
+				if (stra != null)
+				{
+				}
+				// Natürlich nur, wenn die Straße eine eindeutige PLZ hat
+				if (stra.getPlz() != null)
+				{
+					frame.clearStatus();
+					plzFeld.setText(stra.getPlz().toString());
+				}
+				else
+				{
+					frame.changeStatus("Die Straße '" + stra + "' hat keine eindeutige PLZ, bitte selbst eintragen!");
+					plzFeld.setText("");
+				}
+			}
 		}
 	}
-//    /**
-//     * Ein Listener für die Events des "Neuer Standort"-Moduls.
-//     * @author David Klotz
-//     */
-//    private final class StandortNeuListener implements ActionListener {
-//
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            if (e.getSource() == speichernButton) {
-//                log.debug("(" + BasisStandortNeu.this.getIdentifier() + ") "
-//                		+ "Speichern gedrückt!");
-//                // Check if we already have this location
-//                if (standortExists()) {
-//                    frame.changeStatus("Standort existiert bereits!", Color.RED);
-//                    log.debug("Standort existiert bereits und wurde nicht gespeichert.");
-//                } else {
-//                    doSave();
-//                }
-//            } else if (e.getSource() == strassenBox) {
-//                // Wenn wir eine Straße auswählen, wird die PLZ upgedatet
-//                BasisStrassen stra = DatabaseQuery.findStrasse(
-//                    (String) strassenBox.getSelectedItem());
-//                if (stra != null) {
-//                    // Natürlich nur, wenn die Straße eine eindeutige PLZ hat
-//                    if (stra.getPlz() != null) {
-//                        frame.clearStatus();
-//                        plzFeld.setText(stra.getPlz().toString());
-//                    } else {
-//                        frame.changeStatus("Die Straße '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
-//                        plzFeld.setText("");
-//                    }
-//                }
-//            }
-//        }
-//    }
+	//    /**
+	//     * Ein Listener für die Events des "Neuer Standort"-Moduls.
+	//     * @author David Klotz
+	//     */
+	//    private final class StandortNeuListener implements ActionListener {
+	//
+	//        @Override
+	//        public void actionPerformed(ActionEvent e) {
+	//            if (e.getSource() == speichernButton) {
+	//                log.debug("(" + BasisStandortNeu.this.getIdentifier() + ") "
+	//                		+ "Speichern gedrückt!");
+	//                // Check if we already have this location
+	//                if (standortExists()) {
+	//                    frame.changeStatus("Standort existiert bereits!", Color.RED);
+	//                    log.debug("Standort existiert bereits und wurde nicht gespeichert.");
+	//                } else {
+	//                    doSave();
+	//                }
+	//            } else if (e.getSource() == strassenBox) {
+	//                // Wenn wir eine Straße auswählen, wird die PLZ upgedatet
+	//                BasisStrassen stra = DatabaseQuery.findStrasse(
+	//                    (String) strassenBox.getSelectedItem());
+	//                if (stra != null) {
+	//                    // Natürlich nur, wenn die Straße eine eindeutige PLZ hat
+	//                    if (stra.getPlz() != null) {
+	//                        frame.clearStatus();
+	//                        plzFeld.setText(stra.getPlz().toString());
+	//                    } else {
+	//                        frame.changeStatus("Die Straße '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
+	//                        plzFeld.setText("");
+	//                    }
+	//                }
+	//            }
+	//        }
+	//    }
 }
