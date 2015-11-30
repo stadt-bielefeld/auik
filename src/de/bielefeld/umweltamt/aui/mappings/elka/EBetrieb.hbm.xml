@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.10.2015 09:42:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class name="de.bielefeld.umweltamt.aui.mappings.elka.EBetrieb"
+  schema="elka" table="e_betrieb">
+  <id name="nr" type="java.lang.Integer">
+   <column name="nr"/>
+   <generator class="assigned"/>
+  </id>
+  <many-to-one name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka.EStandort" fetch="select" lazy="false">
+   <column name="standort_nr" />
+  </many-to-one>
+  <many-to-one name="adresseByWrAdrNr" class="de.bielefeld.umweltamt.aui.mappings.elka.EAdresse" fetch="select" lazy="false">
+   <column name="wr_adr_nr" />
+  </many-to-one>
+  <property generated="never" lazy="false" name="bezeichnung" type="java.lang.String">
+   <column name="bezeichnung"/>
+  </property>
+  <property generated="never" lazy="false" name="suevkanTog" type="java.lang.Boolean">
+   <column name="suevkan_tog"/>
+  </property>
+  <property generated="never" lazy="false" name="e32" type="java.lang.Float">
+   <column name="e32" precision="8" scale="8"/>
+  </property>
+  <property generated="never" lazy="false" name="n32" type="java.lang.Float">
+   <column name="n32" precision="8" scale="8"/>
+  </property>
+  <property generated="never" lazy="false" name="aktualDat" type="java.util.Date">
+   <column length="29" name="aktual_dat"/>
+  </property>
+  <property generated="never" lazy="false" name="erstellDat" type="java.util.Date">
+   <column length="29" name="erstell_dat"/>
+  </property>
+  <property generated="never" lazy="false" name="herkunft" type="java.lang.String">
+   <column name="herkunft"/>
+  </property>
+ </class>
+</hibernate-mapping>

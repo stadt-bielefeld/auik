@@ -30,12 +30,8 @@
 	<table-filter match-schema="auik" match-name="vaws_.*"
 		package="de.bielefeld.umweltamt.aui.mappings.generated.vaws" />
 		
-	<table-filter match-schema="tipi" match-name="dea_.*"
-		package="de.bielefeld.umweltamt.aui.mappings.generated.tipi" />
-	<table-filter match-schema="tipi" match-name="inka_.*"
-		package="de.bielefeld.umweltamt.aui.mappings.generated.tipi" />
-    <table-filter match-schema="tipi" match-name="auik_wz_code"
-        package="de.bielefeld.umweltamt.aui.mappings.generated.tipi" />
+	<table-filter match-schema="elka" match-name="e_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.generated.elka" />
 		
 	<!-- Sequences ========================================================= -->
 	<table schema="auik" name="anh_49_abscheiderdetails">
@@ -164,89 +160,57 @@
             <key-column name="id" />
 		</primary-key>
 	</table>
-
-	<table schema="tipi" name="dea_adresse">
+	<table schema="elka" name="e_abwasserbehandlungsanlage">
 		<primary-key>
-            <key-column name="adresse_nr" />
+            <key-column name="nr" />
 		</primary-key>
 	</table>
-    <table schema="tipi" name="inka_betrieb">
-        <primary-key>
-            <key-column name="betrieb_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_genehmigung">
-        <primary-key>
-            <key-column name="genehmigung_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_betriebseinrichtung">
-        <primary-key>
-            <key-column name="betriebseinrichtung_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_uebergabestelle">
-        <primary-key>
-            <key-column name="uebergabestelle_lfd_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_messstelle">
-        <primary-key>
-            <key-column name="messstelle_lfd_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_anfallstelle">
-        <primary-key>
-            <key-column name="anfallstelle_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_anlage">
-        <primary-key>
-            <key-column name="anlage_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_messst_anlage">
-        <primary-key>
-            <key-column name="messstelle_lfd_nr" />
-            <key-column name="anlage_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_anfallst_messst">
-        <primary-key>
-            <key-column name="anfallstelle_nr" />
-            <key-column name="messstelle_lfd_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_anfallst_anlage">
-        <primary-key>
-            <key-column name="anfallstelle_nr" />
-            <key-column name="anlage_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_anfallst_stoffe">
-        <primary-key>
-            <key-column name="anfallstelle_nr" />
-            <key-column name="stoff_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_probenahme">
-        <primary-key>
-            <key-column name="probenahme_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_ueberwach_ergebnis">
-        <primary-key>
-            <key-column name="parameter_nr" />
-            <key-column name="probenahme_nr" />
-        </primary-key>
-    </table>
-    <table schema="tipi" name="inka_ueberwachungswert">
-        <primary-key>
-            <key-column name="parameter_nr" />
-            <key-column name="messstelle_lfd_nr" />
-        </primary-key>
-    </table>
-
+	<table schema="elka" name="e_adresse">
+		<primary-key>
+            <key-column name="nr" />
+		</primary-key>
+	</table>
+	<table schema="elka" name="e_anfallstelle">
+		<primary-key>
+            <key-column name="nr" />
+		</primary-key>
+	</table>
+	<table schema="elka" name="e_betrieb">
+		<primary-key>
+            <key-column name="nr" />
+		</primary-key>
+	</table>
+	<table schema="elka" name="e_einleitungsstelle">
+		<primary-key>
+            <key-column name="nr" />
+		</primary-key>
+	</table>
+	<table schema="elka" name="e_messstelle">
+		<primary-key>
+            <key-column name="nr" />
+		</primary-key>
+	</table>
+	<table schema="elka" name="e_probenahme">
+		<primary-key>
+            <key-column name="nr" />
+		</primary-key>
+	</table>
+	<table schema="elka" name="e_probenahme_ueberwachungsergeb">
+		<primary-key>
+            <key-column name="nr" />
+		</primary-key>
+	</table>
+	<table schema="elka" name="e_standort">
+		<primary-key>
+            <key-column name="nr" />
+		</primary-key>
+	</table>
+	<table schema="elka" name="e_wasserrecht">
+		<primary-key>
+            <key-column name="nr" />
+		</primary-key>
+	</table>
+	
     <!-- Exclude Geometry columns ========================================== -->
     <table schema="auik" name="atl_sielhaut">
         <column name="the_geom" exclude="true" />

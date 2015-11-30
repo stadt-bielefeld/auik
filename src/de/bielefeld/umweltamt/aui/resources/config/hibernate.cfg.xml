@@ -11,7 +11,7 @@
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://37.17.225.87/fisumwelt</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>       	
-        	
+
         <!-- MySQL: -->
 		<!--
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
@@ -78,5 +78,15 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWassereinzugsgebiete.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWgk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWirtschaftszweige.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EAbwasserbehandlungsanlage.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EAdresse.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EAnfallstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EBetrieb.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EEinleitungsstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EMessstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EProbenahme.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EProbenahmeUeberwachungsergeb.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EStandort.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EWasserrecht.hbm.xml" />        
     </session-factory>
 </hibernate-configuration>
