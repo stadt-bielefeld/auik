@@ -398,7 +398,7 @@ public class DatabaseAccess
 			// Add global restrictions
 			// For all classes except those in the tipi package
 			if (!(this.criteria.toString().contains(
-					"de.bielefeld.umweltamt.aui.mappings.tipi")))
+					"de.bielefeld.umweltamt.aui.mappings.elka")))
 			{
 				this.criteria.add(Restrictions.eq("deleted", false));
 			}
