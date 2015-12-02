@@ -38,11 +38,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
@@ -204,12 +206,30 @@ public class ELKASync extends AbstractModul {
 						@Override
 						protected void doNonUILogic() {
 							dialog.setVisible(true);
+							if (url == null || url.equals("")) {
+								JOptionPane.showMessageDialog(
+									ELKASync.this.panel,
+									"Bitte geben Sie eine Url an!",
+									"Verbindungsdaten",
+									JOptionPane.INFORMATION_MESSAGE);
+								return;
+							}
+							if (user == null || user.equals("") ||
+								password == null || password.equals("")) {
+								JOptionPane.showMessageDialog(
+									ELKASync.this.panel,
+									"Bitte geben Sie Benutzername und Passwort an!",
+									"Verbindungsdaten",
+									JOptionPane.INFORMATION_MESSAGE);
+								return;
+							}
 							String sel = (String) selection.getSelectedItem();
 							JerseyClient client = new JerseyClientBuilder().build();
 							List<Entity<?>> entityList = 
 								new ArrayList<Entity<?>>();
 							List<Object> dbList = new ArrayList<Object>();
 							int[] rows = ELKASync.this.dbTable.getSelectedRows();
+							
 							if (sel.equals("Abwasserbehandlungsanlagen")) {
 								for (int i = 0; i < rows.length; i++) {
 									dbList.add(ELKASync.this.abwasserbehandlungModel.getObjectAtRow(i));
@@ -275,6 +295,23 @@ public class ELKASync extends AbstractModul {
 						@Override
 						protected void doNonUILogic() {
 							dialog.setVisible(true);
+							if (url == null || url.equals("")) {
+								JOptionPane.showMessageDialog(
+									ELKASync.this.panel,
+									"Bitte geben Sie eine Url an!",
+									"Verbindungsdaten",
+									JOptionPane.INFORMATION_MESSAGE);
+								return;
+							}
+							if (user == null || user.equals("") ||
+								password == null || password.equals("")) {
+								JOptionPane.showMessageDialog(
+									ELKASync.this.panel,
+									"Bitte geben Sie Benutzername und Passwort an!",
+									"Verbindungsdaten",
+									JOptionPane.INFORMATION_MESSAGE);
+								return;
+							}
 							String sel = (String) selection.getSelectedItem();
 							JerseyClient client = new JerseyClientBuilder().build();
 							List<Entity<?>> entityList = 
@@ -368,7 +405,6 @@ public class ELKASync extends AbstractModul {
 									MediaType.APPLICATION_JSON +
 									";charset=UTF-8")
 									.buildPost(entities.get(i));
-				
 						Response response = inv.invoke();
 						progress.setValue(progress.getValue() + 1);
 						String responseEntity = response.readEntity(String.class);
@@ -389,7 +425,13 @@ public class ELKASync extends AbstractModul {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
+				catch (ProcessingException pe) {
+					JOptionPane.showMessageDialog(
+						this.panel,
+						"Der Server unter der angegeben Url ist nicht erreichbar.",
+						"Verbindungsfehler",
+						JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		}
     }
