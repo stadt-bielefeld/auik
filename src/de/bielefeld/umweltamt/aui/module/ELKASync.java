@@ -79,7 +79,12 @@ public class ELKASync extends AbstractModul {
     
 	private static final AuikLogger log = AuikLogger.getLogger();
 
-	private static String IDENTIFIER = SettingsManager.getInstance().getSetting("auik.elka.identifier");
+	private static String IDENTIFIER =
+		SettingsManager.getInstance().getSetting("auik.elka.identifier");
+	private static String PROXY_HOST =
+		SettingsManager.getInstance().getSetting("auik.elka.proxyhost");
+	private static String PROXY_PORT =
+		SettingsManager.getInstance().getSetting("auik.elka.proxyport");	
 	
 	private JPanel panel;
 
@@ -405,6 +410,8 @@ public class ELKASync extends AbstractModul {
     	String type
     ) {
 		if (entities.size() > 0) {
+			System.setProperty("http.proxyHost", PROXY_HOST);
+			System.setProperty("http.proxyPort", PROXY_PORT);
 			JFileChooser chooser = new JFileChooser();
 			if (chooser.showSaveDialog(this.panel) == JFileChooser.APPROVE_OPTION) {
 				File protocolFile = chooser.getSelectedFile();
@@ -448,6 +455,8 @@ public class ELKASync extends AbstractModul {
 						JOptionPane.WARNING_MESSAGE);
 				}
 			}
+			System.setProperty("http.proxyHost", "");
+			System.setProperty("http.proxyPort", "");
 		}
     }
 
