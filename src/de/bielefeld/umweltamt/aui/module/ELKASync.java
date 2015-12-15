@@ -27,6 +27,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,12 +57,16 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
 import de.bielefeld.umweltamt.aui.mappings.elka.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.elka.EAnfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.EBetrieb;
 import de.bielefeld.umweltamt.aui.mappings.elka.EEinleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.EMessstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahme;
+import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergeb;
+import de.bielefeld.umweltamt.aui.mappings.elka.EWasserrecht;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAbwasserbehandlungsanlageModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAnfallstelleModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EBetriebModel;
@@ -73,6 +79,8 @@ public class ELKASync extends AbstractModul {
     
 	private static final AuikLogger log = AuikLogger.getLogger();
 
+	private static String IDENTIFIER = SettingsManager.getInstance().getSetting("auik.elka.identifier");
+	
 	private JPanel panel;
 
 	private EAbwasserbehandlungsanlageModel abwasserbehandlungModel;
@@ -119,11 +127,18 @@ public class ELKASync extends AbstractModul {
 			@Override
 			protected void doNonUILogic() throws RuntimeException {
 				// TODO Auto-generated method stub
-		    	ELKASync.this.messstelleModel.setList(EMessstelle.getAll());
-		    	ELKASync.this.einleitungsstelleModel.setList(EEinleitungsstelle.getAll());
-		    	ELKASync.this.anfallstelleModel.setList(EAnfallstelle.getAll());
-		    	ELKASync.this.betriebModel.setList(EBetrieb.getAll());
-		    	ELKASync.this.abwasserbehandlungModel.setList(EAbwasserbehandlungsanlage.getAll());
+		    	ELKASync.this.messstelleModel.setList(
+		    		prependIdentifierEMessstelle(EMessstelle.getAll()));
+		    	ELKASync.this.einleitungsstelleModel.setList(
+		    		prependIdentifierEEinleitungsstelle(
+		    			EEinleitungsstelle.getAll()));
+		    	ELKASync.this.anfallstelleModel.setList(
+		    		prependIdentifierAnfallstelle(EAnfallstelle.getAll()));
+		    	ELKASync.this.betriebModel.setList(
+		    		prependIdentifierBetrieb(EBetrieb.getAll()));
+		    	ELKASync.this.abwasserbehandlungModel.setList(
+		    		prependIdentifierAbwasserbehandlungsanlage(
+		    			EAbwasserbehandlungsanlage.getAll()));
 		        ELKASync.this.rowCount.setText(String.valueOf(
 		        	ELKASync.this.abwasserbehandlungModel.getRowCount()));
 	        	ELKASync.this.dbTable.setModel(
@@ -446,5 +461,100 @@ public class ELKASync extends AbstractModul {
 
     public void setServicePassword(String password) {
     	this.password = password;
+    }
+    
+    private List<EAbwasserbehandlungsanlage> prependIdentifierAbwasserbehandlungsanlage(
+   		List<EAbwasserbehandlungsanlage> objects
+    ) {
+    	for (EAbwasserbehandlungsanlage anlage : objects) {
+    		log.debug("identifier for " + anlage.getNr());
+    		prependIdentifier(anlage);
+    		prependIdentifier(anlage.getAdresseByBetreibAdrNr());
+    		prependIdentifier(anlage.getAdresseByStoAdrNr());
+    		prependIdentifier(anlage.getStandort());
+    		prependIdentifier(anlage.getStandort().getAdresse());
+    		for (EWasserrecht recht : anlage.getWasserrechts()) {
+    			prependIdentifier(recht);
+    			prependIdentifier(recht.getAdresse());
+    		}
+    	}
+    	return objects;
+    }
+    
+    private List<EAnfallstelle> prependIdentifierAnfallstelle (
+    	List<EAnfallstelle> objects
+    ) {
+    	for (EAnfallstelle stelle : objects) {
+    		prependIdentifier(stelle);
+    		prependIdentifier(stelle.getAdresse());
+    		prependIdentifier(stelle.getStandort());
+    		prependIdentifier(stelle.getStandort().getAdresse());
+    	}
+    	return objects;
+    }
+    
+    private List<EBetrieb> prependIdentifierBetrieb(List<EBetrieb> objects) {
+    	for (EBetrieb betrieb : objects) {
+    		prependIdentifier(betrieb);
+    		prependIdentifier(betrieb.getAdresseByWrAdrNr());
+    		prependIdentifier(betrieb.getStandort());
+    		prependIdentifier(betrieb.getStandort().getAdresse());
+    	}
+    	return objects;
+    }
+    
+    private List<EEinleitungsstelle> prependIdentifierEEinleitungsstelle(
+    	List<EEinleitungsstelle> objects	
+    ) {
+    	for (EEinleitungsstelle stelle : objects) {
+    		prependIdentifier(stelle);
+    		prependIdentifier(stelle.getStandort());
+    		prependIdentifier(stelle.getStandort().getAdresse());
+    		for (EWasserrecht recht : stelle.getWasserrechts()) {
+    			prependIdentifier(recht);
+    			prependIdentifier(recht.getAdresse());
+    		}
+    	}
+    	return objects;
+    }
+    
+    private List<EMessstelle> prependIdentifierEMessstelle(
+    	List<EMessstelle> objects
+    ) {
+    	for (EMessstelle stelle : objects) {
+    		prependIdentifier(stelle);
+    		prependIdentifier(stelle.getStandort());
+    		prependIdentifier(stelle.getStandort().getAdresse());
+    		for (EProbenahme nahme : stelle.getProbenahmes()) {
+    			prependIdentifier(nahme);
+    			for (EProbenahmeUeberwachungsergeb ergeb : 
+    				nahme.getProbenahmeUeberwachungsergebs()) {
+    				prependIdentifier(ergeb);
+    			}
+    		}
+    	}
+    	return objects;
+    }
+    
+    private <T> T prependIdentifier(T object) {
+    	try {
+			Method mGetter = object.getClass().getMethod("getNr");
+			Method mSetter = object.getClass().getMethod("setNr", Integer.class);
+			Integer nr = (Integer)mGetter.invoke(object);
+			if (nr.toString().startsWith(IDENTIFIER)) {
+				return object;
+			}
+			String newNr = IDENTIFIER + nr.toString();
+			mSetter.invoke(object, Integer.valueOf(newNr));
+		} catch (NoSuchMethodException | SecurityException e) {
+			// Do nothing since the object has no Nr field.
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+    	return object;
     }
 }
