@@ -25,6 +25,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 
@@ -37,6 +39,7 @@ public class EMessstelle implements java.io.Serializable {
 
 	private EStandort standort;
 	private Integer nr;
+	private Integer origNr;
 	private String bezeichnung;
 	private Integer typOpt;
 	private Integer artMessungOpt;
@@ -53,11 +56,12 @@ public class EMessstelle implements java.io.Serializable {
 		this.nr = nr;
 	}
 
-	public EMessstelle(Integer nr, EStandort standort, String bezeichnung,
-			Integer typOpt, Integer artMessungOpt, String bemerkung,
-			Date aktualDat, Date erstellDat, String herkunft) {
+	public EMessstelle(Integer nr, EStandort standort, Integer origNr,
+			String bezeichnung, Integer typOpt, Integer artMessungOpt,
+			String bemerkung, Date aktualDat, Date erstellDat, String herkunft) {
 		this.standort = standort;
 		this.nr = nr;
+		this.origNr = origNr;
 		this.bezeichnung = bezeichnung;
 		this.typOpt = typOpt;
 		this.artMessungOpt = artMessungOpt;
@@ -81,6 +85,16 @@ public class EMessstelle implements java.io.Serializable {
 
 	public void setNr(Integer nr) {
 		this.nr = nr;
+	}
+	
+	@JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
+	
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr = origNr;
 	}
 
 	public String getBezeichnung() {

@@ -23,6 +23,8 @@ package de.bielefeld.umweltamt.aui.mappings.elka;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 
@@ -34,6 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 public class EAnfallstelle implements java.io.Serializable {
 
 	private Integer nr;
+	private Integer origNr;
 	private EStandort standort;
 	private EAdresse adresse;
 	private String anhangId;
@@ -52,11 +55,13 @@ public class EAnfallstelle implements java.io.Serializable {
 		this.nr = nr;
 	}
 
-	public EAnfallstelle(Integer nr, EStandort standort, EAdresse adresse,
+	public EAnfallstelle(Integer nr, Integer origNr,
+			EStandort standort, EAdresse adresse,
 			String anhangId, Integer abwaBeschaffOpt, String bezeichnung,
 			String bemerkung, Boolean aufzBetriebTog, Date aktualDat,
 			Date erstellDat, String herkunft) {
 		this.nr = nr;
+		this.origNr = origNr;
 		this.standort = standort;
 		this.adresse = adresse;
 		this.anhangId = anhangId;
@@ -75,6 +80,16 @@ public class EAnfallstelle implements java.io.Serializable {
 
 	public void setNr(Integer nr) {
 		this.nr = nr;
+	}
+
+	@JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
+	
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr = origNr;
 	}
 
 	public EStandort getStandort() {

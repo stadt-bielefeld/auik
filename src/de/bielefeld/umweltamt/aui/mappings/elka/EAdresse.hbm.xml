@@ -9,6 +9,9 @@
    <column name="nr"/>
    <generator class="assigned"/>
   </id>
+  <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
+  	<column name="nr" />
+  </property>
   <property generated="never" lazy="false" name="anrede" type="java.lang.String">
    <column name="anrede"/>
   </property>

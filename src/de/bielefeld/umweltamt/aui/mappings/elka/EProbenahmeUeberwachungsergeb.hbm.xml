@@ -10,6 +10,9 @@
    <column name="nr"/>
    <generator class="assigned"/>
   </id>
+  <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
+  	<column name="nr" />
+  </property>
   <property generated="never" lazy="false" name="stoffNr" type="java.lang.Integer">
    <column name="stoff_nr"/>
   </property>

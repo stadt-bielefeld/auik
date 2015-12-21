@@ -25,6 +25,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -37,6 +39,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public class EAbwasserbehandlungsanlage implements java.io.Serializable {
 
 	private Integer nr;
+	private Integer origNr;
 	private EStandort standort;
 	private EAdresse adresseByStoAdrNr;
 	private EAdresse adresseByBetreibAdrNr;
@@ -59,13 +62,15 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
 		this.nr = nr;
 	}
 
-	public EAbwasserbehandlungsanlage(Integer nr, EStandort standort,
-			EAdresse adresseByStoAdrNr, EAdresse adresseByBetreibAdrNr,
-			String bezeichnung, Float e32, Float n32, Boolean wartungsvertragTog,
+	public EAbwasserbehandlungsanlage(Integer nr, Integer origNr,
+			EStandort standort, EAdresse adresseByStoAdrNr,
+			EAdresse adresseByBetreibAdrNr, String bezeichnung, Float e32,
+			Float n32, Boolean wartungsvertragTog,
 			Boolean genehmpflichtigTog, Boolean einzelabnahmeTog,
 			String bemerkung, Date aktualDat, Date erstellDat,
 			String herkunft, Set<EWasserrecht> wasserrechts) {
 		this.nr = nr;
+		this.origNr = origNr;
 		this.standort = standort;
 		this.adresseByStoAdrNr = adresseByStoAdrNr;
 		this.adresseByBetreibAdrNr = adresseByBetreibAdrNr;
@@ -88,6 +93,16 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
 
 	public void setNr(Integer nr) {
 		this.nr = nr;
+	}
+	
+	@JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
+	
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr = origNr;
 	}
 
 	public EStandort getStandort() {

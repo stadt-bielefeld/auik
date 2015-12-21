@@ -23,6 +23,8 @@ package de.bielefeld.umweltamt.aui.mappings.elka;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 
@@ -34,6 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 public class EAdresse implements java.io.Serializable {
 
 	private Integer nr;
+	private Integer origNr;
 	private String anrede;
 	private String name1;
 	private String name2;
@@ -57,11 +60,13 @@ public class EAdresse implements java.io.Serializable {
 		this.nr = nr;
 	}
 
-	public EAdresse(Integer nr, String anrede, String name1, String name2,
-			String strasse, String hausnr, String plzZst, String ortZst,
-			String staatskennungZst, String telefon, String fax, String email,
-			Boolean personTog, Date aktualDat, Date erstellDat, String herkunft) {
+	public EAdresse(Integer nr, Integer origNr, String anrede, String name1,
+			String name2, String strasse, String hausnr, String plzZst,
+			String ortZst, String staatskennungZst, String telefon, String fax,
+			String email, Boolean personTog, Date aktualDat, Date erstellDat,
+			String herkunft) {
 		this.nr = nr;
+		this.origNr = origNr;
 		this.anrede = anrede;
 		this.name1 = name1;
 		this.name2 = name2;
@@ -85,6 +90,16 @@ public class EAdresse implements java.io.Serializable {
 
 	public void setNr(Integer nr) {
 		this.nr = nr;
+	}
+	
+	@JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
+	
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr = origNr;
 	}
 
 	public String getAnrede() {

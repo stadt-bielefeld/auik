@@ -25,6 +25,8 @@ package de.bielefeld.umweltamt.aui.mappings.elka;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 
@@ -34,6 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 public class EWasserrecht implements java.io.Serializable {
 
 	private Integer nr;
+	private Integer origNr;
 	private EAdresse adresse;
 	private Integer rechtArtOpt;
 	private Date antragDat;
@@ -53,11 +56,13 @@ public class EWasserrecht implements java.io.Serializable {
 		this.nr = nr;
 	}
 
-	public EWasserrecht(Integer nr, EAdresse adresse, Integer rechtArtOpt,
-			Date antragDat, Date erteilungWrDat, Boolean befristungTog,
-			Date befristungDat,	String bemerkung, Date aktualDat,
-			Date erstellDat, String aktenzeichen, String herkunft) {
+	public EWasserrecht(Integer nr, Integer origNr, EAdresse adresse,
+			Integer rechtArtOpt, Date antragDat, Date erteilungWrDat,
+			Boolean befristungTog, Date befristungDat, String bemerkung,
+			Date aktualDat, Date erstellDat, String aktenzeichen,
+			String herkunft) {
 		this.nr = nr;
+		this.origNr = origNr;
 		this.adresse = adresse;
 		this.rechtArtOpt = rechtArtOpt;
 		this.antragDat = antragDat;
@@ -77,6 +82,16 @@ public class EWasserrecht implements java.io.Serializable {
 
 	public void setNr(Integer nr) {
 		this.nr = nr;
+	}
+	
+	@JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
+	
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr = origNr;
 	}
 
 	public EAdresse getAdresse() {

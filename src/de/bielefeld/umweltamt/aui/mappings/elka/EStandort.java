@@ -23,6 +23,8 @@ package de.bielefeld.umweltamt.aui.mappings.elka;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 
@@ -34,6 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 public class EStandort implements java.io.Serializable {
 
 	private Integer nr;
+	private Integer origNr;
 	private EAdresse adresse;
 	private String gemeindeId;
 	private String gemarkung;
@@ -49,7 +52,7 @@ public class EStandort implements java.io.Serializable {
 	private Date aktualDat;
 	private Date erstellDat;
 	private String herkunft;
-
+	
 	public EStandort() {
 	}
 
@@ -57,12 +60,14 @@ public class EStandort implements java.io.Serializable {
 		this.nr = nr;
 	}
 
-	public EStandort(Integer nr, EAdresse adresse, String gemeindeId, String gemarkung,
+	public EStandort(Integer nr, Integer origNr, EAdresse adresse,
+			String gemeindeId, String gemarkung,
 			String flur, String flurstuecke, Float e32, Float n32,
 			Boolean industrieabwasserTog, Boolean niederschlagswasserTog,
 			Boolean kommunaleKaTog, Boolean kleikaTog, Boolean nurSbTog,
 			Date aktualDat, Date erstellDat, String herkunft) {
 		this.nr = nr;
+		this.origNr = origNr;
 		this.adresse = adresse;
 		this.gemeindeId = gemeindeId;
 		this.gemarkung = gemarkung;
@@ -88,6 +93,16 @@ public class EStandort implements java.io.Serializable {
 		this.nr = nr;
 	}
 
+	@JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
+	
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr =  origNr;
+	}
+	
 	public EAdresse getAdresse() {
 		return adresse;
 	}

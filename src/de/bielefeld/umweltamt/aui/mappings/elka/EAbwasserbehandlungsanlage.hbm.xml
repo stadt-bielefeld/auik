@@ -8,6 +8,9 @@
             <column name="nr" />
             <generator class="assigned" />
         </id>
+        <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
+  			<column name="nr" />
+  		</property>
         <many-to-one name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka.EStandort" lazy="false" fetch="select">
             <column name="standort_nr" />
         </many-to-one>

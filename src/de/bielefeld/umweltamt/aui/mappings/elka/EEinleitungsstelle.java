@@ -25,6 +25,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 
@@ -37,6 +39,7 @@ public class EEinleitungsstelle implements java.io.Serializable {
 
 	private EStandort standort;
 	private Integer nr;
+	private Integer origNr;
 	private Boolean typIndirekteinleitungTog;
 	private String bezeichnung;
 	private Integer e32;
@@ -54,12 +57,13 @@ public class EEinleitungsstelle implements java.io.Serializable {
 		this.nr = nr;
 	}
 
-	public EEinleitungsstelle(Integer nr, EStandort standort,
+	public EEinleitungsstelle(Integer nr, EStandort standort, Integer origNr,
 			Boolean typIndirekteinleitungTog, String bezeichnung, Integer e32,
 			Integer n32, Boolean kaNichtInNrwTog, Date aktualDat,
 			Date erstellDat, String herkunft, Set<EWasserrecht> wasserrechts) {
 		this.standort = standort;
 		this.nr = nr;
+		this.origNr = origNr;
 		this.typIndirekteinleitungTog = typIndirekteinleitungTog;
 		this.bezeichnung = bezeichnung;
 		this.e32 = e32;
@@ -85,6 +89,16 @@ public class EEinleitungsstelle implements java.io.Serializable {
 
 	public void setNr(Integer nr) {
 		this.nr = nr;
+	}
+	
+	@JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
+	
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr = origNr;
 	}
 
 	public Boolean getTypIndirekteinleitungTog() {
