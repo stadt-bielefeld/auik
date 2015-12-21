@@ -60,18 +60,22 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
 import de.bielefeld.umweltamt.aui.mappings.elka.EAbwasserbehandlungsanlage;
+import de.bielefeld.umweltamt.aui.mappings.elka.EAdresse;
 import de.bielefeld.umweltamt.aui.mappings.elka.EAnfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.EBetrieb;
 import de.bielefeld.umweltamt.aui.mappings.elka.EEinleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.EMessstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahme;
 import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergeb;
+import de.bielefeld.umweltamt.aui.mappings.elka.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.elka.EWasserrecht;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAbwasserbehandlungsanlageModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAnfallstelleModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EBetriebModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EEinleitungsstelleModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EMessstelleModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
@@ -93,6 +97,9 @@ public class ELKASync extends AbstractModul {
 	private EBetriebModel betriebModel;
 	private EEinleitungsstelleModel einleitungsstelleModel;
 	private EMessstelleModel messstelleModel;
+	private EAdresseModel adresseModel;
+	private EStandortModel standortModel;
+
         
     private JTable dbTable;
     private JLabel rowCount;
@@ -133,9 +140,9 @@ public class ELKASync extends AbstractModul {
 			protected void doNonUILogic() throws RuntimeException {
 				// TODO Auto-generated method stub
 		    	ELKASync.this.messstelleModel.setList(
-		    		prependIdentifierEMessstelle(EMessstelle.getAll()));
+		    		prependIdentifierMessstelle(EMessstelle.getAll()));
 		    	ELKASync.this.einleitungsstelleModel.setList(
-		    		prependIdentifierEEinleitungsstelle(
+		    		prependIdentifierEinleitungsstelle(
 		    			EEinleitungsstelle.getAll()));
 		    	ELKASync.this.anfallstelleModel.setList(
 		    		prependIdentifierAnfallstelle(EAnfallstelle.getAll()));
@@ -144,11 +151,14 @@ public class ELKASync extends AbstractModul {
 		    	ELKASync.this.abwasserbehandlungModel.setList(
 		    		prependIdentifierAbwasserbehandlungsanlage(
 		    			EAbwasserbehandlungsanlage.getAll()));
+		    	ELKASync.this.adresseModel.setList(
+		    		prependIdentifierAdresse(EAdresse.getAll()));
+		    	ELKASync.this.standortModel.setList(
+		    		prependIdentifierStandort(EStandort.getAll()));
 		        ELKASync.this.rowCount.setText(String.valueOf(
-		        	ELKASync.this.abwasserbehandlungModel.getRowCount()));
+		        	ELKASync.this.adresseModel.getRowCount()));
 	        	ELKASync.this.dbTable.setModel(
-	            		ELKASync.this.abwasserbehandlungModel);
-				
+	            		ELKASync.this.adresseModel);
 			}
 		};
 		worker.start();
@@ -163,6 +173,8 @@ public class ELKASync extends AbstractModul {
     	this.betriebModel = new EBetriebModel();
     	this.einleitungsstelleModel = new EEinleitungsstelleModel();
     	this.messstelleModel = new EMessstelleModel();
+    	this.adresseModel = new EAdresseModel();
+    	this.standortModel = new EStandortModel();
         
         this.dbTable = new JTable();
         this.rowCount = new JLabel("0");
@@ -175,7 +187,10 @@ public class ELKASync extends AbstractModul {
             this.panel = new JPanel();
             final JComboBox<String> selection = new JComboBox<String>();
             final JProgressBar progress = new JProgressBar();
-        	String[] entities =  new String[]{"Abwasserbehandlungsanlagen",
+        	String[] entities =  new String[]{
+        			"Adressen",
+        			"Standorte",
+        			"Abwasserbehandlungsanlagen",
             		"Anfallstellen",
             		"Betriebe",
             		"Einleitungsstellen",
@@ -208,6 +223,14 @@ public class ELKASync extends AbstractModul {
                     else if (item.equals("Messstellen")) {
                     	ELKASync.this.dbTable.setModel(
                         		ELKASync.this.messstelleModel);
+                    }
+                    else if (item.equals("Adressen")) {
+                    	ELKASync.this.dbTable.setModel(
+                        		ELKASync.this.adresseModel);
+                    }
+                    else if (item.equals("Standorte")) {
+                    	ELKASync.this.dbTable.setModel(
+                        		ELKASync.this.standortModel);
                     }
                     ELKASync.this.rowCount.setText(String
                         .valueOf(ELKASync.this.dbTable.getRowCount()));
@@ -252,33 +275,45 @@ public class ELKASync extends AbstractModul {
 							
 							if (sel.equals("Abwasserbehandlungsanlagen")) {
 								for (int i = 0; i < rows.length; i++) {
-									dbList.add(ELKASync.this.abwasserbehandlungModel.getObjectAtRow(i));
+									dbList.add(ELKASync.this.abwasserbehandlungModel.getObjectAtRow(rows[i]));
 								}
 								url += "/abwasserbehandlungsanlage";
 							}
 							else if (sel.equals("Anfallstellen")) {
 								for (int i = 0; i < rows.length; i++) {
-									dbList.add(ELKASync.this.anfallstelleModel.getObjectAtRow(i));
+									dbList.add(ELKASync.this.anfallstelleModel.getObjectAtRow(rows[i]));
 								}
 								url += "/anfallstelle";
 							}
 							else if (sel.equals("Betriebe")) {
 								for (int i = 0; i < rows.length; i++) {
-									dbList.add(ELKASync.this.betriebModel.getObjectAtRow(i));
+									dbList.add(ELKASync.this.betriebModel.getObjectAtRow(rows[i]));
 								}
 								url += "/betrieb";
 							}
 							else if (sel.equals("Einleitungsstellen")) {
 								for (int i = 0; i < rows.length; i++) {
-									dbList.add(ELKASync.this.einleitungsstelleModel.getObjectAtRow(i));
+									dbList.add(ELKASync.this.einleitungsstelleModel.getObjectAtRow(rows[i]));
 								}
 								url += "/einleitungsstelle";
 							}
 							else if (sel.equals("Messstellen")) {
 								for (int i = 0; i < rows.length; i++) {
-									dbList.add(ELKASync.this.messstelleModel.getObjectAtRow(i));
+									dbList.add(ELKASync.this.messstelleModel.getObjectAtRow(rows[i]));
 								}
 								url += "/messstelle";
+							}
+							else if (sel.equals("Adressen")) {
+								for (int i = 0; i < rows.length; i++) {
+									dbList.add(ELKASync.this.adresseModel.getObjectAtRow(rows[i]));
+								}
+								url += "/adresse";
+							}
+							else if (sel.equals("Standorte")) {
+								for (int i = 0; i < rows.length; i++) {
+									dbList.add(ELKASync.this.standortModel.getObjectAtRow(rows[i]));
+								}
+								url += "/standort";
 							}
 							else {
 								return;
@@ -358,6 +393,10 @@ public class ELKASync extends AbstractModul {
 								dbList = ELKASync.this.messstelleModel.getList();
 								url += "/messstelle";
 							}
+							else if (sel.equals("Adressen")) {
+								dbList = ELKASync.this.adresseModel.getList();
+								url += "/adresse";
+							}
 							JerseyWebTarget target =
 									client.target(url)
 									.queryParam("username", user)
@@ -431,7 +470,9 @@ public class ELKASync extends AbstractModul {
 						progress.setValue(progress.getValue() + 1);
 						String responseEntity = response.readEntity(String.class);
 						this.progressCounter.setText((i + 1)+ "/" + entities.size());
-						if (response.getStatus() != 200) {
+						if (response.getStatus() != 200 &&
+							response.getStatus() != 201
+						) {
 							printStream.append("Fehler in Objekt: " + (i+1) + "\n");
 							printStream.append("Fehlerbeschreibung: " + responseEntity);
 							printStream.append("\n");
@@ -512,7 +553,7 @@ public class ELKASync extends AbstractModul {
     	return objects;
     }
     
-    private List<EEinleitungsstelle> prependIdentifierEEinleitungsstelle(
+    private List<EEinleitungsstelle> prependIdentifierEinleitungsstelle(
     	List<EEinleitungsstelle> objects	
     ) {
     	for (EEinleitungsstelle stelle : objects) {
@@ -527,7 +568,7 @@ public class ELKASync extends AbstractModul {
     	return objects;
     }
     
-    private List<EMessstelle> prependIdentifierEMessstelle(
+    private List<EMessstelle> prependIdentifierMessstelle(
     	List<EMessstelle> objects
     ) {
     	for (EMessstelle stelle : objects) {
@@ -544,15 +585,31 @@ public class ELKASync extends AbstractModul {
     	}
     	return objects;
     }
+
+    private List<EAdresse> prependIdentifierAdresse(
+      	List<EAdresse> objects
+    ) {
+       	for (EAdresse adresse : objects) {
+       		prependIdentifier(adresse);
+       	}
+       	return objects;
+    }
+
+    private List<EStandort> prependIdentifierStandort(
+          	List<EStandort> objects
+    ) {
+    	for (EStandort standort : objects) {
+       		prependIdentifier(standort);
+       		prependIdentifier(standort.getAdresse());
+       	}
+       	return objects;
+    }
     
     private <T> T prependIdentifier(T object) {
     	try {
-			Method mGetter = object.getClass().getMethod("getNr");
+			Method mGetter = object.getClass().getMethod("getOrigNr");
 			Method mSetter = object.getClass().getMethod("setNr", Integer.class);
 			Integer nr = (Integer)mGetter.invoke(object);
-			if (nr.toString().startsWith(IDENTIFIER)) {
-				return object;
-			}
 			String newNr = IDENTIFIER + nr.toString();
 			mSetter.invoke(object, Integer.valueOf(newNr));
 		} catch (NoSuchMethodException | SecurityException e) {
