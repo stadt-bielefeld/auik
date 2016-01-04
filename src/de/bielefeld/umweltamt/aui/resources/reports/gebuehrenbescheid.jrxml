@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
-<!-- 2015-04-01T13:35:01 -->
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2016-01-04T13:44:24 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="25" uuid="3e42c968-6230-4d71-b690-a3ead7f68061">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="104"/>
@@ -93,7 +93,7 @@
 				<textElement>
 					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Stadt Bielefelt]]></text>
+				<text><![CDATA[Stadt Bielefeld]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="348" y="119" width="125" height="10" uuid="1098ac4a-0de0-45ae-b348-fa78339af414"/>
@@ -397,7 +397,7 @@
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="DejaVu Sans" size="7" isItalic="true" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Bitte überprüfen Sie die diesem Bescheid zugrunde liegenden Tatsachen. Wenn diese nach Ihrer Auffassung fehlerhaft sein sollten, können Sie sich zur schnellen Klärung direkt an mich wenden. <style isBold='true'>Dies führt <style isUnderline='true'>nicht</style> zu einer Verlängerung der einmonatigen Klagefrist nach Bekanntgabe dieses Bescheides (s. folgende Rechtsbehelfsbelehrung).</style> Falls ich meine Entscheidung nicht ändern kann, müssen Sie trotzdem innerhalb eines Monats nach Bekanntgabe des Bescheides Klage erheben, wenn Sie Ihre Beschwerde weiterverfolgen wollen.]]></text>
+				<text><![CDATA[Bitte überprüfen Sie die diesem Bescheid zugrunde liegenden Tatsachen. Wenn diese nach Ihrer Auffassung fehlerhaft sein sollten, können Sie sich zur schnellen Klärung direkt an mich wenden. <style isBold='true'>Dies führt <style isUnderline='true'>nicht</style> zu einer Verlängerung der einmonatigen Widerspruchsfrist nach Bekanntgabe dieses Bescheides (s. folgende Rechtsbehelfsbelehrung).</style> Falls ich meine Entscheidung nicht ändern kann, müssen Sie trotzdem innerhalb eines Monats nach Bekanntgabe des Bescheides Widerspruch erheben, wenn Sie Ihre Beschwerde weiterverfolgen wollen.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="1" width="100" height="10" uuid="8e5b2ae8-c98a-4831-9414-cc6ee1c29d57"/>
@@ -407,14 +407,15 @@
 				<text><![CDATA[Hinweis:]]></text>
 			</staticText>
 		</band>
-		<band height="115" splitType="Prevent">
+		<band height="101" splitType="Prevent">
 			<staticText>
-				<reportElement x="0" y="14" width="483" height="96" uuid="389a9e5c-b286-40ee-9655-06ca95341901"/>
+				<reportElement x="0" y="14" width="483" height="87" uuid="389a9e5c-b286-40ee-9655-06ca95341901"/>
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe Klage erhoben werden. Die Klage ist entweder schriftlich beim Verwaltungsgericht Minden, Königswall 8, 32423 Minden, oder dort zur Niederschrift der Urkundenbeamtin / des Urkundenbeamten der Geschäftsstelle oder in elektronischer Form nach Maßgabe der Verordnung über den elektronischen Rechtsverkehr bei den Verwaltungs-gerichten und den Finanzgerichten im Lande Nordrhein-Westfalen (Elektronische Rechtsverkehrs-verordnung Verwaltungs- und Finanzgerichte – ERVVO VG/FG) vom 07.11.2012 (GV. NRW. S. 548) einzureichen.
-Sollte die Frist durch das Verschulden einer von Ihnen bevollmächtigten Person versäumt werden, so würde deren  Verschulden Ihnen zugerechnet werden.]]></text>
+				<text><![CDATA[Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe schriftlich oder zur Niederschrift beim Oberbürgermeister der Stadt Bielefeld in Bielefeld Widerspruch erhoben werden. Der Widerspruch kann auch durch De-Mail mit Absenderbestätigung i.S.d. § 5 Abs. 5 De-Mail-Gesetz vom 28. April 2011 (BGBl. I S. 666) in der jeweils geltenden Fassung erhoben werden. Die De-Mail-Adresse lautet: info@bielefeld.de-mail.de
+
+Sollte die Frist durch das Verschulden einer von Ihnen bevollmächtigten Person versäumt werden, so würde deren Verschulden Ihnen zugerechnet werden.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="1" width="159" height="14" uuid="460b3fff-af93-4baf-b767-2bfed5cbc4db"/>
@@ -430,7 +431,7 @@ Sollte die Frist durch das Verschulden einer von Ihnen bevollmächtigten Person 
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
-				<text><![CDATA[Des Weiteren weise ich darauf hin, dass eine Klage gegen die Anforderung der Gebühren gemäß § 80 Abs. 2 Nr. 1 Verwaltungsgerichtsordnung (VwGO) keine aufschiebende Wirkung hat. Bescheide, die öffentliche Abgaben oder Kosten festsetzen, sind sofort vollziehbar. <style isBold='true'>Dies bedeutet, dass Sie unabhängig von der Einreichung einer Klage zur fristgerechten Zahlung der festgesetzten Gebühren verpflichtet sind.</style>
+				<text><![CDATA[Des Weiteren weise ich darauf hin, dass ein Widerspruch gegen die Anforderung der Gebühren gemäß § 80 Abs. 2 Nr. 1 Verwaltungsgerichtsordnung (VwGO) keine aufschiebende Wirkung hat. Bescheide, die öffentliche Abgaben oder Kosten festsetzen, sind sofort vollziehbar. <style isBold='true'>Dies bedeutet, dass Sie unabhängig von der Einreichung eines Widerspruchs zur fristgerechten Zahlung der festgesetzten Gebühren verpflichtet sind.</style>
 ]]></text>
 			</staticText>
 		</band>
