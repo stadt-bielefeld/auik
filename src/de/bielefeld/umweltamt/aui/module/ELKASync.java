@@ -397,6 +397,10 @@ public class ELKASync extends AbstractModul {
 								dbList = ELKASync.this.adresseModel.getList();
 								url += "/adresse";
 							}
+							else if (sel.equals("Standorte")) {
+								dbList = ELKASync.this.standortModel.getList();
+								url += "/standort";
+							}
 							JerseyWebTarget target =
 									client.target(url)
 									.queryParam("username", user)
@@ -612,8 +616,8 @@ public class ELKASync extends AbstractModul {
 			Integer nr = (Integer)mGetter.invoke(object);
 			String newNr = IDENTIFIER + nr.toString();
 			mSetter.invoke(object, Integer.valueOf(newNr));
-		} catch (NoSuchMethodException | SecurityException e) {
-			// Do nothing since the object has no Nr field.
+		} catch (NoSuchMethodException e){
+		} catch (SecurityException e) {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
