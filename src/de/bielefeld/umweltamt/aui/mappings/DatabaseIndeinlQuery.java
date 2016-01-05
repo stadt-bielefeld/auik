@@ -486,7 +486,9 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<AnhBwkFachdaten> getBwkByYear(Integer year) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(AnhBwkFachdaten.class)
-                .createAlias("basisObjekt.basisStandort", "standort");
+            .createAlias("basisObjekt", "obj")
+            .createAlias("basisObjekt.basisStandort", "standort")
+            .add(Restrictions.eq("obj.deleted", false));
         detachedCriteria.addOrder(Order.asc("standort.strasse"));
         detachedCriteria.addOrder(Order.asc("standort.hausnr"));
         /* year == -1 => alle Jahre */
@@ -504,11 +506,13 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<AnhBwkFachdaten> getBHKW() {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				AnhBwkFachdaten.class)
+	            .createAlias("basisObjekt", "obj")
 				.createAlias("basisObjekt.basisStandort", "standort")
                 .createAlias("basisObjekt.basisObjektarten", "art")
 				.addOrder(Order.asc("standort.strasse"))
 				.addOrder(Order.asc("standort.hausnr"))
-				.add(Restrictions.eq("art.id", 36));
+				.add(Restrictions.eq("art.id", 36))
+	            .add(Restrictions.eq("obj.deleted", false));
 
         return new DatabaseAccess().executeCriteriaToList(
             detachedCriteria, new AnhBwkFachdaten());
@@ -520,10 +524,12 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<AnhBwkFachdaten> getABA() {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				AnhBwkFachdaten.class)
+	            .createAlias("basisObjekt", "obj")
 				.createAlias("basisObjekt.basisStandort", "standort")
 				.addOrder(Order.asc("standort.strasse"))
 				.addOrder(Order.asc("standort.hausnr"))
-				.add(Restrictions.eq("aba", true));
+				.add(Restrictions.eq("aba", true))
+	            .add(Restrictions.eq("obj.deleted", false));
 
         return new DatabaseAccess().executeCriteriaToList(
             detachedCriteria, new AnhBwkFachdaten());
