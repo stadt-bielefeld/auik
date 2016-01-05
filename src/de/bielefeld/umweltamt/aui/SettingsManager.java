@@ -196,7 +196,7 @@ public class SettingsManager {
 								+ "AnalyseImport, DBSyncModul");
 
 		appSettings.setProperty("auik.prefs.status_time", "40");
-		appSettings.setProperty("auik.prefs.sielhaut_labor", "OWL");
+		appSettings.setProperty("auik.prefs.sielhaut_labor", "Eurofins");
 		appSettings.setProperty("auik.system.spath_fotos",
 				"X:/Applikationen/Anlagenkataster/Sielhaut/fotos/");
 		appSettings.setProperty("auik.system.spath_karten",
