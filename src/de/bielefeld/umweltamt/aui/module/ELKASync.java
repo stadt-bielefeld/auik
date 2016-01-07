@@ -133,28 +133,12 @@ public class ELKASync extends AbstractModul {
 			@Override
 			protected void doUIUpdateLogic() throws RuntimeException {
 				// TODO Auto-generated method stub
-				
 			}
-			
 			@Override
 			protected void doNonUILogic() throws RuntimeException {
 				// TODO Auto-generated method stub
-		    	ELKASync.this.messstelleModel.setList(
-		    		prependIdentifierMessstelle(EMessstelle.getAll()));
-		    	ELKASync.this.einleitungsstelleModel.setList(
-		    		prependIdentifierEinleitungsstelle(
-		    			EEinleitungsstelle.getAll()));
-		    	ELKASync.this.anfallstelleModel.setList(
-		    		prependIdentifierAnfallstelle(EAnfallstelle.getAll()));
-		    	ELKASync.this.betriebModel.setList(
-		    		prependIdentifierBetrieb(EBetrieb.getAll()));
-		    	ELKASync.this.abwasserbehandlungModel.setList(
-		    		prependIdentifierAbwasserbehandlungsanlage(
-		    			EAbwasserbehandlungsanlage.getAll()));
-		    	ELKASync.this.adresseModel.setList(
-		    		prependIdentifierAdresse(EAdresse.getAll()));
-		    	ELKASync.this.standortModel.setList(
-		    		prependIdentifierStandort(EStandort.getAll()));
+				ELKASync.this.adresseModel.setList(
+			    		prependIdentifierAdresse(EAdresse.getAll()));				
 		        ELKASync.this.rowCount.setText(String.valueOf(
 		        	ELKASync.this.adresseModel.getRowCount()));
 	        	ELKASync.this.dbTable.setModel(
@@ -200,44 +184,74 @@ public class ELKASync extends AbstractModul {
                     selection.addItem(entity);
                 }
             }
-            selection.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String item = (String) selection.getSelectedItem();
-                    if (item.equals("Abwasserbehandlungsanlagen")) {
-                    	ELKASync.this.dbTable.setModel(
-                    		ELKASync.this.abwasserbehandlungModel);
-                    }
-                    else if (item.equals("Anfallstellen")) {
-                    	ELKASync.this.dbTable.setModel(
-                        		ELKASync.this.anfallstelleModel);
-                    }
-                    else if (item.equals("Betriebe")) {
-                    	ELKASync.this.dbTable.setModel(
-                        		ELKASync.this.betriebModel);
-                    }
-                    else if (item.equals("Einleitungsstellen")) {
-                    	ELKASync.this.dbTable.setModel(
-                        		ELKASync.this.einleitungsstelleModel);
-                    }
-                    else if (item.equals("Messstellen")) {
-                    	ELKASync.this.dbTable.setModel(
-                        		ELKASync.this.messstelleModel);
-                    }
-                    else if (item.equals("Adressen")) {
-                    	ELKASync.this.dbTable.setModel(
-                        		ELKASync.this.adresseModel);
-                    }
-                    else if (item.equals("Standorte")) {
-                    	ELKASync.this.dbTable.setModel(
-                        		ELKASync.this.standortModel);
-                    }
-                    ELKASync.this.rowCount.setText(String
-                        .valueOf(ELKASync.this.dbTable.getRowCount()));
-                    progress.setValue(0);
-                    ELKASync.this.progressCounter.setText("-/-");
-                }
-            });
+			selection.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					SwingWorkerVariant worker = new SwingWorkerVariant(
+							selection) {
+						@Override
+						protected void doUIUpdateLogic()
+								throws RuntimeException {
+							// TODO Auto-generated method stub
+						}
+						@Override
+						protected void doNonUILogic() throws RuntimeException {
+							String item = (String) selection.getSelectedItem();
+							if (item.equals("Abwasserbehandlungsanlagen")) {
+								ELKASync.this.dbTable
+										.setModel(ELKASync.this.abwasserbehandlungModel);
+						    	ELKASync.this.abwasserbehandlungModel.setList(
+							    		prependIdentifierAbwasserbehandlungsanlage(
+							    			EAbwasserbehandlungsanlage.getAll()));
+						    	ELKASync.this.abwasserbehandlungModel.fireTableDataChanged();
+							} else if (item.equals("Anfallstellen")) {
+								ELKASync.this.dbTable
+										.setModel(ELKASync.this.anfallstelleModel);
+						    	ELKASync.this.anfallstelleModel.setList(
+							    		prependIdentifierAnfallstelle(EAnfallstelle.getAll()));
+						    	ELKASync.this.anfallstelleModel.fireTableDataChanged();
+							} else if (item.equals("Betriebe")) {
+								ELKASync.this.dbTable
+										.setModel(ELKASync.this.betriebModel);
+						    	ELKASync.this.betriebModel.setList(
+							    		prependIdentifierBetrieb(EBetrieb.getAll()));
+						    	ELKASync.this.betriebModel.fireTableDataChanged();
+							} else if (item.equals("Einleitungsstellen")) {
+								ELKASync.this.dbTable
+										.setModel(ELKASync.this.einleitungsstelleModel);
+						    	ELKASync.this.einleitungsstelleModel.setList(
+							    		prependIdentifierEinleitungsstelle(
+							    			EEinleitungsstelle.getAll()));
+						    	ELKASync.this.einleitungsstelleModel.fireTableDataChanged();
+							} else if (item.equals("Messstellen")) {
+								ELKASync.this.dbTable
+										.setModel(ELKASync.this.messstelleModel);
+						    	ELKASync.this.messstelleModel.setList(
+							    		prependIdentifierMessstelle(EMessstelle.getAll()));
+								ELKASync.this.messstelleModel.fireTableDataChanged();
+							} else if (item.equals("Adressen")) {
+								ELKASync.this.dbTable
+										.setModel(ELKASync.this.adresseModel);
+						    	ELKASync.this.adresseModel.setList(
+							    		prependIdentifierAdresse(EAdresse.getAll()));
+						    	ELKASync.this.adresseModel.fireTableDataChanged();
+							} else if (item.equals("Standorte")) {
+								ELKASync.this.dbTable
+										.setModel(ELKASync.this.standortModel);
+						    	ELKASync.this.standortModel.setList(
+							    		prependIdentifierStandort(EStandort.getAll()));
+						    	ELKASync.this.standortModel.fireTableDataChanged();
+							}
+							ELKASync.this.rowCount.setText(String
+									.valueOf(ELKASync.this.dbTable
+											.getRowCount()));
+							progress.setValue(0);
+							ELKASync.this.progressCounter.setText("-/-");
+						}
+					};
+					worker.start();
+				}
+			});
 
             final JButton commitEntries = new JButton("gewählte Einträge übertragen");
             commitEntries.addActionListener(new ActionListener() {
