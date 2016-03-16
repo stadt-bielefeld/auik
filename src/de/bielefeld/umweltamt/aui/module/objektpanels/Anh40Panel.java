@@ -83,7 +83,6 @@ public class Anh40Panel extends JPanel {
     private JTextField sachbearbeiterheepenFeld = null;
     private JTextField klaeranlageFeld = null;
     private JTextField herkunftsbereichFeld = null;
-    private JTextField prioritaetFeld = null;
     private JCheckBox wsgCheck = null;
     private JCheckBox genehmigungspflichtCheck = null;
     private JCheckBox nachtragCheck = null;
@@ -111,7 +110,7 @@ public class Anh40Panel extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-            "r:100dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 100dlu", // Spalten
+            "r:120dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 100dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
@@ -133,16 +132,15 @@ public class Anh40Panel extends JPanel {
         builder.append("Genehmigung §59:", getGen59Datum());
         builder.nextLine();
         builder.append("Kläranlage:", getKlaeranlageFeld());
-        builder.append("Priorität:", getPrioritaetFeld());
-        builder.nextLine();
-        builder.append("Abwassermenge genehmigt:", getAbwmengegenehmigtFeld());
         builder.append("", getNachtragCheck());
         builder.nextLine();
-        builder.append("Abwassermenge produktionsspez.:",
-            getAbwmengeprodspezFeld());
+        builder.append("Abwassermenge genehmigt [m³/a]:", getAbwmengegenehmigtFeld());
         builder.append("", getBimschCheck());
         builder.nextLine();
-        builder.append("Abwassermenge gesamt:", getAbwmengegesamtFeld());
+        builder.append("Abwassermenge prod.-spez. [m³/a]:",
+            getAbwmengeprodspezFeld());
+        builder.nextLine();
+        builder.append("Abwassermenge gesamt [m³/a]:", getAbwmengegesamtFeld());
         builder.nextLine();
         builder.appendSeparator("Bemerkungen");
         builder.appendRow("3dlu");
@@ -463,7 +461,7 @@ public class Anh40Panel extends JPanel {
 
     private JTextField getHerkunftsbereichFeld() {
         if (this.herkunftsbereichFeld == null) {
-            this.herkunftsbereichFeld = new IntegerField();
+            this.herkunftsbereichFeld = new LimitedTextField(50);
         }
         return this.herkunftsbereichFeld;
     }
@@ -536,13 +534,6 @@ public class Anh40Panel extends JPanel {
             this.klaeranlageFeld = new LimitedTextField(50);
         }
         return this.klaeranlageFeld;
-    }
-
-    private JTextField getPrioritaetFeld() {
-        if (this.prioritaetFeld == null) {
-            this.prioritaetFeld = new IntegerField();
-        }
-        return this.prioritaetFeld;
     }
 
     private JTable getObjektverknuepungTabelle() {
