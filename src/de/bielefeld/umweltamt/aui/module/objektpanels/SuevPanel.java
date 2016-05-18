@@ -98,7 +98,7 @@ public class SuevPanel extends JPanel {
     private AnhSuevFachdaten fachdaten = null;
 
     public SuevPanel(BasisObjektBearbeiten hauptModul) {
-        this.name = "Suev-Kan Verfahren";
+        this.name = "SüwVO-Abw-Teil1";
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(

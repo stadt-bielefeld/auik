@@ -383,7 +383,7 @@ public class VawsEditor extends AbstractBaseEditor {
 //        subHeader = new JLabel(" ", JLabel.LEFT);
 //        subHeader.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
-        hnrFeld = new LimitedTextField(25);
+        hnrFeld = new LimitedTextField(100);
 
         fluessigkeitBox = new JComboBox(DatabaseQuery.getVawsFluessigkeiten());
         fluessigkeitBox.setEditable(true);
@@ -419,7 +419,7 @@ public class VawsEditor extends AbstractBaseEditor {
         materialBox = new JComboBox(DatabaseQuery.getVawsMaterialien());
         // TODO: Material-Box editable / Tabelleninhalt?
         materialBox.setEditable(true);
-        bemerkungArea = new LimitedTextArea(255);
+        bemerkungArea = new LimitedTextArea(1000);
 
         // Daten für die Anlagenchronologie-Tabelle:
         anlagenChronoModel = new VawsAnlagenChronoModel();
