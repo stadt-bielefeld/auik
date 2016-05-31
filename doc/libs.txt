@@ -1,195 +1,132 @@
-dataadapterapi.jar
-------------------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
+antlr-2.7.7.jar
+------------------------
+- http://www.antlr2.org
+- ANTLR License
+- Abhängigkeit von hibernate5
 
-odadesignapi.jar
-----------------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
+aopalliance-repackaged-2.4.0-b34.jar
+------------------------------------
+- http://aopalliance.sourceforge.net/
+- Public Domain
+- Abhängigkeit von Jersey
 
-crosstabcoreapi.jar
--------------------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
-
-coreapi.jar
+asm-5.1.jar
 -----------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
+- http://asm.ow2.org/index.html
+- BSD License
 
-dteapi.jar
-----------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
+asm-debug-all-5.1.jar
+-----------------------
+- http://asm.ow2.org/index.html
+- BSD License
+- Abhängig von jersey 2.22.2
 
-flute.jar
----------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
-
-dataextraction.jar
-------------------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
-
-dataaggregationapi.jar
-----------------------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
-
-modelodaapi.jar
----------------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
-
-chartengineapi.jar
-------------------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
-
-scriptapi.jar
--------------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
-
-engineapi.jar
--------------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
-
-modelapi.jar
-------------
-- http://www.eclipse.org/birt/phoenix/intro/index.php
-- eine Abhängigkeit von BIRT
-
-groovy-all-1.7.5.jar
---------------------
-- http://groovy.codehaus.org/
+axis.jar
+--------
+- http://axis.apache.org/axis2/java/core/index.html
 - Apache License v2.0
 
-postgresql-8.3-605.jdbc3.jar
-----------------------------
-- http://jdbc.postgresql.org/
-- BSD License
+axis-wsdl4j-1.5.1.jar
+---------------------
+- http://axis.apache.org/axis2/java/core/index.html
+- Apache License v2.0
 
-pg74.215.jdbc3.jar
-------------------
-- http://jdbc.postgresql.org/
-- BSD License
-- ENTFERNEN ?
+c3p0-0.5.2.jar
+--------------
+- http://sourceforge.net/projects/c3p0/
+- LGPL v2.1
+- Abhängikeit von hibernate5
 
-proxool-0.8.3.jar
------------------
-- http://proxool.sourceforge.net/
-- Proxool-License
+cglib-3.2.2.jar
+--------------
+- http://cglib.sourceforge.net/
+- Apache License v2.0
 
-jasperreports-3.7.6.jar
------------------------
-- http://jasperforge.org/projects/jasperreports
-- LGPL v3
-
-jasperreports-fonts-3.7.6.jar
------------------------------
-- http://jasperforge.org/projects/jasperreports
-- LGPL v3
-
-jdbc2_0-stdext.jar
-------------------
-- SUN License
-
-jfreechart-1.0.0-pre2.jar
+com.jgoodies.uif_lite.jar
 -------------------------
-- http://jfree.org
-- LGPL
+- http://www.jgoodies.com
+- BSD License
+ 
+commons-beanutils-1.9.2.jar
+---------------------------
+- http://commons.apache.org/proper/commons-beanutils/
+- Apache License v2.0
 
-jcommon-1.0.0-pre2.jar
+commons-cli-1.3.1.jar
+---------------------
+- http://commons.apache.org/cli/
+- Apache License v2.0
+
+commons-codec-1.10.jar
 ----------------------
-- http://jfree.org
-- LGPL
+- http://commons.apache.org/codec/
+- Apache License v2.0
 
-antlr-2.7.6.jar
----------------
-- http://www.antlr2.org/
-- ANTLR License
+commons-collections4-4.1.jar
+----------------------------
+- http://commons.apache.org/collections/
+- Apache License v2.0
+
+commons-digester1.7.jar
+-------------------------
+- http://commons.apache.org/digester/
+- Apache License v2.0
+- Aktuelle Version ist 3.3.2, Update wegen Jasperreports nicht möglich
+
+commons-discovery-0.5.jar
+-------------------------
+- http://commons.apache.org/proper/commons-discovery
+- Apache License v2.0
+
+commons-logging-1.2.jar
+-----------------------
+- http://commons.apache.org/logging/
+- Apache License v2.0
+
+concurrent-1.3.4.jar
+--------------------
+- http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html
+- Technology License from SUN to DOUG LEA
+
+connector.jar
+-------------
 
 dom4j-1.6.1.jar
 ---------------
 - http://dom4j.sourceforge.net/dom4j-1.6.1
 - BSD License
 
-jta.jar
--------
-- Somewhere at orcale.com
-- Lizenz nicht ganz klar, da die Version nicht bestimmt werden
-  kann, wahrscheinlich aber CDDL 1.0
+ehcache-3.0.0.jar
+-----------------
+- http://ehcache.org
+- Apache License v2.0
 
-cglib-2.1.3.jar
+forms-1.0.5.jar
 ---------------
-- http://cglib.sourceforge.net/
+- http://www.jgoodies.com
+- BSD License
+- Aktuelle Version nicht mehr unter freier Lizenz verfügbar
+
+groovy-2.4.6.jar 
+------------
+- http://www.groovy-lang.org/
 - Apache License v2.0
 
-concurrent-1.3.2.jar
---------------------
-- http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html
-- Technology License from SUN to DOUG LEA
+hibernate5
+----------
+- www.hibernate.org
+- LGPL v2.1
 
-commons-digester-1.7.jar
-------------------------
-- http://commons.apache.org/digester/
-- Apache License v2.0
+hk2 2.4
+-------
+- https://hk2.java.net/2.5.0-b04/
+- CDDL v1.1 + GPL v2
+- Abhängigkeit von jersey 2.22.2 
 
-commons-collections-2.1.1.jar
------------------------------
-- http://commons.apache.org/collections/
-- Apache License v2.0
-
-commons-cli-1.0.jar
--------------------
-- http://commons.apache.org/cli/
-- Apache License v2.0
-
-commons-codec-1.3.jar
----------------------
-- http://commons.apache.org/codec/
-- Apache License v2.0
-- DOPPELT ?
-
-org.apache.commons.codec_1.3.0.v20080530-1600.jar
--------------------------------------------------
-- http://commons.apache.org/codec/
-- Apache License v2.0
-- DOPPELT ?
-
-commons-beanutils-1.8.0.jar
----------------------------
-- http://commons.apache.org/beanutils/
-- Apache License v2.0
-
-org.eclipse.emf.ecore_2.4.2.v200902171115.jar
----------------------------------------------
-- http://www.eclipse.org
-- Eclipse Public License v1.0
-
-org.eclipse.emf.common_2.4.0.v200902171115.jar
-----------------------------------------------
-- http://www.eclipse.org
-- Eclipse Public License v1.0
-
-org.eclipse.emf.ecore.xmi_2.4.1.v200902171115.jar
--------------------------------------------------
-- http://www.eclipse.org
-- Eclipse Public License v1.0
-
-commons-logging-1.0.4.jar
--------------------------
-- http://commons.apache.org/logging/
-- Apache License v2.0
-
-log4j-1.2.11.jar
-----------------
-- http://logging.apache.org/log4j/
-- Apache License v2.0
+icu4j-57_1.jar
+--------------
+- http://site.icu-project.org/
+- ICU License - ICU 1.8.1 and later
 
 iText-2.1.7.jar
 ---------------
@@ -197,100 +134,138 @@ iText-2.1.7.jar
 - AGPL
 - XXX NICHT FÜR KOMMERZIELLE ZWECKE
 
+Jackson 2.7
+-----------
+- https://github.com/FasterXML/jackson
+- Apache License v2.0
+
+Jasperreports 6.2.2
+-----------------------
+- http://community.jaspersoft.com/
+- LGPL 3
+
+javassist-3.18.1-GA.jar
+-----------------------
+- http://jboss-javassist.github.io/javassist/
+- MPL v1.1, LGPL v2.1, Apache License v2.0
+- Abhängigkeit von hibernate5 und jersey 2.22.2
+
+javax.annotation-api-1.2.jar
+----------------------------
+- Abhängigkeit von jersey 2.22.2
+
+javax.inject-2.4.0-b34.jar
+--------------------------
+- Abhängigkeit von jersey 2.22.2
+
+javax.servlet-api-3.0.1.jar
+---------------------------
+- Abhängigkeit von jersey 2.22.2
+
+javax.ws.rs-api-2.0-m02.jar
+--------------------------
+- Abhängigkeit von jersey 2.22.2
+
+jaxb-api-2.2.7.jar
+------------------
+- Abhängigkeit von jersey 2.22.2
+
+jaxrpc.jar
+----------
+
+jboss-logging-3.3.0.Final.jar
+-----------------------------
+- https://developer.jboss.org/welcome
+- Apache License v2.0
+- Abhängigkeit von hibernate5
+
+jcalendar.jar
+-----------------
+- http://toedter.com/jcalendar/
+- LGPL v2.1
+
+jcommon-1.0.23.jar
+------------------
+- http://free.org
+- LGPL
+
+jdbc2_0-stdext.jar
+------------------
+- SUN License
+
+jersey-2.22.2
+-------------
+- CDDL Version 1.1, GPL V2
+- https://jersey.java.net/
+
+jfreechart-1.0.19.jar
+---------------------
+- http://free.org
+- LGPL
+
+jta.jar
+-------
+- Somewhere at orcale.com
+- Lizenz nicht ganz klar, da die Version nicht bestimmt werden
+  kann, wahrscheinlich aber CDDL 1.0
+
+junit-4.12.jar
+--------------
+- http://junit.org
+- Eclipse Public License v1.0
+
 l2fprod-common-all.jar
 ----------------------
 - http://www.l2fprod.com/common/index.php
 - Apache License v2.0
 
-org.w3c.css.sac_1.3.0.v200805290154.jar
----------------------------------------
-- http://www.w3.org/Style/CSS/SAC/
-- Sac 1.3 License
-
-sac.jar
--------
-- http://www.w3.org/Style/CSS/SAC/
-- Sac 1.3 License
-
-c3p0-0.9.0.jar
---------------
-- http://sourceforge.net/projects/c3p0/
-- LGPL v2.1
-
-js.jar
-------
-- http://www.mozilla.org/rhino
-- MPL v1.1 oder GPL v2
-
-ehcache-1.2.3.jar
------------------
-- http://ehcache.org
-- Apache License v2
-
-jcalendar.jar
--------------
-- http://www.toedter.com/en/jcalendar/index.html
-- LGPL v2.1
-
-hibernate3.jar
---------------
-- http://www.hibernate.org
-- LGPL v2.1
-
-hibernate-tools.jar
--------------------
-- http://www.hibernate.org
-- LGPL v2.1
-
-forms-1.0.5.jar
----------------
-- http://www.jgoodies.com
-- BSD License
+log4j2 - 2.5
+------------
+- http://logging.apache.org/log4j/
+- Apache License v2.0
 
 looks-1.2.2.jar
 ---------------
 - http://www.jgoodies.com
 - BSD License
+- Aktuelle Version nicht unter freier Lizenz verfügbar
 
-mysql-connector-java-5.0.5-bin.jar
-----------------------------------
+lucene 4.10
+-----------
+- https://lucene.apache.org/core/
+- Apache License 2.0
+- Abhängigkeit von hibernate5
 
-junit-3.8.1.jar
+oscache-2.4.jar
 ---------------
-- http://junit.org
-- Common Public License v1.0
+- http://www.opensymphony.com
+- The OpenSymphony Software License, Version 1.1, Apache License 2.0
 
-oscache-2.1.jar
----------------
-- http://www.opensymphony.com/oscache/
-- OpenSymphony Software License (derived from Apache License)
+persistence-api-1.0.jar
+-----------------------
+- Abhängigkeit von jersey 2.22.2
 
-freemarker.jar
---------------
-- http://freemarker.sourceforge.net/index.html
+postgresql-9.4.1208.jre7.jar
+-----------------------
+- https://jdbc.postgresql.org/
 - BSD License
 
-com.ibm.icu_3.8.1.v20080530.jar
--------------------------------
-- http://site.icu-project.org/
-- ICU License v1.8.1 and later
+proxool-0.9.1.jar
+-----------------
+- http://proxool.sourceforge.net/
+- Proxool-License
 
-connector.jar
--------------
-- somewhere at oracle.com
-- TODO
-
-asm-attrs.jar
--------------
-- somewhere at oracle.com
-- TODO
-
-asm.jar
+saci-1.3.jar
 -------
-- somewhere at oracle.com
-- TODO
+- http://www.w3.org/Style/CSS/SAC/
+- Sac 1.3 License
 
-xml-apis.jar
-------------
-- somewhere at oracle.com
-- TODO
+validation-api-1.1.0.Final.jar
+------------------------------
+- Abhängigkeit von jersey 2.22.2
+
+xml-apis-1.3.03.jar
+-------------------
+- Abhängigkeit von hibernate5
+
+

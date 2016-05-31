@@ -55,7 +55,7 @@ import junit.framework.TestCase;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 

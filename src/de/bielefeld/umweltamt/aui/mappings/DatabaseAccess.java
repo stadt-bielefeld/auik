@@ -35,6 +35,9 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.resource.transaction.spi.TransactionStatus; 
+
+
 
 import de.bielefeld.umweltamt.aui.DatabaseManager;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -575,7 +578,8 @@ public class DatabaseAccess
 		try
 		{
 			this.transaction.commit();
-			success = this.transaction.wasCommitted();
+			success = this.transaction.getStatus().isOneOf(TransactionStatus.COMMITTED);
+			//success = this.transaction.wasCommitted();
 		}
 		catch (HibernateException he)
 		{
@@ -624,7 +628,7 @@ public class DatabaseAccess
 		/* via message dialog */
 		GUIManager.getInstance().showErrorMessage(message, "DB-Fehler");
 		/* via stdout */
-		log.error(message + "\n" + exception.getMessage());
+		log.error(exception.getStackTrace().toString());
 
 		/* Hand the exception to the DatabaseManager */
 		DatabaseManager.getInstance().handleDBException(

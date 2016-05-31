@@ -232,7 +232,7 @@ public class HauptFrame extends JFrame {
         try {
             // Systemschriftarten benutzen
             UIManager.put(Options.USE_SYSTEM_FONTS_APP_KEY, Boolean.TRUE);
-            Options.setGlobalFontSizeHints(FontSizeHints.MIXED);
+           //TODO Options.setGlobalFontSizeHints(FontSizeHints.MIXED);
             Options.setUseSystemFonts(true);
 
             // Look & Feel umschalten

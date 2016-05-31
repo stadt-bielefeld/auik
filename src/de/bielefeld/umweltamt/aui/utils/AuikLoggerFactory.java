@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.spi.LoggerFactory;
+import org.apache.logging.log4j.core.LoggerContext;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 
@@ -40,12 +41,22 @@ public class AuikLoggerFactory implements LoggerFactory {
 	private static boolean needsToRunInit = true;
 
 	/**
+	 * Must be implemented for using log4j compatibility API
+	 * @return The new AuikLogger instance 
+	 */
+	@Override
+	public Logger makeNewLoggerInstance(LoggerContext context, String name){
+		if (AuikLoggerFactory.needsToRunInit) init();
+		return new AuikLogger(name);
+	
+	}
+	/**
 	 * Make sure we run {@link AuikLoggerFactory.init} and
 	 * create a new AuikLogger instance
 	 *
 	 * @return The new AuikLogger instance
 	 */
-	@Override
+	//@Override
 	public Logger makeNewLoggerInstance(String name) {
 		if (AuikLoggerFactory.needsToRunInit) init();
 		return new AuikLogger(name);
@@ -54,7 +65,7 @@ public class AuikLoggerFactory implements LoggerFactory {
 	/** Initialize the Logger with user specific log levels */
 	private static void init() {
 	    PropertyConfigurator.configure(
-	        AUIKataster.class.getResource("resources/config/log4j.properties"));
+			AUIKataster.class.getResource("resources/config/log4j2.properties"));
 		AuikLoggerFactory.setSpecialLogLevelsByUser();
 		// If we want to do some global formatting, it would go here.
 		needsToRunInit = false;
@@ -93,11 +104,12 @@ public class AuikLoggerFactory implements LoggerFactory {
     		 * %r - milliseconds from layout creation
     		 * %t - thread name
     		 */
-    		((PatternLayout) rootLogger.getAppender("stdout").getLayout())
+		//TODO:
+    		//((PatternLayout) rootLogger.getAppender("stdout").getLayout())
     				// milliseconds [thread] LEVEL class.method - message
 //    				.setConversionPattern("%6r [%16.-16t] %-5p %C{1}.%M - %m%n");
     				// milliseconds LEVEL class.method - message
-    				.setConversionPattern("%6r %-5p %C{1}.%M - %m%n");
+    		//TODO:		.setConversionPattern("%6r %-5p %C{1}.%M - %m%n");
     				// Buuh! Farbe geht nicht unter Windows...
 //    				.setConversionPattern("\u001b[2;31m%6r %-5p - %m%n\u001b[m");
 					// milliseconds LEVEL - message

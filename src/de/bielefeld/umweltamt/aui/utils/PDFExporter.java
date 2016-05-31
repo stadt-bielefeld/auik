@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Map;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -34,6 +35,9 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
+
+import org.hibernate.jdbc.Work;
+
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.SettingsManager;
@@ -54,7 +58,7 @@ public class PDFExporter {
 	private static final String DEFAULTPATHTOJASPER = "resources/reports/";
 	private static String CONFIGPATHTOJASPER = "";
 	private boolean externalTemplates = false;
-
+	private Connection connection = null;
 	/** Die Geb&uuml;hrenbescheid. */
 	public static final String BESCHEID = "gebuehrenbescheid.jasper";
 
@@ -328,16 +332,20 @@ public class PDFExporter {
 
 		try {
 			JasperPrint jprint = null;
-			Connection con = HibernateSessionFactory.currentSession()
-					.connection();
-			jprint = export(fields, inputStream, destination, con);
-			/*
-			 * With Hibernate 4:
-			 * HibernateSessionFactory.currentSession().doWork( new Work() {
-			 * public void execute(Connection connection) throws SQLException {
-			 * jprint = export(fields, inputStream, destination, connection); }
-			 * } );
-			 */
+			//Deprecated
+			//Connection con = HibernateSessionFactory.currentSession()
+			//		.connection(); 
+			//jprint = export(fields, inputStream, destination, con);
+			
+			// With Hibernate 4:
+			HibernateSessionFactory.currentSession().doWork( new Work() {
+			public void execute(Connection con) throws SQLException {
+			//jprint = export(fields, inputStream, destination, connection); }
+			connection = con;}
+			} );
+			 
+			jprint = export(fields, inputStream, destination, connection);
+			
 			return jprint;
 		} catch (JRException jre) {
 			jre.printStackTrace();

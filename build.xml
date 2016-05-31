@@ -430,5 +430,5 @@
             <test name="de.bielefeld.umweltamt.aui.utils.KommaDoubleTest" />
         </junit>
     </target>
-
+    
 </project>

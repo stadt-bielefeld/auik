@@ -720,15 +720,23 @@ public class BasisPanel extends JPanel {
 		getStandortToolBar().setEnabled(enabled);
 		getArtBox().setEnabled(enabled);
 		getSachbearbeiterBox().setEnabled(enabled);
-		if (DatabaseQuery.getCurrentSachbearbeiter() != null
-				|| this.hauptModul.getObjekt().getBasisSachbearbeiter()
-						.equals(DatabaseQuery.getCurrentSachbearbeiter())) {
-			getWiedervorlageDatum().setEnabled(enabled);
-		} else
-			getWiedervorlageDatum().setEnabled(false);
-		getInaktivBox().setEnabled(enabled);
-		getPrioritaetFeld().setEnabled(enabled);
-		getBeschreibungsArea().setEnabled(enabled);
+		//TODO: abfangen
+				
+		if (this.hauptModul.getObjekt() != null & this.hauptModul.getObjekt().getBasisSachbearbeiter() != null){	
+			log.debug("getObjekt: " + this.hauptModul.getObjekt());
+			log.debug("Sachbearbeiter: " + this.hauptModul.getObjekt().getBasisSachbearbeiter());
+	
+			if (DatabaseQuery.getCurrentSachbearbeiter() != null
+				|| this.hauptModul.getObjekt().getBasisSachbearbeiter().equals(DatabaseQuery.getCurrentSachbearbeiter())) {
+				getWiedervorlageDatum().setEnabled(enabled);
+			} else
+				getWiedervorlageDatum().setEnabled(false);
+			getInaktivBox().setEnabled(enabled);
+			getPrioritaetFeld().setEnabled(enabled);
+			getBeschreibungsArea().setEnabled(enabled);
+		}
+		else
+			log.debug("Objekt oder Sachbearbeiter null - Objekt: " + this.hauptModul.getObjekt() + ", Sachbearbeiter: " + this.hauptModul.getObjekt().getBasisSachbearbeiter());
 	}
 
     @Override
