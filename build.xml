@@ -138,7 +138,7 @@
     <!-- =================================================================== -->
     <!-- Create a jar archive and fill its manifest                          -->
     <!-- =================================================================== -->
-    <target name="dist" depends="compile,version"
+    <target name="dist" depends="compile"
         description="Create a jar archive">
         <mkdir dir="${dist}" />
         <!-- Set some properties for the manifest -->
@@ -147,7 +147,7 @@
             srcfile="${resources}/authors.txt" />
         <!-- echo message="${auik.authors}" / -->
         <jar
-            destfile="${dist}/AUIK.jar"
+            destfile="${dist}/${TODAY} AUIK.jar"
             basedir="${bin}"
             filesetmanifest="skip"
             update="true">
@@ -171,9 +171,9 @@
                 <attribute
                     name="Implementation-Title"
                     value="Anlagen- und Indirekteinleiter Kataster" />
-                <attribute
+                <!--<attribute
                     name="Implementation-Version"
-                    value="Version ${auik.version}" /> 
+                    value="Version ${auik.version}" /> --> 
                 <attribute
                     name="Implementation-Vendor"
                     value="Stadt Bielefeld und Intevation GmbH" />
@@ -186,125 +186,88 @@
                 <include name="**/*.jar" />
             </fileset>
             -->
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/c3p0-0.9.0.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-codec-1.3.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-collections-2.1.1.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-logging-1.0.4.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/concurrent-1.3.2.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/connector.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/dom4j-1.6.1.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/ehcache-1.2.3.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/hibernate3.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/jdbc2_0-stdext.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/log4j-1.2.11.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/oscache-2.1.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/proxool-0.8.3.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/xml-apis.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/forms-1.0.5.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/looks-1.2.2.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/l2fprod-common-all.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/jfreechart-1.0.0-pre2.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/jcommon-1.0.0-pre2.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/jcalendar.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/asm.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/asm-attrs.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/cglib-2.1.3.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/antlr-2.7.6.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/sac.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/jta.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/coreapi.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/dataadapterapi.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-cli-1.0.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/com.ibm.icu_3.8.1.v20080530.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/dteapi.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/engineapi.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/flute.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/js.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/mysql-connector-java-5.0.5-bin.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/modelapi.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/scriptapi.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/postgresql-8.3-605.jdbc3.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/jasperreports-5.0.0.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/jasperreports-fonts-5.0.0.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/chartengineapi.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/jaxrpc.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/axis.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-digester-1.7.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/iText-2.1.7.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/groovy-all-1.7.5.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-discovery-0.5.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/axis-wsdl4j-1.5.1.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/junit-4.10.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="${lib}/com.jgoodies.uif_lite.jar" />
-        </jar>
-        <copy file="${dist}/AUIK.jar" tofile="${dist}/${TODAY} AUIK.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/antlr-2.7.7.jar"/>
+	    <zipfileset excludes="META-INF/*.SF" src="${lib}/aopalliance-repackaged-2.4.0-b34.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/asm-5.1.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/asm-debug-all-5.1.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/axis.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/axis-wsdl4j-1.5.1.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/c3p0-0.9.5.2.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/cglib-3.2.2.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/com.jgoodies.uif_lite.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-beanutils-1.9.2.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-cli-1.3.1.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-codec-1.3.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-collections-3.2.2.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-digester-1.7.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-discovery-0.5.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/commons-logging-1.2.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/concurrent-1.3.4.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/connector.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/dom4j-1.6.1.jar"/>
+ 	    <zipfileset excludes="META-INF/*.SF" src="${lib}/ehcache-3.0.0.jar"/>
+     	    <zipfileset excludes="META-INF/*.SF" src="${lib}/forms-1.0.5.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/groovy-2.4.6.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/hibernate-commons-annotations-5.0.0.Final.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/hibernate-core-5.0.0.Final.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/hibernate-search-engine-5.4.0.Final.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/hibernate-search-orm-5.4.0.Final.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/hk2-api-2.4.0-b34.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/hk2-locator-2.4.0-b34.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/hk2-utils-2.4.0-b31.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/icu4j-57_1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/iText-2.1.7.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jackson-annotations-2.7.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jackson-core-2.7.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jackson-databind-2.7.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jackson-jaxrs-base-2.7.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jackson-jaxrs-json-provider-2.7.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jackson-module-jaxb-annotations-2.7.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jasperreports-6.2.2.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jasperreports-fonts-6.2.2.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/javassist-3.18.1-GA.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/javax.annotation-api-1.2.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/javax.inject-2.4.0-b34.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/javax.servlet-api-3.0.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/javax.ws.rs-api-2.0.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jaxb-api-2.2.7.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jaxrpc.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jboss-logging-3.3.0.Final.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jcalendar.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jcommon-1.0.23.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jdbc2_0-stdext.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jersey-client.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jersey-common.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jersey-container-servlet-core.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jersey-container-servlet.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jersey-entity-filtering-2.22.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jersey-guava-2.22.2.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jersey-media-jaxb.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jersey-media-json-jackson-2.22.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jersey-server.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jfreechart-1.0.19.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/jta.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/junit-4.10.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/l2fprod-common-all.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/log4j-1.2-api-2.5.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/log4j-api-2.5.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/log4j-core-2.5.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/looks-1.2.2.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/lucene-analyzers-common-4.10.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/lucene-core-4.10.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/org.osgi.core-4.2.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/oscache-2.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/osgi-resource-locator-1.0.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/persistence-api-1.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/postgresql-9.4.1208.jre7.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/proxool-0.9.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/sac-1.3.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/validation-api-1.1.0.Final.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib}/xml-apis-1.3.03.jar"/>    
+	</jar>
     </target>
     
-    <!-- =================================================================== -->
-    <!-- Alternativ creation of a jar archive                          -->
-    <!-- =================================================================== -->
-    <target name="create_run_jar">
-        <tstamp><format property="TODAY" pattern="yyyyMMdd" /></tstamp>
-        <jar destfile="X:/Applikationen/Anlagenkataster/AUIK/auik${TODAY}.jar">
-            <manifest>
-                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
-                <attribute name="Rsrc-Main-Class" value="de.bielefeld.umweltamt.aui.AUIKataster"/>
-                <attribute name="Class-Path" value="."/>
-                <attribute name="Rsrc-Class-Path" value="./ c3p0-0.9.0.jar commons-codec-1.3.jar commons-collections-2.1.1.jar commons-logging-1.0.4.jar concurrent-1.3.2.jar connector.jar dom4j-1.6.1.jar ehcache-1.2.3.jar hibernate3.jar jdbc2_0-stdext.jar log4j-1.2.11.jar oscache-2.1.jar proxool-0.8.3.jar xml-apis.jar forms-1.0.5.jar l2fprod-common-all.jar jfreechart-1.0.0-pre2.jar jcommon-1.0.0-pre2.jar jcalendar.jar asm.jar asm-attrs.jar cglib-2.1.3.jar antlr-2.7.6.jar sac.jar jta.jar coreapi.jar dataadapterapi.jar commons-cli-1.0.jar com.ibm.icu_3.8.1.v20080530.jar dteapi.jar engineapi.jar flute.jar js.jar modelapi.jar scriptapi.jar postgresql-8.3-605.jdbc3.jar chartengineapi.jar jaxrpc.jar axis.jar commons-digester-1.7.jar iText-2.1.7.jar groovy-all-1.7.5.jar commons-discovery-0.5.jar axis-wsdl4j-1.5.1.jar looks-1.2.2.jar com.jgoodies.uif_lite.jar jasperreports-5.0.0.jar jasperreports-fonts-5.0.0.jar"/>
-            </manifest>
-            <zipfileset src="jar-in-jar-loader.zip"/>
-            <fileset dir="${bin}"/>
-            <zipfileset dir="${lib}" includes="c3p0-0.9.0.jar"/>
-            <zipfileset dir="${lib}" includes="commons-codec-1.3.jar"/>
-            <zipfileset dir="${lib}" includes="commons-collections-2.1.1.jar"/>
-            <zipfileset dir="${lib}" includes="commons-logging-1.0.4.jar"/>
-            <zipfileset dir="${lib}" includes="concurrent-1.3.2.jar"/>
-            <zipfileset dir="${lib}" includes="connector.jar"/>
-            <zipfileset dir="${lib}" includes="dom4j-1.6.1.jar"/>
-            <zipfileset dir="${lib}" includes="ehcache-1.2.3.jar"/>
-            <zipfileset dir="${lib}" includes="hibernate3.jar"/>
-            <zipfileset dir="${lib}" includes="jdbc2_0-stdext.jar"/>
-            <zipfileset dir="${lib}" includes="log4j-1.2.11.jar"/>
-            <zipfileset dir="${lib}" includes="oscache-2.1.jar"/>
-            <zipfileset dir="${lib}" includes="proxool-0.8.3.jar"/>
-            <zipfileset dir="${lib}" includes="xml-apis.jar"/>
-            <zipfileset dir="${lib}" includes="forms-1.0.5.jar"/>
-            <zipfileset dir="${lib}" includes="l2fprod-common-all.jar"/>
-            <zipfileset dir="${lib}" includes="jfreechart-1.0.0-pre2.jar"/>
-            <zipfileset dir="${lib}" includes="jcommon-1.0.0-pre2.jar"/>
-            <zipfileset dir="${lib}" includes="jcalendar.jar"/>
-            <zipfileset dir="${lib}" includes="asm.jar"/>
-            <zipfileset dir="${lib}" includes="asm-attrs.jar"/>
-            <zipfileset dir="${lib}" includes="cglib-2.1.3.jar"/>
-            <zipfileset dir="${lib}" includes="antlr-2.7.6.jar"/>
-            <zipfileset dir="${lib}" includes="sac.jar"/>
-            <zipfileset dir="${lib}" includes="jta.jar"/>
-            <zipfileset dir="${lib}" includes="coreapi.jar"/>
-            <zipfileset dir="${lib}" includes="dataadapterapi.jar"/>
-            <zipfileset dir="${lib}" includes="commons-cli-1.0.jar"/>
-            <zipfileset dir="${lib}" includes="com.ibm.icu_3.8.1.v20080530.jar"/>
-            <zipfileset dir="${lib}" includes="dteapi.jar"/>
-            <zipfileset dir="${lib}" includes="engineapi.jar"/>
-            <zipfileset dir="${lib}" includes="flute.jar"/>
-            <zipfileset dir="${lib}" includes="js.jar"/>
-            <zipfileset dir="${lib}" includes="modelapi.jar"/>
-            <zipfileset dir="${lib}" includes="scriptapi.jar"/>
-            <zipfileset dir="${lib}" includes="postgresql-8.3-605.jdbc3.jar"/>
-            <zipfileset dir="${lib}" includes="chartengineapi.jar"/>
-            <zipfileset dir="${lib}" includes="jaxrpc.jar"/>
-            <zipfileset dir="${lib}" includes="axis.jar"/>
-            <zipfileset dir="${lib}" includes="commons-digester-1.7.jar"/>
-            <zipfileset dir="${lib}" includes="iText-2.1.7.jar"/>
-            <zipfileset dir="${lib}" includes="groovy-all-1.7.5.jar"/>
-            <zipfileset dir="${lib}" includes="commons-discovery-0.5.jar"/>
-            <zipfileset dir="${lib}" includes="axis-wsdl4j-1.5.1.jar"/>
-            <zipfileset dir="${lib}" includes="looks-1.2.2.jar"/>
-            <zipfileset dir="${lib}" includes="com.jgoodies.uif_lite.jar"/>
-            <zipfileset dir="${lib}" includes="jasperreports-5.0.0.jar"/>
-            <zipfileset dir="${lib}" includes="jasperreports-fonts-5.0.0.jar"/>
-        </jar>
-    </target>
-
     <!-- =================================================================== -->
     <!-- Clean up (${bin}, ${dist}, ${test})                                 -->
     <!-- =================================================================== -->
@@ -313,7 +276,10 @@
             documentation and the previous 'yyyy-MM-dd AUIK.jar's">
         <!-- delete dir="${bin}" / -->
         <delete file="${dist}/AUIK.jar" />
-        <delete file="${dist}/auik.properties" />
+        <delete>
+	    <fileset dir="${dist}/" includes="**/*AUIK.jar" />
+	</delete>
+	<delete file="${dist}/auik.properties" />
         <!-- delete file="${config}/generated/hibernate.cfg.xml" / -->
         <delete>
             <fileset dir="${src}/${gen.mappings}" includes="**/*.hbm.xml" />
@@ -351,7 +317,9 @@
     <!-- =================================================================== -->
     <target name="runjar" depends="dist"
         description="Run the application from the jar archive">
-        <java jar="${dist}/AUIK.jar" fork="true" />
+        <tstamp><format property="TODAY" pattern="yyyy-MM-dd" /></tstamp>
+ 
+	<java jar="${dist}/${TODAY} AUIK.jar" fork="true" />
     </target>
     
     <!-- =================================================================== -->

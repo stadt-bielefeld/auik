@@ -373,14 +373,17 @@ public class KlaerschlammAuswertung extends AbstractModul
 				{
 					if (seriesIndex < this.col1.getSeriesCount())
 					{
-						tmp = this.col1.getSeriesName(seriesIndex)
+						//TODO: key == seriesName?
+						//tmp = this.col1.getSeriesName(seriesIndex)
+						tmp = this.col1.getSeries(seriesIndex).getKey().toString()
 								+ ", "
 								+ this.col1.getSeries(seriesIndex)
 										.getRangeDescription();
 					}
 					else if (this.col2 != null)
 					{
-						tmp = this.col2.getSeriesName(series2Index)
+						//tmp = this.col2.getSeriesName(series2Index)
+						tmp = this.col2.getSeries(series2Index).getKey().toString()
 								+ ", "
 								+ this.col2.getSeries(series2Index)
 										.getRangeDescription();

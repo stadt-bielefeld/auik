@@ -179,8 +179,9 @@ public class Charts {
 
         // Den Renderer für die Messwerte/-linien anpassen
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
-        renderer.setDefaultShapesVisible(true);
-        renderer.setDefaultShapesFilled(true);
+        //TODO: defaultShapes == baseShapes?
+		renderer.setBaseShapesVisible(true);
+        renderer.setBaseShapesFilled(true);
         renderer.setToolTipGenerator(ttgen);
 
         // Die Datumsachse anpassen
@@ -297,8 +298,9 @@ public class Charts {
 
         // Den Renderer für die Messwerte/-linien der ersten Achse anpassen
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
-        renderer.setDefaultShapesVisible(true);
-        renderer.setDefaultShapesFilled(true);
+        //TODO: defaultShapes == baseShapes?
+		renderer.setBaseShapesVisible(true);
+        renderer.setBaseShapesFilled(true);
         renderer.setToolTipGenerator(ttgen);
         if (dataset1.getSeriesCount() == 1) {
             axis1.setLabelPaint(renderer.getSeriesPaint(0));
@@ -306,8 +308,9 @@ public class Charts {
 
         // Den Renderer für die Messwerte/-linien der zweiten Achse anpassen
         XYLineAndShapeRenderer renderer2 = (XYLineAndShapeRenderer) plot.getRenderer(1);
-        renderer2.setDefaultShapesVisible(true);
-        renderer2.setDefaultShapesFilled(true);
+        //TODO: defaultShapes == baseShapes?
+		renderer2.setBaseShapesVisible(true);
+        renderer2.setBaseShapesFilled(true);
         renderer2.setToolTipGenerator(ttgen);
         if (dataset2.getSeriesCount() == 1) {
             axis2.setLabelPaint(renderer2.getSeriesPaint(0));
@@ -354,9 +357,10 @@ class APosToolTipGenerator implements XYToolTipGenerator {
         APosDataItem it = (APosDataItem) ser.getItems().get(item);
         AtlAnalyseposition pos = it.getAnalysePosition();
         AtlProbenahmen probe = pos.getAtlProbenahmen();
-        return "<html>" +
+        //TODO: TimeSeries key == name?
+		return "<html>" +
                 "<b>"+it.getValue()+" "+pos.getAtlEinheiten()+"</b><br>" +
-                ser.getName() + "<br>" +
+                ser.getKey().toString() + "<br>" +
                 "Probe: <b>"+probe.getKennummer()+"</b>, "+AuikUtils.getStringFromDate(probe.getDatumDerEntnahme())+((probe.getZeitDerEntnahmen() != null) ?  " "+probe.getZeitDerEntnahmen().substring(0,5) : "")+"<br>" +
                 "</html>";
     }
