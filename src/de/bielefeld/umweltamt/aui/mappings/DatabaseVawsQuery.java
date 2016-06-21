@@ -202,7 +202,7 @@ abstract class DatabaseVawsQuery
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria.forClass(VawsAnlagenchrono.class)
 																	.add(Restrictions.eq("vawsFachdaten", fachdaten))
-																	.addOrder(Order.asc("datum"))
+																	.addOrder(Order.desc("datum"))
 																	.addOrder(Order.asc("wv")),
 															new VawsAnlagenchrono());
 	}

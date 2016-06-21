@@ -643,11 +643,19 @@ public class BasisBetreiberSuchen extends AbstractModul {
             });
 
             this.betreiberTabelle.getColumnModel().getColumn(0)
-                .setPreferredWidth(300);
+                .setPreferredWidth(200);
             this.betreiberTabelle.getColumnModel().getColumn(1)
                 .setPreferredWidth(60);
             this.betreiberTabelle.getColumnModel().getColumn(2)
                 .setPreferredWidth(70);
+            this.betreiberTabelle.getColumnModel().getColumn(3)
+            	.setPreferredWidth(70);
+            this.betreiberTabelle.getColumnModel().getColumn(4)
+            	.setPreferredWidth(70);
+            this.betreiberTabelle.getColumnModel().getColumn(5)
+        		.setPreferredWidth(70);
+            this.betreiberTabelle.getColumnModel().getColumn(6)
+            	.setPreferredWidth(30);
 
             this.betreiberTabelle
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

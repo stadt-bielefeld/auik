@@ -87,13 +87,16 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.uif_lite.component.Factory;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
@@ -158,6 +161,8 @@ public class VawsEditor extends AbstractBaseEditor {
     private LimitedTextArea bemerkungArea;
     private JTable anlagenChronoTabelle;
     private VawsAnlagenChronoModel anlagenChronoModel;
+	private JSplitPane tabellenSplit;
+	
     // Benötigt bei Lageranlagen & Rohrleitungen
     private JComboBox behaelterArtBox;
     private JComboBox materialBox;
@@ -255,7 +260,7 @@ public class VawsEditor extends AbstractBaseEditor {
     private JRadioButton neuErstelltCheck;
     private JRadioButton unbktCheck;
 
-    // Daten (Abfüllflächen)
+    // Daten (Fahrsilo)
     private JPanel datenFahrsiloTab;
     
     // Ausführung (Abfüllflächen)
@@ -1309,6 +1314,21 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getDatenVAWSAbscheiderTab() {
         if (datenVAWSAbscheiderTab == null) {
+
+			JScrollPane bemerkungScroller = new JScrollPane(
+					bemerkungArea,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        	
+			this.tabellenSplit = Factory.createStrippedSplitPane(
+					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
+					chronoScroller, 0.3);
+        	
+            
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g"
             );
@@ -1344,17 +1364,14 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append("", kompLFCheck);
             builder.nextLine();
 
-            builder.appendSeparator("Bemerkungen");
+            builder.appendSeparator("Bemerkungen und Anlagenchronologie");
             builder.appendRow("3dlu");
             builder.appendRow("fill:30dlu:grow");
             builder.nextLine(2);
-            builder.append(new JScrollPane(bemerkungArea),8);
 
-            builder.appendSeparator("Anlagen-Chronologie");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:40dlu:grow");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(anlagenChronoTabelle),8);
+            builder.append(this.tabellenSplit, 8);
+            
+
 
             datenVAWSAbscheiderTab = builder.getPanel();
         }
@@ -1447,6 +1464,21 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getDatenLageranlagenTab() {
         if (datenLageranlagenTab == null) {
+
+			JScrollPane bemerkungScroller = new JScrollPane(
+					bemerkungArea,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        	
+			this.tabellenSplit = Factory.createStrippedSplitPane(
+					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
+					chronoScroller, 0.3);
+        	
+            
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g"
             );
@@ -1474,17 +1506,13 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append("Stillegung:", stillegungChooser);
             builder.nextLine();
 
-            builder.appendSeparator("Bemerkungen");
+            builder.appendSeparator("Bemerkungen und Anlagenchronologie");
             builder.appendRow("3dlu");
             builder.appendRow("fill:30dlu:grow");
             builder.nextLine(2);
-            builder.append(new JScrollPane(bemerkungArea),8);
 
-            builder.appendSeparator("Anlagen-Chronologie");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:40dlu:grow");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(anlagenChronoTabelle),8);
+            builder.append(this.tabellenSplit, 8);
+            
 
             datenLageranlagenTab = builder.getPanel();
         }
@@ -1549,6 +1577,21 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getDatenRohrleitungenTab() {
         if (datenRohrleitungenTab == null) {
+
+			JScrollPane bemerkungScroller = new JScrollPane(
+					bemerkungArea,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        	
+			this.tabellenSplit = Factory.createStrippedSplitPane(
+					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
+					chronoScroller, 0.3);
+        	
+            
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, p, 10dlu, r:p, 3dlu, p, 0:g"
             );
@@ -1575,18 +1618,14 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append("Stillegung:", stillegungChooser);
             builder.nextLine();
 
-            builder.appendSeparator("Beschreibung der Rohrleitung:");
+            builder.appendSeparator("Bemerkungen und Anlagenchronologie");
             builder.appendRow("3dlu");
-            builder.appendRow("fill:25dlu:grow");
+            builder.appendRow("fill:30dlu:grow");
             builder.nextLine(2);
-            builder.append(new JScrollPane(bemerkungArea), 8);
-            builder.nextLine();
 
-            builder.appendSeparator("Anlagen-Chronologie");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:40dlu:grow");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(anlagenChronoTabelle), 8);
+            builder.append(this.tabellenSplit, 8);
+            
+
 
             datenRohrleitungenTab = builder.getPanel();
         }
@@ -1595,6 +1634,21 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getDatenAbfuellflaechenTab() {
         if (datenAbfuellflaechenTab == null) {
+
+			JScrollPane bemerkungScroller = new JScrollPane(
+					bemerkungArea,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        	
+			this.tabellenSplit = Factory.createStrippedSplitPane(
+					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
+					chronoScroller, 0.3);
+        	
+            
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
             );
@@ -1621,18 +1675,14 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append("", unbktCheck);
             builder.append("", svbCheck);
 
-            builder.appendSeparator("Beschreibung der Abfüllfläche");
+            builder.appendSeparator("Bemerkungen und Anlagenchronologie");
             builder.appendRow("3dlu");
-            builder.appendRow("fill:25dlu:grow(0.3)");
+            builder.appendRow("fill:30dlu:grow");
             builder.nextLine(2);
-            builder.append(new JScrollPane(bemerkungArea), 7);
-            builder.nextLine();
 
-            builder.appendSeparator("Anlagen-Chronologie");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:40dlu:grow");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(anlagenChronoTabelle),7);
+            builder.append(this.tabellenSplit, 7);
+            
+
 
             datenAbfuellflaechenTab = builder.getPanel();
         }
@@ -1641,6 +1691,21 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getDatenFahrsiloTab() {
         if (datenFahrsiloTab == null) {
+
+			JScrollPane bemerkungScroller = new JScrollPane(
+					bemerkungArea,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        	
+			this.tabellenSplit = Factory.createStrippedSplitPane(
+					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
+					chronoScroller, 0.3);
+        	
+            
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
             );
@@ -1671,18 +1736,14 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append("", unbktCheck);
             builder.append("", svbCheck);
 
-            builder.appendSeparator("Beschreibung der Abfüllfläche");
+            builder.appendSeparator("Bemerkungen und Anlagenchronologie");
             builder.appendRow("3dlu");
-            builder.appendRow("fill:25dlu:grow(0.3)");
+            builder.appendRow("fill:30dlu:grow");
             builder.nextLine(2);
-            builder.append(new JScrollPane(bemerkungArea), 7);
-            builder.nextLine();
 
-            builder.appendSeparator("Anlagen-Chronologie");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:40dlu:grow");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(anlagenChronoTabelle),7);
+            builder.append(this.tabellenSplit, 7);
+            
+
 
             datenFahrsiloTab = builder.getPanel();
         }

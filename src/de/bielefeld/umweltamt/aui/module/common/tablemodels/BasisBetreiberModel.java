@@ -41,14 +41,18 @@ public class BasisBetreiberModel extends ListTableModel {
         super(new String[]{
                 "Name",
                 "Anrede",
+                "Vorname",
                 "Zusatz",
+                "Ort",
                 "Straße"}, false, true);
 
         if (zeigeAdresse) {
             columns = new String[]{
                     "Name",
                     "Anrede",
+                    "Vorname",
                     "Zusatz",
+                    "Ort",
                     "Straße",
                     "Nr."
             };
@@ -89,12 +93,18 @@ public class BasisBetreiberModel extends ListTableModel {
                 value = betr.getBetranrede();
                 break;
             case 2:
-                value = betr.getBetrnamezus();
+                value = betr.getBetrvorname();
                 break;
             case 3:
-                value = betr.getStrasse();
+                value = betr.getBetrnamezus();
                 break;
             case 4:
+                value = betr.getOrt();
+                break;
+            case 5:
+                value = betr.getStrasse();
+                break;
+            case 6:
                 if (betr.getHausnrzus() != null) {
                     String tmp = betr.getHausnr() + betr.getHausnrzus();
                     value = tmp;

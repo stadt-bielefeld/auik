@@ -50,6 +50,7 @@ public class BasisStandortModel extends ListTableModel
 				"Ort",
 				"Entw.-Gebiet",
 				"Übersch.-Gebiet",
+				"Wasserschutzgebiet",
 				"VAwS-Gebiet" }, true, true);
 	}
 
@@ -123,7 +124,7 @@ public class BasisStandortModel extends ListTableModel
 	@Override
 	public Object getColumnValue(Object objectAtRow, int columnIndex)
 	{
-		Object value;
+		Object value = null;
 		BasisStandort bsta = (BasisStandort) objectAtRow;
 		switch (columnIndex)
 		{
@@ -172,6 +173,32 @@ public class BasisStandortModel extends ListTableModel
 				}
 				break;
 			case 6:
+				if (bsta.getVawsStandortgghwsg() != null)
+				{
+					Integer sggh = bsta.getVawsStandortgghwsg().getId();
+					if (sggh.equals(1))
+					{
+						value = new String("Zone I");
+					}
+					else if (sggh.equals(2))
+					{
+						value = new String("Zone II");
+					}
+					else if (sggh.equals(3))
+					{
+						value = new String("Zone III/III A");
+					}
+					else if (sggh.equals(4))
+					{
+						value = new String("Zone III B");
+					}
+				}
+				else
+				{
+					value = new String("");
+				}
+				break;
+			case 7:
 				value = bsta.getVawsWassereinzugsgebiete();
 				break;
 			default:
@@ -205,6 +232,8 @@ public class BasisStandortModel extends ListTableModel
 			case 5:
 				return Boolean.class;
 			case 6:
+				return String.class;
+			case 7:
 				return String.class;
 			default:
 				return null;
