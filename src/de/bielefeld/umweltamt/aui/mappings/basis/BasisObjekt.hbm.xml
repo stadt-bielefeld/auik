@@ -3,12 +3,9 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" table="basis_objekt" lazy="false" schema="auik">
-        <id name="objektid" type="java.lang.Integer">
-            <column name="objektid" />
-            <generator class="native">
-                <param name="sequence">auik.basis_objekt_objektid_seq</param>
-            </generator>
-        </id>
+	  <id name="objektid" type="java.lang.Integer" column="objektid" unsaved-value="0">
+	   <generator class="identity"/>
+	  </id>
         <many-to-one name="basisBetreiber" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber" fetch="select">
             <column name="betreiberid" />
         </many-to-one>

@@ -3,12 +3,9 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" table="vaws_fachdaten" lazy="false" schema="auik">
-        <id name="behaelterid" type="java.lang.Integer">
-            <column name="behaelterid" />
-            <generator class="native">
-                <param name="sequence">auik.vaws_fachdaten_behaelterid_seq</param>
-            </generator>
-        </id>
+	  <id name="behaelterid" type="java.lang.Integer" column="behaelterid" unsaved-value="0">
+	   <generator class="identity"/>
+	  </id>
         <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select" cascade="all">
             <column name="objektid" not-null="true" />
         </many-to-one>

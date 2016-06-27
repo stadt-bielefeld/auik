@@ -3,12 +3,9 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen" table="anh_49_analysen" schema="auik">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
-            <generator class="native">
-                <param name="sequence">auik.anh_49_analysen_id_seq</param>
-            </generator>
-        </id>
+	  <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+	   <generator class="identity"/>
+	  </id>
         <many-to-one name="anh49Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" fetch="select">
             <column name="anh49id" />
         </many-to-one>
