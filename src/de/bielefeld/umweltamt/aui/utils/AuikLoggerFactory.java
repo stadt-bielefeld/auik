@@ -65,7 +65,7 @@ public class AuikLoggerFactory implements LoggerFactory {
 	/** Initialize the Logger with user specific log levels */
 	private static void init() {
 	    PropertyConfigurator.configure(
-			AUIKataster.class.getResource("resources/config/log4j2.properties"));
+			AUIKataster.class.getResource("resources/config/log4j2.xml"));
 		AuikLoggerFactory.setSpecialLogLevelsByUser();
 		// If we want to do some global formatting, it would go here.
 		needsToRunInit = false;

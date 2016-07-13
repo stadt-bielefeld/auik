@@ -225,6 +225,11 @@
       <version>6.2.2</version>
     </dependency>
     <dependency>
+      <groupId>net.sf.jasperreports</groupId>
+      <artifactId>jasperreports-fonts</artifactId>
+      <version>6.0.0</version>
+	</dependency>
+    <dependency>
       <groupId>org.jfree</groupId>
       <artifactId>jfreechart</artifactId>
       <version>1.0.19</version>
@@ -408,7 +413,7 @@
     <repository>
       <id>repository.jboss.org-public</id>
       <name>JBoss.org Maven repository</name>
-      <url>https://repository.jboss.org/nexus/content/groups/public</url>
+      <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
     </repository>
   </repositories>  
 
@@ -426,7 +431,7 @@
 	  <resource>
 		<directory>src/de/bielefeld/umweltamt/aui/resources/config/</directory>
 	    <includes>
-		  <include>log4j2.properties</include>
+		  <include>log4j2.xml</include>
 		</includes>
 	  </resource>
      </resources>
@@ -550,5 +555,40 @@
 		</executions>		
       </plugin>
     </plugins>
+     <pluginManagement>
+     	<plugins>
+     		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+     		<plugin>
+     			<groupId>org.eclipse.m2e</groupId>
+     			<artifactId>lifecycle-mapping</artifactId>
+     			<version>1.0.0</version>
+     			<configuration>
+     				<lifecycleMappingMetadata>
+     					<pluginExecutions>
+     						<pluginExecution>
+     							<pluginExecutionFilter>
+     								<groupId>
+     									org.apache.maven.plugins
+     								</groupId>
+     								<artifactId>
+     									maven-install-plugin
+     								</artifactId>
+     								<versionRange>
+     									[2.5.1,)
+     								</versionRange>
+     								<goals>
+     									<goal>install-file</goal>
+     								</goals>
+     							</pluginExecutionFilter>
+     							<action>
+     								<ignore></ignore>
+     							</action>
+     						</pluginExecution>
+     					</pluginExecutions>
+     				</lifecycleMappingMetadata>
+     			</configuration>
+     		</plugin>
+     	</plugins>
+     </pluginManagement>
   </build>
 </project>
