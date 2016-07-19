@@ -29,8 +29,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -58,6 +61,7 @@ import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
@@ -75,6 +79,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 
 /**
  * Das "Probepunkt"-Tab des BasisObjektBearbeiten-Moduls
@@ -117,6 +122,7 @@ public class ProbepunktPanel extends JPanel {
     private JButton selectObjektButton = null;
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
+    private JButton printDeckblattButton = null;
 
     public ProbepunktPanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Probenahmepunkt";
@@ -195,7 +201,7 @@ public class ProbepunktPanel extends JPanel {
         builder.add(objektverknuepfungScroller, cc.xyw(1, 25, 6));
 
         JPanel buttonBarOv = ButtonBarFactory
-            .buildRightAlignedBar(getSelectObjektButton());
+            .buildRightAlignedBar(getPrintDeckblattButton(), getSelectObjektButton());
 
         builder.add(buttonBarOv, cc.xyw(1, 27, 6));
     }
@@ -776,5 +782,54 @@ public class ProbepunktPanel extends JPanel {
             });
         }
         return this.selectObjektButton;
+    }
+    
+    private JButton getPrintDeckblattButton() {
+        if (this.printDeckblattButton == null) {
+            this.printDeckblattButton = new JButton("Deckblatt drucken");
+
+            this.printDeckblattButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        showReport();
+                    } catch (Exception e1) {
+                        // TODO Auto-generated catch block
+                    }
+                }
+            });
+        }
+        return this.printDeckblattButton;
+    }
+    
+    public void showReport() {
+        if (hauptModul.getObjekt().getObjektid() != null) {
+            SettingsManager sm = SettingsManager.getInstance();
+            String fotoPath = sm.getSetting("auik.system.probepktpath_fotos");
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("id", hauptModul.getObjekt().getObjektid());
+            String file = fotoPath + hauptModul.getObjekt().getObjektid() + ".jpg";
+
+            String id=hauptModul.getObjekt().getObjektid().toString();
+            if (id != null
+                    && new File(file).canRead()) {
+                params.put("foto", new String(fotoPath + id + ".jpg"));
+            } else {
+                params.put("foto", new String(fotoPath + "kein_foto.jpg"));
+            }
+            try {
+                File pdfFile = File.createTempFile(id, ".pdf");
+                pdfFile.deleteOnExit();
+                PDFExporter.getInstance().exportReport(params,
+                        PDFExporter.HANDAKTE_DECKBLATT, pdfFile.getAbsolutePath());
+            } catch (Exception ex) {
+                GUIManager.getInstance().showErrorMessage(
+                        "PDF generieren fehlgeschlagen."
+                        + "\n" + ex.getLocalizedMessage(),
+                        "PDF generieren fehlgeschlagen");
+            }
+        } else {
+            log.debug("Dem zu druckenden Probenahmepunkt fehlen Eingaben!");
+        }
     }
 }

@@ -83,6 +83,9 @@ public class PDFExporter {
 	/** VAwS-StandortListe. */
 	public static final String SUEV_LISTE = "suevkan.jasper";
 
+	/** VAwS-StandortListe. */
+	public static final String HANDAKTE_DECKBLATT = "deckblatt_handakte.jasper";
+
 	/**
 	 * Dieser Konstruktor soll nicht aufgerufen werden, um zu verhindern, dass
 	 * mehr als nur eine Instanz dieser Klasse erstellt wird. Stattdessen soll

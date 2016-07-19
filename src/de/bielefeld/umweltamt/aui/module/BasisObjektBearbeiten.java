@@ -125,6 +125,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.Anh56Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.BWKPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.BasisPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ChronoPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.FotoPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.GenehmigungPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepktAuswPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepunktPanel;
@@ -165,6 +166,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private Anh55Panel anhang55Tab;
     private Anh56Panel anhang56Tab;
     private ChronoPanel chronoTab;
+    private FotoPanel fotoTab;
     private GenehmigungPanel genehmigungTab;
     private VawsPanel vawsTab;
 
@@ -387,6 +389,13 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return chronoTab;
     }
 
+    public FotoPanel getFotoTab() {
+
+        fotoTab = new FotoPanel(this);
+        
+        return fotoTab;
+    }
+
     public GenehmigungPanel getGenehmigungTab() {
         if (genehmigungTab == null) {
             genehmigungTab = new GenehmigungPanel(this);
@@ -529,6 +538,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                 DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34)) {
                                 getChronoTab().fetchFormData();
                                 getVawsTab().fetchFormData();
+                                getFotoTab();
                             } else if (objekt.getBasisObjektarten().getAbteilung().equals(
                                 DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_33)) {
                                 getChronoTab().fetchFormData();
@@ -564,6 +574,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                                 getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                 getTabbedPane().addTab(getProbepunktTab().getName(), getProbepunktTab());
+                                getTabbedPane().addTab(getFotoTab().getName(), getFotoTab());
                                 getTabbedPane().addTab(getProbepktAuswTab().getName(), getProbepktAuswTab());
                                 getChronoTab().updateForm();
                                 getProbepunktTab().updateForm();
@@ -669,6 +680,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                     DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34)) {
                                     getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                     getTabbedPane().addTab(getVawsTab().getName(), getVawsTab());
+                                    getTabbedPane().addTab(getFotoTab().getName(), getFotoTab());
                                     getChronoTab().updateForm();
                                     getVawsTab().updateForm();
                                     getTabbedPane().setSelectedComponent(getVawsTab());

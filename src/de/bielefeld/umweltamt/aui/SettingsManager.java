@@ -201,10 +201,12 @@ public class SettingsManager {
 				"X:/Applikationen/Anlagenkataster/Sielhaut/fotos/");
 		appSettings.setProperty("auik.system.spath_karten",
 				"X:/Applikationen/Anlagenkataster/Sielhaut/karten/");
+		appSettings.setProperty("auik.system.probepktpath_fotos",
+				"X:/Applikationen/Anlagenkataster/Fotos/");
 		appSettings.setProperty("auik.gis.programmpath",
 				"C:\\appz\\qgis\\bin\\qgis.bat.lnk");
 		appSettings.setProperty("auik.gis.projectpath",
-				"D:\\\\data\\qgis\\MyProject.qgs");
+				"D:\\data\\qgis\\MyProject.qgs");
 		appSettings.setProperty("auik.probenahme.auftraege",
 				"D:\\Data\\auik\\auftraege");
 		appSettings
