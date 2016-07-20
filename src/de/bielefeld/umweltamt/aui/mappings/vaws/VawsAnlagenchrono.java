@@ -51,6 +51,7 @@ public class VawsAnlagenchrono  implements java.io.Serializable {
     private Date wv;
     private boolean enabled;
     private boolean deleted;
+    private Boolean abgeschlossen;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -70,13 +71,14 @@ public class VawsAnlagenchrono  implements java.io.Serializable {
 
     /** Full constructor */
     public VawsAnlagenchrono(
-        VawsFachdaten vawsFachdaten, Date datum, String sachverhalt, Date wv, boolean enabled, boolean deleted) {
+        VawsFachdaten vawsFachdaten, Date datum, String sachverhalt, Date wv, boolean enabled, boolean deleted, Boolean abgeschlossen) {
         this.vawsFachdaten = vawsFachdaten;
         this.datum = datum;
         this.sachverhalt = sachverhalt;
         this.wv = wv;
         this.enabled = enabled;
         this.deleted = deleted;
+        this.abgeschlossen = abgeschlossen;
     }
 
     /* Setter and getter methods */
@@ -136,6 +138,14 @@ public class VawsAnlagenchrono  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
+    public Boolean getAbgeschlossen() {
+        return this.abgeschlossen;
+    }
+
+    public void setAbgeschlossen(Boolean abgeschlossen) {
+        this.abgeschlossen = abgeschlossen;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -162,6 +172,7 @@ public class VawsAnlagenchrono  implements java.io.Serializable {
         buffer.append("wv").append("='").append(getWv()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("abgeschlossen").append("='").append(getAbgeschlossen()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -233,6 +244,7 @@ public class VawsAnlagenchrono  implements java.io.Serializable {
         this.wv = copy.getWv();
         this.enabled = copy.isEnabled();
         this.deleted = copy.isDeleted();
+        this.abgeschlossen = copy.getAbgeschlossen();
     }
 
     /**

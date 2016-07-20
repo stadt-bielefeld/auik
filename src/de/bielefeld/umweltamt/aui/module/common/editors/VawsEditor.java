@@ -432,6 +432,7 @@ public class VawsEditor extends AbstractBaseEditor {
         anlagenChronoTabelle.getColumnModel().getColumn(0).setPreferredWidth(50);
         anlagenChronoTabelle.getColumnModel().getColumn(1).setPreferredWidth(250);
         anlagenChronoTabelle.getColumnModel().getColumn(2).setPreferredWidth(50);
+        anlagenChronoTabelle.getColumnModel().getColumn(3).setPreferredWidth(50);
 
         anlagenChronoTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -1860,7 +1861,8 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
         super(new String[]{
                 "Datum",
                 "Sachverhalt",
-                "Wiedervorlage"
+                "Wiedervorlage",
+                "abgeschl."
         },
         false, true);
         geloeschte = new ArrayList<VawsAnlagenchrono>();
@@ -1882,7 +1884,10 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
     @Override
     public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
         VawsAnlagenchrono chrono = (VawsAnlagenchrono) objectAtRow;
-        String tmp = (String) newValue;
+        String tmp = "";
+        if (newValue instanceof String) {
+            tmp = (String) newValue;
+        }
 
         DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
 
@@ -1913,6 +1918,10 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
                     //.changeStatus("Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!", HauptFrame.ERROR_COLOR);
                 }
             }
+            break;
+        case 3:
+            Boolean tmpB = (Boolean) newValue;
+            chrono.setAbgeschlossen(tmpB.booleanValue());
             break;
 
         default:
@@ -1962,6 +1971,10 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
         case 2:
             tmp = AuikUtils.getStringFromDate(ac.getWv());
             break;
+        // Verfahren abgeschlossen?:
+        case 3:
+            tmp = new Boolean(ac.getAbgeschlossen());
+            break;
 
         // Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
         default:
@@ -1970,6 +1983,15 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
         }
 
         return tmp;
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        if (columnIndex == 3) {
+            return Boolean.class;
+        } else {
+            return String.class;
+        }
     }
 
     /**

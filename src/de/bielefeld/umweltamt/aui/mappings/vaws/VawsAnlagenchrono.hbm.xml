@@ -24,5 +24,8 @@
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
+        <property name="abgeschlossen" type="java.lang.Boolean">
+            <column name="abgeschlossen" />
+        </property>
     </class>
 </hibernate-mapping>
