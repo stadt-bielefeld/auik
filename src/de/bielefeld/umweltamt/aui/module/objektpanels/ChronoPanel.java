@@ -90,6 +90,7 @@ import java.util.HashMap;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -128,6 +129,7 @@ public class ChronoPanel extends JPanel {
     private Action chronoItemLoeschAction;
     private Action chronoSaveAction;
 	private Action openDocAction;
+	private Action selectAction;
 
     private JPopupMenu chronoPopup;
 
@@ -537,10 +539,12 @@ public class ChronoPanel extends JPanel {
             JMenuItem loeschItem = new JMenuItem(getChronoItemLoeschAction());
             JMenuItem saveItem = new JMenuItem(getChronoSaveAction());
             JMenuItem openDocItem = new JMenuItem(getOpenDocAction());
+            JMenuItem selectItem = new JMenuItem(getSelectAction());
 
             this.chronoPopup.add(loeschItem);
             this.chronoPopup.add(saveItem);
             this.chronoPopup.add(openDocItem);
+            this.chronoPopup.add(selectItem);
         }
 
         if (e.isPopupTrigger()) {
@@ -640,7 +644,7 @@ public class ChronoPanel extends JPanel {
 					BasisObjektchrono bchro = ChronoPanel.this.chronoModel
 							.getRow(row);
 
-					ProcessBuilder pb = new ProcessBuilder("cmd", "/C", "D:/data/auik/bescheide/E008_16.docx");
+					ProcessBuilder pb = new ProcessBuilder("cmd", "/C", bchro.getPfad());
 
 					try
 					{
@@ -663,6 +667,36 @@ public class ChronoPanel extends JPanel {
 		}
 
 		return this.openDocAction;
+	}
+    
+    private Action getSelectAction()
+	{
+
+		if (this.selectAction == null)
+		{
+
+			this.selectAction = new AbstractAction("Dokument auswählen")
+			{
+
+				@Override
+				  public void actionPerformed(ActionEvent e) {            
+			        
+					JFileChooser f = new JFileChooser();
+			        f.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); 
+			        f.showSaveDialog(null);
+
+			        System.out.println(f.getSelectedFile());
+			        System.out.println(chronoTable.getSelectedRow());
+			        
+			        BasisObjektchrono oc = chronoModel.getRow(chronoTable.getSelectedRow());
+			        oc.setPfad(f.getSelectedFile().toString());
+			        chronoModel.fireTableDataChanged();
+				    			        
+				}
+			};
+		}
+
+		return this.selectAction;
 	}
 
 
