@@ -52,6 +52,7 @@ public class BasisObjektchrono  implements java.io.Serializable {
     private String sachbearbeiter;
     private boolean enabled;
     private boolean deleted;
+    private String pfad;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -70,7 +71,7 @@ public class BasisObjektchrono  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisObjektchrono(
-        BasisObjekt basisObjekt, Date datum, String sachverhalt, Date wv, String sachbearbeiter, boolean enabled, boolean deleted) {
+        BasisObjekt basisObjekt, Date datum, String sachverhalt, Date wv, String sachbearbeiter, boolean enabled, boolean deleted, String pfad) {
         this.basisObjekt = basisObjekt;
         this.datum = datum;
         this.sachverhalt = sachverhalt;
@@ -78,6 +79,7 @@ public class BasisObjektchrono  implements java.io.Serializable {
         this.sachbearbeiter = sachbearbeiter;
         this.enabled = enabled;
         this.deleted = deleted;
+        this.sachbearbeiter = pfad;
     }
 
     /* Setter and getter methods */
@@ -145,6 +147,14 @@ public class BasisObjektchrono  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
+    public String getPfad() {
+        return this.pfad;
+    }
+
+    public void setPfad(String pfad) {
+        this.pfad = pfad;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -172,6 +182,7 @@ public class BasisObjektchrono  implements java.io.Serializable {
         buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("pfad").append("='").append(getPfad()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -244,6 +255,7 @@ public class BasisObjektchrono  implements java.io.Serializable {
         this.sachbearbeiter = copy.getSachbearbeiter();
         this.enabled = copy.isEnabled();
         this.deleted = copy.isDeleted();
+        this.pfad = copy.getPfad();
     }
 
     /**

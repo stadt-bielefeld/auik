@@ -79,7 +79,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -123,6 +127,7 @@ public class ChronoPanel extends JPanel {
 
     private Action chronoItemLoeschAction;
     private Action chronoSaveAction;
+	private Action openDocAction;
 
     private JPopupMenu chronoPopup;
 
@@ -175,7 +180,7 @@ public class ChronoPanel extends JPanel {
          * @param obj
          */
         public ChronoModel() {
-            super(new String[] {"Datum", "Sachbearbeiter", "Sachverhalt",
+            super(new String[] {"Datum", "Sachbearbeiter", "Sachverhalt", "Pfad"
 
             }, false, true);
         }
@@ -192,6 +197,18 @@ public class ChronoPanel extends JPanel {
                 fireTableDataChanged();
             }
         }
+
+    	/**
+    	 * Liefert das Objekt aus einer bestimmten Zeile.
+    	 * 
+    	 * @param rowIndex
+    	 *            Die Zeile
+    	 * @return Das Objekt bei rowIndex
+    	 */
+    	public BasisObjektchrono getRow(int rowIndex)
+    	{
+    		return (BasisObjektchrono) getObjectAtRow(rowIndex);
+    	}
 
         @Override
         public void editObject(Object objectAtRow, int columnIndex,
@@ -215,7 +232,7 @@ public class ChronoPanel extends JPanel {
                     }
                     break;
                 case 1:
-                    // Auf 10 Zeichen kürzen, da die Datenbank-Spalte nur 255
+                    // Auf 10 Zeichen kürzen, da die Datenbank-Spalte nur 10
                     // Zeichen breit ist
                     if (tmp.length() > 10) {
                         tmp = tmp.substring(0, 10);
@@ -230,6 +247,14 @@ public class ChronoPanel extends JPanel {
                     }
 
                     chrono.setSachverhalt(tmp);
+                    break;
+                case 3:
+                    // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255
+                    // Zeichen breit ist
+                    if (tmp.length() > 255) {
+                        tmp = tmp.substring(0, 255);
+                    }
+                    chrono.setPfad(tmp);
                     break;
                 default:
                     break;
@@ -278,6 +303,10 @@ public class ChronoPanel extends JPanel {
                 // Sachbearbeiter
                 case 2:
                     tmp = oc.getSachverhalt();
+                    break;
+                // Pfad
+                case 3:
+                    tmp = oc.getPfad();
                     break;
                 // Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
                 default:
@@ -451,6 +480,32 @@ public class ChronoPanel extends JPanel {
     }
 
     /**
+     * Liefert die Action um ein Dokument zu öffnen.
+     */
+    private Action getChronoItemOpenDocAction() {
+        if (this.openDocAction == null) {
+            this.openDocAction = new AbstractAction("Dokument öffnen") {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int row = getChronoTable().getSelectedRow();
+
+                    // Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
+                    if (row != -1) {
+                        ChronoPanel.this.chronoModel.getObjectAtRow(row);
+                    }
+                }
+            };
+            this.openDocAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.openDocAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+        }
+
+        return this.openDocAction;
+    }
+
+    /**
      * Liefert die Action um die ganze Chronologie zu speichern.
      */
     private Action getChronoSaveAction() {
@@ -481,9 +536,11 @@ public class ChronoPanel extends JPanel {
             this.chronoPopup = new JPopupMenu("Chronologie");
             JMenuItem loeschItem = new JMenuItem(getChronoItemLoeschAction());
             JMenuItem saveItem = new JMenuItem(getChronoSaveAction());
+            JMenuItem openDocItem = new JMenuItem(getOpenDocAction());
 
             this.chronoPopup.add(loeschItem);
             this.chronoPopup.add(saveItem);
+            this.chronoPopup.add(openDocItem);
         }
 
         if (e.isPopupTrigger()) {
@@ -563,4 +620,77 @@ public class ChronoPanel extends JPanel {
 
         return this.allButton;
     }
+    
+    private Action getOpenDocAction()
+	{
+
+		if (this.openDocAction == null)
+		{
+
+			this.openDocAction = new AbstractAction("Dokument öffnen")
+			{
+
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+
+
+					int row = ChronoPanel.this.chronoTable
+							.getSelectedRow();
+					BasisObjektchrono bchro = ChronoPanel.this.chronoModel
+							.getRow(row);
+
+					ProcessBuilder pb = new ProcessBuilder("cmd", "/C", "D:/data/auik/bescheide/E008_16.docx");
+
+					try
+					{
+
+						Process process = pb.start();
+						StreamGobbler errorGobbler = new StreamGobbler(
+								process.getErrorStream());
+						StreamGobbler outputGobbler = new StreamGobbler(
+								process.getInputStream());
+						errorGobbler.start();
+						outputGobbler.start();
+
+					}
+					catch (IOException e1)
+					{
+						e1.printStackTrace();
+					}
+				}
+			};
+		}
+
+		return this.openDocAction;
+	}
+
+
+	class StreamGobbler extends Thread
+	{
+		InputStream is;
+
+		// reads everything from is until empty.
+		StreamGobbler(InputStream is)
+		{
+			this.is = is;
+		}
+
+		@Override
+		public void run()
+		{
+			try
+			{
+				InputStreamReader isr = new InputStreamReader(this.is);
+				BufferedReader br = new BufferedReader(isr);
+				String line = null;
+				while ((line = br.readLine()) != null)
+					log.debug(line);
+			}
+			catch (IOException ioe)
+			{
+				ioe.printStackTrace();
+			}
+		}
+	}
 }

@@ -27,5 +27,8 @@
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
+        <property name="pfad" type="java.lang.String">
+            <column name="pfad" />
+        </property>
     </class>
 </hibernate-mapping>

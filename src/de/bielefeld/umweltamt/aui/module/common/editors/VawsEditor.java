@@ -1973,7 +1973,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
             break;
         // Verfahren abgeschlossen?:
         case 3:
-            tmp = new Boolean(ac.getAbgeschlossen());
+            tmp = ac.getAbgeschlossen();
             break;
 
         // Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
