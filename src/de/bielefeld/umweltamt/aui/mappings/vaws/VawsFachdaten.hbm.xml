@@ -153,6 +153,9 @@
         <property name="schutzAntiheber" type="java.lang.Boolean">
             <column name="schutz_antiheber" />
         </property>
+        <property name="aktenzeichen" type="java.lang.String">
+            <column name="aktenzeichen" />
+        </property>
         <set name="vawsVerwaltungsverfs" table="vaws_verwaltungsverf" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="behaelterid" />

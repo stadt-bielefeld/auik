@@ -157,6 +157,7 @@ public class VawsEditor extends AbstractBaseEditor {
     private TextFieldDateChooser genehmigungChooser;
     private TextFieldDateChooser erfassungChooser;
     private TextFieldDateChooser stillegungChooser;
+    private LimitedTextField aktenzeichenField;
     private DoubleField pruefTurnusFeld;
     private LimitedTextArea bemerkungArea;
     private JTable anlagenChronoTabelle;
@@ -416,6 +417,7 @@ public class VawsEditor extends AbstractBaseEditor {
         genehmigungChooser = new TextFieldDateChooser();
         erfassungChooser = new TextFieldDateChooser();
         stillegungChooser = new TextFieldDateChooser();
+        aktenzeichenField = new LimitedTextField(50);
         pruefTurnusFeld = new DoubleField(0);
 
         behaelterArtBox = new JComboBox(DatabaseQuery.getVawsBehaelterarten());
@@ -727,6 +729,7 @@ public class VawsEditor extends AbstractBaseEditor {
         erfassungChooser.setDate(getFachdaten().getDatumerfassung());
         stillegungChooser.setDate(getFachdaten().getStillegungsdatum());
         pruefTurnusFeld.setValue(getFachdaten().getPruefturnus());
+        aktenzeichenField.setText(getFachdaten().getAktenzeichen());
 
         behaelterArtBox.setSelectedItem(getFachdaten().getBehaelterart());
         materialBox.setSelectedItem(getFachdaten().getMaterial());
@@ -1092,6 +1095,7 @@ public class VawsEditor extends AbstractBaseEditor {
         getFachdaten().setDatumerfassung(erfassungChooser.getDate());
         getFachdaten().setStillegungsdatum(stillegungChooser.getDate());
         getFachdaten().setPruefturnus(pruefTurnusFeld.getDoubleValue());
+        getFachdaten().setAktenzeichen(aktenzeichenField.getText());
 
         getFachdaten().setBehaelterart(
             (String)behaelterArtBox.getSelectedItem());
@@ -1500,10 +1504,11 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append("Behälterart:", behaelterArtBox);
             builder.nextLine();
 
-            builder.append("Erfassung:", erfassungChooser);
+            builder.append("Aktenzeichen:", aktenzeichenField);
             builder.append("Material:", materialBox);
             builder.nextLine();
 
+            builder.append("Erfassung:", erfassungChooser);
             builder.append("Stillegung:", stillegungChooser);
             builder.nextLine();
 
@@ -1612,10 +1617,11 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append("Bauart:", behaelterArtBox);
             builder.nextLine();
 
-            builder.append("Erfassung:", erfassungChooser);
+            builder.append("Aktenzeichen:", aktenzeichenField);
             builder.append("Material:", materialBox);
             builder.nextLine();
 
+            builder.append("Erfassung:", erfassungChooser);
             builder.append("Stillegung:", stillegungChooser);
             builder.nextLine();
 
@@ -1666,6 +1672,9 @@ public class VawsEditor extends AbstractBaseEditor {
 
             builder.append("Genehmigung:", genehmigungChooser);
             builder.append("Stillegung:", stillegungChooser);
+
+            builder.append("Aktenzeichen:", aktenzeichenField);
+            builder.nextLine();
 
             builder.appendSeparator("Abfüllfläche");
 
@@ -1727,6 +1736,9 @@ public class VawsEditor extends AbstractBaseEditor {
 
             builder.append("Genehmigung:", genehmigungChooser);
             builder.append("Stillegung:", stillegungChooser);
+
+            builder.append("Aktenzeichen:", aktenzeichenField);
+            builder.nextLine();
 
             builder.appendSeparator("Abfüllfläche");
 

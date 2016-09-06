@@ -97,6 +97,7 @@ public class VawsFachdaten  implements java.io.Serializable {
     private Boolean schutzSensor;
     private Boolean schutzFolie;
     private Boolean schutzAntiheber;
+    private String aktenzeichen;
     private Set<VawsVerwaltungsverf> vawsVerwaltungsverfs = new HashSet<VawsVerwaltungsverf>(0);
     private Set<VawsKontrollen> vawsKontrollens = new HashSet<VawsKontrollen>(0);
     private VawsAbscheider vawsAbscheider;
@@ -122,7 +123,7 @@ public class VawsFachdaten  implements java.io.Serializable {
 
     /** Full constructor */
     public VawsFachdaten(
-        BasisObjekt basisObjekt, String herstellnr, String hersteller, Date datuminbetriebnahme, Date datumerfassung, Date datumaenderung, Date datumgenehmigung, String anlagenart, String behaelterart, String material, String fluessigkeit, String vbfeinstufung, Double menge, Integer wgk, String gefaehrdungsstufe, Integer baujahr, Boolean doppelwandig, Boolean leckanzeige, Boolean auffangraum, Boolean grenzwertgeber, Boolean leckschutzauskleidung, Boolean kellerlagerung, Boolean innenbeschichtung, String beschreibungA, String beschreibungS, Boolean oberirdisch, Boolean unterirdisch, Boolean saugleitung, Boolean rohrKathodenschutz, Boolean ausKupfer, Boolean ausStahl, Boolean mitSchutzrohr, String beschreibungR, Double pruefturnus, Boolean angemahntkz, Date mahnfrist, Date wiedervorlage, Date stillegungsdatum, String bemerkungen, String ausfuehrung, String pruefumfang, String verwendung, boolean enabled, boolean deleted, Boolean ausHdpe, Boolean druckleitung, Boolean schutzSensor, Boolean schutzFolie, Boolean schutzAntiheber, Set<VawsVerwaltungsverf> vawsVerwaltungsverfs, Set<VawsKontrollen> vawsKontrollens, VawsAbscheider vawsAbscheider, Set<VawsAnlagenchrono> vawsAnlagenchronos, Set<VawsVerwaltungsgebuehren> vawsVerwaltungsgebuehrens, VawsAbfuellflaeche vawsAbfuellflaeche) {
+        BasisObjekt basisObjekt, String herstellnr, String hersteller, Date datuminbetriebnahme, Date datumerfassung, Date datumaenderung, Date datumgenehmigung, String anlagenart, String behaelterart, String material, String fluessigkeit, String vbfeinstufung, Double menge, Integer wgk, String gefaehrdungsstufe, Integer baujahr, Boolean doppelwandig, Boolean leckanzeige, Boolean auffangraum, Boolean grenzwertgeber, Boolean leckschutzauskleidung, Boolean kellerlagerung, Boolean innenbeschichtung, String beschreibungA, String beschreibungS, Boolean oberirdisch, Boolean unterirdisch, Boolean saugleitung, Boolean rohrKathodenschutz, Boolean ausKupfer, Boolean ausStahl, Boolean mitSchutzrohr, String beschreibungR, Double pruefturnus, Boolean angemahntkz, Date mahnfrist, Date wiedervorlage, Date stillegungsdatum, String bemerkungen, String ausfuehrung, String pruefumfang, String verwendung, boolean enabled, boolean deleted, Boolean ausHdpe, Boolean druckleitung, Boolean schutzSensor, Boolean schutzFolie, Boolean schutzAntiheber, String aktenzeichen, Set<VawsVerwaltungsverf> vawsVerwaltungsverfs, Set<VawsKontrollen> vawsKontrollens, VawsAbscheider vawsAbscheider, Set<VawsAnlagenchrono> vawsAnlagenchronos, Set<VawsVerwaltungsgebuehren> vawsVerwaltungsgebuehrens, VawsAbfuellflaeche vawsAbfuellflaeche) {
         this.basisObjekt = basisObjekt;
         this.herstellnr = herstellnr;
         this.hersteller = hersteller;
@@ -172,6 +173,7 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.schutzSensor = schutzSensor;
         this.schutzFolie = schutzFolie;
         this.schutzAntiheber = schutzAntiheber;
+        this.aktenzeichen = aktenzeichen;
         this.vawsVerwaltungsverfs = vawsVerwaltungsverfs;
         this.vawsKontrollens = vawsKontrollens;
         this.vawsAbscheider = vawsAbscheider;
@@ -581,6 +583,14 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.schutzAntiheber = schutzAntiheber;
     }
 
+    public String getAktenzeichen() {
+        return this.aktenzeichen;
+    }
+
+    public void setAktenzeichen(String aktenzeichen) {
+        this.aktenzeichen = aktenzeichen;
+    }
+
     public Set<VawsVerwaltungsverf> getVawsVerwaltungsverfs() {
         return this.vawsVerwaltungsverfs;
     }
@@ -698,6 +708,7 @@ public class VawsFachdaten  implements java.io.Serializable {
         buffer.append("schutzSensor").append("='").append(getSchutzSensor()).append("' ");
         buffer.append("schutzFolie").append("='").append(getSchutzFolie()).append("' ");
         buffer.append("schutzAntiheber").append("='").append(getSchutzAntiheber()).append("' ");
+        buffer.append("aktenzeichen").append("='").append(getAktenzeichen()).append("' ");
         buffer.append("vawsVerwaltungsverfs").append("='").append(getVawsVerwaltungsverfs()).append("' ");
         buffer.append("vawsKontrollens").append("='").append(getVawsKontrollens()).append("' ");
         buffer.append("vawsAbscheider").append("='").append(getVawsAbscheider()).append("' ");
@@ -818,6 +829,7 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.schutzSensor = copy.getSchutzSensor();
         this.schutzFolie = copy.getSchutzFolie();
         this.schutzAntiheber = copy.getSchutzAntiheber();
+        this.aktenzeichen = copy.getAktenzeichen();
         this.vawsVerwaltungsverfs = copy.getVawsVerwaltungsverfs();
         this.vawsKontrollens = copy.getVawsKontrollens();
         this.vawsAbscheider = copy.getVawsAbscheider();

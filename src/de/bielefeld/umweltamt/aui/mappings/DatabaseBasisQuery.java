@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.hibernate.NullPrecedence;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -663,7 +664,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 
 		DetachedCriteria detachedCriteria = DetachedCriteria
 				.forClass(BasisStandort.class).addOrder(Order.asc("strasse"))
-				.addOrder(Order.asc("hausnr"));
+				.addOrder(Order.asc("hausnr"))
+				.addOrder(Order.asc("hausnrzus").nulls(NullPrecedence.FIRST));
 
 		if (strasse != null)
 		{

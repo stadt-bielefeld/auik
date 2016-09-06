@@ -683,7 +683,7 @@ public class ChronoPanel extends JPanel {
 			        
 					JFileChooser f = new JFileChooser();
 			        f.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); 
-			        f.showSaveDialog(null);
+			        f.showOpenDialog(null);
 
 			        System.out.println(f.getSelectedFile());
 			        System.out.println(chronoTable.getSelectedRow());
