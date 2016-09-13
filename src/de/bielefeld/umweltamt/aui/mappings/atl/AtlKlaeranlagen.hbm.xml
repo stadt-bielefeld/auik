@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen" table="atl_klaeranlagen" lazy="false" schema="auik">
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen" table="atl_klaeranlagen" schema="auik" lazy="false" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="assigned" />
@@ -10,6 +11,9 @@
         <property name="anlage" type="java.lang.String">
             <meta attribute="use-in-tostring" inherit="false">true</meta>
             <column name="anlage" not-null="true" />
+        </property>
+        <property name="deaKlaeranlageKlaeranlageNr" type="java.lang.Integer">
+            <column name="dea_klaeranlage_klaeranlage_nr" not-null="true" />
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />

@@ -1,19 +1,26 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut" table="atl_sielhaut" schema="auik">
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut" table="atl_sielhaut" schema="auik" lazy="false" optimistic-lock="version">
         <id name="objektid" type="java.lang.Integer">
             <column name="objektid" />
             <generator class="foreign">
                 <param name="property">basisObjekt</param>
             </generator>
         </id>
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"></one-to-one>
-        <one-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" constrained="true" cascade="all"></one-to-one>
+        <!--<one-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" constrained="true"></one-to-one>-->
+        <many-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" fetch="select">
+          <column name="probepktid" />
+        </many-to-one>
+        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"></one-to-one>
         <property name="bezeichnung" type="java.lang.String">
             <column name="bezeichnung" />
         </property>
+        <!--<property name="id" type="java.lang.Integer">
+            <column name="id" />
+        </property>-->
         <property name="haltungsnr" type="java.lang.String">
             <column name="haltungsnr" />
         </property>
@@ -24,10 +31,10 @@
             <column name="entgeb" />
         </property>
         <property name="e32" type="java.lang.Double">
-            <column name="e32" precision="8" scale="0" />
+            <column name="e32" precision="17" scale="17" />
         </property>
         <property name="n32" type="java.lang.Double">
-            <column name="n32" precision="8" scale="0" />
+            <column name="n32" precision="17" scale="17" />
         </property>
         <property name="lage" type="java.lang.String">
             <column name="lage" />

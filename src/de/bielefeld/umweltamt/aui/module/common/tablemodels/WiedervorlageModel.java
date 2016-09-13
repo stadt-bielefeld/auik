@@ -73,10 +73,10 @@ public class WiedervorlageModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = obj.getBasisBetreiber().toString();
+            tmp = obj.getBasisAdresse().toString();
             break;
         case 1:
-            tmp = obj.getBasisStandort().toString();
+            tmp = obj.getBasisLage().toString();
             break;
         case 2:
             tmp = obj.getWiedervorlage();

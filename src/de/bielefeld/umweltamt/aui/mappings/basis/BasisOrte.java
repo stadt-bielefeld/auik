@@ -120,3 +120,4 @@ public class BasisOrte implements java.io.Serializable
 	/* Custom code goes below here! */
 
 }
+

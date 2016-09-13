@@ -25,22 +25,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
+
+
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
 
 /**
  * Ein TableModel für die Basis-Standortdaten.
  * 
  * @author David Klotz
  */
-public class BasisStandortModel extends ListTableModel
+public class BasisLageModel extends ListTableModel
 {
 	private static final long serialVersionUID = 3532697905957103920L;
 	private String lastStrasse = null;
 	private String lastOrt = null;
 	private int lastHausNr = -1;
+    private static final AuikLogger log = AuikLogger.getLogger();
 
-	public BasisStandortModel()
+	public BasisLageModel()
 	{
 		super(new String[] {
 				/* "St.ID", */
@@ -53,7 +63,8 @@ public class BasisStandortModel extends ListTableModel
 				"Wasserschutzgebiet",
 				"VAwS-Gebiet" }, true, true);
 	}
-
+    
+    
 	/**
 	 * Aktualisiert die aktuell angezeigte Liste.
 	 * Falls noch keine Suche durchgeführt wurde, werden die
@@ -75,11 +86,28 @@ public class BasisStandortModel extends ListTableModel
 	 *            Die Zeile
 	 * @return Das Objekt bei rowIndex
 	 */
-	public BasisStandort getRow(int rowIndex)
+	public BasisLageAdresse getRow(int rowIndex)
 	{
-		return (BasisStandort) getObjectAtRow(rowIndex);
+		return (BasisLageAdresse) getObjectAtRow(rowIndex);
 	}
-
+    
+    public List<BasisLageAdresse> createAdresseList(List<BasisAdresse> list){
+        int length = list.size();
+        List<BasisLageAdresse> combined = new ArrayList<BasisLageAdresse>(list.size());
+        log.debug("Creating Adresse-List out of " + length + "Objects");
+        if(length != 0){
+            for(int i = 0; i < length; i++){
+                //log.debug("Creating BasisLageAdresse for Adresse: " + list.get(i));
+                BasisLageAdresse newItem = new BasisLageAdresse(list.get(i));
+                if(newItem.getBasisLage() != null){ 
+                    combined.add(newItem);
+                }
+            }
+        }
+        return combined;
+    }
+    
+    
 	/**
 	 * Filtert den Tabelleninhalt nach der Straße und der Hausnr.
 	 * 
@@ -91,7 +119,23 @@ public class BasisStandortModel extends ListTableModel
 	 */
 	public void filterList(String strasse, int hausnr, String ort)
 	{
-		setList(DatabaseQuery.findStandorte(strasse, hausnr, ort));
+        //Get all BasisAdresse objects
+        List<BasisAdresse> list = DatabaseQuery.findStandorte(strasse, hausnr, ort);
+        //List<BasisAdresse> list = new ArrayList<BasisAdresse>();
+        /*for(BasisAdresse i:temp){
+            log.debug(i);
+            BasisObjekt o;
+            try{
+                o = (BasisObjekt) i.getBasisObjekts().toArray()[0];
+            }
+            catch(ArrayIndexOutOfBoundsException e){
+                o = null;
+            }
+            if(o != null && i != null && i.getId() == o.getBasisStandort().getId()){
+                list.add(i);
+            }
+        }*/
+        setList(createAdresseList(list));
 		lastOrt = ort;
 		lastStrasse = strasse;
 		lastHausNr = hausnr;
@@ -101,11 +145,11 @@ public class BasisStandortModel extends ListTableModel
 	 * Filtert den Tabelleninhalt nach einem Standort.
 	 * 
 	 * @param std
-	 *            BasisStandort
+	 *            BasisLage
 	 */
-	public void filterList(BasisStandort std)
+	public void filterList(BasisLageAdresse std)
 	{
-		List<BasisStandort> oneItemList = new ArrayList<BasisStandort>();
+		List<BasisLageAdresse> oneItemList = new ArrayList<BasisLageAdresse>();
 		oneItemList.add(std);
 		setList(oneItemList);
 	}
@@ -125,7 +169,7 @@ public class BasisStandortModel extends ListTableModel
 	public Object getColumnValue(Object objectAtRow, int columnIndex)
 	{
 		Object value = null;
-		BasisStandort bsta = (BasisStandort) objectAtRow;
+		BasisLageAdresse bsta = (BasisLageAdresse) objectAtRow;
 		switch (columnIndex)
 		{
 		/*
@@ -210,8 +254,8 @@ public class BasisStandortModel extends ListTableModel
 	@Override
 	public boolean objectRemoved(Object objectAtRow)
 	{
-		BasisStandort removedStandort = (BasisStandort) objectAtRow;
-		return BasisStandort.delete(removedStandort);
+		BasisLageAdresse removedStandort = (BasisLageAdresse) objectAtRow;
+		return BasisLageAdresse.delete(removedStandort);
 	}
 
 	@Override

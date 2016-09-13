@@ -75,14 +75,14 @@ public class AnhBwkModel extends ListTableModel {
 
         switch (columnIndex) {
             case 0:
-                String anrede = fachdaten.getBasisObjekt().getBasisBetreiber()
+                String anrede = fachdaten.getBasisObjekt().getBasisAdresse()
                     .getBetranrede();
                 result = (anrede != null? anrede + " " : "")
-                    + fachdaten.getBasisObjekt().getBasisBetreiber()
+                    + fachdaten.getBasisObjekt().getBasisAdresse()
                         .getBetrname();
                 break;
             case 1:
-                result = fachdaten.getBasisObjekt().getBasisStandort()
+                result = fachdaten.getBasisObjekt().getBasisLage()
                     .toString();
                 break;
             case 2: result = fachdaten.getKHersteller();  break;

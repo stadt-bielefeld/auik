@@ -1,40 +1,26 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort" table="basis_standort" lazy="false" schema="auik">
-	  <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
-	   <generator class="identity"/>
-	  </id>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisLage" table="basis_lage" schema="auik" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity"/>
+        </id>
         <many-to-one name="basisGemarkung" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung" fetch="select">
             <column name="gemarkungid" />
         </many-to-one>
-        <many-to-one name="vawsWassereinzugsgebiete" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete" fetch="select">
-            <column name="wassereinzgebid" />
-        </many-to-one> 
         <many-to-one name="vawsStandortgghwsg" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg" fetch="select">
             <column name="standortgegebid" />
         </many-to-one>
-        <property name="ort" type="java.lang.String">
-            <column name="ort" />
-        </property>
-        <property name="strasse" type="java.lang.String">
-            <column name="strasse" />
-        </property>
-        <property name="hausnr" type="java.lang.Integer">
-            <column name="hausnr" />
-        </property>
-        <property name="hausnrzus" type="java.lang.String">
-            <column name="hausnrzus" />
-        </property>
-        <property name="plz" type="java.lang.String">
-            <column name="plz" />
-        </property>
+        <many-to-one name="vawsWassereinzugsgebiete" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete" fetch="select">
+            <column name="wassereinzgebid" />
+        </many-to-one>
         <property name="e32" type="java.lang.Float">
-            <column name="e32" precision="4" scale="0" />
+            <column name="e32" precision="8" scale="8" />
         </property>
         <property name="n32" type="java.lang.Float">
-            <column name="n32" precision="4" scale="0" />
+            <column name="n32" precision="8" scale="8" />
         </property>
         <property name="flur" type="java.lang.String">
             <column name="flur" />
@@ -45,23 +31,8 @@
         <property name="entgebid" type="java.lang.String">
             <column name="entgebid" />
         </property>
-        <property name="vornameeigent" type="java.lang.String">
-            <column name="vornameeigent" />
-        </property>
-        <property name="nameeigent" type="java.lang.String">
-            <column name="nameeigent" />
-        </property>
-        <property name="strasseeigent" type="java.lang.String">
-            <column name="strasseeigent" />
-        </property>
-        <property name="hausnreigent" type="java.lang.Integer">
-            <column name="hausnreigent" />
-        </property>
-        <property name="hausnrzuseigent" type="java.lang.String">
-            <column name="hausnrzuseigent" />
-        </property>
         <property name="revidatum" type="java.util.Date">
-            <column name="revidatum" length="8" />
+            <column name="revidatum" length="29" />
         </property>
         <property name="revihandz" type="java.lang.String">
             <column name="revihandz" />
@@ -81,9 +52,9 @@
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
-        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="true" fetch="select">
+        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="false" fetch="join">
             <key>
-                <column name="standortid" />
+                <column name="lageid" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
         </set>

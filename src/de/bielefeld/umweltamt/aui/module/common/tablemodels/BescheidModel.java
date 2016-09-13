@@ -84,10 +84,10 @@ public class BescheidModel extends ListTableModel {
             tmp = fd.getDatumDerEntnahme();
             break;
         case 2:
-            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisStandort();
+            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisLage();
             break;
         case 3:
-            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
+            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisAdresse();
             break;
         case 4:
             tmp = fd.getBemerkung();

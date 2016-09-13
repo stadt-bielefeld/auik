@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten" table="atl_einheiten" lazy="false" schema="auik">
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten" table="atl_einheiten" schema="auik" lazy="false" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="assigned" />

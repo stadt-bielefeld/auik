@@ -707,7 +707,7 @@ public class ProbepktAuswPanel extends JPanel {
 
                     AuswertungsDialog dialog = new AuswertungsDialog(
                         ProbepktAuswPanel.this.pkt.getBasisObjekt()
-                            .getBasisBetreiber().getBetrname(),
+                            .getBasisAdresse().getBetrname(),
                         ProbepktAuswPanel.this.dataSet1, null,
                         ProbepktAuswPanel.this.frame);
 
@@ -743,7 +743,7 @@ public class ProbepktAuswPanel extends JPanel {
 
                     AuswertungsDialog dialog = new AuswertungsDialog(
                         ProbepktAuswPanel.this.pkt.getBasisObjekt()
-                            .getBasisBetreiber().getBetrname(),
+                            .getBasisAdresse().getBetrname(),
                         ProbepktAuswPanel.this.dataSet1,
                         ProbepktAuswPanel.this.dataSet2,
                         ProbepktAuswPanel.this.frame);
@@ -786,7 +786,7 @@ public class ProbepktAuswPanel extends JPanel {
         }
 
         this.pkt = AtlProbepkt.findById(
-            this.hauptModul.getObjekt().getObjektid());
+            this.hauptModul.getObjekt().getId());
 
         createSeries(paramList, this.pkt, einheit, vonDate, bisDate, analyeVon,
             col);

@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" table="anh_49_fachdaten" schema="auik">
-        <id name="objektid" type="java.lang.Integer">
-            <column name="objektid" />
-            <generator class="foreign">
-                <param name="property">basisObjekt</param>
-            </generator>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" table="anh_49_fachdaten" schema="auik" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity" />
         </id>
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"></one-to-one>
+        <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select">
+            <column name="objektid" not-null="true" unique="true" />
+        </many-to-one>
         <property name="klaeranlage" type="java.lang.String">
             <column name="klaeranlage" />
         </property>
@@ -83,19 +83,19 @@
             <column name="ansprechpartner_in" />
         </property>
         <property name="antragvom" type="java.util.Date">
-            <column name="antragvom" length="8" />
+            <column name="antragvom" length="29" />
         </property>
         <property name="genehmigung" type="java.util.Date">
-            <column name="genehmigung" length="8" />
+            <column name="genehmigung" length="29" />
         </property>
         <property name="wiedervorlage" type="java.util.Date">
-            <column name="wiedervorlage" length="8" />
+            <column name="wiedervorlage" length="29" />
         </property>
         <property name="aenderungsgenehmigung" type="java.util.Date">
-            <column name="aenderungsgenehmigung" length="8" />
+            <column name="aenderungsgenehmigung" length="29" />
         </property>
         <property name="letztesAnschreiben" type="java.util.Date">
-            <column name="letztes_anschreiben" length="8" />
+            <column name="letztes_anschreiben" length="29" />
         </property>
         <property name="anschreiben" type="java.lang.String">
             <column name="anschreiben" />
@@ -107,7 +107,7 @@
             <column name="e_satzung" />
         </property>
         <property name="seitwann" type="java.util.Date">
-            <column name="seitwann" length="8" />
+            <column name="seitwann" length="29" />
         </property>
         <property name="sonstigestechnik" type="java.lang.String">
             <column name="sonstigestechnik" />
@@ -119,13 +119,13 @@
             <column name="behoben" />
         </property>
         <property name="frist" type="java.util.Date">
-            <column name="frist" length="8" />
+            <column name="frist" length="29" />
         </property>
         <property name="durchgefuehrt" type="java.lang.Integer">
             <column name="durchgefuehrt" />
         </property>
         <property name="dekraTuevDatum" type="java.util.Date">
-            <column name="dekra_tuev_datum" length="8" />
+            <column name="dekra_tuev_datum" length="29" />
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
@@ -133,6 +133,12 @@
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
+        <set name="anh49Ortstermines" table="anh_49_ortstermine" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="anh49id" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine" />
+        </set>
         <set name="anh49Kontrollens" table="anh_49_kontrollen" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="anh49id" />
@@ -151,23 +157,17 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen" />
         </set>
+        <set name="anh49Abfuhrs" table="anh_49_abfuhr" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="anh49id" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr" />
+        </set>
         <set name="anh49Verwaltungsverfs" table="anh_49_verwaltungsverf" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="anh49id" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf" />
-        </set>
-        <set name="anh49Ortstermines" table="anh_49_ortstermine" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="anh49id" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine" />
-        </set>
-        <set name="anh49Abfuhr" table="anh_49_abfuhr" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="anh49id" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr" />
         </set>
     </class>
 </hibernate-mapping>

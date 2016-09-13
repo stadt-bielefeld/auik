@@ -71,11 +71,11 @@ public class HerstellNrSuchenModel extends ListTableModel {
             break;
         //Betreiber:
         case 1:
-            tmp = fachdaten.getBasisObjekt().getBasisBetreiber();
+            tmp = fachdaten.getBasisObjekt().getBasisAdresse();
             break;
         //Standort
         case 2:
-            tmp = fachdaten.getBasisObjekt().getBasisStandort();
+            tmp = fachdaten.getBasisObjekt().getBasisLage();
             break;
         // Anlagenart:
         case 3:

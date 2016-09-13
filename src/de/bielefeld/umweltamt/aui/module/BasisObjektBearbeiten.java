@@ -108,9 +108,10 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AbfuhrenPanel;
@@ -389,10 +390,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return chronoTab;
     }
 
-    public FotoPanel getFotoTab() {
-
+    public FotoPanel getFotoTab(){
         fotoTab = new FotoPanel(this);
-        
+
         return fotoTab;
     }
 
@@ -438,13 +438,18 @@ public class BasisObjektBearbeiten extends AbstractModul {
             isNew = true;
             objekt = new BasisObjekt();
             if (manager.getSettingsManager().getSetting("auik.imc.use_standort") != null) {
-                BasisStandort sta = BasisStandort.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
+                BasisAdresse sta = BasisAdresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
+                log.debug("Standort: " + sta.getStrasse() + " " + sta.getHausnr() + ", " +sta.getObjektid());
+                BasisObjekt temp = BasisObjekt.findById(sta.getObjektid()); 
+                BasisLage lage = temp.getBasisLage();
+                log.debug("Creating new BasisObjekt " + lage + " " + temp + " " + sta);
                 objekt.setBasisStandort(sta);
+                objekt.setBasisLage(lage);
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
             }
             if (manager.getSettingsManager().getSetting("auik.imc.use_betreiber") != null) {
-                BasisBetreiber betr = BasisBetreiber.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
-                objekt.setBasisBetreiber(betr);
+                BasisAdresse betr = BasisAdresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
+                objekt.setBasisAdresse(betr);
                 manager.getSettingsManager().removeSetting("auik.imc.use_betreiber");
             }
         }
@@ -558,7 +563,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 } else {
                     log.debug("Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
-                    getHeaderLabel().setText(objekt.getBasisStandort()+"; "+objekt.getBasisBetreiber()+"; "+objekt.getBasisObjektarten().getObjektart());
+                    getHeaderLabel().setText(objekt.getBasisLage()+"; "+objekt.getBasisAdresse()+"; "+objekt.getBasisObjektarten().getObjektart());
                 }
 
                 if (objekt != null) {
@@ -869,3 +874,4 @@ public class BasisObjektBearbeiten extends AbstractModul {
         }
     }
 }
+

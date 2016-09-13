@@ -95,7 +95,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SortedProperties;
 
@@ -111,7 +111,7 @@ public class SettingsManager {
 	/** GUI Manager */
 	private static final GUIManager guiManager = GUIManager.getInstance();
 
-	private BasisStandort standort;
+	private BasisLage standort;
 	private Properties instanceSettings;
 	private SortedProperties appSettings;
 
@@ -178,8 +178,8 @@ public class SettingsManager {
 				.setProperty(
 						"auik.system.module",
 
-						"BasisStandortSuchen, BasisBetreiberSuchen, BasisStandortNeu, "
-								+ "BasisBetreiberNeu, BasisObjektBearbeiten, EinleiterAnh31Auswertung, "
+						"BasisLageSuchen, BasisAdresseSuchen, BasisLageNeu, "
+								+ "BasisAdresseNeu, BasisObjektBearbeiten, EinleiterAnh31Auswertung, "
 								+ "EinleiterAnh40Auswertung, EinleiterAnh49Auswertung, "
 								+ "EinleiterAnh50Auswertung, EinleiterAnh52Auswertung, "
 								+ "EinleiterAnh53Auswertung, EinleiterAnh55Auswertung, "
@@ -299,7 +299,7 @@ public class SettingsManager {
 
 	/**
 	 * Setzt eine Einstellung. Wrapper-Methode für setSetting(String,
-	 * BasisStandort, boolean).
+	 * BasisLage, boolean).
 	 * 
 	 * @param setting
 	 *            Den Key der Einstellung.
@@ -308,7 +308,7 @@ public class SettingsManager {
 	 * @param persist
 	 *            Soll die Einstellung beim Programm-Ende gespeichert werden.
 	 */
-	public void setStandort(BasisStandort std) {
+	public void setStandort(BasisLage std) {
 		this.standort = std;
 	}
 
@@ -398,7 +398,7 @@ public class SettingsManager {
 	 * @return Den Wert der Einstellung oder <code>false</code>, falls diese
 	 *         nicht existiert.
 	 */
-	public BasisStandort getStandort() {
+	public BasisLage getStandort() {
 
 		return standort;
 

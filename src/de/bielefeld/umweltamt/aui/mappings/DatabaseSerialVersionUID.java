@@ -34,7 +34,7 @@ package de.bielefeld.umweltamt.aui.mappings;
 public class DatabaseSerialVersionUID {
 
     /* Generated serialVersionUID for basis package */
-    public static final long forBasisBetreiber          = 7154323084416443564L;
+    public static final long forBasisAdresse          = 7154323084416443564L;
     public static final long forBasisGemarkung          = -230613228647257429L;
     public static final long forBasisObjekt             = -5770125513608713721L;
     public static final long forBasisObjektarten        = -6919909308275509008L;
@@ -43,7 +43,7 @@ public class DatabaseSerialVersionUID {
     public static final long forBasisPrioritaet         = 7751778530285997527L;
     public static final long forBasisPrioritaetId       = -1304451453173654906L;
     public static final long forBasisSachbearbeiter     = 7587341236085960792L;
-    public static final long forBasisStandort           = 2774552431508434460L;
+    public static final long forBasisLage           = 2774552431508434460L;
     public static final long forBasisStrassen           = -3812115749085297644L;
     public static final long forBasisOrte           	= -2842969054038396748L;
 
@@ -128,4 +128,19 @@ public class DatabaseSerialVersionUID {
     public static final long forInkaUeberwachErgebnisId = -756159384549934619L;
     public static final long forInkaUeberwachungswert   = -7215726564799484939L;
     public static final long forInkaUeberwachungswertId = 4518302662515738672L;
-}
+
+	//TODO: generate
+	public static final long forBasisBezeichnung		= 0L;    
+	public static final long forAnh49Abfuhr = 1L;
+
+	public static final long forEProbenahmeUeberwachungsergeb = 2L;
+	public static final long forEAbwasserbehandlungsanlage = 3L;
+	public static final long forEAnfallstelle = 4L;
+	public static final long forEBetrieb = 5L;
+	public static final long forEEinleitungsstelle = 6L;
+	public static final long forEMessstelle = 7L;
+	public static final long forEAdresse = 8L;
+	public static final long forEStandort = 9L;
+	public static final long forEWasserrecht = 10L;
+	public static final long forEProbenahme = 11L;
+}	

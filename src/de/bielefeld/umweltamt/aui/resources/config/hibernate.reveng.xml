@@ -160,6 +160,7 @@
             <key-column name="id" />
 		</primary-key>
 	</table>
+  <!--
 	<table schema="elka" name="e_abwasserbehandlungsanlage">
 		<primary-key>
             <key-column name="nr" />
@@ -209,7 +210,7 @@
 		<primary-key>
             <key-column name="nr" />
 		</primary-key>
-	</table>
+	</table>-->
 	
     <!-- Exclude Geometry columns ========================================== -->
     <table schema="auik" name="atl_sielhaut">

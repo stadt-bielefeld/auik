@@ -22,12 +22,13 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
 
 /**
  * Ein TableModel für die Basis-Objektdaten bei der Betreiber/Standort-Suche.
@@ -75,13 +76,13 @@ public class BasisObjektModel extends ListTableModel {
         BasisObjekt bo = (BasisObjekt) objectAtRow;
         switch(columnIndex) {
             case 0:
-                tmp = bo.getObjektid();
+                tmp = bo.getId();
                 break;
             case 1:
                 if ("Standort".equals(secondColumn)) {
-                    tmp = bo.getBasisStandort() + " (" + bo.getBasisStandort().getEntgebid() + ")";
+                    tmp = bo.getBasisStandort() + " (" + bo.getBasisLage().getEntgebid() + ")";
                 } else if ("Betreiber".equals(secondColumn)) {
-                    tmp = bo.getBasisBetreiber();
+                    tmp = bo.getBasisAdresse();
                 } else {
                     tmp = secondColumn;
                 }
@@ -109,7 +110,7 @@ public class BasisObjektModel extends ListTableModel {
         BasisObjekt removedObjekt = (BasisObjekt) objectAtRow;
         boolean removed;
 
-        if (removedObjekt.getObjektid() != null) {
+        if (removedObjekt.getId() != null) {
             removed = BasisObjekt.delete(removedObjekt);
         } else {
             removed = true;
@@ -131,7 +132,7 @@ public class BasisObjektModel extends ListTableModel {
      * Durchsucht den Tabelleninhalt nach der Betreiber-Id.
      * @param betreiberId Die Betreiber-Id
      */
-    public void searchByBetreiber(BasisBetreiber betr) {
+    public void searchByBetreiber(BasisAdresse betr) {
         setList(DatabaseQuery.getObjekteByBetreiber(betr, abteilung));
     }
 
@@ -139,7 +140,7 @@ public class BasisObjektModel extends ListTableModel {
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(BasisStandort standort) {
+    public void searchByStandort(BasisAdresse standort) {
         setList(DatabaseQuery.getObjekteByStandort(
             standort, abteilung, null, null));
     }
@@ -148,7 +149,7 @@ public class BasisObjektModel extends ListTableModel {
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(BasisStandort standort, String abteilung) {
+    public void searchByStandort(BasisAdresse standort, String abteilung) {
         setList(DatabaseQuery.getObjekteByStandort(
             standort, abteilung, null, null));
     }
@@ -158,7 +159,7 @@ public class BasisObjektModel extends ListTableModel {
      * @param standortId Die Standort-Id
      */
     public void searchByStandort(
-        BasisStandort standort, String abteilung, Integer nichtartid) {
+        BasisAdresse standort, String abteilung, Integer nichtartid) {
         setList(DatabaseQuery.getObjekteByStandort(
             standort, abteilung, nichtartid, false));
     }
@@ -167,7 +168,7 @@ public class BasisObjektModel extends ListTableModel {
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(BasisStandort standort, Integer istartid) {
+    public void searchByStandort(BasisAdresse standort, Integer istartid) {
         setList(DatabaseQuery.getObjekteByStandort(
             standort, null, istartid, true));
     }

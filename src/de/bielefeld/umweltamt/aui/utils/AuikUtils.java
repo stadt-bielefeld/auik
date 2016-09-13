@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -78,9 +79,13 @@ public class AuikUtils {
 
             try {
 //                        Thread.sleep(500);
-                Runtime.getRuntime().exec(
+                /*Runtime.getRuntime().exec(
                     comspec + " /c start \"Bitte warten...\" " + f.getName(),
-                    null, f.getParentFile());
+                    null, f.getParentFile());*/
+
+                //java.awt.Desktop should be platform independent
+                Desktop d = Desktop.getDesktop();
+                d.open(f);
             } catch (IOException e) {
                 throw new RuntimeException("Konnte den Betrachter für " + f
                     + " nicht starten!", e);

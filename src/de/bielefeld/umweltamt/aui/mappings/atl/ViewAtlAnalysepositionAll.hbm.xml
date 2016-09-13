@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll" table="view_atl_analyseposition_all" schema="auik">
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll" table="view_atl_analyseposition_all" schema="auik" lazy="false" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="assigned" />
@@ -11,7 +12,7 @@
             <column name="grkl" />
         </property>
         <property name="wert" type="java.lang.Float">
-            <column name="wert" precision="4" scale="0" />
+            <column name="wert" precision="8" scale="8" />
         </property>
         <property name="analyseVon" type="java.lang.String">
             <column name="analyse_von" />
@@ -20,7 +21,7 @@
             <column name="bericht" />
         </property>
         <property name="normwert" type="java.lang.Double">
-            <column name="normwert" precision="8" scale="0" />
+            <column name="normwert" precision="17" scale="17" />
         </property>
         <property name="einheitenId" type="java.lang.Integer">
             <column name="einheiten_id" />
@@ -38,7 +39,7 @@
             <column name="_deleted" />
         </property>
         <property name="datumDerEntnahme" type="java.util.Date">
-            <column name="datum_der_entnahme" length="8" />
+            <column name="datum_der_entnahme" length="29" />
         </property>
         <property name="probepktId" type="java.lang.Integer">
             <column name="probepkt_id" />

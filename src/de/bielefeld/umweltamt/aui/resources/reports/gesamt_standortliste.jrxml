@@ -31,9 +31,9 @@
 		<defaultValueExpression><![CDATA["/home/andre/kde_trunk/src/auik/src/de/bielefeld/umweltamt/aui/resources/reports/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select distinct basis_objekt.betreiberid, basis_betreiber.betrname from auik.basis_standort
-inner join auik.basis_objekt on basis_objekt.standortid = basis_standort.id
-inner join auik.basis_betreiber on basis_betreiber.id = basis_objekt.betreiberid
+		<![CDATA[select distinct basis_objekt.betreiberid, basis_adresse.betrname from auik.basis_lage
+inner join auik.basis_objekt on basis_objekt.lageid = basis_lage.id
+inner join auik.basis_adresse on basis_adresse.id = basis_objekt.betreiberid
 where basis_standort.id = $P{StandortId};]]>
 	</queryString>
 	<field name="betreiberid" class="java.lang.Integer"/>

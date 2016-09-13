@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter" table="atl_parameter" lazy="false" schema="auik">
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter" table="atl_parameter" schema="auik" lazy="false" optimistic-lock="version">
         <id name="ordnungsbegriff" type="java.lang.String">
             <column name="ordnungsbegriff" />
             <generator class="assigned" />
@@ -21,19 +22,19 @@
             <column name="wirdgemessenineinheit" />
         </property>
         <property name="grenzwert" type="java.lang.Double">
-            <column name="grenzwert" precision="8" scale="0" />
+            <column name="grenzwert" precision="17" scale="17" />
         </property>
         <property name="grenzwertname" type="java.lang.String">
             <column name="grenzwertname" />
         </property>
         <property name="sielhautGw" type="java.lang.Double">
-            <column name="sielhaut_gw" precision="8" scale="0" />
+            <column name="sielhaut_gw" precision="17" scale="17" />
         </property>
         <property name="klaerschlammGw" type="java.lang.Double">
-            <column name="klaerschlamm_gw" precision="8" scale="0" />
+            <column name="klaerschlamm_gw" precision="17" scale="17" />
         </property>
         <property name="preisfueranalyse" type="java.lang.Double">
-            <column name="preisfueranalyse" precision="8" scale="0" />
+            <column name="preisfueranalyse" precision="17" scale="17" />
         </property>
         <property name="einzelnbeauftragbar" type="java.lang.Boolean">
             <column name="einzelnbeauftragbar" />

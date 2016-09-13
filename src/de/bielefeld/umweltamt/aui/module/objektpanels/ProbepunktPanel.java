@@ -207,7 +207,7 @@ public class ProbepunktPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.probepkt = AtlProbepkt.findById(
+        this.probepkt = AtlProbepkt.findByObjektId(
             this.hauptModul.getObjekt().getObjektid());
         log.debug("Probepunkt aus DB geholt: " + this.probepkt);
 
@@ -601,7 +601,7 @@ public class ProbepunktPanel extends JPanel {
                             .changeStatus(
                                 "Probepunkt "
                                     + ProbepunktPanel.this.probepkt
-                                        .getObjektid()
+                                        .getId()
                                     + " erfolgreich gespeichert.",
                                 HauptFrame.SUCCESS_COLOR);
                         // hauptModul.setNew(false);

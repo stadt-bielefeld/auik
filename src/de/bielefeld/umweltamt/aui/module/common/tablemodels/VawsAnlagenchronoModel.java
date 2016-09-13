@@ -65,10 +65,10 @@ public class VawsAnlagenchronoModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = ac.getVawsFachdaten().getBasisObjekt().getBasisBetreiber().toString();
+            tmp = ac.getVawsFachdaten().getBasisObjekt().getBasisAdresse().toString();
             break;
         case 1:
-            tmp = ac.getVawsFachdaten().getBasisObjekt().getBasisStandort().toString();
+            tmp = ac.getVawsFachdaten().getBasisObjekt().getBasisLage().toString();
             break;
         case 2:
             tmp = ac.getWv();

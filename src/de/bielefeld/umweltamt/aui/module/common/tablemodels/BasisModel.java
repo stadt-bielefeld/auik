@@ -78,10 +78,10 @@ public class BasisModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = obj.getBasisBetreiber();
+            tmp = obj.getBasisAdresse();
             break;
         case 1:
-            tmp = obj.getBasisStandort();
+            tmp = obj.getBasisLage();
             break;
         case 2:
 			tmp = "";

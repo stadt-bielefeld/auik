@@ -51,10 +51,10 @@ public class Anh31Model extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = ob.getBasisBetreiber();
+            tmp = ob.getBasisAdresse();
             break;
         case 1:
-            tmp = ob.getBasisStandort();
+            tmp = ob.getBasisLage();
             break;
         case 2:
             tmp = ob.getBeschreibung();

@@ -21,6 +21,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.elka.EMessstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.EAdresse;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class EMessstelleModel extends ListTableModel {
@@ -47,8 +48,9 @@ public class EMessstelleModel extends ListTableModel {
         EMessstelle stelle = (EMessstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
-          		value = stelle.getStandort().getAdresse().getName1();
-                break;
+          		//value = stelle.getStandortNr().getAdresse().getName1();
+                value = EAdresse.findById(stelle.getNr()).getName1();
+				break;
             case 1:
                 value = stelle.getBezeichnung();
                 break;

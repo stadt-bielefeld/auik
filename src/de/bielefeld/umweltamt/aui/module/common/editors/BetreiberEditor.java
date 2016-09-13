@@ -48,7 +48,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
@@ -109,7 +109,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Betreibers.
 	 */
-	public BetreiberEditor(BasisBetreiber betr, HauptFrame owner)
+	public BetreiberEditor(BasisAdresse betr, HauptFrame owner)
 	{
 		super("Betreiber (" + betr.getId() + ")", betr, owner);
 	}
@@ -707,8 +707,8 @@ public class BetreiberEditor extends AbstractBaseEditor
 
 		// frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
 
-		BasisBetreiber persistentBetreiber = null;
-		persistentBetreiber = BasisBetreiber.merge(getBetreiber());
+		BasisAdresse persistentBetreiber = null;
+		persistentBetreiber = BasisAdresse.merge(getBetreiber());
 
 		if (persistentBetreiber != null)
 		{
@@ -758,8 +758,8 @@ public class BetreiberEditor extends AbstractBaseEditor
 		return str;
 	}
 
-	public BasisBetreiber getBetreiber()
+	public BasisAdresse getBetreiber()
 	{
-		return (BasisBetreiber) getEditedObject();
+		return (BasisAdresse) getEditedObject();
 	}
 }

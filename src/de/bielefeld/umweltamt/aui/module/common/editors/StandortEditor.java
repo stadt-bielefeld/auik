@@ -52,7 +52,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
@@ -64,6 +64,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
 
 /**
  * Ein Dialog zum Bearbeiten eines Standorts.
@@ -109,7 +110,7 @@ public class StandortEditor extends AbstractBaseEditor
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Standorts.
 	 */
-	public StandortEditor(BasisStandort bsta, HauptFrame owner)
+	public StandortEditor(BasisLageAdresse bsta, HauptFrame owner)
 	{
 		super("Standort (" + bsta.getId() + ")", bsta, owner);
 	}
@@ -605,7 +606,7 @@ public class StandortEditor extends AbstractBaseEditor
 		Integer wassermng = ((IntegerField) wassermengeFeld).getIntValue();
 		getStandort().setWassermenge(wassermng);
 
-		BasisStandort bsta = BasisStandort.merge(getStandort());
+		BasisLageAdresse bsta = BasisLageAdresse.merge(getStandort());
 		if (bsta != null)
 		{
 			setEditedObject(bsta);
@@ -618,9 +619,9 @@ public class StandortEditor extends AbstractBaseEditor
 		}
 	}
 
-	public BasisStandort getStandort()
+	public BasisLageAdresse getStandort()
 	{
-		return (BasisStandort) getEditedObject();
+		return (BasisLageAdresse) getEditedObject();
 	}
 
 	private void readClipboard()

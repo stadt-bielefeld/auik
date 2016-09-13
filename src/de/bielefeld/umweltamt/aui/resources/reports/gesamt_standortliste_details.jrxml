@@ -8,16 +8,16 @@
 	<parameter name="BetreiberId" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[select basis_objektarten.objektart,
-basis_betreiber.betrname, (select count(*)
-    from auik.basis_standort
-    inner join auik.basis_objekt on basis_objekt.standortid = basis_standort.id
-    inner join auik.basis_betreiber on basis_betreiber.id = basis_objekt.betreiberid
+basis_adresse.betrname, (select count(*)
+    from auik.basis_lage
+    inner join auik.basis_objekt on basis_objekt.lageid = basis_lage.id
+    inner join auik.basis_adresse on basis_adresse.id = basis_objekt.betreiberid
     inner join auik.basis_objektarten on basis_objektarten.id = basis_objekt.objektartid
-    where basis_standort.id = 63
+    where basis_lage.id = 63
           and basis_objekt.betreiberid = 788) as anzahl
-from auik.basis_standort
-inner join auik.basis_objekt on basis_objekt.standortid = basis_standort.id
-inner join auik.basis_betreiber on basis_betreiber.id = basis_objekt.betreiberid
+from auik.basis_lage
+inner join auik.basis_objekt on basis_objekt.lageid = basis_lage.id
+inner join auik.basis_adresse on basis_adresse.id = basis_objekt.betreiberid
 inner join auik.basis_objektarten on basis_objektarten.id = basis_objekt.objektartid
 where basis_standort.id = 63
       and basis_objekt.betreiberid = 788]]>

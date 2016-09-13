@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails" table="anh_49_abscheiderdetails" schema="auik">
-	  <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
-	   <generator class="identity"/>
-	  </id>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails" table="anh_49_abscheiderdetails" schema="auik" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity"/>
+        </id>
         <many-to-one name="anh49Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" fetch="select">
             <column name="anh49id" />
         </many-to-one>
@@ -127,7 +128,7 @@
             <column name="bemerkung" />
         </property>
         <property name="entsorgungsnachweis" type="java.util.Date">
-            <column name="entsorgungsnachweis" length="8" />
+            <column name="entsorgungsnachweis" length="29" />
         </property>
         <property name="entsorgungsnachweisDurch" type="java.lang.String">
             <column name="entsorgungsnachweis_durch" />

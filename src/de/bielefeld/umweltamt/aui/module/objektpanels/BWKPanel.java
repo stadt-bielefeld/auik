@@ -196,8 +196,8 @@ public class BWKPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.bwk = AnhBwkFachdaten.findById(
-            this.hauptModul.getObjekt().getObjektid());
+        this.bwk = AnhBwkFachdaten.findByObjektId(
+            this.hauptModul.getObjekt().getId());
         log.debug("Brennwertkessel aus DB geholt: " + this.bwk);
     }
 
@@ -547,7 +547,7 @@ public class BWKPanel extends JPanel {
                     enableAll(false);
                     if (saveBwkDaten()) {
                         BWKPanel.this.hauptModul.getFrame().changeStatus(
-                            "Brennwertkessel " + BWKPanel.this.bwk.getObjektid()
+                            "Brennwertkessel " + BWKPanel.this.bwk.getId()
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
                     } else {
@@ -596,15 +596,15 @@ public class BWKPanel extends JPanel {
                                 BasisObjektverknuepfung obj = BWKPanel.this.objektVerknuepfungModel
                                     .getRow(row);
                                 if (obj.getBasisObjektByIstVerknuepftMit()
-                                    .getObjektid().intValue() != BWKPanel.this.hauptModul
-                                    .getObjekt().getObjektid().intValue())
+                                    .getId().intValue() != BWKPanel.this.hauptModul
+                                    .getObjekt().getId().intValue())
                                     BWKPanel.this.hauptModul
                                         .getManager()
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByIstVerknuepftMit()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 else
                                     BWKPanel.this.hauptModul
@@ -613,7 +613,7 @@ public class BWKPanel extends JPanel {
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByObjekt()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 BWKPanel.this.hauptModul.getManager()
                                     .switchModul("m_objekt_bearbeiten");

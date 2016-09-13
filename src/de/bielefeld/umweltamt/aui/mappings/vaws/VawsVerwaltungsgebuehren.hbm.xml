@@ -1,22 +1,26 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren" table="vaws_verwaltungsgebuehren" schema="auik">
-	  <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
-	   <generator class="identity"/>
-	  </id>
-        <many-to-one name="vawsGebuehrenarten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten" fetch="select">
-            <column name="gebuehrenart" />
-        </many-to-one>
+    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren" table="vaws_verwaltungsgebuehren" schema="auik" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native">
+                <param name="sequence">auik.vaws_verwaltungsgebuehren_id_seq</param>
+            </generator>
+        </id>
         <many-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" fetch="select">
             <column name="behaelterid" />
         </many-to-one>
+        <many-to-one name="vawsGebuehrenarten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten" fetch="select">
+            <column name="gebuehrenart" />
+        </many-to-one>
         <property name="datum" type="java.util.Date">
-            <column name="datum" length="8" />
+            <column name="datum" length="29" />
         </property>
         <property name="betrag" type="java.lang.Float">
-            <column name="betrag" precision="4" scale="0" />
+            <column name="betrag" precision="8" scale="8" />
         </property>
         <property name="abschnitt" type="java.lang.String">
             <column name="abschnitt" />

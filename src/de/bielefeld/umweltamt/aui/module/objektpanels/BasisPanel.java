@@ -104,18 +104,19 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisBetreiberModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandortModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -139,11 +140,11 @@ public class BasisPanel extends JPanel {
     private class ChooseDialog extends JDialog {
         private static final long serialVersionUID = 6320119317944629431L;
         private HauptFrame frame;
-        private BasisBetreiber betreiber;
-        private BasisStandort standort;
+        private BasisAdresse betreiber;
+        private BasisLageAdresse standort;
 
-        private BasisBetreiberModel betreiberModel;
-        private BasisStandortModel standortModel;
+        private BasisAdresseModel betreiberModel;
+        private BasisLageModel standortModel;
 
         private JTextField suchFeld;
         private JButton submitButton;
@@ -159,23 +160,23 @@ public class BasisPanel extends JPanel {
             List<Object> initialList = new ArrayList<Object>();
             initialList.add(initial);
 
-            if (initial instanceof BasisBetreiber) {
+            if (initial instanceof BasisAdresse) {
                 setTitle("Betreiber auswählen");
-                this.betreiber = (BasisBetreiber) initial;
-                this.betreiberModel = new BasisBetreiberModel(false);
+                this.betreiber = (BasisAdresse) initial;
+                this.betreiberModel = new BasisAdresseModel(false);
                 if (this.betreiber.getId() != null) {
                     this.betreiberModel.setList(initialList);
                 }
-            } else if (initial instanceof BasisStandort) {
+            } else if (initial instanceof BasisLageAdresse) {
                 setTitle("Standort auswählen");
-                this.standort = (BasisStandort) initial;
-                this.standortModel = new BasisStandortModel();
+                this.standort = (BasisLageAdresse) initial;
+                this.standortModel = new BasisLageModel();
                 if (this.standort.getId() != null) {
                     this.standortModel.setList(initialList);
                 }
             } else {
                 throw new IllegalArgumentException(
-                    "intial muss ein BasisBetreiber oder BasisStandort sein!");
+                    "intial muss ein BasisAdresse oder BasisLage sein!");
             }
 
             setContentPane(initializeContentPane());
@@ -186,7 +187,7 @@ public class BasisPanel extends JPanel {
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         }
 
-        public BasisBetreiber getChosenBetreiber() {
+        public BasisAdresse getChosenBetreiber() {
             if (this.betreiber.getId() != null) {
                 return this.betreiber;
             } else {
@@ -194,7 +195,7 @@ public class BasisPanel extends JPanel {
             }
         }
 
-        public BasisStandort getChosenStandort() {
+        public BasisLageAdresse getChosenStandort() {
             if (this.standort.getId() != null) {
                 return this.standort;
             } else {
@@ -517,16 +518,20 @@ public class BasisPanel extends JPanel {
 
     public void updateForm() {
         boolean neu = false;
-
+		log.debug("Updating BasisPanel");
         // Is this a new object?
         if (this.hauptModul.getObjekt() == null
-            || this.hauptModul.getObjekt().getObjektid() == null) {
+            || this.hauptModul.getObjekt().getId() == null) {
             neu = true;
+			log.debug("Neues Objekt");
         }
 
         if (neu == true) {
             // Create a new object
-            // Only load enabled Sachbearbeiter
+			log.debug("Creating new Objekt");
+            //TODO: set new Objekt's abwasserFrei-Field to a default value?
+			hauptModul.getObjekt().setAbwasserfrei(new Boolean(false));
+			// Only load enabled Sachbearbeiter
             getSachbearbeiterBox().setModel(new DefaultComboBoxModel(
                 DatabaseQuery.getEnabledSachbearbeiter()));
             // Preset the current Sachbearbeiter
@@ -586,11 +591,11 @@ public class BasisPanel extends JPanel {
 
         if (this.hauptModul.getObjekt() != null) {
             
-            if (this.hauptModul.getObjekt().getBasisBetreiber() != null) {
+            if (this.hauptModul.getObjekt().getBasisAdresse() != null) {
                 // TODO: Why are we using html here? :-/
             	
-                BasisBetreiber betr = this.hauptModul.getObjekt()
-                    .getBasisBetreiber();
+                BasisAdresse betr = this.hauptModul.getObjekt()
+                    .getBasisAdresse();
                 getBetreiberFeld().setText(betr.toString());
                 String toolTip = "<html><b>Anrede:</b> "
                     + ((betr.getBetranrede() != null) ? betr.getBetranrede()
@@ -619,9 +624,9 @@ public class BasisPanel extends JPanel {
                 getBetreiberFeld().setToolTipText(toolTip);
             
             }
-            if (this.hauptModul.getObjekt().getBasisStandort() != null) {
-                BasisStandort sta = this.hauptModul.getObjekt()
-                    .getBasisStandort();
+            if (this.hauptModul.getObjekt().getBasisLage() != null) {
+                BasisLageAdresse sta;
+                sta = new BasisLageAdresse(this.hauptModul.getObjekt().getBasisLage());
                 String toolTip = "<html>" + sta + "<br>";
                 if (sta.getPlz() != null) {
                     toolTip += "<b>PLZ:</b> " + sta.getPlz() + "<br>";
@@ -656,8 +661,17 @@ public class BasisPanel extends JPanel {
             getInaktivBox().setSelected(
                 this.hauptModul.getObjekt().isInaktiv());
             
-            getAbwasserfreiBox().setSelected(
-                    this.hauptModul.getObjekt().isAbwasserfrei());
+            if(this.hauptModul == null)
+				log.debug("hauptModul null");
+			if(this.hauptModul.getObjekt() == null)
+				log.debug("hauptModul.getObjekt() null");
+			if(this.hauptModul.getObjekt().getAbwasserfrei() == null)
+				log.debug("hauptModul.getObjekt().getAbwasserfrei() null");
+				
+			log.debug("Abwasserfrei: " + hauptModul.getObjekt().getAbwasserfrei().booleanValue() );
+			log.debug("BasisObjekt: " + hauptModul.getObjekt().toString());
+			getAbwasserfreiBox().setSelected(
+                    this.hauptModul.getObjekt().getAbwasserfrei());
 
             if (!neu) {
                 if (this.hauptModul.getObjekt().getPrioritaet() != null) {
@@ -665,7 +679,7 @@ public class BasisPanel extends JPanel {
                         this.hauptModul.getObjekt().getPrioritaet().toString());
                 }
             }
-            
+
 			if (!neu) {
 				if (this.hauptModul.getObjekt().getBasisObjektarten()
 						.getAbteilung().equals("360.33")) {
@@ -686,7 +700,7 @@ public class BasisPanel extends JPanel {
                     this.hauptModul.getObjekt().getBeschreibung());
             }
 
-            if (this.hauptModul.getObjekt().getObjektid() != null) {
+            if (this.hauptModul.getObjekt().getId() != null) {
                 this.objektVerknuepfungModel.setObjekt(this.hauptModul
                     .getObjekt());
             } else {
@@ -720,7 +734,6 @@ public class BasisPanel extends JPanel {
 		getStandortToolBar().setEnabled(enabled);
 		getArtBox().setEnabled(enabled);
 		getSachbearbeiterBox().setEnabled(enabled);
-		//TODO: abfangen
 				
 		if (this.hauptModul.getObjekt() != null & this.hauptModul.getObjekt().getBasisSachbearbeiter() != null){	
 			log.debug("getObjekt: " + this.hauptModul.getObjekt());
@@ -791,10 +804,10 @@ public class BasisPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     String action = e.getActionCommand();
 
-                    BasisBetreiber betreiber = BasisPanel.this.hauptModul
-                        .getObjekt().getBasisBetreiber();
-                    BasisStandort standort = BasisPanel.this.hauptModul
-                        .getObjekt().getBasisStandort();
+                    BasisAdresse betreiber = BasisPanel.this.hauptModul
+                        .getObjekt().getBasisAdresse();
+                    BasisLageAdresse standort = new BasisLageAdresse(BasisPanel.this.hauptModul
+                        .getObjekt().getBasisLage());
 
                     if ("betreiber_edit".equals(action) && betreiber != null) {
                         BetreiberEditor editDialog = new BetreiberEditor(
@@ -806,7 +819,7 @@ public class BasisPanel extends JPanel {
                         editDialog.setVisible(true);
 
                         BasisPanel.this.hauptModul.getObjekt()
-                            .setBasisBetreiber(editDialog.getBetreiber());
+                            .setBasisAdresse(editDialog.getBetreiber());
                     } else if ("standort_edit".equals(action)
                         && standort != null) {
                         StandortEditor editDialog = new StandortEditor(
@@ -818,7 +831,7 @@ public class BasisPanel extends JPanel {
                         editDialog.setVisible(true);
 
                         BasisPanel.this.hauptModul.getObjekt()
-                            .setBasisStandort(editDialog.getStandort());
+                            .setBasisLage(editDialog.getStandort().getBasisLage());
                     }
 
                     updateForm();
@@ -862,16 +875,16 @@ public class BasisPanel extends JPanel {
             this.betreiberChooseButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    BasisBetreiber betreiber = BasisPanel.this.hauptModul
-                        .getObjekt().getBasisBetreiber();
+                    BasisAdresse betreiber = BasisPanel.this.hauptModul
+                        .getObjekt().getBasisAdresse();
                     if (betreiber == null) {
-                        betreiber = new BasisBetreiber();
+                        betreiber = new BasisAdresse();
                     }
                     ChooseDialog chooser = new ChooseDialog(betreiber,
                         BasisPanel.this.hauptModul.getFrame());
                     chooser.setVisible(true);
 
-                    BasisPanel.this.hauptModul.getObjekt().setBasisBetreiber(
+                    BasisPanel.this.hauptModul.getObjekt().setBasisAdresse(
                         chooser.getChosenBetreiber());
                     updateForm();
                 }
@@ -911,25 +924,25 @@ public class BasisPanel extends JPanel {
                         .getSettingsManager()
                         .setSetting("auik.imc.return_to_objekt", true, false);
                     if (BasisPanel.this.hauptModul.getObjekt()
-                        .getBasisBetreiber() != null) {
+                        .getBasisAdresse() != null) {
                         BasisPanel.this.hauptModul
                             .getManager()
                             .getSettingsManager()
                             .setSetting(
                                 "auik.imc.use_betreiber",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisBetreiber().getId()
+                                    .getBasisAdresse().getId()
                                     .intValue(), false);
                     }
                     if (BasisPanel.this.hauptModul.getObjekt()
-                        .getBasisStandort() != null) {
+                        .getBasisLage() != null) {
                         BasisPanel.this.hauptModul
                             .getManager()
                             .getSettingsManager()
                             .setSetting(
                                 "auik.imc.use_standort",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisStandort().getId()
+                                    .getBasisLage().getId()
                                     .intValue(), false);
                     }
                     BasisPanel.this.hauptModul.getManager().switchModul(
@@ -974,18 +987,23 @@ public class BasisPanel extends JPanel {
             this.standortChooseButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    BasisStandort standort = BasisPanel.this.hauptModul
-                        .getObjekt().getBasisStandort();
+                    BasisLage lage = BasisPanel.this.hauptModul.getObjekt().getBasisLage();
+                    BasisLageAdresse standort;
+                    if(lage != null){
+                        standort = new BasisLageAdresse(lage);
+                    }else{
+                        standort = new BasisLageAdresse();
+                    }
                     if (standort == null) {
-                        standort = new BasisStandort();
+                        standort = new BasisLageAdresse();
                     }
                     ChooseDialog chooser = new ChooseDialog(standort,
                         BasisPanel.this.hauptModul.getFrame());
                     chooser.setVisible(true);
-
-                    BasisPanel.this.hauptModul.getObjekt().setBasisStandort(
-                        chooser.getChosenStandort());
-
+                    log.debug("Chosen standort: " + chooser.getChosenStandort().getBasisAdresse());
+                    BasisPanel.this.hauptModul.getObjekt().setBasisAdresse(
+                        chooser.getChosenStandort().getBasisAdresse());
+                    BasisPanel.this.hauptModul.getObjekt().setBasisLage(chooser.getChosenStandort().getBasisLage());
                     updateForm();
                 }
             });
@@ -1025,25 +1043,25 @@ public class BasisPanel extends JPanel {
                         .setSetting("auik.imc.return_to_objekt", true, false);
 
                     if (BasisPanel.this.hauptModul.getObjekt()
-                        .getBasisBetreiber() != null) {
+                        .getBasisAdresse() != null) {
                         BasisPanel.this.hauptModul
                             .getManager()
                             .getSettingsManager()
                             .setSetting(
                                 "auik.imc.use_betreiber",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisBetreiber().getId()
+                                    .getBasisAdresse().getId()
                                     .intValue(), false);
                     }
                     if (BasisPanel.this.hauptModul.getObjekt()
-                        .getBasisStandort() != null) {
+                        .getBasisLage() != null) {
                         BasisPanel.this.hauptModul
                             .getManager()
                             .getSettingsManager()
                             .setSetting(
                                 "auik.imc.use_standort",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisStandort().getId().intValue(),
+                                    .getBasisLage().getId().intValue(),
                                 false);
                     }
                     BasisPanel.this.hauptModul.getManager().switchModul(
@@ -1141,15 +1159,15 @@ public class BasisPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if ((BasisPanel.this.hauptModul.getObjekt()
-                        .getBasisBetreiber() != null)
+                        .getBasisAdresse() != null)
                         && (BasisPanel.this.hauptModul.getObjekt()
-                            .getBasisStandort() != null)) {
+                            .getBasisLage() != null)) {
                         enableAll(false);
                         if (saveObjektDaten()) {
                             BasisPanel.this.hauptModul.getFrame().changeStatus(
                                 "Objekt "
                                     + BasisPanel.this.hauptModul.getObjekt()
-                                        .getObjektid()
+                                        .getId()
                                     + " erfolgreich gespeichert.",
                                 HauptFrame.SUCCESS_COLOR);
                             BasisPanel.this.hauptModul.setNew(false);
@@ -1204,15 +1222,15 @@ public class BasisPanel extends JPanel {
                                 BasisObjektverknuepfung obj = BasisPanel.this.objektVerknuepfungModel
                                     .getRow(row);
                                 if (obj.getBasisObjektByIstVerknuepftMit()
-                                    .getObjektid().intValue() != BasisPanel.this.hauptModul
-                                    .getObjekt().getObjektid().intValue())
+                                    .getId().intValue() != BasisPanel.this.hauptModul
+                                    .getObjekt().getId().intValue())
                                     BasisPanel.this.hauptModul
                                         .getManager()
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByIstVerknuepftMit()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 else
                                     BasisPanel.this.hauptModul
@@ -1221,7 +1239,7 @@ public class BasisPanel extends JPanel {
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByObjekt()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 BasisPanel.this.hauptModul.getManager()
                                     .switchModul("m_objekt_bearbeiten");
@@ -1324,7 +1342,7 @@ public class BasisPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Save the objekt bevor we can link it to another
-                    if (BasisPanel.this.hauptModul.getObjekt().getObjektid() == null) {
+                    if (BasisPanel.this.hauptModul.getObjekt().getId() == null) {
                         BasisPanel.this.hauptModul
                             .getFrame()
                             .changeStatus(
@@ -1371,10 +1389,10 @@ public class BasisPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     String action = e.getActionCommand();
 
-                    BasisBetreiber betreiber = BasisPanel.this.hauptModul
-                        .getObjekt().getBasisBetreiber();
-                    BasisStandort standort = BasisPanel.this.hauptModul
-                        .getObjekt().getBasisStandort();
+                    BasisAdresse betreiber = BasisPanel.this.hauptModul
+                        .getObjekt().getBasisAdresse();
+                    BasisLage standort = BasisPanel.this.hauptModul
+                        .getObjekt().getBasisLage();
 
                     if ("betreiber_delete".equals(action) && betreiber != null) {
                         
@@ -1424,19 +1442,19 @@ public class BasisPanel extends JPanel {
 	
     private void deleteStandort(){
     	
-    	BasisStandort tmp = this.hauptModul.getObjekt().getBasisStandort();
+    	BasisLage tmp = this.hauptModul.getObjekt().getBasisLage();
     	tmp.setDeleted(true);
     	tmp.merge();
-    	this.hauptModul.getObjekt().setBasisStandort(null);
+    	this.hauptModul.getObjekt().setBasisLage(null);
     	
     }
     
     private void deleteBetreiber(){
     	
-    	BasisBetreiber tmp = this.hauptModul.getObjekt().getBasisBetreiber();
+    	BasisAdresse tmp = this.hauptModul.getObjekt().getBasisAdresse();
     	tmp.setDeleted(true);
     	tmp.merge();
-    	this.hauptModul.getObjekt().setBasisBetreiber(null);
+    	this.hauptModul.getObjekt().setBasisAdresse(null);
     }
     
     private boolean delCheck(boolean betr){

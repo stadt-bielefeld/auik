@@ -77,13 +77,13 @@ public class ProbepunktModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = pkt.getObjektid();
+            tmp = pkt.getId();
             break;
         case 1:
-            tmp = pkt.getBasisObjekt().getBasisStandort();
+            tmp = pkt.getBasisObjekt().getBasisLage();
             break;
         case 2:
-            tmp = pkt.getBasisObjekt().getBasisBetreiber();
+            tmp = pkt.getBasisObjekt().getBasisAdresse();
             break;
         case 3:
             tmp = pkt.getBeschreibung();

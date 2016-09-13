@@ -161,10 +161,10 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautProbeModel;
@@ -240,8 +240,8 @@ public class SielhautBearbeiten extends AbstractModul {
     private AtlSielhaut spunkt;
     private AtlProbepkt sprobePkt;
     private BasisObjekt objekt;
-    private BasisStandort standort;
-    private BasisBetreiber betreiber;
+    private BasisLage standort;
+    private BasisAdresse betreiber;
     private BasisObjektarten art;
     private SielhautProbeModel probeModel;
 
@@ -268,8 +268,8 @@ public class SielhautBearbeiten extends AbstractModul {
                 .getSettingsManager().getIntSetting("auik.imc.edit_object")));
             this.manager.getSettingsManager().removeSetting(
                 "auik.imc.edit_object");
-            this.sprobePkt = AtlProbepkt.findById(this.objekt.getObjektid());
-            this.spunkt = AtlSielhaut.findById(this.objekt.getObjektid());
+            this.sprobePkt = AtlProbepkt.findByObjektId(this.objekt.getId());
+            this.spunkt = AtlSielhaut.findByObjektId(this.objekt.getId());
             setSielhautPunkt(this.spunkt);
         }	
         
@@ -309,14 +309,14 @@ public class SielhautBearbeiten extends AbstractModul {
             getTabelleExportButton().setEnabled(true);
         } else {
             this.objekt = new BasisObjekt();
-            this.standort = BasisStandort.findById(
+            this.standort = BasisLage.findById(
                 DatabaseConstants.BASIS_STANDORT_KEIN_STANDORT);
-            this.betreiber = BasisBetreiber.findById(
+            this.betreiber = BasisAdresse.findById(
                 DatabaseConstants.BASIS_BETREIBER_ID_KEINE_BETREIBER);
             this.art = BasisObjektarten.findById(
                 DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE);
-            this.objekt.setBasisStandort(this.standort);
-            this.objekt.setBasisBetreiber(this.betreiber);
+            this.objekt.setBasisLage(this.standort);
+            this.objekt.setBasisAdresse(this.betreiber);
             this.objekt.setBasisObjektarten(this.art);
             this.objekt.setInaktiv(false);
             this.sprobePkt = new AtlProbepkt();

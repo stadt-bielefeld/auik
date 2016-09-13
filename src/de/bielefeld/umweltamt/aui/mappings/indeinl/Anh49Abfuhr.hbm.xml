@@ -1,31 +1,32 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr" table="anh_49_abfuhr" schema="auik">
-	  <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
-	   <generator class="identity"/>
-	  </id>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr" table="anh_49_abfuhr" schema="auik" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity" />
+        </id>
         <many-to-one name="anh49Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" fetch="select">
             <column name="anh49id" />
         </many-to-one>
         <property name="abfuhrdatum" type="java.util.Date">
-            <column name="abfuhrdatum" length="4" />
+            <column name="abfuhrdatum" length="13" />
         </property>
         <property name="naechsteabfuhr" type="java.util.Date">
-            <column name="naechsteabfuhr" length="4" />
+            <column name="naechsteabfuhr" length="13" />
         </property>
         <property name="entsorger" type="java.lang.String">
-            <column name="entsorger" length="0" />
-        </property>
-        <property name="menge" type="java.lang.Double">
-            <column name="menge" />
+            <column name="entsorger" />
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
         </property>
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
+        </property>
+        <property name="menge" type="java.lang.Double">
+            <column name="menge" precision="17" scale="17" />
         </property>
     </class>
 </hibernate-mapping>

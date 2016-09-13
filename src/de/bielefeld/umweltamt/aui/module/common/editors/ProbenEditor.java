@@ -130,9 +130,9 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
@@ -1051,8 +1051,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         AtlProbenahmen probe = getProbe();
 
-        BasisBetreiber basisBetr =
-            probe.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
+        BasisAdresse basisBetr =
+            probe.getAtlProbepkt().getBasisObjekt().getBasisAdresse();
 
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
         CurrencyDouble cd = new CurrencyDouble(getRechnungsbetrag(probe),
@@ -1165,8 +1165,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         });
 
         AtlProbenahmen probe = getProbe();
-        BasisBetreiber basisBetr =
-            probe.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
+        BasisAdresse basisBetr =
+            probe.getAtlProbepkt().getBasisObjekt().getBasisAdresse();
 
         this.probenummer.setText(probe.getKennummer());
         this.probenummer.setEnabled(false);
@@ -1492,10 +1492,10 @@ public class ProbenEditor extends AbstractApplyEditor {
      * @return die Variablen für den Probenahmeauftrag als Map.
      */
     public Map<String, Object> getAuftragDruckMap(AtlProbenahmen probe) {
-        BasisBetreiber betr = probe.getAtlProbepkt().getBasisObjekt()
-            .getBasisBetreiber();
-        BasisStandort std = probe.getAtlProbepkt().getBasisObjekt()
-            .getBasisStandort();
+        BasisAdresse betr = probe.getAtlProbepkt().getBasisObjekt()
+            .getBasisAdresse();
+        BasisLage std = probe.getAtlProbepkt().getBasisObjekt()
+            .getBasisLage();
         AtlProbeart art = probe.getAtlProbepkt().getAtlProbeart();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
@@ -1547,10 +1547,10 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public Map<String, Object> getBescheidDruckMap(AtlProbenahmen probe)
         throws IllegalArgumentException {
-        BasisBetreiber betr =
-            probe.getAtlProbepkt().getBasisObjekt().getBasisBetreiber();
-        BasisStandort basisStandort =
-            probe.getAtlProbepkt().getBasisObjekt().getBasisStandort();
+        BasisAdresse betr =
+            probe.getAtlProbepkt().getBasisObjekt().getBasisAdresse();
+        BasisLage basisStandort =
+            probe.getAtlProbepkt().getBasisObjekt().getBasisLage();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
 

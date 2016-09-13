@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten" table="anh_suev_fachdaten" schema="auik">
-        <id name="objektid" type="java.lang.Integer">
-            <column name="objektid" />
-            <generator class="foreign">
-                <param name="property">basisObjekt</param>
-            </generator>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten" table="anh_suev_fachdaten" schema="auik" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity" />
         </id>
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true" cascade="all"></one-to-one>
+        <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select">
+            <column name="objektid" not-null="true" />
+        </many-to-one>
         <property name="groesser3ha" type="java.lang.Boolean">
             <column name="groesser_3ha" />
         </property>
@@ -44,10 +44,10 @@
             <column name="keine_angaben" />
         </property>
         <property name="datAnzeige58" type="java.util.Date">
-            <column name="dat_anzeige58" length="8" />
+            <column name="dat_anzeige58" length="29" />
         </property>
         <property name="datAnschreiben" type="java.util.Date">
-            <column name="dat_anschreiben" length="8" />
+            <column name="dat_anschreiben" length="29" />
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />

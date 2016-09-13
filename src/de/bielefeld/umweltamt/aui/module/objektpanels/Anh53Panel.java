@@ -163,8 +163,8 @@ public class Anh53Panel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = Anh53Fachdaten.findById(
-            this.hauptModul.getObjekt().getObjektid());
+        this.fachdaten = Anh53Fachdaten.findByObjektId(
+            this.hauptModul.getObjekt().getId());
         log.debug("Objekt aus DB geholt: " + this.fachdaten);
     }
 
@@ -247,7 +247,7 @@ public class Anh53Panel extends JPanel {
         success = this.fachdaten.merge();
         if (success) {
             log.debug("Objekt "
-                + this.fachdaten.getBasisObjekt().getBasisBetreiber()
+                + this.fachdaten.getBasisObjekt().getBasisAdresse()
                     .getBetrname() + " gespeichert.");
         } else {
             log.debug("Objekt " + this.fachdaten
@@ -379,7 +379,7 @@ public class Anh53Panel extends JPanel {
                     enableAll(false);
                     if (saveAnh53Daten()) {
                         Anh53Panel.this.hauptModul.getFrame().changeStatus(
-                            "Objekt " + Anh53Panel.this.fachdaten.getObjektid()
+                            "Objekt " + Anh53Panel.this.fachdaten.getId()
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
                     } else {
@@ -428,15 +428,15 @@ public class Anh53Panel extends JPanel {
                                 BasisObjektverknuepfung obj = Anh53Panel.this.objektVerknuepfungModel
                                     .getRow(row);
                                 if (obj.getBasisObjektByIstVerknuepftMit()
-                                    .getObjektid().intValue() != Anh53Panel.this.hauptModul
-                                    .getObjekt().getObjektid().intValue())
+                                    .getId().intValue() != Anh53Panel.this.hauptModul
+                                    .getObjekt().getId().intValue())
                                     Anh53Panel.this.hauptModul
                                         .getManager()
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByIstVerknuepftMit()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 else
                                     Anh53Panel.this.hauptModul
@@ -445,7 +445,7 @@ public class Anh53Panel extends JPanel {
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByObjekt()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 Anh53Panel.this.hauptModul.getManager()
                                     .switchModul("m_objekt_bearbeiten");

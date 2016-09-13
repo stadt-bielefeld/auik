@@ -147,8 +147,8 @@ public class SuevPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = AnhSuevFachdaten.findById(
-            this.hauptModul.getObjekt().getObjektid());
+        this.fachdaten = AnhSuevFachdaten.findByObjektId(
+            this.hauptModul.getObjekt().getId());
         log.debug("SuevKan-Verfahren aus DB geholt: " + this.fachdaten);
     }
 
@@ -320,7 +320,7 @@ public class SuevPanel extends JPanel {
 
         success = this.fachdaten.merge();
         if (success) {
-            log.debug("SuevKan Verfahren " + this.fachdaten.getObjektid()
+            log.debug("SuevKan Verfahren " + this.fachdaten.getId()
                 + " gespeichert.");
         } else {
             log.debug("SuevKan Verfahren " + this.fachdaten
@@ -438,7 +438,7 @@ public class SuevPanel extends JPanel {
                     if (saveSuevDaten()) {
                         SuevPanel.this.hauptModul.getFrame().changeStatus(
                             "SuevKan Verfahren "
-                                + SuevPanel.this.fachdaten.getObjektid()
+                                + SuevPanel.this.fachdaten.getId()
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
                     } else {
@@ -487,15 +487,15 @@ public class SuevPanel extends JPanel {
                                 BasisObjektverknuepfung obj = SuevPanel.this.objektVerknuepfungModel
                                     .getRow(row);
                                 if (obj.getBasisObjektByIstVerknuepftMit()
-                                    .getObjektid().intValue() != SuevPanel.this.hauptModul
-                                    .getObjekt().getObjektid().intValue()) {
+                                    .getId().intValue() != SuevPanel.this.hauptModul
+                                    .getObjekt().getId().intValue()) {
                                     SuevPanel.this.hauptModul
                                         .getManager()
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByIstVerknuepftMit()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 } else {
                                     SuevPanel.this.hauptModul
@@ -504,7 +504,7 @@ public class SuevPanel extends JPanel {
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByObjekt()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 }
                                 SuevPanel.this.hauptModul.getManager()

@@ -395,7 +395,14 @@ public class Anh49AnalysenPanel extends JPanel {
         @Override
         public void updateList() {
             if (fachdaten != null) {
-                setList(DatabaseQuery.getKontrollen(fachdaten));
+                List<Anh49Kontrollen> temp = DatabaseQuery.getKontrollen(fachdaten);
+                if(temp != null){
+                    setList(DatabaseQuery.getKontrollen(fachdaten));
+                }
+                else{
+                    log.debug("List of Anh49Kontrollen is empty, creating new");
+                    setList(new ArrayList<Anh49Kontrollen>());
+                }
             }
             fireTableDataChanged();
         }

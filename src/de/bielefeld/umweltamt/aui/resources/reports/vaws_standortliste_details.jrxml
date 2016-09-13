@@ -9,21 +9,21 @@
 	<queryString>
         <![CDATA[select vaws_fachdaten.anlagenart, vaws_fachdaten.herstellnr, vaws_fachdaten.fluessigkeit,
 vaws_fachdaten.menge, vaws_fachdaten.stillegungsdatum, basis_objektarten.objektart,
-basis_betreiber.betrname, vaws_fachdaten.objektid, (select count(*)
-    from auik.basis_standort
-    inner join auik.basis_objekt on basis_objekt.standortid = basis_standort.id
-    inner join auik.basis_betreiber on basis_betreiber.id = basis_objekt.betreiberid
-    inner join auik.vaws_fachdaten on vaws_fachdaten.objektid = basis_objekt.objektid
+basis_adresse.betrname, vaws_fachdaten.objektid, (select count(*)
+    from auik.basis_lage
+    inner join auik.basis_objekt on basis_objekt.lageid = basis_lage.id
+    inner join auik.basis_adresse on basis_adresse.id = basis_objekt.betreiberid
+    inner join auik.vaws_fachdaten on vaws_fachdaten.objektid = basis_objekt.id
     inner join auik.basis_objektarten on basis_objektarten.id = basis_objekt.objektartid
-    where basis_standort.id = $P{StandortId}
+    where basis_lage.id = $P{StandortId}
           and basis_objekt.betreiberid = $P{BetreiberId}
           and basis_objektarten.abteilung = '360.34') as anzahl
-from auik.basis_standort
-inner join auik.basis_objekt on basis_objekt.standortid = basis_standort.id
-inner join auik.basis_betreiber on basis_betreiber.id = basis_objekt.betreiberid
-inner join auik.vaws_fachdaten on vaws_fachdaten.objektid = basis_objekt.objektid
+from auik.basis_lage
+inner join auik.basis_objekt on basis_objekt.lageid = basis_lage.id
+inner join auik.basis_adresse on basis_adresse.id = basis_objekt.betreiberid
+inner join auik.vaws_fachdaten on vaws_fachdaten.objektid = basis_objekt.id
 inner join auik.basis_objektarten on basis_objektarten.id = basis_objekt.objektartid
-where basis_standort.id = $P{StandortId}
+where basis_lage.id = $P{StandortId}
       and basis_objekt.betreiberid = $P{BetreiberId}
       and basis_objektarten.abteilung = '360.34']]>
 	</queryString>

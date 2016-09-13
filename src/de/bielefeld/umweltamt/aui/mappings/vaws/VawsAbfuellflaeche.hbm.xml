@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche" table="vaws_abfuellflaeche" schema="auik">
+    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche" table="vaws_abfuellflaeche" schema="auik" lazy="false" optimistic-lock="version">
         <id name="behaelterid" type="java.lang.Integer">
             <column name="behaelterid" />
             <generator class="foreign">
                 <param name="property">vawsFachdaten</param>
             </generator>
         </id>
-        <one-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" constrained="true" cascade="all"></one-to-one>
+        <one-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" constrained="true"></one-to-one>
         <property name="eoh" type="java.lang.Boolean">
             <column name="eoh" />
         </property>
@@ -29,7 +30,7 @@
             <column name="beschbodenfl" />
         </property>
         <property name="dicke" type="java.lang.Float">
-            <column name="dicke" precision="4" scale="0" />
+            <column name="dicke" precision="8" scale="8" />
         </property>
         <property name="guete" type="java.lang.String">
             <column name="guete" />

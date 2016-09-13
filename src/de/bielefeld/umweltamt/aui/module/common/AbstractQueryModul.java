@@ -328,7 +328,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
 
             if (obj != null) {
 //                AUIKataster.debugOutput("Bearbeite BO: " + obj, "AQM");
-                manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getObjektid().intValue(), false);
+                manager.getSettingsManager().setSetting("auik.imc.edit_object", obj.getId().intValue(), false);
                 manager.switchModul("m_objekt_bearbeiten");
             }
 

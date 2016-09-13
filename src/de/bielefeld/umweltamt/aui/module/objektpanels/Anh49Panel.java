@@ -79,6 +79,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -99,7 +102,9 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
@@ -107,6 +112,12 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungMo
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+
+import org.hibernate.Session;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 /**
  * Das "Anhang 49"-Tab des BasisObjektBearbeiten-Moduls.
@@ -269,8 +280,8 @@ public class Anh49Panel extends AbstractAnhangPanel {
     }
 
     public void fetchFormData() {
-        this.fachdaten = Anh49Fachdaten.findById(
-            this.hauptModul.getObjekt().getObjektid());
+		this.fachdaten = Anh49Fachdaten.findByObjektId(
+            this.hauptModul.getObjekt().getId());
         this.log.debug("Anhang 49 Objekt aus DB geholt: " + this.fachdaten);
     }
 
@@ -430,15 +441,15 @@ public class Anh49Panel extends AbstractAnhangPanel {
                                 BasisObjektverknuepfung obj = Anh49Panel.this.objektVerknuepfungModel
                                     .getRow(row);
                                 if (obj.getBasisObjektByIstVerknuepftMit()
-                                    .getObjektid().intValue() != Anh49Panel.this.hauptModul
-                                    .getObjekt().getObjektid().intValue())
+                                    .getId().intValue() != Anh49Panel.this.hauptModul
+                                    .getObjekt().getId().intValue())
                                     Anh49Panel.this.hauptModul
                                         .getManager()
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByIstVerknuepftMit()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 else
                                     Anh49Panel.this.hauptModul
@@ -447,7 +458,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByObjekt()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 Anh49Panel.this.hauptModul.getManager()
                                     .switchModul("m_objekt_bearbeiten");
@@ -551,6 +562,15 @@ public class Anh49Panel extends AbstractAnhangPanel {
             this.selectObjektButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+					if(Anh49Panel.this.fachdaten == null){
+						Anh49Panel.this.log.debug("fachdaten null");
+					}
+					if(Anh49Panel.this.fachdaten.getBasisObjekt() == null){
+						Anh49Panel.this.log.debug("fachdaten.getBasisObjekt null");
+					}
+					if(Anh49Panel.this.objektVerknuepfungModel == null){
+						Anh49Panel.this.log.debug("objektVerknuepfungsmodel null");
+					}
                     ObjektChooser chooser = new ObjektChooser(
                         Anh49Panel.this.hauptModul.getFrame(),
                         Anh49Panel.this.fachdaten.getBasisObjekt(),

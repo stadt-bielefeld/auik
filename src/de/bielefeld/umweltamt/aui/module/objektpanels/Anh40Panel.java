@@ -171,8 +171,8 @@ public class Anh40Panel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = Anh40Fachdaten.findById(
-            this.hauptModul.getObjekt().getObjektid());
+        this.fachdaten = Anh40Fachdaten.findByObjektId(
+            this.hauptModul.getObjekt().getId());
         log.debug("Anhang 40 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
@@ -375,7 +375,7 @@ public class Anh40Panel extends JPanel {
 
         success = this.fachdaten.merge();
         if (success) {
-            log.debug("Anh 40 Objekt " + this.fachdaten.getObjektid()
+            log.debug("Anh 40 Objekt " + this.fachdaten.getId()
                 + " gespeichert.");
         } else {
             log.debug("Anh 40 Objekt " + this.fachdaten
@@ -408,7 +408,7 @@ public class Anh40Panel extends JPanel {
                     if (saveAnh40Daten()) {
                         Anh40Panel.this.hauptModul.getFrame().changeStatus(
                             "Anh 40 Objekt "
-                                + Anh40Panel.this.fachdaten.getObjektid()
+                                + Anh40Panel.this.fachdaten.getId()
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
                     } else {
@@ -568,15 +568,15 @@ public class Anh40Panel extends JPanel {
                                 BasisObjektverknuepfung obj = Anh40Panel.this.objektVerknuepfungModel
                                     .getRow(row);
                                 if (obj.getBasisObjektByIstVerknuepftMit()
-                                    .getObjektid().intValue() != Anh40Panel.this.hauptModul
-                                    .getObjekt().getObjektid().intValue()) {
+                                    .getId().intValue() != Anh40Panel.this.hauptModul
+                                    .getObjekt().getId().intValue()) {
                                     Anh40Panel.this.hauptModul
                                         .getManager()
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByIstVerknuepftMit()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 } else {
                                     Anh40Panel.this.hauptModul
@@ -585,7 +585,7 @@ public class Anh40Panel extends JPanel {
                                         .setSetting(
                                             "auik.imc.edit_object",
                                             obj.getBasisObjektByObjekt()
-                                                .getObjektid().intValue(),
+                                                .getId().intValue(),
                                             false);
                                 }
                                 Anh40Panel.this.hauptModul.getManager()

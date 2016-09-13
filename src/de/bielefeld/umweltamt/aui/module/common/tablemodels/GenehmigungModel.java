@@ -58,10 +58,10 @@ public class GenehmigungModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = fd.getBasisObjekt().getBasisBetreiber().toString();
+            tmp = fd.getBasisObjekt().getBasisAdresse().toString();
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBasisStandort().toString();
+            tmp = fd.getBasisObjekt().getBasisLage().toString();
             break;
         case 2:
             tmp = fd.getErstellungsDatum();

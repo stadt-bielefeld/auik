@@ -21,7 +21,7 @@
 
 /*
  * Datei:
- * $Id: BasisStandortNeu.java,v 1.1.2.1 2010-11-23 10:25:54 u633d Exp $
+ * $Id: BasisLageNeu.java,v 1.1.2.1 2010-11-23 10:25:54 u633d Exp $
  *
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  *
@@ -73,10 +73,12 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
@@ -91,7 +93,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * 
  * @author David Klotz
  */
-public class BasisStandortNeu extends AbstractModul
+public class BasisLageNeu extends AbstractModul
 {
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
@@ -371,7 +373,7 @@ public class BasisStandortNeu extends AbstractModul
 			setAllEnabled(false);
 
 			// Neues Standortobjekt erzeugen
-			BasisStandort bsta = new BasisStandort();
+			BasisLageAdresse bsta = new BasisLageAdresse();
 
 			// Hausnummer:
 			Integer hausnr = ((IntegerField) hausnrEditFeld).getIntValue();
@@ -466,12 +468,20 @@ public class BasisStandortNeu extends AbstractModul
 
 			bsta.setRevidatum(new Date());
 			bsta.setRevihandz(handzeichenNeuFeld.getText().trim());
-
-			bsta = BasisStandort.merge(bsta);
-
+            //create BasisObjekt to Link BasisAdresse and BasisLage
+            BasisObjekt link = new BasisObjekt();
+			bsta = BasisLageAdresse.merge(bsta);
+            link = BasisObjekt.merge(link);
+            link.setBasisStandort(bsta.getBasisAdresse());
+            link.setBasisLage(bsta.getBasisLage());
+            bsta.addBasisObjekt(link);
+            link = BasisObjekt.merge(link);
+            bsta = BasisLageAdresse.merge(bsta);
+            log.debug("Lage: " + bsta.getBasisLage().getId() + " Standort: " + bsta.getBasisAdresse().getId() + ", BasisObjekt: " + link.getId() + ", Adresse: " + link.getBasisStandort().getId() + ", Lage: " + link.getBasisLage().getId());
+            if(link == null) log.debug("Basis Objekt nicht gespeichert");
 			if (bsta != null)
 			{
-				frame.changeStatus("Neuer Standort " + bsta.getId()
+				frame.changeStatus("Neuer Standort " + bsta.getBasisAdresse().getId()
 						+ " erfolgreich gespeichert!", HauptFrame.SUCCESS_COLOR);
 
 				// Wenn wir vom Objekt anlegen kommen,
@@ -479,7 +489,7 @@ public class BasisStandortNeu extends AbstractModul
 																"auik.imc.return_to_objekt"))
 				{
 					manager.getSettingsManager().setSetting(
-															"auik.imc.use_standort", bsta.getId().intValue(),
+															"auik.imc.use_standort", bsta.getBasisAdresse().getId().intValue(),
 															false);
 					manager.getSettingsManager().removeSetting(
 																"auik.imc.return_to_objekt");
@@ -715,7 +725,7 @@ public class BasisStandortNeu extends AbstractModul
 		{
 			if (e.getSource() == speichernButton)
 			{
-				log.debug("(" + BasisStandortNeu.this.getIdentifier() + ") "
+				log.debug("(" + BasisLageNeu.this.getIdentifier() + ") "
 						+ "Speichern gedrückt!");
 				// Check if we already have this location
 				if (standortExists())
@@ -765,7 +775,7 @@ public class BasisStandortNeu extends AbstractModul
 	//        @Override
 	//        public void actionPerformed(ActionEvent e) {
 	//            if (e.getSource() == speichernButton) {
-	//                log.debug("(" + BasisStandortNeu.this.getIdentifier() + ") "
+	//                log.debug("(" + BasisLageNeu.this.getIdentifier() + ") "
 	//                		+ "Speichern gedrückt!");
 	//                // Check if we already have this location
 	//                if (standortExists()) {

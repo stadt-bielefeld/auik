@@ -1,14 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" table="basis_sachbearbeiter" lazy="false" schema="auik">
-        <id name="kennummer" type="java.lang.String">
-            <column name="kennummer" />
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter" table="basis_sachbearbeiter" schema="auik" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
             <generator class="assigned" />
         </id>
+        <property name="kennummer" type="java.lang.String">
+            <column name="kennummer" not-null="true" unique="true" />
+        </property>
         <property name="name" type="java.lang.String">
-            <column name="name" />
+            <column name="name" not-null="true" />
         </property>
         <property name="zeichen" type="java.lang.String">
             <column name="zeichen" />
@@ -23,7 +27,7 @@
             <column name="email" />
         </property>
         <property name="gehoertzuarbeitsgr" type="java.lang.String">
-            <column name="gehoertzuarbeitsgr" length="0" />
+            <column name="gehoertzuarbeitsgr" />
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />

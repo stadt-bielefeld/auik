@@ -21,7 +21,7 @@
 
 /*
  * Datei:
- * $Id: BasisBetreiberNeu.java,v 1.1.2.1 2010-11-23 10:25:54 u633d Exp $
+ * $Id: BasisAdresseNeu.java,v 1.1.2.1 2010-11-23 10:25:54 u633d Exp $
  *
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  *
@@ -71,7 +71,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
@@ -90,7 +90,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * 
  * @author David Klotz
  */
-public class BasisBetreiberNeu extends AbstractModul
+public class BasisAdresseNeu extends AbstractModul
 {
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
@@ -408,7 +408,7 @@ public class BasisBetreiberNeu extends AbstractModul
 			setAllEnabled(false);
 
 			// Neues Standortobjekt erzeugen
-			BasisBetreiber betrn = new BasisBetreiber();
+			BasisAdresse betrn = new BasisAdresse();
 
 			// Anrede
 			String anrede = anredeFeld.getText();
@@ -587,8 +587,8 @@ public class BasisBetreiberNeu extends AbstractModul
 			betrn.setRevidatum(Calendar.getInstance().getTime());
 			betrn.setRevihandz(handzeichenNeuFeld.getText().trim());
 
-			BasisBetreiber persistentBetreiber = null;
-			persistentBetreiber = BasisBetreiber.merge(betrn);
+			BasisAdresse persistentBetreiber = null;
+			persistentBetreiber = BasisAdresse.merge(betrn);
 
 			if (persistentBetreiber != null)
 			{
@@ -839,7 +839,7 @@ public class BasisBetreiberNeu extends AbstractModul
 		{
 			if (e.getSource() == speichernButton)
 			{
-				log.debug("(" + BasisBetreiberNeu.this.getIdentifier() + ") "
+				log.debug("(" + BasisAdresseNeu.this.getIdentifier() + ") "
 						+ "Speichern gedrückt!");
 				doSave();
 			}

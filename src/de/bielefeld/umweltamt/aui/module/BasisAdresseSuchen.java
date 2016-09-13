@@ -21,7 +21,7 @@
 
 /*
  * Datei:
- * $Id: BasisBetreiberSuchen.java,v 1.1.2.1 2010-11-23 10:25:54 u633d Exp $
+ * $Id: BasisAdresseSuchen.java,v 1.1.2.1 2010-11-23 10:25:54 u633d Exp $
  *
  * Erstellt am 12.01.2005 von David Klotz (u633z)
  *
@@ -86,10 +86,10 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisBetreiberModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -102,7 +102,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
  * Ein Modul zum Suchen und Bearbeiten eines Betreibers.
  * @author David Klotz
  */
-public class BasisBetreiberSuchen extends AbstractModul {
+public class BasisAdresseSuchen extends AbstractModul {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -124,14 +124,14 @@ public class BasisBetreiberSuchen extends AbstractModul {
     private Action objektLoeschAction;
     private JPopupMenu objektPopup;
 
-    private BasisBetreiberModel betreiberModel;
+    private BasisAdresseModel betreiberModel;
     private BasisObjektModel objektModel;
 
     /**
      * Wird benutzt, um nach dem Bearbeiten etc. wieder den selben Betreiber in
      * der Liste auszuwählen.
      */
-    private BasisBetreiber lastBetreiber;
+    private BasisAdresse lastBetreiber;
 
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
@@ -173,7 +173,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
     @Override
     public JPanel getPanel() {
         if (this.panel == null) {
-            this.betreiberModel = new BasisBetreiberModel();
+            this.betreiberModel = new BasisAdresseModel();
             this.objektModel = new BasisObjektModel("Standort", this.manager
                 .getSettingsManager().getSetting("auik.prefs.abteilungsfilter"));
 
@@ -266,19 +266,19 @@ public class BasisBetreiberSuchen extends AbstractModul {
         SwingWorkerVariant worker = new SwingWorkerVariant(getSuchFeld()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                BasisBetreiberSuchen.this.betreiberModel.updateList();
+                BasisAdresseSuchen.this.betreiberModel.updateList();
             }
 
             @Override
             protected void doUIUpdateLogic() throws RuntimeException {
-                BasisBetreiberSuchen.this.betreiberModel.fireTableDataChanged();
+                BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
 
-                if (BasisBetreiberSuchen.this.lastBetreiber != null) {
+                if (BasisAdresseSuchen.this.lastBetreiber != null) {
                     // Wenn der Betreiber noch in der Liste ist, wird er
                     // ausgewählt.
-                    int row = BasisBetreiberSuchen.this.betreiberModel
+                    int row = BasisAdresseSuchen.this.betreiberModel
                         .getList().indexOf(
-                            BasisBetreiberSuchen.this.lastBetreiber);
+                            BasisAdresseSuchen.this.lastBetreiber);
                     if (row != -1) {
                         getBetreiberTabelle().setRowSelectionInterval(row, row);
                         getBetreiberTabelle().scrollRectToVisible(
@@ -286,7 +286,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                         getBetreiberTabelle().requestFocus();
                     }
                 } else {
-                    int betreiberCount = BasisBetreiberSuchen.this.betreiberModel
+                    int betreiberCount = BasisAdresseSuchen.this.betreiberModel
                         .getRowCount();
                     if (betreiberCount > 0) {
                         String statusMsg = "Suche: " + betreiberCount
@@ -295,7 +295,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                             statusMsg += "se";
                         }
                         statusMsg += ".";
-                        BasisBetreiberSuchen.this.frame.changeStatus(statusMsg);
+                        BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
                     }
                 }
 
@@ -310,7 +310,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
         ListSelectionModel lsm = getBetreiberTabelle().getSelectionModel();
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
-            BasisBetreiber betr = this.betreiberModel.getRow(selectedRow);
+            BasisAdresse betr = this.betreiberModel.getRow(selectedRow);
             log.debug("Betreiber " + betr.getBetrname() + " (ID"
                 + betr.getId() + ") angewählt.");
             searchObjekteByBetreiber(betr);
@@ -321,7 +321,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
      * öffnet einen Dialog um einen Betreiber-Datensatz zu bearbeiten.
      * @param betr Der Betreiber
      */
-    public void editBetreiber(BasisBetreiber betr) {
+    public void editBetreiber(BasisAdresse betr) {
         BetreiberEditor editDialog = new BetreiberEditor(betr, this.frame);
         editDialog.setLocationRelativeTo(this.frame);
 
@@ -339,19 +339,19 @@ public class BasisBetreiberSuchen extends AbstractModul {
      * Betreibers.
      * @param betreiberid Die Betreiber-Id
      */
-    public void searchObjekteByBetreiber(final BasisBetreiber betreiber) {
+    public void searchObjekteByBetreiber(final BasisAdresse betreiber) {
         // ... siehe show()
         SwingWorkerVariant worker = new SwingWorkerVariant(
             getBetreiberTabelle()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                BasisBetreiberSuchen.this.objektModel
+                BasisAdresseSuchen.this.objektModel
                     .searchByBetreiber(betreiber);
             }
 
             @Override
             protected void doUIUpdateLogic() throws RuntimeException {
-                BasisBetreiberSuchen.this.objektModel.fireTableDataChanged();
+                BasisAdresseSuchen.this.objektModel.fireTableDataChanged();
             }
         };
         worker.start();
@@ -367,7 +367,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
             getBetreiberTabelle()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                BasisBetreiberSuchen.this.betreiberModel.filterList(suche,
+                BasisAdresseSuchen.this.betreiberModel.filterList(suche,
                     column);
             }
 
@@ -375,15 +375,15 @@ public class BasisBetreiberSuchen extends AbstractModul {
             protected void doUIUpdateLogic() throws RuntimeException {
                 getBetreiberTabelle().clearSelection();
 
-                BasisBetreiberSuchen.this.betreiberModel.fireTableDataChanged();
+                BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
                 String statusMsg = "Suche: "
-                    + BasisBetreiberSuchen.this.betreiberModel.getRowCount()
+                    + BasisAdresseSuchen.this.betreiberModel.getRowCount()
                     + " Ergebnis";
-                if (BasisBetreiberSuchen.this.betreiberModel.getRowCount() != 1) {
+                if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1) {
                     statusMsg += "se";
                 }
                 statusMsg += ".";
-                BasisBetreiberSuchen.this.frame.changeStatus(statusMsg);
+                BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
             }
         };
 
@@ -403,7 +403,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                     // Natürlich nur editieren, wenn wirklich eine Zeile
                     // ausgewählt ist
                     if (row != -1) {
-                        BasisBetreiber betr = BasisBetreiberSuchen.this.betreiberModel
+                        BasisAdresse betr = BasisAdresseSuchen.this.betreiberModel
                             .getRow(row);
                         editBetreiber(betr);
                     }
@@ -428,29 +428,29 @@ public class BasisBetreiberSuchen extends AbstractModul {
                     int row = getBetreiberTabelle().getSelectedRow();
                     if (row != -1
                         && getBetreiberTabelle().getEditingRow() == -1) {
-                        if (BasisBetreiberSuchen.this.objektModel.getRowCount() != 0) {
-                            BasisBetreiberSuchen.this.frame
+                        if (BasisAdresseSuchen.this.objektModel.getRowCount() != 0) {
+                            BasisAdresseSuchen.this.frame
                                 .changeStatus(
                                     "Kann Betreiber nicht löschen: Zu erst alle zugehörigen Objekte löschen!",
                                     HauptFrame.ERROR_COLOR);
                         } else {
-                            BasisBetreiber betr = BasisBetreiberSuchen.this.betreiberModel
+                            BasisAdresse betr = BasisAdresseSuchen.this.betreiberModel
                                 .getRow(row);
 
                             if (GUIManager.getInstance().showQuestion(
                                 "Soll der Betreiber '" + betr
                                     + "' wirklich gelöscht werden?",
                                 "Löschen bestätigen")) {
-                                if (BasisBetreiberSuchen.this.betreiberModel
+                                if (BasisAdresseSuchen.this.betreiberModel
                                     .removeRow(row)) {
-                                    BasisBetreiberSuchen.this.frame
+                                    BasisAdresseSuchen.this.frame
                                         .changeStatus("Betreiber gelöscht.",
                                             HauptFrame.SUCCESS_COLOR);
                                     log.debug("Betreiber "
                                         + betr.getId()
                                         + " wurde gelöscht!");
                                 } else {
-                                    BasisBetreiberSuchen.this.frame
+                                    BasisAdresseSuchen.this.frame
                                         .changeStatus(
                                             "Konnte den Betreiber nicht löschen!",
                                             HauptFrame.ERROR_COLOR);
@@ -476,16 +476,16 @@ public class BasisBetreiberSuchen extends AbstractModul {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int row = BasisBetreiberSuchen.this.betreiberTabelle
+                    int row = BasisAdresseSuchen.this.betreiberTabelle
                         .getSelectedRow();
 
                     if (row != -1) {
-                        BasisBetreiber betr = BasisBetreiberSuchen.this.betreiberModel
+                        BasisAdresse betr = BasisAdresseSuchen.this.betreiberModel
                             .getRow(row);
-                        BasisBetreiberSuchen.this.manager.getSettingsManager()
+                        BasisAdresseSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.use_betreiber",
                                 betr.getId().intValue(), false);
-                        BasisBetreiberSuchen.this.manager
+                        BasisAdresseSuchen.this.manager
                             .switchModul("m_objekt_bearbeiten");
                     }
                 }
@@ -504,25 +504,25 @@ public class BasisBetreiberSuchen extends AbstractModul {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int row = BasisBetreiberSuchen.this.objektTabelle
+                    int row = BasisAdresseSuchen.this.objektTabelle
                         .getSelectedRow();
-                    BasisObjekt obj = BasisBetreiberSuchen.this.objektModel
+                    BasisObjekt obj = BasisAdresseSuchen.this.objektModel
                         .getRow(row);
                     if (row != -1
                         || (!(obj.getBasisObjektarten().getId().equals(
                             DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)))) {
-                        BasisBetreiberSuchen.this.manager.getSettingsManager()
+                        BasisAdresseSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.edit_object",
                                 obj.getObjektid().intValue(), false);
-                        BasisBetreiberSuchen.this.manager
+                        BasisAdresseSuchen.this.manager
                             .switchModul("m_objekt_bearbeiten");
                     } else if (row != -1
                         || obj.getBasisObjektarten().getId().equals(
                             DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)) {
-                        BasisBetreiberSuchen.this.manager.getSettingsManager()
+                        BasisAdresseSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.edit_object",
                                 obj.getObjektid().intValue(), false);
-                        BasisBetreiberSuchen.this.manager
+                        BasisAdresseSuchen.this.manager
                             .switchModul("m_sielhaut1");
                     }
                 }
@@ -545,7 +545,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektTabelle().getSelectedRow();
                     if (row != -1 && getObjektTabelle().getEditingRow() == -1) {
-                        BasisObjekt objekt = BasisBetreiberSuchen.this.objektModel
+                        BasisObjekt objekt = BasisAdresseSuchen.this.objektModel
                             .getRow(row);
 
                         if (GUIManager.getInstance().showQuestion(
@@ -556,15 +556,15 @@ public class BasisBetreiberSuchen extends AbstractModul {
                                 + " gelöscht werden, wenn für sie\n"
                                 + "keine Fachdaten mehr existieren.",
                             "Löschen bestätigen")) {
-                            if (BasisBetreiberSuchen.this.objektModel
+                            if (BasisAdresseSuchen.this.objektModel
                                 .removeRow(row)) {
-                                BasisBetreiberSuchen.this.frame.changeStatus(
+                                BasisAdresseSuchen.this.frame.changeStatus(
                                     "Objekt gelöscht.",
                                     HauptFrame.SUCCESS_COLOR);
                                 log.debug("Objekt " + objekt.getObjektid()
                                     + " wurde gelöscht!");
                             } else {
-                                BasisBetreiberSuchen.this.frame.changeStatus(
+                                BasisAdresseSuchen.this.frame.changeStatus(
                                     "Konnte das Objekt nicht löschen!",
                                     HauptFrame.ERROR_COLOR);
                             }
@@ -670,7 +670,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
                             Point origin = e.getPoint();
                             int row = getBetreiberTabelle().rowAtPoint(origin);
 
-                            BasisBetreiber betr = BasisBetreiberSuchen.this.betreiberModel
+                            BasisAdresse betr = BasisAdresseSuchen.this.betreiberModel
                                 .getRow(row);
                             log.debug("Doppelklick auf Zeile " + row);
                             editBetreiber(betr);
@@ -737,24 +737,24 @@ public class BasisBetreiberSuchen extends AbstractModul {
                             Point origin = e.getPoint();
                             int row = getObjektTabelle().rowAtPoint(origin);
                             BasisObjekt obj =
-                                BasisBetreiberSuchen.this.objektModel.getRow(row);
+                                BasisAdresseSuchen.this.objektModel.getRow(row);
                             if (row != -1
                                 && (!(obj.getBasisObjektarten().getId().equals(
                                     DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)))) {
-                                BasisBetreiberSuchen.this.manager
+                                BasisAdresseSuchen.this.manager
                                     .getSettingsManager().setSetting(
                                         "auik.imc.edit_object",
                                         obj.getObjektid().intValue(), false);
-                                BasisBetreiberSuchen.this.manager
+                                BasisAdresseSuchen.this.manager
                                     .switchModul("m_objekt_bearbeiten");
                             } else if (row != -1
                                 && obj.getBasisObjektarten().getId().equals(
                                     DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)) {
-                                BasisBetreiberSuchen.this.manager
+                                BasisAdresseSuchen.this.manager
                                     .getSettingsManager().setSetting(
                                         "auik.imc.edit_object",
                                         obj.getObjektid().intValue(), false);
-                                BasisBetreiberSuchen.this.manager
+                                BasisAdresseSuchen.this.manager
                                     .switchModul("m_sielhaut1");
                             }
                         }

@@ -22,22 +22,22 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBetreiber;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 /**
  * Ein TableModel für die Basis-Betreiberdaten.
  * @author David Klotz
  */
-public class BasisBetreiberModel extends ListTableModel {
+public class BasisAdresseModel extends ListTableModel {
     private static final long serialVersionUID = -1943023265274962194L;
     private String lastSuchWort = null;
     private String lastProperty = null;
 
-    public BasisBetreiberModel() {
+    public BasisAdresseModel() {
         this(true);
     }
 
-    public BasisBetreiberModel(boolean zeigeAdresse) {
+    public BasisAdresseModel(boolean zeigeAdresse) {
         super(new String[]{
                 "Name",
                 "Anrede",
@@ -79,7 +79,7 @@ public class BasisBetreiberModel extends ListTableModel {
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
 
-        BasisBetreiber betr = (BasisBetreiber) objectAtRow;
+        BasisAdresse betr = (BasisAdresse) objectAtRow;
         switch(columnIndex) {
             case 0:
             	if (betr.getKassenzeichen() != null) {
@@ -124,24 +124,24 @@ public class BasisBetreiberModel extends ListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public BasisBetreiber getRow(int rowIndex) {
-        return (BasisBetreiber) super.getObjectAtRow(rowIndex);
+    public BasisAdresse getRow(int rowIndex) {
+        return (BasisAdresse) super.getObjectAtRow(rowIndex);
     }
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        BasisBetreiber removedBetreiber = (BasisBetreiber) objectAtRow;
-        return BasisBetreiber.delete(removedBetreiber);
+        BasisAdresse removedBetreiber = (BasisAdresse) objectAtRow;
+        return BasisAdresse.delete(removedBetreiber);
     }
 
     /**
      * Filtert den Tabelleninhalt nach Anrede, Name oder Zusatz.
-     * Zu den möglichen Werten von <code>property</code>, siehe {@link BasisBetreiber#findBetreiber(String, String)}.
+     * Zu den möglichen Werten von <code>property</code>, siehe {@link BasisAdresse#findBetreiber(String, String)}.
      * @param suche Der Such-String
      * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
      */
     public void filterList(String suche, String property) {
-        setList(DatabaseQuery.getBasisBetreiber(property, suche));
+        setList(DatabaseQuery.getBasisAdresse(property, suche));
         lastSuchWort = suche;
         lastProperty = property;
     }

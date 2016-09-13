@@ -52,10 +52,10 @@ public class Anh53Model extends ListTableModel {
 
         switch (columnIndex) {
             case 0:
-                tmp = fd.getBasisObjekt().getBasisBetreiber();
+                tmp = fd.getBasisObjekt().getBasisAdresse();
                 break;
             case 1:
-                tmp = fd.getBasisObjekt().getBasisStandort();
+                tmp = fd.getBasisObjekt().getBasisLage();
                 break;
             case 2:
                 if (fd.getBasisObjekt().getBasisObjektarten().getId().equals(

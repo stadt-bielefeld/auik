@@ -120,7 +120,7 @@ public class ProbenahmenModel extends ListTableModel {
                     if (secondColumn.equals("Art")) {
                         value = probe.getAtlProbepkt().getAtlProbeart();
                     } else if (secondColumn.equals("Pkt-ID")) {
-                        value = probe.getAtlProbepkt().getObjektid();
+                        value = probe.getAtlProbepkt().getId();
                     } else {
                         value = "";
                     }
@@ -139,7 +139,7 @@ public class ProbenahmenModel extends ListTableModel {
                     break;
                 case 5:
                     value = probe.getAtlProbepkt().getBasisObjekt()
-                        .getBasisBetreiber();
+                        .getBasisAdresse();
                     break;
                 case 6:
                     value = probe.getBemerkung();

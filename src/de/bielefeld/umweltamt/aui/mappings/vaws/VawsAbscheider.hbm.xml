@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider" table="vaws_abscheider" schema="auik">
-        <id name="behaelterid" type="java.lang.Integer">
-            <column name="behaelterid" />
-            <generator class="foreign">
-                <param name="property">vawsFachdaten</param>
-            </generator>
+    <class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider" table="vaws_abscheider" schema="auik" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-        <one-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" constrained="true" cascade="all"></one-to-one>
+        <many-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" fetch="select">
+            <column name="behaelterid" not-null="true" />
+        </many-to-one>
         <property name="sfhersteller" type="java.lang.String">
             <column name="sfhersteller" />
         </property>

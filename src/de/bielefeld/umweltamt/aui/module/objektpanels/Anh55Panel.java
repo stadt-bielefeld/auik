@@ -435,7 +435,7 @@ public class Anh55Panel extends JPanel {
 
         success = fachdaten.merge();
         if (success) {
-            log.debug("Anh 55 Objekt " + this.fachdaten.getObjektid()
+            log.debug("Anh 55 Objekt " + this.fachdaten.getId()
                 + " gespeichert.");
         } else {
             log.debug("Anh 55 Objekt " + this.fachdaten
@@ -699,7 +699,7 @@ public class Anh55Panel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = Anh55Fachdaten.findById(
+        this.fachdaten = Anh55Fachdaten.findByObjektId(
             this.hauptModul.getObjekt().getObjektid());
         log.debug("Anhang 55 Objekt aus DB geholt: ID" + this.fachdaten);
     }
@@ -715,7 +715,7 @@ public class Anh55Panel extends JPanel {
                     if (saveAnh55Daten()) {
                         Anh55Panel.this.hauptModul.getFrame().changeStatus(
                             "Anh 55 Objekt "
-                                + Anh55Panel.this.fachdaten.getObjektid()
+                                + Anh55Panel.this.fachdaten.getId()
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
                     } else {

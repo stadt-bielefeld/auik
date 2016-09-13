@@ -201,7 +201,7 @@ public class Anh52Panel extends JPanel{
 
         success = fachdaten.merge();
         if (success) {
-            log.debug("Anh 52 Objekt " + fachdaten.getObjektid()
+            log.debug("Anh 52 Objekt " + fachdaten.getId()
             		+ " gespeichert.");
         } else {
             log.debug("Anh 52 Objekt " + fachdaten
@@ -268,8 +268,8 @@ public class Anh52Panel extends JPanel{
 
 
     public void fetchFormData() throws RuntimeException {
-        fachdaten = Anh52Fachdaten.findById(
-            this.hauptModul.getObjekt().getObjektid());
+        fachdaten = Anh52Fachdaten.findByObjektId(
+            this.hauptModul.getObjekt().getId());
         log.debug("(Anh52Panel.fetchFormData) "
         		+ "Anhang 52 Objekt aus DB geholt: ID" + fachdaten);
     }
@@ -288,7 +288,7 @@ public class Anh52Panel extends JPanel{
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     if (saveAnh52Daten()) {
-                        hauptModul.getFrame().changeStatus("Anh 52 Objekt "+fachdaten.getObjektid()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
+                        hauptModul.getFrame().changeStatus("Anh 52 Objekt "+fachdaten.getId()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
                     } else {
                         hauptModul.getFrame().changeStatus("Fehler beim Speichern des Anh 40 Objekt!", HauptFrame.ERROR_COLOR);
                     }

@@ -424,7 +424,7 @@ public class ChronoPanel extends JPanel {
 
     public void showReportListe() {
         this.objektid = this.hauptModul.getObjekt().getObjektid();
-        this.betreiber = this.hauptModul.getObjekt().getBasisBetreiber()
+        this.betreiber = this.hauptModul.getObjekt().getBasisAdresse()
             .toString();
         this.standort = this.hauptModul.getObjekt().getBasisStandort()
             .toString();

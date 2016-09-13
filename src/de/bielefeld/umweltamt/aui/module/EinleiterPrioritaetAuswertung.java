@@ -57,7 +57,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.PrioritaetModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -161,7 +161,7 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
 
 	/**
 	 * Schaltet zum "Standort suchen"-Modul um, wenn zu einer Zeile in der
-	 * Ergebnis-Tabelle ein BasisStandort vorhanden ist.
+	 * Ergebnis-Tabelle ein BasisLage vorhanden ist.
 	 *
 	 * @param row
 	 *            Die Zeile der Tabelle.
@@ -175,7 +175,7 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
             	Object standort = fd[0];
 
 	            if (standort != null) {
-	            	manager.getSettingsManager().setStandort((BasisStandort)standort);
+	            	manager.getSettingsManager().setStandort((BasisLage)standort);
 	                manager.switchModul("m_standort_suchen");
 	            }
 
