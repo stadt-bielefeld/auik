@@ -112,11 +112,17 @@ public class DatabaseClassToString {
      */
     public static String toStringForClass(BasisAdresse clazz) {
         String zusatz = "";
+        
+        //If all name fields are empty, the instance must be a Standort
+        if(clazz.getBetrname() == null){
+            return clazz.getStrasse() + " " + clazz.getHausnr();
+        }
+        //Else return a Betreiber string
         if (clazz.getBetrvorname() != null) {
             zusatz = ", " + clazz.getBetrvorname();
         } else if (clazz.getBetrnamezus() != null) {
             zusatz = ", " + clazz.getBetrnamezus();
-        }
+        }        
         return clazz.getBetrname() + zusatz;
     }
 
@@ -195,9 +201,9 @@ public class DatabaseClassToString {
      * @return Komplette, formatierte Strasse inkl. Hausnr
      */
     public static String toStringForClass(BasisLage clazz) {
-        return clazz.getStrasse()
-            + (clazz.getHausnr() != null ? " " + clazz.getHausnr() : "")
-            + (clazz.getHausnrzus() != null ? clazz.getHausnrzus() : "");
+        return " " 
+            + (clazz.getN32() != null ? " " + clazz.getN32() : "")
+            + (clazz.getE32() != null ? " " + clazz.getE32() : "");
     }
 
     /** @return BasisStrassen.toGuiString() */

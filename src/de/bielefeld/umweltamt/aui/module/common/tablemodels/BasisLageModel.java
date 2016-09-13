@@ -94,7 +94,7 @@ public class BasisLageModel extends ListTableModel
     public List<BasisLageAdresse> createAdresseList(List<BasisAdresse> list){
         int length = list.size();
         List<BasisLageAdresse> combined = new ArrayList<BasisLageAdresse>(list.size());
-        log.debug("Creating Adresse-List out of " + length + "Objects");
+        log.debug("Creating Adresse-List out of " + length + " Objects");
         if(length != 0){
             for(int i = 0; i < length; i++){
                 //log.debug("Creating BasisLageAdresse for Adresse: " + list.get(i));
@@ -121,21 +121,18 @@ public class BasisLageModel extends ListTableModel
 	{
         //Get all BasisAdresse objects
         List<BasisAdresse> list = DatabaseQuery.findStandorte(strasse, hausnr, ort);
-        //List<BasisAdresse> list = new ArrayList<BasisAdresse>();
-        /*for(BasisAdresse i:temp){
-            log.debug(i);
-            BasisObjekt o;
-            try{
-                o = (BasisObjekt) i.getBasisObjekts().toArray()[0];
+        List<BasisAdresse> standortList = new ArrayList<BasisAdresse>();
+        //Remove Betreiber from list
+        log.debug("Fetched " + list.size() + " BasisAdresse-Objects");
+        for(BasisAdresse a : list){
+            if(a.getBetrname() == null || a.getBetrname() == ""){
+                standortList.add(a);
+                //log.debug(a.getId() +" "+ a.getStrasse() + " " + a.getHausnr() + " " + a.getBetrname());
             }
-            catch(ArrayIndexOutOfBoundsException e){
-                o = null;
-            }
-            if(o != null && i != null && i.getId() == o.getBasisStandort().getId()){
-                list.add(i);
-            }
-        }*/
-        setList(createAdresseList(list));
+
+        }
+
+        setList(createAdresseList(standortList));
 		lastOrt = ort;
 		lastStrasse = strasse;
 		lastHausNr = hausnr;

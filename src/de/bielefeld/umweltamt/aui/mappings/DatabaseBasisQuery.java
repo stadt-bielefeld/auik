@@ -254,7 +254,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 				.forClass(BasisObjekt.class)
 				.createAlias("basisAdresse", "betreiber")
 				.createAlias("basisObjektarten", "art")
-				.add(Restrictions.eq("basisAdresse", standort))
+				.add(Restrictions.eq("basisStandort", standort))
 				.addOrder(Order.asc("inaktiv"))
 				.addOrder(Order.asc("betreiber.betrname"))
 				.addOrder(Order.asc("art.objektart"))
@@ -663,8 +663,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 
 		DetachedCriteria detachedCriteria = DetachedCriteria
 				.forClass(BasisAdresse.class).addOrder(Order.asc("strasse"))
-				.addOrder(Order.asc("hausnr"));
-
+				.addOrder(Order.asc("hausnr"))
+                .add(Restrictions.isNull("betrname"));
+                
 		if (strasse != null)
 		{
 			if (strasse.length() > 0)
@@ -687,7 +688,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		{
 			detachedCriteria.add(Restrictions.eq("hausnr", hausnr));
 		}
-        detachedCriteria.add(Restrictions.isNull("betrname"));
 		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
 															new BasisAdresse());
 	}

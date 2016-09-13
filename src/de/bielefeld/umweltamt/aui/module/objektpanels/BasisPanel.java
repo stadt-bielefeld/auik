@@ -590,12 +590,13 @@ public class BasisPanel extends JPanel {
         }
 
         if (this.hauptModul.getObjekt() != null) {
-            
+            log.debug("Updating Form with BasisObjekt: " + hauptModul.getObjekt().getId() + " " + hauptModul.getObjekt().getBasisAdresse() + " " + hauptModul.getObjekt().getBasisStandort());
             if (this.hauptModul.getObjekt().getBasisAdresse() != null) {
                 // TODO: Why are we using html here? :-/
             	
                 BasisAdresse betr = this.hauptModul.getObjekt()
                     .getBasisAdresse();
+                log.debug("Set betreiber field to " + betr);
                 getBetreiberFeld().setText(betr.toString());
                 String toolTip = "<html><b>Anrede:</b> "
                     + ((betr.getBetranrede() != null) ? betr.getBetranrede()
@@ -627,6 +628,7 @@ public class BasisPanel extends JPanel {
             if (this.hauptModul.getObjekt().getBasisLage() != null) {
                 BasisLageAdresse sta;
                 sta = new BasisLageAdresse(this.hauptModul.getObjekt().getBasisLage());
+                log.debug("Set standort field to: " + sta + this.hauptModul.getObjekt().getBasisStandort() + " " + this.hauptModul.getObjekt().getBasisLage());
                 String toolTip = "<html>" + sta + "<br>";
                 if (sta.getPlz() != null) {
                     toolTip += "<b>PLZ:</b> " + sta.getPlz() + "<br>";
@@ -994,14 +996,12 @@ public class BasisPanel extends JPanel {
                     }else{
                         standort = new BasisLageAdresse();
                     }
-                    if (standort == null) {
-                        standort = new BasisLageAdresse();
-                    }
                     ChooseDialog chooser = new ChooseDialog(standort,
                         BasisPanel.this.hauptModul.getFrame());
                     chooser.setVisible(true);
-                    log.debug("Chosen standort: " + chooser.getChosenStandort().getBasisAdresse());
-                    BasisPanel.this.hauptModul.getObjekt().setBasisAdresse(
+                    log.debug("Chosen standort: " + chooser.getChosenStandort().getBasisAdresse() + " " + chooser.getChosenStandort().getBasisLage());
+                    
+                    BasisPanel.this.hauptModul.getObjekt().setBasisStandort(
                         chooser.getChosenStandort().getBasisAdresse());
                     BasisPanel.this.hauptModul.getObjekt().setBasisLage(chooser.getChosenStandort().getBasisLage());
                     updateForm();

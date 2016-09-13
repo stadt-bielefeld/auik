@@ -79,13 +79,13 @@
         <property name="objektid" type="java.lang.Integer">
             <column name="objektid" />
         </property>
-        <set name="basisObjektStandort" table="basis_objekt" inverse="true" lazy="false" fetch="join">
+        <set name="basisObjektStandort" table="basis_objekt" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="standortid" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
         </set>
-        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="false" fetch="join">
+        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="betreiberid" />
             </key>

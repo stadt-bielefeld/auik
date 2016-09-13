@@ -35,8 +35,8 @@ public class BasisLageAdresse{
     }
 
     public BasisLageAdresse(){
-        this.lage = BasisLage.merge(new BasisLage());
-        this.adresse = BasisAdresse.merge(new BasisAdresse());
+        this.lage = new BasisLage();
+        this.adresse = new BasisAdresse();
         
     }
 
@@ -51,18 +51,12 @@ public class BasisLageAdresse{
         if(adresse.getBasisObjektStandort().toArray().length > 0 ){
             objekt = (BasisObjekt) adresse.getBasisObjektStandort().toArray()[0];
             this.lage = objekt.getBasisLage();
-            log.debug("Created BasisLageAdresse with attached BasisObjekt");
         }
         else{
             //Adresse belongs to a Betreiber
-            log.debug("No BasisObjekt conncted with BasisStandort #" + this.adresse);
             if(adresse.getBasisObjekts().toArray().length>0){
-                log.debug(adresse.getBetrname() + " " + adresse.getBetranrede() + " is a Betreiber");
                 this.lage = null;
                 this.adresse = null;
-            }
-            else{
-                log.debug(adresse.getBetrname() + " " + adresse.getBetranrede() + " "+adresse.getStrasse() + " " + adresse.getStrasse() + " " + "is no Betreiber");
             }
         }
     }
@@ -77,7 +71,6 @@ public class BasisLageAdresse{
         BasisObjekt objekt = (BasisObjekt) lage.getBasisObjekts().toArray()[0];
         //BasisObjekt objekt = BasisObjekt.findByLageId(lage.getId());
         this.adresse = objekt.getBasisStandort();
-        log.debug("Created LageAdresse from lage " + lage.getId() + " with Adresse " + adresse.getId());
     }
 
 
@@ -295,7 +288,7 @@ public class BasisLageAdresse{
     }
 
     public String toString(){
-        return this.adresse.getStrasse() + (this.adresse.getHausnr() != null ? " " + this.adresse.getHausnr() : "") + (this.adresse.getHausnrzus() != null ? this.adresse.getHausnrzus() : ""); 
+        return "" + (this.adresse.getStrasse() != null ? this.adresse.getStrasse() : "") + (this.adresse.getHausnr() != null ? " " + this.adresse.getHausnr() : "") + (this.adresse.getHausnrzus() != null ? this.adresse.getHausnrzus() : ""); 
     }
 
 }
