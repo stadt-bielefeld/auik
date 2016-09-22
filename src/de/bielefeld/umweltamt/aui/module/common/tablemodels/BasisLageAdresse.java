@@ -8,7 +8,9 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
-
+import org.hibernate.Hibernate;
+import org.hibernate.LazyInitializationException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -45,16 +47,26 @@ public class BasisLageAdresse{
       */
     public BasisLageAdresse(BasisAdresse adresse){
         this.adresse = adresse;
-        Session sess = HibernateSessionFactory.currentSession();
-        adresse.getBasisObjekts().size();
+
+        //log.debug(Hibernate.isInitialized(this.adresse.getBasisObjekts()) + " - " + Hibernate.isInitialized(this.adresse.getBasisObjektStandort()));
+        //Initialize lazy collections
+        //TODO: Check if initialization is necessary
+         //log.debug("Initializing BasisAdresse #" + adresse.getId());
+         Query q = HibernateSessionFactory.currentSession().createQuery("SELECT o From BasisAdresse o WHERE o.id = :id");
+         //Query q = HibernateSessionFactory.currentSession().createQuery("SELECT o From BasisAdresse o LEFT JOIN FETCH o.basisObjekts LEFT JOIN FETCH o.basisObjektStandort WHERE o.id = :id");
+        q.setParameter("id", adresse.getId());
+        this.adresse = (BasisAdresse) q.list().get(0);
+        //Hibernate.initialize(HibernateSessionFactory.currentSession().get(BasisAdresse.class, adresse.getId()));
+        //log.debug(Hibernate.isInitialized(this.adresse.getBasisObjekts()) + " - " + Hibernate.isInitialized(this.adresse.getBasisObjektStandort()));
+        //Get BasisLage from attached BasisObjekt and check if BasisAdresse contains a Betreiber or a Standort
         BasisObjekt objekt = null;
-        if(adresse.getBasisObjektStandort().toArray().length > 0 ){
-            objekt = (BasisObjekt) adresse.getBasisObjektStandort().toArray()[0];
+        if(this.adresse.getBasisObjektStandort().toArray().length > 0 ){
+            objekt = (BasisObjekt) this.adresse.getBasisObjektStandort().toArray()[0];
             this.lage = objekt.getBasisLage();
         }
         else{
             //Adresse belongs to a Betreiber
-            if(adresse.getBasisObjekts().toArray().length>0){
+            if(this.adresse.getBasisObjekts().toArray().length>0){
                 this.lage = null;
                 this.adresse = null;
             }
@@ -66,15 +78,20 @@ public class BasisLageAdresse{
       */
     public BasisLageAdresse(BasisLage lage){
         this.lage = lage;
-        Session sess = HibernateSessionFactory.currentSession();
-        lage.getBasisObjekts().size();
+        //Initialize if necessary
+        if(!Hibernate.isInitialized(lage)){
+            log.debug("Initializing BasisLage #" + adresse.getId());
+            Query q = HibernateSessionFactory.currentSession().createQuery("SELECT o From BasisLage o WHERE o.id = :id");
+            q.setParameter("id", lage.getId());
+            this.lage = (BasisLage) q.list().get(0);
+        }
+        //Get BasisAdresse from attached BasisObjekt
         BasisObjekt objekt = (BasisObjekt) lage.getBasisObjekts().toArray()[0];
-        //BasisObjekt objekt = BasisObjekt.findByLageId(lage.getId());
         this.adresse = objekt.getBasisStandort();
     }
 
 
-
+    //Getter, Setter for BasisLage and BasisAdresse
     public void setBasisLage(BasisLage lage){
         this.lage = lage;
     }
@@ -91,7 +108,7 @@ public class BasisLageAdresse{
         return this.lage;
     }
 
-//Getter
+    //Getter
 
     public Integer getId(){
         return this.adresse.getId();

@@ -263,6 +263,7 @@ public class BasisAdresseSuchen extends AbstractModul {
     }
 
     public void updateBetreiberListe() {
+        log.debug("Start updateBetreiberListe()");
         SwingWorkerVariant worker = new SwingWorkerVariant(getSuchFeld()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
@@ -304,9 +305,11 @@ public class BasisAdresseSuchen extends AbstractModul {
         };
 
         worker.start();
+        log.debug("End updateBetreiberListe()");
     }
 
     public void updateObjekte() {
+        log.debug("Start updateObjekte()");
         ListSelectionModel lsm = getBetreiberTabelle().getSelectionModel();
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
@@ -315,6 +318,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 + betr.getId() + ") angewählt.");
             searchObjekteByBetreiber(betr);
         }
+        log.debug("End updateObjekte()");
     }
 
     /**
@@ -363,6 +367,7 @@ public class BasisAdresseSuchen extends AbstractModul {
      * @param column Nach welcher Eigenschaft des Betreiber soll gesucht werden?
      */
     public void filterBetreiberListe(final String suche, final String column) {
+        log.debug("Start filterBetreiberListe()");
         SwingWorkerVariant worker = new SwingWorkerVariant(
             getBetreiberTabelle()) {
             @Override
@@ -389,6 +394,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
         this.frame.changeStatus("Suche...");
         worker.start();
+        log.debug("End filterBetreiberListe()");
     }
 
     private Action getBetreiberEditAction() {

@@ -55,7 +55,7 @@
   basis_standort.hausnr, 
   basis_standort.hausnrzus, 
   basis_standort.plz, 
-  basis_standort.entgebid, 
+  basis_lage.entgebid, 
   basis_objekt.prioritaet, 
   basis_objekt.beschreibung, 
   atl_probepkt.sachbearbeiter AS SbAtl, 
@@ -63,17 +63,19 @@
   atl_klaeranlagen.anlage, 
   atl_probepkt.branche
 FROM 
-  auik.basis_betreiber, 
+  auik.basis_adresse AS basis_betreiber, 
   auik.basis_objekt, 
   auik.atl_probepkt, 
-  auik.basis_standort, 
+  auik.basis_adresse AS basis_standort,
+  auik.basis_lage, 
   auik.atl_klaeranlagen
 WHERE 
-  basis_objekt.objektid = atl_probepkt.objektid AND
+  basis_objekt.id = atl_probepkt.objektid AND
   basis_objekt.standortid = basis_standort.id AND
   basis_objekt.betreiberid = basis_betreiber.id AND
+  basis_objekt.lageid = basis_lage.id AND
   atl_probepkt.ka_id = atl_klaeranlagen.id AND
-  basis_objekt.objektid = $P{id}]]>
+  basis_objekt.id = $P{id}]]>
 	</queryString>
 	<field name="betranrede" class="java.lang.String"/>
 	<field name="betrname" class="java.lang.String"/>

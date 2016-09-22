@@ -104,6 +104,7 @@ public class BasisLageModel extends ListTableModel
                 }
             }
         }
+        log.debug("Finished creating Adresse-List");
         return combined;
     }
     
@@ -119,6 +120,7 @@ public class BasisLageModel extends ListTableModel
 	 */
 	public void filterList(String strasse, int hausnr, String ort)
 	{
+        log.debug("Start filterList()");
         //Get all BasisAdresse objects
         List<BasisAdresse> list = DatabaseQuery.findStandorte(strasse, hausnr, ort);
         List<BasisAdresse> standortList = new ArrayList<BasisAdresse>();
@@ -136,6 +138,7 @@ public class BasisLageModel extends ListTableModel
 		lastOrt = ort;
 		lastStrasse = strasse;
 		lastHausNr = hausnr;
+        log.debug("End filterList()");
 	}
 
 	/**

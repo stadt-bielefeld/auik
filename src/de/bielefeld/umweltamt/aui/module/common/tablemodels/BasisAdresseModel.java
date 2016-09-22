@@ -24,6 +24,8 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 /**
  * Ein TableModel für die Basis-Betreiberdaten.
  * @author David Klotz
@@ -32,6 +34,7 @@ public class BasisAdresseModel extends ListTableModel {
     private static final long serialVersionUID = -1943023265274962194L;
     private String lastSuchWort = null;
     private String lastProperty = null;
+    private AuikLogger log = AuikLogger.getLogger();
 
     public BasisAdresseModel() {
         this(true);
@@ -141,8 +144,10 @@ public class BasisAdresseModel extends ListTableModel {
      * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
      */
     public void filterList(String suche, String property) {
+        log.debug("Start filterList");
         setList(DatabaseQuery.getBasisAdresse(property, suche));
         lastSuchWort = suche;
         lastProperty = property;
+        log.debug("End filterList");
     }
 }

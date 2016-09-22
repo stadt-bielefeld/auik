@@ -32,6 +32,9 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
@@ -51,6 +54,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
  * This is a service class for all custom queries from the basis package.
@@ -660,7 +664,12 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	public static List<BasisAdresse> findStandorte(String strasse,
 		Integer hausnr, String ort)
 	{
-
+        /*
+        String qString = "FROM BasisAdresse A WHERE A.betrname is null";
+        Query query = HibernateSessionFactory.currentSession().createQuery(qString);
+        List<BasisAdresse> result = (List<BasisAdresse>) query.list();
+        return result;*/
+        
 		DetachedCriteria detachedCriteria = DetachedCriteria
 				.forClass(BasisAdresse.class).addOrder(Order.asc("strasse"))
 				.addOrder(Order.asc("hausnr"))
@@ -690,6 +699,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		}
 		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
 															new BasisAdresse());
+        
 	}
 
 	private static String[] entwaesserungsgebiete = null;

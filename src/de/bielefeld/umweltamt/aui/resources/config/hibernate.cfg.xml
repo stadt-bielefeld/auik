@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
-        
+        <property name="hibernate.generate_statistics">true</property>
         <!-- PostgreSQL: -->
            
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>

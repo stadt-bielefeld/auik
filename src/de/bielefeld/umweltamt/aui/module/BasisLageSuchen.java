@@ -372,6 +372,7 @@ public class BasisLageSuchen extends AbstractModul
 
 	public void updateStandortListe()
 	{
+        log.debug("Start updateStandortListe()");
 		SwingWorkerVariant worker = new SwingWorkerVariant(getStrassenFeld())
 		{
 			@Override
@@ -425,10 +426,12 @@ public class BasisLageSuchen extends AbstractModul
 		};
 
 		worker.start();
+        log.debug("End updateStandortListe()");
 	}
 
 	public void updateObjekte()
 	{
+        log.debug("Start updateObjekte()");
 		ListSelectionModel lsm = getStandortTabelle().getSelectionModel();
 		if (!lsm.isSelectionEmpty())
 		{
@@ -437,6 +440,7 @@ public class BasisLageSuchen extends AbstractModul
 			log.debug("Standort " + standort + " angewählt.");
 			searchObjekteByStandort(standort);
 		}
+        log.debug("End updateObjekte()");
 	}
 
 	/**
@@ -562,6 +566,7 @@ public class BasisLageSuchen extends AbstractModul
 	 */
 	public void filterStandortListe(Component focusComp)
 	{
+        log.debug("Start filterStandortListe()");
 		int hausnr;
 		try
 		{
@@ -618,6 +623,7 @@ public class BasisLageSuchen extends AbstractModul
 
 		this.frame.changeStatus("Suche...");
 		worker.start();
+        log.debug("End filterStandortListe()");
 	}
 
 	public void showReportListe()
