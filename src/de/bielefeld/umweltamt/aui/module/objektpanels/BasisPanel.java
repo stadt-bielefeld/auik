@@ -627,7 +627,7 @@ public class BasisPanel extends JPanel {
             }
             if (this.hauptModul.getObjekt().getBasisLage() != null) {
                 BasisLageAdresse sta;
-                sta = new BasisLageAdresse(this.hauptModul.getObjekt().getBasisLage());
+                sta = new BasisLageAdresse(this.hauptModul.getObjekt().getBasisLage(), this.hauptModul.getObjekt().getBasisStandort());
                 log.debug("Set standort field to: " + sta + this.hauptModul.getObjekt().getBasisStandort() + " " + this.hauptModul.getObjekt().getBasisLage());
                 String toolTip = "<html>" + sta + "<br>";
                 if (sta.getPlz() != null) {
@@ -990,9 +990,10 @@ public class BasisPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     BasisLage lage = BasisPanel.this.hauptModul.getObjekt().getBasisLage();
+                    BasisAdresse adresse = BasisPanel.this.hauptModul.getObjekt().getBasisStandort();
                     BasisLageAdresse standort;
                     if(lage != null){
-                        standort = new BasisLageAdresse(lage);
+                        standort = new BasisLageAdresse(lage, adresse);
                     }else{
                         standort = new BasisLageAdresse();
                     }

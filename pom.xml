@@ -530,7 +530,7 @@
                   <hbmtemplate
                     templatepath="data/templates/auik"
                     template="Pojo.ftl"
-                    filepattern="{package-name}/{class-name}.java">
+                    filepattern="{package-name}/generated/{class-name}.java">
                     <property key="jdk5" value="true" />
                     <property key="ejb3" value="false" />
                   </hbmtemplate>

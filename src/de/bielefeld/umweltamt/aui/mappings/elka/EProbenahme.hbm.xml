@@ -1,47 +1,31 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29.10.2015 09:42:26 by Hibernate Tools 3.4.0.CR1 -->
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 29, 2016 9:46:08 AM by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
- <class name="de.bielefeld.umweltamt.aui.mappings.elka.EProbenahme"
-  schema="elka" table="e_probenahme">
-  <id name="nr" type="java.lang.Integer">
-   <column name="nr"/>
-   <generator class="assigned"/>
-  </id>
-  <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
-  	<column name="nr" />
-  </property>
-  <property generated="never" lazy="false" name="beschreibung" type="java.lang.String">
-   <column name="beschreibung"/>
-  </property>
-  <property generated="never" lazy="false" name="probeDat" type="java.util.Date">
-   <column length="29" name="probe_dat"/>
-  </property>
-  <property generated="never" lazy="false" name="probeId" type="java.lang.String">
-   <column name="probe_id"/>
-  </property>
-  <property generated="never" lazy="false" name="selbstueberwTog" type="java.lang.Boolean">
-   <column name="selbstueberw_tog"/>
-  </property>
-  <property generated="never" lazy="false" name="bemerkung" type="java.lang.String">
-   <column name="bemerkung"/>
-  </property>
-  <property generated="never" lazy="false" name="aktualDat" type="java.util.Date">
-   <column length="29" name="aktual_dat"/>
-  </property>
-  <property generated="never" lazy="false" name="erstellDat" type="java.util.Date">
-   <column length="29" name="erstell_dat"/>
-  </property>
-  <property generated="never" lazy="false" name="herkunft" type="java.lang.String">
-   <column name="herkunft"/>
-  </property>
-  <set name="probenahmeUeberwachungsergebs" table="e_probenahme_ueberwachungsergebs" lazy="false" fetch="select">
-  	<key>
-  		<column name="probenahme_nr"></column>
-  	</key>
-  	<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergeb"/>
-  </set>
-  
- </class>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.elka.EProbenahme" table="e_probenahme" schema="elka" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.elka.EProbenahmeId">
+            <key-property name="nr" type="java.lang.Integer">
+                <column name="nr" />
+            </key-property>
+            <key-property name="msstNr" type="java.lang.Integer">
+                <column name="msst_nr" />
+            </key-property>
+            <key-property name="beschreibung" type="java.lang.String">
+                <column name="beschreibung" />
+            </key-property>
+            <key-property name="probeDat" type="java.util.Date">
+                <column name="probe_dat" length="29" />
+            </key-property>
+            <key-property name="probeId" type="java.lang.String">
+                <column name="probe_id" />
+            </key-property>
+            <key-property name="uhrStich" type="java.lang.String">
+                <column name="uhr_stich" />
+            </key-property>
+            <key-property name="bemerkung" type="java.lang.String">
+                <column name="bemerkung" />
+            </key-property>
+        </composite-id>
+    </class>
 </hibernate-mapping>

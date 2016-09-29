@@ -46,18 +46,12 @@ public class BasisLageAdresse{
       * Create a BasisLageAdresse from a given BasisAdresse
       */
     public BasisLageAdresse(BasisAdresse adresse){
-        this.adresse = adresse;
 
-        //log.debug(Hibernate.isInitialized(this.adresse.getBasisObjekts()) + " - " + Hibernate.isInitialized(this.adresse.getBasisObjektStandort()));
-        //Initialize lazy collections
-        //TODO: Check if initialization is necessary
-         //log.debug("Initializing BasisAdresse #" + adresse.getId());
-         Query q = HibernateSessionFactory.currentSession().createQuery("SELECT o From BasisAdresse o WHERE o.id = :id");
-         //Query q = HibernateSessionFactory.currentSession().createQuery("SELECT o From BasisAdresse o LEFT JOIN FETCH o.basisObjekts LEFT JOIN FETCH o.basisObjektStandort WHERE o.id = :id");
-        q.setParameter("id", adresse.getId());
-        this.adresse = (BasisAdresse) q.list().get(0);
-        //Hibernate.initialize(HibernateSessionFactory.currentSession().get(BasisAdresse.class, adresse.getId()));
-        //log.debug(Hibernate.isInitialized(this.adresse.getBasisObjekts()) + " - " + Hibernate.isInitialized(this.adresse.getBasisObjektStandort()));
+        this.adresse  = (BasisAdresse) HibernateSessionFactory.currentSession().get(BasisAdresse.class, adresse.getId());
+ 
+        Hibernate.initialize(this.adresse.getBasisObjekts());
+        Hibernate.initialize(this.adresse.getBasisObjektStandort());
+
         //Get BasisLage from attached BasisObjekt and check if BasisAdresse contains a Betreiber or a Standort
         BasisObjekt objekt = null;
         if(this.adresse.getBasisObjektStandort().toArray().length > 0 ){
@@ -77,16 +71,21 @@ public class BasisLageAdresse{
       * Create a BasisLageAdresse from a given BasisLage
       */
     public BasisLageAdresse(BasisLage lage){
-        this.lage = lage;
+
+        //Initialization doesnt seem to work
+
         //Initialize if necessary
-        if(!Hibernate.isInitialized(lage)){
-            log.debug("Initializing BasisLage #" + adresse.getId());
-            Query q = HibernateSessionFactory.currentSession().createQuery("SELECT o From BasisLage o WHERE o.id = :id");
-            q.setParameter("id", lage.getId());
-            this.lage = (BasisLage) q.list().get(0);
-        }
+        //this.lage = (BasisLage) HibernateSessionFactory.currentSession().get(BasisLage.class, lage.getId());
+        //Hibernate.initialize(this.lage.getBasisObjekts());
         //Get BasisAdresse from attached BasisObjekt
-        BasisObjekt objekt = (BasisObjekt) lage.getBasisObjekts().toArray()[0];
+        //BasisObjekt objekt = (BasisObjekt) lage.getBasisObjekts().toArray()[0];
+
+        //Workaround
+        List<Object> list =  HibernateSessionFactory.currentSession().createQuery("SELECT lage, objekt FROM BasisLage AS lage JOIN lage.basisObjekts objekt  WHERE lage.id = " + lage.getId()).list();
+        log.debug(list);
+        this.lage = (BasisLage) list.get(0);
+        BasisObjekt objekt = (BasisObjekt) list.get(1);
+                
         this.adresse = objekt.getBasisStandort();
     }
 

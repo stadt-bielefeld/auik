@@ -51,20 +51,11 @@ public class BasisLage  implements java.io.Serializable {
     private BasisGemarkung basisGemarkung;
     private VawsStandortgghwsg vawsStandortgghwsg;
     private VawsWassereinzugsgebiete vawsWassereinzugsgebiete;
-    private String strasse;
-    private Integer hausnr;
-    private String hausnrzus;
-    private String plz;
     private Float e32;
     private Float n32;
     private String flur;
     private String flurstueck;
     private String entgebid;
-    private String vornameeigent;
-    private String nameeigent;
-    private String strasseeigent;
-    private Integer hausnreigent;
-    private String hausnrzuseigent;
     private Date revidatum;
     private String revihandz;
     private Integer wassermenge;
@@ -72,7 +63,6 @@ public class BasisLage  implements java.io.Serializable {
     private String sachbe33hee;
     private boolean enabled;
     private boolean deleted;
-    private String ort;
     private Set<BasisObjekt> basisObjekts = new HashSet<BasisObjekt>(0);
 
     /** Logging */
@@ -92,24 +82,15 @@ public class BasisLage  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisLage(
-        BasisGemarkung basisGemarkung, VawsStandortgghwsg vawsStandortgghwsg, VawsWassereinzugsgebiete vawsWassereinzugsgebiete, String strasse, Integer hausnr, String hausnrzus, String plz, Float e32, Float n32, String flur, String flurstueck, String entgebid, String vornameeigent, String nameeigent, String strasseeigent, Integer hausnreigent, String hausnrzuseigent, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, boolean enabled, boolean deleted, String ort, Set<BasisObjekt> basisObjekts) {
+        BasisGemarkung basisGemarkung, VawsStandortgghwsg vawsStandortgghwsg, VawsWassereinzugsgebiete vawsWassereinzugsgebiete, Float e32, Float n32, String flur, String flurstueck, String entgebid, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, boolean enabled, boolean deleted,  Set<BasisObjekt> basisObjekts) {
         this.basisGemarkung = basisGemarkung;
         this.vawsStandortgghwsg = vawsStandortgghwsg;
         this.vawsWassereinzugsgebiete = vawsWassereinzugsgebiete;
-        this.strasse = strasse;
-        this.hausnr = hausnr;
-        this.hausnrzus = hausnrzus;
-        this.plz = plz;
         this.e32 = e32;
         this.n32 = n32;
         this.flur = flur;
         this.flurstueck = flurstueck;
         this.entgebid = entgebid;
-        this.vornameeigent = vornameeigent;
-        this.nameeigent = nameeigent;
-        this.strasseeigent = strasseeigent;
-        this.hausnreigent = hausnreigent;
-        this.hausnrzuseigent = hausnrzuseigent;
         this.revidatum = revidatum;
         this.revihandz = revihandz;
         this.wassermenge = wassermenge;
@@ -117,7 +98,6 @@ public class BasisLage  implements java.io.Serializable {
         this.sachbe33hee = sachbe33hee;
         this.enabled = enabled;
         this.deleted = deleted;
-        this.ort = ort;
         this.basisObjekts = basisObjekts;
     }
 
@@ -153,39 +133,6 @@ public class BasisLage  implements java.io.Serializable {
     public void setVawsWassereinzugsgebiete(VawsWassereinzugsgebiete vawsWassereinzugsgebiete) {
         this.vawsWassereinzugsgebiete = vawsWassereinzugsgebiete;
     }
-
-    public String getStrasse() {
-        return this.strasse;
-    }
-
-    public void setStrasse(String strasse) {
-        this.strasse = strasse;
-    }
-
-    public Integer getHausnr() {
-        return this.hausnr;
-    }
-
-    public void setHausnr(Integer hausnr) {
-        this.hausnr = hausnr;
-    }
-
-    public String getHausnrzus() {
-        return this.hausnrzus;
-    }
-
-    public void setHausnrzus(String hausnrzus) {
-        this.hausnrzus = hausnrzus;
-    }
-
-    public String getPlz() {
-        return this.plz;
-    }
-
-    public void setPlz(String plz) {
-        this.plz = plz;
-    }
-
     public Float getE32() {
         return this.e32;
     }
@@ -225,47 +172,6 @@ public class BasisLage  implements java.io.Serializable {
     public void setEntgebid(String entgebid) {
         this.entgebid = entgebid;
     }
-
-    public String getVornameeigent() {
-        return this.vornameeigent;
-    }
-
-    public void setVornameeigent(String vornameeigent) {
-        this.vornameeigent = vornameeigent;
-    }
-
-    public String getNameeigent() {
-        return this.nameeigent;
-    }
-
-    public void setNameeigent(String nameeigent) {
-        this.nameeigent = nameeigent;
-    }
-
-    public String getStrasseeigent() {
-        return this.strasseeigent;
-    }
-
-    public void setStrasseeigent(String strasseeigent) {
-        this.strasseeigent = strasseeigent;
-    }
-
-    public Integer getHausnreigent() {
-        return this.hausnreigent;
-    }
-
-    public void setHausnreigent(Integer hausnreigent) {
-        this.hausnreigent = hausnreigent;
-    }
-
-    public String getHausnrzuseigent() {
-        return this.hausnrzuseigent;
-    }
-
-    public void setHausnrzuseigent(String hausnrzuseigent) {
-        this.hausnrzuseigent = hausnrzuseigent;
-    }
-
     public Date getRevidatum() {
         return this.revidatum;
     }
@@ -322,14 +228,6 @@ public class BasisLage  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    public String getOrt() {
-        return this.ort;
-    }
-
-    public void setOrt(String ort) {
-        this.ort = ort;
-    }
-
     public Set<BasisObjekt> getBasisObjekts() {
         return this.basisObjekts;
     }
@@ -361,20 +259,11 @@ public class BasisLage  implements java.io.Serializable {
         buffer.append("basisGemarkung").append("='").append(getBasisGemarkung()).append("' ");			
         buffer.append("vawsStandortgghwsg").append("='").append(getVawsStandortgghwsg()).append("' ");			
         buffer.append("vawsWassereinzugsgebiete").append("='").append(getVawsWassereinzugsgebiete()).append("' ");			
-        buffer.append("strasse").append("='").append(getStrasse()).append("' ");			
-        buffer.append("hausnr").append("='").append(getHausnr()).append("' ");			
-        buffer.append("hausnrzus").append("='").append(getHausnrzus()).append("' ");			
-        buffer.append("plz").append("='").append(getPlz()).append("' ");			
         buffer.append("e32").append("='").append(getE32()).append("' ");			
         buffer.append("n32").append("='").append(getN32()).append("' ");			
         buffer.append("flur").append("='").append(getFlur()).append("' ");			
         buffer.append("flurstueck").append("='").append(getFlurstueck()).append("' ");			
         buffer.append("entgebid").append("='").append(getEntgebid()).append("' ");			
-        buffer.append("vornameeigent").append("='").append(getVornameeigent()).append("' ");			
-        buffer.append("nameeigent").append("='").append(getNameeigent()).append("' ");			
-        buffer.append("strasseeigent").append("='").append(getStrasseeigent()).append("' ");			
-        buffer.append("hausnreigent").append("='").append(getHausnreigent()).append("' ");			
-        buffer.append("hausnrzuseigent").append("='").append(getHausnrzuseigent()).append("' ");			
         buffer.append("revidatum").append("='").append(getRevidatum()).append("' ");			
         buffer.append("revihandz").append("='").append(getRevihandz()).append("' ");			
         buffer.append("wassermenge").append("='").append(getWassermenge()).append("' ");			
@@ -382,7 +271,6 @@ public class BasisLage  implements java.io.Serializable {
         buffer.append("sachbe33hee").append("='").append(getSachbe33hee()).append("' ");			
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("ort").append("='").append(getOrt()).append("' ");			
         buffer.append("basisObjekts").append("='").append(getBasisObjekts()).append("' ");			
         buffer.append("]");
 
@@ -452,20 +340,11 @@ public class BasisLage  implements java.io.Serializable {
         this.basisGemarkung = copy.getBasisGemarkung();            
         this.vawsStandortgghwsg = copy.getVawsStandortgghwsg();            
         this.vawsWassereinzugsgebiete = copy.getVawsWassereinzugsgebiete();            
-        this.strasse = copy.getStrasse();            
-        this.hausnr = copy.getHausnr();            
-        this.hausnrzus = copy.getHausnrzus();            
-        this.plz = copy.getPlz();            
         this.e32 = copy.getE32();            
         this.n32 = copy.getN32();            
         this.flur = copy.getFlur();            
         this.flurstueck = copy.getFlurstueck();            
         this.entgebid = copy.getEntgebid();            
-        this.vornameeigent = copy.getVornameeigent();            
-        this.nameeigent = copy.getNameeigent();            
-        this.strasseeigent = copy.getStrasseeigent();            
-        this.hausnreigent = copy.getHausnreigent();            
-        this.hausnrzuseigent = copy.getHausnrzuseigent();            
         this.revidatum = copy.getRevidatum();            
         this.revihandz = copy.getRevihandz();            
         this.wassermenge = copy.getWassermenge();            
@@ -473,7 +352,6 @@ public class BasisLage  implements java.io.Serializable {
         this.sachbe33hee = copy.getSachbe33hee();            
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
-        this.ort = copy.getOrt();            
         this.basisObjekts = copy.getBasisObjekts();            
     }    
 

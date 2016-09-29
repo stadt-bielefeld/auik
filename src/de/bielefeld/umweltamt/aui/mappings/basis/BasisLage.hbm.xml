@@ -52,7 +52,7 @@
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
-        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="false" fetch="select">
+        <set name="basisObjekts" table="basis_objekt" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="lageid" />
             </key>

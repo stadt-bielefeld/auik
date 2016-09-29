@@ -1,50 +1,28 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29.10.2015 09:42:26 by Hibernate Tools 3.4.0.CR1 -->
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 29, 2016 9:46:08 AM by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
- <class
-  name="de.bielefeld.umweltamt.aui.mappings.elka.EEinleitungsstelle"
-  schema="elka" table="e_einleitungsstelle">
-  <id name="nr" type="java.lang.Integer">
-   <column name="nr"/>
-   <generator class="assigned"/>
-  </id>
-  <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
-  	<column name="nr" />
-  </property>
-  <many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka.EStandort" fetch="select">
-   <column name="standort_nr"/>
-  </many-to-one>
-  <property generated="never" lazy="false" name="typIndirekteinleitungTog" type="java.lang.Boolean">
-   <column name="typ_indirekteinleitung_tog"/>
-  </property>
-  <property generated="never" lazy="false" name="bezeichnung" type="java.lang.String">
-   <column name="bezeichnung"/>
-  </property>
-  <property generated="never" lazy="false" name="e32" type="java.lang.Integer">
-   <column name="e32"/>
-  </property>
-  <property generated="never" lazy="false" name="n32" type="java.lang.Integer">
-   <column name="n32"/>
-  </property>
-  <property generated="never" lazy="false" name="kaNichtInNrwTog" type="java.lang.Boolean">
-   <column name="ka_nicht_in_nrw_tog"/>
-  </property>
-  <property generated="never" lazy="false" name="aktualDat" type="java.util.Date">
-   <column length="13" name="aktual_dat"/>
-  </property>
-  <property generated="never" lazy="false" name="erstellDat" type="java.util.Date">
-   <column length="13" name="erstell_dat"/>
-  </property>
-  <property generated="never" lazy="false" name="herkunft" type="java.lang.String">
-   <column name="herkunft"/>
-  </property>
-  <set name="wasserrechts" table="e_wasserrecht" lazy="false" fetch="select">
-    <key>
-  	  <column name="ref_nr"></column>
-  	</key>
-  	<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.EWasserrecht"/>
-  </set>
- </class>
+    <class name="de.bielefeld.umweltamt.aui.mappings.generated.elka.EEinleitungsstelle" table="e_einleitungsstelle" schema="elka" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.elka.EEinleitungsstelleId">
+            <key-property name="nr" type="java.lang.Integer">
+                <column name="nr" />
+            </key-property>
+            <key-property name="standortNr" type="java.lang.Integer">
+                <column name="standort_nr" />
+            </key-property>
+            <key-property name="typOpt" type="java.lang.Integer">
+                <column name="typ_opt" />
+            </key-property>
+            <key-property name="bezeichnung" type="java.lang.String">
+                <column name="bezeichnung" />
+            </key-property>
+            <key-property name="e32" type="java.lang.Integer">
+                <column name="e32" />
+            </key-property>
+            <key-property name="n32" type="java.lang.Integer">
+                <column name="n32" />
+            </key-property>
+        </composite-id>
+    </class>
 </hibernate-mapping>

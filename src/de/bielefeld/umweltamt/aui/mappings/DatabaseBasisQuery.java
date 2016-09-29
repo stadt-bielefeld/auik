@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
@@ -31,7 +32,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
-
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -52,6 +53,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -78,7 +80,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 
 	/**
 	 * Get all BasisAdresse with a given search string in the selected
-	 * property. <br>
+	 * property that contain a Betreiber. <br>
 	 * If property is <code>null</code>, we search in all three properties.
 	 * 
 	 * @param property
@@ -95,6 +97,30 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		String modSearch = search.toLowerCase().trim() + "%";
 		log.debug("Suche nach '" + modSearch + "' (" + property + ").");
 
+        String query =  "SELECT DISTINCT adresse " + 
+                        "FROM BasisAdresse as adresse JOIN adresse.basisObjekts objekt ";
+        if (property == null)
+		{
+            query += "WHERE adresse.betrname like '" + modSearch + "' OR betranrede like '" + modSearch + "' OR betrnamezus like '" + modSearch + "'";
+		}
+		else if (property.equals("name"))
+		{
+            query += "WHERE adresse.betrname like '" + modSearch + "'";
+		}
+		else if (property.equals("anrede"))
+		{
+            query += "WHERE adresse.betranrede like '" + modSearch + "'";
+		}
+		else if (property.equals("zusatz"))
+		{
+            query += "WHERE adresse.betrzus like '" + modSearch + "'";
+		}
+		else
+		{
+			log.debug("Something went really wrong here...");
+		}
+        query += " ORDER BY adresse.betrname ASC, adresse.betrnamezus ASC";
+        /*
 		DetachedCriteria criteria = DetachedCriteria
 				.forClass(BasisAdresse.class).addOrder(Order.asc("betrname"))
 				.addOrder(Order.asc("betrnamezus"));
@@ -125,7 +151,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		}
 
 		return new DatabaseAccess().executeCriteriaToList(criteria,
-															new BasisAdresse());
+															new BasisAdresse());*/
+        return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
 
 	/**
@@ -650,8 +677,33 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 				.isEmpty()));
 	}
 
+    /**
+     * Returns a List of all BasisAdresse and BasisLage objects that are connected through a BasisObjekt and match the parameters
+     * Output format is List<[BasisAdresse][BasisLage]>
+ 	 * 
+	 * @param strasse
+	 *            String
+	 * @param hausnr
+	 *            Integer (-1: all)
+	 * @param ort
+	 *            String
+	 * @return <code>List&lt;Object[]&gt;</code>
+	 */     
+    public static List<Object[]> findStandorteNew(String strasse, Integer hausnr, String ort){
+        String query = 
+            "SELECT DISTINCT adresse,  lage" +
+            " FROM BasisAdresse AS adresse JOIN  adresse.basisObjektStandort O JOIN O.basisLage lage ";
+        if(strasse != null && strasse.length() > 0)
+            query += " AND adresse.strasse like '" + strasse + "%' ";
+        if(hausnr != null && hausnr != -1)
+            query += " AND adresse.hausnr = " + hausnr;
+        if(ort != null && ort.length() > 0)
+            query += " AND adresse.ort like '" + ort + "%' ";
+        query += " ORDER BY adresse.strasse asc, adresse.hausnr asc";
+        return HibernateSessionFactory.currentSession().createQuery(query).list();
+    }
 	/**
-	 * Find BasisLagee that match the parameters.
+	 * Find BasisAdresse that match the parameters and has betrnam and has betrname.
 	 * 
 	 * @param strasse
 	 *            String

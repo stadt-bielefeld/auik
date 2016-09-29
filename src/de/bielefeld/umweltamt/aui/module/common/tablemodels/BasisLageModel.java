@@ -62,6 +62,7 @@ public class BasisLageModel extends ListTableModel
 				"Übersch.-Gebiet",
 				"Wasserschutzgebiet",
 				"VAwS-Gebiet" }, true, true);
+        log.debug("Creating new BasisLagemodel");
 	}
     
     
@@ -91,24 +92,6 @@ public class BasisLageModel extends ListTableModel
 		return (BasisLageAdresse) getObjectAtRow(rowIndex);
 	}
     
-    public List<BasisLageAdresse> createAdresseList(List<BasisAdresse> list){
-        int length = list.size();
-        List<BasisLageAdresse> combined = new ArrayList<BasisLageAdresse>(list.size());
-        log.debug("Creating Adresse-List out of " + length + " Objects");
-        if(length != 0){
-            for(int i = 0; i < length; i++){
-                //log.debug("Creating BasisLageAdresse for Adresse: " + list.get(i));
-                BasisLageAdresse newItem = new BasisLageAdresse(list.get(i));
-                if(newItem.getBasisLage() != null){ 
-                    combined.add(newItem);
-                }
-            }
-        }
-        log.debug("Finished creating Adresse-List");
-        return combined;
-    }
-    
-    
 	/**
 	 * Filtert den Tabelleninhalt nach der Straße und der Hausnr.
 	 * 
@@ -120,25 +103,21 @@ public class BasisLageModel extends ListTableModel
 	 */
 	public void filterList(String strasse, int hausnr, String ort)
 	{
-        log.debug("Start filterList()");
-        //Get all BasisAdresse objects
-        List<BasisAdresse> list = DatabaseQuery.findStandorte(strasse, hausnr, ort);
-        List<BasisAdresse> standortList = new ArrayList<BasisAdresse>();
-        //Remove Betreiber from list
-        log.debug("Fetched " + list.size() + " BasisAdresse-Objects");
-        for(BasisAdresse a : list){
-            if(a.getBetrname() == null || a.getBetrname() == ""){
-                standortList.add(a);
-                //log.debug(a.getId() +" "+ a.getStrasse() + " " + a.getHausnr() + " " + a.getBetrname());
-            }
-
+        log.debug("Fetching BasisAdresse and BasisLage Objects");
+        //Fetch all BasisAdresse and BasisLage Objects
+        List<Object[]> list = DatabaseQuery.findStandorteNew(strasse, hausnr, ort);
+        log.debug("Fetched " + list.size() + " Objects");
+        List<BasisLageAdresse> standorte = new ArrayList<BasisLageAdresse>();
+        //Add fetched objects to a list of BasisLageAdresse
+        for(Object[] i: list){
+            standorte.add(new BasisLageAdresse((BasisLage)i[1], (BasisAdresse)i[0]));
         }
-
-        setList(createAdresseList(standortList));
+        setList(standorte);
+        log.debug("Created list");
 		lastOrt = ort;
 		lastStrasse = strasse;
 		lastHausNr = hausnr;
-        log.debug("End filterList()");
+        
 	}
 
 	/**
