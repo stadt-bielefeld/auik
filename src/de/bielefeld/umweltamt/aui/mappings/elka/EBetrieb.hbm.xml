@@ -1,52 +1,43 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 29, 2016 9:46:08 AM by Hibernate Tools 5.0.0.Final -->
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.10.2015 09:42:26 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.generated.elka.EBetrieb" table="e_betrieb" schema="elka" optimistic-lock="version">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.generated.elka.EBetriebId">
-            <key-property name="nr" type="java.lang.String">
-                <column name="nr" />
-            </key-property>
-            <key-property name="standortNr" type="java.lang.Integer">
-                <column name="standort_nr" />
-            </key-property>
-            <key-property name="wrAdrNr" type="java.lang.Integer">
-                <column name="wr_adr_nr" />
-            </key-property>
-            <key-property name="bezeichnung" type="java.lang.String">
-                <column name="bezeichnung" />
-            </key-property>
-            <key-property name="suevkanTog" type="java.lang.Boolean">
-                <column name="suevkan_tog" />
-            </key-property>
-            <key-property name="e32" type="java.lang.Float">
-                <column name="e32" precision="8" scale="8" />
-            </key-property>
-            <key-property name="n32" type="java.lang.Float">
-                <column name="n32" precision="8" scale="8" />
-            </key-property>
-            <key-property name="betranrede" type="java.lang.String">
-                <column name="betranrede" />
-            </key-property>
-            <key-property name="name2" type="java.lang.String">
-                <column name="name2" />
-            </key-property>
-            <key-property name="strasse" type="java.lang.String">
-                <column name="strasse" />
-            </key-property>
-            <key-property name="hausnr" type="java.lang.Integer">
-                <column name="hausnr" />
-            </key-property>
-            <key-property name="hausnrzus" type="java.lang.String">
-                <column name="hausnrzus" />
-            </key-property>
-            <key-property name="plz" type="java.lang.String">
-                <column name="plz" />
-            </key-property>
-            <key-property name="ort" type="java.lang.String">
-                <column name="ort" />
-            </key-property>
-        </composite-id>
-    </class>
+ <class name="de.bielefeld.umweltamt.aui.mappings.elka.EBetrieb"
+  schema="elka" table="e_betrieb">
+  <id name="nr" type="java.lang.Integer">
+   <column name="std_nr"/>
+   <generator class="assigned"/>
+  </id>
+  <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
+  	<column name="std_nr" />
+  </property>
+  <many-to-one name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka.EStandort" fetch="select" lazy="false">
+   <column name="standort_nr" />
+  </many-to-one>
+  <many-to-one name="adresseByWrAdrNr" class="de.bielefeld.umweltamt.aui.mappings.elka.EAdresse" fetch="select" lazy="false">
+   <column name="wr_adr_nr" />
+  </many-to-one>
+  <property generated="never" lazy="false" name="bezeichnung" type="java.lang.String">
+   <column name="bezeichnung"/>
+  </property>
+  <property generated="never" lazy="false" name="suevkanTog" type="java.lang.Boolean">
+   <column name="suevkan_tog"/>
+  </property>
+  <property generated="never" lazy="false" name="e32" type="java.lang.Float">
+   <column name="e32" precision="8" scale="8"/>
+  </property>
+  <property generated="never" lazy="false" name="n32" type="java.lang.Float">
+   <column name="n32" precision="8" scale="8"/>
+  </property>
+  <property generated="never" lazy="false" name="aktualDat" type="java.util.Date">
+   <column length="29" name="aktual_dat"/>
+  </property>
+  <property generated="never" lazy="false" name="erstellDat" type="java.util.Date">
+   <column length="29" name="erstell_dat"/>
+  </property>
+  <property generated="never" lazy="false" name="herkunft" type="java.lang.String">
+   <column name="herkunft"/>
+  </property>
+ </class>
 </hibernate-mapping>

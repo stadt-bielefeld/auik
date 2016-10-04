@@ -23,10 +23,12 @@
 
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.elka.EAdresse;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -34,6 +36,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.hibernate.Hibernate;
 
 /**
  * A class that represents a row in the BasisLage database table.<br>
@@ -398,5 +401,14 @@ public class BasisLage  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-
+    
+    /**
+     * Returns a EAdresse instance, belonging to this BasisLage/BasisAdresse
+     */
+    public EAdresse getAdresse(){
+        Hibernate.initialize(HibernateSessionFactory.currentSession().get(BasisLage.class, getId()));
+        Hibernate.initialize(HibernateSessionFactory.currentSession().get(BasisLage.class, getId()).getBasisObjekts());
+        BasisObjekt[] o = (BasisObjekt[])basisObjekts.toArray(); 
+        return EAdresse.findById(o[0].getBasisStandort().getId());
+    }
 }

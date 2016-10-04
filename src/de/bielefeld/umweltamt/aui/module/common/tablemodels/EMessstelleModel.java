@@ -23,8 +23,12 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.elka.EMessstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.EAdresse;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 
 public class EMessstelleModel extends ListTableModel {
+
+    AuikLogger log = AuikLogger.getLogger();
 
 	public EMessstelleModel() {
         super(new String[]{
@@ -49,8 +53,9 @@ public class EMessstelleModel extends ListTableModel {
         switch(columnIndex) {
             case 0:
           		//value = stelle.getStandortNr().getAdresse().getName1();
-                value = EAdresse.findById(stelle.getNr()).getName1();
-				break;
+                //value = EAdresse.findById(stelle.getNr()).getName1();
+				value = stelle.getStandort().getAdresse().getName1();
+                break;
             case 1:
                 value = stelle.getBezeichnung();
                 break;
