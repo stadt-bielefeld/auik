@@ -694,7 +694,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
             "SELECT DISTINCT adresse,  lage" +
             " FROM BasisAdresse AS adresse JOIN  adresse.basisObjektStandort O JOIN O.basisLage lage ";
         if(strasse != null && strasse.length() > 0)
-            query += " AND adresse.strasse like '" + strasse + "%' ";
+            query += " WHERE adresse.strasse like '" + strasse + "%' ";
         if(hausnr != null && hausnr != -1)
             query += " AND adresse.hausnr = " + hausnr;
         if(ort != null && ort.length() > 0)
