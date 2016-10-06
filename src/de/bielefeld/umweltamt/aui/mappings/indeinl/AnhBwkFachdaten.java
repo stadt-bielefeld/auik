@@ -29,9 +29,10 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Set;
 /**
  * A class that represents a row in the AnhBwkFachdaten database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -452,12 +453,16 @@ public class AnhBwkFachdaten  implements java.io.Serializable {
     /* Custom code goes below here! */
     public static AnhBwkFachdaten findByObjektId(java.lang.Integer id) {
         log.debug("Getting AnhBwkFachdaten instance with connected BasisObjekt with id: " + id);
-        List<AnhBwkFachdaten> all = AnhBwkFachdaten.getAll();
+        /*List<AnhBwkFachdaten> all = AnhBwkFachdaten.getAll();
         for(AnhBwkFachdaten i : all){
             if(i.getBasisObjekt().getId().equals(id)){
                 return (AnhBwkFachdaten) new DatabaseAccess().get(AnhBwkFachdaten.class, i.getId());
             }
         }
-        return null;
+        return null;*/
+        BasisObjekt objekt = (BasisObjekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        //BasisObjekt.findById(id);
+        Set<AnhBwkFachdaten> list = objekt.getAnhBwkFachdatens();
+        return list.iterator().next();
     }
 }

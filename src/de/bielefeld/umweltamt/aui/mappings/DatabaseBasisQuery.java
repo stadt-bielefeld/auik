@@ -94,7 +94,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		String search)
 	{
 
-		String modSearch = search.toLowerCase().trim() + "%";
+		String modSearch = search.trim() + "%";
 		log.debug("Suche nach '" + modSearch + "' (" + property + ").");
 
         String query =  "SELECT DISTINCT adresse " + 
@@ -693,12 +693,15 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
         String query = 
             "SELECT DISTINCT adresse,  lage" +
             " FROM BasisAdresse AS adresse JOIN  adresse.basisObjektStandort O JOIN O.basisLage lage ";
-        if(strasse != null && strasse.length() > 0)
-            query += " WHERE adresse.strasse like '" + strasse + "%' ";
-        if(hausnr != null && hausnr != -1)
-            query += " AND adresse.hausnr = " + hausnr;
-        if(ort != null && ort.length() > 0)
-            query += " AND adresse.ort like '" + ort + "%' ";
+        if((strasse != null && strasse.length() > 0) || (hausnr != null && hausnr != -1) || (ort != null && ort.length() > 0)){
+            query += " WHERE ";
+            if(strasse != null && strasse.length() > 0)
+                query += " adresse.strasse like '" + strasse + "%' ";
+            if(hausnr != null && hausnr != -1)
+                query += " AND adresse.hausnr = " + hausnr;
+            if(ort != null && ort.length() > 0)
+                query += " AND adresse.ort like '" + ort + "%' ";
+        }
         query += " ORDER BY adresse.strasse asc, adresse.hausnr asc";
         return HibernateSessionFactory.currentSession().createQuery(query).list();
     }
