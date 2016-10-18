@@ -34,6 +34,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 import de.bielefeld.umweltamt.aui.SettingsManager;
@@ -689,22 +690,43 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 *            String
 	 * @return <code>List&lt;Object[]&gt;</code>
 	 */     
-    public static List<Object[]> findStandorteNew(String strasse, Integer hausnr, String ort){
+    public static List<Object[]> findStandorteNew(String strasse,
+        Integer hausnr, String ort)
+	{
+        //Check which parameters are set
+        boolean bStrasse = (strasse != null && strasse.length() > 0);
+        boolean bHausnr = (hausnr != null && hausnr != -1);
+        boolean bOrt = (ort != null && ort.length() > 0);
+
         String query = 
-            "SELECT DISTINCT adresse,  lage" +
-            " FROM BasisAdresse AS adresse JOIN  adresse.basisObjektStandort O JOIN O.basisLage lage ";
-        if((strasse != null && strasse.length() > 0) || (hausnr != null && hausnr != -1) || (ort != null && ort.length() > 0)){
-            query += " WHERE ";
-            if(strasse != null && strasse.length() > 0)
-                query += " adresse.strasse like '" + strasse + "%' ";
-            if(hausnr != null && hausnr != -1)
-                query += " AND adresse.hausnr = " + hausnr;
-            if(ort != null && ort.length() > 0)
-                query += " AND adresse.ort like '" + ort + "%' ";
-        }
-        query += " ORDER BY adresse.strasse asc, adresse.hausnr asc";
-        return HibernateSessionFactory.currentSession().createQuery(query).list();
+            "SELECT * FROM " +
+            " (SELECT DISTINCT ON (o.standortid) a.*, l.* " +
+            "FROM auik.basis_adresse a JOIN auik.basis_objekt o ON o.standortid = a.id JOIN auik.basis_lage l on o.lageid = l.id";
+            if(bStrasse || bHausnr || bOrt){
+                query += " WHERE ";
+                if(bStrasse){
+                    query += " a.strasse like '" + strasse + "%' ";
+                }
+                if(hausnr != null && hausnr != -1){
+                    if(bStrasse){
+                        query += " AND ";
+                    }
+                    query += " a.hausnr = " + hausnr;
+                }
+                if(bOrt){
+                    if(bStrasse || bHausnr){
+                        query += " AND ";
+                    }
+                    query += " a.ort like '" + ort + "%' ";
+                }
+            }
+            query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";
+            SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+            q.addEntity("a", BasisAdresse.class);
+            q.addEntity("l", BasisLage.class);
+            return q.list();
     }
+
 	/**
 	 * Find BasisAdresse that match the parameters and has betrnam and has betrname.
 	 * 
