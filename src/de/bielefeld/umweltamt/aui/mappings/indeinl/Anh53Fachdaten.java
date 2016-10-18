@@ -23,14 +23,17 @@
 
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class that represents a row in the Anh53Fachdaten database table.<br>
@@ -548,12 +551,16 @@ public class Anh53Fachdaten  implements java.io.Serializable {
     /* Custom code goes below here! */
     public static Anh53Fachdaten findByObjektId(java.lang.Integer id){
         log.debug("Getting Anh53Fachdaten instance with connected BasisObjekt with id: " + id);
-        List<Anh53Fachdaten> all = Anh53Fachdaten.getAll();
+        /*List<Anh53Fachdaten> all = Anh53Fachdaten.getAll();
         for(Anh53Fachdaten i : all){
             if(i.getBasisObjekt().getId().equals(id)){
                 return (Anh53Fachdaten) new DatabaseAccess().get(Anh53Fachdaten.class, i.getId());
             }
         }
-        return null;
+        return null;*/
+        BasisObjekt objekt = (BasisObjekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        //BasisObjekt.findById(id);
+        Set<Anh53Fachdaten> list = objekt.getAnh53Fachdatens();
+        return list.iterator().next();
     }
 }
