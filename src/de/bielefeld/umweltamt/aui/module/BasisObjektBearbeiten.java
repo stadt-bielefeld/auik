@@ -563,7 +563,10 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 } else {
                     log.debug("Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
-                    getHeaderLabel().setText(objekt.getBasisLage()+"; "+objekt.getBasisAdresse()+"; "+objekt.getBasisObjektarten().getObjektart());
+                    getHeaderLabel().setText(objekt.getBasisStandort().getStrasse()+ " " +
+                    		objekt.getBasisStandort().getHausnr() + 
+                    		objekt.getBasisStandort().getHausnrzus() +
+                    		"; "+objekt.getBasisAdresse()+"; "+objekt.getBasisObjektarten().getObjektart());
                 }
 
                 if (objekt != null) {
