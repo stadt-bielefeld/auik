@@ -51,6 +51,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
@@ -172,6 +173,24 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 				+ (hausnr != null ? hausnr.toString() : "")
 				+ (zusatz != null ? zusatz : "");
 	}
+
+	/**
+	 * Get a formatted string for a BasisStandortAdresse
+	 * 
+	 * @param standort
+	 *            BasisAdresse
+	 * @return String
+	 */
+	public static String getStandortString(BasisAdresse standort)
+	{
+		String strasse = standort.getStrasse();
+		Integer hausnr = standort.getHausnr();
+		String zusatz = standort.getHausnrzus();
+		return (strasse != null ? strasse + " " : "")
+				+ (hausnr != null ? hausnr.toString() : "")
+				+ (zusatz != null ? zusatz : "");
+	}
+
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package BASIS : class BasisGemarkung */
@@ -834,6 +853,42 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 											new String[0]);
 		}
 		return DatabaseBasisQuery.entwaesserungsgebiete;
+	}
+
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	/* Queries for package BASIS : class BasisTabStreets */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+	
+	/**
+	 * Get all BasisTabStreets and sort them by their name
+	 * @return <code>Eine Liste aller Standorte</code>
+	 */
+	public static List<BasisTabStreets> getAllTabStreetslist() {
+	    List<BasisTabStreets> strassenlist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(BasisTabStreets.class)
+	                .addOrder(Order.asc("name")),
+	            new BasisTabStreets());
+		return strassenlist;
+	
+	}
+
+	/**
+	 * Get BasisStrassen filtered by plzort and sort them by their name
+	 * 
+	 * @return <code>Eine Liste aller Standorte</code>
+	 */
+	public static List<BasisTabStreets> getTabStreetslist(MatchMode mm)
+	{
+
+		DetachedCriteria dc = DetachedCriteria.forClass(BasisTabStreets.class)
+				.addOrder(Order.asc("name"));
+
+		List<BasisTabStreets> tabstreetslist = new DatabaseAccess()
+				.executeCriteriaToList(dc, new BasisTabStreets());
+
+		return tabstreetslist;
+
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
