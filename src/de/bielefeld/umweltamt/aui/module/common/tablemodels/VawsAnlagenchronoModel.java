@@ -33,6 +33,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.Date;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -68,7 +69,7 @@ public class VawsAnlagenchronoModel extends ListTableModel {
             tmp = ac.getVawsFachdaten().getBasisObjekt().getBasisAdresse().toString();
             break;
         case 1:
-            tmp = ac.getVawsFachdaten().getBasisObjekt().getBasisLage().toString();
+            tmp = DatabaseQuery.getStandortString(ac.getVawsFachdaten().getBasisObjekt().getBasisStandort());
             break;
         case 2:
             tmp = ac.getWv();

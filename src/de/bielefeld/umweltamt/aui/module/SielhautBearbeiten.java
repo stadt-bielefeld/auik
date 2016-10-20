@@ -303,7 +303,7 @@ public class SielhautBearbeiten extends AbstractModul {
     public void setSielhautPunkt(AtlSielhaut sp) {
         this.spunkt = sp;
         if (this.spunkt.getObjektid() != null) {
-            this.sprobePkt = AtlProbepkt.findById(
+            this.sprobePkt = AtlProbepkt.findByObjektId(
                 this.spunkt.getBasisObjekt().getObjektid());
             getPrAnlegenButton().setEnabled(true);
             getTabelleExportButton().setEnabled(true);

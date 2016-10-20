@@ -190,7 +190,7 @@ class WiedervorlageVVModel extends ListTableModel {
             tmp = vf.getVawsFachdaten().getBasisObjekt().getBasisAdresse();
             break;
         case 2:
-            tmp = vf.getVawsFachdaten().getBasisObjekt().getBasisLage();
+            tmp = DatabaseQuery.getStandortString(vf.getVawsFachdaten().getBasisObjekt().getBasisStandort());
             break;
         case 3:
             tmp = AuikUtils.getStringFromDate(vf.getWiedervorlage());
