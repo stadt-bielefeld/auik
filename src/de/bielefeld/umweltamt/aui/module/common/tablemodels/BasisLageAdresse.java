@@ -81,10 +81,10 @@ public class BasisLageAdresse{
         //BasisObjekt objekt = (BasisObjekt) lage.getBasisObjekts().toArray()[0];
 
         //Workaround
-        List<Object> list =  HibernateSessionFactory.currentSession().createQuery("SELECT lage, objekt FROM BasisLage AS lage JOIN lage.basisObjekts objekt  WHERE lage.id = " + lage.getId()).list();
+        List<Object[]> list =  HibernateSessionFactory.currentSession().createQuery("SELECT lage, objekt FROM BasisLage AS lage JOIN lage.basisObjekts objekt  WHERE lage.id = " + lage.getId()).list();
         log.debug(list);
-        this.lage = (BasisLage) list.get(0);
-        BasisObjekt objekt = (BasisObjekt) list.get(1);
+        this.lage = (BasisLage) list.get(0)[0];
+        BasisObjekt objekt = (BasisObjekt) list.get(0)[1];
                 
         this.adresse = objekt.getBasisStandort();
     }

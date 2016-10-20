@@ -282,7 +282,42 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		BasisAdresse standort, String abteilung, Integer artid,
 		Boolean matchArtId)
 	{
-		DetachedCriteria detachedCriteria = DetachedCriteria
+        log.debug("Fetching objects at " + standort);
+        //Find objects witch matching standortid
+		String query1 = "SELECT o.* from auik.basis_objekt o, auik.basis_adresse a, auik.basis_objektarten art "+
+                       " WHERE a.id = " + standort.getId() + " AND o.standortid = a.id";
+        //Find objects with standortid of basis_adresse objects with matching fields
+        String query2 = " UNION " +
+                 "SELECT o.* from auik.basis_objekt o, auik.basis_adresse a, auik.basis_adresse a2, auik.basis_objektarten art " + 
+                 " WHERE a.id = " + standort.getId() + " AND a2.strasse = a.strasse AND a2.hausnr = a.hausnr  AND o.standortid = a2.id"
+                 + " AND CASE WHEN " + 
+                 " (a.hausnrzus IS NOT NULL) THEN (a2.hausnrzus = a.hausnrzus) ELSE (a2.hausnrzus IS NULL) END";
+
+        String filter = " ";
+        if (abteilung != null)
+		{
+            filter += " AND art.abteilung = '" + abteilung + "' ";
+		}
+		if (artid != null)
+		{
+			if (matchArtId)
+			{
+                filter += "AND art.id = " + artid + " ";
+			}
+			else
+			{
+                filter += "AND art.id != " + artid + " ";
+
+			}
+		}
+        query1 += filter;
+        query2 += filter + ";";
+        SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query1 + query2);
+        //log.debug(query1 + query2);
+        q.addEntity("o", BasisObjekt.class);
+        return q.list();
+        /*
+        DetachedCriteria detachedCriteria = DetachedCriteria
 				.forClass(BasisObjekt.class)
 				.createAlias("basisAdresse", "betreiber")
 				.createAlias("basisObjektarten", "art")
@@ -307,7 +342,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 			}
 		}
 		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
-															new BasisObjekt());
+															new BasisObjekt());*/
 	}
 
 	/**
@@ -700,7 +735,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 
         String query = 
             "SELECT * FROM " +
-            " (SELECT DISTINCT ON (o.standortid) a.*, l.* " +
+            " (SELECT DISTINCT ON (a.strasse, a.hausnr, a.hausnrzus) a.*, l.* " +
             "FROM auik.basis_adresse a JOIN auik.basis_objekt o ON o.standortid = a.id JOIN auik.basis_lage l on o.lageid = l.id";
             if(bStrasse || bHausnr || bOrt){
                 query += " WHERE ";
