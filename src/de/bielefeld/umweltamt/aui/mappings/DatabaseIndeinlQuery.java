@@ -647,10 +647,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(IndeinlGenehmigung.class)
                 .createAlias("basisObjekt", "objekt")
-                .createAlias("basisObjekt.basisBetreiber", "betreiber")
+                .createAlias("basisObjekt.basisAdresse", "adresse")
                 .createAlias("basisObjekt.basisStandort", "standort")
                 .add(Restrictions.eq("objekt.inaktiv", inaktiv))
-                .addOrder(Order.asc("betreiber.betrname"))
+                .addOrder(Order.asc("adresse.betrname"))
                 .addOrder(Order.asc("standort.strasse"))
                 .addOrder(Order.asc("standort.hausnr"));
         if (anhang == null || anhang != -1) {
