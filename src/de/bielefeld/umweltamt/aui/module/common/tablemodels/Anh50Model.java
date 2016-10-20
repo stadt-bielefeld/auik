@@ -42,6 +42,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.Date;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -75,7 +76,7 @@ public class Anh50Model extends ListTableModel {
             tmp = fd.getBasisObjekt().getBasisAdresse().toString();
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBasisLage().toString();
+            tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
             break;
         case 2:
             tmp = fd.getWiedervorlage();

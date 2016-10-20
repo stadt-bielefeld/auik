@@ -46,7 +46,7 @@ public class DatabaseSerialVersionUID {
     public static final long forBasisLage           = 2774552431508434460L;
     public static final long forBasisStrassen           = -3812115749085297644L;
     public static final long forBasisOrte           	= -2842969054038396748L;
-
+    public static final long forBasisTabStreets			= -3052644153669690816L;
     /* Generated serialVersionUID for atl package */
     public static final long forAtlAnalyseposition      = 8611630449814009888L;
     public static final long forAtlEinheiten            = 866939599579322354L;

@@ -399,9 +399,11 @@ public class DatabaseAccess
 			this.criteria =
 					detachedCriteria.getExecutableCriteria(this.getSession());
 			// Add global restrictions
-			// For all classes except those in the tipi package
+			// For all classes except those in the tipi package and BasisTabStreets
 			if (!(this.criteria.toString().contains(
-					"de.bielefeld.umweltamt.aui.mappings.elka")))
+					"de.bielefeld.umweltamt.aui.mappings.elka"))
+				&& !(this.criteria.toString().contains(
+					"de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets")))
 			{
 				this.criteria.add(Restrictions.eq("deleted", false));
 			}

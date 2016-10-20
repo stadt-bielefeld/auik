@@ -79,15 +79,8 @@ public class BasisObjektModel extends ListTableModel {
                 tmp = bo.getId();
                 break;
             case 1:
-                if ("Standort".equals(secondColumn) && bo.getBasisStandort().getHausnrzus() != null) {
-                    tmp = bo.getBasisStandort().getStrasse() + " " +
-                    		bo.getBasisStandort().getHausnr() +
-                    		bo.getBasisStandort().getHausnrzus() + " " +
-                    		" (" + bo.getBasisLage().getEntgebid() + ")";
-                } else if ("Standort".equals(secondColumn)){
-                    tmp = bo.getBasisStandort().getStrasse() + " " +
-                    		bo.getBasisStandort().getHausnr() + " " +
-                    		" (" + bo.getBasisLage().getEntgebid() + ")";
+                if ("Standort".equals(secondColumn)) {
+                    tmp = DatabaseQuery.getStandortString(bo.getBasisStandort());
                 } else if ("Betreiber".equals(secondColumn)) {
                     tmp = bo.getBasisAdresse();
                 } else {

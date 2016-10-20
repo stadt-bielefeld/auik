@@ -42,6 +42,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.Date;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -76,7 +77,7 @@ public class WiedervorlageModel extends ListTableModel {
             tmp = obj.getBasisAdresse().toString();
             break;
         case 1:
-            tmp = obj.getBasisLage().toString();
+            tmp = DatabaseQuery.getStandortString(obj.getBasisStandort());
             break;
         case 2:
             tmp = obj.getWiedervorlage();

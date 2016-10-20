@@ -46,6 +46,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -80,7 +81,7 @@ public class ProbepunktModel extends ListTableModel {
             tmp = pkt.getId();
             break;
         case 1:
-            tmp = pkt.getBasisObjekt().getBasisLage();
+            tmp = DatabaseQuery.getStandortString(pkt.getBasisObjekt().getBasisStandort());
             break;
         case 2:
             tmp = pkt.getBasisObjekt().getBasisAdresse();

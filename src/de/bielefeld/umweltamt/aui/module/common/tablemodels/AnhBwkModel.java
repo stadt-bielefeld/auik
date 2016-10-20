@@ -45,6 +45,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.Date;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -82,8 +83,7 @@ public class AnhBwkModel extends ListTableModel {
                         .getBetrname();
                 break;
             case 1:
-                result = fachdaten.getBasisObjekt().getBasisLage()
-                    .toString();
+                result = DatabaseQuery.getStandortString(fachdaten.getBasisObjekt().getBasisStandort());;
                 break;
             case 2: result = fachdaten.getKHersteller();  break;
             case 3: result = fachdaten.getKBrennmittel(); break;

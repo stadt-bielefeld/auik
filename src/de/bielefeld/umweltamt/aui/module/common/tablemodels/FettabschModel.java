@@ -58,7 +58,7 @@ public class FettabschModel extends ListTableModel {
     			tmp = fd.getBasisObjekt().getBasisAdresse();
     			break;
     		case 1:
-    			tmp = fd.getBasisObjekt().getBasisLage();
+    			tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
     			break;
     		case 2:
     			tmp = fd.getBemerkungen();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
 "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
@@ -9,7 +9,7 @@
         <!-- PostgreSQL: -->
            
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://cabraca.maya:12421/auik</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://172.22.100.25/fisumwelt</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>       	
 
         <!-- MySQL: -->
@@ -40,6 +40,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektchrono.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektverknuepfung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisAdresse.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisTabStreets.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh40Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Abfuhr.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Abscheiderdetails.hbm.xml" />

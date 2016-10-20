@@ -46,6 +46,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaetId;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
@@ -208,6 +209,11 @@ public class DatabaseClassToString {
 
     /** @return BasisStrassen.toGuiString() */
     public static String toStringForClass(BasisStrassen clazz) {
+        return clazz.toGuiString();
+    }
+
+    /** @return BasisTabStreets.toGuiString() */
+    public static String toStringForClass(BasisTabStreets clazz) {
         return clazz.toGuiString();
     }
 

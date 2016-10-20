@@ -161,11 +161,11 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
             DetachedCriteria.forClass(Anh49Fachdaten.class)
                 .createAlias("basisObjekt", "objekt")
                 .createAlias("objekt.basisObjektarten", "art")
-                .createAlias("objekt.basisBetreiber", "betreiber")
+                .createAlias("objekt.basisAdresse", "adresse")
                 .add(Restrictions.eq("art.id",
                     DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
                 .addOrder(Order.asc("objekt.inaktiv"))
-                .addOrder(Order.asc("betreiber.betrname")),
+                .addOrder(Order.asc("adresse.betrname")),
             new Anh49Fachdaten());
     }
 
@@ -378,11 +378,11 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Anh50Fachdaten.class)
                 .createAlias("basisObjekt", "objekt")
-                .createAlias("basisObjekt.basisBetreiber", "betreiber")
+                .createAlias("basisObjekt.basisAdresse", "adresse")
                 .add(Restrictions.eq("erloschen", false))
                 .add(Restrictions.eq("objekt.inaktiv", false))
                 .addOrder(Order.asc("wiedervorlage"))
-                .addOrder(Order.asc("betreiber.betrname"));
+                .addOrder(Order.asc("adresse.betrname"));
         if (nurWiedervorlageAbgelaufen) {
             detachedCriteria.add(Restrictions.le("wiedervorlage", new Date()));
         }

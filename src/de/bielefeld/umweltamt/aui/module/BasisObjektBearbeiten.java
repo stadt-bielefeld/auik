@@ -108,6 +108,7 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
@@ -563,10 +564,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 } else {
                     log.debug("Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
-                    getHeaderLabel().setText(objekt.getBasisStandort().getStrasse()+ " " +
-                    		objekt.getBasisStandort().getHausnr() + 
-                    		objekt.getBasisStandort().getHausnrzus() +
-                    		"; "+objekt.getBasisAdresse()+"; "+objekt.getBasisObjektarten().getObjektart());
+                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getBasisStandort()) +
+                    		"; " + objekt.getBasisAdresse()+"; "+objekt.getBasisObjektarten().getObjektart());
                 }
 
                 if (objekt != null) {

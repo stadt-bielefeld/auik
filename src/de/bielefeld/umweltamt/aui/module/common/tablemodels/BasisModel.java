@@ -46,6 +46,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
@@ -81,7 +82,7 @@ public class BasisModel extends ListTableModel {
             tmp = obj.getBasisAdresse();
             break;
         case 1:
-            tmp = obj.getBasisLage();
+            tmp = DatabaseQuery.getStandortString(obj.getBasisStandort());
             break;
         case 2:
 			tmp = "";

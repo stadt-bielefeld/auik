@@ -82,7 +82,7 @@ public class Anh49Model extends ListTableModel {
             	tmp = fd.getBasisObjekt().getBasisAdresse().toString();
                 break;
             case 1: 
-            	tmp = fd.getBasisObjekt().getBasisLage().toString();
+            	tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
                 break;
             case 2: 
             	tmp = DatabaseQuery.getLetzteAnalyse(fd);

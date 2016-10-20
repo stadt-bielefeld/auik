@@ -46,6 +46,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -84,7 +85,7 @@ public class BescheidModel extends ListTableModel {
             tmp = fd.getDatumDerEntnahme();
             break;
         case 2:
-            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisLage();
+            tmp = DatabaseQuery.getStandortString(fd.getAtlProbepkt().getBasisObjekt().getBasisStandort());
             break;
         case 3:
             tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisAdresse();

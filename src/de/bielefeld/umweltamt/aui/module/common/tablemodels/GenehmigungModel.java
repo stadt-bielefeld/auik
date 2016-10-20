@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.Date;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -61,7 +62,7 @@ public class GenehmigungModel extends ListTableModel {
             tmp = fd.getBasisObjekt().getBasisAdresse().toString();
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBasisLage().toString();
+            tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
             break;
         case 2:
             tmp = fd.getErstellungsDatum();

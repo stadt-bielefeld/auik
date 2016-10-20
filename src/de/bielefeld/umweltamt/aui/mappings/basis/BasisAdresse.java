@@ -347,7 +347,7 @@ public class BasisAdresse  implements java.io.Serializable {
     public String toString() {
         return DatabaseClassToString.toStringForClass(this); 
     }
-
+    
     /**
      * Get a string representation for debugging
      * @return String
