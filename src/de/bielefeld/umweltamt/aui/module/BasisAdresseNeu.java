@@ -43,10 +43,12 @@
 package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.Calendar;
 
@@ -58,10 +60,11 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import org.hibernate.criterion.MatchMode;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -71,18 +74,22 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandorteModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
+import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.LongNameComboBoxRenderer;
-import de.bielefeld.umweltamt.aui.utils.SearchBox;
-import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 /**
@@ -105,13 +112,12 @@ public class BasisAdresseNeu extends AbstractModul
 	private JTextField namenFeld;
 	private JTextField nameZusFeld;
 	private JTextField kassenzeichenFeld;
-	//private JTextField strassenFeld;
+	private JTextField strasseFeld;
 	private JFormattedTextField hausnrFeld;
 	private JTextField hausnrZusFeld;
-	//private JFormattedTextField plzZsFeld;
 	private JTextField plzZsFeld;
 	private JTextField plzFeld;
-	private JComboBox orteBox;
+	private JTextField ortFeld;
 	private JTextField telefonFeld;
 	private JTextField telefaxFeld;
 	private JTextField emailFeld;
@@ -119,14 +125,32 @@ public class BasisAdresseNeu extends AbstractModul
 	private JTextField betrBeaufNachnameFeld;
 	private JTextField revdatumsFeld;
 	private JTextField handzeichenNeuFeld;
+	private JTextField flurFeld;
+	private JTextField flurStkFeld;
+	private JFormattedTextField e32Feld;
+	private JFormattedTextField n32Feld;
+	private JComboBox gemarkungBox;
+	private JComboBox entwGebBox;
+	private JComboBox standortGgBox;
+	private JComboBox wEinzugsGebBox;
+	
+	private BasisGemarkung[] gemarkungen = null;
+	private String[] entwgebiete = null;
+	private VawsStandortgghwsg[] standortggs = null;
+	private VawsWassereinzugsgebiete[] wEinzugsgebiete = null;
 
 	private JTextArea bemerkungsArea;
 
-	private SearchBox strassenBox;
+	private JComboBox strassenBox;
+	private JTable standorteTabelle;
+	private BasisStandorteModel standorteModel;
 	private JComboBox wirtschaftszweigBox;
 
 	private BasisOrte[] orte = null;
 	private VawsWirtschaftszweige[] wirtschaftszweige = null;
+	private String[] tabstreets = null;
+	private String street = null;
+
 
 	/*
 	 * (non-Javadoc)
@@ -180,6 +204,7 @@ public class BasisAdresseNeu extends AbstractModul
 	{
 		if (panel == null)
 		{
+
 			speichernButton = new JButton("Speichern");
 
 			anredeFeld = new LimitedTextField(100);
@@ -191,12 +216,25 @@ public class BasisAdresseNeu extends AbstractModul
 			hausnrZusFeld = new LimitedTextField(10);
 			plzZsFeld = new LimitedTextField(3, "");
 			plzFeld = new JTextField();
-			orteBox = new JComboBox();
+			strasseFeld = new JTextField();
+			ortFeld = new JTextField();
 			telefonFeld = new LimitedTextField(50);
 			telefaxFeld = new LimitedTextField(50);
 			emailFeld = new LimitedTextField(50);
 			betrBeaufVornameFeld = new LimitedTextField(50);
 			betrBeaufNachnameFeld = new LimitedTextField(50);
+			flurFeld = new LimitedTextField(50);
+			flurStkFeld = new LimitedTextField(50);
+
+			e32Feld = new DoubleField(1);
+			e32Feld.setValue(new Float(0.0f));
+			n32Feld = new DoubleField(1);
+			n32Feld.setValue(new Float(0.0f));
+			gemarkungBox = new JComboBox();
+			entwGebBox = new JComboBox();
+			entwGebBox.setEditable(true);
+			standortGgBox = new JComboBox();
+			wEinzugsGebBox = new JComboBox();
 
 			revdatumsFeld = new JTextField();
 			revdatumsFeld.setEditable(false);
@@ -211,10 +249,6 @@ public class BasisAdresseNeu extends AbstractModul
 			bemerkungsArea.setWrapStyleWord(true);
 			JScrollPane bemerkungsScroller = new JScrollPane(bemerkungsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 					JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-			strassenBox = new SearchBox();
-			strassenBox.setEditable(true);
-			strassenBox.allowsNewValues(true);
 
 			wirtschaftszweigBox = new JComboBox();
 			wirtschaftszweigBox.setRenderer(new LongNameComboBoxRenderer());
@@ -254,7 +288,7 @@ public class BasisAdresseNeu extends AbstractModul
 			//            TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
 
 			FormLayout layout = new FormLayout(
-					"right:pref, 3dlu, 20dlu, 40dlu, 5dlu, right:pref, 3dlu, 27dlu, 3dlu, 30dlu, 5dlu:grow(0.5)", // Spalten
+					"right:pref, 3dlu, 20dlu, 70dlu, 5dlu, right:pref, 3dlu, 27dlu, 3dlu, 30dlu, 10dlu, 60dlu, 3dlu, 60dlu, 3dlu, 20dlu", // Spalten
 					"pref, 3dlu, " + //1 - Stammdaten
 							"pref, 3dlu, " + //3
 							"pref, 3dlu, " + //5
@@ -282,7 +316,7 @@ public class BasisAdresseNeu extends AbstractModul
 							"pref, 10dlu, " + //41
 
 							"top:pref:grow");//43 - Buttons
-			layout.setRowGroups(new int[][] { { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 30, 31, 33, 35,
+			layout.setRowGroups(new int[][] { { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35,
 					37 } });
 
 			PanelBuilder builder = new PanelBuilder(layout);
@@ -290,83 +324,172 @@ public class BasisAdresseNeu extends AbstractModul
 			CellConstraints cc = new CellConstraints();
 
 			// Stamdaten ------------------------------------
-			builder.addSeparator("Stammdaten", cc.xyw(1, 1, 10));
+			builder.addSeparator("Stammdaten", cc.xyw(1, 1, 16));
 			// Anrede
 			builder.addLabel("Anrede:", cc.xy(1, 3));
-			builder.add(anredeFeld, cc.xyw(3, 3, 4));
+			builder.add(anredeFeld, cc.xyw(3, 3, 6));
+			// Telefon
+			builder.addLabel("Telefon:", cc.xy(10, 3));
+			builder.add(telefonFeld, cc.xyw(12, 3, 5));
 			// Vorname
 			builder.addLabel("Vorname:", cc.xy(1, 5));
-			builder.add(vornamenFeld, cc.xyw(3, 5, 4));
+			builder.add(vornamenFeld, cc.xyw(3, 5, 6));
+			// Telefax
+			builder.addLabel("Telefax:", cc.xy(10, 5));
+			builder.add(telefaxFeld, cc.xyw(12, 5, 5));
 			// Name
 			namenLabel = builder.addLabel("Name:", cc.xy(1, 7));
-			builder.add(namenFeld, cc.xyw(3, 7, 4));
+			builder.add(namenFeld, cc.xyw(3, 7, 6));
+			// eMail
+			builder.addLabel("E-Mail:", cc.xy(10, 7));
+			builder.add(emailFeld, cc.xyw(12, 7, 5));
 			// Zusatz
 			builder.addLabel("Zusatz:", cc.xy(1, 9));
-			builder.add(nameZusFeld, cc.xyw(3, 9, 4));
-			// Zusatz
+			builder.add(nameZusFeld, cc.xyw(3, 9, 6));
+			
+			// Ansprechpartner -------------------------
+			builder.addSeparator("Ansprechpartner", cc.xyw(10, 9, 7));
+			// Vorname
+			builder.addLabel("Vorname:", cc.xy(10, 11));
+			builder.add(betrBeaufVornameFeld, cc.xyw(12, 11, 5));
+			// Nachname
+			builder.addLabel("Name:", cc.xy(10, 13));
+			builder.add(betrBeaufNachnameFeld, cc.xyw(12, 13, 5));
+			// Kassenzeichen
 			builder.addLabel("Kassenzeichen:", cc.xy(1, 11));
-			builder.add(kassenzeichenFeld, cc.xyw(3, 11, 4));
+			builder.add(kassenzeichenFeld, cc.xyw(3, 11, 6));
 			// Wirtschaftszweig
 			builder.addLabel("Wirtschaftszweig:", cc.xy(1, 13));
-			builder.add(wirtschaftszweigBox, cc.xyw(3, 13, 4));
+			builder.add(wirtschaftszweigBox, cc.xyw(3, 13, 6));
 
-			// Adresse --------------------------------------
-			builder.addSeparator("Adresse", cc.xyw(1, 15, 10));
+			// Lage --------------------------------------
+			builder.addSeparator("Lage", cc.xyw(1, 15, 10));
+			// auswählen --------------------------------------
+			builder.addSeparator("auswählen", cc.xyw(12, 15, 5));
 			// Ort
 			builder.addLabel("Ort:", cc.xy(1, 17));
 			builder.add(plzZsFeld, cc.xy(3, 17));
 			builder.add(plzFeld, cc.xy(4, 17));
-			builder.add(orteBox, cc.xyw(6, 17, 5));
+			builder.add(ortFeld, cc.xyw(6, 17, 5));
 			// Straße
 			builder.addLabel("Straße:", cc.xy(1, 19));
-			builder.add(strassenBox, cc.xyw(3, 19, 4));
+			builder.add(strasseFeld, cc.xyw(3, 19, 4));
 			builder.add(hausnrFeld, cc.xy(8, 19));
 			builder.add(hausnrZusFeld, cc.xy(10, 19));
-			// Telefon
-			builder.addLabel("Telefon:", cc.xy(1, 21));
-			builder.add(telefonFeld, cc.xyw(3, 21, 4));
-			// Telefax
-			builder.addLabel("Telefax:", cc.xy(1, 23));
-			builder.add(telefaxFeld, cc.xyw(3, 23, 4));
-			// eMail
-			builder.addLabel("E-Mail:", cc.xy(1, 25));
-			builder.add(emailFeld, cc.xyw(3, 25, 4));
+			builder.add(getStrassenBox(), cc.xyw(12, 17, 5));
 
-			// Betriebsbeauftragter -------------------------
-			builder.addSeparator("Ansprechpartner", cc.xyw(1, 27, 10));
-			// Vorname
-			builder.addLabel("Vorname:", cc.xy(1, 29));
-			builder.add(betrBeaufVornameFeld, cc.xyw(3, 29, 2));
-			// Nachname
-			builder.addLabel("Nachname:", cc.xy(6, 29));
-			builder.add(betrBeaufNachnameFeld, cc.xyw(8, 29, 3));
+			builder.add(getStandorteScroller(), cc.xywh(12, 19, 5, 13));
+
+			// Koordinaten
+			builder.addLabel("E32:", cc.xy(1, 21));
+			builder.add(e32Feld, cc.xyw(3, 21, 3));
+			builder.addLabel("N32:", cc.xy(1, 23));
+			builder.add(n32Feld, cc.xyw(3, 23, 3));
+			builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 25));
+			builder.add(entwGebBox, cc.xyw(3, 25, 3));
+			
+			//
+			builder.addLabel("Gemarkung:", cc.xy(1, 27));
+			builder.add(gemarkungBox, cc.xyw(3, 27, 8));
+			
+			//VAwS
+			builder.addLabel("Standortgegebenheit:", cc.xy(1, 29));
+			builder.add(standortGgBox, cc.xyw(3, 29, 8));
+			builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 31));
+			builder.add(wEinzugsGebBox, cc.xyw(3, 31, 8));
+
+			
 
 			// Bemerkungen ----------------------------------
-			builder.addSeparator("Bemerkungen", cc.xyw(1, 31, 10));
-			builder.add(bemerkungsScroller, cc.xywh(1, 33, 10, 3));
+			builder.addSeparator("Bemerkungen", cc.xyw(1, 33, 10));
+			builder.add(bemerkungsScroller, cc.xywh(1, 35, 10, 3));
 
 			// Revision -------------------------------------
-			builder.addSeparator("Revision", cc.xyw(1, 37, 10));
+			builder.addSeparator("Revision", cc.xyw(12, 33, 5));
 			// Datum
-			builder.addLabel("Datum:", cc.xy(1, 39));
-			builder.add(revdatumsFeld, cc.xyw(3, 39, 4));
+			builder.addLabel("Datum:", cc.xy(12, 35));
+			builder.add(revdatumsFeld, cc.xyw(14, 35, 3));
 			// Handzeichen
-			handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(1, 41));
-			builder.add(handzeichenNeuFeld, cc.xyw(3, 41, 4));
+			handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 37));
+			builder.add(handzeichenNeuFeld, cc.xyw(14, 37, 3));
 
 			// Buttons
-			builder.add(buttonBar, cc.xyw(1, 43, 10));
+			builder.add(buttonBar, cc.xyw(14, 43, 3));
 
 			BetreiberNeuListener dialogListener = new BetreiberNeuListener();
 
 			speichernButton.addActionListener(dialogListener);
 			plzFeld.addActionListener(dialogListener);
-			orteBox.addActionListener(dialogListener);
+			ortFeld.addActionListener(dialogListener);
+			strasseFeld.addActionListener(dialogListener);
 			strassenBox.addActionListener(dialogListener);
 
 			panel = builder.getPanel();
 		}
 		return panel;
+	}
+
+	private JTable getStandorteTabelle() {
+	
+		if (this.standorteModel == null) {
+			this.standorteModel = new BasisStandorteModel();
+	
+			if (this.standorteTabelle == null) {
+				this.standorteTabelle = new JTable(this.standorteModel);
+	
+				this.standorteTabelle.getColumnModel().getColumn(0)
+						.setPreferredWidth(100);
+				this.standorteTabelle.getColumnModel().getColumn(1)
+						.setPreferredWidth(10);
+				this.standorteTabelle.getColumnModel().getColumn(2)
+						.setPreferredWidth(7);
+	
+				this.standorteTabelle
+						.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				this.standorteTabelle.setColumnSelectionAllowed(false);
+				this.standorteTabelle.setRowSelectionAllowed(true);
+	
+				this.standorteTabelle
+						.addMouseListener(new java.awt.event.MouseAdapter() {
+							@Override
+							public void mouseClicked(java.awt.event.MouseEvent e) {
+								if ((e.getClickCount() == 1)
+										&& (e.getButton() == 1)) {
+									updateAdresse();	
+								}
+							}
+	
+							@Override
+							public void mousePressed(MouseEvent e) {
+								
+							}
+	
+							@Override
+							public void mouseReleased(MouseEvent e) {
+								
+							}
+						});
+	
+			}
+		}
+		return this.standorteTabelle;
+	}
+
+	private JScrollPane getStandorteScroller() {
+
+        JScrollPane standorteScroller = new JScrollPane(
+            getStandorteTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		return standorteScroller;
+	}
+
+	private Component getStrassenBox() {
+
+		strassenBox = new JComboBox();
+		strassenBox.setRenderer(new LongNameComboBoxRenderer());
+		
+		return strassenBox;
 	}
 
 	@Override
@@ -375,6 +498,55 @@ public class BasisAdresseNeu extends AbstractModul
 		super.show();
 		clearForm();
 	}
+	
+	public void updateStandorteListe() {
+		
+		SwingWorkerVariant worker = new SwingWorkerVariant(strassenBox) {
+
+			private BasisStandorteModel standorteModel;
+
+			@Override
+			protected void doNonUILogic() throws RuntimeException {
+				
+				String strasse = strassenBox.getSelectedItem().toString();
+		        this.standorteModel.setStrasse(strasse);
+		        this.standorteModel.updateList();
+				
+			}
+
+			@Override
+			protected void doUIUpdateLogic() throws RuntimeException {
+				
+				
+				
+			}
+			
+		};
+	}
+
+    public void updateAdresse() {
+        
+    	log.debug("Start updateAdresse()");
+        ListSelectionModel lsm = getStandorteTabelle().getSelectionModel();
+        if (!lsm.isSelectionEmpty()) {
+            int selectedRow = lsm.getMinSelectionIndex();
+            BasisTabStreets bts = this.standorteModel.getRow(selectedRow);
+            log.debug("Standort " + bts.getName() + " (ID"
+                + bts.getAbgleich() + ") angewählt.");
+            strasseFeld.setText(bts.getName());
+            hausnrFeld.setValue(bts.getHausnr());
+            hausnrZusFeld.setText(bts.getHausnrZusatz());
+            e32Feld.setValue(bts.getX());
+            n32Feld.setValue(bts.getY());
+            BasisStrassen stra = DatabaseQuery.findStrasse(strassenBox
+					.getSelectedItem().toString());
+            if (stra.getPlz() != null) {
+            	plzFeld.setText(stra.getPlz());
+            }
+        }
+        log.debug("End updateAdresse()");
+    }
+
 
 	/**
 	 * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
@@ -408,61 +580,69 @@ public class BasisAdresseNeu extends AbstractModul
 			setAllEnabled(false);
 
 			// Neues Standortobjekt erzeugen
-			BasisAdresse betrn = new BasisAdresse();
+			BasisLageAdresse adrn = new BasisLageAdresse();
 
 			// Anrede
 			String anrede = anredeFeld.getText();
 			if (anrede.equals(""))
 			{
-				betrn.setBetranrede(null);
+				adrn.getBasisAdresse().setBetranrede(null);
 			}
 			else
 			{
-				betrn.setBetranrede(anrede);
+				adrn.getBasisAdresse().setBetranrede(anrede);
 			}
 			// Vorame
 			String vorname = vornamenFeld.getText();
 			if (vorname.equals(""))
 			{
-				betrn.setBetrvorname(null);
+				adrn.getBasisAdresse().setBetrvorname(null);
 			}
 			else
 			{
-				betrn.setBetrvorname(vorname);
+				adrn.getBasisAdresse().setBetrvorname(vorname);
 			}
 			// Name
 			String name = namenFeld.getText();
 			if (name.equals(""))
 			{
-				betrn.setBetrname(null);
+				adrn.getBasisAdresse().setBetrname(null);
 			}
 			else
 			{
-				betrn.setBetrname(name);
+				adrn.getBasisAdresse().setBetrname(name);
 			}
 			// Zusatz
 			String nameZusatz = nameZusFeld.getText();
 			if (nameZusatz.equals(""))
 			{
-				betrn.setBetrnamezus(null);
+				adrn.getBasisAdresse().setBetrnamezus(null);
 			}
 			else
 			{
-				betrn.setBetrnamezus(nameZusatz);
+				adrn.getBasisAdresse().setBetrnamezus(nameZusatz);
 			}
 			// Kassenzeichen
 			String kassenzeichen = kassenzeichenFeld.getText();
 			if (kassenzeichen.equals(""))
 			{
-				betrn.setKassenzeichen(null);
+				adrn.getBasisAdresse().setKassenzeichen(null);
 			}
 			else
 			{
-				betrn.setKassenzeichen(kassenzeichen);
+				adrn.getBasisAdresse().setKassenzeichen(kassenzeichen);
 			}
 
-			betrn.setStrasse(getStrasse());
-
+			// Strasse:
+			String strasse = strasseFeld.getText();
+			if ("".equals(strasse))
+			{
+				adrn.getBasisAdresse().setStrasse(null);
+			}
+			else
+			{
+				adrn.getBasisAdresse().setStrasse(strasse);
+			}
 			// Hausnummer:
 			Integer hausnr;
 			try
@@ -481,114 +661,180 @@ public class BasisAdresseNeu extends AbstractModul
 			{
 				hausnr = (Integer) hausnrFeld.getValue();
 			}
-			betrn.setHausnr(hausnr);
+				adrn.getBasisAdresse().setHausnr(hausnr);
 			// Hausnummer-Zusatz:
 			String hausnrZus = hausnrZusFeld.getText();
 			if (hausnrZus.equals(""))
 			{
-				betrn.setHausnrzus(null);
+				adrn.getBasisAdresse().setHausnrzus(null);
 			}
 			else
 			{
-				betrn.setHausnrzus(hausnrZus);
+				adrn.getBasisAdresse().setHausnrzus(hausnrZus);
 			}
 			// PLZ-Zusatz
 			String plzZs = plzZsFeld.getText();
 			if (plzZs.equals(""))
 			{
-				betrn.setPlzzs(null);
+				adrn.getBasisAdresse().setPlzzs(null);
 			}
 			else
 			{
-				betrn.setPlzzs(plzZs.toUpperCase().trim());
+				adrn.getBasisAdresse().setPlzzs(plzZs.toUpperCase().trim());
 			}
 			// PLZ:
 			String plz = plzFeld.getText().trim();
 			if (plz.equals(""))
 			{
-				betrn.setPlz(null);
+				adrn.getBasisAdresse().setPlz(null);
 			}
 			else
 			{
-				betrn.setPlz(plz);
+				adrn.getBasisAdresse().setPlz(plz);
 			}
-			// Ort
-			strassenBox.setModel(new DefaultComboBoxModel());
-
-			if (orte != null)
+			// Orte
+			String ort = ortFeld.getText().trim();
+			if (ort.equals(""))
 			{
-				orteBox.setModel(new DefaultComboBoxModel(orte));
-				orteBox.setSelectedItem(null);
+				adrn.getBasisAdresse().setOrt(null);
+			}
+			else
+			{
+				adrn.getBasisAdresse().setOrt(ort);
 			}
 			// Telefon
 			String telefon = telefonFeld.getText().trim();
 			if (telefon.equals(""))
 			{
-				betrn.setTelefon(null);
+				adrn.getBasisAdresse().setTelefon(null);
 			}
 			else
 			{
-				betrn.setTelefon(telefon);
+				adrn.getBasisAdresse().setTelefon(telefon);
 			}
 			// Telefax
 			String telefax = telefaxFeld.getText().trim();
 			if (telefax.equals(""))
 			{
-				betrn.setTelefax(null);
+				adrn.getBasisAdresse().setTelefax(null);
 			}
 			else
 			{
-				betrn.setTelefax(telefax);
+				adrn.getBasisAdresse().setTelefax(telefax);
 			}
 			// eMail
 			String email = emailFeld.getText().trim();
 			if (email.equals(""))
 			{
-				betrn.setEmail(null);
+				adrn.getBasisAdresse().setEmail(null);
 			}
 			else
 			{
-				betrn.setEmail(email);
+				adrn.getBasisAdresse().setEmail(email);
 			}
 			// Betriebsbeauftragter-Vorname
 			String betrBeaufVorname = betrBeaufVornameFeld.getText().trim();
 			if (betrBeaufVorname.equals(""))
 			{
-				betrn.setVornamebetrbeauf(null);
+				adrn.getBasisAdresse().setVornamebetrbeauf(null);
 			}
 			else
 			{
-				betrn.setVornamebetrbeauf(betrBeaufVorname);
+				adrn.getBasisAdresse().setVornamebetrbeauf(betrBeaufVorname);
 			}
 			// Betriebsbeauftragter-Nachname
 			String betrBeaufNachname = betrBeaufNachnameFeld.getText().trim();
 			if (betrBeaufNachname.equals(""))
 			{
-				betrn.setNamebetrbeauf(null);
+				adrn.getBasisAdresse().setNamebetrbeauf(null);
 			}
 			else
 			{
-				betrn.setNamebetrbeauf(betrBeaufNachname);
+				adrn.getBasisAdresse().setNamebetrbeauf(betrBeaufNachname);
 			}
 			// Wirtschaftszweig
 			VawsWirtschaftszweige wizw = (VawsWirtschaftszweige) wirtschaftszweigBox.getSelectedItem();
-			betrn.setVawsWirtschaftszweige(wizw);
+			adrn.getBasisAdresse().setVawsWirtschaftszweige(wizw);
+			
+
+
+			// Gemarkung
+			BasisGemarkung bgem = (BasisGemarkung) gemarkungBox
+					.getSelectedItem();
+			adrn.getBasisLage().setBasisGemarkung(bgem);
+
+			// Standortgg
+			VawsStandortgghwsg stgg = (VawsStandortgghwsg) standortGgBox
+					.getSelectedItem();
+			adrn.getBasisLage().setVawsStandortgghwsg(stgg);
+
+			// Einzugsgebiet
+			String ezgb = (String) entwGebBox.getSelectedItem();
+			// Nötig, weil getSelectedItem bei editierbarer ComboBox auch NULL
+			// liefern kann
+			if (ezgb != null)
+			{
+				// Weil ich bis jetzt noch keine LimitedComboBox oder so habe...
+				if (ezgb.length() > 10)
+				{
+					// ... kürze ich hier den String auf 10 Zeichen
+					ezgb = ezgb.substring(0, 10);
+				}
+				ezgb = ezgb.trim();
+			}
+			adrn.getBasisLage().setEntgebid(ezgb);
+
+			// VAWS-Einzugsgebiet
+			VawsWassereinzugsgebiete wezg = (VawsWassereinzugsgebiete) wEinzugsGebBox
+					.getSelectedItem();
+			adrn.getBasisLage().setVawsWassereinzugsgebiete(wezg);
+
+			// Flur
+			String flur = flurFeld.getText().trim();
+			if (flur.equals(""))
+			{
+				adrn.getBasisLage().setFlur(null);
+			}
+			else
+			{
+				adrn.getBasisLage().setFlur(flur);
+			}
+
+			// Flurstueck
+			String flurstk = flurStkFeld.getText().trim();
+			if (flurstk.equals(""))
+			{
+				adrn.getBasisLage().setFlurstueck(null);
+			}
+			else
+			{
+				adrn.getBasisLage().setFlurstueck(flurstk);
+			}
+
+			// Rechtswert
+			Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
+			adrn.getBasisLage().setE32(e32Wert);
+
+			// Hochwert
+			Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
+			adrn.getBasisLage().setN32(n32Wert);
+			
 			// Bemerkungen
 			String bemerkungen = bemerkungsArea.getText().trim();
 			if (bemerkungen.equals(""))
 			{
-				betrn.setBemerkungen(null);
+				adrn.getBasisAdresse().setBemerkungen(null);
 			}
 			else
 			{
-				betrn.setBemerkungen(bemerkungen);
+				adrn.getBasisAdresse().setBemerkungen(bemerkungen);
 			}
 
-			betrn.setRevidatum(Calendar.getInstance().getTime());
-			betrn.setRevihandz(handzeichenNeuFeld.getText().trim());
+			adrn.getBasisAdresse().setRevidatum(Calendar.getInstance().getTime());
+			adrn.getBasisAdresse().setRevihandz(handzeichenNeuFeld.getText().trim());
 
-			BasisAdresse persistentBetreiber = null;
-			persistentBetreiber = BasisAdresse.merge(betrn);
+			BasisLageAdresse persistentBetreiber = null;
+			persistentBetreiber = BasisLageAdresse.merge(adrn);
 
 			if (persistentBetreiber != null)
 			{
@@ -630,9 +876,9 @@ public class BasisAdresseNeu extends AbstractModul
 
 		if (strassenBox.getSelectedItem() != null)
 		{
-			if (strassenBox.getSelectedItem().getClass() == BasisStrassen.class)
+			if (strassenBox.getSelectedItem().getClass() == BasisTabStreets.class)
 			{
-				BasisStrassen selstrasse = (BasisStrassen) strassenBox.getSelectedItem();
+				BasisTabStreets selstrasse = (BasisTabStreets) strassenBox.getSelectedItem();
 				if (selstrasse != null)
 				{
 					str = selstrasse.getStrasse();
@@ -660,7 +906,7 @@ public class BasisAdresseNeu extends AbstractModul
 		setAllEnabled(false);
 		//frame.changeStatus("Beschäftigt...");
 
-		SwingWorkerVariant worker = new SwingWorkerVariant(anredeFeld)
+		SwingWorkerVariant worker = new SwingWorkerVariant(panel)
 		{
 
 			@Override
@@ -674,6 +920,27 @@ public class BasisAdresseNeu extends AbstractModul
 				{
 					wirtschaftszweige = DatabaseQuery.getVawsWirtschaftszweige();
 				}
+				if (tabstreets == null)
+				{
+					tabstreets = DatabaseQuery.getTabStreets();
+				}
+				if (gemarkungen == null)
+				{
+					gemarkungen = DatabaseQuery.getBasisGemarkungen();
+				}
+				if (standortggs == null)
+				{
+					standortggs = DatabaseQuery.getVawsStandortgghwsg();
+				}
+				if (entwgebiete == null)
+				{
+					entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
+				}
+				if (wEinzugsgebiete == null)
+				{
+					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiete();
+				}
+				
 			}
 
 			@Override
@@ -683,12 +950,49 @@ public class BasisAdresseNeu extends AbstractModul
 				{
 					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
 				}
-
-				if (orte != null)
+				if (tabstreets != null)
 				{
-					orteBox.setModel(new DefaultComboBoxModel(orte));
-					orteBox.setSelectedItem(null);
+					strassenBox.setModel(new DefaultComboBoxModel(tabstreets));
 				}
+				if (standorteTabelle != null) {
+
+			        standorteModel.setStrasse(null);
+			        standorteModel.updateList();
+					standorteTabelle.setModel(standorteModel);
+
+					standorteTabelle.getColumnModel().getColumn(0)
+							.setPreferredWidth(100);
+					standorteTabelle.getColumnModel().getColumn(1)
+							.setPreferredWidth(10);
+					standorteTabelle.getColumnModel().getColumn(2)
+							.setPreferredWidth(7);
+
+				}
+
+				if (gemarkungen != null)
+				{
+					gemarkungBox
+							.setModel(new DefaultComboBoxModel(gemarkungen));
+				}
+				if (standortggs != null)
+				{
+					standortGgBox
+							.setModel(new DefaultComboBoxModel(standortggs));
+				}
+
+				if (entwgebiete != null)
+				{
+					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+				}
+
+				if (wEinzugsgebiete != null)
+				{
+					wEinzugsGebBox.setModel(new DefaultComboBoxModel(
+							wEinzugsgebiete));
+				}
+				
+
+				ortFeld.setText("Bielefeld");
 				hausnrFeld.setValue(null);
 				hausnrZusFeld.setText("");
 				plzZsFeld.setText("D");
@@ -730,8 +1034,8 @@ public class BasisAdresseNeu extends AbstractModul
 		speichernButton.setEnabled(enabled);
 
 		strassenBox.setEnabled(enabled);
-		//strassenFeld.setEnabled(enabled);
-		orteBox.setEnabled(enabled);
+		strasseFeld.setEnabled(enabled);
+		ortFeld.setEnabled(enabled);
 		wirtschaftszweigBox.setEnabled(enabled);
 
 		hausnrFeld.setEditable(enabled);
@@ -743,7 +1047,7 @@ public class BasisAdresseNeu extends AbstractModul
 		namenFeld.setEditable(enabled);
 		nameZusFeld.setEditable(enabled);
 		kassenzeichenFeld.setEditable(enabled);
-		orteBox.setEditable(enabled);
+		ortFeld.setEditable(enabled);
 		telefonFeld.setEditable(enabled);
 		telefaxFeld.setEditable(enabled);
 		emailFeld.setEditable(enabled);
@@ -755,77 +1059,7 @@ public class BasisAdresseNeu extends AbstractModul
 
 		handzeichenNeuFeld.setEditable(enabled);
 	}
-
-	/**
-	 * Method reloads the streetlist for a given city
-	 */
-	private void reloadStrassen() 
-	{
-		if (orteBox.getSelectedItem() instanceof BasisOrte) {
-			BasisOrte selort = (BasisOrte) orteBox.getSelectedItem();
-			BasisStrassen[] strassen = DatabaseQuery.getStrassen(
-					selort.getOrt(), MatchMode.EXACT);
-			if (strassen != null) {
-				strassenBox.setModel(new DefaultComboBoxModel(strassen));
-
-				BasisStrassen selstrasse = (BasisStrassen) strassenBox
-						.getSelectedItem();
-				if (selstrasse != null) {
-					// Ort hat sich geändert => Strasse zurücksetzen
-					if (!StringUtils.equals(selstrasse.getOrt(),
-							selort.getOrt(), true)) {
-						strassenBox.setSelectedItem(null);
-					}
-				}
-
-				strassenBox.setEnabled(true);
-			} else {
-				// ohne gültigen Ort gibt's hier keine Strasse
-				strassenBox.setModel(new DefaultComboBoxModel());
-			}
-		} else {
-			// ohne gültigen Ort gibt's hier keine Strasse
-			strassenBox.setModel(new DefaultComboBoxModel());
-		}
-	}
-
-	/**
-	 * Methode reloads the ortelist for a given street
-	 */
-	private void reloadOrte() {
-		if (strassenBox.getSelectedItem() instanceof BasisStrassen) {
-			BasisStrassen selstrasse = (BasisStrassen) strassenBox
-					.getSelectedItem();
-			if (selstrasse != null) {
-				// Wenn wir eine Strasse auswählen, aktualisieren wir die
-				// Orteliste
-				BasisStrassen stra = DatabaseQuery.findStrasse(strassenBox
-						.getSelectedItem().toString());
-				if (stra != null) {
-					// Natürlich nur, wenn die Straße eine eindeutige PLZ hat
-					if (stra.getPlz() != null) {
-						frame.clearStatus();
-						orteBox.setSelectedItem(DatabaseQuery.getOrt(stra
-								.toString()));
-						strassenBox.setSelectedItem(stra);
-					} else {
-						frame.changeStatus("Die Straße '"
-								+ stra
-								+ "' hat keine eindeutige PLZ, bitte selbst eintragen!");
-					}
-				}else {
-					// ohne gültige Strasse gibt's keinen Ort
-					orteBox.setModel(new DefaultComboBoxModel());
-				}
-			} else {
-				// ohne gültigen Ort gibt's keine Strasse
-				orteBox.setModel(new DefaultComboBoxModel());
-			}
-
-			}
-		
-	}
-
+	
 	/**
 	 * Ein Listener für die Events des "Neuer Betreiber"-Moduls.
 	 * 
@@ -844,27 +1078,15 @@ public class BasisAdresseNeu extends AbstractModul
 				doSave();
 			}
 
-			else if (e.getSource() == orteBox)
-			{
-				reloadStrassen();
-			}
+//			else if (e.getSource() == orteBox)
+//			{
+//				reloadStrassen();
+//			}
 			else if (e.getSource() == strassenBox)
 			{
-				reloadOrte();
+		        standorteModel.setStrasse(strassenBox.getSelectedItem().toString());
+		        standorteModel.updateList();
 				
-              // Wenn wir eine Straße auswählen, wird die PLZ upgedatet
-              BasisStrassen stra = DatabaseQuery.findStrasse(
-                  strassenBox.getSelectedItem().toString());
-              if (stra != null) {
-              }
-              // Natürlich nur, wenn die Straße eine eindeutige PLZ hat
-              if (stra.getPlz() != null) {
-                  frame.clearStatus();
-                  plzFeld.setText(stra.getPlz().toString());
-              } else {
-                  frame.changeStatus("Die Straße '"+stra+"' hat keine eindeutige PLZ, bitte selbst eintragen!");
-                  plzFeld.setText("");
-              }
             }
 		}
 	}

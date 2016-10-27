@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets" table="tab_streets_alkis" schema="public" lazy="false"  optimistic-lock="version">
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets" table="tab_streets_alkis" schema="public" lazy="true"  optimistic-lock="version">
         <id name="abgleich" type="java.lang.String">
             <column name="abgleich" />
             <generator class="assigned" />

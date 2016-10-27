@@ -22,23 +22,22 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import org.hibernate.criterion.MatchMode;
 
@@ -49,11 +48,16 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandorteModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -74,8 +78,6 @@ public class BetreiberEditor extends AbstractBaseEditor
 	private static final AuikLogger log = AuikLogger.getLogger();
 
 	// Für die Comboboxen beim Bearbeiten
-	private static BasisOrte[] orte = null;
-	private static VawsWirtschaftszweige[] wirtschaftszweige = null;
 
 	private JLabel handzeichenLabel;
 	private JLabel namenLabel;
@@ -85,11 +87,12 @@ public class BetreiberEditor extends AbstractBaseEditor
 	private JTextField namenFeld;
 	private JTextField nameZusFeld;
 	private JTextField kassenzeichenFeld;
+	private JTextField strasseFeld;
 	private JFormattedTextField hausnrFeld;
 	private JTextField hausnrZusFeld;
 	private JTextField plzZsFeld;
 	private JTextField plzFeld;
-	private JTextField ortsFeld;
+	private JTextField ortFeld;
 	private JTextField telefonFeld;
 	private JTextField telefaxFeld;
 	private JTextField emailFeld;
@@ -98,12 +101,31 @@ public class BetreiberEditor extends AbstractBaseEditor
 	private JTextField revdatumsFeld;
 	private JTextField handzeichenAltFeld;
 	private JTextField handzeichenNeuFeld;
+	private JTextField flurFeld;
+	private JTextField flurStkFeld;
+	private JFormattedTextField e32Feld;
+	private JFormattedTextField n32Feld;
+	private JComboBox gemarkungBox;
+	private JComboBox entwGebBox;
+	private JComboBox standortGgBox;
+	private JComboBox wEinzugsGebBox;
+	
+	private BasisGemarkung[] gemarkungen = null;
+	private String[] entwgebiete = null;
+	private VawsStandortgghwsg[] standortggs = null;
+	private VawsWassereinzugsgebiete[] wEinzugsgebiete = null;
 
 	private JTextArea bemerkungsArea;
 
 	private JComboBox strassenBox;
+	private JTable standorteTabelle;
+	private BasisStandorteModel standorteModel;
 	private JComboBox wirtschaftszweigBox;
-	private JComboBox wzCodeBox;
+
+	private BasisOrte[] orte = null;
+	private VawsWirtschaftszweige[] wirtschaftszweige = null;
+	private String[] tabstreets = null;
+	private String street = null;
 
 
 	/**
@@ -117,6 +139,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 	@Override
 	protected JComponent buildContentArea()
 	{
+		
 		anredeFeld = new LimitedTextField(100);
 		vornamenFeld = new LimitedTextField(100);
 		namenFeld = new LimitedTextField(100);
@@ -124,53 +147,38 @@ public class BetreiberEditor extends AbstractBaseEditor
 		kassenzeichenFeld = new LimitedTextField(50);
 		hausnrFeld = new IntegerField();
 		hausnrZusFeld = new LimitedTextField(10);
-		plzZsFeld = new LimitedTextField(3);
-
-		plzFeld = new LimitedTextField(10);
-		plzFeld.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				if (e.getSource() == plzFeld)
-				{
-					reloadStrassen(plzFeld.getText(), null);
-				}
-			}
-		});
-
-		ortsFeld = new LimitedTextField(50);
-		ortsFeld.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				if (e.getSource() == ortsFeld)
-				{
-					reloadStrassen(null, ortsFeld.getText());
-				}
-			}
-		});
-
+		plzZsFeld = new LimitedTextField(3, "");
+		plzFeld = new JTextField();
+		strasseFeld = new JTextField();
+		ortFeld = new JTextField();
 		telefonFeld = new LimitedTextField(50);
 		telefaxFeld = new LimitedTextField(50);
 		emailFeld = new LimitedTextField(50);
 		betrBeaufVornameFeld = new LimitedTextField(50);
 		betrBeaufNachnameFeld = new LimitedTextField(50);
+		flurFeld = new LimitedTextField(50);
+		flurStkFeld = new LimitedTextField(50);
+
+		e32Feld = new DoubleField(1);
+		e32Feld.setValue(new Float(0.0f));
+		n32Feld = new DoubleField(1);
+		n32Feld.setValue(new Float(0.0f));
+		gemarkungBox = new JComboBox();
+		entwGebBox = new JComboBox();
+		entwGebBox.setEditable(true);
+		standortGgBox = new JComboBox();
+		wEinzugsGebBox = new JComboBox();
 
 		revdatumsFeld = new JTextField();
 		revdatumsFeld.setEditable(false);
 		revdatumsFeld.setFocusable(false);
-		revdatumsFeld
-				.setToolTipText("Wird bei Änderungen automatisch aktualisiert.");
-
-		handzeichenAltFeld = new JTextField();
+		revdatumsFeld.setToolTipText("Wird automatisch gesetzt.");
+		handzeichenAltFeld = new LimitedTextField(10, "");
 		handzeichenAltFeld.setEditable(false);
 		handzeichenAltFeld.setFocusable(false);
-		handzeichenAltFeld.setToolTipText("Handzeichen der letzten Revision");
+		
 		handzeichenNeuFeld = new LimitedTextField(10, "");
-		handzeichenNeuFeld
-				.setToolTipText("Neues Handzeichen bei Änderungen obligatorisch!");
+		handzeichenNeuFeld.setToolTipText("Handzeichen obligatorisch!");
 
 		bemerkungsArea = new LimitedTextArea(2000);
 		bemerkungsArea.setLineWrap(true);
@@ -178,40 +186,13 @@ public class BetreiberEditor extends AbstractBaseEditor
 		JScrollPane bemerkungsScroller = new JScrollPane(bemerkungsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-		strassenBox = new JComboBox();
-		strassenBox.setEditable(true);
-		strassenBox.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				if (e.getSource() == strassenBox)
-				{
-					if (strassenBox.getSelectedItem() != null)
-					{
-						if (strassenBox.getSelectedItem().getClass() == BasisStrassen.class)
-						{
-							BasisStrassen selstrasse = (BasisStrassen) strassenBox.getSelectedItem();
-							if (selstrasse != null)
-							{
-								plzFeld.setText(selstrasse.getPlz());
-								ortsFeld.setText(selstrasse.getOrt());
-							}
-						}
-					}
-				}
-			}
-		});
-
 		wirtschaftszweigBox = new JComboBox();
 		wirtschaftszweigBox.setRenderer(new LongNameComboBoxRenderer());
 
-
-		// Der folgende KeyListener wird benutzt um mit Escape
-		// das Bearbeiten abzubrechen und bei Enter im
-		// Handzeichen-Feld (wenn das Feld nicht leer ist) zum
-		// Speichern-Button zu springen.
-		KeyListener escEnterListener = new KeyAdapter()
+		// Der folgende KeyListener wird benutzt um bei Enter
+		// im Handzeichen-Feld (wenn das Feld nicht leer ist)
+		// zum Speichern-Button zu springen.
+		handzeichenNeuFeld.addKeyListener(new KeyAdapter()
 		{
 			@Override
 			public void keyPressed(KeyEvent e)
@@ -227,145 +208,152 @@ public class BetreiberEditor extends AbstractBaseEditor
 						}
 						else
 						{
-							button1.requestFocus();
+//							speichernButton.requestFocus();
 						}
 					}
 				}
-
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
-				{
-					doCancel();
-				}
 			}
-		};
-		anredeFeld.addKeyListener(escEnterListener);
-		vornamenFeld.addKeyListener(escEnterListener);
-		namenFeld.addKeyListener(escEnterListener);
-		nameZusFeld.addKeyListener(escEnterListener);
-		kassenzeichenFeld.addKeyListener(escEnterListener);
-		hausnrFeld.addKeyListener(escEnterListener);
-		hausnrZusFeld.addKeyListener(escEnterListener);
-		plzZsFeld.addKeyListener(escEnterListener);
-		plzFeld.addKeyListener(escEnterListener);
-		ortsFeld.addKeyListener(escEnterListener);
-		telefonFeld.addKeyListener(escEnterListener);
-		telefaxFeld.addKeyListener(escEnterListener);
-		emailFeld.addKeyListener(escEnterListener);
-		betrBeaufVornameFeld.addKeyListener(escEnterListener);
-		betrBeaufNachnameFeld.addKeyListener(escEnterListener);
-		handzeichenNeuFeld.addKeyListener(escEnterListener);
-		bemerkungsArea.addKeyListener(escEnterListener);
-		strassenBox.addKeyListener(escEnterListener);
-		//strassenFeld.addKeyListener(escEnterListener);
-		wirtschaftszweigBox.addKeyListener(escEnterListener);
+		});
 
 		// Ermögliche TAB aus dem Bemerkungs-Feld zu springen
 		bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
 		bemerkungsScroller.getHorizontalScrollBar().setFocusable(false);
-		//        TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
+		// This was not used:
+		//            TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
 
-		String columnString = "right:pref, 3dlu, 20dlu, 40dlu:grow(1.0), 5dlu, right:pref, 3dlu, 27dlu:grow(1.0), 3dlu, 30dlu:grow(1.0)";
 		FormLayout layout = new FormLayout(
-				// Spalten
-				columnString + // Links
-						", 10dlu, " + // Abstand
-						columnString, // Rechts
-
-				// Zeilen:
-				"pref, 3dlu, " + //1 Stammdaten    - Betr.beauft.
+				"right:pref, 3dlu, 20dlu, 70dlu, 5dlu, right:pref, 3dlu, 27dlu, 3dlu, 30dlu, 10dlu, 60dlu, 3dlu, 60dlu, 3dlu, 20dlu", // Spalten
+				"pref, 3dlu, " + //1 - Stammdaten
 						"pref, 3dlu, " + //3
-						"pref, 3dlu, " + //5             - Bemerkungen
+						"pref, 3dlu, " + //5
 						"pref, 3dlu, " + //7
 						"pref, 3dlu, " + //9
 						"pref, 3dlu, " + //11
 						"pref, 3dlu, " + //13
 
-						"pref, 3dlu, " + //15 Adresse    - Alte Revision
+						"pref, 3dlu, " + //15 - Adresse
 						"pref, 3dlu, " + //17
 						"pref, 3dlu, " + //19
-						"pref, 3dlu, " + //21            - Neue Revision
+						"pref, 3dlu, " + //21
 						"pref, 3dlu, " + //23
 						"pref, 3dlu, " + //25
-						"pref, 3dlu, " + //27
+
+						"pref, 3dlu, " + //27 - Betriebsbeauftrager
 						"pref, 3dlu, " + //29
-						"pref, 3dlu, " + //31
-						"pref"); //33
-		layout.setRowGroups(new int[][] { { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25 } });
+
+						"pref, 3dlu, " + //31 - Bemerkungen
+						"pref, 3dlu, " + //33
+						"pref, 3dlu, " + //35
+
+						"pref, 3dlu, " + //37 - Revision
+						"pref, 3dlu, " + //39
+						"pref, 10dlu, " + //41
+
+						"top:pref:grow");//43 - Buttons
+		layout.setRowGroups(new int[][] { { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35,
+				37 } });
 
 		PanelBuilder builder = new PanelBuilder(layout);
 		builder.setDefaultDialogBorder();
 		CellConstraints cc = new CellConstraints();
 
 		// Stamdaten ------------------------------------
-		builder.addSeparator("Stammdaten", cc.xyw(1, 1, 10));
+		builder.addSeparator("Stammdaten", cc.xyw(1, 1, 16));
 		// Anrede
 		builder.addLabel("Anrede:", cc.xy(1, 3));
-		builder.add(anredeFeld, cc.xyw(3, 3, 8));
-		// Vorame
-		namenLabel = builder.addLabel("Vorname:", cc.xy(1, 5));
-		builder.add(vornamenFeld, cc.xyw(3, 5, 8));
+		builder.add(anredeFeld, cc.xyw(3, 3, 6));
+		// Telefon
+		builder.addLabel("Telefon:", cc.xy(10, 3));
+		builder.add(telefonFeld, cc.xyw(12, 3, 5));
+		// Vorname
+		builder.addLabel("Vorname:", cc.xy(1, 5));
+		builder.add(vornamenFeld, cc.xyw(3, 5, 6));
+		// Telefax
+		builder.addLabel("Telefax:", cc.xy(10, 5));
+		builder.add(telefaxFeld, cc.xyw(12, 5, 5));
 		// Name
 		namenLabel = builder.addLabel("Name:", cc.xy(1, 7));
-		builder.add(namenFeld, cc.xyw(3, 7, 8));
+		builder.add(namenFeld, cc.xyw(3, 7, 6));
+		// eMail
+		builder.addLabel("E-Mail:", cc.xy(10, 7));
+		builder.add(emailFeld, cc.xyw(12, 7, 5));
 		// Zusatz
 		builder.addLabel("Zusatz:", cc.xy(1, 9));
-		builder.add(nameZusFeld, cc.xyw(3, 9, 8));
-		// Zusatz
+		builder.add(nameZusFeld, cc.xyw(3, 9, 6));
+		
+		// Ansprechpartner -------------------------
+		builder.addSeparator("Ansprechpartner", cc.xyw(10, 9, 7));
+		// Vorname
+		builder.addLabel("Vorname:", cc.xy(10, 11));
+		builder.add(betrBeaufVornameFeld, cc.xyw(12, 11, 5));
+		// Nachname
+		builder.addLabel("Name:", cc.xy(10, 13));
+		builder.add(betrBeaufNachnameFeld, cc.xyw(12, 13, 5));
+		// Kassenzeichen
 		builder.addLabel("Kassenzeichen:", cc.xy(1, 11));
-		builder.add(kassenzeichenFeld, cc.xyw(3, 11, 8));
+		builder.add(kassenzeichenFeld, cc.xyw(3, 11, 6));
 		// Wirtschaftszweig
 		builder.addLabel("Wirtschaftszweig:", cc.xy(1, 13));
-		builder.add(wirtschaftszweigBox, cc.xyw(3, 13, 8));
+		builder.add(wirtschaftszweigBox, cc.xyw(3, 13, 6));
 
-		// Adresse --------------------------------------
-		builder.addSeparator("Adresse", cc.xyw(1, 19, 10));
+		// Lage --------------------------------------
+		builder.addSeparator("Lage", cc.xyw(1, 15, 10));
+		// auswählen --------------------------------------
+		builder.addSeparator("auswählen", cc.xyw(12, 15, 5));
 		// Ort
-		builder.addLabel("Ort:", cc.xy(1, 21));
-		builder.add(plzZsFeld, cc.xy(3, 21));
-		builder.add(plzFeld, cc.xy(4, 21));
-		builder.add(ortsFeld, cc.xyw(6, 21, 5));
+		builder.addLabel("Ort:", cc.xy(1, 17));
+		builder.add(plzZsFeld, cc.xy(3, 17));
+		builder.add(plzFeld, cc.xy(4, 17));
+		builder.add(ortFeld, cc.xyw(6, 17, 5));
 		// Straße
-		builder.addLabel("Straße:", cc.xy(1, 23));
-		builder.add(strassenBox, cc.xyw(3, 23, 4));
-		builder.add(hausnrFeld, cc.xy(8, 23));
-		builder.add(hausnrZusFeld, cc.xy(10, 23));
-		// Telefon
-		builder.addLabel("Telefon:", cc.xy(1, 25));
-		builder.add(telefonFeld, cc.xyw(3, 25, 4));
-		// Telefax
-		builder.addLabel("Telefax:", cc.xy(1, 27));
-		builder.add(telefaxFeld, cc.xyw(3, 27, 4));
-		// eMail
-		builder.addLabel("E-Mail:", cc.xy(1, 29));
-		builder.add(emailFeld, cc.xyw(3, 29, 4));
+		builder.addLabel("Straße:", cc.xy(1, 19));
+		builder.add(strasseFeld, cc.xyw(3, 19, 4));
+		builder.add(hausnrFeld, cc.xy(8, 19));
+		builder.add(hausnrZusFeld, cc.xy(10, 19));
+		builder.add(getStrassenBox(), cc.xyw(12, 17, 5));
 
-		// Betriebsbeauftragter -------------------------
-		builder.addSeparator("Ansprechpartner", cc.xyw(1 + 11, 1, 10));
-		// Vorname
-		builder.addLabel("Vorname:", cc.xy(1 + 11, 3));
-		builder.add(betrBeaufVornameFeld, cc.xyw(3 + 11, 3, 2));
-		// Nachname
-		builder.addLabel("Nachname:", cc.xy(6 + 11, 3));
-		builder.add(betrBeaufNachnameFeld, cc.xyw(8 + 11, 3, 3));
+		builder.add(getStandorteScroller(), cc.xywh(12, 19, 5, 13));
+
+		// Koordinaten
+		builder.addLabel("E32:", cc.xy(1, 21));
+		builder.add(e32Feld, cc.xyw(3, 21, 3));
+		builder.addLabel("N32:", cc.xy(1, 23));
+		builder.add(n32Feld, cc.xyw(3, 23, 3));
+		builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 25));
+		builder.add(entwGebBox, cc.xyw(3, 25, 3));
+		
+		//
+		builder.addLabel("Gemarkung:", cc.xy(1, 27));
+		builder.add(gemarkungBox, cc.xyw(3, 27, 8));
+		
+		//VAwS
+		builder.addLabel("Standortgegebenheit:", cc.xy(1, 29));
+		builder.add(standortGgBox, cc.xyw(3, 29, 8));
+		builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 31));
+		builder.add(wEinzugsGebBox, cc.xyw(3, 31, 8));
+
+		
 
 		// Bemerkungen ----------------------------------
-		builder.addSeparator("Bemerkungen", cc.xyw(1 + 11, 5, 10));
-		builder.add(bemerkungsScroller, cc.xywh(1 + 11, 7, 10, 11));
+		builder.addSeparator("Bemerkungen", cc.xyw(1, 33, 10));
+		builder.add(bemerkungsScroller, cc.xywh(1, 35, 10, 9));
 
-		// Alte Revision --------------------------------
-		builder.addSeparator("Letzte Revision", cc.xyw(1 + 11, 19, 10));
+		// Letzte Revision -------------------------------------
+		builder.addSeparator("Letzte Revision", cc.xyw(12, 33, 5));
 		// Datum
-		builder.addLabel("Datum:", cc.xy(1 + 11, 21));
-		builder.add(revdatumsFeld, cc.xyw(3 + 11, 21, 4));
-		// Handzeichen (alt)
-		builder.addLabel("Handzeichen:", cc.xy(1 + 11, 23));
-		builder.add(handzeichenAltFeld, cc.xyw(3 + 11, 23, 4));
+		builder.addLabel("Datum:", cc.xy(12, 35));
+		builder.add(revdatumsFeld, cc.xyw(14, 35, 3));
+		// Handzeichen alt
+		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 37));
+		builder.add(handzeichenAltFeld, cc.xyw(14, 37, 3));
 
-		// Neue Revision --------------------------------
-		builder.addSeparator("Neue Revision", cc.xyw(1 + 11, 25, 10));
-		// Handzeichen (neu)
-		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(1 + 11, 27));
-		builder.add(handzeichenNeuFeld, cc.xyw(3 + 11, 27, 4));
+		// Neue Revision -------------------------------------
+		builder.addSeparator("Neue Revision", cc.xyw(12, 39, 5));
+		// Handzeichen neu
+		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 37));
+		builder.add(handzeichenNeuFeld, cc.xyw(14, 41, 3));
+
+
 
 		return builder.getPanel();
 	}
@@ -386,7 +374,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 			{
 				strassenBox.setModel(new DefaultComboBoxModel(strassen));
 				plzFeld.setText(strassen[0].getPlz());
-				ortsFeld.setText(strassen[0].getOrt());
+				ortFeld.setText(strassen[0].getOrt());
 			}
 		}
 
@@ -399,7 +387,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 			{
 				strassenBox.setModel(new DefaultComboBoxModel(strassen));
 				plzFeld.setText(strassen[0].getPlz());
-				ortsFeld.setText(strassen[0].getOrt());
+				ortFeld.setText(strassen[0].getOrt());
 			}
 		}
 	}
@@ -417,6 +405,23 @@ public class BetreiberEditor extends AbstractBaseEditor
 				{
 					wirtschaftszweige = DatabaseQuery.getVawsWirtschaftszweige();
 				}
+
+				if (gemarkungen == null)
+				{
+					gemarkungen = DatabaseQuery.getBasisGemarkungen();
+				}
+				if (standortggs == null)
+				{
+					standortggs = DatabaseQuery.getVawsStandortgghwsg();
+				}
+				if (entwgebiete == null)
+				{
+					entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
+				}
+				if (wEinzugsgebiete == null)
+				{
+					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiete();
+				}
 			}
 
 			@Override
@@ -429,13 +434,12 @@ public class BetreiberEditor extends AbstractBaseEditor
 					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
 					wirtschaftszweigBox.setSelectedItem(getBetreiber().getVawsWirtschaftszweige());
 				}
-//				wzCodeBox.setEditable(true);
-//				wzCodeBox.setEditable(false);
 				anredeFeld.setText(getBetreiber().getBetranrede());
 				vornamenFeld.setText(getBetreiber().getBetrvorname());
 				namenFeld.setText(getBetreiber().getBetrname());
 				nameZusFeld.setText(getBetreiber().getBetrnamezus());
 				kassenzeichenFeld.setText(getBetreiber().getKassenzeichen());
+				strasseFeld.setText(getBetreiber().getStrasse());
 				hausnrFeld.setValue(getBetreiber().getHausnr());
 				hausnrZusFeld.setText(getBetreiber().getHausnrzus());
 				String plzZs = getBetreiber().getPlzzs();
@@ -445,7 +449,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 				}
 				plzZsFeld.setText(plzZs);
 				plzFeld.setText(getBetreiber().getPlz());
-				ortsFeld.setText(getBetreiber().getOrt());
+				ortFeld.setText(getBetreiber().getOrt());
 				telefonFeld.setText(getBetreiber().getTelefon());
 				telefaxFeld.setText(getBetreiber().getTelefax());
 				emailFeld.setText(getBetreiber().getEmail());
@@ -454,6 +458,26 @@ public class BetreiberEditor extends AbstractBaseEditor
 				betrBeaufVornameFeld.setText(getBetreiber().getVornamebetrbeauf());
 				betrBeaufNachnameFeld.setText(getBetreiber().getNamebetrbeauf());
 
+				if (gemarkungen != null)
+				{
+					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
+				}
+				if (standortggs != null)
+				{
+					standortGgBox
+							.setModel(new DefaultComboBoxModel(standortggs));
+				}
+
+				if (entwgebiete != null)
+				{
+					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+				}
+
+				if (wEinzugsgebiete != null)
+				{
+					wEinzugsGebBox.setModel(new DefaultComboBoxModel(
+							wEinzugsgebiete));
+				}
 				handzeichenAltFeld.setText(getBetreiber().getRevihandz());
 				bemerkungsArea.setText(getBetreiber().getBemerkungen());
 
@@ -555,7 +579,16 @@ public class BetreiberEditor extends AbstractBaseEditor
 			getBetreiber().setKassenzeichen(kasse);
 		}
 
-		getBetreiber().setStrasse(getStrasse());
+		// Strasse:
+		String strasse = strasseFeld.getText();
+		if ("".equals(strasse))
+		{
+			getBetreiber().setStrasse(null);
+		}
+		else
+		{
+			getBetreiber().setStrasse(strasse);
+		}
 
 		// Hausnummer:
 		Integer hausnr = ((IntegerField) hausnrFeld).getIntValue();
@@ -598,7 +631,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 			}
 		}
 		// Ort
-		String ort = ortsFeld.getText();
+		String ort = ortFeld.getText();
 		if (ort != null)
 		{
 			ort = ort.trim();
@@ -761,5 +794,22 @@ public class BetreiberEditor extends AbstractBaseEditor
 	public BasisAdresse getBetreiber()
 	{
 		return (BasisAdresse) getEditedObject();
+	}
+
+	private JScrollPane getStandorteScroller() {
+	
+	    JScrollPane standorteScroller = new JScrollPane(
+	        ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+	        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		return standorteScroller;
+	}
+
+
+	private Component getStrassenBox() {
+	
+		strassenBox = new JComboBox();
+		strassenBox.setRenderer(new LongNameComboBoxRenderer());
+		
+		return strassenBox;
 	}
 }

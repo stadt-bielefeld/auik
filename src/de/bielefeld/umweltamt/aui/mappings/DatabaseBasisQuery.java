@@ -23,8 +23,8 @@ package de.bielefeld.umweltamt.aui.mappings;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.ArrayList;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -32,33 +32,28 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 /**
  * This is a service class for all custom queries from the basis package.
@@ -100,7 +95,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		log.debug("Suche nach '" + modSearch + "' (" + property + ").");
 
         String query =  "SELECT DISTINCT adresse " + 
-                        "FROM BasisAdresse as adresse JOIN adresse.basisObjekts objekt ";
+                        "FROM BasisAdresse as adresse ";
         if (property == null)
 		{
             query += "WHERE adresse.betrname like '" + modSearch + "' OR betranrede like '" + modSearch + "' OR betrnamezus like '" + modSearch + "'";
@@ -859,25 +854,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	/* Queries for package BASIS : class BasisTabStreets */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	
-	/**
-	 * Get all BasisTabStreets and sort them by their name
-	 * @return <code>Eine Liste aller Standorte</code>
-	 */
-	public static List<BasisTabStreets> getAllTabStreetslist() {
-	    List<BasisTabStreets> strassenlist = new DatabaseAccess().executeCriteriaToList(
-	            DetachedCriteria.forClass(BasisTabStreets.class)
-	                .addOrder(Order.asc("name")),
-	            new BasisTabStreets());
-		return strassenlist;
-	
-	}
-
-	/**
-	 * Get BasisStrassen filtered by plzort and sort them by their name
-	 * 
-	 * @return <code>Eine Liste aller Standorte</code>
-	 */
 	public static List<BasisTabStreets> getTabStreetslist(MatchMode mm)
 	{
 
@@ -891,12 +867,51 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 
 	}
 
+	/**
+	 * Get BasisTabStreets
+	 * 
+	 * @return <code>Eine Liste aller Strassennamen</code>
+	 */
+	public static String[] getTabStreets()
+	{
+
+
+    	List<String> basisAllTabStreets = getAllTabStreetslist();
+    	
+    	String[] tabStreets = new String[basisAllTabStreets.size()];
+    	return tabStreets = basisAllTabStreets.toArray(tabStreets);
+    	
+	}
+
+	/**
+	 * Get all BasisTabStreets and sort them by their name
+	 * @return <code>Eine Liste aller Stassen</code>
+	 */
+	public static List<String> getAllTabStreetslist() {
+
+        String query =  "SELECT DISTINCT name " + 
+                "FROM BasisTabStreets ORDER BY name";
+        
+        return HibernateSessionFactory.currentSession().createQuery(query).list();
+    	
+	}
+	
+	public static List<BasisTabStreets> findStandorte(String strasse)
+	{
+		return new DatabaseAccess().executeCriteriaToList(
+																	DetachedCriteria.forClass(BasisTabStreets.class)
+																			.add(Restrictions.eq("name",
+																									strasse))
+																			.addOrder(Order.asc("hausnr"))
+																			.addOrder(Order.asc("hausnrZusatz")),
+																	new BasisTabStreets());
+	}
+	
+	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package BASIS : class BasisStrassen */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	
-    private static String[] strassen = null;
     /**
      * Get all BasisStrassen sorted by strasse
      * @return <code>BasisStrassen[]</code>
@@ -930,6 +945,21 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		List<BasisStrassen> basisStrassen = getStrassenlist(ort, mm);
 
 		return basisStrassen.toArray(new BasisStrassen[0]);
+	}
+	/**
+	 * Get BasisStrassen sorted by strasse
+	 * 
+	 * @return <code>BasisStrassen[]</code>
+	 */
+	public static List<BasisTabStreets> getTabStreets(MatchMode mm)
+	{
+
+		List<BasisTabStreets> basisStrassenlist = new DatabaseAccess()
+		.executeCriteriaToList(
+								DetachedCriteria.forClass(BasisTabStreets.class)
+										.addOrder(Order.asc("name")),
+								new BasisTabStreets());
+		return basisStrassenlist;
 	}
 
 	/**

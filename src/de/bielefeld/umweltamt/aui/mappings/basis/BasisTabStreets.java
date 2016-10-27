@@ -301,6 +301,11 @@ public class BasisTabStreets  implements java.io.Serializable {
         return DatabaseQuery.getAll(new BasisTabStreets());
     }
 
+	public String getStrasse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 //    /* Custom code goes below here! */
 //	public BasisTabStreets(String strasse){
 //		this.strasse = strasse;
