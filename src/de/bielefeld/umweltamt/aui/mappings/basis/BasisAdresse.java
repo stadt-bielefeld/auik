@@ -29,6 +29,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -73,6 +74,7 @@ public class BasisAdresse  implements java.io.Serializable {
     private Integer objektid;
     private Set<BasisObjekt> basisObjekts = new HashSet<BasisObjekt>(0);
     private Set<BasisObjekt> basisObjektStandort = new HashSet<BasisObjekt>(0);
+    private Set<BasisMapAdresseLage> basisMapAdresseLages = new HashSet<BasisMapAdresseLage>(0);
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -90,7 +92,7 @@ public class BasisAdresse  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisAdresse(
-        VawsWirtschaftszweige vawsWirtschaftszweige, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, String auikWzCode, Integer objektid, Set<BasisObjekt> basisObjekts, Set<BasisObjekt> basisObjektStandort) {
+        VawsWirtschaftszweige vawsWirtschaftszweige, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, String auikWzCode, Integer objektid, Set<BasisObjekt> basisObjekts, Set<BasisObjekt> basisObjektStandort,  Set<BasisMapAdresseLage> basisMapAdresseLages) {
         this.vawsWirtschaftszweige = vawsWirtschaftszweige;
         this.betranrede = betranrede;
         this.betrname = betrname;
@@ -117,6 +119,7 @@ public class BasisAdresse  implements java.io.Serializable {
         this.objektid = objektid;
         this.basisObjekts = basisObjekts;
         this.basisObjektStandort = basisObjektStandort;
+        this.basisMapAdresseLages = basisMapAdresseLages;
     }
 
     /* Setter and getter methods */
@@ -336,6 +339,14 @@ public class BasisAdresse  implements java.io.Serializable {
         this.basisObjekts = basisObjekts;
     }
 
+    public Set<BasisMapAdresseLage> getBasisMapAdresseLages() {
+        return this.basisMapAdresseLages;
+    }
+
+    public void setBasisMapAdresseLages(Set<BasisMapAdresseLage> basisMapAdresseLages) {
+        this.basisMapAdresseLages = basisMapAdresseLages;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -382,6 +393,7 @@ public class BasisAdresse  implements java.io.Serializable {
         buffer.append("objektid").append("='").append(getObjektid()).append("' ");			
         buffer.append("basisObjekts").append("='").append(getBasisObjekts()).append("' ");			
         buffer.append("basisObjektStandort").append("='").append(getBasisObjektStandort()).append("' ");
+        buffer.append("basisMapAdresseLages").append("='").append(getBasisMapAdresseLages()).append("' ");		
         buffer.append("]");
 
         return buffer.toString();
@@ -472,7 +484,8 @@ public class BasisAdresse  implements java.io.Serializable {
         this.auikWzCode = copy.getAuikWzCode();            
         this.objektid = copy.getObjektid();            
         this.basisObjekts = copy.getBasisObjekts();
-        this.basisObjektStandort = copy.getBasisObjektStandort();            
+        this.basisObjektStandort = copy.getBasisObjektStandort();   
+        this.basisMapAdresseLages = copy.getBasisMapAdresseLages();           
     }    
 
     /**
@@ -516,6 +529,11 @@ public class BasisAdresse  implements java.io.Serializable {
     public static List<BasisAdresse> getAll() {
         return DatabaseQuery.getAll(new BasisAdresse());
     }
+
+	public void setBasisMapAdresseLages(BasisLage lage) {
+		// TODO Auto-generated method stub
+		
+	}
 
     /* Custom code goes below here! */
 

@@ -67,6 +67,7 @@ public class BasisLage  implements java.io.Serializable {
     private boolean enabled;
     private boolean deleted;
     private Set<BasisObjekt> basisObjekts = new HashSet<BasisObjekt>(0);
+    private Set<BasisMapAdresseLage> basisMapAdresseLages = new HashSet<BasisMapAdresseLage>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -85,7 +86,7 @@ public class BasisLage  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisLage(
-        BasisGemarkung basisGemarkung, VawsStandortgghwsg vawsStandortgghwsg, VawsWassereinzugsgebiete vawsWassereinzugsgebiete, Float e32, Float n32, String flur, String flurstueck, String entgebid, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, boolean enabled, boolean deleted,  Set<BasisObjekt> basisObjekts) {
+        BasisGemarkung basisGemarkung, VawsStandortgghwsg vawsStandortgghwsg, VawsWassereinzugsgebiete vawsWassereinzugsgebiete, Float e32, Float n32, String flur, String flurstueck, String entgebid, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, boolean enabled, boolean deleted,  Set<BasisObjekt> basisObjekts,  Set<BasisMapAdresseLage> basisMapAdresseLages) {
         this.basisGemarkung = basisGemarkung;
         this.vawsStandortgghwsg = vawsStandortgghwsg;
         this.vawsWassereinzugsgebiete = vawsWassereinzugsgebiete;
@@ -102,6 +103,7 @@ public class BasisLage  implements java.io.Serializable {
         this.enabled = enabled;
         this.deleted = deleted;
         this.basisObjekts = basisObjekts;
+        this.basisMapAdresseLages = basisMapAdresseLages;
     }
 
     /* Setter and getter methods */
@@ -239,6 +241,14 @@ public class BasisLage  implements java.io.Serializable {
         this.basisObjekts = basisObjekts;
     }
 
+    public Set<BasisMapAdresseLage> getBasisMapAdresseLage() {
+        return this.basisMapAdresseLages;
+    }
+
+    public void setBasisMapAdresseLage(Set<BasisMapAdresseLage> basisMapAdresseLages) {
+        this.basisMapAdresseLages = basisMapAdresseLages;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -274,7 +284,8 @@ public class BasisLage  implements java.io.Serializable {
         buffer.append("sachbe33hee").append("='").append(getSachbe33hee()).append("' ");			
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("basisObjekts").append("='").append(getBasisObjekts()).append("' ");			
+        buffer.append("basisObjekts").append("='").append(getBasisObjekts()).append("' ");	
+        buffer.append("basisMapAdresseLages").append("='").append(getBasisMapAdresseLage()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -355,7 +366,8 @@ public class BasisLage  implements java.io.Serializable {
         this.sachbe33hee = copy.getSachbe33hee();            
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
-        this.basisObjekts = copy.getBasisObjekts();            
+        this.basisObjekts = copy.getBasisObjekts();   
+        this.basisMapAdresseLages = copy.getBasisMapAdresseLage();            
     }    
 
     /**

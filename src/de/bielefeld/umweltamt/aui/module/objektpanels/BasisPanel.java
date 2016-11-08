@@ -453,11 +453,11 @@ public class BasisPanel extends JPanel {
         builder.setDefaultDialogBorder();
 
         builder.appendSeparator("Eigenschaften");
-        builder.append("Betreiber:", getBetreiberFeld(), 3);
+        builder.append("Betreiber-Adresse:", getBetreiberFeld(), 3);
         builder.append(getBetreiberToolBar());
         builder.nextLine();
 
-        builder.append("Standort:", getStandortFeld(), 3);
+        builder.append("Standort-Adresse:", getStandortFeld(), 3);
         builder.append(getStandortToolBar());
         builder.nextLine();
 
@@ -872,7 +872,7 @@ public class BasisPanel extends JPanel {
                 "reload.png", ""));
             this.betreiberChooseButton
                 .setHorizontalAlignment(SwingConstants.CENTER);
-            this.betreiberChooseButton.setToolTipText("Betreiber auswählen");
+            this.betreiberChooseButton.setToolTipText("Adresse auswählen");
 
             this.betreiberChooseButton.addActionListener(new ActionListener() {
                 @Override

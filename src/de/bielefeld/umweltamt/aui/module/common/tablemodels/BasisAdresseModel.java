@@ -71,6 +71,12 @@ public class BasisAdresseModel extends ListTableModel {
             filterList(lastSuchWort, lastProperty);
         }
     }
+    
+    public void updateAllList() {
+        if (lastSuchWort != null) {
+            filterAllList(lastSuchWort, lastProperty);
+        }
+    }
 
     /**
      * Liefert den Inhalt der Zelle mit den gegebenen Koordinaten.
@@ -146,6 +152,14 @@ public class BasisAdresseModel extends ListTableModel {
     public void filterList(String suche, String property) {
         log.debug("Start filterList");
         setList(DatabaseQuery.getBasisAdresse(property, suche));
+        lastSuchWort = suche;
+        lastProperty = property;
+        log.debug("End filterList");
+    }
+    
+    public void filterAllList(String suche, String property) {
+        log.debug("Start filterList");
+        setList(DatabaseQuery.getBasisAllAdresse(property, suche));
         lastSuchWort = suche;
         lastProperty = property;
         log.debug("End filterList");

@@ -58,5 +58,11 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" />
         </set>
+        <set name="basisMapAdresseLage" table="basis_map_adresse_lage" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="lageid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage" />
+        </set>
     </class>
 </hibernate-mapping>

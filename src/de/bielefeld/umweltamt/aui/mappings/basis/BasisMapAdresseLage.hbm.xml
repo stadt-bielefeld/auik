@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage" table="basis_map_adresse_lage" schema="auik" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="basisAdresse" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse" fetch="select" cascade="all">
+            <column name="adresseid" />
+        </many-to-one>
+        <many-to-one name="basisLage" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisLage" fetch="select" cascade="all">
+            <column name="lageid" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

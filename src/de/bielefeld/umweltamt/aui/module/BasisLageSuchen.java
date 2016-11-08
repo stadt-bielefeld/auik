@@ -127,9 +127,11 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageModel;
@@ -169,6 +171,8 @@ public class BasisLageSuchen extends AbstractModul
 	private JPopupMenu standortPopup;
 
 	private Action objektEditAction;
+	private Action objektBetreiberEditAction;
+	private Action objektStandortEditAction;
 	private Action objektLoeschAction;
 	private Action gisAction;
 	private JPopupMenu objektPopup;
@@ -188,6 +192,7 @@ public class BasisLageSuchen extends AbstractModul
 	protected String betreiber;
 	protected String standort;
 	protected int standortID;
+
 
 	/*
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
@@ -467,6 +472,18 @@ public class BasisLageSuchen extends AbstractModul
 			updateStandortListe();
 		}
 	}
+
+    /**
+     * öffnet einen Dialog um einen Betreiber-Datensatz zu bearbeiten.
+     * @param betr Der Betreiber
+     */
+    public void editBetreiber(BasisAdresse betr) {
+        BetreiberEditor editDialog = new BetreiberEditor(betr, this.frame);
+        editDialog.setLocationRelativeTo(this.frame);
+
+        editDialog.setVisible(true);
+
+    }
 
 	/**
 	 * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines
@@ -1239,6 +1256,60 @@ public class BasisLageSuchen extends AbstractModul
 		return this.objektEditAction;
 	}
 
+	private Action getObjektBetreiberEditAction() {
+	    if (this.objektBetreiberEditAction == null) {
+	        this.objektBetreiberEditAction = new AbstractAction("Betreiber") {
+	
+				private static final long serialVersionUID = 9162213813094661474L;
+	
+				@Override
+	            public void actionPerformed(ActionEvent e) {
+	                int row = getObjektTabelle().getSelectedRow();
+	
+	                if (row != -1) {
+	                    BasisObjekt obj = BasisLageSuchen.this.objektModel
+	                        .getRow(row);
+	                    editBetreiber(obj.getBasisAdresse());
+	                }
+	            }
+	        };
+	        this.objektBetreiberEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
+	            KeyEvent.VK_F1));
+	        this.objektBetreiberEditAction.putValue(Action.ACCELERATOR_KEY,
+	            KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0, false));
+	    }
+	
+	    return this.objektBetreiberEditAction;
+	}
+
+	private Action getObjektStandortEditAction() {
+	    if (this.objektStandortEditAction == null) {
+	        this.objektStandortEditAction = new AbstractAction("Standort") {
+	
+				private static final long serialVersionUID = 8864140472500015190L;
+	
+				@Override
+	            public void actionPerformed(ActionEvent e) {
+	                int row = getObjektTabelle().getSelectedRow();
+	
+	                // Natürlich nur editieren, wenn wirklich eine Zeile
+	                // ausgewählt ist
+	                if (row != -1) {
+	                    BasisObjekt obj = BasisLageSuchen.this.objektModel
+	                        .getRow(row);
+	                    editBetreiber(obj.getBasisStandort());
+	                }
+	            }
+	        };
+	        this.objektStandortEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
+	            KeyEvent.VK_F2));
+	        this.objektStandortEditAction.putValue(Action.ACCELERATOR_KEY,
+	            KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0, false));
+	    }
+	
+	    return this.objektStandortEditAction;
+	}
+
 	private Action getObjektLoeschAction()
 	{
 		if (this.objektLoeschAction == null)
@@ -1386,6 +1457,8 @@ public class BasisLageSuchen extends AbstractModul
 		{
 			this.objektPopup = new JPopupMenu("Objekt");
 			JMenuItem bearbItem = new JMenuItem(getObjektEditAction());
+			JMenuItem objbetrItem = new JMenuItem(getObjektBetreiberEditAction());
+			JMenuItem objstdItem = new JMenuItem(getObjektStandortEditAction());
 			JMenuItem loeschItem = new JMenuItem(getObjektLoeschAction());
 			this.objektPopup.add(bearbItem);
 			this.objektPopup.add(loeschItem);
@@ -1411,6 +1484,8 @@ public class BasisLageSuchen extends AbstractModul
 			this.objektTabelle = new JTable(this.objektModel);
 			this.objektTabelle
 					.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+			objektTabelle.setAutoCreateRowSorter(true);
 
 			TableColumn column = this.objektTabelle.getColumnModel().getColumn(
 																				0);
@@ -1470,23 +1545,37 @@ public class BasisLageSuchen extends AbstractModul
 						}
 					});
 
-			this.objektTabelle.getInputMap()
-					.put(
-							(KeyStroke) getObjektEditAction().getValue(
-																		Action.ACCELERATOR_KEY),
-							getObjektEditAction().getValue(Action.NAME));
+			this.objektTabelle.getInputMap().put(
+					(KeyStroke) getObjektEditAction().getValue(
+							Action.ACCELERATOR_KEY),
+					getObjektEditAction().getValue(Action.NAME));
 			this.objektTabelle.getActionMap().put(
-													getObjektEditAction().getValue(Action.NAME),
-													getObjektEditAction());
+					getObjektEditAction().getValue(Action.NAME),
+					getObjektEditAction());
 
 			this.objektTabelle.getInputMap().put(
-													(KeyStroke) getObjektLoeschAction()
-															.getValue(
-																		Action.ACCELERATOR_KEY),
-													getObjektLoeschAction().getValue(Action.NAME));
+					(KeyStroke) getObjektBetreiberEditAction().getValue(
+							Action.ACCELERATOR_KEY),
+					getObjektBetreiberEditAction().getValue(Action.NAME));
 			this.objektTabelle.getActionMap().put(
-													getObjektLoeschAction().getValue(Action.NAME),
-													getObjektLoeschAction());
+					getObjektBetreiberEditAction().getValue(Action.NAME),
+					getObjektBetreiberEditAction());
+
+			this.objektTabelle.getInputMap().put(
+					(KeyStroke) getObjektStandortEditAction().getValue(
+							Action.ACCELERATOR_KEY),
+					getObjektStandortEditAction().getValue(Action.NAME));
+			this.objektTabelle.getActionMap().put(
+					getObjektStandortEditAction().getValue(Action.NAME),
+					getObjektStandortEditAction());
+
+			this.objektTabelle.getInputMap().put(
+					(KeyStroke) getObjektLoeschAction().getValue(
+							Action.ACCELERATOR_KEY),
+					getObjektLoeschAction().getValue(Action.NAME));
+			this.objektTabelle.getActionMap().put(
+					getObjektLoeschAction().getValue(Action.NAME),
+					getObjektLoeschAction());
 		}
 		return this.objektTabelle;
 	}

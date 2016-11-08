@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.hibernate.NullPrecedence;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
@@ -95,7 +96,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		log.debug("Suche nach '" + modSearch + "' (" + property + ").");
 
         String query =  "SELECT DISTINCT adresse " + 
-                        "FROM BasisAdresse as adresse ";
+                        "FROM BasisAdresse as adresse JOIN adresse.basisObjekts objekt ";
         if (property == null)
 		{
             query += "WHERE adresse.betrname like '" + modSearch + "' OR betranrede like '" + modSearch + "' OR betrnamezus like '" + modSearch + "'";
@@ -151,6 +152,39 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 															new BasisAdresse());*/
         return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
+	public static List<BasisAdresse> getBasisAllAdresse(String property,
+			String search)
+		{
+
+			String modSearch = search.trim() + "%";
+			log.debug("Suche nach '" + modSearch + "' (" + property + ").");
+
+	        String query =  "SELECT DISTINCT adresse " + 
+	                        "FROM BasisAdresse as adresse ";
+	        if (property == null)
+			{
+	            query += "WHERE adresse.betrname like '" + modSearch + "' OR betranrede like '" + modSearch + "' OR betrnamezus like '" + modSearch + "'";
+			}
+			else if (property.equals("name"))
+			{
+	            query += "WHERE adresse.betrname like '" + modSearch + "'";
+			}
+			else if (property.equals("anrede"))
+			{
+	            query += "WHERE adresse.betranrede like '" + modSearch + "'";
+			}
+			else if (property.equals("zusatz"))
+			{
+	            query += "WHERE adresse.betrzus like '" + modSearch + "'";
+			}
+			else
+			{
+				log.debug("Something went really wrong here...");
+			}
+	        query += " ORDER BY adresse.betrname ASC, adresse.betrnamezus ASC";
+	        
+	        return HibernateSessionFactory.currentSession().createQuery(query).list();
+		}
 
 	/**
 	 * Get a nicely formatted street and house number for a BasisAdresse
@@ -844,7 +878,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 											DetachedCriteria.forClass(BasisLage.class)
 													.setProjection(
 																	Projections.distinct(Projections
-																			.property("entgebid"))),
+																			.property("entgebid")))
+													.addOrder(Order.asc("entgebid")),
 											new String[0]);
 		}
 		return DatabaseBasisQuery.entwaesserungsgebiete;
@@ -903,7 +938,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 																			.add(Restrictions.eq("name",
 																									strasse))
 																			.addOrder(Order.asc("hausnr"))
-																			.addOrder(Order.asc("hausnrZusatz")),
+																			.addOrder(Order.asc("hausnrZusatz").nulls(NullPrecedence.FIRST)),
 																	new BasisTabStreets());
 	}
 	

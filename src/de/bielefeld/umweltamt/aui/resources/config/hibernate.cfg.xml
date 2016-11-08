@@ -41,6 +41,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisObjektverknuepfung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisAdresse.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisTabStreets.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/BasisMapAdresseLage.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh40Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Abfuhr.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Abscheiderdetails.hbm.xml" />
