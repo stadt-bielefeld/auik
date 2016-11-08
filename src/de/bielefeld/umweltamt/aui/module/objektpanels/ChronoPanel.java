@@ -682,6 +682,7 @@ public class ChronoPanel extends JPanel {
 				  public void actionPerformed(ActionEvent e) {            
 			        
 					JFileChooser f = new JFileChooser();
+					f.setCurrentDirectory(new File("X:\\Orga\\360\\360-3\\360-3-3\\Alle\\Standorte"));
 			        f.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); 
 			        f.showOpenDialog(null);
 
