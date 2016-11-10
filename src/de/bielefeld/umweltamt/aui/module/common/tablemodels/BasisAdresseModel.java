@@ -34,6 +34,9 @@ public class BasisAdresseModel extends ListTableModel {
     private static final long serialVersionUID = -1943023265274962194L;
     private String lastSuchWort = null;
     private String lastProperty = null;
+    private String lastStrasse = null;
+    private Integer lastHausnr = null;
+    private String LastZus = null;
     private AuikLogger log = AuikLogger.getLogger();
 
     public BasisAdresseModel() {
@@ -162,6 +165,15 @@ public class BasisAdresseModel extends ListTableModel {
         setList(DatabaseQuery.getBasisAllAdresse(property, suche));
         lastSuchWort = suche;
         lastProperty = property;
+        log.debug("End filterList");
+    }
+    
+    public void filterStandort(String strasse, Integer hausnr, String zus) {
+        log.debug("Start filterList");
+        setList(DatabaseQuery.findStandorte(strasse, hausnr, zus));
+        lastStrasse = strasse;
+        lastHausnr = hausnr;
+        LastZus = zus;
         log.debug("End filterList");
     }
 }

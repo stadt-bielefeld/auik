@@ -141,10 +141,10 @@ public class BasisPanel extends JPanel {
         private static final long serialVersionUID = 6320119317944629431L;
         private HauptFrame frame;
         private BasisAdresse betreiber;
-        private BasisLageAdresse standort;
+        private BasisAdresse standort;
 
         private BasisAdresseModel betreiberModel;
-        private BasisLageModel standortModel;
+        private BasisAdresseModel standortModel;
 
         private JTextField suchFeld;
         private JButton submitButton;
@@ -161,22 +161,15 @@ public class BasisPanel extends JPanel {
             initialList.add(initial);
 
             if (initial instanceof BasisAdresse) {
-                setTitle("Betreiber auswählen");
+                setTitle("Adresse auswählen");
                 this.betreiber = (BasisAdresse) initial;
                 this.betreiberModel = new BasisAdresseModel(false);
                 if (this.betreiber.getId() != null) {
                     this.betreiberModel.setList(initialList);
                 }
-            } else if (initial instanceof BasisLageAdresse) {
-                setTitle("Standort auswählen");
-                this.standort = (BasisLageAdresse) initial;
-                this.standortModel = new BasisLageModel();
-                if (this.standort.getId() != null) {
-                    this.standortModel.setList(initialList);
-                }
             } else {
                 throw new IllegalArgumentException(
-                    "intial muss ein BasisAdresse oder BasisLage sein!");
+                    "intial muss eine BasisAdresse sein!");
             }
 
             setContentPane(initializeContentPane());
@@ -195,7 +188,7 @@ public class BasisPanel extends JPanel {
             }
         }
 
-        public BasisLageAdresse getChosenStandort() {
+        public BasisAdresse getChosenStandort() {
             if (this.standort.getId() != null) {
                 return this.standort;
             } else {
@@ -255,7 +248,7 @@ public class BasisPanel extends JPanel {
                     @Override
                     protected void doNonUILogic() throws RuntimeException {
                         ChooseDialog.this.betreiberModel
-                            .filterList(suche, null);
+                            .filterAllList(suche, null);
                     }
 
                     @Override
@@ -282,7 +275,7 @@ public class BasisPanel extends JPanel {
                         	hsnr = -1;
                         }
 
-                        ChooseDialog.this.standortModel.filterList(strasse, hsnr, "");
+                        ChooseDialog.this.standortModel.filterStandort(strasse, hsnr, "");
                     }
 
                     @Override
@@ -808,8 +801,8 @@ public class BasisPanel extends JPanel {
 
                     BasisAdresse betreiber = BasisPanel.this.hauptModul
                         .getObjekt().getBasisAdresse();
-                    BasisLageAdresse standort = new BasisLageAdresse(BasisPanel.this.hauptModul
-                        .getObjekt().getBasisLage());
+                    BasisAdresse standort = BasisPanel.this.hauptModul
+                            .getObjekt().getBasisAdresse();
 
                     if ("betreiber_edit".equals(action) && betreiber != null) {
                         BetreiberEditor editDialog = new BetreiberEditor(
@@ -824,16 +817,16 @@ public class BasisPanel extends JPanel {
                             .setBasisAdresse(editDialog.getBetreiber());
                     } else if ("standort_edit".equals(action)
                         && standort != null) {
-                        StandortEditor editDialog = new StandortEditor(
-                            standort, BasisPanel.this.hauptModul.getFrame());
-                        editDialog
-                            .setLocationRelativeTo(BasisPanel.this.hauptModul
-                                .getFrame());
+                        BetreiberEditor editDialog = new BetreiberEditor(
+                                betreiber, BasisPanel.this.hauptModul.getFrame());
+                            editDialog
+                                .setLocationRelativeTo(BasisPanel.this.hauptModul
+                                    .getFrame());
 
                         editDialog.setVisible(true);
 
-                        BasisPanel.this.hauptModul.getObjekt()
-                            .setBasisLage(editDialog.getStandort().getBasisLage());
+//                        BasisPanel.this.hauptModul.getObjekt()
+//                            .setBasisLage(editDialog.getStandort().getBasisLage());
                     }
 
                     updateForm();
@@ -984,29 +977,25 @@ public class BasisPanel extends JPanel {
                 "reload.png", ""));
             this.standortChooseButton
                 .setHorizontalAlignment(SwingConstants.CENTER);
-            this.standortChooseButton.setToolTipText("Standort auswählen");
+            this.standortChooseButton.setToolTipText("Adresse auswählen");
 
             this.standortChooseButton.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e) {
-                    BasisLage lage = BasisPanel.this.hauptModul.getObjekt().getBasisLage();
-                    BasisAdresse adresse = BasisPanel.this.hauptModul.getObjekt().getBasisStandort();
-                    BasisLageAdresse standort;
-                    if(lage != null){
-                        standort = new BasisLageAdresse(lage, adresse);
-                    }else{
-                        standort = new BasisLageAdresse();
-                    }
-                    ChooseDialog chooser = new ChooseDialog(standort,
-                        BasisPanel.this.hauptModul.getFrame());
-                    chooser.setVisible(true);
-                    log.debug("Chosen standort: " + chooser.getChosenStandort().getBasisAdresse() + " " + chooser.getChosenStandort().getBasisLage());
-                    
-                    BasisPanel.this.hauptModul.getObjekt().setBasisStandort(
-                        chooser.getChosenStandort().getBasisAdresse());
-                    BasisPanel.this.hauptModul.getObjekt().setBasisLage(chooser.getChosenStandort().getBasisLage());
-                    updateForm();
-                }
+				public void actionPerformed(ActionEvent e) {
+					BasisAdresse betreiber = BasisPanel.this.hauptModul
+							.getObjekt().getBasisAdresse();
+					if (betreiber == null) {
+						betreiber = new BasisAdresse();
+					}
+					ChooseDialog chooser = new ChooseDialog(betreiber,
+							BasisPanel.this.hauptModul.getFrame());
+					chooser.setVisible(true);
+
+					BasisPanel.this.hauptModul.getObjekt().setBasisStandort(
+							chooser.getChosenBetreiber());
+					standortFeld.setText(chooser.getChosenBetreiber().toString());
+					updateForm();
+				}
             });
         }
 

@@ -215,8 +215,8 @@ public class BasisAdresseSuchen extends AbstractModul {
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
-            builder.add(getSuchBox(), cc.xy(1, 1));
-            builder.add(getSuchFeld(), cc.xy(3, 1));
+//            builder.add(getSuchBox(), cc.xy(1, 1));
+            builder.add(getSuchFeld(), cc.xyw(1, 1, 3));
             builder.add(submitToolBar, cc.xy(5, 1));
             builder.add(this.tabellenSplit, cc.xyw(1, 3, 5));
 
@@ -891,8 +891,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String suche = getSuchFeld().getText();
-                    String spalte = (String) ((NamedObject) getSuchBox()
-                        .getSelectedItem()).getValue();
+                    String spalte = null;
                     filterBetreiberListe(suche, spalte);
                 }
             });
@@ -924,8 +923,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String suche = getSuchFeld().getText();
-                    String spalte = (String) ((NamedObject) getSuchBox()
-                        .getSelectedItem()).getValue();
+                    String spalte = null;
                     filterBetreiberListe(suche, spalte);
                 }
             });

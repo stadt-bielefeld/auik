@@ -232,7 +232,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 		//            TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
 
 		FormLayout layout = new FormLayout(
-				"right:pref, 3dlu, 20dlu, 70dlu, 5dlu, right:pref, 3dlu, 27dlu, 3dlu, 30dlu, 10dlu, 60dlu, 3dlu, 60dlu, 3dlu, 20dlu", // Spalten
+				"right:pref, 3dlu, 20dlu, 50dlu, 3dlu, right:pref, 3dlu, 27dlu, 3dlu, 30dlu, 10dlu, 60dlu, 3dlu, 60dlu, 3dlu, 20dlu", // Spalten
 				"pref, 3dlu, " + //1 - Stammdaten
 						"pref, 3dlu, " + //3
 						"pref, 3dlu, " + //5
@@ -292,55 +292,57 @@ public class BetreiberEditor extends AbstractBaseEditor
 		builder.add(nameZusFeld, cc.xyw(3, 9, 6));
 		
 		// Ansprechpartner -------------------------
-		builder.addSeparator("Ansprechpartner", cc.xyw(10, 9, 7));
+		builder.addSeparator("Ansprechpartner", cc.xyw(12, 11, 5));
 		// Vorname
-		builder.addLabel("Vorname:", cc.xy(10, 11));
-		builder.add(betrBeaufVornameFeld, cc.xyw(12, 11, 5));
+		builder.addLabel("Vorname:", cc.xy(12, 13));
+		builder.add(betrBeaufVornameFeld, cc.xyw(14, 13, 3));
 		// Nachname
-		builder.addLabel("Name:", cc.xy(10, 13));
-		builder.add(betrBeaufNachnameFeld, cc.xyw(12, 13, 5));
+		builder.addLabel("Name:", cc.xy(12, 15));
+		builder.add(betrBeaufNachnameFeld, cc.xyw(14, 15, 3));
 		// Kassenzeichen
-		builder.addLabel("Kassenzeichen:", cc.xy(1, 11));
-		builder.add(kassenzeichenFeld, cc.xyw(3, 11, 6));
+		builder.addLabel("Kassenzeichen:", cc.xy(1, 15));
+		builder.add(kassenzeichenFeld, cc.xyw(3, 15, 6));
 		// Wirtschaftszweig
-		builder.addLabel("Wirtschaftszweig:", cc.xy(1, 13));
-		builder.add(wirtschaftszweigBox, cc.xyw(3, 13, 6));
+		builder.addLabel("Wirtschaftszweig:", cc.xy(10, 9));
+		builder.add(wirtschaftszweigBox, cc.xyw(12, 9, 5));
 
-		// Lage --------------------------------------
-		builder.addSeparator("Lage", cc.xyw(1, 15, 10));
-		// auswählen --------------------------------------
-		builder.addSeparator("auswählen", cc.xyw(12, 15, 5));
 		// Ort
-		builder.addLabel("Ort:", cc.xy(1, 17));
-		builder.add(plzZsFeld, cc.xy(3, 17));
-		builder.add(plzFeld, cc.xy(4, 17));
-		builder.add(ortFeld, cc.xyw(6, 17, 5));
+		builder.addLabel("Ort:", cc.xy(1, 11));
+		builder.add(plzZsFeld, cc.xy(3, 11));
+		builder.add(plzFeld, cc.xy(4, 11));
+		builder.add(ortFeld, cc.xyw(6, 11, 5));
 		// Straße
-		builder.addLabel("Straße:", cc.xy(1, 19));
-		builder.add(strasseFeld, cc.xyw(3, 19, 4));
-		builder.add(hausnrFeld, cc.xy(8, 19));
-		builder.add(hausnrZusFeld, cc.xy(10, 19));
-		builder.add(getStrassenBox(), cc.xyw(12, 17, 5));
+		builder.addLabel("Straße:", cc.xy(1, 13));
+		builder.add(strasseFeld, cc.xyw(3, 13, 4));
+		builder.add(hausnrFeld, cc.xy(8, 13));
+		builder.add(hausnrZusFeld, cc.xy(10, 13));
+		
+		// Lage --------------------------------------
+		builder.addSeparator("Lage", cc.xyw(1, 17, 10));
+		// auswählen --------------------------------------
+		builder.addSeparator("auswählen", cc.xyw(12, 17, 5));
+		
+		builder.add(getStrassenBox(), cc.xyw(12, 19, 5));
 
-		builder.add(getStandorteScroller(), cc.xywh(12, 19, 5, 13));
+		builder.add(getStandorteScroller(), cc.xywh(12, 21, 5, 11));
 
 		// Koordinaten
-		builder.addLabel("E32:", cc.xy(1, 21));
-		builder.add(e32Feld, cc.xyw(3, 21, 3));
-		builder.addLabel("N32:", cc.xy(1, 23));
-		builder.add(n32Feld, cc.xyw(3, 23, 3));
-		builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 25));
-		builder.add(entwGebBox, cc.xyw(3, 25, 3));
+		builder.addLabel("E32:", cc.xy(1, 19));
+		builder.add(e32Feld, cc.xyw(3, 19, 3));
+		builder.addLabel("N32:", cc.xy(1, 21));
+		builder.add(n32Feld, cc.xyw(3, 21, 3));
+		builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 23));
+		builder.add(entwGebBox, cc.xyw(3, 23, 3));
 		
 		//
-		builder.addLabel("Gemarkung:", cc.xy(1, 27));
-		builder.add(gemarkungBox, cc.xyw(3, 27, 8));
+		builder.addLabel("Gemarkung:", cc.xy(1, 25));
+		builder.add(gemarkungBox, cc.xyw(3, 25, 8));
 		
 		//VAwS
-		builder.addLabel("Standortgegebenheit:", cc.xy(1, 29));
-		builder.add(standortGgBox, cc.xyw(3, 29, 8));
-		builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 31));
-		builder.add(wEinzugsGebBox, cc.xyw(3, 31, 8));
+		builder.addLabel("Standortgegebenheit:", cc.xy(1, 27));
+		builder.add(standortGgBox, cc.xyw(3, 27, 8));
+		builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 29));
+		builder.add(wEinzugsGebBox, cc.xyw(3, 29, 8));
 
 		
 
@@ -360,7 +362,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 		// Neue Revision -------------------------------------
 		builder.addSeparator("Neue Revision", cc.xyw(12, 39, 5));
 		// Handzeichen neu
-		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 37));
+		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 41));
 		builder.add(handzeichenNeuFeld, cc.xyw(14, 41, 3));
 
 
