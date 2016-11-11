@@ -579,12 +579,18 @@ public class BasisAdresseNeu extends AbstractModul
 
 			// Neues Standortobjekt erzeugen
 			BasisAdresse adrn = new BasisAdresse();
-			if (standorteTabelle.getSelectedRowCount() > 0) {
+            
+			/*if (standorteTabelle.getSelectedRowCount() > 0) {
 				mapLage = new BasisMapAdresseLage();
 				lage = new BasisLage();
 				mapLage.setBasisAdresse(adrn);
 				mapLage.setBasisLage(lage);
-			}
+			}*/
+            //Vermeidet fehler beim merge, wenn eine eigene Adresse eingeben wurde anstatt eine aus der Liste auszuwählen
+            mapLage = new BasisMapAdresseLage();
+			lage = new BasisLage();
+			mapLage.setBasisAdresse(adrn);
+			mapLage.setBasisLage(lage);
 
 			// Anrede
 			String anrede = anredeFeld.getText();

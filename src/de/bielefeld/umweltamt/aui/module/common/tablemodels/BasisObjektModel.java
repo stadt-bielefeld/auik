@@ -28,7 +28,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 
 /**
  * Ein TableModel für die Basis-Objektdaten bei der Betreiber/Standort-Suche.

@@ -35,7 +35,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
 
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 
 /**
  * Ein TableModel für die Basis-Standortdaten.
@@ -87,9 +87,9 @@ public class BasisLageModel extends ListTableModel
 	 *            Die Zeile
 	 * @return Das Objekt bei rowIndex
 	 */
-	public BasisLageAdresse getRow(int rowIndex)
+	public BasisMapAdresseLage getRow(int rowIndex)
 	{
-		return (BasisLageAdresse) getObjectAtRow(rowIndex);
+		return (BasisMapAdresseLage) getObjectAtRow(rowIndex);
 	}
     
 	/**
@@ -107,10 +107,11 @@ public class BasisLageModel extends ListTableModel
         //Fetch all BasisAdresse and BasisLage Objects
         List<Object[]> list = DatabaseQuery.findStandorteNew(strasse, hausnr, ort);
         log.debug("Fetched " + list.size() + " Objects");
-        List<BasisLageAdresse> standorte = new ArrayList<BasisLageAdresse>();
-        //Add fetched objects to a list of BasisLageAdresse
+        List<BasisMapAdresseLage> standorte = new ArrayList<BasisMapAdresseLage>();
+        //Add fetched objects to a list of BasisMapAdresseLage
         for(Object[] i: list){
-            standorte.add(new BasisLageAdresse((BasisLage)i[1], (BasisAdresse)i[0]));
+            BasisAdresse adr = (BasisAdresse)i[0];
+            standorte.add(BasisMapAdresseLage.findByAdresseId(adr.getId()));
         }
         setList(standorte);
         log.debug("Created list");
@@ -126,9 +127,9 @@ public class BasisLageModel extends ListTableModel
 	 * @param std
 	 *            BasisLage
 	 */
-	public void filterList(BasisLageAdresse std)
+	public void filterList(BasisMapAdresseLage std)
 	{
-		List<BasisLageAdresse> oneItemList = new ArrayList<BasisLageAdresse>();
+		List<BasisMapAdresseLage> oneItemList = new ArrayList<BasisMapAdresseLage>();
 		oneItemList.add(std);
 		setList(oneItemList);
 	}
@@ -148,7 +149,7 @@ public class BasisLageModel extends ListTableModel
 	public Object getColumnValue(Object objectAtRow, int columnIndex)
 	{
 		Object value = null;
-		BasisLageAdresse bsta = (BasisLageAdresse) objectAtRow;
+		BasisMapAdresseLage bsta = (BasisMapAdresseLage) objectAtRow;
 		switch (columnIndex)
 		{
 		/*
@@ -233,8 +234,8 @@ public class BasisLageModel extends ListTableModel
 	@Override
 	public boolean objectRemoved(Object objectAtRow)
 	{
-		BasisLageAdresse removedStandort = (BasisLageAdresse) objectAtRow;
-		return BasisLageAdresse.delete(removedStandort);
+		BasisMapAdresseLage removedStandort = (BasisMapAdresseLage) objectAtRow;
+		return BasisMapAdresseLage.delete(removedStandort);
 	}
 
 	@Override

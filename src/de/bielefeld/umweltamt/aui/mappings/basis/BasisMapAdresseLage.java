@@ -28,6 +28,24 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
+
+import org.hibernate.Hibernate;
+import org.hibernate.LazyInitializationException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * A class that represents a row in the BasisObjekt database table.<br>
@@ -234,5 +252,168 @@ public class BasisMapAdresseLage  implements java.io.Serializable {
             }
         }
         return null;
+    }
+    
+    public static BasisMapAdresseLage findByAdresseId(Integer id){
+        List<BasisMapAdresseLage> all = BasisMapAdresseLage.getAll();
+        for(BasisMapAdresseLage i : all){
+            if(i.getBasisAdresse().getId().equals(id)){
+                return (BasisMapAdresseLage) new DatabaseAccess().get(BasisMapAdresseLage.class, i.getId());
+            }
+        }
+        return null;
+    }
+    
+    /* Setter and getter for lage and adresse fields*/
+    //Getter
+
+    public String getStrasse(){
+        return basisAdresse.getStrasse();
+    }
+
+    public Integer getHausnr(){
+        return basisAdresse.getHausnr();
+    }
+
+    public String getHausnrzus(){
+        return basisAdresse.getHausnrzus();
+    }
+
+    public String getPlz(){
+        return basisAdresse.getPlz();
+    }
+
+    public String getOrt(){
+        return basisAdresse.getOrt();
+    }
+
+    public BasisGemarkung getBasisGemarkung(){
+        return basisLage.getBasisGemarkung();
+    }
+
+    public String getEntgebid(){
+        return basisLage.getEntgebid();
+    }
+
+    public Float getE32(){
+        return basisLage.getE32();
+    }
+
+    public Float getN32(){
+        return basisLage.getN32();
+    }
+
+    public VawsStandortgghwsg getVawsStandortgghwsg(){
+        return basisLage.getVawsStandortgghwsg();
+    }
+
+    public VawsWassereinzugsgebiete getVawsWassereinzugsgebiete(){
+        return basisLage.getVawsWassereinzugsgebiete();
+    }
+
+    public String getFlur(){
+        return basisLage.getFlur();
+    }
+
+    public String getFlurstueck(){
+        return basisLage.getFlurstueck();
+    }
+
+    public String getRevihandz(){
+        if(basisLage.getRevihandz() != null){
+            return basisLage.getRevihandz();
+        }
+        else{
+            return basisAdresse.getRevihandz();
+        }
+    }
+
+    public Date getRevidatum(){
+        if(basisLage.getRevidatum() != null){
+            return basisLage.getRevidatum();
+        }
+        else{
+            return basisAdresse.getRevidatum();
+        }
+    }
+
+    public String getSachbe33rav(){
+        return basisLage.getSachbe33rav();
+    }
+
+    public Integer getWassermenge(){
+        return basisLage.getWassermenge();
+    }    
+
+    //Setter
+
+    public void setHausnr(Integer hausnr){
+        this.basisAdresse.setHausnr(hausnr);
+    }
+
+    public void setHausnrzus(String hausnrzus){
+        this.basisAdresse.setHausnrzus(hausnrzus);
+    }
+
+    public void setStrasse(String strasse){
+        this.basisAdresse.setStrasse(strasse);
+    }
+
+    public void setPlz(String plz){
+        this.basisAdresse.setPlz(plz);
+    }
+
+    public void setOrt(String ort){
+        this.basisAdresse.setOrt(ort);
+    }
+
+    public void setVawsStandortgghwsg(VawsStandortgghwsg vaws){
+        this.basisLage.setVawsStandortgghwsg(vaws);
+    }
+
+    public void setEntgebid(String entgebid){
+        this.basisLage.setEntgebid(entgebid);
+    }
+
+    public void setVawsWassereinzugsgebiete(VawsWassereinzugsgebiete geb){
+        this.basisLage.setVawsWassereinzugsgebiete(geb);
+    }
+
+    public void setBasisGemarkung(BasisGemarkung gemarkung){
+        this.basisLage.setBasisGemarkung(gemarkung);
+    }
+
+    public void setFlur(String flur){
+        this.basisLage.setFlur(flur);
+    }
+
+    public void setFlurstueck(String flurstueck){
+        this.basisLage.setFlurstueck(flurstueck);
+    }
+
+    public void setE32(Float e32){
+        this.basisLage.setE32(e32);
+    }
+
+    public void setN32(Float n32){
+        this.basisLage.setN32(n32);
+    }
+
+    public void setRevidatum(Date date){
+        this.basisLage.setRevidatum(date);
+        this.basisAdresse.setRevidatum(date);
+    }
+
+    public void setRevihandz(String handz){
+        this.basisLage.setRevihandz(handz);
+        this.basisAdresse.setRevihandz(handz);
+    }
+
+    public void setSachbe33rav(String sachbe33rav){
+        basisLage.setSachbe33rav(sachbe33rav);
+    }
+
+    public void setWassermenge(Integer wassermenge){
+        basisLage.setWassermenge(wassermenge);
     }
 }

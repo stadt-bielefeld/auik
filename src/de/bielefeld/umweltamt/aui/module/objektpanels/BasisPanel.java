@@ -116,7 +116,7 @@ import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageAdresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -619,8 +619,8 @@ public class BasisPanel extends JPanel {
             
             }
             if (this.hauptModul.getObjekt().getBasisLage() != null) {
-                BasisLageAdresse sta;
-                sta = new BasisLageAdresse(this.hauptModul.getObjekt().getBasisLage(), this.hauptModul.getObjekt().getBasisStandort());
+                BasisMapAdresseLage sta;
+                sta = BasisMapAdresseLage.findByAdresseId(this.hauptModul.getObjekt().getBasisStandort().getId());
                 log.debug("Set standort field to: " + sta + this.hauptModul.getObjekt().getBasisStandort() + " " + this.hauptModul.getObjekt().getBasisLage());
                 String toolTip = "<html>" + sta + "<br>";
                 if (sta.getPlz() != null) {
