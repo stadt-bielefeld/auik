@@ -13,5 +13,11 @@
         <many-to-one name="basisLage" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisLage" fetch="select" cascade="all">
             <column name="lageid" />
         </many-to-one>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -42,6 +42,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
@@ -327,19 +328,17 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 * @return Eine Liste von BasisObjekten an diesem Standort.
 	 */
 	public static List<BasisObjekt> getObjekteByStandort(
-		BasisAdresse standort, String abteilung, Integer artid,
+		BasisMapAdresseLage map, String abteilung, Integer artid,
 		Boolean matchArtId)
 	{
-        log.debug("Fetching objects at " + standort);
-        //Find objects witch matching standortid
-		String query1 = "SELECT o.* from auik.basis_objekt o, auik.basis_adresse a, auik.basis_objektarten art "+
-                       " WHERE a.id = " + standort.getId() + " AND o.standortid = a.id";
-        //Find objects with standortid of basis_adresse objects with matching fields
-        String query2 = " UNION " +
-                 "SELECT o.* from auik.basis_objekt o, auik.basis_adresse a, auik.basis_adresse a2, auik.basis_objektarten art " + 
-                 " WHERE a.id = " + standort.getId() + " AND a2.strasse = a.strasse AND a2.hausnr = a.hausnr  AND o.standortid = a2.id"
-                 + " AND CASE WHEN " + 
-                 " (a.hausnrzus IS NOT NULL) THEN (a2.hausnrzus = a.hausnrzus) ELSE (a2.hausnrzus IS NULL) END";
+		String strasse = map.getBasisAdresse().getStrasse();
+		Integer nr = map.getBasisAdresse().getHausnr();
+		
+        log.debug("Fetching objects at " + map.getBasisAdresse());
+        //Find objects witch matching fields
+		String query = "SELECT o.*, a.* from auik.basis_objekt o, auik.basis_adresse a, auik.basis_objektarten art "+
+                       " WHERE o.standortid = a.id AND o.objektartid = art.id "
+                       		+ "AND a.strasse = '" + strasse + "' AND a.hausnr = " + nr;
 
         String filter = " ";
         if (abteilung != null)
@@ -358,12 +357,51 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 
 			}
 		}
-        query1 += filter;
-        query2 += filter + ";";
-        SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query1 + query2);
+        query += filter + "ORDER BY o.inaktiv, a.betrname, art.objektart, o.beschreibung;";
+        SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
         //log.debug(query1 + query2);
         q.addEntity("o", BasisObjekt.class);
         return q.list();
+
+	}
+    	public static List<BasisObjekt> getObjekteByStandort(
+    		BasisAdresse standort, String abteilung, Integer artid,
+    		Boolean matchArtId)
+    	{
+            log.debug("Fetching objects at " + standort);
+            //Find objects witch matching standortid
+    		String query1 = "SELECT o.* from auik.basis_objekt o, auik.basis_adresse a, auik.basis_objektarten art "+
+                           " WHERE a.id = " + standort.getId() + " AND o.standortid = a.id";
+            //Find objects with standortid of basis_adresse objects with matching fields
+            String query2 = " UNION " +
+                     "SELECT o.* from auik.basis_objekt o, auik.basis_adresse a, auik.basis_adresse a2, auik.basis_objektarten art " + 
+                     " WHERE a.id = " + standort.getId() + " AND a2.strasse = a.strasse AND a2.hausnr = a.hausnr  AND o.standortid = a2.id"
+                     + " AND CASE WHEN " + 
+                     " (a.hausnrzus IS NOT NULL) THEN (a2.hausnrzus = a.hausnrzus) ELSE (a2.hausnrzus IS NULL) END";
+
+            String filter = " ";
+            if (abteilung != null)
+    		{
+                filter += " AND art.abteilung = '" + abteilung + "' ";
+    		}
+    		if (artid != null)
+    		{
+    			if (matchArtId)
+    			{
+                    filter += "AND art.id = " + artid + " ";
+    			}
+    			else
+    			{
+                    filter += "AND art.id != " + artid + " ";
+
+    			}
+    		}
+            query1 += filter;
+            query2 += filter + ";";
+            SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query1 + query2);
+            //log.debug(query1 + query2);
+            q.addEntity("o", BasisObjekt.class);
+            return q.list();
         /*
         DetachedCriteria detachedCriteria = DetachedCriteria
 				.forClass(BasisObjekt.class)
@@ -783,8 +821,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 
         String query = 
             "SELECT * FROM " +
-            " (SELECT DISTINCT ON (a.strasse, a.hausnr, a.hausnrzus) a.*, l.* " +
-            "FROM auik.basis_adresse a JOIN auik.basis_objekt o ON o.standortid = a.id JOIN auik.basis_lage l on o.lageid = l.id";
+            " (SELECT DISTINCT ON (a.strasse, a.hausnr, a.hausnrzus) a.*, m.* " +
+            "FROM auik.basis_adresse a JOIN auik.basis_map_adresse_lage m ON m.adresseid = a.id";
             if(bStrasse || bHausnr || bOrt){
                 query += " WHERE ";
                 if(bStrasse){
@@ -806,7 +844,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
             query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";
             SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
             q.addEntity("a", BasisAdresse.class);
-            q.addEntity("l", BasisLage.class);
+            q.addEntity("m", BasisMapAdresseLage.class);
             return q.list();
     }
 
@@ -1132,7 +1170,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 //					.addOrder(Order.asc("plz"))
 					;
 
-			ort = (BasisOrte) new DatabaseAccess().executeCriteriaToUniqueResult(dc, new BasisOrte());
+			ort = new DatabaseAccess().executeCriteriaToUniqueResult(dc, new BasisOrte());
 		}
 
 		return ort;

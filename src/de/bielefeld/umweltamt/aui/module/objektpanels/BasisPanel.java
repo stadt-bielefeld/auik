@@ -105,18 +105,16 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
-import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageModel;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -183,14 +181,6 @@ public class BasisPanel extends JPanel {
         public BasisAdresse getChosenBetreiber() {
             if (this.betreiber.getId() != null) {
                 return this.betreiber;
-            } else {
-                return null;
-            }
-        }
-
-        public BasisAdresse getChosenStandort() {
-            if (this.standort.getId() != null) {
-                return this.standort;
             } else {
                 return null;
             }
@@ -618,20 +608,21 @@ public class BasisPanel extends JPanel {
                 getBetreiberFeld().setToolTipText(toolTip);
             
             }
-            if (this.hauptModul.getObjekt().getBasisLage() != null) {
-                BasisMapAdresseLage sta;
-                sta = BasisMapAdresseLage.findByAdresseId(this.hauptModul.getObjekt().getBasisStandort().getId());
+            if (this.hauptModul.getObjekt().getBasisStandort() != null) {
+                
+            	BasisMapAdresseLage mapsta = (BasisMapAdresseLage) BasisMapAdresseLage.findByAdresse(this.hauptModul.getObjekt().getBasisStandort());
+                BasisAdresse sta = mapsta.getBasisAdresse();
                 log.debug("Set standort field to: " + sta + this.hauptModul.getObjekt().getBasisStandort() + " " + this.hauptModul.getObjekt().getBasisLage());
                 String toolTip = "<html>" + sta + "<br>";
                 if (sta.getPlz() != null) {
                     toolTip += "<b>PLZ:</b> " + sta.getPlz() + "<br>";
                 }
                 toolTip += "<b>Gemarkung:</b> "
-                    + sta.getBasisGemarkung()
-                    + ((sta.getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
-                        + sta.getEntgebid() : "") + "</html>";
+                    + mapsta.getBasisLage().getBasisGemarkung()
+                    + ((mapsta.getBasisLage().getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
+                        + mapsta.getBasisLage().getEntgebid() : "") + "</html>";
                 getStandortFeld().setToolTipText(toolTip);
-                getStandortFeld().setText(sta.toString());
+                getStandortFeld().setText(this.hauptModul.getObjekt().getBasisStandort().toString());
             }
 
             if (this.hauptModul.getObjekt().getBasisObjektarten() != null) {
@@ -889,7 +880,38 @@ public class BasisPanel extends JPanel {
         return this.betreiberChooseButton;
     }
 
-    private JButton getBetreiberEditButton() {
+    private JButton getStandortChooseButton() {
+	    if (this.standortChooseButton == null) {
+	        this.standortChooseButton = new JButton(AuikUtils.getIcon(16,
+	            "reload.png", ""));
+	        this.standortChooseButton
+	            .setHorizontalAlignment(SwingConstants.CENTER);
+	        this.standortChooseButton.setToolTipText("Adresse auswählen");
+	
+	        this.standortChooseButton.addActionListener(new ActionListener() {
+	            @Override
+				public void actionPerformed(ActionEvent e) {
+					BasisAdresse standort = BasisPanel.this.hauptModul
+							.getObjekt().getBasisStandort();
+					if (standort == null) {
+						standort = new BasisAdresse();
+					}
+					ChooseDialog chooser = new ChooseDialog(standort,
+							BasisPanel.this.hauptModul.getFrame());
+					chooser.setVisible(true);
+	
+					standortFeld.setText(chooser.getChosenBetreiber().toString());
+					BasisPanel.this.hauptModul.getObjekt().setBasisStandort(
+							chooser.getChosenBetreiber());
+					updateForm();
+				}
+	        });
+	    }
+	
+	    return this.standortChooseButton;
+	}
+
+	private JButton getBetreiberEditButton() {
         if (this.betreiberEditButton == null) {
             this.betreiberEditButton = new JButton(AuikUtils.getIcon(16,
                 "edit.png", ""));
@@ -969,37 +991,6 @@ public class BasisPanel extends JPanel {
             this.standortToolBar.add(getStandortDeleteButton());
         }
         return this.standortToolBar;
-    }
-
-    private JButton getStandortChooseButton() {
-        if (this.standortChooseButton == null) {
-            this.standortChooseButton = new JButton(AuikUtils.getIcon(16,
-                "reload.png", ""));
-            this.standortChooseButton
-                .setHorizontalAlignment(SwingConstants.CENTER);
-            this.standortChooseButton.setToolTipText("Adresse auswählen");
-
-            this.standortChooseButton.addActionListener(new ActionListener() {
-                @Override
-				public void actionPerformed(ActionEvent e) {
-					BasisAdresse betreiber = BasisPanel.this.hauptModul
-							.getObjekt().getBasisAdresse();
-					if (betreiber == null) {
-						betreiber = new BasisAdresse();
-					}
-					ChooseDialog chooser = new ChooseDialog(betreiber,
-							BasisPanel.this.hauptModul.getFrame());
-					chooser.setVisible(true);
-
-					BasisPanel.this.hauptModul.getObjekt().setBasisStandort(
-							chooser.getChosenBetreiber());
-					standortFeld.setText(chooser.getChosenBetreiber().toString());
-					updateForm();
-				}
-            });
-        }
-
-        return this.standortChooseButton;
     }
 
     private JButton getStandortEditButton() {
@@ -1151,7 +1142,7 @@ public class BasisPanel extends JPanel {
                     if ((BasisPanel.this.hauptModul.getObjekt()
                         .getBasisAdresse() != null)
                         && (BasisPanel.this.hauptModul.getObjekt()
-                            .getBasisLage() != null)) {
+                            .getBasisStandort() != null)) {
                         enableAll(false);
                         if (saveObjektDaten()) {
                             BasisPanel.this.hauptModul.getFrame().changeStatus(

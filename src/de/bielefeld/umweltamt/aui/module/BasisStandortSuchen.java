@@ -533,7 +533,7 @@ public class BasisStandortSuchen extends AbstractModul
 			@Override
 			protected void doNonUILogic()
 			{
-				BasisStandortSuchen.this.objektModel.searchByStandort(standort.getBasisAdresse());
+				BasisStandortSuchen.this.objektModel.searchByStandort(standort);
 			}
 
 			@Override

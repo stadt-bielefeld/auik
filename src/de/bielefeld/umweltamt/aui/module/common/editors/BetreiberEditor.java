@@ -468,30 +468,31 @@ public class BetreiberEditor extends AbstractBaseEditor
 				Date datum = getBetreiber().getRevidatum();
 				revdatumsFeld.setText(AuikUtils.getStringFromDate(datum));
 				
-				lage = (BasisLage) getBetreiber().getBasisMapAdresseLages();
+				mapLage = BasisMapAdresseLage.findByAdresseId(getBetreiber().getId());
 				
-				if(lage != null) {
-					e32Feld.setValue(lage.getE32());
-					n32Feld.setValue(lage.getN32());
+				if(mapLage != null) {
+					lage = mapLage.getBasisLage();
+					e32Feld.setValue(mapLage.getBasisLage().getE32());
+					n32Feld.setValue(mapLage.getBasisLage().getN32());
 
-					if (lage.getBasisGemarkung() != null)
+					if (mapLage.getBasisLage().getBasisGemarkung() != null)
 					{
 						gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
 						gemarkungBox.setSelectedItem(lage.getBasisGemarkung());
 					}
-					if (lage.getVawsStandortgghwsg() != null)
+					if (mapLage.getBasisLage().getVawsStandortgghwsg() != null)
 					{
 						standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
 						standortGgBox.setSelectedItem(lage.getVawsStandortgghwsg());
 					}
 
-					if (lage.getEntgebid() != null)
+					if (mapLage.getBasisLage().getEntgebid() != null)
 					{
 						entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
 						entwGebBox.setSelectedItem(lage.getEntgebid());
 					}
 
-					if (lage.getVawsWassereinzugsgebiete() != null)
+					if (mapLage.getBasisLage().getVawsWassereinzugsgebiete() != null)
 					{
 						wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
 						wEinzugsGebBox.setSelectedItem(lage.getVawsWassereinzugsgebiete());
@@ -815,12 +816,12 @@ public class BetreiberEditor extends AbstractBaseEditor
 
 		// frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
 
-		BasisAdresse persistentBetreiber = null;
-		persistentBetreiber = BasisAdresse.merge(getBetreiber());
+		BasisMapAdresseLage persistentAL = null;
+		persistentAL = BasisMapAdresseLage.merge(mapLage);
 
-		if (persistentBetreiber != null)
+		if (persistentAL != null)
 		{
-			setEditedObject(persistentBetreiber);
+			setEditedObject(persistentAL);
 			log.debug("Änderungen gespeichert!");
 			return true;
 		}

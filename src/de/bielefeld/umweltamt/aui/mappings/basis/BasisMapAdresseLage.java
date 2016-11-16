@@ -35,6 +35,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 
 import org.hibernate.Hibernate;
 import org.hibernate.LazyInitializationException;
@@ -62,6 +63,8 @@ public class BasisMapAdresseLage  implements java.io.Serializable {
     private Integer id;
     private BasisAdresse basisAdresse;
     private BasisLage basisLage;
+    private boolean enabled;
+    private boolean deleted;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -73,9 +76,11 @@ public class BasisMapAdresseLage  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisMapAdresseLage(
-        BasisAdresse basisAdresse, BasisLage basisLage) {
+        BasisAdresse basisAdresse, BasisLage basisLage, boolean enabled, boolean deleted) {
         this.basisAdresse = basisAdresse;
         this.basisLage = basisLage;
+        this.enabled = enabled;
+        this.deleted = deleted;
     }
 
     /* Setter and getter methods */
@@ -103,6 +108,22 @@ public class BasisMapAdresseLage  implements java.io.Serializable {
         this.basisLage = basisLage;
     }
 
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isDeleted() {
+        return this.deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -125,6 +146,8 @@ public class BasisMapAdresseLage  implements java.io.Serializable {
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("basisAdresse").append("='").append(getBasisAdresse()).append("' ");			
         buffer.append("basisLage").append("='").append(getBasisLage()).append("' ");			
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -191,7 +214,9 @@ public class BasisMapAdresseLage  implements java.io.Serializable {
      */
     private void copy(BasisMapAdresseLage copy) {
         this.basisAdresse = copy.getBasisAdresse();            
-        this.basisLage = copy.getBasisLage();            
+        this.basisLage = copy.getBasisLage();          
+        this.enabled = copy.isEnabled();            
+        this.deleted = copy.isDeleted();          
             
     }    
 
@@ -255,13 +280,10 @@ public class BasisMapAdresseLage  implements java.io.Serializable {
     }
     
     public static BasisMapAdresseLage findByAdresseId(Integer id){
-        List<BasisMapAdresseLage> all = BasisMapAdresseLage.getAll();
-        for(BasisMapAdresseLage i : all){
-            if(i.getBasisAdresse().getId().equals(id)){
-                return (BasisMapAdresseLage) new DatabaseAccess().get(BasisMapAdresseLage.class, i.getId());
-            }
-        }
-        return null;
+
+                return (BasisMapAdresseLage) new DatabaseAccess().get(BasisMapAdresseLage.class, id);
+                    
+//        return null;
     }
     
     /* Setter and getter for lage and adresse fields*/
@@ -416,4 +438,10 @@ public class BasisMapAdresseLage  implements java.io.Serializable {
     public void setWassermenge(Integer wassermenge){
         basisLage.setWassermenge(wassermenge);
     }
+
+	public static BasisMapAdresseLage findByAdresse(BasisAdresse basisStandort) {
+		Integer id = basisStandort.getId();
+		BasisMapAdresseLage map = (BasisMapAdresseLage) HibernateSessionFactory.currentSession().createQuery("from BasisMapAdresseLage where adresseid= " + id).list().get(0);
+        return map;
+	}
 }

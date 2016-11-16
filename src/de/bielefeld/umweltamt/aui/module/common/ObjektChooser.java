@@ -36,6 +36,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
@@ -74,7 +75,7 @@ public class ObjektChooser extends OkCancelDialog {
 
         setResizable(true);
 
-        objektModel.searchByStandort(objekt.getBasisAdresse());
+        objektModel.searchByStandort((BasisMapAdresseLage) objekt.getBasisAdresse().getBasisMapAdresseLages());
         // Remove this BasisObjekt from the list as we do not want to connect the
         // BasisObjekt with itself
         objektModel.removeFromList(objekt);
