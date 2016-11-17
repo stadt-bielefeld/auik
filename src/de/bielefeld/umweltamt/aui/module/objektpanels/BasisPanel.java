@@ -793,7 +793,7 @@ public class BasisPanel extends JPanel {
                     BasisAdresse betreiber = BasisPanel.this.hauptModul
                         .getObjekt().getBasisAdresse();
                     BasisAdresse standort = BasisPanel.this.hauptModul
-                            .getObjekt().getBasisAdresse();
+                            .getObjekt().getBasisStandort();
 
                     if ("betreiber_edit".equals(action) && betreiber != null) {
                         BetreiberEditor editDialog = new BetreiberEditor(
@@ -806,10 +806,11 @@ public class BasisPanel extends JPanel {
 
                         BasisPanel.this.hauptModul.getObjekt()
                             .setBasisAdresse(editDialog.getBetreiber());
+                        
                     } else if ("standort_edit".equals(action)
                         && standort != null) {
                         BetreiberEditor editDialog = new BetreiberEditor(
-                                betreiber, BasisPanel.this.hauptModul.getFrame());
+                                standort, BasisPanel.this.hauptModul.getFrame());
                             editDialog
                                 .setLocationRelativeTo(BasisPanel.this.hauptModul
                                     .getFrame());
@@ -817,7 +818,7 @@ public class BasisPanel extends JPanel {
                         editDialog.setVisible(true);
 
 //                        BasisPanel.this.hauptModul.getObjekt()
-//                            .setBasisLage(editDialog.getStandort().getBasisLage());
+//                            .setBasisStandort(editDialog.getBetreiber());
                     }
 
                     updateForm();
