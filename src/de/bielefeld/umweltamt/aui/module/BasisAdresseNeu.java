@@ -792,22 +792,39 @@ public class BasisAdresseNeu extends AbstractModul
 			persistentAL = BasisMapAdresseLage.merge(mapLage);
 
 			if (persistentAL != null) {
-				frame.changeStatus(
-						"Neuer Betreiber " + persistentAL.getId()
-								+ " erfolgreich gespeichert.",
-						HauptFrame.SUCCESS_COLOR);
+				frame.changeStatus("Neuer Betreiber " + persistentAL.getId()
+						+ " erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
 
 				// Wenn wir vom Objekt anlegen kommen,
 				if (manager.getSettingsManager().getBoolSetting(
-						"auik.imc.return_to_objekt")) {
+						"auik.imc.return_to_objekt_betreiber")) {
 					manager.getSettingsManager().setSetting(
 							"auik.imc.use_betreiber",
-							persistentAL.getId().intValue(), false);
+							persistentAL.getBasisAdresse().getId().intValue(),
+							false);
 					manager.getSettingsManager().removeSetting(
-							"auik.imc.return_to_objekt");
+							"auik.imc.return_to_objekt_betreiber");
 					// ... kehren wir direkt dorthin zurück:
 					manager.switchModul("m_objekt_bearbeiten");
-				} else {
+				}
+				else if (manager.getSettingsManager().getBoolSetting(
+							"auik.imc.return_to_objekt_standort")) {
+					manager.getSettingsManager().setSetting(
+							"auik.imc.use_standort",
+							persistentAL.getBasisAdresse().getId().intValue(),
+							false);
+					manager.getSettingsManager().setSetting(
+							"auik.imc.use_lage",
+							persistentAL.getBasisLage().getId().intValue(),
+							false);
+					manager.getSettingsManager().removeSetting(
+							"auik.imc.return_to_objekt_standort");
+					manager.getSettingsManager().removeSetting(
+							"auik.imc.return_to_objekt_lage");
+					// ... kehren wir direkt dorthin zurück:
+					manager.switchModul("m_objekt_bearbeiten");
+					}
+				else {
 					// Sonst einfach das Formular zurücksetzen
 					clearForm();
 				}

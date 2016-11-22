@@ -238,7 +238,7 @@ public class BasisPanel extends JPanel {
                     @Override
                     protected void doNonUILogic() throws RuntimeException {
                         ChooseDialog.this.betreiberModel
-                            .filterAllList(suche, null);
+                            .filterList(suche, null);
                     }
 
                     @Override
@@ -894,7 +894,10 @@ public class BasisPanel extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					BasisAdresse standort = BasisPanel.this.hauptModul
 							.getObjekt().getBasisStandort();
-					if (standort == null) {
+					if (BasisPanel.this. hauptModul.getObjekt().getBasisAdresse() != null) {
+						standort = BasisPanel.this. hauptModul.getObjekt().getBasisAdresse();
+					}
+					if(standort == null){
 						standort = new BasisAdresse();
 					}
 					ChooseDialog chooser = new ChooseDialog(standort,
@@ -940,7 +943,7 @@ public class BasisPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     BasisPanel.this.hauptModul.getManager()
                         .getSettingsManager()
-                        .setSetting("auik.imc.return_to_objekt", true, false);
+                        .setSetting("auik.imc.return_to_objekt_betreiber", true, false);
                     if (BasisPanel.this.hauptModul.getObjekt()
                         .getBasisAdresse() != null) {
                         BasisPanel.this.hauptModul
@@ -958,11 +961,22 @@ public class BasisPanel extends JPanel {
                             .getManager()
                             .getSettingsManager()
                             .setSetting(
-                                "auik.imc.use_standort",
+                                "auik.imc.use_lage",
                                 BasisPanel.this.hauptModul.getObjekt()
                                     .getBasisLage().getId()
                                     .intValue(), false);
                     }
+                    if (BasisPanel.this.hauptModul.getObjekt()
+                            .getBasisStandort() != null) {
+                            BasisPanel.this.hauptModul
+                                .getManager()
+                                .getSettingsManager()
+                                .setSetting(
+                                    "auik.imc.use_standort",
+                                    BasisPanel.this.hauptModul.getObjekt()
+                                        .getBasisStandort().getId()
+                                        .intValue(), false);
+                        }
                     BasisPanel.this.hauptModul.getManager().switchModul(
                         "m_betreiber_neu");
                 }
@@ -1022,8 +1036,7 @@ public class BasisPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     BasisPanel.this.hauptModul.getManager()
                         .getSettingsManager()
-                        .setSetting("auik.imc.return_to_objekt", true, false);
-
+                        .setSetting("auik.imc.return_to_objekt_standort", true, false);
                     if (BasisPanel.this.hauptModul.getObjekt()
                         .getBasisAdresse() != null) {
                         BasisPanel.this.hauptModul
@@ -1036,18 +1049,29 @@ public class BasisPanel extends JPanel {
                                     .intValue(), false);
                     }
                     if (BasisPanel.this.hauptModul.getObjekt()
-                        .getBasisLage() != null) {
+                        .getBasisStandort() != null) {
                         BasisPanel.this.hauptModul
                             .getManager()
                             .getSettingsManager()
                             .setSetting(
                                 "auik.imc.use_standort",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisLage().getId().intValue(),
+                                    .getBasisStandort().getId().intValue(),
                                 false);
                     }
+                    if (BasisPanel.this.hauptModul.getObjekt()
+                            .getBasisLage() != null) {
+                            BasisPanel.this.hauptModul
+                                .getManager()
+                                .getSettingsManager()
+                                .setSetting(
+                                    "auik.imc.use_lage",
+                                    BasisPanel.this.hauptModul.getObjekt()
+                                        .getBasisLage().getId().intValue(),
+                                    false);
+                        }
                     BasisPanel.this.hauptModul.getManager().switchModul(
-                        "m_standort_neu");
+                        "m_betreiber_neu");
                 }
             });
         }

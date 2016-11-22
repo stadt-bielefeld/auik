@@ -93,26 +93,26 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		String search)
 	{
 
-		String modSearch = search.trim() + "%";
+		String modSearch = search.trim().toLowerCase() + "%";
 		log.debug("Suche nach '" + modSearch + "' (" + property + ").");
 
         String query =  "SELECT DISTINCT adresse " + 
                         "FROM BasisAdresse as adresse JOIN adresse.basisObjekts objekt ";
         if (property == null)
 		{
-            query += "WHERE adresse.betrname like '" + modSearch + "' OR betranrede like '" + modSearch + "' OR betrnamezus like '" + modSearch + "'";
+            query += "WHERE LOWER(adresse.betrname) like '" + modSearch + "' OR LOWER(betranrede) like '" + modSearch + "' OR LOWER(betrnamezus) like '" + modSearch + "'";
 		}
 		else if (property.equals("name"))
 		{
-            query += "WHERE adresse.betrname like '" + modSearch + "'";
+            query += "WHERE LOWER(adresse.betrname) like '" + modSearch + "'";
 		}
 		else if (property.equals("anrede"))
 		{
-            query += "WHERE adresse.betranrede like '" + modSearch + "'";
+            query += "WHERE LOWER(adresse.betranrede) like '" + modSearch + "'";
 		}
 		else if (property.equals("zusatz"))
 		{
-            query += "WHERE adresse.betrzus like '" + modSearch + "'";
+            query += "WHERE LOWER(adresse.betrzus) like '" + modSearch + "'";
 		}
 		else
 		{
@@ -826,7 +826,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
             if(bStrasse || bHausnr || bOrt){
                 query += " WHERE ";
                 if(bStrasse){
-                    query += " a.strasse like '" + strasse + "%' ";
+                    query += " lower(a.strasse) like '" + strasse.toLowerCase() + "%' ";
                 }
                 if(hausnr != null && hausnr != -1){
                     if(bStrasse){
@@ -838,7 +838,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
                     if(bStrasse || bHausnr){
                         query += " AND ";
                     }
-                    query += " a.ort like '" + ort + "%' ";
+                    query += " lower(a.ort) like '" + ort.toLowerCase() + "%' ";
                 }
             }
             query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";

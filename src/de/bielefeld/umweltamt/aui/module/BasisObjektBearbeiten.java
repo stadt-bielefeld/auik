@@ -441,12 +441,12 @@ public class BasisObjektBearbeiten extends AbstractModul {
             if (manager.getSettingsManager().getSetting("auik.imc.use_standort") != null) {
                 BasisAdresse sta = BasisAdresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
                 log.debug("Standort: " + sta.getStrasse() + " " + sta.getHausnr() + ", " +sta.getObjektid());
-                BasisObjekt temp = BasisObjekt.findById(sta.getObjektid()); 
-                BasisLage lage = temp.getBasisLage();
-                log.debug("Creating new BasisObjekt " + lage + " " + temp + " " + sta);
+                BasisLage lage = BasisLage.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_lage")));
+                log.debug("Creating new BasisObjekt " + lage + sta);
                 objekt.setBasisStandort(sta);
                 objekt.setBasisLage(lage);
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
+                manager.getSettingsManager().removeSetting("auik.imc.use_lage");
             }
             if (manager.getSettingsManager().getSetting("auik.imc.use_betreiber") != null) {
                 BasisAdresse betr = BasisAdresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));

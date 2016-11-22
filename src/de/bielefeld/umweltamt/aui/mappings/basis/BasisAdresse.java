@@ -360,7 +360,9 @@ public class BasisAdresse  implements java.io.Serializable {
 		String adr = "";
 		adr = adr + (getBetrname() + ", ");
 		adr = adr + (getStrasse() + " ");
-		adr = adr + (getHausnr().toString());
+		if (getHausnr() != null) {
+			adr = adr + (getHausnr().toString());
+		}
 		if (getHausnrzus() != null) {
 			adr = adr + getHausnrzus();
 		}

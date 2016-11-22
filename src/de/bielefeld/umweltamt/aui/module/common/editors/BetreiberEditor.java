@@ -143,7 +143,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 	 */
 	public BetreiberEditor(BasisAdresse betr, HauptFrame owner)
 	{
-		super("Betreiber (" + betr.getId() + ")", betr, owner);
+		super("Betreiber (" + betr.toString() + ")", betr, owner);
 	}
 
 	@Override
@@ -468,7 +468,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 				Date datum = getBetreiber().getRevidatum();
 				revdatumsFeld.setText(AuikUtils.getStringFromDate(datum));
 				
-				mapLage = BasisMapAdresseLage.findByAdresseId(getBetreiber().getId());
+				mapLage = BasisMapAdresseLage.findByAdresse(getBetreiber());
 				
 				if(mapLage != null) {
 					lage = mapLage.getBasisLage();
