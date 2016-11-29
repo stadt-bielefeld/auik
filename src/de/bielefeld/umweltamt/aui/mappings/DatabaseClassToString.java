@@ -202,9 +202,11 @@ public class DatabaseClassToString {
      * @return Komplette, formatierte Strasse inkl. Hausnr
      */
     public static String toStringForClass(BasisLage clazz) {
-        return " " 
-            + (clazz.getN32() != null ? " " + clazz.getN32() : "")
-            + (clazz.getE32() != null ? " " + clazz.getE32() : "");
+        return "" 
+            + (clazz.getEntgebid() != null ? "" + clazz.getEntgebid() : "")
+            + (clazz.getVawsWassereinzugsgebiete() != null ? ", " + clazz.getVawsWassereinzugsgebiete() : "")
+            + (clazz.getE32() != null ? ", " + clazz.getE32() : "")
+            + (clazz.getN32() != null ? ", " + clazz.getN32() : "");
     }
 
     /** @return BasisStrassen.toGuiString() */

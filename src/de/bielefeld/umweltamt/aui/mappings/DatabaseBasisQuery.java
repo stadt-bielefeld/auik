@@ -157,26 +157,26 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 			String search)
 		{
 
-			String modSearch = search.trim() + "%";
+			String modSearch = search.trim().toLowerCase() + "%";
 			log.debug("Suche nach '" + modSearch + "' (" + property + ").");
 
 	        String query =  "SELECT DISTINCT adresse " + 
 	                        "FROM BasisAdresse as adresse ";
 	        if (property == null)
 			{
-	            query += "WHERE adresse.betrname like '" + modSearch + "' OR betranrede like '" + modSearch + "' OR betrnamezus like '" + modSearch + "'";
+	            query += "WHERE LOWER(adresse.betrname) like '" + modSearch + "' OR LOWER(adresse.betranrede) like '" + modSearch + "' OR LOWER(adresse.betrnamezus) like '" + modSearch + "'";
 			}
 			else if (property.equals("name"))
 			{
-	            query += "WHERE adresse.betrname like '" + modSearch + "'";
+	            query += "WHERE LOWER(adresse.betrname) like '" + modSearch + "'";
 			}
 			else if (property.equals("anrede"))
 			{
-	            query += "WHERE adresse.betranrede like '" + modSearch + "'";
+	            query += "WHERE LOWER(adresse.betranrede) like '" + modSearch + "'";
 			}
 			else if (property.equals("zusatz"))
 			{
-	            query += "WHERE adresse.betrzus like '" + modSearch + "'";
+	            query += "WHERE LOWER(adresse.betrzus) like '" + modSearch + "'";
 			}
 			else
 			{
@@ -327,6 +327,26 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 *            Die Objektart, die (nicht) dargestellt werden soll.
 	 * @return Eine Liste von BasisObjekten an diesem Standort.
 	 */
+	
+	public static List<BasisObjekt> getObjekteByStandort(
+			BasisAdresse betreiber, String abteilung)
+		{
+			DetachedCriteria detachedCriteria = DetachedCriteria
+					.forClass(BasisObjekt.class)
+					.createAlias("basisStandort", "lage")
+					.createAlias("basisObjektarten", "art")
+					.add(Restrictions.eq("basisStandort", betreiber))
+					.addOrder(Order.asc("inaktiv"))
+					.addOrder(Order.asc("lage.strasse"))
+					.addOrder(Order.asc("lage.hausnr"))
+					.addOrder(Order.asc("art.objektart"));
+			if (abteilung != null)
+			{
+				detachedCriteria.add(Restrictions.eq("art.abteilung", abteilung));
+			}
+			return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
+																new BasisObjekt());
+		}
 	public static List<BasisObjekt> getObjekteByStandort(
 		BasisMapAdresseLage map, String abteilung, Integer artid,
 		Boolean matchArtId)
@@ -848,57 +868,69 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
             return q.list();
     }
 
-	/**
-	 * Find BasisAdresse that match the parameters and has betrnam and has betrname.
-	 * 
-	 * @param strasse
-	 *            String
-	 * @param hausnr
-	 *            Integer (-1: all)
-	 * @param ort
-	 *            String
-	 * @return <code>List&lt;BasisAdresse&gt;</code>
-	 */
-	public static List<BasisAdresse> findStandorte(String strasse,
-		Integer hausnr, String ort)
-	{
-        /*
-        String qString = "FROM BasisAdresse A WHERE A.betrname is null";
-        Query query = HibernateSessionFactory.currentSession().createQuery(qString);
-        List<BasisAdresse> result = (List<BasisAdresse>) query.list();
-        return result;*/
-        
-		DetachedCriteria detachedCriteria = DetachedCriteria
-				.forClass(BasisAdresse.class).addOrder(Order.asc("strasse"))
-				.addOrder(Order.asc("hausnr"))
-                .add(Restrictions.isNull("betrname"));
-                
-		if (strasse != null)
-		{
-			if (strasse.length() > 0)
-			{
-				detachedCriteria.add(Restrictions.ilike("strasse", strasse,
-														MatchMode.START));
-			}
-		}
+	public static List<BasisAdresse> findStandorte(String search,
+			String property) {
 
-		if (ort != null)
-		{
-			if (ort.length() > 0)
-			{
-				detachedCriteria.add(Restrictions.ilike("ort", ort,
-														MatchMode.START));
-			}
-		}
+		String query = "SELECT DISTINCT adresse "
+				+ "FROM BasisMapAdresseLage as map JOIN map.basisAdresse adresse";
 
-		if (hausnr != -1)
-		{
-			detachedCriteria.add(Restrictions.eq("hausnr", hausnr));
-		}
-		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
-															new BasisAdresse());
-        
+		query += " WHERE ";
+
+		query += "LOWER(adresse.betrname) like '" + search.toLowerCase()
+				+ "%' ";
+
+		query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
+		return HibernateSessionFactory.currentSession().createQuery(query)
+				.list();
 	}
+
+	public static List<BasisAdresse> findAdressen(String search,
+			String property) {
+
+		String query = "SELECT DISTINCT adresse "
+				+ "FROM BasisAdresse adresse";
+
+		query += " WHERE ";
+
+		query += "LOWER(adresse.betrname) like '" + search.toLowerCase()
+				+ "%' ";
+
+		query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
+		return HibernateSessionFactory.currentSession().createQuery(query)
+				.list();
+	}
+	
+	public static List<BasisAdresse> findStandorte(String strasse,
+			Integer hausnr, String ort)
+		{
+			//Check which parameters are set
+	        boolean bStrasse = (strasse != null && strasse.length() > 0);
+	        boolean bHausnr = (hausnr != null && hausnr != -1);
+	        boolean bOrt = (ort != null && ort.length() > 0);
+
+	        String query =  "SELECT DISTINCT adresse " + 
+	                "FROM BasisAdresse as adresse JOIN adresse.basisObjektStandort objekt";
+	            if(bStrasse || bHausnr || bOrt){
+	                query += " WHERE ";
+	                if(bStrasse){
+	                    query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' ";
+	                }
+	                if(hausnr != null && hausnr != -1){
+	                    if(bStrasse){
+	                        query += " AND ";
+	                    }
+	                    query += " adresse.hausnr = " + hausnr;
+	                }
+	                if(bOrt){
+	                    if(bStrasse || bHausnr){
+	                        query += " AND ";
+	                    }
+	                    query += " LOWER(adresse.ort) like '" + ort.toLowerCase() + "%' ";
+	                }
+	            }
+	            query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
+	            return HibernateSessionFactory.currentSession().createQuery(query).list();
+		}
 
 	private static String[] entwaesserungsgebiete = null;
 

@@ -140,6 +140,7 @@ public class BasisPanel extends JPanel {
         private HauptFrame frame;
         private BasisAdresse betreiber;
         private BasisAdresse standort;
+        private String caller;
 
         private BasisAdresseModel betreiberModel;
         private BasisAdresseModel standortModel;
@@ -151,9 +152,10 @@ public class BasisPanel extends JPanel {
         private JButton okButton;
         private JButton abbrechenButton;
 
-        public ChooseDialog(Object initial, HauptFrame frame) {
+        public ChooseDialog(Object initial, HauptFrame frame, String caller) {
             super(frame, true);
             this.frame = frame;
+            this.caller = caller;
 
             List<Object> initialList = new ArrayList<Object>();
             initialList.add(initial);
@@ -232,13 +234,13 @@ public class BasisPanel extends JPanel {
         private void doSearch() {
             final String suche = getSuchFeld().getText();
 
-            if (this.betreiber != null) {
+            if (caller == "betreiber") {
                 SwingWorkerVariant worker = new SwingWorkerVariant(
                     getErgebnisTabelle()) {
                     @Override
                     protected void doNonUILogic() throws RuntimeException {
                         ChooseDialog.this.betreiberModel
-                            .filterList(suche, null);
+                            .filterAllList(suche, null);
                     }
 
                     @Override
@@ -247,31 +249,19 @@ public class BasisPanel extends JPanel {
                     }
                 };
                 worker.start();
-            } else if (this.standort != null) {
+            } else if (caller == "standort") {
                 SwingWorkerVariant worker = new SwingWorkerVariant(
-                    getErgebnisTabelle()) {
-                    @Override
-                    protected void doNonUILogic() throws RuntimeException {
-                        String[] test = suche.split(" ");
-                        String hsnrtxt = test[test.length - 1];
-                        int hsnr = -1;
-                        String strasse;
-                        
-                        try {
-                        	hsnr = Integer.parseInt(hsnrtxt);
-                        	strasse = suche.replaceAll(hsnrtxt, "");
-                        } catch (NumberFormatException e) {
-                        	strasse = suche;
-                        	hsnr = -1;
+                        getErgebnisTabelle()) {
+                        @Override
+                        protected void doNonUILogic() throws RuntimeException {
+                            ChooseDialog.this.betreiberModel
+                                .filterStandort(suche, null);
                         }
 
-                        ChooseDialog.this.standortModel.filterStandort(strasse, hsnr, "");
-                    }
-
-                    @Override
-                    protected void doUIUpdateLogic() throws RuntimeException {
-                        ChooseDialog.this.standortModel.fireTableDataChanged();
-                    }
+                        @Override
+                        protected void doUIUpdateLogic() throws RuntimeException {
+                            ChooseDialog.this.betreiberModel.fireTableDataChanged();
+                        }
                 };
                 worker.start();
             }
@@ -385,6 +375,9 @@ public class BasisPanel extends JPanel {
     private JButton standortEditButton;
     private JButton standortNewButton;
     private JButton standortDeleteButton;
+    
+    // Lage
+    private JTextField lageFeld;
 
     // Art, Sachbearbeiter, Inaktiv, Priorität, Beschreibung, Speichern
     private JComboBox artBox;
@@ -442,6 +435,9 @@ public class BasisPanel extends JPanel {
 
         builder.append("Standort-Adresse:", getStandortFeld(), 3);
         builder.append(getStandortToolBar());
+        builder.nextLine();
+
+        builder.append("Lage:", getLageFeld(), 3);
         builder.nextLine();
 
         builder.append("Art:", getArtBox(), 3);
@@ -623,6 +619,7 @@ public class BasisPanel extends JPanel {
                         + mapsta.getBasisLage().getEntgebid() : "") + "</html>";
                 getStandortFeld().setToolTipText(toolTip);
                 getStandortFeld().setText(this.hauptModul.getObjekt().getBasisStandort().toString());
+                getLageFeld().setText(mapsta.getBasisLage().toString());
             }
 
             if (this.hauptModul.getObjekt().getBasisObjektarten() != null) {
@@ -700,6 +697,7 @@ public class BasisPanel extends JPanel {
         getBetreiberFeld().setToolTipText(null);
         getStandortFeld().setText("");
         getStandortFeld().setToolTipText(null);
+        getLageFeld().setText("");
         if (getArtBox().getItemCount() > 0) {
             getArtBox().setSelectedIndex(0);
         }
@@ -868,7 +866,7 @@ public class BasisPanel extends JPanel {
                         betreiber = new BasisAdresse();
                     }
                     ChooseDialog chooser = new ChooseDialog(betreiber,
-                        BasisPanel.this.hauptModul.getFrame());
+                        BasisPanel.this.hauptModul.getFrame(), "betreiber");
                     chooser.setVisible(true);
 
                     BasisPanel.this.hauptModul.getObjekt().setBasisAdresse(
@@ -901,7 +899,7 @@ public class BasisPanel extends JPanel {
 						standort = new BasisAdresse();
 					}
 					ChooseDialog chooser = new ChooseDialog(standort,
-							BasisPanel.this.hauptModul.getFrame());
+							BasisPanel.this.hauptModul.getFrame(), "standort");
 					chooser.setVisible(true);
 	
 					standortFeld.setText(chooser.getChosenBetreiber().toString());
@@ -992,6 +990,14 @@ public class BasisPanel extends JPanel {
             this.standortFeld.setEditable(false);
         }
         return this.standortFeld;
+    }
+
+    public JTextField getLageFeld() {
+        if (this.lageFeld == null) {
+            this.lageFeld = new JTextField("");
+            this.lageFeld.setEditable(false);
+        }
+        return this.lageFeld;
     }
 
     private JToolBar getStandortToolBar() {

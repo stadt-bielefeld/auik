@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -162,7 +163,7 @@ public class BasisAdresseModel extends ListTableModel {
     
     public void filterAllList(String suche, String property) {
         log.debug("Start filterList");
-        setList(DatabaseQuery.getBasisAllAdresse(property, suche));
+        setList(DatabaseQuery.findAdressen(suche, property));
         lastSuchWort = suche;
         lastProperty = property;
         log.debug("End filterList");
@@ -174,6 +175,14 @@ public class BasisAdresseModel extends ListTableModel {
         lastStrasse = strasse;
         lastHausnr = hausnr;
         LastZus = zus;
+        log.debug("End filterList");
+    }
+    
+    public void filterStandort(String suche, String property) {
+        log.debug("Start filterList");
+        setList(DatabaseQuery.findStandorte(suche, property));
+        lastSuchWort = suche;
+        lastProperty = property;
         log.debug("End filterList");
     }
 }

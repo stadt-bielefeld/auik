@@ -26,6 +26,7 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -93,4 +94,6 @@ public abstract class DatabaseQuery extends DatabaseAtlQuery {
                 .addOrder(Order.asc(propertyName)),
             type);
     }
+
+
 }
