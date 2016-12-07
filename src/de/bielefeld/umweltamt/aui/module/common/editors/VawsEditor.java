@@ -61,6 +61,7 @@ package de.bielefeld.umweltamt.aui.module.common.editors;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -233,7 +234,7 @@ public class VawsEditor extends AbstractBaseEditor {
     private JCheckBox schutzFolieCheck;
     private JCheckBox schutzAntiheberCheck;
     private LimitedTextArea beschreibungAFeld;
-    private LimitedTextArea beschreibungSFeld;
+    private TextArea beschreibungSFeld;
     // Leitungen (Lageranlagen)
     private JPanel leitungenLageranlagenTab;
     private JCheckBox oberIrdischCheck;
@@ -484,7 +485,7 @@ public class VawsEditor extends AbstractBaseEditor {
         schutzFolieCheck = new JCheckBox("Folie");
         schutzAntiheberCheck = new JCheckBox("Antihebersicherung");
         beschreibungAFeld = new LimitedTextArea(255);
-        beschreibungSFeld = new LimitedTextArea(255);
+        beschreibungSFeld = new TextArea();
 
         // Leitungen (Lageranlagen)
         oberIrdischCheck = new JCheckBox("Oberirdisch");
