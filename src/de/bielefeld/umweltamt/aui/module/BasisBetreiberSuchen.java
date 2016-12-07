@@ -140,7 +140,7 @@ public class BasisBetreiberSuchen extends AbstractModul {
      */
     @Override
     public String getName() {
-        return "Betreiber-Adresse suchen";
+        return "Betreiber suchen";
     }
 
     /*

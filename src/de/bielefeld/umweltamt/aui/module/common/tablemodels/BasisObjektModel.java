@@ -141,8 +141,8 @@ public class BasisObjektModel extends ListTableModel {
      * @param standortId Die Standort-Id
      */
     public void searchByStandort(BasisMapAdresseLage standort) {
-        setList(DatabaseQuery.getObjekteByStandort(
-            standort, abteilung, null, null));
+        setList(DatabaseQuery.getObjekteByStrasse(
+            standort.getBasisAdresse(), abteilung, null, null));
     }
 
     /**
@@ -169,7 +169,7 @@ public class BasisObjektModel extends ListTableModel {
      */
     public void searchByStandort(
         BasisAdresse standort, String abteilung, Integer nichtartid) {
-        setList(DatabaseQuery.getObjekteByStandort(
+        setList(DatabaseQuery.getObjekteByStrasse(
             standort, abteilung, nichtartid, false));
     }
 

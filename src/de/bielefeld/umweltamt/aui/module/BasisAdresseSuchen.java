@@ -114,6 +114,9 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private String iconPath = "filefind32.png";
 
+    private JComboBox suchBox;
+    private JTextField suchFeld;
+    
 	private JTextField strassenFeld;
 	private JTextField hausnrFeld;
 	private JTextField ortFeld;
@@ -219,20 +222,23 @@ public class BasisAdresseSuchen extends AbstractModul {
 
             FormLayout layout = new FormLayout(
 					"l:p, max(4dlu;p), p:g, 10dlu, p, 4dlu, max(30dlu;p), 10dlu, p, 4dlu,  p:g, 3dlu, min(16dlu;p)", // spalten
-					"pref, 3dlu, 150dlu:grow, 3dlu, 30"); // zeilen
+					"pref, 3dlu, pref, 3dlu, 150dlu:grow"); // zeilen
 
             PanelBuilder builder = new PanelBuilder(layout);
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
-			builder.addLabel("Straße:", cc.xy(1, 1));
-			builder.add(getStrassenFeld(), cc.xy(3, 1));
-			builder.addLabel("Haus-Nr.:", cc.xy(5, 1));
-			builder.add(getHausnrFeld(), cc.xy(7, 1));
-			builder.addLabel("Ort:", cc.xy(9, 1));
-			builder.add(getOrtFeld(), cc.xy(11, 1));
-            builder.add(submitToolBar, cc.xy(13, 1));
-            builder.add(this.tabellenSplit, cc.xyw(1, 3, 13));
+            builder.add(getSuchBox(), cc.xy(1, 1));
+            builder.add(getSuchFeld(), cc.xy(3, 1));
+            builder.add(submitToolBar, cc.xy(5, 1));
+			builder.addLabel("Straße:", cc.xy(1, 3));
+			builder.add(getStrassenFeld(), cc.xy(3, 3));
+			builder.addLabel("Haus-Nr.:", cc.xy(5, 3));
+			builder.add(getHausnrFeld(), cc.xy(7, 3));
+			builder.addLabel("Ort:", cc.xy(9, 3));
+			builder.add(getOrtFeld(), cc.xy(11, 3));
+            builder.add(submitToolBar, cc.xy(13, 3));
+            builder.add(this.tabellenSplit, cc.xyw(1, 5, 13));
 
             this.panel = builder.getPanel();
         }
@@ -456,7 +462,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             getBetreiberTabelle()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                BasisAdresseSuchen.this.betreiberModel.filterAllList(suche,
+                BasisAdresseSuchen.this.betreiberModel.filterStandort(suche,
                     column);
             }
 
@@ -1156,5 +1162,48 @@ public class BasisAdresseSuchen extends AbstractModul {
 		}
 	
 		return this.suchTimer;
+	}
+
+	private JComboBox getSuchBox() {
+	    if (this.suchBox == null) {
+	        this.suchBox = new JComboBox(new NamedObject[] {
+	                new NamedObject("Name:", "name"),
+	                new NamedObject("Anrede:", "anrede"),
+	                new NamedObject("Zusatz:", "zusatz"),
+	                new NamedObject("Irgendwo", null)});
+	    }
+	    return this.suchBox;
+	}
+
+	private JTextField getSuchFeld() {
+	    if (this.suchFeld == null) {
+	        this.suchFeld = new JTextField();
+	
+	        this.suchFeld.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                String suche = getSuchFeld().getText();
+	                String spalte = (String) ((NamedObject) getSuchBox()
+	                    .getSelectedItem()).getValue();
+	                filterBetreiberListe(suche, spalte);
+	            }
+	        });
+	        this.suchFeld.setFocusTraversalKeys(
+	            KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+	            Collections.EMPTY_SET);
+	
+	        this.suchFeld.addKeyListener(new KeyAdapter() {
+	            @Override
+	            public void keyPressed(KeyEvent e) {
+	                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+	                    String suche = getSuchFeld().getText();
+	                    String spalte = (String) ((NamedObject) getSuchBox()
+	                        .getSelectedItem()).getValue();
+	                    filterBetreiberListe(suche, spalte);
+	                }
+	            }
+	        });
+	    }
+	    return this.suchFeld;
 	}
 }

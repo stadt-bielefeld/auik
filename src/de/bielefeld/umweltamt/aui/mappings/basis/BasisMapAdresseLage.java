@@ -440,8 +440,18 @@ public class BasisMapAdresseLage  implements java.io.Serializable {
     }
 
 	public static BasisMapAdresseLage findByAdresse(BasisAdresse basisStandort) {
+		BasisMapAdresseLage map = new BasisMapAdresseLage();
 		Integer id = basisStandort.getId();
-		BasisMapAdresseLage map = (BasisMapAdresseLage) HibernateSessionFactory.currentSession().createQuery("from BasisMapAdresseLage where adresseid= " + id).list().get(0);
-        return map;
+		List mapAdressen = HibernateSessionFactory
+				.currentSession()
+				.createQuery(
+						"from BasisMapAdresseLage where adresseid= " + id)
+				.list();
+		if (mapAdressen.size() != 0) {
+			map = (BasisMapAdresseLage) mapAdressen
+					.get(0);
+			return map;
+		}
+		return null;
 	}
 }

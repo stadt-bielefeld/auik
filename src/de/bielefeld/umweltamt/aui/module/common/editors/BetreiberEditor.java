@@ -468,7 +468,9 @@ public class BetreiberEditor extends AbstractBaseEditor
 				Date datum = getBetreiber().getRevidatum();
 				revdatumsFeld.setText(AuikUtils.getStringFromDate(datum));
 				
-				mapLage = BasisMapAdresseLage.findByAdresse(getBetreiber());
+				if (BasisMapAdresseLage.findByAdresse(getBetreiber()) != null) {
+					mapLage = BasisMapAdresseLage.findByAdresse(getBetreiber());
+				}
 				
 				if(mapLage != null) {
 					lage = mapLage.getBasisLage();
@@ -816,19 +818,23 @@ public class BetreiberEditor extends AbstractBaseEditor
 
 		// frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
 
-		BasisMapAdresseLage persistentAL = null;
-		persistentAL = BasisMapAdresseLage.merge(mapLage);
+		if (mapLage != null) {
+			BasisMapAdresseLage persistentAL = null;
+			mapLage.setBasisAdresse(getBetreiber());
+			persistentAL = BasisMapAdresseLage.merge(mapLage);
 
-		if (persistentAL != null)
-		{
-			setEditedObject(persistentAL);
-			log.debug("Änderungen gespeichert!");
-			return true;
+			if (persistentAL != null) {
+				setEditedObject(persistentAL);
+				log.debug("Änderungen gespeichert!");
+				return true;
+			} else {
+				return false;
+			}
 		}
-		else
-		{
-			return false;
+		else{
+			getBetreiber().merge();
 		}
+		return true;
 	}
 
 	/**
