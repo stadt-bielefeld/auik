@@ -121,6 +121,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 	private JTextField hausnrFeld;
 	private JTextField ortFeld;
     private JButton submitButton;
+    private JButton submitButtonStrasse;
     private JSplitPane tabellenSplit;
     private JTable betreiberTabelle;
     private JTable objektTabelle;
@@ -221,7 +222,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 0.7);
 
             FormLayout layout = new FormLayout(
-					"l:p, max(4dlu;p), p:g, 10dlu, p, 4dlu, max(30dlu;p), 10dlu, p, 4dlu,  p:g, 3dlu, min(16dlu;p)", // spalten
+					"l:p, max(4dlu;p), p:g, 10dlu, p, 4dlu, max(30dlu;p), 10dlu, p, 4dlu,  p:g, 3dlu, pref", // spalten
 					"pref, 3dlu, pref, 3dlu, 150dlu:grow"); // zeilen
 
             PanelBuilder builder = new PanelBuilder(layout);
@@ -230,14 +231,14 @@ public class BasisAdresseSuchen extends AbstractModul {
 
             builder.add(getSuchBox(), cc.xy(1, 1));
             builder.add(getSuchFeld(), cc.xy(3, 1));
-            builder.add(submitToolBar, cc.xy(5, 1));
+            builder.add(getSubmitButton(), cc.xy(13, 1));
 			builder.addLabel("Straße:", cc.xy(1, 3));
 			builder.add(getStrassenFeld(), cc.xy(3, 3));
 			builder.addLabel("Haus-Nr.:", cc.xy(5, 3));
 			builder.add(getHausnrFeld(), cc.xy(7, 3));
 			builder.addLabel("Ort:", cc.xy(9, 3));
 			builder.add(getOrtFeld(), cc.xy(11, 3));
-            builder.add(submitToolBar, cc.xy(13, 3));
+            builder.add(getSubmitButtonStrasse(), cc.xy(13, 3));
             builder.add(this.tabellenSplit, cc.xyw(1, 5, 13));
 
             this.panel = builder.getPanel();
@@ -284,51 +285,32 @@ public class BasisAdresseSuchen extends AbstractModul {
         }
     }
 
-//    public void updateBetreiberListe() {
-//        log.debug("Start updateBetreiberListe()");
-//        SwingWorkerVariant worker = new SwingWorkerVariant(getSuchFeld()) {
-//            @Override
-//            protected void doNonUILogic() throws RuntimeException {
-//                BasisAdresseSuchen.this.betreiberModel.updateAllList();
-//            }
-//
-//            @Override
-//            protected void doUIUpdateLogic() throws RuntimeException {
-//                BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
-//
-//                if (BasisAdresseSuchen.this.lastAdresse != null) {
-//                    // Wenn der Betreiber noch in der Liste ist, wird er
-//                    // ausgewählt.
-//                    int row = BasisAdresseSuchen.this.betreiberModel
-//                        .getList().indexOf(
-//                            BasisAdresseSuchen.this.lastAdresse);
-//                    if (row != -1) {
-//                        getBetreiberTabelle().setRowSelectionInterval(row, row);
-//                        getBetreiberTabelle().scrollRectToVisible(
-//                            getBetreiberTabelle().getCellRect(row, 0, true));
-//                        getBetreiberTabelle().requestFocus();
-//                    }
-//                } else {
-//                    int betreiberCount = BasisAdresseSuchen.this.betreiberModel
-//                        .getRowCount();
-//                    if (betreiberCount > 0) {
-//                        String statusMsg = "Suche: " + betreiberCount
-//                            + " Ergebnis";
-//                        if (betreiberCount != 1) {
-//                            statusMsg += "se";
-//                        }
-//                        statusMsg += ".";
-//                        BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
-//                    }
-//                }
-//
-//                updateObjekte();
-//            }
-//        };
-//
-//        worker.start();
-//        log.debug("End updateBetreiberListe()");
-//    }
+    private void doSearch() {
+        final String suche = getSuchFeld().getText();
+
+
+            SwingWorkerVariant worker = new SwingWorkerVariant(
+                getBetreiberTabelle()) {
+                @Override
+                protected void doNonUILogic() throws RuntimeException {
+                	BasisAdresseSuchen.this.betreiberModel
+                        .filterAllList(suche, null);
+                }
+
+                @Override
+                protected void doUIUpdateLogic() throws RuntimeException {
+                	BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
+                }
+            };
+            worker.start();
+
+			getStrassenFeld().setText("");
+			getHausnrFeld().setText("");
+			
+    } 
+    
+
+
 
     /**
 	 * Filtert die Standort-Liste nach Straße und Hausnummer.
@@ -364,15 +346,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 																		getOrtFeld()
 																				.getText());
 				}
-//				else
-//				{
-//					BasisAdresseSuchen.this.betreiberModel
-//							.filterList(BasisMapAdresseLage.findByLageId(SettingsManager.getInstance()
-//									.getStandort().getId()));
-//					SettingsManager.getInstance().setStandort(null);
-//					getStrassenFeld().setText("");
-//					getHausnrFeld().setText("");
-//				}
+				getSuchFeld().setText("");
 			}
 	
 			@Override
@@ -396,6 +370,46 @@ public class BasisAdresseSuchen extends AbstractModul {
 		this.frame.changeStatus("Suche...");
 		worker.start();
 	    log.debug("End filterStandortListe()");
+	}
+
+	/**
+	 * Filtert / Durchsucht die Betreiber-Liste.
+	 * @param suche Wonach soll gesucht werden?
+	 * @param column Nach welcher Eigenschaft des Betreiber soll gesucht werden?
+	 */
+	public void filterBetreiberListe(final String suche, final String column) {
+	    log.debug("Start filterBetreiberListe()");
+	    SwingWorkerVariant worker = new SwingWorkerVariant(
+	        getBetreiberTabelle()) {
+	        @Override
+	        protected void doNonUILogic() throws RuntimeException {
+	            BasisAdresseSuchen.this.betreiberModel.filterStandort(suche,
+	                column);
+	        }
+	
+	        @Override
+	        protected void doUIUpdateLogic() throws RuntimeException {
+	            getBetreiberTabelle().clearSelection();
+	
+	            BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
+	            String statusMsg = "Suche: "
+	                + BasisAdresseSuchen.this.betreiberModel.getRowCount()
+	                + " Ergebnis";
+	            if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1) {
+	                statusMsg += "se";
+	            }
+	            statusMsg += ".";
+	            BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
+	            getStrassenFeld().setText("");
+	            getHausnrFeld().setText("");
+	            getOrtFeld().setText("");
+	        }
+	    };
+	
+	    this.frame.changeStatus("Suche...");
+	    worker.start();
+	    log.debug("End filterBetreiberListe()");
+	    
 	}
 
 	public void updateObjekte() {
@@ -449,42 +463,6 @@ public class BasisAdresseSuchen extends AbstractModul {
             }
         };
         worker.start();
-    }
-
-    /**
-     * Filtert / Durchsucht die Betreiber-Liste.
-     * @param suche Wonach soll gesucht werden?
-     * @param column Nach welcher Eigenschaft des Betreiber soll gesucht werden?
-     */
-    public void filterBetreiberListe(final String suche, final String column) {
-        log.debug("Start filterBetreiberListe()");
-        SwingWorkerVariant worker = new SwingWorkerVariant(
-            getBetreiberTabelle()) {
-            @Override
-            protected void doNonUILogic() throws RuntimeException {
-                BasisAdresseSuchen.this.betreiberModel.filterStandort(suche,
-                    column);
-            }
-
-            @Override
-            protected void doUIUpdateLogic() throws RuntimeException {
-                getBetreiberTabelle().clearSelection();
-
-                BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
-                String statusMsg = "Suche: "
-                    + BasisAdresseSuchen.this.betreiberModel.getRowCount()
-                    + " Ergebnis";
-                if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1) {
-                    statusMsg += "se";
-                }
-                statusMsg += ".";
-                BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
-            }
-        };
-
-        this.frame.changeStatus("Suche...");
-        worker.start();
-        log.debug("End filterBetreiberListe()");
     }
 
     private Action getBetreiberEditAction() {
@@ -964,10 +942,26 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private JButton getSubmitButton() {
         if (this.submitButton == null) {
-            this.submitButton = new JButton(AuikUtils.getIcon(16,
+            this.submitButton = new JButton("Name suchen", AuikUtils.getIcon(16,
                 "key_enter.png"));
             this.submitButton.setToolTipText("Suche starten");
             this.submitButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+					doSearch();
+                }
+            });
+        }
+
+        return this.submitButton;
+    }
+
+    private JButton getSubmitButtonStrasse() {
+        if (this.submitButtonStrasse == null) {
+            this.submitButtonStrasse = new JButton("Standort suchen", AuikUtils.getIcon(16,
+                "key_enter.png"));
+            this.submitButtonStrasse.setToolTipText("Suche starten");
+            this.submitButtonStrasse.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 					getSuchTimer().stop();
@@ -976,7 +970,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             });
         }
 
-        return this.submitButton;
+        return this.submitButtonStrasse;
     }
 
 	private JTextField getStrassenFeld()

@@ -359,6 +359,9 @@ public class BasisAdresse  implements java.io.Serializable {
 		// return DatabaseClassToString.toStringForClass(this);
 		String adr = "";
 		adr = adr + (getBetrname() + ", ");
+		if (getBetrvorname() != null) {
+			adr = adr + (getBetrvorname() + ", ");
+		}
 		adr = adr + (getStrasse() + " ");
 		if (getHausnr() != null) {
 			adr = adr + (getHausnr().toString());

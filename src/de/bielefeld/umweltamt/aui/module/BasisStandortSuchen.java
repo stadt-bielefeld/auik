@@ -1487,10 +1487,35 @@ public class BasisStandortSuchen extends AbstractModul
 
 			objektTabelle.setAutoCreateRowSorter(true);
 
-			TableColumn column = this.objektTabelle.getColumnModel().getColumn(
-																				0);
-			column.setMaxWidth(60);
-			column.setPreferredWidth(column.getMaxWidth() - 10);
+			TableColumn column = null;
+			for (int i = 0; i < this.objektModel.getColumnCount(); i++)
+			{
+				column = this.objektTabelle.getColumnModel().getColumn(i);
+				/*
+				 * if (i == 0) { column.setMaxWidth(60);
+				 * column.setPreferredWidth(column.getMaxWidth()-10); } else
+				 */
+				if (i == 0)
+				{
+					column.setMaxWidth(60);
+					// column.setCellRenderer(centerRenderer);
+				}
+				else if (i == 1)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(300);
+				}
+				else if (i == 2)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(50);
+				}
+				else if (i == 3)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(100);
+				}
+			}
 
 			this.objektTabelle
 					.addMouseListener(new java.awt.event.MouseAdapter()

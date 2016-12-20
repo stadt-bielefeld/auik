@@ -356,6 +356,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 			query += " AND a.hausnrzus IS NULL ";
 		}
 
+		query += " AND o._deleted = false ";
+		
 		String filter = " ";
 		if (abteilung != null) {
 			filter += " AND art.abteilung = '" + abteilung + "' ";
@@ -817,7 +819,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	    boolean bOrt = (ort != null && ort.length() > 0);
 	
 	    String query =  "SELECT DISTINCT adresse " + 
-	            "FROM BasisAdresse as adresse JOIN adresse.basisObjektStandort objekt";
+	            "FROM BasisMapAdresseLage as map JOIN map.basisAdresse adresse";
 	        if(bStrasse || bHausnr || bOrt){
 	            query += " WHERE ";
 	            if(bStrasse){
