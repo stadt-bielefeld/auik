@@ -31,6 +31,9 @@
         </property>
         <property name="hausnrZusatz" type="java.lang.String">
             <column name="hausnr_zusatz" />
+        </property>		
+        <property name="plz" type="java.lang.String">
+            <column name="plz" />
         </property>
     </class>
 </hibernate-mapping>

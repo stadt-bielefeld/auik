@@ -55,6 +55,7 @@ public class BasisTabStreets  implements java.io.Serializable {
     private Integer hausnr;
     private String hausnrZusatz;
     private String abgleich;
+    private String plz;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -72,7 +73,7 @@ public class BasisTabStreets  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisTabStreets(
-        String name, String nr, Float x, Float y, String gemeinde, String schl, Integer hausnr, String hausnrZusatz, String abgleich) {
+        String name, String nr, Float x, Float y, String gemeinde, String schl, Integer hausnr, String hausnrZusatz, String abgleich, String plz) {
         this.name = name;
         this.nr = nr;
         this.x = x;
@@ -82,6 +83,7 @@ public class BasisTabStreets  implements java.io.Serializable {
         this.hausnr = hausnr;
         this.hausnrZusatz = hausnrZusatz;
         this.abgleich = abgleich;
+        this.plz = plz;
     }
 
     /* Setter and getter methods */
@@ -153,6 +155,14 @@ public class BasisTabStreets  implements java.io.Serializable {
 
     public void setAbgleich(String abgleich) {
         this.abgleich = abgleich;
+    }
+
+    public String getPlz() {
+        return this.plz;
+    }
+
+    public void setPlz(String plz) {
+        this.plz = plz;
     }
 
 

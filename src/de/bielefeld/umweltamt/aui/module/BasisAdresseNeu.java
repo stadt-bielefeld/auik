@@ -442,10 +442,12 @@ public class BasisAdresseNeu extends AbstractModul
 				this.standorteTabelle = new JTable(this.standorteModel);
 	
 				this.standorteTabelle.getColumnModel().getColumn(0)
-						.setPreferredWidth(100);
-				this.standorteTabelle.getColumnModel().getColumn(1)
 						.setPreferredWidth(10);
+				this.standorteTabelle.getColumnModel().getColumn(1)
+						.setPreferredWidth(100);
 				this.standorteTabelle.getColumnModel().getColumn(2)
+						.setPreferredWidth(10);
+				this.standorteTabelle.getColumnModel().getColumn(3)
 						.setPreferredWidth(7);
 	
 				this.standorteTabelle
@@ -537,6 +539,7 @@ public class BasisAdresseNeu extends AbstractModul
             BasisTabStreets bts = this.standorteModel.getRow(selectedRow);
             log.debug("Standort " + bts.getName() + " (ID"
                 + bts.getAbgleich() + ") angewählt.");
+            plzFeld.setText(bts.getPlz());
             strasseFeld.setText(bts.getName());
             hausnrFeld.setValue(bts.getHausnr());
             hausnrZusFeld.setText(bts.getHausnrZusatz());
@@ -931,12 +934,14 @@ public class BasisAdresseNeu extends AbstractModul
 			        standorteModel.setStrasse(null);
 			        standorteModel.updateList();
 					standorteTabelle.setModel(standorteModel);
-
+					
 					standorteTabelle.getColumnModel().getColumn(0)
-							.setPreferredWidth(100);
-					standorteTabelle.getColumnModel().getColumn(1)
 							.setPreferredWidth(10);
+					standorteTabelle.getColumnModel().getColumn(1)
+							.setPreferredWidth(100);
 					standorteTabelle.getColumnModel().getColumn(2)
+							.setPreferredWidth(10);
+					standorteTabelle.getColumnModel().getColumn(3)
 							.setPreferredWidth(7);
 
 				}

@@ -57,6 +57,7 @@ public class BasisStandorteModel extends ListTableModel {
 
     public BasisStandorteModel() {
         super(new String[]{
+                "Plz",
                 "Strasse",
                 "Nr",
                 "Zus"
@@ -74,12 +75,15 @@ public class BasisStandorteModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = ts.getName();
+            tmp = ts.getPlz();
             break;
         case 1:
-            tmp = ts.getHausnr();
+            tmp = ts.getName();
             break;
         case 2:
+            tmp = ts.getHausnr();
+            break;
+        case 3:
             tmp = ts.getHausnrZusatz();
             break;
 

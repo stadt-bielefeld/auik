@@ -422,12 +422,14 @@ public class BetreiberEditor extends AbstractBaseEditor
 			        standorteModel.setStrasse(null);
 			        standorteModel.updateList();
 					standorteTabelle.setModel(standorteModel);
-
+					
 					standorteTabelle.getColumnModel().getColumn(0)
-							.setPreferredWidth(100);
-					standorteTabelle.getColumnModel().getColumn(1)
 							.setPreferredWidth(10);
+					standorteTabelle.getColumnModel().getColumn(1)
+							.setPreferredWidth(100);
 					standorteTabelle.getColumnModel().getColumn(2)
+							.setPreferredWidth(10);
+					standorteTabelle.getColumnModel().getColumn(3)
 							.setPreferredWidth(7);
 
 				}
