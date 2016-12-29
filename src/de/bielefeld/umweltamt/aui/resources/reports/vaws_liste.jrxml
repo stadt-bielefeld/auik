@@ -97,7 +97,7 @@ order by stillegungsdatum ASC]]>
 	<title>
 		<band height="60" splitType="Stretch">
 			<textField>
-				<reportElement uuid="f889b2ec-d898-4a33-9d40-c6dacb0844bc" mode="Opaque" x="0" y="30" width="483" height="30" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="0" y="30" width="483" height="30" backcolor="#D8D8D8" uuid="f889b2ec-d898-4a33-9d40-c6dacb0844bc"/>
 				<textElement verticalAlignment="Middle">
 					<font size="16"/>
 					<paragraph leftIndent="10"/>
@@ -105,7 +105,7 @@ order by stillegungsdatum ASC]]>
 				<textFieldExpression><![CDATA[$P{Betreiber}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="30ba4762-9f22-4e40-a90d-6f4c8bc7cde0" mode="Opaque" x="0" y="0" width="483" height="30" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="0" y="0" width="483" height="30" backcolor="#D8D8D8" uuid="30ba4762-9f22-4e40-a90d-6f4c8bc7cde0"/>
 				<textElement verticalAlignment="Middle">
 					<font size="15" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -117,13 +117,13 @@ order by stillegungsdatum ASC]]>
 	<pageHeader>
 		<band height="108" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" x="3" y="66" width="479" height="13"/>
+				<reportElement x="3" y="66" width="479" height="13" uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4"/>
 				<graphicElement>
 					<pen lineColor="#FFFFFF"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="21" width="483" height="20"/>
+				<reportElement x="0" y="21" width="483" height="20" uuid="baec4638-ebab-4849-a431-c6786712d126"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
@@ -135,7 +135,7 @@ order by stillegungsdatum ASC]]>
 				<text><![CDATA[Details]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d" mode="Opaque" x="1" y="51" width="56" height="20" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="1" y="51" width="56" height="20" backcolor="#D8D8D8" uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -146,7 +146,7 @@ order by stillegungsdatum ASC]]>
 				<text><![CDATA[Standort]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="60b1a670-0991-429e-88c5-f38019ac7ab9" x="56" y="70" width="426" height="20"/>
+				<reportElement x="56" y="70" width="426" height="20" uuid="60b1a670-0991-429e-88c5-f38019ac7ab9"/>
 				<box>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -158,7 +158,7 @@ order by stillegungsdatum ASC]]>
 				<textFieldExpression><![CDATA[$P{Art}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="1" y="70" width="56" height="20"/>
+				<reportElement x="1" y="70" width="56" height="20" uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c"/>
 				<box>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -169,7 +169,7 @@ order by stillegungsdatum ASC]]>
 				<text><![CDATA[Art]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64" mode="Opaque" x="56" y="51" width="426" height="20" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="56" y="51" width="426" height="20" backcolor="#D8D8D8" uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -182,21 +182,39 @@ order by stillegungsdatum ASC]]>
 			</textField>
 		</band>
 	</pageHeader>
-	<columnHeader>
-		<band height="93" splitType="Stretch">
+	<pageFooter>
+		<band height="11" splitType="Stretch">
+			<textField pattern="dd.MM.yyyy HH:mm">
+				<reportElement mode="Transparent" x="318" y="0" width="97" height="11" uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="334" height="11" uuid="7b5e7c42-773b-4194-85ab-398cde121227"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[© Copyright 2016 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="54">
 			<componentElement>
-				<reportElement uuid="0a4983f9-b25e-4a3d-ad50-3d01ba7cbf52" key="table 1" style="table" x="0" y="0" width="483" height="53"/>
+				<reportElement key="table 1" style="table" x="0" y="0" width="483" height="53" uuid="a69ee282-1bd0-4d08-a9bb-2d5a25711ba1"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
-					<datasetRun subDataset="fachdaten" uuid="018e6a70-9d64-4e38-bda9-74d889f5a2bc">
+					<datasetRun subDataset="fachdaten" uuid="7a198530-359e-4738-b891-e43fd4ec83f4">
 						<datasetParameter name="ObjektId">
 							<datasetParameterExpression><![CDATA[$P{ObjektId}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="96" uuid="fe4f79d2-d14e-449d-9bf0-0e91c2bb903c">
+					<jr:column width="96" uuid="ac1c27f2-7e96-47cc-bff4-0665dbe36fa6">
 						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement uuid="56796b65-e1a8-43d7-88ae-a4c3c1289036" style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000"/>
+								<reportElement style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000" uuid="cd075ab9-00b1-4b4b-bc88-a5a30f8ee6d5"/>
 								<box>
 									<bottomPen lineWidth="0.5"/>
 								</box>
@@ -208,16 +226,16 @@ order by stillegungsdatum ASC]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="22d29f1c-0def-4e9c-b11e-dfa95e5f3b35" x="0" y="0" width="96" height="20"/>
+								<reportElement x="0" y="0" width="96" height="20" uuid="b8b081b6-684f-4648-8049-9f178eade69e"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{anlagenart}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="96" uuid="005239d4-94d8-43fb-aa47-b3f4db7ceab4">
+					<jr:column width="96" uuid="15308e1a-6f2d-4a4a-9bb4-7d2008d8a2f0">
 						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement uuid="1ec155da-f7e2-45d8-ac77-41112f96e154" style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000"/>
+								<reportElement style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000" uuid="c5a439cb-647a-40d7-a11b-b450d312c54c"/>
 								<box>
 									<bottomPen lineWidth="0.5"/>
 								</box>
@@ -229,16 +247,16 @@ order by stillegungsdatum ASC]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="10e77e88-bbcc-490d-bb5d-aa90fe03954c" x="0" y="0" width="96" height="20"/>
+								<reportElement x="0" y="0" width="96" height="20" uuid="54ab8d5b-ea66-4959-8315-70f03c74ca85"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{herstellnr}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="96" uuid="d39ed8ae-81b8-4ba2-877e-f228dd039e61">
+					<jr:column width="96" uuid="c15d7d28-aa62-4fcf-ab76-977cf6cb74ae">
 						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement uuid="be457047-686f-44bb-859c-5c9f6a899507" style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000"/>
+								<reportElement style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000" uuid="68c00430-1b9b-403f-ad12-3e68f4188bce"/>
 								<box>
 									<bottomPen lineWidth="0.5"/>
 								</box>
@@ -250,16 +268,16 @@ order by stillegungsdatum ASC]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="f43eb1f7-49dc-480d-9eb9-b6599f3eb828" x="0" y="0" width="96" height="20"/>
+								<reportElement x="0" y="0" width="96" height="20" uuid="8c56f890-ee98-42da-9d9d-0c47c9e97999"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{fluessigkeit}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="99" uuid="ca1a343f-d376-44df-809e-a9ff90908d05">
+					<jr:column width="99" uuid="bce2b2d9-552e-4347-8948-1166050072ac">
 						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement uuid="951401c3-c231-4ebd-aa74-0cf2d7e2b025" style="table_TH" x="0" y="0" width="99" height="20" forecolor="#000000"/>
+								<reportElement style="table_TH" x="0" y="0" width="99" height="20" forecolor="#000000" uuid="df964a1f-ffa3-4403-a40e-4e75a5fb3058"/>
 								<box>
 									<bottomPen lineWidth="0.5"/>
 								</box>
@@ -271,16 +289,16 @@ order by stillegungsdatum ASC]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="a8860501-22bc-4b86-9f74-a4159919740f" x="0" y="0" width="99" height="20"/>
+								<reportElement x="0" y="0" width="99" height="20" uuid="565e116c-c17c-4ea4-bdaf-668b27078ac7"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{menge}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="96" uuid="1def5e78-754b-49e1-85a5-4c992f15c653">
+					<jr:column width="96" uuid="22a170c9-8923-4637-9f48-ca4f7e4a3864">
 						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement uuid="0745d82b-d6ff-4468-b418-17978d79e81b" style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000"/>
+								<reportElement style="table_TH" x="0" y="0" width="96" height="20" forecolor="#000000" uuid="d65e33e4-5fb1-444d-a72c-7201fdbf9ac8"/>
 								<box>
 									<bottomPen lineWidth="0.5"/>
 								</box>
@@ -292,7 +310,7 @@ order by stillegungsdatum ASC]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="dd.MM.yy" isBlankWhenNull="true">
-								<reportElement uuid="75a87972-6eae-4c6e-b0c4-d71633c03928" x="0" y="0" width="96" height="20"/>
+								<reportElement x="0" y="0" width="96" height="20" uuid="49a7d3a0-1c2f-4b40-93eb-543d58ebcd48"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{stillegungsdatum}]]></textFieldExpression>
 							</textField>
@@ -301,23 +319,5 @@ order by stillegungsdatum ASC]]>
 				</jr:table>
 			</componentElement>
 		</band>
-	</columnHeader>
-	<pageFooter>
-		<band height="11" splitType="Stretch">
-			<textField pattern="dd.MM.yyyy HH:mm">
-				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" mode="Transparent" x="318" y="0" width="97" height="11"/>
-				<textElement verticalAlignment="Top">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{DATE}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="7b5e7c42-773b-4194-85ab-398cde121227" x="0" y="0" width="334" height="11"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[© Copyright 2012 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am:]]></text>
-			</staticText>
-		</band>
-	</pageFooter>
+	</summary>
 </jasperReport>

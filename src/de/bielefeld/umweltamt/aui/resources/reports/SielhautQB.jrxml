@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SielhautQB" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5d330858-588e-4770-943b-bd502b22232f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+     *
+FROM
+     "auik"."view_sielhautqb_kreuztabelle_firmen" view_sielhautqb_kreuztabelle_firmen
+WHERE
+     bezeichnung = '101Bax']]>
+	</queryString>
+	<field name="bezeichnung" class="java.lang.String"/>
+	<field name="datum_der_entnahme" class="java.sql.Timestamp"/>
+	<field name="Cadmium" class="java.lang.Double"/>
+	<field name="Chrom" class="java.lang.Double"/>
+	<field name="Kupfer" class="java.lang.Double"/>
+	<field name="Quecksilber" class="java.lang.Double"/>
+	<field name="Nickel" class="java.lang.Double"/>
+	<field name="Blei" class="java.lang.Double"/>
+	<field name="Zink" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="27">
+			<staticText>
+				<reportElement x="34" y="12" width="98" height="14" uuid="39fcc593-bbe1-4ad7-9fb6-9ffdc52bc330"/>
+				<text><![CDATA[Bezeichnung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="264" y="12" width="98" height="14" uuid="5de1c1b9-3f46-4d04-aa80-c6cf7b6597f4"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Cadmium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="132" y="12" width="98" height="14" uuid="35ada3ab-9bdc-4dca-b3bf-4d7b89b72533"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Datum]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28">
+			<textField>
+				<reportElement x="34" y="10" width="98" height="15" uuid="c0b42bc7-0f8c-4e0e-bfc8-ef827bea3933"/>
+				<textFieldExpression><![CDATA[$F{bezeichnung}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0">
+				<reportElement x="264" y="10" width="98" height="15" uuid="59fcd00e-0d69-4569-9e93-94830d8cc245"/>
+				<textFieldExpression><![CDATA[$F{Cadmium}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="132" y="10" width="132" height="15" uuid="6515c89e-5a9e-4ee6-b465-d920def5436e"/>
+				<textFieldExpression><![CDATA[$F{datum_der_entnahme}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="255">
+			<barChart>
+				<chart isShowLegend="false">
+					<reportElement x="93" y="27" width="199" height="209" uuid="ea65872e-fb6b-4cfb-8d39-a6a2cca2deec"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[""]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{datum_der_entnahme}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Cadmium}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="false" isShowTickLabels="false" isShowTickMarks="false">
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat tickLabelMask="" verticalTickLabels="false"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat verticalTickLabels="true"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>
