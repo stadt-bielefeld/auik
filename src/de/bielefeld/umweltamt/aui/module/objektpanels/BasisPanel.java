@@ -96,7 +96,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
-import javax.swing.text.JTextComponent;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -117,7 +116,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
-import de.bielefeld.umweltamt.aui.module.BasisAdresseSuchen;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
@@ -851,6 +849,11 @@ public class BasisPanel extends JPanel {
                 getStandortFeld().setToolTipText(toolTip);
                 getStandortFeld().setText(this.hauptModul.getObjekt().getBasisStandort().toString());
                 getLageFeld().setText(mapsta.getBasisLage().toString());
+            }
+
+            if(this.hauptModul.getObjekt().getBasisLage() == null){
+            	BasisMapAdresseLage mapsta = (BasisMapAdresseLage) BasisMapAdresseLage.findByAdresse(this.hauptModul.getObjekt().getBasisStandort());
+            	this.hauptModul.getObjekt().setBasisLage(mapsta.getBasisLage());
             }
 
             if (this.hauptModul.getObjekt().getBasisObjektarten() != null) {

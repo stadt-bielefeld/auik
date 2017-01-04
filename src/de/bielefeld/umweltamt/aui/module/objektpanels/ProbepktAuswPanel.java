@@ -785,7 +785,7 @@ public class ProbepktAuswPanel extends JPanel {
             analyeVon = this.analyseVonBox.getSelectedItem().toString();
         }
 
-        this.pkt = AtlProbepkt.findById(
+        this.pkt = AtlProbepkt.findByObjektId(
             this.hauptModul.getObjekt().getId());
 
         createSeries(paramList, this.pkt, einheit, vonDate, bisDate, analyeVon,

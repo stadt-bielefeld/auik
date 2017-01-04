@@ -1500,10 +1500,17 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("kennnummer", this.probenummer.getText());
-        params.put("name", betr.toString());
+        params.put("name", betr.getBetrname());
         params.put("art", art.getArt());
-        params.put("betriebsgrundstueck", std.toString());
-
+		if (betr.getHausnrzus() != null) {
+			params.put(
+					"betriebsgrundstueck",
+					betr.getStrasse() + " " + betr.getHausnr()
+							+ betr.getHausnrzus());
+		} else {
+			params.put("betriebsgrundstueck",
+					betr.getStrasse() + " " + betr.getHausnr());
+		}
         try {
             Integer anzahl = Integer.parseInt(this.beteiligte.getText());
             params.put("anzahlMitarbeiter", anzahl.toString());

@@ -1042,7 +1042,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 				DetachedCriteria.forClass(ViewAtlAnalysepositionAll.class)
 						.add(Restrictions.eq("parameterId", param.getOrdnungsbegriff()))
 						.add(Restrictions.eq("einheitenId", einheit.getId()))
-						.add(Restrictions.eq("probepktId", punkt.getId()))
+						.add(Restrictions.eq("probepktId", punkt.getBasisObjekt().getId()))
 //						.add(Restrictions.gt("wert", new Float(0)))
 						.add(Restrictions.between("datumDerEntnahme", beginDate, endDate))
 						.addOrder(Order.asc("datumDerEntnahme"));

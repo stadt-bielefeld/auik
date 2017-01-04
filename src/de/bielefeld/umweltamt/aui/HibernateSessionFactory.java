@@ -198,7 +198,7 @@ public class HibernateSessionFactory {
         try {
             Session session = currentSession();
             List<?> test = session.createSQLQuery(
-                    "select count(*) from auik.basis_strassen"
+                    "select count(*) from tab_streets_alkis"
             ).list();
 
             tmp = true;
