@@ -30,6 +30,7 @@
 			<![CDATA[select *
 from auik.vaws_fachdaten
 where objektid = $P{ObjektId}
+and _deleted = false
 order by stillegungsdatum ASC]]>
 		</queryString>
 		<field name="behaelterid" class="java.lang.Integer"/>
