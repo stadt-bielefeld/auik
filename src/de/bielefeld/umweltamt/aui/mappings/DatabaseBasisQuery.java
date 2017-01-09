@@ -118,6 +118,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		{
 			log.debug("Something went really wrong here...");
 		}
+        query += " AND adresse.deleted = false";
         query += " ORDER BY adresse.betrname ASC, adresse.betrnamezus ASC";
 
         return HibernateSessionFactory.currentSession().createQuery(query).list();
@@ -767,6 +768,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
         boolean bStrasse = (strasse != null && strasse.length() > 0);
         boolean bHausnr = (hausnr != null && hausnr != -1);
         boolean bOrt = (ort != null && ort.length() > 0);
+        String str = strasse.toLowerCase();
+        str = str.replace("'", "''");
 
         String query = 
             "SELECT * FROM " +
@@ -775,7 +778,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
             if(bStrasse || bHausnr || bOrt){
                 query += " WHERE ";
                 if(bStrasse){
-                    query += " lower(a.strasse) like '" + strasse.toLowerCase() + "%' ";
+                    query += " lower(a.strasse) like '" + str + "%' ";
                 }
                 if(hausnr != null && hausnr != -1){
                     if(bStrasse){
@@ -817,13 +820,15 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	    boolean bStrasse = (strasse != null && strasse.length() > 0);
 	    boolean bHausnr = (hausnr != null && hausnr != -1);
 	    boolean bOrt = (ort != null && ort.length() > 0);
+        String str = strasse.toLowerCase();
+        str = str.replace("'", "''");
 	
 	    String query =  "SELECT DISTINCT adresse " + 
 	            "FROM BasisMapAdresseLage as map JOIN map.basisAdresse adresse";
 	        if(bStrasse || bHausnr || bOrt){
 	            query += " WHERE ";
 	            if(bStrasse){
-	                query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' ";
+	                query += "LOWER(adresse.strasse) like '" + str + "%' ";
 	            }
 	            if(hausnr != null && hausnr != -1){
 	                if(bStrasse){
