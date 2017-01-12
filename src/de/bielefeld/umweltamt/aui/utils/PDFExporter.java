@@ -184,7 +184,7 @@ public class PDFExporter {
 			throws JRException {
 		JasperPrint print = JasperFillManager.fillReport(reportFile, fields,
 				connection);
-
+        //dest = "/home/awoestmann/test.pdf";
 		JasperExportManager.exportReportToPdfFile(print, dest);
 		AuikUtils.spawnFileProg(new File(dest));
 
@@ -210,7 +210,7 @@ public class PDFExporter {
 			InputStream reportFile, String dest) throws JRException {
 		JasperPrint print = JasperFillManager.fillReport(reportFile, fields,
 				new JREmptyDataSource(1));
-
+        //dest = "/home/awoestmann/test.pdf";
 		JasperExportManager.exportReportToPdfFile(print, dest);
 		AuikUtils.spawnFileProg(new File(dest));
 

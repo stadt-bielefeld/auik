@@ -360,17 +360,18 @@ public class AtlProbepkt  implements java.io.Serializable {
     /* Custom code goes below here! */
     public static AtlProbepkt findByObjektId(java.lang.Integer id){
         log.debug("Getting AtlProbepkt instance with connected BasisObjekt with id: " + id);
-        /*List<AtlProbepkt> all = AtlProbepkt.getAll();
+        List<AtlProbepkt> all = AtlProbepkt.getAll();
         for(AtlProbepkt i : all){
             if(i.getBasisObjekt().getId().equals(id)){
                 return (AtlProbepkt) new DatabaseAccess().get(AtlProbepkt.class, i.getId());
             }
         }
         log.debug("Found no Atlprobepkt instance with attached BasisObjekt#" + id);
-        return null;*/
-        BasisObjekt objekt = (BasisObjekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        return null;
+        /*BasisObjekt objekt = (BasisObjekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt o where o.id= " + id).list().get(0);
+
         //BasisObjekt.findById(id);
         Set<AtlProbepkt> list = objekt.getAtlProbepkts();
-        return list.iterator().next();
+        return list.iterator().next();*/
     }
 }

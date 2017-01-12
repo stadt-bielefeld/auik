@@ -219,6 +219,7 @@
       <artifactId>groovy</artifactId>
       <version>2.4.6</version>
     </dependency>
+    <!--
     <dependency>
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports</artifactId>
@@ -229,6 +230,13 @@
       <artifactId>jasperreports-fonts</artifactId>
       <version>6.0.0</version>
 	  </dependency>
+     -->
+    <!-- A repacked jasperreports jar file with necessary fonts included, workaround for font problems on Windows systems-->
+    <dependency>
+        <groupId>de.bielefeld.umweltamt.aui</groupId>
+        <artifactId>jasperreports-auik-font-repack</artifactId>
+        <version>1.0.0</version>
+    </dependency>
     <dependency>
       <groupId>org.jfree</groupId>
       <artifactId>jfreechart</artifactId>
@@ -419,7 +427,6 @@
 
   <build>
     <sourceDirectory>src</sourceDirectory>
-    <testSourceDirectory>test</testSourceDirectory>
 	  <resources>
 	    <resource>
 	      <directory>src</directory>
@@ -475,25 +482,41 @@
       <!--install local jars via install plugin,
 		  use "mvn validate" before compiling -->
 	    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-      	<version>2.5.1</version>
-    	  <configuration>
-          <groupId>com.jgoodies</groupId>
-          <artifactId>uif_lite</artifactId>
-      	    <version>1.0</version>
-      	  <packaging>jar</packaging>
-      	  <file>${project.basedir}/lib/com.jgoodies.uif_lite.jar</file>
-      	  <generatePom>true</generatePom>
-    	  </configuration>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+      	  <version>2.5.1</version>    	  
   		  <executions>
       	  <execution>
-            <id>install-jar-lib</id>
+            <id>install-jgoodies</id>
             <goals>
               <goal>install-file</goal>
             </goals>
             <phase>validate</phase>
+            <configuration>
+              <groupId>com.jgoodies</groupId>
+              <artifactId>uif_lite</artifactId>
+      	      <version>1.0</version>
+      	      <packaging>jar</packaging>
+      	      <file>${project.basedir}/lib/com.jgoodies.uif_lite.jar</file>
+      	      <generatePom>true</generatePom>
+    	    </configuration>
       	  </execution>
+          <!-- Install local repacked jasperreports jar file-->
+          <execution>
+            <id>install-fonts</id>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <phase>validate</phase>
+            <configuration>
+              <groupId>de.bielefeld.umweltamt.aui</groupId>
+              <artifactId>jasperreports-auik-font-repack</artifactId>
+              <version>1.0.0</version>
+      	      <packaging>jar</packaging>
+      	      <file>${project.basedir}/lib/jasperreports-auik-font-repack.jar</file>
+      	      <generatePom>true</generatePom>
+    	    </configuration>
+      	  </execution>          
     	</executions>
 	  </plugin>
 	  <plugin>
