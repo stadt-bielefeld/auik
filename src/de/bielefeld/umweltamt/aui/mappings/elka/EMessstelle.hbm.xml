@@ -13,7 +13,7 @@
   	<column name="nr" />
   </property>
   <many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka.EStandort" fetch="select">
-   <column name="standort_nr"/>
+   <column name="lageid"/>
   </many-to-one>
   <property generated="never" lazy="false" name="bezeichnung" type="java.lang.String">
    <column name="bezeichnung"/>

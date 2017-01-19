@@ -6,11 +6,11 @@
  <class name="de.bielefeld.umweltamt.aui.mappings.elka.EAdresse"
   schema="elka" table="e_adresse">
   <id name="nr" type="java.lang.Integer">
-   <column name="std_nr"/>
+   <column name="nr"/>
    <generator class="assigned"/>
   </id>
   <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
-  	<column name="std_nr" />
+  	<column name="nr" />
   </property>
   <property generated="never" lazy="false" name="anrede" type="java.lang.String">
    <column name="anrede"/>

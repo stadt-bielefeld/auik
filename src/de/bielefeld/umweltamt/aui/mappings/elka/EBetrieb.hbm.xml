@@ -6,12 +6,9 @@
  <class name="de.bielefeld.umweltamt.aui.mappings.elka.EBetrieb"
   schema="elka" table="e_betrieb">
   <id name="nr" type="java.lang.Integer">
-   <column name="std_nr"/>
-   <generator class="assigned"/>
+   <column name="nr"/>
+   <generator class="identity"/>
   </id>
-  <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
-  	<column name="std_nr" />
-  </property>
   <many-to-one name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka.EStandort" fetch="select" lazy="false">
    <column name="standort_nr" />
   </many-to-one>

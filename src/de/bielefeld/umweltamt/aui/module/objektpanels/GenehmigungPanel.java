@@ -167,7 +167,7 @@ public class GenehmigungPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = IndeinlGenehmigung.findById(
+        this.fachdaten = IndeinlGenehmigung.findByObjektId(
             this.hauptModul.getObjekt().getObjektid());
         log.debug("Genehmigung Objekt aus DB geholt: ID" + this.fachdaten);
     }

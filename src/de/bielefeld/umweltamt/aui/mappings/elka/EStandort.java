@@ -266,5 +266,4 @@ public class EStandort implements java.io.Serializable {
     public static List<EStandort> getAll() {
         return DatabaseQuery.getAll(new EStandort());
     }
-
 }

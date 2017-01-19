@@ -467,8 +467,12 @@ public class ELKASync extends AbstractModul {
     	String type
     ) {
 		if (entities.size() > 0) {
-			System.setProperty("http.proxyHost", PROXY_HOST);
-			System.setProperty("http.proxyPort", PROXY_PORT);
+            if(PROXY_HOST != null){
+                System.setProperty("http.proxyHost", PROXY_HOST);
+            }
+            if(PROXY_PORT != null){
+			    System.setProperty("http.proxyPort", PROXY_PORT);
+            }
 			JFileChooser chooser = new JFileChooser();
 			if (chooser.showSaveDialog(this.panel) == JFileChooser.APPROVE_OPTION) {
 				File protocolFile = chooser.getSelectedFile();
@@ -572,7 +576,7 @@ public class ELKASync extends AbstractModul {
     }
     
     private List<EEinleitungsstelle> prependIdentifierEinleitungsstelle(
-    	List<EEinleitungsstelle> objects	
+    	List<EEinleitungsstelle> objects
     ) {
     	for (EEinleitungsstelle stelle : objects) {
     		prependIdentifier(stelle);
@@ -628,7 +632,12 @@ public class ELKASync extends AbstractModul {
 			Method mGetter = object.getClass().getMethod("getOrigNr");
 			Method mSetter = object.getClass().getMethod("setNr", Integer.class);
 			Integer nr = (Integer)mGetter.invoke(object);
-			String newNr = IDENTIFIER + nr.toString();
+            if(nr == null) {
+                mGetter = object.getClass().getMethod("getNr");
+                nr = (Integer)mGetter.invoke(object);
+                object.getClass().getMethod("setOrigNr", Integer.class).invoke(object, nr);
+            }
+            String newNr = IDENTIFIER + nr.toString();
 			mSetter.invoke(object, Integer.valueOf(newNr));
 		} catch (NoSuchMethodException e){
 		} catch (SecurityException e) {

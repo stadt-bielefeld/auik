@@ -266,6 +266,4 @@ public class EAdresse implements java.io.Serializable {
     public static List<EAdresse> getAll() {
         return DatabaseQuery.getAll(new EAdresse());
     }
-
-
 }

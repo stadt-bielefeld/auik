@@ -23,6 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -30,7 +31,9 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class that represents a row in the IndeinlGenehmigung database table.<br>
@@ -44,6 +47,7 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
         DatabaseSerialVersionUID.forIndeinlGenehmigung;
     
     /* Primary key, foreign keys (relations) and table columns */
+    private Integer id;
     private Integer objektid;
     private BasisObjekt basisObjekt;
     private String bemerkungen;
@@ -102,6 +106,14 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getObjektid() {
         return this.objektid;
     }
@@ -410,5 +422,9 @@ public class IndeinlGenehmigung  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-
+    public static IndeinlGenehmigung findByObjektId(java.lang.Integer id) {
+        BasisObjekt objekt = (BasisObjekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        Set<IndeinlGenehmigung> list = objekt.getIndeinlGenehmigungs();
+        return list.iterator().next();
+    }
 }

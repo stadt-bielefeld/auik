@@ -76,7 +76,7 @@ public class BasisObjekt  implements java.io.Serializable {
     private boolean enabled;
     private boolean deleted;
     private Boolean abwasserfrei;
-    private IndeinlGenehmigung indeinlGenehmigung;
+    private Set<IndeinlGenehmigung> indeinlGenehmigungs = new HashSet<IndeinlGenehmigung>(0);
     private Set<Anh53Fachdaten> anh53Fachdatens = new HashSet<Anh53Fachdaten>(0);
     private Set<AnhSuevFachdaten> anhSuevFachdatens = new HashSet<AnhSuevFachdaten>(0);
     private Set<AnhBwkFachdaten> anhBwkFachdatens = new HashSet<AnhBwkFachdaten>(0);
@@ -111,7 +111,7 @@ public class BasisObjekt  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisObjekt(
-        BasisAdresse basisStandort, BasisAdresse basisAdresse, BasisLage basisLage, BasisObjektarten basisObjektarten, BasisSachbearbeiter basisSachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, IndeinlGenehmigung indeinlGenehmigung, Set<Anh53Fachdaten> anh53Fachdatens, Set<AnhSuevFachdaten> anhSuevFachdatens, Set<AnhBwkFachdaten> anhBwkFachdatens, Set<AtlProbepkt> atlProbepkts, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt, Set<VawsFachdaten> vawsFachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit, Set<Anh40Fachdaten> anh40Fachdatens, Set<BasisObjektchrono> basisObjektchronos, AtlSielhaut atlSielhaut, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens) {
+        BasisAdresse basisStandort, BasisAdresse basisAdresse, BasisLage basisLage, BasisObjektarten basisObjektarten, BasisSachbearbeiter basisSachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Set<IndeinlGenehmigung> indeinlGenehmigungs, Set<Anh53Fachdaten> anh53Fachdatens, Set<AnhSuevFachdaten> anhSuevFachdatens, Set<AnhBwkFachdaten> anhBwkFachdatens, Set<AtlProbepkt> atlProbepkts, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt, Set<VawsFachdaten> vawsFachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit, Set<Anh40Fachdaten> anh40Fachdatens, Set<BasisObjektchrono> basisObjektchronos, AtlSielhaut atlSielhaut, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens) {
         this.basisStandort = basisStandort;
         this.basisAdresse = basisAdresse;
         this.basisLage = basisLage;
@@ -129,7 +129,7 @@ public class BasisObjekt  implements java.io.Serializable {
         this.enabled = enabled;
         this.deleted = deleted;
         this.abwasserfrei = abwasserfrei;
-        this.indeinlGenehmigung = indeinlGenehmigung;
+        this.indeinlGenehmigungs = indeinlGenehmigungs;
         this.anh53Fachdatens = anh53Fachdatens;
         this.anhSuevFachdatens = anhSuevFachdatens;
         this.anhBwkFachdatens = anhBwkFachdatens;
@@ -292,12 +292,12 @@ public class BasisObjekt  implements java.io.Serializable {
         this.abwasserfrei = abwasserfrei;
     }
 
-    public IndeinlGenehmigung getIndeinlGenehmigung() {
-        return this.indeinlGenehmigung;
+    public Set<IndeinlGenehmigung> getIndeinlGenehmigungs() {
+        return this.indeinlGenehmigungs;
     }
 
-    public void setIndeinlGenehmigung(IndeinlGenehmigung indeinlGenehmigung) {
-        this.indeinlGenehmigung = indeinlGenehmigung;
+    public void setIndeinlGenehmigungs(Set<IndeinlGenehmigung> indeinlGenehmigungs) {
+        this.indeinlGenehmigungs = indeinlGenehmigungs;
     }
 
     public Set<Anh53Fachdaten> getAnh53Fachdatens() {
@@ -457,7 +457,7 @@ public class BasisObjekt  implements java.io.Serializable {
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("abwasserfrei").append("='").append(getAbwasserfrei()).append("' ");			
-        buffer.append("indeinlGenehmigung").append("='").append(getIndeinlGenehmigung()).append("' ");			
+        buffer.append("indeinlGenehmigungs").append("='").append(getIndeinlGenehmigungs()).append("' ");			
         buffer.append("anh53Fachdatens").append("='").append(getAnh53Fachdatens()).append("' ");			
         buffer.append("anhSuevFachdatens").append("='").append(getAnhSuevFachdatens()).append("' ");			
         buffer.append("anhBwkFachdatens").append("='").append(getAnhBwkFachdatens()).append("' ");			
@@ -555,7 +555,7 @@ public class BasisObjekt  implements java.io.Serializable {
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
         this.abwasserfrei = copy.getAbwasserfrei();            
-        this.indeinlGenehmigung = copy.getIndeinlGenehmigung();            
+        this.indeinlGenehmigungs = copy.getIndeinlGenehmigungs();            
         this.anh53Fachdatens = copy.getAnh53Fachdatens();            
         this.anhSuevFachdatens = copy.getAnhSuevFachdatens();            
         this.anhBwkFachdatens = copy.getAnhBwkFachdatens();            

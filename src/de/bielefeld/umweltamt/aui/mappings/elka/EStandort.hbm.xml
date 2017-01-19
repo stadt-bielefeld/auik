@@ -7,7 +7,7 @@
   schema="elka" table="e_standort">
   <id name="nr" type="java.lang.Integer">
    <column name="nr"/>
-   <generator class="assigned"/>
+   <generator class="identity"/>
   </id>
   <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
   	<column name="nr" />
@@ -16,7 +16,7 @@
    <column length="8" name="gemeindekennzahl"/>
   </property>
   <many-to-one name="adresse" class="de.bielefeld.umweltamt.aui.mappings.elka.EAdresse" fetch="select" lazy="false">
-   <column name="adresse" />
+   <column name="adr_nr" />
   </many-to-one>
   <property generated="never" lazy="false" name="gemarkung" type="java.lang.String">
    <column name="gemarkung"/>
