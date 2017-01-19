@@ -23,12 +23,15 @@
 
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class that represents a row in the VawsAbscheider database table.<br>
@@ -629,4 +632,12 @@ public class VawsAbscheider  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    public static VawsAbscheider findByBehaelterid(java.lang.Integer id){
+        VawsFachdaten fd = (VawsFachdaten) HibernateSessionFactory.currentSession().createQuery("from VawsFachdaten where behaelterid= " + id).list().get(0);
+        Set<VawsAbscheider> list = fd.getVawsAbscheiders();
+		if (list.size() != 0) {
+			return list.iterator().next();
+		}
+		return null;
+    }
 }

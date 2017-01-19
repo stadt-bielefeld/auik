@@ -168,8 +168,10 @@ public class DatabaseConstants {
     /* VawsAnlagenart(en) */
     public static final String VAWS_ANLAGENART_ABFUELLFLAECHE = "Abfüllfläche";
     public static final String VAWS_ANLAGENART_ROHRLEITUNG = "Rohrleitung";
-    public static final String VAWS_ANLAGENART_VAWS_ABSCHEIDER =
-        "VAwS-Abscheider";
-    public static final String VAWS_ANLAGENART_FAHRSILO = "JGS-Anlage";
+    public static final String VAWS_ANLAGENART_VAWS_ABSCHEIDER = "VAwS-Abscheider";
+    public static final String VAWS_ANLAGENART_AP = "Abfüllplatz";
+    public static final String VAWS_ANLAGENART_FS = "Fahrsilo";
+    public static final String VAWS_ANLAGENART_GK = "Güllekeller";
+    public static final String VAWS_ANLAGENART_GHB = "Güllehochbehälter";
 
 }

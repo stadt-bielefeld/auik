@@ -193,7 +193,7 @@ class WiedervorlageSVModel extends ListTableModel {
                 tmp = vk.getVawsFachdaten().getAnlagenart();
                 break;
             case 3:
-                tmp = vk.getVawsFachdaten().getBasisObjekt().getBasisAdresse();
+                tmp = vk.getVawsFachdaten().getBasisObjekt().getBasisAdresse().getBetrname();
                 break;
             case 4:
                 tmp = DatabaseQuery.getStandortString(vk.getVawsFachdaten().getBasisObjekt().getBasisStandort());

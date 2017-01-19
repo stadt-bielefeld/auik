@@ -73,6 +73,7 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGefaehrdungsstufen;
+import de.bielefeld.umweltamt.aui.mappings.vaws.VawsJgs;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsMaterial;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefer;
@@ -447,7 +448,7 @@ public class DatabaseClassToString {
 
     /** @return Custom VawsAbfuellflaeche.toString() */
     public static String toStringForClass(VawsAbfuellflaeche clazz) {
-        return "[VawsAbfuellflaeche: " + clazz.getBehaelterid()
+        return "[VawsAbfuellflaeche: " + clazz.getId()
             + ", FD:" + clazz.getVawsFachdaten() + "]";
     }
 
@@ -495,6 +496,12 @@ public class DatabaseClassToString {
     /** @return "VawsGefaehrdungsstufen.toGuiString() */
     public static String toStringForClass(VawsGefaehrdungsstufen clazz) {
         return clazz.toGuiString();
+    }
+
+    /** @return Custom VawsAbscheider.toString() */
+    public static String toStringForClass(VawsJgs clazz) {
+        return "[VawsJgs: " + clazz.getId()
+            + ", FD:" + clazz.getVawsFachdaten() + "]";
     }
 
     /** @return "VawsKontrollen.toDebugString() */

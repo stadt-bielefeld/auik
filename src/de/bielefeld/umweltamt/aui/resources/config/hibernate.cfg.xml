@@ -68,6 +68,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsFluessigkeit.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsGebuehrenarten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsGefaehrdungsstufen.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsJgs.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsKontrollen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsMaterial.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsPruefer.hbm.xml" />

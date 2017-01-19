@@ -848,12 +848,12 @@ public class BasisPanel extends JPanel {
                         + mapsta.getBasisLage().getEntgebid() : "") + "</html>";
                 getStandortFeld().setToolTipText(toolTip);
                 getStandortFeld().setText(this.hauptModul.getObjekt().getBasisStandort().toString());
-                getLageFeld().setText(mapsta.getBasisLage().toString());
-            }
 
-            if(this.hauptModul.getObjekt().getBasisLage() == null){
-            	BasisMapAdresseLage mapsta = (BasisMapAdresseLage) BasisMapAdresseLage.findByAdresse(this.hauptModul.getObjekt().getBasisStandort());
-            	this.hauptModul.getObjekt().setBasisLage(mapsta.getBasisLage());
+                if(this.hauptModul.getObjekt().getBasisLage() == null){
+                	mapsta = (BasisMapAdresseLage) BasisMapAdresseLage.findByAdresse(this.hauptModul.getObjekt().getBasisStandort());
+                	this.hauptModul.getObjekt().setBasisLage(mapsta.getBasisLage());
+                }
+                getLageFeld().setText(mapsta.getBasisLage().toString());
             }
 
             if (this.hauptModul.getObjekt().getBasisObjektarten() != null) {

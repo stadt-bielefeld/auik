@@ -273,22 +273,26 @@ abstract class DatabaseVawsQuery {
 	}
 
 	/**
-	 * Everything that is NOT (Abfüllfläche OR Rohrleitung OR Fahrsilo) is
+	 * Everything that is NOT (Abfüllfläche OR Rohrleitung OR Fahrsilo OR Güllekeller OR Güllehochbehälter) is
 	 * Lageranlage. TODO: Check this. We have a Anlagenart Lageranlage, but also
 	 * some others
 	 * 
 	 * @param fachdaten
 	 *            VawsFachdaten
 	 * @return <code>true</code>, if Anlagenart is NOT (Abfüllfläche OR
-	 *         Rohrleitung), <code>false</code>, otherwise
+	 *         Rohrleitung OR Fahrsilo OR Güllekeller OR Güllehochbehälter), <code>false</code>, otherwise
 	 */
 	public static boolean isLageranlage(VawsFachdaten fachdaten) {
 		return (!(fachdaten.getAnlagenart().equals(
 				DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)
 				|| fachdaten.getAnlagenart().equals(
-						DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG) || fachdaten
-				.getAnlagenart().equals(
-						DatabaseConstants.VAWS_ANLAGENART_FAHRSILO)));
+						DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG) 
+				|| fachdaten.getAnlagenart().equals(
+						DatabaseConstants.VAWS_ANLAGENART_FS) 
+				|| fachdaten.getAnlagenart().equals(
+						DatabaseConstants.VAWS_ANLAGENART_GK) 
+				|| fachdaten.getAnlagenart().equals(
+						DatabaseConstants.VAWS_ANLAGENART_GHB)));
 	}
 
 	/**

@@ -187,7 +187,7 @@ class WiedervorlageVVModel extends ListTableModel {
             tmp = vf.getVawsFachdaten().getBehaelterid();
             break;
         case 1:
-            tmp = vf.getVawsFachdaten().getBasisObjekt().getBasisAdresse();
+            tmp = vf.getVawsFachdaten().getBasisObjekt().getBasisAdresse().getBetrname();
             break;
         case 2:
             tmp = DatabaseQuery.getStandortString(vf.getVawsFachdaten().getBasisObjekt().getBasisStandort());

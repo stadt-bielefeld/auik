@@ -279,16 +279,27 @@ public class ProbepktAuswPanel extends JPanel {
                 TimeSeries series;
                 APosDataItem item;
 
-                for (int i = 0; i < this.col1.getSeriesCount(); i++) {
-                    series = this.col1.getSeries(i);
-                    for (int j = 0; j < series.getItemCount(); j++) {
-                        item = (APosDataItem) series.getDataItem(j);
+				for (int i = 0; i < this.col1.getSeriesCount(); i++) {
+					series = this.col1.getSeries(i);
+					for (int j = 0; j < series.getItemCount(); j++) {
+						item = (APosDataItem) series.getDataItem(j);
 
-                        if (!this.dateList.contains(item.getMinute())) {
-                            this.dateList.add(item.getMinute());
-                        }
-                    }
-                }
+						int n = this.dateList.size();
+						boolean add = true;
+						if (n == 0) {
+							this.dateList.add(item.getMinute());
+						} else
+							for (int k = 0; k < n; k++) {
+								if (this.dateList.get(k).toString().equals(item
+										.getMinute().toString())) {
+									add = false;
+								}
+							}
+						if(add == true && n > 0){
+							this.dateList.add(item.getMinute());
+						}
+					}
+				}
 
                 if (this.col2 != null) {
                     for (int i = 0; i < this.col2.getSeriesCount(); i++) {
@@ -296,9 +307,20 @@ public class ProbepktAuswPanel extends JPanel {
                         for (int j = 0; j < series.getItemCount(); j++) {
                             item = (APosDataItem) series.getDataItem(j);
                             // count++;
-                            if (!this.dateList.contains(item.getMinute())) {
-                                this.dateList.add(item.getMinute());
-                            }
+                            int n = this.dateList.size();
+    						boolean add = true;
+    						if (n == 0) {
+    							this.dateList.add(item.getMinute());
+    						} else
+    							for (int k = 0; k < n; k++) {
+    								if (this.dateList.get(k).toString().equals(item
+    										.getMinute().toString())) {
+    									add = false;
+    								}
+    							}
+    						if(add == true && n > 0){
+    							this.dateList.add(item.getMinute());
+    						}
                         }
                     }
                 }

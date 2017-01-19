@@ -302,19 +302,19 @@ public class Charts {
 		renderer.setBaseShapesVisible(true);
         renderer.setBaseShapesFilled(true);
         renderer.setToolTipGenerator(ttgen);
-        if (dataset1.getSeriesCount() == 1) {
-            axis1.setLabelPaint(renderer.getSeriesPaint(0));
-        }
+//        if (dataset1.getSeriesCount() == 1) {
+//            axis1.setLabelPaint(renderer.getSeriesPaint(0));
+//        }
 
         // Den Renderer für die Messwerte/-linien der zweiten Achse anpassen
         XYLineAndShapeRenderer renderer2 = (XYLineAndShapeRenderer) plot.getRenderer(1);
         //TODO: defaultShapes == baseShapes?
 		renderer2.setBaseShapesVisible(true);
         renderer2.setBaseShapesFilled(true);
-        renderer2.setToolTipGenerator(ttgen);
-        if (dataset2.getSeriesCount() == 1) {
-            axis2.setLabelPaint(renderer2.getSeriesPaint(0));
-        }
+//        renderer2.setToolTipGenerator(ttgen);
+//        if (dataset2.getSeriesCount() == 1) {
+//            axis2.setLabelPaint(renderer2.getSeriesPaint(0));
+//        }
 
         // Die Legende anpassen
         LegendTitle l1 = new LegendTitle(renderer);

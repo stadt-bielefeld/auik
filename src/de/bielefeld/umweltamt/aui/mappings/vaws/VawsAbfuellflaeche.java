@@ -23,12 +23,15 @@
 
 package de.bielefeld.umweltamt.aui.mappings.vaws;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class that represents a row in the VawsAbfuellflaeche database table.<br>
@@ -42,7 +45,7 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
         DatabaseSerialVersionUID.forVawsAbfuellflaeche;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer behaelterid;
+    private Integer id;
     private VawsFachdaten vawsFachdaten;
     private Boolean eoh;
     private Boolean ef;
@@ -59,8 +62,8 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
     private String beschableitung;
     private boolean enabled;
     private boolean deleted;
-
-    /** Logging */
+    
+	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /** Default constructor */
@@ -70,7 +73,7 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
 
     /** Minimal constructor */
     public VawsAbfuellflaeche(
-        VawsFachdaten vawsFachdaten, boolean enabled, boolean deleted) {
+    	VawsFachdaten vawsFachdaten, boolean enabled, boolean deleted) {
         this.vawsFachdaten = vawsFachdaten;
         this.enabled = enabled;
         this.deleted = deleted;
@@ -78,7 +81,7 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
 
     /** Full constructor */
     public VawsAbfuellflaeche(
-        VawsFachdaten vawsFachdaten, Boolean eoh, Boolean ef, Boolean abfsaniert, Boolean abfneuerstellt, String bodenflaechenausf, String beschbodenfl, Float dicke, String guete, String fugenmaterial, String beschfugenmat, String niederschlagschutz, Boolean abscheidervorh, String beschableitung, boolean enabled, boolean deleted) {
+    	VawsFachdaten vawsFachdaten, Boolean eoh, Boolean ef, Boolean abfsaniert, Boolean abfneuerstellt, String bodenflaechenausf, String beschbodenfl, Float dicke, String guete, String fugenmaterial, String beschfugenmat, String niederschlagschutz, Boolean abscheidervorh, String beschableitung, VawsJgs vawsJgs, boolean enabled, boolean deleted) {
         this.vawsFachdaten = vawsFachdaten;
         this.eoh = eoh;
         this.ef = ef;
@@ -98,12 +101,12 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public Integer getBehaelterid() {
-        return this.behaelterid;
+    public Integer getId() {
+        return this.id;
     }
 
-    public void setBehaelterid(Integer behaelterid) {
-        this.behaelterid = behaelterid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public VawsFachdaten getVawsFachdaten() {
@@ -233,7 +236,6 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
-
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -269,7 +271,7 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
         buffer.append("abscheidervorh").append("='").append(getAbscheidervorh()).append("' ");			
         buffer.append("beschableitung").append("='").append(getBeschableitung()).append("' ");			
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -285,8 +287,8 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
         if (this == other) return true;
         if (other == null) return false;
         if (!(other instanceof VawsAbfuellflaeche)) return false;
-        return (this.getBehaelterid().equals(
-            ((VawsAbfuellflaeche) other).getBehaelterid()));
+        return (this.getId().equals(
+            ((VawsAbfuellflaeche) other).getId()));
     }
 
     /**
@@ -296,8 +298,8 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        int idValue = this.getBehaelterid() == null ?
-            0 : this.getBehaelterid().hashCode();
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
         result = result * 37 + idValue;
         return result;
     }
@@ -350,7 +352,7 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
         this.abscheidervorh = copy.getAbscheidervorh();            
         this.beschableitung = copy.getBeschableitung();            
         this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
+        this.deleted = copy.isDeleted();         
     }    
 
     /**
@@ -396,5 +398,14 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+
+	public static VawsAbfuellflaeche findByBehaelterid(Integer id) {
+        VawsFachdaten fd = (VawsFachdaten) HibernateSessionFactory.currentSession().createQuery("from VawsFachdaten where behaelterid= " + id).list().get(0);
+        Set<VawsAbfuellflaeche> list = fd.getVawsAbfuellflaeches();
+		if (list.size() != 0) {
+			return list.iterator().next();
+		}
+		return null;
+	}
 
 }

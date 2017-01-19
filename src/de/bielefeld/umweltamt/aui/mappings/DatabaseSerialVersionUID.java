@@ -90,6 +90,7 @@ public class DatabaseSerialVersionUID {
     public static final long forVawsFluessigkeit        = -5923433617281795242L;
     public static final long forVawsGebuehrenarten      = -4661287242692895282L;
     public static final long forVawsGefaehrdungsstufen  = -6004960617439959764L;
+    public static final long forVawsJgs					= -7550034142950138357L;
     public static final long forVawsKontrollen          = 7151680384864528912L;
     public static final long forVawsMaterial            = 877428098249100951L;
     public static final long forVawsPruefer             = -8186136740692550007L;

@@ -100,10 +100,11 @@ public class VawsFachdaten  implements java.io.Serializable {
     private String aktenzeichen;
     private Set<VawsVerwaltungsverf> vawsVerwaltungsverfs = new HashSet<VawsVerwaltungsverf>(0);
     private Set<VawsKontrollen> vawsKontrollens = new HashSet<VawsKontrollen>(0);
-    private VawsAbscheider vawsAbscheider;
     private Set<VawsAnlagenchrono> vawsAnlagenchronos = new HashSet<VawsAnlagenchrono>(0);
     private Set<VawsVerwaltungsgebuehren> vawsVerwaltungsgebuehrens = new HashSet<VawsVerwaltungsgebuehren>(0);
-    private VawsAbfuellflaeche vawsAbfuellflaeche;
+    private Set<VawsAbscheider> vawsAbscheiders = new HashSet<VawsAbscheider>(0);
+    private Set<VawsAbfuellflaeche> vawsAbfuellflaeches = new HashSet<VawsAbfuellflaeche>(0);
+    private Set<VawsJgs> vawsJgss = new HashSet<VawsJgs>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -123,7 +124,7 @@ public class VawsFachdaten  implements java.io.Serializable {
 
     /** Full constructor */
     public VawsFachdaten(
-        BasisObjekt basisObjekt, String herstellnr, String hersteller, Date datuminbetriebnahme, Date datumerfassung, Date datumaenderung, Date datumgenehmigung, String anlagenart, String behaelterart, String material, String fluessigkeit, String vbfeinstufung, Double menge, Integer wgk, String gefaehrdungsstufe, Integer baujahr, Boolean doppelwandig, Boolean leckanzeige, Boolean auffangraum, Boolean grenzwertgeber, Boolean leckschutzauskleidung, Boolean kellerlagerung, Boolean innenbeschichtung, String beschreibungA, String beschreibungS, Boolean oberirdisch, Boolean unterirdisch, Boolean saugleitung, Boolean rohrKathodenschutz, Boolean ausKupfer, Boolean ausStahl, Boolean mitSchutzrohr, String beschreibungR, Double pruefturnus, Boolean angemahntkz, Date mahnfrist, Date wiedervorlage, Date stillegungsdatum, String bemerkungen, String ausfuehrung, String pruefumfang, String verwendung, boolean enabled, boolean deleted, Boolean ausHdpe, Boolean druckleitung, Boolean schutzSensor, Boolean schutzFolie, Boolean schutzAntiheber, String aktenzeichen, Set<VawsVerwaltungsverf> vawsVerwaltungsverfs, Set<VawsKontrollen> vawsKontrollens, VawsAbscheider vawsAbscheider, Set<VawsAnlagenchrono> vawsAnlagenchronos, Set<VawsVerwaltungsgebuehren> vawsVerwaltungsgebuehrens, VawsAbfuellflaeche vawsAbfuellflaeche) {
+        BasisObjekt basisObjekt, String herstellnr, String hersteller, Date datuminbetriebnahme, Date datumerfassung, Date datumaenderung, Date datumgenehmigung, String anlagenart, String behaelterart, String material, String fluessigkeit, String vbfeinstufung, Double menge, Integer wgk, String gefaehrdungsstufe, Integer baujahr, Boolean doppelwandig, Boolean leckanzeige, Boolean auffangraum, Boolean grenzwertgeber, Boolean leckschutzauskleidung, Boolean kellerlagerung, Boolean innenbeschichtung, String beschreibungA, String beschreibungS, Boolean oberirdisch, Boolean unterirdisch, Boolean saugleitung, Boolean rohrKathodenschutz, Boolean ausKupfer, Boolean ausStahl, Boolean mitSchutzrohr, String beschreibungR, Double pruefturnus, Boolean angemahntkz, Date mahnfrist, Date wiedervorlage, Date stillegungsdatum, String bemerkungen, String ausfuehrung, String pruefumfang, String verwendung, boolean enabled, boolean deleted, Boolean ausHdpe, Boolean druckleitung, Boolean schutzSensor, Boolean schutzFolie, Boolean schutzAntiheber, String aktenzeichen, Set<VawsVerwaltungsverf> vawsVerwaltungsverfs, Set<VawsKontrollen> vawsKontrollens, Set<VawsAbscheider> vawsAbscheiders, Set<VawsAnlagenchrono> vawsAnlagenchronos, Set<VawsVerwaltungsgebuehren> vawsVerwaltungsgebuehrens, Set<VawsAbfuellflaeche> vawsAbfuellflaeches, Set<VawsJgs> vawsJgss) {
         this.basisObjekt = basisObjekt;
         this.herstellnr = herstellnr;
         this.hersteller = hersteller;
@@ -176,10 +177,11 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.aktenzeichen = aktenzeichen;
         this.vawsVerwaltungsverfs = vawsVerwaltungsverfs;
         this.vawsKontrollens = vawsKontrollens;
-        this.vawsAbscheider = vawsAbscheider;
         this.vawsAnlagenchronos = vawsAnlagenchronos;
         this.vawsVerwaltungsgebuehrens = vawsVerwaltungsgebuehrens;
-        this.vawsAbfuellflaeche = vawsAbfuellflaeche;
+        this.vawsAbscheiders = vawsAbscheiders;
+        this.vawsAbfuellflaeches = vawsAbfuellflaeches;
+        this.vawsJgss = vawsJgss;
     }
 
     /* Setter and getter methods */
@@ -607,12 +609,12 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.vawsKontrollens = vawsKontrollens;
     }
 
-    public VawsAbscheider getVawsAbscheider() {
-        return this.vawsAbscheider;
+    public Set<VawsAbscheider> getVawsAbscheiders() {
+        return this.vawsAbscheiders;
     }
 
-    public void setVawsAbscheider(VawsAbscheider vawsAbscheider) {
-        this.vawsAbscheider = vawsAbscheider;
+    public void setVawsAbscheiders(Set<VawsAbscheider> vawsAbscheiders) {
+        this.vawsAbscheiders = vawsAbscheiders;
     }
 
     public Set<VawsAnlagenchrono> getVawsAnlagenchronos() {
@@ -631,12 +633,20 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.vawsVerwaltungsgebuehrens = vawsVerwaltungsgebuehrens;
     }
 
-    public VawsAbfuellflaeche getVawsAbfuellflaeche() {
-        return this.vawsAbfuellflaeche;
+    public Set<VawsAbfuellflaeche> getVawsAbfuellflaeches() {
+        return this.vawsAbfuellflaeches;
     }
 
-    public void setVawsAbfuellflaeche(VawsAbfuellflaeche vawsAbfuellflaeche) {
-        this.vawsAbfuellflaeche = vawsAbfuellflaeche;
+    public void setVawsAbfuellflaeches(Set<VawsAbfuellflaeche> vawsAbfuellflaeches) {
+        this.vawsAbfuellflaeches = vawsAbfuellflaeches;
+    }
+
+    public Set<VawsJgs> getVawsJgss() {
+        return this.vawsJgss;
+    }
+
+    public void setVawsJgss(Set<VawsJgs> vawsJgss) {
+        this.vawsJgss = vawsJgss;
     }
 
     /**
@@ -711,10 +721,10 @@ public class VawsFachdaten  implements java.io.Serializable {
         buffer.append("aktenzeichen").append("='").append(getAktenzeichen()).append("' ");
         buffer.append("vawsVerwaltungsverfs").append("='").append(getVawsVerwaltungsverfs()).append("' ");
         buffer.append("vawsKontrollens").append("='").append(getVawsKontrollens()).append("' ");
-        buffer.append("vawsAbscheider").append("='").append(getVawsAbscheider()).append("' ");
+        buffer.append("vawsAbscheider").append("='").append(getVawsAbscheiders()).append("' ");
         buffer.append("vawsAnlagenchronos").append("='").append(getVawsAnlagenchronos()).append("' ");
         buffer.append("vawsVerwaltungsgebuehrens").append("='").append(getVawsVerwaltungsgebuehrens()).append("' ");
-        buffer.append("vawsAbfuellflaeche").append("='").append(getVawsAbfuellflaeche()).append("' ");
+        buffer.append("vawsAbfuellflaeche").append("='").append(getVawsAbfuellflaeches()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -832,10 +842,10 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.aktenzeichen = copy.getAktenzeichen();
         this.vawsVerwaltungsverfs = copy.getVawsVerwaltungsverfs();
         this.vawsKontrollens = copy.getVawsKontrollens();
-        this.vawsAbscheider = copy.getVawsAbscheider();
+        this.vawsAbscheiders = copy.getVawsAbscheiders();
         this.vawsAnlagenchronos = copy.getVawsAnlagenchronos();
         this.vawsVerwaltungsgebuehrens = copy.getVawsVerwaltungsgebuehrens();
-        this.vawsAbfuellflaeche = copy.getVawsAbfuellflaeche();
+        this.vawsAbfuellflaeches = copy.getVawsAbfuellflaeches();
     }
 
     /**

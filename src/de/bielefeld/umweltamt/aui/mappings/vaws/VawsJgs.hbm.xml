@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="de.bielefeld.umweltamt.aui.mappings.vaws.VawsJgs" table="vaws_jgs" schema="auik" lazy="false" optimistic-lock="version">
+	  <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+	   <generator class="identity"/>
+	  </id>
+        <many-to-one name="vawsFachdaten" class="de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten" fetch="select">
+            <column name="behaelterid" not-null="true" />
+        </many-to-one>
+        <property name="lagerflaeche" type="java.lang.Integer">
+            <column name="lagerflaeche" />
+        </property>
+        <property name="gewaesser_abstand" type="java.lang.Integer">
+            <column name="gewaesser_abstand" />
+        </property>
+        <property name="gewaesser_name" type="java.lang.String">
+            <column name="gewaesser_name" />
+        </property>
+        <property name="brunnen_abstand" type="java.lang.Integer">
+            <column name="brunnen_abstand" />
+        </property>
+        <property name="tierhaltung" type="java.lang.String">
+            <column name="tierhaltung" />
+        </property>
+        <property name="seitenwaende" type="java.lang.Boolean">
+            <column name="seitenwaende" />
+        </property>
+        <property name="wandhoehe" type="java.lang.Integer">
+            <column name="wandhoehe" />
+        </property>
+        <property name="volumen_aufbehaelter" type="java.lang.Integer">
+            <column name="volumen_aufbehaelter" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
