@@ -30,8 +30,38 @@
         <property name="wandhoehe" type="java.lang.Integer">
             <column name="wandhoehe" />
         </property>
-        <property name="volumen_aufbehaelter" type="java.lang.Integer">
-            <column name="volumen_aufbehaelter" />
+        <property name="bodenplatte" type="java.lang.String">
+            <column name="bodenplatte" />
+        </property>
+        <property name="ueberdachung" type="boolean">
+            <column name="ueberdachung" not-null="true" />
+        </property>
+        <property name="auffangbeh" type="java.lang.String">
+            <column name="auffangbeh" />
+        </property>
+        <property name="volumen_auffangbeh" type="java.lang.Integer">
+            <column name="volumen_auffangbeh" />
+        </property>
+        <property name="rohrleitung" type="java.lang.String">
+            <column name="rohrleitung" />
+        </property>
+        <property name="dichtheitspruefung" type="java.util.Date">
+            <column name="dichtheitspruefung" length="29" />
+        </property>
+        <property name="drainage" type="boolean">
+            <column name="drainage" not-null="true" />
+        </property>
+        <property name="fuellanzeiger" type="boolean">
+            <column name="fuellanzeiger" not-null="true" />
+        </property>
+        <property name="schieber" type="boolean">
+            <column name="schieber" not-null="true" />
+        </property>
+        <property name="abdeckung" type="boolean">
+            <column name="abdeckung" not-null="true" />
+        </property>
+        <property name="leitung_geprueft" type="boolean">
+            <column name="leitung_geprueft" not-null="true" />
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />

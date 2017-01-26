@@ -67,7 +67,7 @@ public class VawsModel extends ListTableModel {
     public VawsModel() {
         super(new String[]{
                 "Anlagenart",
-                "Bezeichnung/Herstellnr.",
+                "Bezeichnung/Zuordnung",
                 "Flüssigkeit",
                 "Menge",
                 "Stillgelegt"

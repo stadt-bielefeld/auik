@@ -30,6 +30,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -54,7 +55,17 @@ public class VawsJgs  implements java.io.Serializable {
     private String tierhaltung;
     private Boolean seitenwaende;
     private Integer wandhoehe;
-    private Integer volumen_aufbehaelter;
+    private String bodenplatte;
+    private boolean ueberdachung;
+    private String auffangbeh;
+    private Integer volumen_auffangbeh;
+    private String rohrleitung;
+    private Date dichtheitspruefung;
+    private Boolean drainage;
+    private Boolean fuellanzeiger;
+    private Boolean schieber;
+    private Boolean abdeckung;
+    private Boolean leitung_geprueft;
     private boolean enabled;
     private boolean deleted;
 
@@ -74,22 +85,42 @@ public class VawsJgs  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    /** Full constructor */
-    public VawsJgs(
-    	Integer id, VawsFachdaten vawsFachdaten, Integer lagerflaeche, Integer gewaesser_abstand, String gewaesser_name, Integer brunnen_abstand, String tierhaltung, Boolean seitenwaende, Integer wandhoehe, Integer volumen_aufbehaelter, boolean enabled, boolean deleted) {
-        this.vawsFachdaten = vawsFachdaten;
-        this.lagerflaeche = lagerflaeche;
-        this.gewaesser_abstand = gewaesser_abstand;
-        this.gewaesser_name = gewaesser_name;
-        this.brunnen_abstand = brunnen_abstand;
-        this.tierhaltung = tierhaltung;
-        this.seitenwaende = seitenwaende;
-        this.wandhoehe = wandhoehe;
-        this.volumen_aufbehaelter = volumen_aufbehaelter;
-        this.enabled = enabled;
-        this.deleted = deleted;
-    }
+	/** Full constructor */
+    public VawsJgs(Integer id, VawsFachdaten vawsFachdaten,
+			Integer lagerflaeche, Integer gewaesser_abstand,
+			String gewaesser_name, Integer brunnen_abstand, String tierhaltung,
+			Boolean seitenwaende, Integer wandhoehe, String bodenplatte,
+			boolean ueberdachung, String auffangbeh,
+			Integer volumen_auffangbeh, String rohrleitung,
+			Date dichtheitspruefung, Boolean drainage, Boolean fuellanzeiger,
+			Boolean schieber, Boolean abdeckung, Boolean leitung_geprueft,
+			boolean enabled, boolean deleted) {
+		super();
+		this.id = id;
+		this.vawsFachdaten = vawsFachdaten;
+		this.lagerflaeche = lagerflaeche;
+		this.gewaesser_abstand = gewaesser_abstand;
+		this.gewaesser_name = gewaesser_name;
+		this.brunnen_abstand = brunnen_abstand;
+		this.tierhaltung = tierhaltung;
+		this.seitenwaende = seitenwaende;
+		this.wandhoehe = wandhoehe;
+		this.bodenplatte = bodenplatte;
+		this.ueberdachung = ueberdachung;
+		this.auffangbeh = auffangbeh;
+		this.volumen_auffangbeh = volumen_auffangbeh;
+		this.rohrleitung = rohrleitung;
+		this.dichtheitspruefung = dichtheitspruefung;
+		this.drainage = drainage;
+		this.fuellanzeiger = fuellanzeiger;
+		this.schieber = schieber;
+		this.abdeckung = abdeckung;
+		this.leitung_geprueft = leitung_geprueft;
+		this.enabled = enabled;
+		this.deleted = deleted;
+	}
 
+	/* Setter and getter methods */
     public Integer getLagerflaeche() {
 		return lagerflaeche;
 	}
@@ -146,15 +177,94 @@ public class VawsJgs  implements java.io.Serializable {
 		this.wandhoehe = wandhoehe;
 	}
 
-	public Integer getVolumen_aufbehaelter() {
-		return volumen_aufbehaelter;
+	public String getBodenplatte() {
+		return bodenplatte;
 	}
 
-	public void setVolumen_aufbehaelter(Integer volumen_aufbehaelter) {
-		this.volumen_aufbehaelter = volumen_aufbehaelter;
+	public void setBodenplatte(String bodenplatte) {
+		this.bodenplatte = bodenplatte;
 	}
 
-	/* Setter and getter methods */
+	public Boolean getUeberdachung() {
+		return ueberdachung;
+	}
+
+	public void setUeberdachung(Boolean ueberdachung) {
+		this.ueberdachung = ueberdachung;
+	}
+
+	public String getAuffangbeh() {
+		return auffangbeh;
+	}
+
+	public void setAuffangbeh(String auffangbeh) {
+		this.auffangbeh = auffangbeh;
+	}
+
+	public Integer getVolumen_auffangbeh() {
+		return volumen_auffangbeh;
+	}
+
+	public void setVolumen_auffangbeh(Integer volumen_auffangbeh) {
+		this.volumen_auffangbeh = volumen_auffangbeh;
+	}
+
+	public String getRohrleitung() {
+		return rohrleitung;
+	}
+
+	public void setRohrleitung(String rohrleitung) {
+		this.rohrleitung = rohrleitung;
+	}
+	
+	public Date getDichtheitspruefung() {
+		return dichtheitspruefung;
+	}
+
+	public void setDichtheitspruefung(Date dichtheitspruefung) {
+		this.dichtheitspruefung = dichtheitspruefung;
+	}
+
+	public Boolean getDrainage() {
+		return drainage;
+	}
+
+	public void setDrainage(Boolean drainage) {
+		this.drainage = drainage;
+	}
+
+	public Boolean getFuellanzeiger() {
+		return fuellanzeiger;
+	}
+
+	public void setFuellanzeiger(Boolean fuellanzeiger) {
+		this.fuellanzeiger = fuellanzeiger;
+	}
+
+	public Boolean getSchieber() {
+		return schieber;
+	}
+
+	public void setSchieber(Boolean schieber) {
+		this.schieber = schieber;
+	}
+
+	public Boolean getAbdeckung() {
+		return abdeckung;
+	}
+
+	public void setAbdeckung(Boolean abdeckung) {
+		this.abdeckung = abdeckung;
+	}
+
+	public Boolean getLeitung_geprueft() {
+		return leitung_geprueft;
+	}
+
+	public void setLeitung_geprueft(Boolean leitung_geprueft) {
+		this.leitung_geprueft = leitung_geprueft;
+	}
+
     public Integer getId() {
         return this.id;
     }
@@ -208,14 +318,18 @@ public class VawsJgs  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("vawsFachdaten").append("='").append(getVawsFachdaten()).append("' ");			
-        buffer.append("eoh").append("='").append(getLagerflaeche()).append("' ");			
-        buffer.append("ef").append("='").append(getGewaesser_abstand()).append("' ");			
-        buffer.append("abfsaniert").append("='").append(getGewaesser_name()).append("' ");			
-        buffer.append("abfneuerstellt").append("='").append(getBrunnen_abstand()).append("' ");			
-        buffer.append("bodenflaechenausf").append("='").append(getTierhaltung()).append("' ");			
-        buffer.append("beschbodenfl").append("='").append(getSeitenwaende()).append("' ");			
-        buffer.append("dicke").append("='").append(getWandhoehe()).append("' ");			
-        buffer.append("guete").append("='").append(getVolumen_aufbehaelter()).append("' ");			
+        buffer.append("lagerflaeche").append("='").append(getLagerflaeche()).append("' ");			
+        buffer.append("gewaesserAbstand").append("='").append(getGewaesser_abstand()).append("' ");			
+        buffer.append("gewaesserName").append("='").append(getGewaesser_name()).append("' ");			
+        buffer.append("brunnenAbstand").append("='").append(getBrunnen_abstand()).append("' ");			
+        buffer.append("tierhaltung").append("='").append(getTierhaltung()).append("' ");			
+        buffer.append("seitenwaende").append("='").append(getSeitenwaende()).append("' ");			
+        buffer.append("wandhoehe").append("='").append(getWandhoehe()).append("' ");			
+        buffer.append("bodenplatte").append("='").append(getBodenplatte()).append("' ");
+        buffer.append("ueberdachung").append("='").append(getUeberdachung()).append("' ");
+        buffer.append("auffangbeh").append("='").append(getAuffangbeh()).append("' ");
+        buffer.append("volumenAuffangbeh").append("='").append(getVolumen_auffangbeh()).append("' ");			
+        buffer.append("rohrleitung").append("='").append(getRohrleitung()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("]");
@@ -290,8 +404,12 @@ public class VawsJgs  implements java.io.Serializable {
         this.brunnen_abstand = copy.getBrunnen_abstand();            
         this.tierhaltung = copy.getTierhaltung();            
         this.seitenwaende = copy.getSeitenwaende();            
-        this.wandhoehe = copy.getWandhoehe();            
-        this.volumen_aufbehaelter = copy.getVolumen_aufbehaelter();            
+        this.wandhoehe = copy.getWandhoehe();
+        this.bodenplatte = copy.getBodenplatte();
+        this.ueberdachung = copy.getUeberdachung();
+        this.auffangbeh = copy.getAuffangbeh();
+        this.volumen_auffangbeh = copy.getVolumen_auffangbeh();
+        this.rohrleitung = copy.getRohrleitung();
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
     }    

@@ -269,13 +269,23 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel datenJgsTab;
     private JPanel datenAbfuellflaechenJgsTab;
     private IntegerField lagerflaecheFeld;
-    private IntegerField gewaesser_abstandFeld;
-    private LimitedTextField gewaesser_nameFeld;
-    private IntegerField brunnen_abstandFeld;
+    private IntegerField abstandGewFeld;
+    private LimitedTextField gewNameFeld;
+    private IntegerField abstandBrunnenFeld;
     private LimitedTextField tierhaltungFeld;
     private JCheckBox seitenwandCheck;
     private IntegerField wandhoeheFeld;
-    private IntegerField volumen_aufbehaelterFeld;
+    private LimitedTextField bodenplatteFeld;
+    private JCheckBox ueberdachungCheck;
+    private JComboBox auffangbehBox;
+    private IntegerField volumenAuffangbehFeld;
+    private JComboBox rohrleitungBox;
+    private TextFieldDateChooser dichtheitChooser;
+    private JCheckBox drainageCheck;
+    private JCheckBox fuellanzeigerCheck;
+    private JCheckBox schieberCheck;
+    private JCheckBox abdeckungCheck;
+    private JCheckBox leitung_geprueftCheck;
     
     // Ausführung (Abfüllflächen)
     private JPanel ausfuehrungAbfuellflaechenTab;
@@ -514,6 +524,28 @@ public class VawsEditor extends AbstractBaseEditor {
         schutzAntiheberCheck = new JCheckBox("Antihebersicherung");
         beschreibungAFeld = new LimitedTextArea(255);
         beschreibungSFeld = new TextArea();
+        
+        //JGS 
+        lagerflaecheFeld = new IntegerField();
+        abstandGewFeld = new IntegerField();
+        gewNameFeld = new LimitedTextField(25);
+        abstandBrunnenFeld = new IntegerField();
+        tierhaltungFeld = new LimitedTextField(25);
+        seitenwandCheck = new JCheckBox("Seitenwand");
+        wandhoeheFeld = new IntegerField();
+        bodenplatteFeld = new LimitedTextField(25);
+        ueberdachungCheck = new JCheckBox("Überdachung");
+        auffangbehBox = new JComboBox(DatabaseQuery.getVawsBehaelterarten());
+        auffangbehBox.setEditable(false);
+        volumenAuffangbehFeld = new IntegerField();
+        rohrleitungBox = new JComboBox(DatabaseQuery.getVawsBehaelterarten());
+        rohrleitungBox.setEditable(false);
+        dichtheitChooser = new TextFieldDateChooser();
+        drainageCheck = new JCheckBox("Kontrolldrainage");
+        fuellanzeigerCheck = new JCheckBox("Füllstandsanzeiger");
+        schieberCheck = new JCheckBox("Schieber/Ventile zugänglich");
+        abdeckungCheck = new JCheckBox("Abdeckung vorhanden");
+        leitung_geprueftCheck = new JCheckBox("Leitungen geprüft");
 
         // Leitungen (Lageranlagen)
         oberIrdischCheck = new JCheckBox("Oberirdisch");
@@ -530,7 +562,7 @@ public class VawsEditor extends AbstractBaseEditor {
         // Ausführung (Abfüllflächen)
         bodenflaechenAusfBox = new JComboBox(
             DatabaseQuery.getVawsBodenflaechenausf());
-        bodenflaechenAusfBox.setEditable(false);
+        bodenflaechenAusfBox.setEditable(true);
         dickeFeld = new DoubleField(0);
         gueteFeld = new LimitedTextField(50);
         fugenMaterialFeld = new LimitedTextField(50);
@@ -720,7 +752,7 @@ public class VawsEditor extends AbstractBaseEditor {
         topBuilder.append(header, 9);
 //        topBuilder.append(ButtonBarFactory.buildRightAlignedBar(reportButton), 7);
 //        topBuilder.append(subHeader, 9);
-        /*hnrLabel =*/ topBuilder.append("Herstell-Nr.:");
+        /*hnrLabel =*/ topBuilder.append("Bezeichnung / Zuordnung:");
         topBuilder.append("Flüssigkeit:");
         topBuilder.append("VbF:");
         topBuilder.append("Gefährdungsstufe:");
@@ -1021,42 +1053,55 @@ public class VawsEditor extends AbstractBaseEditor {
             tabbedPane.addTab("Ausführung", getAbfuellflaecheJgsTab());
 
             mengeFeld.setValue(getFachdaten().getMenge());
-            
+            lagerflaecheFeld.setValue(getJgs().getLagerflaeche());
+            abstandGewFeld.setValue(getJgs().getGewaesser_abstand());
+            gewNameFeld.setText(getJgs().getGewaesser_name());
+            abstandBrunnenFeld.setValue(getJgs().getBrunnen_abstand());
+            tierhaltungFeld.setText(getJgs().getTierhaltung());
+                        
             if(getJgs().getSeitenwaende()!=null)
-                eohCheck.setSelected(getJgs().getSeitenwaende());
+                seitenwandCheck.setSelected(getJgs().getSeitenwaende());
             else
-                eohCheck.setSelected(false);
-//
-//            if(getAbfuellflaeche().getEf()!=null)
-//                efCheck.setSelected(getAbfuellflaeche().getEf());
-//            else
-//                efCheck.setSelected(false);
-//
-//            if(getAbfuellflaeche().getAbfsaniert()!=null)
-//                saniertCheck.setSelected(getAbfuellflaeche().getAbfsaniert());
-//            else
-//                saniertCheck.setSelected(false);
-//
-//            if(getAbfuellflaeche().getAbfneuerstellt()!=null)
-//                neuErstelltCheck.setSelected(getAbfuellflaeche().getAbfneuerstellt());
-//            else
-//                neuErstelltCheck.setSelected(false);
+            	seitenwandCheck.setSelected(false);
+            
+            wandhoeheFeld.setValue(getJgs().getWandhoehe());
+            bodenflaechenAusfBox.setSelectedItem(getJgs().getBodenplatte());
 
-//
-//            bodenflaechenAusfBox.setSelectedItem(getAbfuellflaeche().getBodenflaechenausf());
-//            dickeFeld.setValue(getAbfuellflaeche().getDicke());
-//            gueteFeld.setText(getAbfuellflaeche().getGuete());
-//            fugenMaterialFeld.setText(getAbfuellflaeche().getFugenmaterial());
-//            niederschlagSchutzBox.setSelectedItem(getAbfuellflaeche().getNiederschlagschutz());
-//
-//            if(getFachdaten().getDoppelwandig()!=null)
-//                abscheiderVorhandenCheck.setSelected(getFachdaten().getDoppelwandig());
-//            else
-//                abscheiderVorhandenCheck.setSelected(false);
-//
-//            beschrBodenflaecheArea.setText(getAbfuellflaeche().getBeschbodenfl());
-//            beschrFugenmaterialArea.setText(getAbfuellflaeche().getBeschfugenmat());
-//            beschrAblNiederschlArea.setText(getAbfuellflaeche().getBeschableitung());
+			if (getJgs().getUeberdachung() != null)
+				ueberdachungCheck.setSelected(getJgs().getUeberdachung());
+			else
+				ueberdachungCheck.setSelected(false);    
+			
+			auffangbehBox.setSelectedItem(getJgs().getAuffangbeh());
+			volumenAuffangbehFeld.setValue(getJgs().getVolumen_auffangbeh());
+			rohrleitungBox.setSelectedItem(getJgs().getRohrleitung());
+	        dichtheitChooser.setDate(getJgs().getDichtheitspruefung());
+
+			if (getJgs().getDrainage() != null)
+				drainageCheck.setSelected(getJgs().getDrainage());
+			else
+				drainageCheck.setSelected(false);  
+
+			if (getJgs().getFuellanzeiger() != null)
+				fuellanzeigerCheck.setSelected(getJgs().getFuellanzeiger());
+			else
+				fuellanzeigerCheck.setSelected(false);  
+
+			if (getJgs().getSchieber() != null)
+				schieberCheck.setSelected(getJgs().getSchieber());
+			else
+				schieberCheck.setSelected(false);  
+
+			if (getJgs().getAbdeckung() != null)
+				abdeckungCheck.setSelected(getJgs().getAbdeckung());
+			else
+				abdeckungCheck.setSelected(false);  
+
+			if (getJgs().getLeitung_geprueft() != null)
+				leitung_geprueftCheck.setSelected(getJgs().getLeitung_geprueft());
+			else
+				leitung_geprueftCheck.setSelected(false);  
+            
         }
         tabbedPane.addTab("Sachverständigenprüfung", getSvPruefungTab());
         svPruefungModel.setFachdaten(getFachdaten());
@@ -1235,12 +1280,29 @@ public class VawsEditor extends AbstractBaseEditor {
             success = success && getAbscheider().merge();
 
         }
-        if (getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_AP) ||  
-            getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_FS) ||
+        if (getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_FS) ||
             getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GK) || 
             getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GHB)) {
-            
-        	getJgs().setSeitenwaende(eohCheck.isSelected());
+         
+        	getJgs().setBodenplatte((String)bodenflaechenAusfBox.getSelectedItem());
+        	getJgs().setBrunnen_abstand(abstandBrunnenFeld.getIntValue());
+        	getJgs().setGewaesser_abstand(abstandGewFeld.getIntValue());
+        	getJgs().setGewaesser_name(gewNameFeld.getText());
+        	getJgs().setLagerflaeche(lagerflaecheFeld.getIntValue());   
+        	getJgs().setSeitenwaende(seitenwandCheck.isSelected());
+        	getJgs().setTierhaltung(tierhaltungFeld.getText());
+        	getJgs().setWandhoehe(wandhoeheFeld.getIntValue());
+        	getJgs().setAuffangbeh((String)auffangbehBox.getSelectedItem());
+        	getJgs().setVolumen_auffangbeh(volumenAuffangbehFeld.getIntValue());
+        	getJgs().setRohrleitung((String)rohrleitungBox.getSelectedItem());
+        	getJgs().setDichtheitspruefung(dichtheitChooser.getDate());
+        	getJgs().setDrainage(drainageCheck.isSelected());
+        	getJgs().setFuellanzeiger(fuellanzeigerCheck.isSelected());
+        	getJgs().setSchieber(schieberCheck.isSelected());
+        	getJgs().setAbdeckung(abdeckungCheck.isSelected());
+        	getJgs().setLeitung_geprueft(leitung_geprueftCheck.isSelected());
+        	
+        	
 
             success = success && getJgs().merge();
         }
@@ -1743,7 +1805,13 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getAbfuellflaecheJgsTab() {
         if (datenAbfuellflaechenJgsTab == null) {
+
         	
+			JScrollPane bemerkungScroller = new JScrollPane(
+					bemerkungArea,
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			
             
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
@@ -1753,14 +1821,39 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.setDefaultDialogBorder();
 
 
-            builder.appendSeparator("Abfüllfläche");
+            builder.appendSeparator("Ausführung");
 
-            builder.append("", neuErstelltCheck);
-            builder.append("", eohCheck);
-            builder.append("", saniertCheck);
-            builder.append("", efCheck);
-            builder.append("", unbktCheck);
-            builder.append("", svbCheck);
+            builder.append("Bodenplatte", bodenflaechenAusfBox);
+            
+            builder.nextLine();
+
+            builder.append("", seitenwandCheck);
+            builder.append("", drainageCheck);
+
+            builder.append("", fuellanzeigerCheck);
+            builder.append("", schieberCheck);
+
+            builder.append("", abdeckungCheck);
+            builder.append("", leitung_geprueftCheck);
+            
+            builder.nextLine();
+
+            builder.appendSeparator("Auffangvorrichtung");
+            
+            builder.append("Auffangbehälter", auffangbehBox);
+            builder.append("Behältervolumen [m³]", volumenAuffangbehFeld);
+            
+            builder.append("Rohrleitung", rohrleitungBox);
+            builder.append("Wandhöhe [m]", wandhoeheFeld);
+
+            builder.nextLine();
+
+            builder.appendSeparator("Bemerkungen");
+            builder.appendRow("3dlu");
+            builder.appendRow("fill:30dlu:grow");
+            builder.nextLine(2);
+
+            builder.append(bemerkungScroller, 7);
 
 
             datenAbfuellflaechenJgsTab = builder.getPanel();
@@ -1771,18 +1864,10 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getDatenJgsTab() {
         if (datenJgsTab == null) {
 
-			JScrollPane bemerkungScroller = new JScrollPane(
-					bemerkungArea,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
 			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         	
-			this.tabellenSplit = Factory.createStrippedSplitPane(
-					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-					chronoScroller, 0.3);
         	
             
             FormLayout layout = new FormLayout(
@@ -1793,12 +1878,18 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.setDefaultDialogBorder();
 
             builder.appendSeparator("Stammdaten");
-            builder.append("Behälterart:", behaelterArtBox);
-            builder.append("Behältergröße [m³]:", mengeFeld);
-            
-            builder.appendSeparator("");
             builder.append("Baujahr:", baujahrFeld);
-            builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
+            builder.append("Tierhaltung:", tierhaltungFeld);
+            
+            builder.append("Lagerfläche [m²]:", lagerflaecheFeld);
+            builder.append("Lagervolumen [m³]:", mengeFeld);
+            
+            builder.append("Abstand zu Gewässer [m]:", abstandGewFeld);
+            builder.append("Gewässername:", gewNameFeld);
+            
+            builder.append("Abstand zu Brunnen [m]:", abstandBrunnenFeld);
+
+            builder.nextLine();
 
             builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
             builder.append("Erfassung:", erfassungChooser);
@@ -1806,15 +1897,14 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append("Genehmigung:", genehmigungChooser);
             builder.append("Stillegung:", stillegungChooser);
 
-            builder.append("Aktenzeichen:", aktenzeichenField);
             builder.nextLine();
 
-            builder.appendSeparator("Bemerkungen und Anlagenchronologie");
+            builder.appendSeparator("Anlagenchronologie");
             builder.appendRow("3dlu");
             builder.appendRow("fill:30dlu:grow");
             builder.nextLine(2);
 
-            builder.append(this.tabellenSplit, 7);
+            builder.append(chronoScroller, 7);
             
 
 
