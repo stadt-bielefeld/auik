@@ -36,6 +36,11 @@ import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.JerseyWebTarget;
 
+import org.glassfish.jersey.filter.LoggingFilter;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.util.logging.FileHandler;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -282,7 +287,16 @@ public class ELKASync extends AbstractModul {
 							}
 							String sel = (String) selection.getSelectedItem();
 							JerseyClient client = new JerseyClientBuilder().build();
-							List<Entity<?>> entityList = 
+                            Logger l = Logger.getAnonymousLogger();
+                            try{
+                                l.addHandler(new FileHandler(sel+"-network.log"));
+                            }
+                            catch(IOException e){
+                                log.debug(e);
+                            }
+                            client.register(new LoggingFilter(l, true));
+
+                            List<Entity<?>> entityList = 
 								new ArrayList<Entity<?>>();
 							List<Object> dbList = new ArrayList<Object>();
 							int[] rows = ELKASync.this.dbTable.getSelectedRows();
@@ -383,6 +397,15 @@ public class ELKASync extends AbstractModul {
 							}
 							String sel = (String) selection.getSelectedItem();
 							JerseyClient client = new JerseyClientBuilder().build();
+                            Logger l = Logger.getAnonymousLogger();
+                            try{
+                                l.addHandler(new FileHandler(sel + "-network.log"));
+                            }
+                            catch(IOException e){
+                                log.debug(e);
+                            }
+                            client.register(new LoggingFilter(l, true));
+
 							List<Entity<?>> entityList = 
 								new ArrayList<Entity<?>>();
 							List<?> dbList = null;
@@ -483,7 +506,7 @@ public class ELKASync extends AbstractModul {
 					printStream.append("Sende " + type + "\n");
 					printStream.append("--------------------------------------\n");
 					for (int i = 0; i < entities.size(); i++) {
-						Invocation inv =
+                            Invocation inv =
 							target.request(
 									MediaType.APPLICATION_JSON +
 									";charset=UTF-8")

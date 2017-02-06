@@ -58,7 +58,7 @@ public class VawsJgs  implements java.io.Serializable {
     private String bodenplatte;
     private boolean ueberdachung;
     private String auffangbeh;
-    private Integer volumen_auffangbeh;
+    private Double volumen_auffangbeh;
     private String rohrleitung;
     private Date dichtheitspruefung;
     private Boolean drainage;
@@ -91,7 +91,7 @@ public class VawsJgs  implements java.io.Serializable {
 			String gewaesser_name, Integer brunnen_abstand, String tierhaltung,
 			Boolean seitenwaende, Integer wandhoehe, String bodenplatte,
 			boolean ueberdachung, String auffangbeh,
-			Integer volumen_auffangbeh, String rohrleitung,
+			Double volumen_auffangbeh, String rohrleitung,
 			Date dichtheitspruefung, Boolean drainage, Boolean fuellanzeiger,
 			Boolean schieber, Boolean abdeckung, Boolean leitung_geprueft,
 			boolean enabled, boolean deleted) {
@@ -201,11 +201,11 @@ public class VawsJgs  implements java.io.Serializable {
 		this.auffangbeh = auffangbeh;
 	}
 
-	public Integer getVolumen_auffangbeh() {
+	public Double getVolumen_auffangbeh() {
 		return volumen_auffangbeh;
 	}
 
-	public void setVolumen_auffangbeh(Integer volumen_auffangbeh) {
+	public void setVolumen_auffangbeh(Double volumen_auffangbeh) {
 		this.volumen_auffangbeh = volumen_auffangbeh;
 	}
 

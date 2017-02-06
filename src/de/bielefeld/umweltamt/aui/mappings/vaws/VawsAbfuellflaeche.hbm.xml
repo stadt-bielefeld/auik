@@ -49,6 +49,9 @@
         <property name="beschableitung" type="java.lang.String">
             <column name="beschableitung" />
         </property>
+        <property name="groesse" type="java.lang.Integer">
+            <column name="groesse" />
+        </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
         </property>

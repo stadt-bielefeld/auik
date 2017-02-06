@@ -162,6 +162,7 @@ public class VawsEditor extends AbstractBaseEditor {
     private TextFieldDateChooser erfassungChooser;
     private TextFieldDateChooser stillegungChooser;
     private LimitedTextField aktenzeichenField;
+    private IntegerField groesseField;
     private DoubleField pruefTurnusFeld;
     private LimitedTextArea bemerkungArea;
     private JTable anlagenChronoTabelle;
@@ -278,7 +279,7 @@ public class VawsEditor extends AbstractBaseEditor {
     private LimitedTextField bodenplatteFeld;
     private JCheckBox ueberdachungCheck;
     private JComboBox auffangbehBox;
-    private IntegerField volumenAuffangbehFeld;
+    private DoubleField volumenAuffangbehFeld;
     private JComboBox rohrleitungBox;
     private TextFieldDateChooser dichtheitChooser;
     private JCheckBox drainageCheck;
@@ -499,6 +500,7 @@ public class VawsEditor extends AbstractBaseEditor {
         // TODO: Ausführung aus anderer Tabelle / Vorgaben? Welche noch?
 
         // Daten (Abfüllflächen)
+        groesseField = new IntegerField();
         eohCheck = new JCheckBox("Einfach o. Herkömmlich");
         efCheck = new JCheckBox("Eignungsfeststellung");
         svbCheck = new JCheckBox("Sachverständigenbescheinigung");
@@ -537,7 +539,7 @@ public class VawsEditor extends AbstractBaseEditor {
         ueberdachungCheck = new JCheckBox("Überdachung");
         auffangbehBox = new JComboBox(DatabaseQuery.getVawsBehaelterarten());
         auffangbehBox.setEditable(false);
-        volumenAuffangbehFeld = new IntegerField();
+        volumenAuffangbehFeld = new DoubleField(0);
         rohrleitungBox = new JComboBox(DatabaseQuery.getVawsBehaelterarten());
         rohrleitungBox.setEditable(false);
         dichtheitChooser = new TextFieldDateChooser();
@@ -1033,6 +1035,7 @@ public class VawsEditor extends AbstractBaseEditor {
             bodenflaechenAusfBox.setSelectedItem(getAbfuellflaeche().getBodenflaechenausf());
             dickeFeld.setValue(getAbfuellflaeche().getDicke());
             gueteFeld.setText(getAbfuellflaeche().getGuete());
+            groesseField.setValue(getAbfuellflaeche().getGroesse());
             fugenMaterialFeld.setText(getAbfuellflaeche().getFugenmaterial());
             niederschlagSchutzBox.setSelectedItem(getAbfuellflaeche().getNiederschlagschutz());
 
@@ -1232,6 +1235,7 @@ public class VawsEditor extends AbstractBaseEditor {
             getAbfuellflaeche().setBodenflaechenausf((String)bodenflaechenAusfBox.getSelectedItem());
             getAbfuellflaeche().setDicke(dickeFeld.getFloatValue());
             getAbfuellflaeche().setGuete(gueteFeld.getText());
+            getAbfuellflaeche().setGroesse(groesseField.getIntValue());
             getAbfuellflaeche().setFugenmaterial(fugenMaterialFeld.getText());
             getAbfuellflaeche().setNiederschlagschutz((String)niederschlagSchutzBox.getSelectedItem());
             getAbfuellflaeche().setAbscheidervorh(abscheiderVorhandenCheck.isSelected());
@@ -1293,7 +1297,7 @@ public class VawsEditor extends AbstractBaseEditor {
         	getJgs().setTierhaltung(tierhaltungFeld.getText());
         	getJgs().setWandhoehe(wandhoeheFeld.getIntValue());
         	getJgs().setAuffangbeh((String)auffangbehBox.getSelectedItem());
-        	getJgs().setVolumen_auffangbeh(volumenAuffangbehFeld.getIntValue());
+        	getJgs().setVolumen_auffangbeh(volumenAuffangbehFeld.getDoubleValue());
         	getJgs().setRohrleitung((String)rohrleitungBox.getSelectedItem());
         	getJgs().setDichtheitspruefung(dichtheitChooser.getDate());
         	getJgs().setDrainage(drainageCheck.isSelected());
@@ -1778,6 +1782,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append("Stillegung:", stillegungChooser);
 
             builder.append("Aktenzeichen:", aktenzeichenField);
+            builder.append("Größe [m²]:", groesseField);
             builder.nextLine();
 
             builder.appendSeparator("Abfüllfläche");
@@ -1879,7 +1884,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
             builder.appendSeparator("Stammdaten");
             builder.append("Baujahr:", baujahrFeld);
-            builder.append("Tierhaltung:", tierhaltungFeld);
+            builder.append("Aktenzeichen:", aktenzeichenField);
             
             builder.append("Lagerfläche [m²]:", lagerflaecheFeld);
             builder.append("Lagervolumen [m³]:", mengeFeld);
@@ -1888,6 +1893,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append("Gewässername:", gewNameFeld);
             
             builder.append("Abstand zu Brunnen [m]:", abstandBrunnenFeld);
+            builder.append("Tierhaltung:", tierhaltungFeld);
 
             builder.nextLine();
 

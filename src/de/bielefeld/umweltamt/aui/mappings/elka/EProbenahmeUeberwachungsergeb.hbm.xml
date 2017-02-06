@@ -32,10 +32,10 @@
    <column name="messergebnis_text_opt"/>
   </property>
   <property generated="never" lazy="false" name="messergebnis" type="java.lang.Float">
-   <column name="messergebnis" precision="8" scale="8"/>
+   <column name="wert" precision="8" scale="8"/>
   </property>
   <property generated="never" lazy="false" name="masseinheitenNr" type="java.lang.Integer">
-   <column name="masseinheiten_nr"/>
+   <column name="id_elka"/>
   </property>
  </class>
 </hibernate-mapping>

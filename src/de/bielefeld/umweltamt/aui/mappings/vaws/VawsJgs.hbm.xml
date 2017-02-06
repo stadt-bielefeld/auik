@@ -39,7 +39,7 @@
         <property name="auffangbeh" type="java.lang.String">
             <column name="auffangbeh" />
         </property>
-        <property name="volumen_auffangbeh" type="java.lang.Integer">
+        <property name="volumen_auffangbeh" type="java.lang.Double">
             <column name="volumen_auffangbeh" />
         </property>
         <property name="rohrleitung" type="java.lang.String">

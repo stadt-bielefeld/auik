@@ -54,7 +54,7 @@ public class EMessstelleModel extends ListTableModel {
             case 0:
           		//value = stelle.getStandortNr().getAdresse().getName1();
                 //value = EAdresse.findById(stelle.getNr()).getName1();
-				value = stelle.getStandort().getAdresse().getName1();
+				value = stelle.getStandort().getAdresse().getNr();
                 break;
             case 1:
                 value = stelle.getBezeichnung();

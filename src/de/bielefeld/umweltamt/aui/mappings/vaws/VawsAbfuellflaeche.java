@@ -62,7 +62,7 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
     private String beschableitung;
     private boolean enabled;
     private boolean deleted;
-    
+    private Integer groesse;
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -220,6 +220,15 @@ public class VawsAbfuellflaeche  implements java.io.Serializable {
     public void setBeschableitung(String beschableitung) {
         this.beschableitung = beschableitung;
     }
+    
+	public Integer getGroesse() {
+		return groesse;
+	}
+
+	public void setGroesse(Integer groesse) {
+		this.groesse = groesse;
+	}
+
 
     public boolean isEnabled() {
         return this.enabled;
