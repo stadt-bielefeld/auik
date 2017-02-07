@@ -342,7 +342,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
     	
     	public static List<BasisObjekt> getObjekteByStrasse(BasisAdresse adr,
 			String abteilung, Integer artid, Boolean matchArtId) {
-		String strasse = adr.getStrasse();
+    		    		
+		String strasse = adr.getStrasse().replaceAll("'", "''");
 		Integer nr = adr.getHausnr();
 		String zus = adr.getHausnrzus();
 
