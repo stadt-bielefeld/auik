@@ -169,7 +169,8 @@ public class SettingsManager {
 	private void initAppSettings() {
 		appSettings = new SortedProperties();
 		// SortedProperties defaults = new SortedProperties();
-		appSettings.setProperty("auik.prefs.res_x", "700");
+		appSettings.setProperty("auik.elka.identifier", "");
+        appSettings.setProperty("auik.prefs.res_x", "700");
 		appSettings.setProperty("auik.prefs.res_y", "525");
 		appSettings.setProperty("auik.prefs.maximized", "false");
 		appSettings.setProperty("auik.prefs.save_size", "true");
