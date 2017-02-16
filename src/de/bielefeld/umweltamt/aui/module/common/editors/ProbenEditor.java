@@ -169,7 +169,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Dieser Wert stellt den Preis einer Stunde f&uuml;r Personal- und
      * Sachkosten in Cent dar.
      **/
-    public static final double PERSONAL_UND_SACHKOSTEN = 5544;
+    public static final double PERSONAL_UND_SACHKOSTEN = 5758;
 
     /**
      * Dieser Wert gibt an, wieviele Stellen das Feld in der Datei kasse.txt

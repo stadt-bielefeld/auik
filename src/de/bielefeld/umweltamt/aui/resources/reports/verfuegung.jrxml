@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2016-01-27T07:10:01 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="25" uuid="64078b94-0af8-4f19-a992-4e90f5a9f28f">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="102"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1442"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -33,105 +31,105 @@
 	<detail>
 		<band height="298" splitType="Stretch">
 			<staticText>
-				<reportElement x="348" y="110" width="130" height="10" uuid="cfa14842-4da0-4a8b-9a4d-1152168b93e2"/>
+				<reportElement x="348" y="182" width="130" height="10" uuid="cfa14842-4da0-4a8b-9a4d-1152168b93e2"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Frau Melcher]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="147" width="40" height="10" uuid="d450e093-2e64-474a-8d1b-8e289072e54d"/>
+				<reportElement x="348" y="219" width="40" height="10" uuid="d450e093-2e64-474a-8d1b-8e289072e54d"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Telefax]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="53" width="125" height="15" uuid="5a5d1989-e693-447c-b38b-b28ce3fcef34"/>
+				<reportElement x="348" y="125" width="125" height="15" uuid="5a5d1989-e693-447c-b38b-b28ce3fcef34"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Umweltamt]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="138" width="40" height="10" uuid="531b3628-c3d9-4c28-8d62-8b994fe9db46"/>
+				<reportElement x="348" y="210" width="40" height="10" uuid="531b3628-c3d9-4c28-8d62-8b994fe9db46"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Telefon]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="156" width="40" height="10" uuid="fd724b29-4ebc-4284-8455-c74dbc20f35a"/>
+				<reportElement x="348" y="228" width="40" height="10" uuid="fd724b29-4ebc-4284-8455-c74dbc20f35a"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Internet]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="67" width="130" height="10" uuid="53c8d7a7-86e7-4e45-aff6-7f5c0d14136d"/>
+				<reportElement x="348" y="139" width="130" height="10" uuid="53c8d7a7-86e7-4e45-aff6-7f5c0d14136d"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[August-Bebel-Straße 75-77]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="390" y="156" width="83" height="10" uuid="69f20e29-0912-4984-8a28-885de2814d73"/>
+				<reportElement x="390" y="228" width="83" height="10" uuid="69f20e29-0912-4984-8a28-885de2814d73"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[www.bielefeld.de]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="390" y="147" width="83" height="10" uuid="23b04add-1027-4bd6-bdd5-c2a66c33b34d"/>
+				<reportElement x="390" y="219" width="83" height="10" uuid="23b04add-1027-4bd6-bdd5-c2a66c33b34d"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[0521 51-3395]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="15" width="125" height="15" uuid="7ab0dec3-9266-436e-a28b-b019584cc816"/>
+				<reportElement x="348" y="87" width="125" height="15" forecolor="#FF0000" uuid="7ab0dec3-9266-436e-a28b-b019584cc816"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Stadt Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="119" width="125" height="10" uuid="03ba587d-8bf5-42d6-8712-49891496687b"/>
+				<reportElement x="348" y="191" width="125" height="10" uuid="03ba587d-8bf5-42d6-8712-49891496687b"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[Zimmer 309]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="29" width="125" height="15" uuid="392f329e-d250-436b-93dc-e6d7488e1cf6"/>
+				<reportElement x="348" y="101" width="125" height="15" forecolor="#FF0000" uuid="392f329e-d250-436b-93dc-e6d7488e1cf6"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Der Oberbürgermeister]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="96" width="125" height="15" uuid="2e051a3f-8547-49b2-a16c-97f8d2c62a1c"/>
+				<reportElement x="348" y="168" width="125" height="15" uuid="2e051a3f-8547-49b2-a16c-97f8d2c62a1c"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Auskunft gibt Ihnen:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="390" y="138" width="83" height="10" uuid="e1b94c8d-8d89-4409-818c-9463e96b8c21"/>
+				<reportElement x="390" y="210" width="83" height="10" uuid="e1b94c8d-8d89-4409-818c-9463e96b8c21"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[0521 51-6561]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="166" width="40" height="10" uuid="efeaadd0-7c80-41b2-a8cf-7547ce1803e9"/>
+				<reportElement x="348" y="238" width="40" height="10" uuid="efeaadd0-7c80-41b2-a8cf-7547ce1803e9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
 				<text><![CDATA[E-Mail]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="390" y="166" width="93" height="10" uuid="cb5baf20-cdb9-4cdf-8078-f1129a27df77"/>
+				<reportElement x="390" y="238" width="93" height="10" uuid="cb5baf20-cdb9-4cdf-8078-f1129a27df77"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="7"/>
 				</textElement>
@@ -182,10 +180,6 @@
 			<rectangle>
 				<reportElement x="-13" y="276" width="9" height="6" backcolor="#000000" uuid="a4009528-7fce-4d99-a5f0-6600a1c07291"/>
 			</rectangle>
-			<image>
-				<reportElement x="146" y="1" width="185" height="65" uuid="2036202f-7104-457d-a4b8-52edce1e1569"/>
-				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/gui/images/icons/gebuehrenbescheid.png"]]></imageExpression>
-			</image>
 			<rectangle>
 				<reportElement x="-13" y="118" width="9" height="6" backcolor="#000000" uuid="64a1106e-6eca-4972-b137-ecff56f35842"/>
 			</rectangle>
@@ -196,10 +190,6 @@
 				</textElement>
 				<text><![CDATA[Stadt Bielefeld · 360.11 · D-33597 Bielefeld]]></text>
 			</staticText>
-			<image>
-				<reportElement x="400" y="175" width="75" height="101" uuid="0348806a-164a-4c07-8e1c-6ae7321915ed"/>
-				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/gui/images/icons/gebuehrenbescheid-icon.jpg"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="-30" y="117" width="17" height="12" uuid="64ebe7a6-4d3d-446e-970b-b709dcf4ff00"/>
 				<textElement>
@@ -259,6 +249,10 @@
 					<textFieldExpression><![CDATA[$P{firmaOrt}]]></textFieldExpression>
 				</textField>
 			</frame>
+			<image>
+				<reportElement x="348" y="0" width="44" height="62" uuid="7c98c344-76ed-40d0-9f93-a13fd7dde3d1"/>
+				<imageExpression><![CDATA["de/bielefeld/umweltamt/aui/gui/images/icons/Logo_BI.PNG"]]></imageExpression>
+			</image>
 		</band>
 		<band height="84">
 			<staticText>
@@ -266,7 +260,7 @@
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 39. Änderungssatzung vom 14.12.2015 (KdS)]]></text>
+				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 40. Änderungssatzung vom 15.12.2016 (KdS)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="20" y="51" width="360" height="15" uuid="7a000f5a-0201-4d0a-aa7b-2c470330095d"/>
@@ -609,25 +603,11 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<text><![CDATA[14.30 - 18.00 Uhr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="26" width="105" height="9" uuid="53b97974-cb4e-4119-82da-c08211e4642d"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="6"/>
-				</textElement>
-				<text><![CDATA[D-33602 Bielefeld]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="186" y="2" width="105" height="9" uuid="56149ca0-5c9d-4a70-8aa6-356b969a5cc9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lieferanschrift:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="186" y="18" width="105" height="9" uuid="b6197122-f0ba-4e23-a9d1-2e7634d3c4b0"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="6"/>
-				</textElement>
-				<text><![CDATA[Neues Rathaus (Niederwall 23)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="186" y="10" width="105" height="9" uuid="ba903b1b-95c0-47ae-bb3f-1ce3bd728aae"/>
@@ -691,6 +671,27 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[BIC: SPBIDE3BXXX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="27" width="105" height="9" uuid="493add1a-ea25-4251-9ef6-29df4738e62c"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[August-Bebel-Straße 75-77]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="19" width="105" height="9" uuid="56334adb-b9f0-4c6d-81c7-122c1fdec67d"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[Umweltamt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="35" width="105" height="9" uuid="3021afb3-4dda-4ff7-8798-29ae6f47c0f6"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<text><![CDATA[33602 Bielefeld]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
