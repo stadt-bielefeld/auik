@@ -4,17 +4,14 @@
 <!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut" table="atl_sielhaut" schema="auik" lazy="false" optimistic-lock="version">
-        <id name="objektid" type="java.lang.Integer">
-            <column name="objektid" />
-            <generator class="foreign">
-                <param name="property">basisObjekt</param>
-            </generator>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
         <!--<one-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" constrained="true"></one-to-one>-->
         <many-to-one name="atlProbepkt" class="de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt" fetch="select">
           <column name="probepktid" />
         </many-to-one>
-        <one-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" constrained="true"></one-to-one>
         <property name="bezeichnung" type="java.lang.String">
             <column name="bezeichnung" />
         </property>
@@ -71,6 +68,13 @@
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
+         <column name="_enabled" not-null="true" />
         </property>
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />

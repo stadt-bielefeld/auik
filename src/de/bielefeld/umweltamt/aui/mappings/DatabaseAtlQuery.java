@@ -954,7 +954,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria
 																	.forClass(AtlSielhaut.class)
-																	.createAlias("basisObjekt", "objekt")
+																	.createAlias("atlProbepkt", "probepkt")
+																	.createAlias("probepkt.basisObjekt", "objekt")
 																	.add(Restrictions.ilike("bezeichnung",
 																							search,
 																							MatchMode.START))

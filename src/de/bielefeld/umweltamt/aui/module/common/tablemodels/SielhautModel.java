@@ -52,7 +52,7 @@ public class SielhautModel extends ListTableModel {
                 }
                 break;
             case 5:
-                if (spunkt.getBasisObjekt().isInaktiv() == true) {
+                if (spunkt.getAtlProbepkt().getBasisObjekt().isInaktiv() == true) {
                     tmp = new Boolean(true);
                 } else {
                     tmp = new Boolean(false);

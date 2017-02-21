@@ -240,8 +240,9 @@ public class SielhautBearbeiten extends AbstractModul {
     private AtlSielhaut spunkt;
     private AtlProbepkt sprobePkt;
     private BasisObjekt objekt;
-    private BasisLage standort;
+    private BasisLage lage;
     private BasisAdresse betreiber;
+    private BasisAdresse standort;
     private BasisObjektarten art;
     private SielhautProbeModel probeModel;
 
@@ -276,9 +277,9 @@ public class SielhautBearbeiten extends AbstractModul {
         else{
         	List<AtlSielhaut> list1 = AtlSielhaut.getAll();
         	if(list1.isEmpty() != true){
-        		objekt = list1.get(0).getBasisObjekt();
         		sprobePkt = list1.get(0).getAtlProbepkt();
         		spunkt = list1.get(0);
+        		objekt = sprobePkt.getBasisObjekt();
                 setSielhautPunkt(this.spunkt);
         	}
         	
@@ -297,25 +298,26 @@ public class SielhautBearbeiten extends AbstractModul {
     private BasisObjekt getB1(){
     	SielhautModel tmp = new SielhautModel();
     	AtlSielhaut t1 =(AtlSielhaut) tmp.getObjectAtRow(0);
-    	return t1.getBasisObjekt();
+    	return t1.getAtlProbepkt().getBasisObjekt();
     }
 
     public void setSielhautPunkt(AtlSielhaut sp) {
         this.spunkt = sp;
-        if (this.spunkt.getObjektid() != null) {
-            this.sprobePkt = AtlProbepkt.findByObjektId(
-                this.spunkt.getBasisObjekt().getObjektid());
+        if (this.spunkt.getId() != null) {
+            this.sprobePkt = this.spunkt.getAtlProbepkt();
+            this.objekt = sprobePkt.getBasisObjekt();
             getPrAnlegenButton().setEnabled(true);
             getTabelleExportButton().setEnabled(true);
         } else {
             this.objekt = new BasisObjekt();
-            this.standort = BasisLage.findById(
-                DatabaseConstants.BASIS_STANDORT_KEIN_STANDORT);
+            this.lage = new BasisLage();
             this.betreiber = BasisAdresse.findById(
-                DatabaseConstants.BASIS_BETREIBER_ID_KEINE_BETREIBER);
+                DatabaseConstants.BASIS_BETREIBER_ID_Umweltamt_360x33);
+            this.standort = BasisAdresse.findById(
+                DatabaseConstants.BASIS_STANDORT_KEIN_STANDORT);
             this.art = BasisObjektarten.findById(
                 DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE);
-            this.objekt.setBasisLage(this.standort);
+            this.objekt.setBasisLage(this.lage);
             this.objekt.setBasisAdresse(this.betreiber);
             this.objekt.setBasisObjektarten(this.art);
             this.objekt.setInaktiv(false);
@@ -346,8 +348,8 @@ public class SielhautBearbeiten extends AbstractModul {
 
         getSpBemerkungsArea().setText(this.spunkt.getBemerkungen());
 
-        getSpE32Feld().setValue(this.spunkt.getE32());
-        getSpN32Feld().setValue(this.spunkt.getN32());
+        getSpE32Feld().setValue(this.objekt.getBasisLage().getE32());
+        getSpN32Feld().setValue(this.objekt.getBasisLage().getN32());
 
         getSpHaltungsnrFeld().setText(this.spunkt.getHaltungsnr());
         getSpAlarmplannrFeld().setText(this.spunkt.getAlarmplannr());
@@ -419,11 +421,15 @@ public class SielhautBearbeiten extends AbstractModul {
     public boolean saveProbepunkt(BasisObjekt objekt) {
         boolean saved = false;
 
-        objekt = BasisObjekt.findById(objekt.getObjektid());
+//        objekt = BasisObjekt.findById(objekt.getObjektid());
         this.sprobePkt.setBasisObjekt(objekt);
 //        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
 //        this.sprobePkt.setAtlSielhaut(this.spunkt);
 
+        this.lage = BasisLage.merge(objekt.getBasisLage());
+        this.objekt.setBasisLage(lage);
+        this.objekt = BasisObjekt.merge(this.objekt);
+        this.sprobePkt.setBasisObjekt(this.objekt);
         this.sprobePkt = AtlProbepkt.merge(this.sprobePkt);
 
         saved = true;
@@ -467,8 +473,8 @@ public class SielhautBearbeiten extends AbstractModul {
             }
 
             // Rechts- und Hochwert
-            this.spunkt.setE32(getSpE32Feld().getDoubleValue());
-            this.spunkt.setN32(getSpN32Feld().getDoubleValue());
+            this.objekt.getBasisLage().setE32(getSpE32Feld().getDoubleValue().floatValue());
+            this.objekt.getBasisLage().setN32(getSpN32Feld().getDoubleValue().floatValue());
 
             // Haltungs-Nr.
             if ("".equals(getSpHaltungsnrFeld().getText())) {
@@ -489,16 +495,18 @@ public class SielhautBearbeiten extends AbstractModul {
             this.spunkt.setPNachprobe(getSpNachprobeCheck().isSelected());
             this.spunkt.setPFirmenprobe(getSpFirmenprobeCheck().isSelected());
 
-            if (saveObjekt()) {
+            
                 if (saveProbepunkt(this.objekt)) {
 
-                    this.spunkt.setBasisObjekt(this.objekt);
+                	this.spunkt.setAtlProbepkt(this.sprobePkt);
+                    this.spunkt.getAtlProbepkt().setBasisObjekt(this.objekt);
                     this.spunkt.setAtlProbepkt(this.sprobePkt);
+                    this.spunkt.setId(objekt.getId());
 
                     this.spunkt = AtlSielhaut.merge(this.spunkt);
 
                     if (this.spunkt != null) {
-                        this.spunkt = AtlSielhaut.findById(this.spunkt.getObjektid());
+                        this.spunkt = AtlSielhaut.findById(this.spunkt.getId());
 
                         this.frame.changeStatus(
                             "Sielhaut-Messpunkt erfolgreich gespeichert.",
@@ -506,21 +514,17 @@ public class SielhautBearbeiten extends AbstractModul {
                         setSielhautPunkt(this.spunkt);
                     }
                 }
-            } else {
-                this.frame.changeStatus(
-                    "Sielhaut-Messpunkt konnte nicht gespeichert werden!",
-                    HauptFrame.ERROR_COLOR);
-            }
-        }
+            } 
+        
     }
 
     public void showReport() {
-        if (spunkt.getObjektid() != null) {
+        if (spunkt.getId() != null) {
             SettingsManager sm = SettingsManager.getInstance();
             String fotoPath = sm.getSetting("auik.system.spath_fotos");
             String mapPath = sm.getSetting("auik.system.spath_karten");
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("id", spunkt.getObjektid());
+            params.put("id", spunkt.getId());
 
             String bezeichnung=spunkt.getBezeichnung();
             if (bezeichnung != null
@@ -888,8 +892,8 @@ public class SielhautBearbeiten extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     SielhautBearbeiten.this.manager.getSettingsManager()
                         .setSetting("auik.imc.edit_object",
-                            SielhautBearbeiten.this.spunkt
-                                .getBasisObjekt().getObjektid().intValue()
+                            SielhautBearbeiten.this.spunkt.getAtlProbepkt()
+                                .getBasisObjekt().getId().intValue()
                             , false);
                     SielhautBearbeiten.this.manager
                         .switchModul("m_objekt_bearbeiten");
@@ -1890,7 +1894,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 @Override
                 public void opening() {
                     if (SielhautBearbeiten.this.spunkt != null
-                        && SielhautBearbeiten.this.spunkt.getObjektid() != null) {
+                        && SielhautBearbeiten.this.spunkt.getId() != null) {
                         String imgPath = SielhautBearbeiten.this.manager
                             .getSettingsManager().getSetting(
                                 "auik.system.spath_fotos")
@@ -1949,7 +1953,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 @Override
                 public void opening() {
                     if (SielhautBearbeiten.this.spunkt != null
-                        && SielhautBearbeiten.this.spunkt.getObjektid() != null) {
+                        && SielhautBearbeiten.this.spunkt.getId() != null) {
                         String imgPath = SielhautBearbeiten.this.manager
                             .getSettingsManager().getSetting(
                                 "auik.system.spath_karten")

@@ -43,9 +43,8 @@ public class AtlSielhaut  implements java.io.Serializable {
         DatabaseSerialVersionUID.forAtlSielhaut;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer objektid;
+    private Integer id;
     private AtlProbepkt atlProbepkt;
-    private BasisObjekt basisObjekt;
     private String bezeichnung;
     private String haltungsnr;
     private String alarmplannr;
@@ -78,7 +77,6 @@ public class AtlSielhaut  implements java.io.Serializable {
     public AtlSielhaut(
         AtlProbepkt atlProbepkt, BasisObjekt basisObjekt, boolean enabled, boolean deleted) {
         this.atlProbepkt = atlProbepkt;
-        this.basisObjekt = basisObjekt;
         this.enabled = enabled;
         this.deleted = deleted;
     }
@@ -87,7 +85,6 @@ public class AtlSielhaut  implements java.io.Serializable {
     public AtlSielhaut(
         AtlProbepkt atlProbepkt, BasisObjekt basisObjekt, String bezeichnung, String haltungsnr, String alarmplannr, String entgeb, Double e32, Double n32, String lage, String bemerkungen, String twabfluss, String bsb, String ew, String gebiet, Boolean PSielhaut, Boolean PAlarmplan, Boolean PNachprobe, Boolean schlammprobe, Boolean PFirmenprobe, boolean enabled, boolean deleted) {
         this.atlProbepkt = atlProbepkt;
-        this.basisObjekt = basisObjekt;
         this.bezeichnung = bezeichnung;
         this.haltungsnr = haltungsnr;
         this.alarmplannr = alarmplannr;
@@ -110,12 +107,12 @@ public class AtlSielhaut  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public Integer getObjektid() {
-        return this.objektid;
+    public Integer getId() {
+        return this.id;
     }
 
-    public void setObjektid(Integer objektid) {
-        this.objektid = objektid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public AtlProbepkt getAtlProbepkt() {
@@ -124,14 +121,6 @@ public class AtlSielhaut  implements java.io.Serializable {
 
     public void setAtlProbepkt(AtlProbepkt atlProbepkt) {
         this.atlProbepkt = atlProbepkt;
-    }
-
-    public BasisObjekt getBasisObjekt() {
-        return this.basisObjekt;
-    }
-
-    public void setBasisObjekt(BasisObjekt basisObjekt) {
-        this.basisObjekt = basisObjekt;
     }
 
     public String getBezeichnung() {
@@ -307,7 +296,6 @@ public class AtlSielhaut  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("atlProbepkt").append("='").append(getAtlProbepkt()).append("' ");			
-        buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");			
         buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
         buffer.append("haltungsnr").append("='").append(getHaltungsnr()).append("' ");			
         buffer.append("alarmplannr").append("='").append(getAlarmplannr()).append("' ");			
@@ -342,8 +330,8 @@ public class AtlSielhaut  implements java.io.Serializable {
         if (this == other) return true;
         if (other == null) return false;
         if (!(other instanceof AtlSielhaut)) return false;
-        return (this.getObjektid().equals(
-            ((AtlSielhaut) other).getObjektid()));
+        return (this.getId().equals(
+            ((AtlSielhaut) other).getId()));
     }
 
     /**
@@ -353,8 +341,8 @@ public class AtlSielhaut  implements java.io.Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        int idValue = this.getObjektid() == null ?
-            0 : this.getObjektid().hashCode();
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
         result = result * 37 + idValue;
         return result;
     }
@@ -392,8 +380,7 @@ public class AtlSielhaut  implements java.io.Serializable {
      * @param copy AtlSielhaut
      */
     private void copy(AtlSielhaut copy) {
-        this.atlProbepkt = copy.getAtlProbepkt();            
-        this.basisObjekt = copy.getBasisObjekt();            
+        this.atlProbepkt = copy.getAtlProbepkt();             
         this.bezeichnung = copy.getBezeichnung();            
         this.haltungsnr = copy.getHaltungsnr();            
         this.alarmplannr = copy.getAlarmplannr();            
@@ -462,7 +449,7 @@ public class AtlSielhaut  implements java.io.Serializable {
         log.debug("Getting AtlSielhaut instance with attached object with id :" + id);
         List<AtlSielhaut> list = AtlSielhaut.getAll();
         for(AtlSielhaut i : list){
-            if(i.getObjektid().equals(id)){
+            if(i.getId().equals(id)){
                 return (AtlSielhaut) new DatabaseAccess().get(AtlSielhaut.class, id);
             }
         }

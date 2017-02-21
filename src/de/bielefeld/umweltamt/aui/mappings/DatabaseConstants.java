@@ -127,7 +127,10 @@ public class DatabaseConstants {
     /* ********************************************************************** */
 
     /* BasisBetreiber */
-    public static final int BASIS_BETREIBER_ID_KEINE_BETREIBER = 3;
+    public static final int BASIS_BETREIBER_ID_Umweltamt_360x33 = 3;
+
+    /* BasisStandort */
+    public static final int BASIS_STANDORT_KEIN_STANDORT = 50610;
 
     /* BasisObjektarten */
     public static final int BASIS_OBJEKTART_ID_SUEV = 13;
@@ -150,9 +153,7 @@ public class DatabaseConstants {
     public static final int BASIS_OBJEKTART_ID_ABSCHEIDER_ES = 60;
     public static final String BASIS_OBJEKTART_ABTEILUNG_33 = "360.33";
     public static final String BASIS_OBJEKTART_ABTEILUNG_34 = "360.34";
-
-    /* BasisStandort */
-    public static final int BASIS_STANDORT_KEIN_STANDORT = 41;
+    
 
     /* ********************************************************************** */
     /* Constants for package INDEINL                                          */
