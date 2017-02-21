@@ -953,7 +953,7 @@ public class BasisPanel extends JPanel {
 		getArtBox().setEnabled(enabled);
 		getSachbearbeiterBox().setEnabled(enabled);
 				
-		if (this.hauptModul.getObjekt() != null & this.hauptModul.getObjekt().getBasisSachbearbeiter() != null){	
+		if (this.hauptModul.getObjekt() != null && this.hauptModul.getObjekt().getBasisSachbearbeiter() != null){	
 			log.debug("getObjekt: " + this.hauptModul.getObjekt());
 			log.debug("Sachbearbeiter: " + this.hauptModul.getObjekt().getBasisSachbearbeiter());
 	
