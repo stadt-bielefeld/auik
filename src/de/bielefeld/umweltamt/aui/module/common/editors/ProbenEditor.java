@@ -1500,7 +1500,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("kennnummer", this.probenummer.getText());
-        params.put("name", betr.getBetrname());
+        params.put("name", betr.toString());
         params.put("art", art.getArt());
 		if (betr.getHausnrzus() != null) {
 			params.put(

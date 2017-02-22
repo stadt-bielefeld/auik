@@ -229,36 +229,51 @@ public class KlaerschlammAuswertung extends AbstractModul
 				TimeSeries series;
 				APosDataItem item;
 				// int count = 0;
-				for (int i = 0; i < this.col1.getSeriesCount(); i++)
-				{
+				for (int i = 0; i < this.col1.getSeriesCount(); i++) {
 					series = this.col1.getSeries(i);
-					for (int j = 0; j < series.getItemCount(); j++)
-					{
+					for (int j = 0; j < series.getItemCount(); j++) {
 						item = (APosDataItem) series.getDataItem(j);
-						// count++;
-						if (!this.dateList.contains(item.getMinute()))
-						{
+
+						int n = this.dateList.size();
+						boolean add = true;
+						if (n == 0) {
+							this.dateList.add(item.getMinute());
+						} else
+							for (int k = 0; k < n; k++) {
+								if (this.dateList.get(k).toString().equals(item
+										.getMinute().toString())) {
+									add = false;
+								}
+							}
+						if(add == true && n > 0){
 							this.dateList.add(item.getMinute());
 						}
 					}
 				}
 
-				if (this.col2 != null)
-				{
-					for (int i = 0; i < this.col2.getSeriesCount(); i++)
-					{
-						series = this.col2.getSeries(i);
-						for (int j = 0; j < series.getItemCount(); j++)
-						{
-							item = (APosDataItem) series.getDataItem(j);
-							// count++;
-							if (!this.dateList.contains(item.getMinute()))
-							{
-								this.dateList.add(item.getMinute());
-							}
-						}
-					}
-				}
+                if (this.col2 != null) {
+                    for (int i = 0; i < this.col2.getSeriesCount(); i++) {
+                        series = this.col2.getSeries(i);
+                        for (int j = 0; j < series.getItemCount(); j++) {
+                            item = (APosDataItem) series.getDataItem(j);
+                            // count++;
+                            int n = this.dateList.size();
+    						boolean add = true;
+    						if (n == 0) {
+    							this.dateList.add(item.getMinute());
+    						} else
+    							for (int k = 0; k < n; k++) {
+    								if (this.dateList.get(k).toString().equals(item
+    										.getMinute().toString())) {
+    									add = false;
+    								}
+    							}
+    						if(add == true && n > 0){
+    							this.dateList.add(item.getMinute());
+    						}
+                        }
+                    }
+                }
 
 				Collections.sort(this.dateList);
 			}
