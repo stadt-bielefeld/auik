@@ -922,21 +922,21 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	public static AtlProbepkt getKlaerschlammProbepunkt(
 		AtlProbeart art, AtlKlaeranlagen ka)
 	{
-		Integer objektIDs[] =
-		// Probe(punkt)art:
-		{ // Anlieferung | Faulschlamm | Rohschlamm | Zulauf // Kläranlage:
-		24546, 24603, 17796, // Heepen
-				24602, 17797, // Brake
-				42904, 24605, // Obere Lutter
-				24504, 24547, 24604, 24584 // Sennestadt
-											// Verl-Sende
-		};
+//		Integer objektIDs[] =
+//		// Probe(punkt)art:
+//		{ // Anlieferung | Faulschlamm | Rohschlamm | Zulauf // Kläranlage:
+//		24546, 24603, 17796, // Heepen
+//				24602, 17797, // Brake
+//				42904, 24605, // Obere Lutter
+//				24504, 24547, 24604, 24584 // Sennestadt
+//											// Verl-Sende
+//		};
 		return new DatabaseAccess()
 				.executeCriteriaToUniqueResult(
 												DetachedCriteria.forClass(AtlProbepkt.class)
 														.add(Restrictions.eq("atlProbeart", art))
-														.add(Restrictions.eq("atlKlaeranlagen", ka))
-														.add(Restrictions.in("id", objektIDs)),
+														.add(Restrictions.eq("atlKlaeranlagen", ka)),
+//														.add(Restrictions.in("id", objektIDs)),
 												new AtlProbepkt());
 	}
 
