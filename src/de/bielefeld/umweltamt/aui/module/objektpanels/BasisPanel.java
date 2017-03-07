@@ -1024,7 +1024,7 @@ public class BasisPanel extends JPanel {
 
                     BasisAdresse betreiber = BasisPanel.this.hauptModul
                         .getObjekt().getBasisAdresse();
-                    BasisAdresse standort = BasisPanel.this.hauptModul
+                    BasisAdresse standort = (BasisAdresse) BasisPanel.this.hauptModul
                             .getObjekt().getBasisStandort();
 
                     if ("betreiber_edit".equals(action) && betreiber != null) {
@@ -1049,8 +1049,8 @@ public class BasisPanel extends JPanel {
 
                         editDialog.setVisible(true);
 
-//                        BasisPanel.this.hauptModul.getObjekt()
-//                            .setBasisStandort(editDialog.getBetreiber());
+                        BasisPanel.this.hauptModul.getObjekt()
+                            .setBasisStandort(editDialog.getBetreiber());
                     }
 
                     updateForm();

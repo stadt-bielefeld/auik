@@ -793,6 +793,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
                     }
                     query += " lower(a.ort) like '" + ort.toLowerCase() + "%' ";
                 }
+            query += " AND a.deleted = false";
             }
             query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";
             SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
@@ -843,6 +844,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	                }
 	                query += " LOWER(adresse.ort) like '" + ort.toLowerCase() + "%' ";
 	            }
+	            query += " AND adresse.deleted = false";
 	        }
 	        query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
 	        return HibernateSessionFactory.currentSession().createQuery(query).list();

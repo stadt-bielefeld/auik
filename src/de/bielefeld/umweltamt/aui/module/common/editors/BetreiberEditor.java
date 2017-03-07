@@ -478,27 +478,27 @@ public class BetreiberEditor extends AbstractBaseEditor
 					lage = mapLage.getBasisLage();
 					e32Feld.setValue(mapLage.getBasisLage().getE32());
 					n32Feld.setValue(mapLage.getBasisLage().getN32());
+					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
+					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
+					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
 
 					if (mapLage.getBasisLage().getBasisGemarkung() != null)
 					{
-						gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
 						gemarkungBox.setSelectedItem(lage.getBasisGemarkung());
 					}
 					if (mapLage.getBasisLage().getVawsStandortgghwsg() != null)
 					{
-						standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
 						standortGgBox.setSelectedItem(lage.getVawsStandortgghwsg());
 					}
 
 					if (mapLage.getBasisLage().getEntgebid() != null)
 					{
-						entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
 						entwGebBox.setSelectedItem(lage.getEntgebid());
 					}
 
 					if (mapLage.getBasisLage().getVawsWassereinzugsgebiete() != null)
 					{
-						wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
 						wEinzugsGebBox.setSelectedItem(lage.getVawsWassereinzugsgebiete());
 					}
 				}
@@ -826,7 +826,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 			persistentAL = BasisMapAdresseLage.merge(mapLage);
 
 			if (persistentAL != null) {
-				setEditedObject(persistentAL);
+//				setEditedObject(persistentAL);
 				log.debug("Änderungen gespeichert!");
 				return true;
 			} else {
