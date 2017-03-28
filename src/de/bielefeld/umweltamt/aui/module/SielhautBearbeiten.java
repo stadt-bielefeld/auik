@@ -348,8 +348,8 @@ public class SielhautBearbeiten extends AbstractModul {
 
         getSpBemerkungsArea().setText(this.spunkt.getBemerkungen());
 
-        getSpE32Feld().setValue(this.objekt.getBasisLage().getE32());
-        getSpN32Feld().setValue(this.objekt.getBasisLage().getN32());
+        getSpE32Feld().setValue(this.spunkt.getE32());
+        getSpN32Feld().setValue(this.spunkt.getN32());
 
         getSpHaltungsnrFeld().setText(this.spunkt.getHaltungsnr());
         getSpAlarmplannrFeld().setText(this.spunkt.getAlarmplannr());
@@ -473,8 +473,8 @@ public class SielhautBearbeiten extends AbstractModul {
             }
 
             // Rechts- und Hochwert
-            this.objekt.getBasisLage().setE32(getSpE32Feld().getDoubleValue().floatValue());
-            this.objekt.getBasisLage().setN32(getSpN32Feld().getDoubleValue().floatValue());
+            this.spunkt.setE32(getSpE32Feld().getDoubleValue());
+            this.spunkt.setN32(getSpN32Feld().getDoubleValue());
 
             // Haltungs-Nr.
             if ("".equals(getSpHaltungsnrFeld().getText())) {

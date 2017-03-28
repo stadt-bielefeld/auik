@@ -1494,22 +1494,22 @@ public class ProbenEditor extends AbstractApplyEditor {
     public Map<String, Object> getAuftragDruckMap(AtlProbenahmen probe) {
         BasisAdresse betr = probe.getAtlProbepkt().getBasisObjekt()
             .getBasisAdresse();
-        BasisLage std = probe.getAtlProbepkt().getBasisObjekt()
-            .getBasisLage();
+        BasisAdresse std = probe.getAtlProbepkt().getBasisObjekt()
+            .getBasisStandort();
         AtlProbeart art = probe.getAtlProbepkt().getAtlProbeart();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("kennnummer", this.probenummer.getText());
         params.put("name", betr.toString());
         params.put("art", art.getArt());
-		if (betr.getHausnrzus() != null) {
+		if (std.getHausnrzus() != null) {
 			params.put(
 					"betriebsgrundstueck",
-					betr.getStrasse() + " " + betr.getHausnr()
+					std.getStrasse() + " " + std.getHausnr()
 							+ betr.getHausnrzus());
 		} else {
 			params.put("betriebsgrundstueck",
-					betr.getStrasse() + " " + betr.getHausnr());
+					std.getStrasse() + " " + std.getHausnr());
 		}
         try {
             Integer anzahl = Integer.parseInt(this.beteiligte.getText());
