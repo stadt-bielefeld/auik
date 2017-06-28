@@ -48,6 +48,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
@@ -63,6 +64,8 @@ import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -75,8 +78,14 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+
+import org.hibernate.dialect.FirebirdDialect;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -121,7 +130,8 @@ public class BasisAdresseSuchen extends AbstractModul {
 	private JTextField hausnrFeld;
 	private JTextField ortFeld;
     private JButton submitButton;
-    private JButton submitButtonStrasse;
+    private JButton submitButtonStandort;
+    private JButton submitButtonBetreiber;
     private JSplitPane tabellenSplit;
     private JTable betreiberTabelle;
     private JTable objektTabelle;
@@ -139,6 +149,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private BasisAdresseModel betreiberModel;
     private BasisObjektModel objektModel;
+    public BasisAdresse adresse;
 
 	private Timer suchTimer;
 
@@ -153,7 +164,7 @@ public class BasisAdresseSuchen extends AbstractModul {
      */
     @Override
     public String getName() {
-        return "Standort-Adresse suchen";
+        return "Adresse suchen";
     }
 
     /*
@@ -222,7 +233,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 0.7);
 
             FormLayout layout = new FormLayout(
-					"l:p, max(4dlu;p), p:g, 10dlu, p, 4dlu, max(30dlu;p), 10dlu, p, 4dlu,  p:g, 3dlu, pref", // spalten
+					"l:p, max(4dlu;p), p:g, 3dlu, p, 3dlu, 40dlu, 3dlu, p, 3dlu,  p:g, 3dlu, 70dlu, 3dlu, 70dlu", // spalten
 					"pref, 3dlu, pref, 3dlu, 150dlu:grow"); // zeilen
 
             PanelBuilder builder = new PanelBuilder(layout);
@@ -231,15 +242,16 @@ public class BasisAdresseSuchen extends AbstractModul {
 
             builder.add(getSuchBox(), cc.xy(1, 1));
             builder.add(getSuchFeld(), cc.xy(3, 1));
-            builder.add(getSubmitButton(), cc.xy(13, 1));
+            builder.add(getSubmitButton(), cc.xyw(13, 1, 3));
 			builder.addLabel("Straße:", cc.xy(1, 3));
 			builder.add(getStrassenFeld(), cc.xy(3, 3));
 			builder.addLabel("Haus-Nr.:", cc.xy(5, 3));
 			builder.add(getHausnrFeld(), cc.xy(7, 3));
 			builder.addLabel("Ort:", cc.xy(9, 3));
 			builder.add(getOrtFeld(), cc.xy(11, 3));
-            builder.add(getSubmitButtonStrasse(), cc.xy(13, 3));
-            builder.add(this.tabellenSplit, cc.xyw(1, 5, 13));
+            builder.add(getSubmitButtonBetreiber(), cc.xy(13, 3));
+            builder.add(getSubmitButtonStandort(), cc.xy(15, 3));
+            builder.add(this.tabellenSplit, cc.xyw(1, 5, 15));
 
             this.panel = builder.getPanel();
         }
@@ -286,26 +298,48 @@ public class BasisAdresseSuchen extends AbstractModul {
     }
 
     private void doSearch() {
-        final String suche = getSuchFeld().getText();
+        final String name = getSuchFeld().getText();
+        final String strasse = getStrassenFeld().getText();
+		int hausnr;
+		try
+		{
+			hausnr = Integer.parseInt(getHausnrFeld().getText());
+		}
+		catch (NumberFormatException e1)
+		{
+			hausnr = -1;
+		}
+		final int fhausnr = hausnr;
+        final String ort = getOrtFeld().getText();
 
 
             SwingWorkerVariant worker = new SwingWorkerVariant(
                 getBetreiberTabelle()) {
                 @Override
                 protected void doNonUILogic() throws RuntimeException {
-                	BasisAdresseSuchen.this.betreiberModel
-                        .filterAllList(suche, null);
+					BasisAdresseSuchen.this.betreiberModel
+                        .filterAllList(name, strasse, fhausnr , ort, null);
                 }
 
                 @Override
                 protected void doUIUpdateLogic() throws RuntimeException {
+    				getBetreiberTabelle().clearSelection();
+    				
+    				BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
+    				String statusMsg = "Suche: "
+    						+ BasisAdresseSuchen.this.betreiberModel.getRowCount()
+    						+ " Ergebnis";
+    				if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1)
+    				{
+    					statusMsg += "se";
+    				}
+    				statusMsg += ".";
+    				BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
                 	BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
                 }
             };
             worker.start();
 
-			getStrassenFeld().setText("");
-			getHausnrFeld().setText("");
 			
     } 
     
@@ -313,7 +347,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
 
     /**
-	 * Filtert die Standort-Liste nach Straße und Hausnummer.
+	 * Filtert die Adressen-Liste nach Betreibern.
 	 * 
 	 * @param focusComp
 	 *            Welche Komponente soll nach der Suche den Fokus bekommen.
@@ -340,13 +374,14 @@ public class BasisAdresseSuchen extends AbstractModul {
 			{
 				if (SettingsManager.getInstance().getStandort() == null)
 				{
-					BasisAdresseSuchen.this.betreiberModel.filterStandort(
+					BasisAdresseSuchen.this.betreiberModel.filterBetreiber(
+																		getSuchFeld().getText(),
 																		getStrassenFeld().getText(),
 																		fhausnr,
 																		getOrtFeld()
 																				.getText());
 				}
-				getSuchFeld().setText("");
+//				getSuchFeld().setText("");
 			}
 	
 			@Override
@@ -372,6 +407,67 @@ public class BasisAdresseSuchen extends AbstractModul {
 	    log.debug("End filterStandortListe()");
 	}
 
+    /**
+	 * Filtert die Adressen-Liste nach Standorten.
+	 * 
+	 * @param focusComp
+	 *            Welche Komponente soll nach der Suche den Fokus bekommen.
+	 */
+	public void filterStandortListe(Component focusComp)
+	{
+	    log.debug("Start filterStandortListe()");
+		int hausnr;
+		try
+		{
+			hausnr = Integer.parseInt(getHausnrFeld().getText());
+		}
+		catch (NumberFormatException e1)
+		{
+			hausnr = -1;
+		}
+		final int fhausnr = hausnr;
+	
+		SwingWorkerVariant worker = new SwingWorkerVariant(focusComp)
+		{
+	
+			@Override
+			protected void doNonUILogic()
+			{
+				if (SettingsManager.getInstance().getStandort() == null)
+				{
+					BasisAdresseSuchen.this.betreiberModel.filterStandort(
+																		getSuchFeld().getText(),
+																		getStrassenFeld().getText(),
+																		fhausnr,
+																		getOrtFeld()
+																				.getText());
+				}
+			}
+	
+			@Override
+			protected void doUIUpdateLogic()
+			{
+				getBetreiberTabelle().clearSelection();
+	
+				BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
+				String statusMsg = "Suche: "
+						+ BasisAdresseSuchen.this.betreiberModel.getRowCount()
+						+ " Ergebnis";
+				if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1)
+				{
+					statusMsg += "se";
+				}
+				statusMsg += ".";
+				BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
+			}
+		};
+	
+		this.frame.changeStatus("Suche...");
+		worker.start();
+	    log.debug("End filterStandortListe()");
+	}
+
+
 	/**
 	 * Filtert / Durchsucht die Betreiber-Liste.
 	 * @param suche Wonach soll gesucht werden?
@@ -385,6 +481,44 @@ public class BasisAdresseSuchen extends AbstractModul {
 	        protected void doNonUILogic() throws RuntimeException {
 	            BasisAdresseSuchen.this.betreiberModel.filterStandort(suche,
 	                column);
+	        }
+	
+	        @Override
+	        protected void doUIUpdateLogic() throws RuntimeException {
+	            getBetreiberTabelle().clearSelection();
+	
+	            BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
+	            String statusMsg = "Suche: "
+	                + BasisAdresseSuchen.this.betreiberModel.getRowCount()
+	                + " Ergebnis";
+	            if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1) {
+	                statusMsg += "se";
+	            }
+	            statusMsg += ".";
+	            BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
+	        }
+	    };
+	
+	    this.frame.changeStatus("Suche...");
+	    worker.start();
+	    log.debug("End filterBetreiberListe()");
+	    
+	}
+
+	/**
+	 * Filtert / Durchsucht die Betreiber-Liste.
+	 * @param suche Wonach soll gesucht werden?
+	 * @param column Nach welcher Eigenschaft des Betreiber soll gesucht werden?
+	 */
+	public void filterAdressenListe(final String name, final String strasse, 
+				final Integer nummer, final String ort, final String column) {
+	    log.debug("Start filterBetreiberListe()");
+	    SwingWorkerVariant worker = new SwingWorkerVariant(
+	        getBetreiberTabelle()) {
+	        @Override
+	        protected void doNonUILogic() throws RuntimeException {
+	            BasisAdresseSuchen.this.betreiberModel.filterAllList(name, strasse,
+	                nummer, ort, column);
 	        }
 	
 	        @Override
@@ -421,7 +555,9 @@ public class BasisAdresseSuchen extends AbstractModul {
             log.debug("Betreiber " + betr.getBetrname() + " (ID"
                 + betr.getId() + ") angewählt.");
             searchObjekteByBetreiber(betr);
+            this.adresse = betr;
         }
+        
         log.debug("End updateObjekte()");
     }
 
@@ -559,6 +695,9 @@ public class BasisAdresseSuchen extends AbstractModul {
                         BasisAdresseSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.use_standort",
                                 betr.getId().intValue(), false);
+                        BasisAdresseSuchen.this.manager.getSettingsManager()
+                        .setSetting("auik.imc.use_betreiber",
+                            betr.getId().intValue(), false);
                         BasisAdresseSuchen.this.manager
                             .switchModul("m_objekt_bearbeiten");
                     }
@@ -850,11 +989,35 @@ public class BasisAdresseSuchen extends AbstractModul {
     }
 
     private JTable getObjektTabelle() {
+    	BasisAdresse adr = this.adresse;
         if (this.objektTabelle == null) {
-            this.objektTabelle = new JTable(this.objektModel);
-            this.objektTabelle
-                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        	
+            this.objektTabelle = new JTable(this.objektModel){
 
+				public Component prepareRenderer(TableCellRenderer renderer,
+						int row, int column) {
+					Component c = super.prepareRenderer(renderer, row, column);
+					BasisObjekt obj = BasisAdresseSuchen.this.objektModel
+							.getRow(row);
+					if (!isRowSelected(row)) {
+
+						if (obj.getBasisAdresse() == obj.getBasisStandort()) {
+							c.setBackground(Color.GREEN);
+						}						
+						
+						else if (obj.getBasisAdresse() != obj.getBasisStandort()) {
+							c.setBackground(Color.YELLOW);
+						}
+						else {
+							c.setBackground(Color.WHITE);
+						}
+					}
+					return c;
+				}
+			};
+              
+			this.objektTabelle
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             this.objektTabelle.getColumnModel().getColumn(0).setMaxWidth(60);
             this.objektTabelle
                 .getColumnModel()
@@ -862,7 +1025,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 .setPreferredWidth(
                     this.objektTabelle.getColumnModel().getColumn(0)
                         .getMaxWidth() - 10);
-
+            
             this.objektTabelle
                 .addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
@@ -890,7 +1053,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                                         obj.getObjektid().intValue(), false);
                                 BasisAdresseSuchen.this.manager
                                     .switchModul("m_sielhaut1");
-                            }
+                            }                            	
                         }
                     }
 
@@ -942,12 +1105,13 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private JButton getSubmitButton() {
         if (this.submitButton == null) {
-            this.submitButton = new JButton("Name suchen", AuikUtils.getIcon(16,
+            this.submitButton = new JButton("Alle Adressen", AuikUtils.getIcon(16,
                 "key_enter.png"));
             this.submitButton.setToolTipText("Suche starten");
             this.submitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+					getSuchTimer().stop();
 					doSearch();
                 }
             });
@@ -956,12 +1120,11 @@ public class BasisAdresseSuchen extends AbstractModul {
         return this.submitButton;
     }
 
-    private JButton getSubmitButtonStrasse() {
-        if (this.submitButtonStrasse == null) {
-            this.submitButtonStrasse = new JButton("Standort suchen", AuikUtils.getIcon(16,
-                "key_enter.png"));
-            this.submitButtonStrasse.setToolTipText("Suche starten");
-            this.submitButtonStrasse.addActionListener(new ActionListener() {
+    private JButton getSubmitButtonBetreiber() {
+        if (this.submitButtonBetreiber == null) {
+            this.submitButtonBetreiber = new JButton("nur Betreiber");
+            this.submitButtonBetreiber.setToolTipText("Suche starten");
+            this.submitButtonBetreiber.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 					getSuchTimer().stop();
@@ -970,7 +1133,23 @@ public class BasisAdresseSuchen extends AbstractModul {
             });
         }
 
-        return this.submitButtonStrasse;
+        return this.submitButtonBetreiber;
+    }
+
+    private JButton getSubmitButtonStandort() {
+        if (this.submitButtonStandort == null) {
+            this.submitButtonStandort = new JButton("nur Standorte");
+            this.submitButtonStandort.setToolTipText("Suche starten");
+            this.submitButtonStandort.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+					getSuchTimer().stop();
+					filterStandortListe(getBetreiberTabelle());
+                }
+            });
+        }
+
+        return this.submitButtonStandort;
     }
 
 	private JTextField getStrassenFeld()
@@ -1179,7 +1358,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 	                String suche = getSuchFeld().getText();
 	                String spalte = (String) ((NamedObject) getSuchBox()
 	                    .getSelectedItem()).getValue();
-	                filterBetreiberListe(suche, spalte);
+	                doSearch();
 	            }
 	        });
 	        this.suchFeld.setFocusTraversalKeys(
@@ -1193,7 +1372,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 	                    String suche = getSuchFeld().getText();
 	                    String spalte = (String) ((NamedObject) getSuchBox()
 	                        .getSelectedItem()).getValue();
-	                    filterBetreiberListe(suche, spalte);
+	                    doSearch();
 	                }
 	            }
 	        });

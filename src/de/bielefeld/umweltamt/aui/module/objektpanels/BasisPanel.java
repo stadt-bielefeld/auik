@@ -833,28 +833,40 @@ public class BasisPanel extends JPanel {
                 getBetreiberFeld().setToolTipText(toolTip);
             
             }
-            if (this.hauptModul.getObjekt().getBasisStandort() != null) {
-                
-            	BasisMapAdresseLage mapsta = (BasisMapAdresseLage) BasisMapAdresseLage.findByAdresse(this.hauptModul.getObjekt().getBasisStandort());
-                BasisAdresse sta = mapsta.getBasisAdresse();
-                log.debug("Set standort field to: " + sta + this.hauptModul.getObjekt().getBasisStandort() + " " + this.hauptModul.getObjekt().getBasisLage());
-                String toolTip = "<html>" + sta + "<br>";
-                if (sta.getPlz() != null) {
-                    toolTip += "<b>PLZ:</b> " + sta.getPlz() + "<br>";
-                }
-                toolTip += "<b>Gemarkung:</b> "
-                    + mapsta.getBasisLage().getBasisGemarkung()
-                    + ((mapsta.getBasisLage().getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
-                        + mapsta.getBasisLage().getEntgebid() : "") + "</html>";
-                getStandortFeld().setToolTipText(toolTip);
-                getStandortFeld().setText(this.hauptModul.getObjekt().getBasisStandort().toString());
+			if (this.hauptModul.getObjekt().getBasisStandort() != null) {
 
-                if(this.hauptModul.getObjekt().getBasisLage() == null){
-                	mapsta = (BasisMapAdresseLage) BasisMapAdresseLage.findByAdresse(this.hauptModul.getObjekt().getBasisStandort());
-                	this.hauptModul.getObjekt().setBasisLage(mapsta.getBasisLage());
-                }
-                getLageFeld().setText(mapsta.getBasisLage().toString());
-            }
+				BasisMapAdresseLage mapsta = (BasisMapAdresseLage) BasisMapAdresseLage
+						.findByAdresse(this.hauptModul.getObjekt()
+								.getBasisStandort());
+				if (mapsta != null) {
+					BasisAdresse sta = mapsta.getBasisAdresse();
+					log.debug("Set standort field to: " + sta
+							+ this.hauptModul.getObjekt().getBasisStandort()
+							+ " " + this.hauptModul.getObjekt().getBasisLage());
+					String toolTip = "<html>" + sta + "<br>";
+					if (sta.getPlz() != null) {
+						toolTip += "<b>PLZ:</b> " + sta.getPlz() + "<br>";
+					}
+					toolTip += "<b>Gemarkung:</b> "
+							+ mapsta.getBasisLage().getBasisGemarkung()
+							+ ((mapsta.getBasisLage().getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
+									+ mapsta.getBasisLage().getEntgebid()
+									: "") + "</html>";
+					getStandortFeld().setToolTipText(toolTip);
+					getStandortFeld().setText(
+							this.hauptModul.getObjekt().getBasisStandort()
+									.toString());
+
+					if (this.hauptModul.getObjekt().getBasisLage() == null) {
+						mapsta = (BasisMapAdresseLage) BasisMapAdresseLage
+								.findByAdresse(this.hauptModul.getObjekt()
+										.getBasisStandort());
+						this.hauptModul.getObjekt().setBasisLage(
+								mapsta.getBasisLage());
+					}
+					getLageFeld().setText(mapsta.getBasisLage().toString());
+				}
+			}
 
             if (this.hauptModul.getObjekt().getBasisObjektarten() != null) {
                 getArtBox().setSelectedItem(

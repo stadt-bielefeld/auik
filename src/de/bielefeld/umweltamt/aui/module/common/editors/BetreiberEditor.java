@@ -23,15 +23,22 @@ package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -113,6 +120,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 	private JTextField flurStkFeld;
 	private JFormattedTextField e32Feld;
 	private JFormattedTextField n32Feld;
+    private JButton ausAblageButton;
 	private JComboBox gemarkungBox;
 	private JComboBox entwGebBox;
 	private JComboBox standortGgBox;
@@ -331,6 +339,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 		builder.add(e32Feld, cc.xyw(3, 19, 3));
 		builder.addLabel("N32:", cc.xy(1, 21));
 		builder.add(n32Feld, cc.xyw(3, 21, 3));
+        builder.add(getAusAblageButton(), cc.xywh(8, 19, 3, 3));
 		builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 23));
 		builder.add(entwGebBox, cc.xyw(3, 23, 3));
 		
@@ -997,4 +1006,60 @@ public class BetreiberEditor extends AbstractBaseEditor
             }
 		}
 	}
+	
+
+    private void readClipboard() {
+
+        Clipboard systemClipboard;
+        systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable transferData = systemClipboard.getContents(null);
+        for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
+            Object content = null;
+            try {
+                content = transferData.getTransferData(dataFlavor);
+            } catch (UnsupportedFlavorException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            if (content instanceof String) {
+
+                String[] tmp = content.toString().split(",");
+                if (tmp.length == 4) {
+                    String e32AusZeile = tmp[2];
+                    String n32AusZeile = tmp[3];
+                    this.e32Feld.setText(e32AusZeile.substring(
+                        0, 7));
+                    this.n32Feld.setText(n32AusZeile
+                        .substring(0, 7));
+                    this.frame.changeStatus("Rechts- und Hochwert eingetragen",
+                        HauptFrame.SUCCESS_COLOR);
+                } else {
+                    this.frame.changeStatus(
+                        "Zwischenablage enthält keine verwertbaren Daten",
+                        HauptFrame.ERROR_COLOR);
+                }
+                break;
+            }
+        }
+    }
+
+    public JButton getAusAblageButton() {
+        if (this.ausAblageButton == null) {
+
+            this.ausAblageButton = new JButton("aus QGis");
+            this.ausAblageButton
+                .setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
+            this.ausAblageButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    readClipboard();
+                }
+            });
+        }
+
+        return this.ausAblageButton;
+    }
 }

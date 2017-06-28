@@ -319,8 +319,10 @@ public class SielhautBearbeiten extends AbstractModul {
                 DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE);
             this.objekt.setBasisLage(this.lage);
             this.objekt.setBasisAdresse(this.betreiber);
+            this.objekt.setBasisStandort(this.standort);
             this.objekt.setBasisObjektarten(this.art);
             this.objekt.setInaktiv(false);
+            this.objekt.setAbwasserfrei(true);
             this.sprobePkt = new AtlProbepkt();
             this.sprobePkt.setAtlProbeart(
                 AtlProbeart.findById(

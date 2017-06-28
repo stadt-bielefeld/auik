@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage" table="basis_map_adresse_lage" schema="auik" lazy="false" optimistic-lock="version">
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage" table="basis_map_adresse_lage" schema="auik" lazy="true" optimistic-lock="version">
         <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
             <generator class="identity"/>
         </id>

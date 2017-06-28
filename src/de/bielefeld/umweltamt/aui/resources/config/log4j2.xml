@@ -17,8 +17,8 @@
 <!--     </RollingFile> -->
   </Appenders>
   <Loggers>
-    <Logger name="org.apache.log4j.xml" level="debug"/>
-    <Logger name="SQLLogger" level="debug"/>
+    <Logger name="org.apache.log4j.xml" level="error"/>
+    <Logger name="SQLLogger" level="error"/>
     <Logger name="org.hibernate" level="debug"/>
     <Root level="info">
       <AppenderRef ref="Console"/>

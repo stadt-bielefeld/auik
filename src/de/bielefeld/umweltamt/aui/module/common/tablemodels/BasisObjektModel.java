@@ -21,6 +21,8 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.awt.Color;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
@@ -29,6 +31,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
+import de.bielefeld.umweltamt.aui.module.BasisAdresseSuchen;
 
 /**
  * Ein TableModel für die Basis-Objektdaten bei der Betreiber/Standort-Suche.
@@ -150,8 +153,8 @@ public class BasisObjektModel extends ListTableModel {
      * @param standortId Die Standort-Id
      */
     public void searchByStandort(BasisAdresse standort) {
-        setList(DatabaseQuery.getObjekteByStandort(
-            standort, null));
+        setList(DatabaseQuery.getObjekteByAdresse(
+            standort, null, null, true));
     }
 
     /**

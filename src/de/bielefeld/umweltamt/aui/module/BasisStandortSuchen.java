@@ -815,37 +815,7 @@ public class BasisStandortSuchen extends AbstractModul
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					getSuchTimer().stop();
 					filterStandortListe(getStandortTabelle());
-				}
-			});
-
-			this.ortFeld.addKeyListener(new KeyAdapter()
-			{
-				@Override
-				public void keyPressed(KeyEvent e)
-				{
-					if (e.getKeyCode() == KeyEvent.VK_TAB)
-					{
-						getSuchTimer().stop();
-						filterStandortListe(getHausnrFeld());
-					}
-				}
-
-				@Override
-				public void keyTyped(KeyEvent e)
-				{
-					if (Character.isLetterOrDigit(e.getKeyChar()))
-					{
-						if (getSuchTimer().isRunning())
-						{
-							getSuchTimer().restart();
-						}
-						else
-						{
-							getSuchTimer().start();
-						}
-					}
 				}
 			});
 		}
