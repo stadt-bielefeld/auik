@@ -65,6 +65,7 @@ FROM
   auik.basis_objekt,
   auik.atl_probepkt,
   auik.basis_adresse AS basis_standort,
+  auik.basis_map_adresse_lage,
   auik.basis_lage,
   auik.atl_klaeranlagen,
   auik.basis_sachbearbeiter as sb1,
@@ -73,7 +74,8 @@ WHERE
   basis_objekt.id = atl_probepkt.objektid AND
   basis_objekt.standortid = basis_standort.id AND
   basis_objekt.betreiberid = basis_betreiber.id AND
-  basis_objekt.lageid = basis_lage.id AND
+  basis_objekt.standortid = basis_map_adresse_lage.adresseid AND
+  basis_map_adresse_lage.lageid = basis_lage.id AND
   atl_probepkt.ka_id = atl_klaeranlagen.id AND
   atl_probepkt.sachbearbeiter = sb1.id AND
   basis_objekt.sachbearbeiter = sb2.id AND
@@ -120,7 +122,7 @@ WHERE
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{strasse} + " " + $F{hausnr} + ", " +  $F{plz} + " Bielefeld"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{strasse} + " " + $F{hausnr} + $F{hausnrzus} + ", " +  $F{plz} + " Bielefeld"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="60" width="150" height="20" uuid="ef335080-85b0-44f9-8afc-c01fb3e33af9">
