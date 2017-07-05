@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.ElkaAba" table="elka_aba" schema="auik" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <generator class="identity" />
+        </id>
+        <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt" fetch="select">
+            <column name="objektid" not-null="true" unique="true" />
+        </many-to-one>
+        <many-to-one name="ansprAdrId" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse" fetch="select">
+            <column name="anspr_adr_id" />
+        </many-to-one>
+        <property name="aktualDat" type="java.util.Date">
+            <column name="aktual_dat" length="13" />
+        </property>
+        <property name="erstellDat" type="java.util.Date">
+            <column name="erstell_dat" length="13" />
+        </property>
+        <property name="herkunft" type="java.lang.String">
+            <column name="herkunft" />
+        </property>
+        <property name="bezeichnung" type="java.lang.String">
+            <column name="bezeichnung" />
+        </property>
+        <property name="inbetriebDat" type="java.util.Date">
+            <column name="inbetrieb_dat" length="13" />
+        </property>
+        <property name="stillgelegtDat" type="java.util.Date">
+            <column name="stillgelegt_dat" length="13" />
+        </property>
+        <property name="genehmpflichtigToc" type="java.lang.Boolean">
+            <column name="genehmpflichtig_toc" />
+        </property>
+        <property name="e32" type="java.lang.Integer">
+            <column name="e32" />
+        </property>
+        <property name="n32" type="java.lang.Integer">
+            <column name="n32" />
+        </property>
+        <property name="sonstZulOpt" type="java.lang.Integer">
+            <column name="sonst_zul_opt" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

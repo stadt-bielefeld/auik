@@ -29,6 +29,10 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAba;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAnfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaEinleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
@@ -38,9 +42,9 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -76,7 +80,10 @@ public class BasisObjekt  implements java.io.Serializable {
     private boolean enabled;
     private boolean deleted;
     private Boolean abwasserfrei;
-    private Set<IndeinlGenehmigung> indeinlGenehmigungs = new HashSet<IndeinlGenehmigung>(0);
+    private Set<ElkaWasserrecht> elkaWasserrechts = new HashSet<ElkaWasserrecht>(0);
+    private Set<ElkaAba> elkaAbas = new HashSet<ElkaAba>(0);
+    private Set<ElkaAnfallstelle> elkaAnfallstelles = new HashSet<ElkaAnfallstelle>(0);
+    private Set<ElkaEinleitungsstelle> elkaEinleitungsstelles = new HashSet<ElkaEinleitungsstelle>(0);
     private Set<Anh53Fachdaten> anh53Fachdatens = new HashSet<Anh53Fachdaten>(0);
     private Set<AnhSuevFachdaten> anhSuevFachdatens = new HashSet<AnhSuevFachdaten>(0);
     private Set<AnhBwkFachdaten> anhBwkFachdatens = new HashSet<AnhBwkFachdaten>(0);
@@ -111,7 +118,7 @@ public class BasisObjekt  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisObjekt(
-        BasisAdresse basisStandort, BasisAdresse basisAdresse, BasisLage basisLage, BasisObjektarten basisObjektarten, BasisSachbearbeiter basisSachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Set<IndeinlGenehmigung> indeinlGenehmigungs, Set<Anh53Fachdaten> anh53Fachdatens, Set<AnhSuevFachdaten> anhSuevFachdatens, Set<AnhBwkFachdaten> anhBwkFachdatens, Set<AtlProbepkt> atlProbepkts, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt, Set<VawsFachdaten> vawsFachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit, Set<Anh40Fachdaten> anh40Fachdatens, Set<BasisObjektchrono> basisObjektchronos, AtlSielhaut atlSielhaut, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens) {
+        BasisAdresse basisStandort, BasisAdresse basisAdresse, BasisLage basisLage, BasisObjektarten basisObjektarten, BasisSachbearbeiter basisSachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Set<ElkaWasserrecht> elkaWasserrechts, Set<Anh53Fachdaten> anh53Fachdatens, Set<AnhSuevFachdaten> anhSuevFachdatens, Set<AnhBwkFachdaten> anhBwkFachdatens, Set<AtlProbepkt> atlProbepkts, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt, Set<VawsFachdaten> vawsFachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit, Set<Anh40Fachdaten> anh40Fachdatens, Set<BasisObjektchrono> basisObjektchronos, AtlSielhaut atlSielhaut, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens) {
         this.basisStandort = basisStandort;
         this.basisAdresse = basisAdresse;
         this.basisLage = basisLage;
@@ -129,7 +136,7 @@ public class BasisObjekt  implements java.io.Serializable {
         this.enabled = enabled;
         this.deleted = deleted;
         this.abwasserfrei = abwasserfrei;
-        this.indeinlGenehmigungs = indeinlGenehmigungs;
+        this.elkaWasserrechts = elkaWasserrechts;
         this.anh53Fachdatens = anh53Fachdatens;
         this.anhSuevFachdatens = anhSuevFachdatens;
         this.anhBwkFachdatens = anhBwkFachdatens;
@@ -292,12 +299,36 @@ public class BasisObjekt  implements java.io.Serializable {
         this.abwasserfrei = abwasserfrei;
     }
 
-    public Set<IndeinlGenehmigung> getIndeinlGenehmigungs() {
-        return this.indeinlGenehmigungs;
+    public Set<ElkaWasserrecht> getElkaWasserrechts() {
+        return this.elkaWasserrechts;
     }
 
-    public void setIndeinlGenehmigungs(Set<IndeinlGenehmigung> indeinlGenehmigungs) {
-        this.indeinlGenehmigungs = indeinlGenehmigungs;
+    public void setElkaWasserrechts(Set<ElkaWasserrecht> elkaWasserrechts) {
+		this.elkaWasserrechts = elkaWasserrechts;
+    }
+
+    public Set<ElkaAba> getElkaAbas() {
+        return this.elkaAbas;
+    }
+
+    public void setElkaAbas(Set<ElkaAba> elkaAbas) {
+		this.elkaAbas = elkaAbas;
+    }
+
+    public Set<ElkaAnfallstelle> getElkaAnfallstelles() {
+        return this.elkaAnfallstelles;
+    }
+
+    public void setElkaAnfallstelles(Set<ElkaAnfallstelle> elkaAnfallstelles) {
+		this.elkaAnfallstelles = elkaAnfallstelles;
+    }
+
+    public Set<ElkaEinleitungsstelle> getElkaEinleitungsstelles() {
+        return this.elkaEinleitungsstelles;
+    }
+
+    public void setElkaEinleitungsstelles(Set<ElkaEinleitungsstelle> elkaEinleitungsstelles) {
+		this.elkaEinleitungsstelles = elkaEinleitungsstelles;
     }
 
     public Set<Anh53Fachdaten> getAnh53Fachdatens() {
@@ -457,7 +488,7 @@ public class BasisObjekt  implements java.io.Serializable {
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("abwasserfrei").append("='").append(getAbwasserfrei()).append("' ");			
-        buffer.append("indeinlGenehmigungs").append("='").append(getIndeinlGenehmigungs()).append("' ");			
+        buffer.append("basisWasserrechts").append("='").append(getElkaWasserrechts()).append("' ");			
         buffer.append("anh53Fachdatens").append("='").append(getAnh53Fachdatens()).append("' ");			
         buffer.append("anhSuevFachdatens").append("='").append(getAnhSuevFachdatens()).append("' ");			
         buffer.append("anhBwkFachdatens").append("='").append(getAnhBwkFachdatens()).append("' ");			
@@ -555,7 +586,7 @@ public class BasisObjekt  implements java.io.Serializable {
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
         this.abwasserfrei = copy.getAbwasserfrei();            
-        this.indeinlGenehmigungs = copy.getIndeinlGenehmigungs();            
+        this.elkaWasserrechts = copy.getElkaWasserrechts();            
         this.anh53Fachdatens = copy.getAnh53Fachdatens();            
         this.anhSuevFachdatens = copy.getAnhSuevFachdatens();            
         this.anhBwkFachdatens = copy.getAnhBwkFachdatens();            

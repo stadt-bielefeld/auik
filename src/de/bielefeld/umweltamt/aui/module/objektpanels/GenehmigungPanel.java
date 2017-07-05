@@ -52,7 +52,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
@@ -95,7 +95,7 @@ public class GenehmigungPanel extends JPanel {
 
     // Daten
 
-    private IndeinlGenehmigung fachdaten = null;
+    private ElkaWasserrecht fachdaten = null;
 
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
@@ -167,7 +167,7 @@ public class GenehmigungPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = IndeinlGenehmigung.findByObjektId(
+        this.fachdaten = ElkaWasserrecht.findByObjektId(
             this.hauptModul.getObjekt().getObjektid());
         log.debug("Genehmigung Objekt aus DB geholt: ID" + this.fachdaten);
     }
@@ -359,12 +359,12 @@ public class GenehmigungPanel extends JPanel {
     public void completeObjekt() {
         if (this.hauptModul.isNew() || this.fachdaten == null) {
             // Neues Genehmigung Objekt erzeugen
-            this.fachdaten = new IndeinlGenehmigung();
+            this.fachdaten = new ElkaWasserrecht();
             // Objekt_Id setzen
             this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
 
             // Uebergabestelle speichern
-            this.fachdaten = IndeinlGenehmigung.merge(this.fachdaten);
+            this.fachdaten = ElkaWasserrecht.merge(this.fachdaten);
             log.debug("Neues Genehmigung Objekt " + this.fachdaten
                 + " gespeichert.");
         }

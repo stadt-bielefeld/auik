@@ -74,10 +74,3 @@
         </property>
     </class>
 </hibernate-mapping>
-         <column name="_enabled" not-null="true" />
-        </property>
-        <property name="deleted" type="boolean">
-            <column name="_deleted" not-null="true" />
-        </property>
-    </class>
-</hibernate-mapping>

@@ -47,6 +47,10 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaetId;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAba;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAnfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaEinleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
@@ -63,7 +67,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
@@ -435,11 +438,35 @@ public class DatabaseClassToString {
     }
 
     /**
-     * @return Custom IndeinlGenehmigung.toString()
-     * Liefert einen String der Form "[Genehmigung Verfahren:ID]"
+     * @return Custom ElkaWasserrecht.toString()
+     * Liefert einen String der Form "[Wasserrecht:ID]"
      */
-    public static String toStringForClass(IndeinlGenehmigung clazz) {
-        return "[Genehmigung Verfahren:" + clazz.getObjektid() + "]";
+    public static String toStringForClass(ElkaWasserrecht clazz) {
+        return "[Wasserrecht:" + clazz.getObjektid() + "]";
+    }
+
+    /**
+     * @return Custom ElkaAba.toString()
+     * Liefert einen String der Form "[Abwasserbehandlungsanlage:ID]"
+     */
+    public static String toStringForClass(ElkaAba clazz) {
+        return "[Abwasserbehandlungsanlage:ID:" + clazz.getObjektid() + "]";
+    }
+
+    /**
+     * @return Custom ElkaAnfallstelle.toString()
+     * Liefert einen String der Form "[Anfallstelle:ID]"
+     */
+    public static String toStringForClass(ElkaAnfallstelle clazz) {
+        return "[Anfallstelle:ID:" + clazz.getObjektid() + "]";
+    }
+
+    /**
+     * @return Custom ElkaEinleitungsstelle.toString()
+     * Liefert einen String der Form "[Einleitungsstelle:ID]"
+     */
+    public static String toStringForClass(ElkaEinleitungsstelle clazz) {
+        return "[Einleitungsstelle:" + clazz.getObjektid() + "]";
     }
 
     /* ********************************************************************** */

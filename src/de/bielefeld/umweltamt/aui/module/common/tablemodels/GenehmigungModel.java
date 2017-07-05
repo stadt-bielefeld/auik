@@ -24,7 +24,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -54,7 +54,7 @@ public class GenehmigungModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        IndeinlGenehmigung fd = (IndeinlGenehmigung) objectAtRow;
+    	ElkaWasserrecht fd = (ElkaWasserrecht) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {

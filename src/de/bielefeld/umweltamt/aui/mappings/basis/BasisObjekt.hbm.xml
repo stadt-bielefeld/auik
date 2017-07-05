@@ -58,11 +58,11 @@
         <property name="abwasserfrei" type="java.lang.Boolean">
             <column name="abwasserfrei" />
         </property>
-        <set name="indeinlGenehmigungs" table="indeinl_genehmigung" inverse="true" lazy="true" fetch="select">
+        <set name="elkaWasserrechts" table="elka_wasserrecht" inverse="true" lazy="true" fetch="select">
             <key>
               <column name="objektid" />
             </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung" />
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht" />
         </set> 
         <set name="anh53Fachdatens" table="anh_53_fachdaten" inverse="true" lazy="true" fetch="select">
             <key>

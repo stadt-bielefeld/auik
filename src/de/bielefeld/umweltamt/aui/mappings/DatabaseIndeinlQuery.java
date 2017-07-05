@@ -35,6 +35,7 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
@@ -51,7 +52,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.IndeinlGenehmigung;
 
 /**
  * This is a service class for all custom queries from the indeinl package.
@@ -625,7 +625,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         if (DatabaseIndeinlQuery.anhaenge == null) {
             DatabaseIndeinlQuery.anhaenge = new DatabaseAccess()
                 .executeCriteriaToArray(
-                    DetachedCriteria.forClass(IndeinlGenehmigung.class)
+                    DetachedCriteria.forClass(ElkaWasserrecht.class)
                         .addOrder(Order.asc("anhang"))
                         .setProjection(Projections.distinct(
                             Projections.property("anhang"))),
@@ -642,10 +642,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
      * @param gen59 Boolean false: whatever, true: IndeinlGenehmigung.gen59
      * @return List&lt;IndeinlGenehmigung&gt;
      */
-    public static List<IndeinlGenehmigung> getGenehmigungen(
+    public static List<ElkaWasserrecht> getGenehmigungen(
         Integer anhang, Boolean inaktiv, Boolean gen58, Boolean gen59) {
         DetachedCriteria detachedCriteria =
-            DetachedCriteria.forClass(IndeinlGenehmigung.class)
+            DetachedCriteria.forClass(ElkaWasserrecht.class)
                 .createAlias("basisObjekt", "objekt")
                 .createAlias("basisObjekt.basisAdresse", "adresse")
                 .createAlias("basisObjekt.basisStandort", "standort")
@@ -664,6 +664,6 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
             detachedCriteria.add(Restrictions.eq("gen59", gen59));
         }
         return new DatabaseAccess().executeCriteriaToList(
-            detachedCriteria, new IndeinlGenehmigung());
+            detachedCriteria, new ElkaWasserrecht());
     }
 }
