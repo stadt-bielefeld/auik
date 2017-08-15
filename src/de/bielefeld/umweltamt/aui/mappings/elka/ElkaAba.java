@@ -48,9 +48,9 @@ public class ElkaAba  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Integer objektid;
     private BasisObjekt basisObjekt;
-    private Integer ansprAdrId;
+    private ElkaAbaverfahren elkaAbaverfahren;
+	private Integer ansprAdrId;
     private Date aktualDat;
     private Date erstellDat;
     private String herkunft;
@@ -58,6 +58,8 @@ public class ElkaAba  implements java.io.Serializable {
     private Date inbetriebDat;
     private Date stillgelegtDat;
     private Boolean genehmpflichtigToc;
+    private Boolean wartungsvertragToc;
+    private Boolean einzelabnahmeToc;
     private Integer e32;
     private Integer n32;
     private Integer sonstZulOpt;
@@ -82,8 +84,9 @@ public class ElkaAba  implements java.io.Serializable {
 
     /** Full constructor */
     public ElkaAba(
-        BasisObjekt basisObjekt, Integer ansprAdrId, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, Date inbetriebDat, Date stillgelegtDat, Boolean genehmpflichtigToc, Integer e32, Integer n32, Integer sonstZulOpt, boolean enabled, boolean deleted, Integer uebergabestelleE32, Integer uebergabestelleN32) {
+        BasisObjekt basisObjekt, ElkaAbaverfahren elkaAbaverfahren, Integer ansprAdrId, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, Date inbetriebDat, Date stillgelegtDat, Boolean genehmpflichtigToc, Boolean wartungsvertragToc, Boolean einzelabnahmeToc, Integer e32, Integer n32, Integer sonstZulOpt, boolean enabled, boolean deleted, Integer uebergabestelleE32, Integer uebergabestelleN32) {
         this.basisObjekt = basisObjekt;
+        this.elkaAbaverfahren = elkaAbaverfahren;
         this.ansprAdrId = ansprAdrId;
         this.aktualDat = aktualDat;
         this.erstellDat = erstellDat;
@@ -92,6 +95,8 @@ public class ElkaAba  implements java.io.Serializable {
         this.inbetriebDat = inbetriebDat;
         this.stillgelegtDat = stillgelegtDat;
         this.genehmpflichtigToc = genehmpflichtigToc;
+        this.wartungsvertragToc = wartungsvertragToc;
+        this.einzelabnahmeToc = einzelabnahmeToc;
         this.e32 = e32;
         this.n32 = n32;
         this.sonstZulOpt = sonstZulOpt;
@@ -108,23 +113,23 @@ public class ElkaAba  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Integer getObjektid() {
-        return this.objektid;
-    }
-
-    public void setObjektid(Integer objektid) {
-        this.objektid = objektid;
-    }
-
     public BasisObjekt getBasisObjekt() {
         return this.basisObjekt;
     }
 
     public void setBasisObjekt(BasisObjekt basisObjekt) {
         this.basisObjekt = basisObjekt;
-    }
-    
-        public Integer getAnsprAdrId() {
+	}
+
+	public ElkaAbaverfahren getElkaAbaverfahren() {
+		return elkaAbaverfahren;
+	}
+
+	public void setElkaAbaverfahren(ElkaAbaverfahren elkaAbaverfahren) {
+		this.elkaAbaverfahren = elkaAbaverfahren;
+	}
+
+	public Integer getAnsprAdrId() {
 		return ansprAdrId;
 	}
 
@@ -188,6 +193,22 @@ public class ElkaAba  implements java.io.Serializable {
 		this.genehmpflichtigToc = genehmpflichtigToc;
 	}
 
+	public Boolean getWartungsvertragToc() {
+		return wartungsvertragToc;
+	}
+
+	public void setWartungsvertragToc(Boolean wartungsvertragToc) {
+		this.wartungsvertragToc = wartungsvertragToc;
+	}
+
+	public Boolean getEinzelabnahmeToc() {
+		return einzelabnahmeToc;
+	}
+
+	public void setEinzelabnahmeToc(Boolean einzelabnahmeToc) {
+		this.einzelabnahmeToc = einzelabnahmeToc;
+	}
+
 	public Integer getE32() {
 		return e32;
 	}
@@ -249,6 +270,7 @@ public class ElkaAba  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");			
+        buffer.append("abaVerfahren").append("='").append(getElkaAbaverfahren()).append("' ");				
         buffer.append("ansprAdrId").append("='").append(getAnsprAdrId()).append("' ");			
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
@@ -256,7 +278,9 @@ public class ElkaAba  implements java.io.Serializable {
         buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
         buffer.append("inbetriebDat").append("='").append(getInbetriebDat()).append("' ");			
         buffer.append("stillgelegtDat").append("='").append(getStillgelegtDat()).append("' ");			
-        buffer.append("genehmpflichtigToc").append("='").append(getGenehmpflichtigToc()).append("' ");			
+        buffer.append("genehmpflichtigToc").append("='").append(getGenehmpflichtigToc()).append("' ");	
+        buffer.append("wartungsvertragToc").append("='").append(getWartungsvertragToc()).append("' ");	
+        buffer.append("einzelabnahmeToc").append("='").append(getEinzelabnahmeToc()).append("' ");			
         buffer.append("e32").append("='").append(getE32()).append("' ");			
         buffer.append("n32").append("='").append(getN32()).append("' ");			
         buffer.append("sonstZulOpt").append("='").append(getSonstZulOpt()).append("' ");			
@@ -277,8 +301,8 @@ public class ElkaAba  implements java.io.Serializable {
         if (this == other) return true;
         if (other == null) return false;
         if (!(other instanceof ElkaAba)) return false;
-        return (this.getObjektid().equals(
-            ((ElkaAba) other).getObjektid()));
+        return (this.getId().equals(
+            ((ElkaAba) other).getId()));
     }
 
     /**
@@ -288,8 +312,8 @@ public class ElkaAba  implements java.io.Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        int idValue = this.getObjektid() == null ?
-            0 : this.getObjektid().hashCode();
+        int idValue = this.getId() == null ?
+            0 : this.getId().hashCode();
         result = result * 37 + idValue;
         return result;
     }
@@ -327,7 +351,8 @@ public class ElkaAba  implements java.io.Serializable {
      * @param copy ElkaAba
      */
     private void copy(ElkaAba copy) {
-        this.basisObjekt = copy.getBasisObjekt();            
+        this.basisObjekt = copy.getBasisObjekt();             
+        this.elkaAbaverfahren = copy.getElkaAbaverfahren();            
         this.ansprAdrId = copy.getAnsprAdrId();            
         this.aktualDat = copy.getAktualDat();            
         this.erstellDat = copy.getErstellDat();            
@@ -335,7 +360,9 @@ public class ElkaAba  implements java.io.Serializable {
         this.bezeichnung = copy.getBezeichnung();            
         this.inbetriebDat = copy.getInbetriebDat();            
         this.stillgelegtDat = copy.getStillgelegtDat();            
-        this.genehmpflichtigToc = copy.getGenehmpflichtigToc();            
+        this.genehmpflichtigToc = copy.getGenehmpflichtigToc();     
+        this.wartungsvertragToc = copy.getWartungsvertragToc();    
+        this.einzelabnahmeToc = copy.getEinzelabnahmeToc();           
         this.e32 = copy.getE32();            
         this.n32 = copy.getN32();            
         this.sonstZulOpt = copy.getSonstZulOpt();         

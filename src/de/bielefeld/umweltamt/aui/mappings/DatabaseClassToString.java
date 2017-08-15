@@ -48,6 +48,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaetId;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
 import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAba;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAbaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAnfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.ElkaEinleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht;
@@ -442,7 +443,7 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "[Wasserrecht:ID]"
      */
     public static String toStringForClass(ElkaWasserrecht clazz) {
-        return "[Wasserrecht:" + clazz.getObjektid() + "]";
+        return "[Wasserrecht:" + clazz.getId() + "]";
     }
 
     /**
@@ -450,7 +451,15 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "[Abwasserbehandlungsanlage:ID]"
      */
     public static String toStringForClass(ElkaAba clazz) {
-        return "[Abwasserbehandlungsanlage:ID:" + clazz.getObjektid() + "]";
+        return "[Abwasserbehandlungsanlage:ID:" + clazz.getId() + "]";
+    }
+
+    /**
+     * @return Custom ElkaAbaverfahren.toString()
+     * Liefert einen String der Form clazz.toGuiString()
+     */
+    public static String toStringForClass(ElkaAbaverfahren clazz) {
+        return clazz.toGuiString();
     }
 
     /**
@@ -458,7 +467,7 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "[Anfallstelle:ID]"
      */
     public static String toStringForClass(ElkaAnfallstelle clazz) {
-        return "[Anfallstelle:ID:" + clazz.getObjektid() + "]";
+        return "[Anfallstelle:ID:" + clazz.getId() + "]";
     }
 
     /**
@@ -466,7 +475,7 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "[Einleitungsstelle:ID]"
      */
     public static String toStringForClass(ElkaEinleitungsstelle clazz) {
-        return "[Einleitungsstelle:" + clazz.getObjektid() + "]";
+        return "[Einleitungsstelle:" + clazz.getId() + "]";
     }
 
     /* ********************************************************************** */

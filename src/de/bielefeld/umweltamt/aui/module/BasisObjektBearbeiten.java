@@ -112,6 +112,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
@@ -157,6 +158,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private BWKPanel bwkTab;
     private Anh50Panel zahnarztTab;
     private SuevPanel suevTab;
+    private AbaPanel abaTab;
     private Anh40Panel anhang40Tab;
     private Anh49Panel anhang49Tab;
     private Anh49AbfuhrenPanel anh49abfuhrTab;
@@ -349,6 +351,13 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return suevTab;
     }
 
+    public AbaPanel getAbaTab() {
+        if (abaTab == null) {
+        	abaTab = new AbaPanel(this);
+        }
+        return abaTab;
+    }
+
     public Anh40Panel getAnh40Tab() {
         if (anhang40Tab == null) {
             anhang40Tab = new Anh40Panel(this);
@@ -485,6 +494,10 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             getChronoTab().fetchFormData();
                             getZahnarztTab().fetchFormData();
                             break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
+                            getChronoTab().fetchFormData();
+                            getAbaTab().fetchFormData();
+                            break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
@@ -601,6 +614,13 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                 getChronoTab().updateForm();
                                 getZahnarztTab().updateForm();
                                 getTabbedPane().setSelectedComponent(getZahnarztTab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getAbaTab().getName(), getAbaTab());
+                                getChronoTab().updateForm();
+                                getAbaTab().updateForm();
+                                getTabbedPane().setSelectedComponent(getAbaTab());
                                 break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
@@ -726,6 +746,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
                     getZahnarztTab().clearForm();
                     break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
+                    getAbaTab().clearForm();
+                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
@@ -780,6 +803,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
                     getZahnarztTab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
+                    getAbaTab().enableAll(enabled);
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
@@ -840,6 +866,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
                     getZahnarztTab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
+                    getAbaTab().completeObjekt();
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:

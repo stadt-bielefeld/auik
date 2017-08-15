@@ -149,5 +149,11 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten" />
         </set>
+        <set name="elkaAbas" table="elka_aba" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.ElkaAba" />
+        </set>
     </class>
 </hibernate-mapping>

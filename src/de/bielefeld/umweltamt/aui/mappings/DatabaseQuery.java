@@ -27,6 +27,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAbaverfahren;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**

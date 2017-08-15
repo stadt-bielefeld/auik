@@ -118,7 +118,7 @@ public class BasisObjekt  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisObjekt(
-        BasisAdresse basisStandort, BasisAdresse basisAdresse, BasisLage basisLage, BasisObjektarten basisObjektarten, BasisSachbearbeiter basisSachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Set<ElkaWasserrecht> elkaWasserrechts, Set<Anh53Fachdaten> anh53Fachdatens, Set<AnhSuevFachdaten> anhSuevFachdatens, Set<AnhBwkFachdaten> anhBwkFachdatens, Set<AtlProbepkt> atlProbepkts, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt, Set<VawsFachdaten> vawsFachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit, Set<Anh40Fachdaten> anh40Fachdatens, Set<BasisObjektchrono> basisObjektchronos, AtlSielhaut atlSielhaut, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens) {
+        BasisAdresse basisStandort, BasisAdresse basisAdresse, BasisLage basisLage, BasisObjektarten basisObjektarten, BasisSachbearbeiter basisSachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Set<ElkaAba> elkaAbas, Set<ElkaWasserrecht> elkaWasserrechts, Set<Anh53Fachdaten> anh53Fachdatens, Set<AnhSuevFachdaten> anhSuevFachdatens, Set<AnhBwkFachdaten> anhBwkFachdatens, Set<AtlProbepkt> atlProbepkts, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForObjekt, Set<VawsFachdaten> vawsFachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens, Set<BasisObjektverknuepfung> basisObjektverknuepfungsForIstVerknuepftMit, Set<Anh40Fachdaten> anh40Fachdatens, Set<BasisObjektchrono> basisObjektchronos, AtlSielhaut atlSielhaut, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens) {
         this.basisStandort = basisStandort;
         this.basisAdresse = basisAdresse;
         this.basisLage = basisLage;
@@ -137,6 +137,7 @@ public class BasisObjekt  implements java.io.Serializable {
         this.deleted = deleted;
         this.abwasserfrei = abwasserfrei;
         this.elkaWasserrechts = elkaWasserrechts;
+        this.elkaAbas = elkaAbas;
         this.anh53Fachdatens = anh53Fachdatens;
         this.anhSuevFachdatens = anhSuevFachdatens;
         this.anhBwkFachdatens = anhBwkFachdatens;

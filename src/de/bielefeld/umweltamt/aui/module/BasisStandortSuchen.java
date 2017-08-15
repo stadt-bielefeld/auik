@@ -129,7 +129,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
@@ -1156,11 +1155,11 @@ public class BasisStandortSuchen extends AbstractModul
 		{
 			this.standortPopup = new JPopupMenu("Standort");
 //			JMenuItem bearbItem = new JMenuItem(getStandortEditAction());
-			JMenuItem neuItem = new JMenuItem(getObjektNeuAction());
+//			JMenuItem neuItem = new JMenuItem(getObjektNeuAction());
 			JMenuItem gisItem = new JMenuItem(getGisAction());
 			JMenuItem delItem = new JMenuItem(getStandortLoeschAction());
 //			this.standortPopup.add(bearbItem);
-			this.standortPopup.add(neuItem);
+//			this.standortPopup.add(neuItem);
 			this.standortPopup.add(gisItem);
 			this.standortPopup.add(delItem);
 		}

@@ -311,15 +311,20 @@ public class BasisAdresseSuchen extends AbstractModul {
 		}
 		final int fhausnr = hausnr;
         final String ort = getOrtFeld().getText();
+        final String property = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();;
 
 
             SwingWorkerVariant worker = new SwingWorkerVariant(
                 getBetreiberTabelle()) {
                 @Override
-                protected void doNonUILogic() throws RuntimeException {
-					BasisAdresseSuchen.this.betreiberModel
-                        .filterAllList(name, strasse, fhausnr , ort, null);
-                }
+                
+			protected void doNonUILogic() throws RuntimeException {
+//				if (name != "" || strasse != ""
+//						|| fhausnr != -1 || ort != "") {
+					BasisAdresseSuchen.this.betreiberModel.filterAllList(name,
+							strasse, fhausnr, ort, property);
+				}
+//			}
 
                 @Override
                 protected void doUIUpdateLogic() throws RuntimeException {
@@ -467,84 +472,6 @@ public class BasisAdresseSuchen extends AbstractModul {
 	    log.debug("End filterStandortListe()");
 	}
 
-
-	/**
-	 * Filtert / Durchsucht die Betreiber-Liste.
-	 * @param suche Wonach soll gesucht werden?
-	 * @param column Nach welcher Eigenschaft des Betreiber soll gesucht werden?
-	 */
-	public void filterBetreiberListe(final String suche, final String column) {
-	    log.debug("Start filterBetreiberListe()");
-	    SwingWorkerVariant worker = new SwingWorkerVariant(
-	        getBetreiberTabelle()) {
-	        @Override
-	        protected void doNonUILogic() throws RuntimeException {
-	            BasisAdresseSuchen.this.betreiberModel.filterStandort(suche,
-	                column);
-	        }
-	
-	        @Override
-	        protected void doUIUpdateLogic() throws RuntimeException {
-	            getBetreiberTabelle().clearSelection();
-	
-	            BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
-	            String statusMsg = "Suche: "
-	                + BasisAdresseSuchen.this.betreiberModel.getRowCount()
-	                + " Ergebnis";
-	            if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1) {
-	                statusMsg += "se";
-	            }
-	            statusMsg += ".";
-	            BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
-	        }
-	    };
-	
-	    this.frame.changeStatus("Suche...");
-	    worker.start();
-	    log.debug("End filterBetreiberListe()");
-	    
-	}
-
-	/**
-	 * Filtert / Durchsucht die Betreiber-Liste.
-	 * @param suche Wonach soll gesucht werden?
-	 * @param column Nach welcher Eigenschaft des Betreiber soll gesucht werden?
-	 */
-	public void filterAdressenListe(final String name, final String strasse, 
-				final Integer nummer, final String ort, final String column) {
-	    log.debug("Start filterBetreiberListe()");
-	    SwingWorkerVariant worker = new SwingWorkerVariant(
-	        getBetreiberTabelle()) {
-	        @Override
-	        protected void doNonUILogic() throws RuntimeException {
-	            BasisAdresseSuchen.this.betreiberModel.filterAllList(name, strasse,
-	                nummer, ort, column);
-	        }
-	
-	        @Override
-	        protected void doUIUpdateLogic() throws RuntimeException {
-	            getBetreiberTabelle().clearSelection();
-	
-	            BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
-	            String statusMsg = "Suche: "
-	                + BasisAdresseSuchen.this.betreiberModel.getRowCount()
-	                + " Ergebnis";
-	            if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1) {
-	                statusMsg += "se";
-	            }
-	            statusMsg += ".";
-	            BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
-	            getStrassenFeld().setText("");
-	            getHausnrFeld().setText("");
-	            getOrtFeld().setText("");
-	        }
-	    };
-	
-	    this.frame.changeStatus("Suche...");
-	    worker.start();
-	    log.debug("End filterBetreiberListe()");
-	    
-	}
 
 	public void updateObjekte() {
         log.debug("Start updateObjekte()");
@@ -1002,11 +929,11 @@ public class BasisAdresseSuchen extends AbstractModul {
 					if (!isRowSelected(row)) {
 
 						if (obj.getBasisAdresse() == obj.getBasisStandort()) {
-							c.setBackground(Color.GREEN);
+							c.setBackground(new Color(153, 255, 153));
 						}						
 						
 						else if (obj.getBasisAdresse() != obj.getBasisStandort()) {
-							c.setBackground(Color.YELLOW);
+							c.setBackground(new Color(255, 255, 153));
 						}
 						else {
 							c.setBackground(Color.WHITE);
@@ -1152,6 +1079,42 @@ public class BasisAdresseSuchen extends AbstractModul {
         return this.submitButtonStandort;
     }
 
+	private JTextField getSuchFeld() {
+	    if (this.suchFeld == null) {
+	        this.suchFeld = new JTextField();
+	        this.suchFeld.requestFocusInWindow();
+			this.suchFeld.setFocusTraversalKeys(
+					KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+					Collections.EMPTY_SET);
+	
+	        this.suchFeld.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                String suche = getSuchFeld().getText();
+	                String spalte = (String) ((NamedObject) getSuchBox()
+	                    .getSelectedItem()).getValue();
+	                doSearch();
+	            }
+	        });
+//	        this.suchFeld.setFocusTraversalKeys(
+//	            KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+//	            Collections.EMPTY_SET);
+//	
+//	        this.suchFeld.addKeyListener(new KeyAdapter() {
+//	            @Override
+//	            public void keyPressed(KeyEvent e) {
+//	                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+//	                    String suche = getSuchFeld().getText();
+//	                    String spalte = (String) ((NamedObject) getSuchBox()
+//	                        .getSelectedItem()).getValue();
+//	                    doSearch();
+//	                }
+//	            }
+//	        });
+	    }
+	    return this.suchFeld;
+	}
+
 	private JTextField getStrassenFeld()
 	{
 		if (this.strassenFeld == null)
@@ -1167,7 +1130,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 				public void actionPerformed(ActionEvent e)
 				{
 					getSuchTimer().stop();
-					filterBetreiberListe(getBetreiberTabelle());
+					doSearch();
 				}
 			});
 	
@@ -1179,7 +1142,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 					if (e.getKeyCode() == KeyEvent.VK_TAB)
 					{
 						getSuchTimer().stop();
-						filterBetreiberListe(getHausnrFeld());
+						doSearch();
 					}
 				}
 	
@@ -1218,7 +1181,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 				public void actionPerformed(ActionEvent e)
 				{
 					getSuchTimer().stop();
-					filterBetreiberListe(getBetreiberTabelle());
+					doSearch();
 				}
 			});
 	
@@ -1230,7 +1193,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 					if (e.getKeyCode() == KeyEvent.VK_TAB)
 					{
 						getSuchTimer().stop();
-						filterBetreiberListe(getHausnrFeld());
+						doSearch();
 					}
 				}
 	
@@ -1265,7 +1228,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					filterBetreiberListe(getBetreiberTabelle());
+					doSearch();
 				}
 			});
 		}
@@ -1340,43 +1303,13 @@ public class BasisAdresseSuchen extends AbstractModul {
 	private JComboBox getSuchBox() {
 	    if (this.suchBox == null) {
 	        this.suchBox = new JComboBox(new NamedObject[] {
-	                new NamedObject("Name:", "name"),
 	                new NamedObject("Anrede:", "anrede"),
+	                new NamedObject("Vorname:", "vorname"),
+	                new NamedObject("Name:", "name"),
 	                new NamedObject("Zusatz:", "zusatz"),
 	                new NamedObject("Irgendwo", null)});
+	        this.suchBox.setSelectedIndex(2);
 	    }
 	    return this.suchBox;
-	}
-
-	private JTextField getSuchFeld() {
-	    if (this.suchFeld == null) {
-	        this.suchFeld = new JTextField();
-	
-	        this.suchFeld.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                String suche = getSuchFeld().getText();
-	                String spalte = (String) ((NamedObject) getSuchBox()
-	                    .getSelectedItem()).getValue();
-	                doSearch();
-	            }
-	        });
-	        this.suchFeld.setFocusTraversalKeys(
-	            KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-	            Collections.EMPTY_SET);
-	
-	        this.suchFeld.addKeyListener(new KeyAdapter() {
-	            @Override
-	            public void keyPressed(KeyEvent e) {
-	                if (e.getKeyCode() == KeyEvent.VK_TAB) {
-	                    String suche = getSuchFeld().getText();
-	                    String spalte = (String) ((NamedObject) getSuchBox()
-	                        .getSelectedItem()).getValue();
-	                    doSearch();
-	                }
-	            }
-	        });
-	    }
-	    return this.suchFeld;
 	}
 }

@@ -145,6 +145,7 @@ public class DatabaseConstants {
     public static final int BASIS_OBJEKTART_ID_ANHANG_55 = 29;
     public static final int BASIS_OBJEKTART_ID_ANHANG_56 = 30;
     public static final int BASIS_OBJEKTART_ID_PROBEPUNKT = 32;
+    public static final int BASIS_OBJEKTART_ID_ABA = 34;
     public static final int BASIS_OBJEKTART_ID_ANHANG_52 = 35;
     public static final int BASIS_OBJEKTART_ID_BHKW = 36;
     public static final int BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE = 40;

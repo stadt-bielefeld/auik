@@ -1065,9 +1065,25 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 				+ "FROM BasisAdresse adresse";
         if(bName || bStrasse || bHausnr || bOrt){
             query += " WHERE ";
-            if(bName){
+            if (bName && property == null)
+    		{
+                query += "(LOWER(adresse.betrname) like '" + name.toLowerCase() + "%' OR LOWER(betrvorname) like '" + name.toLowerCase() + "%' OR LOWER(betranrede) like '" + name.toLowerCase() + "%' OR LOWER(betrnamezus) like '" + name.toLowerCase() + "') AND ";
+    		}else if (bName && property.equals("anrede"))
+    		{
+                query += "LOWER(adresse.betranrede) like '" + name.toLowerCase() + "%' AND ";
+    		}else if (bName && property.equals("vorname"))
+    		{
+                query += "LOWER(adresse.betrvorname) like '" + name.toLowerCase() + "%' AND ";
+    		}
+    		else if (bName && property.equals("name"))
+    		{
                 query += "LOWER(adresse.betrname) like '" + name.toLowerCase() + "%' AND ";
-            }
+    		}
+    		
+    		else if (bName && property.equals("zusatz"))
+    		{
+                query += "LOWER(adresse.betrnamezus) like '" + name.toLowerCase() + "%' AND ";
+    		}
             if(bStrasse){
                 query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' AND ";
             }

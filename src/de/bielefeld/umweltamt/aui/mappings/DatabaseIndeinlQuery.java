@@ -35,6 +35,7 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAbaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
@@ -52,6 +53,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
+import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 
 /**
  * This is a service class for all custom queries from the indeinl package.
@@ -598,6 +600,20 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 																		new Integer(0));
 		return id + 1;
 	}
+
+    private static ElkaAbaverfahren[] verfahren = null;
+    /**
+     * Get all AbaVerfahren
+     * @return <code>AbaVerfahren[]</code>
+     */
+    public static ElkaAbaverfahren[] getVerfahren() {
+        if (DatabaseIndeinlQuery.verfahren == null) {
+            DatabaseIndeinlQuery.verfahren =
+                DatabaseQuery.getOrderedAll(new ElkaAbaverfahren())
+                    .toArray(new ElkaAbaverfahren[0]);
+        }
+        return DatabaseIndeinlQuery.verfahren;
+    }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class AnhSuevFachdaten                    */

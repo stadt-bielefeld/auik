@@ -12,6 +12,9 @@
         <many-to-one name="ansprAdrId" class="de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse" fetch="select">
             <column name="anspr_adr_id" />
         </many-to-one>
+        <many-to-one name="elkaAbaverfahren" class="de.bielefeld.umweltamt.aui.mappings.elka.ElkaAbaverfahren" fetch="select">
+            <column name="verfahren_nr" />
+        </many-to-one>
         <property name="aktualDat" type="java.util.Date">
             <column name="aktual_dat" length="13" />
         </property>
@@ -32,6 +35,12 @@
         </property>
         <property name="genehmpflichtigToc" type="java.lang.Boolean">
             <column name="genehmpflichtig_toc" />
+        </property>
+        <property name="wartungsvertragToc" type="java.lang.Boolean">
+            <column name="wartungsvertrag_toc" />
+        </property>
+        <property name="einzelabnahmeToc" type="java.lang.Boolean">
+            <column name="einzelabnahme_toc" />
         </property>
         <property name="e32" type="java.lang.Integer">
             <column name="e32" />
