@@ -122,7 +122,7 @@ WHERE
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{strasse} + " " + $F{hausnr} + $F{hausnrzus} + ", " +  $F{plz} + " Bielefeld"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{strasse} + " " + $F{hausnr} + $F{hausnrzus}.equals("null") ? "" : $F{hausnrzus} + ", " +  $F{plz} + " Bielefeld"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="60" width="150" height="20" uuid="ef335080-85b0-44f9-8afc-c01fb3e33af9">
