@@ -1454,7 +1454,7 @@ public class BasisStandortSuchen extends AbstractModul
 			this.objektTabelle
 					.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-			objektTabelle.setAutoCreateRowSorter(true);
+			objektTabelle.setAutoCreateRowSorter(false);
 
 			TableColumn column = null;
 			for (int i = 0; i < this.objektModel.getColumnCount(); i++)

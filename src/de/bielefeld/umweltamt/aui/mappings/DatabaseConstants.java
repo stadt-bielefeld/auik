@@ -98,7 +98,7 @@ public class DatabaseConstants {
     public static final Integer ATL_PROBEART_ID_SIELHAUT = 7;
     public static final Integer ATL_PROBEART_ID_ZULAUF = 9;
 
-    /* AtlKläranlage */
+    /* AtlKlÃ¤ranlage */
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_HEEPEN =
         AtlKlaeranlagen.findById(1);
     public static final AtlKlaeranlagen ATL_KLAERANLAGE_BRAKE =
@@ -152,6 +152,8 @@ public class DatabaseConstants {
     public static final int BASIS_OBJEKTART_ID_GENEHMIGUNG = 42;
     public static final int BASIS_OBJEKTART_ID_ABSCHEIDER34 = 58;
     public static final int BASIS_OBJEKTART_ID_ABSCHEIDER_ES = 60;
+    public static final int BASIS_OBJEKTART_ID_EINLEITUNGSTELLE = 66;
+    public static final int BASIS_OBJEKTART_ID_ANFALLSTELLE = 65;
     public static final String BASIS_OBJEKTART_ABTEILUNG_33 = "360.33";
     public static final String BASIS_OBJEKTART_ABTEILUNG_34 = "360.34";
     
@@ -168,11 +170,11 @@ public class DatabaseConstants {
     /* ********************************************************************** */
 
     /* VawsAnlagenart(en) */
-    public static final String VAWS_ANLAGENART_ABFUELLFLAECHE = "Abfüllfläche";
+    public static final String VAWS_ANLAGENART_ABFUELLFLAECHE = "AbfÃ¼llflÃ¤che";
     public static final String VAWS_ANLAGENART_ROHRLEITUNG = "Rohrleitung";
     public static final String VAWS_ANLAGENART_VAWS_ABSCHEIDER = "VAwS-Abscheider";
     public static final String VAWS_ANLAGENART_FS = "Fahrsilo";
-    public static final String VAWS_ANLAGENART_GK = "Güllekeller";
-    public static final String VAWS_ANLAGENART_GHB = "Güllehochbehälter";
+    public static final String VAWS_ANLAGENART_GK = "GÃ¼llekeller";
+    public static final String VAWS_ANLAGENART_GHB = "GÃ¼llehochbehÃ¤lter";
 
 }

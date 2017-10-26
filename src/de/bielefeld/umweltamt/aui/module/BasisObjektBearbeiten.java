@@ -43,7 +43,7 @@
  * Anlegen neuer Probepunkte korrigiert
  *
  * Revision 1.3  2009/07/30 05:31:22  u633d
- * GIS, Entsorger vereinheitlicht, Objekte inaktivierbar und andere Erg�nzungen
+ * GIS, Entsorger vereinheitlicht, Objekte inaktivierbar und andere Erg nzungen
  *
  * Revision 1.2  2009/03/24 12:35:20  u633d
  * Umstellung auf UTF8
@@ -113,6 +113,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.AnfallstellePanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
@@ -128,6 +129,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.Anh56Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.BWKPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.BasisPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ChronoPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.EinleitungsstellePanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.FotoPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.GenehmigungPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepktAuswPanel;
@@ -173,6 +175,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private FotoPanel fotoTab;
     private GenehmigungPanel genehmigungTab;
     private VawsPanel vawsTab;
+    private EinleitungsstellePanel einleitungsstelleTab;
+    private AnfallstellePanel anfallstelleTab;
 
     // Daten
     private BasisObjekt objekt;
@@ -420,6 +424,20 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return vawsTab;
     }
 
+    public EinleitungsstellePanel getEinleitungsstelleTab() {
+        if (einleitungsstelleTab == null) {
+        	einleitungsstelleTab = new EinleitungsstellePanel(this);
+        }
+        return einleitungsstelleTab;
+    }
+    
+    public AnfallstellePanel getAnfallstelleTab() {
+    	if (anfallstelleTab == null) {
+    		anfallstelleTab = new AnfallstellePanel(this);
+    	}
+    	return anfallstelleTab;
+    }
+
 
     //Erzeuge einen Registerbereich
     public JTabbedPane getTabbedPane() {
@@ -541,6 +559,14 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             getChronoTab().fetchFormData();
                             getAnh52Tab().fetchFormData();
                             break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
+                            getChronoTab().fetchFormData();
+                            getEinleitungsstelleTab().fetchFormData();
+                            break;
+                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
+                        	getChronoTab().fetchFormData();
+                        	getAnfallstelleTab().fetchFormData();
+                        	break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
                             getChronoTab().fetchFormData();
@@ -700,6 +726,20 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                 getGenehmigungTab().updateForm();
                                 getTabbedPane().setSelectedComponent(getGenehmigungTab());
                                 break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getEinleitungsstelleTab().getName(), getEinleitungsstelleTab());
+                                getChronoTab().updateForm();
+                                getEinleitungsstelleTab().updateForm();
+                                getTabbedPane().setSelectedComponent(getEinleitungsstelleTab());
+                                break;
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
+                            	getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                            	getTabbedPane().addTab(getAnfallstelleTab().getName(), getAnfallstelleTab());
+                            	getChronoTab().updateForm();
+                            	getAnfallstelleTab().updateForm();
+                            	getTabbedPane().setSelectedComponent(getAnfallstelleTab());
+                            	break;
                             default:
                                 log.debug("Unknown BasisObjektart: "
                                     + objekt.getBasisObjektarten());
@@ -776,6 +816,12 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
                     getAnh52Tab().clearForm();
                     break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
+                    getEinleitungsstelleTab().clearForm();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
+                	getAnfallstelleTab().clearForm();
+                	break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
                     getAnh53Tab().clearForm();
@@ -831,6 +877,12 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
                     getAnh52Tab().enableAll(enabled);
                     break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
+                    getEinleitungsstelleTab().enableAll(enabled);
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
+                	getAnfallstelleTab().enableAll(enabled);
+                	break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
                     getAnh53Tab().enableAll(enabled);
@@ -894,6 +946,12 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
                     getAnh52Tab().completeObjekt();
                     break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
+                    getEinleitungsstelleTab().completeObjekt();
+                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
+                	getAnfallstelleTab().completeObjekt();
+                	break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
                     getAnh53Tab().completeObjekt();

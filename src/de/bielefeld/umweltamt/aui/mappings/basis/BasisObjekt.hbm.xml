@@ -155,5 +155,17 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.ElkaAba" />
         </set>
+        <set name="elkaEinleitungsstelles" table="elka_einleitungsstelle" inverse="true" lazy="true" fetch="select">
+        	<key>
+        		<column name="objektid" not-null="true"/>
+        	</key>
+        	<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.ElkaEinleitungsstelle" />
+        </set>
+        <set name="elkaAnfallstelles" table="elka_anfallstelle" inverse="true" lazy="true" fetch="select">
+        	<key>
+        	<column name="objektid" not-null="true"/>
+        	</key>
+        	<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.ElkaAnfallstelle" />
+        </set>
     </class>
 </hibernate-mapping>

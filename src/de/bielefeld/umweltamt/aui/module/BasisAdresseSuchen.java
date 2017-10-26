@@ -64,8 +64,6 @@ import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -78,14 +76,9 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-
-import org.hibernate.dialect.FirebirdDialect;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -99,7 +92,6 @@ import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
@@ -223,7 +215,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             // Die Tab-Action ist in eine neue Klasse ausgelagert,
             // weil man sie evtl. öfters brauchen wird.
             TabAction ta = new TabAction();
-			ta.addComp(getStrassenFeld());
+			ta.addComp(getSuchFeld());
 			ta.addComp(getHausnrFeld());
             ta.addComp(getBetreiberTabelle());
             ta.addComp(getObjektTabelle());
@@ -272,9 +264,10 @@ public class BasisAdresseSuchen extends AbstractModul {
                 .getSetting("auik.prefs.divloc_betreiber"));
             this.tabellenSplit.setDividerLocation(divloc);
         }
-
+        
         this.lastAdresse = null;
-//        updateBetreiberListe();
+        filterBetreiberListe(suchFeld);
+        
     }
 
     /* (non-Javadoc)
@@ -377,8 +370,8 @@ public class BasisAdresseSuchen extends AbstractModul {
 			@Override
 			protected void doNonUILogic()
 			{
-				if (SettingsManager.getInstance().getStandort() == null)
-				{
+				if (SettingsManager.getInstance().getStandort() != null)
+				{					
 					BasisAdresseSuchen.this.betreiberModel.filterBetreiber(
 																		getSuchFeld().getText(),
 																		getStrassenFeld().getText(),
@@ -438,7 +431,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			@Override
 			protected void doNonUILogic()
 			{
-				if (SettingsManager.getInstance().getStandort() == null)
+				if (SettingsManager.getInstance().getStandort() != null)
 				{
 					BasisAdresseSuchen.this.betreiberModel.filterStandort(
 																		getSuchFeld().getText(),

@@ -51,14 +51,14 @@
         <property name="typAusserortStrasseneinl" type="java.lang.Boolean">
             <column name="typ_ausserort_strasseneinl" />
         </property>
-        <property name="stationierungNs3" type="java.lang.Float">
-            <column name="stationierung_ns_3" precision="8" scale="8" not-null="true" />
+        <property name="stationierungNs3" type="java.lang.Double">
+            <column name="stationierung_ns_3" precision="8" scale="8" />
         </property>
-        <property name="einzugsgebiet" type="java.lang.Float">
-            <column name="einzugsgebiet" precision="8" scale="8" not-null="true" />
+        <property name="einzugsgebiet" type="java.lang.Double">
+            <column name="einzugsgebiet" precision="8" scale="8" />
         </property>
-        <property name="stationierungSt3" type="java.lang.Float">
-            <column name="stationierung_st_3" precision="8" scale="8" not-null="true" />
+        <property name="stationierungSt3" type="java.lang.Double">
+            <column name="stationierung_st_3" precision="8" scale="8" />
         </property>
         <property name="abgaberelEinl" type="java.lang.Integer">
             <column name="abgaberel_einl" />

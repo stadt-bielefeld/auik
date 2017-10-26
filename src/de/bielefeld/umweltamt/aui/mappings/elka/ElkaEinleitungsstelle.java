@@ -430,12 +430,12 @@ public class ElkaEinleitungsstelle  implements java.io.Serializable {
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
-     * @return <code>IndeinlGenehmigung</code> the merged instance,
+     * @return <code>ElkaEinleitungsstelle</code> the merged instance,
      *         if everything went okay,
      *         <code>null</code> otherwise
      */
     public static ElkaEinleitungsstelle merge(ElkaEinleitungsstelle detachedInstance) {
-        log.debug("Merging IndeinlGenehmigung instance " + detachedInstance);
+        log.debug("Merging ElkaEinleitungsstelle instance " + detachedInstance);
         return (ElkaEinleitungsstelle) new DatabaseAccess().merge(detachedInstance);
     }
 

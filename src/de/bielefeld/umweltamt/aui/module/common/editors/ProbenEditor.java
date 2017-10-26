@@ -220,37 +220,13 @@ public class ProbenEditor extends AbstractApplyEditor {
             } else { // isNew
                 if (this.isSchlamm) {
                     String[] paramIDs = {
-                        DatabaseConstants.ATL_PARAMETER_ID_AMMONIUM_STICKSTOFF,
                         DatabaseConstants.ATL_PARAMETER_ID_AOX,
-                        DatabaseConstants.ATL_PARAMETER_ID_ARSEN,
-                        DatabaseConstants.ATL_PARAMETER_ID_BASISCH_WIRKSAME_SUBSTANZ,
-                        DatabaseConstants.ATL_PARAMETER_ID_BENZO_A_PYREN,
                         DatabaseConstants.ATL_PARAMETER_ID_BLEI,
                         DatabaseConstants.ATL_PARAMETER_ID_CADMIUM,
                         DatabaseConstants.ATL_PARAMETER_ID_CHROM,
-                        DatabaseConstants.ATL_PARAMETER_ID_CHROMAT,
-                        DatabaseConstants.ATL_PARAMETER_ID_COBALT,
-                        DatabaseConstants.ATL_PARAMETER_ID_DEHP,
-                        DatabaseConstants.ATL_PARAMETER_ID_GLUEHVERLUST,
-                        DatabaseConstants.ATL_PARAMETER_ID_KALIUM,
                         DatabaseConstants.ATL_PARAMETER_ID_KUPFER,
-                        DatabaseConstants.ATL_PARAMETER_ID_MAGNESIUM,
                         DatabaseConstants.ATL_PARAMETER_ID_NICKEL,
-                        DatabaseConstants.ATL_PARAMETER_ID_PCB_28,
-                        DatabaseConstants.ATL_PARAMETER_ID_PCB_52,
-                        DatabaseConstants.ATL_PARAMETER_ID_PCB_101,
-                        DatabaseConstants.ATL_PARAMETER_ID_PCB_138,
-                        DatabaseConstants.ATL_PARAMETER_ID_PCB_153,
-                        DatabaseConstants.ATL_PARAMETER_ID_PCB_180,
-                        DatabaseConstants.ATL_PARAMETER_ID_PCB_SUMME,
-                        DatabaseConstants.ATL_PARAMETER_ID_PCDD_PCDF,
-                        DatabaseConstants.ATL_PARAMETER_ID_PH_WERT,
-                        DatabaseConstants.ATL_PARAMETER_ID_PHOSPHOR,
                         DatabaseConstants.ATL_PARAMETER_ID_QUECKSILBER,
-                        DatabaseConstants.ATL_PARAMETER_ID_SCHWEFEL,
-                        DatabaseConstants.ATL_PARAMETER_ID_STICKSTOFF,
-                        DatabaseConstants.ATL_PARAMETER_ID_THALLIUM,
-                        DatabaseConstants.ATL_PARAMETER_ID_TROCKENSUBSTANZ,
                         DatabaseConstants.ATL_PARAMETER_ID_ZINK
                     };
                     AtlParameter[] params = new AtlParameter[paramIDs.length];
@@ -662,6 +638,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 DatabaseQuery.getCurrentSachbearbeiter());
             this.uhrzeitVon.setText("");
             this.uhrzeitBis.setText("");
+//            doSave();
         }
 
         this.parameterModel = new ParameterModel(getProbe(), isNew,
@@ -1373,7 +1350,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
     @Override
-    protected boolean doSave() {
+    public boolean doSave() {
         log.debug("Speichere Probenahmedetails");
 
         AtlProbenahmen probe = getProbe();

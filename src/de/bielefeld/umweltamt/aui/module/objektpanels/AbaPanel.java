@@ -80,9 +80,10 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  */
 public class AbaPanel extends JPanel {
-    private static final long serialVersionUID = 7997458251785488488L;
 
-    /** Logging */
+private static final long serialVersionUID = -4030805403749508467L;
+
+	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private String name;
