@@ -1319,6 +1319,17 @@ public class SielhautBearbeiten extends AbstractModul {
 
                 initializeData();
             }
+            
+            private boolean istVorhanden (List<Minute> liste, Minute neu) {
+        	boolean  x = false;
+        	ArrayList<Minute> array = (ArrayList<Minute>)liste;
+        	for (int i =0; i < array.size();i++) {
+        	    if (array.get(i).getDay().hashCode() == neu.getDay().hashCode()) {
+        		x = true;
+        	    }
+        	}
+        	return x;
+            }
 
             private void initializeData() {
                 TimeSeries series;
@@ -1327,9 +1338,9 @@ public class SielhautBearbeiten extends AbstractModul {
                 for (int i = 0; i < this.col1.getSeriesCount(); i++) {
                     series = this.col1.getSeries(i);
                     for (int j = 0; j < series.getItemCount(); j++) {
-                        item = (APosDataItem) series.getDataItem(j);
-
-                        if (!this.dateList.contains(item.getMinute())) {
+                        item = (APosDataItem) series.getDataItem(j);        
+                        Minute v = item.getMinute();
+                        if (!istVorhanden(this.dateList,v)) {
                             this.dateList.add(item.getMinute());
                         }
                     }
