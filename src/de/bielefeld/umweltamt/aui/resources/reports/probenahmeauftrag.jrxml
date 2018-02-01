@@ -876,7 +876,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[UCL]]></text>
+				<text><![CDATA[Eurofins]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="6" y="618" width="507" height="15" uuid="e82d6414-2018-426e-b85f-ae137047b452"/>

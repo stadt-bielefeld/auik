@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="25" uuid="64078b94-0af8-4f19-a992-4e90f5a9f28f">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1442"/>
+	<property name="ireport.x" value="88"/>
+	<property name="ireport.y" value="1358"/>
 	<parameter name="datum" class="java.lang.String"/>
 	<parameter name="kassenzeichen" class="java.lang.String"/>
 	<parameter name="probenehmer" class="java.lang.String"/>
@@ -260,7 +260,7 @@
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 40. Änderungssatzung vom 15.12.2016 (KdS)]]></text>
+				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 41. Änderungssatzung vom 15.12.2017 (KdS)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="20" y="51" width="360" height="15" uuid="7a000f5a-0201-4d0a-aa7b-2c470330095d"/>
@@ -539,7 +539,7 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<textElement>
 					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
-				<text><![CDATA[1201 _ _ _ _ _ _ _]]></text>
+				<text><![CDATA[120 _ _ _ _ _ _ _]]></text>
 			</staticText>
 		</band>
 	</detail>
@@ -617,56 +617,49 @@ Die Daten dürfen nur nach §§ 14 und 16 DSG NW übermittelt werden.]]></text>
 				<text><![CDATA[Stadt Bielefeld]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="10" width="172" height="9" uuid="bbaa093a-1141-4d2f-9f54-681445c82390"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="6"/>
-				</textElement>
-				<text><![CDATA[Sparkasse Bielefeld Kto.-Nr. 26 (BLZ 480 501 61)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="58" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
+				<reportElement x="0" y="50" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Gläubiger-Identifikationsnummer:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="50" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
+				<reportElement x="0" y="42" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[BIC: PBNKDEFF]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="34" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
+				<reportElement x="0" y="26" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[Postbank Hannover Kto.-Nr. 20-307 (BLZ 250 100 30)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="18" width="172" height="9" uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e"/>
+				<reportElement x="0" y="10" width="172" height="9" uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[IBAN: DE09 4805 0161 0000 0000 26]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="66" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
+				<reportElement x="0" y="58" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[DE1920000000017669]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="42" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
+				<reportElement x="0" y="34" width="172" height="9" uuid="0f9214d8-ff65-484f-9aaf-c3e2bc389ab7"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
 				<text><![CDATA[IBAN: DE52 2501 0030 0000 0203 07]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="26" width="172" height="9" uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e"/>
+				<reportElement x="0" y="18" width="172" height="9" uuid="ba3d0c66-05dc-4a8d-b798-58ad81baaa7e"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="6"/>
 				</textElement>
