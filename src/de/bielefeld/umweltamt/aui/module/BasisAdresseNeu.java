@@ -51,6 +51,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -549,6 +551,53 @@ public class BasisAdresseNeu extends AbstractModul
 					.getSelectedItem().toString());
             if (stra.getPlz() != null) {
             	plzFeld.setText(stra.getPlz());
+            }
+            
+            BasisLage vorhandeneLage = null;
+            String i;
+            if (bts.getHausnrZusatz() == null) {
+        	i = "";
+            } else  {
+        	i = bts.getHausnrZusatz();
+            }
+            List<BasisAdresse> firmen = DatabaseQuery.findStandorte(strasseFeld.getText(),bts.getHausnr() , stra.getOrt());
+            for(BasisAdresse firma : firmen) {
+        	String f;
+                if (firma.getHausnrzus() == null) {
+            	f = "";
+                } else  {
+            	f = firma.getHausnrzus();
+                }
+        	if (i.equals(f) || f.contains("-") ) {
+            	Set<BasisMapAdresseLage> verk = firma.getBasisMapAdresseLages();
+            	for (BasisMapAdresseLage ver : verk) {
+            	    vorhandeneLage = ver.getBasisLage();
+            	}   
+        	}
+            }
+            if (vorhandeneLage != null) {
+        	List<BasisGemarkung> gemarkungen = DatabaseQuery.getGemarkungenlist();
+        	for (BasisGemarkung gemarkung : gemarkungen) {
+        	  if (gemarkung.getGemarkung().equals(vorhandeneLage.getBasisGemarkung().getGemarkung())) {
+        	      this.gemarkungBox.setSelectedItem(gemarkung);
+        	  }
+        	}
+        	for (VawsStandortgghwsg standort : standortggs) {
+        	    if (standort.getStandortgg().equals(vorhandeneLage.getVawsStandortgghwsg().getStandortgg())) {
+        		this.standortGgBox.setSelectedItem(standort);
+        	    }
+        	}
+        	for (VawsWassereinzugsgebiete wEinzugsgebiet : wEinzugsgebiete) {
+        	    if (wEinzugsgebiet.getEzgbname().equals(vorhandeneLage.getVawsWassereinzugsgebiete().getEzgbname())) {
+        		this.wEinzugsGebBox.setSelectedItem(wEinzugsgebiet);
+        	    }
+        	}
+        	this.entwGebBox.setSelectedItem(vorhandeneLage.getEntgebid());
+            } else {
+        	this.gemarkungBox.setSelectedIndex(0);
+        	this.standortGgBox.setSelectedIndex(0);
+        	this.wEinzugsGebBox.setSelectedIndex(0);
+        	this.entwGebBox.setSelectedIndex(0);
             }
         }
         log.debug("End updateAdresse()");
