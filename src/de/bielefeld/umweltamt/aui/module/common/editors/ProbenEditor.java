@@ -1533,8 +1533,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         throws IllegalArgumentException {
         BasisAdresse betr =
             probe.getAtlProbepkt().getBasisObjekt().getBasisAdresse();
-        BasisLage basisStandort =
-            probe.getAtlProbepkt().getBasisObjekt().getBasisLage();
+        BasisAdresse basisStandort =
+            probe.getAtlProbepkt().getBasisObjekt().getBasisStandort();
+        BasisLage basisLage =
+                probe.getAtlProbepkt().getBasisObjekt().getBasisLage();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
 
@@ -1552,7 +1554,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         Date now = new Date();
         params.put("datum", DateUtils.format(now, DateUtils.FORMAT_DATE));
         params.put("entnahmedatum", entnahmezeitpunkt);
-        params.put("entnahmeort", "test");//basisStandort.toString());
+        params.put("entnahmeort", basisStandort.toString());//basisStandort.toString());
         params.put("entnahmestelle", probe.getAtlProbepkt().getBasisObjekt()
             .getBeschreibung());
         params.put("entnahmestellen", "1");
