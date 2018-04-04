@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ParameterReport" language="groovy" pageWidth="518" pageHeight="842" columnWidth="498" leftMargin="0" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ParameterReport" language="groovy" pageWidth="518" pageHeight="842" columnWidth="498" leftMargin="0" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d18177b2-c20a-4b16-99f4-a9d16c3d370c">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -16,88 +16,88 @@
 	<columnHeader>
 		<band height="23">
 			<rectangle>
-				<reportElement x="0" y="0" width="478" height="23" backcolor="#CCCCCC"/>
+				<reportElement x="0" y="0" width="478" height="23" backcolor="#CCCCCC" uuid="0b3933e4-b48d-4f11-af9b-909c8b0e5eab"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="249" y="3" width="113" height="20"/>
+				<reportElement x="218" y="3" width="113" height="20" uuid="d3caab7a-4e29-42e4-b119-efed9fe963bc"/>
 				<textElement>
 					<font fontName="DejaVu Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Kennzeichnung]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="3" width="104" height="20"/>
+				<reportElement x="334" y="2" width="144" height="20" uuid="bf82b2a5-424d-4e97-afd9-306122a9e008"/>
 				<textElement>
 					<font fontName="DejaVu Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Konservierung]]></text>
 			</staticText>
 			<line>
-				<reportElement x="243" y="0" width="1" height="23"/>
+				<reportElement x="215" y="0" width="1" height="23" uuid="eeddb432-e778-4672-b02e-ee4b1bf919ef"/>
 			</line>
 			<line>
-				<reportElement x="362" y="0" width="1" height="23"/>
+				<reportElement x="331" y="0" width="1" height="23" uuid="c4baea92-f003-4fb7-945b-4886895c1dff"/>
 			</line>
 			<staticText>
-				<reportElement x="30" y="3" width="124" height="20"/>
+				<reportElement x="30" y="3" width="124" height="20" uuid="62606f4a-932f-4c59-880c-ccae951333ef"/>
 				<textElement>
 					<font fontName="DejaVu Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Parameter]]></text>
 			</staticText>
 			<line>
-				<reportElement x="25" y="0" width="1" height="23"/>
+				<reportElement x="25" y="0" width="1" height="23" uuid="66fdff7d-97fc-477a-9f1a-e6e5f589eb3e"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="478" height="15"/>
+				<reportElement x="0" y="0" width="478" height="15" uuid="e2d95db5-fd9e-402e-bc67-02b2bc8e7049"/>
 			</rectangle>
 			<line>
-				<reportElement x="243" y="0" width="1" height="15"/>
+				<reportElement x="215" y="0" width="1" height="15" uuid="4a916560-40fc-4e87-bc04-220ac0a721bc"/>
 			</line>
 			<line>
-				<reportElement x="362" y="0" width="1" height="15"/>
+				<reportElement x="331" y="0" width="1" height="15" uuid="33414bba-b467-4ff8-be81-db15d9a988ff"/>
 			</line>
 			<line>
-				<reportElement x="25" y="0" width="1" height="15"/>
+				<reportElement x="25" y="0" width="1" height="15" uuid="98f80f79-6ef9-4c64-9d7b-e4f47ca3dba8"/>
 			</line>
 			<staticText>
-				<reportElement x="9" y="1" width="12" height="13"/>
+				<reportElement x="9" y="1" width="12" height="13" uuid="f34cef96-777b-425a-bee6-0bb6f8161c5d"/>
 				<textElement>
 					<font fontName="DejaVu Serif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[X]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="29" y="1" width="213" height="13"/>
+				<reportElement x="29" y="1" width="187" height="13" uuid="c3c8cfa3-040b-43c9-9cc0-8dedc50c46ca"/>
 				<textElement>
 					<font fontName="DejaVu Serif" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{Parameter}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Parameter}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="367" y="1" width="104" height="13"/>
+				<reportElement x="334" y="0" width="144" height="13" uuid="95f63169-a474-499e-90a3-2b18dea701fc"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="DejaVu Serif" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{Konservierung}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Konservierung}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="249" y="1" width="113" height="13"/>
+				<reportElement x="218" y="1" width="113" height="13" uuid="8f84f4ad-0158-4fbe-b2c3-8053e3b67885"/>
 				<textElement>
 					<font fontName="DejaVu Serif" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{Kennzeichnung}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Kennzeichnung}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="154" y="1" width="89" height="13"/>
+				<reportElement x="124" y="1" width="89" height="13" uuid="620455a1-240b-449e-ad38-b5687472349d"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Serif" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{Zusatz}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Zusatz}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
