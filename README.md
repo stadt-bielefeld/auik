@@ -1,6 +1,6 @@
 # Willkommen zu AUI-K
 
-[![Build Status](https://travis-ci.org/BjoernSchilberg/auik.svg?branch=master)][travis]
+[![Build Status](https://travis-ci.org/stadt-bielefeld/auik.svg?branch=master)][travis]
 [![Build status](https://ci.appveyor.com/api/projects/status/h9vq9wyxpj51hgms?svg=true)][appveyor]
 [![License](https://img.shields.io/badge/License-LGPL%20v2.1-blue.svg)][license]
 
