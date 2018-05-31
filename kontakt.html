@@ -10,7 +10,7 @@
 
 <meta property="og:title" content="AUI-K - Anlagen und Indirekteinleiter-Kataster">
 <meta property="og:type" content="website">
-<meta property="og:url" content="http://auik.wald.intevation.org/">
+<meta property="og:url" content="https://stadt-bielefeld.github.io/auik/">
 <meta property="og:image" content="http://imgs.sapo.pt/ink/assets/imgs/ink_opengraph.png">
 <meta property="og:site_name" content="AUI-K">
 <meta property="og:description" content=" AUI-K - Das freie Anlagen- und
@@ -25,8 +25,16 @@ Indirekteinleiter.">
 <link rel="shortcut icon" href="favicon.ico">
 
 <link rel="stylesheet" type="text/css" href="ink-2.2.1/css/ink-min.css">
-    
 <link rel="stylesheet" type="text/css" href="css/docs.css">  
+<link rel="stylesheet" href="http://ol3js.org/en/master/css/ol.css" type="text/css">
+<!--link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" /-->
+    <style>
+      .map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+
 
 <!--[if lt IE 9]>
 <script type="text/javascript" src="http://cdn.ink.sapo.pt/2.2.1/js/html5shiv.js"></script>
@@ -49,25 +57,25 @@ Indirekteinleiter.">
 
 <nav class="ink-navigation ink-grid hide-small hide-medium ie7">
 <ul class="menu horizontal flat black shadowed">
-<li><a class="logoPlaceholder" href="http://auik.wald.intevation.org/" title="AUI-K">AUI-K</a></li>           
-<li><a href="ueber">Über AUI-K</a></li>
-<li><a href="bedienung">Bedienung</a></li>
-<li><a href="entwicklung">Entwicklung</a></li>
-<li><a href="kontakt">Kontakt</a></li>
+<li><a class="logoPlaceholder" href="https://stadt-bielefeld.github.io/auik/" title="AUI-K">AUI-K</a></li>           
+<li><a href="ueber.html">Über AUI-K</a></li>
+<li><a href="bedienung.html">Bedienung</a></li>
+<li><a href="entwicklung.html">Entwicklung</a></li>
+<li><a href="kontakt.html">Kontakt</a></li>
 </ul>
 </nav>
 
 <nav class="ink-navigation ink-grid hide-all show-medium show-small">
 <ul class="menu vertical flat black">
-<li class="title"><a class="logoPlaceholder push-left" href="http://auik.wald.intevation.org/" title="Site Title">AUI-K</a>
+<li class="title"><a class="logoPlaceholder push-left" href="https://stadt-bielefeld.github.io/auik/" title="Site Title">AUI-K</a>
 <button class="toggle" data-target="#topbar_menu"><span class="icon-reorder"></span></button>
 </li>           
 </ul>
 <ul class="menu vertical flat black hide-all" id="topbar_menu">
-<li><a href="ueber">Über AUI-K</a></li>
-<li><a href="bedienung">Bedienung</a></li>
-<li><a href="entwicklung">Entwicklung</a></li>
-<li><a href="kontakt">Kontakt</a></li>
+<li><a href="ueber.html">Über AUI-K</a></li>
+<li><a href="bedienung.html">Bedienung</a></li>
+<li><a href="entwicklung.html">Entwicklung</a></li>
+<li><a href="kontakt.html">Kontakt</a></li>
 </ul>
 </nav>
 
@@ -75,8 +83,40 @@ Indirekteinleiter.">
 
 </div>
 
+<div class="ink-grid">
+
+<div class="ink-grid">
+    <div class="whatIs">
+        <h1>Kontakt</h1>
+    </div>
+    <div id="map" class="map"></div>
+
+    <!--advantages-->
+    <h3>Fragen ... ?</h3>
+    <div class="column-group gutters">
+        <div class="large-50 medium-50 small-100">
+            <h4>... zum fachlichen Kontext</h4>
+            <p>AUI-K wird vom  <a
+href="http://www.bielefeld.de/de/rv/ds_stadtverwaltung/umwa/">Umweltamt
+Bielefeld</a> eingesetzt. Wenn Sie Fragen, zum fachlichen Kontext haben, nimmt sich gerne Gerd Genuit Ihrer Fragen an.</p>
+        </div>
+        <div class="large-50 medium-50 small-100">
+            <h4>... zur Entwicklung und Unterstützung</h4>
+<p>Die technische Entwicklung und Unterstützung erfolgt durch das Osnabrücker
+Unternehmen <a href="http://www.intevation.de">Intevation</a>. Bei Fragen
+hierzu, wenden Sie sich einfach an <a href="mailto:geospatial@intevation.de">geospatial@intevation.de</a>.</p>
+        </div>
+    </div>
+    <!--end advantages-->
+
+
+</div>
+
 <footer>
 </footer>
 
+<script src="http://ol3js.org/en/master/build/ol.js" type="text/javascript"></script>
+<!--script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.2/leaflet.js" type="text/javascript"></script-->
+<script type="text/javascript" src="scripts/karte.ol.js"></script>
 </body>
 </html>

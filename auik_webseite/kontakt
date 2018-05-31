@@ -10,7 +10,7 @@
 
 <meta property="og:title" content="AUI-K - Anlagen und Indirekteinleiter-Kataster">
 <meta property="og:type" content="website">
-<meta property="og:url" content="http://auik.wald.intevation.org/">
+<meta property="og:url" content="https://stadt-bielefeld.github.io/auik/">
 <meta property="og:image" content="http://imgs.sapo.pt/ink/assets/imgs/ink_opengraph.png">
 <meta property="og:site_name" content="AUI-K">
 <meta property="og:description" content=" AUI-K - Das freie Anlagen- und
@@ -57,7 +57,7 @@ Indirekteinleiter.">
 
 <nav class="ink-navigation ink-grid hide-small hide-medium ie7">
 <ul class="menu horizontal flat black shadowed">
-<li><a class="logoPlaceholder" href="http://auik.wald.intevation.org/" title="AUI-K">AUI-K</a></li>           
+<li><a class="logoPlaceholder" href="https://stadt-bielefeld.github.io/auik/" title="AUI-K">AUI-K</a></li>           
 <li><a href="ueber">Über AUI-K</a></li>
 <li><a href="bedienung">Bedienung</a></li>
 <li><a href="entwicklung">Entwicklung</a></li>
@@ -67,7 +67,7 @@ Indirekteinleiter.">
 
 <nav class="ink-navigation ink-grid hide-all show-medium show-small">
 <ul class="menu vertical flat black">
-<li class="title"><a class="logoPlaceholder push-left" href="http://auik.wald.intevation.org/" title="Site Title">AUI-K</a>
+<li class="title"><a class="logoPlaceholder push-left" href="https://stadt-bielefeld.github.io/auik/" title="Site Title">AUI-K</a>
 <button class="toggle" data-target="#topbar_menu"><span class="icon-reorder"></span></button>
 </li>           
 </ul>
