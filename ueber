@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>AUIK - Anlagen und Indirekteinleiter-Kataster</title>
+<meta name="description" content="">
+<meta name="author" content="Intevation GmbH">
+
+<meta property="og:title" content="AUI-K - Anlagen und Indirekteinleiter-Kataster">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://auik.wald.intevation.org/">
+<meta property="og:image" content="http://imgs.sapo.pt/ink/assets/imgs/ink_opengraph.png">
+<meta property="og:site_name" content="AUI-K">
+<meta property="og:description" content=" AUI-K - Das freie Anlagen- und
+Indirekteinleiterkataster bietet einen schnellen Überblick und ermöglicht einen
+fach- und organisationsübergreifenden Informationsaustausch über Anlagen und
+Indirekteinleiter.">
+    
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+<link rel="shortcut icon" href="favicon.ico">
+
+<link rel="stylesheet" type="text/css" href="ink-2.2.1/css/ink-min.css">
+    
+<link rel="stylesheet" type="text/css" href="css/docs.css">  
+
+<!--[if lt IE 9]>
+<script type="text/javascript" src="http://cdn.ink.sapo.pt/2.2.1/js/html5shiv.js"></script>
+<script type="text/javascript" src="http://cdn.ink.sapo.pt/2.2.1/js/html5shiv-printshiv.js"></script>
+<![endif]-->
+
+<!--[if lte IE 7 ]>
+<link rel="stylesheet" href="http://cdn.ink.sapo.pt/2.2.1/css/ink-ie7.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<![endif]-->
+
+<script type="text/javascript" src="ink-2.2.1/js/ink.js"></script>
+<script type="text/javascript" src="ink-2.2.1/js/ink-ui.js"></script>
+<script type="text/javascript" src="ink-2.2.1/js/autoload.js"></script>
+
+</head>
+
+<body onload="prettyPrint()">
+
+<div id="topbar">
+
+<nav class="ink-navigation ink-grid hide-small hide-medium ie7">
+<ul class="menu horizontal flat black shadowed">
+<li><a class="logoPlaceholder" href="http://auik.wald.intevation.org/" title="AUI-K">AUI-K</a></li>           
+<li><a href="ueber">Über AUI-K</a></li>
+<li><a href="bedienung">Bedienung</a></li>
+<li><a href="entwicklung">Entwicklung</a></li>
+<li><a href="kontakt">Kontakt</a></li>
+</ul>
+</nav>
+
+<nav class="ink-navigation ink-grid hide-all show-medium show-small">
+<ul class="menu vertical flat black">
+<li class="title"><a class="logoPlaceholder push-left" href="http://auik.wald.intevation.org/" title="Site Title">AUI-K</a>
+<button class="toggle" data-target="#topbar_menu"><span class="icon-reorder"></span></button>
+</li>           
+</ul>
+<ul class="menu vertical flat black hide-all" id="topbar_menu">
+<li><a href="ueber">Über AUI-K</a></li>
+<li><a href="bedienung">Bedienung</a></li>
+<li><a href="entwicklung">Entwicklung</a></li>
+<li><a href="kontakt">Kontakt</a></li>
+</ul>
+</nav>
+
+<div class="border"></div>
+
+</div>
+
+<div class="ink-grid">
+    <div class="whatIs">
+        <h1>Über AUI-K</h1>
+        <p>Sie möchten etwas über die Hintergründe erfahren? Dann sind Sie hier genau richtig.</p>
+    </div>
+
+    <div class="column-group gutters">        
+        <div class="large-20 medium-25 small-100">
+            <nav class="ink-navigation sticky" data-offset-top="70px" data-offset-bottom="350px" id="start_menu">
+                <ul class="menu vertical rounded black">
+                    <li><a class="scrollableLink" href="#topbar"><span class="icon-chevron-up"></span> Nach oben</a></li>
+                    <li><a class="scrollableLink" href="#nav-entstehung">Entstehung</a></li>
+                    <li><a class="scrollableLink" href="#nav-aufgaben">Aufgaben</a></li>
+                    <li><a class="scrollableLink" href="#nav-merkmale">Merkmale</a></li>
+                                    </ul>
+            </nav>
+        </div>
+        
+<div class="large-80 medium-75 small-100">
+<section id="nav-entstehung" data-spy="true" data-target="#start_menu">
+<h2>Entstehung des Katasters</h2>
+<p>
+Das Anlagen- und Indirekteinleiterkataster (AUI-K) ist in leidenschaftlicher
+Handarbeit durch das <a
+href="http://www.bielefeld.de/de/rv/ds_stadtverwaltung/umwa/">Umweltamt
+Bielefeld</a> entstanden. Die Entwicklung wird seit 2010 durch das Osnabrücker
+Unternehmen Intevation unterstützt. In Osnabrück wird auch technische
+Infrastruktur für das AUI-K Projekt von der <a
+href="http://www.intevation.de">Intevation GmbH</a> bereitgestellt. Die Anfänge
+des Projektes gehen bis auf die frühen 90er Jahre zurück.
+</p>
+<p>
+Mit der Einführung von
+Einzelplatz-PCs sollte die bis dahin im Einsatz befindliche
+Großrechneranwendung Uschi (Umweltschutzinformationssystem) abgelöst werden.
+Angestrebt war eine Lösung mit Informix als Datenbank und Benutzeroberflächen,
+welche in Smalltalk programmiert waren. Aufgrund verschiedenster
+Unzulänglichkeiten konnte sich diese Programmierung jedoch bei den Anwendern
+nicht durchsetzen.
+</p>
+<p>
+Da die PCs aber mittlerweile mit MS-Access ausgestattet waren, begannen
+zahlreiche Sachbearbeiter für ihre Probleme individuelle Lösungen zu schaffen.
+Diese wurden Mitte der 90er Jahre auf Basis von Access zu einer Datenbank
+zusammengeführt. Um eine ausreichende Sicherheit der Daten zu gewährleisten,
+wurden die Tabellen bald auf ein mehrbenutzerfähiges relationales Datenbankmanagementsystem (RDBMS) übertragen.
+Hierfür wurde zunächst eine DB2 und später eine Informix Datenbank eingesetzt.
+</p>
+<p>
+Im Jahre 2005 wurden die Benutzeroberfläche auf Java portiert und seit 2011 liegen unsere
+Daten in einer PostgreSQL Datenbank.
+</p>
+<h3>Ein kurzer historischer Abriss</h3>
+<ul>
+<li>Anfang der <strong>90er</strong> Entstehung kleiner Access Datenbanken zur Sachbearbeitung einzelner Teilbereiche.</li>
+<li>Mitte der <strong>90er</strong> Zusammenführung der kleinen Access Datenbanken auf eine gemeinsame Access Basis.</li>
+<ul>
+<li>Datenhaltung erfolgte zunächst auf DB2, später dann auf Informix.</li>
+</ul>
+<li><strong>2005</strong> Wurde die Benutzeroberfläche in Swing (Java) realisiert.</li>
+<li><strong>2011</strong> Wurde die Datenhaltung nach PostgreSQL migriert.</li>
+<li><strong>2012</strong> AUI-K wurde Freie Software und unter der GNU Lesser General Public License (LGPL) lizenziert.</li>
+</ul>
+</section>
+
+<section id="nav-aufgaben" data-spy="true" data-target="#start_menu">
+<h2>Aufgaben eines Indirekteinleiterkatasters</h2>
+<p>
+<span class="ink-label success">
+Schnellen Überblick über einen Standort
+</span>
+</p>
+<p>
+Das Kataster soll schnell einen möglichst umfassenden Überblick über alle
+umweltrelevanten Anlagen an einem Standort bieten. Hierbei soll es auch einen
+<strong>fach- und organisationsübergreifenden Informationsaustausch
+ermöglichen</strong>.  Erfasst werden in der Datenbank alle wesentlichen
+Informationen zu Anlagen zum Umgang mit wassergefährdenden Stoffen (<a
+href="http://www.lanuv.nrw.de/wasser/gefstoffe.htm">VAwS</a>) und Firmen, die
+produktionsspezifisches Abwasser in die öffentliche Kanalisation einleiten
+(Indirekteinleiter).
+</p>
+<p>
+<span class="ink-label error">
+Abgelaufene Wiedervorlagen anzeigen
+</span>
+</p>
+<p>
+Details der Sachbearbeitung werden sicher noch eine ganze Zeit in Hausakten
+abgelegt, aber die grundlegenden Daten der Bearbeitung werden auch über
+Abteilungsgrenzen hinweg bereitgestellt. Für die Wartung und Funktionskontrolle
+von Lager- oder Produktionsanlagen müssen oft Fristen von mehreren Jahren
+nachgehalten werden. Dies ist bei einer großen Anzahl von Anlagen nur noch über
+EDV gestütztes System möglich.  An verschiedenen Stellen wie z. B.
+wiederkehrende Sachverständigenprüfungen werden automatisch Wiedervorlagelisten
+erzeugt.
+</p>
+<p>
+<span class="ink-label warning">
+Entwicklung am Standort dokumentieren
+</span>
+</p>
+<p>
+Die Vergangenheit hat gezeigt, dass oft erst nach Jahren eine Belastung auf
+einem Standort festgestellt wird. In diesem Fall kann der Verursacher oft nur
+schwer oder gar nicht mehr ermittelt werden. Daher ist es wünschenswert, die
+Entwicklung eines Standortes möglichst vollständig dokumentiert zu haben. Nur
+auf diese Weise kann man Verunreinigungen einem Verursacher zuordnen, auch wenn
+dieser schon lange den Standort verlassen hat.  Darüber hinaus sind in dem
+System die Messwerte der Klärschlammanalytik und von Sielhautuntersuchungen im
+Kanalnetz enthalten. 
+</p>
+<p>
+<span class="ink-label info">
+Statistische Auswertungen
+</span>
+</p>
+<p>
+Eine weitere wichtige Aufgabe des Katasters besteht in der Erstellung von
+statistischen Auswertungen. Diese werden immer wieder und immer öfter von
+stadtinternen Stellen, aber auch von vorgesetzten Dienststellen angefordert.
+Die Entwicklung der Schadstoffgehalte wird in Diagrammen graphisch aufbereitet,
+wodurch ein umfassendes Bild über die Gesamtsituation, regionale Unterschiede
+und deren potentielle Verursacher entsteht.
+</p>
+<p>
+<span class="ink-label success">
+Workflow einer Probenahme
+</span>
+</p>
+<p>
+Um einen möglichst großen Nutzen zu erreichen, ist es wichtig, dass die Daten,
+wenn die möglich ist, automatisch importiert werden. Dies haben wir
+beispielsweise im Bereich der Probenahmen realisiert, wo ein vollständiger
+Workflow in dem System entstanden ist. Dieser beginnt beim Erstellen eines
+Probenahmeauftrags über den Import der Ergebnisse und die Freigabe der Daten
+und geht bis hin zum Erstellen eines Gebührenbescheides und der Übergabe einer
+Textdatei an die Stadtkasse. 
+</p>
+</section>
+
+<section id="nav-merkmale" data-spy="true" data-target="#start_menu">
+<h2>Merkmale</h2>
+<ul>
+<li>Freie Software (OpenSource)</li>
+<ul>
+<li><a href="http://www.gnu.org/licenses/old-licenses/lgpl-2.1">GNU Lesser General Public License (LGPL) Version 2.1</a></li>
+</ul>
+<li>Datenhaltung</li>
+<ul>
+<li><a href="http://hibernate.org/">Hibernate</a> (Persistenz- und ORM-Framework)</li>
+<li><a href="http://www.postgresql.org/">PostgreSQL</a> (Datenbank)</li>
+<li><a href="http://postgis.org/">PostGIS</a> (räumliche Datenbank-Erweiterung)</li>
+</ul>
+<li>Benutzeroberfläche</li>
+<ul>
+<li>Swing (Java)</li>
+<li><a href="http://www.jgoodies.com/">JGoodies</a> (Swing-Erweiterung / FormLayout)</li>
+<li><a href="http://community.jaspersoft.com/project/jasperreports-library">JasperReports</a> (Erstellung von Gebührenbescheiden und  Ausgabe von PDF-Dokumenten)</li>
+<li><a href="http://www.jfree.org/jfreechart/">JFreeChart</a> (Grafische Auswertungen von Messdaten)</li>
+</ul>
+<li>Geoinformationssystem</li>
+<ul>
+<li><a href="http://qgis.org">QGIS</a></li>
+</ul>
+</ul>
+</section>
+
+</div>
+</div>
+</div>
+
+<footer>
+</footer>
+
+</body>
+</html>
