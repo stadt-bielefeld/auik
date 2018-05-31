@@ -1,9 +1,0 @@
-aheinecke = Andre Heinecke <aheinecke@intevation.de>
-awoestmann = Alexander Woestmann <awoestmann@intevation.de> 
-cpearce = Conny Pearce <Conny.Pearce@bielefeld.de>
-genuit = Gerd Genuit <GerdGenuit@users.noreply.github.com> 
-ingo = Info Weinzierl <weinzierl.ingo@gmail.com>
-isyde = Thomas Friebe <TFriebe@isyde.de>
-iweinzierl = Ingo Weinzierl <weinzierl.ingo@gmail.com>
-raimund = Raimund Renkert <raimund.renkert@intevation.de>
-u633d = Gerd Genuit <GerdGenuit@users.noreply.github.com>
