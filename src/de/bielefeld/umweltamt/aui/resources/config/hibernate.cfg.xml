@@ -4,13 +4,18 @@
 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+    
+    	<!--
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         <property name="hibernate.generate_statistics">true</property>
+        -->
+        
         <!-- PostgreSQL: -->
            
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://172.22.100.25/fisumwelt</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>       	
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5433/fisumwelt</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
 
         <!-- MySQL: -->
 		<!--
@@ -58,7 +63,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh56Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/AnhBwkFachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/AnhSuevFachdaten.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/IndeinlGenehmigung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsAbfuellflaeche.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsAbscheider.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsAnlagenarten.hbm.xml" />
@@ -86,6 +90,12 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EAnfallstelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EBetrieb.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EEinleitungsstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/ElkaAba.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/ElkaAbaverfahren.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/ElkaAnfallstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/ElkaEinleitungsstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/ElkaReferenz.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/ElkaWasserrecht.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EMessstelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EProbenahme.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EProbenahmeUeberwachungsergeb.hbm.xml" />
