@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="2"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.3636363636363658"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="5"/>
+	<property name="ireport.x" value="3"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -35,14 +35,19 @@
 				<reportElement key="rectangle-1" x="381" y="2" width="134" height="47" uuid="d95fc955-6dd9-4ce1-addd-0fb1ee73be8a"/>
 			</rectangle>
 			<staticText>
-				<reportElement key="staticText-1" x="1" y="1" width="87" height="26" uuid="1f69f0df-2219-45ee-9652-9fe013b6549b"/>
+				<reportElement key="staticText-1" x="1" y="1" width="237" height="40" uuid="1f69f0df-2219-45ee-9652-9fe013b6549b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<text><![CDATA[Stadt Bielefeld Umweltamt]]></text>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Angebot Eurofins: GMSO2017011207
+CF: RÖBKE/AUTH/KLIPKER/DEEKE/EWES - Abwasser
+Stadt Bielefeld Umweltamt]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-3" x="393" y="3" width="107" height="13" uuid="c021ae63-2d6a-480b-90e2-6d7796b8da2b"/>
@@ -84,7 +89,7 @@
 				<textFieldExpression><![CDATA["Probeentnahmeprotokoll für "+$P{art}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="214" y="0" width="93" height="25" uuid="46532538-e5d4-41f9-a1b9-1f35bc44214c"/>
+				<reportElement x="246" y="0" width="93" height="25" uuid="46532538-e5d4-41f9-a1b9-1f35bc44214c"/>
 				<textElement>
 					<font fontName="SansSerif" size="18" isBold="true"/>
 				</textElement>
