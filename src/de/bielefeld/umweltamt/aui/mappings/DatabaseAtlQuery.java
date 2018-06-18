@@ -690,9 +690,14 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 			{
 				wert = pos.getWert().toString().replace(".", ",");
 			}
-			else if (pos.getWert() < 0.009)
+			else if (pos.getWert() < 0.001)
 			{
-				wert = pos.getWert().toString().substring(0, 5);
+				wert = String.format("%.4f",pos.getWert());
+				wert = wert.replace(".", ",");
+			}
+			else if (pos.getWert() < 0.01)
+			{
+				wert = String.format("%.3f",pos.getWert());
 				wert = wert.replace(".", ",");
 			}
 			else if (pos.getWert() < 100)

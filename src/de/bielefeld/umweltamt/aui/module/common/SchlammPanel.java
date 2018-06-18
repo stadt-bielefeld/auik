@@ -245,7 +245,6 @@ public class SchlammPanel extends JPanel {
             if (pkt != null) {
                 probe.setAtlProbepkt(pkt);
                 ProbenEditor editDialog = new ProbenEditor(probe, frame, true);
-                editDialog.doSave();
                 editDialog.setVisible(true);
 
                 lastProbe = probe;

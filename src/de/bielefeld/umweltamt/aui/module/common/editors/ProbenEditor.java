@@ -542,9 +542,15 @@ public class ProbenEditor extends AbstractApplyEditor {
         @Override
         public boolean objectRemoved(Object objectAtRow) {
             AtlAnalyseposition tmp = (AtlAnalyseposition) objectAtRow;
-            tmp.delete();
 
-            return true;// probe.getAtlAnalysepositionen().remove(tmp);
+            if(tmp.getId() == null) {
+            	probe.getAtlAnalysepositions().remove(tmp);
+            	}
+            else {
+                tmp.delete();
+            }
+    	
+            return true;
         }
 
         @Override
