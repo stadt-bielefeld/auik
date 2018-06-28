@@ -1138,7 +1138,8 @@ public class BasisPanel extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					BasisAdresse standort = BasisPanel.this.hauptModul
 							.getObjekt().getBasisStandort();
-					if (BasisPanel.this. hauptModul.getObjekt().getBasisAdresse() != null) {
+					if (BasisPanel.this. hauptModul.getObjekt().getBasisAdresse() != null &&
+							standort == null) {
 						standort = BasisPanel.this. hauptModul.getObjekt().getBasisAdresse();
 					}
 					if(standort == null){

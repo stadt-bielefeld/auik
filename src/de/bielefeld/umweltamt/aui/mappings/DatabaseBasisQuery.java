@@ -1000,9 +1000,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 			String property) {
 
 		String query = "SELECT DISTINCT adresse "
-				+ "FROM BasisObjekt as obj JOIN obj.basisAdresse adresse";
+				+ "FROM BasisAdresse as adresse";
 
 		query += " WHERE ";
+
+		query += " adresse.ort = 'Bielefeld' ";
+
+		query += " AND ";
 
 		query += "LOWER(adresse.betrname) like '" + search.toLowerCase()
 				+ "%' ";
