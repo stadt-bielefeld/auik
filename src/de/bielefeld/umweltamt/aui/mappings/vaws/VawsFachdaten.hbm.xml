@@ -45,7 +45,7 @@
         <property name="menge" type="java.lang.Double">
             <column name="menge" precision="8" scale="0" />
         </property>
-        <property name="wgk" type="java.lang.Integer">
+        <property name="wgk" type="java.lang.String">
             <column name="wgk" />
         </property>
         <property name="gefaehrdungsstufe" type="java.lang.String">

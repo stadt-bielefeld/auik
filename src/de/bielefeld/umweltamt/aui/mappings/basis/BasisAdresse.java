@@ -70,6 +70,9 @@ public class BasisAdresse  implements java.io.Serializable {
     private String betrvorname;
     private boolean enabled;
     private boolean deleted;
+    private boolean datenschutzAwsv;
+    private boolean datenschutzEsatzung;
+    private boolean datenschutzWhg;
     private String auikWzCode;
     private Integer objektid;
     private Set<BasisObjekt> basisObjekts = new HashSet<BasisObjekt>(0);
@@ -92,7 +95,7 @@ public class BasisAdresse  implements java.io.Serializable {
 
     /** Full constructor */
     public BasisAdresse(
-        VawsWirtschaftszweige vawsWirtschaftszweige, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, String auikWzCode, Integer objektid, Set<BasisObjekt> basisObjekts, Set<BasisObjekt> basisObjektStandort,  Set<BasisMapAdresseLage> basisMapAdresseLages) {
+        VawsWirtschaftszweige vawsWirtschaftszweige, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, String auikWzCode, Integer objektid, boolean datenschutzAwsv, boolean datenschutzEsatzung, boolean datenschutzWhg, Set<BasisObjekt> basisObjekts, Set<BasisObjekt> basisObjektStandort,  Set<BasisMapAdresseLage> basisMapAdresseLages) {
         this.vawsWirtschaftszweige = vawsWirtschaftszweige;
         this.betranrede = betranrede;
         this.betrname = betrname;
@@ -115,6 +118,9 @@ public class BasisAdresse  implements java.io.Serializable {
         this.betrvorname = betrvorname;
         this.enabled = enabled;
         this.deleted = deleted;
+        this.datenschutzAwsv = datenschutzAwsv;
+        this.datenschutzEsatzung = datenschutzEsatzung;
+        this.datenschutzWhg = datenschutzWhg;
         this.auikWzCode = auikWzCode;
         this.objektid = objektid;
         this.basisObjekts = basisObjekts;
@@ -331,6 +337,30 @@ public class BasisAdresse  implements java.io.Serializable {
         this.objektid = objektid;
     }
 
+    public Boolean getDatenschutzAwsv() {
+        return this.datenschutzAwsv;
+    }
+
+    public void setDatenschutzAwsv(boolean datenschutzAwsv) {
+        this.datenschutzAwsv = datenschutzAwsv;
+    }
+
+    public Boolean getDatenschutzEsatzung() {
+        return this.datenschutzEsatzung;
+    }
+
+    public void setDatenschutzEsatzung(boolean datenschutzEsatzung) {
+        this.datenschutzEsatzung = datenschutzEsatzung;
+    }
+
+    public Boolean getDatenschutzWhg() {
+        return this.datenschutzWhg;
+    }
+
+    public void setDatenschutzWhg(boolean datenschutzWhg) {
+        this.datenschutzWhg = datenschutzWhg;
+    }
+
     public Set<BasisObjekt> getBasisObjekts() {
         return this.basisObjekts;
     }
@@ -408,6 +438,9 @@ public class BasisAdresse  implements java.io.Serializable {
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("auikWzCode").append("='").append(getAuikWzCode()).append("' ");			
         buffer.append("objektid").append("='").append(getObjektid()).append("' ");			
+        buffer.append("datenschutzAwsv").append("='").append(getDatenschutzAwsv()).append("' ");			
+        buffer.append("datenschutzEsatzung").append("='").append(getDatenschutzEsatzung()).append("' ");			
+        buffer.append("datenschutzWhg()").append("='").append(getDatenschutzWhg()).append("' ");			
         buffer.append("basisObjekts").append("='").append(getBasisObjekts()).append("' ");			
         buffer.append("basisObjektStandort").append("='").append(getBasisObjektStandort()).append("' ");
         buffer.append("basisMapAdresseLages").append("='").append(getBasisMapAdresseLages()).append("' ");		
@@ -500,6 +533,9 @@ public class BasisAdresse  implements java.io.Serializable {
         this.deleted = copy.isDeleted();            
         this.auikWzCode = copy.getAuikWzCode();            
         this.objektid = copy.getObjektid();            
+        this.datenschutzAwsv = copy.getDatenschutzAwsv();            
+        this.datenschutzEsatzung = copy.getDatenschutzEsatzung();            
+        this.datenschutzWhg = copy.getDatenschutzWhg();            
         this.basisObjekts = copy.getBasisObjekts();
         this.basisObjektStandort = copy.getBasisObjektStandort();   
         this.basisMapAdresseLages = copy.getBasisMapAdresseLages();           

@@ -88,7 +88,6 @@ import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwmassnahmen;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWgk;
 import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 
@@ -588,11 +587,6 @@ public class DatabaseClassToString {
     /** @return "VawsWassereinzugsgebiete.toGuiString() */
     public static String toStringForClass(VawsWassereinzugsgebiete clazz) {
         return clazz.toGuiString();
-    }
-
-    /** @return Custom VawsWgk.toString() */
-    public static String toStringForClass(VawsWgk clazz) {
-        return clazz.getWassergef().toString();
     }
 
     /** @return "VawsWirtschaftszweige.toGuiString() */

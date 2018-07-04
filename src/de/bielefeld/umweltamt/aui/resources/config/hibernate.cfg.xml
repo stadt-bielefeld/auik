@@ -83,7 +83,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsVerwaltungsverf.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsVerwmassnahmen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWassereinzugsgebiete.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWgk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/vaws/VawsWirtschaftszweige.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EAbwasserbehandlungsanlage.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/EAdresse.hbm.xml" />

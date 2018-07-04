@@ -76,6 +76,15 @@
         <property name="auikWzCode" type="java.lang.String">
             <column name="auik_wz_code" />
         </property>
+        <property name="datenschutzAwsv" type="boolean">
+            <column name="datenschutz_awsv" not-null="true" />
+        </property>
+        <property name="datenschutzEsatzung" type="boolean">
+            <column name="datenschutz_esatzung" not-null="true" />
+        </property>
+        <property name="datenschutzWhg" type="boolean">
+            <column name="datenschutz_whg" not-null="true" />
+        </property>
         <property name="objektid" type="java.lang.Integer">
             <column name="objektid" />
         </property>

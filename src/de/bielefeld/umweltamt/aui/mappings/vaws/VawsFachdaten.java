@@ -61,7 +61,7 @@ public class VawsFachdaten  implements java.io.Serializable {
     private String fluessigkeit;
     private String vbfeinstufung;
     private Double menge;
-    private Integer wgk;
+    private String wgk;
     private String gefaehrdungsstufe;
     private Integer baujahr;
     private Boolean doppelwandig;
@@ -124,7 +124,7 @@ public class VawsFachdaten  implements java.io.Serializable {
 
     /** Full constructor */
     public VawsFachdaten(
-        BasisObjekt basisObjekt, String herstellnr, String hersteller, Date datuminbetriebnahme, Date datumerfassung, Date datumaenderung, Date datumgenehmigung, String anlagenart, String behaelterart, String material, String fluessigkeit, String vbfeinstufung, Double menge, Integer wgk, String gefaehrdungsstufe, Integer baujahr, Boolean doppelwandig, Boolean leckanzeige, Boolean auffangraum, Boolean grenzwertgeber, Boolean leckschutzauskleidung, Boolean kellerlagerung, Boolean innenbeschichtung, String beschreibungA, String beschreibungS, Boolean oberirdisch, Boolean unterirdisch, Boolean saugleitung, Boolean rohrKathodenschutz, Boolean ausKupfer, Boolean ausStahl, Boolean mitSchutzrohr, String beschreibungR, Double pruefturnus, Boolean angemahntkz, Date mahnfrist, Date wiedervorlage, Date stillegungsdatum, String bemerkungen, String ausfuehrung, String pruefumfang, String verwendung, boolean enabled, boolean deleted, Boolean ausHdpe, Boolean druckleitung, Boolean schutzSensor, Boolean schutzFolie, Boolean schutzAntiheber, String aktenzeichen, Set<VawsVerwaltungsverf> vawsVerwaltungsverfs, Set<VawsKontrollen> vawsKontrollens, Set<VawsAbscheider> vawsAbscheiders, Set<VawsAnlagenchrono> vawsAnlagenchronos, Set<VawsVerwaltungsgebuehren> vawsVerwaltungsgebuehrens, Set<VawsAbfuellflaeche> vawsAbfuellflaeches, Set<VawsJgs> vawsJgss) {
+        BasisObjekt basisObjekt, String herstellnr, String hersteller, Date datuminbetriebnahme, Date datumerfassung, Date datumaenderung, Date datumgenehmigung, String anlagenart, String behaelterart, String material, String fluessigkeit, String vbfeinstufung, Double menge, String wgk, String gefaehrdungsstufe, Integer baujahr, Boolean doppelwandig, Boolean leckanzeige, Boolean auffangraum, Boolean grenzwertgeber, Boolean leckschutzauskleidung, Boolean kellerlagerung, Boolean innenbeschichtung, String beschreibungA, String beschreibungS, Boolean oberirdisch, Boolean unterirdisch, Boolean saugleitung, Boolean rohrKathodenschutz, Boolean ausKupfer, Boolean ausStahl, Boolean mitSchutzrohr, String beschreibungR, Double pruefturnus, Boolean angemahntkz, Date mahnfrist, Date wiedervorlage, Date stillegungsdatum, String bemerkungen, String ausfuehrung, String pruefumfang, String verwendung, boolean enabled, boolean deleted, Boolean ausHdpe, Boolean druckleitung, Boolean schutzSensor, Boolean schutzFolie, Boolean schutzAntiheber, String aktenzeichen, Set<VawsVerwaltungsverf> vawsVerwaltungsverfs, Set<VawsKontrollen> vawsKontrollens, Set<VawsAbscheider> vawsAbscheiders, Set<VawsAnlagenchrono> vawsAnlagenchronos, Set<VawsVerwaltungsgebuehren> vawsVerwaltungsgebuehrens, Set<VawsAbfuellflaeche> vawsAbfuellflaeches, Set<VawsJgs> vawsJgss) {
         this.basisObjekt = basisObjekt;
         this.herstellnr = herstellnr;
         this.hersteller = hersteller;
@@ -297,11 +297,11 @@ public class VawsFachdaten  implements java.io.Serializable {
         this.menge = menge;
     }
 
-    public Integer getWgk() {
+    public String getWgk() {
         return this.wgk;
     }
 
-    public void setWgk(Integer wgk) {
+    public void setWgk(String wgk) {
         this.wgk = wgk;
     }
 

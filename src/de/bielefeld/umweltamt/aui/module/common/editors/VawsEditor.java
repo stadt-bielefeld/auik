@@ -443,7 +443,8 @@ public class VawsEditor extends AbstractBaseEditor {
         gefStufeBox.setEditable(false);
         //gefStufeBox.setPrototypeDisplayValue(" A ");
 
-        wgkBox = new JComboBox(DatabaseQuery.getVawsWgk());
+        String[] items = {"1","2","3","awg","nwg"};
+        wgkBox = new JComboBox(items);
         wgkBox.setEditable(false);
         //wgkBox.setPrototypeDisplayValue(" 3 ");
 
@@ -1167,7 +1168,7 @@ public class VawsEditor extends AbstractBaseEditor {
         getFachdaten().setFluessigkeit(tmp);
         getFachdaten().setVbfeinstufung((String)vbfBox.getSelectedItem());
         getFachdaten().setGefaehrdungsstufe((String)gefStufeBox.getSelectedItem());
-        getFachdaten().setWgk((Integer)wgkBox.getSelectedItem());
+        getFachdaten().setWgk((String)wgkBox.getSelectedItem());
         getFachdaten().setMenge(mengeFeld.getDoubleValue());
 
         getFachdaten().setBaujahr(baujahrFeld.getIntValue());
