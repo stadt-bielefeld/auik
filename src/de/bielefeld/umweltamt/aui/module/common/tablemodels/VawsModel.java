@@ -49,7 +49,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;

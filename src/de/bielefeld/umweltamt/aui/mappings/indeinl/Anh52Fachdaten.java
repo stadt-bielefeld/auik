@@ -27,7 +27,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +45,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private BasisObjekt basisObjekt;
+    private Objekt objekt;
     private Integer nrbetriebsstaette;
     private String firmenname;
     private String telefon;
@@ -66,18 +66,18 @@ public class Anh52Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh52Fachdaten(
-        Integer id, BasisObjekt basisObjekt, boolean enabled, boolean deleted) {
+        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
         this.id = id;
-        this.basisObjekt = basisObjekt;
+        this.objekt = objekt;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh52Fachdaten(
-        Integer id, BasisObjekt basisObjekt, Integer nrbetriebsstaette, String firmenname, String telefon, String telefax, String ansprechpartner, Date datumgenehmigung, String bemerkungen, boolean enabled, boolean deleted) {
+        Integer id, Objekt objekt, Integer nrbetriebsstaette, String firmenname, String telefon, String telefax, String ansprechpartner, Date datumgenehmigung, String bemerkungen, boolean enabled, boolean deleted) {
         this.id = id;
-        this.basisObjekt = basisObjekt;
+        this.objekt = objekt;
         this.nrbetriebsstaette = nrbetriebsstaette;
         this.firmenname = firmenname;
         this.telefon = telefon;
@@ -98,12 +98,12 @@ public class Anh52Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public BasisObjekt getBasisObjekt() {
-        return this.basisObjekt;
+    public Objekt getObjekt() {
+        return this.objekt;
     }
 
-    public void setBasisObjekt(BasisObjekt basisObjekt) {
-        this.basisObjekt = basisObjekt;
+    public void setObjekt(Objekt objekt) {
+        this.objekt = objekt;
     }
 
     public Integer getNrbetriebsstaette() {
@@ -199,7 +199,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");			
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
         buffer.append("nrbetriebsstaette").append("='").append(getNrbetriebsstaette()).append("' ");			
         buffer.append("firmenname").append("='").append(getFirmenname()).append("' ");			
         buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
@@ -275,7 +275,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh52Fachdaten copy) {
         this.id = copy.getId();            
-        this.basisObjekt = copy.getBasisObjekt();            
+        this.objekt = copy.getObjekt();            
         this.nrbetriebsstaette = copy.getNrbetriebsstaette();            
         this.firmenname = copy.getFirmenname();            
         this.telefon = copy.getTelefon();            
@@ -330,14 +330,5 @@ public class Anh52Fachdaten  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-    public static Anh52Fachdaten findByObjektId(java.lang.Integer id){
-        log.debug("Getting Anh52Fachdaten instance with connect BasisObjekt with id: " + id);
-        List<Anh52Fachdaten> all = Anh52Fachdaten.getAll();
-        for(Anh52Fachdaten i : all){
-            if(i.getBasisObjekt().getId().equals(id)){
-                return (Anh52Fachdaten) new DatabaseAccess().get(Anh52Fachdaten.class, i.getId());
-            }
-        }
-        return null;
-    }
+
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.Lage" table="lage" schema="basis" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="standortgghwsg" class="de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg" fetch="select">
+            <column name="standortgegebid" />
+        </many-to-one>
+        <many-to-one name="wassereinzugsgebiet" class="de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet" fetch="select">
+            <column name="wassereinzgebid" />
+        </many-to-one>
+        <many-to-one name="gemarkung" class="de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung" fetch="select">
+            <column name="gemarkungid" />
+        </many-to-one>
+        <property name="plz" type="java.lang.String">
+            <column name="plz" />
+        </property>
+        <property name="e32" type="java.lang.Float">
+            <column name="e32" precision="8" scale="8" />
+        </property>
+        <property name="n32" type="java.lang.Float">
+            <column name="n32" precision="8" scale="8" />
+        </property>
+        <property name="flur" type="java.lang.String">
+            <column name="flur" />
+        </property>
+        <property name="flurstueck" type="java.lang.String">
+            <column name="flurstueck" />
+        </property>
+        <property name="entgebid" type="java.lang.String">
+            <column name="entgebid" />
+        </property>
+        <property name="strasseeigent" type="java.lang.String">
+            <column name="strasseeigent" />
+        </property>
+        <property name="revidatum" type="java.util.Date">
+            <column name="revidatum" length="29" />
+        </property>
+        <property name="revihandz" type="java.lang.String">
+            <column name="revihandz" />
+        </property>
+        <property name="wassermenge" type="java.lang.Integer">
+            <column name="wassermenge" />
+        </property>
+        <property name="sachbe33rav" type="java.lang.String">
+            <column name="sachbe33rav" />
+        </property>
+        <property name="sachbe33hee" type="java.lang.String">
+            <column name="sachbe33hee" />
+        </property>
+        <property name="theGeom" type="serializable">
+            <column name="the_geom" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="objekts" table="objekt" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="lageid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" />
+        </set>
+    </class>
+</hibernate-mapping>

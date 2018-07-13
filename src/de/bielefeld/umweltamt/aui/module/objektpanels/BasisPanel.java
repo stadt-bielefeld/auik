@@ -108,15 +108,15 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
-import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
+import de.bielefeld.umweltamt.aui.module.ObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
@@ -132,7 +132,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
- * Das "Objekt"-Tab des BasisObjektBearbeiten-Moduls
+ * Das "Objekt"-Tab des ObjektBearbeiten-Moduls
  * @author David Klotz
  */
 
@@ -144,8 +144,8 @@ public class BasisPanel extends JPanel {
     private class ChooseDialog extends JDialog {
         private static final long serialVersionUID = 6320119317944629431L;
         private HauptFrame frame;
-        private BasisAdresse betreiber;
-        private BasisAdresse standort;
+        private Adresse betreiber;
+        private Adresse standort;
         private String caller;
 
         private BasisAdresseModel betreiberModel;
@@ -155,7 +155,7 @@ public class BasisPanel extends JPanel {
         private JTextField strasseFeld;
     	private JTextField hausnrFeld;
         private JButton submitButton;
-        private JButton submitButtonStrasse;
+        private JButton submitButtonStrassen;
         private JTable ergebnisTabelle;
 
         private JButton okButton;
@@ -172,16 +172,16 @@ public class BasisPanel extends JPanel {
             List<Object> initialList = new ArrayList<Object>();
             initialList.add(initial);
 
-            if (initial instanceof BasisAdresse) {
+            if (initial instanceof Adresse) {
                 setTitle("Adresse auswählen");
-                this.betreiber = (BasisAdresse) initial;
+                this.betreiber = (Adresse) initial;
                 this.betreiberModel = new BasisAdresseModel(true);
                 if (this.betreiber.getId() != null) {
                     this.betreiberModel.setList(initialList);
                 }
             } else {
                 throw new IllegalArgumentException(
-                    "intial muss eine BasisAdresse sein!");
+                    "intial muss eine Adresse sein!");
             }
 
             setContentPane(initializeContentPane());
@@ -192,7 +192,7 @@ public class BasisPanel extends JPanel {
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         }
 
-        public BasisAdresse getChosenBetreiber() {
+        public Adresse getChosenBetreiber() {
             if (this.betreiber.getId() != null) {
                 return this.betreiber;
             } else {
@@ -229,10 +229,10 @@ public class BasisPanel extends JPanel {
             builder.add(submitToolBar, cc.xy(9, 1));
 			builder.add(getSubmitButton(), cc.xy(9, 1));
 			builder.addLabel("Straße:", cc.xy(1, 3));
-            builder.add(getStrasseFeld(), cc.xy(3, 3));
+            builder.add(getStrassenFeld(), cc.xy(3, 3));
 			builder.addLabel("Hausnr.:", cc.xy(5, 3));
 			builder.add(getHausnrFeld(), cc.xy(7, 3));
-			builder.add(getSubmitButtonStrasse(), cc.xy(9, 3));
+			builder.add(getSubmitButtonStrassen(), cc.xy(9, 3));
             builder.add(tabellenScroller, cc.xywh(1, 5, 9, 2));
             builder.add(buttonBar, cc.xyw(3, 8, 3));
 
@@ -269,7 +269,7 @@ public class BasisPanel extends JPanel {
                 };
                 worker.start();
 
-				getStrasseFeld().setText("");
+				getStrassenFeld().setText("");
 				getHausnrFeld().setText("");
 				
             } else if (caller == "standort") {
@@ -288,7 +288,7 @@ public class BasisPanel extends JPanel {
                 };
                 worker.start();
 
-				getStrasseFeld().setText("");
+				getStrassenFeld().setText("");
 				getHausnrFeld().setText("");
             }
         } 
@@ -322,7 +322,7 @@ public class BasisPanel extends JPanel {
     				if (SettingsManager.getInstance().getStandort() == null)
     				{
     					ChooseDialog.this.betreiberModel.filterStandort(
-    																		getStrasseFeld().getText(),
+    																		getStrassenFeld().getText(),
     																		fhausnr, null);
     				}
     				getSuchFeld().setText("");
@@ -365,7 +365,7 @@ public class BasisPanel extends JPanel {
             return this.suchFeld;
         }
 
-        private JTextField getStrasseFeld() {
+        private JTextField getStrassenFeld() {
         	
             if (this.strasseFeld == null) {
             	
@@ -446,12 +446,12 @@ public class BasisPanel extends JPanel {
             return this.submitButton;
         }
 
-        private JButton getSubmitButtonStrasse() {
-            if (this.submitButtonStrasse == null) {
-                this.submitButtonStrasse = new JButton("Standort suchen", AuikUtils.getIcon(16,
+        private JButton getSubmitButtonStrassen() {
+            if (this.submitButtonStrassen == null) {
+                this.submitButtonStrassen = new JButton("Standort suchen", AuikUtils.getIcon(16,
                     "key_enter.png"));
-                this.submitButtonStrasse.setToolTipText("Suche starten");
-                this.submitButtonStrasse.addActionListener(new ActionListener() {
+                this.submitButtonStrassen.setToolTipText("Suche starten");
+                this.submitButtonStrassen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         filterBetreiberListe(getErgebnisTabelle());;
@@ -459,7 +459,7 @@ public class BasisPanel extends JPanel {
                 });
             }
 
-            return this.submitButtonStrasse;
+            return this.submitButtonStrassen;
         }
 
         private JTable getErgebnisTabelle() {
@@ -538,7 +538,7 @@ public class BasisPanel extends JPanel {
 						// http://www.javaworld.com/javaworld/jw-06-2003/jw-0606-swingworker.html
 						// Ist auch ausgedruckt im Ordner im Regal. -DK
 						SwingWorkerVariant worker = new SwingWorkerVariant(
-								getStrasseFeld())
+								getStrassenFeld())
 						{
 							protected String oldText = "";
 							private String newText = "";
@@ -546,7 +546,7 @@ public class BasisPanel extends JPanel {
 							@Override
 							protected void doNonUILogic()
 							{
-								this.oldText = getStrasseFeld().getText();
+								this.oldText = getStrassenFeld().getText();
 								if (this.oldText.equals(""))
 								{
 									this.newText = "";
@@ -555,12 +555,12 @@ public class BasisPanel extends JPanel {
 								{
 									String suchText = AuikUtils
 											.sanitizeQueryInput(this.oldText);
-									BasisStrassen str = DatabaseQuery
-											.findStrasse(suchText);
+									Strassen str = DatabaseQuery
+											.findStrassen(suchText);
 		
 									if (str != null)
 									{
-										this.newText = str.getStrasse();
+										this.newText = str.getStrassen();
 									}
 									else
 									{
@@ -572,10 +572,10 @@ public class BasisPanel extends JPanel {
 							@Override
 							protected void doUIUpdateLogic()
 							{
-								getStrasseFeld().setText(this.newText);
-								getStrasseFeld().setSelectionStart(
+								getStrassenFeld().setText(this.newText);
+								getStrassenFeld().setSelectionStart(
 																	this.oldText.length());
-								getStrasseFeld().setSelectionEnd(
+								getStrassenFeld().setSelectionEnd(
 																	this.newText.length());
 							}
 						};
@@ -630,10 +630,10 @@ public class BasisPanel extends JPanel {
 
     // Daten
     private String name;
-    private BasisObjektBearbeiten hauptModul;
+    private ObjektBearbeiten hauptModul;
 
     // Fachdaten
-    private BasisObjektarten[] objektarten;
+    private Objektarten[] objektarten;
 
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
@@ -644,7 +644,7 @@ public class BasisPanel extends JPanel {
     
     
 	private ActionListener deleteButtonListener;
-    public BasisPanel(BasisObjektBearbeiten hauptModul) {
+    public BasisPanel(ObjektBearbeiten hauptModul) {
 
         this.name = "Objekt";
         this.hauptModul = hauptModul;
@@ -761,14 +761,14 @@ public class BasisPanel extends JPanel {
             getArtBox().removeAllItems();
             // Ändern der Objektart von Anhang 53 (<3000) in Anhang 53 (>3000)
             // und umgekehrt ist weiterhin möglich
-            Integer art = this.hauptModul.getObjekt().getBasisObjektarten().getId();
+            Integer art = this.hauptModul.getObjekt().getObjektarten().getId();
             if (art == DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN
                 || art == DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS) {
                 // Anhang 53 (<3000) (360.33)
-                getArtBox().addItem(BasisObjektarten.findById(
+                getArtBox().addItem(Objektarten.findById(
                     DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN));
                 // Anhang 53 (>3000) (360.33)
-                getArtBox().addItem(BasisObjektarten.findById(
+                getArtBox().addItem(Objektarten.findById(
                     DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS));
             }
             // Ändern der Objektarten Anhang 49, Abscheider und Fettabscheider
@@ -778,32 +778,32 @@ public class BasisPanel extends JPanel {
                 || art == DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER
                 || art == DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34) {
                 // Anhang 49 (360.33)
-                getArtBox().addItem(BasisObjektarten.findById(
+                getArtBox().addItem(Objektarten.findById(
                     DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49));
                 // Abscheider (360.32)
-                getArtBox().addItem(BasisObjektarten.findById(
+                getArtBox().addItem(Objektarten.findById(
                     DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER));
                 // Fettabscheider (360.33)
-                getArtBox().addItem(BasisObjektarten.findById(
+                getArtBox().addItem(Objektarten.findById(
                     DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER));
                 // Abscheider (360.34)
-                getArtBox().addItem(BasisObjektarten.findById(
+                getArtBox().addItem(Objektarten.findById(
                     DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34));
             }
             // Objektart als einziges in die Liste eintragen
             else {
                 getArtBox().addItem(
-                    this.hauptModul.getObjekt().getBasisObjektarten());
+                    this.hauptModul.getObjekt().getObjektarten());
             }
         }
 
         if (this.hauptModul.getObjekt() != null) {
-            log.debug("Updating Form with BasisObjekt: " + hauptModul.getObjekt().getId() + " " + hauptModul.getObjekt().getBasisAdresse() + " " + hauptModul.getObjekt().getBasisStandort());
-            if (this.hauptModul.getObjekt().getBasisAdresse() != null) {
+            log.debug("Updating Form with Objekt: " + hauptModul.getObjekt().getId() + " " + hauptModul.getObjekt().getAdresse() + " " + hauptModul.getObjekt().getBasisStandort());
+            if (this.hauptModul.getObjekt().getAdresse() != null) {
                 // TODO: Why are we using html here? :-/
             	
-                BasisAdresse betr = this.hauptModul.getObjekt()
-                    .getBasisAdresse();
+                Adresse betr = this.hauptModul.getObjekt()
+                    .getAdresse();
                 log.debug("Set betreiber field to " + betr);
                 getBetreiberFeld().setText(betr.toString());
                 String toolTip = "<html><b>Anrede:</b> "
@@ -814,8 +814,8 @@ public class BasisPanel extends JPanel {
                     toolTip += "<b>Zusatz:</b> " + betr.getBetrnamezus()
                         + "<br><br>";
                 }
-                if (betr.getStrasse() != null) {
-                    toolTip += "<b>Adresse:</b><br>" + betr.getStrasse() + " "
+                if (betr.getStrassen() != null) {
+                    toolTip += "<b>Adresse:</b><br>" + betr.getStrassen() + " "
                         + betr.getHausnr();
                     if (betr.getHausnrzus() != null) {
                         toolTip += betr.getHausnrzus();
@@ -835,11 +835,11 @@ public class BasisPanel extends JPanel {
             }
 			if (this.hauptModul.getObjekt().getBasisStandort() != null) {
 
-				BasisMapAdresseLage mapsta = (BasisMapAdresseLage) BasisMapAdresseLage
+				MapAdresseLage mapsta = (MapAdresseLage) MapAdresseLage
 						.findByAdresse(this.hauptModul.getObjekt()
 								.getBasisStandort());
 				if (mapsta != null) {
-					BasisAdresse sta = mapsta.getBasisAdresse();
+					Adresse sta = mapsta.getAdresse();
 					log.debug("Set standort field to: " + sta
 							+ this.hauptModul.getObjekt().getBasisStandort()
 							+ " " + this.hauptModul.getObjekt().getBasisLage());
@@ -858,7 +858,7 @@ public class BasisPanel extends JPanel {
 									.toString());
 
 					if (this.hauptModul.getObjekt().getBasisLage() == null) {
-						mapsta = (BasisMapAdresseLage) BasisMapAdresseLage
+						mapsta = (MapAdresseLage) MapAdresseLage
 								.findByAdresse(this.hauptModul.getObjekt()
 										.getBasisStandort());
 						this.hauptModul.getObjekt().setBasisLage(
@@ -868,14 +868,14 @@ public class BasisPanel extends JPanel {
 				}
 			}
 
-            if (this.hauptModul.getObjekt().getBasisObjektarten() != null) {
+            if (this.hauptModul.getObjekt().getObjektarten() != null) {
                 getArtBox().setSelectedItem(
-                    this.hauptModul.getObjekt().getBasisObjektarten());
+                    this.hauptModul.getObjekt().getObjektarten());
             }
 
-            if (this.hauptModul.getObjekt().getBasisSachbearbeiter() != null) {
+            if (this.hauptModul.getObjekt().getSachbearbeiter() != null) {
                 getSachbearbeiterBox().setSelectedItem(
-                    this.hauptModul.getObjekt().getBasisSachbearbeiter());
+                    this.hauptModul.getObjekt().getSachbearbeiter());
                 getSachbearbeiterBox().setFont(this.normalFont);
             } else {
                 getSachbearbeiterBox().setSelectedItem(
@@ -898,7 +898,7 @@ public class BasisPanel extends JPanel {
 				log.debug("hauptModul.getObjekt().getAbwasserfrei() null");
 				
 			log.debug("Abwasserfrei: " + hauptModul.getObjekt().getAbwasserfrei().booleanValue() );
-			log.debug("BasisObjekt: " + hauptModul.getObjekt().toString());
+			log.debug("Objekt: " + hauptModul.getObjekt().toString());
 			getAbwasserfreiBox().setSelected(
                     this.hauptModul.getObjekt().getAbwasserfrei());
 
@@ -910,7 +910,7 @@ public class BasisPanel extends JPanel {
             }
 
 			if (!neu) {
-				if (this.hauptModul.getObjekt().getBasisObjektarten()
+				if (this.hauptModul.getObjekt().getObjektarten()
 						.getAbteilung().equals("360.33")) {
 					getPrioritaetFeld().setVisible(true);
 					getPrioritaetLabel().setVisible(true);
@@ -965,12 +965,12 @@ public class BasisPanel extends JPanel {
 		getArtBox().setEnabled(enabled);
 		getSachbearbeiterBox().setEnabled(enabled);
 				
-		if (this.hauptModul.getObjekt() != null && this.hauptModul.getObjekt().getBasisSachbearbeiter() != null){	
+		if (this.hauptModul.getObjekt() != null && this.hauptModul.getObjekt().getSachbearbeiter() != null){	
 			log.debug("getObjekt: " + this.hauptModul.getObjekt());
-			log.debug("Sachbearbeiter: " + this.hauptModul.getObjekt().getBasisSachbearbeiter());
+			log.debug("Sachbearbeiter: " + this.hauptModul.getObjekt().getSachbearbeiter());
 	
 			if (DatabaseQuery.getCurrentSachbearbeiter() != null
-				|| this.hauptModul.getObjekt().getBasisSachbearbeiter().equals(DatabaseQuery.getCurrentSachbearbeiter())) {
+				|| this.hauptModul.getObjekt().getSachbearbeiter().equals(DatabaseQuery.getCurrentSachbearbeiter())) {
 				getWiedervorlageDatum().setEnabled(enabled);
 			} else
 				getWiedervorlageDatum().setEnabled(false);
@@ -979,7 +979,7 @@ public class BasisPanel extends JPanel {
 			getBeschreibungsArea().setEnabled(enabled);
 		}
 		else
-			log.debug("Objekt oder Sachbearbeiter null - Objekt: " + this.hauptModul.getObjekt() + ", Sachbearbeiter: " + this.hauptModul.getObjekt().getBasisSachbearbeiter());
+			log.debug("Objekt oder Sachbearbeiter null - Objekt: " + this.hauptModul.getObjekt() + ", Sachbearbeiter: " + this.hauptModul.getObjekt().getSachbearbeiter());
 	}
 
     @Override
@@ -993,20 +993,20 @@ public class BasisPanel extends JPanel {
         // Eingegebene Daten für das Objekt übernehmen
         // Betreiber / Standort werden schon nach der Auswahl durch die
         // chooseButtons gesetzt
-        this.hauptModul.getObjekt().setBasisObjektarten(
-            (BasisObjektarten) getArtBox().getSelectedItem());
+        this.hauptModul.getObjekt().setObjektarten(
+            (Objektarten) getArtBox().getSelectedItem());
         this.hauptModul.getObjekt().setBeschreibung(
             getBeschreibungsArea().getText());
-        this.hauptModul.getObjekt().setBasisSachbearbeiter(
-            (BasisSachbearbeiter) getSachbearbeiterBox().getSelectedItem());
+        this.hauptModul.getObjekt().setSachbearbeiter(
+            (Sachbearbeiter) getSachbearbeiterBox().getSelectedItem());
         Date wiedervorlage = this.wiedervorlageDatum.getDate();
         this.hauptModul.getObjekt().setWiedervorlage(wiedervorlage);
         this.hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
         this.hauptModul.getObjekt().setAbwasserfrei(getAbwasserfreiBox().isSelected());
 
-//        BasisObjekt tmp = BasisObjekt.saveBasisObjekt(
+//        Objekt tmp = Objekt.saveObjekt(
 //            this.hauptModul.getObjekt(), prio);
-        BasisObjekt tmp = BasisObjekt.merge(this.hauptModul.getObjekt());
+        Objekt tmp = Objekt.merge(this.hauptModul.getObjekt());
 
         // Only cascade the priority, if one is set
         if (!getPrioritaetFeld().getText().equals("")) {
@@ -1034,9 +1034,9 @@ public class BasisPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     String action = e.getActionCommand();
 
-                    BasisAdresse betreiber = BasisPanel.this.hauptModul
-                        .getObjekt().getBasisAdresse();
-                    BasisAdresse standort = (BasisAdresse) BasisPanel.this.hauptModul
+                    Adresse betreiber = BasisPanel.this.hauptModul
+                        .getObjekt().getAdresse();
+                    Adresse standort = (Adresse) BasisPanel.this.hauptModul
                             .getObjekt().getBasisStandort();
 
                     if ("betreiber_edit".equals(action) && betreiber != null) {
@@ -1049,7 +1049,7 @@ public class BasisPanel extends JPanel {
                         editDialog.setVisible(true);
 
                         BasisPanel.this.hauptModul.getObjekt()
-                            .setBasisAdresse(editDialog.getBetreiber());
+                            .setAdresse(editDialog.getBetreiber());
                         
                     } else if ("standort_edit".equals(action)
                         && standort != null) {
@@ -1106,16 +1106,16 @@ public class BasisPanel extends JPanel {
             this.betreiberChooseButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    BasisAdresse betreiber = BasisPanel.this.hauptModul
-                        .getObjekt().getBasisAdresse();
+                    Adresse betreiber = BasisPanel.this.hauptModul
+                        .getObjekt().getAdresse();
                     if (betreiber == null) {
-                        betreiber = new BasisAdresse();
+                        betreiber = new Adresse();
                     }
                     ChooseDialog chooser = new ChooseDialog(betreiber,
                         BasisPanel.this.hauptModul.getFrame(), "betreiber");
                     chooser.setVisible(true);
 
-                    BasisPanel.this.hauptModul.getObjekt().setBasisAdresse(
+                    BasisPanel.this.hauptModul.getObjekt().setAdresse(
                         chooser.getChosenBetreiber());
                     updateForm();
                 }
@@ -1136,14 +1136,14 @@ public class BasisPanel extends JPanel {
 	        this.standortChooseButton.addActionListener(new ActionListener() {
 	            @Override
 				public void actionPerformed(ActionEvent e) {
-					BasisAdresse standort = BasisPanel.this.hauptModul
+					Adresse standort = BasisPanel.this.hauptModul
 							.getObjekt().getBasisStandort();
-					if (BasisPanel.this. hauptModul.getObjekt().getBasisAdresse() != null &&
+					if (BasisPanel.this. hauptModul.getObjekt().getAdresse() != null &&
 							standort == null) {
-						standort = BasisPanel.this. hauptModul.getObjekt().getBasisAdresse();
+						standort = BasisPanel.this. hauptModul.getObjekt().getAdresse();
 					}
 					if(standort == null){
-						standort = new BasisAdresse();
+						standort = new Adresse();
 					}
 					ChooseDialog chooser = new ChooseDialog(standort,
 							BasisPanel.this.hauptModul.getFrame(), "standort");
@@ -1193,14 +1193,14 @@ public class BasisPanel extends JPanel {
                         .getSettingsManager()
                         .setSetting("auik.imc.return_to_objekt_betreiber", true, false);
                     if (BasisPanel.this.hauptModul.getObjekt()
-                        .getBasisAdresse() != null) {
+                        .getAdresse() != null) {
                         BasisPanel.this.hauptModul
                             .getManager()
                             .getSettingsManager()
                             .setSetting(
                                 "auik.imc.use_betreiber",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisAdresse().getId()
+                                    .getAdresse().getId()
                                     .intValue(), false);
                     }
                     if (BasisPanel.this.hauptModul.getObjekt()
@@ -1294,14 +1294,14 @@ public class BasisPanel extends JPanel {
                         .getSettingsManager()
                         .setSetting("auik.imc.return_to_objekt_standort", true, false);
                     if (BasisPanel.this.hauptModul.getObjekt()
-                        .getBasisAdresse() != null) {
+                        .getAdresse() != null) {
                         BasisPanel.this.hauptModul
                             .getManager()
                             .getSettingsManager()
                             .setSetting(
                                 "auik.imc.use_betreiber",
                                 BasisPanel.this.hauptModul.getObjekt()
-                                    .getBasisAdresse().getId()
+                                    .getAdresse().getId()
                                     .intValue(), false);
                     }
                     if (BasisPanel.this.hauptModul.getObjekt()
@@ -1421,7 +1421,7 @@ public class BasisPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if ((BasisPanel.this.hauptModul.getObjekt()
-                        .getBasisAdresse() != null)
+                        .getAdresse() != null)
                         && (BasisPanel.this.hauptModul.getObjekt()
                             .getBasisStandort() != null)) {
                         enableAll(false);
@@ -1481,9 +1481,9 @@ public class BasisPanel extends JPanel {
                                 origin);
 
                             if (row != -1) {
-                                BasisObjektverknuepfung obj = BasisPanel.this.objektVerknuepfungModel
+                                Objektverknuepfung obj = BasisPanel.this.objektVerknuepfungModel
                                     .getRow(row);
-                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                if (obj.getObjektByIstVerknuepftMit()
                                     .getId().intValue() != BasisPanel.this.hauptModul
                                     .getObjekt().getId().intValue())
                                     BasisPanel.this.hauptModul
@@ -1491,7 +1491,7 @@ public class BasisPanel extends JPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByIstVerknuepftMit()
+                                            obj.getObjektByIstVerknuepftMit()
                                                 .getId().intValue(),
                                             false);
                                 else
@@ -1500,7 +1500,7 @@ public class BasisPanel extends JPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByObjekt()
+                                            obj.getObjektByObjekt()
                                                 .getId().intValue(),
                                             false);
                                 BasisPanel.this.hauptModul.getManager()
@@ -1562,7 +1562,7 @@ public class BasisPanel extends JPanel {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                         && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = BasisPanel.this.objektVerknuepfungModel
+                        Objektverknuepfung verknuepfung = BasisPanel.this.objektVerknuepfungModel
                             .getRow(row);
                         if (GUIManager.getInstance().showQuestion(
                             "Soll die Verknüpfung wirklich gelöscht werden?\n"
@@ -1651,9 +1651,9 @@ public class BasisPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     String action = e.getActionCommand();
 
-                    BasisAdresse betreiber = BasisPanel.this.hauptModul
-                        .getObjekt().getBasisAdresse();
-                    BasisLage standort = BasisPanel.this.hauptModul
+                    Adresse betreiber = BasisPanel.this.hauptModul
+                        .getObjekt().getAdresse();
+                    Lage standort = BasisPanel.this.hauptModul
                         .getObjekt().getBasisLage();
 
                     if ("betreiber_delete".equals(action) && betreiber != null) {
@@ -1704,7 +1704,7 @@ public class BasisPanel extends JPanel {
 	
 	private void deleteStandort(){
     	
-    	BasisLage tmp = this.hauptModul.getObjekt().getBasisLage();
+    	Lage tmp = this.hauptModul.getObjekt().getBasisLage();
     	tmp.setDeleted(true);
     	tmp.merge();
     	this.hauptModul.getObjekt().setBasisLage(null);
@@ -1713,10 +1713,10 @@ public class BasisPanel extends JPanel {
     
     private void deleteBetreiber(){
     	
-    	BasisAdresse tmp = this.hauptModul.getObjekt().getBasisAdresse();
+    	Adresse tmp = this.hauptModul.getObjekt().getAdresse();
     	tmp.setDeleted(true);
     	tmp.merge();
-    	this.hauptModul.getObjekt().setBasisAdresse(null);
+    	this.hauptModul.getObjekt().setAdresse(null);
     }
     
     private boolean delCheck(boolean betr){

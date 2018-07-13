@@ -78,14 +78,14 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsStandortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandorteModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -108,7 +108,7 @@ public class BasisAdresseNeu extends AbstractModul
 
 	private JButton speichernButton;
 	private BasisMapAdresseLage mapLage;
-	private BasisLage lage;
+	private Lage lage;
 
 	private JLabel handzeichenLabel;
 	private JLabel namenLabel;
@@ -553,7 +553,7 @@ public class BasisAdresseNeu extends AbstractModul
             	plzFeld.setText(stra.getPlz());
             }
             
-            BasisLage vorhandeneLage = null;
+            Lage vorhandeneLage = null;
             String i;
             if (bts.getHausnrZusatz() == null) {
         	i = "";
@@ -571,7 +571,7 @@ public class BasisAdresseNeu extends AbstractModul
         	if (i.equals(f) || f.contains("-") ) {
             	Set<BasisMapAdresseLage> verk = firma.getBasisMapAdresseLages();
             	for (BasisMapAdresseLage ver : verk) {
-            	    vorhandeneLage = ver.getBasisLage();
+            	    vorhandeneLage = ver.getLage();
             	}   
         	}
             }

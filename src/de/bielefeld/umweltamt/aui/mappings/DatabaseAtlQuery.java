@@ -34,16 +34,16 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parametergruppen;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
+import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
+import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
@@ -65,47 +65,47 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/* ********************************************************************** */
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlAnalyseposition */
+	/* Queries for package ATL : class Analyseposition */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Get AtlProbenahmen their AtlAnalyseposition for an AtlProbepkt
+	 * Get Probenahme their Analyseposition for an Messstelle
 	 * 
 	 * @param probepunkt
 	 *            AtlProbpkt
-	 * @return <code>Map&lt;AtlProbenahmen,
-	 *         Map&lt;AtlParameter, AtlAnalyseposition&gt;&gt;</code>
+	 * @return <code>Map&lt;Probenahme,
+	 *         Map&lt;Parameter, Analyseposition&gt;&gt;</code>
 	 */
-	public static Map<AtlProbenahmen, Map<AtlParameter, AtlAnalyseposition>>
-			getAnalysepositionen(AtlProbepkt probepkt)
+	public static Map<Probenahme, Map<Parameter, Analyseposition>>
+			getAnalysepositionen(Messstelle probepkt)
 	{
-		Map<AtlProbenahmen, Map<AtlParameter, AtlAnalyseposition>> probeMap =
-				new HashMap<AtlProbenahmen,
-				Map<AtlParameter, AtlAnalyseposition>>();
-		Map<AtlParameter, AtlAnalyseposition> parameterMap;
+		Map<Probenahme, Map<Parameter, Analyseposition>> probeMap =
+				new HashMap<Probenahme,
+				Map<Parameter, Analyseposition>>();
+		Map<Parameter, Analyseposition> parameterMap;
 		// For each Probe add an empty parameterMap to the probeMap
-		List<AtlProbenahmen> proben = DatabaseQuery.findProbenahmen(probepkt);
-		for (AtlProbenahmen probe : proben)
+		List<Probenahme> proben = DatabaseQuery.findProbenahme(probepkt);
+		for (Probenahme probe : proben)
 		{
-			parameterMap = new HashMap<AtlParameter, AtlAnalyseposition>();
+			parameterMap = new HashMap<Parameter, Analyseposition>();
 			probeMap.put(probe, parameterMap);
 		}
-		// Get all AtlAnalysepositions (really all!)
-		List<AtlAnalyseposition> positions = new DatabaseAccess()
+		// Get all Analysepositions (really all!)
+		List<Analyseposition> positions = new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlAnalyseposition.class)
-												.createAlias("atlProbenahmen", "probe")
+										DetachedCriteria.forClass(Analyseposition.class)
+												.createAlias("atlProbenahme", "probe")
 												.add(Restrictions.eq("probe.atlProbepkt", probepkt))
 												.addOrder(Order.asc("probe.kennummer"))
 										,
-										new AtlAnalyseposition());
-		// Sort the AtlAnalysepositions into the maps
-		for (AtlAnalyseposition position : positions)
+										new Analyseposition());
+		// Sort the Analysepositions into the maps
+		for (Analyseposition position : positions)
 		{
 			// Get the parameterMap for the Probe
-			probeMap.get(position.getAtlProbenahmen())
+			probeMap.get(position.getProbenahme())
 					// Add this position to it with the parameter as key
-					.put(position.getAtlParameter(), position);
+					.put(position.getParameter(), position);
 		}
 		return probeMap;
 	}
@@ -118,32 +118,32 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	public static String[] getAnalysierer()
 	{
 		return new DatabaseAccess().executeCriteriaToArray(
-															DetachedCriteria.forClass(AtlAnalyseposition.class)
+															DetachedCriteria.forClass(Analyseposition.class)
 																	.setProjection(Projections.distinct(
 																			Projections.property("analyseVon"))),
 															new String[0]);
 	}
 
 	/**
-	 * Get all <code>AtlAnalyseposition</code>s for a given
-	 * <code>AtlProbepkt</code> and <code>AtlParameter</code> in a given
+	 * Get all <code>Analyseposition</code>s for a given
+	 * <code>Messstelle</code> and <code>Parameter</code> in a given
 	 * time interval
 	 * 
 	 * @param param
-	 *            AtlParameter
+	 *            Parameter
 	 * @param pkt
-	 *            AtlProbepkt
+	 *            Messstelle
 	 * @param beginDate
 	 * @param endDate
-	 * @return List&lt;AtlAnalyseposition&gt;
+	 * @return List&lt;Analyseposition&gt;
 	 */
-	public static List<AtlAnalyseposition> getAnalysepositionen(
-		AtlParameter param, AtlProbepkt pkt, Date beginDate, Date endDate)
+	public static List<Analyseposition> getAnalysepositionen(
+		Parameter param, Messstelle pkt, Date beginDate, Date endDate)
 	{
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria
-																	.forClass(AtlAnalyseposition.class)
-																	.createAlias("atlProbenahmen", "probe")
+																	.forClass(Analyseposition.class)
+																	.createAlias("atlProbenahme", "probe")
 																	.add(Restrictions.eq("probe.atlProbepkt", pkt))
 																	.add(Restrictions.eq("atlParameter", param))
 																	.add(Restrictions
@@ -152,81 +152,81 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 																						beginDate,
 																						endDate))
 																	.addOrder(Order.asc("probe.datumDerEntnahme")),
-															new AtlAnalyseposition());
+															new Analyseposition());
 	}
 
 	/**
-	 * Get all <code>AtlAnalyseposition</code>s for a given
-	 * <code>AtlProbenahmen</code> and sort them
+	 * Get all <code>Analyseposition</code>s for a given
+	 * <code>Probenahme</code> and sort them
 	 * 
 	 * @param probe
-	 *            AtlProbenahmen
-	 * @return List&lt;AtlAnalyseposition&gt;
+	 *            Probenahme
+	 * @return List&lt;Analyseposition&gt;
 	 */
-	public static List<AtlAnalyseposition> getSortedAnalysepositionen(
-		AtlProbenahmen probe)
+	public static List<Analyseposition> getSortedAnalysepositionen(
+		Probenahme probe)
 	{
 		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria.forClass(AtlAnalyseposition.class)
+															DetachedCriteria.forClass(Analyseposition.class)
 																	.createAlias("atlParameter", "parameter")
-																	.add(Restrictions.eq("atlProbenahmen", probe))
+																	.add(Restrictions.eq("atlProbenahme", probe))
 																	.addOrder(Order.asc("parameter.reihenfolge")),
-															new AtlAnalyseposition());
+															new Analyseposition());
 	}
 
 	/**
-	 * Find an AtlAnalyseposition from a given AtlProbenahmen with the given
-	 * AtlParameter.
+	 * Find an Analyseposition from a given Probenahme with the given
+	 * Parameter.
 	 * If there is none and createNew is true, create a new one.
 	 * 
 	 * @param probe
-	 *            AtlProbenahmen
+	 *            Probenahme
 	 * @param parameter
-	 *            AtlParameter
+	 *            Parameter
 	 * @param einheit
 	 *            AtlEinheit
 	 * @param createNew
 	 *            boolean
-	 * @return AtlAnalyseposition
+	 * @return Analyseposition
 	 */
-	public static AtlAnalyseposition findAnalyseposition(
-		AtlProbenahmen probe, AtlParameter parameter, AtlEinheiten einheit,
+	public static Analyseposition findAnalyseposition(
+		Probenahme probe, Parameter parameter, Einheiten einheit,
 		boolean createNew)
 	{
-		AtlAnalyseposition position = new DatabaseAccess()
+		Analyseposition position = new DatabaseAccess()
 				.executeCriteriaToUniqueResult(
-												DetachedCriteria.forClass(AtlAnalyseposition.class)
-														.add(Restrictions.eq("atlProbenahmen", probe))
+												DetachedCriteria.forClass(Analyseposition.class)
+														.add(Restrictions.eq("atlProbenahme", probe))
 														.add(Restrictions.eq("atlParameter", parameter)),
-												new AtlAnalyseposition());
+												new Analyseposition());
 		if (position == null && createNew)
 		{
-			position = new AtlAnalyseposition();
-			position.setAtlProbenahmen(probe);
-			position.setAtlParameter(parameter);
-			position.setAtlEinheiten(einheit);
+			position = new Analyseposition();
+			position.setProbenahme(probe);
+			position.setParameter(parameter);
+			position.setEinheiten(einheit);
 		}
 		return position;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlEinheiten */
+	/* Queries for package ATL : class Einheiten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static AtlEinheiten[] atlEinheiten = null;
+	private static Einheiten[] atlEinheiten = null;
 
 	/**
 	 * Liefert alle in der Einheiten-Tabelle gespeicherten Einheiten.
 	 * 
 	 * @return Ein Array mit allen Einheiten
 	 */
-	public static AtlEinheiten[] getAtlEinheiten()
+	public static Einheiten[] getEinheiten()
 	{
 		if (DatabaseAtlQuery.atlEinheiten == null)
 		{
 			DatabaseAtlQuery.atlEinheiten =
-					DatabaseQuery.getOrderedAll(new AtlEinheiten(), "bezeichnung")
-							.toArray(new AtlEinheiten[0]);
+					DatabaseQuery.getOrderedAll(new Einheiten(), "bezeichnung")
+							.toArray(new Einheiten[0]);
 		}
 		return DatabaseAtlQuery.atlEinheiten;
 	}
@@ -236,30 +236,30 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 * 
 	 * @param description
 	 *            The description of the unit (e.g. "mg/l")
-	 * @return <code>AtlEinheiten</code>, if an unit was found,
+	 * @return <code>Einheiten</code>, if an unit was found,
 	 *         <code>null</code> otherwise
 	 */
-	public static AtlEinheiten getEinheitByDescription(String description)
+	public static Einheiten getEinheitByDescription(String description)
 	{
 		return new DatabaseAccess().executeCriteriaToUniqueResult(
-																	DetachedCriteria.forClass(AtlEinheiten.class)
+																	DetachedCriteria.forClass(Einheiten.class)
 																			.add(Restrictions.eq("bezeichnung",
 																									description)),
-																	new AtlEinheiten());
+																	new Einheiten());
 	}
 
 	/**
-	 * Check if an AtlEinheiten with <code>description</code> exists.<br>
+	 * Check if an Einheiten with <code>description</code> exists.<br>
 	 * This is mainly used for the import.
 	 * 
 	 * @param description
 	 *            String
-	 * @return <code>true</code>, if an AtlEinheiten exists, <code>false</code>
+	 * @return <code>true</code>, if an Einheiten exists, <code>false</code>
 	 *         otherwise
 	 */
 	public static boolean einheitExists(String description)
 	{
-		for (AtlEinheiten einheit : DatabaseAtlQuery.getAtlEinheiten())
+		for (Einheiten einheit : DatabaseAtlQuery.getEinheiten())
 		{
 			if (einheit.getBezeichnung().equals(description))
 			{
@@ -270,107 +270,107 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlKlaeranlagen */
+	/* Queries for package ATL : class Klaeranlage */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static AtlKlaeranlagen[] atlKlaeranlagen = null;
+	private static Klaeranlage[] atlKlaeranlagen = null;
 
 	/**
-	 * Get an array of all AtlKlaeranlagen,
+	 * Get an array of all Klaeranlage,
 	 * omit id 7 because this is an intended duplicate
 	 * 
-	 * @return AtlKlaeranlagen[]
+	 * @return Klaeranlage[]
 	 */
-	public static AtlKlaeranlagen[] getKlaeranlagen()
+	public static Klaeranlage[] getKlaeranlagen()
 	{
 		if (DatabaseAtlQuery.atlKlaeranlagen == null)
 		{
 			DatabaseAtlQuery.atlKlaeranlagen =
 					new DatabaseAccess().executeCriteriaToArray(
-																DetachedCriteria.forClass(AtlKlaeranlagen.class)
+																DetachedCriteria.forClass(Klaeranlage.class)
 																		.add(Restrictions.ne("id", 7))
 																		.addOrder(Order.asc("id")),
-																new AtlKlaeranlagen[0]);
+																new Klaeranlage[0]);
 		}
 		return DatabaseAtlQuery.atlKlaeranlagen;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlParameter */
+	/* Queries for package ATL : class Parameter */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Liefert alle Parameter, die für Klärschlamm-Probenahmen relevant sind.
+	 * Liefert alle Parameter, die für Klärschlamm-Probenahme relevant sind.
 	 * D.h. alle, deren Klärschlamm-Grenzwert nicht <code>NULL</code> ist.
 	 * 
-	 * @return Ein Array mit allen für Klärschlamm-Probenahmen relevanten
+	 * @return Ein Array mit allen für Klärschlamm-Probenahme relevanten
 	 *         Parametern
 	 */
-	public static AtlParameter[] getKlaerschlammParameter()
+	public static Parameter[] getKlaerschlammParameter()
 	{
 		return new DatabaseAccess().executeCriteriaToArray(
-															DetachedCriteria.forClass(AtlParameter.class)
+															DetachedCriteria.forClass(Parameter.class)
 																	.add(Restrictions.isNotNull("klaerschlammGw"))
 																	.addOrder(Order.asc("bezeichnung")),
-															new AtlParameter[0]);
+															new Parameter[0]);
 	}
 
 	/**
-	 * Liefert alle Parameter, die für SielhautBearbeiten-Probenahmen relevant
+	 * Liefert alle Parameter, die für SielhautBearbeiten-Probenahme relevant
 	 * sind. D.h. alle, deren SielhautBearbeiten-Grenzwert nicht
 	 * <code>NULL</code> ist.
 	 *
-	 * @return Ein Array mit allen für SielhautBearbeiten-Probenahmen relevanten
+	 * @return Ein Array mit allen für SielhautBearbeiten-Probenahme relevanten
 	 *         Parametern
 	 */
-	public static List<AtlParameter> getGroupedParameterAsList()
+	public static List<Parameter> getGroupedParameterAsList()
 	{
 		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria.forClass(AtlParameter.class)
+															DetachedCriteria.forClass(Parameter.class)
 																	.add(Restrictions.isNotNull("atlParametergruppen"))
 																	.addOrder(Order.asc("reihenfolge")),
-															new AtlParameter());
+															new Parameter());
 	}
 
 	/**
-	 * AtlParameter.getGroupedParameterAsList als Array
+	 * Parameter.getGroupedParameterAsList als Array
 	 *
-	 * @return Ein Array mit allen für Probenahmen relevanten Parametern
+	 * @return Ein Array mit allen für Probenahme relevanten Parametern
 	 */
-	public static AtlParameter[] getGroupedParameter()
+	public static Parameter[] getGroupedParameter()
 	{
 		return new DatabaseAccess().executeCriteriaToArray(
-															DetachedCriteria.forClass(AtlParameter.class)
+															DetachedCriteria.forClass(Parameter.class)
 																	.add(Restrictions.isNotNull("atlParametergruppen"))
 																	.addOrder(Order.asc("reihenfolge")),
-															new AtlParameter[0]);
+															new Parameter[0]);
 	}
 
-	public static List<AtlParameter> getAllParameterAsList()
+	public static List<Parameter> getAllParameterAsList()
 	{
-		return DatabaseQuery.getOrderedAll(new AtlParameter(), "bezeichnung");
+		return DatabaseQuery.getOrderedAll(new Parameter(), "bezeichnung");
 	}
 
-	private static AtlParameter[] parameter = null;
+	private static Parameter[] parameter = null;
 
-	public static AtlParameter[] getAllParameterAsArray()
+	public static Parameter[] getAllParameterAsArray()
 	{
 		if (DatabaseAtlQuery.parameter == null)
 		{
 			DatabaseAtlQuery.parameter =
-					DatabaseQuery.getOrderedAll(new AtlParameter(), "bezeichnung")
-							.toArray(new AtlParameter[0]);
+					DatabaseQuery.getOrderedAll(new Parameter(), "bezeichnung")
+							.toArray(new Parameter[0]);
 		}
 		return DatabaseAtlQuery.parameter;
 	}
 
-	public static List<AtlParameter> getParameterInGroup(int id)
+	public static List<Parameter> getParameterInGroup(int id)
 	{
 		return new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlParameter.class)
+										DetachedCriteria.forClass(Parameter.class)
 												.add(Restrictions.eq("atlParametergruppen.id", id)),
-										new AtlParameter());
+										new Parameter());
 	}
 
 	/**
@@ -379,31 +379,31 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 * @param description
 	 *            The description of the parameter
 	 *            (e.g. "Palladium (Pd)")
-	 * @return <code>AtlParameter</code>, if a parameter was found,
+	 * @return <code>Parameter</code>, if a parameter was found,
 	 *         <code>null</code> otherwise
 	 */
 	// TODO: Maybe like or ilike is a better solution?
-	public static AtlParameter getParameterByDescription(String description)
+	public static Parameter getParameterByDescription(String description)
 	{
 		return new DatabaseAccess().executeCriteriaToUniqueResult(
-																	DetachedCriteria.forClass(AtlParameter.class)
+																	DetachedCriteria.forClass(Parameter.class)
 																			.add(Restrictions.eq("bezeichnung",
 																									description)),
-																	new AtlParameter());
+																	new Parameter());
 	}
 
 	/**
-	 * Check if an AtlParameter with <code>description</code> exists.<br>
+	 * Check if an Parameter with <code>description</code> exists.<br>
 	 * This is mainly used for the import.
 	 * 
 	 * @param description
 	 *            String
-	 * @return <code>true</code>, if an AtlParameter exists, <code>false</code>
+	 * @return <code>true</code>, if an Parameter exists, <code>false</code>
 	 *         otherwise
 	 */
 	public static boolean parameterExists(String description)
 	{
-		for (AtlParameter para : DatabaseAtlQuery.getAllParameterAsArray())
+		for (Parameter para : DatabaseAtlQuery.getAllParameterAsArray())
 		{
 			if (para.getBezeichnung().equals(description))
 			{
@@ -414,11 +414,11 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlParametergruppen */
+	/* Queries for package ATL : class Parametergruppen */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Diese Funktion pr&uuml;ft, ob die {@link AtlParameter}, die in
+	 * Diese Funktion pr&uuml;ft, ob die {@link Parameter}, die in
 	 * <i>group</i> enthalten sind, vollst&auml;ndig sind.
 	 *
 	 * @param id
@@ -430,9 +430,9 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *         false.
 	 */
 	public static boolean isCompleteParameterGroup(
-		int id, List<AtlParameter> group)
+		int id, List<Parameter> group)
 	{
-		List<AtlParameter> complete = DatabaseQuery.getParameterInGroup(id);
+		List<Parameter> complete = DatabaseQuery.getParameterInGroup(id);
 		// First simply check the size
 		// As we use List and not Set the size is not a good criteria...
 		//        if (group.size() != complete.size()) {
@@ -451,46 +451,46 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlProbeart */
+	/* Queries for package ATL : class Probeart */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static AtlProbeart[] atlProbearten = null;
+	private static Probeart[] atlProbearten = null;
 
 	/**
 	 * Liefert alle vorhandenen Probearten.
 	 * 
 	 * @return Alle vorhandenen Probearten
 	 */
-	public static AtlProbeart[] getProbearten()
+	public static Probeart[] getProbearten()
 	{
 		if (DatabaseAtlQuery.atlProbearten == null)
 		{
 			DatabaseAtlQuery.atlProbearten = DatabaseQuery.getOrderedAll(
-																			new AtlProbeart())
-					.toArray(new AtlProbeart[0]);
+																			new Probeart())
+					.toArray(new Probeart[0]);
 		}
 		return DatabaseAtlQuery.atlProbearten;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlProbenahmen */
+	/* Queries for package ATL : class Probenahme */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Liefert alle Probenahmen eines bestimmten Probepunktes.
+	 * Liefert alle Probenahme eines bestimmten Probepunktes.
 	 * 
 	 * @param punkt
 	 *            Der Probepunkt.
-	 * @return List&lt;AtlProbenahmen&gt;
+	 * @return List&lt;Probenahme&gt;
 	 */
-	public static List<AtlProbenahmen> findProbenahmen(AtlProbepkt punkt)
+	public static List<Probenahme> findProbenahme(Messstelle punkt)
 	{
 		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria.forClass(AtlProbenahmen.class)
+															DetachedCriteria.forClass(Probenahme.class)
 																	.add(Restrictions.eq("atlProbepkt", punkt))
 																	.addOrder(Order.desc("datumDerEntnahme"))
 																	.addOrder(Order.asc("kennummer")),
-															new AtlProbenahmen());
+															new Probenahme());
 	}
 
 	/**
@@ -501,129 +501,129 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 * @return Die Probe mit der gegebenen ID oder <code>null</code> falls diese
 	 *         nicht existiert
 	 */
-	public static AtlProbenahmen findProbenahme(String kennnummer)
+	public static Probenahme findProbenahme(String kennnummer)
 	{
 		return new DatabaseAccess().executeCriteriaToUniqueResult(
-																	DetachedCriteria.forClass(AtlProbenahmen.class)
+																	DetachedCriteria.forClass(Probenahme.class)
 																			.add(Restrictions.eq("kennummer",
 																									kennnummer)),
-																	new AtlProbenahmen());
+																	new Probenahme());
 	}
 
 	/**
-	 * Liefert alle Probenahmen einer bestimmten Art von einer bestimmten
+	 * Liefert alle Probenahme einer bestimmten Art von einer bestimmten
 	 * Kläranlage.
 	 * 
 	 * @param art
-	 *            AtlProbeart
+	 *            Probeart
 	 * @param ka
-	 *            AtlKlaeranlagen
-	 * @return List&lt;AtlProbenahmen&gt;
+	 *            Klaeranlage
+	 * @return List&lt;Probenahme&gt;
 	 */
-	public static List<AtlProbenahmen> findProbenahmen(
-		AtlProbeart art, AtlKlaeranlagen ka)
+	public static List<Probenahme> findProbenahme(
+		Probeart art, Klaeranlage ka)
 	{
 		return new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlProbenahmen.class)
+										DetachedCriteria.forClass(Probenahme.class)
 												.createAlias("atlProbepkt", "probepunkt")
 												.add(Restrictions.eq("probepunkt.atlProbeart", art))
 												.add(Restrictions.eq("probepunkt.atlKlaeranlagen", ka))
 												.addOrder(Order.desc("datumDerEntnahme"))
 												.addOrder(Order.desc("kennummer")),
-										new AtlProbenahmen());
+										new Probenahme());
 	}
 
 	/**
-	 * Find AtlProbenahmen with <code>value</code> somewhere in
+	 * Find Probenahme with <code>value</code> somewhere in
 	 * <code>propertyName</code> (search case insensitive).
 	 * 
 	 * @param propertyName
 	 *            String
 	 * @param value
 	 *            String
-	 * @return List&lt;AtlProbenahmen&gt;
+	 * @return List&lt;Probenahme&gt;
 	 */
-	public static List<AtlProbenahmen> findProbenahmen(
+	public static List<Probenahme> findProbenahme(
 		String propertyName, String value)
 	{
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria
-																	.forClass(AtlProbenahmen.class)
+																	.forClass(Probenahme.class)
 																	.add(Restrictions.ilike(
 																							propertyName,
 																							value,
 																							MatchMode.ANYWHERE))
 																	.addOrder(Order.desc("datumDerEntnahme"))
 																	.addOrder(Order.desc("kennummer")),
-															new AtlProbenahmen());
+															new Probenahme());
 	}
 
 	/**
-	 * Find AtlProbenahmen with <code>status</code>
+	 * Find Probenahme with <code>status</code>
 	 * 
 	 * @param status
-	 *            AtlStatus
-	 * @return List&lt;AtlProbenahmen&gt;
+	 *            Status
+	 * @return List&lt;Probenahme&gt;
 	 */
-	public static List<AtlProbenahmen> findProbenahmen(AtlStatus status)
+	public static List<Probenahme> findProbenahme(Status status)
 	{
 		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria.forClass(AtlProbenahmen.class)
+															DetachedCriteria.forClass(Probenahme.class)
 																	.add(Restrictions.eq("atlStatus", status))
 																	.addOrder(Order.desc("datumDerEntnahme"))
 																	.addOrder(Order.desc("kennummer")),
-															new AtlProbenahmen());
+															new Probenahme());
 	}
 
 	/**
-	 * Check if there is an AtlProbenahmen with <code>kennnummer</code>
+	 * Check if there is an Probenahme with <code>kennnummer</code>
 	 * 
 	 * @param kennnummer
 	 *            String
-	 * @return <code>true</code>, if an AtlProbenahmen exists,
+	 * @return <code>true</code>, if an Probenahme exists,
 	 *         <code>false</code> otherwise
 	 */
 	public static Boolean probenahmeExists(String kennnummer)
 	{
 		return (!(new DatabaseAccess().executeCriteriaToList(
-																DetachedCriteria.forClass(AtlProbenahmen.class)
+																DetachedCriteria.forClass(Probenahme.class)
 																		.add(Restrictions.eq("kennummer", kennnummer)),
-																new AtlProbenahmen()).isEmpty()));
+																new Probenahme()).isEmpty()));
 	}
 
 	/**
 	 * @param probe
-	 *            AtlProbenahmen
+	 *            Probenahme
 	 * @return <code>true</code>, wenn die Probeart des Probepunktes dieser
 	 *         Probe Rohschlamm oder Faulschlamm ist, sonst <code>false</code>
 	 */
-	public static Boolean isKlaerschlammProbe(AtlProbenahmen probe)
+	public static Boolean isKlaerschlammProbe(Probenahme probe)
 	{
-		return (probe.getAtlProbepkt().getAtlProbeart().getId().equals(
+		return (probe.getMessstelle().getProbeart().getId().equals(
 																		DatabaseConstants.ATL_PROBEART_ID_FAULSCHLAMM) || probe
-				.getAtlProbepkt().getAtlProbeart().getId().equals(
+				.getMessstelle().getProbeart().getId().equals(
 																	DatabaseConstants.ATL_PROBEART_ID_ROHRSCHLAMM));
 	}
 
-	public static JRMapDataSource getAuftragDataSource(AtlProbenahmen probe)
+	public static JRMapDataSource getAuftragDataSource(Probenahme probe)
 	{
-		List<AtlAnalyseposition> sorted = new DatabaseAccess()
+		List<Analyseposition> sorted = new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlAnalyseposition.class)
+										DetachedCriteria.forClass(Analyseposition.class)
 												.createAlias("atlParameter", "parameter")
-												.add(Restrictions.eq("atlProbenahmen", probe))
+												.add(Restrictions.eq("atlProbenahme", probe))
 												.add(Restrictions.not(
 														Restrictions.ilike("parameter.bezeichnung",
 																			"bei Probenahme", MatchMode.ANYWHERE)))
 												.addOrder(Order.asc("parameter.reihenfolge")),
-										new AtlAnalyseposition());
+										new Analyseposition());
 
 		int elements = sorted.size();
 
 		Object[][] values = new Object[elements][];
 		Object[] columns;
-		AtlParameter parameter = null;
+		Parameter parameter = null;
 
 		String[] columnsAuftrag = { "auswahl", "Parameter",
 				"Kennzeichnung", "Konservierung", "Zusatz" };
@@ -632,7 +632,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		{
 			columns = new Object[5];
 
-			parameter = sorted.get(i).getAtlParameter();
+			parameter = sorted.get(i).getParameter();
 
 			columns[0] = true; // this value is always true
 			columns[1] = parameter.getBezeichnung();
@@ -646,14 +646,14 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new JRMapDataSource(columnsAuftrag, values);
 	}
 
-	public static JRMapDataSource getBescheidDataSource(AtlProbenahmen probe)
+	public static JRMapDataSource getBescheidDataSource(Probenahme probe)
 	{
-		List<AtlAnalyseposition> sorted =
+		List<Analyseposition> sorted =
 				DatabaseQuery.getSortedAnalysepositionen(probe);
-		List<AtlParameter> params = new ArrayList<AtlParameter>();
-		for (AtlAnalyseposition pos : sorted)
+		List<Parameter> params = new ArrayList<Parameter>();
+		for (Analyseposition pos : sorted)
 		{
-			params.add(pos.getAtlParameter());
+			params.add(pos.getParameter());
 		}
 
 		int elements = sorted.size();
@@ -663,15 +663,15 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 		Object[][] values = new Object[elements][];
 		Object[] columns;
-		AtlAnalyseposition pos = null;
-		AtlParameter parameter = null;
+		Analyseposition pos = null;
+		Parameter parameter = null;
 
 		for (int i = 0; i < elements; i++)
 		{
 			columns = new Object[columnsBescheid.length];
 			pos = sorted.get(i);
 
-			parameter = pos.getAtlParameter();
+			parameter = pos.getParameter();
 			String grenzwert = "";
 			if (parameter.getGrenzwert() != null
 					&& parameter.getGrenzwert() <= 10)
@@ -719,7 +719,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 				gebuehr = new GermanDouble(parameter.getPreisfueranalyse())
 						.toString() + " €";
 
-			AtlParametergruppen gr = parameter.getAtlParametergruppen();
+			Parametergruppen gr = parameter.getParametergruppen();
 			int groupId = gr != null ? gr.getId() : -1;
 
 			boolean inGroup = DatabaseQuery.isCompleteParameterGroup(
@@ -729,9 +729,9 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 			//                groups.put(groupId, gr);
 			//            }
 			String einh = "";
-			if (!pos.getAtlEinheiten().getBezeichnung().equals("ohne"))
+			if (!pos.getEinheiten().getBezeichnung().equals("ohne"))
 			{
-				einh = pos.getAtlEinheiten().getBezeichnung();
+				einh = pos.getEinheiten().getBezeichnung();
 			}
 
 			columns[0] = i + 1;
@@ -747,8 +747,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 			values[i] = columns;
 		}
 
-		Map<Integer, AtlParametergruppen> groups =
-				new HashMap<Integer, AtlParametergruppen>(1);
+		Map<Integer, Parametergruppen> groups =
+				new HashMap<Integer, Parametergruppen>(1);
 
 		int numGroups = groups.size();
 
@@ -765,8 +765,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 			newValues[i] = values[i];
 		}
 
-		Collection<AtlParametergruppen> theGroups = groups.values();
-		for (AtlParametergruppen apg : theGroups)
+		Collection<Parametergruppen> theGroups = groups.values();
+		for (Parametergruppen apg : theGroups)
 		{
 
 			String gebuehr = new GermanDouble(apg.getPreisfueranalyse())
@@ -791,18 +791,18 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlProbepkt */
+	/* Queries for package ATL : class Messstelle */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Get all AtlProbepkt with AtlProbeart(ID)
+	 * Get all Messstelle with Probeart(ID)
 	 * 
-	 * @return <code>List&lt;AtlProbepkt&gt;</code>
+	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<AtlProbepkt> getProbepktByArtID(Integer atlProbeartID)
+	public static List<Messstelle> getProbepktByArtID(Integer atlProbeartID)
 	{
 		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria.forClass(AtlProbepkt.class)
+															DetachedCriteria.forClass(Messstelle.class)
 																	.createAlias("basisObjekt", "objekt")
 																	.createAlias("objekt.basisStandort", "standort")
 																	.createAlias("atlProbeart", "art")
@@ -810,122 +810,122 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 																	.add(Restrictions.eq("art.id", atlProbeartID))
 																	.addOrder(Order.asc("standort.strasse"))
 																	.addOrder(Order.asc("standort.hausnr")),
-															new AtlProbepkt());
+															new Messstelle());
 	}
 
 	/**
-	 * Get all inactive AtlProbepkt
+	 * Get all inactive Messstelle
 	 * 
-	 * @return <code>List&lt;AtlProbepkt&gt;</code>
+	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<AtlProbepkt> getInaktivProbepkt()
+	public static List<Messstelle> getInaktivProbepkt()
 	{
 		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria.forClass(AtlProbepkt.class)
+															DetachedCriteria.forClass(Messstelle.class)
 																	.createAlias("basisObjekt", "objekt")
 																	.createAlias("objekt.basisStandort", "standort")
 																	.add(Restrictions.eq("objekt.inaktiv", true))
 																	.addOrder(Order.asc("standort.strasse"))
 																	.addOrder(Order.asc("standort.hausnr")),
-															new AtlProbepkt());
+															new Messstelle());
 	}
 
 	/**
-	 * Get all AtlProbepkt which have AtlProbenahmen from Probenehmer
+	 * Get all Messstelle which have Probenahme from Probenehmer
 	 * (kennummer starts with "3").
 	 * 
-	 * @return <code>List&lt;AtlProbepkt&gt;</code>
+	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<AtlProbepkt> getProbenehmerPunkte()
+	public static List<Messstelle> getProbenehmerPunkte()
 	{
 		return new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlProbepkt.class)
+										DetachedCriteria.forClass(Messstelle.class)
 												.createAlias("basisObjekt", "objekt")
-												.createAlias("atlProbenahmens", "probe")
+												.createAlias("atlProbenahmes", "probe")
 												.add(Restrictions.eq("objekt.inaktiv", false))
 												.add(Restrictions.like(
 																		"probe.kennummer", "3", MatchMode.START))
 												// YAY! Finally found the right way to do distinct and get
 												// the complete objects! :D
 												.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
-										new AtlProbepkt());
+										new Messstelle());
 	}
 
 	/**
-	 * Get all AtlProbepkt which have AtlProbenahmen from ESatzung
+	 * Get all Messstelle which have Probenahme from ESatzung
 	 * (kennummer starts with "E").
 	 * 
-	 * @return <code>List&lt;AtlProbepkt&gt;</code>
+	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<AtlProbepkt> getESatzungsPunkte()
+	public static List<Messstelle> getESatzungsPunkte()
 	{
 		return new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlProbepkt.class)
+										DetachedCriteria.forClass(Messstelle.class)
 												.createAlias("basisObjekt", "objekt")
-												.createAlias("atlProbenahmens", "probe")
+												.createAlias("atlProbenahmes", "probe")
 												.add(Restrictions.eq("objekt.inaktiv", false))
 												.add(Restrictions.like(
 																		"probe.kennummer", "E", MatchMode.START))
 												.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
-										new AtlProbepkt());
+										new Messstelle());
 	}
 
 	/**
-	 * Get all AtlProbepkt which have AtlProbenahmen from UWB
+	 * Get all Messstelle which have Probenahme from UWB
 	 * (kennummer starts with "2").
 	 * 
-	 * @return <code>List&lt;AtlProbepkt&gt;</code>
+	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<AtlProbepkt> getUWBPunkte()
+	public static List<Messstelle> getUWBPunkte()
 	{
 		return new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlProbepkt.class)
+										DetachedCriteria.forClass(Messstelle.class)
 												.createAlias("basisObjekt", "objekt")
-												.createAlias("atlProbenahmens", "probe")
+												.createAlias("atlProbenahmes", "probe")
 												.add(Restrictions.eq("objekt.inaktiv", false))
 												.add(Restrictions.like(
 																		"probe.kennummer", "2", MatchMode.START))
 												.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
-										new AtlProbepkt());
+										new Messstelle());
 	}
 
 	/**
-	 * Get all AtlProbepkt which have AtlProbenahmen from Selbstueberwachung
+	 * Get all Messstelle which have Probenahme from Selbstueberwachung
 	 * (kennummer starts with "E").
 	 * 
-	 * @return <code>List&lt;AtlProbepkt&gt;</code>
+	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<AtlProbepkt> getSelbstueberwPunkte()
+	public static List<Messstelle> getSelbstueberwPunkte()
 	{
 		return new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlProbepkt.class)
+										DetachedCriteria.forClass(Messstelle.class)
 												.createAlias("basisObjekt", "objekt")
-												.createAlias("atlProbenahmens", "probe")
+												.createAlias("atlProbenahmes", "probe")
 												.add(Restrictions.eq("objekt.inaktiv", false))
 												.add(Restrictions.like(
 																		"probe.kennummer", "7", MatchMode.START))
 												.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
-										new AtlProbepkt());
+										new Messstelle());
 	}
 
 	/**
-	 * Get the one(!) AtlProbepkt for the Klärschlamm
+	 * Get the one(!) Messstelle for the Klärschlamm
 	 * 
 	 * @param art
 	 *            AtlProbe(punkt)art
 	 * @param ka
 	 *            AtlKlaeranlage
-	 * @return AtlProbepkt
+	 * @return Messstelle
 	 */
 	// TODO: Add DatabaseConstants for these Probepunkte
 	// These values here are what we got with the original query which also
 	// matched art and ka, but then sorted by objektid and took the first result
-	public static AtlProbepkt getKlaerschlammProbepunkt(
-		AtlProbeart art, AtlKlaeranlagen ka)
+	public static Messstelle getKlaerschlammProbepunkt(
+		Probeart art, Klaeranlage ka)
 	{
 //		Integer objektIDs[] =
 //		// Probe(punkt)art:
@@ -938,27 +938,27 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 //		};
 		return new DatabaseAccess()
 				.executeCriteriaToUniqueResult(
-												DetachedCriteria.forClass(AtlProbepkt.class)
+												DetachedCriteria.forClass(Messstelle.class)
 														.add(Restrictions.eq("atlProbeart", art))
 														.add(Restrictions.eq("atlKlaeranlagen", ka)),
 //														.add(Restrictions.in("id", objektIDs)),
-												new AtlProbepkt());
+												new Messstelle());
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlSielhaut */
+	/* Queries for package ATL : class Sielhaut */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Find AtlSielhaut starting with the <code>search</code> String
+	 * Find Sielhaut starting with the <code>search</code> String
 	 * 
-	 * @return <code>List&lt;AtlSielhaut&gt;</code>
+	 * @return <code>List&lt;Sielhaut&gt;</code>
 	 */
-	public static List<AtlSielhaut> findSielhaut(String search)
+	public static List<Sielhaut> findSielhaut(String search)
 	{
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria
-																	.forClass(AtlSielhaut.class)
+																	.forClass(Sielhaut.class)
 																	.createAlias("atlProbepkt", "probepkt")
 																	.createAlias("probepkt.basisObjekt", "objekt")
 																	.add(Restrictions.ilike("bezeichnung",
@@ -968,27 +968,27 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 																	.addOrder(Order.desc("PFirmenprobe"))
 																	.addOrder(Order.asc("objekt.inaktiv"))
 																	.addOrder(Order.asc("bezeichnung")),
-															new AtlSielhaut());
+															new Sielhaut());
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlStatus */
+	/* Queries for package ATL : class Status */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static AtlStatus[] atlStatus = null;
+	private static Status[] atlStatus = null;
 
 	/**
-	 * Get all AtlStatus
+	 * Get all Status
 	 * 
-	 * @return <code>AtlStatus[]</code>
+	 * @return <code>Status[]</code>
 	 */
-	public static AtlStatus[] getStatus()
+	public static Status[] getStatus()
 	{
 		if (DatabaseAtlQuery.atlStatus == null)
 		{
 			DatabaseAtlQuery.atlStatus =
-					DatabaseQuery.getOrderedAll(new AtlStatus())
-							.toArray(new AtlStatus[0]);
+					DatabaseQuery.getOrderedAll(new Status())
+							.toArray(new Status[0]);
 		}
 		return DatabaseAtlQuery.atlStatus;
 	}
@@ -997,9 +997,9 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 * Hole den nächsten Status - für den Wullspuffel ;-)
 	 * 
 	 * @param aktuellerStatus
-	 * @return <code>AtlStatus</code> nächster Status
+	 * @return <code>Status</code> nächster Status
 	 */
-	public static AtlStatus getNextStatus(AtlStatus aktuellerStatus)
+	public static Status getNextStatus(Status aktuellerStatus)
 	{
 		if (aktuellerStatus.equals(
 				DatabaseConstants.ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT))
@@ -1015,7 +1015,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class ViewAtlAnalyseposition */
+	/* Queries for package ATL : class ViewAnalyseposition */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
@@ -1038,10 +1038,10 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *            Das End-Datum
 	 * @param analyseVon
 	 *            Wo wurde analysiert?
-	 * @return Eine Liste mit <code>AtlAnalyseposition</code>en
+	 * @return Eine Liste mit <code>Analyseposition</code>en
 	 */
-	public static List<AtlAnalyseposition> getAnalysepositionFromView(
-		AtlParameter param, AtlEinheiten einheit, AtlProbepkt punkt,
+	public static List<Analyseposition> getAnalysepositionFromView(
+		Parameter param, Einheiten einheit, Messstelle punkt,
 		Date beginDate, Date endDate, String analyseVon)
 	{
 		DetachedCriteria detachedCriteria =
@@ -1064,7 +1064,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		List<ViewAtlAnalysepositionAll> viewResult =
 				new DatabaseAccess().executeCriteriaToList(
 															detachedCriteria, new ViewAtlAnalysepositionAll());
-		List<AtlAnalyseposition> result = new ArrayList<AtlAnalyseposition>();
+		List<Analyseposition> result = new ArrayList<Analyseposition>();
 		for (ViewAtlAnalysepositionAll viewPos : viewResult)
 		{
 			result.add(DatabaseQuery.getAnalysepositionFromView(viewPos));
@@ -1073,20 +1073,20 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	}
 
 	// Dirty cast/copy...
-	public static AtlAnalyseposition getAnalysepositionFromView(
+	public static Analyseposition getAnalysepositionFromView(
 		ViewAtlAnalysepositionAll viewPos)
 	{
-		AtlAnalyseposition pos = new AtlAnalyseposition();
+		Analyseposition pos = new Analyseposition();
 		pos.setId(viewPos.getId());
 		pos.setGrkl(viewPos.getGrkl());
 		pos.setWert(viewPos.getWert());
 		pos.setAnalyseVon(viewPos.getAnalyseVon());
 		pos.setBericht(viewPos.getBericht());
 		pos.setNormwert(viewPos.getNormwert());
-		pos.setAtlEinheiten(AtlEinheiten.findById(viewPos.getEinheitenId()));
-		pos.setAtlParameter(AtlParameter.findById(viewPos.getParameterId()));
-		pos.setAtlProbenahmen(
-				AtlProbenahmen.findById(viewPos.getProbenahmeId()));
+		pos.setEinheiten(Einheiten.findById(viewPos.getEinheitenId()));
+		pos.setParameter(Parameter.findById(viewPos.getParameterId()));
+		pos.setProbenahme(
+				Probenahme.findById(viewPos.getProbenahmeId()));
 		pos.setEnabled(viewPos.getEnabled());
 		pos.setDeleted(viewPos.getDeleted());
 		return pos;

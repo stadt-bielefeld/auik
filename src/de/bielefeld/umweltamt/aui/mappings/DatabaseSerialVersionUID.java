@@ -43,7 +43,7 @@ public class DatabaseSerialVersionUID {
     public static final long forBasisPrioritaet         = 7751778530285997527L;
     public static final long forBasisPrioritaetId       = -1304451453173654906L;
     public static final long forBasisSachbearbeiter     = 7587341236085960792L;
-    public static final long forBasisLage           = 2774552431508434460L;
+    public static final long forLage           = 2774552431508434460L;
     public static final long forBasisStrassen           = -3812115749085297644L;
     public static final long forBasisOrte           	= -2842969054038396748L;
     public static final long forBasisTabStreets			= -3052644153669690816L;

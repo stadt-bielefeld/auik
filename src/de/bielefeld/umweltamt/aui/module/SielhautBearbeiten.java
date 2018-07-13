@@ -164,7 +164,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautProbeModel;
@@ -240,7 +240,7 @@ public class SielhautBearbeiten extends AbstractModul {
     private AtlSielhaut spunkt;
     private AtlProbepkt sprobePkt;
     private BasisObjekt objekt;
-    private BasisLage lage;
+    private Lage lage;
     private BasisAdresse betreiber;
     private BasisAdresse standort;
     private BasisObjektarten art;
@@ -310,7 +310,7 @@ public class SielhautBearbeiten extends AbstractModul {
             getTabelleExportButton().setEnabled(true);
         } else {
             this.objekt = new BasisObjekt();
-            this.lage = new BasisLage();
+            this.lage = new Lage();
             this.betreiber = BasisAdresse.findById(
                 DatabaseConstants.BASIS_BETREIBER_ID_Umweltamt_360x33);
             this.standort = BasisAdresse.findById(
@@ -428,7 +428,7 @@ public class SielhautBearbeiten extends AbstractModul {
 //        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
 //        this.sprobePkt.setAtlSielhaut(this.spunkt);
 
-        this.lage = BasisLage.merge(objekt.getBasisLage());
+        this.lage = Lage.merge(objekt.getBasisLage());
         this.objekt.setBasisLage(lage);
         this.objekt = BasisObjekt.merge(this.objekt);
         this.sprobePkt.setBasisObjekt(this.objekt);

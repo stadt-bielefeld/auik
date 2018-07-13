@@ -22,7 +22,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -63,7 +63,7 @@ public class EditorEinheitenModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        AtlEinheiten einheit = (AtlEinheiten) objectAtRow;
+        Einheiten einheit = (Einheiten) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -89,7 +89,7 @@ public class EditorEinheitenModel extends EditableListTableModel {
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
 		
-		AtlEinheiten tmp = (AtlEinheiten) objectAtRow;
+		Einheiten tmp = (Einheiten) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -105,20 +105,20 @@ public class EditorEinheitenModel extends EditableListTableModel {
             break;        	
         	
 		}
-		AtlEinheiten.merge(tmp);
+		Einheiten.merge(tmp);
 	}
 
 	@Override
 	public Object newObject() {
-		AtlEinheiten tmp = new AtlEinheiten();
+		Einheiten tmp = new Einheiten();
 		tmp.setId(DatabaseQuery.newEinheitenID());
 		return tmp;
 	}
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	AtlEinheiten removedEinheit = (AtlEinheiten) objectAtRow;
-        return AtlEinheiten.delete(removedEinheit);
+    	Einheiten removedEinheit = (Einheiten) objectAtRow;
+        return Einheiten.delete(removedEinheit);
     }
 
     /**
@@ -126,7 +126,7 @@ public class EditorEinheitenModel extends EditableListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public AtlEinheiten getRow(int rowIndex) {
-        return (AtlEinheiten) getObjectAtRow(rowIndex);
+    public Einheiten getRow(int rowIndex) {
+        return (Einheiten) getObjectAtRow(rowIndex);
     }
 }

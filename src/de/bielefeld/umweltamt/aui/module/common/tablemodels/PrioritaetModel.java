@@ -45,7 +45,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -72,7 +72,7 @@ public class PrioritaetModel extends ListTableModel {
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object[] field = (Object[]) objectAtRow;
         switch (columnIndex) {
-            case 0: return ((BasisLage) field[columnIndex]);
+            case 0: return ((Lage) field[columnIndex]);
             case 1: return ((BasisAdresse) field[columnIndex]);
             case 2: return ((String) field[columnIndex]); // Priority
             case 3: return ((BasisSachbearbeiter) field[columnIndex]);

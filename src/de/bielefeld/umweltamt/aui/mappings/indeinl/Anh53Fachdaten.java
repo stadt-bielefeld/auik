@@ -23,17 +23,14 @@
 
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * A class that represents a row in the Anh53Fachdaten database table.<br>
@@ -48,7 +45,7 @@ public class Anh53Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private BasisObjekt basisObjekt;
+    private Objekt objekt;
     private String branche;
     private String verfahren;
     private Date antragsdatum;
@@ -87,18 +84,18 @@ public class Anh53Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh53Fachdaten(
-        Integer id, BasisObjekt basisObjekt, boolean enabled, boolean deleted) {
+        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
         this.id = id;
-        this.basisObjekt = basisObjekt;
+        this.objekt = objekt;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh53Fachdaten(
-        Integer id, BasisObjekt basisObjekt, String branche, String verfahren, Date antragsdatum, Boolean bagatell, Date bagatelldatum, Date genehmigungsdatum, Date genehmigungaufgehoben, Date abnahmedatum, String genehmigungstitel, Boolean genehmigung, Integer durchsatz, Integer gesamtmengeEb, Boolean onlineentsilberung, Boolean abwasser, Date abwasserfrei, Date kleiner200qm, Boolean betriebAbgemeldet, String bemerkungen, Boolean betriebstagebuch, Boolean wasseruhr, Integer spuelwassermenge, Integer spuelwasserverbrauch, Boolean wartungsvertrag, Boolean grgen, String genart, boolean enabled, boolean deleted) {
+        Integer id, Objekt objekt, String branche, String verfahren, Date antragsdatum, Boolean bagatell, Date bagatelldatum, Date genehmigungsdatum, Date genehmigungaufgehoben, Date abnahmedatum, String genehmigungstitel, Boolean genehmigung, Integer durchsatz, Integer gesamtmengeEb, Boolean onlineentsilberung, Boolean abwasser, Date abwasserfrei, Date kleiner200qm, Boolean betriebAbgemeldet, String bemerkungen, Boolean betriebstagebuch, Boolean wasseruhr, Integer spuelwassermenge, Integer spuelwasserverbrauch, Boolean wartungsvertrag, Boolean grgen, String genart, boolean enabled, boolean deleted) {
         this.id = id;
-        this.basisObjekt = basisObjekt;
+        this.objekt = objekt;
         this.branche = branche;
         this.verfahren = verfahren;
         this.antragsdatum = antragsdatum;
@@ -137,12 +134,12 @@ public class Anh53Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public BasisObjekt getBasisObjekt() {
-        return this.basisObjekt;
+    public Objekt getObjekt() {
+        return this.objekt;
     }
 
-    public void setBasisObjekt(BasisObjekt basisObjekt) {
-        this.basisObjekt = basisObjekt;
+    public void setObjekt(Objekt objekt) {
+        this.objekt = objekt;
     }
 
     public String getBranche() {
@@ -382,7 +379,7 @@ public class Anh53Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");			
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
         buffer.append("branche").append("='").append(getBranche()).append("' ");			
         buffer.append("verfahren").append("='").append(getVerfahren()).append("' ");			
         buffer.append("antragsdatum").append("='").append(getAntragsdatum()).append("' ");			
@@ -476,7 +473,7 @@ public class Anh53Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh53Fachdaten copy) {
         this.id = copy.getId();            
-        this.basisObjekt = copy.getBasisObjekt();            
+        this.objekt = copy.getObjekt();            
         this.branche = copy.getBranche();            
         this.verfahren = copy.getVerfahren();            
         this.antragsdatum = copy.getAntragsdatum();            
@@ -549,18 +546,5 @@ public class Anh53Fachdaten  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-    public static Anh53Fachdaten findByObjektId(java.lang.Integer id){
-        log.debug("Getting Anh53Fachdaten instance with connected BasisObjekt with id: " + id);
-        /*List<Anh53Fachdaten> all = Anh53Fachdaten.getAll();
-        for(Anh53Fachdaten i : all){
-            if(i.getBasisObjekt().getId().equals(id)){
-                return (Anh53Fachdaten) new DatabaseAccess().get(Anh53Fachdaten.class, i.getId());
-            }
-        }
-        return null;*/
-        BasisObjekt objekt = (BasisObjekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
-        //BasisObjekt.findById(id);
-        Set<Anh53Fachdaten> list = objekt.getAnh53Fachdatens();
-        return list.iterator().next();
-    }
+
 }

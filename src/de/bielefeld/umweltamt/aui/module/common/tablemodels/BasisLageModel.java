@@ -26,11 +26,11 @@ import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsStandortgghwsg;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 
@@ -122,7 +122,7 @@ public class BasisLageModel extends ListTableModel
 	 * Filtert den Tabelleninhalt nach einem Standort.
 	 * 
 	 * @param std
-	 *            BasisLage
+	 *            Lage
 	 */
 	public void filterList(BasisMapAdresseLage std)
 	{

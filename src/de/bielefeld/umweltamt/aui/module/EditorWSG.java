@@ -66,7 +66,7 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsWassereinzugsgebiete;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorWSGModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;

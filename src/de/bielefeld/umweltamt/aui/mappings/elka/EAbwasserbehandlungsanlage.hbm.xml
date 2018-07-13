@@ -1,60 +1,61 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29.10.2015 09:42:26 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.elka.EAbwasserbehandlungsanlage" table="e_abwasserbehandlungsanlage" schema="elka" lazy="false">
-        <id name="nr" type="java.lang.Integer">
-            <column name="nr" />
-            <generator class="assigned" />
-        </id>
-        <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
-  			<column name="nr" />
-  		</property>
-        <many-to-one name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka.EStandort" lazy="false" fetch="select">
-            <column name="standort_nr" />
-        </many-to-one>
-        <many-to-one name="adresseByStoAdrNr" class="de.bielefeld.umweltamt.aui.mappings.elka.EAdresse" lazy="false" fetch="select">
-            <column name="sto_adr_nr" />
-        </many-to-one>
-        <many-to-one name="adresseByBetreibAdrNr" class="de.bielefeld.umweltamt.aui.mappings.elka.EAdresse" lazy="false" fetch="select">
-            <column name="betreib_adr_nr" />
-        </many-to-one>
-        <property name="bemerkung" type="java.lang.String">
-            <column name="bemerkung" />
-        </property>
-        <property name="e32" type="java.lang.Float">
-            <column name="e32" precision="8" scale="8" />
-        </property>
-        <property name="n32" type="java.lang.Float">
-            <column name="n32" precision="8" scale="8" />
-        </property>
-        <property name="wartungsvertragTog" type="java.lang.Boolean">
-            <column name="wartungsvertrag_tog" />
-        </property>
-        <property name="genehmpflichtigTog" type="java.lang.Boolean">
-            <column name="genehmpflichtig_tog" />
-        </property>
-        <property name="einzelabnahmeTog" type="java.lang.Boolean">
-            <column name="einzelabnahme_tog" />
-        </property>
-        <property name="bezeichnung" type="java.lang.String">
-            <column name="bezeichnung" />
-        </property>
-        <property name="aktualDat" type="java.util.Date">
-            <column name="aktual_dat" length="29" />
-        </property>
-        <property name="erstellDat" type="java.util.Date">
-            <column name="erstell_dat" length="29" />
-        </property>
-        <property name="herkunft" type="java.lang.String">
-            <column name="herkunft" />
-        </property>
-        <set name="wasserrechts" table="e_wasserrecht" lazy="false" fetch="select">
-  		  <key>
-  		    <column name="ref_nr"></column>
-  	      </key>
-  	      <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.EWasserrecht"/>
-        </set>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.EAbwasserbehandlungsanlage" table="e_abwasserbehandlungsanlage" schema="elka" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.elka.EAbwasserbehandlungsanlageId">
+            <key-property name="nr" type="java.lang.Integer">
+                <column name="nr" />
+            </key-property>
+            <key-property name="lageid" type="java.lang.Integer">
+                <column name="lageid" />
+            </key-property>
+            <key-property name="standortNr" type="java.lang.Integer">
+                <column name="standort_nr" />
+            </key-property>
+            <key-property name="stoAdrNr" type="java.lang.Integer">
+                <column name="sto_adr_nr" />
+            </key-property>
+            <key-property name="betreibAdrNr" type="java.lang.Integer">
+                <column name="betreib_adr_nr" />
+            </key-property>
+            <key-property name="betreiberid" type="java.lang.Integer">
+                <column name="betreiberid" />
+            </key-property>
+            <key-property name="bezeichnung" type="java.lang.String">
+                <column name="bezeichnung" />
+            </key-property>
+            <key-property name="e32" type="java.lang.Integer">
+                <column name="e32" />
+            </key-property>
+            <key-property name="n32" type="java.lang.Integer">
+                <column name="n32" />
+            </key-property>
+            <key-property name="wartungsvertragTog" type="java.lang.Boolean">
+                <column name="wartungsvertrag_tog" />
+            </key-property>
+            <key-property name="genehmpflichtigTog" type="java.lang.Boolean">
+                <column name="genehmpflichtig_tog" />
+            </key-property>
+            <key-property name="verfahrenNr" type="java.lang.Integer">
+                <column name="verfahren_nr" />
+            </key-property>
+            <key-property name="einzelabnahmeTog" type="java.lang.Boolean">
+                <column name="einzelabnahme_tog" />
+            </key-property>
+            <key-property name="bemerkung" type="java.lang.String">
+                <column name="bemerkung" />
+            </key-property>
+            <key-property name="aktualDat" type="java.util.Date">
+                <column name="aktual_dat" length="29" />
+            </key-property>
+            <key-property name="erstellDat" type="java.util.Date">
+                <column name="erstell_dat" length="29" />
+            </key-property>
+            <key-property name="herkunft" type="java.lang.String">
+                <column name="herkunft" />
+            </key-property>
+        </composite-id>
     </class>
 </hibernate-mapping>

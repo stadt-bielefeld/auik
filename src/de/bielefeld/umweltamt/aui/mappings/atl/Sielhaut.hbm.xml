@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut" table="sielhaut" schema="labor" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="messstelle" class="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" fetch="select">
+            <column name="probepktid" />
+        </many-to-one>
+        <property name="bezeichnung" type="java.lang.String">
+            <column name="bezeichnung" />
+        </property>
+        <property name="haltungsnr" type="java.lang.String">
+            <column name="haltungsnr" />
+        </property>
+        <property name="alarmplannr" type="java.lang.String">
+            <column name="alarmplannr" />
+        </property>
+        <property name="entgeb" type="java.lang.String">
+            <column name="entgeb" />
+        </property>
+        <property name="e32" type="java.lang.Double">
+            <column name="e32" precision="17" scale="17" />
+        </property>
+        <property name="n32" type="java.lang.Double">
+            <column name="n32" precision="17" scale="17" />
+        </property>
+        <property name="lage" type="java.lang.String">
+            <column name="lage" />
+        </property>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <property name="twabfluss" type="java.lang.String">
+            <column name="twabfluss" />
+        </property>
+        <property name="bsb" type="java.lang.String">
+            <column name="bsb" />
+        </property>
+        <property name="ew" type="java.lang.String">
+            <column name="ew" />
+        </property>
+        <property name="gebiet" type="java.lang.String">
+            <column name="gebiet" />
+        </property>
+        <property name="PSielhaut" type="java.lang.Boolean">
+            <column name="p_sielhaut" />
+        </property>
+        <property name="PAlarmplan" type="java.lang.Boolean">
+            <column name="p_alarmplan" />
+        </property>
+        <property name="PNachprobe" type="java.lang.Boolean">
+            <column name="p_nachprobe" />
+        </property>
+        <property name="schlammprobe" type="java.lang.Boolean">
+            <column name="schlammprobe" />
+        </property>
+        <property name="PFirmenprobe" type="java.lang.Boolean">
+            <column name="p_firmenprobe" />
+        </property>
+        <property name="theGeom" type="serializable">
+            <column name="the_geom" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

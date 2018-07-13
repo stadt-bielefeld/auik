@@ -132,7 +132,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
 import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
@@ -1541,7 +1541,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             probe.getAtlProbepkt().getBasisObjekt().getBasisAdresse();
         BasisAdresse basisStandort =
             probe.getAtlProbepkt().getBasisObjekt().getBasisStandort();
-        BasisLage basisLage =
+        Lage basisLage =
                 probe.getAtlProbepkt().getBasisObjekt().getBasisLage();
 
         HashMap<String, Object> params = new HashMap<String, Object>();

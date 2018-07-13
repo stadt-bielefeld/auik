@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" table="messstelle" schema="labor" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
+            <column name="objektid" not-null="true" unique="true" />
+        </many-to-one>
+        <many-to-one name="sachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter" fetch="select">
+            <column name="sachbearbeiter" />
+        </many-to-one>
+        <many-to-one name="klaeranlage" class="de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage" fetch="select">
+            <column name="ka_id" />
+        </many-to-one>
+        <many-to-one name="probeart" class="de.bielefeld.umweltamt.aui.mappings.atl.Probeart" fetch="select">
+            <column name="art_id" />
+        </many-to-one>
+        <property name="beschreibung" type="java.lang.String">
+            <column name="beschreibung" />
+        </property>
+        <property name="nrProbepkt" type="java.lang.Integer">
+            <column name="nr_probepkt" />
+        </property>
+        <property name="firmenId" type="java.lang.Integer">
+            <column name="firmen_id" />
+        </property>
+        <property name="branche" type="java.lang.String">
+            <column name="branche" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="probenahmes" table="probenahme" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.Probenahme" />
+        </set>
+        <set name="referenzsForQMsstNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="q_msst_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+        </set>
+        <set name="referenzsForZMsstNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="z_msst_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+        </set>
+        <set name="sielhauts" table="sielhaut" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="probepktid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut" />
+        </set>
+    </class>
+</hibernate-mapping>

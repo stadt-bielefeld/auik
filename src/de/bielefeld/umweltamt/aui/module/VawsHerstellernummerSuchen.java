@@ -42,7 +42,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsFachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.HerstellNrSuchenModel;

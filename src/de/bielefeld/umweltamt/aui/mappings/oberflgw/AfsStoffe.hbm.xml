@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe" table="afs_stoffe" schema="oberflgw" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffeId">
+            <key-property name="anfallstellenNr" type="long">
+                <column name="anfallstellen_nr" />
+            </key-property>
+            <key-property name="stoffNr" type="long">
+                <column name="stoff_nr" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="anfallstelle" class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" update="false" insert="false" fetch="select">
+            <column name="anfallstellen_nr" not-null="true" />
+        </many-to-one>
+        <property name="produkt" type="java.lang.String">
+            <column name="produkt" length="15" />
+        </property>
+    </class>
+</hibernate-mapping>

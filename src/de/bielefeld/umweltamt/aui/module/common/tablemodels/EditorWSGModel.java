@@ -22,7 +22,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -63,7 +63,7 @@ public class EditorWSGModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        VawsWassereinzugsgebiete wsg = (VawsWassereinzugsgebiete) objectAtRow;
+        Wassereinzugsgebiet wsg = (Wassereinzugsgebiet) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -89,7 +89,7 @@ public class EditorWSGModel extends EditableListTableModel {
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
 		
-		VawsWassereinzugsgebiete tmp = (VawsWassereinzugsgebiete) objectAtRow;
+		Wassereinzugsgebiet tmp = (Wassereinzugsgebiet) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -105,20 +105,20 @@ public class EditorWSGModel extends EditableListTableModel {
             break;        	
         	
 		}
-		VawsWassereinzugsgebiete.merge(tmp);
+		Wassereinzugsgebiet.merge(tmp);
 	}
 
 	@Override
 	public Object newObject() {
-		VawsWassereinzugsgebiete tmp = new VawsWassereinzugsgebiete();
+		Wassereinzugsgebiet tmp = new Wassereinzugsgebiet();
 		tmp.setId(DatabaseQuery.newWSGID());
 		return tmp;
 	}
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	VawsWassereinzugsgebiete removedWSG = (VawsWassereinzugsgebiete) objectAtRow;
-        return VawsWassereinzugsgebiete.delete(removedWSG);
+    	Wassereinzugsgebiet removedWSG = (Wassereinzugsgebiet) objectAtRow;
+        return Wassereinzugsgebiet.delete(removedWSG);
     }
 
     /**
@@ -126,7 +126,7 @@ public class EditorWSGModel extends EditableListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public VawsWassereinzugsgebiete getRow(int rowIndex) {
-        return (VawsWassereinzugsgebiete) getObjectAtRow(rowIndex);
+    public Wassereinzugsgebiet getRow(int rowIndex) {
+        return (Wassereinzugsgebiet) getObjectAtRow(rowIndex);
     }
 }

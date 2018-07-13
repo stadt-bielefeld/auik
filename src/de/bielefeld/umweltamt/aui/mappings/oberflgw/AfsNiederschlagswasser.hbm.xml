@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" table="afs_niederschlagswasser" schema="oberflgw" optimistic-lock="version">
+        <id name="nr" type="long">
+            <column name="nr" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="anfallstelle" class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" fetch="select">
+            <column name="anfallstellen_nr" />
+        </many-to-one>
+        <many-to-one name="entwaesserungsgrundstueck" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck" fetch="select">
+            <column name="entw_grund_nr" />
+        </many-to-one>
+        <property name="lfdNr" type="java.lang.Integer">
+            <column name="lfd_nr" />
+        </property>
+        <property name="bezeichnung" type="java.lang.String">
+            <column name="bezeichnung" length="80" />
+        </property>
+        <property name="befFlaeche" type="java.lang.Integer">
+            <column name="bef_flaeche" />
+        </property>
+        <property name="nwHerBereichOpt" type="java.lang.Integer">
+            <column name="nw_her_bereich_opt" />
+        </property>
+        <property name="abflussmenge" type="big_decimal">
+            <column name="abflussmenge" precision="11" />
+        </property>
+        <set name="referenzsForQNwAfsNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="q_nw_afs_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+        </set>
+        <set name="referenzsForZNwAfsNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="z_nw_afs_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+        </set>
+    </class>
+</hibernate-mapping>

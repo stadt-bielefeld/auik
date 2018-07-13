@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung" table="sb_entlastung" schema="oberflgw" optimistic-lock="version">
+        <id name="nr" type="long">
+            <column name="nr" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="sonderbauwerk" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk" fetch="select">
+            <column name="sb_nr" not-null="true" />
+        </many-to-one>
+        <property name="lfdNr" type="java.lang.Integer">
+            <column name="lfd_nr" />
+        </property>
+        <property name="typOpt" type="java.lang.Integer">
+            <column name="typ_opt" />
+        </property>
+        <property name="tauchwandTog" type="boolean">
+            <column name="tauchwand_tog" not-null="true" />
+        </property>
+        <property name="sonstigeBehTog" type="boolean">
+            <column name="sonstige_beh_tog" not-null="true" />
+        </property>
+        <property name="ausbUeberlaufOpt" type="java.lang.Integer">
+            <column name="ausb_ueberlauf_opt" />
+        </property>
+        <property name="sonstigeBehandlung" type="java.lang.String">
+            <column name="sonstige_behandlung" length="80" />
+        </property>
+        <property name="sbNichtInNrwTog" type="boolean">
+            <column name="sb_nicht_in_nrw_tog" not-null="true" />
+        </property>
+        <property name="kaNichtInNrwTog" type="boolean">
+            <column name="ka_nicht_in_nrw_tog" not-null="true" />
+        </property>
+        <property name="ausbUeberlaufSonstiges" type="java.lang.String">
+            <column name="ausb_ueberlauf_sonstiges" length="80" />
+        </property>
+        <set name="referenzsForQEntlNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="q_entl_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+        </set>
+        <set name="referenzsForZEntlNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="z_entl_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+        </set>
+    </class>
+</hibernate-mapping>

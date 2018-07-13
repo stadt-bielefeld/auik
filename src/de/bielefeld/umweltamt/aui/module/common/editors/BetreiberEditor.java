@@ -62,14 +62,14 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsStandortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsWirtschaftszweige;
 import de.bielefeld.umweltamt.aui.module.BasisAdresseNeu;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandorteModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -131,7 +131,7 @@ public class BetreiberEditor extends AbstractBaseEditor
     private JCheckBox daten_esatzungCheck;
     private JCheckBox daten_whgCheck;
 	
-	private BasisLage lage = null;
+	private Lage lage = null;
 	private BasisMapAdresseLage mapLage = null;
 	private BasisGemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;

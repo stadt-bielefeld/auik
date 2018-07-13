@@ -1,41 +1,40 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29.10.2015 09:42:26 by Hibernate Tools 3.4.0.CR1 -->
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
- <class
-  name="de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergeb"
-  schema="elka" table="e_probenahme_ueberwachungsergeb">
-  <id name="nr" type="java.lang.Integer">
-   <column name="nr"/>
-   <generator class="assigned"/>
-  </id>
-  <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
-  	<column name="nr" />
-  </property>
-  <property generated="never" lazy="false" name="stoffNr" type="java.lang.Integer">
-   <column name="stoff_nr"/>
-  </property>
-  <property generated="never" lazy="false" name="gruppeDevId" type="java.lang.String">
-   <column length="3" name="gruppe_dev_id"/>
-  </property>
-  <property generated="never" lazy="false" name="regelwerkId" type="java.lang.String">
-   <column length="2" name="regelwerk_id"/>
-  </property>
-  <property generated="never" lazy="false" name="variantenId" type="java.lang.String">
-   <column length="1" name="varianten_id"/>
-  </property>
-  <property generated="never" lazy="false" name="trennNrOpt" type="java.lang.Integer">
-   <column length="3" name="trenn_nr_opt"/>
-  </property>
-  <property generated="never" lazy="false" name="messergebnisTextOpt" type="java.lang.Integer">
-   <column name="messergebnis_text_opt"/>
-  </property>
-  <property generated="never" lazy="false" name="messergebnis" type="java.lang.Float">
-   <column name="wert" precision="8" scale="8"/>
-  </property>
-  <property generated="never" lazy="false" name="masseinheitenNr" type="java.lang.Integer">
-   <column name="id_elka"/>
-  </property>
- </class>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergeb" table="e_probenahme_ueberwachungsergeb" schema="elka" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergebId">
+            <key-property name="nr" type="java.lang.Integer">
+                <column name="nr" />
+            </key-property>
+            <key-property name="probenahmeNr" type="java.lang.Integer">
+                <column name="probenahme_nr" />
+            </key-property>
+            <key-property name="stoffNr" type="java.lang.Integer">
+                <column name="stoff_nr" />
+            </key-property>
+            <key-property name="gruppeDevId" type="java.lang.String">
+                <column name="gruppe_dev_id" length="3" />
+            </key-property>
+            <key-property name="regelwerkId" type="java.lang.String">
+                <column name="regelwerk_id" length="2" />
+            </key-property>
+            <key-property name="variantenId" type="java.lang.String">
+                <column name="varianten_id" length="1" />
+            </key-property>
+            <key-property name="trennNrOpt" type="java.lang.String">
+                <column name="trenn_nr_opt" length="3" />
+            </key-property>
+            <key-property name="messergebnisTextOpt" type="java.lang.Integer">
+                <column name="messergebnis_text_opt" />
+            </key-property>
+            <key-property name="wert" type="big_decimal">
+                <column name="wert" precision="131089" scale="0" />
+            </key-property>
+            <key-property name="idElka" type="java.lang.Integer">
+                <column name="id_elka" />
+            </key-property>
+        </composite-id>
+    </class>
 </hibernate-mapping>

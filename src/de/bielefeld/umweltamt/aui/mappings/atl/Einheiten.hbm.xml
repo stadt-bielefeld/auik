@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.Einheiten" table="einheiten" schema="labor" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="bezeichnung" type="java.lang.String">
+            <column name="bezeichnung" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="deaEinheitenMasseinheitenNr" type="java.lang.Integer">
+            <column name="dea_einheiten_masseinheiten_nr" />
+        </property>
+        <set name="analysepositions" table="analyseposition" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="einheiten_id" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition" />
+        </set>
+        <set name="metaParameters" table="meta_parameter" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="einheit_id" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.MetaParameter" />
+        </set>
+    </class>
+</hibernate-mapping>

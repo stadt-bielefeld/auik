@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" table="referenz" schema="elka" optimistic-lock="version">
+        <id name="nr" type="java.lang.Integer">
+            <column name="nr" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="abaByZAbaNr" class="de.bielefeld.umweltamt.aui.mappings.elka.Aba" fetch="select">
+            <column name="z_aba_nr" />
+        </many-to-one>
+        <many-to-one name="abaByQAbaNr" class="de.bielefeld.umweltamt.aui.mappings.elka.Aba" fetch="select">
+            <column name="q_aba_nr" />
+        </many-to-one>
+        <many-to-one name="anfallstelleByZAfsNr" class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" fetch="select">
+            <column name="z_afs_nr" />
+        </many-to-one>
+        <many-to-one name="anfallstelleByQAfsNr" class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" fetch="select">
+            <column name="q_afs_nr" />
+        </many-to-one>
+        <many-to-one name="einleitungsstelleByQElsNr" class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" fetch="select">
+            <column name="q_els_nr" />
+        </many-to-one>
+        <many-to-one name="einleitungsstelleByZElsNr" class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" fetch="select">
+            <column name="z_els_nr" />
+        </many-to-one>
+        <many-to-one name="klaeranlageByQKaNr" class="de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage" fetch="select">
+            <column name="q_ka_nr" />
+        </many-to-one>
+        <many-to-one name="klaeranlageByZKaNr" class="de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage" fetch="select">
+            <column name="z_ka_nr" />
+        </many-to-one>
+        <many-to-one name="messstelleByQMsstNr" class="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" fetch="select">
+            <column name="q_msst_nr" />
+        </many-to-one>
+        <many-to-one name="messstelleByZMsstNr" class="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" fetch="select">
+            <column name="z_msst_nr" />
+        </many-to-one>
+        <many-to-one name="afsNiederschlagswasserByQNwAfsNr" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" fetch="select">
+            <column name="q_nw_afs_nr" />
+        </many-to-one>
+        <many-to-one name="afsNiederschlagswasserByZNwAfsNr" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" fetch="select">
+            <column name="z_nw_afs_nr" />
+        </many-to-one>
+        <many-to-one name="sbEntlastungByQEntlNr" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung" fetch="select">
+            <column name="q_entl_nr" />
+        </many-to-one>
+        <many-to-one name="sbEntlastungByZEntlNr" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung" fetch="select">
+            <column name="z_entl_nr" />
+        </many-to-one>
+        <many-to-one name="sonderbauwerkByQSbNr" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk" fetch="select">
+            <column name="q_sb_nr" />
+        </many-to-one>
+        <many-to-one name="sonderbauwerkByZSbNr" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk" fetch="select">
+            <column name="z_sb_nr" />
+        </many-to-one>
+        <property name="fsTog" type="java.lang.Boolean">
+            <column name="fs_tog" />
+        </property>
+        <property name="standortNr" type="java.lang.Integer">
+            <column name="standort_nr" />
+        </property>
+        <property name="QKkaNr" type="java.lang.Integer">
+            <column name="q_kka_nr" />
+        </property>
+        <property name="ZKkaNr" type="java.lang.Integer">
+            <column name="z_kka_nr" />
+        </property>
+        <property name="aktualDat" type="java.util.Date">
+            <column name="aktual_dat" length="13" />
+        </property>
+        <property name="erstellDat" type="java.util.Date">
+            <column name="erstell_dat" length="13" />
+        </property>
+    </class>
+</hibernate-mapping>

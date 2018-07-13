@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.ViewBasisStandort" table="view_basis_standort" schema="basis" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.basis.ViewBasisStandortId">
+            <key-property name="id" type="java.lang.Integer">
+                <column name="id" />
+            </key-property>
+            <key-property name="adresse" type="java.lang.String">
+                <column name="adresse" />
+            </key-property>
+            <key-property name="strasse" type="java.lang.String">
+                <column name="strasse" />
+            </key-property>
+            <key-property name="hausnr" type="java.lang.Integer">
+                <column name="hausnr" />
+            </key-property>
+            <key-property name="hausnrzus" type="java.lang.String">
+                <column name="hausnrzus" />
+            </key-property>
+            <key-property name="rechtswert" type="java.lang.Float">
+                <column name="rechtswert" precision="8" scale="8" />
+            </key-property>
+            <key-property name="hochwert" type="java.lang.Float">
+                <column name="hochwert" precision="8" scale="8" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

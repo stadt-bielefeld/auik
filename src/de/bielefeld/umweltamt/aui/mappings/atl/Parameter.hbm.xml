@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.Parameter" table="parameter" schema="labor" optimistic-lock="version">
+        <id name="ordnungsbegriff" type="java.lang.String">
+            <column name="ordnungsbegriff" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="parametergruppen" class="de.bielefeld.umweltamt.aui.mappings.atl.Parametergruppen" fetch="select">
+            <column name="parametergruppe_id" />
+        </many-to-one>
+        <property name="analyseverfahren" type="java.lang.String">
+            <column name="analyseverfahren" />
+        </property>
+        <property name="bezeichnung" type="java.lang.String">
+            <column name="bezeichnung" />
+        </property>
+        <property name="wirdgemessenineinheit" type="java.lang.Integer">
+            <column name="wirdgemessenineinheit" />
+        </property>
+        <property name="grenzwert" type="java.lang.Double">
+            <column name="grenzwert" precision="17" scale="17" />
+        </property>
+        <property name="grenzwertname" type="java.lang.String">
+            <column name="grenzwertname" />
+        </property>
+        <property name="sielhautGw" type="java.lang.Double">
+            <column name="sielhaut_gw" precision="17" scale="17" />
+        </property>
+        <property name="klaerschlammGw" type="java.lang.Double">
+            <column name="klaerschlamm_gw" precision="17" scale="17" />
+        </property>
+        <property name="preisfueranalyse" type="java.lang.Double">
+            <column name="preisfueranalyse" precision="17" scale="17" />
+        </property>
+        <property name="einzelnbeauftragbar" type="java.lang.Boolean">
+            <column name="einzelnbeauftragbar" />
+        </property>
+        <property name="kennzeichnung" type="java.lang.String">
+            <column name="kennzeichnung" />
+        </property>
+        <property name="konservierung" type="java.lang.String">
+            <column name="konservierung" />
+        </property>
+        <property name="reihenfolge" type="java.lang.Integer">
+            <column name="reihenfolge" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="deaStoffeStoffNr" type="java.lang.Integer">
+            <column name="dea_stoffe_stoff_nr" />
+        </property>
+        <set name="metaParameters" table="meta_parameter" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ordnungsbegriff" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.MetaParameter" />
+        </set>
+        <set name="analysepositions" table="analyseposition" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="parameter_id" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition" />
+        </set>
+    </class>
+</hibernate-mapping>

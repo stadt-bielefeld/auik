@@ -35,7 +35,7 @@ import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
+import de.bielefeld.umweltamt.aui.mappings.awsv.VawsAnlagenchrono;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**

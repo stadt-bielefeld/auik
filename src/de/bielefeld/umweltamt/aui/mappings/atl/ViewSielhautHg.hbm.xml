@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautHg" table="view_sielhaut_hg" schema="labor" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautHgId">
+            <key-property name="id" type="java.lang.Integer">
+                <column name="id" />
+            </key-property>
+            <key-property name="wert" type="java.lang.Float">
+                <column name="wert" precision="8" scale="8" />
+            </key-property>
+            <key-property name="kennummer" type="java.lang.String">
+                <column name="kennummer" />
+            </key-property>
+            <key-property name="datumDerEntnahme" type="java.util.Date">
+                <column name="datum_der_entnahme" length="29" />
+            </key-property>
+            <key-property name="PSielhaut" type="java.lang.Boolean">
+                <column name="p_sielhaut" />
+            </key-property>
+            <key-property name="PNachprobe" type="java.lang.Boolean">
+                <column name="p_nachprobe" />
+            </key-property>
+            <key-property name="PFirmenprobe" type="java.lang.Boolean">
+                <column name="p_firmenprobe" />
+            </key-property>
+            <key-property name="deleted" type="java.lang.Boolean">
+                <column name="_deleted" />
+            </key-property>
+            <key-property name="e32" type="java.lang.Double">
+                <column name="e32" precision="17" scale="17" />
+            </key-property>
+            <key-property name="n32" type="java.lang.Double">
+                <column name="n32" precision="17" scale="17" />
+            </key-property>
+            <key-property name="theGeom" type="serializable">
+                <column name="the_geom" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.Probenahme" table="probenahme" schema="labor" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="sachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter" fetch="select">
+            <column name="sachbearbeiter" />
+        </many-to-one>
+        <many-to-one name="messstelle" class="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" fetch="select">
+            <column name="objektid" />
+        </many-to-one>
+        <many-to-one name="status" class="de.bielefeld.umweltamt.aui.mappings.atl.Status" fetch="select">
+            <column name="status" />
+        </many-to-one>
+        <property name="kennummer" type="java.lang.String">
+            <column name="kennummer" />
+        </property>
+        <property name="art" type="java.lang.String">
+            <column name="art" />
+        </property>
+        <property name="datumDerEntnahme" type="java.util.Date">
+            <column name="datum_der_entnahme" length="29" />
+        </property>
+        <property name="zeitAnfang" type="time">
+            <column name="zeit_anfang" length="15" />
+        </property>
+        <property name="bisDatum" type="java.util.Date">
+            <column name="bis_datum" length="29" />
+        </property>
+        <property name="zeitDerEntnahmen" type="java.lang.String">
+            <column name="zeit_der_entnahmen" />
+        </property>
+        <property name="einwaage" type="java.lang.Float">
+            <column name="einwaage" precision="8" scale="8" />
+        </property>
+        <property name="VM3" type="java.lang.String">
+            <column name="v_m3" />
+        </property>
+        <property name="fahrer" type="java.lang.String">
+            <column name="fahrer" />
+        </property>
+        <property name="objektNr" type="java.lang.String">
+            <column name="objekt_nr" />
+        </property>
+        <property name="datumIcp" type="java.util.Date">
+            <column name="datum_icp" length="29" />
+        </property>
+        <property name="sonderparameter" type="java.lang.String">
+            <column name="sonderparameter" />
+        </property>
+        <property name="bemerkung" type="java.lang.String">
+            <column name="bemerkung" />
+        </property>
+        <property name="an360x11" type="java.util.Date">
+            <column name="an_360x11" length="29" />
+        </property>
+        <property name="ueberschreitung" type="java.lang.String">
+            <column name="ueberschreitung" />
+        </property>
+        <property name="anzahlbeteiligte" type="java.lang.Integer">
+            <column name="anzahlbeteiligte" />
+        </property>
+        <property name="uhrzeitbeginn" type="java.lang.String">
+            <column name="uhrzeitbeginn" />
+        </property>
+        <property name="uhrzeitende" type="java.lang.String">
+            <column name="uhrzeitende" />
+        </property>
+        <property name="fahrtzeit" type="java.lang.String">
+            <column name="fahrtzeit" />
+        </property>
+        <property name="bescheid" type="java.util.Date">
+            <column name="bescheid" length="29" />
+        </property>
+        <property name="kosten" type="java.lang.Double">
+            <column name="kosten" precision="17" scale="17" />
+        </property>
+        <property name="massnahmen" type="java.lang.String">
+            <column name="massnahmen" />
+        </property>
+        <property name="bezeichnung" type="java.lang.String">
+            <column name="bezeichnung" />
+        </property>
+        <property name="uschivorg" type="java.lang.Integer">
+            <column name="uschivorg" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="qbAusschliessen" type="java.lang.Boolean">
+            <column name="qb_ausschliessen" />
+        </property>
+        <set name="analysepositions" table="analyseposition" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="probenahme_id" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition" />
+        </set>
+    </class>
+</hibernate-mapping>

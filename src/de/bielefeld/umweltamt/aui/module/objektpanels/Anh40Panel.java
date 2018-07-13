@@ -52,7 +52,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
@@ -565,7 +565,7 @@ public class Anh40Panel extends JPanel {
                                 origin);
 
                             if (row != -1) {
-                                BasisObjektverknuepfung obj = Anh40Panel.this.objektVerknuepfungModel
+                                Objektverknuepfung obj = Anh40Panel.this.objektVerknuepfungModel
                                     .getRow(row);
                                 if (obj.getBasisObjektByIstVerknuepftMit()
                                     .getId().intValue() != Anh40Panel.this.hauptModul
@@ -646,7 +646,7 @@ public class Anh40Panel extends JPanel {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                         && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = Anh40Panel.this.objektVerknuepfungModel
+                        Objektverknuepfung verknuepfung = Anh40Panel.this.objektVerknuepfungModel
                             .getRow(row);
                         if (GUIManager.getInstance().showQuestion(
                             "Soll die Verknüpfung wirklich gelöscht werden?\n"

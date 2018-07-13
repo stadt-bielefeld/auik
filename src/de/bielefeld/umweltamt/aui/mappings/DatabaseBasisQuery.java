@@ -36,24 +36,22 @@ import org.hibernate.transform.Transformers;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.SettingsManager;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 
@@ -74,11 +72,11 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	/* ********************************************************************** */
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisAdresse */
+	/* Queries for package BASIS : class Adresse */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Get all BasisAdresse with a given search string in the selected
+	 * Get all Adresse with a given search string in the selected
 	 * property that contain a Betreiber. <br>
 	 * If property is <code>null</code>, we search in all three properties.
 	 * 
@@ -86,18 +84,18 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 *            Name of the property
 	 * @param search
 	 *            Search string
-	 * @return <code>List&lt;BasisAdresse&gt;</code> List of BasisAdresse
+	 * @return <code>List&lt;Adresse&gt;</code> List of Adresse
 	 *         with the given search string in the given property
 	 */
-	public static List<BasisAdresse> getBasisAdresse(String property,
+	public static List<Adresse> getAdresse(String property,
 		String search)
 	{
 
 		String modSearch = search.trim().toLowerCase() + "%";
 		log.debug("Suche nach '" + modSearch + "' (" + property + ").");
 
-        String query =  "SELECT DISTINCT adresse " + 
-                        "FROM BasisAdresse as adresse JOIN adresse.basisObjekts objekt ";
+        String query =  "SELECT DISTINCT Adresse " + 
+                        "FROM Adresse as adresse JOIN adresse.basisObjekts objekt ";
         if (property == null)
 		{
             query += "WHERE LOWER(adresse.betrname) like '" + modSearch + "' OR LOWER(betranrede) like '" + modSearch + "' OR LOWER(betrnamezus) like '" + modSearch + "'";
@@ -125,13 +123,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	}
 
 	/**
-	 * Get a nicely formatted street and house number for a BasisAdresse
+	 * Get a nicely formatted street and house number for a Adresse
 	 * 
 	 * @param betreiber
-	 *            BasisAdresse
+	 *            Adresse
 	 * @return String
 	 */
-	public static String getBetriebsgrundstueck(BasisAdresse betreiber)
+	public static String getBetriebsgrundstueck(Adresse betreiber)
 	{
 		String strasse = betreiber.getStrasse();
 		Integer hausnr = betreiber.getHausnr();
@@ -145,10 +143,10 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 * Get a formatted string for a BasisStandortAdresse
 	 * 
 	 * @param standort
-	 *            BasisAdresse
+	 *            Adresse
 	 * @return String
 	 */
-	public static String getStandortString(BasisAdresse standort)
+	public static String getStandortString(Adresse standort)
 	{
 		String strasse = standort.getStrasse();
 		Integer hausnr = standort.getHausnr();
@@ -160,55 +158,55 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisGemarkung */
+	/* Queries for package BASIS : class Gemarkung */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static BasisGemarkung[] gemarkungen = null;
+	private static Gemarkung[] gemarkungen = null;
 
 	/**
-	 * Get an array with all <code>BasisGemarkung</code>en
+	 * Get an array with all <code>Gemarkung</code>en
 	 * 
-	 * @return <code>BasisGemarkung[]</code>
+	 * @return <code>Gemarkung[]</code>
 	 */
-	public static BasisGemarkung[] getBasisGemarkungen()
+	public static Gemarkung[] getGemarkungen()
 	{
 		if (DatabaseBasisQuery.gemarkungen == null)
 		{
 			DatabaseBasisQuery.gemarkungen = DatabaseQuery.getOrderedAll(
-																			new BasisGemarkung())
-					.toArray(new BasisGemarkung[0]);
+																			new Gemarkung())
+					.toArray(new Gemarkung[0]);
 		}
 		return DatabaseBasisQuery.gemarkungen;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisGemarkung */
+	/* Queries for package BASIS : class Gemarkung */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Get all BasisGemarkungen and sort them by their name
+	 * Get all Gemarkungen and sort them by their name
 	 * 
 	 * @return <code>Eine Liste aller Gemarkungen</code>
 	 */
-	public static List<BasisGemarkung> getGemarkungenlist()
+	public static List<Gemarkung> getGemarkungenlist()
 	{
-		List<BasisGemarkung> gemarkungenlist = new DatabaseAccess()
+		List<Gemarkung> gemarkungenlist = new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(BasisGemarkung.class)
+										DetachedCriteria.forClass(Gemarkung.class)
 												.addOrder(Order.asc("gemarkung")),
-										new BasisGemarkung());
+										new Gemarkung());
 		return gemarkungenlist;
 	}
 
 	/**
-	 * Get next id for new BasisGemarkung
+	 * Get next id for new Gemarkung
 	 * 
-	 * @return <code>BasisGemarkung</code>
+	 * @return <code>Gemarkung</code>
 	 */
 	public static Integer newGemarkungID()
 	{
 		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-																		DetachedCriteria.forClass(BasisGemarkung.class)
+																		DetachedCriteria.forClass(Gemarkung.class)
 																				.setProjection(
 																								Property.forName("id")
 																										.max()),
@@ -217,7 +215,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisObjekt */
+	/* Queries for package BASIS : class Objekt */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
@@ -229,13 +227,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 * @param abteilung
 	 *            Die Abteilung, wenn nach ihr gefiltert werden soll, sonst
 	 *            <code>null</code>.
-	 * @return Eine Liste von BasisObjekten dieses Betreibers.
+	 * @return Eine Liste von Objekten dieses Betreibers.
 	 */
-	public static List<BasisObjekt> getObjekteByBetreiber(
-		BasisAdresse betreiber, String abteilung)
+	public static List<Objekt> getObjekteByBetreiber(
+		Adresse betreiber, String abteilung)
 	{
 		DetachedCriteria detachedCriteria = DetachedCriteria
-				.forClass(BasisObjekt.class)
+				.forClass(Objekt.class)
 				.createAlias("basisStandort", "lage")
 				.createAlias("basisObjektarten", "art")
 				.add(Restrictions.eq("basisAdresse", betreiber))
@@ -248,7 +246,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 			detachedCriteria.add(Restrictions.eq("art.abteilung", abteilung));
 		}
 		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
-															new BasisObjekt());
+															new Objekt());
 	}
 
 	/**
@@ -262,14 +260,14 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 *            <code>null</code>.
 	 * @param artid
 	 *            Die Objektart, die (nicht) dargestellt werden soll.
-	 * @return Eine Liste von BasisObjekten an diesem Standort.
+	 * @return Eine Liste von Objekten an diesem Standort.
 	 */
 	
-	public static List<BasisObjekt> getObjekteByStandort(
-			BasisAdresse betreiber, String abteilung)
+	public static List<Objekt> getObjekteByStandort(
+			Adresse betreiber, String abteilung)
 		{
 			DetachedCriteria detachedCriteria = DetachedCriteria
-					.forClass(BasisObjekt.class)
+					.forClass(Objekt.class)
 					.createAlias("basisStandort", "lage")
 					.createAlias("basisObjektarten", "art")
 					.add(Restrictions.eq("basisStandort", betreiber))
@@ -282,12 +280,12 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 				detachedCriteria.add(Restrictions.eq("art.abteilung", abteilung));
 			}
 			return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
-																new BasisObjekt());
+																new Objekt());
 		}
 	
 	
-	public static List<BasisObjekt> getObjekteByAdresse(
-		BasisAdresse adresse, String abteilung, Integer artid,
+	public static List<Objekt> getObjekteByAdresse(
+		Adresse adresse, String abteilung, Integer artid,
 		Boolean matchArtId)
 	{
         log.debug("Fetching objects at " + adresse);
@@ -318,13 +316,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 
         SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 
-        q.addEntity("o", BasisObjekt.class);
+        q.addEntity("o", Objekt.class);
         return q.list();
 }
 	
 	
-    	public static List<BasisObjekt> getObjekteByStandort(
-    		BasisAdresse standort, String abteilung, Integer artid,
+    	public static List<Objekt> getObjekteByStandort(
+    		Adresse standort, String abteilung, Integer artid,
     		Boolean matchArtId)
     	{
             log.debug("Fetching objects at " + standort);
@@ -359,7 +357,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
             query2 += filter + ";";
             SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query1 + query2);
             //log.debug(query1 + query2);
-            q.addEntity("o", BasisObjekt.class);
+            q.addEntity("o", Objekt.class);
             return q.list();
 	}	
 
@@ -374,10 +372,10 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
     	 *            <code>null</code>.
     	 * @param artid
     	 *            Die Objektart, die (nicht) dargestellt werden soll.
-    	 * @return Eine Liste von BasisObjekten an diesem Standort.
+    	 * @return Eine Liste von Objekten an diesem Standort.
     	 */
     	
-    	public static List<BasisObjekt> getObjekteByStrasse(BasisAdresse adr,
+    	public static List<Objekt> getObjekteByStrasse(Adresse adr,
 			String abteilung, Integer artid, Boolean matchArtId) {
     		    		
 		String strasse = adr.getStrasse().replaceAll("'", "''");
@@ -414,7 +412,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(
 				query);
 		// log.debug(query1 + query2);
-		q.addEntity("o", BasisObjekt.class);
+		q.addEntity("o", Objekt.class);
 		return q.list();
 
 	}
@@ -424,12 +422,12 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 * 
 	 * @param artid
 	 *            Die Objektart, die (nicht) dargestellt werden soll.
-	 * @return Eine Liste von BasisObjekten an diesem Standort.
+	 * @return Eine Liste von Objekten an diesem Standort.
 	 */
-	public static List<BasisObjekt> getObjekteByArt(Integer artid)
+	public static List<Objekt> getObjekteByArt(Integer artid)
 	{
 		DetachedCriteria detachedCriteria = DetachedCriteria
-				.forClass(BasisObjekt.class)
+				.forClass(Objekt.class)
 				.createAlias("basisAdresse", "betreiber")
 				.createAlias("basisObjektarten", "art")
 				.add(Restrictions.eq("art.id", artid))
@@ -438,34 +436,34 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 				.addOrder(Order.asc("art.objektart"));
 
 		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
-															new BasisObjekt());
+															new Objekt());
 	}
 
 	/**
-	 * Cascade a priority to all objects from the same BasisAdresse and
-	 * BasisLage
+	 * Cascade a priority to all objects from the same Adresse and
+	 * Lage
 	 * 
 	 * @param prioritaet
 	 *            String
 	 * @param basisObjekt
-	 *            BasisObjekt
+	 *            Objekt
 	 * @return <code>true</code> if every merge was successful,
 	 *         <code>false</code> otherwise
 	 */
 	public static Boolean cascadePriority(String prioritaet,
-		BasisObjekt basisObjekt)
+		Objekt basisObjekt)
 	{
 		Boolean result = true;
-		List<BasisObjekt> list = new DatabaseAccess()
+		List<Objekt> list = new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria
-												.forClass(BasisObjekt.class)
+												.forClass(Objekt.class)
 												.add(Restrictions.eq("basisAdresse",
-																		basisObjekt.getBasisAdresse()))
+																		basisObjekt.getAdresse()))
 												.add(Restrictions.eq("basisLage",
 																		basisObjekt.getBasisLage())),
-										new BasisObjekt());
-		for (BasisObjekt objekt : list)
+										new Objekt());
+		for (Objekt objekt : list)
 		{
 			objekt.setPrioritaet(prioritaet);
 			result = result && objekt.merge();
@@ -475,8 +473,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 
 	/**
 	 * Get a list of all priorities. The list contains an array with
-	 * <code>BasisLage</code>, <code>BasisAdresse</code>,
-	 * <code>String</code> (priority) and <code>BasisSachbearbeiter</code>
+	 * <code>Lage</code>, <code>Adresse</code>,
+	 * <code>String</code> (priority) and <code>Sachbearbeiter</code>
 	 * 
 	 * @return <code>List&lt;?&gt;</code>
 	 */
@@ -485,7 +483,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		return new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria
-												.forClass(BasisObjekt.class)
+												.forClass(Objekt.class)
 												.add(Restrictions.eq("inaktiv", false))
 												.add(Restrictions.eq("deleted", false))
 												.add(Restrictions.isNotNull("prioritaet"))
@@ -505,58 +503,58 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 												.addOrder(Order.asc("prioritaet"))
 												.addOrder(Order.asc("basisLage"))
 												.addOrder(Order.asc("basisAdresse")),
-										new BasisObjekt());
+										new Objekt());
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisObjektarten */
+	/* Queries for package BASIS : class Objektarten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static BasisObjektarten[] objektarten = null;
+	private static Objektarten[] objektarten = null;
 
 	/**
-	 * Get all BasisObjektarten and sort them by their name
+	 * Get all Objektarten and sort them by their name
 	 * 
-	 * @return <code>BasisObjektarten[]</code>
+	 * @return <code>Objektarten[]</code>
 	 */
-	public static BasisObjektarten[] getObjektarten()
+	public static Objektarten[] getObjektarten()
 	{
 		if (DatabaseBasisQuery.objektarten == null)
 		{
 			DatabaseBasisQuery.objektarten = DatabaseQuery.getOrderedAll(
-																			new BasisObjektarten(), "objektart")
+																			new Objektarten(), "objektart")
 					.toArray(
-								new BasisObjektarten[0]);
+								new Objektarten[0]);
 		}
 		return DatabaseBasisQuery.objektarten;
 	}
 
 	/**
-	 * Get all BasisObjektarten and sort them by their name and kind
+	 * Get all Objektarten and sort them by their name and kind
 	 * 
-	 * @return <code>BasisObjektarten[]</code>
+	 * @return <code>Objektarten[]</code>
 	 */
-	public static List<BasisObjektarten> getObjektartenlist()
+	public static List<Objektarten> getObjektartenlist()
 	{
-		List<BasisObjektarten> objektartenlist = new DatabaseAccess()
+		List<Objektarten> objektartenlist = new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(BasisObjektarten.class)
+										DetachedCriteria.forClass(Objektarten.class)
 												.addOrder(Order.asc("abteilung"))
 												.addOrder(Order.asc("objektart")),
-										new BasisObjektarten());
+										new Objektarten());
 		return objektartenlist;
 	}
 
 	/**
-	 * Get next id for new BasisObjektarten
+	 * Get next id for new Objektarten
 	 * 
-	 * @return <code>BasisObjektartenID</code>
+	 * @return <code>ObjektartenID</code>
 	 */
 	public static Integer newObjektartenID()
 	{
 		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
 																		DetachedCriteria
-																				.forClass(BasisObjektarten.class)
+																				.forClass(Objektarten.class)
 																				.setProjection(Property.forName("id")
 																						.max()),
 																		new Integer(0));
@@ -564,26 +562,26 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisObjektchrono */
+	/* Queries for package BASIS : class Objektchrono */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Go throw the BasisObjektchrono Set and grep the earliest chrono.
+	 * Go throw the Objektchrono Set and grep the earliest chrono.
 	 * 
 	 * @param objekt
-	 *            BasisObjekt
-	 * @return BasisObjektchrono
+	 *            Objekt
+	 * @return Objektchrono
 	 */
-	public static Timestamp getLastChronoDateForObjekt(BasisObjekt objekt)
+	public static Timestamp getLastChronoDateForObjekt(Objekt objekt)
 	{
 		// // TODO: When we can load the lazy initialized stuff properly, do
 		// this:
-		// Set<BasisObjektchrono> chronos = objekt.getBasisObjektchronos();
+		// Set<Objektchrono> chronos = objekt.getObjektchronos();
 		// if (!(DatabaseAccess.isInitialized(chronos))) {
 		// // TODO: Load the Set
 		// }
-		// BasisObjektchrono max = null;
-		// for (BasisObjektchrono chrono : chronos) {
+		// Objektchrono max = null;
+		// for (Objektchrono chrono : chronos) {
 		// if ((max == null) || max.getDatum().before(chrono.getDatum())) {
 		// max = chrono;
 		// }
@@ -592,7 +590,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		return new DatabaseAccess()
 				.executeCriteriaToUniqueResult(
 												DetachedCriteria
-														.forClass(BasisObjektchrono.class)
+														.forClass(Objektchrono.class)
 														.add(Restrictions.eq("basisObjekt", objekt))
 														.setProjection(
 																		Projections.distinct(Projections
@@ -650,109 +648,109 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 												new Timestamp(0));
 	}
 
-	// TODO: This may be replaced with objekt.getBasisObjektchonos() if we find
+	// TODO: This may be replaced with objekt.getObjektchonos() if we find
 	// an easy way to load them as they are lazy loaded.
-	public static List<BasisObjektchrono> getChronos(BasisObjekt objekt)
+	public static List<Objektchrono> getChronos(Objekt objekt)
 	{
 		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria.forClass(BasisObjektchrono.class)
+															DetachedCriteria.forClass(Objektchrono.class)
 																	.add(Restrictions.eq("basisObjekt", objekt))
 																	.addOrder(Order.asc("datum")),
-															new BasisObjektchrono());
+															new Objektchrono());
 	}
 
-	public static List<BasisObjektchrono> getAllChronos(BasisObjekt objekt)
+	public static List<Objektchrono> getAllChronos(Objekt objekt)
 	{
 		return new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria
-												.forClass(BasisObjektchrono.class)
+												.forClass(Objektchrono.class)
 												.createAlias("basisObjekt", "objekt")
 												.add(Restrictions.eq("objekt.basisAdresse",
-																		objekt.getBasisAdresse()))
+																		objekt.getAdresse()))
 												.add(Restrictions.eq("objekt.basisLage",
 																		objekt.getBasisLage()))
-												.addOrder(Order.asc("datum")), new BasisObjektchrono());
+												.addOrder(Order.asc("datum")), new Objektchrono());
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisObjektverknuepfung */
+	/* Queries for package BASIS : class Objektverknuepfung */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Liefert alle verknuepften Objekte zu einem bestimmten BasisObjekt.
+	 * Liefert alle verknuepften Objekte zu einem bestimmten Objekt.
 	 * 
 	 * @param objekt
-	 *            Das BasisObjekt.
+	 *            Das Objekt.
 	 * @return Eine Liste mit Objekten.
 	 */
-	public static List<BasisObjektverknuepfung> getLinkedObjekts(
-		BasisObjekt objekt)
+	public static List<Objektverknuepfung> getLinkedObjekts(
+		Objekt objekt)
 	{
 		return new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria
-												.forClass(BasisObjektverknuepfung.class)
+												.forClass(Objektverknuepfung.class)
 												.add(Restrictions.or(Restrictions
 														.eq("basisObjektByIstVerknuepftMit",
 															objekt), Restrictions.eq(
 																						"basisObjektByObjekt", objekt))),
-										new BasisObjektverknuepfung());
+										new Objektverknuepfung());
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisSachbearbeiter */
+	/* Queries for package BASIS : class Sachbearbeiter */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static BasisSachbearbeiter[] sachbearbeiter = null;
+	private static Sachbearbeiter[] sachbearbeiter = null;
 
 	/**
-	 * Get a sorted array of all enabled BasisSachbearbeiter
+	 * Get a sorted array of all enabled Sachbearbeiter
 	 * 
-	 * @return <code>BasisSachbearbeiter[]</code>
+	 * @return <code>Sachbearbeiter[]</code>
 	 */
-	public static BasisSachbearbeiter[] getEnabledSachbearbeiter()
+	public static Sachbearbeiter[] getEnabledSachbearbeiter()
 	{
 		if (DatabaseBasisQuery.sachbearbeiter == null)
 		{
 			DatabaseBasisQuery.sachbearbeiter = new DatabaseAccess()
 					.executeCriteriaToArray(
 											DetachedCriteria
-													.forClass(BasisSachbearbeiter.class)
+													.forClass(Sachbearbeiter.class)
 													.add(Restrictions.eq("enabled", true))
 													.addOrder(Order.asc("name")),
-											new BasisSachbearbeiter[0]);
+											new Sachbearbeiter[0]);
 		}
 		return DatabaseBasisQuery.sachbearbeiter;
 	}
 
 	/**
-	 * Get the current BasisSachbearbeiter.
+	 * Get the current Sachbearbeiter.
 	 * 
-	 * @return <code>BasisSachbearbeiter</code>
+	 * @return <code>Sachbearbeiter</code>
 	 */
-	public static BasisSachbearbeiter getCurrentSachbearbeiter()
+	public static Sachbearbeiter getCurrentSachbearbeiter()
 	{
-		return BasisSachbearbeiter.findByKennummer(SettingsManager.getInstance()
+		return Sachbearbeiter.findByKennummer(SettingsManager.getInstance()
 				.getSetting("auik.prefs.lastuser"));
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisSachbearbeiter */
+	/* Queries for package BASIS : class Sachbearbeiter */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Get all BasisSachbearbeiter and sort them by their name
+	 * Get all Sachbearbeiter and sort them by their name
 	 * 
 	 * @return <code>Eine Liste aller Parameter</code>
 	 */
-	public static List<BasisSachbearbeiter> getSachbearbeiterlist()
+	public static List<Sachbearbeiter> getSachbearbeiterlist()
 	{
-		List<BasisSachbearbeiter> sachbearbeiterlist = new DatabaseAccess()
+		List<Sachbearbeiter> sachbearbeiterlist = new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(BasisSachbearbeiter.class)
+										DetachedCriteria.forClass(Sachbearbeiter.class)
 												.addOrder(Order.asc("name")),
-										new BasisSachbearbeiter());
+										new Sachbearbeiter());
 		return sachbearbeiterlist;
 	}
 
@@ -778,18 +776,18 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		return (!(new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria
-												.forClass(BasisAdresse.class)
+												.forClass(Adresse.class)
 												.add(Restrictions.eq("strasse", strasse))
 												.add(Restrictions.eq("hausnr", hausnr))
 												.add(DatabaseAccess.getRestrictionsEqualOrNull(
 																								"hausnrzus", zusatz)),
-										new BasisAdresse())
+										new Adresse())
 				.isEmpty()));
 	}
 
     /**
-     * Returns a List of all BasisAdresse and BasisLage objects that are connected through a BasisMapAdresseLage object
-     * Output format is List<[BasisAdresse][BasisLage]>
+     * Returns a List of all Adresse and BasisLage objects that are connected through a BasisMapAdresseLage object
+     * Output format is List<[Adresse][BasisLage]>
  	 * 
 	 * @param strasse
 	 *            String
@@ -834,14 +832,14 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
             }
             query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";
             SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
-            q.addEntity("a", BasisAdresse.class);
+            q.addEntity("a", Adresse.class);
             q.addEntity("m", BasisMapAdresseLage.class);
             return q.list();
     }
  
     /**
-     * Returns a List of BasisAdresse objects for the given parameters
-     * Output format is List<[BasisAdresse]>
+     * Returns a List of Adresse objects for the given parameters
+     * Output format is List<[Adresse]>
  	 * 
 	 * @param Name
 	 *            String
@@ -851,10 +849,10 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 *            Integer (-1: all)
 	 * @param ort
 	 *            String
-	 * @return <code>List&lt;BasisAdresse[]&gt;</code>
+	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */     
    
-	public static List<BasisAdresse> findBetreiber(String name, String strasse,
+	public static List<Adresse> findBetreiber(String name, String strasse,
 		Integer hausnr, String ort)
 	{
 		//Check which parameters are set
@@ -866,7 +864,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
         str = str.replace("'", "''");
 	
 		String query = "SELECT DISTINCT adresse "
-				+ "FROM BasisObjekt as obj JOIN obj.basisAdresse adresse";
+				+ "FROM Objekt as obj JOIN obj.basisAdresse adresse";
 		if (bName || bStrasse || bHausnr || bOrt) {
 			query += " WHERE ";
 			if (bName) {
@@ -894,8 +892,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	}
  
     /**
-     * Returns a List of BasisAdresse objects for the given parameters
-     * Output format is List<[BasisAdresse]>
+     * Returns a List of Adresse objects for the given parameters
+     * Output format is List<[Adresse]>
  	 * 
 	 * @param Name
 	 *            String
@@ -905,10 +903,10 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 *            Integer (-1: all)
 	 * @param ort
 	 *            String
-	 * @return <code>List&lt;BasisAdresse[]&gt;</code>
+	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */     
    
-	public static List<BasisAdresse> findStandorte(String name, String strasse,
+	public static List<Adresse> findStandorte(String name, String strasse,
 		Integer hausnr, String ort)
 	{
 		//Check which parameters are set
@@ -920,7 +918,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
         str = str.replace("'", "''");
 	
 		String query = "SELECT DISTINCT adresse "
-				+ "FROM BasisObjekt as obj JOIN obj.basisStandort adresse";
+				+ "FROM Objekt as obj JOIN obj.basisStandort adresse";
 		if (bName || bStrasse || bHausnr || bOrt) {
 			query += " WHERE ";
 			if (bName) {
@@ -948,7 +946,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	}	
 	
 	
-	public static List<BasisAdresse> findStandorte(String strasse,
+	public static List<Adresse> findStandorte(String strasse,
 			Integer hausnr, String ort)
 			{
 				//Check which parameters are set
@@ -984,23 +982,23 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 			}
 	
 	/**
-     * Returns a List of BasisAdresse objects matching the given parameters
+     * Returns a List of Adresse objects matching the given parameters
      * and having a connection to a BasisMapAdresseLage object
      * 
-     * Output format is List<[BasisAdresse]>
+     * Output format is List<[Adresse]>
  	 * 
 	 * @param search
 	 *            String Betreibername
 	 * @param property
 	 *            String
-	 * @return <code>List&lt;BasisAdresse[]&gt;</code>
+	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */     
    
-	public static List<BasisAdresse> findStandorte(String search,
+	public static List<Adresse> findStandorte(String search,
 			String property) {
 
 		String query = "SELECT DISTINCT adresse "
-				+ "FROM BasisAdresse as adresse";
+				+ "FROM Adresse as adresse";
 
 		query += " WHERE ";
 
@@ -1017,22 +1015,22 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	}
 	
 	/**
-     * Returns a List of all BasisAdresse objects matching the given parameters
+     * Returns a List of all Adresse objects matching the given parameters
      * 
-     * Output format is List<[BasisAdresse]>
+     * Output format is List<[Adresse]>
  	 * 
 	 * @param search
 	 *            String Betreibername
 	 * @param property
 	 *            String
-	 * @return <code>List&lt;BasisAdresse[]&gt;</code>
+	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */     
    
-	public static List<BasisAdresse> findAdressen(String search,
+	public static List<Adresse> findAdressen(String search,
 			String property) {
 
 		String query = "SELECT DISTINCT adresse "
-				+ "FROM BasisAdresse adresse";
+				+ "FROM Adresse adresse";
 
 		query += " WHERE ";
 
@@ -1045,18 +1043,18 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	}
 	
 	/**
-     * Returns a List of all BasisAdresse objects matching the given parameters
+     * Returns a List of all Adresse objects matching the given parameters
      * 
-     * Output format is List<[BasisAdresse]>
+     * Output format is List<[Adresse]>
  	 * 
 	 * @param search
 	 *            String Betreibername
 	 * @param property
 	 *            String
-	 * @return <code>List&lt;BasisAdresse[]&gt;</code>
+	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */     
    
-	public static List<BasisAdresse> findAdressen(String name, String strasse, Integer hausnr, String ort,
+	public static List<Adresse> findAdressen(String name, String strasse, Integer hausnr, String ort,
 			String property) {
 
 
@@ -1066,7 +1064,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	    boolean bOrt = (ort != null && ort.length() > 0);
 	    
 		String query = "SELECT adresse "
-				+ "FROM BasisAdresse adresse";
+				+ "FROM Adresse adresse";
         if(bName || bStrasse || bHausnr || bOrt){
             query += " WHERE ";
             if (bName && property == null)
@@ -1119,7 +1117,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		{
 			DatabaseBasisQuery.entwaesserungsgebiete = new DatabaseAccess()
 					.executeCriteriaToArray(
-											DetachedCriteria.forClass(BasisLage.class)
+											DetachedCriteria.forClass(Lage.class)
 													.setProjection(
 																	Projections.distinct(Projections
 																			.property("entgebid")))
@@ -1128,128 +1126,55 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		}
 		return DatabaseBasisQuery.entwaesserungsgebiete;
 	}
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisTabStreets */
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	public static List<BasisTabStreets> getTabStreetslist(MatchMode mm)
-	{
-
-		DetachedCriteria dc = DetachedCriteria.forClass(BasisTabStreets.class)
-				.addOrder(Order.asc("name"));
-
-		List<BasisTabStreets> tabstreetslist = new DatabaseAccess()
-				.executeCriteriaToList(dc, new BasisTabStreets());
-
-		return tabstreetslist;
-
-	}
-
-	/**
-	 * Get BasisTabStreets
-	 * 
-	 * @return <code>Eine Liste aller Strassennamen</code>
-	 */
-	public static String[] getTabStreets()
-	{
-
-
-    	List<String> basisAllTabStreets = getAllTabStreetslist();
-    	
-    	String[] tabStreets = new String[basisAllTabStreets.size()];
-    	return tabStreets = basisAllTabStreets.toArray(tabStreets);
-    	
-	}
-
-	/**
-	 * Get all BasisTabStreets and sort them by their name
-	 * @return <code>Eine Liste aller Stassen</code>
-	 */
-	public static List<String> getAllTabStreetslist() {
-
-        String query =  "SELECT DISTINCT name " + 
-                "FROM BasisTabStreets ORDER BY name";
-        
-        return HibernateSessionFactory.currentSession().createQuery(query).list();
-    	
-	}
-	
-	public static List<BasisTabStreets> findStandorte(String strasse)
-	{
-		return new DatabaseAccess().executeCriteriaToList(
-																	DetachedCriteria.forClass(BasisTabStreets.class)
-																			.add(Restrictions.eq("name",
-																									strasse))
-																			.addOrder(Order.asc("hausnr"))
-																			.addOrder(Order.asc("hausnrZusatz").nulls(NullPrecedence.FIRST)),
-																	new BasisTabStreets());
-	}
-	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisStrassen */
+	/* Queries for package BASIS : class Strassen */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     /**
-     * Get all BasisStrassen sorted by strasse
-     * @return <code>BasisStrassen[]</code>
+     * Get all Strassen sorted by strasse
+     * @return <code>Strassen[]</code>
      */
-    public static BasisStrassen[] getAllStrassen() {
+    public static Strassen[] getAllStrassen() {
 
-    	List<BasisStrassen> basisAllStrassen = getAllStrassenlist();
+    	List<Strassen> basisAllStrassen = getAllStrassenlist();
     	
-        return basisAllStrassen.toArray(new BasisStrassen[0]);
+        return basisAllStrassen.toArray(new Strassen[0]);
     }
 	/**
-	 * Get all BasisStrassen and sort them by their name
+	 * Get all Strassen and sort them by their name
 	 * @return <code>Eine Liste aller Stassen</code>
 	 */
-	public static List<BasisStrassen> getAllStrassenlist() {
-	    List<BasisStrassen> strassenlist = new DatabaseAccess().executeCriteriaToList(
-	            DetachedCriteria.forClass(BasisStrassen.class)
+	public static List<Strassen> getAllStrassenlist() {
+	    List<Strassen> strassenlist = new DatabaseAccess().executeCriteriaToList(
+	            DetachedCriteria.forClass(Strassen.class)
 	                .addOrder(Order.asc("strasse")),
-	            new BasisStrassen());
+	            new Strassen());
 		return strassenlist;
 	
 	}
 	/**
-	 * Get BasisStrassen sorted by strasse
+	 * Get Strassen sorted by strasse
 	 * 
-	 * @return <code>BasisStrassen[]</code>
+	 * @return <code>Strassen[]</code>
 	 */
-	public static BasisStrassen[] getStrassen(String ort, MatchMode mm)
+	public static Strassen[] getStrassen(String ort, MatchMode mm)
 	{
 
-		List<BasisStrassen> basisStrassen = getStrassenlist(ort, mm);
+		List<Strassen> basisStrassen = getStrassenlist(ort, mm);
 
-		return basisStrassen.toArray(new BasisStrassen[0]);
-	}
-	/**
-	 * Get BasisStrassen sorted by strasse
-	 * 
-	 * @return <code>BasisStrassen[]</code>
-	 */
-	public static List<BasisTabStreets> getTabStreets(MatchMode mm)
-	{
-
-		List<BasisTabStreets> basisStrassenlist = new DatabaseAccess()
-		.executeCriteriaToList(
-								DetachedCriteria.forClass(BasisTabStreets.class)
-										.addOrder(Order.asc("name")),
-								new BasisTabStreets());
-		return basisStrassenlist;
+		return basisStrassen.toArray(new Strassen[0]);
 	}
 
 	/**
-	 * Get BasisStrassen filtered by plzort and sort them by their name
+	 * Get Strassen filtered by plzort and sort them by their name
 	 * 
 	 * @return <code>Eine Liste aller Stassen</code>
 	 */
-	public static List<BasisStrassen> getStrassenlist(String ort, MatchMode mm)
+	public static List<Strassen> getStrassenlist(String ort, MatchMode mm)
 	{
 
-		DetachedCriteria dc = DetachedCriteria.forClass(BasisStrassen.class)
+		DetachedCriteria dc = DetachedCriteria.forClass(Strassen.class)
 				.addOrder(Order.asc("strasse"));
 
 //		if (!StringUtils.isNullOrEmpty(plz))
@@ -1262,8 +1187,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 			dc = dc.add(Restrictions.like("ort", ort, mm));
 		}
 
-		List<BasisStrassen> strassenlist = new DatabaseAccess()
-				.executeCriteriaToList(dc, new BasisStrassen());
+		List<Strassen> strassenlist = new DatabaseAccess()
+				.executeCriteriaToList(dc, new Strassen());
 
 		return strassenlist;
 
@@ -1274,30 +1199,30 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 * 
 	 * @param search
 	 *            String
-	 * @return <code>BasisStrassen</code>
+	 * @return <code>Strassen</code>
 	 */
-	public static BasisStrassen findStrasse(String search)
+	public static Strassen findStrasse(String search)
 	{
-		List<BasisStrassen> list = new DatabaseAccess()
+		List<Strassen> list = new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria
-												.forClass(BasisStrassen.class)
+												.forClass(Strassen.class)
 												.add(Restrictions.ilike("strasse", search,
 																		MatchMode.START))
-												.addOrder(Order.asc("strasse")), new BasisStrassen());
+												.addOrder(Order.asc("strasse")), new Strassen());
 		// If we got something, just return the first result
 		return (list.isEmpty() ? null : list.get(0));
 	}
 
 	/**
-	 * Get next id for new BasisStrassen
+	 * Get next id for new Strassen
 	 * 
-	 * @return <code>BasisStrassenID</code>
+	 * @return <code>StrassenID</code>
 	 */
 	public static Integer newStrassenID()
 	{
 		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-																		DetachedCriteria.forClass(BasisStrassen.class)
+																		DetachedCriteria.forClass(Strassen.class)
 																				.setProjection(
 																								Property.forName("id")
 																										.max()),
@@ -1305,120 +1230,44 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		return id + 1;
 	}
 
-	private static List<BasisOrte> orte = null;
 
-	/**
-	 * Get cities sorted by zip code
-	 * 
-	 * @return <code>BasisStrassen[]</code>
-	 */
-	public static BasisOrte[] getOrte()
-	{
-
-		if (orte == null)
-		{
-			orte = getOrtelist();
-		}
-
-		return orte.toArray(new BasisOrte[0]);
-	}
-
-	/**
-	 * Get cities sorted by zip code
-	 * 
-	 * @return <code>Liste aller Orte</code>
-	 */
-	public static List<BasisOrte> getOrtelist()
-	{
-
-		if (orte == null)
-		{
-			DetachedCriteria dc = DetachedCriteria
-					.forClass(BasisStrassen.class)
-					.setProjection(Projections.distinct(Projections.projectionList()
-							.add(Projections.property("ort"), "ort")
-//							.add(Projections.property("plz"), "plz")
-							))
-					.setResultTransformer(Transformers.aliasToBean(BasisOrte.class))
-					.addOrder(Order.asc("ort"))
-//					.addOrder(Order.asc("plz"))
-					;
-
-			orte = new DatabaseAccess().executeCriteriaToList(dc, new BasisOrte());
-		}
-
-		return orte;
-
-	}
-	
-	private static BasisOrte ort = null;
-
-	/**
-	 * Get city for a given street
-	 * 
-	 * @return <code>Einen Ort</code>
-	 */
-	public static BasisOrte getOrt(String street)
-	{
-
-//		if (ort == null)
-		{
-			DetachedCriteria dc = DetachedCriteria
-					.forClass(BasisStrassen.class)
-					.setProjection(Projections.distinct(Projections.projectionList()
-							.add(Projections.property("ort"), "ort")
-//							.add(Projections.property("plz"), "plz")
-							))
-					.setResultTransformer(Transformers.aliasToBean(BasisOrte.class))
-					.add(Restrictions.ilike("strasse", street,
-							MatchMode.START))
-					.addOrder(Order.asc("ort"))
-//					.addOrder(Order.asc("plz"))
-					;
-
-			ort = new DatabaseAccess().executeCriteriaToUniqueResult(dc, new BasisOrte());
-		}
-
-		return ort;
-
-	}
 
 	/* ********************************************************************** */
 	/* Queries for package ATL */
 	/* ********************************************************************** */
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlEinheiten */
+	/* Queries for package ATL : class Einheiten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	
 
 	/**
-	 * Get all AtlEinheiten and sort them by their name
+	 * Get all Einheiten and sort them by their name
 	 * 
 	 * @return <code>Eine Liste aller Einheiten</code>
 	 */
-	public static List<AtlEinheiten> getEinheitenlist()
+	public static List<Einheiten> getEinheitenlist()
 	{
-		List<AtlEinheiten> strassenlist = new DatabaseAccess()
+		List<Einheiten> strassenlist = new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlEinheiten.class)
+										DetachedCriteria.forClass(Einheiten.class)
 												.addOrder(
 															Order.asc("id")),
-										new AtlEinheiten());
+										new Einheiten());
 		return strassenlist;
 
 	}
 	
 	/**
-	 * Get next id for new AtlEinheiten
+	 * Get next id for new Einheiten
 	 * 
-	 * @return <code>AtlEinheitenID</code>
+	 * @return <code>EinheitenID</code>
 	 */
 	public static Integer newEinheitenID()
 	{
 		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-																		DetachedCriteria.forClass(AtlEinheiten.class)
+																		DetachedCriteria.forClass(Einheiten.class)
 																				.setProjection(
 																								Property.forName("id")
 																										.max()),
@@ -1427,53 +1276,53 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlParameter */
+	/* Queries for package ATL : class Parameter */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Get all AtlParameter and sort them by their name
+	 * Get all Parameter and sort them by their name
 	 * 
 	 * @return <code>Eine Liste aller Parameter</code>
 	 */
-	public static List<AtlParameter> getParameterlist()
+	public static List<Parameter> getParameterlist()
 	{
-		List<AtlParameter> parameterlist = new DatabaseAccess()
+		List<Parameter> parameterlist = new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlParameter.class)
+										DetachedCriteria.forClass(Parameter.class)
 												.addOrder(
 															Order.asc("id")),
-										new AtlParameter());
+										new Parameter());
 		return parameterlist;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package ATL : class AtlKlaeranlage */
+	/* Queries for package ATL : class Klaeranlage */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Get all AtlKlaeranlagen and sort them by their name
+	 * Get all Klaeranlage and sort them by their name
 	 * 
 	 * @return <code>Eine Liste aller Parameter</code>
 	 */
-	public static List<AtlKlaeranlagen> getKlaeranlagenlist()
+	public static List<Klaeranlage> getKlaeranlagelist()
 	{
-		List<AtlKlaeranlagen> klaeranlagenlist = new DatabaseAccess()
+		List<Klaeranlage> klaeranlagenlist = new DatabaseAccess()
 				.executeCriteriaToList(
-										DetachedCriteria.forClass(AtlKlaeranlagen.class)
+										DetachedCriteria.forClass(Klaeranlage.class)
 												.addOrder(Order.asc("id")),
-										new AtlKlaeranlagen());
+										new Klaeranlage());
 		return klaeranlagenlist;
 	}
 
 	/**
-	 * Get next id for new AtlKlaeranlagen
+	 * Get next id for new Klaeranlage
 	 * 
-	 * @return <code>AtlKlaeranlagenID</code>
+	 * @return <code>KlaeranlageID</code>
 	 */
-	public static Integer newKlaeranlagenID()
+	public static Integer newKlaeranlageID()
 	{
 		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-																		DetachedCriteria.forClass(AtlKlaeranlagen.class)
+																		DetachedCriteria.forClass(Klaeranlage.class)
 																				.setProjection(
 																								Property.forName("id")
 																										.max()),
@@ -1494,28 +1343,28 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	 * 
 	 * @return <code>Eine Liste aller Wasserschutzgebiete</code>
 	 */
-	public static List<VawsWassereinzugsgebiete> getWasserschutzgebietelist()
+	public static List<Wassereinzugsgebiet> getWasserschutzgebietelist()
 	{
-		List<VawsWassereinzugsgebiete> wsglist = new DatabaseAccess()
+		List<Wassereinzugsgebiet> wsglist = new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(
-																	VawsWassereinzugsgebiete.class)
+																	Wassereinzugsgebiet.class)
 												.addOrder(
 															Order.asc("id")),
-										new VawsWassereinzugsgebiete());
+										new Wassereinzugsgebiet());
 		return wsglist;
 
 	}
 
 	/**
-	 * Get next id for new VawsWassereinzugsgebiete
+	 * Get next id for new Wassereinzugsgebiet
 	 * 
-	 * @return <code>VawsWassereinzugsgebieteID</code>
+	 * @return <code>WassereinzugsgebietID</code>
 	 */
 	public static Integer newWSGID()
 	{
 		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-																		DetachedCriteria.forClass(VawsWassereinzugsgebiete.class)
+																		DetachedCriteria.forClass(Wassereinzugsgebiet.class)
 																				.setProjection(
 																								Property.forName("id")
 																										.max()),

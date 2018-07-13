@@ -528,7 +528,7 @@
         <executions>
 		      <!--run hibernate tools via antrun plugin-->
       	  <!-- TODO: run with mvn antrun:run@db2mapping -->
-	        <!--<execution>
+	        <execution>
 			      <id>db2mapping</id>
 		        <phase>generate-sources</phase>
             <configuration>
@@ -546,17 +546,17 @@
 				        <taskdef name="hibernatetool"
                   classname="org.hibernate.tool.ant.HibernateToolTask"
                 	  classpathref="hibernatetool.path" />
-                <hibernatetool destdir="src">
+                <hibernatetool destdir="generated-sources/mappings">
                   <jdbcconfiguration
                     propertyfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.properties"
                     revengfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.reveng.xml">
                   </jdbcconfiguration>
                   <hbm2hbmxml />
-                  <hbm2cfgxml destdir="src/de/bielefeld/umweltamt/aui/resources/config/generated" />
+                  <hbm2cfgxml destdir="generated-sources/resources/config/generated" />
                   <hbmtemplate
                     templatepath="data/templates/auik"
                     template="Pojo.ftl"
-                    filepattern="{package-name}/generated/{class-name}.java">
+                    filepattern="{package-name}/{class-name}.java">
                     <property key="jdk5" value="true" />
                     <property key="ejb3" value="false" />
                   </hbmtemplate>
@@ -566,7 +566,8 @@
 		        <goals>
 		          <goal>run</goal>
 		        </goals>
-		      </execution>-->
+		      </execution>
+
 		      <execution>
             <id>copy-jars</id>
             <phase>install</phase>
