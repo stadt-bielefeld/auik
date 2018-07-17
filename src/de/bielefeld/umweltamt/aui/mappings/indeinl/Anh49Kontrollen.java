@@ -44,6 +44,7 @@ public class Anh49Kontrollen  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
+    private Anh49Fachdaten anh49Fachdaten;
     private Date pruefdatum;
     private Date naechstepruefung;
     private String pruefergebnis;
@@ -84,6 +85,14 @@ public class Anh49Kontrollen  implements java.io.Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Anh49Fachdaten getAnh49Fachdaten() {
+        return this.anh49Fachdaten;
+    }
+
+    public void setAnh49Fachdaten(Anh49Fachdaten anh49Fachdaten) {
+        this.anh49Fachdaten = anh49Fachdaten;
     }
 
     public Date getPruefdatum() {

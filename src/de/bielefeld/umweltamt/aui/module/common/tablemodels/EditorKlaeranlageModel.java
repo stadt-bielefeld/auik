@@ -22,7 +22,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -63,7 +63,7 @@ public class EditorKlaeranlageModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        AtlKlaeranlagen einheit = (AtlKlaeranlagen) objectAtRow;
+    	Klaeranlage einheit = (Klaeranlage) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -89,7 +89,7 @@ public class EditorKlaeranlageModel extends EditableListTableModel {
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
 		
-		AtlKlaeranlagen tmp = (AtlKlaeranlagen) objectAtRow;
+		Klaeranlage tmp = (Klaeranlage) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -105,20 +105,20 @@ public class EditorKlaeranlageModel extends EditableListTableModel {
             break;        	
         	
 		}
-		AtlKlaeranlagen.merge(tmp);
+		Klaeranlage.merge(tmp);
 	}
 
 	@Override
 	public Object newObject() {
-		AtlKlaeranlagen tmp = new AtlKlaeranlagen();
-		tmp.setId(DatabaseQuery.newKlaeranlagenID());
+		Klaeranlage tmp = new Klaeranlage();
+		tmp.setId(DatabaseQuery.newKlaeranlageID());
 		return tmp;
 	}
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	AtlKlaeranlagen removedklaeranlage = (AtlKlaeranlagen) objectAtRow;
-        return AtlKlaeranlagen.delete(removedklaeranlage);
+    	Klaeranlage removedklaeranlage = (Klaeranlage) objectAtRow;
+        return Klaeranlage.delete(removedklaeranlage);
     }
 
     /**
@@ -126,7 +126,7 @@ public class EditorKlaeranlageModel extends EditableListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public AtlKlaeranlagen getRow(int rowIndex) {
-        return (AtlKlaeranlagen) getObjectAtRow(rowIndex);
+    public Klaeranlage getRow(int rowIndex) {
+        return (Klaeranlage) getObjectAtRow(rowIndex);
     }
 }

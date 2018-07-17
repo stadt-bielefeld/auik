@@ -52,10 +52,10 @@ public class Anh52Model extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = fd.getBasisObjekt().getBasisAdresse();
+            tmp = fd.getObjekt().getAdresseByBetreiberid();
             break;
         case 1:
-            tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
+            tmp = DatabaseQuery.getStandortString(fd.getObjekt().getAdresseByStandortid());
             break;
         case 2:
             tmp = fd.getBemerkungen();
@@ -65,7 +65,7 @@ public class Anh52Model extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getBasisObjekt().isInaktiv()) {
+        if (fd.getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

@@ -256,6 +256,11 @@ public class Status  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Status());
     }
 
+	public String toGuiString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     /* Custom code goes below here! */
 
 }

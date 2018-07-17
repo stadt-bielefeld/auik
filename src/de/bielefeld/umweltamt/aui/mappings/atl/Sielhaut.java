@@ -461,4 +461,15 @@ public class Sielhaut  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    public static Sielhaut findByObjektId(java.lang.Integer id){
+        log.debug("Getting AtlSielhaut instance with attached object with id :" + id);
+        List<Sielhaut> list = Sielhaut.getAll();
+        for(Sielhaut i : list){
+            if(i.getId().equals(id)){
+                return (Sielhaut) new DatabaseAccess().get(Sielhaut.class, id);
+            }
+        }
+        log.debug("Sielhaut object not found");
+        return null;
+    }
 }

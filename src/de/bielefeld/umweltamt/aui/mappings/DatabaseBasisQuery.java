@@ -40,6 +40,8 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
+import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
@@ -48,7 +50,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
@@ -95,7 +97,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		log.debug("Suche nach '" + modSearch + "' (" + property + ").");
 
         String query =  "SELECT DISTINCT Adresse " + 
-                        "FROM Adresse as adresse JOIN adresse.basisObjekts objekt ";
+                        "FROM Adresse as adresse JOIN adresse.objektsForBetreiberid objekt ";
         if (property == null)
 		{
             query += "WHERE LOWER(adresse.betrname) like '" + modSearch + "' OR LOWER(betranrede) like '" + modSearch + "' OR LOWER(betrnamezus) like '" + modSearch + "'";
@@ -290,7 +292,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 	{
         log.debug("Fetching objects at " + adresse);
         //Find objects witch matching standortid
-		String query = "SELECT o.* from auik.basis_objekt o "+
+		String query = "SELECT o.* from basis.objekt o "+
                        " WHERE (o.standortid = "+ adresse.getId() +
                        " OR o.betreiberid = "+ adresse.getId() +
                        " ) AND o._deleted = false " +
@@ -327,7 +329,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
     	{
             log.debug("Fetching objects at " + standort);
             //Find objects witch matching standortid
-    		String query1 = "SELECT o.* from auik.basis_objekt o, auik.basis_adresse a, auik.basis_objektarten art "+
+    		String query1 = "SELECT o.* from basis.objekt o, basis.adresse a, basis.objektarten art "+
                            " WHERE a.id = " + standort.getId() + " AND o.standortid = a.id";
             //Find objects with standortid of basis_adresse objects with matching fields
             String query2 = " UNION " +
@@ -459,9 +461,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 										DetachedCriteria
 												.forClass(Objekt.class)
 												.add(Restrictions.eq("basisAdresse",
-																		basisObjekt.getAdresse()))
+																		basisObjekt.getAdresses()))
 												.add(Restrictions.eq("basisLage",
-																		basisObjekt.getBasisLage())),
+																		basisObjekt.getLage())),
 										new Objekt());
 		for (Objekt objekt : list)
 		{
@@ -667,9 +669,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 												.forClass(Objektchrono.class)
 												.createAlias("basisObjekt", "objekt")
 												.add(Restrictions.eq("objekt.basisAdresse",
-																		objekt.getAdresse()))
+																		objekt.getAdresses()))
 												.add(Restrictions.eq("objekt.basisLage",
-																		objekt.getBasisLage()))
+																		objekt.getLage()))
 												.addOrder(Order.asc("datum")), new Objektchrono());
 	}
 
@@ -810,7 +812,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
         String query = 
             "SELECT * FROM " +
             " (SELECT DISTINCT ON (a.strasse, a.hausnr, a.hausnrzus) a.*, m.* " +
-            "FROM auik.basis_adresse a JOIN auik.basis_map_adresse_lage m ON m.adresseid = a.id";
+            "FROM basis.adresse a JOIN basis.map_adresse_lage m ON m.adresseid = a.id";
             if(bStrasse || bHausnr || bOrt){
                 query += " WHERE ";
                 if(bStrasse){
@@ -833,7 +835,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
             query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";
             SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
             q.addEntity("a", Adresse.class);
-            q.addEntity("m", BasisMapAdresseLage.class);
+            q.addEntity("m", MapAdresseLage.class);
             return q.list();
     }
  
@@ -1127,6 +1129,64 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		return DatabaseBasisQuery.entwaesserungsgebiete;
 	}
 	
+	public static List<TabStreets> findStandorte(String strasse)
+	{
+		return new DatabaseAccess().executeCriteriaToList(
+																	DetachedCriteria.forClass(TabStreets.class)
+																			.add(Restrictions.eq("name",
+																									strasse))
+																			.addOrder(Order.asc("hausnr"))
+																			.addOrder(Order.asc("hausnrZusatz").nulls(NullPrecedence.FIRST)),
+																	new TabStreets());
+	}
+
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	/* Queries for package BASIS : class BasisTabStreets */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+	public static List<TabStreets> getTabStreetslist(MatchMode mm)
+	{
+
+		DetachedCriteria dc = DetachedCriteria.forClass(TabStreets.class)
+				.addOrder(Order.asc("name"));
+
+		List<TabStreets> tabstreetslist = new DatabaseAccess()
+				.executeCriteriaToList(dc, new TabStreets());
+
+		return tabstreetslist;
+
+	}
+
+	/**
+	 * Get BasisTabStreets
+	 * 
+	 * @return <code>Eine Liste aller Strassennamen</code>
+	 */
+	public static String[] getTabStreets()
+	{
+
+
+    	List<String> basisAllTabStreets = getAllTabStreetslist();
+    	
+    	String[] tabStreets = new String[basisAllTabStreets.size()];
+    	return tabStreets = basisAllTabStreets.toArray(tabStreets);
+    	
+	}
+
+	/**
+	 * Get all BasisTabStreets and sort them by their name
+	 * @return <code>Eine Liste aller Stassen</code>
+	 */
+	public static List<String> getAllTabStreetslist() {
+
+        String query =  "SELECT DISTINCT name " + 
+                "FROM BasisTabStreets ORDER BY name";
+        
+        return HibernateSessionFactory.currentSession().createQuery(query).list();
+    	
+	}
+	
+	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package BASIS : class Strassen */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1230,6 +1290,83 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery
 		return id + 1;
 	}
 
+	private static List<Orte> orte = null;
+
+	/**
+	 * Get cities sorted by zip code
+	 * 
+	 * @return <code>BasisStrassen[]</code>
+	 */
+	public static Orte[] getOrte()
+	{
+
+		if (orte == null)
+		{
+			orte = getOrtelist();
+		}
+
+		return orte.toArray(new Orte[0]);
+	}
+
+	/**
+	 * Get cities sorted by zip code
+	 * 
+	 * @return <code>Liste aller Orte</code>
+	 */
+	public static List<Orte> getOrtelist()
+	{
+
+		if (orte == null)
+		{
+			DetachedCriteria dc = DetachedCriteria
+					.forClass(Strassen.class)
+					.setProjection(Projections.distinct(Projections.projectionList()
+							.add(Projections.property("ort"), "ort")
+//							.add(Projections.property("plz"), "plz")
+							))
+					.setResultTransformer(Transformers.aliasToBean(Orte.class))
+					.addOrder(Order.asc("ort"))
+//					.addOrder(Order.asc("plz"))
+					;
+
+			orte = new DatabaseAccess().executeCriteriaToList(dc, new Orte());
+		}
+
+		return orte;
+
+	}
+	
+	private static Orte ort = null;
+
+	/**
+	 * Get city for a given street
+	 * 
+	 * @return <code>Einen Ort</code>
+	 */
+	public static Orte getOrt(String street)
+	{
+
+//		if (ort == null)
+		{
+			DetachedCriteria dc = DetachedCriteria
+					.forClass(Strassen.class)
+					.setProjection(Projections.distinct(Projections.projectionList()
+							.add(Projections.property("ort"), "ort")
+//							.add(Projections.property("plz"), "plz")
+							))
+					.setResultTransformer(Transformers.aliasToBean(Orte.class))
+					.add(Restrictions.ilike("strasse", street,
+							MatchMode.START))
+					.addOrder(Order.asc("ort"))
+//					.addOrder(Order.asc("plz"))
+					;
+
+			ort = new DatabaseAccess().executeCriteriaToUniqueResult(dc, new Orte());
+		}
+
+		return ort;
+
+	}
 
 
 	/* ********************************************************************** */

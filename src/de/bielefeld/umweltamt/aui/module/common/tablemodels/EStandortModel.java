@@ -51,10 +51,10 @@ public class EStandortModel extends ListTableModel {
         EStandort standort = (EStandort) objectAtRow;
         switch(columnIndex) {
             case 0:
-                value = standort.getNr();
+                value = standort.getId().getNr();
                 break;
             case 1:
-            	value = standort.getAdresse().getStrasse();
+            	value = standort.getId().getAdresse().getStrasse();
             	break;
             case 2:
             	value = standort.getAdresse().getPlzZst();
@@ -63,10 +63,10 @@ public class EStandortModel extends ListTableModel {
             	value = standort.getAdresse().getOrtZst();
             	break;
             case 4:
-            	value = standort.getFlur();
+            	value = standort.getId().getFlur();
             	break;
             case 5:
-            	value = standort.getFlurstuecke();
+            	value = standort.getId().getFlurstuecke();
             	break;
             default:
                 value = null;

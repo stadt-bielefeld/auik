@@ -82,7 +82,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     		Objektarten art) {
     	return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Objekt.class)
-            	.add(Restrictions.eq("basisObjektarten", art))
+            	.add(Restrictions.eq("objektarten", art))
                 .add(Restrictions.eq("inaktiv", false)),
             new Objekt());
                 

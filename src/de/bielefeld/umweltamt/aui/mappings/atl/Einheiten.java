@@ -280,6 +280,11 @@ public class Einheiten  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Einheiten());
     }
 
+	public String toGuiString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     /* Custom code goes below here! */
 
 }

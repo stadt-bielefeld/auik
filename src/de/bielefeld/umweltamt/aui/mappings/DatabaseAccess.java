@@ -403,7 +403,7 @@ public class DatabaseAccess
 			if (!(this.criteria.toString().contains(
 					"de.bielefeld.umweltamt.aui.mappings.elka"))
 				&& !(this.criteria.toString().contains(
-					"de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets")))
+					"de.bielefeld.umweltamt.aui.mappings.basis.TabStreets")))
 			{
 				this.criteria.add(Restrictions.eq("deleted", false));
 			}

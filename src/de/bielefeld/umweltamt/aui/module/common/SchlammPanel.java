@@ -81,11 +81,11 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -105,7 +105,7 @@ public class SchlammPanel extends JPanel {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    private AtlProbeart art;
+    private Probeart art;
 
     private HauptFrame frame;
 
@@ -115,7 +115,7 @@ public class SchlammPanel extends JPanel {
      * Wird benutzt, um nach dem Bearbeiten etc. wieder die selbe Probe in der
      * Liste auszuwählen.
      */
-    private AtlProbenahmen lastProbe;
+    private Probenahme lastProbe;
 
     private Action probeEditAction;
     private Action probeLoeschAction;
@@ -130,7 +130,7 @@ public class SchlammPanel extends JPanel {
 
     private JPopupMenu probePopup;
 
-    public SchlammPanel(AtlProbeart art, HauptFrame frame) {
+    public SchlammPanel(Probeart art, HauptFrame frame) {
         super(new FormLayout("pref, 4dlu, pref:grow", // spalten
                 "pref, 3dlu, 140dlu:grow, 3dlu, pref"));// zeilen
 
@@ -171,11 +171,11 @@ public class SchlammPanel extends JPanel {
     }
 
     public void updateProbeListe() {
-        AtlKlaeranlagen ka = (AtlKlaeranlagen) getAnlageBox().getSelectedItem();
+        Klaeranlage ka = (Klaeranlage) getAnlageBox().getSelectedItem();
         setKlaeranlage(ka, art);
     }
 
-    public void setKlaeranlage(final AtlKlaeranlagen ka, final AtlProbeart art) {
+    public void setKlaeranlage(final Klaeranlage ka, final Probeart art) {
         SwingWorkerVariant worker = new SwingWorkerVariant(getProbeTabelle()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
@@ -217,7 +217,7 @@ public class SchlammPanel extends JPanel {
     /**
      * Bearbeitet eine Probenahme.
      */
-    public void editProbenahme(AtlProbenahmen probe) {
+    public void editProbenahme(Probenahme probe) {
         ProbenEditor editDialog = new ProbenEditor(probe, frame, false);
 
         editDialog.setVisible(true);
@@ -233,17 +233,17 @@ public class SchlammPanel extends JPanel {
     public void neueProbenahme(String kennNummer, Timestamp datum) {
         boolean exists = DatabaseQuery.probenahmeExists(kennNummer);
         if (!exists) {
-            AtlProbenahmen probe = new AtlProbenahmen();
+            Probenahme probe = new Probenahme();
             probe.setKennummer(kennNummer);
             probe.setDatumDerEntnahme(datum);
-            probe.setAtlAnalysepositions(new HashSet<AtlAnalyseposition>());
-            AtlProbepkt pkt;
-            AtlKlaeranlagen ka = (AtlKlaeranlagen) getAnlageBox()
+            probe.setAnalysepositions(new HashSet<Analyseposition>());
+            Messstelle pkt;
+            Klaeranlage ka = (Klaeranlage) getAnlageBox()
                     .getSelectedItem();
             pkt = DatabaseQuery.getKlaerschlammProbepunkt(art, ka);
 
             if (pkt != null) {
-                probe.setAtlProbepkt(pkt);
+                probe.setMessstelle(pkt);
                 ProbenEditor editDialog = new ProbenEditor(probe, frame, true);
                 editDialog.setVisible(true);
 
@@ -281,7 +281,7 @@ public class SchlammPanel extends JPanel {
                     // Natürlich nur editieren, wenn wirklich eine Zeile
                     // ausgewählt ist
                     if (row != -1) {
-                        AtlProbenahmen probe = probeModel.getRow(row);
+                        Probenahme probe = probeModel.getRow(row);
                         editProbenahme(probe);
                     }
                 }
@@ -304,7 +304,7 @@ public class SchlammPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     int row = getProbeTabelle().getSelectedRow();
                     if (row != -1 && getProbeTabelle().getEditingRow() == -1) {
-                        AtlProbenahmen probe = probeModel.getRow(row);
+                        Probenahme probe = probeModel.getRow(row);
                         if (GUIManager.getInstance()
                                 .showQuestion(
                                         "Soll die Probenahme '"
@@ -407,7 +407,7 @@ public class SchlammPanel extends JPanel {
                         Point origin = e.getPoint();
                         int row = getProbeTabelle().rowAtPoint(origin);
 
-                        AtlProbenahmen probe = probeModel.getRow(row);
+                        Probenahme probe = probeModel.getRow(row);
                         editProbenahme(probe);
                     }
                 }

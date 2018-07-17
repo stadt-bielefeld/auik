@@ -83,6 +83,15 @@
         <property name="erstellDat" type="java.util.Date">
             <column name="erstell_dat" length="13" />
         </property>
+        <property name="datenschutzAwsv" type="boolean">
+            <column name="datenschutz_awsv" not-null="true" />
+        </property>
+        <property name="datenschutzEsatzung" type="boolean">
+            <column name="datenschutz_esatzung" not-null="true" />
+        </property>
+        <property name="datenschutzWhg" type="boolean">
+            <column name="datenschutz_whg" not-null="true" />
+        </property>
         <set name="objektsForStandortid" table="objekt" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="standortid" />

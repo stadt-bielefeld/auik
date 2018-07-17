@@ -328,6 +328,11 @@ public class Entsorger  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Entsorger());
     }
 
+	public String toGuiString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     /* Custom code goes below here! */
 
 }

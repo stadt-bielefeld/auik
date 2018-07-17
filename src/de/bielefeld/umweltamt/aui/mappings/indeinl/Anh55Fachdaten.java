@@ -558,4 +558,14 @@ public class Anh55Fachdaten  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    public static Anh55Fachdaten findByObjektId(java.lang.Integer id){
+        log.debug("Getting Anh55Fachdaten instance with connected BasisObjekt with id: " + id);
+        List<Anh55Fachdaten> all = Anh55Fachdaten.getAll();
+        for(Anh55Fachdaten i : all){
+            if(i.getObjekt().getId().equals(id)){
+                return (Anh55Fachdaten) new DatabaseAccess().get(Anh55Fachdaten.class, i.getId());
+            }
+        }
+        return null;
+    }
 }

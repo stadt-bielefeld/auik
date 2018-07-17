@@ -46,7 +46,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -71,19 +71,19 @@ public class AnhBwkModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        AnhBwkFachdaten fachdaten = (AnhBwkFachdaten) objectAtRow;
+        BwkFachdaten fachdaten = (BwkFachdaten) objectAtRow;
         Object result = null;
 
         switch (columnIndex) {
             case 0:
-                String anrede = fachdaten.getBasisObjekt().getBasisAdresse()
+                String anrede = fachdaten.getObjekt().getAdresseByBetreiberid()
                     .getBetranrede();
                 result = (anrede != null? anrede + " " : "")
-                    + fachdaten.getBasisObjekt().getBasisAdresse()
+                    + fachdaten.getObjekt().getAdresseByBetreiberid()
                         .getBetrname();
                 break;
             case 1:
-                result = DatabaseQuery.getStandortString(fachdaten.getBasisObjekt().getBasisStandort());;
+                result = DatabaseQuery.getStandortString(fachdaten.getObjekt().getAdresseByStandortid());
                 break;
             case 2: result = fachdaten.getKHersteller();  break;
             case 3: result = fachdaten.getKBrennmittel(); break;
@@ -92,12 +92,12 @@ public class AnhBwkModel extends ListTableModel {
             case 6: return fachdaten.getAnschreiben();
             case 7: return fachdaten.getDatumG();
             case 8:
-                result = fachdaten.getBasisObjekt().getBeschreibung();
+                result = fachdaten.getObjekt().getBeschreibung();
                 break;
             default: result = "ERROR";                    break;
         }
 
-        if (result != null && fachdaten.getBasisObjekt().isInaktiv()) {
+        if (result != null && fachdaten.getObjekt().isInaktiv()) {
             result = StringUtils.setStrike(result.toString());
         }
         return result;

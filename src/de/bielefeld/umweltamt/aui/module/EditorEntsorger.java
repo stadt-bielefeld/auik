@@ -66,7 +66,7 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorEntsorgerModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -280,7 +280,7 @@ public class EditorEntsorger extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     int row = getResultTable().getSelectedRow();
                     if (row != -1 && getResultTable().getEditingRow() == -1) {
-                    	AnhEntsorger entsorger = EditorEntsorger.this.tmodel
+                    	Entsorger entsorger = EditorEntsorger.this.tmodel
                             .getRow(row);
 
                         if (GUIManager.getInstance().showQuestion(

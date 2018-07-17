@@ -357,5 +357,15 @@ public class Sachbearbeiter  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+    
+	public static Sachbearbeiter findByKennummer(String nr){
+		List<Sachbearbeiter> list = Sachbearbeiter.getAll();
+		for(int i=0; i<list.size(); i++){
+			if(list.get(i).getKennummer().equals(nr)){
+				return list.get(i);
+			}
+		}
+		return null;
+	}
 
 }

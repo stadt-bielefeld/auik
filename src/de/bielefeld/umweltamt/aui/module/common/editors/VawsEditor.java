@@ -103,15 +103,15 @@ import com.jgoodies.uif_lite.component.Factory;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsAbfuellflaeche;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsAbscheider;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsAnlagenchrono;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsGebuehrenarten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsJgs;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsKontrollen;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsVerwaltungsgebuehren;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsVerwaltungsverf;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Abscheider;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Gebuehrenarten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Jgs;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Kontrollen;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsgebuehren;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
@@ -132,9 +132,9 @@ public class VawsEditor extends AbstractBaseEditor {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    private VawsAbfuellflaeche abfuellflaeche;
-    private VawsAbscheider abscheider;
-    private VawsJgs jgs;
+    private Abfuellflaeche abfuellflaeche;
+    private Abscheider abscheider;
+    private Jgs jgs;
 
     private JPanel topPanel;
     private JTabbedPane tabbedPane;
@@ -323,7 +323,7 @@ public class VawsEditor extends AbstractBaseEditor {
     /**
      * Erzeugt einen neuen Dialog zum Bearbeiten von VAWS-Fachdaten.
      */
-    public VawsEditor(VawsFachdaten fachdaten, HauptFrame owner) {
+    public VawsEditor(Fachdaten fachdaten, HauptFrame owner) {
         //super("VAwS-Einzelanlage (" + fachdaten + ")", fachdaten, owner);
         super("VAwS-Einzelanlage " + (fachdaten.getBehaelterid() == null ? "(Neu)" : fachdaten.getBehaelterid().toString()), fachdaten, owner);
     }
@@ -333,7 +333,7 @@ public class VawsEditor extends AbstractBaseEditor {
      * Schaltet zu einem bestimmten Tab um.
      * @param tab "Sachverständigenprüfung", "Verwaltungsverfahren" oder "Herstellnummer"
      */
-    public VawsEditor(VawsFachdaten fachdaten, HauptFrame owner, String tab) {
+    public VawsEditor(Fachdaten fachdaten, HauptFrame owner, String tab) {
         this(fachdaten, owner);
         if ("Sachverständigenprüfung".equals(tab)) {
             tabbedPane.setSelectedComponent(getSvPruefungTab());
@@ -369,16 +369,16 @@ public class VawsEditor extends AbstractBaseEditor {
      * Liefert das bearbeitete Objekt.
      * @return Ein VawsFachdaten-Objekt.
      */
-    public VawsFachdaten getFachdaten() {
-        return (VawsFachdaten) getEditedObject();
+    public Fachdaten getFachdaten() {
+        return (Fachdaten) getEditedObject();
     }
 
-    public VawsAbscheider getAbscheider() {
+    public Abscheider getAbscheider() {
         if (abscheider == null) {
-            abscheider = VawsAbscheider.findByBehaelterid(getFachdaten().getBehaelterid());
+            abscheider = Abscheider.findByBehaelterid(getFachdaten().getBehaelterid());
             if (abscheider == null) {
-                abscheider = new VawsAbscheider();
-                abscheider.setVawsFachdaten(getFachdaten());
+                abscheider = new Abscheider();
+                abscheider.setFachdaten(getFachdaten());
             }
         }
         return abscheider;
@@ -389,12 +389,12 @@ public class VawsEditor extends AbstractBaseEditor {
      * Achtung: Nur bei Abfüllflächen-Objekten aufrufen!
      * @return Ein VawsAbfuellflaechen-Objekt
      */
-    private VawsAbfuellflaeche getAbfuellflaeche() {
+    private Abfuellflaeche getAbfuellflaeche() {
         if (abfuellflaeche == null) {
-            abfuellflaeche = VawsAbfuellflaeche.findByBehaelterid(getFachdaten().getBehaelterid());
+            abfuellflaeche = Abfuellflaeche.findByBehaelterid(getFachdaten().getBehaelterid());
             if (abfuellflaeche == null) {
-                abfuellflaeche = new VawsAbfuellflaeche();
-                abfuellflaeche.setVawsFachdaten(getFachdaten());
+                abfuellflaeche = new Abfuellflaeche();
+                abfuellflaeche.setFachdaten(getFachdaten());
             }
         }
         return abfuellflaeche;
@@ -405,12 +405,12 @@ public class VawsEditor extends AbstractBaseEditor {
      * Achtung: Nur bei Abfüllflächen-Objekten aufrufen!
      * @return Ein VawsAbfuellflaechen-Objekt
      */
-    private VawsJgs getJgs() {
+    private Jgs getJgs() {
         if (jgs == null) {
-        	jgs = VawsJgs.findByBehaelterid(getFachdaten().getBehaelterid());
+        	jgs = Jgs.findByBehaelterid(getFachdaten().getBehaelterid());
             if (jgs == null) {
-            	jgs = new VawsJgs();
-            	jgs.setVawsFachdaten(getFachdaten());
+            	jgs = new Jgs();
+            	jgs.setFachdaten(getFachdaten());
             }
         }
         return jgs;
@@ -431,7 +431,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
         hnrFeld = new LimitedTextField(100);
 
-        fluessigkeitBox = new JComboBox(DatabaseQuery.getVawsFluessigkeiten());
+        fluessigkeitBox = new JComboBox(DatabaseQuery.getFluessigkeiten());
         fluessigkeitBox.setEditable(true);
         //fluessigkeitBox.setPrototypeDisplayValue("Lösungsmittelrückstände");
 
@@ -439,7 +439,7 @@ public class VawsEditor extends AbstractBaseEditor {
         vbfBox.setEditable(false);
         //vbfBox.setPrototypeDisplayValue(" A III ");
 
-        gefStufeBox = new JComboBox(DatabaseQuery.getVawsGefaehrdungsstufen());
+        gefStufeBox = new JComboBox(DatabaseQuery.getGefaehrdungsstufen());
         gefStufeBox.setEditable(false);
         //gefStufeBox.setPrototypeDisplayValue(" A ");
 
@@ -461,10 +461,10 @@ public class VawsEditor extends AbstractBaseEditor {
         aktenzeichenField = new LimitedTextField(50);
         pruefTurnusFeld = new DoubleField(0);
 
-        behaelterArtBox = new JComboBox(DatabaseQuery.getVawsBehaelterarten());
+        behaelterArtBox = new JComboBox(DatabaseQuery.getBehaelterarten());
         behaelterArtBox.setEditable(false);
 
-        materialBox = new JComboBox(DatabaseQuery.getVawsMaterialien());
+        materialBox = new JComboBox(DatabaseQuery.getMaterialien());
         // TODO: Material-Box editable / Tabelleninhalt?
         materialBox.setEditable(true);
         bemerkungArea = new LimitedTextArea(1000);
@@ -538,10 +538,10 @@ public class VawsEditor extends AbstractBaseEditor {
         wandhoeheFeld = new IntegerField();
         bodenplatteFeld = new LimitedTextField(25);
         ueberdachungCheck = new JCheckBox("Überdachung");
-        auffangbehBox = new JComboBox(DatabaseQuery.getVawsBehaelterarten());
+        auffangbehBox = new JComboBox(DatabaseQuery.getBehaelterarten());
         auffangbehBox.setEditable(false);
         volumenAuffangbehFeld = new DoubleField(0);
-        rohrleitungBox = new JComboBox(DatabaseQuery.getVawsBehaelterarten());
+        rohrleitungBox = new JComboBox(DatabaseQuery.getBehaelterarten());
         rohrleitungBox.setEditable(false);
         dichtheitChooser = new TextFieldDateChooser();
         drainageCheck = new JCheckBox("Kontrolldrainage");
@@ -627,7 +627,7 @@ public class VawsEditor extends AbstractBaseEditor {
         svPruefungTabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
 
         // Für die ComboBox bei "Prüfer"
-        prueferBox = new JComboBox(DatabaseQuery.getVawsPruefer());
+        prueferBox = new JComboBox(DatabaseQuery.getPruefer());
         prueferBox.setEditable(false);
         prueferBox.addFocusListener(new FocusAdapter() {
             @Override
@@ -640,7 +640,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
         // Für die ComboBox bei "Prüfergebnis"
         pruefergebnisBox = new JComboBox(
-            DatabaseQuery.getVawsPruefergebnisse());
+            DatabaseQuery.getPruefergebniss());
         pruefergebnisBox.setEditable(false);
         pruefergebnisBox.addFocusListener(new FocusAdapter() {
             @Override
@@ -719,7 +719,7 @@ public class VawsEditor extends AbstractBaseEditor {
         verwGebuehrenTabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
 
         // Für die ComboBox bei "Gebührenart"
-        gebArtenBox = new JComboBox(DatabaseQuery.getVawsGebuehrenarten());
+        gebArtenBox = new JComboBox(DatabaseQuery.getGebuehrenarten());
         gebArtenBox.setEditable(false);
         gebArtenBox.addFocusListener(new FocusAdapter() {
             @Override
@@ -803,7 +803,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
         if (getFachdaten().getAnlagenart().equals(
             DatabaseConstants.VAWS_ANLAGENART_VAWS_ABSCHEIDER)) {
-        	VawsAbscheider abs = this.getAbscheider();
+        	Abscheider abs = this.getAbscheider();
             tabbedPane.addTab("Daten", getDatenVAWSAbscheiderTab());
             tabbedPane.addTab("Ausführung", getAusfuehrungVAWSAbscheiderTab());
             tabbedPane.addTab("Schutzvorkehrungen", getSchutzvorkehrungenVAWSAbscheiderTab());
@@ -1008,7 +1008,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
         } else if (getFachdaten().getAnlagenart().equals(
             DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)) {
-        	VawsAbfuellflaeche flaeche = this.getAbfuellflaeche();
+        	Abfuellflaeche flaeche = this.getAbfuellflaeche();
             tabbedPane.addTab("Daten", getDatenAbfuellflaechenTab());
             tabbedPane.addTab("Ausführung", getAusfuehrungAbfuellflaechenTab());
 
@@ -1058,9 +1058,9 @@ public class VawsEditor extends AbstractBaseEditor {
 
             mengeFeld.setValue(getFachdaten().getMenge());
             lagerflaecheFeld.setValue(getJgs().getLagerflaeche());
-            abstandGewFeld.setValue(getJgs().getGewaesser_abstand());
-            gewNameFeld.setText(getJgs().getGewaesser_name());
-            abstandBrunnenFeld.setValue(getJgs().getBrunnen_abstand());
+            abstandGewFeld.setValue(getJgs().getGewaesserAbstand());
+            gewNameFeld.setText(getJgs().getGewaesserName());
+            abstandBrunnenFeld.setValue(getJgs().getBrunnenAbstand());
             tierhaltungFeld.setText(getJgs().getTierhaltung());
                         
             if(getJgs().getSeitenwaende()!=null)
@@ -1077,7 +1077,7 @@ public class VawsEditor extends AbstractBaseEditor {
 				ueberdachungCheck.setSelected(false);    
 			
 			auffangbehBox.setSelectedItem(getJgs().getAuffangbeh());
-			volumenAuffangbehFeld.setValue(getJgs().getVolumen_auffangbeh());
+			volumenAuffangbehFeld.setValue(getJgs().getVolumenAuffangbeh());
 			rohrleitungBox.setSelectedItem(getJgs().getRohrleitung());
 	        dichtheitChooser.setDate(getJgs().getDichtheitspruefung());
 
@@ -1101,8 +1101,8 @@ public class VawsEditor extends AbstractBaseEditor {
 			else
 				abdeckungCheck.setSelected(false);  
 
-			if (getJgs().getLeitung_geprueft() != null)
-				leitung_geprueftCheck.setSelected(getJgs().getLeitung_geprueft());
+			if (getJgs().getLeitungGeprueft() != null)
+				leitung_geprueftCheck.setSelected(getJgs().getLeitungGeprueft());
 			else
 				leitung_geprueftCheck.setSelected(false);  
             
@@ -1218,7 +1218,7 @@ public class VawsEditor extends AbstractBaseEditor {
         }
 
         success = success && getFachdaten().merge();
-        setEditedObject(VawsFachdaten.findById(getFachdaten().getBehaelterid()));
+        setEditedObject(Fachdaten.findById(getFachdaten().getBehaelterid()));
 
         // Für Abfüllflächen (wg. dem VawsAbfuellflaechen-Objekt)
         if (getFachdaten().getAnlagenart().equals(
@@ -1290,22 +1290,22 @@ public class VawsEditor extends AbstractBaseEditor {
             getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GHB)) {
          
         	getJgs().setBodenplatte((String)bodenflaechenAusfBox.getSelectedItem());
-        	getJgs().setBrunnen_abstand(abstandBrunnenFeld.getIntValue());
-        	getJgs().setGewaesser_abstand(abstandGewFeld.getIntValue());
-        	getJgs().setGewaesser_name(gewNameFeld.getText());
+        	getJgs().setBrunnenAbstand(abstandBrunnenFeld.getIntValue());
+        	getJgs().setGewaesserAbstand(abstandGewFeld.getIntValue());
+        	getJgs().setGewaesserName(gewNameFeld.getText());
         	getJgs().setLagerflaeche(lagerflaecheFeld.getIntValue());   
         	getJgs().setSeitenwaende(seitenwandCheck.isSelected());
         	getJgs().setTierhaltung(tierhaltungFeld.getText());
         	getJgs().setWandhoehe(wandhoeheFeld.getIntValue());
         	getJgs().setAuffangbeh((String)auffangbehBox.getSelectedItem());
-        	getJgs().setVolumen_auffangbeh(volumenAuffangbehFeld.getDoubleValue());
+        	getJgs().setVolumenAuffangbeh(volumenAuffangbehFeld.getDoubleValue());
         	getJgs().setRohrleitung((String)rohrleitungBox.getSelectedItem());
         	getJgs().setDichtheitspruefung(dichtheitChooser.getDate());
         	getJgs().setDrainage(drainageCheck.isSelected());
         	getJgs().setFuellanzeiger(fuellanzeigerCheck.isSelected());
         	getJgs().setSchieber(schieberCheck.isSelected());
         	getJgs().setAbdeckung(abdeckungCheck.isSelected());
-        	getJgs().setLeitung_geprueft(leitung_geprueftCheck.isSelected());
+        	getJgs().setLeitungGeprueft(leitung_geprueftCheck.isSelected());
         	
         	
 
@@ -1313,9 +1313,9 @@ public class VawsEditor extends AbstractBaseEditor {
         }
         // Anlagenchronologie speichern:
         for (Iterator<?> it = anlagenChronoModel.getList().iterator(); it.hasNext();) {
-            success = success && ((VawsAnlagenchrono) it.next()).merge();
+            success = success && ((Anlagenchrono) it.next()).merge();
         }
-        for (Iterator<VawsAnlagenchrono> it = anlagenChronoModel.getGeloeschte().iterator(); it.hasNext();) {
+        for (Iterator<Anlagenchrono> it = anlagenChronoModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && it.next().delete();
         }
         log.debug(anlagenChronoModel.getList().size()
@@ -1325,9 +1325,9 @@ public class VawsEditor extends AbstractBaseEditor {
 
         // Sachverständigenprüfung speichern:
         for (Iterator<?> it = svPruefungModel.getList().iterator(); it.hasNext();) {
-            success = success && ((VawsKontrollen) it.next()).merge();
+            success = success && ((Kontrollen) it.next()).merge();
         }
-        for (Iterator<VawsKontrollen> it = svPruefungModel.getGeloeschte().iterator(); it.hasNext();) {
+        for (Iterator<Kontrollen> it = svPruefungModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && it.next().delete();
         }
         log.debug(svPruefungModel.getList().size()
@@ -1337,9 +1337,9 @@ public class VawsEditor extends AbstractBaseEditor {
 
         // Verwaltungsverfahren speichern:
         for (Iterator<?> it = verwVerfahrenModel.getList().iterator(); it.hasNext();) {
-            success = success && ((VawsVerwaltungsverf) it.next()).merge();
+            success = success && ((Verwaltungsverf) it.next()).merge();
         }
-        for (Iterator<VawsVerwaltungsverf> it = verwVerfahrenModel.getGeloeschte().iterator(); it.hasNext();) {
+        for (Iterator<Verwaltungsverf> it = verwVerfahrenModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && it.next().delete();
         }
         log.debug(verwVerfahrenModel.getList().size()
@@ -1349,9 +1349,9 @@ public class VawsEditor extends AbstractBaseEditor {
 
         // Verwaltunggebühren speichern:
         for (Iterator<?> it = verwGebuehrenModel.getList().iterator(); it.hasNext();) {
-            success = success && ((VawsVerwaltungsgebuehren) it.next()).merge();
+            success = success && ((Verwaltungsgebuehren) it.next()).merge();
         }
-        for (Iterator<VawsVerwaltungsgebuehren> it = verwGebuehrenModel.getGeloeschte().iterator(); it.hasNext();) {
+        for (Iterator<Verwaltungsgebuehren> it = verwGebuehrenModel.getGeloeschte().iterator(); it.hasNext();) {
             success = success && it.next().delete();
         }
         log.debug(verwGebuehrenModel.getList().size()
@@ -2020,8 +2020,8 @@ public class VawsEditor extends AbstractBaseEditor {
  */
 class VawsAnlagenChronoModel extends EditableListTableModel {
     private static final long serialVersionUID = -2520120636324926275L;
-    private List<VawsAnlagenchrono> geloeschte;
-    private VawsFachdaten fachdaten;
+    private List<Anlagenchrono> geloeschte;
+    private Fachdaten fachdaten;
 
     /**
      * Erzeugt ein einfaches TableModel für die Vaws-Anlagenchronologie.
@@ -2034,14 +2034,14 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
                 "abgeschl."
         },
         false, true);
-        geloeschte = new ArrayList<VawsAnlagenchrono>();
+        geloeschte = new ArrayList<Anlagenchrono>();
     }
 
     /**
      * Setzt das Fachdaten-Objekt und aktualisiert die Tabelle.
      * @param fachdaten Das Fachdaten-Objekt
      */
-    public void setFachdaten(VawsFachdaten fachdaten) {
+    public void setFachdaten(Fachdaten fachdaten) {
         this.fachdaten = fachdaten;
 
         if (fachdaten != null) {
@@ -2052,7 +2052,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 
     @Override
     public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-        VawsAnlagenchrono chrono = (VawsAnlagenchrono) objectAtRow;
+        Anlagenchrono chrono = (Anlagenchrono) objectAtRow;
         String tmp = "";
         if (newValue instanceof String) {
             tmp = (String) newValue;
@@ -2100,22 +2100,22 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 
     @Override
     public Object newObject() {
-        VawsAnlagenchrono chr = new VawsAnlagenchrono();
-        chr.setVawsFachdaten(fachdaten);
+        Anlagenchrono chr = new Anlagenchrono();
+        chr.setFachdaten(fachdaten);
         chr.setDatum(new Date());
         return chr;
     }
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        VawsAnlagenchrono chrono = (VawsAnlagenchrono) objectAtRow;
+        Anlagenchrono chrono = (Anlagenchrono) objectAtRow;
         if (chrono.getId() != null) {
             geloeschte.add(chrono);
         }
         return true;
     }
 
-    public List<VawsAnlagenchrono> getGeloeschte() {
+    public List<Anlagenchrono> getGeloeschte() {
         return geloeschte;
     }
 
@@ -2124,7 +2124,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        VawsAnlagenchrono ac = (VawsAnlagenchrono) objectAtRow;
+        Anlagenchrono ac = (Anlagenchrono) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -2168,8 +2168,8 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
      * @param row Die Zeile der Tabelle.
      * @return Den Datensatz, der in dieser Zeile angezeigt wird.
      */
-    public VawsAnlagenchrono getDatenSatz(int row) {
-        return (VawsAnlagenchrono) getObjectAtRow(row);
+    public Anlagenchrono getDatenSatz(int row) {
+        return (Anlagenchrono) getObjectAtRow(row);
     }
 
     /*
@@ -2188,8 +2188,8 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
  */
 class VawsKontrollenModel extends EditableListTableModel {
     private static final long serialVersionUID = 1747805482011126348L;
-    private List<VawsKontrollen> geloeschte;
-    private VawsFachdaten fachdaten;
+    private List<Kontrollen> geloeschte;
+    private Fachdaten fachdaten;
 
     /**
      * Erzeugt ein einfaches TableModel für die Vaws-Kontrollen.
@@ -2203,14 +2203,14 @@ class VawsKontrollenModel extends EditableListTableModel {
                 "Prfg. abgeschl."
         },
         false, true);
-        geloeschte = new ArrayList<VawsKontrollen>();
+        geloeschte = new ArrayList<Kontrollen>();
     }
 
     /**
      * Setzt das Fachdaten-Objekt und aktualisiert die Tabelle.
      * @param fachdaten Das Fachdaten-Objekt
      */
-    public void setFachdaten(VawsFachdaten fachdaten) {
+    public void setFachdaten(Fachdaten fachdaten) {
         this.fachdaten = fachdaten;
 
         if (fachdaten != null) {
@@ -2221,7 +2221,7 @@ class VawsKontrollenModel extends EditableListTableModel {
 
     @Override
     public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-        VawsKontrollen ktrl = (VawsKontrollen) objectAtRow;
+        Kontrollen ktrl = (Kontrollen) objectAtRow;
         String tmp = "";
         if (newValue instanceof String) {
             tmp = (String) newValue;
@@ -2268,8 +2268,8 @@ class VawsKontrollenModel extends EditableListTableModel {
 
     @Override
     public Object newObject() {
-        VawsKontrollen ktr = new VawsKontrollen();
-        ktr.setVawsFachdaten(fachdaten);
+        Kontrollen ktr = new Kontrollen();
+        ktr.setFachdaten(fachdaten);
         ktr.setPruefdatum(new Date());
         ktr.setPruefungabgeschlossen(false);
         return ktr;
@@ -2277,14 +2277,14 @@ class VawsKontrollenModel extends EditableListTableModel {
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        VawsKontrollen ktr = (VawsKontrollen) objectAtRow;
+        Kontrollen ktr = (Kontrollen) objectAtRow;
         if (ktr.getId() != null) {
             geloeschte.add(ktr);
         }
         return true;
     }
 
-    public List<VawsKontrollen> getGeloeschte() {
+    public List<Kontrollen> getGeloeschte() {
         return geloeschte;
     }
 
@@ -2293,7 +2293,7 @@ class VawsKontrollenModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        VawsKontrollen ac = (VawsKontrollen) objectAtRow;
+        Kontrollen ac = (Kontrollen) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -2341,8 +2341,8 @@ class VawsKontrollenModel extends EditableListTableModel {
      * @param row Die Zeile der Tabelle.
      * @return Den Datensatz, der in dieser Zeile angezeigt wird.
      */
-    public VawsKontrollen getDatenSatz(int row) {
-        return (VawsKontrollen) getObjectAtRow(row);
+    public Kontrollen getDatenSatz(int row) {
+        return (Kontrollen) getObjectAtRow(row);
     }
 
     /*
@@ -2360,8 +2360,8 @@ class VawsKontrollenModel extends EditableListTableModel {
  */
 class VerwVerfahrenModel extends EditableListTableModel {
     private static final long serialVersionUID = -7932308301889587228L;
-    private List<VawsVerwaltungsverf> geloeschte;
-    private VawsFachdaten fachdaten;
+    private List<Verwaltungsverf> geloeschte;
+    private Fachdaten fachdaten;
 
     /**
      * Erzeugt ein einfaches TableModel für die Vaws-Verwaltungsverfahren.
@@ -2374,25 +2374,25 @@ class VerwVerfahrenModel extends EditableListTableModel {
                 "abgeschl."
         },
         false, true);
-        geloeschte = new ArrayList<VawsVerwaltungsverf>();
+        geloeschte = new ArrayList<Verwaltungsverf>();
     }
 
     /**
      * Setzt das Fachdaten-Objekt und aktualisiert die Tabelle.
      * @param fachdaten Das Fachdaten-Objekt
      */
-    public void setFachdaten(VawsFachdaten fachdaten) {
+    public void setFachdaten(Fachdaten fachdaten) {
         this.fachdaten = fachdaten;
 
         if (fachdaten != null) {
-            setList(DatabaseQuery.getVawsVerwaltungsverf(fachdaten));
+            setList(DatabaseQuery.getVerwaltungsverf(fachdaten));
             fireTableDataChanged();
         }
     }
 
     @Override
     public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-        VawsVerwaltungsverf verf = (VawsVerwaltungsverf) objectAtRow;
+        Verwaltungsverf verf = (Verwaltungsverf) objectAtRow;
         String tmp = "";
         if (newValue instanceof String) {
             tmp = (String) newValue;
@@ -2436,8 +2436,8 @@ class VerwVerfahrenModel extends EditableListTableModel {
 
     @Override
     public Object newObject() {
-        VawsVerwaltungsverf verf = new VawsVerwaltungsverf();
-        verf.setVawsFachdaten(fachdaten);
+        Verwaltungsverf verf = new Verwaltungsverf();
+        verf.setFachdaten(fachdaten);
         verf.setWvverwverf(false);
         verf.setDatum(new Date());
         return verf;
@@ -2445,14 +2445,14 @@ class VerwVerfahrenModel extends EditableListTableModel {
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        VawsVerwaltungsverf verf = (VawsVerwaltungsverf) objectAtRow;
+        Verwaltungsverf verf = (Verwaltungsverf) objectAtRow;
         if (verf.getId() != null) {
             geloeschte.add(verf);
         }
         return true;
     }
 
-    public List<VawsVerwaltungsverf> getGeloeschte() {
+    public List<Verwaltungsverf> getGeloeschte() {
         return geloeschte;
     }
 
@@ -2461,7 +2461,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        VawsVerwaltungsverf verf = (VawsVerwaltungsverf) objectAtRow;
+        Verwaltungsverf verf = (Verwaltungsverf) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -2505,8 +2505,8 @@ class VerwVerfahrenModel extends EditableListTableModel {
      * @param row Die Zeile der Tabelle.
      * @return Den Datensatz, der in dieser Zeile angezeigt wird.
      */
-    public VawsVerwaltungsverf getDatenSatz(int row) {
-        return (VawsVerwaltungsverf) getObjectAtRow(row);
+    public Verwaltungsverf getDatenSatz(int row) {
+        return (Verwaltungsverf) getObjectAtRow(row);
     }
 
     /*
@@ -2524,8 +2524,8 @@ class VerwVerfahrenModel extends EditableListTableModel {
  */
 class VerwGebuehrenModel extends EditableListTableModel {
     private static final long serialVersionUID = 8662150283828728780L;
-    private List<VawsVerwaltungsgebuehren> geloeschte;
-    private VawsFachdaten fachdaten;
+    private List<Verwaltungsgebuehren> geloeschte;
+    private Fachdaten fachdaten;
 
     /**
      * Erzeugt ein einfaches TableModel für Vaws-Fachdaten.
@@ -2539,25 +2539,25 @@ class VerwGebuehrenModel extends EditableListTableModel {
                 "Kassenzeichen"
         },
         false, true);
-        geloeschte = new ArrayList<VawsVerwaltungsgebuehren>();
+        geloeschte = new ArrayList<Verwaltungsgebuehren>();
     }
 
     /**
      * Setzt das Fachdaten-Objekt und aktualisiert die Tabelle.
      * @param fachdaten Das Fachdaten-Objekt
      */
-    public void setFachdaten(VawsFachdaten fachdaten) {
+    public void setFachdaten(Fachdaten fachdaten) {
         this.fachdaten = fachdaten;
 
         if (fachdaten != null) {
-            setList(DatabaseQuery.getVawsVerwaltungsgebuehren(fachdaten));
+            setList(DatabaseQuery.getVerwaltungsgebuehren(fachdaten));
             fireTableDataChanged();
         }
     }
 
     @Override
     public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-        VawsVerwaltungsgebuehren gebuehr = (VawsVerwaltungsgebuehren) objectAtRow;
+        Verwaltungsgebuehren gebuehr = (Verwaltungsgebuehren) objectAtRow;
         String tmp = "";
         if (newValue instanceof String) {
             tmp = (String) newValue;
@@ -2575,7 +2575,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
             }
             break;
         case 1:
-            gebuehr.setVawsGebuehrenarten((VawsGebuehrenarten) newValue);
+            gebuehr.setGebuehrenarten((Gebuehrenarten) newValue);
             break;
         case 2:
             Float tmpWert = null;
@@ -2600,24 +2600,24 @@ class VerwGebuehrenModel extends EditableListTableModel {
 
     @Override
     public Object newObject() {
-        VawsVerwaltungsgebuehren gebuehr = new VawsVerwaltungsgebuehren();
+        Verwaltungsgebuehren gebuehr = new Verwaltungsgebuehren();
         gebuehr.setBetrag(new Float(0.0));
         gebuehr.setAbschnitt("360.12 LW");
-        gebuehr.setVawsFachdaten(fachdaten);
+        gebuehr.setFachdaten(fachdaten);
         gebuehr.setDatum(new Date());
         return gebuehr;
     }
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        VawsVerwaltungsgebuehren gebuehr = (VawsVerwaltungsgebuehren) objectAtRow;
+        Verwaltungsgebuehren gebuehr = (Verwaltungsgebuehren) objectAtRow;
         if (gebuehr.getId() != null) {
             geloeschte.add(gebuehr);
         }
         return true;
     }
 
-    public List<VawsVerwaltungsgebuehren> getGeloeschte() {
+    public List<Verwaltungsgebuehren> getGeloeschte() {
         return geloeschte;
     }
 
@@ -2626,7 +2626,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        VawsVerwaltungsgebuehren gebuehr = (VawsVerwaltungsgebuehren) objectAtRow;
+        Verwaltungsgebuehren gebuehr = (Verwaltungsgebuehren) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -2636,7 +2636,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
             break;
         // Gebührenart:
         case 1:
-            tmp = gebuehr.getVawsGebuehrenarten();
+            tmp = gebuehr.getGebuehrenarten();
             break;
         // Betrag:
         case 2:
@@ -2663,7 +2663,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex == 1) {
-            return VawsGebuehrenarten.class;
+            return Gebuehrenarten.class;
         } else if (columnIndex == 2) {
             return KommaDouble.class;
         } else {
@@ -2676,8 +2676,8 @@ class VerwGebuehrenModel extends EditableListTableModel {
      * @param row Die Zeile der Tabelle.
      * @return Den Datensatz, der in dieser Zeile angezeigt wird.
      */
-    public VawsVerwaltungsgebuehren getDatenSatz(int row) {
-        return (VawsVerwaltungsgebuehren) getObjectAtRow(row);
+    public Verwaltungsgebuehren getDatenSatz(int row) {
+        return (Verwaltungsgebuehren) getObjectAtRow(row);
     }
 
     /*

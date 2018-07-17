@@ -190,7 +190,12 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.awsv.Abscheider" />
         </set>
-        <one-to-one name="abfuellflaeche" class="de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche"></one-to-one>
+        <set name="abfuellflaeches" table="abfuellflaeche" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="behaelterid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche" />
+        </set>
         <set name="verwaltungsverfs" table="verwaltungsverf" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="behaelterid" />

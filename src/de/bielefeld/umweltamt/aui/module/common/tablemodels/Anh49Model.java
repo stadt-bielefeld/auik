@@ -79,10 +79,10 @@ public class Anh49Model extends ListTableModel {
 
         switch (columnIndex) {
             case 0: 
-            	tmp = fd.getBasisObjekt().getBasisAdresse().toString();
+            	tmp = fd.getObjekt().getAdresseByBetreiberid().toString();
                 break;
             case 1: 
-            	tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
+            	tmp = DatabaseQuery.getStandortString(fd.getObjekt().getAdresseByStandortid());
                 break;
             case 2: 
             	tmp = DatabaseQuery.getLetzteAnalyse(fd);
@@ -94,13 +94,13 @@ public class Anh49Model extends ListTableModel {
             	tmp = fd.getSonstigestechnik();
                 break;
             case 5: 
-            	tmp = fd.getBasisObjekt().getBasisSachbearbeiter().toString();
+            	tmp = fd.getObjekt().getSachbearbeiter().toString();
                 break;
             default: 
             	tmp = "ERROR";
             break;
         }
-        if (fd.getBasisObjekt().isInaktiv() && tmp != null && tmp instanceof Date == false) {
+        if (fd.getObjekt().isInaktiv() && tmp != null && tmp instanceof Date == false) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

@@ -21,7 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -54,7 +54,7 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        BasisSachbearbeiter bearbeiter = (BasisSachbearbeiter) objectAtRow;
+    	Sachbearbeiter bearbeiter = (Sachbearbeiter) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -95,7 +95,7 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
 		
-		BasisSachbearbeiter tmp = (BasisSachbearbeiter) objectAtRow;
+		Sachbearbeiter tmp = (Sachbearbeiter) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	String tmpID = (String) newValue;
@@ -136,19 +136,19 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
             break;        	
         	
 		}
-		BasisSachbearbeiter.merge(tmp);
+		Sachbearbeiter.merge(tmp);
 	}
 
 	@Override
 	public Object newObject() {
-		BasisSachbearbeiter tmp = new BasisSachbearbeiter();
+		Sachbearbeiter tmp = new Sachbearbeiter();
 		return tmp;
 	}
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	BasisSachbearbeiter removedSachbearbieter = (BasisSachbearbeiter) objectAtRow;
-        return BasisSachbearbeiter.delete(removedSachbearbieter);
+    	Sachbearbeiter removedSachbearbieter = (Sachbearbeiter) objectAtRow;
+        return Sachbearbeiter.delete(removedSachbearbieter);
     }
 
     /**
@@ -156,7 +156,7 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public BasisSachbearbeiter getRow(int rowIndex) {
-        return (BasisSachbearbeiter) getObjectAtRow(rowIndex);
+    public Sachbearbeiter getRow(int rowIndex) {
+        return (Sachbearbeiter) getObjectAtRow(rowIndex);
     }
 }

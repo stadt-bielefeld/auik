@@ -96,7 +96,7 @@ public class FotoPanel extends JPanel {
 
                     if (hauptModul.getObjekt() != null) {
                         String imgPath = "X:/Applikationen/Anlagenkataster/Fotos/" + 
-                        		hauptModul.getObjekt().getObjektid() + ".jpg";
+                        		hauptModul.getObjekt().getId() + ".jpg";
                         File imgFile = new File(imgPath);
                         if (imgFile.canRead()) {
                             ImageIcon imgIcon = new ImageIcon(
@@ -114,7 +114,7 @@ public class FotoPanel extends JPanel {
                             getFotoLabel().setIcon(null);
                             getFotoLabel().setText(
                                 "<html><b>-  Foto " + 
-                        		hauptModul.getObjekt().getObjektid() + ".jpg nicht gefunden!  -</b></html>");
+                        		hauptModul.getObjekt().getId() + ".jpg nicht gefunden!  -</b></html>");
                         }
                     }
 

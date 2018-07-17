@@ -295,6 +295,11 @@ public class Klaeranlage  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Klaeranlage());
     }
 
+	public String toGuiString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     /* Custom code goes below here! */
 
 }

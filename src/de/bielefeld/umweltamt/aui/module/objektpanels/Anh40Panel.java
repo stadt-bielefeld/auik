@@ -389,7 +389,7 @@ public class Anh40Panel extends JPanel {
             // Neues Anhang 40 Objekt erzeugen
             this.fachdaten = new Anh40Fachdaten();
             // Objekt_Id setzen
-            this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
+            this.fachdaten.setObjekt(this.hauptModul.getObjekt());
 
             // Anhang 40 Objekt speichern
             Anh40Fachdaten.merge(this.fachdaten);
@@ -567,7 +567,7 @@ public class Anh40Panel extends JPanel {
                             if (row != -1) {
                                 Objektverknuepfung obj = Anh40Panel.this.objektVerknuepfungModel
                                     .getRow(row);
-                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                if (obj.getObjektByIstVerknuepftMit()
                                     .getId().intValue() != Anh40Panel.this.hauptModul
                                     .getObjekt().getId().intValue()) {
                                     Anh40Panel.this.hauptModul
@@ -575,7 +575,7 @@ public class Anh40Panel extends JPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByIstVerknuepftMit()
+                                            obj.getObjektByIstVerknuepftMit()
                                                 .getId().intValue(),
                                             false);
                                 } else {
@@ -584,7 +584,7 @@ public class Anh40Panel extends JPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByObjekt()
+                                            obj.getObjektByObjekt()
                                                 .getId().intValue(),
                                             false);
                                 }
@@ -689,7 +689,7 @@ public class Anh40Panel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(
                         Anh40Panel.this.hauptModul.getFrame(),
-                        Anh40Panel.this.fachdaten.getBasisObjekt(),
+                        Anh40Panel.this.fachdaten.getObjekt(),
                         Anh40Panel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }

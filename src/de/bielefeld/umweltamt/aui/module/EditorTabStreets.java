@@ -68,8 +68,7 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
+import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorStrassenModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorTabStreetsModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -322,7 +321,7 @@ public class EditorTabStreets extends AbstractModul
 					int row = getResultTable().getSelectedRow();
 					if (row != -1 && getResultTable().getEditingRow() == -1)
 					{
-						BasisTabStreets strasse = EditorTabStreets.this.tmodel
+						TabStreets strasse = EditorTabStreets.this.tmodel
 								.getRow(row);
 
 						if (GUIManager.getInstance().showQuestion(

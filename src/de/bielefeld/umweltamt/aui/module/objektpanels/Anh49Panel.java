@@ -103,8 +103,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
@@ -374,7 +374,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
             // Neues Anhang49-Objekt erzeugen
             this.fachdaten = new Anh49Fachdaten();
             // Objekt_Id setzen
-            this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
+            this.fachdaten.setObjekt(this.hauptModul.getObjekt());
 
             // Anhang49-Objekt speichern
             Anh49Fachdaten.merge(this.fachdaten);
@@ -438,9 +438,9 @@ public class Anh49Panel extends AbstractAnhangPanel {
                                 origin);
 
                             if (row != -1) {
-                                BasisObjektverknuepfung obj = Anh49Panel.this.objektVerknuepfungModel
+                                Objektverknuepfung obj = Anh49Panel.this.objektVerknuepfungModel
                                     .getRow(row);
-                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                if (obj.getObjektByIstVerknuepftMit()
                                     .getId().intValue() != Anh49Panel.this.hauptModul
                                     .getObjekt().getId().intValue())
                                     Anh49Panel.this.hauptModul
@@ -448,7 +448,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByIstVerknuepftMit()
+                                            obj.getObjektByIstVerknuepftMit()
                                                 .getId().intValue(),
                                             false);
                                 else
@@ -457,7 +457,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByObjekt()
+                                            obj.getObjektByObjekt()
                                                 .getId().intValue(),
                                             false);
                                 Anh49Panel.this.hauptModul.getManager()
@@ -520,7 +520,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                         && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = Anh49Panel.this.objektVerknuepfungModel
+                        Objektverknuepfung verknuepfung = Anh49Panel.this.objektVerknuepfungModel
                             .getRow(row);
                         if (GUIManager.getInstance().showQuestion(
                             "Soll die Verknüpfung wirklich gelöscht werden?\n"
@@ -565,7 +565,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
 					if(Anh49Panel.this.fachdaten == null){
 						Anh49Panel.this.log.debug("fachdaten null");
 					}
-					if(Anh49Panel.this.fachdaten.getBasisObjekt() == null){
+					if(Anh49Panel.this.fachdaten.getObjekt() == null){
 						Anh49Panel.this.log.debug("fachdaten.getBasisObjekt null");
 					}
 					if(Anh49Panel.this.objektVerknuepfungModel == null){
@@ -573,7 +573,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
 					}
                     ObjektChooser chooser = new ObjektChooser(
                         Anh49Panel.this.hauptModul.getFrame(),
-                        Anh49Panel.this.fachdaten.getBasisObjekt(),
+                        Anh49Panel.this.fachdaten.getObjekt(),
                         Anh49Panel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }

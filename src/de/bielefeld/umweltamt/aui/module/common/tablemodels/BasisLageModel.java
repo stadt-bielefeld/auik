@@ -25,14 +25,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsWassereinzugsgebiete;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsStandortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
 
 /**
  * Ein TableModel für die Basis-Standortdaten.
@@ -84,9 +84,9 @@ public class BasisLageModel extends ListTableModel
 	 *            Die Zeile
 	 * @return Das Objekt bei rowIndex
 	 */
-	public BasisMapAdresseLage getRow(int rowIndex)
+	public MapAdresseLage getRow(int rowIndex)
 	{
-		return (BasisMapAdresseLage) getObjectAtRow(rowIndex);
+		return (MapAdresseLage) getObjectAtRow(rowIndex);
 	}
     
 	/**
@@ -104,10 +104,10 @@ public class BasisLageModel extends ListTableModel
         //Fetch all BasisAdresse and BasisLage Objects
         List<Object[]> list = DatabaseQuery.findStandorteNew(strasse, hausnr, ort);
         log.debug("Fetched " + list.size() + " Objects");
-        List<BasisMapAdresseLage> standorte = new ArrayList<BasisMapAdresseLage>();
+        List<MapAdresseLage> standorte = new ArrayList<MapAdresseLage>();
         //Add fetched objects to a list of BasisMapAdresseLage
         for(Object[] i: list){
-        	BasisMapAdresseLage adr = (BasisMapAdresseLage)i[1];
+        	MapAdresseLage adr = (MapAdresseLage)i[1];
             standorte.add(adr);
         }
         setList(standorte);
@@ -124,9 +124,9 @@ public class BasisLageModel extends ListTableModel
 	 * @param std
 	 *            Lage
 	 */
-	public void filterList(BasisMapAdresseLage std)
+	public void filterList(MapAdresseLage std)
 	{
-		List<BasisMapAdresseLage> oneItemList = new ArrayList<BasisMapAdresseLage>();
+		List<MapAdresseLage> oneItemList = new ArrayList<MapAdresseLage>();
 		oneItemList.add(std);
 		setList(oneItemList);
 	}
@@ -146,53 +146,55 @@ public class BasisLageModel extends ListTableModel
 	public Object getColumnValue(Object objectAtRow, int columnIndex)
 	{
 		Object value = null;
-		BasisMapAdresseLage bsta = (BasisMapAdresseLage) objectAtRow;
-		if (bsta != null && bsta.getBasisLage() != null){
+		MapAdresseLage bsta = (MapAdresseLage) objectAtRow;
+		if (bsta != null && bsta.getLage() != null){
 		switch (columnIndex)
 		{
 		/*
 		 * case 0: value = bsta.getStandortid(); break;
 		 */
 			case 0:
-				value = bsta.getBasisAdresse().getStrasse();
+				value = bsta.getAdresse().getStrasse();
 				break;
 			case 1:
 				if (bsta.getHausnrzus() != null)
 				{
-					String tmp = bsta.getBasisAdresse().getHausnr() + bsta.getBasisAdresse().getHausnrzus();
+					String tmp = bsta.getAdresse().getHausnr() + bsta.getAdresse().getHausnrzus();
 					value = tmp;
 				}
 				else
 				{
-					value = bsta.getBasisAdresse().getHausnr();
+					value = bsta.getAdresse().getHausnr();
 				}
 				break;
 			case 2:
-				value = bsta.getBasisAdresse().getPlz();
+				value = bsta.getAdresse().getPlz();
 				break;
 			case 3:
-				value = bsta.getBasisAdresse().getOrt();
+				value = bsta.getAdresse().getOrt();
 				break;
 			case 4:
-				if (bsta.getBasisLage() != null || bsta.getBasisLage().getEntgebid() != null)
+				if (bsta.getLage() != null || bsta.getLage().getEntgebid() != null)
 				{
-					value = bsta.getBasisLage().getEntgebid();
+//					value = bsta.getLage().getEntgebid();
+					value = "";
 				}
 				else
 					value = "";
 				break;
 			case 5:
-				if (bsta.getBasisLage() != null && bsta.getBasisLage().getVawsStandortgghwsg() != null)
+				if (bsta.getLage() != null && bsta.getLage().getStandortgghwsg() != null)
 				{
-					Integer sggh = bsta.getBasisLage().getVawsStandortgghwsg().getId();
-					if (sggh.equals(6))
-					{
-						value = new Boolean(true);
-					}
-					else
-					{
-						value = new Boolean(false);
-					}
+//					Integer sggh = bsta.getLage().getStandortgghwsg().getId();
+//					if (sggh.equals(6))
+//					{
+//						value = new Boolean(true);
+//					}
+//					else
+//					{
+//						value = new Boolean(false);
+//					}
+					value = new Boolean(false);
 				}
 				else
 				{
@@ -200,9 +202,9 @@ public class BasisLageModel extends ListTableModel
 				}
 				break;
 			case 6:
-				if (bsta.getBasisLage() != null && bsta.getBasisLage().getVawsStandortgghwsg() != null)
+				if (bsta.getLage() != null && bsta.getLage().getStandortgghwsg() != null)
 				{
-					Integer sggh = bsta.getBasisLage().getVawsStandortgghwsg().getId();
+					Integer sggh = bsta.getLage().getStandortgghwsg().getId();
 					if (sggh.equals(1))
 					{
 						value = new String("Zone I");
@@ -226,8 +228,8 @@ public class BasisLageModel extends ListTableModel
 				}
 				break;
 			case 7:
-				if (bsta.getBasisLage() != null || bsta.getBasisLage().getVawsWassereinzugsgebiete() != null) {
-					value = bsta.getBasisLage().getVawsWassereinzugsgebiete();					
+				if (bsta.getLage() != null || bsta.getLage().getWassereinzugsgebiet() != null) {
+					value = bsta.getLage().getWassereinzugsgebiet();					
 				}
 				break;
 			default:
@@ -241,8 +243,8 @@ public class BasisLageModel extends ListTableModel
 	@Override
 	public boolean objectRemoved(Object objectAtRow)
 	{
-		BasisMapAdresseLage removedStandort = (BasisMapAdresseLage) objectAtRow;
-		return BasisMapAdresseLage.delete(removedStandort);
+		MapAdresseLage removedStandort = (MapAdresseLage) objectAtRow;
+		return MapAdresseLage.delete(removedStandort);
 	}
 
 	@Override

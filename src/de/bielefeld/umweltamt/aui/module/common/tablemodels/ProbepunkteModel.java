@@ -50,7 +50,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -79,33 +79,33 @@ public class ProbepunkteModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        AtlProbepkt fd = (AtlProbepkt) objectAtRow;
+    	Messstelle fd = (Messstelle) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
+            tmp = DatabaseQuery.getStandortString(fd.getObjekt().getAdresseByStandortid());
             break;
         case 1:
-            tmp = fd.getBasisObjekt().getBasisLage().getEntgebid();
+            tmp = fd.getObjekt().getLage().getEntgebid();
             break;
         case 2:
-            tmp = fd.getBasisObjekt().getBasisAdresse();
+            tmp = fd.getObjekt().getAdresseByBetreiberid();
             break;
         case 3:
-            tmp = fd.getBasisObjekt().getBasisAdresse().getKassenzeichen();
+            tmp = fd.getObjekt().getAdresseByBetreiberid().getKassenzeichen();
             break;
         case 4:
             tmp = fd.getBranche();
             break;
         case 5:
-            tmp = fd.getBasisObjekt().getBeschreibung();
+            tmp = fd.getObjekt().getBeschreibung();
             break;
         case 6:
-            tmp = fd.getBasisObjekt().getBasisSachbearbeiter();
+            tmp = fd.getObjekt().getSachbearbeiter();
             break;
         case 7:
-            tmp = fd.getBasisSachbearbeiter();
+            tmp = fd.getSachbearbeiter();
             break;
         default:
             tmp = "ERROR";

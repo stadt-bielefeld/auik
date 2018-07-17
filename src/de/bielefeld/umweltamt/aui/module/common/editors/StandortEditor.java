@@ -50,12 +50,12 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
+import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsStandortgghwsg;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsWassereinzugsgebiete;
+import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
@@ -64,7 +64,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
 
 /**
  * Ein Dialog zum Bearbeiten eines Standorts.
@@ -79,11 +79,11 @@ public class StandortEditor extends AbstractBaseEditor
 	private static final AuikLogger log = AuikLogger.getLogger();
 
 	// Für die Comboboxen beim Bearbeiten
-	private static BasisOrte[] orte = null;
-	private static BasisGemarkung[] gemarkungen = null;
-	private static VawsStandortgghwsg[] standortggs = null;
+	private static Orte[] orte = null;
+	private static Gemarkung[] gemarkungen = null;
+	private static Standortgghwsg[] standortggs = null;
 	private static String[] entwgebiete = null;
-	private static VawsWassereinzugsgebiete[] wEinzugsgebiete = null;
+	private static Wassereinzugsgebiet[] wEinzugsgebiete = null;
 
 	private JFormattedTextField hausnrEditFeld;
 	private JTextField hausnrZusFeld;
@@ -110,7 +110,7 @@ public class StandortEditor extends AbstractBaseEditor
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Standorts.
 	 */
-	public StandortEditor(BasisMapAdresseLage bsta, HauptFrame owner)
+	public StandortEditor(MapAdresseLage bsta, HauptFrame owner)
 	{
 		super("Standort (" + bsta.getId() + ")", bsta, owner);
 	}
@@ -311,17 +311,17 @@ public class StandortEditor extends AbstractBaseEditor
 	 */
 	private void reloadStrassen()
 	{
-		BasisOrte selort = (BasisOrte) orteBox.getSelectedItem();
+		Orte selort = (Orte) orteBox.getSelectedItem();
 		if (selort != null)
 		{
 			// Wenn wir einen Ort auswählen, aktualisieren wir die
 			// Straßenliste
-			BasisStrassen[] strassen = DatabaseQuery.getStrassen(selort.getOrt(), MatchMode.EXACT);
+			Strassen[] strassen = DatabaseQuery.getStrassen(selort.getOrt(), MatchMode.EXACT);
 			if (strassen != null)
 			{
 				strassenBox.setModel(new DefaultComboBoxModel(strassen));
 
-				BasisStrassen selstrasse = (BasisStrassen) strassenBox.getSelectedItem();
+				Strassen selstrasse = (Strassen) strassenBox.getSelectedItem();
 				if (selstrasse != null)
 				{
 					// Ort hat sich geändert => Strasse zurücksetzen
@@ -365,11 +365,11 @@ public class StandortEditor extends AbstractBaseEditor
 				}
 				if (gemarkungen == null)
 				{
-					gemarkungen = DatabaseQuery.getBasisGemarkungen();
+					gemarkungen = DatabaseQuery.getGemarkungen();
 				}
 				if (standortggs == null)
 				{
-					standortggs = DatabaseQuery.getVawsStandortgghwsg();
+					standortggs = DatabaseQuery.getStandortgghwsg();
 				}
 				if (entwgebiete == null)
 				{
@@ -377,7 +377,7 @@ public class StandortEditor extends AbstractBaseEditor
 				}
 				if (wEinzugsgebiete == null)
 				{
-					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiete();
+					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiet();
 				}
 			}
 
@@ -394,12 +394,12 @@ public class StandortEditor extends AbstractBaseEditor
 				if (gemarkungen != null)
 				{
 					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
-					gemarkungBox.setSelectedItem(getStandort().getBasisGemarkung());
+					gemarkungBox.setSelectedItem(getStandort().getGemarkung());
 				}
 				if (standortggs != null)
 				{
 					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
-					standortGgBox.setSelectedItem(getStandort().getVawsStandortgghwsg());
+					standortGgBox.setSelectedItem(getStandort().getStandortgghwsg());
 				}
 
 				if (entwgebiete != null)
@@ -411,17 +411,17 @@ public class StandortEditor extends AbstractBaseEditor
 				if (wEinzugsgebiete != null)
 				{
 					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
-					wEinzugsGebBox.setSelectedItem(getStandort().getVawsWassereinzugsgebiete());
+					wEinzugsGebBox.setSelectedItem(getStandort().getWassereinzugsgebiete());
 				}
 
 				if (!StringUtils.isNullOrEmpty(getStandort().getPlz()))
 				{
-					orteBox.setSelectedItem(new BasisOrte(getStandort().getOrt()));
+					orteBox.setSelectedItem(new Orte(getStandort().getOrt()));
 				}
 
 				if (!StringUtils.isNullOrEmpty(getStandort().getStrasse()))
 				{
-					strassenBox.setSelectedItem(new BasisStrassen(getStandort().getStrasse()));
+					strassenBox.setSelectedItem(new Strassen());
 				}
 
 				hausnrEditFeld.setValue(getStandort().getHausnr());
@@ -486,7 +486,7 @@ public class StandortEditor extends AbstractBaseEditor
 		}
 
 		// Straße:
-		BasisStrassen strasse = ((BasisStrassen) strassenBox.getSelectedItem());
+		Strassen strasse = ((Strassen) strassenBox.getSelectedItem());
 		if (strasse == null)
 		{
 			getStandort().setStrasse(null);
@@ -517,12 +517,12 @@ public class StandortEditor extends AbstractBaseEditor
         }
 
 		// Gemarkung
-		BasisGemarkung bgem = (BasisGemarkung) gemarkungBox.getSelectedItem();
-		getStandort().setBasisGemarkung(bgem);
+		Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
+		getStandort().setGemarkung(bgem);
 
 		// Standortgg
-		VawsStandortgghwsg stgg = (VawsStandortgghwsg) standortGgBox.getSelectedItem();
-		getStandort().setVawsStandortgghwsg(stgg);
+		Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
+		getStandort().setStandortgghwsg(stgg);
 
 		// Entwässerungsgebiet
 		String entgb = (String) entwGebBox.getSelectedItem();
@@ -542,8 +542,8 @@ public class StandortEditor extends AbstractBaseEditor
 		}
 
 		// VAWS-Einzugsgebiet
-		VawsWassereinzugsgebiete wezg = (VawsWassereinzugsgebiete) wEinzugsGebBox.getSelectedItem();
-		getStandort().setVawsWassereinzugsgebiete(wezg);
+		Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
+		getStandort().setWassereinzugsgebiet(wezg);
 
 		// Flur
 		String flur = flurFeld.getText();
@@ -606,7 +606,7 @@ public class StandortEditor extends AbstractBaseEditor
 		Integer wassermng = ((IntegerField) wassermengeFeld).getIntValue();
 		getStandort().setWassermenge(wassermng);
 
-		BasisMapAdresseLage bsta = BasisMapAdresseLage.merge(getStandort());
+		MapAdresseLage bsta = MapAdresseLage.merge(getStandort());
 		if (bsta != null)
 		{
 			setEditedObject(bsta);
@@ -619,9 +619,9 @@ public class StandortEditor extends AbstractBaseEditor
 		}
 	}
 
-	public BasisMapAdresseLage getStandort()
+	public MapAdresseLage getStandort()
 	{
-		return (BasisMapAdresseLage) getEditedObject();
+		return (MapAdresseLage) getEditedObject();
 	}
 
 	private void readClipboard()

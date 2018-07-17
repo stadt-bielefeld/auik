@@ -47,10 +47,10 @@ public class EEinleitungsstelleModel extends ListTableModel {
         EEinleitungsstelle stelle = (EEinleitungsstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
-          		value = stelle.getStandort().getAdresse().getName1();
+          		value = stelle.getId().getStandortNr().getAdresse().getName1();
                 break;
             case 1:
-                value = stelle.getBezeichnung();
+                value = stelle.getId().getBezeichnung();
                 break;
             case 2:
                 value = stelle.getTypIndirekteinleitungTog() ? "Indirekteinleiter" : "";

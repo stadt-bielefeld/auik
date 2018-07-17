@@ -427,4 +427,15 @@ public class Anh56Fachdaten  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    public static Anh56Fachdaten findByObjektId(java.lang.Integer id){
+        List<Anh56Fachdaten> list = Anh56Fachdaten.getAll();
+        for(Anh56Fachdaten i : list){
+            if(i.getObjekt().getId().equals(id)){
+                log.debug("Returning Anh56Fachdaten with BasisObjekt id: " + id);
+                return (Anh56Fachdaten) new DatabaseAccess().get(Anh56Fachdaten.class, i.getId());
+            }
+        }
+        log.debug("Found no Anh56Fachdaten with BasisObjekt id: " + id);
+        return null;
+    }
 }

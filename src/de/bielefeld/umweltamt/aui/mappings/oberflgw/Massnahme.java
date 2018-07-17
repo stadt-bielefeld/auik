@@ -43,7 +43,7 @@ public class Massnahme  implements java.io.Serializable {
         DatabaseSerialVersionUID.forMassnahme;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private long nr;
+    private Integer nr;
     private Long stoffNr;
     private Long gruppeNr;
     private String massnahmeStoff;
@@ -64,7 +64,7 @@ public class Massnahme  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Massnahme(
-        long nr, Date erstellDat, Date aktualDat) {
+    	Integer nr, Date erstellDat, Date aktualDat) {
         this.nr = nr;
         this.erstellDat = erstellDat;
         this.aktualDat = aktualDat;
@@ -72,7 +72,7 @@ public class Massnahme  implements java.io.Serializable {
 
     /** Full constructor */
     public Massnahme(
-        long nr, Long stoffNr, Long gruppeNr, String massnahmeStoff, Date stoffEintragsDat, String ergebnisMassnahme, Date ergebnisAm, Date erstellDat, Date aktualDat, String externalNr) {
+    	Integer nr, Long stoffNr, Long gruppeNr, String massnahmeStoff, Date stoffEintragsDat, String ergebnisMassnahme, Date ergebnisAm, Date erstellDat, Date aktualDat, String externalNr) {
         this.nr = nr;
         this.stoffNr = stoffNr;
         this.gruppeNr = gruppeNr;
@@ -86,11 +86,11 @@ public class Massnahme  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public long getNr() {
+    public Integer getNr() {
         return this.nr;
     }
 
-    public void setNr(long nr) {
+    public void setNr(Integer nr) {
         this.nr = nr;
     }
 

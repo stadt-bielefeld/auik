@@ -78,15 +78,15 @@ public class Anh40Model extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = fd.getBasisObjekt().getBasisAdresse();
+            tmp = fd.getObjekt().getAdresseByBetreiberid();
             break;
         case 1:
-            tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
+            tmp = DatabaseQuery.getStandortString(fd.getObjekt().getAdresseByStandortid());
             break;
         case 2:
 			tmp = "";
-			if (fd.getBasisObjekt().getBasisSachbearbeiter() != null) {
-				tmp = fd.getBasisObjekt().getBasisSachbearbeiter().getName();
+			if (fd.getObjekt().getSachbearbeiter() != null) {
+				tmp = fd.getObjekt().getSachbearbeiter().getName();
 			}
 			break;
         case 3:
@@ -100,7 +100,7 @@ public class Anh40Model extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getBasisObjekt().isInaktiv()) {
+        if (fd.getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

@@ -256,6 +256,11 @@ public class Wirtschaftszweig  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Wirtschaftszweig());
     }
 
+	public String toGuiString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     /* Custom code goes below here! */
 
 }

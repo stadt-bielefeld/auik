@@ -23,10 +23,12 @@
 
 package de.bielefeld.umweltamt.aui.mappings.elka;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -50,6 +52,7 @@ public class Anfallstelle  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Integer objektid;
+    private Objekt objekt;
     private Integer seqId;
     private Date aktualDat;
     private Date erstellDat;
@@ -121,7 +124,15 @@ public class Anfallstelle  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Integer getObjektid() {
+    public Objekt getObjekt() {
+		return objekt;
+	}
+
+	public void setObjekt(Objekt objekt) {
+		this.objekt = objekt;
+	}
+
+	public Integer getObjektid() {
         return this.objektid;
     }
 
@@ -461,6 +472,12 @@ public class Anfallstelle  implements java.io.Serializable {
     public static List<Anfallstelle> getAll() {
         return DatabaseQuery.getAll(new Anfallstelle());
     }
+
+	public static Anfallstelle findByObjektId(Integer id2) {
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id2).list().get(0);
+        Set<Anfallstelle> list = objekt.getAnfallstelles();
+        return list.iterator().next();
+	}
 
     /* Custom code goes below here! */
 

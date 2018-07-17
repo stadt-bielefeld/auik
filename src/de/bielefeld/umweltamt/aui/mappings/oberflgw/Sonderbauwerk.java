@@ -50,7 +50,7 @@ public class Sonderbauwerk  implements java.io.Serializable {
         DatabaseSerialVersionUID.forSonderbauwerk;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private long nr;
+    private Integer nr;
     private Adresse adresse;
     private Objekt objekt;
     private Wasserrecht wasserrecht;
@@ -170,7 +170,7 @@ public class Sonderbauwerk  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Sonderbauwerk(
-        long nr, Objekt objekt, String gemeindeId, Integer typOpt, Integer e32, Integer n32, boolean inNrwTog, boolean industrTog, boolean rohrspeicherTog, boolean AReiEinrichTog, boolean messartTog, boolean drosselTog, boolean fuellstandTog, boolean entlastungswasserTog, boolean entlastungsdauerTog, boolean entlastungshaeufigTog, boolean fernMessTog, boolean niederschlagTog, boolean fernStoerTog, boolean hwfreiTog, boolean hwEinrichtungTog, boolean hwRueckstauTog, boolean hwSchieberTog, boolean hwPumpwerkTog, boolean hwWeitereTog, boolean bemesWeitergTog, boolean drossUeberTog, Date erstellDat, Date aktualDat) {
+    	Integer nr, Objekt objekt, String gemeindeId, Integer typOpt, Integer e32, Integer n32, boolean inNrwTog, boolean industrTog, boolean rohrspeicherTog, boolean AReiEinrichTog, boolean messartTog, boolean drosselTog, boolean fuellstandTog, boolean entlastungswasserTog, boolean entlastungsdauerTog, boolean entlastungshaeufigTog, boolean fernMessTog, boolean niederschlagTog, boolean fernStoerTog, boolean hwfreiTog, boolean hwEinrichtungTog, boolean hwRueckstauTog, boolean hwSchieberTog, boolean hwPumpwerkTog, boolean hwWeitereTog, boolean bemesWeitergTog, boolean drossUeberTog, Date erstellDat, Date aktualDat) {
         this.nr = nr;
         this.objekt = objekt;
         this.gemeindeId = gemeindeId;
@@ -204,7 +204,7 @@ public class Sonderbauwerk  implements java.io.Serializable {
 
     /** Full constructor */
     public Sonderbauwerk(
-        long nr, Adresse adresse, Objekt objekt, Wasserrecht wasserrecht, String gemeindeId, String bezeichnung, String kurzbeschreibung, Integer entwEinzugsgebOpt, Integer typOpt, Integer inbetriebnahme, Date stillgelegtAm, Date wiederinbetrDat, String bemerkung, Integer e32, Integer n32, boolean inNrwTog, boolean industrTog, String nameAusserhalbNrw, BigDecimal KEntwGebiet, BigDecimal befFlaecheEgebiet, BigDecimal abflussbeiwert, BigDecimal befGrad, BigDecimal undurchFlaeche, Integer beckentypOpt, boolean rohrspeicherTog, Integer bauweiseOpt, Integer drosselOpt, String soDrossel, Integer beckensteuerungOpt, boolean AReiEinrichTog, boolean messartTog, boolean drosselTog, boolean fuellstandTog, boolean entlastungswasserTog, boolean entlastungsdauerTog, boolean entlastungshaeufigTog, boolean fernMessTog, boolean niederschlagTog, boolean fernStoerTog, boolean hwfreiTog, BigDecimal einstauHaeufig, boolean hwEinrichtungTog, boolean hwRueckstauTog, boolean hwSchieberTog, boolean hwPumpwerkTog, boolean hwWeitereTog, String hwSonstText, boolean bemesWeitergTog, String bemessungText, Integer anordnungOpt, Integer beckenartOpt, BigDecimal beckentiefe, BigDecimal behFlaeche1u2, BigDecimal behFlaeche2u3, Integer betriebsartOpt, Integer csb, BigDecimal drosselabfluss, Integer drossAbflussOpt, boolean drossUeberTog, Integer entlastungsartOpt, BigDecimal entleerungszeit, BigDecimal flaechenbeschickung, Integer fliesszeit, BigDecimal fremdAbfluss, Integer funktionOpt, Integer kanalVol, BigDecimal qrkrit, BigDecimal kritischMisch, BigDecimal maxHSchmutzabfluss, BigDecimal maxHTrocken, BigDecimal minDrAbfluss, Integer mischUeberlauf, Integer NMindestV, Integer NSpezVol, BigDecimal neigung, BigDecimal rdrosseldurchfluss, BigDecimal regenabflDross, BigDecimal regenabflEntl, BigDecimal regenabfluss, BigDecimal regenabflussDr, BigDecimal regenspende, Integer rfilterflaeche, BigDecimal rfiltergeschwin, BigDecimal rfiltersubstratH, Integer rhydWirkungsgrad, BigDecimal rjahrUeh, BigDecimal rkrit, BigDecimal rmFilterbelastung, BigDecimal rspezFiltervol, Integer rstauvolumen, Integer rvolSlamelle, BigDecimal rwKritAbfluss, BigDecimal rwKritMisch, Integer rwMindestMisch, BigDecimal schmutzAbfluss, BigDecimal skuAnstroem, Integer skuMindestSvol, Integer skuSpezVol, Integer spezBeckenvol, Integer spezSpeicher, BigDecimal trockenWAbfluss, Integer speichervolumen, Integer WOberflaeche, Date erstellDat, Date aktualDat, String externalNr, Set<SbEntlastung> sbEntlastungs, Set<Referenz> referenzsForQSbNr, Set<Referenz> referenzsForZSbNr) {
+    	Integer nr, Adresse adresse, Objekt objekt, Wasserrecht wasserrecht, String gemeindeId, String bezeichnung, String kurzbeschreibung, Integer entwEinzugsgebOpt, Integer typOpt, Integer inbetriebnahme, Date stillgelegtAm, Date wiederinbetrDat, String bemerkung, Integer e32, Integer n32, boolean inNrwTog, boolean industrTog, String nameAusserhalbNrw, BigDecimal KEntwGebiet, BigDecimal befFlaecheEgebiet, BigDecimal abflussbeiwert, BigDecimal befGrad, BigDecimal undurchFlaeche, Integer beckentypOpt, boolean rohrspeicherTog, Integer bauweiseOpt, Integer drosselOpt, String soDrossel, Integer beckensteuerungOpt, boolean AReiEinrichTog, boolean messartTog, boolean drosselTog, boolean fuellstandTog, boolean entlastungswasserTog, boolean entlastungsdauerTog, boolean entlastungshaeufigTog, boolean fernMessTog, boolean niederschlagTog, boolean fernStoerTog, boolean hwfreiTog, BigDecimal einstauHaeufig, boolean hwEinrichtungTog, boolean hwRueckstauTog, boolean hwSchieberTog, boolean hwPumpwerkTog, boolean hwWeitereTog, String hwSonstText, boolean bemesWeitergTog, String bemessungText, Integer anordnungOpt, Integer beckenartOpt, BigDecimal beckentiefe, BigDecimal behFlaeche1u2, BigDecimal behFlaeche2u3, Integer betriebsartOpt, Integer csb, BigDecimal drosselabfluss, Integer drossAbflussOpt, boolean drossUeberTog, Integer entlastungsartOpt, BigDecimal entleerungszeit, BigDecimal flaechenbeschickung, Integer fliesszeit, BigDecimal fremdAbfluss, Integer funktionOpt, Integer kanalVol, BigDecimal qrkrit, BigDecimal kritischMisch, BigDecimal maxHSchmutzabfluss, BigDecimal maxHTrocken, BigDecimal minDrAbfluss, Integer mischUeberlauf, Integer NMindestV, Integer NSpezVol, BigDecimal neigung, BigDecimal rdrosseldurchfluss, BigDecimal regenabflDross, BigDecimal regenabflEntl, BigDecimal regenabfluss, BigDecimal regenabflussDr, BigDecimal regenspende, Integer rfilterflaeche, BigDecimal rfiltergeschwin, BigDecimal rfiltersubstratH, Integer rhydWirkungsgrad, BigDecimal rjahrUeh, BigDecimal rkrit, BigDecimal rmFilterbelastung, BigDecimal rspezFiltervol, Integer rstauvolumen, Integer rvolSlamelle, BigDecimal rwKritAbfluss, BigDecimal rwKritMisch, Integer rwMindestMisch, BigDecimal schmutzAbfluss, BigDecimal skuAnstroem, Integer skuMindestSvol, Integer skuSpezVol, Integer spezBeckenvol, Integer spezSpeicher, BigDecimal trockenWAbfluss, Integer speichervolumen, Integer WOberflaeche, Date erstellDat, Date aktualDat, String externalNr, Set<SbEntlastung> sbEntlastungs, Set<Referenz> referenzsForQSbNr, Set<Referenz> referenzsForZSbNr) {
         this.nr = nr;
         this.adresse = adresse;
         this.objekt = objekt;
@@ -317,11 +317,11 @@ public class Sonderbauwerk  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public long getNr() {
+    public Integer getNr() {
         return this.nr;
     }
 
-    public void setNr(long nr) {
+    public void setNr(Integer nr) {
         this.nr = nr;
     }
 

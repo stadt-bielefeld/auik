@@ -424,6 +424,11 @@ public class Parameter  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Parameter());
     }
 
+	public String toGuiString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     /* Custom code goes below here! */
 
 }

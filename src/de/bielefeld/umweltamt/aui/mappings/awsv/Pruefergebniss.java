@@ -242,6 +242,11 @@ public class Pruefergebniss  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Pruefergebniss());
     }
 
+	public String toGuiString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     /* Custom code goes below here! */
 
 }

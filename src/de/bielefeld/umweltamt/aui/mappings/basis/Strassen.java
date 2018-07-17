@@ -52,7 +52,8 @@ public class Strassen  implements java.io.Serializable {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    /** Default constructor */
+    /** Default constructor 
+     * @param string */
     public Strassen() {
         // This place is intentionally left blank.
     }
@@ -265,6 +266,11 @@ public class Strassen  implements java.io.Serializable {
     public static List<Strassen> getAll() {
         return DatabaseQuery.getAll(new Strassen());
     }
+
+	public String toGuiString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
     /* Custom code goes below here! */
 

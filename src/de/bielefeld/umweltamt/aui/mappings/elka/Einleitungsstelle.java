@@ -23,10 +23,12 @@
 
 package de.bielefeld.umweltamt.aui.mappings.elka;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Versickerungsanlage;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
@@ -48,6 +50,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Integer objektid;
+    private Objekt objekt;
     private Date aktualDat;
     private Date erstellDat;
     private String herkunft;
@@ -212,7 +215,15 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Integer getObjektid() {
+    public Objekt getObjekt() {
+		return objekt;
+	}
+
+	public void setObjekt(Objekt objekt) {
+		this.objekt = objekt;
+	}
+
+	public Integer getObjektid() {
         return this.objektid;
     }
 
@@ -955,4 +966,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    public static Einleitungsstelle findByObjektId(java.lang.Integer id) {
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        Set<Einleitungsstelle> list = objekt.getEinleitungsstelles();
+        return list.iterator().next();
+    }
 }

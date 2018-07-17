@@ -22,7 +22,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
+import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -42,7 +42,7 @@ class SielhautChooser extends OkCancelDialog {
     private JTable ergebnisTabelle;
 
     private SielhautModel sielhautModel;
-    private AtlSielhaut chosenSielhaut = null;
+    private Sielhaut chosenSielhaut = null;
 
     public SielhautChooser(HauptFrame owner) {
         super("Sielhautpunkt auswählen", owner);
@@ -94,13 +94,13 @@ class SielhautChooser extends OkCancelDialog {
 
     private void choose(int row) {
         if (row != -1) {
-            this.chosenSielhaut = (AtlSielhaut) this.sielhautModel
+            this.chosenSielhaut = (Sielhaut) this.sielhautModel
                 .getObjectAtRow(row);
             dispose();
         }
     }
 
-    public AtlSielhaut getChosenSielhaut() {
+    public Sielhaut getChosenSielhaut() {
         return this.chosenSielhaut;
     }
 

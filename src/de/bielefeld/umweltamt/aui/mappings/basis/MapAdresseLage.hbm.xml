@@ -8,12 +8,12 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="adresseid" type="java.lang.Integer">
+        <many-to-one name="Adresse" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select" cascade="all">
             <column name="adresseid" />
-        </property>
-        <property name="lageid" type="java.lang.Integer">
+        </many-to-one>
+        <many-to-one name="Lage" class="de.bielefeld.umweltamt.aui.mappings.basis.Lage" fetch="select" cascade="all">
             <column name="lageid" />
-        </property>
+        </many-to-one>
         <property name="enabled" type="java.lang.Boolean">
             <column name="_enabled" />
         </property>

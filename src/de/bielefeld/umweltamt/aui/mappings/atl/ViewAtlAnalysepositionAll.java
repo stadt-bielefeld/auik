@@ -28,6 +28,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,7 +43,20 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
         DatabaseSerialVersionUID.forViewAtlAnalysepositionAll;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private ViewAtlAnalysepositionAllId id;
+    private Integer id;
+    private String grkl;
+    private Float wert;
+    private String analyseVon;
+    private String bericht;
+    private Double normwert;
+    private Integer einheitenId;
+    private String parameterId;
+    private Integer probenahmeId;
+    private Boolean enabled;
+    private Boolean deleted;
+    private Date datumDerEntnahme;
+    private Integer probepktId;
+    private String kennummer;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -52,20 +66,142 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
         // This place is intentionally left blank.
     }
 
+    /** Minimal constructor */
+    public ViewAtlAnalysepositionAll(
+        Integer id) {
+        this.id = id;
+    }
 
     /** Full constructor */
     public ViewAtlAnalysepositionAll(
-        ViewAtlAnalysepositionAllId id) {
+        Integer id, String grkl, Float wert, String analyseVon, String bericht, Double normwert, Integer einheitenId, String parameterId, Integer probenahmeId, Boolean enabled, Boolean deleted, Date datumDerEntnahme, Integer probepktId, String kennummer) {
         this.id = id;
+        this.grkl = grkl;
+        this.wert = wert;
+        this.analyseVon = analyseVon;
+        this.bericht = bericht;
+        this.normwert = normwert;
+        this.einheitenId = einheitenId;
+        this.parameterId = parameterId;
+        this.probenahmeId = probenahmeId;
+        this.enabled = enabled;
+        this.deleted = deleted;
+        this.datumDerEntnahme = datumDerEntnahme;
+        this.probepktId = probepktId;
+        this.kennummer = kennummer;
     }
 
     /* Setter and getter methods */
-    public ViewAtlAnalysepositionAllId getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(ViewAtlAnalysepositionAllId id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getGrkl() {
+        return this.grkl;
+    }
+
+    public void setGrkl(String grkl) {
+        this.grkl = grkl;
+    }
+
+    public Float getWert() {
+        return this.wert;
+    }
+
+    public void setWert(Float wert) {
+        this.wert = wert;
+    }
+
+    public String getAnalyseVon() {
+        return this.analyseVon;
+    }
+
+    public void setAnalyseVon(String analyseVon) {
+        this.analyseVon = analyseVon;
+    }
+
+    public String getBericht() {
+        return this.bericht;
+    }
+
+    public void setBericht(String bericht) {
+        this.bericht = bericht;
+    }
+
+    public Double getNormwert() {
+        return this.normwert;
+    }
+
+    public void setNormwert(Double normwert) {
+        this.normwert = normwert;
+    }
+
+    public Integer getEinheitenId() {
+        return this.einheitenId;
+    }
+
+    public void setEinheitenId(Integer einheitenId) {
+        this.einheitenId = einheitenId;
+    }
+
+    public String getParameterId() {
+        return this.parameterId;
+    }
+
+    public void setParameterId(String parameterId) {
+        this.parameterId = parameterId;
+    }
+
+    public Integer getProbenahmeId() {
+        return this.probenahmeId;
+    }
+
+    public void setProbenahmeId(Integer probenahmeId) {
+        this.probenahmeId = probenahmeId;
+    }
+
+    public Boolean getEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Boolean getDeleted() {
+        return this.deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public Date getDatumDerEntnahme() {
+        return this.datumDerEntnahme;
+    }
+
+    public void setDatumDerEntnahme(Date datumDerEntnahme) {
+        this.datumDerEntnahme = datumDerEntnahme;
+    }
+
+    public Integer getProbepktId() {
+        return this.probepktId;
+    }
+
+    public void setProbepktId(Integer probepktId) {
+        this.probepktId = probepktId;
+    }
+
+    public String getKennummer() {
+        return this.kennummer;
+    }
+
+    public void setKennummer(String kennummer) {
+        this.kennummer = kennummer;
     }
 
     /**
@@ -89,6 +225,19 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
+        buffer.append("grkl").append("='").append(getGrkl()).append("' ");			
+        buffer.append("wert").append("='").append(getWert()).append("' ");			
+        buffer.append("analyseVon").append("='").append(getAnalyseVon()).append("' ");			
+        buffer.append("bericht").append("='").append(getBericht()).append("' ");			
+        buffer.append("normwert").append("='").append(getNormwert()).append("' ");			
+        buffer.append("einheitenId").append("='").append(getEinheitenId()).append("' ");			
+        buffer.append("parameterId").append("='").append(getParameterId()).append("' ");			
+        buffer.append("probenahmeId").append("='").append(getProbenahmeId()).append("' ");			
+        buffer.append("enabled").append("='").append(getEnabled()).append("' ");			
+        buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
+        buffer.append("datumDerEntnahme").append("='").append(getDatumDerEntnahme()).append("' ");			
+        buffer.append("probepktId").append("='").append(getProbepktId()).append("' ");			
+        buffer.append("kennummer").append("='").append(getKennummer()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -155,6 +304,19 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
      */
     private void copy(ViewAtlAnalysepositionAll copy) {
         this.id = copy.getId();            
+        this.grkl = copy.getGrkl();            
+        this.wert = copy.getWert();            
+        this.analyseVon = copy.getAnalyseVon();            
+        this.bericht = copy.getBericht();            
+        this.normwert = copy.getNormwert();            
+        this.einheitenId = copy.getEinheitenId();            
+        this.parameterId = copy.getParameterId();            
+        this.probenahmeId = copy.getProbenahmeId();            
+        this.enabled = copy.getEnabled();            
+        this.deleted = copy.getDeleted();            
+        this.datumDerEntnahme = copy.getDatumDerEntnahme();            
+        this.probepktId = copy.getProbepktId();            
+        this.kennummer = copy.getKennummer();            
     }    
 
     /**
@@ -184,7 +346,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static ViewAtlAnalysepositionAll findById(de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAllId id) {
+    public static ViewAtlAnalysepositionAll findById(java.lang.Integer id) {
         log.debug("Getting ViewAtlAnalysepositionAll instance with id: " + id);
         return (ViewAtlAnalysepositionAll)
             new DatabaseAccess().get(ViewAtlAnalysepositionAll.class, id);

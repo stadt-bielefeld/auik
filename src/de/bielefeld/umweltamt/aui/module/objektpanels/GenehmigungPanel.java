@@ -51,8 +51,8 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
@@ -95,7 +95,7 @@ public class GenehmigungPanel extends JPanel {
 
     // Daten
 
-    private ElkaWasserrecht fachdaten = null;
+    private Wasserrecht fachdaten = null;
 
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
@@ -167,8 +167,8 @@ public class GenehmigungPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = ElkaWasserrecht.findByObjektId(
-            this.hauptModul.getObjekt().getObjektid());
+        this.fachdaten = Wasserrecht.findByObjektId(
+            this.hauptModul.getObjekt().getId());
         log.debug("Genehmigung Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
@@ -347,7 +347,7 @@ public class GenehmigungPanel extends JPanel {
 
         success = this.fachdaten.merge();
         if (success) {
-            log.debug("Uebergabestelle Objekt " + this.fachdaten.getObjektid()
+            log.debug("Uebergabestelle Objekt " + this.fachdaten.getId()
                 + " gespeichert.");
         } else {
             log.debug("Uebergabestelle Objekt " + this.fachdaten
@@ -359,12 +359,12 @@ public class GenehmigungPanel extends JPanel {
     public void completeObjekt() {
         if (this.hauptModul.isNew() || this.fachdaten == null) {
             // Neues Genehmigung Objekt erzeugen
-            this.fachdaten = new ElkaWasserrecht();
+            this.fachdaten = new Wasserrecht();
             // Objekt_Id setzen
-            this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
+            this.fachdaten.setObjekt(this.hauptModul.getObjekt());
 
             // Uebergabestelle speichern
-            this.fachdaten = ElkaWasserrecht.merge(this.fachdaten);
+            this.fachdaten = Wasserrecht.merge(this.fachdaten);
             log.debug("Neues Genehmigung Objekt " + this.fachdaten
                 + " gespeichert.");
         }
@@ -383,7 +383,7 @@ public class GenehmigungPanel extends JPanel {
                             .changeStatus(
                                 "Genehmigung "
                                     + GenehmigungPanel.this.fachdaten
-                                        .getObjektid()
+                                        .getId()
                                     + " erfolgreich gespeichert.",
                                 HauptFrame.SUCCESS_COLOR);
                     } else {
@@ -536,18 +536,18 @@ public class GenehmigungPanel extends JPanel {
                                 origin);
 
                             if (row != -1) {
-                                BasisObjektverknuepfung obj = GenehmigungPanel.this.objektVerknuepfungModel
+                                Objektverknuepfung obj = GenehmigungPanel.this.objektVerknuepfungModel
                                     .getRow(row);
-                                if (obj.getBasisObjektByIstVerknuepftMit()
-                                    .getObjektid().intValue() != GenehmigungPanel.this.hauptModul
-                                    .getObjekt().getObjektid().intValue())
+                                if (obj.getObjektByIstVerknuepftMit()
+                                    .getId().intValue() != GenehmigungPanel.this.hauptModul
+                                    .getObjekt().getId().intValue())
                                     GenehmigungPanel.this.hauptModul
                                         .getManager()
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByIstVerknuepftMit()
-                                                .getObjektid().intValue(),
+                                            obj.getObjektByIstVerknuepftMit()
+                                                .getId().intValue(),
                                             false);
                                 else
                                     GenehmigungPanel.this.hauptModul
@@ -555,8 +555,8 @@ public class GenehmigungPanel extends JPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByObjekt()
-                                                .getObjektid().intValue(),
+                                            obj.getObjektByObjekt()
+                                                .getId().intValue(),
                                             false);
                                 GenehmigungPanel.this.hauptModul.getManager()
                                     .switchModul("m_objekt_bearbeiten");
@@ -618,7 +618,7 @@ public class GenehmigungPanel extends JPanel {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                         && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = GenehmigungPanel.this.objektVerknuepfungModel
+                        Objektverknuepfung verknuepfung = GenehmigungPanel.this.objektVerknuepfungModel
                             .getRow(row);
                         if (GUIManager.getInstance().showQuestion(
                             "Soll die Verknüpfung wirklich gelöscht werden?\n"
@@ -661,7 +661,7 @@ public class GenehmigungPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(
                         GenehmigungPanel.this.hauptModul.getFrame(),
-                        GenehmigungPanel.this.fachdaten.getBasisObjekt(),
+                        GenehmigungPanel.this.fachdaten.getObjekt(),
                         GenehmigungPanel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }

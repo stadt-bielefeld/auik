@@ -438,5 +438,16 @@ public class Anh40Fachdaten  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-
+    
+    
+    public static Anh40Fachdaten findByObjektId(java.lang.Integer id){
+        log.debug("Getting Anh40Fachdaten instance with connected BasisObjekt with id " + id);
+        List<Anh40Fachdaten> all = Anh40Fachdaten.getAll();
+        for(Anh40Fachdaten i : all){
+            if(i.getObjekt().getId().equals(id)){
+                return (Anh40Fachdaten) new DatabaseAccess().get(Anh40Fachdaten.class, i.getId());
+            }
+        }
+        return null;
+    }
 }

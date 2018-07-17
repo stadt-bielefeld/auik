@@ -28,6 +28,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.HashSet;
@@ -60,7 +61,7 @@ public class Fachdaten  implements java.io.Serializable {
     private String fluessigkeit;
     private String vbfeinstufung;
     private Double menge;
-    private Integer wgk;
+    private String wgk;
     private String gefaehrdungsstufe;
     private Integer baujahr;
     private Boolean doppelwandig;
@@ -102,7 +103,7 @@ public class Fachdaten  implements java.io.Serializable {
     private Set<Jgs> jgses = new HashSet<Jgs>(0);
     private Set<Kontrollen> kontrollens = new HashSet<Kontrollen>(0);
     private Set<Abscheider> abscheiders = new HashSet<Abscheider>(0);
-    private Abfuellflaeche abfuellflaeche;
+    private Set<Abfuellflaeche> abfuellflaeches = new HashSet<Abfuellflaeche>(0);
     private Set<Verwaltungsverf> verwaltungsverfs = new HashSet<Verwaltungsverf>(0);
 
     /** Logging */
@@ -123,7 +124,7 @@ public class Fachdaten  implements java.io.Serializable {
 
     /** Full constructor */
     public Fachdaten(
-        Objekt objekt, String herstellnr, String hersteller, Date datuminbetriebnahme, Date datumerfassung, Date datumaenderung, Date datumgenehmigung, String anlagenart, String behaelterart, String material, String fluessigkeit, String vbfeinstufung, Double menge, Integer wgk, String gefaehrdungsstufe, Integer baujahr, Boolean doppelwandig, Boolean leckanzeige, Boolean auffangraum, Boolean grenzwertgeber, Boolean leckschutzauskleidung, Boolean kellerlagerung, Boolean innenbeschichtung, String beschreibungA, String beschreibungS, Boolean oberirdisch, Boolean unterirdisch, Boolean saugleitung, Boolean rohrKathodenschutz, Boolean ausKupfer, Boolean ausStahl, Boolean mitSchutzrohr, String beschreibungR, Double pruefturnus, Boolean angemahntkz, Date mahnfrist, Date wiedervorlage, Date stillegungsdatum, String bemerkungen, String ausfuehrung, String pruefumfang, String verwendung, boolean enabled, boolean deleted, Boolean ausHdpe, Boolean druckleitung, Boolean schutzSensor, Boolean schutzFolie, Boolean schutzAntiheber, String aktenzeichen, Set<Anlagenchrono> anlagenchronos, Set<Verwaltungsgebuehren> verwaltungsgebuehrens, Set<Jgs> jgses, Set<Kontrollen> kontrollens, Set<Abscheider> abscheiders, Abfuellflaeche abfuellflaeche, Set<Verwaltungsverf> verwaltungsverfs) {
+        Objekt objekt, String herstellnr, String hersteller, Date datuminbetriebnahme, Date datumerfassung, Date datumaenderung, Date datumgenehmigung, String anlagenart, String behaelterart, String material, String fluessigkeit, String vbfeinstufung, Double menge, String wgk, String gefaehrdungsstufe, Integer baujahr, Boolean doppelwandig, Boolean leckanzeige, Boolean auffangraum, Boolean grenzwertgeber, Boolean leckschutzauskleidung, Boolean kellerlagerung, Boolean innenbeschichtung, String beschreibungA, String beschreibungS, Boolean oberirdisch, Boolean unterirdisch, Boolean saugleitung, Boolean rohrKathodenschutz, Boolean ausKupfer, Boolean ausStahl, Boolean mitSchutzrohr, String beschreibungR, Double pruefturnus, Boolean angemahntkz, Date mahnfrist, Date wiedervorlage, Date stillegungsdatum, String bemerkungen, String ausfuehrung, String pruefumfang, String verwendung, boolean enabled, boolean deleted, Boolean ausHdpe, Boolean druckleitung, Boolean schutzSensor, Boolean schutzFolie, Boolean schutzAntiheber, String aktenzeichen, Set<Anlagenchrono> anlagenchronos, Set<Verwaltungsgebuehren> verwaltungsgebuehrens, Set<Jgs> jgses, Set<Kontrollen> kontrollens, Set<Abscheider> abscheiders, Abfuellflaeche abfuellflaeche, Set<Verwaltungsverf> verwaltungsverfs) {
         this.objekt = objekt;
         this.herstellnr = herstellnr;
         this.hersteller = hersteller;
@@ -179,7 +180,7 @@ public class Fachdaten  implements java.io.Serializable {
         this.jgses = jgses;
         this.kontrollens = kontrollens;
         this.abscheiders = abscheiders;
-        this.abfuellflaeche = abfuellflaeche;
+        this.abfuellflaeches = abfuellflaeches;
         this.verwaltungsverfs = verwaltungsverfs;
     }
 
@@ -296,11 +297,11 @@ public class Fachdaten  implements java.io.Serializable {
         this.menge = menge;
     }
 
-    public Integer getWgk() {
+    public String getWgk() {
         return this.wgk;
     }
 
-    public void setWgk(Integer wgk) {
+    public void setWgk(String wgk) {
         this.wgk = wgk;
     }
 
@@ -632,12 +633,12 @@ public class Fachdaten  implements java.io.Serializable {
         this.abscheiders = abscheiders;
     }
 
-    public Abfuellflaeche getAbfuellflaeche() {
-        return this.abfuellflaeche;
+    public Set<Abfuellflaeche> getAbfuellflaeches() {
+        return this.abfuellflaeches;
     }
 
-    public void setAbfuellflaeche(Abfuellflaeche abfuellflaeche) {
-        this.abfuellflaeche = abfuellflaeche;
+    public void setAbfuellflaeches(Set<Abfuellflaeche> abfuellflaeches) {
+        this.abfuellflaeches = abfuellflaeches;
     }
 
     public Set<Verwaltungsverf> getVerwaltungsverfs() {
@@ -723,7 +724,7 @@ public class Fachdaten  implements java.io.Serializable {
         buffer.append("jgses").append("='").append(getJgses()).append("' ");			
         buffer.append("kontrollens").append("='").append(getKontrollens()).append("' ");			
         buffer.append("abscheiders").append("='").append(getAbscheiders()).append("' ");			
-        buffer.append("abfuellflaeche").append("='").append(getAbfuellflaeche()).append("' ");			
+        buffer.append("abfuellflaeche").append("='").append(getAbfuellflaeches()).append("' ");			
         buffer.append("verwaltungsverfs").append("='").append(getVerwaltungsverfs()).append("' ");			
         buffer.append("]");
 
@@ -845,7 +846,7 @@ public class Fachdaten  implements java.io.Serializable {
         this.jgses = copy.getJgses();            
         this.kontrollens = copy.getKontrollens();            
         this.abscheiders = copy.getAbscheiders();            
-        this.abfuellflaeche = copy.getAbfuellflaeche();            
+        this.abfuellflaeches = copy.getAbfuellflaeches();            
         this.verwaltungsverfs = copy.getVerwaltungsverfs();            
     }    
 

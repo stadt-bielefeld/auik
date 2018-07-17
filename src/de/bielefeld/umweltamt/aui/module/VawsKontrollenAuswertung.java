@@ -51,8 +51,8 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsKontrollen;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Kontrollen;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -72,7 +72,7 @@ public class VawsKontrollenAuswertung extends AbstractQueryModul {
     @Override
     protected void editObject(int row) {
         if (row != -1) {
-            VawsFachdaten fd = ((VawsKontrollen)model.getObjectAtRow(row)).getVawsFachdaten();
+            Fachdaten fd = ((Kontrollen)model.getObjectAtRow(row)).getFachdaten();
 
             VawsEditor editor = new VawsEditor(fd, frame, "Sachverständigenprüfung");
 
@@ -180,23 +180,23 @@ class WiedervorlageSVModel extends ListTableModel {
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object tmp;
-        VawsKontrollen vk = (VawsKontrollen) objectAtRow;
+        Kontrollen vk = (Kontrollen) objectAtRow;
 
         switch (columnIndex) {
             case 0:
-                tmp = vk.getVawsFachdaten().getBehaelterid();
+                tmp = vk.getFachdaten().getBehaelterid();
                 break;
             case 1:
                 tmp = AuikUtils.getStringFromDate(vk.getNaechstepruefung());
                 break;
             case 2:
-                tmp = vk.getVawsFachdaten().getAnlagenart();
+                tmp = vk.getFachdaten().getAnlagenart();
                 break;
             case 3:
-                tmp = vk.getVawsFachdaten().getBasisObjekt().getBasisAdresse().getBetrname();
+                tmp = vk.getFachdaten().getObjekt().getAdresseByBetreiberid().getBetrname();
                 break;
             case 4:
-                tmp = DatabaseQuery.getStandortString(vk.getVawsFachdaten().getBasisObjekt().getBasisStandort());
+                tmp = DatabaseQuery.getStandortString(vk.getFachdaten().getObjekt().getAdresseByStandortid());
                 break;
 
             default:

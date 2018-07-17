@@ -22,7 +22,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -64,7 +64,7 @@ public class EditorStrassenModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        BasisStrassen str = (BasisStrassen) objectAtRow;
+        Strassen str = (Strassen) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -96,7 +96,7 @@ public class EditorStrassenModel extends EditableListTableModel {
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
 		
-		BasisStrassen tmp = (BasisStrassen) objectAtRow;
+		Strassen tmp = (Strassen) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -122,20 +122,20 @@ public class EditorStrassenModel extends EditableListTableModel {
             break;        	
         	
 		}
-		BasisStrassen.merge(tmp);
+		Strassen.merge(tmp);
 	}
 
 	@Override
 	public Object newObject() {
-		BasisStrassen tmp = new BasisStrassen();
+		Strassen tmp = new Strassen();
 		tmp.setId(DatabaseQuery.newStrassenID());
 		return tmp;
 	}
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        BasisStrassen removedStrasse = (BasisStrassen) objectAtRow;
-        return BasisStrassen.delete(removedStrasse);
+        Strassen removedStrasse = (Strassen) objectAtRow;
+        return Strassen.delete(removedStrasse);
     }
 
     /**
@@ -143,7 +143,7 @@ public class EditorStrassenModel extends EditableListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public BasisStrassen getRow(int rowIndex) {
-        return (BasisStrassen) getObjectAtRow(rowIndex);
+    public Strassen getRow(int rowIndex) {
+        return (Strassen) getObjectAtRow(rowIndex);
     }
 }

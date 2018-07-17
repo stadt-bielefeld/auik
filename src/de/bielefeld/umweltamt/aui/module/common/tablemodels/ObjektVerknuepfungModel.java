@@ -22,8 +22,8 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -33,13 +33,13 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class ObjektVerknuepfungModel extends ListTableModel {
     private static final long serialVersionUID = 3217003188537219019L;
-    private BasisObjekt objekt;
+    private Objekt objekt;
 
     /**
      * Erzeugt ein neues ObjektverknuepfungModel. Dieses hat die Spalten "ID",
      * "Objektart" und "Beschreibung".
      */
-    public ObjektVerknuepfungModel(BasisObjekt objekt) {
+    public ObjektVerknuepfungModel(Objekt objekt) {
         super(new String[] { "Id", "Objektart", "Beschreibung" }, false, true);
     }
 
@@ -49,7 +49,7 @@ public class ObjektVerknuepfungModel extends ListTableModel {
      * @param objekt
      *            Das Basis-Objekt
      */
-    public void setObjekt(BasisObjekt objekt) {
+    public void setObjekt(Objekt objekt) {
         this.objekt = objekt;
         updateList();
     }
@@ -64,37 +64,37 @@ public class ObjektVerknuepfungModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        BasisObjektverknuepfung objektverk = (BasisObjektverknuepfung) objectAtRow;
+        Objektverknuepfung objektverk = (Objektverknuepfung) objectAtRow;
 
         Object tmp;
 
         switch (columnIndex) {
 
         case 0:
-            if (objektverk.getBasisObjektByObjekt().getObjektid().intValue() == objekt
-                    .getObjektid().intValue())
-                tmp = objektverk.getBasisObjektByIstVerknuepftMit()
-                        .getObjektid();
+            if (objektverk.getObjektByObjekt().getId().intValue() == objekt
+                    .getId().intValue())
+                tmp = objektverk.getObjektByIstVerknuepftMit()
+                        .getId();
             else
-                tmp = objektverk.getBasisObjektByObjekt().getObjektid();
+                tmp = objektverk.getObjektByObjekt().getId();
             break;
 
         case 1:
-            if (objektverk.getBasisObjektByObjekt().getObjektid().intValue() == objekt
-                    .getObjektid().intValue())
-                tmp = objektverk.getBasisObjektByIstVerknuepftMit()
-                        .getBasisObjektarten();
+            if (objektverk.getObjektByObjekt().getId().intValue() == objekt
+                    .getId().intValue())
+                tmp = objektverk.getObjektByIstVerknuepftMit()
+                        .getObjektarten();
             else
-                tmp = objektverk.getBasisObjektByObjekt().getBasisObjektarten();
+                tmp = objektverk.getObjektByObjekt().getObjektarten();
             break;
 
         case 2:
-            if (objektverk.getBasisObjektByObjekt().getObjektid().intValue() == objekt
-                    .getObjektid().intValue())
-                tmp = objektverk.getBasisObjektByIstVerknuepftMit()
+            if (objektverk.getObjektByObjekt().getId().intValue() == objekt
+                    .getId().intValue())
+                tmp = objektverk.getObjektByIstVerknuepftMit()
                         .getBeschreibung();
             else
-                tmp = objektverk.getBasisObjektByObjekt().getBeschreibung();
+                tmp = objektverk.getObjektByObjekt().getBeschreibung();
             break;
 
         default:
@@ -107,11 +107,11 @@ public class ObjektVerknuepfungModel extends ListTableModel {
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        BasisObjektverknuepfung removedObjekt = (BasisObjektverknuepfung) objectAtRow;
+        Objektverknuepfung removedObjekt = (Objektverknuepfung) objectAtRow;
         boolean removed;
 
         if (removedObjekt.getClass() != null) {
-            removed = BasisObjektverknuepfung.delete(removedObjekt);
+            removed = Objektverknuepfung.delete(removedObjekt);
         } else {
             removed = true;
         }
@@ -125,8 +125,8 @@ public class ObjektVerknuepfungModel extends ListTableModel {
         fireTableDataChanged();
     }
 
-    public BasisObjektverknuepfung getRow(int rowIndex) {
-        return (BasisObjektverknuepfung) getObjectAtRow(rowIndex);
+    public Objektverknuepfung getRow(int rowIndex) {
+        return (Objektverknuepfung) getObjectAtRow(rowIndex);
     }
 
     public void clearList() {

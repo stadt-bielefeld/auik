@@ -24,7 +24,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -54,15 +54,15 @@ public class GenehmigungModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	ElkaWasserrecht fd = (ElkaWasserrecht) objectAtRow;
+    	Wasserrecht fd = (Wasserrecht) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            tmp = fd.getBasisObjekt().getBasisAdresse().toString();
+            tmp = fd.getObjekt().getAdresseByBetreiberid().toString();
             break;
         case 1:
-            tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
+            tmp = DatabaseQuery.getStandortString(fd.getObjekt().getAdresseByStandortid());
             break;
         case 2:
             tmp = fd.getErstellungsDatum();
@@ -83,7 +83,7 @@ public class GenehmigungModel extends ListTableModel {
                 tmp = new Boolean(false);
             break;
         case 6:
-            tmp = fd.getBasisObjekt().getPrioritaet();
+            tmp = fd.getObjekt().getPrioritaet();
             break;
         case 7:
             tmp = fd.getBemerkungen();
@@ -93,7 +93,7 @@ public class GenehmigungModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (tmp instanceof String && fd.getBasisObjekt().isInaktiv()) {
+        if (tmp instanceof String && fd.getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike((String)tmp);
         }
         return tmp;

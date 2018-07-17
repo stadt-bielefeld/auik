@@ -403,4 +403,14 @@ public class SuevFachdaten  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    public static SuevFachdaten findByObjektId(java.lang.Integer id){
+        log.debug("Getting AnhSuevFachdaten instance with objektid: " + id);
+        List<SuevFachdaten> all = SuevFachdaten.getAll();
+        for(SuevFachdaten i : all){
+            if(i.getObjekt().getId().equals(id)){
+                return (SuevFachdaten) new DatabaseAccess().get(SuevFachdaten.class, i.getId());
+            }
+        }
+        return null;
+    }
 }

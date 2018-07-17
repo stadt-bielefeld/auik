@@ -45,7 +45,7 @@ public class SbEntlastung  implements java.io.Serializable {
         DatabaseSerialVersionUID.forSbEntlastung;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private long nr;
+    private Integer nr;
     private Sonderbauwerk sonderbauwerk;
     private Integer lfdNr;
     private Integer typOpt;
@@ -69,7 +69,7 @@ public class SbEntlastung  implements java.io.Serializable {
 
     /** Minimal constructor */
     public SbEntlastung(
-        long nr, Sonderbauwerk sonderbauwerk, boolean tauchwandTog, boolean sonstigeBehTog, boolean sbNichtInNrwTog, boolean kaNichtInNrwTog) {
+    	Integer nr, Sonderbauwerk sonderbauwerk, boolean tauchwandTog, boolean sonstigeBehTog, boolean sbNichtInNrwTog, boolean kaNichtInNrwTog) {
         this.nr = nr;
         this.sonderbauwerk = sonderbauwerk;
         this.tauchwandTog = tauchwandTog;
@@ -80,7 +80,7 @@ public class SbEntlastung  implements java.io.Serializable {
 
     /** Full constructor */
     public SbEntlastung(
-        long nr, Sonderbauwerk sonderbauwerk, Integer lfdNr, Integer typOpt, boolean tauchwandTog, boolean sonstigeBehTog, Integer ausbUeberlaufOpt, String sonstigeBehandlung, boolean sbNichtInNrwTog, boolean kaNichtInNrwTog, String ausbUeberlaufSonstiges, Set<Referenz> referenzsForQEntlNr, Set<Referenz> referenzsForZEntlNr) {
+    	Integer nr, Sonderbauwerk sonderbauwerk, Integer lfdNr, Integer typOpt, boolean tauchwandTog, boolean sonstigeBehTog, Integer ausbUeberlaufOpt, String sonstigeBehandlung, boolean sbNichtInNrwTog, boolean kaNichtInNrwTog, String ausbUeberlaufSonstiges, Set<Referenz> referenzsForQEntlNr, Set<Referenz> referenzsForZEntlNr) {
         this.nr = nr;
         this.sonderbauwerk = sonderbauwerk;
         this.lfdNr = lfdNr;
@@ -97,11 +97,11 @@ public class SbEntlastung  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public long getNr() {
+    public Integer getNr() {
         return this.nr;
     }
 
-    public void setNr(long nr) {
+    public void setNr(Integer nr) {
         this.nr = nr;
     }
 

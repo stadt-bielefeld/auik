@@ -44,9 +44,9 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaEinleitungsstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaReferenz;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
@@ -94,12 +94,12 @@ public class EinleitungsstellePanel extends JPanel {
     private JFormattedTextField stationierung3OptFeld = null;
     private JFormattedTextField schutzzoneOptFeld = null;
     //Kläranlage
-    private AtlKlaeranlagen[] klaeranlagen = null;
-    private JComboBox<AtlKlaeranlagen> klaeranlageBox = null;
+    private Klaeranlage[] klaeranlagen = null;
+    private JComboBox<Klaeranlage> klaeranlageBox = null;
     private JButton saveElkaEinleitungsstelleButton = null;
     // Daten
-    private ElkaEinleitungsstelle  einleitungsstelle = null;
-    private ElkaReferenz referenz = null;
+    private Einleitungsstelle  einleitungsstelle = null;
+    private Referenz referenz = null;
 
     public EinleitungsstellePanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Einleitungsstelle";
@@ -172,17 +172,17 @@ public class EinleitungsstellePanel extends JPanel {
      * @throws RuntimeException
      */
     public void fetchFormData() throws RuntimeException {
-    	this.einleitungsstelle = ElkaEinleitungsstelle.findByObjektId(
+    	this.einleitungsstelle = Einleitungsstelle.findByObjektId(
     			this.hauptModul.getObjekt().getId());
     	log.debug("Einleitungsstelle aus DB geholt: " + this.einleitungsstelle);
     	
-    	List<ElkaReferenz> referenzen = ElkaReferenz.getAll();
+    	List<Referenz> referenzen = Referenz.getAll();
     	this.referenz = null;
     	
-    	for (ElkaReferenz ref : referenzen) {
-    	    if (ref.getQElsNr().getId() == this.einleitungsstelle.getId()
-    		    && ref.getZKaNr() != null) {
-    		this.referenz = ElkaReferenz.findById(ref.getNr());
+    	for (Referenz ref : referenzen) {
+    	    if (ref.getEinleitungsstelleByQElsNr().getId() == this.einleitungsstelle.getId()
+    		    && ref.getKlaeranlageByZKaNr() != null) {
+    		this.referenz = Referenz.findById(ref.getNr());
     	    	log.debug("Referenz aus DB geholt: " + this.referenz);
     	    }
     	}
@@ -290,12 +290,12 @@ public class EinleitungsstellePanel extends JPanel {
     		} 		
     		
     		if (this.klaeranlagen != null) {
-    		    getKlaeranlageBox().setModel(new DefaultComboBoxModel<AtlKlaeranlagen>(this.klaeranlagen));
+    		    getKlaeranlageBox().setModel(new DefaultComboBoxModel<Klaeranlage>(this.klaeranlagen));
     		    getKlaeranlageBox().setSelectedIndex(-1);
     		}
     		
     		if (this.referenz != null) {
-    		    getKlaeranlageBox().setSelectedItem(this.referenz.getZKaNr());
+    		    getKlaeranlageBox().setSelectedItem(this.referenz.getKlaeranlageByZKaNr());
     		}
     	}
     }
@@ -463,7 +463,7 @@ public class EinleitungsstellePanel extends JPanel {
     	this.einleitungsstelle.setStationierungSt3(stationierungSt3);
     	
     	Integer abgaberelEinl = ((IntegerField)this.abgaberelEinlFeld).getIntValue();
-    	this.einleitungsstelle.setAbgaberelEinl(abgaberelEinl);
+    	this.einleitungsstelle.setAbgaberelevanteEltOpt(abgaberelEinl);
     	
     	Integer e32 = ((IntegerField)this.e32Feld).getIntValue();
     	this.einleitungsstelle.setE32(e32);
@@ -472,18 +472,18 @@ public class EinleitungsstellePanel extends JPanel {
     	this.einleitungsstelle.setN32(n32);
     	
     	Integer kanalArtOpt = ((IntegerField)this.kanalArtOptFeld).getIntValue();
-    	this.einleitungsstelle.setKanalArtOpt(kanalArtOpt);
+    	this.einleitungsstelle.setKanalArtOpt(kanalArtOpt.shortValue());
     	
     	Integer stationierung3Opt = ((IntegerField)this.stationierung3OptFeld).getIntValue();
-    	this.einleitungsstelle.setStationierung3Opt(stationierung3Opt);
+    	this.einleitungsstelle.setStationierung3Opt(stationierung3Opt.shortValue());
     	
     	Integer schutzzoneOpt = ((IntegerField)this.schutzzoneOptFeld).getIntValue();
-    	this.einleitungsstelle.setSchutzzoneOpt(schutzzoneOpt);
+    	this.einleitungsstelle.setSchutzzoneOpt(schutzzoneOpt.shortValue());
  	  	
     	success = this.einleitungsstelle.merge();
     	if (success) {
     		log.debug("Einleitungsstelle"
-    				+ this.einleitungsstelle.getBasisObjekt().getBasisAdresse()
+    				+ this.einleitungsstelle.getObjekt().getAdresseByBetreiberid()
     				.getBetrname() + " gespeichert.");
     	} else {
     		log.debug("Einleitungsstelle" + this.einleitungsstelle
@@ -501,10 +501,10 @@ public class EinleitungsstellePanel extends JPanel {
     	boolean success;
     	if (getKlaeranlageBox().getSelectedItem() != null) {
     	    if (this.referenz == null) {
-    		this.referenz = new ElkaReferenz();
+    		this.referenz = new Referenz();
     	    }
-    	    this.referenz.setZKaNr((AtlKlaeranlagen)getKlaeranlageBox().getSelectedItem());
-    	    this.referenz.setQElsNr(this.einleitungsstelle);
+    	    this.referenz.setKlaeranlageByZKaNr((Klaeranlage)getKlaeranlageBox().getSelectedItem());
+    	    this.referenz.setEinleitungsstelleByQElsNr(this.einleitungsstelle);
     	    success = this.referenz.merge();
     	}
     	else {
@@ -520,9 +520,9 @@ public class EinleitungsstellePanel extends JPanel {
     public void completeObjekt() {
         if (this.hauptModul.isNew() || this.einleitungsstelle == null) {
         	// Neue EinleitungstellePanel erzeugen
-        	this.einleitungsstelle = new ElkaEinleitungsstelle();
+        	this.einleitungsstelle = new Einleitungsstelle();
         	//Objekt_Id setzen
-        	this.einleitungsstelle.setBasisObjekt(this.hauptModul.getObjekt());
+        	this.einleitungsstelle.setObjekt(this.hauptModul.getObjekt());
         	this.einleitungsstelle.merge();
         	//ElkaEinleitungsstelle.merge(this.einleitungstelle);
         	log.debug("Neue ElkaEinleitungsstelle " + this.einleitungsstelle + " gespeichert.");
@@ -763,10 +763,10 @@ public class EinleitungsstellePanel extends JPanel {
      * Get-Methode die die KlaeranlageBox des Panels zurückgibt
      * @return {@link JComboBox}
      */
-    private JComboBox<AtlKlaeranlagen> getKlaeranlageBox() {
+    private JComboBox<Klaeranlage> getKlaeranlageBox() {
         if (this.klaeranlageBox == null) {
 
-            this.klaeranlageBox = new JComboBox<AtlKlaeranlagen>();
+            this.klaeranlageBox = new JComboBox<Klaeranlage>();
             this.klaeranlageBox.setKeySelectionManager(new MyKeySelectionManager());
 
         }
@@ -811,7 +811,7 @@ public class EinleitungsstellePanel extends JPanel {
 	    			}
 	    			if (saveKlaeranlageDaten()) {
 	    			    status = status + " & Verknüpfung mit der Kläranlage "
-	    				    + EinleitungsstellePanel.this.referenz.getZKaNr().getAnlage()
+	    				    + EinleitungsstellePanel.this.referenz.getKlaeranlageByZKaNr().getAnlage()
 	    			    	    + " über die Referenz-Tabelle erfolgreich gespeichert.";
 	    			} else {
 	    			    status = status + " & Verknüpfung konnte nicht gespeichert werden!";

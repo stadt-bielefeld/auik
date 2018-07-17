@@ -23,6 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -382,4 +383,20 @@ public class Messstelle  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    public static Messstelle findByObjektId(java.lang.Integer id){
+        log.debug("Getting AtlProbepkt instance with connected BasisObjekt with id: " + id);
+        /*List<AtlProbepkt> all = AtlProbepkt.getAll();
+        for(AtlProbepkt i : all){
+            if(i.getBasisObjekt().getId().equals(id)){
+                return (AtlProbepkt) new DatabaseAccess().get(AtlProbepkt.class, i.getId());
+            }
+        }
+        log.debug("Found no Atlprobepkt instance with attached BasisObjekt#" + id);
+        return null;*/
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt o where o.id= " + id).list().get(0);
+
+        //BasisObjekt.findById(id);
+        Set<Messstelle> list = objekt.getMessstelles();
+        return list.iterator().next();
+    }
 }

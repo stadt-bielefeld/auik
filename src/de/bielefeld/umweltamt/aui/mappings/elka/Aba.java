@@ -23,10 +23,12 @@
 
 package de.bielefeld.umweltamt.aui.mappings.elka;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.HashSet;
@@ -46,6 +48,8 @@ public class Aba  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
+    private Objekt objekt;
+    private Abaverfahren abaverfahren;
     private Integer objektid;
     private Integer ansprAdrId;
     private Date aktualDat;
@@ -113,6 +117,22 @@ public class Aba  implements java.io.Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public Objekt getObjekt() {
+        return this.objekt;
+    }
+
+    public void setBasisObjekt(Objekt objekt) {
+        this.objekt = objekt;
+	}
+
+	public Abaverfahren getAbaverfahren() {
+		return abaverfahren;
+	}
+
+	public void setAbaverfahren(Abaverfahren abaverfahren) {
+		this.abaverfahren = abaverfahren;
+	}
 
     public Integer getObjektid() {
         return this.objektid;
@@ -433,6 +453,14 @@ public class Aba  implements java.io.Serializable {
      */
     public static List<Aba> getAll() {
         return DatabaseQuery.getAll(new Aba());
+    }
+
+    /* Custom code goes below here! */
+    
+    public static Aba findByObjektId(java.lang.Integer id) {
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        Set<Aba> list = objekt.getAbas();
+        return list.iterator().next();
     }
 
     /* Custom code goes below here! */

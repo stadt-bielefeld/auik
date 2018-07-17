@@ -143,7 +143,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * Ein Modul um Objekte zu bearbeiten.
  * @author David Klotz
  */
-public class ObjektBearbeiten extends AbstractModul {
+public class BasisObjektBearbeiten extends AbstractModul {
 
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -467,17 +467,17 @@ public class ObjektBearbeiten extends AbstractModul {
             objekt = new Objekt();
             if (manager.getSettingsManager().getSetting("auik.imc.use_standort") != null) {
                 Adresse sta = Adresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
-                log.debug("Standort: " + sta.getStrasse() + " " + sta.getHausnr() + ", " +sta.getObjektid());
+                log.debug("Standort: " + sta.getStrasse() + " " + sta.getHausnr() + ", " +sta.getId());
                 Lage lage = Lage.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_lage")));
                 log.debug("Creating new Objekt " + lage + sta);
-                objekt.setBasisStandort(sta);
-                objekt.setBasisLage(lage);
+                objekt.setAdresseByStandortid(sta);
+                objekt.setLage(lage);
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
                 manager.getSettingsManager().removeSetting("auik.imc.use_lage");
             }
             if (manager.getSettingsManager().getSetting("auik.imc.use_betreiber") != null) {
                 Adresse betr = Adresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
-                objekt.setAdresse(betr);
+                objekt.setAdresseByBetreiberid(betr);
                 manager.getSettingsManager().removeSetting("auik.imc.use_betreiber");
             }
         }
@@ -603,8 +603,8 @@ public class ObjektBearbeiten extends AbstractModul {
                 } else {
                     log.debug("Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
-                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getBasisStandort()) +
-                    		"; " + objekt.getAdresse()+"; "+objekt.getObjektarten().getObjektart());
+                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getAdresseByStandortid()) +
+                    		"; " + objekt.getAdresseByStandortid()+"; "+objekt.getObjektarten().getObjektart());
                 }
 
                 if (objekt != null) {

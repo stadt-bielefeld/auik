@@ -71,10 +71,14 @@ public class Adresse  implements java.io.Serializable {
     private boolean enabled;
     private boolean deleted;
     private String auikWzCode;
+    private boolean datenschutzAwsv;
+    private boolean datenschutzEsatzung;
+    private boolean datenschutzWhg;
     private Date erstellDat;
     private Set<Objekt> objektsForStandortid = new HashSet<Objekt>(0);
     private Set<Sonderbauwerk> sonderbauwerks = new HashSet<Sonderbauwerk>(0);
     private Set<Objekt> objektsForBetreiberid = new HashSet<Objekt>(0);
+    private Set<MapAdresseLage> MapAdresseLages = new HashSet<MapAdresseLage>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -327,7 +331,31 @@ public class Adresse  implements java.io.Serializable {
         this.auikWzCode = auikWzCode;
     }
 
-    public Date getErstellDat() {
+    public Boolean getDatenschutzAwsv() {
+		return datenschutzAwsv;
+	}
+
+	public void setDatenschutzAwsv(boolean datenschutzAwsv) {
+		this.datenschutzAwsv = datenschutzAwsv;
+	}
+
+	public Boolean getDatenschutzEsatzung() {
+		return datenschutzEsatzung;
+	}
+
+	public void setDatenschutzEsatzung(boolean datenschutzEsatzung) {
+		this.datenschutzEsatzung = datenschutzEsatzung;
+	}
+
+	public Boolean getDatenschutzWhg() {
+		return datenschutzWhg;
+	}
+
+	public void setDatenschutzWhg(boolean datenschutzWhg) {
+		this.datenschutzWhg = datenschutzWhg;
+	}
+
+	public Date getErstellDat() {
         return this.erstellDat;
     }
 
@@ -359,7 +387,20 @@ public class Adresse  implements java.io.Serializable {
         this.objektsForBetreiberid = objektsForBetreiberid;
     }
 
-    /**
+    public Set<MapAdresseLage> getMapAdresseLages() {
+		return MapAdresseLages;
+	}
+
+	public void setMapAdresseLages(Set<MapAdresseLage> MapAdresseLages) {
+		this.MapAdresseLages = MapAdresseLages;
+	}
+
+	public void setMapAdresseLages(Lage lage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
      * string, call on <code>toGuiString</code> for a gui representation or do

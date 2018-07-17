@@ -51,8 +51,8 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsVerwaltungsverf;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -72,7 +72,7 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
     @Override
     protected void editObject(int row) {
         if (row != -1) {
-            VawsFachdaten fd = ((VawsVerwaltungsverf)model.getObjectAtRow(row)).getVawsFachdaten();
+            Fachdaten fd = ((Verwaltungsverf)model.getObjectAtRow(row)).getFachdaten();
 
             VawsEditor editor = new VawsEditor(fd, frame, "Verwaltungsverfahren");
 
@@ -180,17 +180,17 @@ class WiedervorlageVVModel extends ListTableModel {
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object tmp;
-        VawsVerwaltungsverf vf = (VawsVerwaltungsverf) objectAtRow;
+        Verwaltungsverf vf = (Verwaltungsverf) objectAtRow;
 
         switch (columnIndex) {
         case 0:
-            tmp = vf.getVawsFachdaten().getBehaelterid();
+            tmp = vf.getFachdaten().getBehaelterid();
             break;
         case 1:
-            tmp = vf.getVawsFachdaten().getBasisObjekt().getBasisAdresse().getBetrname();
+            tmp = vf.getFachdaten().getObjekt().getAdresseByBetreiberid().getBetrname();
             break;
         case 2:
-            tmp = DatabaseQuery.getStandortString(vf.getVawsFachdaten().getBasisObjekt().getBasisStandort());
+            tmp = DatabaseQuery.getStandortString(vf.getFachdaten().getObjekt().getAdresseByStandortid());
             break;
         case 3:
             tmp = AuikUtils.getStringFromDate(vf.getWiedervorlage());

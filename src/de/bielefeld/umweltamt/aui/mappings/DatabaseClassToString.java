@@ -33,6 +33,23 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAllId;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAlt;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAltId;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewQgisAnalyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewQgisAnalysepositionId;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautHg;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautHgId;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbKreuztabelleFirmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbKreuztabelleFirmenId;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbKreuztabelleRoutine;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbKreuztabelleRoutineId;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenFirmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenFirmenId;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenRoutine;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenRoutineId;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenVs;
+import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenVsId;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Bezeichnung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
@@ -40,15 +57,56 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Onlinekartendienst;
+import de.bielefeld.umweltamt.aui.mappings.basis.OnlinekartendienstId;
+import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
+import de.bielefeld.umweltamt.aui.mappings.basis.View360x33;
+import de.bielefeld.umweltamt.aui.mappings.basis.View360x33Id;
+import de.bielefeld.umweltamt.aui.mappings.basis.ViewBasisStandort;
+import de.bielefeld.umweltamt.aui.mappings.basis.ViewBasisStandortId;
+import de.bielefeld.umweltamt.aui.mappings.basis.ViewBetriebe;
+import de.bielefeld.umweltamt.aui.mappings.basis.ViewBetriebeId;
+import de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfungId;
 import de.bielefeld.umweltamt.aui.mappings.basis.Prioritaet;
 import de.bielefeld.umweltamt.aui.mappings.basis.PrioritaetId;
 import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.EAbwasserbehandlungsanlage;
+import de.bielefeld.umweltamt.aui.mappings.elka.EAbwasserbehandlungsanlageId;
+import de.bielefeld.umweltamt.aui.mappings.elka.EAdresse;
+import de.bielefeld.umweltamt.aui.mappings.elka.EAdresseId;
+import de.bielefeld.umweltamt.aui.mappings.elka.EAnfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.EAnfallstelleId;
+import de.bielefeld.umweltamt.aui.mappings.elka.EBetrieb;
+import de.bielefeld.umweltamt.aui.mappings.elka.EBetriebId;
+import de.bielefeld.umweltamt.aui.mappings.elka.EEinleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.EEinleitungsstelleId;
+import de.bielefeld.umweltamt.aui.mappings.elka.EEntwaesserungsgrundstueck;
+import de.bielefeld.umweltamt.aui.mappings.elka.EEntwaesserungsgrundstueckId;
+import de.bielefeld.umweltamt.aui.mappings.elka.EMessstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.EMessstelleId;
+import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahme;
+import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeId;
+import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergeb;
+import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergebId;
+import de.bielefeld.umweltamt.aui.mappings.elka.ESonderbauwerk;
+import de.bielefeld.umweltamt.aui.mappings.elka.ESonderbauwerkId;
+import de.bielefeld.umweltamt.aui.mappings.elka.EStandort;
+import de.bielefeld.umweltamt.aui.mappings.elka.EStandortId;
+import de.bielefeld.umweltamt.aui.mappings.elka.EWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka.EWasserrechtId;
 import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnhang;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaEinheit;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaStoff;
+import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
@@ -66,6 +124,16 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.SuevFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwkId;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffeId;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Versickerungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Abscheider;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenarten;
@@ -118,7 +186,7 @@ public class DatabaseClassToString {
         
         //If all name fields are empty, the instance must be a Standort
         if(clazz.getBetrname() == null){
-            return clazz.getStrassen() + " " + clazz.getHausnr();
+            return clazz.getStrasse() + " " + clazz.getHausnr();
         }
         //Else return a Betreiber string
         if (clazz.getBetrvorname() != null) {
@@ -142,9 +210,9 @@ public class DatabaseClassToString {
      *         "[ID:Objekt-ID, Betr.:Adresse, Stdort:BasisLage, Art:Objektart]"
      */
     public static String toStringForClass(Objekt clazz) {
-        return "[ID:" + clazz.getObjektid() +
-            ", Betr.:" + clazz.getAdresse() +
-            ", Stdort:" + clazz.getBasisLage() +
+        return "[ID:" + clazz.getId() +
+            ", Betr.:" + clazz.getAdresseByBetreiberid() +
+            ", Stdort:" + clazz.getLage() +
             ", Art:" + clazz.getObjektarten() + "]";
     }
 
@@ -300,11 +368,6 @@ public class DatabaseClassToString {
     /** @return Status.toGuiString() */
     public static String toStringForClass(Status clazz) {
         return clazz.toGuiString();
-    }
-
-    /** Custom ViewAnalysepositionAll.toString() */
-    public static String toStringForClass(ViewAnalysepositionAll clazz) {
-        return DatabaseQuery.getAnalysepositionFromView(clazz).toString();
     }
 
     /* ********************************************************************** */
@@ -592,6 +655,351 @@ public class DatabaseClassToString {
 
 	public static String toStringForClass(PrioritaetId clazz) {
 		return clazz.getStandortId().toString();
+	}
+
+	public static String toStringForClass(View360x33 view360x33) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(View360x33Id view360x33Id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Onlinekartendienst onlinekartendienst) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(OnlinekartendienstId onlinekartendienstId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewBasisStandort viewBasisStandort) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewBasisStandortId viewBasisStandortId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewBetriebe viewBetriebe) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewBetriebeId viewBetriebeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewTwoWayObjektverknuepfung viewTwoWayObjektverknuepfung) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewTwoWayObjektverknuepfungId viewTwoWayObjektverknuepfungId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(MapAdresseLage mapAdresseLage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EAbwasserbehandlungsanlage eAbwasserbehandlungsanlage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EAbwasserbehandlungsanlageId eAbwasserbehandlungsanlageId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EAdresse eAdresse) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EAdresseId eAdresseId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EAnfallstelle eAnfallstelle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EAnfallstelleId eAnfallstelleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EBetrieb eBetrieb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EBetriebId eBetriebId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EEinleitungsstelle eEinleitungsstelle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EEinleitungsstelleId eEinleitungsstelleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewQgisAnalyseposition viewQgisAnalyseposition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewQgisAnalysepositionId viewQgisAnalysepositionId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautHg viewSielhautHg) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautHgId viewSielhautHgId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautqbKreuztabelleFirmen viewSielhautqbKreuztabelleFirmen) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautqbKreuztabelleFirmenId viewSielhautqbKreuztabelleFirmenId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautqbKreuztabelleRoutine viewSielhautqbKreuztabelleRoutine) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautqbKreuztabelleRoutineId viewSielhautqbKreuztabelleRoutineId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautqbProbenahmenFirmen viewSielhautqbProbenahmenFirmen) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautqbProbenahmenFirmenId viewSielhautqbProbenahmenFirmenId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautqbProbenahmenRoutine viewSielhautqbProbenahmenRoutine) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautqbProbenahmenRoutineId viewSielhautqbProbenahmenRoutineId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautqbProbenahmenVs viewSielhautqbProbenahmenVs) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewSielhautqbProbenahmenVsId viewSielhautqbProbenahmenVsId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EEntwaesserungsgrundstueck eEntwaesserungsgrundstueck) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EEntwaesserungsgrundstueckId eEntwaesserungsgrundstueckId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EMessstelle eMessstelle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EMessstelleId eMessstelleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EProbenahme eProbenahme) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EProbenahmeId eProbenahmeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EProbenahmeUeberwachungsergeb eProbenahmeUeberwachungsergeb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EProbenahmeUeberwachungsergebId eProbenahmeUeberwachungsergebId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ESonderbauwerk eSonderbauwerk) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ESonderbauwerkId eSonderbauwerkId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EStandort eStandort) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EStandortId eStandortId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EWasserrecht eWasserrecht) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EWasserrechtId eWasserrechtId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(MapElkaAnhang mapElkaAnhang) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(MapElkaEinheit mapElkaEinheit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(MapElkaStoff mapElkaStoff) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Referenz referenz) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewBwk viewBwk) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewBwkId viewBwkId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(AfsNiederschlagswasser afsNiederschlagswasser) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(AfsStoffe afsStoffe) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(AfsStoffeId afsStoffeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Entwaesserungsgrundstueck entwaesserungsgrundstueck) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Massnahme massnahme) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(SbEntlastung sbEntlastung) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Sonderbauwerk sonderbauwerk) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Versickerungsanlage versickerungsanlage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewAtlAnalysepositionAll viewAtlAnalysepositionAll) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewAtlAnalysepositionAllId viewAtlAnalysepositionAllId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewAtlAnalysepositionAlt viewAtlAnalysepositionAlt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewAtlAnalysepositionAltId viewAtlAnalysepositionAltId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(TabStreets tabStreets) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Orte orte) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

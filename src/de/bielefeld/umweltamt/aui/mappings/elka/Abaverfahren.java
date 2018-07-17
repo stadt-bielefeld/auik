@@ -241,6 +241,11 @@ public class Abaverfahren  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Abaverfahren());
     }
 
+	public String toGuiString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     /* Custom code goes below here! */
 
 }

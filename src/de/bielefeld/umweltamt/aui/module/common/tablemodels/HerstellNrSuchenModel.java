@@ -26,7 +26,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -61,7 +61,7 @@ public class HerstellNrSuchenModel extends ListTableModel {
     // Die einzelnen Spalten werden mit Daten befÃ¼llt
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        VawsFachdaten fachdaten = (VawsFachdaten) objectAtRow;
+        Fachdaten fachdaten = (Fachdaten) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -71,11 +71,11 @@ public class HerstellNrSuchenModel extends ListTableModel {
             break;
         //Betreiber:
         case 1:
-            tmp = fachdaten.getBasisObjekt().getBasisAdresse();
+            tmp = fachdaten.getObjekt().getAdresseByBetreiberid();
             break;
         //Standort
         case 2:
-            tmp = fachdaten.getBasisObjekt().getLage();
+            tmp = fachdaten.getObjekt().getLage();
             break;
         // Anlagenart:
         case 3:
@@ -117,8 +117,8 @@ public class HerstellNrSuchenModel extends ListTableModel {
      * @param row Die Zeile der Tabelle.
      * @return Den Datensatz, der in dieser Zeile angezeigt wird.
      */
-    public VawsFachdaten getDatenSatz(int row) {
-        return (VawsFachdaten) getObjectAtRow(row);
+    public Fachdaten getDatenSatz(int row) {
+        return (Fachdaten) getObjectAtRow(row);
     }
 
     /*

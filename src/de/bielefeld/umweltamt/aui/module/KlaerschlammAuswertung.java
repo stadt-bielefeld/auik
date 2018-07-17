@@ -136,12 +136,12 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -701,7 +701,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 	private JTextField rightAnalyseFeld;
 
 	private ActionListener rlButtonListener;
-	private AtlEinheiten[] einheiten;
+	private Einheiten[] einheiten;
 
 	private TimeSeriesCollection dataSet1;
 	private TimeSeriesCollection dataSet2;
@@ -755,7 +755,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 	{
 		if (this.panel == null)
 		{
-			this.einheiten = DatabaseQuery.getAtlEinheiten();
+			this.einheiten = DatabaseQuery.getEinheiten();
 
 			String spaltenTeil = "pref, 5dlu, pref:g";
 			String zeileLuecke = "pref, 3dlu";
@@ -878,25 +878,25 @@ public class KlaerschlammAuswertung extends AbstractModul
 		TimeSeriesCollection col = new TimeSeriesCollection();
 
 		//        int parameterAnzahl;
-		AtlEinheiten einheit;
+		Einheiten einheit;
 		JList paramList;
 		String analyseVon;
 		if (axis.equals(LEFT))
 		{
 			//            parameterAnzahl = getLeftList().getModel().getSize();
-			einheit = (AtlEinheiten) getLeftEinheitenBox().getSelectedItem();
+			einheit = (Einheiten) getLeftEinheitenBox().getSelectedItem();
 			paramList = getLeftList();
 			analyseVon = getLeftAnalyseFeld().getText().toLowerCase().trim();
 		}
 		else
 		{
 			//            parameterAnzahl = getRightList().getModel().getSize();
-			einheit = (AtlEinheiten) getRightEinheitenBox().getSelectedItem();
+			einheit = (Einheiten) getRightEinheitenBox().getSelectedItem();
 			paramList = getRightList();
 			analyseVon = getRightAnalyseFeld().getText().toLowerCase().trim();
 		}
 
-		AtlProbeart art = (AtlProbeart) getArtBox().getSelectedItem();
+		Probeart art = (Probeart) getArtBox().getSelectedItem();
 
 		Date vonDate = getVonDateChooser().getDate();
 		Date bisDate = getBisDateChooser().getDate();
@@ -905,8 +905,8 @@ public class KlaerschlammAuswertung extends AbstractModul
 		{
 			for (int ndx : this.klaeranlagen.getSelectedIndices())
 			{
-				AtlKlaeranlagen anlage =
-						(AtlKlaeranlagen)
+				Klaeranlage anlage =
+						(Klaeranlage)
 						this.klaeranlagen.getModel().getElementAt(ndx);
 				createSeries(art,
 								anlage,
@@ -922,24 +922,24 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return col;
 	}
 
-	private void createSeries(AtlProbeart art, AtlKlaeranlagen ka,
-		AtlEinheiten einheit, JList paramList, String analyseVon,
+	private void createSeries(Probeart art, Klaeranlage ka,
+		Einheiten einheit, JList paramList, String analyseVon,
 		Date vonDate, Date bisDate, TimeSeriesCollection col)
 	{
 
-		AtlProbepkt pkt = DatabaseQuery.getKlaerschlammProbepunkt(art, ka);
+		Messstelle pkt = DatabaseQuery.getKlaerschlammProbepunkt(art, ka);
 
 		if (pkt != null)
 		{
 			for (int i = 0; i < paramList.getModel().getSize(); i++)
 			{
-				AtlParameter param = (AtlParameter) paramList.getModel()
+				Parameter param = (Parameter) paramList.getModel()
 						.getElementAt(i);
 
 				this.frame.changeStatus("Erzeuge Datenreihe für " + param + ", "
 						+ ka);
 
-				List<AtlAnalyseposition> list =
+				List<Analyseposition> list =
 						DatabaseQuery.getAnalysepositionFromView(
 																	param, einheit, pkt, vonDate, bisDate, analyseVon);
 				TimeSeries series = ChartDataSets
@@ -976,13 +976,13 @@ public class KlaerschlammAuswertung extends AbstractModul
 	{
 		if (this.klaeranlagen == null)
 		{
-			List<AtlKlaeranlagen> all = AtlKlaeranlagen.getAll();
+			List<Klaeranlage> all = Klaeranlage.getAll();
 			DefaultListModel model = new DefaultListModel();
 			this.klaeranlagen = new JList(model);
 			this.klaeranlagen.setPrototypeCellValue("test");
 			this.klaeranlagen.setSelectionMode(
 					ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-			for (AtlKlaeranlagen element : all)
+			for (Klaeranlage element : all)
 			{
 				model.addElement(element);
 			}
@@ -1000,10 +1000,10 @@ public class KlaerschlammAuswertung extends AbstractModul
 					DatabaseConstants.ATL_PROBEART_ID_ANLIEFERUNG,
 					DatabaseConstants.ATL_PROBEART_ID_ZULAUF
 			};
-			AtlProbeart[] arten = new AtlProbeart[artIDs.length];
+			Probeart[] arten = new Probeart[artIDs.length];
 			for (int i = 0; i < artIDs.length; i++)
 			{
-				arten[i] = AtlProbeart.findById(artIDs[i]);
+				arten[i] = Probeart.findById(artIDs[i]);
 			}
 			this.artBox = new JComboBox(arten);
 		}
@@ -1097,7 +1097,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 				builder.add(createRLButton(true, paramID), cc.xy(3, y));
 				builder.add(
 							new JLabel(
-									AtlParameter.findById(paramID).getBezeichnung(),
+									Parameter.findById(paramID).getBezeichnung(),
 									JLabel.CENTER),
 							cc.xy(5, y, "f,d"));
 				builder.add(createRLButton(false, paramID), cc.xy(7, y));
@@ -1347,18 +1347,18 @@ public class KlaerschlammAuswertung extends AbstractModul
 																			"");
 					String paramId = e.getActionCommand().replaceFirst(".*_",
 																		"");
-					AtlParameter param = null;
+					Parameter param = null;
 
 					if (!paramId.equals(""))
 					{
 						if (paramId.equals("box"))
 						{
-							param = (AtlParameter) getParameterBox()
+							param = (Parameter) getParameterBox()
 									.getSelectedItem();
 						}
 						else
 						{
-							param = AtlParameter.findById(paramId);
+							param = Parameter.findById(paramId);
 						}
 					}
 

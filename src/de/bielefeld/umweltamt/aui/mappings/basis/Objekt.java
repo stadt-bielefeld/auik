@@ -29,6 +29,9 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -80,9 +83,11 @@ public class Objekt  implements java.io.Serializable {
     private Set<Objektverknuepfung> objektverknuepfungsForIstVerknuepftMit = new HashSet<Objektverknuepfung>(0);
     private Set<Anh53Fachdaten> anh53Fachdatens = new HashSet<Anh53Fachdaten>(0);
     private Set<Anh40Fachdaten> anh40Fachdatens = new HashSet<Anh40Fachdaten>(0);
+    private Set<Einleitungsstelle> einleitungsstelles = new HashSet<Einleitungsstelle>(0);
     private Set<BwkFachdaten> bwkFachdatens = new HashSet<BwkFachdaten>(0);
     private Set<Wasserrecht> wasserrechts = new HashSet<Wasserrecht>(0);
     private Set<Adresse> adresses = new HashSet<Adresse>(0);
+    private Set<Aba> Abas = new HashSet<Aba>(0);
     private Set<Anh49Fachdaten> anh49Fachdatens = new HashSet<Anh49Fachdaten>(0);
     private Set<SuevFachdaten> suevFachdatens = new HashSet<SuevFachdaten>(0);
     private Set<Anh50Fachdaten> anh50Fachdatens = new HashSet<Anh50Fachdaten>(0);
@@ -95,6 +100,7 @@ public class Objekt  implements java.io.Serializable {
     private Set<Fachdaten> fachdatens = new HashSet<Fachdaten>(0);
     private Set<Anh52Fachdaten> anh52Fachdatens = new HashSet<Anh52Fachdaten>(0);
     private Set<Anh56Fachdaten> anh56Fachdatens = new HashSet<Anh56Fachdaten>(0);
+    private Set<Anfallstelle> Anfallstelles = new HashSet<Anfallstelle>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -321,6 +327,15 @@ public class Objekt  implements java.io.Serializable {
         this.anh40Fachdatens = anh40Fachdatens;
     }
 
+    public Set<Einleitungsstelle> getEinleitungsstelles() {
+        return this.einleitungsstelles;
+    }
+
+    public void setEinleitungsstelles(Set<Einleitungsstelle> einleitungsstelles) {
+		this.einleitungsstelles = einleitungsstelles;
+    }
+
+
     public Set<BwkFachdaten> getBwkFachdatens() {
         return this.bwkFachdatens;
     }
@@ -343,6 +358,14 @@ public class Objekt  implements java.io.Serializable {
 
     public void setAdresses(Set<Adresse> adresses) {
         this.adresses = adresses;
+    }
+
+    public Set<Aba> getAbas() {
+        return this.Abas;
+    }
+
+    public void setAbas(Set<Aba> elkaAbas) {
+		this.Abas = Abas;
     }
 
     public Set<Anh49Fachdaten> getAnh49Fachdatens() {
@@ -441,7 +464,15 @@ public class Objekt  implements java.io.Serializable {
         this.anh56Fachdatens = anh56Fachdatens;
     }
 
-    /**
+    public Set<Anfallstelle> getAnfallstelles() {
+		return Anfallstelles;
+	}
+
+	public void setAnfallstelles(Set<Anfallstelle> anfallstelles) {
+		Anfallstelles = anfallstelles;
+	}
+
+	/**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
      * string, call on <code>toGuiString</code> for a gui representation or do

@@ -66,8 +66,8 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorEinheitenModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorGemarkungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -281,7 +281,7 @@ public class EditorGemarkungen extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     int row = getResultTable().getSelectedRow();
                     if (row != -1 && getResultTable().getEditingRow() == -1) {
-                    	BasisGemarkung gemarkung = EditorGemarkungen.this.tmodel
+                    	Gemarkung gemarkung = EditorGemarkungen.this.tmodel
                             .getRow(row);
 
                         if (GUIManager.getInstance().showQuestion(

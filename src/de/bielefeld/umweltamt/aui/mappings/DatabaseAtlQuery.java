@@ -94,8 +94,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		List<Analyseposition> positions = new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(Analyseposition.class)
-												.createAlias("atlProbenahme", "probe")
-												.add(Restrictions.eq("probe.atlProbepkt", probepkt))
+												.createAlias("probenahme", "probe")
+												.add(Restrictions.eq("probe.messstelle", probepkt))
 												.addOrder(Order.asc("probe.kennummer"))
 										,
 										new Analyseposition());
@@ -1074,7 +1074,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	// Dirty cast/copy...
 	public static Analyseposition getAnalysepositionFromView(
-		ViewAtlAnalysepositionAll viewPos)
+			ViewAtlAnalysepositionAll viewPos)
 	{
 		Analyseposition pos = new Analyseposition();
 		pos.setId(viewPos.getId());

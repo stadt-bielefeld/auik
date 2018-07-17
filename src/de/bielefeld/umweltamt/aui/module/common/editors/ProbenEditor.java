@@ -123,15 +123,15 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parametergruppen;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.atl.Status;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
@@ -162,7 +162,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private static final long serialVersionUID = 5903518104076020136L;
 
     public interface OKListener {
-        public void onOK(AtlParameter[] params);
+        public void onOK(Parameter[] params);
     }
 
     /**
@@ -186,12 +186,12 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     private class ParameterModel extends EditableListTableModel {
         private static final long serialVersionUID = 6042681141925302970L;
-        private AtlProbenahmen probe;
+        private Probenahme probe;
         private boolean isNew;
         private boolean isSchlamm;
         private boolean isSielhaut;
 
-        public ParameterModel(AtlProbenahmen probe, boolean isNew,
+        public ParameterModel(Probenahme probe, boolean isNew,
             boolean isSchlamm, boolean isSielhaut) {
             super(new String[] {"Parameter", "GrKl", "Messwert", "Einheit",
                     "Analyse von", "Grenzwert", "% Normwert"}, false, true);
@@ -215,7 +215,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 // + probe);
                 // }
                 // positionen = probe.getAtlAnalysepositionen();
-                this.probe = AtlProbenahmen.findById(this.probe.getId());
+                this.probe = Probenahme.findById(this.probe.getId());
                 setList(DatabaseQuery.getSortedAnalysepositionen(this.probe));
             } else { // isNew
                 if (this.isSchlamm) {
@@ -229,46 +229,46 @@ public class ProbenEditor extends AbstractApplyEditor {
                         DatabaseConstants.ATL_PARAMETER_ID_QUECKSILBER,
                         DatabaseConstants.ATL_PARAMETER_ID_ZINK
                     };
-                    AtlParameter[] params = new AtlParameter[paramIDs.length];
+                    Parameter[] params = new Parameter[paramIDs.length];
                     for (int i = 0; i < paramIDs.length; i++) {
-                        params[i] = AtlParameter.findById(paramIDs[i]);
+                        params[i] = Parameter.findById(paramIDs[i]);
                     }
                     String analyse_von = "AGROLAB";
                     setList(new ArrayList<Object>());
-                    for (AtlParameter param : params) {
+                    for (Parameter param : params) {
                         addParameter(param,
                             DatabaseConstants.ATL_EINHEIT_MG_KG,
                             analyse_von);
                     }
                 } else if (this.probe.getKennummer().startsWith("7")) {
-                    AtlParameter[] params = {
-                        AtlParameter.findById(
+                    Parameter[] params = {
+                        Parameter.findById(
                             DatabaseConstants.ATL_PARAMETER_ID_TOC),
-                        AtlParameter.findById(
+                        Parameter.findById(
                             DatabaseConstants.ATL_PARAMETER_ID_ABWASSERMENGE)
                     };
                     String analyse_von = "Betriebslabor";
                     setList(new ArrayList<Object>());
-                    for (AtlParameter param : params) {
+                    for (Parameter param : params) {
                         addParameter(param,
-                            AtlEinheiten.findById(
+                            Einheiten.findById(
                                 param.getWirdgemessenineinheit()),
                             analyse_von);
                     }
                 } else if (!this.isSielhaut) {
-                    AtlParameter[] params = {
-                        AtlParameter.findById(
+                    Parameter[] params = {
+                        Parameter.findById(
                             DatabaseConstants.ATL_PARAMETER_ID_TEMPERATUR),
-                        AtlParameter.findById(
+                        Parameter.findById(
                             DatabaseConstants.ATL_PARAMETER_ID_PH_WERT),
-                        AtlParameter.findById(
+                        Parameter.findById(
                             DatabaseConstants.ATL_PARAMETER_ID_LEITFAEHIGKEIT)
                     };
                     String analyse_von = "360.33";
                     setList(new ArrayList<Object>());
-                    for (AtlParameter param : params) {
+                    for (Parameter param : params) {
                         addParameter(param,
-                            AtlEinheiten.findById(
+                            Einheiten.findById(
                                 param.getWirdgemessenineinheit()),
                             analyse_von);
                     }
@@ -280,11 +280,11 @@ public class ProbenEditor extends AbstractApplyEditor {
         @Override
         public Object getColumnValue(Object objectAtRow, int columnIndex) {
             Object value;
-            AtlAnalyseposition pos = (AtlAnalyseposition) objectAtRow;
+            Analyseposition pos = (Analyseposition) objectAtRow;
             switch (columnIndex) {
                 // Parameter
                 case 0:
-                    value = pos.getAtlParameter();
+                    value = pos.getParameter();
                     break;
                 // GrKl
                 case 1:
@@ -296,7 +296,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     break;
                 // Einheit
                 case 3:
-                    value = pos.getAtlEinheiten();
+                    value = pos.getEinheiten();
                     break;
                 // Analyse von
                 case 4:
@@ -306,13 +306,13 @@ public class ProbenEditor extends AbstractApplyEditor {
                 case 5:
                     value = null;
                     Double grenzWert = null;
-                    if (pos.getAtlParameter() != null) {
+                    if (pos.getParameter() != null) {
                         if (DatabaseQuery.isKlaerschlammProbe(this.probe)) {
-                            grenzWert = pos.getAtlParameter().getKlaerschlammGw();
-                        } else if (this.probe.getAtlProbepkt().getAtlProbeart()
+                            grenzWert = pos.getParameter().getKlaerschlammGw();
+                        } else if (this.probe.getMessstelle().getProbeart()
                             .getId().equals(
                             DatabaseConstants.ATL_PROBEART_ID_SIELHAUT)) {
-                            grenzWert = pos.getAtlParameter().getSielhautGw();
+                            grenzWert = pos.getParameter().getSielhautGw();
                         }
                     }
 
@@ -323,25 +323,25 @@ public class ProbenEditor extends AbstractApplyEditor {
                 // % Normwert
                 case 6:
                     value = "-";
-                    if (pos.getAtlEinheiten().getId().equals(
+                    if (pos.getEinheiten().getId().equals(
                         DatabaseConstants.ATL_EINHEIT_MG_KG.getId())) {
                         double tmpVal = -1;
                         if (DatabaseQuery.isKlaerschlammProbe(this.probe)) {
-                            if (pos.getAtlParameter().getKlaerschlammGw() != null) {
-                                if (!pos.getAtlParameter().getKlaerschlammGw()
+                            if (pos.getParameter().getKlaerschlammGw() != null) {
+                                if (!pos.getParameter().getKlaerschlammGw()
                                     .equals(new Double(0.0))) {
                                     tmpVal = pos.getWert().doubleValue()
-                                        / pos.getAtlParameter()
+                                        / pos.getParameter()
                                             .getKlaerschlammGw().doubleValue();
                                 }
                             }
-                        } else if (this.probe.getAtlProbepkt().getAtlProbeart().getId().equals(
+                        } else if (this.probe.getMessstelle().getProbeart().getId().equals(
                             DatabaseConstants.ATL_PROBEART_ID_SIELHAUT)) {
-                            if (pos.getAtlParameter().getSielhautGw() != null) {
-                                if (!pos.getAtlParameter().getSielhautGw()
+                            if (pos.getParameter().getSielhautGw() != null) {
+                                if (!pos.getParameter().getSielhautGw()
                                     .equals(new Double(0.0))) {
                                     tmpVal = pos.getWert().doubleValue()
-                                        / pos.getAtlParameter().getSielhautGw()
+                                        / pos.getParameter().getSielhautGw()
                                             .doubleValue();
                                 }
                             }
@@ -379,12 +379,12 @@ public class ProbenEditor extends AbstractApplyEditor {
         @Override
         public void editObject(Object objectAtRow, int columnIndex,
             Object newValue) {
-            AtlAnalyseposition tmp = (AtlAnalyseposition) objectAtRow;
+            Analyseposition tmp = (Analyseposition) objectAtRow;
 
             switch (columnIndex) {
                 case 0:
-                    AtlParameter tmpPara = (AtlParameter) newValue;
-                    tmp.setAtlParameter(tmpPara);
+                    Parameter tmpPara = (Parameter) newValue;
+                    tmp.setParameter(tmpPara);
 //				AtlParameter sParameter = AtlParameter.getParameter(tmpPara.getBezeichnung());
 //				parameterBox.setSelectedItem(tmpPara);
                     break;
@@ -416,8 +416,8 @@ public class ProbenEditor extends AbstractApplyEditor {
                     break;
 
                 case 3:
-                    AtlEinheiten tmpEinheit = (AtlEinheiten) newValue;
-                    tmp.setAtlEinheiten(tmpEinheit);
+                    Einheiten tmpEinheit = (Einheiten) newValue;
+                    tmp.setEinheiten(tmpEinheit);
                     break;
 
                 case 4:
@@ -441,19 +441,19 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         @Override
         public Object newObject() {
-            AtlAnalyseposition tmp = new AtlAnalyseposition();
-            tmp.setAtlProbenahmen(this.probe);
+            Analyseposition tmp = new Analyseposition();
+            tmp.setProbenahme(this.probe);
             if (DatabaseQuery.isKlaerschlammProbe(this.probe)
-                || this.probe.getAtlProbepkt().getAtlProbeart().getId().equals(
+                || this.probe.getMessstelle().getProbeart().getId().equals(
                     DatabaseConstants.ATL_PROBEART_ID_SIELHAUT)) {
-                tmp.setAtlEinheiten(DatabaseConstants.ATL_EINHEIT_MG_KG);
+                tmp.setEinheiten(DatabaseConstants.ATL_EINHEIT_MG_KG);
             } else {
-                tmp.setAtlEinheiten(DatabaseConstants.ATL_EINHEIT_MG_L);
+                tmp.setEinheiten(DatabaseConstants.ATL_EINHEIT_MG_L);
             }
-            tmp.setAtlParameter((AtlParameter) ProbenEditor.this.parameterBox
+            tmp.setParameter((Parameter) ProbenEditor.this.parameterBox
                 .getSelectedItem());
             tmp.setWert(new Float(0));
-            tmp.setAtlEinheiten(AtlEinheiten.findById(tmp.getAtlParameter()
+            tmp.setEinheiten(Einheiten.findById(tmp.getParameter()
                 .getWirdgemessenineinheit()));
             // tmp.setAnalyseVon("");
             return tmp;
@@ -465,22 +465,22 @@ public class ProbenEditor extends AbstractApplyEditor {
          * keine doppelten Parameter vor.
          * @param parameter Ein neuer Parameter.
          */
-        public void addParameter(AtlParameter parameter) {
+        public void addParameter(Parameter parameter) {
             if (isParameterAlreadyThere(parameter)) {
                 log.debug("Der Parameter wird bereits geprüft.");
                 return;
             }
 
-            AtlAnalyseposition pos = new AtlAnalyseposition();
+            Analyseposition pos = new Analyseposition();
 
-            pos.setAtlProbenahmen(this.probe);
-            pos.setAtlParameter(parameter);
+            pos.setProbenahme(this.probe);
+            pos.setParameter(parameter);
             pos.setWert(new Float(0));
-            pos.setAtlEinheiten(AtlEinheiten.findById(parameter
+            pos.setEinheiten(Einheiten.findById(parameter
                 .getWirdgemessenineinheit()));
 
 //            getList().add(pos);
-            List<AtlAnalyseposition> list = (List<AtlAnalyseposition>) getList();
+            List<Analyseposition> list = (List<Analyseposition>) getList();
             list.add(pos);
 
             fireTableDataChanged();
@@ -492,23 +492,23 @@ public class ProbenEditor extends AbstractApplyEditor {
          * keine doppelten Parameter vor.
          * @param parameter Ein neuer Parameter.
          */
-        public void addParameter(AtlParameter parameter, AtlEinheiten einheit,
+        public void addParameter(Parameter parameter, Einheiten einheit,
             String analysevon) {
             if (isParameterAlreadyThere(parameter)) {
                 log.debug("Der Parameter wird bereits geprüft.");
                 return;
             }
 
-            AtlAnalyseposition pos = new AtlAnalyseposition();
+            Analyseposition pos = new Analyseposition();
 
-            pos.setAtlProbenahmen(this.probe);
-            pos.setAtlParameter(parameter);
+            pos.setProbenahme(this.probe);
+            pos.setParameter(parameter);
             pos.setWert(new Float(0));
-            pos.setAtlEinheiten(einheit);
+            pos.setEinheiten(einheit);
             pos.setAnalyseVon(analysevon);
 
 //          getList().add(pos);
-            List<AtlAnalyseposition> list = (List<AtlAnalyseposition>) getList();
+            List<Analyseposition> list = (List<Analyseposition>) getList();
             list.add(pos);
 
             fireTableDataChanged();
@@ -521,15 +521,15 @@ public class ProbenEditor extends AbstractApplyEditor {
          * @return true, wenn der Parameter bereits im Model enthalten ist,
          *         andernfalls false.
          */
-        public boolean isParameterAlreadyThere(AtlParameter newParam) {
+        public boolean isParameterAlreadyThere(Parameter newParam) {
             List<?> data = getList();
             int size = data.size();
 
             String newOrdnungsbegriff = newParam.getOrdnungsbegriff();
 
             for (int i = 0; i < size; i++) {
-                AtlAnalyseposition pos = (AtlAnalyseposition) data.get(i);
-                AtlParameter param = pos.getAtlParameter();
+                Analyseposition pos = (Analyseposition) data.get(i);
+                Parameter param = pos.getParameter();
 
                 if (param.getOrdnungsbegriff().equals(newOrdnungsbegriff)) {
                     return true;
@@ -541,10 +541,10 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         @Override
         public boolean objectRemoved(Object objectAtRow) {
-            AtlAnalyseposition tmp = (AtlAnalyseposition) objectAtRow;
+            Analyseposition tmp = (Analyseposition) objectAtRow;
 
             if(tmp.getId() == null) {
-            	probe.getAtlAnalysepositions().remove(tmp);
+            	probe.getAnalysepositions().remove(tmp);
             	}
             else {
                 tmp.delete();
@@ -558,7 +558,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             Class<?> tmp;
             switch (columnIndex) {
                 case 0:
-                    tmp = AtlParameter.class;
+                    tmp = Parameter.class;
                     break;
 
                 case 2:
@@ -566,7 +566,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     break;
 
                 case 3:
-                    tmp = AtlEinheiten.class;
+                    tmp = Einheiten.class;
                     break;
 
                 case 5:
@@ -619,7 +619,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private boolean isSchlamm;
     private boolean isSielhaut;
 
-    public ProbenEditor(AtlProbenahmen probe, HauptFrame owner, boolean isNew) {
+    public ProbenEditor(Probenahme probe, HauptFrame owner, boolean isNew) {
         super("Probenahme " + probe.getKennummer(), probe, owner);
         this.isNew = isNew;
         this.isSchlamm = false;
@@ -629,14 +629,14 @@ public class ProbenEditor extends AbstractApplyEditor {
             this.isSchlamm = true;
         }
 
-        if (probe.getAtlProbepkt().getAtlProbeart().getId().equals(
+        if (probe.getMessstelle().getProbeart().getId().equals(
             DatabaseConstants.ATL_PROBEART_ID_SIELHAUT)) {
             this.isSielhaut = true;
         }
 
         if (!isNew /*probe.isAnalysepositionenInitialized()*/) {
             // TODO: Here we want to get rid of getProbenahmeAndInit
-            setEditedObject(AtlProbenahmen.findById(probe.getId()));
+            setEditedObject(Probenahme.findById(probe.getId()));
         }
 
         if (isNew) {
@@ -673,7 +673,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             public void actionPerformed(ActionEvent e) {
                 doSave();
 
-                AtlProbenahmen probe = getProbe();
+                Probenahme probe = getProbe();
 
                 Map<String, Object> params = getAuftragDruckMap(probe);
 
@@ -712,7 +712,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
                     updateVorgangsstatus(
                         DatabaseConstants.ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT);
-                    probe.setAtlStatus(
+                    probe.setStatus(
                         DatabaseConstants.ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT);
 
                     probe.merge();
@@ -738,7 +738,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         this.bescheidDrucken.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AtlProbenahmen probe = getProbe();
+                Probenahme probe = getProbe();
 
                 String basePath = SettingsManager.getInstance().getSetting(
                     "auik.probenahme.bescheide");
@@ -815,7 +815,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     updateVorgangsstatus(
                         DatabaseConstants.ATL_STATUS_BESCHEID_GEDRUCKT);
 
-                    probe.setAtlStatus(
+                    probe.setStatus(
                         DatabaseConstants.ATL_STATUS_BESCHEID_GEDRUCKT);
 
                     probe.merge();
@@ -1032,10 +1032,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         File path = new File(bescheid).getParentFile();
         File kasse = new File(path, KASSE_FILENAME);
 
-        AtlProbenahmen probe = getProbe();
+        Probenahme probe = getProbe();
 
-        BasisAdresse basisBetr =
-            probe.getAtlProbepkt().getBasisObjekt().getBasisAdresse();
+        Adresse basisBetr =
+            probe.getMessstelle().getObjekt().getAdresseByBetreiberid();
 
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
         CurrencyDouble cd = new CurrencyDouble(getRechnungsbetrag(probe),
@@ -1147,13 +1147,13 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
         });
 
-        AtlProbenahmen probe = getProbe();
-        BasisAdresse basisBetr =
-            probe.getAtlProbepkt().getBasisObjekt().getBasisAdresse();
+        Probenahme probe = getProbe();
+        Adresse basisBetr =
+            probe.getMessstelle().getObjekt().getAdresseByBetreiberid();
 
         this.probenummer.setText(probe.getKennummer());
         this.probenummer.setEnabled(false);
-        this.entnahmepunkt.setText(probe.getAtlProbepkt().getBasisObjekt()
+        this.entnahmepunkt.setText(probe.getMessstelle().getObjekt()
             .getBeschreibung());
         Date entnahmeDatum = probe.getDatumDerEntnahme();
         this.datum.setDate(entnahmeDatum);
@@ -1231,7 +1231,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         this.icpDatum.setDate(icpDate);
 
         this.bemerkungsArea.setText(getProbe().getBemerkung());
-        this.sachbearbeiterBox.setSelectedItem(probe.getBasisSachbearbeiter());
+        this.sachbearbeiterBox.setSelectedItem(probe.getSachbearbeiter());
     }
 
     /** Initialisiert die Spalten der Analysepositionen-Tabelle */
@@ -1248,7 +1248,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             .getColumn(0);
         parameterColumn.setPreferredWidth(150);
 
-        AtlParameter[] parameter = DatabaseQuery.getGroupedParameter();
+        Parameter[] parameter = DatabaseQuery.getGroupedParameter();
 
         this.parameterBox = new JComboBox(parameter);
         this.parameterBox.setEditable(false);
@@ -1275,7 +1275,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 //        AtlEinheiten[] einheiten = AtlEinheiten.getEinheiten();
 
 //        this.einheitenBox = new JComboBox(einheiten);
-        this.einheitenBox = new JComboBox(DatabaseQuery.getAtlEinheiten());
+        this.einheitenBox = new JComboBox(DatabaseQuery.getEinheiten());
         this.einheitenBox.setEditable(false);
         this.einheitenBox.addFocusListener(new FocusAdapter() {
             @Override
@@ -1325,28 +1325,28 @@ public class ProbenEditor extends AbstractApplyEditor {
      * gespeichert ist.
      */
     protected void fillVorgangsstatus() {
-        AtlProbenahmen probe = getProbe();
+        Probenahme probe = getProbe();
 
-        if (probe == null || probe.getAtlStatus() == null)
+        if (probe == null || probe.getStatus() == null)
             return;
 
-        AtlStatus status = probe.getAtlStatus();
+        Status status = probe.getStatus();
         log.debug("Aktueller Status: " + status.getBezeichnung());
 
         updateVorgangsstatus(status);
     }
 
-    protected AtlStatus getVorgangsstatus() {
-        return (AtlStatus) this.vorgangsstatusBox.getSelectedItem();
+    protected Status getVorgangsstatus() {
+        return (Status) this.vorgangsstatusBox.getSelectedItem();
     }
 
-    protected BasisSachbearbeiter getSachbearbeiter() {
+    protected Sachbearbeiter getSachbearbeiter() {
         ComboBoxModel model = this.sachbearbeiterBox.getModel();
 
-        return (BasisSachbearbeiter) model.getSelectedItem();
+        return (Sachbearbeiter) model.getSelectedItem();
     }
 
-    protected void updateVorgangsstatus(AtlStatus newStatus) {
+    protected void updateVorgangsstatus(Status newStatus) {
         this.vorgangsstatusBox.setSelectedItem(newStatus);
     }
 
@@ -1359,10 +1359,10 @@ public class ProbenEditor extends AbstractApplyEditor {
     public boolean doSave() {
         log.debug("Speichere Probenahmedetails");
 
-        AtlProbenahmen probe = getProbe();
+        Probenahme probe = getProbe();
 
         // Vorgangsstatus
-        probe.setAtlStatus((AtlStatus) this.vorgangsstatusBox.getSelectedItem());
+        probe.setStatus((Status) this.vorgangsstatusBox.getSelectedItem());
 
         // Von
         // TODO: This does not seem to make sense...
@@ -1414,10 +1414,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         // Sachbearbeiter
-        BasisSachbearbeiter b = (BasisSachbearbeiter) this.sachbearbeiterBox
+        Sachbearbeiter b = (Sachbearbeiter) this.sachbearbeiterBox
             .getSelectedItem();
         if (b != null) {
-            probe.setBasisSachbearbeiter(b);
+            probe.setSachbearbeiter(b);
         }
 
         // Kennnummer
@@ -1440,7 +1440,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         boolean success = true;
 
-        probe = AtlProbenahmen.merge(probe);
+        probe = Probenahme.merge(probe);
         setProbe(probe);
         success = (probe != null);
         if (this.isNew) {
@@ -1456,12 +1456,12 @@ public class ProbenEditor extends AbstractApplyEditor {
 //        log.debug("Analysepositionen geändert: "
 //            + getProbe().getAtlAnalysepositionen());
         List<?> objects = this.parameterModel.getList();
-        AtlAnalyseposition position;
+        Analyseposition position;
         for (Object object : objects) {
-            position = (AtlAnalyseposition) object;
-            position.setAtlProbenahmen(probe);
-            if (position.getAtlParameter().getSielhautGw() != null) {
-            	position.setNormwert(position.getWert()/position.getAtlParameter().getSielhautGw());
+            position = (Analyseposition) object;
+            position.setProbenahme(probe);
+            if (position.getParameter().getSielhautGw() != null) {
+            	position.setNormwert(position.getWert()/position.getParameter().getSielhautGw());
             }            
             success = success && position.merge();
         }
@@ -1474,12 +1474,12 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Probenahmeauftrages.
      * @return die Variablen für den Probenahmeauftrag als Map.
      */
-    public Map<String, Object> getAuftragDruckMap(AtlProbenahmen probe) {
-        BasisAdresse betr = probe.getAtlProbepkt().getBasisObjekt()
-            .getBasisAdresse();
-        BasisAdresse std = probe.getAtlProbepkt().getBasisObjekt()
-            .getBasisStandort();
-        AtlProbeart art = probe.getAtlProbepkt().getAtlProbeart();
+    public Map<String, Object> getAuftragDruckMap(Probenahme probe) {
+        Adresse betr = probe.getMessstelle().getObjekt()
+            .getAdresseByBetreiberid();
+        Adresse std = probe.getMessstelle().getObjekt()
+            .getAdresseByStandortid();
+        Probeart art = probe.getMessstelle().getProbeart();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("kennnummer", this.probenummer.getText());
@@ -1509,7 +1509,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("entnahmestelle", this.entnahmepunkt.getText());
         params.put("bemerkungen", this.bemerkungsArea.getText());
 
-        BasisSachbearbeiter sb = (BasisSachbearbeiter) this.sachbearbeiterBox
+        Sachbearbeiter sb = (Sachbearbeiter) this.sachbearbeiterBox
             .getSelectedItem();
 
         StringBuilder info = new StringBuilder();
@@ -1525,7 +1525,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         // TODO fill in the correct values if they exist
         params.put("anzahlEntnahmestellen", "1");
 
-        params.put("branche", probe.getAtlProbepkt().getBranche());
+        params.put("branche", probe.getMessstelle().getBranche());
 
         return params;
     }
@@ -1535,14 +1535,14 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Druck/Export des Geb&uuml;hrenbescheid notwendig sind.
      * @return die Variablen des Geb&uuml;hrenbescheids als Map.
      */
-    public Map<String, Object> getBescheidDruckMap(AtlProbenahmen probe)
+    public Map<String, Object> getBescheidDruckMap(Probenahme probe)
         throws IllegalArgumentException {
-        BasisAdresse betr =
-            probe.getAtlProbepkt().getBasisObjekt().getBasisAdresse();
-        BasisAdresse basisStandort =
-            probe.getAtlProbepkt().getBasisObjekt().getBasisStandort();
+        Adresse betr =
+            probe.getMessstelle().getObjekt().getAdresseByBetreiberid();
+        Adresse basisStandort =
+            probe.getMessstelle().getObjekt().getAdresseByStandortid();
         Lage basisLage =
-                probe.getAtlProbepkt().getBasisObjekt().getBasisLage();
+                probe.getMessstelle().getObjekt().getLage();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
 
@@ -1561,7 +1561,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("datum", DateUtils.format(now, DateUtils.FORMAT_DATE));
         params.put("entnahmedatum", entnahmezeitpunkt);
         params.put("entnahmeort", basisStandort.toString());//basisStandort.toString());
-        params.put("entnahmestelle", probe.getAtlProbepkt().getBasisObjekt()
+        params.put("entnahmestelle", probe.getMessstelle().getObjekt()
             .getBeschreibung());
         params.put("entnahmestellen", "1");
         params.put("maxdatum", DateUtils.format(DateUtils.getDateOfBill(now),
@@ -1658,21 +1658,21 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Diese Methode liefert die Analysekosten der <i>probe</i>.
      * @return die Analysekosten.
      */
-    public double getAnalysekosten(AtlProbenahmen probe)
+    public double getAnalysekosten(Probenahme probe)
         throws IllegalArgumentException {
-        List<AtlAnalyseposition> sorted =
+        List<Analyseposition> sorted =
             DatabaseQuery.getSortedAnalysepositionen(probe);
-        HashMap<Integer, List<AtlParameter>> gruppen = new HashMap<Integer, List<AtlParameter>>();
+        HashMap<Integer, List<Parameter>> gruppen = new HashMap<Integer, List<Parameter>>();
         double single = 0d;
         double group = 0d;
 
-        AtlAnalyseposition pos = null;
-        AtlParameter para = null;
-        AtlParametergruppen gruppe = null;
+        Analyseposition pos = null;
+        Parameter para = null;
+        Parametergruppen gruppe = null;
         for (int i = 0; i < sorted.size(); i++) {
             pos = sorted.get(i);
-            para = pos.getAtlParameter();
-            gruppe = para.getAtlParametergruppen();
+            para = pos.getParameter();
+            gruppe = para.getParametergruppen();
 
             if (gruppe == null) {
                 single += para.getPreisfueranalyse();
@@ -1682,7 +1682,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 if (gruppen.containsKey(id)) {
                     gruppen.get(id).add(para);
                 } else {
-                    List<AtlParameter> neu = new ArrayList<AtlParameter>();
+                    List<Parameter> neu = new ArrayList<Parameter>();
                     neu.add(para);
 
                     gruppen.put(id, neu);
@@ -1720,11 +1720,11 @@ public class ProbenEditor extends AbstractApplyEditor {
      * @throws IllegalArgumentException
      */
     public double getGruppierteAnalysekosten(int gruppe,
-        List<AtlParameter> params) throws IllegalArgumentException {
+        List<Parameter> params) throws IllegalArgumentException {
         double preis = 0d;
 
         if (DatabaseQuery.isCompleteParameterGroup(gruppe, params)) {
-            AtlParametergruppen g = AtlParametergruppen.findById(gruppe);
+            Parametergruppen g = Parametergruppen.findById(gruppe);
 
             if (g == null) {
                 log.debug("No such group with id: " + gruppe);
@@ -1736,7 +1736,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             int parameter = params.size();
 
             for (int i = 0; i < parameter; i++) {
-                AtlParameter p = params.get(i);
+                Parameter p = params.get(i);
 
                 if (p.getEinzelnbeauftragbar()) {
                     preis += p.getPreisfueranalyse();
@@ -1759,7 +1759,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Sach- und Personalkosten und der Analysekosten.
      * @return den Rechnungsbetrag.
      */
-    public double getRechnungsbetrag(AtlProbenahmen probe)
+    public double getRechnungsbetrag(Probenahme probe)
         throws ParseException, IllegalArgumentException {
         return Math.round(getSachUndPersonalkosten() * 100.) / 100.
             + Math.round(getAnalysekosten(probe) * 100.) / 100.;
@@ -1769,7 +1769,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Diese Funktion berechnet den Rechnungsbetrag der <i>probe</i>, setzt den
      * Betrag am Objekt und aktualisiert die GUI.
      */
-    protected void updateRechnungsbetrag(AtlProbenahmen probe)
+    protected void updateRechnungsbetrag(Probenahme probe)
         throws ParseException {
         double betrag = getRechnungsbetrag(probe);
 
@@ -1783,7 +1783,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Diese Funktion berechnet das Rechnugnsdatum, setzt dies am AtlProbenahmen
      * Objekt und aktualisiert die GUI mit dem aktuellen Datum.
      */
-    protected void updateRechnungsdatum(AtlProbenahmen probe) {
+    protected void updateRechnungsdatum(Probenahme probe) {
         Date now = new Date();
         // TODO: Check this: This variable was not used, but should it really
         // not?
@@ -1800,8 +1800,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         ParameterChooser chooser = new ParameterChooser(this.frame);
         chooser.addOKListener(new OKListener() {
             @Override
-            public void onOK(AtlParameter[] params) {
-                for (AtlParameter param : params) {
+            public void onOK(Parameter[] params) {
+                for (Parameter param : params) {
                     ProbenEditor.this.parameterModel.addParameter(param);
                 }
             }
@@ -1809,11 +1809,11 @@ public class ProbenEditor extends AbstractApplyEditor {
         chooser.setVisible(true);
     }
 
-    public AtlProbenahmen getProbe() {
-        return (AtlProbenahmen) getEditedObject();
+    public Probenahme getProbe() {
+        return (Probenahme) getEditedObject();
     }
 
-    public void setProbe(AtlProbenahmen probe) {
+    public void setProbe(Probenahme probe) {
         setEditedObject(probe);
     }
 
@@ -1825,7 +1825,7 @@ class ParameterChooser extends OkCancelApplyDialog {
     private JTable ergebnisTabelle;
 
     private ParameterAuswahlModel parameterAuswahlModel;
-    private AtlParameter chosenParameter = null;
+    private Parameter chosenParameter = null;
     private ProbenEditor.OKListener oklistener;
 
     public ParameterChooser(HauptFrame owner) {
@@ -1881,7 +1881,7 @@ class ParameterChooser extends OkCancelApplyDialog {
      */
     @Override
     protected void doOk() {
-        AtlParameter[] selected = this.parameterAuswahlModel
+        Parameter[] selected = this.parameterAuswahlModel
             .getSelectedParameter();
         fireOKEvent(selected);
 
@@ -1895,7 +1895,7 @@ class ParameterChooser extends OkCancelApplyDialog {
         this.parameterAuswahlModel.fireTableDataChanged();
     }
 
-    protected void fireOKEvent(AtlParameter[] parameter) {
+    protected void fireOKEvent(Parameter[] parameter) {
         if (this.oklistener == null) {
             return;
         }
@@ -1903,7 +1903,7 @@ class ParameterChooser extends OkCancelApplyDialog {
         this.oklistener.onOK(parameter);
     }
 
-    public AtlParameter getChosenParameter() {
+    public Parameter getChosenParameter() {
         return this.chosenParameter;
     }
 
@@ -1991,18 +1991,18 @@ class ParameterAuswahlModel extends ListTableModel {
         Arrays.fill(this.selection, false);
     }
 
-    public AtlParameter[] getSelectedParameter() {
-        List<AtlParameter> params = new ArrayList<AtlParameter>();
+    public Parameter[] getSelectedParameter() {
+        List<Parameter> params = new ArrayList<Parameter>();
         List<?> data = getList();
         int rows = getRowCount();
 
         for (int idx = 0; idx < rows; idx++) {
             if (this.selection[idx]) {
-                params.add((AtlParameter) data.get(idx));
+                params.add((Parameter) data.get(idx));
             }
         }
 
-        return params.toArray(new AtlParameter[params.size()]);
+        return params.toArray(new Parameter[params.size()]);
     }
 
     /*
@@ -2027,7 +2027,7 @@ class ParameterAuswahlModel extends ListTableModel {
                     case 0:
                         return new Boolean(this.selection[row]);
                     case 1:
-                        AtlParameter p = (AtlParameter) getObjectAtRow(row);
+                        Parameter p = (Parameter) getObjectAtRow(row);
                         return p.getBezeichnung();
                     default:
                         return "FEHLER!";

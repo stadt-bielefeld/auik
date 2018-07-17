@@ -36,9 +36,9 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
@@ -56,11 +56,11 @@ public class ObjektChooser extends OkCancelDialog {
     private JTable ergebnisTabelle;
 
     private BasisObjektModel objektModel;
-    private BasisObjekt chosenObjekt = null;
-    private BasisObjekt objekt = null;
+    private Objekt chosenObjekt = null;
+    private Objekt objekt = null;
     private ObjektVerknuepfungModel objektVerknuepfungModel;
 
-    public ObjektChooser(HauptFrame owner, BasisObjekt objekt, ObjektVerknuepfungModel objektVerknuepfungModel) {
+    public ObjektChooser(HauptFrame owner, Objekt objekt, ObjektVerknuepfungModel objektVerknuepfungModel) {
         super("Objekt auswählen", owner);
 
         objektModel = new BasisObjektModel("Betreiber", null);
@@ -75,7 +75,7 @@ public class ObjektChooser extends OkCancelDialog {
 
         setResizable(true);
 
-        objektModel.searchByStandort(objekt.getBasisStandort());
+        objektModel.searchByStandort(objekt.getAdresseByStandortid());
         // Remove this BasisObjekt from the list as we do not want to connect the
         // BasisObjekt with itself
         objektModel.removeFromList(objekt);
@@ -93,19 +93,19 @@ public class ObjektChooser extends OkCancelDialog {
         choose(row, objekt, objektVerknuepfungModel);
     }
 
-    private void choose(int row, BasisObjekt objekt, ObjektVerknuepfungModel objektVerknuepfungModel) {
+    private void choose(int row, Objekt objekt, ObjektVerknuepfungModel objektVerknuepfungModel) {
         if (row != -1) {
-            chosenObjekt = (BasisObjekt) objektModel.getObjectAtRow(row);
-            BasisObjektverknuepfung neueov = new BasisObjektverknuepfung();
-            neueov.setBasisObjektByObjekt(objekt);
-            neueov.setBasisObjektByIstVerknuepftMit(chosenObjekt);
-            BasisObjektverknuepfung.merge(neueov);
+            chosenObjekt = (Objekt) objektModel.getObjectAtRow(row);
+            Objektverknuepfung neueov = new Objektverknuepfung();
+            neueov.setObjektByObjekt(objekt);
+            neueov.setObjektByIstVerknuepftMit(chosenObjekt);
+            Objektverknuepfung.merge(neueov);
             objektVerknuepfungModel.updateList();
             dispose();
         }
     }
 
-    public BasisObjekt getChosenObjekt() {
+    public Objekt getChosenObjekt() {
         return chosenObjekt;
     }
 

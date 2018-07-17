@@ -48,7 +48,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         DatabaseSerialVersionUID.forEntwaesserungsgrundstueck;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private long nr;
+    private Integer nr;
     private Objekt objekt;
     private Wasserrecht wasserrecht;
     private boolean erlFreiElTog;
@@ -79,7 +79,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Entwaesserungsgrundstueck(
-        long nr, Objekt objekt, boolean erlFreiElTog, Date erstellDat, Integer einlBereichOpt, Date aktualDat, long adrNr) {
+    	Integer nr, Objekt objekt, boolean erlFreiElTog, Date erstellDat, Integer einlBereichOpt, Date aktualDat, long adrNr) {
         this.nr = nr;
         this.objekt = objekt;
         this.erlFreiElTog = erlFreiElTog;
@@ -91,7 +91,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public Entwaesserungsgrundstueck(
-        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, long adrNr, String externalNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+    	Integer nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, long adrNr, String externalNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
         this.nr = nr;
         this.objekt = objekt;
         this.wasserrecht = wasserrecht;
@@ -115,11 +115,11 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public long getNr() {
+    public Integer getNr() {
         return this.nr;
     }
 
-    public void setNr(long nr) {
+    public void setNr(Integer nr) {
         this.nr = nr;
     }
 

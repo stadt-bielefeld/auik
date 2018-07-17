@@ -68,7 +68,7 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorStrassenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -320,7 +320,7 @@ public class EditorStrassen extends AbstractModul
 					int row = getResultTable().getSelectedRow();
 					if (row != -1 && getResultTable().getEditingRow() == -1)
 					{
-						BasisStrassen strasse = EditorStrassen.this.tmodel
+						Strassen strasse = EditorStrassen.this.tmodel
 								.getRow(row);
 
 						if (GUIManager.getInstance().showQuestion(

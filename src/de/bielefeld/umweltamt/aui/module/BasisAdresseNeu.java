@@ -76,16 +76,16 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsStandortgghwsg;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsWassereinzugsgebiete;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsWirtschaftszweige;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
+import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
+import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandorteModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -107,7 +107,7 @@ public class BasisAdresseNeu extends AbstractModul
 	private static final AuikLogger log = AuikLogger.getLogger();
 
 	private JButton speichernButton;
-	private BasisMapAdresseLage mapLage;
+	private MapAdresseLage mapLage;
 	private Lage lage;
 
 	private JLabel handzeichenLabel;
@@ -140,10 +140,10 @@ public class BasisAdresseNeu extends AbstractModul
 	private JComboBox standortGgBox;
 	private JComboBox wEinzugsGebBox;
 	
-	private BasisGemarkung[] gemarkungen = null;
+	private Gemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;
-	private VawsStandortgghwsg[] standortggs = null;
-	private VawsWassereinzugsgebiete[] wEinzugsgebiete = null;
+	private Standortgghwsg[] standortggs = null;
+	private Wassereinzugsgebiet[] wEinzugsgebiete = null;
 
 	private JTextArea bemerkungsArea;
 
@@ -152,8 +152,8 @@ public class BasisAdresseNeu extends AbstractModul
 	private BasisStandorteModel standorteModel;
 	private JComboBox wirtschaftszweigBox;
 
-	private BasisOrte[] orte = null;
-	private VawsWirtschaftszweige[] wirtschaftszweige = null;
+	private Orte[] orte = null;
+	private Wirtschaftszweig[] wirtschaftszweige = null;
 	private String[] tabstreets = null;
 	private String street = null;
 
@@ -538,7 +538,7 @@ public class BasisAdresseNeu extends AbstractModul
         ListSelectionModel lsm = getStandorteTabelle().getSelectionModel();
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
-            BasisTabStreets bts = this.standorteModel.getRow(selectedRow);
+            TabStreets bts = this.standorteModel.getRow(selectedRow);
             log.debug("Standort " + bts.getName() + " (ID"
                 + bts.getAbgleich() + ") angewählt.");
             plzFeld.setText(bts.getPlz());
@@ -547,7 +547,7 @@ public class BasisAdresseNeu extends AbstractModul
             hausnrZusFeld.setText(bts.getHausnrZusatz());
             e32Feld.setValue(bts.getX());
             n32Feld.setValue(bts.getY());
-            BasisStrassen stra = DatabaseQuery.findStrasse(strassenBox
+            Strassen stra = DatabaseQuery.findStrasse(strassenBox
 					.getSelectedItem().toString());
             if (stra.getPlz() != null) {
             	plzFeld.setText(stra.getPlz());
@@ -560,8 +560,8 @@ public class BasisAdresseNeu extends AbstractModul
             } else  {
         	i = bts.getHausnrZusatz();
             }
-            List<BasisAdresse> firmen = DatabaseQuery.findStandorte(strasseFeld.getText(),bts.getHausnr() , stra.getOrt());
-            for(BasisAdresse firma : firmen) {
+            List<Adresse> firmen = DatabaseQuery.findStandorte(strasseFeld.getText(),bts.getHausnr() , stra.getOrt());
+            for(Adresse firma : firmen) {
         	String f;
                 if (firma.getHausnrzus() == null) {
             	f = "";
@@ -569,26 +569,26 @@ public class BasisAdresseNeu extends AbstractModul
             	f = firma.getHausnrzus();
                 }
         	if (i.equals(f) || f.contains("-") ) {
-            	Set<BasisMapAdresseLage> verk = firma.getBasisMapAdresseLages();
-            	for (BasisMapAdresseLage ver : verk) {
+            	Set<MapAdresseLage> verk = firma.getMapAdresseLages();
+            	for (MapAdresseLage ver : verk) {
             	    vorhandeneLage = ver.getLage();
             	}   
         	}
             }
             if (vorhandeneLage != null) {
-        	List<BasisGemarkung> gemarkungen = DatabaseQuery.getGemarkungenlist();
-        	for (BasisGemarkung gemarkung : gemarkungen) {
-        	  if (gemarkung.getGemarkung().equals(vorhandeneLage.getBasisGemarkung().getGemarkung())) {
+        	List<Gemarkung> gemarkungen = DatabaseQuery.getGemarkungenlist();
+        	for (Gemarkung gemarkung : gemarkungen) {
+        	  if (gemarkung.getGemarkung().equals(vorhandeneLage.getGemarkung().getGemarkung())) {
         	      this.gemarkungBox.setSelectedItem(gemarkung);
         	  }
         	}
-        	for (VawsStandortgghwsg standort : standortggs) {
-        	    if (standort.getStandortgg().equals(vorhandeneLage.getVawsStandortgghwsg().getStandortgg())) {
+        	for (Standortgghwsg standort : standortggs) {
+        	    if (standort.getStandortgg().equals(vorhandeneLage.getStandortgghwsg().getStandortgg())) {
         		this.standortGgBox.setSelectedItem(standort);
         	    }
         	}
-        	for (VawsWassereinzugsgebiete wEinzugsgebiet : wEinzugsgebiete) {
-        	    if (wEinzugsgebiet.getEzgbname().equals(vorhandeneLage.getVawsWassereinzugsgebiete().getEzgbname())) {
+        	for (Wassereinzugsgebiet wEinzugsgebiet : wEinzugsgebiete) {
+        	    if (wEinzugsgebiet.getEzgbname().equals(vorhandeneLage.getWassereinzugsgebiet().getEzgbname())) {
         		this.wEinzugsGebBox.setSelectedItem(wEinzugsgebiet);
         	    }
         	}
@@ -630,7 +630,7 @@ public class BasisAdresseNeu extends AbstractModul
 			setAllEnabled(false);
 
 			// Neues Standortobjekt erzeugen
-			BasisAdresse adrn = new BasisAdresse();
+			Adresse adrn = new Adresse();
             
 			/*if (standorteTabelle.getSelectedRowCount() > 0) {
 				mapLage = new BasisMapAdresseLage();
@@ -639,10 +639,10 @@ public class BasisAdresseNeu extends AbstractModul
 				mapLage.setBasisLage(lage);
 			}*/
             //Vermeidet fehler beim merge, wenn eine eigene Adresse eingeben wurde anstatt eine aus der Liste auszuwählen
-            mapLage = new BasisMapAdresseLage();
-			lage = new BasisLage();
-			mapLage.setBasisAdresse(adrn);
-			mapLage.setBasisLage(lage);
+            mapLage = new MapAdresseLage();
+			lage = new Lage();
+			mapLage.setAdresse(adrn);
+			mapLage.setLage(lage);
 
 			// Anrede
 			String anrede = anredeFeld.getText();
@@ -764,20 +764,20 @@ public class BasisAdresseNeu extends AbstractModul
 				adrn.setNamebetrbeauf(betrBeaufNachname);
 			}
 			// Wirtschaftszweig
-			VawsWirtschaftszweige wizw = (VawsWirtschaftszweige) wirtschaftszweigBox
+			Wirtschaftszweig wizw = (Wirtschaftszweig) wirtschaftszweigBox
 					.getSelectedItem();
-			adrn.setVawsWirtschaftszweige(wizw);
+			adrn.setWirtschaftszweig(wizw);
 
 			if (lage != null) {
 				// Gemarkung
-				BasisGemarkung bgem = (BasisGemarkung) gemarkungBox
+				Gemarkung bgem = (Gemarkung) gemarkungBox
 						.getSelectedItem();
-				mapLage.getBasisLage().setBasisGemarkung(bgem);
+				mapLage.getLage().setGemarkung(bgem);
 
 				// Standortgg
-				VawsStandortgghwsg stgg = (VawsStandortgghwsg) standortGgBox
+				Standortgghwsg stgg = (Standortgghwsg) standortGgBox
 						.getSelectedItem();
-				mapLage.getBasisLage().setVawsStandortgghwsg(stgg);
+				mapLage.getLage().setStandortgghwsg(stgg);
 
 				// Einzugsgebiet
 				String ezgb = (String) entwGebBox.getSelectedItem();
@@ -793,36 +793,36 @@ public class BasisAdresseNeu extends AbstractModul
 					}
 					ezgb = ezgb.trim();
 				}
-				mapLage.getBasisLage().setEntgebid(ezgb);
+				mapLage.getLage().setEntgebid(ezgb);
 
 				// VAWS-Einzugsgebiet
-				VawsWassereinzugsgebiete wezg = (VawsWassereinzugsgebiete) wEinzugsGebBox
+				Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox
 						.getSelectedItem();
-				mapLage.getBasisLage().setVawsWassereinzugsgebiete(wezg);
+				mapLage.getLage().setWassereinzugsgebiet(wezg);
 
 				// Flur
 				String flur = flurFeld.getText().trim();
 				if (flur.equals("")) {
-					mapLage.getBasisLage().setFlur(null);
+					mapLage.getLage().setFlur(null);
 				} else {
-					mapLage.getBasisLage().setFlur(flur);
+					mapLage.getLage().setFlur(flur);
 				}
 
 				// Flurstueck
 				String flurstk = flurStkFeld.getText().trim();
 				if (flurstk.equals("")) {
-					mapLage.getBasisLage().setFlurstueck(null);
+					mapLage.getLage().setFlurstueck(null);
 				} else {
-					mapLage.getBasisLage().setFlurstueck(flurstk);
+					mapLage.getLage().setFlurstueck(flurstk);
 				}
 
 				// Rechtswert
 				Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
-				mapLage.getBasisLage().setE32(e32Wert);
+				mapLage.getLage().setE32(e32Wert);
 
 				// Hochwert
 				Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
-				mapLage.getBasisLage().setN32(n32Wert);
+				mapLage.getLage().setN32(n32Wert);
 			}
 			// Bemerkungen
 			String bemerkungen = bemerkungsArea.getText().trim();
@@ -840,8 +840,8 @@ public class BasisAdresseNeu extends AbstractModul
 			 * und Basis_Lage ebenfalls gespeichert werden.
 			 */
 
-			BasisMapAdresseLage persistentAL = null;
-			persistentAL = BasisMapAdresseLage.merge(mapLage);
+			MapAdresseLage persistentAL = null;
+			persistentAL = MapAdresseLage.merge(mapLage);
 
 			if (persistentAL != null) {
 				frame.changeStatus("Neuer Betreiber " + persistentAL.getId()
@@ -852,7 +852,7 @@ public class BasisAdresseNeu extends AbstractModul
 						"auik.imc.return_to_objekt_betreiber")) {
 					manager.getSettingsManager().setSetting(
 							"auik.imc.use_betreiber",
-							persistentAL.getBasisAdresse().getId().intValue(),
+							persistentAL.getAdresse().getId().intValue(),
 							false);
 					manager.getSettingsManager().removeSetting(
 							"auik.imc.return_to_objekt_betreiber");
@@ -863,11 +863,11 @@ public class BasisAdresseNeu extends AbstractModul
 							"auik.imc.return_to_objekt_standort")) {
 					manager.getSettingsManager().setSetting(
 							"auik.imc.use_standort",
-							persistentAL.getBasisAdresse().getId().intValue(),
+							persistentAL.getAdresse().getId().intValue(),
 							false);
 					manager.getSettingsManager().setSetting(
 							"auik.imc.use_lage",
-							persistentAL.getBasisLage().getId().intValue(),
+							persistentAL.getLage().getId().intValue(),
 							false);
 					manager.getSettingsManager().removeSetting(
 							"auik.imc.return_to_objekt_standort");
@@ -900,9 +900,9 @@ public class BasisAdresseNeu extends AbstractModul
 
 		if (strassenBox.getSelectedItem() != null)
 		{
-			if (strassenBox.getSelectedItem().getClass() == BasisTabStreets.class)
+			if (strassenBox.getSelectedItem().getClass() == TabStreets.class)
 			{
-				BasisTabStreets selstrasse = (BasisTabStreets) strassenBox.getSelectedItem();
+				TabStreets selstrasse = (TabStreets) strassenBox.getSelectedItem();
 				if (selstrasse != null)
 				{
 					str = selstrasse.getStrasse();
@@ -942,7 +942,7 @@ public class BasisAdresseNeu extends AbstractModul
 				}
 				if (wirtschaftszweige == null)
 				{
-					wirtschaftszweige = DatabaseQuery.getVawsWirtschaftszweige();
+					wirtschaftszweige = DatabaseQuery.getWirtschaftszweig();
 				}
 				if (tabstreets == null)
 				{
@@ -950,11 +950,11 @@ public class BasisAdresseNeu extends AbstractModul
 				}
 				if (gemarkungen == null)
 				{
-					gemarkungen = DatabaseQuery.getBasisGemarkungen();
+					gemarkungen = DatabaseQuery.getGemarkungen();
 				}
 				if (standortggs == null)
 				{
-					standortggs = DatabaseQuery.getVawsStandortgghwsg();
+					standortggs = DatabaseQuery.getStandortgghwsg();
 				}
 				if (entwgebiete == null)
 				{
@@ -962,7 +962,7 @@ public class BasisAdresseNeu extends AbstractModul
 				}
 				if (wEinzugsgebiete == null)
 				{
-					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiete();
+					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiet();
 				}
 				
 			}
