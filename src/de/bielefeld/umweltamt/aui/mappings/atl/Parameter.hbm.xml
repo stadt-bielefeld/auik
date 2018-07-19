@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.atl.Parameter" table="parameter" schema="labor" optimistic-lock="version">
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.Parameter" table="parameter" schema="labor" lazy="false" optimistic-lock="version">
         <id name="ordnungsbegriff" type="java.lang.String">
             <column name="ordnungsbegriff" />
             <generator class="assigned" />

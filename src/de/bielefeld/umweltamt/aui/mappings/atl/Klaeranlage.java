@@ -296,8 +296,7 @@ public class Klaeranlage  implements java.io.Serializable {
     }
 
 	public String toGuiString() {
-		// TODO Auto-generated method stub
-		return null;
+		return getAnlage();
 	}
 
     /* Custom code goes below here! */

@@ -3,10 +3,9 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.basis.Lage" table="lage" schema="basis" optimistic-lock="version">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
-            <generator class="assigned" />
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.Lage" table="lage" schema="basis" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity"/>
         </id>
         <many-to-one name="standortgghwsg" class="de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg" fetch="select">
             <column name="standortgegebid" />
@@ -52,9 +51,6 @@
         </property>
         <property name="sachbe33hee" type="java.lang.String">
             <column name="sachbe33hee" />
-        </property>
-        <property name="theGeom" type="serializable">
-            <column name="the_geom" />
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />

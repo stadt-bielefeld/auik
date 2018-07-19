@@ -59,9 +59,9 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsAnlagenchrono;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.VawsKontrollen;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Kontrollen;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh50Model;
@@ -89,7 +89,7 @@ public class VawsChronologieAuswertung extends AbstractQueryModul {
     @Override
     protected void editObject(int row) {
         if (row != -1) {
-            VawsFachdaten fd = ((VawsAnlagenchrono)tmodel.getObjectAtRow(row)).getVawsFachdaten();
+            Fachdaten fd = ((Anlagenchrono)tmodel.getObjectAtRow(row)).getFachdaten();
 
             VawsEditor editor = new VawsEditor(fd, frame, "Daten");
 
@@ -182,7 +182,7 @@ public class VawsChronologieAuswertung extends AbstractQueryModul {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     ((VawsAnlagenchronoModel)getTableModel()).setList(
-                        DatabaseQuery.getVawsAnlagenchrono(
+                        DatabaseQuery.getAnlagenchrono(
                         		wiedervorlageCheck.isSelected(), 
                         		abgeschlossenCheck.isSelected()));
                     ((VawsAnlagenchronoModel)getTableModel()).fireTableDataChanged();

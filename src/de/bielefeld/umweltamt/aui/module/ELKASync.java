@@ -31,15 +31,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.glassfish.jersey.client.JerseyClient;
-import org.glassfish.jersey.client.JerseyClientBuilder;
-import org.glassfish.jersey.client.JerseyWebTarget;
-
-import org.glassfish.jersey.filter.LoggingFilter;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -57,6 +50,11 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.client.JerseyClient;
+import org.glassfish.jersey.client.JerseyClientBuilder;
+import org.glassfish.jersey.client.JerseyWebTarget;
+import org.glassfish.jersey.filter.LoggingFilter;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -64,16 +62,16 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
-import de.bielefeld.umweltamt.aui.mappings.elka.EAbwasserbehandlungsanlage;
-import de.bielefeld.umweltamt.aui.mappings.elka.EAdresse;
-import de.bielefeld.umweltamt.aui.mappings.elka.EAnfallstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.EBetrieb;
-import de.bielefeld.umweltamt.aui.mappings.elka.EEinleitungsstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.EMessstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahme;
-import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergeb;
-import de.bielefeld.umweltamt.aui.mappings.elka.EStandort;
-import de.bielefeld.umweltamt.aui.mappings.elka.EWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EBetrieb;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EMessstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahme;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahmeUeberwachungsergeb;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAbwasserbehandlungsanlageModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAnfallstelleModel;

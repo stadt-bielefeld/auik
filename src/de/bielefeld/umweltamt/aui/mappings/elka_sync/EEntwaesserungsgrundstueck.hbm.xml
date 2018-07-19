@@ -3,8 +3,8 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.elka.EEntwaesserungsgrundstueck" table="e_entwaesserungsgrundstueck" schema="elka" optimistic-lock="version">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.elka.EEntwaesserungsgrundstueckId">
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueck" table="e_entwaesserungsgrundstueck" schema="elka" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueckId">
             <key-property name="nr" type="java.lang.Long">
                 <column name="nr" />
             </key-property>

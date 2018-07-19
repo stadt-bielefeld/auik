@@ -173,7 +173,7 @@ public class MapAdresseLage  implements java.io.Serializable {
      *         <code>null</code> otherwise
      */
     public static MapAdresseLage merge(MapAdresseLage detachedInstance) {
-        log.debug("Merging BasisObjekt instance " + detachedInstance);
+        log.debug("Merging Objekt instance " + detachedInstance);
         return (MapAdresseLage) new DatabaseAccess().merge(detachedInstance);
     }
 
@@ -212,7 +212,7 @@ public class MapAdresseLage  implements java.io.Serializable {
      *         <code>false</code> otherwise
      */
     public static boolean delete(MapAdresseLage detachedInstance) {
-        log.debug("Deleting BasisObjekt instance " + detachedInstance);
+        log.debug("Deleting Objekt instance " + detachedInstance);
         return new DatabaseAccess().delete(detachedInstance);
     }
 
@@ -233,7 +233,7 @@ public class MapAdresseLage  implements java.io.Serializable {
      *         <code>null</code> otherwise
      */
     public static MapAdresseLage findById(java.lang.Integer id) {
-        log.debug("Getting BasisObjekt instance with id: " + id);
+        log.debug("Getting Objekt instance with id: " + id);
         return (MapAdresseLage)
             new DatabaseAccess().get(MapAdresseLage.class, id);
     }
@@ -430,7 +430,7 @@ public class MapAdresseLage  implements java.io.Serializable {
 		List mapAdressen = HibernateSessionFactory
 				.currentSession()
 				.createQuery(
-						"from BasisMapAdresseLage where adresseid= " + id)
+						"from MapAdresseLage where adresseid= " + id)
 				.list();
 		if (mapAdressen.size() != 0) {
 			map = (MapAdresseLage) mapAdressen

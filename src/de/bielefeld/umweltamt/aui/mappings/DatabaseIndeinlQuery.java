@@ -100,7 +100,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 			boolean nurWiedervorlageAbgelaufen) {
 		DetachedCriteria detachedCriteria = DetachedCriteria
 				.forClass(Objekt.class)
-				.add(Restrictions.eq("basisSachbearbeiter",
+				.add(Restrictions.eq("sachbearbeiter",
 						DatabaseQuery.getCurrentSachbearbeiter()))
 				.add(Restrictions.isNotNull("wiedervorlage"))
                 .addOrder(Order.asc("basisObjektarten"))
@@ -125,7 +125,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<Anh40Fachdaten> getAnhang40Auswertung() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh40Fachdaten.class)
-                .createAlias("basisObjekt", "objekt")
+                .createAlias("objekt", "objekt")
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("objektid")),
             new Anh40Fachdaten());
@@ -161,9 +161,9 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<Anh49Fachdaten> getFettabscheider() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh49Fachdaten.class)
-                .createAlias("basisObjekt", "objekt")
-                .createAlias("objekt.basisObjektarten", "art")
-                .createAlias("objekt.basisAdresse", "adresse")
+                .createAlias("objekt", "objekt")
+                .createAlias("objekt.objektarten", "art")
+                .createAlias("objekt.adresse", "adresse")
                 .add(Restrictions.eq("art.id",
                     DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
                 .addOrder(Order.asc("objekt.inaktiv"))
@@ -220,8 +220,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 
         DetachedCriteria criteria =
             DetachedCriteria.forClass(Anh49Fachdaten.class)
-                .createAlias("basisObjekt", "obj")
-                .createAlias("basisObjekt.basisObjektarten", "art");
+                .createAlias("objekt", "obj")
+                .createAlias("objekt.objektarten", "art");
 
         if (inaktiv == true) {
             criteria.add(Restrictions.eq("obj.inaktiv", inaktiv));
@@ -245,7 +245,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 //        }
         if (sachbearbeiter != null) {
             criteria.add(
-                Restrictions.eq("obj.basisSachbearbeiter", sachbearbeiter));
+                Restrictions.eq("obj.sachbearbeiter", sachbearbeiter));
         }
 
         criteria.add(Restrictions.ne("art.id",
@@ -256,34 +256,6 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         return new DatabaseAccess().executeCriteriaToList(
             criteria, new Anh49Fachdaten());
     }
-
-    // This is used for a drop down box. When the time comes and we are not
-    // using the dekra_tuev_datum anymore, this should be replaced by the last
-    // analyse datum
-//    public static Integer[] getOldDekraTuevYears() {
-//        Integer years[] = null;
-//        Timestamp times[] = new DatabaseAccess().executeCriteriaToArray(
-//            DetachedCriteria.forClass(Anh49Fachdaten.class)
-//                .createAlias("basisObjekt", "objekt")
-//                .createAlias("basisObjekt.basisObjektarten", "art")
-//                .add(Restrictions.ne("art.id",
-//                    DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
-//                .setProjection(Projections.distinct(
-//                    Projections.property("dekraTuevDatum")))
-//                .addOrder(Order.asc("dekraTuevDatum")),
-//            new Timestamp[0]);
-//        years = new Integer[times.length];
-//        Calendar cal = Calendar.getInstance();
-//        for (int i = 0; i < times.length; i++) {
-//            if (times[i] != null) {
-//                cal.setTime(times[i]);
-//                years[i] = cal.get(Calendar.YEAR);
-//            } else {
-//                years[i] = null;
-//            }
-//        }
-//        return years;
-//    }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class Anh49Kontrollen                     */
@@ -379,8 +351,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         boolean nurWiedervorlageAbgelaufen) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Anh50Fachdaten.class)
-                .createAlias("basisObjekt", "objekt")
-                .createAlias("basisObjekt.basisAdresse", "adresse")
+                .createAlias("objekt", "objekt")
+                .createAlias("objekt.adresseByBetreiberid", "adresse")
                 .add(Restrictions.eq("erloschen", false))
                 .add(Restrictions.eq("objekt.inaktiv", false))
                 .addOrder(Order.asc("wiedervorlage"))
@@ -403,7 +375,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<Anh52Fachdaten> getAnhang52() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh52Fachdaten.class)
-                .createAlias("basisObjekt", "objekt")
+                .createAlias("objekt", "objekt")
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("id")),
             new Anh52Fachdaten());
@@ -420,9 +392,9 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<Anh53Fachdaten> getAnhang53() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh53Fachdaten.class)
-                .createAlias("basisObjekt", "objekt")
-                .createAlias("basisObjekt.basisObjektarten", "art")
-                .createAlias("basisObjekt.basisStandort", "standort")
+                .createAlias("objekt", "objekt")
+                .createAlias("objekt.objektarten", "art")
+                .createAlias("objekt.adresseByStandortid", "standort")
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("art.id"))
                 .addOrder(Order.asc("standort.strasse"))
@@ -441,7 +413,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<Anh55Fachdaten> getAnhang55() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh55Fachdaten.class)
-                .createAlias("basisObjekt", "objekt")
+                .createAlias("objekt", "objekt")
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("id")),
             new Anh55Fachdaten());
@@ -459,8 +431,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         Boolean abwasseranfall, Boolean genpflicht) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Anh56Fachdaten.class)
-                .createAlias("basisObjekt", "objekt")
-                .createAlias("basisObjekt.basisStandort", "standort")
+                .createAlias("objekt", "objekt")
+                .createAlias("objekt.adresseByStandortid", "standort")
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("standort.strasse"))
                 .addOrder(Order.asc("standort.hausnr"));
@@ -508,9 +480,9 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<BwkFachdaten> getBHKW() {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				BwkFachdaten.class)
-	            .createAlias("basisObjekt", "obj")
-				.createAlias("basisObjekt.basisStandort", "standort")
-                .createAlias("basisObjekt.basisObjektarten", "art")
+	            .createAlias("objekt", "obj")
+				.createAlias("objekt.adresseByStandortid", "standort")
+                .createAlias("objekt.basisObjektarten", "art")
 				.addOrder(Order.asc("standort.strasse"))
 				.addOrder(Order.asc("standort.hausnr"))
 				.add(Restrictions.eq("art.id", 36))
@@ -526,8 +498,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<BwkFachdaten> getABA() {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				BwkFachdaten.class)
-	            .createAlias("basisObjekt", "obj")
-				.createAlias("basisObjekt.basisStandort", "standort")
+	            .createAlias("objekt", "obj")
+				.createAlias("objekt.adresseByStandortid", "standort")
 				.addOrder(Order.asc("standort.strasse"))
 				.addOrder(Order.asc("standort.hausnr"))
 				.add(Restrictions.eq("aba", true))
@@ -626,7 +598,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<SuevFachdaten> getAnhangSuev() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(SuevFachdaten.class)
-                .createAlias("basisObjekt", "objekt")
+                .createAlias("objekt", "objekt")
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("id")),
             new SuevFachdaten());
@@ -662,9 +634,9 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         Integer anhang, Boolean inaktiv, Boolean gen58, Boolean gen59) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Wasserrecht.class)
-                .createAlias("basisObjekt", "objekt")
-                .createAlias("basisObjekt.basisAdresse", "adresse")
-                .createAlias("basisObjekt.basisStandort", "standort")
+                .createAlias("objekt", "objekt")
+                .createAlias("objekt.adresseByBetreiberid", "adresse")
+                .createAlias("objekt.adresseByStandortid", "standort")
                 .add(Restrictions.eq("objekt.inaktiv", inaktiv))
                 .addOrder(Order.asc("adresse.betrname"))
                 .addOrder(Order.asc("standort.strasse"))

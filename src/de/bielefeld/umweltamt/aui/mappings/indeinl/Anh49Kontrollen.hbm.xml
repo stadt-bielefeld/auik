@@ -4,12 +4,12 @@
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen" table="anh_49_kontrollen" schema="indeinl" optimistic-lock="version">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
-            <generator class="native">
-                <param name="sequence">indeinl.anh_49_kontrollen_id_seq</param>
-            </generator>
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity"/>
         </id>
+        <many-to-one name="anh49Fachdaten" class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" fetch="select">
+            <column name="anh49id" />
+        </many-to-one>
         <property name="pruefdatum" type="java.util.Date">
             <column name="pruefdatum" length="13" />
         </property>
@@ -18,9 +18,6 @@
         </property>
         <property name="pruefergebnis" type="java.lang.String">
             <column name="pruefergebnis" />
-        </property>
-        <property name="anh49id" type="java.lang.Integer">
-            <column name="anh49id" />
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />

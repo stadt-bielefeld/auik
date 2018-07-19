@@ -790,7 +790,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
             }
         }
         return null;*/
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         //BasisObjekt.findById(id);
         Set<Anh49Fachdaten> list = objekt.getAnh49Fachdatens();
         return list.iterator().next();

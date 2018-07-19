@@ -3,10 +3,9 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage" table="map_adresse_lage" schema="basis" optimistic-lock="version">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
-            <generator class="assigned" />
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage" table="map_adresse_lage" schema="basis" lazy="true" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity"/>
         </id>
         <many-to-one name="Adresse" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select" cascade="all">
             <column name="adresseid" />

@@ -356,7 +356,7 @@ public class SchlammPanel extends JPanel {
 
     private JComboBox getAnlageBox() {
         if (anlageBox == null) {
-            anlageBox = new JComboBox(DatabaseQuery.getKlaeranlagen());
+            anlageBox = new JComboBox(DatabaseQuery.getKlaeranlage());
 
             anlageBox.addActionListener(new ActionListener() {
                 @Override

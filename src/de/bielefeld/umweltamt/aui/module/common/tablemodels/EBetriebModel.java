@@ -20,7 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.elka.EBetrieb;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EBetrieb;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class EBetriebModel extends ListTableModel {

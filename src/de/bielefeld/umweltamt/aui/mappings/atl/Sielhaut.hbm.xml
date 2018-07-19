@@ -62,9 +62,6 @@
         <property name="PFirmenprobe" type="java.lang.Boolean">
             <column name="p_firmenprobe" />
         </property>
-        <property name="theGeom" type="serializable">
-            <column name="the_geom" />
-        </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
         </property>

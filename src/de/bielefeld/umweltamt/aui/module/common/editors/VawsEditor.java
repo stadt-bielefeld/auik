@@ -496,7 +496,7 @@ public class VawsEditor extends AbstractBaseEditor {
         mengeFeld = new DoubleField(0);
 
         // Daten (Rohrleitungen)
-        ausfuehrungBox = new JComboBox(DatabaseQuery.getVawsAusfuehrungen());
+        ausfuehrungBox = new JComboBox(DatabaseQuery.getAusfuehrungen());
         ausfuehrungBox.setEditable(false);
         // TODO: Ausführung aus anderer Tabelle / Vorgaben? Welche noch?
 
@@ -564,13 +564,13 @@ public class VawsEditor extends AbstractBaseEditor {
 
         // Ausführung (Abfüllflächen)
         bodenflaechenAusfBox = new JComboBox(
-            DatabaseQuery.getVawsBodenflaechenausf());
+            DatabaseQuery.getBodenflaechenausf());
         bodenflaechenAusfBox.setEditable(true);
         dickeFeld = new DoubleField(0);
         gueteFeld = new LimitedTextField(50);
         fugenMaterialFeld = new LimitedTextField(50);
         niederschlagSchutzBox = new JComboBox(
-            DatabaseQuery.getVawsNiederschlagschutz());
+            DatabaseQuery.getNiederschlagschutz());
         niederschlagSchutzBox.setEditable(false);
         abscheiderVorhandenCheck = new JCheckBox("Abscheider vorhanden?");
         beschrBodenflaecheArea = new LimitedTextArea(255);
@@ -683,7 +683,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
         // Für die ComboBox bei "Maßnahme"
         massnahmenBox = new JComboBox(
-            DatabaseQuery.getVawsVerwaltungsMassnahmen());
+            DatabaseQuery.getVerwaltungsMassnahmen());
         massnahmenBox.setEditable(true);
         massnahmenBox.addFocusListener(new FocusAdapter() {
             @Override

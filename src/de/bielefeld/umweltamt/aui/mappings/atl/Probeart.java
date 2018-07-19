@@ -258,8 +258,7 @@ public class Probeart  implements java.io.Serializable {
     }
 
 	public String toGuiString() {
-		// TODO Auto-generated method stub
-		return null;
+		return getArt();
 	}
 
     /* Custom code goes below here! */

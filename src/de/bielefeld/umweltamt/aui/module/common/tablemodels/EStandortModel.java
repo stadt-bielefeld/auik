@@ -20,8 +20,8 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.elka.EAdresse;
-import de.bielefeld.umweltamt.aui.mappings.elka.EStandort;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class EStandortModel extends ListTableModel {
@@ -51,10 +51,10 @@ public class EStandortModel extends ListTableModel {
         EStandort standort = (EStandort) objectAtRow;
         switch(columnIndex) {
             case 0:
-                value = standort.getId().getNr();
+                value = standort.getNr();
                 break;
             case 1:
-            	value = standort.getId().getAdresse().getStrasse();
+            	value = standort.getAdresse().getStrasse();
             	break;
             case 2:
             	value = standort.getAdresse().getPlzZst();
@@ -63,10 +63,10 @@ public class EStandortModel extends ListTableModel {
             	value = standort.getAdresse().getOrtZst();
             	break;
             case 4:
-            	value = standort.getId().getFlur();
+            	value = standort.getFlur();
             	break;
             case 5:
-            	value = standort.getId().getFlurstuecke();
+            	value = standort.getFlurstuecke();
             	break;
             default:
                 value = null;

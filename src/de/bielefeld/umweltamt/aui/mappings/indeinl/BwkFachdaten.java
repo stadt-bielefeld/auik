@@ -454,7 +454,7 @@ public class BwkFachdaten  implements java.io.Serializable {
     /* Custom code goes below here! */
 
     public static BwkFachdaten findByObjektId(java.lang.Integer id) {
-        log.debug("Getting AnhBwkFachdaten instance with connected BasisObjekt with id: " + id);
+        log.debug("Getting AnhBwkFachdaten instance with connected Objekt with id: " + id);
         /*List<AnhBwkFachdaten> all = AnhBwkFachdaten.getAll();
         for(AnhBwkFachdaten i : all){
             if(i.getBasisObjekt().getId().equals(id)){
@@ -462,7 +462,7 @@ public class BwkFachdaten  implements java.io.Serializable {
             }
         }
         return null;*/
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         //BasisObjekt.findById(id);
         Set<BwkFachdaten> list = objekt.getBwkFachdatens();
         return list.iterator().next();

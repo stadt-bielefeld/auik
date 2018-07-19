@@ -474,7 +474,7 @@ public class Anfallstelle  implements java.io.Serializable {
     }
 
 	public static Anfallstelle findByObjektId(Integer id2) {
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id2).list().get(0);
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id2).list().get(0);
         Set<Anfallstelle> list = objekt.getAnfallstelles();
         return list.iterator().next();
 	}

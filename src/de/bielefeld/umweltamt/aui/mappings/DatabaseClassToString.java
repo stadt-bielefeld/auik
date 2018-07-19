@@ -78,36 +78,26 @@ import de.bielefeld.umweltamt.aui.mappings.basis.PrioritaetId;
 import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.EAbwasserbehandlungsanlage;
-import de.bielefeld.umweltamt.aui.mappings.elka.EAbwasserbehandlungsanlageId;
-import de.bielefeld.umweltamt.aui.mappings.elka.EAdresse;
-import de.bielefeld.umweltamt.aui.mappings.elka.EAdresseId;
-import de.bielefeld.umweltamt.aui.mappings.elka.EAnfallstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.EAnfallstelleId;
-import de.bielefeld.umweltamt.aui.mappings.elka.EBetrieb;
-import de.bielefeld.umweltamt.aui.mappings.elka.EBetriebId;
-import de.bielefeld.umweltamt.aui.mappings.elka.EEinleitungsstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.EEinleitungsstelleId;
-import de.bielefeld.umweltamt.aui.mappings.elka.EEntwaesserungsgrundstueck;
-import de.bielefeld.umweltamt.aui.mappings.elka.EEntwaesserungsgrundstueckId;
-import de.bielefeld.umweltamt.aui.mappings.elka.EMessstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.EMessstelleId;
-import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahme;
-import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeId;
-import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergeb;
-import de.bielefeld.umweltamt.aui.mappings.elka.EProbenahmeUeberwachungsergebId;
-import de.bielefeld.umweltamt.aui.mappings.elka.ESonderbauwerk;
-import de.bielefeld.umweltamt.aui.mappings.elka.ESonderbauwerkId;
-import de.bielefeld.umweltamt.aui.mappings.elka.EStandort;
-import de.bielefeld.umweltamt.aui.mappings.elka.EStandortId;
-import de.bielefeld.umweltamt.aui.mappings.elka.EWasserrecht;
-import de.bielefeld.umweltamt.aui.mappings.elka.EWasserrechtId;
 import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnhang;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaEinheit;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaStoff;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EBetrieb;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueck;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueckId;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EMessstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahme;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahmeUeberwachungsergeb;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerkId;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
@@ -717,17 +707,7 @@ public class DatabaseClassToString {
 		return null;
 	}
 
-	public static String toStringForClass(EAbwasserbehandlungsanlageId eAbwasserbehandlungsanlageId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(EAdresse eAdresse) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(EAdresseId eAdresseId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -737,27 +717,12 @@ public class DatabaseClassToString {
 		return null;
 	}
 
-	public static String toStringForClass(EAnfallstelleId eAnfallstelleId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(EBetrieb eBetrieb) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static String toStringForClass(EBetriebId eBetriebId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(EEinleitungsstelle eEinleitungsstelle) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(EEinleitungsstelleId eEinleitungsstelleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -847,27 +812,12 @@ public class DatabaseClassToString {
 		return null;
 	}
 
-	public static String toStringForClass(EMessstelleId eMessstelleId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(EProbenahme eProbenahme) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static String toStringForClass(EProbenahmeId eProbenahmeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(EProbenahmeUeberwachungsergeb eProbenahmeUeberwachungsergeb) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(EProbenahmeUeberwachungsergebId eProbenahmeUeberwachungsergebId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -887,17 +837,7 @@ public class DatabaseClassToString {
 		return null;
 	}
 
-	public static String toStringForClass(EStandortId eStandortId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(EWasserrecht eWasserrecht) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(EWasserrechtId eWasserrechtId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

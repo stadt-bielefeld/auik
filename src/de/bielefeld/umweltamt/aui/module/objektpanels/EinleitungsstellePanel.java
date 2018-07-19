@@ -188,7 +188,7 @@ public class EinleitungsstellePanel extends JPanel {
     	}
       
     	if (this.klaeranlagen == null) {
-            this.klaeranlagen = DatabaseQuery.getKlaeranlagen();
+            this.klaeranlagen = DatabaseQuery.getKlaeranlage();
         }
     }
     

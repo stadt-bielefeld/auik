@@ -100,7 +100,7 @@ public class BasisLageModel extends ListTableModel
 	 */
 	public void filterList(String strasse, int hausnr, String ort)
 	{
-        log.debug("Fetching BasisAdresse and BasisLage Objects");
+        log.debug("Fetching Adresse and Lage Objects");
         //Fetch all BasisAdresse and BasisLage Objects
         List<Object[]> list = DatabaseQuery.findStandorteNew(strasse, hausnr, ort);
         log.debug("Fetched " + list.size() + " Objects");
@@ -174,10 +174,9 @@ public class BasisLageModel extends ListTableModel
 				value = bsta.getAdresse().getOrt();
 				break;
 			case 4:
-				if (bsta.getLage() != null || bsta.getLage().getEntgebid() != null)
+				if (bsta.getLage() != null && bsta.getLage().getEntgebid() != null)
 				{
-//					value = bsta.getLage().getEntgebid();
-					value = "";
+					value = bsta.getLage().getEntgebid();
 				}
 				else
 					value = "";
@@ -185,16 +184,15 @@ public class BasisLageModel extends ListTableModel
 			case 5:
 				if (bsta.getLage() != null && bsta.getLage().getStandortgghwsg() != null)
 				{
-//					Integer sggh = bsta.getLage().getStandortgghwsg().getId();
-//					if (sggh.equals(6))
-//					{
-//						value = new Boolean(true);
-//					}
-//					else
-//					{
-//						value = new Boolean(false);
-//					}
-					value = new Boolean(false);
+					Integer sggh = bsta.getLage().getStandortgghwsg().getId();
+					if (sggh.equals(6))
+					{
+						value = new Boolean(true);
+					}
+					else
+					{
+						value = new Boolean(false);
+					}
 				}
 				else
 				{

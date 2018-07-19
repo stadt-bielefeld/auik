@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.10.2015 09:42:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort"
+  schema="elka" table="e_standort">
+  <id name="nr" type="java.lang.Integer">
+   <column name="nr"/>
+   <generator class="identity"/>
+  </id>
+  <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
+  	<column name="nr" />
+  </property>
+  <property generated="never" lazy="false" name="gemeindeId" type="java.lang.String">
+   <column length="8" name="gemeindekennzahl"/>
+  </property>
+  <many-to-one name="adresse" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select" lazy="false">
+   <column name="adr_nr" />
+  </many-to-one>
+  <property generated="never" lazy="false" name="gemarkung" type="java.lang.String">
+   <column name="gemarkung"/>
+  </property>
+  <property generated="never" lazy="false" name="flur" type="java.lang.String">
+   <column name="flur"/>
+  </property>
+  <property generated="never" lazy="false" name="flurstuecke" type="java.lang.String">
+   <column name="flurstuecke"/>
+  </property>
+  <property generated="never" lazy="false" name="e32" type="java.lang.Float">
+   <column name="e32" precision="8" scale="8"/>
+  </property>
+  <property generated="never" lazy="false" name="n32" type="java.lang.Float">
+   <column name="n32" precision="8" scale="8"/>
+  </property>
+  <property generated="never" lazy="false" name="industrieabwasserTog" type="java.lang.Boolean">
+   <column name="industrieabwasser_tog"/>
+  </property>
+  <property generated="never" lazy="false" name="niederschlagswasserTog" type="java.lang.Boolean">
+   <column name="niederschlagswasser_tog"/>
+  </property>
+  <property generated="never" lazy="false" name="kommunaleKaTog" type="java.lang.Boolean">
+   <column name="kommunale_ka_tog"/>
+  </property>
+  <property generated="never" lazy="false" name="kleikaTog" type="java.lang.Boolean">
+   <column name="kleika_tog"/>
+  </property>
+  <property generated="never" lazy="false" name="nurSbTog" type="java.lang.Boolean">
+   <column name="nur_sb_tog"/>
+  </property>
+  <property generated="never" lazy="false" name="aktualDat" type="java.util.Date">
+   <column length="29" name="aktual_dat"/>
+  </property>
+  <property generated="never" lazy="false" name="erstellDat" type="java.util.Date">
+   <column length="29" name="erstell_dat"/>
+  </property>
+  <property generated="never" lazy="false" name="herkunft" type="java.lang.String">
+   <column name="herkunft"/>
+  </property>
+ </class>
+</hibernate-mapping>

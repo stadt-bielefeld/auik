@@ -258,8 +258,7 @@ public class Wassereinzugsgebiet  implements java.io.Serializable {
     }
 
 	public String toGuiString() {
-		// TODO Auto-generated method stub
-		return null;
+		return getEzgbname();
 	}
 
     /* Custom code goes below here! */

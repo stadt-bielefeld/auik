@@ -143,9 +143,9 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria
 																	.forClass(Analyseposition.class)
-																	.createAlias("atlProbenahme", "probe")
-																	.add(Restrictions.eq("probe.atlProbepkt", pkt))
-																	.add(Restrictions.eq("atlParameter", param))
+																	.createAlias("probenahme", "probe")
+																	.add(Restrictions.eq("probe.messstelle", pkt))
+																	.add(Restrictions.eq("parameter", param))
 																	.add(Restrictions
 																			.between(
 																						"probe.datumDerEntnahme",
@@ -168,8 +168,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	{
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria.forClass(Analyseposition.class)
-																	.createAlias("atlParameter", "parameter")
-																	.add(Restrictions.eq("atlProbenahme", probe))
+																	.createAlias("parameter", "parameter")
+																	.add(Restrictions.eq("probenahme", probe))
 																	.addOrder(Order.asc("parameter.reihenfolge")),
 															new Analyseposition());
 	}
@@ -196,8 +196,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		Analyseposition position = new DatabaseAccess()
 				.executeCriteriaToUniqueResult(
 												DetachedCriteria.forClass(Analyseposition.class)
-														.add(Restrictions.eq("atlProbenahme", probe))
-														.add(Restrictions.eq("atlParameter", parameter)),
+														.add(Restrictions.eq("probenahme", probe))
+														.add(Restrictions.eq("parameter", parameter)),
 												new Analyseposition());
 		if (position == null && createNew)
 		{
@@ -213,7 +213,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/* Queries for package ATL : class Einheiten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static Einheiten[] atlEinheiten = null;
+	private static Einheiten[] einheiten = null;
 
 	/**
 	 * Liefert alle in der Einheiten-Tabelle gespeicherten Einheiten.
@@ -222,13 +222,13 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 */
 	public static Einheiten[] getEinheiten()
 	{
-		if (DatabaseAtlQuery.atlEinheiten == null)
+		if (DatabaseAtlQuery.einheiten == null)
 		{
-			DatabaseAtlQuery.atlEinheiten =
+			DatabaseAtlQuery.einheiten =
 					DatabaseQuery.getOrderedAll(new Einheiten(), "bezeichnung")
 							.toArray(new Einheiten[0]);
 		}
-		return DatabaseAtlQuery.atlEinheiten;
+		return DatabaseAtlQuery.einheiten;
 	}
 
 	/**
@@ -273,7 +273,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/* Queries for package ATL : class Klaeranlage */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static Klaeranlage[] atlKlaeranlagen = null;
+	private static Klaeranlage[] klaeranlage = null;
 
 	/**
 	 * Get an array of all Klaeranlage,
@@ -281,18 +281,18 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 * 
 	 * @return Klaeranlage[]
 	 */
-	public static Klaeranlage[] getKlaeranlagen()
+	public static Klaeranlage[] getKlaeranlage()
 	{
-		if (DatabaseAtlQuery.atlKlaeranlagen == null)
+		if (DatabaseAtlQuery.klaeranlage == null)
 		{
-			DatabaseAtlQuery.atlKlaeranlagen =
+			DatabaseAtlQuery.klaeranlage =
 					new DatabaseAccess().executeCriteriaToArray(
 																DetachedCriteria.forClass(Klaeranlage.class)
 																		.add(Restrictions.ne("id", 7))
 																		.addOrder(Order.asc("id")),
 																new Klaeranlage[0]);
 		}
-		return DatabaseAtlQuery.atlKlaeranlagen;
+		return DatabaseAtlQuery.klaeranlage;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -327,7 +327,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	{
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria.forClass(Parameter.class)
-																	.add(Restrictions.isNotNull("atlParametergruppen"))
+																	.add(Restrictions.isNotNull("parametergruppen"))
 																	.addOrder(Order.asc("reihenfolge")),
 															new Parameter());
 	}
@@ -341,7 +341,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	{
 		return new DatabaseAccess().executeCriteriaToArray(
 															DetachedCriteria.forClass(Parameter.class)
-																	.add(Restrictions.isNotNull("atlParametergruppen"))
+																	.add(Restrictions.isNotNull("parametergruppen"))
 																	.addOrder(Order.asc("reihenfolge")),
 															new Parameter[0]);
 	}
@@ -369,7 +369,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(Parameter.class)
-												.add(Restrictions.eq("atlParametergruppen.id", id)),
+												.add(Restrictions.eq("parametergruppen.id", id)),
 										new Parameter());
 	}
 
@@ -454,7 +454,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/* Queries for package ATL : class Probeart */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static Probeart[] atlProbearten = null;
+	private static Probeart[] probearten = null;
 
 	/**
 	 * Liefert alle vorhandenen Probearten.
@@ -463,13 +463,13 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 */
 	public static Probeart[] getProbearten()
 	{
-		if (DatabaseAtlQuery.atlProbearten == null)
+		if (DatabaseAtlQuery.probearten == null)
 		{
-			DatabaseAtlQuery.atlProbearten = DatabaseQuery.getOrderedAll(
+			DatabaseAtlQuery.probearten = DatabaseQuery.getOrderedAll(
 																			new Probeart())
 					.toArray(new Probeart[0]);
 		}
-		return DatabaseAtlQuery.atlProbearten;
+		return DatabaseAtlQuery.probearten;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -487,7 +487,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	{
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria.forClass(Probenahme.class)
-																	.add(Restrictions.eq("atlProbepkt", punkt))
+																	.add(Restrictions.eq("messstelle", punkt))
 																	.addOrder(Order.desc("datumDerEntnahme"))
 																	.addOrder(Order.asc("kennummer")),
 															new Probenahme());
@@ -526,9 +526,9 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(Probenahme.class)
-												.createAlias("atlProbepkt", "probepunkt")
-												.add(Restrictions.eq("probepunkt.atlProbeart", art))
-												.add(Restrictions.eq("probepunkt.atlKlaeranlagen", ka))
+												.createAlias("messstelle", "probepunkt")
+												.add(Restrictions.eq("probepunkt.probeart", art))
+												.add(Restrictions.eq("probepunkt.klaeranlage", ka))
 												.addOrder(Order.desc("datumDerEntnahme"))
 												.addOrder(Order.desc("kennummer")),
 										new Probenahme());
@@ -570,7 +570,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	{
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria.forClass(Probenahme.class)
-																	.add(Restrictions.eq("atlStatus", status))
+																	.add(Restrictions.eq("status", status))
 																	.addOrder(Order.desc("datumDerEntnahme"))
 																	.addOrder(Order.desc("kennummer")),
 															new Probenahme());
@@ -611,8 +611,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		List<Analyseposition> sorted = new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(Analyseposition.class)
-												.createAlias("atlParameter", "parameter")
-												.add(Restrictions.eq("atlProbenahme", probe))
+												.createAlias("parameter", "parameter")
+												.add(Restrictions.eq("probenahme", probe))
 												.add(Restrictions.not(
 														Restrictions.ilike("parameter.bezeichnung",
 																			"bei Probenahme", MatchMode.ANYWHERE)))
@@ -803,9 +803,9 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	{
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria.forClass(Messstelle.class)
-																	.createAlias("basisObjekt", "objekt")
-																	.createAlias("objekt.basisStandort", "standort")
-																	.createAlias("atlProbeart", "art")
+																	.createAlias("objekt", "objekt")
+																	.createAlias("objekt.standort", "standort")
+																	.createAlias("probeart", "art")
 																	.add(Restrictions.eq("objekt.inaktiv", false))
 																	.add(Restrictions.eq("art.id", atlProbeartID))
 																	.addOrder(Order.asc("standort.strasse"))
@@ -822,8 +822,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	{
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria.forClass(Messstelle.class)
-																	.createAlias("basisObjekt", "objekt")
-																	.createAlias("objekt.basisStandort", "standort")
+																	.createAlias("objekt", "objekt")
+																	.createAlias("objekt.standort", "standort")
 																	.add(Restrictions.eq("objekt.inaktiv", true))
 																	.addOrder(Order.asc("standort.strasse"))
 																	.addOrder(Order.asc("standort.hausnr")),
@@ -841,8 +841,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(Messstelle.class)
-												.createAlias("basisObjekt", "objekt")
-												.createAlias("atlProbenahmes", "probe")
+												.createAlias("objekt", "objekt")
+												.createAlias("probenahmes", "probe")
 												.add(Restrictions.eq("objekt.inaktiv", false))
 												.add(Restrictions.like(
 																		"probe.kennummer", "3", MatchMode.START))
@@ -863,8 +863,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(Messstelle.class)
-												.createAlias("basisObjekt", "objekt")
-												.createAlias("atlProbenahmes", "probe")
+												.createAlias("objekt", "objekt")
+												.createAlias("probenahmes", "probe")
 												.add(Restrictions.eq("objekt.inaktiv", false))
 												.add(Restrictions.like(
 																		"probe.kennummer", "E", MatchMode.START))
@@ -883,8 +883,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(Messstelle.class)
-												.createAlias("basisObjekt", "objekt")
-												.createAlias("atlProbenahmes", "probe")
+												.createAlias("objekt", "objekt")
+												.createAlias("probenahmes", "probe")
 												.add(Restrictions.eq("objekt.inaktiv", false))
 												.add(Restrictions.like(
 																		"probe.kennummer", "2", MatchMode.START))
@@ -903,8 +903,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess()
 				.executeCriteriaToList(
 										DetachedCriteria.forClass(Messstelle.class)
-												.createAlias("basisObjekt", "objekt")
-												.createAlias("atlProbenahmes", "probe")
+												.createAlias("objekt", "objekt")
+												.createAlias("probenahmes", "probe")
 												.add(Restrictions.eq("objekt.inaktiv", false))
 												.add(Restrictions.like(
 																		"probe.kennummer", "7", MatchMode.START))
@@ -939,8 +939,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess()
 				.executeCriteriaToUniqueResult(
 												DetachedCriteria.forClass(Messstelle.class)
-														.add(Restrictions.eq("atlProbeart", art))
-														.add(Restrictions.eq("atlKlaeranlagen", ka)),
+														.add(Restrictions.eq("probeart", art))
+														.add(Restrictions.eq("klaeranlage", ka)),
 //														.add(Restrictions.in("id", objektIDs)),
 												new Messstelle());
 	}
@@ -959,8 +959,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria
 																	.forClass(Sielhaut.class)
-																	.createAlias("atlProbepkt", "probepkt")
-																	.createAlias("probepkt.basisObjekt", "objekt")
+																	.createAlias("messstelle", "probepkt")
+																	.createAlias("probepkt.objekt", "objekt")
 																	.add(Restrictions.ilike("bezeichnung",
 																							search,
 																							MatchMode.START))

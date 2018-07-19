@@ -257,8 +257,7 @@ public class Gemarkung  implements java.io.Serializable {
     }
 
 	public String toGuiString() {
-		// TODO Auto-generated method stub
-		return null;
+		return getGemarkung();
 	}
 
     /* Custom code goes below here! */

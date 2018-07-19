@@ -258,8 +258,7 @@ public class Standortgghwsg  implements java.io.Serializable {
     }
 
 	public String toGuiString() {
-		// TODO Auto-generated method stub
-		return null;
+		return getStandortgg();
 	}
 
     /* Custom code goes below here! */

@@ -48,7 +48,6 @@ public class Anh49Kontrollen  implements java.io.Serializable {
     private Date pruefdatum;
     private Date naechstepruefung;
     private String pruefergebnis;
-    private Integer anh49id;
     private boolean enabled;
     private boolean deleted;
 
@@ -69,11 +68,10 @@ public class Anh49Kontrollen  implements java.io.Serializable {
 
     /** Full constructor */
     public Anh49Kontrollen(
-        Date pruefdatum, Date naechstepruefung, String pruefergebnis, Integer anh49id, boolean enabled, boolean deleted) {
+    	Anh49Fachdaten anh49Fachdaten, Date pruefdatum, Date naechstepruefung, String pruefergebnis, boolean enabled, boolean deleted) {
         this.pruefdatum = pruefdatum;
         this.naechstepruefung = naechstepruefung;
         this.pruefergebnis = pruefergebnis;
-        this.anh49id = anh49id;
         this.enabled = enabled;
         this.deleted = deleted;
     }
@@ -119,14 +117,6 @@ public class Anh49Kontrollen  implements java.io.Serializable {
         this.pruefergebnis = pruefergebnis;
     }
 
-    public Integer getAnh49id() {
-        return this.anh49id;
-    }
-
-    public void setAnh49id(Integer anh49id) {
-        this.anh49id = anh49id;
-    }
-
     public boolean isEnabled() {
         return this.enabled;
     }
@@ -166,7 +156,6 @@ public class Anh49Kontrollen  implements java.io.Serializable {
         buffer.append("pruefdatum").append("='").append(getPruefdatum()).append("' ");			
         buffer.append("naechstepruefung").append("='").append(getNaechstepruefung()).append("' ");			
         buffer.append("pruefergebnis").append("='").append(getPruefergebnis()).append("' ");			
-        buffer.append("anh49id").append("='").append(getAnh49id()).append("' ");			
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("]");
@@ -237,7 +226,6 @@ public class Anh49Kontrollen  implements java.io.Serializable {
         this.pruefdatum = copy.getPruefdatum();            
         this.naechstepruefung = copy.getNaechstepruefung();            
         this.pruefergebnis = copy.getPruefergebnis();            
-        this.anh49id = copy.getAnh49id();            
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
     }    

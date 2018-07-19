@@ -95,7 +95,7 @@ abstract class DatabaseVawsQuery {
 						// look at this at some point in time... :(
 						// And it seems to be working with the Kontrollen...
 								.add(Restrictions
-										.eq("vawsFachdaten", fachdaten)),
+										.eq("fachdaten", fachdaten)),
 						// .add(Restrictions.eq(
 						// "behaelterid", fachdaten.getBehaelterid())),
 						new Abfuellflaeche());
@@ -116,16 +116,16 @@ abstract class DatabaseVawsQuery {
 		return flaeche;
 	}
 
-	private static String[] vawsBodenflaechenausf = null;
+	private static String[] bodenflaechenausf = null;
 
 	/**
 	 * Get all used Bodenflaechenausf from Abfuellflaeche
 	 * 
 	 * @return <code>String[]</code>
 	 */
-	public static String[] getVawsBodenflaechenausf() {
-		if (DatabaseVawsQuery.vawsBodenflaechenausf == null) {
-			DatabaseVawsQuery.vawsBodenflaechenausf = new DatabaseAccess()
+	public static String[] getBodenflaechenausf() {
+		if (DatabaseVawsQuery.bodenflaechenausf == null) {
+			DatabaseVawsQuery.bodenflaechenausf = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Abfuellflaeche.class)
@@ -135,19 +135,19 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("bodenflaechenausf")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsBodenflaechenausf;
+		return DatabaseVawsQuery.bodenflaechenausf;
 	}
 
-	private static String[] vawsNiederschlagschutz = null;
+	private static String[] niederschlagschutz = null;
 
 	/**
 	 * Get all used Niederschlagschutz from Abfuellflaeche
 	 * 
 	 * @return <code>String[]</code>
 	 */
-	public static String[] getVawsNiederschlagschutz() {
-		if (DatabaseVawsQuery.vawsNiederschlagschutz == null) {
-			DatabaseVawsQuery.vawsNiederschlagschutz = new DatabaseAccess()
+	public static String[] getNiederschlagschutz() {
+		if (DatabaseVawsQuery.niederschlagschutz == null) {
+			DatabaseVawsQuery.niederschlagschutz = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Abfuellflaeche.class)
@@ -157,14 +157,14 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("niederschlagschutz")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsNiederschlagschutz;
+		return DatabaseVawsQuery.niederschlagschutz;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package VAWS: class Anlagenarten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static Anlagenarten[] vawsAnlagenarten = null;
+	private static Anlagenarten[] anlagenarten = null;
 
 	/**
 	 * Get all Anlagenarten
@@ -172,11 +172,11 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>Anlagenarten[]</code>
 	 */
 	public static Anlagenarten[] getAnlagenarten() {
-		if (DatabaseVawsQuery.vawsAnlagenarten == null) {
-			DatabaseVawsQuery.vawsAnlagenarten = DatabaseQuery.getOrderedAll(
+		if (DatabaseVawsQuery.anlagenarten == null) {
+			DatabaseVawsQuery.anlagenarten = DatabaseQuery.getOrderedAll(
 					new Anlagenarten()).toArray(new Anlagenarten[0]);
 		}
-		return DatabaseVawsQuery.vawsAnlagenarten;
+		return DatabaseVawsQuery.anlagenarten;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -194,7 +194,7 @@ abstract class DatabaseVawsQuery {
 			Fachdaten fachdaten) {
 		return new DatabaseAccess().executeCriteriaToList(
 				DetachedCriteria.forClass(Anlagenchrono.class)
-						.add(Restrictions.eq("vawsFachdaten", fachdaten))
+						.add(Restrictions.eq("fachdaten", fachdaten))
 						.addOrder(Order.desc("datum"))
 						.addOrder(Order.asc("wv")), new Anlagenchrono());
 	}
@@ -203,7 +203,7 @@ abstract class DatabaseVawsQuery {
 	/* Queries for package VAWS: class Behaelterart */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static String[] vawsBehaelterart = null;
+	private static String[] behaelterart = null;
 
 	/**
 	 * Get all Behaelterart
@@ -211,8 +211,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getBehaelterarten() {
-		if (DatabaseVawsQuery.vawsBehaelterart == null) {
-			DatabaseVawsQuery.vawsBehaelterart = new DatabaseAccess()
+		if (DatabaseVawsQuery.behaelterart == null) {
+			DatabaseVawsQuery.behaelterart = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Behaelterart.class)
@@ -222,7 +222,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("behaelterart")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsBehaelterart;
+		return DatabaseVawsQuery.behaelterart;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -242,23 +242,23 @@ abstract class DatabaseVawsQuery {
 		return new DatabaseAccess()
 				.executeCriteriaToList(
 						DetachedCriteria.forClass(Fachdaten.class)
-								.add(Restrictions.eq("basisObjekt", objekt))
+								.add(Restrictions.eq("objekt", objekt))
 								.addOrder(Order.desc("stillegungsdatum"))
 								.addOrder(Order.asc("anlagenart"))
 								.addOrder(Order.asc("herstellnr")),
 						new Fachdaten());
 	}
 
-	private static String[] vawsAusfuehrung = null;
+	private static String[] ausfuehrung = null;
 
 	/**
 	 * Get all used Ausführungen from Fachdaten
 	 * 
 	 * @return <code>String[]</code>
 	 */
-	public static String[] getVawsAusfuehrungen() {
-		if (DatabaseVawsQuery.vawsAusfuehrung == null) {
-			DatabaseVawsQuery.vawsAusfuehrung = new DatabaseAccess()
+	public static String[] getAusfuehrungen() {
+		if (DatabaseVawsQuery.ausfuehrung == null) {
+			DatabaseVawsQuery.ausfuehrung = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Fachdaten.class)
@@ -268,7 +268,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("ausfuehrung")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsAusfuehrung;
+		return DatabaseVawsQuery.ausfuehrung;
 	}
 
 	/**
@@ -320,7 +320,7 @@ abstract class DatabaseVawsQuery {
 	/* Queries for package VAWS: class Fluessigkeit */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static String[] vawsFluessigkeit = null;
+	private static String[] fluessigkeit = null;
 
 	/**
 	 * Get all Fluessigkeit
@@ -328,8 +328,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getFluessigkeiten() {
-		if (DatabaseVawsQuery.vawsFluessigkeit == null) {
-			DatabaseVawsQuery.vawsFluessigkeit = new DatabaseAccess()
+		if (DatabaseVawsQuery.fluessigkeit == null) {
+			DatabaseVawsQuery.fluessigkeit = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Fluessigkeit.class)
@@ -339,14 +339,14 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("fluessigkeit")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsFluessigkeit;
+		return DatabaseVawsQuery.fluessigkeit;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package VAWS: class Gebuehrenarten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static Gebuehrenarten[] vawsGebuehrenarten = null;
+	private static Gebuehrenarten[] gebuehrenarten = null;
 
 	/**
 	 * Get all Gebuehrenarten
@@ -354,19 +354,19 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>Gebuehrenarten[]</code>
 	 */
 	public static Gebuehrenarten[] getGebuehrenarten() {
-		if (DatabaseVawsQuery.vawsGebuehrenarten == null) {
-			DatabaseVawsQuery.vawsGebuehrenarten = DatabaseQuery.getOrderedAll(
+		if (DatabaseVawsQuery.gebuehrenarten == null) {
+			DatabaseVawsQuery.gebuehrenarten = DatabaseQuery.getOrderedAll(
 					new Gebuehrenarten())
 					.toArray(new Gebuehrenarten[0]);
 		}
-		return DatabaseVawsQuery.vawsGebuehrenarten;
+		return DatabaseVawsQuery.gebuehrenarten;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package VAWS: class Gefaehrdungsstufen */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static String[] vawsGefaehrdungsstufen = null;
+	private static String[] gefaehrdungsstufen = null;
 
 	/**
 	 * Get all Gefaehrdungsstufen
@@ -374,8 +374,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getGefaehrdungsstufen() {
-		if (DatabaseVawsQuery.vawsGefaehrdungsstufen == null) {
-			DatabaseVawsQuery.vawsGefaehrdungsstufen = new DatabaseAccess()
+		if (DatabaseVawsQuery.gefaehrdungsstufen == null) {
+			DatabaseVawsQuery.gefaehrdungsstufen = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Gefaehrdungsstufen.class)
@@ -385,7 +385,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("gefaehrdungsstufen")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsGefaehrdungsstufen;
+		return DatabaseVawsQuery.gefaehrdungsstufen;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -418,7 +418,7 @@ abstract class DatabaseVawsQuery {
 	public static List<Kontrollen> getKontrollen(Fachdaten fachdaten) {
 		return new DatabaseAccess().executeCriteriaToList(
 				DetachedCriteria.forClass(Kontrollen.class)
-						.add(Restrictions.eq("vawsFachdaten", fachdaten))
+						.add(Restrictions.eq("fachdaten", fachdaten))
 						.addOrder(Order.desc("pruefungabgeschlossen"))
 						.addOrder(Order.asc("pruefdatum"))
 						.addOrder(Order.asc("naechstepruefung")),
@@ -429,7 +429,7 @@ abstract class DatabaseVawsQuery {
 	/* Queries for package VAWS: class Material */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static String[] vawsMaterial = null;
+	private static String[] material = null;
 
 	/**
 	 * Get all Material
@@ -437,8 +437,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getMaterialien() {
-		if (DatabaseVawsQuery.vawsMaterial == null) {
-			DatabaseVawsQuery.vawsMaterial = new DatabaseAccess()
+		if (DatabaseVawsQuery.material == null) {
+			DatabaseVawsQuery.material = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Material.class)
@@ -447,14 +447,14 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("material")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsMaterial;
+		return DatabaseVawsQuery.material;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package VAWS: class Pruefer */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static String[] vawsPruefer = null;
+	private static String[] pruefer = null;
 
 	/**
 	 * Get all Pruefer
@@ -462,8 +462,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getPruefer() {
-		if (DatabaseVawsQuery.vawsPruefer == null) {
-			DatabaseVawsQuery.vawsPruefer = new DatabaseAccess()
+		if (DatabaseVawsQuery.pruefer == null) {
+			DatabaseVawsQuery.pruefer = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Pruefer.class)
@@ -472,14 +472,14 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("pruefer")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsPruefer;
+		return DatabaseVawsQuery.pruefer;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package VAWS: class Pruefergebniss */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static String[] vawsPruefergebniss = null;
+	private static String[] pruefergebniss = null;
 
 	/**
 	 * Get all Pruefergebniss
@@ -487,8 +487,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getPruefergebniss() {
-		if (DatabaseVawsQuery.vawsPruefergebniss == null) {
-			DatabaseVawsQuery.vawsPruefergebniss = new DatabaseAccess()
+		if (DatabaseVawsQuery.pruefergebniss == null) {
+			DatabaseVawsQuery.pruefergebniss = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Pruefergebniss.class)
@@ -498,14 +498,14 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("pruefergebnis")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsPruefergebniss;
+		return DatabaseVawsQuery.pruefergebniss;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package VAWS: class Standortgghwsg */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static Standortgghwsg[] vawsStandortgghwsg = null;
+	private static Standortgghwsg[] standortgghwsg = null;
 
 	/**
 	 * Get all Standortgghwsg
@@ -513,19 +513,19 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>Standortgghwsg[]</code>
 	 */
 	public static Standortgghwsg[] getStandortgghwsg() {
-		if (DatabaseVawsQuery.vawsStandortgghwsg == null) {
-			DatabaseVawsQuery.vawsStandortgghwsg = DatabaseQuery.getOrderedAll(
+		if (DatabaseVawsQuery.standortgghwsg == null) {
+			DatabaseVawsQuery.standortgghwsg = DatabaseQuery.getOrderedAll(
 					new Standortgghwsg())
 					.toArray(new Standortgghwsg[0]);
 		}
-		return DatabaseVawsQuery.vawsStandortgghwsg;
+		return DatabaseVawsQuery.standortgghwsg;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package VAWS: class Vbfeinstufung */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static String[] vawsVbfeinstufung = null;
+	private static String[] vbfeinstufung = null;
 
 	/**
 	 * Get all Vbfeinstufung
@@ -533,8 +533,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getVawsVbfEinstufungen() {
-		if (DatabaseVawsQuery.vawsVbfeinstufung == null) {
-			DatabaseVawsQuery.vawsVbfeinstufung = new DatabaseAccess()
+		if (DatabaseVawsQuery.vbfeinstufung == null) {
+			DatabaseVawsQuery.vbfeinstufung = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Vbfeinstufung.class)
@@ -544,7 +544,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("vbfeinstufung")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsVbfeinstufung;
+		return DatabaseVawsQuery.vbfeinstufung;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -560,7 +560,7 @@ abstract class DatabaseVawsQuery {
 			Fachdaten fachdaten) {
 		return new DatabaseAccess().executeCriteriaToList(
 				DetachedCriteria.forClass(Verwaltungsgebuehren.class)
-						.add(Restrictions.eq("vawsFachdaten", fachdaten))
+						.add(Restrictions.eq("fachdaten", fachdaten))
 						.addOrder(Order.asc("datum"))
 						.addOrder(Order.asc("abschnitt"))
 						.addOrder(Order.asc("betrag")),
@@ -580,7 +580,7 @@ abstract class DatabaseVawsQuery {
 			Fachdaten fachdaten) {
 		return new DatabaseAccess().executeCriteriaToList(
 				DetachedCriteria.forClass(Verwaltungsverf.class)
-						.add(Restrictions.eq("vawsFachdaten", fachdaten))
+						.add(Restrictions.eq("fachdaten", fachdaten))
 						.addOrder(Order.desc("wvverwverf"))
 						.addOrder(Order.asc("datum"))
 						.addOrder(Order.asc("wiedervorlage")),
@@ -609,16 +609,16 @@ abstract class DatabaseVawsQuery {
 	/* Queries for package VAWS: class Verwmassnahmen */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static String[] vawsVerwaltungsMassnahmen = null;
+	private static String[] verwaltungsMassnahmen = null;
 
 	/**
 	 * Get all Verwmassnahmen
 	 * 
 	 * @return <code>String[]</code>
 	 */
-	public static String[] getVawsVerwaltungsMassnahmen() {
-		if (DatabaseVawsQuery.vawsVerwaltungsMassnahmen == null) {
-			DatabaseVawsQuery.vawsVerwaltungsMassnahmen = new DatabaseAccess()
+	public static String[] getVerwaltungsMassnahmen() {
+		if (DatabaseVawsQuery.verwaltungsMassnahmen == null) {
+			DatabaseVawsQuery.verwaltungsMassnahmen = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Verwmassnahmen.class)
@@ -627,14 +627,14 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("massnahmen")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vawsVerwaltungsMassnahmen;
+		return DatabaseVawsQuery.verwaltungsMassnahmen;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package VAWS: class Wassereinzugsgebiet */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static Wassereinzugsgebiet[] vawsWassereinzugsgebiet = null;
+	private static Wassereinzugsgebiet[] wassereinzugsgebiet = null;
 
 	/**
 	 * Get all Wassereinzugsgebiet
@@ -642,26 +642,19 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>Wassereinzugsgebiet[]</code>
 	 */
 	public static Wassereinzugsgebiet[] getWassereinzugsgebiet() {
-		if (DatabaseVawsQuery.vawsWassereinzugsgebiet == null) {
-			DatabaseVawsQuery.vawsWassereinzugsgebiet = DatabaseQuery
+		if (DatabaseVawsQuery.wassereinzugsgebiet == null) {
+			DatabaseVawsQuery.wassereinzugsgebiet = DatabaseQuery
 					.getOrderedAll(new Wassereinzugsgebiet()).toArray(
 							new Wassereinzugsgebiet[0]);
 		}
-		return DatabaseVawsQuery.vawsWassereinzugsgebiet;
+		return DatabaseVawsQuery.wassereinzugsgebiet;
 	}
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class VawsWgk */
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static Integer[] vawsWgk = null;
-
-
+	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package VAWS: class Wirtschaftszweig */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static Wirtschaftszweig[] vawsWirtschaftszweige = null;
+	private static Wirtschaftszweig[] wirtschaftszweige = null;
 
 	/**
 	 * Get all Wirtschaftszweig
@@ -669,12 +662,12 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>Wirtschaftszweig[]</code>
 	 */
 	public static Wirtschaftszweig[] getWirtschaftszweig() {
-		if (DatabaseVawsQuery.vawsWirtschaftszweige == null) {
-			DatabaseVawsQuery.vawsWirtschaftszweige = DatabaseQuery
+		if (DatabaseVawsQuery.wirtschaftszweige == null) {
+			DatabaseVawsQuery.wirtschaftszweige = DatabaseQuery
 					.getOrderedAll(new Wirtschaftszweig()).toArray(
 							new Wirtschaftszweig[0]);
 		}
-		return DatabaseVawsQuery.vawsWirtschaftszweige;
+		return DatabaseVawsQuery.wirtschaftszweige;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -691,7 +684,7 @@ abstract class DatabaseVawsQuery {
         DetachedCriteria detachedCriteria =
 				DetachedCriteria.forClass(Anlagenchrono.class)
 						.addOrder(Order.desc("wv"))
-						.addOrder(Order.asc("vawsFachdaten"));
+						.addOrder(Order.asc("fachdaten"));
         if (nurWiedervorlageAbgelaufen && !nurNichtAbgeschlossen) {
             detachedCriteria.add(Restrictions.le("wv", new Date()));
         }
@@ -705,35 +698,4 @@ abstract class DatabaseVawsQuery {
         return new DatabaseAccess().executeCriteriaToList(
                 detachedCriteria, new Anlagenchrono());
 	}
-//
-//	/**
-//	 * Get all Anlagenchronologie with "wiedervorlage" in the past and
-//	 * "wvverwverf" either <code>false</code> or <code>null</code>
-//	 * 
-//	 * @return <code>List&lt;VawsAnlagenchronologie;</code>
-//	 */
-//	public static List<Anlagenchrono> getWiedervorlageAnlagenchrono() {
-//		return new DatabaseAccess().executeCriteriaToList(
-//				DetachedCriteria
-//						.forClass(Anlagenchrono.class)
-//						.add(Restrictions.lt("wv", new Date()))
-//						.addOrder(Order.asc("wv"))
-//						.addOrder(Order.asc("vawsFachdaten")),
-//				new Anlagenchrono());
-//	}
-//
-//	/**
-//	 * Get all Anlagenchronologie with "wiedervorlage" in the past and
-//	 * "wvverwverf" either <code>false</code> or <code>null</code>
-//	 * 
-//	 * @return <code>List&lt;VawsAnlagenchronologie;</code>
-//	 */
-//	public static List<Anlagenchrono> getAbgeschlossenAnlagenchrono() {
-//		return new DatabaseAccess().executeCriteriaToList(
-//				DetachedCriteria
-//						.forClass(Anlagenchrono.class)
-//						.add(Restrictions.eq("abgeschlossen", false))
-//						.addOrder(Order.asc("vawsFachdaten")),
-//				new Anlagenchrono());
-//	}
 }
