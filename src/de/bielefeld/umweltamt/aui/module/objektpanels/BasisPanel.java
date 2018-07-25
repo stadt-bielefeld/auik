@@ -865,7 +865,14 @@ public class BasisPanel extends JPanel {
 								mapsta.getLage());
 					}
 					getLageFeld().setText(mapsta.getLage().toString());
+				}else {
+					getLageFeld().setText(this.hauptModul.getObjekt().getLage().toString());
 				}
+			}
+			
+			if (this.hauptModul.getObjekt().getAdresseByStandortid().getId() == 3) {
+
+				getLageFeld().setText(this.hauptModul.getObjekt().getLage().toString());
 			}
 
             if (this.hauptModul.getObjekt().getObjektarten() != null) {

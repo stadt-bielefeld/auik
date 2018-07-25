@@ -8,9 +8,9 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="objektid" type="java.lang.Integer">
-            <column name="objektid" />
-        </property>
+        <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
+            <column name="objektid" not-null="true" unique="true" />
+        </many-to-one>
         <property name="aktualDat" type="java.util.Date">
             <column name="aktual_dat" length="13" />
         </property>
@@ -62,7 +62,7 @@
         <property name="stationierungSt3" type="java.lang.Double">
             <column name="stationierung_st_3" precision="17" scale="17" />
         </property>
-        <property name="abgaberelEinl" type="java.lang.Short">
+        <property name="abgaberelEinl" type="java.lang.Integer">
             <column name="abgaberel_einl" />
         </property>
         <property name="e32" type="java.lang.Integer">
@@ -71,13 +71,13 @@
         <property name="n32" type="java.lang.Integer">
             <column name="n32" />
         </property>
-        <property name="kanalArtOpt" type="java.lang.Short">
+        <property name="kanalArtOpt" type="java.lang.Integer">
             <column name="kanal_art_opt" />
         </property>
-        <property name="stationierung3Opt" type="java.lang.Short">
+        <property name="stationierung3Opt" type="java.lang.Integer">
             <column name="stationierung_3_opt" />
         </property>
-        <property name="schutzzoneOpt" type="java.lang.Short">
+        <property name="schutzzoneOpt" type="java.lang.Integer">
             <column name="schutzzone_opt" />
         </property>
         <property name="deleted" type="java.lang.Boolean">

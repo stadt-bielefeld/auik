@@ -166,5 +166,12 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten" />
         </set>
+        <set name="einleitungsstelles" table="einleitungsstelle" inverse="true" lazy="true" fetch="select">
+        	<key>
+        		<column name="objektid" not-null="true"/>
+        	</key>
+        	<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" />
+        </set>
+       
     </class>
 </hibernate-mapping>

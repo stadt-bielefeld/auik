@@ -600,7 +600,14 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     log.debug("Neues Objekt");
                     getHeaderLabel().setForeground(Color.RED);
                     getHeaderLabel().setText("Neues Objekt");
-                } else {
+                }
+                else if (objekt.getAdresseByStandortid().getId()== 3) {
+                    log.debug("Bearbeite Objekt: " + objekt);
+                    getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
+                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getAdresseByBetreiberid()) +
+                    		"; " + objekt.getAdresseByBetreiberid()+"; "+objekt.getObjektarten().getObjektart());
+                }
+                else {
                     log.debug("Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
                     getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getAdresseByStandortid()) +

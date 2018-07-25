@@ -472,13 +472,13 @@ public class EinleitungsstellePanel extends JPanel {
     	this.einleitungsstelle.setN32(n32);
     	
     	Integer kanalArtOpt = ((IntegerField)this.kanalArtOptFeld).getIntValue();
-    	this.einleitungsstelle.setKanalArtOpt(kanalArtOpt.shortValue());
+    	this.einleitungsstelle.setKanalArtOpt(kanalArtOpt);
     	
     	Integer stationierung3Opt = ((IntegerField)this.stationierung3OptFeld).getIntValue();
-    	this.einleitungsstelle.setStationierung3Opt(stationierung3Opt.shortValue());
+    	this.einleitungsstelle.setStationierung3Opt(stationierung3Opt);
     	
     	Integer schutzzoneOpt = ((IntegerField)this.schutzzoneOptFeld).getIntValue();
-    	this.einleitungsstelle.setSchutzzoneOpt(schutzzoneOpt.shortValue());
+    	this.einleitungsstelle.setSchutzzoneOpt(schutzzoneOpt);
  	  	
     	success = this.einleitungsstelle.merge();
     	if (success) {

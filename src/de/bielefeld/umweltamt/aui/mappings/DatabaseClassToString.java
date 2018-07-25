@@ -33,7 +33,6 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAllId;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAlt;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAltId;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewQgisAnalyseposition;
@@ -913,11 +912,6 @@ public class DatabaseClassToString {
 	}
 
 	public static String toStringForClass(ViewAtlAnalysepositionAll viewAtlAnalysepositionAll) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewAtlAnalysepositionAllId viewAtlAnalysepositionAllId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

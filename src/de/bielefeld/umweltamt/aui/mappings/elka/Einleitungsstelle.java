@@ -68,12 +68,12 @@ public class Einleitungsstelle  implements java.io.Serializable {
     private Double stationierungNs3;
     private Double einzugsgebiet;
     private Double stationierungSt3;
-    private Short abgaberelEinl;
+    private Integer abgaberelEinl;
     private Integer e32;
     private Integer n32;
-    private Short kanalArtOpt;
-    private Short stationierung3Opt;
-    private Short schutzzoneOpt;
+    private Integer kanalArtOpt;
+    private Integer stationierung3Opt;
+    private Integer schutzzoneOpt;
     private Boolean deleted;
     private Boolean enabled;
     private boolean typIndirekteinleitungTog;
@@ -141,7 +141,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
 
     /** Full constructor */
     public Einleitungsstelle(
-        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, String gewaessernameNs, String nadiaId, Date stillgelegtAm, Boolean typIndirekt, Boolean typIndGewDirekt, Boolean typKommTrenn, Boolean typPrivatTrenn, Boolean typSonstige, Boolean typAusserortStrasseneinl, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Short abgaberelEinl, Integer e32, Integer n32, Short kanalArtOpt, Short stationierung3Opt, Short schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr) {
+        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, String gewaessernameNs, String nadiaId, Date stillgelegtAm, Boolean typIndirekt, Boolean typIndGewDirekt, Boolean typKommTrenn, Boolean typPrivatTrenn, Boolean typSonstige, Boolean typAusserortStrasseneinl, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer e32, Integer n32, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr) {
         this.id = id;
         this.objektid = objektid;
         this.aktualDat = aktualDat;
@@ -367,11 +367,11 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.stationierungSt3 = stationierungSt3;
     }
 
-    public Short getAbgaberelEinl() {
+    public Integer getAbgaberelEinl() {
         return this.abgaberelEinl;
     }
 
-    public void setAbgaberelEinl(Short abgaberelEinl) {
+    public void setAbgaberelEinl(Integer abgaberelEinl) {
         this.abgaberelEinl = abgaberelEinl;
     }
 
@@ -391,27 +391,27 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.n32 = n32;
     }
 
-    public Short getKanalArtOpt() {
+    public Integer getKanalArtOpt() {
         return this.kanalArtOpt;
     }
 
-    public void setKanalArtOpt(Short kanalArtOpt) {
+    public void setKanalArtOpt(Integer kanalArtOpt) {
         this.kanalArtOpt = kanalArtOpt;
     }
 
-    public Short getStationierung3Opt() {
+    public Integer getStationierung3Opt() {
         return this.stationierung3Opt;
     }
 
-    public void setStationierung3Opt(Short stationierung3Opt) {
+    public void setStationierung3Opt(Integer stationierung3Opt) {
         this.stationierung3Opt = stationierung3Opt;
     }
 
-    public Short getSchutzzoneOpt() {
+    public Integer getSchutzzoneOpt() {
         return this.schutzzoneOpt;
     }
 
-    public void setSchutzzoneOpt(Short schutzzoneOpt) {
+    public void setSchutzzoneOpt(Integer schutzzoneOpt) {
         this.schutzzoneOpt = schutzzoneOpt;
     }
 
@@ -967,7 +967,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     /* Custom code goes below here! */
 
     public static Einleitungsstelle findByObjektId(java.lang.Integer id) {
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Einleitungsstelle> list = objekt.getEinleitungsstelles();
         return list.iterator().next();
     }

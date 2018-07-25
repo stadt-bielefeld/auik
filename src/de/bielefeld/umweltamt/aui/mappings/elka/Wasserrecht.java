@@ -553,7 +553,7 @@ public class Wasserrecht  implements java.io.Serializable {
     /* Custom code goes below here! */
 
     public static Wasserrecht findByObjektId(java.lang.Integer id) {
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Wasserrecht> list = objekt.getWasserrechts();
         return list.iterator().next();
     }
