@@ -86,6 +86,7 @@ public class GenehmigungPanel extends JPanel {
     private JCheckBox befristetCheck = null;
     private JCheckBox gen58Check = null;
     private JCheckBox gen59Check = null;
+    private JCheckBox gen8Check = null;
     private JCheckBox selbstueberwCheck = null;
     private JCheckBox eSatzungCheck = null;
     private IntegerField uebergabestelleE32Field = null;
@@ -123,15 +124,15 @@ public class GenehmigungPanel extends JPanel {
         builder.append("", getGen59CheckBox());
         builder.nextLine();
         builder.append("Änderungsdatum:", getAenderungsDatum());
-        builder.append("", getSelbCheckBox());
+        builder.append("", getGen8CheckBox());
         builder.nextLine();
         builder.append("Anhang:", getAnhangFeld());
-        builder.append("", getEsaCheckBox());
+        builder.append("", getSelbCheckBox());
         builder.nextLine();
         builder.append("Genehmigte Menge [m³]:", getGenMengeFeld());
-        builder.append("", getBefCheckBox());
+        builder.append("", getEsaCheckBox());
         builder.nextLine();
-        builder.append("");
+        builder.append("", getBefCheckBox());
         builder.append("");
         builder.append("bis:", getBefristetDatum());
         builder.nextLine();
@@ -221,6 +222,13 @@ public class GenehmigungPanel extends JPanel {
                     getGen59CheckBox().setSelected(false);
                 }
             }
+            if (this.fachdaten.getGen8() != null) {
+                if (this.fachdaten.getGen8() == true) {
+                    getGen8CheckBox().setSelected(true);
+                } else {
+                    getGen8CheckBox().setSelected(false);
+                }
+            }
             if (this.fachdaten.getSelbstueberw() != null) {
                 if (this.fachdaten.getSelbstueberw() == true) {
                     getSelbCheckBox().setSelected(true);
@@ -260,6 +268,7 @@ public class GenehmigungPanel extends JPanel {
         getBefCheckBox().setSelected(false);
         getGen58CheckBox().setSelected(false);
         getGen59CheckBox().setSelected(false);
+        getGen8CheckBox().setSelected(false);
         getSelbCheckBox().setSelected(false);
         getEsaCheckBox().setSelected(false);
         getUebergabestelleE32Field().setValue(null);
@@ -277,6 +286,7 @@ public class GenehmigungPanel extends JPanel {
         getBefCheckBox().setEnabled(enabled);
         getGen58CheckBox().setEnabled(enabled);
         getGen59CheckBox().setEnabled(enabled);
+        getGen8CheckBox().setEnabled(enabled);
         getSelbCheckBox().setEnabled(enabled);
         getEsaCheckBox().setEnabled(enabled);
         getUebergabestelleE32Field().setEnabled(enabled);
@@ -327,6 +337,12 @@ public class GenehmigungPanel extends JPanel {
             this.fachdaten.setGen59(true);
         } else {
             this.fachdaten.setGen59(false);
+        }
+
+        if (getGen8CheckBox().isSelected()) {
+            this.fachdaten.setGen8(true);
+        } else {
+            this.fachdaten.setGen8(false);
         }
 
         if (getSelbCheckBox().isSelected()) {
@@ -467,6 +483,13 @@ public class GenehmigungPanel extends JPanel {
             this.gen59Check = new JCheckBox("59er Genehmigung");
         }
         return this.gen59Check;
+    }
+
+    private JCheckBox getGen8CheckBox() {
+        if (this.gen8Check == null) {
+            this.gen8Check = new JCheckBox("8er Genehmigung");
+        }
+        return this.gen8Check;
     }
 
     private JCheckBox getSelbCheckBox() {

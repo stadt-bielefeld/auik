@@ -23,6 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.oberflgw;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -1538,4 +1539,9 @@ public class Sonderbauwerk  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    public static Sonderbauwerk findByObjektId(java.lang.Integer id) {
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
+        Set<Sonderbauwerk> list = objekt.getSonderbauwerks();
+        return list.iterator().next();
+    }
 }

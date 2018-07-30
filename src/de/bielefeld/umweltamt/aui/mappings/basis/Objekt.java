@@ -87,7 +87,7 @@ public class Objekt  implements java.io.Serializable {
     private Set<BwkFachdaten> bwkFachdatens = new HashSet<BwkFachdaten>(0);
     private Set<Wasserrecht> wasserrechts = new HashSet<Wasserrecht>(0);
     private Set<Adresse> adresses = new HashSet<Adresse>(0);
-    private Set<Aba> Abas = new HashSet<Aba>(0);
+    private Set<Aba> abas = new HashSet<Aba>(0);
     private Set<Anh49Fachdaten> anh49Fachdatens = new HashSet<Anh49Fachdaten>(0);
     private Set<SuevFachdaten> suevFachdatens = new HashSet<SuevFachdaten>(0);
     private Set<Anh50Fachdaten> anh50Fachdatens = new HashSet<Anh50Fachdaten>(0);
@@ -361,11 +361,11 @@ public class Objekt  implements java.io.Serializable {
     }
 
     public Set<Aba> getAbas() {
-        return this.Abas;
+        return this.abas;
     }
 
-    public void setAbas(Set<Aba> elkaAbas) {
-		this.Abas = Abas;
+    public void setAbas(Set<Aba> abas) {
+		this.abas = abas;
     }
 
     public Set<Anh49Fachdaten> getAnh49Fachdatens() {

@@ -47,7 +47,7 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
- * Das "Objekt-Chronologie"-Panel des Objekt-Bearbeiten-Moduls.
+ * Das "Foto"-Panel des Objekt-Bearbeiten-Moduls.
  * @author Gerd Genuit
  */
 public class FotoPanel extends JPanel {
@@ -67,8 +67,8 @@ public class FotoPanel extends JPanel {
     private JLabel fotoLabel;
 
     /**
-     * Erzeugt das Foto-Panel für das BasisObjektBearbeiten-Modul.
-     * @param hauptModul Das BasisObjektBearbeiten-Hauptmodul.
+     * Erzeugt das Foto-Panel für das ObjektBearbeiten-Modul.
+     * @param hauptModul Das ObjektBearbeiten-Hauptmodul.
      */
     public FotoPanel(BasisObjektBearbeiten hauptModul) {
     	

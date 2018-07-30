@@ -50,7 +50,6 @@ public class Aba  implements java.io.Serializable {
     private Integer id;
     private Objekt objekt;
     private Abaverfahren abaverfahren;
-    private Integer objektid;
     private Integer ansprAdrId;
     private Date aktualDat;
     private Date erstellDat;
@@ -62,7 +61,6 @@ public class Aba  implements java.io.Serializable {
     private Integer e32;
     private Integer n32;
     private Integer sonstZulOpt;
-    private Integer verfahrenNr;
     private Boolean wartungsvertragToc;
     private Boolean einzelabnahmeToc;
     private Boolean enabled;
@@ -86,9 +84,10 @@ public class Aba  implements java.io.Serializable {
 
     /** Full constructor */
     public Aba(
-        Integer id, Integer objektid, Integer ansprAdrId, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, Date inbetriebDat, Date stillgelegtDat, Boolean genehmpflichtigToc, Integer e32, Integer n32, Integer sonstZulOpt, Integer verfahrenNr, Boolean wartungsvertragToc, Boolean einzelabnahmeToc, Boolean enabled, Boolean deleted, Set<Referenz> referenzsForZAbaNr, Set<Referenz> referenzsForQAbaNr) {
+        Integer id, Objekt objekt, Abaverfahren abaverfahren, Integer ansprAdrId, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, Date inbetriebDat, Date stillgelegtDat, Boolean genehmpflichtigToc, Integer e32, Integer n32, Integer sonstZulOpt, Integer verfahrenNr, Boolean wartungsvertragToc, Boolean einzelabnahmeToc, Boolean enabled, Boolean deleted, Set<Referenz> referenzsForZAbaNr, Set<Referenz> referenzsForQAbaNr) {
         this.id = id;
-        this.objektid = objektid;
+        this.objekt = objekt;
+        this.abaverfahren = abaverfahren;
         this.ansprAdrId = ansprAdrId;
         this.aktualDat = aktualDat;
         this.erstellDat = erstellDat;
@@ -100,7 +99,6 @@ public class Aba  implements java.io.Serializable {
         this.e32 = e32;
         this.n32 = n32;
         this.sonstZulOpt = sonstZulOpt;
-        this.verfahrenNr = verfahrenNr;
         this.wartungsvertragToc = wartungsvertragToc;
         this.einzelabnahmeToc = einzelabnahmeToc;
         this.enabled = enabled;
@@ -122,7 +120,7 @@ public class Aba  implements java.io.Serializable {
         return this.objekt;
     }
 
-    public void setBasisObjekt(Objekt objekt) {
+    public void setObjekt(Objekt objekt) {
         this.objekt = objekt;
 	}
 
@@ -133,14 +131,6 @@ public class Aba  implements java.io.Serializable {
 	public void setAbaverfahren(Abaverfahren abaverfahren) {
 		this.abaverfahren = abaverfahren;
 	}
-
-    public Integer getObjektid() {
-        return this.objektid;
-    }
-
-    public void setObjektid(Integer objektid) {
-        this.objektid = objektid;
-    }
 
     public Integer getAnsprAdrId() {
         return this.ansprAdrId;
@@ -230,14 +220,6 @@ public class Aba  implements java.io.Serializable {
         this.sonstZulOpt = sonstZulOpt;
     }
 
-    public Integer getVerfahrenNr() {
-        return this.verfahrenNr;
-    }
-
-    public void setVerfahrenNr(Integer verfahrenNr) {
-        this.verfahrenNr = verfahrenNr;
-    }
-
     public Boolean getWartungsvertragToc() {
         return this.wartungsvertragToc;
     }
@@ -307,7 +289,8 @@ public class Aba  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objektid").append("='").append(getObjektid()).append("' ");			
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("verfahren").append("='").append(getAbaverfahren()).append("' ");	
         buffer.append("ansprAdrId").append("='").append(getAnsprAdrId()).append("' ");			
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
@@ -319,7 +302,6 @@ public class Aba  implements java.io.Serializable {
         buffer.append("e32").append("='").append(getE32()).append("' ");			
         buffer.append("n32").append("='").append(getN32()).append("' ");			
         buffer.append("sonstZulOpt").append("='").append(getSonstZulOpt()).append("' ");			
-        buffer.append("verfahrenNr").append("='").append(getVerfahrenNr()).append("' ");			
         buffer.append("wartungsvertragToc").append("='").append(getWartungsvertragToc()).append("' ");			
         buffer.append("einzelabnahmeToc").append("='").append(getEinzelabnahmeToc()).append("' ");			
         buffer.append("enabled").append("='").append(getEnabled()).append("' ");			
@@ -392,7 +374,8 @@ public class Aba  implements java.io.Serializable {
      */
     private void copy(Aba copy) {
         this.id = copy.getId();            
-        this.objektid = copy.getObjektid();            
+        this.objekt = copy.getObjekt();              
+        this.abaverfahren = copy.getAbaverfahren(); 
         this.ansprAdrId = copy.getAnsprAdrId();            
         this.aktualDat = copy.getAktualDat();            
         this.erstellDat = copy.getErstellDat();            
@@ -404,7 +387,6 @@ public class Aba  implements java.io.Serializable {
         this.e32 = copy.getE32();            
         this.n32 = copy.getN32();            
         this.sonstZulOpt = copy.getSonstZulOpt();            
-        this.verfahrenNr = copy.getVerfahrenNr();            
         this.wartungsvertragToc = copy.getWartungsvertragToc();            
         this.einzelabnahmeToc = copy.getEinzelabnahmeToc();            
         this.enabled = copy.getEnabled();            
@@ -458,11 +440,9 @@ public class Aba  implements java.io.Serializable {
     /* Custom code goes below here! */
     
     public static Aba findByObjektId(java.lang.Integer id) {
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Aba> list = objekt.getAbas();
         return list.iterator().next();
     }
-
-    /* Custom code goes below here! */
 
 }

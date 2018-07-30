@@ -47,7 +47,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
- * Das "Anfallstelle"-Tab des BasisObjektBearbeiten-Moduls
+ * Das "Anfallstelle"-Tab des ObjektBearbeiten-Moduls
  * @author Tobias Kaps
  * @date 29.09.2017
  */

@@ -27,9 +27,12 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.atl.MetaParameter;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class that represents a row in the Abaverfahren database table.<br>
@@ -47,6 +50,7 @@ public class Abaverfahren  implements java.io.Serializable {
     private Date aktualDat;
     private Date erstellDat;
     private String bezeichnung;
+    private Set<Aba> abas = new HashSet<Aba>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -102,6 +106,14 @@ public class Abaverfahren  implements java.io.Serializable {
 
     public void setBezeichnung(String bezeichnung) {
         this.bezeichnung = bezeichnung;
+    }
+
+    public Set<Aba> getAbas() {
+        return this.abas;
+    }
+
+    public void setAbas(Set<Aba> abas) {
+        this.abas = abas;
     }
 
     /**
@@ -241,11 +253,14 @@ public class Abaverfahren  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Abaverfahren());
     }
 
-	public String toGuiString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
     /* Custom code goes below here! */
+    
+    /**
+     * Get a string representation for the gui
+     * @return String
+     */
+    public String toGuiString() {
+        return getBezeichnung();
+    }
 
 }

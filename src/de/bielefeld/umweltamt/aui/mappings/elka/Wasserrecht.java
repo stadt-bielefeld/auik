@@ -76,6 +76,7 @@ public class Wasserrecht  implements java.io.Serializable {
     private String beerWrNr;
     private Date erstellDat;
     private Date aktualDat;
+    private Boolean gen8;
     private Set<Entwaesserungsgrundstueck> entwaesserungsgrundstuecks = new HashSet<Entwaesserungsgrundstueck>(0);
     private Set<Sonderbauwerk> sonderbauwerks = new HashSet<Sonderbauwerk>(0);
 
@@ -347,7 +348,15 @@ public class Wasserrecht  implements java.io.Serializable {
         this.aktualDat = aktualDat;
     }
 
-    public Set<Entwaesserungsgrundstueck> getEntwaesserungsgrundstuecks() {
+   	public Boolean getGen8() {
+		return gen8;
+	}
+
+	public void setGen8(Boolean gen8) {
+		this.gen8 = gen8;
+	}
+
+	public Set<Entwaesserungsgrundstueck> getEntwaesserungsgrundstuecks() {
         return this.entwaesserungsgrundstuecks;
     }
 

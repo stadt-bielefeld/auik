@@ -76,7 +76,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
- * Das "Abwasserbehandlungsanlage"-Tab des BasisObjektBearbeiten-Moduls
+ * Das "Abwasserbehandlungsanlage"-Tab des ObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
 public class AbaPanel extends JPanel {
@@ -115,11 +115,6 @@ private static final long serialVersionUID = -4030805403749508467L;
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
     
-//    // Normaler und kursiver Font für die Verfahren ComboBox
-//    // Normal: gespeichert, kursiv: nur angezeigt
-//    private Font normalFont;
-//    private Font italicFont;
-
 
     public AbaPanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Abwasserbehandlungsanlage";
@@ -302,7 +297,7 @@ private static final long serialVersionUID = -4030805403749508467L;
             // Neuen Abwasserbehandlungsanlage erzeugen
             this.fachdaten = new Aba();
             // Objekt_Id setzen
-            this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
+            this.fachdaten.setObjekt(this.hauptModul.getObjekt());
             // Verfahren auf "unbekannt" setzen
             Abaverfahren verfahren = Abaverfahren.findById(1);
             this.fachdaten.setAbaverfahren(verfahren);

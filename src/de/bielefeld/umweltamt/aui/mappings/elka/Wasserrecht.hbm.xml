@@ -86,6 +86,9 @@
         <property name="aktualDat" type="java.util.Date">
             <column name="aktual_dat" length="29" />
         </property>
+        <property name="gen8" type="java.lang.Boolean">
+            <column name="gen8" />
+        </property>
         <set name="entwaesserungsgrundstuecks" table="entwaesserungsgrundstueck" schema="oberflgw" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="wasserecht_nr" />

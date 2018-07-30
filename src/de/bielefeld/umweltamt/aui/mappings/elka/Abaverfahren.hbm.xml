@@ -3,10 +3,9 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" table="abaverfahren" schema="elka" optimistic-lock="version">
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" table="abaverfahren" schema="elka" lazy="false" optimistic-lock="version">
         <id name="nr" type="java.lang.Integer">
-            <column name="nr" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="aktualDat" type="java.util.Date">
             <column name="aktual_dat" length="13" />
@@ -17,5 +16,11 @@
         <property name="bezeichnung" type="java.lang.String">
             <column name="bezeichnung" />
         </property>
+        <set name="Abas" table="aba" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="verfahren_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Aba" />
+        </set>
     </class>
 </hibernate-mapping>
