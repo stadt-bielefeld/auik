@@ -83,7 +83,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 public class ELKASync extends AbstractModul {
-    
+
 	private static final AuikLogger log = AuikLogger.getLogger();
 
 	private static String IDENTIFIER =
@@ -91,8 +91,8 @@ public class ELKASync extends AbstractModul {
 	private static String PROXY_HOST =
 		SettingsManager.getInstance().getSetting("auik.elka.proxyhost");
 	private static String PROXY_PORT =
-		SettingsManager.getInstance().getSetting("auik.elka.proxyport");	
-	
+		SettingsManager.getInstance().getSetting("auik.elka.proxyport");
+
 	private JPanel panel;
 
 	private EAbwasserbehandlungsanlageModel abwasserbehandlungModel;
@@ -103,11 +103,11 @@ public class ELKASync extends AbstractModul {
 	private EAdresseModel adresseModel;
 	private EStandortModel standortModel;
 
-        
+
     private JTable dbTable;
     private JLabel rowCount;
     private JLabel progressCounter;
-    
+
     // Logindaten für den entfernten Service.
     private String url;
     private String user;
@@ -127,12 +127,12 @@ public class ELKASync extends AbstractModul {
     public String getName() {
         return "ELKA Datenbankabgleich";
     }
-    
+
     @Override
     public void show() {
     	super.show();
     	SwingWorkerVariant worker = new SwingWorkerVariant(this.panel) {
-			
+
 			@Override
 			protected void doUIUpdateLogic() throws RuntimeException {
 				// TODO Auto-generated method stub
@@ -141,7 +141,7 @@ public class ELKASync extends AbstractModul {
 			protected void doNonUILogic() throws RuntimeException {
 				// TODO Auto-generated method stub
 				ELKASync.this.adresseModel.setList(
-			    		prependIdentifierAdresse(EAdresse.getAll()));				
+			    		prependIdentifierAdresse(EAdresse.getAll()));
 		        ELKASync.this.rowCount.setText(String.valueOf(
 		        	ELKASync.this.adresseModel.getRowCount()));
 	        	ELKASync.this.dbTable.setModel(
@@ -162,7 +162,7 @@ public class ELKASync extends AbstractModul {
     	this.messstelleModel = new EMessstelleModel();
     	this.adresseModel = new EAdresseModel();
     	this.standortModel = new EStandortModel();
-        
+
         this.dbTable = new JTable();
         this.rowCount = new JLabel("0");
         this.progressCounter = new JLabel("-/-");
@@ -294,11 +294,11 @@ public class ELKASync extends AbstractModul {
                             }
                             client.register(new LoggingFilter(l, true));
 
-                            List<Entity<?>> entityList = 
+                            List<Entity<?>> entityList =
 								new ArrayList<Entity<?>>();
 							List<Object> dbList = new ArrayList<Object>();
 							int[] rows = ELKASync.this.dbTable.getSelectedRows();
-							
+
 							if (sel.equals("Abwasserbehandlungsanlagen")) {
 								for (int i = 0; i < rows.length; i++) {
 									dbList.add(ELKASync.this.abwasserbehandlungModel.getObjectAtRow(rows[i]));
@@ -364,7 +364,128 @@ public class ELKASync extends AbstractModul {
 					};
 					worker.start();
                 }
+			});
+
+			final JButton deleteEntries = new JButton("gewählte Einträge löschen");
+            deleteEntries.addActionListener(new ActionListener() {
+            	CredentialsDialog dialog = new CredentialsDialog(
+						ELKASync.this);
+                @Override
+				public void actionPerformed(ActionEvent ae) {
+					SwingWorkerVariant worker = new SwingWorkerVariant(commitEntries) {
+						@Override
+						protected void doNonUILogic() {
+							dialog.setVisible(true);
+							if (url == null || url.equals("")) {
+								JOptionPane.showMessageDialog(
+									ELKASync.this.panel,
+									"Bitte geben Sie eine Url an!",
+									"Verbindungsdaten",
+									JOptionPane.INFORMATION_MESSAGE);
+								return;
+							}
+							if (user == null || user.equals("") ||
+								password == null || password.equals("")) {
+								JOptionPane.showMessageDialog(
+									ELKASync.this.panel,
+									"Bitte geben Sie Benutzername und Passwort an!",
+									"Verbindungsdaten",
+									JOptionPane.INFORMATION_MESSAGE);
+								return;
+							}
+							String sel = (String) selection.getSelectedItem();
+							JerseyClient client = new JerseyClientBuilder().build();
+                            Logger l = Logger.getAnonymousLogger();
+                            try{
+                                l.addHandler(new FileHandler(sel+"-network.log"));
+                            }
+                            catch(IOException e){
+                                log.debug(e);
+                            }
+                            client.register(new LoggingFilter(l, true));
+
+                            List<Entity<?>> entityList =
+								new ArrayList<Entity<?>>();
+                            List<Object> dbList = new ArrayList<Object>();
+                            List<Object> idList = new ArrayList<Object>();
+							int[] rows = ELKASync.this.dbTable.getSelectedRows();
+
+							if (sel.equals("Abwasserbehandlungsanlagen")) {
+								for (int i = 0; i < rows.length; i++) {
+                                    EAbwasserbehandlungsanlage objectAtRow =
+                                        (EAbwasserbehandlungsanlage) ELKASync.this.abwasserbehandlungModel.
+                                        getObjectAtRow(rows[i]);
+                                    dbList.add(objectAtRow);
+                                    idList.add(objectAtRow.getNr());
+								}
+								url += "/abwasserbehandlungsanlage";
+							}
+							else if (sel.equals("Anfallstellen")) {
+								for (int i = 0; i < rows.length; i++) {
+									dbList.add(ELKASync.this.anfallstelleModel.getObjectAtRow(rows[i]));
+								}
+								url += "/anfallstelle";
+							}
+							else if (sel.equals("Betriebe")) {
+								for (int i = 0; i < rows.length; i++) {
+									dbList.add(ELKASync.this.betriebModel.getObjectAtRow(rows[i]));
+								}
+								url += "/betrieb";
+							}
+							else if (sel.equals("Einleitungsstellen")) {
+								for (int i = 0; i < rows.length; i++) {
+									dbList.add(ELKASync.this.einleitungsstelleModel.getObjectAtRow(rows[i]));
+								}
+								url += "/einleitungsstelle";
+							}
+							else if (sel.equals("Messstellen")) {
+								for (int i = 0; i < rows.length; i++) {
+									dbList.add(ELKASync.this.messstelleModel.getObjectAtRow(rows[i]));
+								}
+								url += "/messstelle";
+							}
+							else if (sel.equals("Adressen")) {
+								for (int i = 0; i < rows.length; i++) {
+                                    EAdresse objectAtRow =
+                                    (EAdresse) ELKASync.this.adresseModel.
+                                    getObjectAtRow(rows[i]);
+                                    idList.add(objectAtRow.getNr());
+                                    dbList.add(objectAtRow);
+								}
+								url += "/adresse";
+							}
+							else if (sel.equals("Standorte")) {
+								for (int i = 0; i < rows.length; i++) {
+                                    EStandort objectAtRow =
+                                    (EStandort) ELKASync.this.standortModel.
+                                    getObjectAtRow(rows[i]);
+                                    idList.add(objectAtRow.getNr());
+                                    dbList.add(objectAtRow);
+								}
+								url += "/standort";
+							}
+							else {
+								return;
+							}
+							for (int i = 0; i < dbList.size(); i++) {
+								entityList.add(Entity.entity(
+									dbList.get(i),
+									MediaType.APPLICATION_JSON + ";charset=UTF-8"));
+							}
+
+							progress.setValue(0);
+							progress.setMaximum(dbList.size());
+							ELKASync.this.progressCounter.setText("0/" + dbList.size());
+							ELKASync.this.deleteData(entityList, idList, url, user, password, progress, sel);
+						}
+						@Override
+						protected void doUIUpdateLogic() {
+						}
+					};
+					worker.start();
+                }
             });
+
 
             final JButton commitTable = new JButton("gewählte Tabelle übertragen");
             commitTable.addActionListener(new ActionListener() {
@@ -404,7 +525,7 @@ public class ELKASync extends AbstractModul {
                             }
                             client.register(new LoggingFilter(l, true));
 
-							List<Entity<?>> entityList = 
+							List<Entity<?>> entityList =
 								new ArrayList<Entity<?>>();
 							List<?> dbList = null;
 
@@ -470,6 +591,7 @@ public class ELKASync extends AbstractModul {
             builder.add(selection, cc.xy(3, 1));
             builder.add(commitTable, cc.xy(5, 1));
             builder.add(commitEntries, cc.xy(7, 1));
+            builder.add(deleteEntries, cc.xy(9, 1));
             builder.add(dbScroller, cc.xyw(1, 3, 10));
             builder.addLabel("Anzahl der Elemente: ", cc.xy(1, 5));
             builder.add(this.rowCount, cc.xy(3, 5));
@@ -480,7 +602,83 @@ public class ELKASync extends AbstractModul {
         }
         return this.panel;
     }
-    
+
+    private <T> void deleteData(
+        List<Entity<?>> entities,
+        List<Object> ids,
+        String url,
+        String user,
+        String password,
+        JProgressBar progress,
+        String type
+    ) {
+		if (entities.size() > 0) {
+            if(PROXY_HOST != null){
+                System.setProperty("http.proxyHost", PROXY_HOST);
+            }
+            if(PROXY_PORT != null){
+			    System.setProperty("http.proxyPort", PROXY_PORT);
+            }
+			JFileChooser chooser = new JFileChooser();
+			if (chooser.showSaveDialog(this.panel) == JFileChooser.APPROVE_OPTION) {
+				File protocolFile = chooser.getSelectedFile();
+				try {
+                    JerseyClient client = new JerseyClientBuilder().build();
+					FileOutputStream fileStream = new FileOutputStream(protocolFile);
+					PrintStream printStream = new PrintStream(fileStream);
+					this.progressCounter.setText("0/" + entities.size());
+					printStream.append("Lösche " + type + "\n");
+					printStream.append("--------------------------------------\n");
+					for (int i = 0; i < entities.size(); i++) {
+                        String deleteUrl = url + "/" + ids.get(i);
+                        log.debug("Deleting " + deleteUrl);
+                        JerseyWebTarget target =
+                            client.target(deleteUrl)
+                            .queryParam("username", user)
+                            .queryParam("password", password);
+                        Invocation inv =
+							target.request(
+									MediaType.APPLICATION_JSON +
+									";charset=UTF-8")
+									.buildDelete();
+						Response response = inv.invoke();
+						progress.setValue(progress.getValue() + 1);
+						String responseEntity = response.readEntity(String.class);
+                        this.progressCounter.setText((i + 1)+ "/" + entities.size());
+                        switch (response.getStatus()) {
+                            case 204:
+                                printStream.append((i + 1) + ":" + " erfolgreich Gelöscht\n");
+                                break;
+                            case 404:
+                                printStream.append("Fehler in Objekt: " + (i+1) + "\n");
+                                printStream.append("Fehlerbeschreibung: Entität nicht existent");
+                                printStream.append("\n");
+                                break;
+                            default:
+                                printStream.append("Fehler in Objekt: " + (i+1) + "\n");
+                                printStream.append("Fehlerbeschreibung: " + responseEntity);
+                                printStream.append("\n");
+                        }
+					}
+					fileStream.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				catch (ProcessingException pe) {
+					JOptionPane.showMessageDialog(
+						this.panel,
+						"Der Server unter der angegeben Url ist nicht erreichbar.",
+						"Verbindungsfehler",
+						JOptionPane.WARNING_MESSAGE);
+				}
+			}
+			System.setProperty("http.proxyHost", "");
+			System.setProperty("http.proxyPort", "");
+		}
+
+    }
     private <T> void sendData(
     	List<Entity<?>> entities,
     	JerseyWebTarget target,
@@ -555,7 +753,7 @@ public class ELKASync extends AbstractModul {
     public void setServicePassword(String password) {
     	this.password = password;
     }
-    
+
     private List<EAbwasserbehandlungsanlage> prependIdentifierAbwasserbehandlungsanlage(
    		List<EAbwasserbehandlungsanlage> objects
     ) {
@@ -573,7 +771,7 @@ public class ELKASync extends AbstractModul {
     	}
     	return objects;
     }
-    
+
     private List<EAnfallstelle> prependIdentifierAnfallstelle (
     	List<EAnfallstelle> objects
     ) {
@@ -585,7 +783,7 @@ public class ELKASync extends AbstractModul {
     	}
     	return objects;
     }
-    
+
     private List<EBetrieb> prependIdentifierBetrieb(List<EBetrieb> objects) {
     	for (EBetrieb betrieb : objects) {
     		prependIdentifier(betrieb);
@@ -595,7 +793,7 @@ public class ELKASync extends AbstractModul {
     	}
     	return objects;
     }
-    
+
     private List<EEinleitungsstelle> prependIdentifierEinleitungsstelle(
     	List<EEinleitungsstelle> objects
     ) {
@@ -610,7 +808,7 @@ public class ELKASync extends AbstractModul {
     	}
     	return objects;
     }
-    
+
     private List<EMessstelle> prependIdentifierMessstelle(
     	List<EMessstelle> objects
     ) {
@@ -620,7 +818,7 @@ public class ELKASync extends AbstractModul {
     		prependIdentifier(stelle.getStandort().getAdresse());
     		for (EProbenahme nahme : stelle.getProbenahmes()) {
     			prependIdentifier(nahme);
-    			for (EProbenahmeUeberwachungsergeb ergeb : 
+    			for (EProbenahmeUeberwachungsergeb ergeb :
     				nahme.getProbenahmeUeberwachungsergebs()) {
     				prependIdentifier(ergeb);
     			}
@@ -647,7 +845,7 @@ public class ELKASync extends AbstractModul {
        	}
        	return objects;
     }
-    
+
     private <T> T prependIdentifier(T object) {
     	try {
 			Method mGetter = object.getClass().getMethod("getOrigNr");
