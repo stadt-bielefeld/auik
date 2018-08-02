@@ -257,8 +257,7 @@ public class Wirtschaftszweig  implements java.io.Serializable {
     }
 
 	public String toGuiString() {
-		// TODO Auto-generated method stub
-		return null;
+		return getWirtschaftszweig();
 	}
 
     /* Custom code goes below here! */

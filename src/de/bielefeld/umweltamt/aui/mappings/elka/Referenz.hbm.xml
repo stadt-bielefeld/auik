@@ -4,9 +4,8 @@
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" table="referenz" schema="elka" optimistic-lock="version">
-        <id name="nr" type="java.lang.Integer">
-            <column name="nr" />
-            <generator class="assigned" />
+        <id name="nr" type="java.lang.Integer" column="nr" unsaved-value="0">
+            <generator class="identity"/>
         </id>
         <many-to-one name="abaByZAbaNr" class="de.bielefeld.umweltamt.aui.mappings.elka.Aba" fetch="select">
             <column name="z_aba_nr" />

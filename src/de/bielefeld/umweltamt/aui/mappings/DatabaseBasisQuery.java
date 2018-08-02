@@ -44,7 +44,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
-import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
@@ -621,7 +620,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            String
 	 * @return <code>List&lt;Object[]&gt;</code>
 	 */
-	public static List<Object[]> findStandorteNew(String strasse, Integer hausnr, String ort) {
+	public static List<Lage[]> findStandorteNew(String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
 		boolean bHausnr = (hausnr != null && hausnr != -1);
@@ -630,7 +629,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		str = str.replace("'", "''");
 
 		String query = "SELECT * FROM " + " (SELECT DISTINCT ON (a.strasse, a.hausnr, a.hausnrzus) a.*, m.* "
-				+ "FROM basis.adresse a JOIN basis.map_adresse_lage m ON m.adresseid = a.id";
+				+ "FROM basis.adresse a JOIN basis.lage m ON m.adresseid = a.id";
 		if (bStrasse || bHausnr || bOrt) {
 			query += " WHERE ";
 			if (bStrasse) {
@@ -652,8 +651,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		}
 		query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";
 		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
-		q.addEntity("a", Adresse.class);
-		q.addEntity("m", MapAdresseLage.class);
+		q.addEntity("a", Lage.class);
 		return q.list();
 	}
 
@@ -759,7 +757,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
 
-		String query = "SELECT DISTINCT adresse " + "FROM MapAdresseLage as map JOIN map.adresse";
+		String query = "SELECT DISTINCT adresse " + "FROM Lage as lage JOIN lage.adresse adresse";
 		if (bStrasse || bHausnr || bOrt) {
 			query += " WHERE ";
 			if (bStrasse) {

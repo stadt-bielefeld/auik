@@ -16,6 +16,9 @@
         <many-to-one name="gemarkung" class="de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung" fetch="select">
             <column name="gemarkungid" />
         </many-to-one>
+        <many-to-one name="adresse" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select">
+            <column name="adresseid" />
+        </many-to-one>
         <property name="plz" type="java.lang.String">
             <column name="plz" />
         </property>

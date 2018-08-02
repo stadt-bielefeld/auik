@@ -23,12 +23,14 @@
 
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.io.Serializable;
 import java.util.Date;
@@ -52,6 +54,7 @@ public class Lage  implements java.io.Serializable {
     private Standortgghwsg standortgghwsg;
     private Wassereinzugsgebiet wassereinzugsgebiet;
     private Gemarkung gemarkung;
+    private Adresse adresse;
     private String plz;
     private Float e32;
     private Float n32;
@@ -87,11 +90,12 @@ public class Lage  implements java.io.Serializable {
 
     /** Full constructor */
     public Lage(
-        Integer id, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Gemarkung gemarkung, String plz, Float e32, Float n32, String flur, String flurstueck, String entgebid, String strasseeigent, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, Serializable theGeom, boolean enabled, boolean deleted, Set<Objekt> objekts) {
+        Integer id, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Adresse adresse, Gemarkung gemarkung, String plz, Float e32, Float n32, String flur, String flurstueck, String entgebid, String strasseeigent, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, Serializable theGeom, boolean enabled, boolean deleted, Set<Objekt> objekts) {
         this.id = id;
         this.standortgghwsg = standortgghwsg;
         this.wassereinzugsgebiet = wassereinzugsgebiet;
         this.gemarkung = gemarkung;
+        this.adresse = adresse;
         this.plz = plz;
         this.e32 = e32;
         this.n32 = n32;
@@ -133,6 +137,14 @@ public class Lage  implements java.io.Serializable {
 
     public void setWassereinzugsgebiet(Wassereinzugsgebiet wassereinzugsgebiet) {
         this.wassereinzugsgebiet = wassereinzugsgebiet;
+    }
+
+    public Adresse getAdresse() {
+        return this.adresse;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
     }
 
     public Gemarkung getGemarkung() {
@@ -294,7 +306,8 @@ public class Lage  implements java.io.Serializable {
         buffer.append("id").append("='").append(getId()).append("' ");			
         buffer.append("standortgghwsg").append("='").append(getStandortgghwsg()).append("' ");			
         buffer.append("wassereinzugsgebiet").append("='").append(getWassereinzugsgebiet()).append("' ");			
-        buffer.append("gemarkung").append("='").append(getGemarkung()).append("' ");			
+        buffer.append("gemarkung").append("='").append(getGemarkung()).append("' ");
+        buffer.append("Adresse").append("='").append(getAdresse()).append("' ");	
         buffer.append("plz").append("='").append(getPlz()).append("' ");			
         buffer.append("e32").append("='").append(getE32()).append("' ");			
         buffer.append("n32").append("='").append(getN32()).append("' ");			
@@ -378,7 +391,8 @@ public class Lage  implements java.io.Serializable {
     private void copy(Lage copy) {
         this.id = copy.getId();            
         this.standortgghwsg = copy.getStandortgghwsg();            
-        this.wassereinzugsgebiet = copy.getWassereinzugsgebiet();            
+        this.wassereinzugsgebiet = copy.getWassereinzugsgebiet();           
+        this.adresse = copy.getAdresse();
         this.gemarkung = copy.getGemarkung();            
         this.plz = copy.getPlz();            
         this.e32 = copy.getE32();            
@@ -439,6 +453,22 @@ public class Lage  implements java.io.Serializable {
     public static List<Lage> getAll() {
         return DatabaseQuery.getAll(new Lage());
     }
+	
+	public static Lage findByAdresse(Adresse Standort) {
+		Lage lage = new Lage();
+		Integer id = Standort.getId();
+		List Lages = HibernateSessionFactory
+				.currentSession()
+				.createQuery(
+						"from Lage where adresseid= " + id)
+				.list();
+		if (Lages.size() != 0) {
+			lage = (Lage) Lages
+					.get(0);
+			return lage;
+		}
+		return null;
+	}
 
     /* Custom code goes below here! */
 

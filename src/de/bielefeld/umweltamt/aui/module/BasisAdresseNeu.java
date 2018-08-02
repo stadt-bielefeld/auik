@@ -79,7 +79,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
-import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
@@ -107,7 +106,6 @@ public class BasisAdresseNeu extends AbstractModul
 	private static final AuikLogger log = AuikLogger.getLogger();
 
 	private JButton speichernButton;
-	private MapAdresseLage mapLage;
 	private Lage lage;
 
 	private JLabel handzeichenLabel;
@@ -569,9 +567,9 @@ public class BasisAdresseNeu extends AbstractModul
             	f = firma.getHausnrzus();
                 }
         	if (i.equals(f) || f.contains("-") ) {
-            	Set<MapAdresseLage> verk = firma.getMapAdresseLages();
-            	for (MapAdresseLage ver : verk) {
-            	    vorhandeneLage = ver.getLage();
+            	Set<Lage> verk = firma.getLages();
+            	for (Lage ver : verk) {
+            	    vorhandeneLage = ver;
             	}   
         	}
             }
@@ -632,18 +630,6 @@ public class BasisAdresseNeu extends AbstractModul
 			// Neues Standortobjekt erzeugen
 			Adresse adrn = new Adresse();
             
-			/*if (standorteTabelle.getSelectedRowCount() > 0) {
-				mapLage = new BasisMapAdresseLage();
-				lage = new BasisLage();
-				mapLage.setBasisAdresse(adrn);
-				mapLage.setBasisLage(lage);
-			}*/
-            //Vermeidet fehler beim merge, wenn eine eigene Adresse eingeben wurde anstatt eine aus der Liste auszuwählen
-            mapLage = new MapAdresseLage();
-			lage = new Lage();
-			mapLage.setAdresse(adrn);
-			mapLage.setLage(lage);
-
 			// Anrede
 			String anrede = anredeFeld.getText();
 			if (anrede.equals("")) {
@@ -772,12 +758,12 @@ public class BasisAdresseNeu extends AbstractModul
 				// Gemarkung
 				Gemarkung bgem = (Gemarkung) gemarkungBox
 						.getSelectedItem();
-				mapLage.getLage().setGemarkung(bgem);
+				lage.setGemarkung(bgem);
 
 				// Standortgg
 				Standortgghwsg stgg = (Standortgghwsg) standortGgBox
 						.getSelectedItem();
-				mapLage.getLage().setStandortgghwsg(stgg);
+				lage.setStandortgghwsg(stgg);
 
 				// Einzugsgebiet
 				String ezgb = (String) entwGebBox.getSelectedItem();
@@ -793,36 +779,36 @@ public class BasisAdresseNeu extends AbstractModul
 					}
 					ezgb = ezgb.trim();
 				}
-				mapLage.getLage().setEntgebid(ezgb);
+				lage.setEntgebid(ezgb);
 
 				// VAWS-Einzugsgebiet
 				Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox
 						.getSelectedItem();
-				mapLage.getLage().setWassereinzugsgebiet(wezg);
+				lage.setWassereinzugsgebiet(wezg);
 
 				// Flur
 				String flur = flurFeld.getText().trim();
 				if (flur.equals("")) {
-					mapLage.getLage().setFlur(null);
+					lage.setFlur(null);
 				} else {
-					mapLage.getLage().setFlur(flur);
+					lage.setFlur(flur);
 				}
 
 				// Flurstueck
 				String flurstk = flurStkFeld.getText().trim();
 				if (flurstk.equals("")) {
-					mapLage.getLage().setFlurstueck(null);
+					lage.setFlurstueck(null);
 				} else {
-					mapLage.getLage().setFlurstueck(flurstk);
+					lage.setFlurstueck(flurstk);
 				}
 
 				// Rechtswert
 				Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
-				mapLage.getLage().setE32(e32Wert);
+				lage.setE32(e32Wert);
 
 				// Hochwert
 				Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
-				mapLage.getLage().setN32(n32Wert);
+				lage.setN32(n32Wert);
 			}
 			// Bemerkungen
 			String bemerkungen = bemerkungsArea.getText().trim();
@@ -840,8 +826,8 @@ public class BasisAdresseNeu extends AbstractModul
 			 * und Basis_Lage ebenfalls gespeichert werden.
 			 */
 
-			MapAdresseLage persistentAL = null;
-			persistentAL = MapAdresseLage.merge(mapLage);
+			Adresse persistentAL = null;
+			persistentAL = Adresse.merge(adrn);
 
 			if (persistentAL != null) {
 				frame.changeStatus("Neuer Betreiber " + persistentAL.getId()
@@ -852,7 +838,7 @@ public class BasisAdresseNeu extends AbstractModul
 						"auik.imc.return_to_objekt_betreiber")) {
 					manager.getSettingsManager().setSetting(
 							"auik.imc.use_betreiber",
-							persistentAL.getAdresse().getId().intValue(),
+							persistentAL.getId().intValue(),
 							false);
 					manager.getSettingsManager().removeSetting(
 							"auik.imc.return_to_objekt_betreiber");
@@ -863,11 +849,11 @@ public class BasisAdresseNeu extends AbstractModul
 							"auik.imc.return_to_objekt_standort")) {
 					manager.getSettingsManager().setSetting(
 							"auik.imc.use_standort",
-							persistentAL.getAdresse().getId().intValue(),
+							persistentAL.getId().intValue(),
 							false);
 					manager.getSettingsManager().setSetting(
 							"auik.imc.use_lage",
-							persistentAL.getLage().getId().intValue(),
+							persistentAL.getId().intValue(),
 							false);
 					manager.getSettingsManager().removeSetting(
 							"auik.imc.return_to_objekt_standort");

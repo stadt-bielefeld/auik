@@ -65,6 +65,7 @@ public class Objekt  implements java.io.Serializable {
     private Integer id;
     private Adresse adresseByStandortid;
     private Adresse adresseByBetreiberid;
+    private Adresse adresse;
     private Lage lage;
     private Objektarten objektarten;
     private Sachbearbeiter sachbearbeiter;
@@ -181,6 +182,14 @@ public class Objekt  implements java.io.Serializable {
 
     public void setAdresseByBetreiberid(Adresse adresseByBetreiberid) {
         this.adresseByBetreiberid = adresseByBetreiberid;
+    }
+
+    public Adresse getAdresse() {
+        return this.adresse;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
     }
 
     public Lage getLage() {
@@ -673,4 +682,17 @@ public class Objekt  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+
+
+    public static Objekt findByAdresseId(Integer id){
+        List<Objekt> all = Objekt.getAll();
+        for(Objekt i : all){
+            log.debug("Comparing " + i.getAdresseByBetreiberid().getId() + " " + id);
+            if(i.getAdresseByBetreiberid().getId().equals(id)){
+                log.debug("Returning Objekt: " + i.getId());
+                return (Objekt) new DatabaseAccess().get(Objekt.class, i.getId());
+            }
+        }
+        return null;
+    }
 }

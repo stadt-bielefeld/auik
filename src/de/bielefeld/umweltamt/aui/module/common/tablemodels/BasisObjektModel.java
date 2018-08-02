@@ -30,7 +30,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
-import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
 import de.bielefeld.umweltamt.aui.module.BasisAdresseSuchen;
 
 /**
@@ -143,7 +142,7 @@ public class BasisObjektModel extends ListTableModel {
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(MapAdresseLage standort) {
+    public void searchByStandort(Lage standort) {
         setList(DatabaseQuery.getObjekteByStrasse(
             standort.getAdresse(), abteilung, null, null));
     }

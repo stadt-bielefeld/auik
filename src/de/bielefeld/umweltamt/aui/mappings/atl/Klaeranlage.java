@@ -47,7 +47,7 @@ public class Klaeranlage  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String anlage;
-    private Integer deaKlaeranlageKlaeranlageNr;
+    private Integer deaKlaeranlageNr;
     private boolean enabled;
     private boolean deleted;
     private Set<Referenz> referenzsForQKaNr = new HashSet<Referenz>(0);
@@ -64,20 +64,20 @@ public class Klaeranlage  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Klaeranlage(
-        Integer id, String anlage, Integer deaKlaeranlageKlaeranlageNr, boolean enabled, boolean deleted) {
+        Integer id, String anlage, Integer deaKlaeranlageNr, boolean enabled, boolean deleted) {
         this.id = id;
         this.anlage = anlage;
-        this.deaKlaeranlageKlaeranlageNr = deaKlaeranlageKlaeranlageNr;
+        this.deaKlaeranlageNr = deaKlaeranlageNr;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Klaeranlage(
-        Integer id, String anlage, Integer deaKlaeranlageKlaeranlageNr, boolean enabled, boolean deleted, Set<Referenz> referenzsForQKaNr, Set<Referenz> referenzsForZKaNr, Set<Messstelle> messstelles) {
+        Integer id, String anlage, Integer deaKlaeranlageNr, boolean enabled, boolean deleted, Set<Referenz> referenzsForQKaNr, Set<Referenz> referenzsForZKaNr, Set<Messstelle> messstelles) {
         this.id = id;
         this.anlage = anlage;
-        this.deaKlaeranlageKlaeranlageNr = deaKlaeranlageKlaeranlageNr;
+        this.deaKlaeranlageNr = deaKlaeranlageNr;
         this.enabled = enabled;
         this.deleted = deleted;
         this.referenzsForQKaNr = referenzsForQKaNr;
@@ -102,12 +102,12 @@ public class Klaeranlage  implements java.io.Serializable {
         this.anlage = anlage;
     }
 
-    public Integer getDeaKlaeranlageKlaeranlageNr() {
-        return this.deaKlaeranlageKlaeranlageNr;
+    public Integer getDeaKlaeranlageNr() {
+        return this.deaKlaeranlageNr;
     }
 
-    public void setDeaKlaeranlageKlaeranlageNr(Integer deaKlaeranlageKlaeranlageNr) {
-        this.deaKlaeranlageKlaeranlageNr = deaKlaeranlageKlaeranlageNr;
+    public void setDeaKlaeranlageNr(Integer deaKlaeranlageNr) {
+        this.deaKlaeranlageNr = deaKlaeranlageNr;
     }
 
     public boolean isEnabled() {
@@ -172,7 +172,7 @@ public class Klaeranlage  implements java.io.Serializable {
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
         buffer.append("anlage").append("='").append(getAnlage()).append("' ");			
-        buffer.append("deaKlaeranlageKlaeranlageNr").append("='").append(getDeaKlaeranlageKlaeranlageNr()).append("' ");			
+        buffer.append("deaKlaeranlageKlaeranlageNr").append("='").append(getDeaKlaeranlageNr()).append("' ");			
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("referenzsForQKaNr").append("='").append(getReferenzsForQKaNr()).append("' ");			
@@ -245,7 +245,7 @@ public class Klaeranlage  implements java.io.Serializable {
     private void copy(Klaeranlage copy) {
         this.id = copy.getId();            
         this.anlage = copy.getAnlage();            
-        this.deaKlaeranlageKlaeranlageNr = copy.getDeaKlaeranlageKlaeranlageNr();            
+        this.deaKlaeranlageNr = copy.getDeaKlaeranlageNr();            
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
         this.referenzsForQKaNr = copy.getReferenzsForQKaNr();            
