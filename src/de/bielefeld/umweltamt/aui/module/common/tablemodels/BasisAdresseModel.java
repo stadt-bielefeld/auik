@@ -26,7 +26,7 @@ import java.util.Set;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -99,44 +99,44 @@ public class BasisAdresseModel extends ListTableModel {
 
 		Adresse betr = (Adresse) objectAtRow;
 		HibernateSessionFactory.currentSession().refresh(betr);
-		if (betr.getLages().size() > 0) {
-			for (int i = 0; i < betr.getLages().size(); i++) {
-				Lage lage = (Lage) betr
-						.getLages().toArray()[i];
+		if (betr.getMapAdresseLages().size() > 0) {
+			for (int i = 0; i < betr.getMapAdresseLages().size(); i++) {
+				MapAdresseLage map = (MapAdresseLage) betr
+						.getMapAdresseLages().toArray()[i];
 				switch (columnIndex) {
 				case 0:
-					if (betr.getKassenzeichen() != null) {
-						String tmp = betr.getBetrname() + " ("
-								+ betr.getKassenzeichen()
+					if (map.getAdresse().getKassenzeichen() != null) {
+						String tmp = map.getAdresse().getBetrname() + " ("
+								+ map.getAdresse().getKassenzeichen()
 								+ ")";
 						value = tmp;
 					} else {
-						value = betr.getBetrname();
+						value = map.getAdresse().getBetrname();
 					}
 					break;
 				case 1:
-					value = betr.getBetrvorname();
+					value = map.getAdresse().getBetrvorname();
 					break;
 				case 2:
-					value = betr.getOrt();
+					value = map.getAdresse().getOrt();
 					break;
 				case 3:
-					value = betr.getStrasse();
+					value = map.getAdresse().getStrasse();
 					break;
 				case 4:
-					if (betr.getHausnrzus() != null) {
-						String tmp = betr.getHausnr()
-								+ betr.getHausnrzus();
+					if (map.getAdresse().getHausnrzus() != null) {
+						String tmp = map.getAdresse().getHausnr()
+								+ map.getAdresse().getHausnrzus();
 						value = tmp;
 					} else {
-						value = betr.getHausnr();
+						value = map.getAdresse().getHausnr();
 					}
 					break;
 				case 5:
-					value = lage.getE32();
+					value = map.getLage().getE32();
 					break;
 				case 6:
-					value = lage.getN32();
+					value = map.getLage().getN32();
 					break;
 				default:
 					value = null;

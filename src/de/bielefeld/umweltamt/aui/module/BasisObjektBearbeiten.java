@@ -471,7 +471,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 Lage lage = Lage.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_lage")));
                 log.debug("Creating new Objekt " + lage + sta);
                 objekt.setAdresseByStandortid(sta);
-                objekt.setLage(lage);
+//                objekt.setLage(lage);
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
                 manager.getSettingsManager().removeSetting("auik.imc.use_lage");
             }

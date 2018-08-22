@@ -103,12 +103,6 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk" />
         </set>
-        <set name="lages" table="lage" schema="basis" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="adresseid" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Lage" />
-        </set>
         <set name="objektsForBetreiberid" table="objekt" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="betreiberid" />

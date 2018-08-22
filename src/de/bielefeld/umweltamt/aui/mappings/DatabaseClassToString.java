@@ -61,6 +61,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.OnlinekartendienstId;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.basis.View360x33;
@@ -691,6 +692,11 @@ public class DatabaseClassToString {
 	}
 
 	public static String toStringForClass(ViewTwoWayObjektverknuepfungId viewTwoWayObjektverknuepfungId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(MapAdresseLage mapAdresseLage) {
 		// TODO Auto-generated method stub
 		return null;
 	}

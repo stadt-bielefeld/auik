@@ -130,11 +130,11 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageModel;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.BasicEntryField;
@@ -183,7 +183,7 @@ public class BasisStandortSuchen extends AbstractModul
 	 * Wird benutzt, um nach dem Bearbeiten etc. wieder den selben Standort in
 	 * der Liste auszuwählen.
 	 */
-	private Lage lastStandort;
+	private MapAdresseLage lastStandort;
 
 	private Timer suchTimer;
 
@@ -440,7 +440,7 @@ public class BasisStandortSuchen extends AbstractModul
 		if (!lsm.isSelectionEmpty())
 		{
 			int selectedRow = lsm.getMinSelectionIndex();
-			Lage standort = this.standortModel.getRow(selectedRow);
+			MapAdresseLage standort = this.standortModel.getRow(selectedRow);
 			log.debug("Standort " + standort + " angewählt.");
 			searchObjekteByStandort(standort);
 		}
@@ -453,7 +453,7 @@ public class BasisStandortSuchen extends AbstractModul
 	 * @param standort
 	 *            Der Standort
 	 */
-	public void editStandort(Lage standort)
+	public void editStandort(MapAdresseLage standort)
 	{
 		StandortEditor editDialog = null;
 
@@ -493,7 +493,7 @@ public class BasisStandortSuchen extends AbstractModul
 	 * @param abteilung
 	 *            33 oder 34
 	 */
-	public void searchObjekteByStandort(final Lage standort,
+	public void searchObjekteByStandort(final MapAdresseLage standort,
 		final String abteilung, final Integer nichtartid)
 	{
 
@@ -523,7 +523,7 @@ public class BasisStandortSuchen extends AbstractModul
 	 * @param standortid
 	 *            Die Standort-Id
 	 */
-	public void searchObjekteByStandort(final Lage standort)
+	public void searchObjekteByStandort(final MapAdresseLage standort)
 	{
 
 		// ... siehe show()
@@ -551,7 +551,7 @@ public class BasisStandortSuchen extends AbstractModul
 	 * @param standortid
 	 *            Die Standort-Id
 	 */
-	public void searchObjekteByStandort(final Lage standort,
+	public void searchObjekteByStandort(final MapAdresseLage standort,
 		final Integer istartid)
 	{
 
@@ -611,7 +611,7 @@ public class BasisStandortSuchen extends AbstractModul
 				else
 				{
 					BasisStandortSuchen.this.standortModel
-							.filterList(Lage.findById(SettingsManager.getInstance()
+							.filterList(MapAdresseLage.findByLageId(SettingsManager.getInstance()
 									.getStandort().getId()));
 					SettingsManager.getInstance().setStandort(null);
 					getStrassenFeld().setText("");
@@ -648,7 +648,7 @@ public class BasisStandortSuchen extends AbstractModul
 		ListSelectionModel lsm = getStandortTabelle().getSelectionModel();
 		int selectedRow = lsm.getMinSelectionIndex();
 
-		Lage standort = this.standortModel.getRow(selectedRow);
+		MapAdresseLage standort = this.standortModel.getRow(selectedRow);
 
 		String adresse = "" + standort.getAdresse();
 
@@ -876,7 +876,7 @@ public class BasisStandortSuchen extends AbstractModul
 					if (!lsm.isSelectionEmpty())
 					{
 						int selectedRow = lsm.getMinSelectionIndex();
-						Lage standort = BasisStandortSuchen.this.standortModel
+						MapAdresseLage standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
 						log.debug("Standort " + standort + " angewählt.");
 						searchObjekteByStandort(standort,
@@ -906,7 +906,7 @@ public class BasisStandortSuchen extends AbstractModul
 					if (!lsm.isSelectionEmpty())
 					{
 						int selectedRow = lsm.getMinSelectionIndex();
-						Lage standort = BasisStandortSuchen.this.standortModel
+						MapAdresseLage standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
 						log.debug("Standort " + standort + " angewählt.");
 						searchObjekteByStandort(standort,
@@ -937,7 +937,7 @@ public class BasisStandortSuchen extends AbstractModul
 					if (!lsm.isSelectionEmpty())
 					{
 						int selectedRow = lsm.getMinSelectionIndex();
-						Lage standort = BasisStandortSuchen.this.standortModel
+						MapAdresseLage standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
 						log.debug("Standort " + standort + " angewählt.");
 						searchObjekteByStandort(standort,
@@ -1050,7 +1050,7 @@ public class BasisStandortSuchen extends AbstractModul
 						if ((e.getButton() == MouseEvent.BUTTON1)
 								&& (e.getClickCount() == 2))
 						{
-							Lage bsta = BasisStandortSuchen.this.standortModel
+							MapAdresseLage bsta = BasisStandortSuchen.this.standortModel
 									.getRow(row);
 //							editStandort(bsta);
 						}
@@ -1132,7 +1132,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 					if (row != -1)
 					{
-						Lage bsta = BasisStandortSuchen.this.standortModel
+						MapAdresseLage bsta = BasisStandortSuchen.this.standortModel
 								.getRow(row);
 						BasisStandortSuchen.this.manager.getSettingsManager()
 								.setSetting("auik.imc.use_standort",
@@ -1387,7 +1387,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 					int row = BasisStandortSuchen.this.standortTabelle
 							.getSelectedRow();
-					Lage bsta = BasisStandortSuchen.this.standortModel
+					MapAdresseLage bsta = BasisStandortSuchen.this.standortModel
 							.getRow(row);
 
 					ProcessBuilder pb = new ProcessBuilder("cmd", "/C", prog,
@@ -1597,7 +1597,7 @@ public class BasisStandortSuchen extends AbstractModul
 						}
 						else
 						{
-							Lage str = BasisStandortSuchen.this.standortModel
+							MapAdresseLage str = BasisStandortSuchen.this.standortModel
 									.getRow(row);
 
 							if (GUIManager.getInstance().showQuestion(

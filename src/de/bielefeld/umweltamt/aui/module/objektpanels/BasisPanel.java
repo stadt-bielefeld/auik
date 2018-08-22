@@ -110,13 +110,13 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
+import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-import de.bielefeld.umweltamt.aui.module.ELKASync;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
@@ -162,6 +162,7 @@ public class BasisPanel extends JPanel {
         private JButton abbrechenButton;
 
     	private Timer suchTimer;
+
 
         public ChooseDialog(Object initial, HauptFrame frame, String caller) {
             super(frame, true);
@@ -643,8 +644,6 @@ public class BasisPanel extends JPanel {
     
     
 	private ActionListener deleteButtonListener;
-	private JPanel  panel;
-	
     public BasisPanel(BasisObjektBearbeiten hauptModul) {
 
         this.name = "Objekt";
@@ -836,11 +835,11 @@ public class BasisPanel extends JPanel {
             }
 			if (this.hauptModul.getObjekt().getAdresseByStandortid() != null) {
 
-				Lage lage = (Lage) Lage
+				MapAdresseLage mapsta = (MapAdresseLage) MapAdresseLage
 						.findByAdresse(this.hauptModul.getObjekt()
 								.getAdresseByStandortid());
-				if (lage != null) {
-					Adresse sta = lage.getAdresse();
+				if (mapsta != null) {
+					Adresse sta = mapsta.getAdresse();
 					log.debug("Set standort field to: " + sta
 							+ this.hauptModul.getObjekt().getAdresseByStandortid()
 							+ " " + this.hauptModul.getObjekt().getLage());
@@ -849,9 +848,9 @@ public class BasisPanel extends JPanel {
 						toolTip += "<b>PLZ:</b> " + sta.getPlz() + "<br>";
 					}
 					toolTip += "<b>Gemarkung:</b> "
-							+ lage.getGemarkung()
-							+ ((lage.getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
-									+ lage.getEntgebid()
+							+ mapsta.getLage().getGemarkung()
+							+ ((mapsta.getLage().getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
+									+ mapsta.getLage().getEntgebid()
 									: "") + "</html>";
 					getStandortFeld().setToolTipText(toolTip);
 					getStandortFeld().setText(
@@ -859,13 +858,13 @@ public class BasisPanel extends JPanel {
 									.toString());
 
 					if (this.hauptModul.getObjekt().getLage() == null) {
-						lage = (Lage) Lage
+						mapsta = (MapAdresseLage) MapAdresseLage
 								.findByAdresse(this.hauptModul.getObjekt()
 										.getAdresseByStandortid());
 						this.hauptModul.getObjekt().setLage(
-								lage);
+								mapsta.getLage());
 					}
-					getLageFeld().setText(lage.toString());
+					getLageFeld().setText(mapsta.getLage().toString());
 				}else {
 					getLageFeld().setText(this.hauptModul.getObjekt().getLage().toString());
 				}
@@ -1111,31 +1110,22 @@ public class BasisPanel extends JPanel {
                 .setHorizontalAlignment(SwingConstants.CENTER);
             this.betreiberChooseButton.setToolTipText("Adresse auswählen");
 
-			this.betreiberChooseButton.addActionListener(new ActionListener() {
-				@Override
-	            
-				public void actionPerformed(ActionEvent e) {
-					Adresse betreiber = BasisPanel.this.hauptModul
-							.getObjekt().getAdresseByBetreiberid();
-					if (BasisPanel.this. hauptModul.getObjekt().getAdresseByBetreiberid() != null &&
-							betreiber == null) {
-						betreiber = BasisPanel.this. hauptModul.getObjekt().getAdresseByBetreiberid();
-					}
-					if(betreiber == null){
-						betreiber = new Adresse();
-					}
-					ChooseDialog chooser = new ChooseDialog(betreiber,
-							BasisPanel.this.hauptModul.getFrame(), "betreiber");
-					chooser.setVisible(true);
-	
-					if (chooser.getChosenBetreiber() != null) {
-						betreiberFeld.setText(chooser.getChosenBetreiber()
-								.toString());
-						BasisPanel.this.hauptModul.getObjekt()
-								.setAdresseByStandortid(chooser.getChosenBetreiber());
-					}
-					updateForm();
-				}
+            this.betreiberChooseButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Adresse betreiber = BasisPanel.this.hauptModul
+                        .getObjekt().getAdresseByBetreiberid();
+                    if (betreiber == null) {
+                        betreiber = new Adresse();
+                    }
+                    ChooseDialog chooser = new ChooseDialog(betreiber,
+                        BasisPanel.this.hauptModul.getFrame(), "betreiber");
+                    chooser.setVisible(true);
+
+                    BasisPanel.this.hauptModul.getObjekt().setAdresseByBetreiberid(
+                        chooser.getChosenBetreiber());
+                    updateForm();
+                }
             });
         }
 
@@ -1152,29 +1142,28 @@ public class BasisPanel extends JPanel {
 	
 	        this.standortChooseButton.addActionListener(new ActionListener() {
 	            @Override
-	            
 				public void actionPerformed(ActionEvent e) {
-					Lage lage = (Lage) Lage
-							.findByAdresse(BasisPanel.this.hauptModul.getObjekt().getAdresseByStandortid());
-					if (lage != null) {
-						Adresse standort = lage.getAdresse();
-						ChooseDialog chooser = new ChooseDialog(standort, BasisPanel.this.hauptModul.getFrame(),
-								"betreiber");
-						chooser.setVisible(true);
-
-						BasisPanel.this.hauptModul.getObjekt().setAdresseByStandortid(chooser.getChosenBetreiber());
-						updateForm();
-					} else {
-						JOptionPane.showMessageDialog(
-								BasisPanel.this.panel,
-								"Eine Standortadresse muss mindestens einen Rechts- und Hochwert haben!",
-								"Keine Lagedaten erfasst",
-//								"Rechts- und Hochwert haben.",
-								JOptionPane.INFORMATION_MESSAGE);
+					Adresse standort = BasisPanel.this.hauptModul
+							.getObjekt().getAdresseByStandortid();
+					if (BasisPanel.this. hauptModul.getObjekt().getAdresseByBetreiberid() != null &&
+							standort == null) {
+						standort = BasisPanel.this. hauptModul.getObjekt().getAdresseByBetreiberid();
 					}
+					if(standort == null){
+						standort = new Adresse();
+					}
+					ChooseDialog chooser = new ChooseDialog(standort,
+							BasisPanel.this.hauptModul.getFrame(), "standort");
+					chooser.setVisible(true);
+	
+					if (chooser.getChosenBetreiber() != null) {
+						standortFeld.setText(chooser.getChosenBetreiber()
+								.toString());
+						BasisPanel.this.hauptModul.getObjekt()
+								.setAdresseByStandortid(chooser.getChosenBetreiber());
+					}
+					updateForm();
 				}
-	            
-
 	        });
 	    }
 	
