@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe" table="afs_stoffe" schema="oberflgw" optimistic-lock="version">
         <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffeId">

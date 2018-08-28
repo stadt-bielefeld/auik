@@ -1,22 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.elka.Aba" table="aba" schema="elka" lazy="false" optimistic-lock="version">
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.Aba" table="aba" schema="elka" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
-            <column name="objektid" not-null="true" unique="true" />
-        </many-to-one>
-        <many-to-one name="ansprAdrId" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select">
+        <property name="objektid" type="java.lang.Integer">
+            <column name="objektid" />
+        </property>
+        <property name="ansprAdrId" type="java.lang.Integer">
             <column name="anspr_adr_id" />
-        </many-to-one>
-        <many-to-one name="abaverfahren" class="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" fetch="select">
-            <column name="verfahren_nr" />
-        </many-to-one>
+        </property>
         <property name="aktualDat" type="java.util.Date">
             <column name="aktual_dat" length="13" />
         </property>
@@ -47,6 +44,9 @@
         <property name="sonstZulOpt" type="java.lang.Integer">
             <column name="sonst_zul_opt" />
         </property>
+        <property name="verfahrenNr" type="java.lang.Integer">
+            <column name="verfahren_nr" />
+        </property>
         <property name="wartungsvertragToc" type="java.lang.Boolean">
             <column name="wartungsvertrag_toc" />
         </property>
@@ -59,11 +59,23 @@
         <property name="deleted" type="java.lang.Boolean">
             <column name="_deleted" />
         </property>
+        <set name="ZAbaWasserrechts" table="z_aba_wasserrecht" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="anlage_nr" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.ZAbaWasserrecht" />
+        </set>
         <set name="referenzsForZAbaNr" table="referenz" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="z_aba_nr" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+        </set>
+        <set name="ZAbaVerfahrens" table="z_aba_verfahren" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="anlage_nr" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren" />
         </set>
         <set name="referenzsForQAbaNr" table="referenz" inverse="true" lazy="true" fetch="select">
             <key>

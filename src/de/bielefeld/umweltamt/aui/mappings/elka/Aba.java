@@ -29,6 +29,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.HashSet;
@@ -48,8 +49,7 @@ public class Aba  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Objekt objekt;
-    private Abaverfahren abaverfahren;
+    private Integer objektid;
     private Integer ansprAdrId;
     private Date aktualDat;
     private Date erstellDat;
@@ -61,11 +61,14 @@ public class Aba  implements java.io.Serializable {
     private Integer e32;
     private Integer n32;
     private Integer sonstZulOpt;
+    private Integer verfahrenNr;
     private Boolean wartungsvertragToc;
     private Boolean einzelabnahmeToc;
     private Boolean enabled;
     private Boolean deleted;
+    private Set<ZAbaWasserrecht> ZAbaWasserrechts = new HashSet<ZAbaWasserrecht>(0);
     private Set<Referenz> referenzsForZAbaNr = new HashSet<Referenz>(0);
+    private Set<ZAbaVerfahren> ZAbaVerfahrens = new HashSet<ZAbaVerfahren>(0);
     private Set<Referenz> referenzsForQAbaNr = new HashSet<Referenz>(0);
 
     /** Logging */
@@ -84,10 +87,9 @@ public class Aba  implements java.io.Serializable {
 
     /** Full constructor */
     public Aba(
-        Integer id, Objekt objekt, Abaverfahren abaverfahren, Integer ansprAdrId, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, Date inbetriebDat, Date stillgelegtDat, Boolean genehmpflichtigToc, Integer e32, Integer n32, Integer sonstZulOpt, Integer verfahrenNr, Boolean wartungsvertragToc, Boolean einzelabnahmeToc, Boolean enabled, Boolean deleted, Set<Referenz> referenzsForZAbaNr, Set<Referenz> referenzsForQAbaNr) {
+        Integer id, Integer objektid, Integer ansprAdrId, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, Date inbetriebDat, Date stillgelegtDat, Boolean genehmpflichtigToc, Integer e32, Integer n32, Integer sonstZulOpt, Integer verfahrenNr, Boolean wartungsvertragToc, Boolean einzelabnahmeToc, Boolean enabled, Boolean deleted, Set<ZAbaWasserrecht> ZAbaWasserrechts, Set<Referenz> referenzsForZAbaNr, Set<ZAbaVerfahren> ZAbaVerfahrens, Set<Referenz> referenzsForQAbaNr) {
         this.id = id;
-        this.objekt = objekt;
-        this.abaverfahren = abaverfahren;
+        this.objektid = objektid;
         this.ansprAdrId = ansprAdrId;
         this.aktualDat = aktualDat;
         this.erstellDat = erstellDat;
@@ -99,11 +101,14 @@ public class Aba  implements java.io.Serializable {
         this.e32 = e32;
         this.n32 = n32;
         this.sonstZulOpt = sonstZulOpt;
+        this.verfahrenNr = verfahrenNr;
         this.wartungsvertragToc = wartungsvertragToc;
         this.einzelabnahmeToc = einzelabnahmeToc;
         this.enabled = enabled;
         this.deleted = deleted;
+        this.ZAbaWasserrechts = ZAbaWasserrechts;
         this.referenzsForZAbaNr = referenzsForZAbaNr;
+        this.ZAbaVerfahrens = ZAbaVerfahrens;
         this.referenzsForQAbaNr = referenzsForQAbaNr;
     }
 
@@ -116,21 +121,13 @@ public class Aba  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Objekt getObjekt() {
-        return this.objekt;
+    public Integer getObjektid() {
+        return this.objektid;
     }
 
-    public void setObjekt(Objekt objekt) {
-        this.objekt = objekt;
-	}
-
-	public Abaverfahren getAbaverfahren() {
-		return abaverfahren;
-	}
-
-	public void setAbaverfahren(Abaverfahren abaverfahren) {
-		this.abaverfahren = abaverfahren;
-	}
+    public void setObjektid(Integer objektid) {
+        this.objektid = objektid;
+    }
 
     public Integer getAnsprAdrId() {
         return this.ansprAdrId;
@@ -220,6 +217,14 @@ public class Aba  implements java.io.Serializable {
         this.sonstZulOpt = sonstZulOpt;
     }
 
+    public Integer getVerfahrenNr() {
+        return this.verfahrenNr;
+    }
+
+    public void setVerfahrenNr(Integer verfahrenNr) {
+        this.verfahrenNr = verfahrenNr;
+    }
+
     public Boolean getWartungsvertragToc() {
         return this.wartungsvertragToc;
     }
@@ -252,12 +257,28 @@ public class Aba  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
+    public Set<ZAbaWasserrecht> getZAbaWasserrechts() {
+        return this.ZAbaWasserrechts;
+    }
+
+    public void setZAbaWasserrechts(Set<ZAbaWasserrecht> ZAbaWasserrechts) {
+        this.ZAbaWasserrechts = ZAbaWasserrechts;
+    }
+
     public Set<Referenz> getReferenzsForZAbaNr() {
         return this.referenzsForZAbaNr;
     }
 
     public void setReferenzsForZAbaNr(Set<Referenz> referenzsForZAbaNr) {
         this.referenzsForZAbaNr = referenzsForZAbaNr;
+    }
+
+    public Set<ZAbaVerfahren> getZAbaVerfahrens() {
+        return this.ZAbaVerfahrens;
+    }
+
+    public void setZAbaVerfahrens(Set<ZAbaVerfahren> ZAbaVerfahrens) {
+        this.ZAbaVerfahrens = ZAbaVerfahrens;
     }
 
     public Set<Referenz> getReferenzsForQAbaNr() {
@@ -289,8 +310,7 @@ public class Aba  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("verfahren").append("='").append(getAbaverfahren()).append("' ");	
+        buffer.append("objektid").append("='").append(getObjektid()).append("' ");			
         buffer.append("ansprAdrId").append("='").append(getAnsprAdrId()).append("' ");			
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
@@ -302,11 +322,14 @@ public class Aba  implements java.io.Serializable {
         buffer.append("e32").append("='").append(getE32()).append("' ");			
         buffer.append("n32").append("='").append(getN32()).append("' ");			
         buffer.append("sonstZulOpt").append("='").append(getSonstZulOpt()).append("' ");			
+        buffer.append("verfahrenNr").append("='").append(getVerfahrenNr()).append("' ");			
         buffer.append("wartungsvertragToc").append("='").append(getWartungsvertragToc()).append("' ");			
         buffer.append("einzelabnahmeToc").append("='").append(getEinzelabnahmeToc()).append("' ");			
         buffer.append("enabled").append("='").append(getEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
+        buffer.append("ZAbaWasserrechts").append("='").append(getZAbaWasserrechts()).append("' ");			
         buffer.append("referenzsForZAbaNr").append("='").append(getReferenzsForZAbaNr()).append("' ");			
+        buffer.append("ZAbaVerfahrens").append("='").append(getZAbaVerfahrens()).append("' ");			
         buffer.append("referenzsForQAbaNr").append("='").append(getReferenzsForQAbaNr()).append("' ");			
         buffer.append("]");
 
@@ -374,8 +397,7 @@ public class Aba  implements java.io.Serializable {
      */
     private void copy(Aba copy) {
         this.id = copy.getId();            
-        this.objekt = copy.getObjekt();              
-        this.abaverfahren = copy.getAbaverfahren(); 
+        this.objektid = copy.getObjektid();            
         this.ansprAdrId = copy.getAnsprAdrId();            
         this.aktualDat = copy.getAktualDat();            
         this.erstellDat = copy.getErstellDat();            
@@ -387,11 +409,14 @@ public class Aba  implements java.io.Serializable {
         this.e32 = copy.getE32();            
         this.n32 = copy.getN32();            
         this.sonstZulOpt = copy.getSonstZulOpt();            
+        this.verfahrenNr = copy.getVerfahrenNr();            
         this.wartungsvertragToc = copy.getWartungsvertragToc();            
         this.einzelabnahmeToc = copy.getEinzelabnahmeToc();            
         this.enabled = copy.getEnabled();            
         this.deleted = copy.getDeleted();            
+        this.ZAbaWasserrechts = copy.getZAbaWasserrechts();            
         this.referenzsForZAbaNr = copy.getReferenzsForZAbaNr();            
+        this.ZAbaVerfahrens = copy.getZAbaVerfahrens();            
         this.referenzsForQAbaNr = copy.getReferenzsForQAbaNr();            
     }    
 
@@ -438,11 +463,9 @@ public class Aba  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-    
     public static Aba findByObjektId(java.lang.Integer id) {
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Aba> list = objekt.getAbas();
         return list.iterator().next();
     }
-
 }

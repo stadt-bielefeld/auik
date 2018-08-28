@@ -210,5 +210,23 @@ public class DatabaseSerialVersionUID {
 	public static final long forSonderbauwerk = 76L;
 	public static final long forVersickerungsanlage = 77L;
 	public static final long forViewAtlAnalysepositionAllId = 78L;
-	public static final long forViewAtlAnalysepositionAlt = 79L;
+    public static final long forViewAtlAnalysepositionAlt = 79L;
+    public static final long forZElsWasserrecht = 80L;
+    public static final long forZElsWasserrechtId = 81L;
+    public static final long forZAbaVerfahrenId = 82L;
+    public static final long forZAbaWasserrechtId = 83L;
+    public static final long forMsstBerichtspflichtId = 84L;
+    public static final long forMsstBerichtspflicht = 85L;
+    public static final long forZBetriebMassnahme = 86L;
+    public static final long forZEntwaessgrAbwasbehverf = 87L;
+    public static final long forZBetriebMassnahmeId = 88L;
+    public static final long forZEntwaessgrAbwasbehverfId = 89L;
+    public static final long forZRbfSchutzgueter = 90L;
+    public static final long forZRbfSchutzgueterId = 91L;
+    public static final long forZSbRegeln = 92L;
+    public static final long forZSbRegelnId = 93L;
+    public static final long forZSbVerfahren = 94L;
+    public static final long forZSbVerfahrenId = 95L;
+    public static final long forZAbaWasserrecht = 96L;
+    public static final long forZAbaVerfahren = 97L;
 }	

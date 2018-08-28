@@ -22,11 +22,15 @@ package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
@@ -210,5 +214,15 @@ public class EAnfallstelle implements java.io.Serializable {
      */
     public static List<EAnfallstelle> getAll() {
         return DatabaseQuery.getAll(new EAnfallstelle());
-    }
+	}
+	
+	public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
+		Anfallstelle afs = Anfallstelle.findById(getNr());
+		return afs != null ? afs.getAfsNiederschlagswassers() : null;
+	}
+
+	public Set<AfsStoffe> getAfsStoffes() {
+		Anfallstelle afs = Anfallstelle.findById(getNr());
+		return afs != null ? afs.getAfsStoffes() : null;
+	}
 }

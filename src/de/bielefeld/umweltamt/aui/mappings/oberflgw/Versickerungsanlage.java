@@ -45,7 +45,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         DatabaseSerialVersionUID.forVersickerungsanlage;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer nr;
+    private Long nr;
     private Einleitungsstelle einleitungsstelle;
     private BigDecimal flurabstand;
     private BigDecimal gelaendeVerAnlage;
@@ -75,7 +75,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Versickerungsanlage(
-    	Integer nr, Einleitungsstelle einleitungsstelle, boolean landesfoerderungTog, boolean notueberlaufTog, Date erstellDat, Date aktualDat, String herkunft) {
+        Long nr, Einleitungsstelle einleitungsstelle, boolean landesfoerderungTog, boolean notueberlaufTog, Date erstellDat, Date aktualDat, String herkunft) {
         this.nr = nr;
         this.einleitungsstelle = einleitungsstelle;
         this.landesfoerderungTog = landesfoerderungTog;
@@ -87,7 +87,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
 
     /** Full constructor */
     public Versickerungsanlage(
-    	Integer nr, Einleitungsstelle einleitungsstelle, BigDecimal flurabstand, BigDecimal gelaendeVerAnlage, BigDecimal abstGrGrenze, BigDecimal abstUnterkGebaeude, BigDecimal abstVerAnlage, boolean landesfoerderungTog, boolean notueberlaufTog, String notueberlaufZiel, Date erstellDat, BigDecimal durchlaessigkeit, String untergrundart, Integer verAnlageOpt, String sonstigesVers, String bauartzulId, Date aktualDat, String herkunft, String externalNr) {
+        Long nr, Einleitungsstelle einleitungsstelle, BigDecimal flurabstand, BigDecimal gelaendeVerAnlage, BigDecimal abstGrGrenze, BigDecimal abstUnterkGebaeude, BigDecimal abstVerAnlage, boolean landesfoerderungTog, boolean notueberlaufTog, String notueberlaufZiel, Date erstellDat, BigDecimal durchlaessigkeit, String untergrundart, Integer verAnlageOpt, String sonstigesVers, String bauartzulId, Date aktualDat, String herkunft, String externalNr) {
         this.nr = nr;
         this.einleitungsstelle = einleitungsstelle;
         this.flurabstand = flurabstand;
@@ -110,11 +110,11 @@ public class Versickerungsanlage  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public Integer getNr() {
+    public Long getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(long nr) {
         this.nr = nr;
     }
 

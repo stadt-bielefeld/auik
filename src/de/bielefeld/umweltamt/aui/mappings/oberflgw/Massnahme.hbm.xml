@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme" table="massnahme" schema="oberflgw" optimistic-lock="version">
         <id name="nr" type="long">
@@ -35,5 +35,11 @@
         <property name="externalNr" type="java.lang.String">
             <column name="external_nr" length="50" />
         </property>
+        <set name="ZBetriebMassnahmes" table="z_betrieb_massnahme" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="massnahme_nr" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme" />
+        </set>
     </class>
 </hibernate-mapping>

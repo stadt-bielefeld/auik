@@ -528,6 +528,7 @@
         <executions>
 		      <!--run hibernate tools via antrun plugin-->
       	  <!-- TODO: run with mvn antrun:run@db2mapping -->
+                  <!--
 	        <execution>
 			      <id>db2mapping</id>
 		        <phase>generate-sources</phase>
@@ -566,7 +567,7 @@
 		        <goals>
 		          <goal>run</goal>
 		        </goals>
-		      </execution>
+		      </execution>-->
 
 		      <execution>
             <id>copy-jars</id>

@@ -19,7 +19,9 @@
   <Loggers>
     <Logger name="org.apache.log4j.xml" level="error"/>
     <Logger name="SQLLogger" level="error"/>
-    <Logger name="org.hibernate" level="debug"/>
+    <Logger name="org.hibernate" level="warning">
+      <AppenderRef ref="Console"/>
+    </Logger>
     <Root level="info">
       <AppenderRef ref="Console"/>
 <!--       <AppenderRef ref="Logfile"/>  -->

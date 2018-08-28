@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28.08.2018 12:49:47 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren" table="z_aba_verfahren" schema="elka" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahrenId">
+            <key-property name="anlageNr" type="long">
+                <column name="anlage_nr" />
+            </key-property>
+            <key-property name="abwasbehverfNr" type="long">
+                <column name="abwasbehverf_nr" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="aba" class="de.bielefeld.umweltamt.aui.mappings.elka.Aba" update="false" insert="false" fetch="select">
+            <column name="anlage_nr" not-null="true" />
+        </many-to-one>
+        <many-to-one name="abaverfahren" class="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" update="false" insert="false" fetch="select">
+            <column name="abwasbehverf_nr" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

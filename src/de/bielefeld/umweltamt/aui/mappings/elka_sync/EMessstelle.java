@@ -29,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
@@ -198,5 +200,12 @@ public class EMessstelle implements java.io.Serializable {
 
 	public void setProbenahmes(Set<EProbenahme> probenahme) {
 		this.probenahmes = probenahme;
+		
 	}
+
+	public Set<MsstBerichtspflicht> getZuordnungMsstBereichspflichts() {
+		Messstelle mst = Messstelle.findById(getNr());
+		return mst != null ? mst.getMsstBerichtspflichts() : null;
+	}
+
 }

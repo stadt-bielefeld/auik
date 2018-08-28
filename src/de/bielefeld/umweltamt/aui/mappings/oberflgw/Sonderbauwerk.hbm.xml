@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk" table="sonderbauwerk" schema="oberflgw" optimistic-lock="version">
         <id name="nr" type="long">
@@ -323,11 +323,23 @@
         <property name="externalNr" type="java.lang.String">
             <column name="external_nr" length="50" />
         </property>
+        <set name="ZSbVerfahrens" table="z_sb_verfahren" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sb_nr" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbVerfahren" />
+        </set>
         <set name="sbEntlastungs" table="sb_entlastung" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="sb_nr" not-null="true" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung" />
+        </set>
+        <set name="ZSbRegelns" table="z_sb_regeln" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sb_nr" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbRegeln" />
         </set>
         <set name="referenzsForQSbNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="select">
             <key>
@@ -340,6 +352,12 @@
                 <column name="z_sb_nr" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+        </set>
+        <set name="ZRbfSchutzgueters" table="z_rbf_schutzgueter" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sb_nr" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter" />
         </set>
     </class>
 </hibernate-mapping>

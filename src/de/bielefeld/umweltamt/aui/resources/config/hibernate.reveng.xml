@@ -28,6 +28,9 @@
 	<table-filter match-schema="awsv" match-name=".*"
 		package="de.bielefeld.umweltamt.aui.mappings.awsv" />
 		
+    <table-filter match-schema="elka" match-name="e_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.elka_sync" />
+
 	<table-filter match-schema="elka" match-name=".*"
 		package="de.bielefeld.umweltamt.aui.mappings.elka" />
 
@@ -161,7 +164,7 @@
             <key-column name="id" />
 		</primary-key>
 	</table>
-  <!--
+
 	<table schema="elka" name="e_abwasserbehandlungsanlage">
 		<primary-key>
             <key-column name="nr" />
@@ -211,8 +214,8 @@
 		<primary-key>
             <key-column name="nr" />
 		</primary-key>
-	</table>-->
-	
+	</table>
+
     <!-- Exclude Geometry columns ========================================== -->
     <table schema="auik" name="atl_sielhaut">
         <column name="the_geom" exclude="true" />

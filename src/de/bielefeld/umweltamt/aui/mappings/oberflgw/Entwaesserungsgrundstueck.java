@@ -49,7 +49,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         DatabaseSerialVersionUID.forEntwaesserungsgrundstueck;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer nr;
+    private Long nr;
     private Objekt objekt;
     private Wasserrecht wasserrecht;
     private boolean erlFreiElTog;
@@ -68,6 +68,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private Date aktualDat;
     private long adrNr;
     private String externalNr;
+    private Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs = new HashSet<ZEntwaessgrAbwasbehverf>(0);
     private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
 
     /** Logging */
@@ -80,7 +81,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Entwaesserungsgrundstueck(
-    	Integer nr, Objekt objekt, boolean erlFreiElTog, Date erstellDat, Integer einlBereichOpt, Date aktualDat, long adrNr) {
+        long nr, Objekt objekt, boolean erlFreiElTog, Date erstellDat, Integer einlBereichOpt, Date aktualDat, long adrNr) {
         this.nr = nr;
         this.objekt = objekt;
         this.erlFreiElTog = erlFreiElTog;
@@ -92,7 +93,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public Entwaesserungsgrundstueck(
-    	Integer nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, long adrNr, String externalNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, long adrNr, String externalNr, Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
         this.nr = nr;
         this.objekt = objekt;
         this.wasserrecht = wasserrecht;
@@ -112,15 +113,16 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.aktualDat = aktualDat;
         this.adrNr = adrNr;
         this.externalNr = externalNr;
+        this.ZEntwaessgrAbwasbehverfs = ZEntwaessgrAbwasbehverfs;
         this.afsNiederschlagswassers = afsNiederschlagswassers;
     }
 
     /* Setter and getter methods */
-    public Integer getNr() {
+    public Long getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(long nr) {
         this.nr = nr;
     }
 
@@ -268,6 +270,14 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.externalNr = externalNr;
     }
 
+    public Set<ZEntwaessgrAbwasbehverf> getZEntwaessgrAbwasbehverfs() {
+        return this.ZEntwaessgrAbwasbehverfs;
+    }
+
+    public void setZEntwaessgrAbwasbehverfs(Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs) {
+        this.ZEntwaessgrAbwasbehverfs = ZEntwaessgrAbwasbehverfs;
+    }
+
     public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
         return this.afsNiederschlagswassers;
     }
@@ -315,6 +325,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
         buffer.append("adrNr").append("='").append(getAdrNr()).append("' ");			
         buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
+        buffer.append("ZEntwaessgrAbwasbehverfs").append("='").append(getZEntwaessgrAbwasbehverfs()).append("' ");			
         buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");			
         buffer.append("]");
 
@@ -400,6 +411,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.aktualDat = copy.getAktualDat();            
         this.adrNr = copy.getAdrNr();            
         this.externalNr = copy.getExternalNr();            
+        this.ZEntwaessgrAbwasbehverfs = copy.getZEntwaessgrAbwasbehverfs();            
         this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();            
     }    
 
@@ -446,11 +458,9 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-
     public static Entwaesserungsgrundstueck findByObjektId(java.lang.Integer id) {
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Entwaesserungsgrundstueck> list = objekt.getEntwaesserungsgrundstuecks();
         return list.iterator().next();
     }
-
 }

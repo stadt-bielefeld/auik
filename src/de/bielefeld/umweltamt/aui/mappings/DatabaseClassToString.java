@@ -83,18 +83,17 @@ import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaEinheit;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaStoff;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka.ZElsWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EBetrieb;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueck;
-import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueckId;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EMessstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahme;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahmeUeberwachungsergeb;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
-import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerkId;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
@@ -817,10 +816,6 @@ public class DatabaseClassToString {
 		return null;
 	}
 
-	public static String toStringForClass(EEntwaesserungsgrundstueckId eEntwaesserungsgrundstueckId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public static String toStringForClass(EMessstelle eMessstelle) {
 		// TODO Auto-generated method stub
@@ -838,11 +833,6 @@ public class DatabaseClassToString {
 	}
 
 	public static String toStringForClass(ESonderbauwerk eSonderbauwerk) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ESonderbauwerkId eSonderbauwerkId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -938,6 +928,11 @@ public class DatabaseClassToString {
 	}
 
 	public static String toStringForClass(ViewAtlAnalysepositionAltId viewAtlAnalysepositionAltId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    public static String toStringForClass(ZElsWasserrecht zew) {
 		// TODO Auto-generated method stub
 		return null;
 	}
