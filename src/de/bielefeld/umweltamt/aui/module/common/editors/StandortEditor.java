@@ -64,7 +64,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
-import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 
 /**
  * Ein Dialog zum Bearbeiten eines Standorts.
@@ -110,7 +110,7 @@ public class StandortEditor extends AbstractBaseEditor
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Standorts.
 	 */
-	public StandortEditor(MapAdresseLage bsta, HauptFrame owner)
+	public StandortEditor(Standort bsta, HauptFrame owner)
 	{
 		super("Standort (" + bsta.getId() + ")", bsta, owner);
 	}
@@ -394,50 +394,50 @@ public class StandortEditor extends AbstractBaseEditor
 				if (gemarkungen != null)
 				{
 					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
-					gemarkungBox.setSelectedItem(getStandort().getGemarkung());
+					gemarkungBox.setSelectedItem(getStandort().getLage().getGemarkung());
 				}
 				if (standortggs != null)
 				{
 					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
-					standortGgBox.setSelectedItem(getStandort().getStandortgghwsg());
+					standortGgBox.setSelectedItem(getStandort().getLage().getStandortgghwsg());
 				}
 
 				if (entwgebiete != null)
 				{
 					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
-					entwGebBox.setSelectedItem(getStandort().getEntgebid());
+					entwGebBox.setSelectedItem(getStandort().getLage().getEntgebid());
 				}
 
 				if (wEinzugsgebiete != null)
 				{
 					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
-					wEinzugsGebBox.setSelectedItem(getStandort().getWassereinzugsgebiete());
+					wEinzugsGebBox.setSelectedItem(getStandort().getLage().getWassereinzugsgebiet());
 				}
 
-				if (!StringUtils.isNullOrEmpty(getStandort().getPlz()))
+				if (!StringUtils.isNullOrEmpty(getStandort().getAdresse().getPlz()))
 				{
-					orteBox.setSelectedItem(new Orte(getStandort().getOrt()));
+					orteBox.setSelectedItem(new Orte(getStandort().getAdresse().getOrt()));
 				}
 
-				if (!StringUtils.isNullOrEmpty(getStandort().getStrasse()))
+				if (!StringUtils.isNullOrEmpty(getStandort().getAdresse().getStrasse()))
 				{
 					strassenBox.setSelectedItem(new Strassen());
 				}
 
-				hausnrEditFeld.setValue(getStandort().getHausnr());
-				hausnrZusFeld.setText(getStandort().getHausnrzus());
-                if (getStandort().getPlz() != null) {
-                    plzFeld.setText(getStandort().getPlz());
+				hausnrEditFeld.setValue(getStandort().getAdresse().getHausnr());
+				hausnrZusFeld.setText(getStandort().getAdresse().getHausnrzus());
+                if (getStandort().getAdresse().getPlz() != null) {
+                    plzFeld.setText(getStandort().getAdresse().getPlz());
                 }
-				flurFeld.setText(getStandort().getFlur());
-				flurStkFeld.setText(getStandort().getFlurstueck());
-				e32Feld.setValue(getStandort().getE32());
-				n32Feld.setValue(getStandort().getN32());
-				Date datum = getStandort().getRevidatum();
+				flurFeld.setText(getStandort().getLage().getFlur());
+				flurStkFeld.setText(getStandort().getLage().getFlurstueck());
+				e32Feld.setValue(getStandort().getLage().getE32());
+				n32Feld.setValue(getStandort().getLage().getN32());
+				Date datum = getStandort().getAdresse().getRevidatum();
 				datumFeld.setText(AuikUtils.getStringFromDate(datum));
-				handzeichenAltFeld.setText(getStandort().getRevihandz());
-				sachbeFeld.setText(getStandort().getSachbe33rav());
-				wassermengeFeld.setValue(getStandort().getWassermenge());
+				handzeichenAltFeld.setText(getStandort().getAdresse().getRevihandz());
+				sachbeFeld.setText(getStandort().getLage().getSachbe33rav());
+				wassermengeFeld.setValue(getStandort().getLage().getWassermenge());
 
 				frame.clearStatus();
 			}
@@ -472,30 +472,30 @@ public class StandortEditor extends AbstractBaseEditor
 	{
 		// Hausnummer:
 		Integer hausnr = ((IntegerField) hausnrEditFeld).getIntValue();
-		getStandort().setHausnr(hausnr);
+		getStandort().getAdresse().setHausnr(hausnr);
 
 		// Hausnummer-Zusatz:
 		String hausnrZus = hausnrZusFeld.getText();
 		if ("".equals(hausnrZus))
 		{
-			getStandort().setHausnrzus(null);
+			getStandort().getAdresse().setHausnrzus(null);
 		}
 		else
 		{
-			getStandort().setHausnrzus(hausnrZus);
+			getStandort().getAdresse().setHausnrzus(hausnrZus);
 		}
 
 		// Straße:
 		Strassen strasse = ((Strassen) strassenBox.getSelectedItem());
 		if (strasse == null)
 		{
-			getStandort().setStrasse(null);
+			getStandort().getAdresse().setStrasse(null);
 //			getStandort().setPlz(null);
 //			getStandort().setOrt(null);
 		}
 		else
 		{
-			getStandort().setStrasse(strasse.getStrasse());
+			getStandort().getAdresse().setStrasse(strasse.getStrasse());
 //			getStandort().setPlz(strasse.getPlz());
 //			getStandort().setOrt(strasse.getOrt());
 		}
@@ -503,26 +503,26 @@ public class StandortEditor extends AbstractBaseEditor
         // PLZ:
         String plz = plzFeld.getText().trim();
         if ("".equals(plz)) {
-            getStandort().setPlz(null);
+            getStandort().getAdresse().setPlz(null);
         } else {
-            getStandort().setPlz(plz);
+            getStandort().getAdresse().setPlz(plz);
         }
 		
         // Ort:
         String ort = orteBox.getSelectedItem().toString();
         if ("".equals(ort)) {
-            getStandort().setOrt(null);
+            getStandort().getAdresse().setOrt(null);
         } else {
-            getStandort().setOrt(ort);
+            getStandort().getAdresse().setOrt(ort);
         }
 
 		// Gemarkung
 		Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
-		getStandort().setGemarkung(bgem);
+		getStandort().getLage().setGemarkung(bgem);
 
 		// Standortgg
 		Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
-		getStandort().setStandortgghwsg(stgg);
+		getStandort().getLage().setStandortgghwsg(stgg);
 
 		// Entwässerungsgebiet
 		String entgb = (String) entwGebBox.getSelectedItem();
@@ -534,16 +534,16 @@ public class StandortEditor extends AbstractBaseEditor
 		}
 		if ("".equals(entgb))
 		{
-			getStandort().setEntgebid(null);
+			getStandort().getLage().setEntgebid(null);
 		}
 		else
 		{
-			getStandort().setEntgebid(entgb);
+			getStandort().getLage().setEntgebid(entgb);
 		}
 
 		// VAWS-Einzugsgebiet
 		Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
-		getStandort().setWassereinzugsgebiet(wezg);
+		getStandort().getLage().setWassereinzugsgebiet(wezg);
 
 		// Flur
 		String flur = flurFeld.getText();
@@ -552,11 +552,11 @@ public class StandortEditor extends AbstractBaseEditor
 			flur = flur.trim();
 			if (flur.equals(""))
 			{
-				getStandort().setFlur(null);
+				getStandort().getLage().setFlur(null);
 			}
 			else
 			{
-				getStandort().setFlur(flur);
+				getStandort().getLage().setFlur(flur);
 			}
 		}
 
@@ -566,27 +566,27 @@ public class StandortEditor extends AbstractBaseEditor
 		{
 			if (flurstk.equals(""))
 			{
-				getStandort().setFlurstueck(null);
+				getStandort().getLage().setFlurstueck(null);
 			}
 			else
 			{
-				getStandort().setFlurstueck(flurstk);
+				getStandort().getLage().setFlurstueck(flurstk);
 			}
 		}
 
 		// E32
 		Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
-		getStandort().setE32(e32Wert);
+		getStandort().getLage().setE32(e32Wert);
 
 		// N32
 		Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
-		getStandort().setN32(n32Wert);
+		getStandort().getLage().setN32(n32Wert);
 
 		// Handzeichen
 		String handzeichen = handzeichenNeuFeld.getText().trim();
-		getStandort().setRevihandz(handzeichen);
+		getStandort().getLage().setRevihandz(handzeichen);
 
-		getStandort().setRevidatum(new Date());
+		getStandort().getLage().setRevidatum(new Date());
 
 		// Indirekteinleiter
 		String sach = sachbeFeld.getText();
@@ -594,19 +594,19 @@ public class StandortEditor extends AbstractBaseEditor
 		{
 			if (sach.equals(""))
 			{
-				getStandort().setSachbe33rav(null);
+				getStandort().getLage().setSachbe33rav(null);
 			}
 			else
 			{
-				getStandort().setSachbe33rav(sach);
+				getStandort().getLage().setSachbe33rav(sach);
 			}
 		}
 
 		// Wassermenge:
 		Integer wassermng = ((IntegerField) wassermengeFeld).getIntValue();
-		getStandort().setWassermenge(wassermng);
+		getStandort().getLage().setWassermenge(wassermng);
 
-		MapAdresseLage bsta = MapAdresseLage.merge(getStandort());
+		Standort bsta = Standort.merge(getStandort());
 		if (bsta != null)
 		{
 			setEditedObject(bsta);
@@ -619,9 +619,9 @@ public class StandortEditor extends AbstractBaseEditor
 		}
 	}
 
-	public MapAdresseLage getStandort()
+	public Standort getStandort()
 	{
-		return (MapAdresseLage) getEditedObject();
+		return (Standort) getEditedObject();
 	}
 
 	private void readClipboard()

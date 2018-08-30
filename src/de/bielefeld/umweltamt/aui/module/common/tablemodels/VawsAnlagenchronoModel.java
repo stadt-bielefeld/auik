@@ -66,10 +66,10 @@ public class VawsAnlagenchronoModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = ac.getFachdaten().getObjekt().getAdresseByBetreiberid().toString();
+            tmp = ac.getFachdaten().getObjekt().getBetreiberid().toString();
             break;
         case 1:
-            tmp = DatabaseQuery.getStandortString(ac.getFachdaten().getObjekt().getAdresseByStandortid());
+            tmp = DatabaseQuery.getStandortString(ac.getFachdaten().getObjekt().getStandortid());
             break;
         case 2:
             tmp = ac.getWv();

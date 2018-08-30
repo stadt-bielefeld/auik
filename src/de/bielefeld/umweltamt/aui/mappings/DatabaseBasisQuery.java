@@ -44,7 +44,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
-import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
@@ -131,13 +131,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * Get a formatted string for a BasisStandortAdresse
 	 * 
 	 * @param standort
-	 *            Adresse
+	 *            Standort
 	 * @return String
 	 */
-	public static String getStandortString(Adresse standort) {
-		String strasse = standort.getStrasse();
-		Integer hausnr = standort.getHausnr();
-		String zusatz = standort.getHausnrzus();
+	public static String getStandortString(Standort standort) {
+		String strasse = standort.getAdresse().getStrasse();
+		Integer hausnr = standort.getAdresse().getHausnr();
+		String zusatz = standort.getAdresse().getHausnrzus();
 		return (strasse != null ? strasse + " " : "") + (hausnr != null ? hausnr.toString() : "")
 				+ (zusatz != null ? zusatz : "");
 	}
@@ -226,9 +226,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return Eine Liste von Objekten an diesem Standort.
 	 */
 
-	public static List<Objekt> getObjekteByStandort(Adresse betreiber, String abteilung) {
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Objekt.class).createAlias("standort", "lage")
-				.createAlias("objektarten", "art").add(Restrictions.eq("basisStandort", betreiber))
+	public static List<Objekt> getObjekteByStandort(Standort standort, String abteilung) {
+		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Objekt.class).createAlias("lage", "lage")
+				.createAlias("objektarten", "art").add(Restrictions.eq("standort", standort))
 				.addOrder(Order.asc("inaktiv")).addOrder(Order.asc("lage.strasse")).addOrder(Order.asc("lage.hausnr"))
 				.addOrder(Order.asc("art.objektart"));
 		if (abteilung != null) {
@@ -241,9 +241,11 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			Boolean matchArtId) {
 		log.debug("Fetching objects at " + adresse);
 		// Find objects witch matching standortid
-		String query = "SELECT o.* from basis.objekt o " + " WHERE (o.standortid = " + adresse.getId()
-				+ " OR o.betreiberid = " + adresse.getId() + " ) AND o._deleted = false "
-				+ " ORDER BY o.inaktiv, o.objektartid";
+		String query = "SELECT o.* from basis.objekt o, basis.standort s " 
+				+ " WHERE o.standortid = s.id "
+				+ " AND (s.adresseid = " + adresse.getId()
+				+ " OR o.betreiberid = " + adresse.getId() + " ) "
+				+ " AND o._deleted = false ORDER BY o.inaktiv, o.objektartid";
 
 		String filter = " ";
 		if (abteilung != null) {
@@ -264,18 +266,19 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		return q.list();
 	}
 
-	public static List<Objekt> getObjekteByStandort(Adresse standort, String abteilung, Integer artid,
+	public static List<Objekt> getObjekteByStandort(Standort standort, String abteilung, Integer artid,
 			Boolean matchArtId) {
+		String strasse = standort.getAdresse().getStrasse();
+		Integer hausnr = standort.getAdresse().getHausnr();
+		String hausnrzus = standort.getAdresse().getHausnrzus();
 		log.debug("Fetching objects at " + standort);
-		// Find objects witch matching standortid
-		String query1 = "SELECT o.* from basis.objekt o, basis.adresse a, basis.objektarten art " + " WHERE a.id = "
-				+ standort.getId() + " AND o.standortid = a.id";
-		// Find objects with standortid of basis_adresse objects with matching fields
-		String query2 = " UNION "
-				+ "SELECT o.* from basis.objekt o, basis.adresse a, basis.adresse a2, basis.objektarten art "
-				+ " WHERE a.id = " + standort.getId()
-				+ " AND a2.strasse = a.strasse AND a2.hausnr = a.hausnr  AND o.standortid = a2.id" + " AND CASE WHEN "
-				+ " (a.hausnrzus IS NOT NULL) THEN (a2.hausnrzus = a.hausnrzus) ELSE (a2.hausnrzus IS NULL) END";
+		// Find objects with standortid of adresse with matching fields
+		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.adresse a, basis.objektarten art "
+				+ " WHERE o.standortid = s.id AND s.adresseid = a.id AND o.objektartid = art.id"
+				+ " AND a.strasse = '" + strasse + "'"
+				+ " AND a.hausnr = " + hausnr
+				+ " AND CASE WHEN (" + hausnrzus + " IS NOT NULL) THEN (a.hausnrzus = '" + hausnrzus + "') ELSE (a.hausnrzus IS NULL) END"
+				+ " AND o._deleted = false ORDER BY o.inaktiv, o.objektartid";
 
 		String filter = " ";
 		if (abteilung != null) {
@@ -289,10 +292,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 			}
 		}
-		query1 += filter;
-		query2 += filter + ";";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query1 + query2);
-		// log.debug(query1 + query2);
+		query += filter + ";";
+		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("o", Objekt.class);
 		return q.list();
 	}
@@ -379,7 +380,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		Boolean result = true;
 		List<Objekt> list = new DatabaseAccess().executeCriteriaToList(
 				DetachedCriteria.forClass(Objekt.class).add(Restrictions.eq("adresse", basisObjekt.getAdresses()))
-						.add(Restrictions.eq("lage", basisObjekt.getLage())),
+						.add(Restrictions.eq("lage", basisObjekt.getStandortid().getLage())),
 				new Objekt());
 		for (Objekt objekt : list) {
 			objekt.setPrioritaet(prioritaet);
@@ -518,7 +519,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		return new DatabaseAccess().executeCriteriaToList(
 				DetachedCriteria.forClass(Objektchrono.class).createAlias("objekt", "objekt")
 						.add(Restrictions.eq("objekt.adresse", objekt.getAdresses()))
-						.add(Restrictions.eq("objekt.lage", objekt.getLage())).addOrder(Order.asc("datum")),
+						.add(Restrictions.eq("objekt.lage", objekt.getStandortid().getLage())).addOrder(Order.asc("datum")),
 				new Objektchrono());
 	}
 
@@ -629,8 +630,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
 
-		String query = "SELECT * FROM " + " (SELECT DISTINCT ON (a.strasse, a.hausnr, a.hausnrzus) a.*, m.* "
-				+ "FROM basis.adresse a JOIN basis.map_adresse_lage m ON m.adresseid = a.id";
+		String query = "SELECT * FROM " + " (SELECT DISTINCT ON (a.strasse, a.hausnr, a.hausnrzus) m.*, a.* "
+				+ "FROM basis.standort m JOIN basis.adresse a ON a.id = m.adresseid";
 		if (bStrasse || bHausnr || bOrt) {
 			query += " WHERE ";
 			if (bStrasse) {
@@ -653,7 +654,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";
 		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("a", Adresse.class);
-		q.addEntity("m", MapAdresseLage.class);
+		q.addEntity("m", Standort.class);
 		return q.list();
 	}
 

@@ -432,7 +432,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Anh56Fachdaten.class)
                 .createAlias("objekt", "objekt")
-                .createAlias("objekt.adresseByStandortid", "standort")
+                .createAlias("objekt.standortid", "standort")
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("standort.strasse"))
                 .addOrder(Order.asc("standort.hausnr"));

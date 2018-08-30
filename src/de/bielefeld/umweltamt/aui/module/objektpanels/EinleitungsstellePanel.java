@@ -503,7 +503,7 @@ public class EinleitungsstellePanel extends JPanel {
     	success = this.einleitungsstelle.merge();
     	if (success) {
     		log.debug("Einleitungsstelle"
-    				+ this.einleitungsstelle.getObjekt().getAdresseByBetreiberid()
+    				+ this.einleitungsstelle.getObjekt().getBetreiberid()
     				.getBetrname() + " gespeichert.");
     	} else {
     		log.debug("Einleitungsstelle" + this.einleitungsstelle

@@ -255,7 +255,7 @@ public class AnfallstellePanel extends JPanel {
         
         if(success) {
         	log.debug("Zahnarzt "
-                  + this.anfallstelle.getObjekt().getAdresseByBetreiberid()
+                  + this.anfallstelle.getObjekt().getBetreiberid()
                       .getBetrname() + " gespeichert.");     	
         } else {
         	log.debug("Anfallstelle " + this.anfallstelle

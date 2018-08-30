@@ -57,7 +57,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Bezeichnung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Gemarkung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Lage.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/MapAdresseLage.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Standort.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Objekt.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Objektarten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Objektchrono.hbm.xml" />

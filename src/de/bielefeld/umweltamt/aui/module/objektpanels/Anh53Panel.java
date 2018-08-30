@@ -247,7 +247,7 @@ public class Anh53Panel extends JPanel {
         success = this.fachdaten.merge();
         if (success) {
             log.debug("Objekt "
-                + this.fachdaten.getObjekt().getAdresseByBetreiberid()
+                + this.fachdaten.getObjekt().getBetreiberid()
                     .getBetrname() + " gespeichert.");
         } else {
             log.debug("Objekt " + this.fachdaten

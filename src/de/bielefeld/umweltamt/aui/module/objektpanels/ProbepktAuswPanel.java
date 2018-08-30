@@ -729,7 +729,7 @@ public class ProbepktAuswPanel extends JPanel {
 
                     AuswertungsDialog dialog = new AuswertungsDialog(
                         ProbepktAuswPanel.this.pkt.getObjekt()
-                            .getAdresseByBetreiberid().getBetrname(),
+                            .getBetreiberid().getBetrname(),
                         ProbepktAuswPanel.this.dataSet1, null,
                         ProbepktAuswPanel.this.frame);
 
@@ -765,7 +765,7 @@ public class ProbepktAuswPanel extends JPanel {
 
                     AuswertungsDialog dialog = new AuswertungsDialog(
                         ProbepktAuswPanel.this.pkt.getObjekt()
-                            .getAdresseByBetreiberid().getBetrname(),
+                            .getBetreiberid().getBetrname(),
                         ProbepktAuswPanel.this.dataSet1,
                         ProbepktAuswPanel.this.dataSet2,
                         ProbepktAuswPanel.this.frame);

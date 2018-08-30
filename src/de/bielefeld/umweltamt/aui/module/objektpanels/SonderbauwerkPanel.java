@@ -216,7 +216,7 @@ public class SonderbauwerkPanel extends JPanel {
     	success = this.sonderbauwerk.merge();
     	if (success) {
     		log.debug("Sonderbauwerk"
-    				+ this.sonderbauwerk.getObjekt().getAdresseByBetreiberid()
+    				+ this.sonderbauwerk.getObjekt().getBetreiberid()
     				.getBetrname() + " gespeichert.");
     	} else {
     		log.debug("Sonderbauwerk" + this.sonderbauwerk

@@ -47,7 +47,6 @@ public class Adresse  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Objekt objekt;
     private Wirtschaftszweig wirtschaftszweig;
     private String betranrede;
     private String betrname;
@@ -75,10 +74,8 @@ public class Adresse  implements java.io.Serializable {
     private boolean datenschutzEsatzung;
     private boolean datenschutzWhg;
     private Date erstellDat;
-    private Set<Objekt> objektsForStandortid = new HashSet<Objekt>(0);
-    private Set<Sonderbauwerk> sonderbauwerks = new HashSet<Sonderbauwerk>(0);
     private Set<Objekt> objektsForBetreiberid = new HashSet<Objekt>(0);
-    private Set<MapAdresseLage> MapAdresseLages = new HashSet<MapAdresseLage>(0);
+    private Set<Standort> standorts = new HashSet<Standort>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -98,9 +95,8 @@ public class Adresse  implements java.io.Serializable {
 
     /** Full constructor */
     public Adresse(
-        Integer id, Objekt objekt, Wirtschaftszweig wirtschaftszweig, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, String auikWzCode, Date erstellDat, Set<Objekt> objektsForStandortid, Set<Sonderbauwerk> sonderbauwerks, Set<Objekt> objektsForBetreiberid) {
+        Integer id, Wirtschaftszweig wirtschaftszweig, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, String auikWzCode, Date erstellDat, Set<Standort> standorts, Set<Objekt> objektsForBetreiberid) {
         this.id = id;
-        this.objekt = objekt;
         this.wirtschaftszweig = wirtschaftszweig;
         this.betranrede = betranrede;
         this.betrname = betrname;
@@ -125,8 +121,7 @@ public class Adresse  implements java.io.Serializable {
         this.deleted = deleted;
         this.auikWzCode = auikWzCode;
         this.erstellDat = erstellDat;
-        this.objektsForStandortid = objektsForStandortid;
-        this.sonderbauwerks = sonderbauwerks;
+        this.standorts = standorts;
         this.objektsForBetreiberid = objektsForBetreiberid;
     }
 
@@ -137,14 +132,6 @@ public class Adresse  implements java.io.Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Objekt getObjekt() {
-        return this.objekt;
-    }
-
-    public void setObjekt(Objekt objekt) {
-        this.objekt = objekt;
     }
 
     public Wirtschaftszweig getWirtschaftszweig() {
@@ -363,22 +350,6 @@ public class Adresse  implements java.io.Serializable {
         this.erstellDat = erstellDat;
     }
 
-    public Set<Objekt> getObjektsForStandortid() {
-        return this.objektsForStandortid;
-    }
-
-    public void setObjektsForStandortid(Set<Objekt> objektsForStandortid) {
-        this.objektsForStandortid = objektsForStandortid;
-    }
-
-    public Set<Sonderbauwerk> getSonderbauwerks() {
-        return this.sonderbauwerks;
-    }
-
-    public void setSonderbauwerks(Set<Sonderbauwerk> sonderbauwerks) {
-        this.sonderbauwerks = sonderbauwerks;
-    }
-
     public Set<Objekt> getObjektsForBetreiberid() {
         return this.objektsForBetreiberid;
     }
@@ -387,18 +358,14 @@ public class Adresse  implements java.io.Serializable {
         this.objektsForBetreiberid = objektsForBetreiberid;
     }
 
-    public Set<MapAdresseLage> getMapAdresseLages() {
-		return MapAdresseLages;
+    public Set<Standort> getStandorts() {
+		return standorts;
 	}
 
-	public void setMapAdresseLages(Set<MapAdresseLage> MapAdresseLages) {
-		this.MapAdresseLages = MapAdresseLages;
+	public void setStandorts(Set<Standort> standorts) {
+		this.standorts = standorts;
 	}
 
-	public void setMapAdresseLages(Lage lage) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	/**
      * To implement custom toString methods, jump to not generated code.<br>
@@ -420,8 +387,7 @@ public class Adresse  implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");				
         buffer.append("wirtschaftszweig").append("='").append(getWirtschaftszweig()).append("' ");			
         buffer.append("betranrede").append("='").append(getBetranrede()).append("' ");			
         buffer.append("betrname").append("='").append(getBetrname()).append("' ");			
@@ -446,9 +412,8 @@ public class Adresse  implements java.io.Serializable {
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("auikWzCode").append("='").append(getAuikWzCode()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("objektsForStandortid").append("='").append(getObjektsForStandortid()).append("' ");			
-        buffer.append("sonderbauwerks").append("='").append(getSonderbauwerks()).append("' ");			
-        buffer.append("objektsForBetreiberid").append("='").append(getObjektsForBetreiberid()).append("' ");			
+        buffer.append("Standorts").append("='").append(getStandorts()).append("' ");			
+         buffer.append("objektsForBetreiberid").append("='").append(getObjektsForBetreiberid()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -514,8 +479,7 @@ public class Adresse  implements java.io.Serializable {
      * @param copy Adresse
      */
     private void copy(Adresse copy) {
-        this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
+        this.id = copy.getId();                    
         this.wirtschaftszweig = copy.getWirtschaftszweig();            
         this.betranrede = copy.getBetranrede();            
         this.betrname = copy.getBetrname();            
@@ -540,8 +504,7 @@ public class Adresse  implements java.io.Serializable {
         this.deleted = copy.isDeleted();            
         this.auikWzCode = copy.getAuikWzCode();            
         this.erstellDat = copy.getErstellDat();            
-        this.objektsForStandortid = copy.getObjektsForStandortid();            
-        this.sonderbauwerks = copy.getSonderbauwerks();            
+        this.standorts = copy.getStandorts();            
         this.objektsForBetreiberid = copy.getObjektsForBetreiberid();            
     }    
 
@@ -586,6 +549,11 @@ public class Adresse  implements java.io.Serializable {
     public static List<Adresse> getAll() {
         return DatabaseQuery.getAll(new Adresse());
     }
+
+	public Standort getStandort() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
     /* Custom code goes below here! */
 

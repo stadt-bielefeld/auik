@@ -79,7 +79,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
-import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
@@ -107,7 +107,7 @@ public class BasisAdresseNeu extends AbstractModul
 	private static final AuikLogger log = AuikLogger.getLogger();
 
 	private JButton speichernButton;
-	private MapAdresseLage mapLage;
+	private Standort mapLage;
 	private Lage lage;
 
 	private JLabel handzeichenLabel;
@@ -569,8 +569,8 @@ public class BasisAdresseNeu extends AbstractModul
             	f = firma.getHausnrzus();
                 }
         	if (i.equals(f) || f.contains("-") ) {
-            	Set<MapAdresseLage> verk = firma.getMapAdresseLages();
-            	for (MapAdresseLage ver : verk) {
+            	Set<Standort> verk = firma.getStandorts();
+            	for (Standort ver : verk) {
             	    vorhandeneLage = ver.getLage();
             	}   
         	}
@@ -639,7 +639,7 @@ public class BasisAdresseNeu extends AbstractModul
 				mapLage.setBasisLage(lage);
 			}*/
             //Vermeidet fehler beim merge, wenn eine eigene Adresse eingeben wurde anstatt eine aus der Liste auszuwählen
-            mapLage = new MapAdresseLage();
+            mapLage = new Standort();
 			lage = new Lage();
 			mapLage.setAdresse(adrn);
 			mapLage.setLage(lage);
@@ -840,8 +840,8 @@ public class BasisAdresseNeu extends AbstractModul
 			 * und Basis_Lage ebenfalls gespeichert werden.
 			 */
 
-			MapAdresseLage persistentAL = null;
-			persistentAL = MapAdresseLage.merge(mapLage);
+			Standort persistentAL = null;
+			persistentAL = Standort.merge(mapLage);
 
 			if (persistentAL != null) {
 				frame.changeStatus("Neuer Betreiber " + persistentAL.getId()

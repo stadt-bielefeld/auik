@@ -682,7 +682,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                     if (row != -1) {
                         Objekt obj = BasisAdresseSuchen.this.objektModel
                             .getRow(row);
-                        editBetreiber(obj.getAdresseByBetreiberid());
+                        editBetreiber(obj.getBetreiberid());
                     }
                 }
             };
@@ -710,7 +710,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                     if (row != -1) {
                         Objekt obj = BasisAdresseSuchen.this.objektModel
                             .getRow(row);
-                        editBetreiber(obj.getAdresseByStandortid());
+                        editBetreiber(obj.getBetreiberid());
                     }
                 }
             };
@@ -921,11 +921,11 @@ public class BasisAdresseSuchen extends AbstractModul {
 							.getRow(row);
 					if (!isRowSelected(row)) {
 
-						if (obj.getAdresseByBetreiberid() == obj.getAdresseByStandortid()) {
+						if (obj.getBetreiberid() == obj.getStandortid().getAdresse()) {
 							c.setBackground(new Color(153, 255, 153));
 						}						
 						
-						else if (obj.getAdresseByBetreiberid() != obj.getAdresseByStandortid()) {
+						else if (obj.getBetreiberid() != obj.getStandortid().getAdresse()) {
 							c.setBackground(new Color(255, 255, 153));
 						}
 						else {

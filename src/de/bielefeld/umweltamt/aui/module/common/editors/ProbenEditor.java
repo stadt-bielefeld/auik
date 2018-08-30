@@ -1035,7 +1035,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         Probenahme probe = getProbe();
 
         Adresse basisBetr =
-            probe.getMessstelle().getObjekt().getAdresseByBetreiberid();
+            probe.getMessstelle().getObjekt().getBetreiberid();
 
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
         CurrencyDouble cd = new CurrencyDouble(getRechnungsbetrag(probe),
@@ -1149,7 +1149,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         Probenahme probe = getProbe();
         Adresse basisBetr =
-            probe.getMessstelle().getObjekt().getAdresseByBetreiberid();
+            probe.getMessstelle().getObjekt().getBetreiberid();
 
         this.probenummer.setText(probe.getKennummer());
         this.probenummer.setEnabled(false);
@@ -1476,9 +1476,9 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public Map<String, Object> getAuftragDruckMap(Probenahme probe) {
         Adresse betr = probe.getMessstelle().getObjekt()
-            .getAdresseByBetreiberid();
+            .getBetreiberid();
         Adresse std = probe.getMessstelle().getObjekt()
-            .getAdresseByStandortid();
+            .getStandortid().getAdresse();
         Probeart art = probe.getMessstelle().getProbeart();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
@@ -1538,11 +1538,11 @@ public class ProbenEditor extends AbstractApplyEditor {
     public Map<String, Object> getBescheidDruckMap(Probenahme probe)
         throws IllegalArgumentException {
         Adresse betr =
-            probe.getMessstelle().getObjekt().getAdresseByBetreiberid();
+            probe.getMessstelle().getObjekt().getBetreiberid();
         Adresse basisStandort =
-            probe.getMessstelle().getObjekt().getAdresseByStandortid();
+            probe.getMessstelle().getObjekt().getStandortid().getAdresse();
         Lage basisLage =
-                probe.getMessstelle().getObjekt().getLage();
+                probe.getMessstelle().getObjekt().getStandortid().getLage();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
 

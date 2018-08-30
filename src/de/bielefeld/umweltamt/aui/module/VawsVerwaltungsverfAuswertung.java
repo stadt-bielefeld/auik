@@ -187,10 +187,10 @@ class WiedervorlageVVModel extends ListTableModel {
             tmp = vf.getFachdaten().getBehaelterid();
             break;
         case 1:
-            tmp = vf.getFachdaten().getObjekt().getAdresseByBetreiberid().getBetrname();
+            tmp = vf.getFachdaten().getObjekt().getBetreiberid().getBetrname();
             break;
         case 2:
-            tmp = DatabaseQuery.getStandortString(vf.getFachdaten().getObjekt().getAdresseByStandortid());
+            tmp = DatabaseQuery.getStandortString(vf.getFachdaten().getObjekt().getStandortid());
             break;
         case 3:
             tmp = AuikUtils.getStringFromDate(vf.getWiedervorlage());

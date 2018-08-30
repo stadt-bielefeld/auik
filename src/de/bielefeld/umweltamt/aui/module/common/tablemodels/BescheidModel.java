@@ -85,10 +85,10 @@ public class BescheidModel extends ListTableModel {
             tmp = fd.getDatumDerEntnahme();
             break;
         case 2:
-            tmp = DatabaseQuery.getStandortString(fd.getMessstelle().getObjekt().getAdresseByStandortid());
+            tmp = DatabaseQuery.getStandortString(fd.getMessstelle().getObjekt().getStandortid());
             break;
         case 3:
-            tmp = fd.getMessstelle().getObjekt().getAdresseByBetreiberid();
+            tmp = fd.getMessstelle().getObjekt().getBetreiberid();
             break;
         case 4:
             tmp = fd.getBemerkung();

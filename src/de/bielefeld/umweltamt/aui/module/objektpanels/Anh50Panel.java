@@ -275,7 +275,7 @@ public class Anh50Panel extends JPanel {
         success = this.fachdaten.merge();
         if (success) {
             log.debug("Zahnarzt "
-                + this.fachdaten.getObjekt().getAdresseByBetreiberid()
+                + this.fachdaten.getObjekt().getBetreiberid()
                     .getBetrname() + " gespeichert.");
         } else {
             log.debug("Zahnarzt " + this.fachdaten

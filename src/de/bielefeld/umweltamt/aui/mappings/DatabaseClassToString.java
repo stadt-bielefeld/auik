@@ -61,7 +61,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.OnlinekartendienstId;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
-import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.basis.View360x33;
@@ -185,8 +185,29 @@ public class DatabaseClassToString {
         }        
         return clazz.getBetrname() + zusatz;
     }
+    
+    /**
+     * Custom Standort.toString()
+     * Liefert einen String der Form "Name, Zusatz" falls ein Zusatz vorhanden
+     * ist, sonst nur den Namen.
+     */
+    public static String toStringForClass(Standort clazz) {
+	    String zusatz = "";
+	    
+	    //If all name fields are empty, the instance must be a Standort
+	    if(clazz.getAdresse().getBetrname() == null){
+	        return clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr();
+	    }
+	    //Else return a Betreiber string
+	    if (clazz.getAdresse().getBetrvorname() != null) {
+	        zusatz = ", " + clazz.getAdresse().getBetrvorname();
+	    } else if (clazz.getAdresse().getBetrnamezus() != null) {
+	        zusatz = ", " + clazz.getAdresse().getBetrnamezus();
+	    }        
+	    return clazz.getAdresse().getBetrname() + zusatz;
+	}
 
-    /** @return Gemarkung.toGuiString() */
+	/** @return Gemarkung.toGuiString() */
     public static String toStringForClass(Gemarkung clazz) {
         return clazz.toGuiString();
     }
@@ -196,12 +217,12 @@ public class DatabaseClassToString {
      * Custom Objekt.toString()
      * Liefert einen String, der dieses Objekt beschreibt.
      * @return Einen String in der Form
-     *         "[ID:Objekt-ID, Betr.:Adresse, Stdort:BasisLage, Art:Objektart]"
+     *         "[ID:Objekt-ID, Betr.:Adresse, Stdort:BasisStandort, Art:Objektart]"
      */
     public static String toStringForClass(Objekt clazz) {
         return "[ID:" + clazz.getId() +
-            ", Betr.:" + clazz.getAdresseByBetreiberid() +
-            ", Stdort:" + clazz.getLage() +
+            ", Betr.:" + clazz.getBetreiberid() +
+            ", Stdort:" + clazz.getStandortid() +
             ", Art:" + clazz.getObjektarten() + "]";
     }
 
@@ -692,11 +713,6 @@ public class DatabaseClassToString {
 	}
 
 	public static String toStringForClass(ViewTwoWayObjektverknuepfungId viewTwoWayObjektverknuepfungId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(MapAdresseLage mapAdresseLage) {
 		// TODO Auto-generated method stub
 		return null;
 	}

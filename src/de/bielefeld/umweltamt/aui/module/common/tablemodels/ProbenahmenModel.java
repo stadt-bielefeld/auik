@@ -139,7 +139,7 @@ public class ProbenahmenModel extends ListTableModel {
                     break;
                 case 5:
                     value = probe.getMessstelle().getObjekt()
-                        .getAdresseByBetreiberid();
+                        .getBetreiberid();
                     break;
                 case 6:
                     value = probe.getBemerkung();

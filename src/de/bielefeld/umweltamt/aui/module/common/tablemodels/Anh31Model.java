@@ -52,10 +52,10 @@ public class Anh31Model extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = ob.getAdresseByBetreiberid();
+            tmp = ob.getBetreiberid();
             break;
         case 1:
-            tmp = DatabaseQuery.getStandortString(ob.getAdresseByStandortid());
+            tmp = DatabaseQuery.getStandortString(ob.getStandortid());
             break;
         case 2:
             tmp = ob.getBeschreibung();

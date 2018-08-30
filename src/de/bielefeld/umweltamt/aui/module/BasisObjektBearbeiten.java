@@ -111,6 +111,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AnfallstellePanel;
@@ -466,18 +467,18 @@ public class BasisObjektBearbeiten extends AbstractModul {
             isNew = true;
             objekt = new Objekt();
             if (manager.getSettingsManager().getSetting("auik.imc.use_standort") != null) {
-                Adresse sta = Adresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
-                log.debug("Standort: " + sta.getStrasse() + " " + sta.getHausnr() + ", " +sta.getId());
+                Standort sta = Standort.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
+                log.debug("Standort: " + sta.getAdresse().getStrasse() + " " + sta.getAdresse().getHausnr() + ", " +sta.getId());
                 Lage lage = Lage.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_lage")));
                 log.debug("Creating new Objekt " + lage + sta);
-                objekt.setAdresseByStandortid(sta);
+                objekt.setStandortid(sta);
 //                objekt.setLage(lage);
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
                 manager.getSettingsManager().removeSetting("auik.imc.use_lage");
             }
             if (manager.getSettingsManager().getSetting("auik.imc.use_betreiber") != null) {
                 Adresse betr = Adresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
-                objekt.setAdresseByBetreiberid(betr);
+                objekt.setBetreiberid(betr);
                 manager.getSettingsManager().removeSetting("auik.imc.use_betreiber");
             }
         }
@@ -601,17 +602,17 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getHeaderLabel().setForeground(Color.RED);
                     getHeaderLabel().setText("Neues Objekt");
                 }
-                else if (objekt.getAdresseByStandortid().getId()== 3) {
+                else if (objekt.getStandortid().getId()== 3) {
                     log.debug("Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
-                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getAdresseByBetreiberid()) +
-                    		"; " + objekt.getAdresseByBetreiberid()+"; "+objekt.getObjektarten().getObjektart());
+                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getStandortid()) +
+                    		"; " + objekt.getBetreiberid()+"; "+objekt.getObjektarten().getObjektart());
                 }
                 else {
                     log.debug("Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
-                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getAdresseByStandortid()) +
-                    		"; " + objekt.getAdresseByStandortid()+"; "+objekt.getObjektarten().getObjektart());
+                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getStandortid()) +
+                    		"; " + objekt.getBetreiberid()+"; "+objekt.getObjektarten().getObjektart());
                 }
 
                 if (objekt != null) {

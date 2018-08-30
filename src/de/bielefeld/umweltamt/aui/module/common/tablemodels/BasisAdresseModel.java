@@ -26,7 +26,7 @@ import java.util.Set;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -98,11 +98,11 @@ public class BasisAdresseModel extends ListTableModel {
 		Object value = null;
 
 		Adresse betr = (Adresse) objectAtRow;
-		HibernateSessionFactory.currentSession().refresh(betr);
-		if (betr.getMapAdresseLages().size() > 0) {
-			for (int i = 0; i < betr.getMapAdresseLages().size(); i++) {
-				MapAdresseLage map = (MapAdresseLage) betr
-						.getMapAdresseLages().toArray()[i];
+//		HibernateSessionFactory.currentSession().refresh(betr);
+		if (betr.getStandorts().size() > 0) {
+			for (int i = 0; i < betr.getStandorts().size(); i++) {
+				Standort map = (Standort) betr
+						.getStandorts().toArray()[i];
 				switch (columnIndex) {
 				case 0:
 					if (map.getAdresse().getKassenzeichen() != null) {

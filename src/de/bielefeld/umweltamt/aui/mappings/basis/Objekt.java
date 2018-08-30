@@ -63,10 +63,8 @@ public class Objekt  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Adresse adresseByStandortid;
-    private Adresse adresseByBetreiberid;
-    private Adresse adresse;
-    private Lage lage;
+    private Standort standortid;
+    private Adresse betreiberid;
     private Objektarten objektarten;
     private Sachbearbeiter sachbearbeiter;
     private Integer uschistdid;
@@ -121,10 +119,9 @@ public class Objekt  implements java.io.Serializable {
 
     /** Full constructor */
     public Objekt(
-        Adresse adresseByStandortid, Adresse adresseByBetreiberid, Lage lage, Objektarten objektarten, Sachbearbeiter sachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Set<Objektverknuepfung> objektverknuepfungsForIstVerknuepftMit, Set<Anh53Fachdaten> anh53Fachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<BwkFachdaten> bwkFachdatens, Set<Wasserrecht> wasserrechts, Set<Adresse> adresses, Set<Anh49Fachdaten> anh49Fachdatens, Set<SuevFachdaten> suevFachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Messstelle> messstelles, Set<Sonderbauwerk> sonderbauwerks, Set<Entwaesserungsgrundstueck> entwaesserungsgrundstuecks, Set<Objektchrono> objektchronos, Set<Objektverknuepfung> objektverknuepfungsForObjekt, Set<Anh55Fachdaten> anh55Fachdatens, Set<Fachdaten> fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
-        this.adresseByStandortid = adresseByStandortid;
-        this.adresseByBetreiberid = adresseByBetreiberid;
-        this.lage = lage;
+        Standort standortid, Adresse betreiberid, Objektarten objektarten, Sachbearbeiter sachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Set<Objektverknuepfung> objektverknuepfungsForIstVerknuepftMit, Set<Anh53Fachdaten> anh53Fachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<BwkFachdaten> bwkFachdatens, Set<Wasserrecht> wasserrechts, Set<Adresse> adresses, Set<Anh49Fachdaten> anh49Fachdatens, Set<SuevFachdaten> suevFachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Messstelle> messstelles, Set<Sonderbauwerk> sonderbauwerks, Set<Entwaesserungsgrundstueck> entwaesserungsgrundstuecks, Set<Objektchrono> objektchronos, Set<Objektverknuepfung> objektverknuepfungsForObjekt, Set<Anh55Fachdaten> anh55Fachdatens, Set<Fachdaten> fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
+        this.standortid = standortid;
+        this.betreiberid = betreiberid;
         this.objektarten = objektarten;
         this.sachbearbeiter = sachbearbeiter;
         this.uschistdid = uschistdid;
@@ -168,36 +165,20 @@ public class Objekt  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Adresse getAdresseByStandortid() {
-        return this.adresseByStandortid;
+    public Standort getStandortid() {
+        return this.standortid;
     }
 
-    public void setAdresseByStandortid(Adresse adresseByStandortid) {
-        this.adresseByStandortid = adresseByStandortid;
+    public void setStandortid(Standort standortid) {
+        this.standortid = standortid;
     }
 
-    public Adresse getAdresseByBetreiberid() {
-        return this.adresseByBetreiberid;
+    public Adresse getBetreiberid() {
+        return this.betreiberid;
     }
 
-    public void setAdresseByBetreiberid(Adresse adresseByBetreiberid) {
-        this.adresseByBetreiberid = adresseByBetreiberid;
-    }
-
-    public Adresse getAdresse() {
-        return this.adresse;
-    }
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
-    }
-
-    public Lage getLage() {
-        return this.lage;
-    }
-
-    public void setLage(Lage lage) {
-        this.lage = lage;
+    public void setBetreiberid(Adresse betreiberid) {
+        this.betreiberid = betreiberid;
     }
 
     public Objektarten getObjektarten() {
@@ -501,9 +482,8 @@ public class Objekt  implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("adresseByStandortid").append("='").append(getAdresseByStandortid()).append("' ");			
-        buffer.append("adresseByBetreiberid").append("='").append(getAdresseByBetreiberid()).append("' ");			
-        buffer.append("lage").append("='").append(getLage()).append("' ");			
+        buffer.append("standortid").append("='").append(getStandortid()).append("' ");			
+        buffer.append("betreiberid").append("='").append(getBetreiberid()).append("' ");			
         buffer.append("objektarten").append("='").append(getObjektarten()).append("' ");			
         buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");			
         buffer.append("uschistdid").append("='").append(getUschistdid()).append("' ");			
@@ -601,9 +581,8 @@ public class Objekt  implements java.io.Serializable {
      * @param copy Objekt
      */
     private void copy(Objekt copy) {
-        this.adresseByStandortid = copy.getAdresseByStandortid();            
-        this.adresseByBetreiberid = copy.getAdresseByBetreiberid();            
-        this.lage = copy.getLage();            
+        this.standortid = copy.getStandortid();            
+        this.betreiberid = copy.getBetreiberid();            
         this.objektarten = copy.getObjektarten();            
         this.sachbearbeiter = copy.getSachbearbeiter();            
         this.uschistdid = copy.getUschistdid();            
@@ -687,8 +666,20 @@ public class Objekt  implements java.io.Serializable {
     public static Objekt findByAdresseId(Integer id){
         List<Objekt> all = Objekt.getAll();
         for(Objekt i : all){
-            log.debug("Comparing " + i.getAdresseByBetreiberid().getId() + " " + id);
-            if(i.getAdresseByBetreiberid().getId().equals(id)){
+            log.debug("Comparing " + i.getBetreiberid().getId() + " " + id);
+            if(i.getBetreiberid().getId().equals(id)){
+                log.debug("Returning Objekt: " + i.getId());
+                return (Objekt) new DatabaseAccess().get(Objekt.class, i.getId());
+            }
+        }
+        return null;
+    }
+
+    public static Objekt findByStandortId(Integer id){
+        List<Objekt> all = Objekt.getAll();
+        for(Objekt i : all){
+            log.debug("Comparing " + i.getStandortid().getId() + " " + id);
+            if(i.getStandortid().getId().equals(id)){
                 log.debug("Returning Objekt: " + i.getId());
                 return (Objekt) new DatabaseAccess().get(Objekt.class, i.getId());
             }

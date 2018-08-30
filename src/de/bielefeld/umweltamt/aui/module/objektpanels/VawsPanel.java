@@ -276,8 +276,8 @@ public class VawsPanel extends JPanel {
 
     public void showReportListe() {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("Betreiber", hauptModul.getObjekt().getAdresseByBetreiberid().toString());
-        params.put("Standort", DatabaseQuery.getStandortString(hauptModul.getObjekt().getAdresseByStandortid()));
+        params.put("Betreiber", hauptModul.getObjekt().getBetreiberid().toString());
+        params.put("Standort", DatabaseQuery.getStandortString(hauptModul.getObjekt().getStandortid()));
         params.put("Art", hauptModul.getObjekt().getObjektarten().getObjektart());
         params.put("ObjektId", hauptModul.getObjekt().getId());
         try {
@@ -298,8 +298,8 @@ public class VawsPanel extends JPanel {
         if (row != -1) {
             Map<String, Object> params = new HashMap<String, Object>();
             Fachdaten anlage = vawsModel.getDatenSatz(row);
-            params.put("Betreiber", hauptModul.getObjekt().getAdresseByBetreiberid().toString());
-            params.put("Standort", DatabaseQuery.getStandortString(hauptModul.getObjekt().getAdresseByStandortid()));
+            params.put("Betreiber", hauptModul.getObjekt().getBetreiberid().toString());
+            params.put("Standort", DatabaseQuery.getStandortString(hauptModul.getObjekt().getStandortid()));
             params.put("Objektart", hauptModul.getObjekt().getObjektarten().getObjektart());
             params.put("BehaelterId", anlage.getBehaelterid());
 

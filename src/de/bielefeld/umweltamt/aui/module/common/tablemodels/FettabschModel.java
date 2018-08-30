@@ -55,10 +55,10 @@ public class FettabschModel extends ListTableModel {
 		Object tmp = null;
 		switch (columnIndex) {
     		case 0:
-    			tmp = fd.getObjekt().getAdresseByBetreiberid();
+    			tmp = fd.getObjekt().getBetreiberid();
     			break;
     		case 1:
-    			tmp = DatabaseQuery.getStandortString(fd.getObjekt().getAdresseByStandortid());
+    			tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
     			break;
     		case 2:
     			tmp = fd.getBemerkungen();

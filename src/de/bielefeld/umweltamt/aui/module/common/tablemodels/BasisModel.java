@@ -79,10 +79,10 @@ public class BasisModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = obj.getAdresseByBetreiberid();
+            tmp = obj.getBetreiberid();
             break;
         case 1:
-            tmp = DatabaseQuery.getStandortString(obj.getAdresseByStandortid());
+            tmp = DatabaseQuery.getStandortString(obj.getStandortid());
             break;
         case 2:
 			tmp = "";

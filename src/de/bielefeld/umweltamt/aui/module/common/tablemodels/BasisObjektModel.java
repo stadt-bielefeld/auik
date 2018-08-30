@@ -30,7 +30,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
-import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.module.BasisAdresseSuchen;
 
 /**
@@ -83,9 +83,9 @@ public class BasisObjektModel extends ListTableModel {
                 break;
             case 1:
                 if ("Standort".equals(secondColumn)) {
-                    tmp = DatabaseQuery.getStandortString(bo.getAdresseByStandortid());
+                    tmp = DatabaseQuery.getStandortString(bo.getStandortid());
                 } else if ("Betreiber".equals(secondColumn)) {
-                    tmp = bo.getAdresseByBetreiberid();
+                    tmp = bo.getBetreiberid();
                 } else {
                     tmp = secondColumn;
                 }
@@ -143,9 +143,9 @@ public class BasisObjektModel extends ListTableModel {
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(MapAdresseLage standort) {
-        setList(DatabaseQuery.getObjekteByStrasse(
-            standort.getAdresse(), abteilung, null, null));
+    public void searchByStandort(Standort standort) {
+        setList(DatabaseQuery.getObjekteByStandort(
+            standort, abteilung, null, null));
     }
 
     /**
@@ -161,7 +161,7 @@ public class BasisObjektModel extends ListTableModel {
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(Adresse standort, String abteilung) {
+    public void searchByStandort(Standort standort, String abteilung) {
         setList(DatabaseQuery.getObjekteByStandort(
             standort, abteilung, null, null));
     }
@@ -180,7 +180,7 @@ public class BasisObjektModel extends ListTableModel {
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(Adresse standort, Integer istartid) {
+    public void searchByStandort(Standort standort, Integer istartid) {
         setList(DatabaseQuery.getObjekteByStandort(
             standort, null, istartid, true));
     }

@@ -164,6 +164,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
@@ -242,7 +243,7 @@ public class SielhautBearbeiten extends AbstractModul {
     private Objekt objekt;
     private Lage lage;
     private Adresse betreiber;
-    private Adresse standort;
+    private Standort standort;
     private Objektarten art;
     private SielhautProbeModel probeModel;
 
@@ -313,13 +314,12 @@ public class SielhautBearbeiten extends AbstractModul {
             this.lage = new Lage();
             this.betreiber = Adresse.findById(
                 DatabaseConstants.BASIS_BETREIBER_ID_Umweltamt_360x33);
-            this.standort = Adresse.findById(
+            this.standort = Standort.findById(
                 DatabaseConstants.BASIS_STANDORT_KEIN_STANDORT);
             this.art = Objektarten.findById(
                 DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE);
-            this.objekt.setLage(this.lage);
-            this.objekt.setAdresseByBetreiberid(this.betreiber);
-            this.objekt.setAdresseByStandortid(this.standort);
+            this.objekt.setBetreiberid(this.betreiber);
+            this.objekt.setStandortid(this.standort);
             this.objekt.setObjektarten(this.art);
             this.objekt.setInaktiv(false);
             this.objekt.setAbwasserfrei(true);
@@ -428,8 +428,8 @@ public class SielhautBearbeiten extends AbstractModul {
 //        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
 //        this.sprobePkt.setAtlSielhaut(this.spunkt);
 
-        this.lage = Lage.merge(objekt.getLage());
-        this.objekt.setLage(lage);
+        this.standort = standort.merge(objekt.getStandortid());
+        this.objekt.setStandortid(standort);
         this.objekt = Objekt.merge(this.objekt);
         this.sprobePkt.setObjekt(this.objekt);
         this.sprobePkt = Messstelle.merge(this.sprobePkt);

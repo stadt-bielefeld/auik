@@ -7,14 +7,11 @@
         <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
             <generator class="identity"/>
         </id>
-        <many-to-one name="adresseByStandortid" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select">
+        <many-to-one name="standortid" class="de.bielefeld.umweltamt.aui.mappings.basis.Standort" fetch="select">
             <column name="standortid" />
         </many-to-one>
-        <many-to-one name="adresseByBetreiberid" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select">
+        <many-to-one name="betreiberid" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select">
             <column name="betreiberid" />
-        </many-to-one>
-        <many-to-one name="lage" class="de.bielefeld.umweltamt.aui.mappings.basis.Lage" fetch="select">
-            <column name="lageid" />
         </many-to-one>
         <many-to-one name="objektarten" class="de.bielefeld.umweltamt.aui.mappings.basis.Objektarten" fetch="select">
             <column name="objektartid" />

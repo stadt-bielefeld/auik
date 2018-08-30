@@ -63,7 +63,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
-import de.bielefeld.umweltamt.aui.mappings.basis.MapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
@@ -132,7 +132,7 @@ public class BetreiberEditor extends AbstractBaseEditor
     private JCheckBox daten_whgCheck;
 	
 	private Lage lage = null;
-	private MapAdresseLage mapLage = null;
+    private Standort standort = null;
 	private Gemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;
 	private Standortgghwsg[] standortggs = null;
@@ -515,34 +515,34 @@ public class BetreiberEditor extends AbstractBaseEditor
 				Date datum = getBetreiber().getRevidatum();
 				revdatumsFeld.setText(AuikUtils.getStringFromDate(datum));
 				
-				if (MapAdresseLage.findByAdresse(getBetreiber()) != null) {
-					mapLage = MapAdresseLage.findByAdresse(getBetreiber());
+				if (Standort.findByAdresse(getBetreiber()) != null) {
+					standort = Standort.findByAdresse(getBetreiber());
 				}
 				
-				if(mapLage != null) {
-					lage = mapLage.getLage();
-					e32Feld.setValue(mapLage.getLage().getE32());
-					n32Feld.setValue(mapLage.getLage().getN32());
+				if(standort != null) {
+					lage = standort.getLage();
+					e32Feld.setValue(standort.getLage().getE32());
+					n32Feld.setValue(standort.getLage().getN32());
 					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
 					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
 					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
 					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
 
-					if (mapLage.getLage().getGemarkung() != null)
+					if (standort.getLage().getGemarkung() != null)
 					{
 						gemarkungBox.setSelectedItem(lage.getGemarkung());
 					}
-					if (mapLage.getLage().getStandortgghwsg() != null)
+					if (standort.getLage().getStandortgghwsg() != null)
 					{
 						standortGgBox.setSelectedItem(lage.getStandortgghwsg());
 					}
 
-					if (mapLage.getLage().getEntgebid() != null)
+					if (standort.getLage().getEntgebid() != null)
 					{
 						entwGebBox.setSelectedItem(lage.getEntgebid());
 					}
 
-					if (mapLage.getLage().getWassereinzugsgebiet() != null)
+					if (standort.getLage().getWassereinzugsgebiet() != null)
 					{
 						wEinzugsGebBox.setSelectedItem(lage.getWassereinzugsgebiet());
 					}
@@ -788,9 +788,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 		getBetreiber().setWirtschaftszweig(wizw);
 
 		if (lage != null) {
-			
-			getBetreiber().setMapAdresseLages(lage);
-			
+						
 			// Gemarkung
 			Gemarkung bgem = (Gemarkung) gemarkungBox
 					.getSelectedItem();
@@ -869,10 +867,10 @@ public class BetreiberEditor extends AbstractBaseEditor
 
 		// frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
 
-		if (mapLage != null) {
-			MapAdresseLage persistentAL = null;
-			mapLage.setAdresse(getBetreiber());
-			persistentAL = MapAdresseLage.merge(mapLage);
+		if (standort != null) {
+			Standort persistentAL = null;
+			standort.setAdresse(getBetreiber());
+			persistentAL = Standort.merge(standort);
 
 			if (persistentAL != null) {
 //				setEditedObject(persistentAL);
@@ -990,9 +988,9 @@ public class BetreiberEditor extends AbstractBaseEditor
 	    if (!lsm.isSelectionEmpty()) {
 	    	if (lage == null){
 	    		lage = new Lage();
-	    		mapLage = new MapAdresseLage();
-				mapLage.setAdresse(getBetreiber());
-				mapLage.setLage(lage);
+	    		standort = new Standort();
+	    		standort.setAdresse(getBetreiber());
+	    		standort.setLage(lage);
 	    	    
 				gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
 				standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
