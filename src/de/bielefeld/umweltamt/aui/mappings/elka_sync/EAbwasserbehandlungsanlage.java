@@ -97,12 +97,12 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
     public void setNr(Integer nr) {
         this.nr = nr;
     }
-    
+
     @JsonIgnore
     public Integer getOrigNr() {
         return this.origNr;
     }
-    
+
     @JsonIgnore
     public void setOrigNr(Integer origNr) {
         this.origNr = origNr;
@@ -263,6 +263,13 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
         this.wasserrechts = wasserrechts;
     }
 
+    /* Custom code goes below here! */
+
+    /**
+     * Returns the Abaverfahren instances connected to the aba instance
+     * on which this instance is based on.
+     * @return The instances as set
+     */
     public Set<Abaverfahren> getAbwasserbehandlungsverfahrens() {
         Aba aba = Aba.findById(getNr());
         if (aba == null) {

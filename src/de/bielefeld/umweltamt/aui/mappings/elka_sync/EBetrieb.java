@@ -83,12 +83,12 @@ public class EBetrieb implements java.io.Serializable {
     public void setNr(Integer nr) {
         this.nr = nr;
     }
-    
+
     @JsonIgnore
     public Integer getOrigNr() {
         return this.origNr;
     }
-    
+
     @JsonIgnore
     public void setOrigNr(Integer origNr) {
         this.origNr = origNr;
@@ -204,7 +204,14 @@ public class EBetrieb implements java.io.Serializable {
     public static List<EBetrieb> getAll() {
         return DatabaseQuery.getAll(new EBetrieb());
     }
-    
+
+    /* Custom code goes below here! */
+
+    /**
+     * Returns the Massnahme instances connected to the Adresse table entry
+     * on which this instance is based on.
+     * @return The instances as set
+     */
     public Set<Massnahme> getMassnahmes() {
         Adresse adresse = Adresse.findById(getNr());
         if (adresse == null) {

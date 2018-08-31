@@ -47,7 +47,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forEntwaesserungsgrundstueck;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Long nr;
     private Objekt objekt;
@@ -295,7 +295,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -304,29 +304,29 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("nr").append("='").append(getNr()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("wasserrecht").append("='").append(getWasserrecht()).append("' ");			
-        buffer.append("erlFreiElTog").append("='").append(isErlFreiElTog()).append("' ");			
-        buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");			
-        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");			
-        buffer.append("regenhaeufigkeit").append("='").append(getRegenhaeufigkeit()).append("' ");			
-        buffer.append("regendauer").append("='").append(getRegendauer()).append("' ");			
-        buffer.append("grEntwGebiet").append("='").append(getGrEntwGebiet()).append("' ");			
-        buffer.append("dtvWert").append("='").append(getDtvWert()).append("' ");			
-        buffer.append("wasserableitungsstreckeOpt").append("='").append(getWasserableitungsstreckeOpt()).append("' ");			
-        buffer.append("nameEtwGebiet").append("='").append(getNameEtwGebiet()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("einlBereichOpt").append("='").append(getEinlBereichOpt()).append("' ");			
-        buffer.append("abwbeskonNr").append("='").append(getAbwbeskonNr()).append("' ");			
-        buffer.append("einbauartOpt").append("='").append(getEinbauartOpt()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("adrNr").append("='").append(getAdrNr()).append("' ");			
-        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
-        buffer.append("ZEntwaessgrAbwasbehverfs").append("='").append(getZEntwaessgrAbwasbehverfs()).append("' ");			
-        buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");
+        buffer.append("wasserrecht").append("='").append(getWasserrecht()).append("' ");
+        buffer.append("erlFreiElTog").append("='").append(isErlFreiElTog()).append("' ");
+        buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");
+        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");
+        buffer.append("regenhaeufigkeit").append("='").append(getRegenhaeufigkeit()).append("' ");
+        buffer.append("regendauer").append("='").append(getRegendauer()).append("' ");
+        buffer.append("grEntwGebiet").append("='").append(getGrEntwGebiet()).append("' ");
+        buffer.append("dtvWert").append("='").append(getDtvWert()).append("' ");
+        buffer.append("wasserableitungsstreckeOpt").append("='").append(getWasserableitungsstreckeOpt()).append("' ");
+        buffer.append("nameEtwGebiet").append("='").append(getNameEtwGebiet()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("einlBereichOpt").append("='").append(getEinlBereichOpt()).append("' ");
+        buffer.append("abwbeskonNr").append("='").append(getAbwbeskonNr()).append("' ");
+        buffer.append("einbauartOpt").append("='").append(getEinbauartOpt()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("adrNr").append("='").append(getAdrNr()).append("' ");
+        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");
+        buffer.append("ZEntwaessgrAbwasbehverfs").append("='").append(getZEntwaessgrAbwasbehverfs()).append("' ");
+        buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -358,7 +358,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -392,28 +392,28 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
      * @param copy Entwaesserungsgrundstueck
      */
     private void copy(Entwaesserungsgrundstueck copy) {
-        this.nr = copy.getNr();            
-        this.objekt = copy.getObjekt();            
-        this.wasserrecht = copy.getWasserrecht();            
-        this.erlFreiElTog = copy.isErlFreiElTog();            
-        this.regenspende = copy.getRegenspende();            
-        this.bemerkung = copy.getBemerkung();            
-        this.regenhaeufigkeit = copy.getRegenhaeufigkeit();            
-        this.regendauer = copy.getRegendauer();            
-        this.grEntwGebiet = copy.getGrEntwGebiet();            
-        this.dtvWert = copy.getDtvWert();            
-        this.wasserableitungsstreckeOpt = copy.getWasserableitungsstreckeOpt();            
-        this.nameEtwGebiet = copy.getNameEtwGebiet();            
-        this.erstellDat = copy.getErstellDat();            
-        this.einlBereichOpt = copy.getEinlBereichOpt();            
-        this.abwbeskonNr = copy.getAbwbeskonNr();            
-        this.einbauartOpt = copy.getEinbauartOpt();            
-        this.aktualDat = copy.getAktualDat();            
-        this.adrNr = copy.getAdrNr();            
-        this.externalNr = copy.getExternalNr();            
-        this.ZEntwaessgrAbwasbehverfs = copy.getZEntwaessgrAbwasbehverfs();            
-        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();            
-    }    
+        this.nr = copy.getNr();
+        this.objekt = copy.getObjekt();
+        this.wasserrecht = copy.getWasserrecht();
+        this.erlFreiElTog = copy.isErlFreiElTog();
+        this.regenspende = copy.getRegenspende();
+        this.bemerkung = copy.getBemerkung();
+        this.regenhaeufigkeit = copy.getRegenhaeufigkeit();
+        this.regendauer = copy.getRegendauer();
+        this.grEntwGebiet = copy.getGrEntwGebiet();
+        this.dtvWert = copy.getDtvWert();
+        this.wasserableitungsstreckeOpt = copy.getWasserableitungsstreckeOpt();
+        this.nameEtwGebiet = copy.getNameEtwGebiet();
+        this.erstellDat = copy.getErstellDat();
+        this.einlBereichOpt = copy.getEinlBereichOpt();
+        this.abwbeskonNr = copy.getAbwbeskonNr();
+        this.einbauartOpt = copy.getEinbauartOpt();
+        this.aktualDat = copy.getAktualDat();
+        this.adrNr = copy.getAdrNr();
+        this.externalNr = copy.getExternalNr();
+        this.ZEntwaessgrAbwasbehverfs = copy.getZEntwaessgrAbwasbehverfs();
+        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

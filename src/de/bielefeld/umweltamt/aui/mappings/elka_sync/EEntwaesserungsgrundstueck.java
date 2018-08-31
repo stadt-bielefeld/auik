@@ -311,16 +311,6 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         return buffer.toString();
     }
 
-    /* Custom code goes below here! */
-    public Set<ZEntwaessgrAbwasbehverf> getZEntwassergrAbwasbehverfs() {
-        Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(getNr());
-        return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs() : null;
-    }
-
-    public Set<AfsNiederschlagswasser> getAfsNiederschlagwassers () {
-        Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(getNr());
-        return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getAfsNiederschlagswassers() : null;
-    }
 
     /**
      * @param other
@@ -428,5 +418,25 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+
+    /**
+     * Get ZEntwaessgrAbwasbehverf instances connected to the Entwasserungsgrundstueck table entry
+     * on which this instance is based on.
+     * @return The instances as set
+     */
+    public Set<ZEntwaessgrAbwasbehverf> getZEntwassergrAbwasbehverfs() {
+        Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(getNr());
+        return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs() : null;
+    }
+
+    /**
+     * Get the AfsNiederschlagwasser instances connected to the Entwaesserungsgrundstueck table entry
+     * on which this instance is based on.
+     * @return The instances as set
+     */
+    public Set<AfsNiederschlagswasser> getAfsNiederschlagwassers () {
+        Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(getNr());
+        return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getAfsNiederschlagswassers() : null;
+    }
 
 }

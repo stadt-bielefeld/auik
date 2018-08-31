@@ -1158,7 +1158,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -1167,150 +1167,119 @@ public class ESonderbauwerk  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("nr").append("='").append(getNr()).append("' ");			
-        buffer.append("gemeindeId").append("='").append(getGemeindeId()).append("' ");			
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("kurzbeschreibung").append("='").append(getKurzbeschreibung()).append("' ");			
-        buffer.append("entwEinzugsgebOpt").append("='").append(getEntwEinzugsgebOpt()).append("' ");			
-        buffer.append("typOpt").append("='").append(getTypOpt()).append("' ");			
-        buffer.append("inbetriebnahme").append("='").append(getInbetriebnahme()).append("' ");			
-        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");			
-        buffer.append("wiederinbetrDat").append("='").append(getWiederinbetrDat()).append("' ");			
-        buffer.append("standortid").append("='").append(getStandortid()).append("' ");			
-        buffer.append("betreiberid").append("='").append(getBetreiberid()).append("' ");			
-        buffer.append("ansprAdrNr").append("='").append(getAnsprAdrNr()).append("' ");			
-        buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");			
-        buffer.append("e32").append("='").append(getE32()).append("' ");			
-        buffer.append("n32").append("='").append(getN32()).append("' ");			
-        buffer.append("inNrwTog").append("='").append(getInNrwTog()).append("' ");			
-        buffer.append("industrTog").append("='").append(getIndustrTog()).append("' ");			
-        buffer.append("nameAusserhalbNrw").append("='").append(getNameAusserhalbNrw()).append("' ");			
-        buffer.append("KEntwGebiet").append("='").append(getKEntwGebiet()).append("' ");			
-        buffer.append("befFlaecheEgebiet").append("='").append(getBefFlaecheEgebiet()).append("' ");			
-        buffer.append("abflussbeiwert").append("='").append(getAbflussbeiwert()).append("' ");			
-        buffer.append("befGrad").append("='").append(getBefGrad()).append("' ");			
-        buffer.append("undurchFlaeche").append("='").append(getUndurchFlaeche()).append("' ");			
-        buffer.append("beckentypOpt").append("='").append(getBeckentypOpt()).append("' ");			
-        buffer.append("rohrspeicherTog").append("='").append(getRohrspeicherTog()).append("' ");			
-        buffer.append("bauweiseOpt").append("='").append(getBauweiseOpt()).append("' ");			
-        buffer.append("drosselOpt").append("='").append(getDrosselOpt()).append("' ");			
-        buffer.append("soDrossel").append("='").append(getSoDrossel()).append("' ");			
-        buffer.append("beckensteuerungOpt").append("='").append(getBeckensteuerungOpt()).append("' ");			
-        buffer.append("AReiEinrichTog").append("='").append(getAReiEinrichTog()).append("' ");			
-        buffer.append("messartTog").append("='").append(getMessartTog()).append("' ");			
-        buffer.append("drosselTog").append("='").append(getDrosselTog()).append("' ");			
-        buffer.append("fuellstandTog").append("='").append(getFuellstandTog()).append("' ");			
-        buffer.append("entlastungswasserTog").append("='").append(getEntlastungswasserTog()).append("' ");			
-        buffer.append("entlastungsdauerTog").append("='").append(getEntlastungsdauerTog()).append("' ");			
-        buffer.append("entlastungshaeufigTog").append("='").append(getEntlastungshaeufigTog()).append("' ");			
-        buffer.append("fernMessTog").append("='").append(getFernMessTog()).append("' ");			
-        buffer.append("niederschlagTog").append("='").append(getNiederschlagTog()).append("' ");			
-        buffer.append("fernStoerTog").append("='").append(getFernStoerTog()).append("' ");			
-        buffer.append("hwfreiTog").append("='").append(getHwfreiTog()).append("' ");			
-        buffer.append("einstauHaeufig").append("='").append(getEinstauHaeufig()).append("' ");			
-        buffer.append("hwEinrichtungTog").append("='").append(getHwEinrichtungTog()).append("' ");			
-        buffer.append("hwRueckstauTog").append("='").append(getHwRueckstauTog()).append("' ");			
-        buffer.append("hwSchieberTog").append("='").append(getHwSchieberTog()).append("' ");			
-        buffer.append("hwPumpwerkTog").append("='").append(getHwPumpwerkTog()).append("' ");			
-        buffer.append("hwWeitereTog").append("='").append(getHwWeitereTog()).append("' ");			
-        buffer.append("hwSonstText").append("='").append(getHwSonstText()).append("' ");			
-        buffer.append("bemesWeitergTog").append("='").append(getBemesWeitergTog()).append("' ");			
-        buffer.append("bemessungText").append("='").append(getBemessungText()).append("' ");			
-        buffer.append("anordnungOpt").append("='").append(getAnordnungOpt()).append("' ");			
-        buffer.append("wasserrechtGenehmigungNr").append("='").append(getWasserrechtGenehmigungNr()).append("' ");			
-        buffer.append("beckenartOpt").append("='").append(getBeckenartOpt()).append("' ");			
-        buffer.append("beckentiefe").append("='").append(getBeckentiefe()).append("' ");			
-        buffer.append("behFlaeche1u2").append("='").append(getBehFlaeche1u2()).append("' ");			
-        buffer.append("behFlaeche2u3").append("='").append(getBehFlaeche2u3()).append("' ");			
-        buffer.append("betriebsartOpt").append("='").append(getBetriebsartOpt()).append("' ");			
-        buffer.append("csb").append("='").append(getCsb()).append("' ");			
-        buffer.append("drosselabfluss").append("='").append(getDrosselabfluss()).append("' ");			
-        buffer.append("drossAbflussOpt").append("='").append(getDrossAbflussOpt()).append("' ");			
-        buffer.append("drossUeberTog").append("='").append(getDrossUeberTog()).append("' ");			
-        buffer.append("entlastungsartOpt").append("='").append(getEntlastungsartOpt()).append("' ");			
-        buffer.append("entleerungszeit").append("='").append(getEntleerungszeit()).append("' ");			
-        buffer.append("flaechenbeschickung").append("='").append(getFlaechenbeschickung()).append("' ");			
-        buffer.append("fliesszeit").append("='").append(getFliesszeit()).append("' ");			
-        buffer.append("fremdAbfluss").append("='").append(getFremdAbfluss()).append("' ");			
-        buffer.append("funktionOpt").append("='").append(getFunktionOpt()).append("' ");			
-        buffer.append("kanalVol").append("='").append(getKanalVol()).append("' ");			
-        buffer.append("qrkrit").append("='").append(getQrkrit()).append("' ");			
-        buffer.append("kritischMisch").append("='").append(getKritischMisch()).append("' ");			
-        buffer.append("maxHSchmutzabfluss").append("='").append(getMaxHSchmutzabfluss()).append("' ");			
-        buffer.append("maxHTrocken").append("='").append(getMaxHTrocken()).append("' ");			
-        buffer.append("minDrAbfluss").append("='").append(getMinDrAbfluss()).append("' ");			
-        buffer.append("mischUeberlauf").append("='").append(getMischUeberlauf()).append("' ");			
-        buffer.append("NMindestV").append("='").append(getNMindestV()).append("' ");			
-        buffer.append("NSpezVol").append("='").append(getNSpezVol()).append("' ");			
-        buffer.append("neigung").append("='").append(getNeigung()).append("' ");			
-        buffer.append("rdrosseldurchfluss").append("='").append(getRdrosseldurchfluss()).append("' ");			
-        buffer.append("regenabflDross").append("='").append(getRegenabflDross()).append("' ");			
-        buffer.append("regenabflEntl").append("='").append(getRegenabflEntl()).append("' ");			
-        buffer.append("regenabfluss").append("='").append(getRegenabfluss()).append("' ");			
-        buffer.append("regenabflussDr").append("='").append(getRegenabflussDr()).append("' ");			
-        buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");			
-        buffer.append("rfilterflaeche").append("='").append(getRfilterflaeche()).append("' ");			
-        buffer.append("rfiltergeschwin").append("='").append(getRfiltergeschwin()).append("' ");			
-        buffer.append("rfiltersubstratH").append("='").append(getRfiltersubstratH()).append("' ");			
-        buffer.append("rhydWirkungsgrad").append("='").append(getRhydWirkungsgrad()).append("' ");			
-        buffer.append("rjahrUeh").append("='").append(getRjahrUeh()).append("' ");			
-        buffer.append("rkrit").append("='").append(getRkrit()).append("' ");			
-        buffer.append("rmFilterbelastung").append("='").append(getRmFilterbelastung()).append("' ");			
-        buffer.append("rspezFiltervol").append("='").append(getRspezFiltervol()).append("' ");			
-        buffer.append("rstauvolumen").append("='").append(getRstauvolumen()).append("' ");			
-        buffer.append("rvolSlamelle").append("='").append(getRvolSlamelle()).append("' ");			
-        buffer.append("rwKritAbfluss").append("='").append(getRwKritAbfluss()).append("' ");			
-        buffer.append("rwKritMisch").append("='").append(getRwKritMisch()).append("' ");			
-        buffer.append("rwMindestMisch").append("='").append(getRwMindestMisch()).append("' ");			
-        buffer.append("schmutzAbfluss").append("='").append(getSchmutzAbfluss()).append("' ");			
-        buffer.append("skuAnstroem").append("='").append(getSkuAnstroem()).append("' ");			
-        buffer.append("skuMindestSvol").append("='").append(getSkuMindestSvol()).append("' ");			
-        buffer.append("skuSpezVol").append("='").append(getSkuSpezVol()).append("' ");			
-        buffer.append("spezBeckenvol").append("='").append(getSpezBeckenvol()).append("' ");			
-        buffer.append("spezSpeicher").append("='").append(getSpezSpeicher()).append("' ");			
-        buffer.append("trockenWAbfluss").append("='").append(getTrockenWAbfluss()).append("' ");			
-        buffer.append("speichervolumen").append("='").append(getSpeichervolumen()).append("' ");			
-        buffer.append("WOberflaeche").append("='").append(getWOberflaeche()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");			
-        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("gemeindeId").append("='").append(getGemeindeId()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("kurzbeschreibung").append("='").append(getKurzbeschreibung()).append("' ");
+        buffer.append("entwEinzugsgebOpt").append("='").append(getEntwEinzugsgebOpt()).append("' ");
+        buffer.append("typOpt").append("='").append(getTypOpt()).append("' ");
+        buffer.append("inbetriebnahme").append("='").append(getInbetriebnahme()).append("' ");
+        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");
+        buffer.append("wiederinbetrDat").append("='").append(getWiederinbetrDat()).append("' ");
+        buffer.append("standortid").append("='").append(getStandortid()).append("' ");
+        buffer.append("betreiberid").append("='").append(getBetreiberid()).append("' ");
+        buffer.append("ansprAdrNr").append("='").append(getAnsprAdrNr()).append("' ");
+        buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");
+        buffer.append("e32").append("='").append(getE32()).append("' ");
+        buffer.append("n32").append("='").append(getN32()).append("' ");
+        buffer.append("inNrwTog").append("='").append(getInNrwTog()).append("' ");
+        buffer.append("industrTog").append("='").append(getIndustrTog()).append("' ");
+        buffer.append("nameAusserhalbNrw").append("='").append(getNameAusserhalbNrw()).append("' ");
+        buffer.append("KEntwGebiet").append("='").append(getKEntwGebiet()).append("' ");
+        buffer.append("befFlaecheEgebiet").append("='").append(getBefFlaecheEgebiet()).append("' ");
+        buffer.append("abflussbeiwert").append("='").append(getAbflussbeiwert()).append("' ");
+        buffer.append("befGrad").append("='").append(getBefGrad()).append("' ");
+        buffer.append("undurchFlaeche").append("='").append(getUndurchFlaeche()).append("' ");
+        buffer.append("beckentypOpt").append("='").append(getBeckentypOpt()).append("' ");
+        buffer.append("rohrspeicherTog").append("='").append(getRohrspeicherTog()).append("' ");
+        buffer.append("bauweiseOpt").append("='").append(getBauweiseOpt()).append("' ");
+        buffer.append("drosselOpt").append("='").append(getDrosselOpt()).append("' ");
+        buffer.append("soDrossel").append("='").append(getSoDrossel()).append("' ");
+        buffer.append("beckensteuerungOpt").append("='").append(getBeckensteuerungOpt()).append("' ");
+        buffer.append("AReiEinrichTog").append("='").append(getAReiEinrichTog()).append("' ");
+        buffer.append("messartTog").append("='").append(getMessartTog()).append("' ");
+        buffer.append("drosselTog").append("='").append(getDrosselTog()).append("' ");
+        buffer.append("fuellstandTog").append("='").append(getFuellstandTog()).append("' ");
+        buffer.append("entlastungswasserTog").append("='").append(getEntlastungswasserTog()).append("' ");
+        buffer.append("entlastungsdauerTog").append("='").append(getEntlastungsdauerTog()).append("' ");
+        buffer.append("entlastungshaeufigTog").append("='").append(getEntlastungshaeufigTog()).append("' ");
+        buffer.append("fernMessTog").append("='").append(getFernMessTog()).append("' ");
+        buffer.append("niederschlagTog").append("='").append(getNiederschlagTog()).append("' ");
+        buffer.append("fernStoerTog").append("='").append(getFernStoerTog()).append("' ");
+        buffer.append("hwfreiTog").append("='").append(getHwfreiTog()).append("' ");
+        buffer.append("einstauHaeufig").append("='").append(getEinstauHaeufig()).append("' ");
+        buffer.append("hwEinrichtungTog").append("='").append(getHwEinrichtungTog()).append("' ");
+        buffer.append("hwRueckstauTog").append("='").append(getHwRueckstauTog()).append("' ");
+        buffer.append("hwSchieberTog").append("='").append(getHwSchieberTog()).append("' ");
+        buffer.append("hwPumpwerkTog").append("='").append(getHwPumpwerkTog()).append("' ");
+        buffer.append("hwWeitereTog").append("='").append(getHwWeitereTog()).append("' ");
+        buffer.append("hwSonstText").append("='").append(getHwSonstText()).append("' ");
+        buffer.append("bemesWeitergTog").append("='").append(getBemesWeitergTog()).append("' ");
+        buffer.append("bemessungText").append("='").append(getBemessungText()).append("' ");
+        buffer.append("anordnungOpt").append("='").append(getAnordnungOpt()).append("' ");
+        buffer.append("wasserrechtGenehmigungNr").append("='").append(getWasserrechtGenehmigungNr()).append("' ");
+        buffer.append("beckenartOpt").append("='").append(getBeckenartOpt()).append("' ");
+        buffer.append("beckentiefe").append("='").append(getBeckentiefe()).append("' ");
+        buffer.append("behFlaeche1u2").append("='").append(getBehFlaeche1u2()).append("' ");
+        buffer.append("behFlaeche2u3").append("='").append(getBehFlaeche2u3()).append("' ");
+        buffer.append("betriebsartOpt").append("='").append(getBetriebsartOpt()).append("' ");
+        buffer.append("csb").append("='").append(getCsb()).append("' ");
+        buffer.append("drosselabfluss").append("='").append(getDrosselabfluss()).append("' ");
+        buffer.append("drossAbflussOpt").append("='").append(getDrossAbflussOpt()).append("' ");
+        buffer.append("drossUeberTog").append("='").append(getDrossUeberTog()).append("' ");
+        buffer.append("entlastungsartOpt").append("='").append(getEntlastungsartOpt()).append("' ");
+        buffer.append("entleerungszeit").append("='").append(getEntleerungszeit()).append("' ");
+        buffer.append("flaechenbeschickung").append("='").append(getFlaechenbeschickung()).append("' ");
+        buffer.append("fliesszeit").append("='").append(getFliesszeit()).append("' ");
+        buffer.append("fremdAbfluss").append("='").append(getFremdAbfluss()).append("' ");
+        buffer.append("funktionOpt").append("='").append(getFunktionOpt()).append("' ");
+        buffer.append("kanalVol").append("='").append(getKanalVol()).append("' ");
+        buffer.append("qrkrit").append("='").append(getQrkrit()).append("' ");
+        buffer.append("kritischMisch").append("='").append(getKritischMisch()).append("' ");
+        buffer.append("maxHSchmutzabfluss").append("='").append(getMaxHSchmutzabfluss()).append("' ");
+        buffer.append("maxHTrocken").append("='").append(getMaxHTrocken()).append("' ");
+        buffer.append("minDrAbfluss").append("='").append(getMinDrAbfluss()).append("' ");
+        buffer.append("mischUeberlauf").append("='").append(getMischUeberlauf()).append("' ");
+        buffer.append("NMindestV").append("='").append(getNMindestV()).append("' ");
+        buffer.append("NSpezVol").append("='").append(getNSpezVol()).append("' ");
+        buffer.append("neigung").append("='").append(getNeigung()).append("' ");
+        buffer.append("rdrosseldurchfluss").append("='").append(getRdrosseldurchfluss()).append("' ");
+        buffer.append("regenabflDross").append("='").append(getRegenabflDross()).append("' ");
+        buffer.append("regenabflEntl").append("='").append(getRegenabflEntl()).append("' ");
+        buffer.append("regenabfluss").append("='").append(getRegenabfluss()).append("' ");
+        buffer.append("regenabflussDr").append("='").append(getRegenabflussDr()).append("' ");
+        buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");
+        buffer.append("rfilterflaeche").append("='").append(getRfilterflaeche()).append("' ");
+        buffer.append("rfiltergeschwin").append("='").append(getRfiltergeschwin()).append("' ");
+        buffer.append("rfiltersubstratH").append("='").append(getRfiltersubstratH()).append("' ");
+        buffer.append("rhydWirkungsgrad").append("='").append(getRhydWirkungsgrad()).append("' ");
+        buffer.append("rjahrUeh").append("='").append(getRjahrUeh()).append("' ");
+        buffer.append("rkrit").append("='").append(getRkrit()).append("' ");
+        buffer.append("rmFilterbelastung").append("='").append(getRmFilterbelastung()).append("' ");
+        buffer.append("rspezFiltervol").append("='").append(getRspezFiltervol()).append("' ");
+        buffer.append("rstauvolumen").append("='").append(getRstauvolumen()).append("' ");
+        buffer.append("rvolSlamelle").append("='").append(getRvolSlamelle()).append("' ");
+        buffer.append("rwKritAbfluss").append("='").append(getRwKritAbfluss()).append("' ");
+        buffer.append("rwKritMisch").append("='").append(getRwKritMisch()).append("' ");
+        buffer.append("rwMindestMisch").append("='").append(getRwMindestMisch()).append("' ");
+        buffer.append("schmutzAbfluss").append("='").append(getSchmutzAbfluss()).append("' ");
+        buffer.append("skuAnstroem").append("='").append(getSkuAnstroem()).append("' ");
+        buffer.append("skuMindestSvol").append("='").append(getSkuMindestSvol()).append("' ");
+        buffer.append("skuSpezVol").append("='").append(getSkuSpezVol()).append("' ");
+        buffer.append("spezBeckenvol").append("='").append(getSpezBeckenvol()).append("' ");
+        buffer.append("spezSpeicher").append("='").append(getSpezSpeicher()).append("' ");
+        buffer.append("trockenWAbfluss").append("='").append(getTrockenWAbfluss()).append("' ");
+        buffer.append("speichervolumen").append("='").append(getSpeichervolumen()).append("' ");
+        buffer.append("WOberflaeche").append("='").append(getWOberflaeche()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");
+        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
-    }
-
-    /* Custom code goes below here! */
-
-    /**
-     * @return the sonderbauwerk
-     */
-    public Sonderbauwerk getSonderbauwerk() {
-        if (sonderbauwerk == null) {
-            sonderbauwerk = Sonderbauwerk.findById(getNr());
-        }
-        return sonderbauwerk;
-    }
-    public Set<ZRbfSchutzgueter> getZRfbSchutzguts() {
-        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
-        return sonderbauwerk != null ? sonderbauwerk.getZRbfSchutzgueters() : null;
-    }
-
-    public Set<ZSbVerfahren> getZSbVerfahrens() {
-        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
-        return sonderbauwerk != null ? sonderbauwerk.getZSbVerfahrens() : null;
-    }
-
-    public Set<ZSbRegeln> getZSbRegelns() {
-        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
-        return sonderbauwerk != null ? sonderbauwerk.getZSbRegelns() : null;
-    }
-
-    public Set<SbEntlastung> getSbEntlasungs() {
-        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
-        return sonderbauwerk != null ? sonderbauwerk.getSbEntlastungs() : null;
     }
 
     /**
@@ -1339,7 +1308,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -1373,8 +1342,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * @param copy ESonderbauwerk
      */
     private void copy(ESonderbauwerk copy) {
-        this.nr = copy.getNr();            
-    }    
+        this.nr = copy.getNr();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -1419,5 +1388,55 @@ public class ESonderbauwerk  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+
+    /**
+     * @return the sonderbauwerk
+     */
+    public Sonderbauwerk getSonderbauwerk() {
+        if (sonderbauwerk == null) {
+            sonderbauwerk = Sonderbauwerk.findById(getNr());
+        }
+        return sonderbauwerk;
+    }
+
+    /**
+     * Return the ZRfbSchutzgut instances that are connected to the Sonderbauwerk table entry
+     * on which this instance is based on.
+     * @return the ZRfbSchutzgut instances as set
+     */
+    public Set<ZRbfSchutzgueter> getZRfbSchutzguts() {
+        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
+        return sonderbauwerk != null ? sonderbauwerk.getZRbfSchutzgueters() : null;
+    }
+
+    /**
+     * Return the ZSbVerfahren instances that are connected to the Sonderbauwerk table entry
+     * on which this instance is based on.
+     * @return The ZSbVerfahren instances as set
+     */
+    public Set<ZSbVerfahren> getZSbVerfahrens() {
+        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
+        return sonderbauwerk != null ? sonderbauwerk.getZSbVerfahrens() : null;
+    }
+
+    /**
+     * Return the ZSbRegeln instances that are connected to the Sonderbauwerk table entry
+     * on which this instance is based on.
+     * @return The ZSBRegeln instances as set
+     */
+    public Set<ZSbRegeln> getZSbRegelns() {
+        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
+        return sonderbauwerk != null ? sonderbauwerk.getZSbRegelns() : null;
+    }
+
+    /**
+     * Return the SbEntlastung instances that are connected to the Sonderbauwerk table entry
+     * on which this instance is based on.
+     * @return The SbEntlastung instances as set
+     */
+    public Set<SbEntlastung> getSbEntlasungs() {
+        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
+        return sonderbauwerk != null ? sonderbauwerk.getSbEntlastungs() : null;
+    }
 
 }

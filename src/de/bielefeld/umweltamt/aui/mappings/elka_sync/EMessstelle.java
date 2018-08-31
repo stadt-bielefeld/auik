@@ -203,6 +203,13 @@ public class EMessstelle implements java.io.Serializable {
 		
 	}
 
+    /* Custom code goes below here! */
+
+	/**
+	 * Returns all MsstBerichtspflich instances of the Messstelle table row
+	 * on which this instance is based on.
+	 * @return The instances as set
+	 */
 	public Set<MsstBerichtspflicht> getZuordnungMsstBereichspflichts() {
 		Messstelle mst = Messstelle.findById(getNr());
 		return mst != null ? mst.getMsstBerichtspflichts() : null;
