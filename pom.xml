@@ -5,6 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <properties>
     <jersey.version>2.5</jersey.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
     <!-- hibernate tools & dependencies-->
@@ -232,7 +233,7 @@
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports-fonts</artifactId>
       <version>6.0.0</version>
-	  </dependency>
+	</dependency>
      -->
     <!-- A repacked jasperreports jar file with necessary fonts included, workaround for font problems on Windows systems-->
     <dependency>
@@ -246,7 +247,7 @@
       <version>1.0.19</version>
     </dependency> 
     <!-- 
-	  <dependency>
+	<dependency>
       <groupId>org.hibernate.common</groupId>
       <artifactId>hibernate-commons-annotations</artifactId>
       <version>5.0.0.Final</version>
@@ -374,7 +375,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>9.4.1208.jre7</version>
+      <version>42.2.1</version>
     </dependency>
     <dependency>
       <groupId>com.cloudhopper.proxool</groupId>
@@ -417,7 +418,7 @@
       <artifactId>commons-codec</artifactId>
       <version>1.10</version>
     </dependency>
-  </dependencies>
+ </dependencies>
 
   <!-- jboss public repository-->
   <repositories>
@@ -430,71 +431,67 @@
 
   <build>
     <sourceDirectory>src</sourceDirectory>
-	  <resources>
-	    <resource>
-	      <directory>src</directory>
-		    <excludes>
+	<resources>
+	  <resource>
+	    <directory>src</directory>
+		<excludes>
           <exclude>**/*.java</exclude>
-		    </excludes>
-	    </resource>
-     <!-- If needed: include log4j config -->
-	    <resource>
-		    <directory>src/de/bielefeld/umweltamt/aui/resources/config/</directory>
-	      <includes>
-		      <include>log4j2.xml</include>
-		    </includes>
-	    </resource>
-    </resources>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-	        <source>1.7</source>
-          <target>1.7</target>
-          <excludes>
-            <exclude>**/*.xml</exclude>
-            <exclude>**/*.jasper</exclude>
-            <exclude>**/*.jrml</exclude>
-          </excludes>
-        </configuration>
+		</excludes>
+	  </resource>
+      <!-- If needed: include log4j config -->
+	  <resource>
+		<directory>src/de/bielefeld/umweltamt/aui/resources/config/</directory>
+	    <includes>
+		  <include>log4j2.xml</include>
+		</includes>
+	  </resource>
+     </resources>
+     <plugins>
+       <plugin>
+         <artifactId>maven-compiler-plugin</artifactId>
+         <version>3.1</version>
+         <configuration>
+		   <source>1.6</source>
+           <target>1.6</target>
+         </configuration>
+       </plugin>
+	   <plugin>
+         <artifactId>maven-assembly-plugin</artifactId>
+         <version>2.5.5</version>
+         <configuration>
+           <descriptorRefs>
+             <descriptorRef>jar-with-dependencies</descriptorRef>
+           </descriptorRefs>
+           <archive>
+             <manifest>
+               <mainClass>de.bielefeld.umweltamt.aui.AUIKataster</mainClass>
+             </manifest>
+           </archive>
+         </configuration>
+         <executions>
+           <execution>
+             <id>make-assembly</id>
+             <phase>package</phase>
+             <goals>
+               <goal>single</goal>
+             </goals>
+           </execution>
+         </executions>
       </plugin>
-	    <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.5.5</version>
-          <configuration>
-            <descriptorRefs>
-              <descriptorRef>jar-with-dependencies</descriptorRef>
-            </descriptorRefs>
-            <archive>
-              <manifest>
-                <mainClass>de.bielefeld.umweltamt.aui.AUIKataster</mainClass>
-              </manifest>
-            </archive>
-          </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <!--install local jars via install plugin,
+
+	  <!--install local jars via install plugin,
 		  use "mvn validate" before compiling -->
-	    <plugin>
+	  <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
       	  <version>2.5.1</version>    	  
   		  <executions>
       	  <execution>
-            <id>install-jgoodies</id>
+         	<id>install-jgoodies</id>
             <goals>
               <goal>install-file</goal>
-            </goals>
-            <phase>validate</phase>
+         	</goals>
+         	<phase>validate</phase>
             <configuration>
               <groupId>com.jgoodies</groupId>
               <artifactId>uif_lite</artifactId>
@@ -520,67 +517,61 @@
       	      <generatePom>true</generatePom>
     	    </configuration>
       	  </execution>          
-    	</executions>
+   		</executions>
 	  </plugin>
 	  <plugin>
 	    <artifactId>maven-antrun-plugin</artifactId>
         <version>1.8</version>
         <executions>
-		      <!--run hibernate tools via antrun plugin-->
+		  <!--run hibernate tools via antrun plugin-->
       	  <!-- TODO: run with mvn antrun:run@db2mapping -->
-	        <execution>
-			      <id>db2mapping</id>
-		        <phase>generate-sources</phase>
+	 	  <!-- <execution>
+			<id>db2mapping</id>
+		    <phase>test-compile</phase>
             <configuration>
               <property name="src"        location="src" />
-			        <property name="resources"  value="src/de/bielefeld/umweltamt/aui/resources" />
+			  <property name="resources"  value="src/de/bielefeld/umweltamt/aui/resources" />
               <property name="config"     value="src/de/bielefeld/umweltamt/aui/resources/config" />
-			        <property name="data" location="data" />
-			        <target>
-			          <property name="maven_compile_classpath" refid="maven.compile.classpath"/>
+			  <property name="data" location="data" />
+			  <target>
+			    <property name="maven_compile_classpath" refid="maven.compile.classpath"/>
                 <property name="maven_test_classpath" refid="maven.test.classpath"/>
-				        <path id="hibernatetool.path">
-					        <pathelement path="${maven_compile_classpath}"/>
-					        <pathelement path="${maven_test_classpath}"/>
+				<path id="hibernatetool.path">
+					<pathelement path="${maven_compile_classpath}"/>
+					<pathelement path="${maven_test_classpath}"/>
                 </path>
-				        <taskdef name="hibernatetool"
+				<taskdef name="hibernatetool"
                   classname="org.hibernate.tool.ant.HibernateToolTask"
                 	  classpathref="hibernatetool.path" />
-                <hibernatetool destdir="generated-sources/mappings">
+                
+                <hibernatetool destdir="src">
                   <jdbcconfiguration
                     propertyfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.properties"
                     revengfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.reveng.xml">
                   </jdbcconfiguration>
-                  <hbm2hbmxml />
-                  <hbm2cfgxml destdir="generated-sources/resources/config/generated" />
-                  <hbmtemplate
-                    templatepath="data/templates/auik"
-                    template="Pojo.ftl"
-                    filepattern="{package-name}/{class-name}.java">
-                    <property key="jdk5" value="true" />
-                    <property key="ejb3" value="false" />
-                  </hbmtemplate>
+                  <hbm2hbmxml /> 
+                  <hbm2cfgxml destdir="src/de/bielefeld/umweltamt/aui/resources/config/generated" />
+				  <hbm2java />
                 </hibernatetool>
-		          </target>
+		      </target>
             </configuration>
-		        <goals>
-		          <goal>run</goal>
-		        </goals>
-		      </execution>
-
-		      <execution>
+		    <goals>
+		      <goal>run</goal>
+		    </goals>
+		  </execution>-->
+		  <execution>
             <id>copy-jars</id>
             <phase>install</phase>
             <configuration>
               <target>
                 <tstamp>
-                  <format property="today" pattern="yyyy-MM-dd"/>
+                  <format property="today" pattern="yyyyMMdd"/>
                 </tstamp>
-                <copy todir="jars">
+                <copy todir="X:\Applikationen\Anlagenkataster\AUIK">
                   <fileset dir="target">
                     <include name="*.jar"/>
                   </fileset>
-                  <globmapper from="*.jar" to="*-${today}.jar"/>
+                  <globmapper from="*.jar" to="auik${today}.jar"/>
                 </copy>
               </target>
             </configuration>
@@ -588,75 +579,44 @@
               <goal>run</goal>
             </goals>
           </execution>
-          <!--Compile jasper files-->
           
-          <execution>
-            <id>generate-jasper-files</id>
-            <phase>compile</phase>
-            <configuration>
-              <target>
-                <echo message="Running Jasper ant task"/>
-                <property name="reports" value="src/de/bielefeld/umweltamt/aui/resources/reports"/>
-                <property name="maven_compile_classpath" refid="maven.compile.classpath" />
-                <path id="classpath">
-                  <pathelement path="${maven_compile_classpath}" />
-                </path>
-                <taskdef name="jrc"
-                  classname="net.sf.jasperreports.ant.JRAntCompileTask">
-                  <classpath refid="classpath" />
-                </taskdef>
-                <jrc destdir="${reports}"
-                  tempdir="${reports}">
-                  <src>
-                    <fileset dir="${reports}">
-                      <include name="**/*.jrxml" />
-                    </fileset>
-                  </src>
-                  <classpath refid="classpath" />
-                </jrc>
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-		    </executions>
+		</executions>		
       </plugin>
     </plugins>
-    <pluginManagement>
-      <plugins>
-      <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-      <plugin>
-        <groupId>org.eclipse.m2e</groupId>
-        <artifactId>lifecycle-mapping</artifactId>
-      	<version>1.0.0</version>
-      	<configuration>
-      		<lifecycleMappingMetadata>
-      			<pluginExecutions>
-      				<pluginExecution>
-      						<pluginExecutionFilter>
-      							<groupId>
-      								org.apache.maven.plugins
-      							</groupId>
-      							<artifactId>
-      								maven-install-plugin
-      							</artifactId>
-      							<versionRange>
-      									[2.5.1,)
-      							</versionRange>
-      							<goals>
-      								<goal>install-file</goal>
-      							</goals>
-      						</pluginExecutionFilter>
-      						<action>
-      							<ignore></ignore>
-      						</action>
-      					</pluginExecution>
-      				</pluginExecutions>
-      			</lifecycleMappingMetadata>
-      		</configuration>
-      	</plugin>
-      </plugins>
+     <pluginManagement>
+     	<plugins>
+     		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+     		<plugin>
+     			<groupId>org.eclipse.m2e</groupId>
+     			<artifactId>lifecycle-mapping</artifactId>
+     			<version>1.0.0</version>
+     			<configuration>
+     				<lifecycleMappingMetadata>
+     					<pluginExecutions>
+     						<pluginExecution>
+     							<pluginExecutionFilter>
+     								<groupId>
+     									org.apache.maven.plugins
+     								</groupId>
+     								<artifactId>
+     									maven-install-plugin
+     								</artifactId>
+     								<versionRange>
+     									[2.5.1,)
+     								</versionRange>
+     								<goals>
+     									<goal>install-file</goal>
+     								</goals>
+     							</pluginExecutionFilter>
+     							<action>
+     								<ignore></ignore>
+     							</action>
+     						</pluginExecution>
+     					</pluginExecutions>
+     				</lifecycleMappingMetadata>
+     			</configuration>
+     		</plugin>
+     	</plugins>
      </pluginManagement>
   </build>
 </project>
