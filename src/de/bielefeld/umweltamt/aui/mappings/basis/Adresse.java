@@ -27,7 +27,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.HashSet;
@@ -69,13 +69,15 @@ public class Adresse  implements java.io.Serializable {
     private String betrvorname;
     private boolean enabled;
     private boolean deleted;
-    private String auikWzCode;
     private boolean datenschutzAwsv;
     private boolean datenschutzEsatzung;
     private boolean datenschutzWhg;
+    private String auikWzCode;
     private Date erstellDat;
     private Set<Objekt> objektsForBetreiberid = new HashSet<Objekt>(0);
     private Set<Standort> standorts = new HashSet<Standort>(0);
+    private Integer iglId;
+    private Set<ZBetriebMassnahme> ZBetriebMassnahmes = new HashSet<ZBetriebMassnahme>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -95,7 +97,12 @@ public class Adresse  implements java.io.Serializable {
 
     /** Full constructor */
     public Adresse(
-        Integer id, Wirtschaftszweig wirtschaftszweig, String betranrede, String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf, String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, String telefon, String telefax, String email, String bemerkungen, Date revidatum, String revihandz, String kassenzeichen, String betrvorname, boolean enabled, boolean deleted, String auikWzCode, Date erstellDat, Set<Standort> standorts, Set<Objekt> objektsForBetreiberid) {
+            Integer id, Objekt objekt, Wirtschaftszweig wirtschaftszweig, String betranrede,
+            String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf,
+            String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort,
+            String telefon, String telefax, String email, String bemerkungen, Date revidatum,
+            String revihandz, String kassenzeichen, String betrvorname, boolean enabled,
+            boolean deleted, String auikWzCode, Date erstellDat, Integer iglId, Set<Standort> standorts, Set<Objekt> objektsForBetreiberid, Set<ZBetriebMassnahme> ZBetriebMassnahmes) {
         this.id = id;
         this.wirtschaftszweig = wirtschaftszweig;
         this.betranrede = betranrede;
@@ -122,7 +129,9 @@ public class Adresse  implements java.io.Serializable {
         this.auikWzCode = auikWzCode;
         this.erstellDat = erstellDat;
         this.standorts = standorts;
+        this.iglId = iglId;
         this.objektsForBetreiberid = objektsForBetreiberid;
+        this.ZBetriebMassnahmes = ZBetriebMassnahmes;
     }
 
     /* Setter and getter methods */
@@ -310,7 +319,31 @@ public class Adresse  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    public String getAuikWzCode() {
+    public Boolean getDatenschutzAwsv() {
+	    return this.datenschutzAwsv;
+	}
+
+	public void setDatenschutzAwsv(boolean datenschutzAwsv) {
+	    this.datenschutzAwsv = datenschutzAwsv;
+	}
+
+	public Boolean getDatenschutzEsatzung() {
+	    return this.datenschutzEsatzung;
+	}
+
+	public void setDatenschutzEsatzung(boolean datenschutzEsatzung) {
+	    this.datenschutzEsatzung = datenschutzEsatzung;
+	}
+
+	public Boolean getDatenschutzWhg() {
+	    return this.datenschutzWhg;
+	}
+
+	public void setDatenschutzWhg(boolean datenschutzWhg) {
+	    this.datenschutzWhg = datenschutzWhg;
+	}
+
+	public String getAuikWzCode() {
         return this.auikWzCode;
     }
 
@@ -318,36 +351,20 @@ public class Adresse  implements java.io.Serializable {
         this.auikWzCode = auikWzCode;
     }
 
-    public Boolean getDatenschutzAwsv() {
-		return datenschutzAwsv;
-	}
-
-	public void setDatenschutzAwsv(boolean datenschutzAwsv) {
-		this.datenschutzAwsv = datenschutzAwsv;
-	}
-
-	public Boolean getDatenschutzEsatzung() {
-		return datenschutzEsatzung;
-	}
-
-	public void setDatenschutzEsatzung(boolean datenschutzEsatzung) {
-		this.datenschutzEsatzung = datenschutzEsatzung;
-	}
-
-	public Boolean getDatenschutzWhg() {
-		return datenschutzWhg;
-	}
-
-	public void setDatenschutzWhg(boolean datenschutzWhg) {
-		this.datenschutzWhg = datenschutzWhg;
-	}
-
-	public Date getErstellDat() {
+    public Date getErstellDat() {
         return this.erstellDat;
     }
 
     public void setErstellDat(Date erstellDat) {
         this.erstellDat = erstellDat;
+    }
+
+    public Integer getIglId() {
+        return this.iglId;
+    }
+
+    public void setIglId(Integer iglId) {
+        this.iglId = iglId;
     }
 
     public Set<Objekt> getObjektsForBetreiberid() {
@@ -366,8 +383,15 @@ public class Adresse  implements java.io.Serializable {
 		this.standorts = standorts;
 	}
 
+    public Set<ZBetriebMassnahme> getZBetriebMassnahmes() {
+        return this.ZBetriebMassnahmes;
+    }
 
-	/**
+    public void setZBetriebMassnahmes(Set<ZBetriebMassnahme> ZBetriebMassnahmes) {
+        this.ZBetriebMassnahmes = ZBetriebMassnahmes;
+    }
+
+    /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
      * string, call on <code>toGuiString</code> for a gui representation or do
@@ -413,7 +437,9 @@ public class Adresse  implements java.io.Serializable {
         buffer.append("auikWzCode").append("='").append(getAuikWzCode()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
         buffer.append("Standorts").append("='").append(getStandorts()).append("' ");			
-         buffer.append("objektsForBetreiberid").append("='").append(getObjektsForBetreiberid()).append("' ");			
+        buffer.append("objektsForBetreiberid").append("='").append(getObjektsForBetreiberid()).append("' ");			
+        buffer.append("iglId").append("='").append(getIglId()).append("' ");			
+        buffer.append("ZBetriebMassnahmes").append("='").append(getZBetriebMassnahmes()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -505,7 +531,9 @@ public class Adresse  implements java.io.Serializable {
         this.auikWzCode = copy.getAuikWzCode();            
         this.erstellDat = copy.getErstellDat();            
         this.standorts = copy.getStandorts();            
+        this.iglId = copy.getIglId();            
         this.objektsForBetreiberid = copy.getObjektsForBetreiberid();            
+        this.ZBetriebMassnahmes = copy.getZBetriebMassnahmes();            
     }    
 
     /**

@@ -47,9 +47,9 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forEntwaesserungsgrundstueck;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer nr;
+    private Long nr;
     private Objekt objekt;
     private Wasserrecht wasserrecht;
     private boolean erlFreiElTog;
@@ -68,6 +68,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private Date aktualDat;
     private long adrNr;
     private String externalNr;
+    private Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs = new HashSet<ZEntwaessgrAbwasbehverf>(0);
     private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
 
     /** Logging */
@@ -80,7 +81,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Entwaesserungsgrundstueck(
-    	Integer nr, Objekt objekt, boolean erlFreiElTog, Date erstellDat, Integer einlBereichOpt, Date aktualDat, long adrNr) {
+        long nr, Objekt objekt, boolean erlFreiElTog, Date erstellDat, Integer einlBereichOpt, Date aktualDat, long adrNr) {
         this.nr = nr;
         this.objekt = objekt;
         this.erlFreiElTog = erlFreiElTog;
@@ -92,7 +93,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public Entwaesserungsgrundstueck(
-    	Integer nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, long adrNr, String externalNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, long adrNr, String externalNr, Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
         this.nr = nr;
         this.objekt = objekt;
         this.wasserrecht = wasserrecht;
@@ -112,15 +113,16 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.aktualDat = aktualDat;
         this.adrNr = adrNr;
         this.externalNr = externalNr;
+        this.ZEntwaessgrAbwasbehverfs = ZEntwaessgrAbwasbehverfs;
         this.afsNiederschlagswassers = afsNiederschlagswassers;
     }
 
     /* Setter and getter methods */
-    public Integer getNr() {
+    public Long getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(long nr) {
         this.nr = nr;
     }
 
@@ -268,6 +270,14 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.externalNr = externalNr;
     }
 
+    public Set<ZEntwaessgrAbwasbehverf> getZEntwaessgrAbwasbehverfs() {
+        return this.ZEntwaessgrAbwasbehverfs;
+    }
+
+    public void setZEntwaessgrAbwasbehverfs(Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs) {
+        this.ZEntwaessgrAbwasbehverfs = ZEntwaessgrAbwasbehverfs;
+    }
+
     public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
         return this.afsNiederschlagswassers;
     }
@@ -285,7 +295,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -294,28 +304,29 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("nr").append("='").append(getNr()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("wasserrecht").append("='").append(getWasserrecht()).append("' ");			
-        buffer.append("erlFreiElTog").append("='").append(isErlFreiElTog()).append("' ");			
-        buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");			
-        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");			
-        buffer.append("regenhaeufigkeit").append("='").append(getRegenhaeufigkeit()).append("' ");			
-        buffer.append("regendauer").append("='").append(getRegendauer()).append("' ");			
-        buffer.append("grEntwGebiet").append("='").append(getGrEntwGebiet()).append("' ");			
-        buffer.append("dtvWert").append("='").append(getDtvWert()).append("' ");			
-        buffer.append("wasserableitungsstreckeOpt").append("='").append(getWasserableitungsstreckeOpt()).append("' ");			
-        buffer.append("nameEtwGebiet").append("='").append(getNameEtwGebiet()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("einlBereichOpt").append("='").append(getEinlBereichOpt()).append("' ");			
-        buffer.append("abwbeskonNr").append("='").append(getAbwbeskonNr()).append("' ");			
-        buffer.append("einbauartOpt").append("='").append(getEinbauartOpt()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("adrNr").append("='").append(getAdrNr()).append("' ");			
-        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
-        buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");
+        buffer.append("wasserrecht").append("='").append(getWasserrecht()).append("' ");
+        buffer.append("erlFreiElTog").append("='").append(isErlFreiElTog()).append("' ");
+        buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");
+        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");
+        buffer.append("regenhaeufigkeit").append("='").append(getRegenhaeufigkeit()).append("' ");
+        buffer.append("regendauer").append("='").append(getRegendauer()).append("' ");
+        buffer.append("grEntwGebiet").append("='").append(getGrEntwGebiet()).append("' ");
+        buffer.append("dtvWert").append("='").append(getDtvWert()).append("' ");
+        buffer.append("wasserableitungsstreckeOpt").append("='").append(getWasserableitungsstreckeOpt()).append("' ");
+        buffer.append("nameEtwGebiet").append("='").append(getNameEtwGebiet()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("einlBereichOpt").append("='").append(getEinlBereichOpt()).append("' ");
+        buffer.append("abwbeskonNr").append("='").append(getAbwbeskonNr()).append("' ");
+        buffer.append("einbauartOpt").append("='").append(getEinbauartOpt()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("adrNr").append("='").append(getAdrNr()).append("' ");
+        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");
+        buffer.append("ZEntwaessgrAbwasbehverfs").append("='").append(getZEntwaessgrAbwasbehverfs()).append("' ");
+        buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -347,7 +358,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -381,27 +392,28 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
      * @param copy Entwaesserungsgrundstueck
      */
     private void copy(Entwaesserungsgrundstueck copy) {
-        this.nr = copy.getNr();            
-        this.objekt = copy.getObjekt();            
-        this.wasserrecht = copy.getWasserrecht();            
-        this.erlFreiElTog = copy.isErlFreiElTog();            
-        this.regenspende = copy.getRegenspende();            
-        this.bemerkung = copy.getBemerkung();            
-        this.regenhaeufigkeit = copy.getRegenhaeufigkeit();            
-        this.regendauer = copy.getRegendauer();            
-        this.grEntwGebiet = copy.getGrEntwGebiet();            
-        this.dtvWert = copy.getDtvWert();            
-        this.wasserableitungsstreckeOpt = copy.getWasserableitungsstreckeOpt();            
-        this.nameEtwGebiet = copy.getNameEtwGebiet();            
-        this.erstellDat = copy.getErstellDat();            
-        this.einlBereichOpt = copy.getEinlBereichOpt();            
-        this.abwbeskonNr = copy.getAbwbeskonNr();            
-        this.einbauartOpt = copy.getEinbauartOpt();            
-        this.aktualDat = copy.getAktualDat();            
-        this.adrNr = copy.getAdrNr();            
-        this.externalNr = copy.getExternalNr();            
-        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();            
-    }    
+        this.nr = copy.getNr();
+        this.objekt = copy.getObjekt();
+        this.wasserrecht = copy.getWasserrecht();
+        this.erlFreiElTog = copy.isErlFreiElTog();
+        this.regenspende = copy.getRegenspende();
+        this.bemerkung = copy.getBemerkung();
+        this.regenhaeufigkeit = copy.getRegenhaeufigkeit();
+        this.regendauer = copy.getRegendauer();
+        this.grEntwGebiet = copy.getGrEntwGebiet();
+        this.dtvWert = copy.getDtvWert();
+        this.wasserableitungsstreckeOpt = copy.getWasserableitungsstreckeOpt();
+        this.nameEtwGebiet = copy.getNameEtwGebiet();
+        this.erstellDat = copy.getErstellDat();
+        this.einlBereichOpt = copy.getEinlBereichOpt();
+        this.abwbeskonNr = copy.getAbwbeskonNr();
+        this.einbauartOpt = copy.getEinbauartOpt();
+        this.aktualDat = copy.getAktualDat();
+        this.adrNr = copy.getAdrNr();
+        this.externalNr = copy.getExternalNr();
+        this.ZEntwaessgrAbwasbehverfs = copy.getZEntwaessgrAbwasbehverfs();
+        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -446,11 +458,9 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-
     public static Entwaesserungsgrundstueck findByObjektId(java.lang.Integer id) {
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Entwaesserungsgrundstueck> list = objekt.getEntwaesserungsgrundstuecks();
         return list.iterator().next();
     }
-
 }

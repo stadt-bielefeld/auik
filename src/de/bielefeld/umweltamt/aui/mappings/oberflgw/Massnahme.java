@@ -29,7 +29,9 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class that represents a row in the Massnahme database table.<br>
@@ -43,7 +45,7 @@ public class Massnahme  implements java.io.Serializable {
         DatabaseSerialVersionUID.forMassnahme;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer nr;
+    private Long nr;
     private Long stoffNr;
     private Long gruppeNr;
     private String massnahmeStoff;
@@ -53,6 +55,7 @@ public class Massnahme  implements java.io.Serializable {
     private Date erstellDat;
     private Date aktualDat;
     private String externalNr;
+    private Set<ZBetriebMassnahme> ZBetriebMassnahmes = new HashSet<ZBetriebMassnahme>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -64,7 +67,7 @@ public class Massnahme  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Massnahme(
-    	Integer nr, Date erstellDat, Date aktualDat) {
+        long nr, Date erstellDat, Date aktualDat) {
         this.nr = nr;
         this.erstellDat = erstellDat;
         this.aktualDat = aktualDat;
@@ -72,7 +75,7 @@ public class Massnahme  implements java.io.Serializable {
 
     /** Full constructor */
     public Massnahme(
-    	Integer nr, Long stoffNr, Long gruppeNr, String massnahmeStoff, Date stoffEintragsDat, String ergebnisMassnahme, Date ergebnisAm, Date erstellDat, Date aktualDat, String externalNr) {
+        long nr, Long stoffNr, Long gruppeNr, String massnahmeStoff, Date stoffEintragsDat, String ergebnisMassnahme, Date ergebnisAm, Date erstellDat, Date aktualDat, String externalNr, Set<ZBetriebMassnahme> ZBetriebMassnahmes) {
         this.nr = nr;
         this.stoffNr = stoffNr;
         this.gruppeNr = gruppeNr;
@@ -83,14 +86,15 @@ public class Massnahme  implements java.io.Serializable {
         this.erstellDat = erstellDat;
         this.aktualDat = aktualDat;
         this.externalNr = externalNr;
+        this.ZBetriebMassnahmes = ZBetriebMassnahmes;
     }
 
     /* Setter and getter methods */
-    public Integer getNr() {
+    public Long getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(long nr) {
         this.nr = nr;
     }
 
@@ -166,6 +170,14 @@ public class Massnahme  implements java.io.Serializable {
         this.externalNr = externalNr;
     }
 
+    public Set<ZBetriebMassnahme> getZBetriebMassnahmes() {
+        return this.ZBetriebMassnahmes;
+    }
+
+    public void setZBetriebMassnahmes(Set<ZBetriebMassnahme> ZBetriebMassnahmes) {
+        this.ZBetriebMassnahmes = ZBetriebMassnahmes;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -196,6 +208,7 @@ public class Massnahme  implements java.io.Serializable {
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
         buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
+        buffer.append("ZBetriebMassnahmes").append("='").append(getZBetriebMassnahmes()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -271,6 +284,7 @@ public class Massnahme  implements java.io.Serializable {
         this.erstellDat = copy.getErstellDat();            
         this.aktualDat = copy.getAktualDat();            
         this.externalNr = copy.getExternalNr();            
+        this.ZBetriebMassnahmes = copy.getZBetriebMassnahmes();            
     }    
 
     /**

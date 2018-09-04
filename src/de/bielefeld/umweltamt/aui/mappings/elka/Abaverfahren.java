@@ -27,7 +27,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.atl.MetaParameter;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.HashSet;
@@ -50,7 +50,8 @@ public class Abaverfahren  implements java.io.Serializable {
     private Date aktualDat;
     private Date erstellDat;
     private String bezeichnung;
-    private Set<Aba> abas = new HashSet<Aba>(0);
+    private Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs = new HashSet<ZEntwaessgrAbwasbehverf>(0);
+    private Set<ZAbaVerfahren> ZAbaVerfahrens = new HashSet<ZAbaVerfahren>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -68,11 +69,13 @@ public class Abaverfahren  implements java.io.Serializable {
 
     /** Full constructor */
     public Abaverfahren(
-        Integer nr, Date aktualDat, Date erstellDat, String bezeichnung) {
+        Integer nr, Date aktualDat, Date erstellDat, String bezeichnung, Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs, Set<ZAbaVerfahren> ZAbaVerfahrens) {
         this.nr = nr;
         this.aktualDat = aktualDat;
         this.erstellDat = erstellDat;
         this.bezeichnung = bezeichnung;
+        this.ZEntwaessgrAbwasbehverfs = ZEntwaessgrAbwasbehverfs;
+        this.ZAbaVerfahrens = ZAbaVerfahrens;
     }
 
     /* Setter and getter methods */
@@ -108,12 +111,20 @@ public class Abaverfahren  implements java.io.Serializable {
         this.bezeichnung = bezeichnung;
     }
 
-    public Set<Aba> getAbas() {
-        return this.abas;
+    public Set<ZEntwaessgrAbwasbehverf> getZEntwaessgrAbwasbehverfs() {
+        return this.ZEntwaessgrAbwasbehverfs;
     }
 
-    public void setAbas(Set<Aba> abas) {
-        this.abas = abas;
+    public void setZEntwaessgrAbwasbehverfs(Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs) {
+        this.ZEntwaessgrAbwasbehverfs = ZEntwaessgrAbwasbehverfs;
+    }
+
+    public Set<ZAbaVerfahren> getZAbaVerfahrens() {
+        return this.ZAbaVerfahrens;
+    }
+
+    public void setZAbaVerfahrens(Set<ZAbaVerfahren> ZAbaVerfahrens) {
+        this.ZAbaVerfahrens = ZAbaVerfahrens;
     }
 
     /**
@@ -140,6 +151,8 @@ public class Abaverfahren  implements java.io.Serializable {
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
         buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
+        buffer.append("ZEntwaessgrAbwasbehverfs").append("='").append(getZEntwaessgrAbwasbehverfs()).append("' ");			
+        buffer.append("ZAbaVerfahrens").append("='").append(getZAbaVerfahrens()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -209,6 +222,8 @@ public class Abaverfahren  implements java.io.Serializable {
         this.aktualDat = copy.getAktualDat();            
         this.erstellDat = copy.getErstellDat();            
         this.bezeichnung = copy.getBezeichnung();            
+        this.ZEntwaessgrAbwasbehverfs = copy.getZEntwaessgrAbwasbehverfs();            
+        this.ZAbaVerfahrens = copy.getZAbaVerfahrens();            
     }    
 
     /**
@@ -254,13 +269,7 @@ public class Abaverfahren  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-    
-    /**
-     * Get a string representation for the gui
-     * @return String
-     */
     public String toGuiString() {
         return getBezeichnung();
     }
-
 }

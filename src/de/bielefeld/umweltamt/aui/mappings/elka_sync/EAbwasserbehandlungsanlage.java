@@ -29,6 +29,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
+import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
+import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
@@ -38,176 +41,176 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  */
 public class EAbwasserbehandlungsanlage implements java.io.Serializable {
 
-	private Integer nr;
-	private Integer origNr;
-	private EStandort standort;
-	private EAdresse adresseByStoAdrNr;
-	private EAdresse adresseByBetreibAdrNr;
-	private Set<EWasserrecht> wasserrechts = new HashSet<EWasserrecht>(0);
-	private String bezeichnung;
-	private Float e32;
-	private Float n32;
-	private Boolean wartungsvertragTog;
-	private Boolean genehmpflichtigTog;
-	private Boolean einzelabnahmeTog;
-	private String bemerkung;
-	private Date aktualDat;
-	private Date erstellDat;
-	private String herkunft;
+    private Integer nr;
+    private Integer origNr;
+    private EStandort standort;
+    private EAdresse adresseByStoAdrNr;
+    private EAdresse adresseByBetreibAdrNr;
+    private Set<EWasserrecht> wasserrechts = new HashSet<EWasserrecht>(0);
+    private String bezeichnung;
+    private Float e32;
+    private Float n32;
+    private Boolean wartungsvertragTog;
+    private Boolean genehmpflichtigTog;
+    private Boolean einzelabnahmeTog;
+    private String bemerkung;
+    private Date aktualDat;
+    private Date erstellDat;
+    private String herkunft;
 
-	public EAbwasserbehandlungsanlage() {
-	}
+    public EAbwasserbehandlungsanlage() {
+    }
 
-	public EAbwasserbehandlungsanlage(Integer nr) {
-		this.nr = nr;
-	}
+    public EAbwasserbehandlungsanlage(Integer nr) {
+        this.nr = nr;
+    }
 
-	public EAbwasserbehandlungsanlage(Integer nr, Integer origNr,
-			EStandort standort, EAdresse adresseByStoAdrNr,
-			EAdresse adresseByBetreibAdrNr, String bezeichnung, Float e32,
-			Float n32, Boolean wartungsvertragTog,
-			Boolean genehmpflichtigTog, Boolean einzelabnahmeTog,
-			String bemerkung, Date aktualDat, Date erstellDat,
-			String herkunft, Set<EWasserrecht> wasserrechts) {
-		this.nr = nr;
-		this.origNr = origNr;
-		this.standort = standort;
-		this.adresseByStoAdrNr = adresseByStoAdrNr;
-		this.adresseByBetreibAdrNr = adresseByBetreibAdrNr;
-		this.bezeichnung = bezeichnung;
-		this.e32 = e32;
-		this.n32 = n32;
-		this.wartungsvertragTog = wartungsvertragTog;
-		this.genehmpflichtigTog = genehmpflichtigTog;
-		this.einzelabnahmeTog = einzelabnahmeTog;
-		this.bemerkung = bemerkung;
-		this.aktualDat = aktualDat;
-		this.erstellDat = erstellDat;
-		this.herkunft = herkunft;
-		this.setWasserrechts(wasserrechts);
-	}
+    public EAbwasserbehandlungsanlage(Integer nr, Integer origNr,
+            EStandort standort, EAdresse adresseByStoAdrNr,
+            EAdresse adresseByBetreibAdrNr, String bezeichnung, Float e32,
+            Float n32, Boolean wartungsvertragTog,
+            Boolean genehmpflichtigTog, Boolean einzelabnahmeTog,
+            String bemerkung, Date aktualDat, Date erstellDat,
+            String herkunft, Set<EWasserrecht> wasserrechts) {
+        this.nr = nr;
+        this.origNr = origNr;
+        this.standort = standort;
+        this.adresseByStoAdrNr = adresseByStoAdrNr;
+        this.adresseByBetreibAdrNr = adresseByBetreibAdrNr;
+        this.bezeichnung = bezeichnung;
+        this.e32 = e32;
+        this.n32 = n32;
+        this.wartungsvertragTog = wartungsvertragTog;
+        this.genehmpflichtigTog = genehmpflichtigTog;
+        this.einzelabnahmeTog = einzelabnahmeTog;
+        this.bemerkung = bemerkung;
+        this.aktualDat = aktualDat;
+        this.erstellDat = erstellDat;
+        this.herkunft = herkunft;
+        this.setWasserrechts(wasserrechts);
+    }
 
-	public Integer getNr() {
-		return this.nr;
-	}
+    public Integer getNr() {
+        return this.nr;
+    }
 
-	public void setNr(Integer nr) {
-		this.nr = nr;
-	}
-	
-	@JsonIgnore
-	public Integer getOrigNr() {
-		return this.origNr;
-	}
-	
-	@JsonIgnore
-	public void setOrigNr(Integer origNr) {
-		this.origNr = origNr;
-	}
+    public void setNr(Integer nr) {
+        this.nr = nr;
+    }
 
-	public EStandort getStandort() {
-		return this.standort;
-	}
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return this.origNr;
+    }
 
-	public void setStandort(EStandort standort) {
-		this.standort = standort;
-	}
+    @JsonIgnore
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
+    }
 
-	public EAdresse getAdresseByStoAdrNr() {
-		return this.adresseByStoAdrNr;
-	}
+    public EStandort getStandort() {
+        return this.standort;
+    }
 
-	public void setAdresseByStoAdrNr(EAdresse adresseByStoAdrNr) {
-		this.adresseByStoAdrNr = adresseByStoAdrNr;
-	}
+    public void setStandort(EStandort standort) {
+        this.standort = standort;
+    }
 
-	public EAdresse getAdresseByBetreibAdrNr() {
-		return this.adresseByBetreibAdrNr;
-	}
+    public EAdresse getAdresseByStoAdrNr() {
+        return this.adresseByStoAdrNr;
+    }
 
-	public void setAdresseByBetreibAdrNr(EAdresse adresseByBetreibAdrNr) {
-		this.adresseByBetreibAdrNr = adresseByBetreibAdrNr;
-	}
+    public void setAdresseByStoAdrNr(EAdresse adresseByStoAdrNr) {
+        this.adresseByStoAdrNr = adresseByStoAdrNr;
+    }
 
-	public String getBezeichnung() {
-		return this.bezeichnung;
-	}
+    public EAdresse getAdresseByBetreibAdrNr() {
+        return this.adresseByBetreibAdrNr;
+    }
 
-	public void setBezeichnung(String bezeichnung) {
-		this.bezeichnung = bezeichnung;
-	}
+    public void setAdresseByBetreibAdrNr(EAdresse adresseByBetreibAdrNr) {
+        this.adresseByBetreibAdrNr = adresseByBetreibAdrNr;
+    }
 
-	public Integer getE32() {
-		return Math.round(this.e32);
-	}
+    public String getBezeichnung() {
+        return this.bezeichnung;
+    }
 
-	public void setE32(Float e32) {
-		this.e32 = e32;
-	}
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
 
-	public Integer getN32() {
-		return Math.round(this.n32);
-	}
+    public Integer getE32() {
+        return Math.round(this.e32);
+    }
 
-	public void setN32(Float n32) {
-		this.n32 = n32;
-	}
+    public void setE32(Float e32) {
+        this.e32 = e32;
+    }
 
-	public Boolean getWartungsvertragTog() {
-		return this.wartungsvertragTog;
-	}
+    public Integer getN32() {
+        return Math.round(this.n32);
+    }
 
-	public void setWartungsvertragTog(Boolean wartungsvertragTog) {
-		this.wartungsvertragTog = wartungsvertragTog;
-	}
+    public void setN32(Float n32) {
+        this.n32 = n32;
+    }
 
-	public Boolean getGenehmpflichtigTog() {
-		return this.genehmpflichtigTog;
-	}
+    public Boolean getWartungsvertragTog() {
+        return this.wartungsvertragTog;
+    }
 
-	public void setGenehmpflichtigTog(Boolean genehmpflichtigTog) {
-		this.genehmpflichtigTog = genehmpflichtigTog;
-	}
+    public void setWartungsvertragTog(Boolean wartungsvertragTog) {
+        this.wartungsvertragTog = wartungsvertragTog;
+    }
 
-	public Boolean getEinzelabnahmeTog() {
-		return this.einzelabnahmeTog;
-	}
+    public Boolean getGenehmpflichtigTog() {
+        return this.genehmpflichtigTog;
+    }
 
-	public void setEinzelabnahmeTog(Boolean einzelabnahmeTog) {
-		this.einzelabnahmeTog = einzelabnahmeTog;
-	}
+    public void setGenehmpflichtigTog(Boolean genehmpflichtigTog) {
+        this.genehmpflichtigTog = genehmpflichtigTog;
+    }
 
-	public String getBemerkung() {
-		return this.bemerkung;
-	}
+    public Boolean getEinzelabnahmeTog() {
+        return this.einzelabnahmeTog;
+    }
 
-	public void setBemerkung(String bemerkung) {
-		this.bemerkung = bemerkung;
-	}
+    public void setEinzelabnahmeTog(Boolean einzelabnahmeTog) {
+        this.einzelabnahmeTog = einzelabnahmeTog;
+    }
 
-	public Date getAktualDat() {
-		return this.aktualDat;
-	}
+    public String getBemerkung() {
+        return this.bemerkung;
+    }
 
-	public void setAktualDat(Date aktualDat) {
-		this.aktualDat = aktualDat;
-	}
+    public void setBemerkung(String bemerkung) {
+        this.bemerkung = bemerkung;
+    }
 
-	public Date getErstellDat() {
-		return this.erstellDat;
-	}
+    public Date getAktualDat() {
+        return this.aktualDat;
+    }
 
-	public void setErstellDat(Date erstellDat) {
-		this.erstellDat = erstellDat;
-	}
+    public void setAktualDat(Date aktualDat) {
+        this.aktualDat = aktualDat;
+    }
 
-	public String getHerkunft() {
-		return this.herkunft;
-	}
+    public Date getErstellDat() {
+        return this.erstellDat;
+    }
 
-	public void setHerkunft(String herkunft) {
-		this.herkunft = herkunft;
-	}
+    public void setErstellDat(Date erstellDat) {
+        this.erstellDat = erstellDat;
+    }
+
+    public String getHerkunft() {
+        return this.herkunft;
+    }
+
+    public void setHerkunft(String herkunft) {
+        this.herkunft = herkunft;
+    }
 
     /**
      * Update this EAbwasserbehandlungsanlage with its new values.<br>
@@ -252,12 +255,30 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
         return DatabaseQuery.getAll(new EAbwasserbehandlungsanlage());
     }
 
-	public Set<EWasserrecht> getWasserrechts() {
-		return wasserrechts;
-	}
+    public Set<EWasserrecht> getWasserrechts() {
+        return wasserrechts;
+    }
 
-	public void setWasserrechts(Set<EWasserrecht> wasserrechts) {
-		this.wasserrechts = wasserrechts;
-	}
+    public void setWasserrechts(Set<EWasserrecht> wasserrechts) {
+        this.wasserrechts = wasserrechts;
+    }
 
+    /* Custom code goes below here! */
+
+    /**
+     * Returns the Abaverfahren instances connected to the aba instance
+     * on which this instance is based on.
+     * @return The instances as set
+     */
+    public Set<Abaverfahren> getAbwasserbehandlungsverfahrens() {
+        Aba aba = Aba.findById(getNr());
+        if (aba == null) {
+            return null;
+        }
+        Set<Abaverfahren> abaverfahrens = new HashSet<Abaverfahren>(0);
+        for (ZAbaVerfahren zav : aba.getZAbaVerfahrens()) {
+            abaverfahrens.add(zav.getAbaverfahren());
+        }
+        return abaverfahrens;
+    }
 }

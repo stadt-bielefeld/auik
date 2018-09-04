@@ -31,6 +31,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.HashSet;
 import java.util.List;
@@ -46,7 +47,7 @@ public class Messstelle  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forMessstelle;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Objekt objekt;
@@ -60,6 +61,7 @@ public class Messstelle  implements java.io.Serializable {
     private boolean enabled;
     private boolean deleted;
     private Set<Probenahme> probenahmes = new HashSet<Probenahme>(0);
+    private Set<MsstBerichtspflicht> msstBerichtspflichts = new HashSet<MsstBerichtspflicht>(0);
     private Set<Referenz> referenzsForQMsstNr = new HashSet<Referenz>(0);
     private Set<Referenz> referenzsForZMsstNr = new HashSet<Referenz>(0);
     private Set<Sielhaut> sielhauts = new HashSet<Sielhaut>(0);
@@ -83,7 +85,7 @@ public class Messstelle  implements java.io.Serializable {
 
     /** Full constructor */
     public Messstelle(
-        Integer id, Objekt objekt, Sachbearbeiter sachbearbeiter, Klaeranlage klaeranlage, Probeart probeart, String beschreibung, Integer nrProbepkt, Integer firmenId, String branche, boolean enabled, boolean deleted, Set<Probenahme> probenahmes, Set<Referenz> referenzsForQMsstNr, Set<Referenz> referenzsForZMsstNr, Set<Sielhaut> sielhauts) {
+        Integer id, Objekt objekt, Sachbearbeiter sachbearbeiter, Klaeranlage klaeranlage, Probeart probeart, String beschreibung, Integer nrProbepkt, Integer firmenId, String branche, boolean enabled, boolean deleted, Set<Probenahme> probenahmes, Set<MsstBerichtspflicht> msstBerichtspflichts, Set<Referenz> referenzsForQMsstNr, Set<Referenz> referenzsForZMsstNr, Set<Sielhaut> sielhauts) {
         this.id = id;
         this.objekt = objekt;
         this.sachbearbeiter = sachbearbeiter;
@@ -96,6 +98,7 @@ public class Messstelle  implements java.io.Serializable {
         this.enabled = enabled;
         this.deleted = deleted;
         this.probenahmes = probenahmes;
+        this.msstBerichtspflichts = msstBerichtspflichts;
         this.referenzsForQMsstNr = referenzsForQMsstNr;
         this.referenzsForZMsstNr = referenzsForZMsstNr;
         this.sielhauts = sielhauts;
@@ -198,6 +201,14 @@ public class Messstelle  implements java.io.Serializable {
         this.probenahmes = probenahmes;
     }
 
+    public Set<MsstBerichtspflicht> getMsstBerichtspflichts() {
+        return this.msstBerichtspflichts;
+    }
+
+    public void setMsstBerichtspflichts(Set<MsstBerichtspflicht> msstBerichtspflichts) {
+        this.msstBerichtspflichts = msstBerichtspflichts;
+    }
+
     public Set<Referenz> getReferenzsForQMsstNr() {
         return this.referenzsForQMsstNr;
     }
@@ -231,7 +242,7 @@ public class Messstelle  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -240,23 +251,24 @@ public class Messstelle  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");			
-        buffer.append("klaeranlage").append("='").append(getKlaeranlage()).append("' ");			
-        buffer.append("probeart").append("='").append(getProbeart()).append("' ");			
-        buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");			
-        buffer.append("nrProbepkt").append("='").append(getNrProbepkt()).append("' ");			
-        buffer.append("firmenId").append("='").append(getFirmenId()).append("' ");			
-        buffer.append("branche").append("='").append(getBranche()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("probenahmes").append("='").append(getProbenahmes()).append("' ");			
-        buffer.append("referenzsForQMsstNr").append("='").append(getReferenzsForQMsstNr()).append("' ");			
-        buffer.append("referenzsForZMsstNr").append("='").append(getReferenzsForZMsstNr()).append("' ");			
-        buffer.append("sielhauts").append("='").append(getSielhauts()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");
+        buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");
+        buffer.append("klaeranlage").append("='").append(getKlaeranlage()).append("' ");
+        buffer.append("probeart").append("='").append(getProbeart()).append("' ");
+        buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");
+        buffer.append("nrProbepkt").append("='").append(getNrProbepkt()).append("' ");
+        buffer.append("firmenId").append("='").append(getFirmenId()).append("' ");
+        buffer.append("branche").append("='").append(getBranche()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("probenahmes").append("='").append(getProbenahmes()).append("' ");
+        buffer.append("msstBerichtspflichts").append("='").append(getMsstBerichtspflichts()).append("' ");
+        buffer.append("referenzsForQMsstNr").append("='").append(getReferenzsForQMsstNr()).append("' ");
+        buffer.append("referenzsForZMsstNr").append("='").append(getReferenzsForZMsstNr()).append("' ");
+        buffer.append("sielhauts").append("='").append(getSielhauts()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -288,7 +300,7 @@ public class Messstelle  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -322,22 +334,23 @@ public class Messstelle  implements java.io.Serializable {
      * @param copy Messstelle
      */
     private void copy(Messstelle copy) {
-        this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
-        this.sachbearbeiter = copy.getSachbearbeiter();            
-        this.klaeranlage = copy.getKlaeranlage();            
-        this.probeart = copy.getProbeart();            
-        this.beschreibung = copy.getBeschreibung();            
-        this.nrProbepkt = copy.getNrProbepkt();            
-        this.firmenId = copy.getFirmenId();            
-        this.branche = copy.getBranche();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.probenahmes = copy.getProbenahmes();            
-        this.referenzsForQMsstNr = copy.getReferenzsForQMsstNr();            
-        this.referenzsForZMsstNr = copy.getReferenzsForZMsstNr();            
-        this.sielhauts = copy.getSielhauts();            
-    }    
+        this.id = copy.getId();
+        this.objekt = copy.getObjekt();
+        this.sachbearbeiter = copy.getSachbearbeiter();
+        this.klaeranlage = copy.getKlaeranlage();
+        this.probeart = copy.getProbeart();
+        this.beschreibung = copy.getBeschreibung();
+        this.nrProbepkt = copy.getNrProbepkt();
+        this.firmenId = copy.getFirmenId();
+        this.branche = copy.getBranche();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.probenahmes = copy.getProbenahmes();
+        this.msstBerichtspflichts = copy.getMsstBerichtspflichts();
+        this.referenzsForQMsstNr = copy.getReferenzsForQMsstNr();
+        this.referenzsForZMsstNr = copy.getReferenzsForZMsstNr();
+        this.sielhauts = copy.getSielhauts();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -382,21 +395,11 @@ public class Messstelle  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-
     public static Messstelle findByObjektId(java.lang.Integer id){
         log.debug("Getting AtlProbepkt instance with connected Objekt with id: " + id);
-        /*List<AtlProbepkt> all = AtlProbepkt.getAll();
-        for(AtlProbepkt i : all){
-            if(i.getBasisObjekt().getId().equals(id)){
-                return (AtlProbepkt) new DatabaseAccess().get(AtlProbepkt.class, i.getId());
-            }
-        }
-        log.debug("Found no Atlprobepkt instance with attached BasisObjekt#" + id);
-        return null;*/
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt o where o.id= " + id).list().get(0);
-
-        //BasisObjekt.findById(id);
         Set<Messstelle> list = objekt.getMessstelles();
         return list.iterator().next();
     }
+
 }

@@ -22,11 +22,15 @@ package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
@@ -35,142 +39,142 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
  */
 public class EAnfallstelle implements java.io.Serializable {
 
-	private Integer nr;
-	private Integer origNr;
-	private EStandort standort;
-	private EAdresse adresse;
-	private String anhangId;
-	private Integer abwaBeschaffOpt;
-	private String bezeichnung;
-	private String bemerkung;
-	private Boolean aufzBetriebTog;
-	private Date aktualDat;
-	private Date erstellDat;
-	private String herkunft;
+    private Integer nr;
+    private Integer origNr;
+    private EStandort standort;
+    private EAdresse adresse;
+    private String anhangId;
+    private Integer abwaBeschaffOpt;
+    private String bezeichnung;
+    private String bemerkung;
+    private Boolean aufzBetriebTog;
+    private Date aktualDat;
+    private Date erstellDat;
+    private String herkunft;
 
-	public EAnfallstelle() {
-	}
+    public EAnfallstelle() {
+    }
 
-	public EAnfallstelle(Integer nr) {
-		this.nr = nr;
-	}
+    public EAnfallstelle(Integer nr) {
+        this.nr = nr;
+    }
 
-	public EAnfallstelle(Integer nr, Integer origNr,
-			EStandort standort, EAdresse adresse,
-			String anhangId, Integer abwaBeschaffOpt, String bezeichnung,
-			String bemerkung, Boolean aufzBetriebTog, Date aktualDat,
-			Date erstellDat, String herkunft) {
-		this.nr = nr;
-		this.origNr = origNr;
-		this.standort = standort;
-		this.adresse = adresse;
-		this.anhangId = anhangId;
-		this.abwaBeschaffOpt = abwaBeschaffOpt;
-		this.bezeichnung = bezeichnung;
-		this.bemerkung = bemerkung;
-		this.aufzBetriebTog = aufzBetriebTog;
-		this.aktualDat = aktualDat;
-		this.erstellDat = erstellDat;
-		this.herkunft = herkunft;
-	}
+    public EAnfallstelle(Integer nr, Integer origNr,
+            EStandort standort, EAdresse adresse,
+            String anhangId, Integer abwaBeschaffOpt, String bezeichnung,
+            String bemerkung, Boolean aufzBetriebTog, Date aktualDat,
+            Date erstellDat, String herkunft) {
+        this.nr = nr;
+        this.origNr = origNr;
+        this.standort = standort;
+        this.adresse = adresse;
+        this.anhangId = anhangId;
+        this.abwaBeschaffOpt = abwaBeschaffOpt;
+        this.bezeichnung = bezeichnung;
+        this.bemerkung = bemerkung;
+        this.aufzBetriebTog = aufzBetriebTog;
+        this.aktualDat = aktualDat;
+        this.erstellDat = erstellDat;
+        this.herkunft = herkunft;
+    }
 
-	public Integer getNr() {
-		return this.nr;
-	}
+    public Integer getNr() {
+        return this.nr;
+    }
 
-	public void setNr(Integer nr) {
-		this.nr = nr;
-	}
+    public void setNr(Integer nr) {
+        this.nr = nr;
+    }
 
-	@JsonIgnore
-	public Integer getOrigNr() {
-		return this.origNr;
-	}
-	
-	@JsonIgnore
-	public void setOrigNr(Integer origNr) {
-		this.origNr = origNr;
-	}
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return this.origNr;
+    }
 
-	public EStandort getStandort() {
-		return this.standort;
-	}
+    @JsonIgnore
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
+    }
 
-	public void setStandort(EStandort standort) {
-		this.standort = standort;
-	}
+    public EStandort getStandort() {
+        return this.standort;
+    }
 
-	public EAdresse getAdresse() {
-		return this.adresse;
-	}
+    public void setStandort(EStandort standort) {
+        this.standort = standort;
+    }
 
-	public void setAdresse(EAdresse adresse) {
-		this.adresse = adresse;
-	}
+    public EAdresse getAdresse() {
+        return this.adresse;
+    }
 
-	public String getAnhangId() {
-		return this.anhangId;
-	}
+    public void setAdresse(EAdresse adresse) {
+        this.adresse = adresse;
+    }
 
-	public void setAnhangId(String anhangId) {
-		this.anhangId = anhangId;
-	}
+    public String getAnhangId() {
+        return this.anhangId;
+    }
 
-	public Integer getAbwaBeschaffOpt() {
-		return this.abwaBeschaffOpt;
-	}
+    public void setAnhangId(String anhangId) {
+        this.anhangId = anhangId;
+    }
 
-	public void setAbwaBeschaffOpt(Integer abwaBeschaffOpt) {
-		this.abwaBeschaffOpt = abwaBeschaffOpt;
-	}
+    public Integer getAbwaBeschaffOpt() {
+        return this.abwaBeschaffOpt;
+    }
 
-	public String getBezeichnung() {
-		return this.bezeichnung;
-	}
+    public void setAbwaBeschaffOpt(Integer abwaBeschaffOpt) {
+        this.abwaBeschaffOpt = abwaBeschaffOpt;
+    }
 
-	public void setBezeichnung(String bezeichnung) {
-		this.bezeichnung = bezeichnung;
-	}
+    public String getBezeichnung() {
+        return this.bezeichnung;
+    }
 
-	public String getBemerkung() {
-		return this.bemerkung;
-	}
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
 
-	public void setBemerkung(String bemerkung) {
-		this.bemerkung = bemerkung;
-	}
+    public String getBemerkung() {
+        return this.bemerkung;
+    }
 
-	public Boolean getAufzBetriebTog() {
-		return this.aufzBetriebTog;
-	}
+    public void setBemerkung(String bemerkung) {
+        this.bemerkung = bemerkung;
+    }
 
-	public void setAufzBetriebTog(Boolean aufzBetriebTog) {
-		this.aufzBetriebTog = aufzBetriebTog;
-	}
+    public Boolean getAufzBetriebTog() {
+        return this.aufzBetriebTog;
+    }
 
-	public Date getAktualDat() {
-		return this.aktualDat;
-	}
+    public void setAufzBetriebTog(Boolean aufzBetriebTog) {
+        this.aufzBetriebTog = aufzBetriebTog;
+    }
 
-	public void setAktualDat(Date aktualDat) {
-		this.aktualDat = aktualDat;
-	}
+    public Date getAktualDat() {
+        return this.aktualDat;
+    }
 
-	public Date getErstellDat() {
-		return this.erstellDat;
-	}
+    public void setAktualDat(Date aktualDat) {
+        this.aktualDat = aktualDat;
+    }
 
-	public void setErstellDat(Date erstellDat) {
-		this.erstellDat = erstellDat;
-	}
+    public Date getErstellDat() {
+        return this.erstellDat;
+    }
 
-	public String getHerkunft() {
-		return this.herkunft;
-	}
+    public void setErstellDat(Date erstellDat) {
+        this.erstellDat = erstellDat;
+    }
 
-	public void setHerkunft(String herkunft) {
-		this.herkunft = herkunft;
-	}
+    public String getHerkunft() {
+        return this.herkunft;
+    }
+
+    public void setHerkunft(String herkunft) {
+        this.herkunft = herkunft;
+    }
 
     /**
      * Update this EAbwasserbehandlungsanlage with its new values.<br>
@@ -210,5 +214,27 @@ public class EAnfallstelle implements java.io.Serializable {
      */
     public static List<EAnfallstelle> getAll() {
         return DatabaseQuery.getAll(new EAnfallstelle());
+    }
+
+    /* Custom code goes below here! */
+
+    /**
+     * Returns the AfsNiederschlagwasser instances connected to the Anfallstelle table entry
+     * on which this instance is based on.
+     * @return The instances as set
+     */
+    public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
+        Anfallstelle afs = Anfallstelle.findById(getNr());
+        return afs != null ? afs.getAfsNiederschlagswassers() : null;
+    }
+
+    /**
+     * Returns the AfsStoffe instances connected to the Anfallstelle table entry
+     * on which this instance is based on.
+     * @return The instances as set
+     */
+    public Set<AfsStoffe> getAfsStoffes() {
+        Anfallstelle afs = Anfallstelle.findById(getNr());
+        return afs != null ? afs.getAfsStoffes() : null;
     }
 }

@@ -47,7 +47,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
         DatabaseSerialVersionUID.forAfsNiederschlagswasser;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer nr;
+    private Long nr;
     private Anfallstelle anfallstelle;
     private Entwaesserungsgrundstueck entwaesserungsgrundstueck;
     private Integer lfdNr;
@@ -68,13 +68,13 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
 
     /** Minimal constructor */
     public AfsNiederschlagswasser(
-    	Integer nr) {
+        long nr) {
         this.nr = nr;
     }
 
     /** Full constructor */
     public AfsNiederschlagswasser(
-    	Integer nr, Anfallstelle anfallstelle, Entwaesserungsgrundstueck entwaesserungsgrundstueck, Integer lfdNr, String bezeichnung, Integer befFlaeche, Integer nwHerBereichOpt, BigDecimal abflussmenge, Set<Referenz> referenzsForQNwAfsNr, Set<Referenz> referenzsForZNwAfsNr) {
+        long nr, Anfallstelle anfallstelle, Entwaesserungsgrundstueck entwaesserungsgrundstueck, Integer lfdNr, String bezeichnung, Integer befFlaeche, Integer nwHerBereichOpt, BigDecimal abflussmenge, Set<Referenz> referenzsForQNwAfsNr, Set<Referenz> referenzsForZNwAfsNr) {
         this.nr = nr;
         this.anfallstelle = anfallstelle;
         this.entwaesserungsgrundstueck = entwaesserungsgrundstueck;
@@ -88,11 +88,11 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public Integer getNr() {
+    public Long getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(long nr) {
         this.nr = nr;
     }
 

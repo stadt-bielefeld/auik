@@ -23,7 +23,6 @@
 
 package de.bielefeld.umweltamt.aui.mappings.oberflgw;
 
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -51,7 +50,7 @@ public class Sonderbauwerk  implements java.io.Serializable {
         DatabaseSerialVersionUID.forSonderbauwerk;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer nr;
+    private Long nr;
     private Adresse adresse;
     private Objekt objekt;
     private Wasserrecht wasserrecht;
@@ -157,9 +156,12 @@ public class Sonderbauwerk  implements java.io.Serializable {
     private Date erstellDat;
     private Date aktualDat;
     private String externalNr;
+    private Set<ZSbVerfahren> ZSbVerfahrens = new HashSet<ZSbVerfahren>(0);
     private Set<SbEntlastung> sbEntlastungs = new HashSet<SbEntlastung>(0);
+    private Set<ZSbRegeln> ZSbRegelns = new HashSet<ZSbRegeln>(0);
     private Set<Referenz> referenzsForQSbNr = new HashSet<Referenz>(0);
     private Set<Referenz> referenzsForZSbNr = new HashSet<Referenz>(0);
+    private Set<ZRbfSchutzgueter> ZRbfSchutzgueters = new HashSet<ZRbfSchutzgueter>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -171,7 +173,7 @@ public class Sonderbauwerk  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Sonderbauwerk(
-    	Integer nr, Objekt objekt, String gemeindeId, Integer typOpt, Integer e32, Integer n32, boolean inNrwTog, boolean industrTog, boolean rohrspeicherTog, boolean AReiEinrichTog, boolean messartTog, boolean drosselTog, boolean fuellstandTog, boolean entlastungswasserTog, boolean entlastungsdauerTog, boolean entlastungshaeufigTog, boolean fernMessTog, boolean niederschlagTog, boolean fernStoerTog, boolean hwfreiTog, boolean hwEinrichtungTog, boolean hwRueckstauTog, boolean hwSchieberTog, boolean hwPumpwerkTog, boolean hwWeitereTog, boolean bemesWeitergTog, boolean drossUeberTog, Date erstellDat, Date aktualDat) {
+        long nr, Objekt objekt, String gemeindeId, Integer typOpt, Integer e32, Integer n32, boolean inNrwTog, boolean industrTog, boolean rohrspeicherTog, boolean AReiEinrichTog, boolean messartTog, boolean drosselTog, boolean fuellstandTog, boolean entlastungswasserTog, boolean entlastungsdauerTog, boolean entlastungshaeufigTog, boolean fernMessTog, boolean niederschlagTog, boolean fernStoerTog, boolean hwfreiTog, boolean hwEinrichtungTog, boolean hwRueckstauTog, boolean hwSchieberTog, boolean hwPumpwerkTog, boolean hwWeitereTog, boolean bemesWeitergTog, boolean drossUeberTog, Date erstellDat, Date aktualDat) {
         this.nr = nr;
         this.objekt = objekt;
         this.gemeindeId = gemeindeId;
@@ -205,7 +207,7 @@ public class Sonderbauwerk  implements java.io.Serializable {
 
     /** Full constructor */
     public Sonderbauwerk(
-    	Integer nr, Adresse adresse, Objekt objekt, Wasserrecht wasserrecht, String gemeindeId, String bezeichnung, String kurzbeschreibung, Integer entwEinzugsgebOpt, Integer typOpt, Integer inbetriebnahme, Date stillgelegtAm, Date wiederinbetrDat, String bemerkung, Integer e32, Integer n32, boolean inNrwTog, boolean industrTog, String nameAusserhalbNrw, BigDecimal KEntwGebiet, BigDecimal befFlaecheEgebiet, BigDecimal abflussbeiwert, BigDecimal befGrad, BigDecimal undurchFlaeche, Integer beckentypOpt, boolean rohrspeicherTog, Integer bauweiseOpt, Integer drosselOpt, String soDrossel, Integer beckensteuerungOpt, boolean AReiEinrichTog, boolean messartTog, boolean drosselTog, boolean fuellstandTog, boolean entlastungswasserTog, boolean entlastungsdauerTog, boolean entlastungshaeufigTog, boolean fernMessTog, boolean niederschlagTog, boolean fernStoerTog, boolean hwfreiTog, BigDecimal einstauHaeufig, boolean hwEinrichtungTog, boolean hwRueckstauTog, boolean hwSchieberTog, boolean hwPumpwerkTog, boolean hwWeitereTog, String hwSonstText, boolean bemesWeitergTog, String bemessungText, Integer anordnungOpt, Integer beckenartOpt, BigDecimal beckentiefe, BigDecimal behFlaeche1u2, BigDecimal behFlaeche2u3, Integer betriebsartOpt, Integer csb, BigDecimal drosselabfluss, Integer drossAbflussOpt, boolean drossUeberTog, Integer entlastungsartOpt, BigDecimal entleerungszeit, BigDecimal flaechenbeschickung, Integer fliesszeit, BigDecimal fremdAbfluss, Integer funktionOpt, Integer kanalVol, BigDecimal qrkrit, BigDecimal kritischMisch, BigDecimal maxHSchmutzabfluss, BigDecimal maxHTrocken, BigDecimal minDrAbfluss, Integer mischUeberlauf, Integer NMindestV, Integer NSpezVol, BigDecimal neigung, BigDecimal rdrosseldurchfluss, BigDecimal regenabflDross, BigDecimal regenabflEntl, BigDecimal regenabfluss, BigDecimal regenabflussDr, BigDecimal regenspende, Integer rfilterflaeche, BigDecimal rfiltergeschwin, BigDecimal rfiltersubstratH, Integer rhydWirkungsgrad, BigDecimal rjahrUeh, BigDecimal rkrit, BigDecimal rmFilterbelastung, BigDecimal rspezFiltervol, Integer rstauvolumen, Integer rvolSlamelle, BigDecimal rwKritAbfluss, BigDecimal rwKritMisch, Integer rwMindestMisch, BigDecimal schmutzAbfluss, BigDecimal skuAnstroem, Integer skuMindestSvol, Integer skuSpezVol, Integer spezBeckenvol, Integer spezSpeicher, BigDecimal trockenWAbfluss, Integer speichervolumen, Integer WOberflaeche, Date erstellDat, Date aktualDat, String externalNr, Set<SbEntlastung> sbEntlastungs, Set<Referenz> referenzsForQSbNr, Set<Referenz> referenzsForZSbNr) {
+        long nr, Adresse adresse, Objekt objekt, Wasserrecht wasserrecht, String gemeindeId, String bezeichnung, String kurzbeschreibung, Integer entwEinzugsgebOpt, Integer typOpt, Integer inbetriebnahme, Date stillgelegtAm, Date wiederinbetrDat, String bemerkung, Integer e32, Integer n32, boolean inNrwTog, boolean industrTog, String nameAusserhalbNrw, BigDecimal KEntwGebiet, BigDecimal befFlaecheEgebiet, BigDecimal abflussbeiwert, BigDecimal befGrad, BigDecimal undurchFlaeche, Integer beckentypOpt, boolean rohrspeicherTog, Integer bauweiseOpt, Integer drosselOpt, String soDrossel, Integer beckensteuerungOpt, boolean AReiEinrichTog, boolean messartTog, boolean drosselTog, boolean fuellstandTog, boolean entlastungswasserTog, boolean entlastungsdauerTog, boolean entlastungshaeufigTog, boolean fernMessTog, boolean niederschlagTog, boolean fernStoerTog, boolean hwfreiTog, BigDecimal einstauHaeufig, boolean hwEinrichtungTog, boolean hwRueckstauTog, boolean hwSchieberTog, boolean hwPumpwerkTog, boolean hwWeitereTog, String hwSonstText, boolean bemesWeitergTog, String bemessungText, Integer anordnungOpt, Integer beckenartOpt, BigDecimal beckentiefe, BigDecimal behFlaeche1u2, BigDecimal behFlaeche2u3, Integer betriebsartOpt, Integer csb, BigDecimal drosselabfluss, Integer drossAbflussOpt, boolean drossUeberTog, Integer entlastungsartOpt, BigDecimal entleerungszeit, BigDecimal flaechenbeschickung, Integer fliesszeit, BigDecimal fremdAbfluss, Integer funktionOpt, Integer kanalVol, BigDecimal qrkrit, BigDecimal kritischMisch, BigDecimal maxHSchmutzabfluss, BigDecimal maxHTrocken, BigDecimal minDrAbfluss, Integer mischUeberlauf, Integer NMindestV, Integer NSpezVol, BigDecimal neigung, BigDecimal rdrosseldurchfluss, BigDecimal regenabflDross, BigDecimal regenabflEntl, BigDecimal regenabfluss, BigDecimal regenabflussDr, BigDecimal regenspende, Integer rfilterflaeche, BigDecimal rfiltergeschwin, BigDecimal rfiltersubstratH, Integer rhydWirkungsgrad, BigDecimal rjahrUeh, BigDecimal rkrit, BigDecimal rmFilterbelastung, BigDecimal rspezFiltervol, Integer rstauvolumen, Integer rvolSlamelle, BigDecimal rwKritAbfluss, BigDecimal rwKritMisch, Integer rwMindestMisch, BigDecimal schmutzAbfluss, BigDecimal skuAnstroem, Integer skuMindestSvol, Integer skuSpezVol, Integer spezBeckenvol, Integer spezSpeicher, BigDecimal trockenWAbfluss, Integer speichervolumen, Integer WOberflaeche, Date erstellDat, Date aktualDat, String externalNr, Set<ZSbVerfahren> ZSbVerfahrens, Set<SbEntlastung> sbEntlastungs, Set<ZSbRegeln> ZSbRegelns, Set<Referenz> referenzsForQSbNr, Set<Referenz> referenzsForZSbNr, Set<ZRbfSchutzgueter> ZRbfSchutzgueters) {
         this.nr = nr;
         this.adresse = adresse;
         this.objekt = objekt;
@@ -312,17 +314,20 @@ public class Sonderbauwerk  implements java.io.Serializable {
         this.erstellDat = erstellDat;
         this.aktualDat = aktualDat;
         this.externalNr = externalNr;
+        this.ZSbVerfahrens = ZSbVerfahrens;
         this.sbEntlastungs = sbEntlastungs;
+        this.ZSbRegelns = ZSbRegelns;
         this.referenzsForQSbNr = referenzsForQSbNr;
         this.referenzsForZSbNr = referenzsForZSbNr;
+        this.ZRbfSchutzgueters = ZRbfSchutzgueters;
     }
 
     /* Setter and getter methods */
-    public Integer getNr() {
+    public Long getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(long nr) {
         this.nr = nr;
     }
 
@@ -1166,12 +1171,28 @@ public class Sonderbauwerk  implements java.io.Serializable {
         this.externalNr = externalNr;
     }
 
+    public Set<ZSbVerfahren> getZSbVerfahrens() {
+        return this.ZSbVerfahrens;
+    }
+
+    public void setZSbVerfahrens(Set<ZSbVerfahren> ZSbVerfahrens) {
+        this.ZSbVerfahrens = ZSbVerfahrens;
+    }
+
     public Set<SbEntlastung> getSbEntlastungs() {
         return this.sbEntlastungs;
     }
 
     public void setSbEntlastungs(Set<SbEntlastung> sbEntlastungs) {
         this.sbEntlastungs = sbEntlastungs;
+    }
+
+    public Set<ZSbRegeln> getZSbRegelns() {
+        return this.ZSbRegelns;
+    }
+
+    public void setZSbRegelns(Set<ZSbRegeln> ZSbRegelns) {
+        this.ZSbRegelns = ZSbRegelns;
     }
 
     public Set<Referenz> getReferenzsForQSbNr() {
@@ -1188,6 +1209,14 @@ public class Sonderbauwerk  implements java.io.Serializable {
 
     public void setReferenzsForZSbNr(Set<Referenz> referenzsForZSbNr) {
         this.referenzsForZSbNr = referenzsForZSbNr;
+    }
+
+    public Set<ZRbfSchutzgueter> getZRbfSchutzgueters() {
+        return this.ZRbfSchutzgueters;
+    }
+
+    public void setZRbfSchutzgueters(Set<ZRbfSchutzgueter> ZRbfSchutzgueters) {
+        this.ZRbfSchutzgueters = ZRbfSchutzgueters;
     }
 
     /**
@@ -1316,9 +1345,12 @@ public class Sonderbauwerk  implements java.io.Serializable {
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
         buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
+        buffer.append("ZSbVerfahrens").append("='").append(getZSbVerfahrens()).append("' ");			
         buffer.append("sbEntlastungs").append("='").append(getSbEntlastungs()).append("' ");			
+        buffer.append("ZSbRegelns").append("='").append(getZSbRegelns()).append("' ");			
         buffer.append("referenzsForQSbNr").append("='").append(getReferenzsForQSbNr()).append("' ");			
         buffer.append("referenzsForZSbNr").append("='").append(getReferenzsForZSbNr()).append("' ");			
+        buffer.append("ZRbfSchutzgueters").append("='").append(getZRbfSchutzgueters()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -1490,9 +1522,12 @@ public class Sonderbauwerk  implements java.io.Serializable {
         this.erstellDat = copy.getErstellDat();            
         this.aktualDat = copy.getAktualDat();            
         this.externalNr = copy.getExternalNr();            
+        this.ZSbVerfahrens = copy.getZSbVerfahrens();            
         this.sbEntlastungs = copy.getSbEntlastungs();            
+        this.ZSbRegelns = copy.getZSbRegelns();            
         this.referenzsForQSbNr = copy.getReferenzsForQSbNr();            
         this.referenzsForZSbNr = copy.getReferenzsForZSbNr();            
+        this.ZRbfSchutzgueters = copy.getZRbfSchutzgueters();            
     }    
 
     /**
@@ -1537,11 +1572,11 @@ public class Sonderbauwerk  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Sonderbauwerk());
     }
 
+	public static Sonderbauwerk findByObjektId(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     /* Custom code goes below here! */
 
-    public static Sonderbauwerk findByObjektId(java.lang.Integer id) {
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
-        Set<Sonderbauwerk> list = objekt.getSonderbauwerks();
-        return list.iterator().next();
-    }
 }

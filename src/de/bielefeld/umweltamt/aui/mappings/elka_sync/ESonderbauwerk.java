@@ -27,8 +27,17 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbRegeln;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbVerfahren;
+
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class that represents a row in the ESonderbauwerk database table.<br>
@@ -40,12 +49,121 @@ public class ESonderbauwerk  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forESonderbauwerk;
-    
-    /* Primary key, foreign keys (relations) and table columns */
-    private ESonderbauwerkId id;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
+
+    /* Primary key, foreign keys (relations) and table columns */
+    private Long nr;
+    private String gemeindeId;
+    private String bezeichnung;
+    private String kurzbeschreibung;
+    private Integer entwEinzugsgebOpt;
+    private Integer typOpt;
+    private Integer inbetriebnahme;
+    private Date stillgelegtAm;
+    private Date wiederinbetrDat;
+    private Integer standortid;
+    private Integer betreiberid;
+    private Long ansprAdrNr;
+    private String beschreibung;
+    private Integer e32;
+    private Integer n32;
+    private Boolean inNrwTog;
+    private Boolean industrTog;
+    private String nameAusserhalbNrw;
+    private BigDecimal KEntwGebiet;
+    private BigDecimal befFlaecheEgebiet;
+    private BigDecimal abflussbeiwert;
+    private BigDecimal befGrad;
+    private BigDecimal undurchFlaeche;
+    private Integer beckentypOpt;
+    private Boolean rohrspeicherTog;
+    private Integer bauweiseOpt;
+    private Integer drosselOpt;
+    private String soDrossel;
+    private Integer beckensteuerungOpt;
+    private Boolean AReiEinrichTog;
+    private Boolean messartTog;
+    private Boolean drosselTog;
+    private Boolean fuellstandTog;
+    private Boolean entlastungswasserTog;
+    private Boolean entlastungsdauerTog;
+    private Boolean entlastungshaeufigTog;
+    private Boolean fernMessTog;
+    private Boolean niederschlagTog;
+    private Boolean fernStoerTog;
+    private Boolean hwfreiTog;
+    private BigDecimal einstauHaeufig;
+    private Boolean hwEinrichtungTog;
+    private Boolean hwRueckstauTog;
+    private Boolean hwSchieberTog;
+    private Boolean hwPumpwerkTog;
+    private Boolean hwWeitereTog;
+    private String hwSonstText;
+    private Boolean bemesWeitergTog;
+    private String bemessungText;
+    private Integer anordnungOpt;
+    private Long wasserrechtGenehmigungNr;
+    private Integer beckenartOpt;
+    private BigDecimal beckentiefe;
+    private BigDecimal behFlaeche1u2;
+    private BigDecimal behFlaeche2u3;
+    private Integer betriebsartOpt;
+    private Integer csb;
+    private BigDecimal drosselabfluss;
+    private Integer drossAbflussOpt;
+    private Boolean drossUeberTog;
+    private Integer entlastungsartOpt;
+    private BigDecimal entleerungszeit;
+    private BigDecimal flaechenbeschickung;
+    private Integer fliesszeit;
+    private BigDecimal fremdAbfluss;
+    private Integer funktionOpt;
+    private Integer kanalVol;
+    private BigDecimal qrkrit;
+    private BigDecimal kritischMisch;
+    private BigDecimal maxHSchmutzabfluss;
+    private BigDecimal maxHTrocken;
+    private BigDecimal minDrAbfluss;
+    private Integer mischUeberlauf;
+    private Integer NMindestV;
+    private Integer NSpezVol;
+    private BigDecimal neigung;
+    private BigDecimal rdrosseldurchfluss;
+    private BigDecimal regenabflDross;
+    private BigDecimal regenabflEntl;
+    private BigDecimal regenabfluss;
+    private BigDecimal regenabflussDr;
+    private BigDecimal regenspende;
+    private Integer rfilterflaeche;
+    private BigDecimal rfiltergeschwin;
+    private BigDecimal rfiltersubstratH;
+    private Integer rhydWirkungsgrad;
+    private BigDecimal rjahrUeh;
+    private BigDecimal rkrit;
+    private BigDecimal rmFilterbelastung;
+    private BigDecimal rspezFiltervol;
+    private Integer rstauvolumen;
+    private Integer rvolSlamelle;
+    private BigDecimal rwKritAbfluss;
+    private BigDecimal rwKritMisch;
+    private Integer rwMindestMisch;
+    private BigDecimal schmutzAbfluss;
+    private BigDecimal skuAnstroem;
+    private Integer skuMindestSvol;
+    private Integer skuSpezVol;
+    private Integer spezBeckenvol;
+    private Integer spezSpeicher;
+    private BigDecimal trockenWAbfluss;
+    private Integer speichervolumen;
+    private Integer WOberflaeche;
+    private Date erstellDat;
+    private Date aktualDat;
+    private String herkunft;
+    private String externalNr;
+
+    private Sonderbauwerk sonderbauwerk;
 
     /** Default constructor */
     public ESonderbauwerk() {
@@ -55,17 +173,980 @@ public class ESonderbauwerk  implements java.io.Serializable {
 
     /** Full constructor */
     public ESonderbauwerk(
-        ESonderbauwerkId id) {
-        this.id = id;
+        Long nr, String gemeindeId, String bezeichnung, String kurzbeschreibung, Integer entwEinzugsgebOpt, Integer typOpt, Integer inbetriebnahme, Date stillgelegtAm, Date wiederinbetrDat, Integer standortid, Integer betreiberid, Long ansprAdrNr, String beschreibung, Integer e32, Integer n32, Boolean inNrwTog, Boolean industrTog, String nameAusserhalbNrw, BigDecimal KEntwGebiet, BigDecimal befFlaecheEgebiet, BigDecimal abflussbeiwert, BigDecimal befGrad, BigDecimal undurchFlaeche, Integer beckentypOpt, Boolean rohrspeicherTog, Integer bauweiseOpt, Integer drosselOpt, String soDrossel, Integer beckensteuerungOpt, Boolean AReiEinrichTog, Boolean messartTog, Boolean drosselTog, Boolean fuellstandTog, Boolean entlastungswasserTog, Boolean entlastungsdauerTog, Boolean entlastungshaeufigTog, Boolean fernMessTog, Boolean niederschlagTog, Boolean fernStoerTog, Boolean hwfreiTog, BigDecimal einstauHaeufig, Boolean hwEinrichtungTog, Boolean hwRueckstauTog, Boolean hwSchieberTog, Boolean hwPumpwerkTog, Boolean hwWeitereTog, String hwSonstText, Boolean bemesWeitergTog, String bemessungText, Integer anordnungOpt, Long wasserrechtGenehmigungNr, Integer beckenartOpt, BigDecimal beckentiefe, BigDecimal behFlaeche1u2, BigDecimal behFlaeche2u3, Integer betriebsartOpt, Integer csb, BigDecimal drosselabfluss, Integer drossAbflussOpt, Boolean drossUeberTog, Integer entlastungsartOpt, BigDecimal entleerungszeit, BigDecimal flaechenbeschickung, Integer fliesszeit, BigDecimal fremdAbfluss, Integer funktionOpt, Integer kanalVol, BigDecimal qrkrit, BigDecimal kritischMisch, BigDecimal maxHSchmutzabfluss, BigDecimal maxHTrocken, BigDecimal minDrAbfluss, Integer mischUeberlauf, Integer NMindestV, Integer NSpezVol, BigDecimal neigung, BigDecimal rdrosseldurchfluss, BigDecimal regenabflDross, BigDecimal regenabflEntl, BigDecimal regenabfluss, BigDecimal regenabflussDr, BigDecimal regenspende, Integer rfilterflaeche, BigDecimal rfiltergeschwin, BigDecimal rfiltersubstratH, Integer rhydWirkungsgrad, BigDecimal rjahrUeh, BigDecimal rkrit, BigDecimal rmFilterbelastung, BigDecimal rspezFiltervol, Integer rstauvolumen, Integer rvolSlamelle, BigDecimal rwKritAbfluss, BigDecimal rwKritMisch, Integer rwMindestMisch, BigDecimal schmutzAbfluss, BigDecimal skuAnstroem, Integer skuMindestSvol, Integer skuSpezVol, Integer spezBeckenvol, Integer spezSpeicher, BigDecimal trockenWAbfluss, Integer speichervolumen, Integer WOberflaeche, Date erstellDat, Date aktualDat, String herkunft, String externalNr) {
+        this.nr = nr;
+        this.gemeindeId = gemeindeId;
+        this.bezeichnung = bezeichnung;
+        this.kurzbeschreibung = kurzbeschreibung;
+        this.entwEinzugsgebOpt = entwEinzugsgebOpt;
+        this.typOpt = typOpt;
+        this.inbetriebnahme = inbetriebnahme;
+        this.stillgelegtAm = stillgelegtAm;
+        this.wiederinbetrDat = wiederinbetrDat;
+        this.standortid = standortid;
+        this.betreiberid = betreiberid;
+        this.ansprAdrNr = ansprAdrNr;
+        this.beschreibung = beschreibung;
+        this.e32 = e32;
+        this.n32 = n32;
+        this.inNrwTog = inNrwTog;
+        this.industrTog = industrTog;
+        this.nameAusserhalbNrw = nameAusserhalbNrw;
+        this.KEntwGebiet = KEntwGebiet;
+        this.befFlaecheEgebiet = befFlaecheEgebiet;
+        this.abflussbeiwert = abflussbeiwert;
+        this.befGrad = befGrad;
+        this.undurchFlaeche = undurchFlaeche;
+        this.beckentypOpt = beckentypOpt;
+        this.rohrspeicherTog = rohrspeicherTog;
+        this.bauweiseOpt = bauweiseOpt;
+        this.drosselOpt = drosselOpt;
+        this.soDrossel = soDrossel;
+        this.beckensteuerungOpt = beckensteuerungOpt;
+        this.AReiEinrichTog = AReiEinrichTog;
+        this.messartTog = messartTog;
+        this.drosselTog = drosselTog;
+        this.fuellstandTog = fuellstandTog;
+        this.entlastungswasserTog = entlastungswasserTog;
+        this.entlastungsdauerTog = entlastungsdauerTog;
+        this.entlastungshaeufigTog = entlastungshaeufigTog;
+        this.fernMessTog = fernMessTog;
+        this.niederschlagTog = niederschlagTog;
+        this.fernStoerTog = fernStoerTog;
+        this.hwfreiTog = hwfreiTog;
+        this.einstauHaeufig = einstauHaeufig;
+        this.hwEinrichtungTog = hwEinrichtungTog;
+        this.hwRueckstauTog = hwRueckstauTog;
+        this.hwSchieberTog = hwSchieberTog;
+        this.hwPumpwerkTog = hwPumpwerkTog;
+        this.hwWeitereTog = hwWeitereTog;
+        this.hwSonstText = hwSonstText;
+        this.bemesWeitergTog = bemesWeitergTog;
+        this.bemessungText = bemessungText;
+        this.anordnungOpt = anordnungOpt;
+        this.wasserrechtGenehmigungNr = wasserrechtGenehmigungNr;
+        this.beckenartOpt = beckenartOpt;
+        this.beckentiefe = beckentiefe;
+        this.behFlaeche1u2 = behFlaeche1u2;
+        this.behFlaeche2u3 = behFlaeche2u3;
+        this.betriebsartOpt = betriebsartOpt;
+        this.csb = csb;
+        this.drosselabfluss = drosselabfluss;
+        this.drossAbflussOpt = drossAbflussOpt;
+        this.drossUeberTog = drossUeberTog;
+        this.entlastungsartOpt = entlastungsartOpt;
+        this.entleerungszeit = entleerungszeit;
+        this.flaechenbeschickung = flaechenbeschickung;
+        this.fliesszeit = fliesszeit;
+        this.fremdAbfluss = fremdAbfluss;
+        this.funktionOpt = funktionOpt;
+        this.kanalVol = kanalVol;
+        this.qrkrit = qrkrit;
+        this.kritischMisch = kritischMisch;
+        this.maxHSchmutzabfluss = maxHSchmutzabfluss;
+        this.maxHTrocken = maxHTrocken;
+        this.minDrAbfluss = minDrAbfluss;
+        this.mischUeberlauf = mischUeberlauf;
+        this.NMindestV = NMindestV;
+        this.NSpezVol = NSpezVol;
+        this.neigung = neigung;
+        this.rdrosseldurchfluss = rdrosseldurchfluss;
+        this.regenabflDross = regenabflDross;
+        this.regenabflEntl = regenabflEntl;
+        this.regenabfluss = regenabfluss;
+        this.regenabflussDr = regenabflussDr;
+        this.regenspende = regenspende;
+        this.rfilterflaeche = rfilterflaeche;
+        this.rfiltergeschwin = rfiltergeschwin;
+        this.rfiltersubstratH = rfiltersubstratH;
+        this.rhydWirkungsgrad = rhydWirkungsgrad;
+        this.rjahrUeh = rjahrUeh;
+        this.rkrit = rkrit;
+        this.rmFilterbelastung = rmFilterbelastung;
+        this.rspezFiltervol = rspezFiltervol;
+        this.rstauvolumen = rstauvolumen;
+        this.rvolSlamelle = rvolSlamelle;
+        this.rwKritAbfluss = rwKritAbfluss;
+        this.rwKritMisch = rwKritMisch;
+        this.rwMindestMisch = rwMindestMisch;
+        this.schmutzAbfluss = schmutzAbfluss;
+        this.skuAnstroem = skuAnstroem;
+        this.skuMindestSvol = skuMindestSvol;
+        this.skuSpezVol = skuSpezVol;
+        this.spezBeckenvol = spezBeckenvol;
+        this.spezSpeicher = spezSpeicher;
+        this.trockenWAbfluss = trockenWAbfluss;
+        this.speichervolumen = speichervolumen;
+        this.WOberflaeche = WOberflaeche;
+        this.erstellDat = erstellDat;
+        this.aktualDat = aktualDat;
+        this.herkunft = herkunft;
+        this.externalNr = externalNr;
     }
 
     /* Setter and getter methods */
-    public ESonderbauwerkId getId() {
-        return this.id;
+    public Long getNr() {
+        return this.nr;
     }
 
-    public void setId(ESonderbauwerkId id) {
-        this.id = id;
+    public void setNr(Long nr) {
+        this.nr = nr;
+    }
+
+    public String getGemeindeId() {
+        return this.gemeindeId;
+    }
+
+    public void setGemeindeId(String gemeindeId) {
+        this.gemeindeId = gemeindeId;
+    }
+
+    public String getBezeichnung() {
+        return this.bezeichnung;
+    }
+
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
+
+    public String getKurzbeschreibung() {
+        return this.kurzbeschreibung;
+    }
+
+    public void setKurzbeschreibung(String kurzbeschreibung) {
+        this.kurzbeschreibung = kurzbeschreibung;
+    }
+
+    public Integer getEntwEinzugsgebOpt() {
+        return this.entwEinzugsgebOpt;
+    }
+
+    public void setEntwEinzugsgebOpt(Integer entwEinzugsgebOpt) {
+        this.entwEinzugsgebOpt = entwEinzugsgebOpt;
+    }
+
+    public Integer getTypOpt() {
+        return this.typOpt;
+    }
+
+    public void setTypOpt(Integer typOpt) {
+        this.typOpt = typOpt;
+    }
+
+    public Integer getInbetriebnahme() {
+        return this.inbetriebnahme;
+    }
+
+    public void setInbetriebnahme(Integer inbetriebnahme) {
+        this.inbetriebnahme = inbetriebnahme;
+    }
+
+    public Date getStillgelegtAm() {
+        return this.stillgelegtAm;
+    }
+
+    public void setStillgelegtAm(Date stillgelegtAm) {
+        this.stillgelegtAm = stillgelegtAm;
+    }
+
+    public Date getWiederinbetrDat() {
+        return this.wiederinbetrDat;
+    }
+
+    public void setWiederinbetrDat(Date wiederinbetrDat) {
+        this.wiederinbetrDat = wiederinbetrDat;
+    }
+
+    public Integer getStandortid() {
+        return this.standortid;
+    }
+
+    public void setStandortid(Integer standortid) {
+        this.standortid = standortid;
+    }
+
+    public Integer getBetreiberid() {
+        return this.betreiberid;
+    }
+
+    public void setBetreiberid(Integer betreiberid) {
+        this.betreiberid = betreiberid;
+    }
+
+    public Long getAnsprAdrNr() {
+        return this.ansprAdrNr;
+    }
+
+    public void setAnsprAdrNr(Long ansprAdrNr) {
+        this.ansprAdrNr = ansprAdrNr;
+    }
+
+    public String getBeschreibung() {
+        return this.beschreibung;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    public Integer getE32() {
+        return this.e32;
+    }
+
+    public void setE32(Integer e32) {
+        this.e32 = e32;
+    }
+
+    public Integer getN32() {
+        return this.n32;
+    }
+
+    public void setN32(Integer n32) {
+        this.n32 = n32;
+    }
+
+    public Boolean getInNrwTog() {
+        return this.inNrwTog;
+    }
+
+    public void setInNrwTog(Boolean inNrwTog) {
+        this.inNrwTog = inNrwTog;
+    }
+
+    public Boolean getIndustrTog() {
+        return this.industrTog;
+    }
+
+    public void setIndustrTog(Boolean industrTog) {
+        this.industrTog = industrTog;
+    }
+
+    public String getNameAusserhalbNrw() {
+        return this.nameAusserhalbNrw;
+    }
+
+    public void setNameAusserhalbNrw(String nameAusserhalbNrw) {
+        this.nameAusserhalbNrw = nameAusserhalbNrw;
+    }
+
+    public BigDecimal getKEntwGebiet() {
+        return this.KEntwGebiet;
+    }
+
+    public void setKEntwGebiet(BigDecimal KEntwGebiet) {
+        this.KEntwGebiet = KEntwGebiet;
+    }
+
+    public BigDecimal getBefFlaecheEgebiet() {
+        return this.befFlaecheEgebiet;
+    }
+
+    public void setBefFlaecheEgebiet(BigDecimal befFlaecheEgebiet) {
+        this.befFlaecheEgebiet = befFlaecheEgebiet;
+    }
+
+    public BigDecimal getAbflussbeiwert() {
+        return this.abflussbeiwert;
+    }
+
+    public void setAbflussbeiwert(BigDecimal abflussbeiwert) {
+        this.abflussbeiwert = abflussbeiwert;
+    }
+
+    public BigDecimal getBefGrad() {
+        return this.befGrad;
+    }
+
+    public void setBefGrad(BigDecimal befGrad) {
+        this.befGrad = befGrad;
+    }
+
+    public BigDecimal getUndurchFlaeche() {
+        return this.undurchFlaeche;
+    }
+
+    public void setUndurchFlaeche(BigDecimal undurchFlaeche) {
+        this.undurchFlaeche = undurchFlaeche;
+    }
+
+    public Integer getBeckentypOpt() {
+        return this.beckentypOpt;
+    }
+
+    public void setBeckentypOpt(Integer beckentypOpt) {
+        this.beckentypOpt = beckentypOpt;
+    }
+
+    public Boolean getRohrspeicherTog() {
+        return this.rohrspeicherTog;
+    }
+
+    public void setRohrspeicherTog(Boolean rohrspeicherTog) {
+        this.rohrspeicherTog = rohrspeicherTog;
+    }
+
+    public Integer getBauweiseOpt() {
+        return this.bauweiseOpt;
+    }
+
+    public void setBauweiseOpt(Integer bauweiseOpt) {
+        this.bauweiseOpt = bauweiseOpt;
+    }
+
+    public Integer getDrosselOpt() {
+        return this.drosselOpt;
+    }
+
+    public void setDrosselOpt(Integer drosselOpt) {
+        this.drosselOpt = drosselOpt;
+    }
+
+    public String getSoDrossel() {
+        return this.soDrossel;
+    }
+
+    public void setSoDrossel(String soDrossel) {
+        this.soDrossel = soDrossel;
+    }
+
+    public Integer getBeckensteuerungOpt() {
+        return this.beckensteuerungOpt;
+    }
+
+    public void setBeckensteuerungOpt(Integer beckensteuerungOpt) {
+        this.beckensteuerungOpt = beckensteuerungOpt;
+    }
+
+    public Boolean getAReiEinrichTog() {
+        return this.AReiEinrichTog;
+    }
+
+    public void setAReiEinrichTog(Boolean AReiEinrichTog) {
+        this.AReiEinrichTog = AReiEinrichTog;
+    }
+
+    public Boolean getMessartTog() {
+        return this.messartTog;
+    }
+
+    public void setMessartTog(Boolean messartTog) {
+        this.messartTog = messartTog;
+    }
+
+    public Boolean getDrosselTog() {
+        return this.drosselTog;
+    }
+
+    public void setDrosselTog(Boolean drosselTog) {
+        this.drosselTog = drosselTog;
+    }
+
+    public Boolean getFuellstandTog() {
+        return this.fuellstandTog;
+    }
+
+    public void setFuellstandTog(Boolean fuellstandTog) {
+        this.fuellstandTog = fuellstandTog;
+    }
+
+    public Boolean getEntlastungswasserTog() {
+        return this.entlastungswasserTog;
+    }
+
+    public void setEntlastungswasserTog(Boolean entlastungswasserTog) {
+        this.entlastungswasserTog = entlastungswasserTog;
+    }
+
+    public Boolean getEntlastungsdauerTog() {
+        return this.entlastungsdauerTog;
+    }
+
+    public void setEntlastungsdauerTog(Boolean entlastungsdauerTog) {
+        this.entlastungsdauerTog = entlastungsdauerTog;
+    }
+
+    public Boolean getEntlastungshaeufigTog() {
+        return this.entlastungshaeufigTog;
+    }
+
+    public void setEntlastungshaeufigTog(Boolean entlastungshaeufigTog) {
+        this.entlastungshaeufigTog = entlastungshaeufigTog;
+    }
+
+    public Boolean getFernMessTog() {
+        return this.fernMessTog;
+    }
+
+    public void setFernMessTog(Boolean fernMessTog) {
+        this.fernMessTog = fernMessTog;
+    }
+
+    public Boolean getNiederschlagTog() {
+        return this.niederschlagTog;
+    }
+
+    public void setNiederschlagTog(Boolean niederschlagTog) {
+        this.niederschlagTog = niederschlagTog;
+    }
+
+    public Boolean getFernStoerTog() {
+        return this.fernStoerTog;
+    }
+
+    public void setFernStoerTog(Boolean fernStoerTog) {
+        this.fernStoerTog = fernStoerTog;
+    }
+
+    public Boolean getHwfreiTog() {
+        return this.hwfreiTog;
+    }
+
+    public void setHwfreiTog(Boolean hwfreiTog) {
+        this.hwfreiTog = hwfreiTog;
+    }
+
+    public BigDecimal getEinstauHaeufig() {
+        return this.einstauHaeufig;
+    }
+
+    public void setEinstauHaeufig(BigDecimal einstauHaeufig) {
+        this.einstauHaeufig = einstauHaeufig;
+    }
+
+    public Boolean getHwEinrichtungTog() {
+        return this.hwEinrichtungTog;
+    }
+
+    public void setHwEinrichtungTog(Boolean hwEinrichtungTog) {
+        this.hwEinrichtungTog = hwEinrichtungTog;
+    }
+
+    public Boolean getHwRueckstauTog() {
+        return this.hwRueckstauTog;
+    }
+
+    public void setHwRueckstauTog(Boolean hwRueckstauTog) {
+        this.hwRueckstauTog = hwRueckstauTog;
+    }
+
+    public Boolean getHwSchieberTog() {
+        return this.hwSchieberTog;
+    }
+
+    public void setHwSchieberTog(Boolean hwSchieberTog) {
+        this.hwSchieberTog = hwSchieberTog;
+    }
+
+    public Boolean getHwPumpwerkTog() {
+        return this.hwPumpwerkTog;
+    }
+
+    public void setHwPumpwerkTog(Boolean hwPumpwerkTog) {
+        this.hwPumpwerkTog = hwPumpwerkTog;
+    }
+
+    public Boolean getHwWeitereTog() {
+        return this.hwWeitereTog;
+    }
+
+    public void setHwWeitereTog(Boolean hwWeitereTog) {
+        this.hwWeitereTog = hwWeitereTog;
+    }
+
+    public String getHwSonstText() {
+        return this.hwSonstText;
+    }
+
+    public void setHwSonstText(String hwSonstText) {
+        this.hwSonstText = hwSonstText;
+    }
+
+    public Boolean getBemesWeitergTog() {
+        return this.bemesWeitergTog;
+    }
+
+    public void setBemesWeitergTog(Boolean bemesWeitergTog) {
+        this.bemesWeitergTog = bemesWeitergTog;
+    }
+
+    public String getBemessungText() {
+        return this.bemessungText;
+    }
+
+    public void setBemessungText(String bemessungText) {
+        this.bemessungText = bemessungText;
+    }
+
+    public Integer getAnordnungOpt() {
+        return this.anordnungOpt;
+    }
+
+    public void setAnordnungOpt(Integer anordnungOpt) {
+        this.anordnungOpt = anordnungOpt;
+    }
+
+    public Long getWasserrechtGenehmigungNr() {
+        return this.wasserrechtGenehmigungNr;
+    }
+
+    public void setWasserrechtGenehmigungNr(Long wasserrechtGenehmigungNr) {
+        this.wasserrechtGenehmigungNr = wasserrechtGenehmigungNr;
+    }
+
+    public Integer getBeckenartOpt() {
+        return this.beckenartOpt;
+    }
+
+    public void setBeckenartOpt(Integer beckenartOpt) {
+        this.beckenartOpt = beckenartOpt;
+    }
+
+    public BigDecimal getBeckentiefe() {
+        return this.beckentiefe;
+    }
+
+    public void setBeckentiefe(BigDecimal beckentiefe) {
+        this.beckentiefe = beckentiefe;
+    }
+
+    public BigDecimal getBehFlaeche1u2() {
+        return this.behFlaeche1u2;
+    }
+
+    public void setBehFlaeche1u2(BigDecimal behFlaeche1u2) {
+        this.behFlaeche1u2 = behFlaeche1u2;
+    }
+
+    public BigDecimal getBehFlaeche2u3() {
+        return this.behFlaeche2u3;
+    }
+
+    public void setBehFlaeche2u3(BigDecimal behFlaeche2u3) {
+        this.behFlaeche2u3 = behFlaeche2u3;
+    }
+
+    public Integer getBetriebsartOpt() {
+        return this.betriebsartOpt;
+    }
+
+    public void setBetriebsartOpt(Integer betriebsartOpt) {
+        this.betriebsartOpt = betriebsartOpt;
+    }
+
+    public Integer getCsb() {
+        return this.csb;
+    }
+
+    public void setCsb(Integer csb) {
+        this.csb = csb;
+    }
+
+    public BigDecimal getDrosselabfluss() {
+        return this.drosselabfluss;
+    }
+
+    public void setDrosselabfluss(BigDecimal drosselabfluss) {
+        this.drosselabfluss = drosselabfluss;
+    }
+
+    public Integer getDrossAbflussOpt() {
+        return this.drossAbflussOpt;
+    }
+
+    public void setDrossAbflussOpt(Integer drossAbflussOpt) {
+        this.drossAbflussOpt = drossAbflussOpt;
+    }
+
+    public Boolean getDrossUeberTog() {
+        return this.drossUeberTog;
+    }
+
+    public void setDrossUeberTog(Boolean drossUeberTog) {
+        this.drossUeberTog = drossUeberTog;
+    }
+
+    public Integer getEntlastungsartOpt() {
+        return this.entlastungsartOpt;
+    }
+
+    public void setEntlastungsartOpt(Integer entlastungsartOpt) {
+        this.entlastungsartOpt = entlastungsartOpt;
+    }
+
+    public BigDecimal getEntleerungszeit() {
+        return this.entleerungszeit;
+    }
+
+    public void setEntleerungszeit(BigDecimal entleerungszeit) {
+        this.entleerungszeit = entleerungszeit;
+    }
+
+    public BigDecimal getFlaechenbeschickung() {
+        return this.flaechenbeschickung;
+    }
+
+    public void setFlaechenbeschickung(BigDecimal flaechenbeschickung) {
+        this.flaechenbeschickung = flaechenbeschickung;
+    }
+
+    public Integer getFliesszeit() {
+        return this.fliesszeit;
+    }
+
+    public void setFliesszeit(Integer fliesszeit) {
+        this.fliesszeit = fliesszeit;
+    }
+
+    public BigDecimal getFremdAbfluss() {
+        return this.fremdAbfluss;
+    }
+
+    public void setFremdAbfluss(BigDecimal fremdAbfluss) {
+        this.fremdAbfluss = fremdAbfluss;
+    }
+
+    public Integer getFunktionOpt() {
+        return this.funktionOpt;
+    }
+
+    public void setFunktionOpt(Integer funktionOpt) {
+        this.funktionOpt = funktionOpt;
+    }
+
+    public Integer getKanalVol() {
+        return this.kanalVol;
+    }
+
+    public void setKanalVol(Integer kanalVol) {
+        this.kanalVol = kanalVol;
+    }
+
+    public BigDecimal getQrkrit() {
+        return this.qrkrit;
+    }
+
+    public void setQrkrit(BigDecimal qrkrit) {
+        this.qrkrit = qrkrit;
+    }
+
+    public BigDecimal getKritischMisch() {
+        return this.kritischMisch;
+    }
+
+    public void setKritischMisch(BigDecimal kritischMisch) {
+        this.kritischMisch = kritischMisch;
+    }
+
+    public BigDecimal getMaxHSchmutzabfluss() {
+        return this.maxHSchmutzabfluss;
+    }
+
+    public void setMaxHSchmutzabfluss(BigDecimal maxHSchmutzabfluss) {
+        this.maxHSchmutzabfluss = maxHSchmutzabfluss;
+    }
+
+    public BigDecimal getMaxHTrocken() {
+        return this.maxHTrocken;
+    }
+
+    public void setMaxHTrocken(BigDecimal maxHTrocken) {
+        this.maxHTrocken = maxHTrocken;
+    }
+
+    public BigDecimal getMinDrAbfluss() {
+        return this.minDrAbfluss;
+    }
+
+    public void setMinDrAbfluss(BigDecimal minDrAbfluss) {
+        this.minDrAbfluss = minDrAbfluss;
+    }
+
+    public Integer getMischUeberlauf() {
+        return this.mischUeberlauf;
+    }
+
+    public void setMischUeberlauf(Integer mischUeberlauf) {
+        this.mischUeberlauf = mischUeberlauf;
+    }
+
+    public Integer getNMindestV() {
+        return this.NMindestV;
+    }
+
+    public void setNMindestV(Integer NMindestV) {
+        this.NMindestV = NMindestV;
+    }
+
+    public Integer getNSpezVol() {
+        return this.NSpezVol;
+    }
+
+    public void setNSpezVol(Integer NSpezVol) {
+        this.NSpezVol = NSpezVol;
+    }
+
+    public BigDecimal getNeigung() {
+        return this.neigung;
+    }
+
+    public void setNeigung(BigDecimal neigung) {
+        this.neigung = neigung;
+    }
+
+    public BigDecimal getRdrosseldurchfluss() {
+        return this.rdrosseldurchfluss;
+    }
+
+    public void setRdrosseldurchfluss(BigDecimal rdrosseldurchfluss) {
+        this.rdrosseldurchfluss = rdrosseldurchfluss;
+    }
+
+    public BigDecimal getRegenabflDross() {
+        return this.regenabflDross;
+    }
+
+    public void setRegenabflDross(BigDecimal regenabflDross) {
+        this.regenabflDross = regenabflDross;
+    }
+
+    public BigDecimal getRegenabflEntl() {
+        return this.regenabflEntl;
+    }
+
+    public void setRegenabflEntl(BigDecimal regenabflEntl) {
+        this.regenabflEntl = regenabflEntl;
+    }
+
+    public BigDecimal getRegenabfluss() {
+        return this.regenabfluss;
+    }
+
+    public void setRegenabfluss(BigDecimal regenabfluss) {
+        this.regenabfluss = regenabfluss;
+    }
+
+    public BigDecimal getRegenabflussDr() {
+        return this.regenabflussDr;
+    }
+
+    public void setRegenabflussDr(BigDecimal regenabflussDr) {
+        this.regenabflussDr = regenabflussDr;
+    }
+
+    public BigDecimal getRegenspende() {
+        return this.regenspende;
+    }
+
+    public void setRegenspende(BigDecimal regenspende) {
+        this.regenspende = regenspende;
+    }
+
+    public Integer getRfilterflaeche() {
+        return this.rfilterflaeche;
+    }
+
+    public void setRfilterflaeche(Integer rfilterflaeche) {
+        this.rfilterflaeche = rfilterflaeche;
+    }
+
+    public BigDecimal getRfiltergeschwin() {
+        return this.rfiltergeschwin;
+    }
+
+    public void setRfiltergeschwin(BigDecimal rfiltergeschwin) {
+        this.rfiltergeschwin = rfiltergeschwin;
+    }
+
+    public BigDecimal getRfiltersubstratH() {
+        return this.rfiltersubstratH;
+    }
+
+    public void setRfiltersubstratH(BigDecimal rfiltersubstratH) {
+        this.rfiltersubstratH = rfiltersubstratH;
+    }
+
+    public Integer getRhydWirkungsgrad() {
+        return this.rhydWirkungsgrad;
+    }
+
+    public void setRhydWirkungsgrad(Integer rhydWirkungsgrad) {
+        this.rhydWirkungsgrad = rhydWirkungsgrad;
+    }
+
+    public BigDecimal getRjahrUeh() {
+        return this.rjahrUeh;
+    }
+
+    public void setRjahrUeh(BigDecimal rjahrUeh) {
+        this.rjahrUeh = rjahrUeh;
+    }
+
+    public BigDecimal getRkrit() {
+        return this.rkrit;
+    }
+
+    public void setRkrit(BigDecimal rkrit) {
+        this.rkrit = rkrit;
+    }
+
+    public BigDecimal getRmFilterbelastung() {
+        return this.rmFilterbelastung;
+    }
+
+    public void setRmFilterbelastung(BigDecimal rmFilterbelastung) {
+        this.rmFilterbelastung = rmFilterbelastung;
+    }
+
+    public BigDecimal getRspezFiltervol() {
+        return this.rspezFiltervol;
+    }
+
+    public void setRspezFiltervol(BigDecimal rspezFiltervol) {
+        this.rspezFiltervol = rspezFiltervol;
+    }
+
+    public Integer getRstauvolumen() {
+        return this.rstauvolumen;
+    }
+
+    public void setRstauvolumen(Integer rstauvolumen) {
+        this.rstauvolumen = rstauvolumen;
+    }
+
+    public Integer getRvolSlamelle() {
+        return this.rvolSlamelle;
+    }
+
+    public void setRvolSlamelle(Integer rvolSlamelle) {
+        this.rvolSlamelle = rvolSlamelle;
+    }
+
+    public BigDecimal getRwKritAbfluss() {
+        return this.rwKritAbfluss;
+    }
+
+    public void setRwKritAbfluss(BigDecimal rwKritAbfluss) {
+        this.rwKritAbfluss = rwKritAbfluss;
+    }
+
+    public BigDecimal getRwKritMisch() {
+        return this.rwKritMisch;
+    }
+
+    public void setRwKritMisch(BigDecimal rwKritMisch) {
+        this.rwKritMisch = rwKritMisch;
+    }
+
+    public Integer getRwMindestMisch() {
+        return this.rwMindestMisch;
+    }
+
+    public void setRwMindestMisch(Integer rwMindestMisch) {
+        this.rwMindestMisch = rwMindestMisch;
+    }
+
+    public BigDecimal getSchmutzAbfluss() {
+        return this.schmutzAbfluss;
+    }
+
+    public void setSchmutzAbfluss(BigDecimal schmutzAbfluss) {
+        this.schmutzAbfluss = schmutzAbfluss;
+    }
+
+    public BigDecimal getSkuAnstroem() {
+        return this.skuAnstroem;
+    }
+
+    public void setSkuAnstroem(BigDecimal skuAnstroem) {
+        this.skuAnstroem = skuAnstroem;
+    }
+
+    public Integer getSkuMindestSvol() {
+        return this.skuMindestSvol;
+    }
+
+    public void setSkuMindestSvol(Integer skuMindestSvol) {
+        this.skuMindestSvol = skuMindestSvol;
+    }
+
+    public Integer getSkuSpezVol() {
+        return this.skuSpezVol;
+    }
+
+    public void setSkuSpezVol(Integer skuSpezVol) {
+        this.skuSpezVol = skuSpezVol;
+    }
+
+    public Integer getSpezBeckenvol() {
+        return this.spezBeckenvol;
+    }
+
+    public void setSpezBeckenvol(Integer spezBeckenvol) {
+        this.spezBeckenvol = spezBeckenvol;
+    }
+
+    public Integer getSpezSpeicher() {
+        return this.spezSpeicher;
+    }
+
+    public void setSpezSpeicher(Integer spezSpeicher) {
+        this.spezSpeicher = spezSpeicher;
+    }
+
+    public BigDecimal getTrockenWAbfluss() {
+        return this.trockenWAbfluss;
+    }
+
+    public void setTrockenWAbfluss(BigDecimal trockenWAbfluss) {
+        this.trockenWAbfluss = trockenWAbfluss;
+    }
+
+    public Integer getSpeichervolumen() {
+        return this.speichervolumen;
+    }
+
+    public void setSpeichervolumen(Integer speichervolumen) {
+        this.speichervolumen = speichervolumen;
+    }
+
+    public Integer getWOberflaeche() {
+        return this.WOberflaeche;
+    }
+
+    public void setWOberflaeche(Integer WOberflaeche) {
+        this.WOberflaeche = WOberflaeche;
+    }
+
+    public Date getErstellDat() {
+        return this.erstellDat;
+    }
+
+    public void setErstellDat(Date erstellDat) {
+        this.erstellDat = erstellDat;
+    }
+
+    public Date getAktualDat() {
+        return this.aktualDat;
+    }
+
+    public void setAktualDat(Date aktualDat) {
+        this.aktualDat = aktualDat;
+    }
+
+    public String getHerkunft() {
+        return this.herkunft;
+    }
+
+    public void setHerkunft(String herkunft) {
+        this.herkunft = herkunft;
+    }
+
+    public String getExternalNr() {
+        return this.externalNr;
+    }
+
+    public void setExternalNr(String externalNr) {
+        this.externalNr = externalNr;
     }
 
     /**
@@ -77,7 +1158,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -86,9 +1167,116 @@ public class ESonderbauwerk  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("gemeindeId").append("='").append(getGemeindeId()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("kurzbeschreibung").append("='").append(getKurzbeschreibung()).append("' ");
+        buffer.append("entwEinzugsgebOpt").append("='").append(getEntwEinzugsgebOpt()).append("' ");
+        buffer.append("typOpt").append("='").append(getTypOpt()).append("' ");
+        buffer.append("inbetriebnahme").append("='").append(getInbetriebnahme()).append("' ");
+        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");
+        buffer.append("wiederinbetrDat").append("='").append(getWiederinbetrDat()).append("' ");
+        buffer.append("standortid").append("='").append(getStandortid()).append("' ");
+        buffer.append("betreiberid").append("='").append(getBetreiberid()).append("' ");
+        buffer.append("ansprAdrNr").append("='").append(getAnsprAdrNr()).append("' ");
+        buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");
+        buffer.append("e32").append("='").append(getE32()).append("' ");
+        buffer.append("n32").append("='").append(getN32()).append("' ");
+        buffer.append("inNrwTog").append("='").append(getInNrwTog()).append("' ");
+        buffer.append("industrTog").append("='").append(getIndustrTog()).append("' ");
+        buffer.append("nameAusserhalbNrw").append("='").append(getNameAusserhalbNrw()).append("' ");
+        buffer.append("KEntwGebiet").append("='").append(getKEntwGebiet()).append("' ");
+        buffer.append("befFlaecheEgebiet").append("='").append(getBefFlaecheEgebiet()).append("' ");
+        buffer.append("abflussbeiwert").append("='").append(getAbflussbeiwert()).append("' ");
+        buffer.append("befGrad").append("='").append(getBefGrad()).append("' ");
+        buffer.append("undurchFlaeche").append("='").append(getUndurchFlaeche()).append("' ");
+        buffer.append("beckentypOpt").append("='").append(getBeckentypOpt()).append("' ");
+        buffer.append("rohrspeicherTog").append("='").append(getRohrspeicherTog()).append("' ");
+        buffer.append("bauweiseOpt").append("='").append(getBauweiseOpt()).append("' ");
+        buffer.append("drosselOpt").append("='").append(getDrosselOpt()).append("' ");
+        buffer.append("soDrossel").append("='").append(getSoDrossel()).append("' ");
+        buffer.append("beckensteuerungOpt").append("='").append(getBeckensteuerungOpt()).append("' ");
+        buffer.append("AReiEinrichTog").append("='").append(getAReiEinrichTog()).append("' ");
+        buffer.append("messartTog").append("='").append(getMessartTog()).append("' ");
+        buffer.append("drosselTog").append("='").append(getDrosselTog()).append("' ");
+        buffer.append("fuellstandTog").append("='").append(getFuellstandTog()).append("' ");
+        buffer.append("entlastungswasserTog").append("='").append(getEntlastungswasserTog()).append("' ");
+        buffer.append("entlastungsdauerTog").append("='").append(getEntlastungsdauerTog()).append("' ");
+        buffer.append("entlastungshaeufigTog").append("='").append(getEntlastungshaeufigTog()).append("' ");
+        buffer.append("fernMessTog").append("='").append(getFernMessTog()).append("' ");
+        buffer.append("niederschlagTog").append("='").append(getNiederschlagTog()).append("' ");
+        buffer.append("fernStoerTog").append("='").append(getFernStoerTog()).append("' ");
+        buffer.append("hwfreiTog").append("='").append(getHwfreiTog()).append("' ");
+        buffer.append("einstauHaeufig").append("='").append(getEinstauHaeufig()).append("' ");
+        buffer.append("hwEinrichtungTog").append("='").append(getHwEinrichtungTog()).append("' ");
+        buffer.append("hwRueckstauTog").append("='").append(getHwRueckstauTog()).append("' ");
+        buffer.append("hwSchieberTog").append("='").append(getHwSchieberTog()).append("' ");
+        buffer.append("hwPumpwerkTog").append("='").append(getHwPumpwerkTog()).append("' ");
+        buffer.append("hwWeitereTog").append("='").append(getHwWeitereTog()).append("' ");
+        buffer.append("hwSonstText").append("='").append(getHwSonstText()).append("' ");
+        buffer.append("bemesWeitergTog").append("='").append(getBemesWeitergTog()).append("' ");
+        buffer.append("bemessungText").append("='").append(getBemessungText()).append("' ");
+        buffer.append("anordnungOpt").append("='").append(getAnordnungOpt()).append("' ");
+        buffer.append("wasserrechtGenehmigungNr").append("='").append(getWasserrechtGenehmigungNr()).append("' ");
+        buffer.append("beckenartOpt").append("='").append(getBeckenartOpt()).append("' ");
+        buffer.append("beckentiefe").append("='").append(getBeckentiefe()).append("' ");
+        buffer.append("behFlaeche1u2").append("='").append(getBehFlaeche1u2()).append("' ");
+        buffer.append("behFlaeche2u3").append("='").append(getBehFlaeche2u3()).append("' ");
+        buffer.append("betriebsartOpt").append("='").append(getBetriebsartOpt()).append("' ");
+        buffer.append("csb").append("='").append(getCsb()).append("' ");
+        buffer.append("drosselabfluss").append("='").append(getDrosselabfluss()).append("' ");
+        buffer.append("drossAbflussOpt").append("='").append(getDrossAbflussOpt()).append("' ");
+        buffer.append("drossUeberTog").append("='").append(getDrossUeberTog()).append("' ");
+        buffer.append("entlastungsartOpt").append("='").append(getEntlastungsartOpt()).append("' ");
+        buffer.append("entleerungszeit").append("='").append(getEntleerungszeit()).append("' ");
+        buffer.append("flaechenbeschickung").append("='").append(getFlaechenbeschickung()).append("' ");
+        buffer.append("fliesszeit").append("='").append(getFliesszeit()).append("' ");
+        buffer.append("fremdAbfluss").append("='").append(getFremdAbfluss()).append("' ");
+        buffer.append("funktionOpt").append("='").append(getFunktionOpt()).append("' ");
+        buffer.append("kanalVol").append("='").append(getKanalVol()).append("' ");
+        buffer.append("qrkrit").append("='").append(getQrkrit()).append("' ");
+        buffer.append("kritischMisch").append("='").append(getKritischMisch()).append("' ");
+        buffer.append("maxHSchmutzabfluss").append("='").append(getMaxHSchmutzabfluss()).append("' ");
+        buffer.append("maxHTrocken").append("='").append(getMaxHTrocken()).append("' ");
+        buffer.append("minDrAbfluss").append("='").append(getMinDrAbfluss()).append("' ");
+        buffer.append("mischUeberlauf").append("='").append(getMischUeberlauf()).append("' ");
+        buffer.append("NMindestV").append("='").append(getNMindestV()).append("' ");
+        buffer.append("NSpezVol").append("='").append(getNSpezVol()).append("' ");
+        buffer.append("neigung").append("='").append(getNeigung()).append("' ");
+        buffer.append("rdrosseldurchfluss").append("='").append(getRdrosseldurchfluss()).append("' ");
+        buffer.append("regenabflDross").append("='").append(getRegenabflDross()).append("' ");
+        buffer.append("regenabflEntl").append("='").append(getRegenabflEntl()).append("' ");
+        buffer.append("regenabfluss").append("='").append(getRegenabfluss()).append("' ");
+        buffer.append("regenabflussDr").append("='").append(getRegenabflussDr()).append("' ");
+        buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");
+        buffer.append("rfilterflaeche").append("='").append(getRfilterflaeche()).append("' ");
+        buffer.append("rfiltergeschwin").append("='").append(getRfiltergeschwin()).append("' ");
+        buffer.append("rfiltersubstratH").append("='").append(getRfiltersubstratH()).append("' ");
+        buffer.append("rhydWirkungsgrad").append("='").append(getRhydWirkungsgrad()).append("' ");
+        buffer.append("rjahrUeh").append("='").append(getRjahrUeh()).append("' ");
+        buffer.append("rkrit").append("='").append(getRkrit()).append("' ");
+        buffer.append("rmFilterbelastung").append("='").append(getRmFilterbelastung()).append("' ");
+        buffer.append("rspezFiltervol").append("='").append(getRspezFiltervol()).append("' ");
+        buffer.append("rstauvolumen").append("='").append(getRstauvolumen()).append("' ");
+        buffer.append("rvolSlamelle").append("='").append(getRvolSlamelle()).append("' ");
+        buffer.append("rwKritAbfluss").append("='").append(getRwKritAbfluss()).append("' ");
+        buffer.append("rwKritMisch").append("='").append(getRwKritMisch()).append("' ");
+        buffer.append("rwMindestMisch").append("='").append(getRwMindestMisch()).append("' ");
+        buffer.append("schmutzAbfluss").append("='").append(getSchmutzAbfluss()).append("' ");
+        buffer.append("skuAnstroem").append("='").append(getSkuAnstroem()).append("' ");
+        buffer.append("skuMindestSvol").append("='").append(getSkuMindestSvol()).append("' ");
+        buffer.append("skuSpezVol").append("='").append(getSkuSpezVol()).append("' ");
+        buffer.append("spezBeckenvol").append("='").append(getSpezBeckenvol()).append("' ");
+        buffer.append("spezSpeicher").append("='").append(getSpezSpeicher()).append("' ");
+        buffer.append("trockenWAbfluss").append("='").append(getTrockenWAbfluss()).append("' ");
+        buffer.append("speichervolumen").append("='").append(getSpeichervolumen()).append("' ");
+        buffer.append("WOberflaeche").append("='").append(getWOberflaeche()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");
+        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -104,8 +1292,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
         if (this == other) return true;
         if (other == null) return false;
         if (!(other instanceof ESonderbauwerk)) return false;
-        return (this.getId().equals(
-            ((ESonderbauwerk) other).getId()));
+        return (this.getNr().equals(
+            ((ESonderbauwerk) other).getNr()));
     }
 
     /**
@@ -115,12 +1303,12 @@ public class ESonderbauwerk  implements java.io.Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        int idValue = this.getId() == null ?
-            0 : this.getId().hashCode();
+        int idValue = this.getNr() == null ?
+            0 : this.getNr().hashCode();
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -154,8 +1342,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * @param copy ESonderbauwerk
      */
     private void copy(ESonderbauwerk copy) {
-        this.id = copy.getId();            
-    }    
+        this.nr = copy.getNr();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -184,7 +1372,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static ESonderbauwerk findById(de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerkId id) {
+    public static ESonderbauwerk findById(Long id) {
         log.debug("Getting ESonderbauwerk instance with id: " + id);
         return (ESonderbauwerk)
             new DatabaseAccess().get(ESonderbauwerk.class, id);
@@ -200,5 +1388,55 @@ public class ESonderbauwerk  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+
+    /**
+     * @return the sonderbauwerk
+     */
+    public Sonderbauwerk getSonderbauwerk() {
+        if (sonderbauwerk == null) {
+            sonderbauwerk = Sonderbauwerk.findById(getNr());
+        }
+        return sonderbauwerk;
+    }
+
+    /**
+     * Return the ZRfbSchutzgut instances that are connected to the Sonderbauwerk table entry
+     * on which this instance is based on.
+     * @return the ZRfbSchutzgut instances as set
+     */
+    public Set<ZRbfSchutzgueter> getZRfbSchutzguts() {
+        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
+        return sonderbauwerk != null ? sonderbauwerk.getZRbfSchutzgueters() : null;
+    }
+
+    /**
+     * Return the ZSbVerfahren instances that are connected to the Sonderbauwerk table entry
+     * on which this instance is based on.
+     * @return The ZSbVerfahren instances as set
+     */
+    public Set<ZSbVerfahren> getZSbVerfahrens() {
+        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
+        return sonderbauwerk != null ? sonderbauwerk.getZSbVerfahrens() : null;
+    }
+
+    /**
+     * Return the ZSbRegeln instances that are connected to the Sonderbauwerk table entry
+     * on which this instance is based on.
+     * @return The ZSBRegeln instances as set
+     */
+    public Set<ZSbRegeln> getZSbRegelns() {
+        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
+        return sonderbauwerk != null ? sonderbauwerk.getZSbRegelns() : null;
+    }
+
+    /**
+     * Return the SbEntlastung instances that are connected to the Sonderbauwerk table entry
+     * on which this instance is based on.
+     * @return The SbEntlastung instances as set
+     */
+    public Set<SbEntlastung> getSbEntlasungs() {
+        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
+        return sonderbauwerk != null ? sonderbauwerk.getSbEntlastungs() : null;
+    }
 
 }

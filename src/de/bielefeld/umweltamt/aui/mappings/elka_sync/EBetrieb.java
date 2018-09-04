@@ -21,12 +21,17 @@
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
@@ -35,131 +40,131 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
  */
 public class EBetrieb implements java.io.Serializable {
 
-	private EStandort standort;
-	private Integer nr;
-	private Integer origNr;
-	private EAdresse adresseByWrAdrNr;
-	private String bezeichnung;
-	private Boolean suevkanTog;
-	private Float e32;
-	private Float n32;
-	private Date aktualDat;
-	private Date erstellDat;
-	private String herkunft;
+    private EStandort standort;
+    private Integer nr;
+    private Integer origNr;
+    private EAdresse adresseByWrAdrNr;
+    private String bezeichnung;
+    private Boolean suevkanTog;
+    private Float e32;
+    private Float n32;
+    private Date aktualDat;
+    private Date erstellDat;
+    private String herkunft;
 
-	public EBetrieb() {
-	}
+    public EBetrieb() {
+    }
 
-	public EBetrieb(Integer nr) {
-		this.nr = nr;
-	}
+    public EBetrieb(Integer nr) {
+        this.nr = nr;
+    }
 
-	public EBetrieb(Integer nr, EStandort standort, Integer origNr,
-			EAdresse adresseByWrAdrNr, String bezeichnung, Boolean suevkanTog,
-			Float e32, Float n32, Date aktualDat, Date erstellDat,
-			String herkunft) {
-		this.standort = standort;
-		this.nr = nr;
-		this.origNr = origNr;
-		this.adresseByWrAdrNr = adresseByWrAdrNr;
-		this.bezeichnung = bezeichnung;
-		this.suevkanTog = suevkanTog;
-		this.e32 = e32;
-		this.n32 = n32;
-		this.aktualDat = aktualDat;
-		this.erstellDat = erstellDat;
-		this.herkunft = herkunft;
-	}
+    public EBetrieb(Integer nr, EStandort standort, Integer origNr,
+            EAdresse adresseByWrAdrNr, String bezeichnung, Boolean suevkanTog,
+            Float e32, Float n32, Date aktualDat, Date erstellDat,
+            String herkunft) {
+        this.standort = standort;
+        this.nr = nr;
+        this.origNr = origNr;
+        this.adresseByWrAdrNr = adresseByWrAdrNr;
+        this.bezeichnung = bezeichnung;
+        this.suevkanTog = suevkanTog;
+        this.e32 = e32;
+        this.n32 = n32;
+        this.aktualDat = aktualDat;
+        this.erstellDat = erstellDat;
+        this.herkunft = herkunft;
+    }
 
-	public Integer getNr() {
-		return this.nr;
-	}
+    public Integer getNr() {
+        return this.nr;
+    }
 
-	public void setNr(Integer nr) {
-		this.nr = nr;
-	}
-	
-	@JsonIgnore
-	public Integer getOrigNr() {
-		return this.origNr;
-	}
-	
-	@JsonIgnore
-	public void setOrigNr(Integer origNr) {
-		this.origNr = origNr;
-	}
+    public void setNr(Integer nr) {
+        this.nr = nr;
+    }
 
-	public EStandort getStandort() {
-		return this.standort;
-	}
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return this.origNr;
+    }
 
-	public void setStandort(EStandort standort) {
-		this.standort = standort;
-	}
+    @JsonIgnore
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
+    }
 
-	public EAdresse getAdresseByWrAdrNr() {
-		return this.adresseByWrAdrNr;
-	}
+    public EStandort getStandort() {
+        return this.standort;
+    }
 
-	public void setAdresseByWrAdrNr(EAdresse adresseByWrAdrNr) {
-		this.adresseByWrAdrNr = adresseByWrAdrNr;
-	}
+    public void setStandort(EStandort standort) {
+        this.standort = standort;
+    }
 
-	public String getBezeichnung() {
-		return this.bezeichnung;
-	}
+    public EAdresse getAdresseByWrAdrNr() {
+        return this.adresseByWrAdrNr;
+    }
 
-	public void setBezeichnung(String bezeichnung) {
-		this.bezeichnung = bezeichnung;
-	}
+    public void setAdresseByWrAdrNr(EAdresse adresseByWrAdrNr) {
+        this.adresseByWrAdrNr = adresseByWrAdrNr;
+    }
 
-	public Boolean getSuevkanTog() {
-		return this.suevkanTog;
-	}
+    public String getBezeichnung() {
+        return this.bezeichnung;
+    }
 
-	public void setSuevkanTog(Boolean suevkanTog) {
-		this.suevkanTog = suevkanTog;
-	}
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
 
-	public Integer getE32() {
-		return Math.round(this.e32);
-	}
+    public Boolean getSuevkanTog() {
+        return this.suevkanTog;
+    }
 
-	public void setE32(Float e32) {
-		this.e32 = e32;
-	}
+    public void setSuevkanTog(Boolean suevkanTog) {
+        this.suevkanTog = suevkanTog;
+    }
 
-	public Integer getN32() {
-		return Math.round(this.n32);
-	}
+    public Integer getE32() {
+        return Math.round(this.e32);
+    }
 
-	public void setN32(Float n32) {
-		this.n32 = n32;
-	}
+    public void setE32(Float e32) {
+        this.e32 = e32;
+    }
 
-	public Date getAktualDat() {
-		return this.aktualDat;
-	}
+    public Integer getN32() {
+        return Math.round(this.n32);
+    }
 
-	public void setAktualDat(Date aktualDat) {
-		this.aktualDat = aktualDat;
-	}
+    public void setN32(Float n32) {
+        this.n32 = n32;
+    }
 
-	public Date getErstellDat() {
-		return this.erstellDat;
-	}
+    public Date getAktualDat() {
+        return this.aktualDat;
+    }
 
-	public void setErstellDat(Date erstellDat) {
-		this.erstellDat = erstellDat;
-	}
+    public void setAktualDat(Date aktualDat) {
+        this.aktualDat = aktualDat;
+    }
 
-	public String getHerkunft() {
-		return this.herkunft;
-	}
+    public Date getErstellDat() {
+        return this.erstellDat;
+    }
 
-	public void setHerkunft(String herkunft) {
-		this.herkunft = herkunft;
-	}
+    public void setErstellDat(Date erstellDat) {
+        this.erstellDat = erstellDat;
+    }
+
+    public String getHerkunft() {
+        return this.herkunft;
+    }
+
+    public void setHerkunft(String herkunft) {
+        this.herkunft = herkunft;
+    }
 
     /**
      * Update this EAbwasserbehandlungsanlage with its new values.<br>
@@ -167,16 +172,16 @@ public class EBetrieb implements java.io.Serializable {
      * @param copy AtlKlaeranlagen
      */
     private void copy(EBetrieb copy) {
-    	this.bezeichnung = copy.getBezeichnung();
-    	this.e32 = copy.getE32().floatValue();
-    	this.n32 = copy.getN32().floatValue();
-    	this.nr = copy.getNr();
-    	this.standort = copy.getStandort();
-    	this.suevkanTog = copy.getSuevkanTog();
-    	this.adresseByWrAdrNr = copy.getAdresseByWrAdrNr();
-    	this.aktualDat = copy.getAktualDat();
-    	this.erstellDat = copy.getErstellDat();
-    	this.herkunft = copy.getHerkunft();
+        this.bezeichnung = copy.getBezeichnung();
+        this.e32 = copy.getE32().floatValue();
+        this.n32 = copy.getN32().floatValue();
+        this.nr = copy.getNr();
+        this.standort = copy.getStandort();
+        this.suevkanTog = copy.getSuevkanTog();
+        this.adresseByWrAdrNr = copy.getAdresseByWrAdrNr();
+        this.aktualDat = copy.getAktualDat();
+        this.erstellDat = copy.getErstellDat();
+        this.herkunft = copy.getHerkunft();
     }
 
     /**
@@ -198,5 +203,25 @@ public class EBetrieb implements java.io.Serializable {
      */
     public static List<EBetrieb> getAll() {
         return DatabaseQuery.getAll(new EBetrieb());
+    }
+
+    /* Custom code goes below here! */
+
+    /**
+     * Returns the Massnahme instances connected to the Adresse table entry
+     * on which this instance is based on.
+     * @return The instances as set
+     */
+    public Set<Massnahme> getMassnahmes() {
+        Adresse adresse = Adresse.findById(getNr());
+        if (adresse == null) {
+            return null;
+        }
+        Set<Massnahme> massnahmes = new HashSet<Massnahme>(0);
+        Set<ZBetriebMassnahme> zBetriebMassnahmes = adresse.getZBetriebMassnahmes();
+        for (ZBetriebMassnahme zbm : zBetriebMassnahmes) {
+            massnahmes.add(zbm.getMassnahme());
+        }
+        return massnahmes;
     }
 }
