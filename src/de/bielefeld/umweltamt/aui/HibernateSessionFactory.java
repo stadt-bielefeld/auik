@@ -26,6 +26,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
+import org.postgresql.util.PSQLException;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -198,17 +199,13 @@ public class HibernateSessionFactory {
         try {
             Session session = currentSession();
             List<?> test = session.createSQLQuery(
-                    "select count(*) from tab_streets_alkis"
+                    "select count(*) from basis.adresse"
             ).list();
-
             tmp = true;
-            log.debug(test.toString());
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             if (e.getClass().equals(org.hibernate.exception.JDBCConnectionException.class)) {
                 tmp = false;
                 setDBData("", "");
-            } else {
-                throw e;
             }
         } finally {
             closeSession();
