@@ -264,7 +264,7 @@ public class ELKASync extends AbstractModul {
                                 ELKASync.this.dbTable
                                     .setModel(ELKASync.this.sbModel);
                                 ELKASync.this.sbModel.setList(
-                                        prependIdentifierSonderbauwerk(ESonderbauwerk.getAll());
+                                        prependIdentifierSonderbauwerk(ESonderbauwerk.getAll()));
                                 ELKASync.this.sbModel.fireTableDataChanged();
                             }
                             ELKASync.this.rowCount.setText(String

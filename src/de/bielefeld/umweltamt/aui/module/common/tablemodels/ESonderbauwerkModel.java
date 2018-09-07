@@ -20,12 +20,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
-public class ESonderbauwerk extends ListTableModel {
+public class ESonderbauwerkModel extends ListTableModel {
 
-    public ESonderbauwerk() {
+    public ESonderbauwerkModel() {
         super(new String[]{
                 "Nr",
                 "Gemeinde",
