@@ -4,331 +4,330 @@
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk" table="e_sonderbauwerk" schema="elka" optimistic-lock="version">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerkId">
-            <key-property name="nr" type="java.lang.Long">
-                <column name="nr" />
-            </key-property>
-            <key-property name="gemeindeId" type="java.lang.String">
-                <column name="gemeinde_id" length="8" />
-            </key-property>
-            <key-property name="bezeichnung" type="java.lang.String">
-                <column name="bezeichnung" length="60" />
-            </key-property>
-            <key-property name="kurzbeschreibung" type="java.lang.String">
-                <column name="kurzbeschreibung" length="60" />
-            </key-property>
-            <key-property name="entwEinzugsgebOpt" type="java.lang.Integer">
-                <column name="entw_einzugsgeb_opt" />
-            </key-property>
-            <key-property name="typOpt" type="java.lang.Integer">
-                <column name="typ_opt" />
-            </key-property>
-            <key-property name="inbetriebnahme" type="java.lang.Integer">
-                <column name="inbetriebnahme" />
-            </key-property>
-            <key-property name="stillgelegtAm" type="java.util.Date">
-                <column name="stillgelegt_am" length="13" />
-            </key-property>
-            <key-property name="wiederinbetrDat" type="java.util.Date">
-                <column name="wiederinbetr_dat" length="13" />
-            </key-property>
-            <key-property name="standortid" type="java.lang.Integer">
-                <column name="standortid" />
-            </key-property>
-            <key-property name="betreiberid" type="java.lang.Integer">
-                <column name="betreiberid" />
-            </key-property>
-            <key-property name="ansprAdrNr" type="java.lang.Long">
-                <column name="anspr_adr_nr" />
-            </key-property>
-            <key-property name="beschreibung" type="java.lang.String">
-                <column name="beschreibung" />
-            </key-property>
-            <key-property name="e32" type="java.lang.Integer">
-                <column name="e32" />
-            </key-property>
-            <key-property name="n32" type="java.lang.Integer">
-                <column name="n32" />
-            </key-property>
-            <key-property name="inNrwTog" type="java.lang.Boolean">
-                <column name="in_nrw_tog" />
-            </key-property>
-            <key-property name="industrTog" type="java.lang.Boolean">
-                <column name="industr_tog" />
-            </key-property>
-            <key-property name="nameAusserhalbNrw" type="java.lang.String">
-                <column name="name_ausserhalb_nrw" length="30" />
-            </key-property>
-            <key-property name="KEntwGebiet" type="big_decimal">
-                <column name="k_entw_gebiet" precision="11" />
-            </key-property>
-            <key-property name="befFlaecheEgebiet" type="big_decimal">
-                <column name="bef_flaeche_egebiet" precision="11" />
-            </key-property>
-            <key-property name="abflussbeiwert" type="big_decimal">
-                <column name="abflussbeiwert" precision="11" />
-            </key-property>
-            <key-property name="befGrad" type="big_decimal">
-                <column name="bef_grad" precision="11" />
-            </key-property>
-            <key-property name="undurchFlaeche" type="big_decimal">
-                <column name="undurch_flaeche" precision="11" />
-            </key-property>
-            <key-property name="beckentypOpt" type="java.lang.Integer">
-                <column name="beckentyp_opt" />
-            </key-property>
-            <key-property name="rohrspeicherTog" type="java.lang.Boolean">
-                <column name="rohrspeicher_tog" />
-            </key-property>
-            <key-property name="bauweiseOpt" type="java.lang.Integer">
-                <column name="bauweise_opt" />
-            </key-property>
-            <key-property name="drosselOpt" type="java.lang.Integer">
-                <column name="drossel_opt" />
-            </key-property>
-            <key-property name="soDrossel" type="java.lang.String">
-                <column name="so_drossel" length="80" />
-            </key-property>
-            <key-property name="beckensteuerungOpt" type="java.lang.Integer">
-                <column name="beckensteuerung_opt" />
-            </key-property>
-            <key-property name="AReiEinrichTog" type="java.lang.Boolean">
-                <column name="a_rei_einrich_tog" />
-            </key-property>
-            <key-property name="messartTog" type="java.lang.Boolean">
-                <column name="messart_tog" />
-            </key-property>
-            <key-property name="drosselTog" type="java.lang.Boolean">
-                <column name="drossel_tog" />
-            </key-property>
-            <key-property name="fuellstandTog" type="java.lang.Boolean">
-                <column name="fuellstand_tog" />
-            </key-property>
-            <key-property name="entlastungswasserTog" type="java.lang.Boolean">
-                <column name="entlastungswasser_tog" />
-            </key-property>
-            <key-property name="entlastungsdauerTog" type="java.lang.Boolean">
-                <column name="entlastungsdauer_tog" />
-            </key-property>
-            <key-property name="entlastungshaeufigTog" type="java.lang.Boolean">
-                <column name="entlastungshaeufig_tog" />
-            </key-property>
-            <key-property name="fernMessTog" type="java.lang.Boolean">
-                <column name="fern_mess_tog" />
-            </key-property>
-            <key-property name="niederschlagTog" type="java.lang.Boolean">
-                <column name="niederschlag_tog" />
-            </key-property>
-            <key-property name="fernStoerTog" type="java.lang.Boolean">
-                <column name="fern_stoer_tog" />
-            </key-property>
-            <key-property name="hwfreiTog" type="java.lang.Boolean">
-                <column name="hwfrei_tog" />
-            </key-property>
-            <key-property name="einstauHaeufig" type="big_decimal">
-                <column name="einstau_haeufig" precision="11" />
-            </key-property>
-            <key-property name="hwEinrichtungTog" type="java.lang.Boolean">
-                <column name="hw_einrichtung_tog" />
-            </key-property>
-            <key-property name="hwRueckstauTog" type="java.lang.Boolean">
-                <column name="hw_rueckstau_tog" />
-            </key-property>
-            <key-property name="hwSchieberTog" type="java.lang.Boolean">
-                <column name="hw_schieber_tog" />
-            </key-property>
-            <key-property name="hwPumpwerkTog" type="java.lang.Boolean">
-                <column name="hw_pumpwerk_tog" />
-            </key-property>
-            <key-property name="hwWeitereTog" type="java.lang.Boolean">
-                <column name="hw_weitere_tog" />
-            </key-property>
-            <key-property name="hwSonstText" type="java.lang.String">
-                <column name="hw_sonst_text" length="80" />
-            </key-property>
-            <key-property name="bemesWeitergTog" type="java.lang.Boolean">
-                <column name="bemes_weiterg_tog" />
-            </key-property>
-            <key-property name="bemessungText" type="java.lang.String">
-                <column name="bemessung_text" length="80" />
-            </key-property>
-            <key-property name="anordnungOpt" type="java.lang.Integer">
-                <column name="anordnung_opt" />
-            </key-property>
-            <key-property name="wasserrechtGenehmigungNr" type="java.lang.Long">
-                <column name="wasserrecht_genehmigung_nr" />
-            </key-property>
-            <key-property name="beckenartOpt" type="java.lang.Integer">
-                <column name="beckenart_opt" />
-            </key-property>
-            <key-property name="beckentiefe" type="big_decimal">
-                <column name="beckentiefe" precision="10" scale="1" />
-            </key-property>
-            <key-property name="behFlaeche1u2" type="big_decimal">
-                <column name="beh_flaeche_1u2" precision="11" />
-            </key-property>
-            <key-property name="behFlaeche2u3" type="big_decimal">
-                <column name="beh_flaeche_2u3" precision="11" />
-            </key-property>
-            <key-property name="betriebsartOpt" type="java.lang.Integer">
-                <column name="betriebsart_opt" />
-            </key-property>
-            <key-property name="csb" type="java.lang.Integer">
-                <column name="csb" />
-            </key-property>
-            <key-property name="drosselabfluss" type="big_decimal">
-                <column name="drosselabfluss" precision="10" scale="1" />
-            </key-property>
-            <key-property name="drossAbflussOpt" type="java.lang.Integer">
-                <column name="dross_abfluss_opt" />
-            </key-property>
-            <key-property name="drossUeberTog" type="java.lang.Boolean">
-                <column name="dross_ueber_tog" />
-            </key-property>
-            <key-property name="entlastungsartOpt" type="java.lang.Integer">
-                <column name="entlastungsart_opt" />
-            </key-property>
-            <key-property name="entleerungszeit" type="big_decimal">
-                <column name="entleerungszeit" precision="10" scale="1" />
-            </key-property>
-            <key-property name="flaechenbeschickung" type="big_decimal">
-                <column name="flaechenbeschickung" precision="10" scale="1" />
-            </key-property>
-            <key-property name="fliesszeit" type="java.lang.Integer">
-                <column name="fliesszeit" />
-            </key-property>
-            <key-property name="fremdAbfluss" type="big_decimal">
-                <column name="fremd_abfluss" precision="10" />
-            </key-property>
-            <key-property name="funktionOpt" type="java.lang.Integer">
-                <column name="funktion_opt" />
-            </key-property>
-            <key-property name="kanalVol" type="java.lang.Integer">
-                <column name="kanal_vol" />
-            </key-property>
-            <key-property name="qrkrit" type="big_decimal">
-                <column name="qrkrit" precision="11" />
-            </key-property>
-            <key-property name="kritischMisch" type="big_decimal">
-                <column name="kritisch_misch" precision="10" scale="1" />
-            </key-property>
-            <key-property name="maxHSchmutzabfluss" type="big_decimal">
-                <column name="max_h_schmutzabfluss" precision="10" />
-            </key-property>
-            <key-property name="maxHTrocken" type="big_decimal">
-                <column name="max_h_trocken" precision="10" scale="1" />
-            </key-property>
-            <key-property name="minDrAbfluss" type="big_decimal">
-                <column name="min_dr_abfluss" precision="10" scale="1" />
-            </key-property>
-            <key-property name="mischUeberlauf" type="java.lang.Integer">
-                <column name="misch_ueberlauf" />
-            </key-property>
-            <key-property name="NMindestV" type="java.lang.Integer">
-                <column name="n_mindest_v" />
-            </key-property>
-            <key-property name="NSpezVol" type="java.lang.Integer">
-                <column name="n_spez_vol" />
-            </key-property>
-            <key-property name="neigung" type="big_decimal">
-                <column name="neigung" precision="11" />
-            </key-property>
-            <key-property name="rdrosseldurchfluss" type="big_decimal">
-                <column name="rdrosseldurchfluss" precision="10" scale="1" />
-            </key-property>
-            <key-property name="regenabflDross" type="big_decimal">
-                <column name="regenabfl_dross" precision="10" scale="1" />
-            </key-property>
-            <key-property name="regenabflEntl" type="big_decimal">
-                <column name="regenabfl_entl" precision="10" scale="1" />
-            </key-property>
-            <key-property name="regenabfluss" type="big_decimal">
-                <column name="regenabfluss" precision="10" />
-            </key-property>
-            <key-property name="regenabflussDr" type="big_decimal">
-                <column name="regenabfluss_dr" precision="10" scale="1" />
-            </key-property>
-            <key-property name="regenspende" type="big_decimal">
-                <column name="regenspende" precision="10" scale="1" />
-            </key-property>
-            <key-property name="rfilterflaeche" type="java.lang.Integer">
-                <column name="rfilterflaeche" />
-            </key-property>
-            <key-property name="rfiltergeschwin" type="big_decimal">
-                <column name="rfiltergeschwin" precision="12" scale="3" />
-            </key-property>
-            <key-property name="rfiltersubstratH" type="big_decimal">
-                <column name="rfiltersubstrat_h" precision="11" />
-            </key-property>
-            <key-property name="rhydWirkungsgrad" type="java.lang.Integer">
-                <column name="rhyd_wirkungsgrad" />
-            </key-property>
-            <key-property name="rjahrUeh" type="big_decimal">
-                <column name="rjahr_ueh" precision="11" />
-            </key-property>
-            <key-property name="rkrit" type="big_decimal">
-                <column name="rkrit" precision="10" scale="1" />
-            </key-property>
-            <key-property name="rmFilterbelastung" type="big_decimal">
-                <column name="rm_filterbelastung" precision="10" scale="1" />
-            </key-property>
-            <key-property name="rspezFiltervol" type="big_decimal">
-                <column name="rspez_filtervol" precision="11" />
-            </key-property>
-            <key-property name="rstauvolumen" type="java.lang.Integer">
-                <column name="rstauvolumen" />
-            </key-property>
-            <key-property name="rvolSlamelle" type="java.lang.Integer">
-                <column name="rvol_slamelle" />
-            </key-property>
-            <key-property name="rwKritAbfluss" type="big_decimal">
-                <column name="rw_krit_abfluss" precision="10" scale="1" />
-            </key-property>
-            <key-property name="rwKritMisch" type="big_decimal">
-                <column name="rw_krit_misch" precision="10" scale="1" />
-            </key-property>
-            <key-property name="rwMindestMisch" type="java.lang.Integer">
-                <column name="rw_mindest_misch" />
-            </key-property>
-            <key-property name="schmutzAbfluss" type="big_decimal">
-                <column name="schmutz_abfluss" precision="10" />
-            </key-property>
-            <key-property name="skuAnstroem" type="big_decimal">
-                <column name="sku_anstroem" precision="10" scale="1" />
-            </key-property>
-            <key-property name="skuMindestSvol" type="java.lang.Integer">
-                <column name="sku_mindest_svol" />
-            </key-property>
-            <key-property name="skuSpezVol" type="java.lang.Integer">
-                <column name="sku_spez_vol" />
-            </key-property>
-            <key-property name="spezBeckenvol" type="java.lang.Integer">
-                <column name="spez_beckenvol" />
-            </key-property>
-            <key-property name="spezSpeicher" type="java.lang.Integer">
-                <column name="spez_speicher" />
-            </key-property>
-            <key-property name="trockenWAbfluss" type="big_decimal">
-                <column name="trocken_w_abfluss" precision="10" scale="1" />
-            </key-property>
-            <key-property name="speichervolumen" type="java.lang.Integer">
-                <column name="speichervolumen" />
-            </key-property>
-            <key-property name="WOberflaeche" type="java.lang.Integer">
-                <column name="w_oberflaeche" />
-            </key-property>
-            <key-property name="erstellDat" type="java.util.Date">
-                <column name="erstell_dat" length="29" />
-            </key-property>
-            <key-property name="aktualDat" type="java.util.Date">
-                <column name="aktual_dat" length="29" />
-            </key-property>
-            <key-property name="herkunft" type="java.lang.String">
-                <column name="herkunft" />
-            </key-property>
-            <key-property name="externalNr" type="java.lang.String">
-                <column name="external_nr" length="50" />
-            </key-property>
-        </composite-id>
+        <id name="nr" type="java.lang.Long">
+        <column name="nr"/>
+        <generator class="assigned"/>
+        </id>
+        <property name="gemeindeId" type="java.lang.String">
+            <column name="gemeinde_id" length="8" />
+        </property>
+        <property name="bezeichnung" type="java.lang.String">
+            <column name="bezeichnung" length="60" />
+        </property>
+        <property name="kurzbeschreibung" type="java.lang.String">
+            <column name="kurzbeschreibung" length="60" />
+        </property>
+        <property name="entwEinzugsgebOpt" type="java.lang.Integer">
+            <column name="entw_einzugsgeb_opt" />
+        </property>
+        <property name="typOpt" type="java.lang.Integer">
+            <column name="typ_opt" />
+        </property>
+        <property name="inbetriebnahme" type="java.lang.Integer">
+            <column name="inbetriebnahme" />
+        </property>
+        <property name="stillgelegtAm" type="java.util.Date">
+            <column name="stillgelegt_am" length="13" />
+        </property>
+        <property name="wiederinbetrDat" type="java.util.Date">
+            <column name="wiederinbetr_dat" length="13" />
+        </property>
+        <property name="standortid" type="java.lang.Integer">
+            <column name="standortid" />
+        </property>
+        <property name="betreiberid" type="java.lang.Integer">
+            <column name="betreiberid" />
+        </property>
+        <property name="ansprAdrNr" type="java.lang.Long">
+            <column name="anspr_adr_nr" />
+        </property>
+        <property name="beschreibung" type="java.lang.String">
+            <column name="beschreibung" />
+        </property>
+        <property name="e32" type="java.lang.Integer">
+            <column name="e32" />
+        </property>
+        <property name="n32" type="java.lang.Integer">
+            <column name="n32" />
+        </property>
+        <property name="inNrwTog" type="java.lang.Boolean">
+            <column name="in_nrw_tog" />
+        </property>
+        <property name="industrTog" type="java.lang.Boolean">
+            <column name="industr_tog" />
+        </property>
+        <property name="nameAusserhalbNrw" type="java.lang.String">
+            <column name="name_ausserhalb_nrw" length="30" />
+        </property>
+        <property name="KEntwGebiet" type="big_decimal">
+            <column name="k_entw_gebiet" precision="11" />
+        </property>
+        <property name="befFlaecheEgebiet" type="big_decimal">
+            <column name="bef_flaeche_egebiet" precision="11" />
+        </property>
+        <property name="abflussbeiwert" type="big_decimal">
+            <column name="abflussbeiwert" precision="11" />
+        </property>
+        <property name="befGrad" type="big_decimal">
+            <column name="bef_grad" precision="11" />
+        </property>
+        <property name="undurchFlaeche" type="big_decimal">
+            <column name="undurch_flaeche" precision="11" />
+        </property>
+        <property name="beckentypOpt" type="java.lang.Integer">
+            <column name="beckentyp_opt" />
+        </property>
+        <property name="rohrspeicherTog" type="java.lang.Boolean">
+            <column name="rohrspeicher_tog" />
+        </property>
+        <property name="bauweiseOpt" type="java.lang.Integer">
+            <column name="bauweise_opt" />
+        </property>
+        <property name="drosselOpt" type="java.lang.Integer">
+            <column name="drossel_opt" />
+        </property>
+        <property name="soDrossel" type="java.lang.String">
+            <column name="so_drossel" length="80" />
+        </property>
+        <property name="beckensteuerungOpt" type="java.lang.Integer">
+            <column name="beckensteuerung_opt" />
+        </property>
+        <property name="AReiEinrichTog" type="java.lang.Boolean">
+            <column name="a_rei_einrich_tog" />
+        </property>
+        <property name="messartTog" type="java.lang.Boolean">
+            <column name="messart_tog" />
+        </property>
+        <property name="drosselTog" type="java.lang.Boolean">
+            <column name="drossel_tog" />
+        </property>
+        <property name="fuellstandTog" type="java.lang.Boolean">
+            <column name="fuellstand_tog" />
+        </property>
+        <property name="entlastungswasserTog" type="java.lang.Boolean">
+            <column name="entlastungswasser_tog" />
+        </property>
+        <property name="entlastungsdauerTog" type="java.lang.Boolean">
+            <column name="entlastungsdauer_tog" />
+        </property>
+        <property name="entlastungshaeufigTog" type="java.lang.Boolean">
+            <column name="entlastungshaeufig_tog" />
+        </property>
+        <property name="fernMessTog" type="java.lang.Boolean">
+            <column name="fern_mess_tog" />
+        </property>
+        <property name="niederschlagTog" type="java.lang.Boolean">
+            <column name="niederschlag_tog" />
+        </property>
+        <property name="fernStoerTog" type="java.lang.Boolean">
+            <column name="fern_stoer_tog" />
+        </property>
+        <property name="hwfreiTog" type="java.lang.Boolean">
+            <column name="hwfrei_tog" />
+        </property>
+        <property name="einstauHaeufig" type="big_decimal">
+            <column name="einstau_haeufig" precision="11" />
+        </property>
+        <property name="hwEinrichtungTog" type="java.lang.Boolean">
+            <column name="hw_einrichtung_tog" />
+        </property>
+        <property name="hwRueckstauTog" type="java.lang.Boolean">
+            <column name="hw_rueckstau_tog" />
+        </property>
+        <property name="hwSchieberTog" type="java.lang.Boolean">
+            <column name="hw_schieber_tog" />
+        </property>
+        <property name="hwPumpwerkTog" type="java.lang.Boolean">
+            <column name="hw_pumpwerk_tog" />
+        </property>
+        <property name="hwWeitereTog" type="java.lang.Boolean">
+            <column name="hw_weitere_tog" />
+        </property>
+        <property name="hwSonstText" type="java.lang.String">
+            <column name="hw_sonst_text" length="80" />
+        </property>
+        <property name="bemesWeitergTog" type="java.lang.Boolean">
+            <column name="bemes_weiterg_tog" />
+        </property>
+        <property name="bemessungText" type="java.lang.String">
+            <column name="bemessung_text" length="80" />
+        </property>
+        <property name="anordnungOpt" type="java.lang.Integer">
+            <column name="anordnung_opt" />
+        </property>
+        <property name="wasserrechtGenehmigungNr" type="java.lang.Long">
+            <column name="wasserrecht_genehmigung_nr" />
+        </property>
+        <property name="beckenartOpt" type="java.lang.Integer">
+            <column name="beckenart_opt" />
+        </property>
+        <property name="beckentiefe" type="big_decimal">
+            <column name="beckentiefe" precision="10" scale="1" />
+        </property>
+        <property name="behFlaeche1u2" type="big_decimal">
+            <column name="beh_flaeche_1u2" precision="11" />
+        </property>
+        <property name="behFlaeche2u3" type="big_decimal">
+            <column name="beh_flaeche_2u3" precision="11" />
+        </property>
+        <property name="betriebsartOpt" type="java.lang.Integer">
+            <column name="betriebsart_opt" />
+        </property>
+        <property name="csb" type="java.lang.Integer">
+            <column name="csb" />
+        </property>
+        <property name="drosselabfluss" type="big_decimal">
+            <column name="drosselabfluss" precision="10" scale="1" />
+        </property>
+        <property name="drossAbflussOpt" type="java.lang.Integer">
+            <column name="dross_abfluss_opt" />
+        </property>
+        <property name="drossUeberTog" type="java.lang.Boolean">
+            <column name="dross_ueber_tog" />
+        </property>
+        <property name="entlastungsartOpt" type="java.lang.Integer">
+            <column name="entlastungsart_opt" />
+        </property>
+        <property name="entleerungszeit" type="big_decimal">
+            <column name="entleerungszeit" precision="10" scale="1" />
+        </property>
+        <property name="flaechenbeschickung" type="big_decimal">
+            <column name="flaechenbeschickung" precision="10" scale="1" />
+        </property>
+        <property name="fliesszeit" type="java.lang.Integer">
+            <column name="fliesszeit" />
+        </property>
+        <property name="fremdAbfluss" type="big_decimal">
+            <column name="fremd_abfluss" precision="10" />
+        </property>
+        <property name="funktionOpt" type="java.lang.Integer">
+            <column name="funktion_opt" />
+        </property>
+        <property name="kanalVol" type="java.lang.Integer">
+            <column name="kanal_vol" />
+        </property>
+        <property name="qrkrit" type="big_decimal">
+            <column name="qrkrit" precision="11" />
+        </property>
+        <property name="kritischMisch" type="big_decimal">
+            <column name="kritisch_misch" precision="10" scale="1" />
+        </property>
+        <property name="maxHSchmutzabfluss" type="big_decimal">
+            <column name="max_h_schmutzabfluss" precision="10" />
+        </property>
+        <property name="maxHTrocken" type="big_decimal">
+            <column name="max_h_trocken" precision="10" scale="1" />
+        </property>
+        <property name="minDrAbfluss" type="big_decimal">
+            <column name="min_dr_abfluss" precision="10" scale="1" />
+        </property>
+        <property name="mischUeberlauf" type="java.lang.Integer">
+            <column name="misch_ueberlauf" />
+        </property>
+        <property name="NMindestV" type="java.lang.Integer">
+            <column name="n_mindest_v" />
+        </property>
+        <property name="NSpezVol" type="java.lang.Integer">
+            <column name="n_spez_vol" />
+        </property>
+        <property name="neigung" type="big_decimal">
+            <column name="neigung" precision="11" />
+        </property>
+        <property name="rdrosseldurchfluss" type="big_decimal">
+            <column name="rdrosseldurchfluss" precision="10" scale="1" />
+        </property>
+        <property name="regenabflDross" type="big_decimal">
+            <column name="regenabfl_dross" precision="10" scale="1" />
+        </property>
+        <property name="regenabflEntl" type="big_decimal">
+            <column name="regenabfl_entl" precision="10" scale="1" />
+        </property>
+        <property name="regenabfluss" type="big_decimal">
+            <column name="regenabfluss" precision="10" />
+        </property>
+        <property name="regenabflussDr" type="big_decimal">
+            <column name="regenabfluss_dr" precision="10" scale="1" />
+        </property>
+        <property name="regenspende" type="big_decimal">
+            <column name="regenspende" precision="10" scale="1" />
+        </property>
+        <property name="rfilterflaeche" type="java.lang.Integer">
+            <column name="rfilterflaeche" />
+        </property>
+        <property name="rfiltergeschwin" type="big_decimal">
+            <column name="rfiltergeschwin" precision="12" scale="3" />
+        </property>
+        <property name="rfiltersubstratH" type="big_decimal">
+            <column name="rfiltersubstrat_h" precision="11" />
+        </property>
+        <property name="rhydWirkungsgrad" type="java.lang.Integer">
+            <column name="rhyd_wirkungsgrad" />
+        </property>
+        <property name="rjahrUeh" type="big_decimal">
+            <column name="rjahr_ueh" precision="11" />
+        </property>
+        <property name="rkrit" type="big_decimal">
+            <column name="rkrit" precision="10" scale="1" />
+        </property>
+        <property name="rmFilterbelastung" type="big_decimal">
+            <column name="rm_filterbelastung" precision="10" scale="1" />
+        </property>
+        <property name="rspezFiltervol" type="big_decimal">
+            <column name="rspez_filtervol" precision="11" />
+        </property>
+        <property name="rstauvolumen" type="java.lang.Integer">
+            <column name="rstauvolumen" />
+        </property>
+        <property name="rvolSlamelle" type="java.lang.Integer">
+            <column name="rvol_slamelle" />
+        </property>
+        <property name="rwKritAbfluss" type="big_decimal">
+            <column name="rw_krit_abfluss" precision="10" scale="1" />
+        </property>
+        <property name="rwKritMisch" type="big_decimal">
+            <column name="rw_krit_misch" precision="10" scale="1" />
+        </property>
+        <property name="rwMindestMisch" type="java.lang.Integer">
+            <column name="rw_mindest_misch" />
+        </property>
+        <property name="schmutzAbfluss" type="big_decimal">
+            <column name="schmutz_abfluss" precision="10" />
+        </property>
+        <property name="skuAnstroem" type="big_decimal">
+            <column name="sku_anstroem" precision="10" scale="1" />
+        </property>
+        <property name="skuMindestSvol" type="java.lang.Integer">
+            <column name="sku_mindest_svol" />
+        </property>
+        <property name="skuSpezVol" type="java.lang.Integer">
+            <column name="sku_spez_vol" />
+        </property>
+        <property name="spezBeckenvol" type="java.lang.Integer">
+            <column name="spez_beckenvol" />
+        </property>
+        <property name="spezSpeicher" type="java.lang.Integer">
+            <column name="spez_speicher" />
+        </property>
+        <property name="trockenWAbfluss" type="big_decimal">
+            <column name="trocken_w_abfluss" precision="10" scale="1" />
+        </property>
+        <property name="speichervolumen" type="java.lang.Integer">
+            <column name="speichervolumen" />
+        </property>
+        <property name="WOberflaeche" type="java.lang.Integer">
+            <column name="w_oberflaeche" />
+        </property>
+        <property name="erstellDat" type="java.util.Date">
+            <column name="erstell_dat" length="29" />
+        </property>
+        <property name="aktualDat" type="java.util.Date">
+            <column name="aktual_dat" length="29" />
+        </property>
+        <property name="herkunft" type="java.lang.String">
+            <column name="herkunft" />
+        </property>
+        <property name="externalNr" type="java.lang.String">
+            <column name="external_nr" length="50" />
+        </property>
     </class>
 </hibernate-mapping>

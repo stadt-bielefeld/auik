@@ -8,18 +8,15 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="basisObjekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
+        <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
             <column name="objektid" not-null="true" unique="true" />
         </many-to-one>
         <many-to-one name="ansprAdrId" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select">
             <column name="anspr_adr_id" />
         </many-to-one>
-        <many-to-one name="elkaAbaverfahren" class="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" fetch="select">
+        <many-to-one name="abaverfahren" class="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" fetch="select">
             <column name="verfahren_nr" />
         </many-to-one>
-        <property name="ansprAdrId" type="java.lang.Integer">
-            <column name="anspr_adr_id" />
-        </property>
         <property name="aktualDat" type="java.util.Date">
             <column name="aktual_dat" length="13" />
         </property>
@@ -50,9 +47,7 @@
         <property name="sonstZulOpt" type="java.lang.Integer">
             <column name="sonst_zul_opt" />
         </property>
-        <property name="verfahrenNr" type="java.lang.Integer">
-            <column name="verfahren_nr" />
-        </property>
+
         <property name="wartungsvertragToc" type="java.lang.Boolean">
             <column name="wartungsvertrag_toc" />
         </property>

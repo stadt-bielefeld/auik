@@ -71,6 +71,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueck;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EMessstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahme;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahmeUeberwachungsergeb;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAbwasserbehandlungsanlageModel;
@@ -81,6 +82,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.EEinleitungsstelleMo
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EEntwaesserungsgrundstueckModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EMessstelleModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.ESonderbauwerkModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
@@ -105,6 +107,7 @@ public class ELKASync extends AbstractModul {
     private EAdresseModel adresseModel;
     private EStandortModel standortModel;
     private EEntwaesserungsgrundstueckModel entwgrundModel;
+    private ESonderbauwerkModel sbModel;
 
 
     private JTable dbTable;
@@ -166,6 +169,7 @@ public class ELKASync extends AbstractModul {
         this.adresseModel = new EAdresseModel();
         this.standortModel = new EStandortModel();
         this.entwgrundModel = new EEntwaesserungsgrundstueckModel();
+        this.sbModel = new ESonderbauwerkModel();
 
         this.dbTable = new JTable();
         this.rowCount = new JLabel("0");
@@ -186,7 +190,8 @@ public class ELKASync extends AbstractModul {
                     "Betriebe",
                     "Einleitungsstellen",
                     "Messstellen",
-                    "Entwässerungsgrundstücke"};
+                    "Entwässerungsgrundstücke",
+                    "Sonderbauwerke"};
             if (entities != null && entities.length > 0) {
                 for (String entity : entities) {
                     selection.addItem(entity);
@@ -255,6 +260,12 @@ public class ELKASync extends AbstractModul {
                                 ELKASync.this.entwgrundModel.setList(
                                         prependIdentifierEEntwaesserungsgrundstueck(EEntwaesserungsgrundstueck.getAll()));
                                 ELKASync.this.entwgrundModel.fireTableDataChanged();
+                            } else if (item.equals("Sonderbauwerke")) {
+                                ELKASync.this.dbTable
+                                    .setModel(ELKASync.this.sbModel);
+                                ELKASync.this.sbModel.setList(
+                                        prependIdentifierSonderbauwerk(ESonderbauwerk.getAll());
+                                ELKASync.this.sbModel.fireTableDataChanged();
                             }
                             ELKASync.this.rowCount.setText(String
                                     .valueOf(ELKASync.this.dbTable
@@ -357,6 +368,11 @@ public class ELKASync extends AbstractModul {
                                     dbList.add(ELKASync.this.entwgrundModel.getObjectAtRow(rows[i]));
                                 }
                                 url += "entwasserungsgrundstueck";
+                            } else if (sel.equals("Sonderbauwerke")) {
+                                for (int i = 0; i< rows.length; i++) {
+                                    dbList.add(ELKASync.this.sbModel.getObjectAtRow(rows[i]));
+                                }
+                                url += "sonderbauwerk";
                             }
                             else {
                                 return;
@@ -466,6 +482,12 @@ public class ELKASync extends AbstractModul {
                                     dbList.add(ELKASync.this.entwgrundModel.getObjectAtRow(rows[i]));
                                 }
                                 url += "entwaesserungsgrundstueck";
+                            }
+                            else if (sel.equals("Sonderbauwerke")) {
+                                for (int i = 0; i< rows.length; i++) {
+                                    dbList.add(ELKASync.this.sbModel.getObjectAtRow(rows[i]));
+                                }
+                                url += "sonderbauwerk";
                             }
                             else if (sel.equals("Adressen")) {
                                 for (int i = 0; i < rows.length; i++) {
@@ -582,6 +604,9 @@ public class ELKASync extends AbstractModul {
                             } else if (sel.equals("Entwässerungsgrundstücke")) {
                                 dbList = ELKASync.this.entwgrundModel.getList();
                                 url += "/entwaesserungsgrundstueck";
+                            } else if (sel.equals("Sonderbauwerke")) {
+                                dbList = ELKASync.this.sbModel.getList();
+                                url += "/sonderbauwerk";
                             }
                             JerseyWebTarget target =
                                     client.target(url)
@@ -795,6 +820,12 @@ public class ELKASync extends AbstractModul {
                 prependIdentifier(recht.getAdresse());
             }
         }
+        return objects;
+    }
+
+    private List<ESonderbauwerk> prependIdentifierSonderbauwerk (
+        List<ESonderbauwerk> objects
+    ) {
         return objects;
     }
 

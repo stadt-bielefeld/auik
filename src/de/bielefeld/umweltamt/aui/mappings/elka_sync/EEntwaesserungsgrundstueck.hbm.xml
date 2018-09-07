@@ -4,67 +4,66 @@
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueck" table="e_entwaesserungsgrundstueck" schema="elka" optimistic-lock="version">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueckId">
-            <key-property name="nr" type="java.lang.Long">
-                <column name="nr" />
-            </key-property>
-            <key-property name="erlFreiElTog" type="java.lang.Boolean">
-                <column name="erl_frei_el_tog" />
-            </key-property>
-            <key-property name="regenspende" type="big_decimal">
-                <column name="regenspende" precision="10" scale="1" />
-            </key-property>
-            <key-property name="regenhaeufigkeit" type="big_decimal">
-                <column name="regenhaeufigkeit" precision="10" scale="1" />
-            </key-property>
-            <key-property name="beschreibung" type="java.lang.String">
-                <column name="beschreibung" />
-            </key-property>
-            <key-property name="regendauer" type="java.lang.Integer">
-                <column name="regendauer" />
-            </key-property>
-            <key-property name="grEntwGebiet" type="java.lang.Integer">
-                <column name="gr_entw_gebiet" />
-            </key-property>
-            <key-property name="standortid" type="java.lang.Integer">
-                <column name="standortid" />
-            </key-property>
-            <key-property name="dtvWert" type="big_decimal">
-                <column name="dtv_wert" precision="10" scale="1" />
-            </key-property>
-            <key-property name="wasserableitungsstreckeOpt" type="java.lang.Integer">
-                <column name="wasserableitungsstrecke_opt" />
-            </key-property>
-            <key-property name="nameEtwGebiet" type="java.lang.String">
-                <column name="name_etw_gebiet" length="80" />
-            </key-property>
-            <key-property name="erstellDat" type="java.util.Date">
-                <column name="erstell_dat" length="29" />
-            </key-property>
-            <key-property name="einlBereichOpt" type="java.lang.Integer">
-                <column name="einl_bereich_opt" />
-            </key-property>
-            <key-property name="abwbeskonNr" type="java.lang.String">
-                <column name="abwbeskon_nr" length="30" />
-            </key-property>
-            <key-property name="einbauartOpt" type="java.lang.Integer">
-                <column name="einbauart_opt" />
-            </key-property>
-            <key-property name="aktualDat" type="java.util.Date">
-                <column name="aktual_dat" length="29" />
-            </key-property>
-            <key-property name="betreiberid" type="java.lang.Integer">
-                <column name="betreiberid" />
-            </key-property>
-            <key-property name="wasserechtNr" type="java.lang.Long">
-                <column name="wasserecht_nr" />
-            </key-property>
-            <key-property name="herkunft" type="java.lang.String">
-                <column name="herkunft" />
-            </key-property>
-            <key-property name="externalNr" type="java.lang.String">
-                <column name="external_nr" length="50" />
-            </key-property>
-        </composite-id>
+        <id name="nr" type="java.lang.Long">
+        <column name="nr"/>
+        <generator class="assigned"/>
+        </id>
+        <property name="erlFreiElTog" type="java.lang.Boolean">
+            <column name="erl_frei_el_tog" />
+        </property>
+        <property name="regenspende" type="big_decimal">
+            <column name="regenspende" precision="10" scale="1" />
+        </property>
+        <property name="regenhaeufigkeit" type="big_decimal">
+            <column name="regenhaeufigkeit" precision="10" scale="1" />
+        </property>
+        <property name="beschreibung" type="java.lang.String">
+            <column name="beschreibung" />
+        </property>
+        <property name="regendauer" type="java.lang.Integer">
+            <column name="regendauer" />
+        </property>
+        <property name="grEntwGebiet" type="java.lang.Integer">
+            <column name="gr_entw_gebiet" />
+        </property>
+        <property name="standortid" type="java.lang.Integer">
+            <column name="standortid" />
+        </property>
+        <property name="dtvWert" type="big_decimal">
+            <column name="dtv_wert" precision="10" scale="1" />
+        </property>
+        <property name="wasserableitungsstreckeOpt" type="java.lang.Integer">
+            <column name="wasserableitungsstrecke_opt" />
+        </property>
+        <property name="nameEtwGebiet" type="java.lang.String">
+            <column name="name_etw_gebiet" length="80" />
+        </property>
+        <property name="erstellDat" type="java.util.Date">
+            <column name="erstell_dat" length="29" />
+        </property>
+        <property name="einlBereichOpt" type="java.lang.Integer">
+            <column name="einl_bereich_opt" />
+        </property>
+        <property name="abwbeskonNr" type="java.lang.String">
+            <column name="abwbeskon_nr" length="30" />
+        </property>
+        <property name="einbauartOpt" type="java.lang.Integer">
+            <column name="einbauart_opt" />
+        </property>
+        <property name="aktualDat" type="java.util.Date">
+            <column name="aktual_dat" length="29" />
+        </property>
+        <property name="betreiberid" type="java.lang.Integer">
+            <column name="betreiberid" />
+        </property>
+        <property name="wasserechtNr" type="java.lang.Long">
+            <column name="wasserecht_nr" />
+        </property>
+        <property name="herkunft" type="java.lang.String">
+            <column name="herkunft" />
+        </property>
+        <property name="externalNr" type="java.lang.String">
+            <column name="external_nr" length="50" />
+        </property>
     </class>
 </hibernate-mapping>
