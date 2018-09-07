@@ -48,7 +48,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forEEntwaesserungsgrundstueck;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Long nr;
     private Boolean erlFreiElTog;
@@ -78,7 +78,6 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
-
 
     /** Full constructor */
     public EEntwaesserungsgrundstueck(
