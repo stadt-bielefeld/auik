@@ -53,33 +53,33 @@
   basis_standort.hausnr,
   basis_standort.hausnrzus,
   basis_standort.plz,
-  basis_lage.entgebid,
-  basis_objekt.prioritaet,
-  basis_objekt.beschreibung,
+  lage.entgebid,
+  objekt.prioritaet,
+  objekt.beschreibung,
   sb1.name AS SbAtl,
   sb2.name AS SbAbs,
-  atl_klaeranlagen.anlage,
-  atl_probepkt.branche
+  klaeranlage.anlage,
+  messstelle.branche
 FROM
-  auik.basis_adresse AS basis_betreiber,
-  auik.basis_objekt,
-  auik.atl_probepkt,
-  auik.basis_adresse AS basis_standort,
-  auik.basis_map_adresse_lage,
-  auik.basis_lage,
-  auik.atl_klaeranlagen,
-  auik.basis_sachbearbeiter as sb1,
-  auik.basis_sachbearbeiter as sb2
+  basis.adresse AS basis_betreiber,
+  basis.objekt,
+  labor.messstelle,
+  basis.standort,
+  basis.adresse AS basis_standort,
+  basis.lage,
+  labor.klaeranlage,
+  basis.sachbearbeiter as sb1,
+  basis.sachbearbeiter as sb2
 WHERE
-  basis_objekt.id = atl_probepkt.objektid AND
-  basis_objekt.standortid = basis_standort.id AND
-  basis_objekt.betreiberid = basis_betreiber.id AND
-  basis_objekt.standortid = basis_map_adresse_lage.adresseid AND
-  basis_map_adresse_lage.lageid = basis_lage.id AND
-  atl_probepkt.ka_id = atl_klaeranlagen.id AND
-  atl_probepkt.sachbearbeiter = sb1.id AND
-  basis_objekt.sachbearbeiter = sb2.id AND
-  basis_objekt.id = $P{id}]]>
+  objekt.id = messstelle.objektid AND
+  objekt.betreiberid = basis_betreiber.id AND
+  objekt.standortid = standort.id AND
+  standort.adresseid = basis_standort.id AND
+  standort.lageid = lage.id AND
+  messstelle.ka_id = klaeranlage.id AND
+  messstelle.sachbearbeiter = sb1.id AND
+  objekt.sachbearbeiter = sb2.id AND
+  objekt.id = $P{id}]]>
 	</queryString>
 	<field name="betranrede" class="java.lang.String"/>
 	<field name="betrname" class="java.lang.String"/>

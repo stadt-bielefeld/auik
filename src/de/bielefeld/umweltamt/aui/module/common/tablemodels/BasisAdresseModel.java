@@ -98,7 +98,7 @@ public class BasisAdresseModel extends ListTableModel {
 		Object value = null;
 
 		Adresse betr = (Adresse) objectAtRow;
-//		HibernateSessionFactory.currentSession().refresh(betr);
+		HibernateSessionFactory.currentSession().refresh(betr);
 		if (betr.getStandorts().size() > 0) {
 			for (int i = 0; i < betr.getStandorts().size(); i++) {
 				Standort map = (Standort) betr

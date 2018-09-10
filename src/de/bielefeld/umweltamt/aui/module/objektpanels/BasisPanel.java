@@ -835,44 +835,44 @@ public class BasisPanel extends JPanel {
             }
 			if (this.hauptModul.getObjekt().getStandortid() != null) {
 
-				Standort mapsta = (Standort) Standort
+				Standort standort = (Standort) Standort
 						.findByAdresse(this.hauptModul.getObjekt()
 								.getStandortid().getAdresse());
-				if (mapsta != null) {
-					Adresse sta = mapsta.getAdresse();
-					log.debug("Set standort field to: " + sta
+				if (standort != null) {
+					Adresse adr = standort.getAdresse();
+					log.debug("Set standort field to: " + adr
 							+ this.hauptModul.getObjekt().getStandortid()
 							+ " " + this.hauptModul.getObjekt().getStandortid().getLage());
-					String toolTip = "<html>" + sta + "<br>";
-					if (sta.getPlz() != null) {
-						toolTip += "<b>PLZ:</b> " + sta.getPlz() + "<br>";
+					String toolTip = "<html>" + adr + "<br>";
+					if (adr.getPlz() != null) {
+						toolTip += "<b>PLZ:</b> " + adr.getPlz() + "<br>";
 					}
 					toolTip += "<b>Gemarkung:</b> "
-							+ mapsta.getLage().getGemarkung()
-							+ ((mapsta.getLage().getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
-									+ mapsta.getLage().getEntgebid()
+							+ standort.getLage().getGemarkung()
+							+ ((standort.getLage().getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
+									+ standort.getLage().getEntgebid()
 									: "") + "</html>";
 					getStandortFeld().setToolTipText(toolTip);
 					getStandortFeld().setText(
-							mapsta.getAdresse().toString());
+							standort.getAdresse().toString());
 
 					if (this.hauptModul.getObjekt().getStandortid().getLage() == null) {
-						mapsta = (Standort) Standort
+						standort = (Standort) Standort
 								.findByAdresse(this.hauptModul.getObjekt()
 										.getStandortid().getAdresse());
 						this.hauptModul.getObjekt().getStandortid().setLage(
-								mapsta.getLage());
+								standort.getLage());
 					}
-					getLageFeld().setText(mapsta.getLage().toString());
+					getLageFeld().setText(standort.getLage().toString());
 				}else {
 					getLageFeld().setText(this.hauptModul.getObjekt().getStandortid().getLage().toString());
 				}
 			}
 			
-			if (this.hauptModul.getObjekt().getStandortid().getId() == 3) {
-
-				getLageFeld().setText(this.hauptModul.getObjekt().getStandortid().getLage().toString());
-			}
+//			if (this.hauptModul.getObjekt().getStandortid().getId() == 3) {
+//
+//				getLageFeld().setText(this.hauptModul.getObjekt().getStandortid().getLage().toString());
+//			}
 
             if (this.hauptModul.getObjekt().getObjektarten() != null) {
                 getArtBox().setSelectedItem(
@@ -1146,12 +1146,14 @@ public class BasisPanel extends JPanel {
 							.getObjekt().getStandortid();
 					if (BasisPanel.this. hauptModul.getObjekt().getBetreiberid() != null &&
 							standort == null) {
-						standort = BasisPanel.this. hauptModul.getObjekt().getStandortid();
+						standort = new Standort();
+						standort.setAdresse(BasisPanel.this. hauptModul.getObjekt().getBetreiberid());
 					}
 					if(standort == null){
 						standort = new Standort();
+						standort.setAdresse(new Adresse());
 					}
-					ChooseDialog chooser = new ChooseDialog(standort,
+					ChooseDialog chooser = new ChooseDialog(standort.getAdresse(),
 							BasisPanel.this.hauptModul.getFrame(), "standort");
 					chooser.setVisible(true);
 	

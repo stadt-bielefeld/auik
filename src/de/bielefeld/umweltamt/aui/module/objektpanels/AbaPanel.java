@@ -189,12 +189,6 @@ private static final long serialVersionUID = -4030805403749508467L;
             if (this.fachdaten.getErstellDat() != null) {
             	getErstellDat().setDate(this.fachdaten.getErstellDat());
             }
-            if (this.fachdaten.getAbaverfahren() != null) {
-                getVerfahrenBox().setSelectedItem(
-                    this.fachdaten.getAbaverfahren());
-            } else {
-//            	getVerfahrenBox().setFont(this.italicFont);
-            }
             if (this.fachdaten.getGenehmpflichtigToc() != null) {
                 if (this.fachdaten.getGenehmpflichtigToc() == true) {
                     getGenehmigungdpflichtCheck().setSelected(true);
@@ -272,14 +266,6 @@ private static final long serialVersionUID = -4030805403749508467L;
             this.fachdaten.setEinzelabnahmeToc(false);
         }
         
-        if (getVerfahrenBox().getSelectedItem() != null) {
-            this.fachdaten.setAbaverfahren((Abaverfahren) getVerfahrenBox()
-                .getSelectedItem());
-            log.debug("Verfahren " + this.fachdaten.getAbaverfahren()
-                + " zugeordnet.");
-        } else
-        	getVerfahrenBox().setSelectedIndex(-1);
-
         success = this.fachdaten.merge();
         if (success) {
             log.debug("Zahnarzt "
@@ -300,7 +286,6 @@ private static final long serialVersionUID = -4030805403749508467L;
             this.fachdaten.setObjekt(this.hauptModul.getObjekt());
             // Verfahren auf "unbekannt" setzen
             Abaverfahren verfahren = Abaverfahren.findById(1);
-            this.fachdaten.setAbaverfahren(verfahren);
 
             // Abwasserbehandlungsanlage speichern
             this.fachdaten.merge();

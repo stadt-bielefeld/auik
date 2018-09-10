@@ -404,7 +404,7 @@ abstract class DatabaseVawsQuery {
 						.add(Restrictions.lt("naechstepruefung", new Date()))
 						.add(Restrictions.eq("pruefungabgeschlossen", false))
 						.addOrder(Order.asc("naechstepruefung"))
-						.addOrder(Order.asc("vawsFachdaten")),
+						.addOrder(Order.asc("fachdaten")),
 				new Kontrollen());
 	}
 
@@ -601,7 +601,7 @@ abstract class DatabaseVawsQuery {
 						.add(Restrictions.or(Restrictions.isNull("wvverwverf"),
 								Restrictions.eq("wvverwverf", false)))
 						.addOrder(Order.asc("wiedervorlage"))
-						.addOrder(Order.asc("vawsFachdaten")),
+						.addOrder(Order.asc("fachdaten")),
 				new Verwaltungsverf());
 	}
 

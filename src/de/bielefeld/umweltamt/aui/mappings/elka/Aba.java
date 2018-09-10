@@ -50,7 +50,6 @@ public class Aba  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Objekt objekt;
-    private Abaverfahren abaverfahren;
     private Integer ansprAdrId;
     private Date aktualDat;
     private Date erstellDat;
@@ -127,14 +126,6 @@ public class Aba  implements java.io.Serializable {
 
 	public void setObjekt(Objekt objekt) {
 	    this.objekt = objekt;
-	}
-
-	public Abaverfahren getAbaverfahren() {
-		return abaverfahren;
-	}
-
-	public void setAbaverfahren(Abaverfahren abaverfahren) {
-		this.abaverfahren = abaverfahren;
 	}
 
 	public Integer getAnsprAdrId() {
@@ -319,7 +310,6 @@ public class Aba  implements java.io.Serializable {
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");	
         buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("abaverfahren").append("='").append(getAbaverfahren()).append("' ");						
         buffer.append("ansprAdrId").append("='").append(getAnsprAdrId()).append("' ");			
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
@@ -407,7 +397,6 @@ public class Aba  implements java.io.Serializable {
     private void copy(Aba copy) {
         this.id = copy.getId();                 
         this.objekt = copy.getObjekt();             
-        this.abaverfahren = copy.getAbaverfahren();      
         this.ansprAdrId = copy.getAnsprAdrId();            
         this.aktualDat = copy.getAktualDat();            
         this.erstellDat = copy.getErstellDat();            

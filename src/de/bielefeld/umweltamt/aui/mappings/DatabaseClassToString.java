@@ -33,22 +33,6 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAlt;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAltId;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewQgisAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewQgisAnalysepositionId;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautHg;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautHgId;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbKreuztabelleFirmen;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbKreuztabelleFirmenId;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbKreuztabelleRoutine;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbKreuztabelleRoutineId;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenFirmen;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenFirmenId;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenRoutine;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenRoutineId;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenVs;
-import de.bielefeld.umweltamt.aui.mappings.atl.ViewSielhautqbProbenahmenVsId;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Bezeichnung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
@@ -741,76 +725,6 @@ public class DatabaseClassToString {
 		return null;
 	}
 
-	public static String toStringForClass(ViewQgisAnalyseposition viewQgisAnalyseposition) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewQgisAnalysepositionId viewQgisAnalysepositionId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautHg viewSielhautHg) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautHgId viewSielhautHgId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautqbKreuztabelleFirmen viewSielhautqbKreuztabelleFirmen) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautqbKreuztabelleFirmenId viewSielhautqbKreuztabelleFirmenId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautqbKreuztabelleRoutine viewSielhautqbKreuztabelleRoutine) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautqbKreuztabelleRoutineId viewSielhautqbKreuztabelleRoutineId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautqbProbenahmenFirmen viewSielhautqbProbenahmenFirmen) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautqbProbenahmenFirmenId viewSielhautqbProbenahmenFirmenId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautqbProbenahmenRoutine viewSielhautqbProbenahmenRoutine) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautqbProbenahmenRoutineId viewSielhautqbProbenahmenRoutineId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautqbProbenahmenVs viewSielhautqbProbenahmenVs) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewSielhautqbProbenahmenVsId viewSielhautqbProbenahmenVsId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(EEntwaesserungsgrundstueck eEntwaesserungsgrundstueck) {
 		// TODO Auto-generated method stub
 		return null;
@@ -918,16 +832,6 @@ public class DatabaseClassToString {
 	}
 
 	public static String toStringForClass(ViewAtlAnalysepositionAll viewAtlAnalysepositionAll) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewAtlAnalysepositionAlt viewAtlAnalysepositionAlt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewAtlAnalysepositionAltId viewAtlAnalysepositionAltId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

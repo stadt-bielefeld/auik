@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 28.08.2018 12:49:47 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" table="messstelle" schema="labor" optimistic-lock="version">
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" table="messstelle" schema="labor" lazy="false" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="assigned" />
