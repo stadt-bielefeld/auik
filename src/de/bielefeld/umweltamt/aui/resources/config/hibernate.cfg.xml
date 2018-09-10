@@ -75,7 +75,10 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Wasserrecht.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/ZAbaVerfahren.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/ZAbaWasserrecht.hbm.xml" />
+<<<<<<< HEAD
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/ZElsWasserrecht.hbm.xml" />
+=======
+>>>>>>> refs/remotes/origin/db_schema_update
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EAbwasserbehandlungsanlage.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EAdresse.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EAnfallstelle.hbm.xml" />
@@ -118,5 +121,9 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/oberflgw/ZRbfSchutzgueter.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/oberflgw/ZSbRegeln.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/oberflgw/ZSbVerfahren.hbm.xml" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/db_schema_update
     </session-factory>
 </hibernate-configuration>
