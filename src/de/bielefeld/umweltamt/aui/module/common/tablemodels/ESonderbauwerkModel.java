@@ -158,8 +158,8 @@ public class ESonderbauwerkModel extends ListTableModel {
             case 6: return sb.getInbetriebnahme();
             case 7: return sb.getStillgelegtAm();
             case 8: return sb.getWiederinbetrDat();
-            case 9: return sb.getStandortid();
-            case 10: return sb.getBetreiberid();
+            case 9: return sb.getStandort().getNr();
+            case 10: return sb.getAdresse().getName1();
             case 11: return sb.getAnsprAdrNr();
             case 12: return sb.getBeschreibung();
             case 13: return sb.getE32();

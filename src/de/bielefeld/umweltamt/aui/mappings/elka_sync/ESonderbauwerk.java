@@ -34,6 +34,9 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbRegeln;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbVerfahren;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +57,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /* Primary key, foreign keys (relations) and table columns */
-    private Long nr;
+    private Integer nr;
+    private Integer origNr;
     private String gemeindeId;
     private String bezeichnung;
     private String kurzbeschreibung;
@@ -63,8 +67,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private Integer inbetriebnahme;
     private Date stillgelegtAm;
     private Date wiederinbetrDat;
-    private Integer standortid;
-    private Integer betreiberid;
+    private EStandort standort;
+    private EAdresse adresse;
     private Long ansprAdrNr;
     private String beschreibung;
     private Integer e32;
@@ -173,7 +177,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
 
     /** Full constructor */
     public ESonderbauwerk(
-        Long nr, String gemeindeId, String bezeichnung, String kurzbeschreibung, Integer entwEinzugsgebOpt, Integer typOpt, Integer inbetriebnahme, Date stillgelegtAm, Date wiederinbetrDat, Integer standortid, Integer betreiberid, Long ansprAdrNr, String beschreibung, Integer e32, Integer n32, Boolean inNrwTog, Boolean industrTog, String nameAusserhalbNrw, BigDecimal KEntwGebiet, BigDecimal befFlaecheEgebiet, BigDecimal abflussbeiwert, BigDecimal befGrad, BigDecimal undurchFlaeche, Integer beckentypOpt, Boolean rohrspeicherTog, Integer bauweiseOpt, Integer drosselOpt, String soDrossel, Integer beckensteuerungOpt, Boolean AReiEinrichTog, Boolean messartTog, Boolean drosselTog, Boolean fuellstandTog, Boolean entlastungswasserTog, Boolean entlastungsdauerTog, Boolean entlastungshaeufigTog, Boolean fernMessTog, Boolean niederschlagTog, Boolean fernStoerTog, Boolean hwfreiTog, BigDecimal einstauHaeufig, Boolean hwEinrichtungTog, Boolean hwRueckstauTog, Boolean hwSchieberTog, Boolean hwPumpwerkTog, Boolean hwWeitereTog, String hwSonstText, Boolean bemesWeitergTog, String bemessungText, Integer anordnungOpt, Long wasserrechtGenehmigungNr, Integer beckenartOpt, BigDecimal beckentiefe, BigDecimal behFlaeche1u2, BigDecimal behFlaeche2u3, Integer betriebsartOpt, Integer csb, BigDecimal drosselabfluss, Integer drossAbflussOpt, Boolean drossUeberTog, Integer entlastungsartOpt, BigDecimal entleerungszeit, BigDecimal flaechenbeschickung, Integer fliesszeit, BigDecimal fremdAbfluss, Integer funktionOpt, Integer kanalVol, BigDecimal qrkrit, BigDecimal kritischMisch, BigDecimal maxHSchmutzabfluss, BigDecimal maxHTrocken, BigDecimal minDrAbfluss, Integer mischUeberlauf, Integer NMindestV, Integer NSpezVol, BigDecimal neigung, BigDecimal rdrosseldurchfluss, BigDecimal regenabflDross, BigDecimal regenabflEntl, BigDecimal regenabfluss, BigDecimal regenabflussDr, BigDecimal regenspende, Integer rfilterflaeche, BigDecimal rfiltergeschwin, BigDecimal rfiltersubstratH, Integer rhydWirkungsgrad, BigDecimal rjahrUeh, BigDecimal rkrit, BigDecimal rmFilterbelastung, BigDecimal rspezFiltervol, Integer rstauvolumen, Integer rvolSlamelle, BigDecimal rwKritAbfluss, BigDecimal rwKritMisch, Integer rwMindestMisch, BigDecimal schmutzAbfluss, BigDecimal skuAnstroem, Integer skuMindestSvol, Integer skuSpezVol, Integer spezBeckenvol, Integer spezSpeicher, BigDecimal trockenWAbfluss, Integer speichervolumen, Integer WOberflaeche, Date erstellDat, Date aktualDat, String herkunft, String externalNr) {
+        Integer nr, String gemeindeId, String bezeichnung, String kurzbeschreibung, Integer entwEinzugsgebOpt, Integer typOpt, Integer inbetriebnahme, Date stillgelegtAm, Date wiederinbetrDat, EStandort standort, EAdresse adresse, Long ansprAdrNr, String beschreibung, Integer e32, Integer n32, Boolean inNrwTog, Boolean industrTog, String nameAusserhalbNrw, BigDecimal KEntwGebiet, BigDecimal befFlaecheEgebiet, BigDecimal abflussbeiwert, BigDecimal befGrad, BigDecimal undurchFlaeche, Integer beckentypOpt, Boolean rohrspeicherTog, Integer bauweiseOpt, Integer drosselOpt, String soDrossel, Integer beckensteuerungOpt, Boolean AReiEinrichTog, Boolean messartTog, Boolean drosselTog, Boolean fuellstandTog, Boolean entlastungswasserTog, Boolean entlastungsdauerTog, Boolean entlastungshaeufigTog, Boolean fernMessTog, Boolean niederschlagTog, Boolean fernStoerTog, Boolean hwfreiTog, BigDecimal einstauHaeufig, Boolean hwEinrichtungTog, Boolean hwRueckstauTog, Boolean hwSchieberTog, Boolean hwPumpwerkTog, Boolean hwWeitereTog, String hwSonstText, Boolean bemesWeitergTog, String bemessungText, Integer anordnungOpt, Long wasserrechtGenehmigungNr, Integer beckenartOpt, BigDecimal beckentiefe, BigDecimal behFlaeche1u2, BigDecimal behFlaeche2u3, Integer betriebsartOpt, Integer csb, BigDecimal drosselabfluss, Integer drossAbflussOpt, Boolean drossUeberTog, Integer entlastungsartOpt, BigDecimal entleerungszeit, BigDecimal flaechenbeschickung, Integer fliesszeit, BigDecimal fremdAbfluss, Integer funktionOpt, Integer kanalVol, BigDecimal qrkrit, BigDecimal kritischMisch, BigDecimal maxHSchmutzabfluss, BigDecimal maxHTrocken, BigDecimal minDrAbfluss, Integer mischUeberlauf, Integer NMindestV, Integer NSpezVol, BigDecimal neigung, BigDecimal rdrosseldurchfluss, BigDecimal regenabflDross, BigDecimal regenabflEntl, BigDecimal regenabfluss, BigDecimal regenabflussDr, BigDecimal regenspende, Integer rfilterflaeche, BigDecimal rfiltergeschwin, BigDecimal rfiltersubstratH, Integer rhydWirkungsgrad, BigDecimal rjahrUeh, BigDecimal rkrit, BigDecimal rmFilterbelastung, BigDecimal rspezFiltervol, Integer rstauvolumen, Integer rvolSlamelle, BigDecimal rwKritAbfluss, BigDecimal rwKritMisch, Integer rwMindestMisch, BigDecimal schmutzAbfluss, BigDecimal skuAnstroem, Integer skuMindestSvol, Integer skuSpezVol, Integer spezBeckenvol, Integer spezSpeicher, BigDecimal trockenWAbfluss, Integer speichervolumen, Integer WOberflaeche, Date erstellDat, Date aktualDat, String herkunft, String externalNr) {
         this.nr = nr;
         this.gemeindeId = gemeindeId;
         this.bezeichnung = bezeichnung;
@@ -183,8 +187,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.inbetriebnahme = inbetriebnahme;
         this.stillgelegtAm = stillgelegtAm;
         this.wiederinbetrDat = wiederinbetrDat;
-        this.standortid = standortid;
-        this.betreiberid = betreiberid;
+        this.standort = standort;
+        this.adresse = adresse;
         this.ansprAdrNr = ansprAdrNr;
         this.beschreibung = beschreibung;
         this.e32 = e32;
@@ -284,12 +288,22 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.externalNr = externalNr;
     }
 
+    @JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
+	
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr = origNr;
+	}
+
     /* Setter and getter methods */
-    public Long getNr() {
+    public Integer getNr() {
         return this.nr;
     }
 
-    public void setNr(Long nr) {
+    public void setNr(Integer nr) {
         this.nr = nr;
     }
 
@@ -357,20 +371,20 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.wiederinbetrDat = wiederinbetrDat;
     }
 
-    public Integer getStandortid() {
-        return this.standortid;
+    public EStandort getStandort() {
+        return this.standort;
     }
 
-    public void setStandortid(Integer standortid) {
-        this.standortid = standortid;
+    public void setStandort(EStandort standort) {
+        this.standort = standort;
     }
 
-    public Integer getBetreiberid() {
-        return this.betreiberid;
+    public EAdresse getAdresse() {
+        return this.adresse;
     }
 
-    public void setBetreiberid(Integer betreiberid) {
-        this.betreiberid = betreiberid;
+    public void setAdresse(EAdresse adresse) {
+        this.adresse = adresse;
     }
 
     public Long getAnsprAdrNr() {
@@ -1178,8 +1192,6 @@ public class ESonderbauwerk  implements java.io.Serializable {
         buffer.append("inbetriebnahme").append("='").append(getInbetriebnahme()).append("' ");
         buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");
         buffer.append("wiederinbetrDat").append("='").append(getWiederinbetrDat()).append("' ");
-        buffer.append("standortid").append("='").append(getStandortid()).append("' ");
-        buffer.append("betreiberid").append("='").append(getBetreiberid()).append("' ");
         buffer.append("ansprAdrNr").append("='").append(getAnsprAdrNr()).append("' ");
         buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");
         buffer.append("e32").append("='").append(getE32()).append("' ");

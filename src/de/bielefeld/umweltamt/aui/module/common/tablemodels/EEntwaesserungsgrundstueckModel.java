@@ -81,7 +81,7 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
             case 6:
                 return ewg.getGrEntwGebiet();
             case 7:
-                return ewg.getStandortid();
+                return ewg.getStandort().getNr();
             case 8:
                 return ewg.getDtvWert();
             case 9:
@@ -93,15 +93,15 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
             case 12:
                 return ewg.getEinlBereichOpt();
             case 13:
-                return ewg.getAbwbeskonNr();
+                return ewg.getAbwbeskonnr();
             case 14:
                 return ewg.getEinbauartOpt();
             case 15:
                 return ewg.getAktualDat();
             case 16:
-                return ewg.getBetreiberid();
+                return ewg.getAdresse().getName1();
             case 17:
-                return ewg.getWasserechtNr();
+                return ewg.getWasserrecht() != null ? ewg.getWasserrecht().getNr(): null;
             case 18:
                 return ewg.getHerkunft();
             case 19:

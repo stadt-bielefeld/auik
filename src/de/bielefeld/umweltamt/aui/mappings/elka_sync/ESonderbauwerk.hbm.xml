@@ -34,12 +34,12 @@
 		<property name="wiederinbetrDat" type="java.util.Date">
 			<column name="wiederinbetr_dat" length="13" />
 		</property>
-		<property name="standortid" type="java.lang.Integer">
-			<column name="standortid" />
-		</property>
-		<property name="betreiberid" type="java.lang.Integer">
-			<column name="betreiberid" />
-		</property>
+        <many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">
+            <column name="standortid"/>
+        </many-to-one>
+        <many-to-one lazy="false" name="adresse" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
+            <column name="betreiberid"/>
+        </many-to-one>
 		<property name="ansprAdrNr" type="java.lang.Long">
 			<column name="anspr_adr_nr" />
 		</property>

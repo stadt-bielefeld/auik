@@ -826,13 +826,26 @@ public class ELKASync extends AbstractModul {
     private List<ESonderbauwerk> prependIdentifierSonderbauwerk (
         List<ESonderbauwerk> objects
     ) {
+        for (ESonderbauwerk sb: objects) {
+            prependIdentifier(sb);
+        }
         return objects;
     }
 
     private List<EEntwaesserungsgrundstueck> prependIdentifierEEntwaesserungsgrundstueck (
         List<EEntwaesserungsgrundstueck> objects
     ) {
-        //TODO: Check if there are identifiers
+        for (EEntwaesserungsgrundstueck ewg: objects) {
+            prependIdentifier(ewg);
+            prependIdentifier(ewg.getAdresse());
+            prependIdentifier(ewg.getStandort());
+            prependIdentifier(ewg.getStandort().getAdresse());
+            EWasserrecht recht = ewg.getWasserrecht();
+            if (recht != null) {
+                prependIdentifier(recht);
+                prependIdentifier(recht.getAdresse());
+            }
+        }
         return objects;
     }
 

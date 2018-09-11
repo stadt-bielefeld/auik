@@ -27,10 +27,13 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -50,24 +53,25 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         DatabaseSerialVersionUID.forEEntwaesserungsgrundstueck;
 
     /* Primary key, foreign keys (relations) and table columns */
-    private Long nr;
+    private Integer nr;
+    private EStandort standort;
+    private EAdresse adresse;
+    private Integer origNr;
     private Boolean erlFreiElTog;
     private BigDecimal regenspende;
     private BigDecimal regenhaeufigkeit;
     private String beschreibung;
     private Integer regendauer;
     private Integer grEntwGebiet;
-    private Integer standortid;
     private BigDecimal dtvWert;
     private Integer wasserableitungsstreckeOpt;
     private String nameEtwGebiet;
     private Date erstellDat;
     private Integer einlBereichOpt;
-    private String abwbeskonNr;
+    private String abwbeskonnr;
     private Integer einbauartOpt;
     private Date aktualDat;
-    private Integer betreiberid;
-    private Long wasserechtNr;
+    private EWasserrecht wasserrecht;
     private String herkunft;
     private String externalNr;
 
@@ -81,36 +85,62 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public EEntwaesserungsgrundstueck(
-        Long nr, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String beschreibung, Integer regendauer, Integer grEntwGebiet, Integer standortid, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, Integer betreiberid, Long wasserechtNr, String herkunft, String externalNr) {
+        Integer nr, EStandort standort, EAdresse adresse, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String beschreibung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
         this.nr = nr;
+        this.standort = standort;
+        this.adresse = adresse;
         this.erlFreiElTog = erlFreiElTog;
         this.regenspende = regenspende;
         this.regenhaeufigkeit = regenhaeufigkeit;
         this.beschreibung = beschreibung;
         this.regendauer = regendauer;
         this.grEntwGebiet = grEntwGebiet;
-        this.standortid = standortid;
         this.dtvWert = dtvWert;
         this.wasserableitungsstreckeOpt = wasserableitungsstreckeOpt;
         this.nameEtwGebiet = nameEtwGebiet;
         this.erstellDat = erstellDat;
         this.einlBereichOpt = einlBereichOpt;
-        this.abwbeskonNr = abwbeskonNr;
+        this.abwbeskonnr = abwbeskonNr;
         this.einbauartOpt = einbauartOpt;
         this.aktualDat = aktualDat;
-        this.betreiberid = betreiberid;
-        this.wasserechtNr = wasserechtNr;
+        this.wasserrecht = wasserecht;
         this.herkunft = herkunft;
         this.externalNr = externalNr;
     }
 
+    @JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
+	
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr = origNr;
+	}
+
     /* Setter and getter methods */
-    public Long getNr() {
+    public Integer getNr() {
         return this.nr;
     }
 
-    public void setNr(Long nr) {
+    public void setNr(Integer nr) {
         this.nr = nr;
+    }
+
+    public EStandort getStandort() {
+        return this.standort;
+    }
+
+    public void setStandort(EStandort standort) {
+        this.standort = standort;
+    }
+
+    public EAdresse getAdresse() {
+        return this.adresse;
+    }
+
+    public void setAdresse(EAdresse adresse) {
+        this.adresse = adresse;
     }
 
     public Boolean getErlFreiElTog() {
@@ -161,14 +191,6 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         this.grEntwGebiet = grEntwGebiet;
     }
 
-    public Integer getStandortid() {
-        return this.standortid;
-    }
-
-    public void setStandortid(Integer standortid) {
-        this.standortid = standortid;
-    }
-
     public BigDecimal getDtvWert() {
         return this.dtvWert;
     }
@@ -209,12 +231,12 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         this.einlBereichOpt = einlBereichOpt;
     }
 
-    public String getAbwbeskonNr() {
-        return this.abwbeskonNr;
+    public String getAbwbeskonnr() {
+        return this.abwbeskonnr;
     }
 
-    public void setAbwbeskonNr(String abwbeskonNr) {
-        this.abwbeskonNr = abwbeskonNr;
+    public void setAbwbeskonnr(String abwbeskonNr) {
+        this.abwbeskonnr = abwbeskonNr;
     }
 
     public Integer getEinbauartOpt() {
@@ -233,20 +255,12 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         this.aktualDat = aktualDat;
     }
 
-    public Integer getBetreiberid() {
-        return this.betreiberid;
+    public EWasserrecht getWasserrecht() {
+        return this.wasserrecht;
     }
 
-    public void setBetreiberid(Integer betreiberid) {
-        this.betreiberid = betreiberid;
-    }
-
-    public Long getWasserechtNr() {
-        return this.wasserechtNr;
-    }
-
-    public void setWasserechtNr(Long wasserechtNr) {
-        this.wasserechtNr = wasserechtNr;
+    public void setWasserrecht(EWasserrecht wasserecht) {
+        this.wasserrecht = wasserecht;
     }
 
     public String getHerkunft() {
@@ -292,17 +306,15 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");			
         buffer.append("regendauer").append("='").append(getRegendauer()).append("' ");			
         buffer.append("grEntwGebiet").append("='").append(getGrEntwGebiet()).append("' ");			
-        buffer.append("standortid").append("='").append(getStandortid()).append("' ");			
         buffer.append("dtvWert").append("='").append(getDtvWert()).append("' ");			
         buffer.append("wasserableitungsstreckeOpt").append("='").append(getWasserableitungsstreckeOpt()).append("' ");			
         buffer.append("nameEtwGebiet").append("='").append(getNameEtwGebiet()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
         buffer.append("einlBereichOpt").append("='").append(getEinlBereichOpt()).append("' ");			
-        buffer.append("abwbeskonNr").append("='").append(getAbwbeskonNr()).append("' ");			
+        buffer.append("abwbeskonNr").append("='").append(getAbwbeskonnr()).append("' ");			
         buffer.append("einbauartOpt").append("='").append(getEinbauartOpt()).append("' ");			
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("betreiberid").append("='").append(getBetreiberid()).append("' ");			
-        buffer.append("wasserechtNr").append("='").append(getWasserechtNr()).append("' ");			
+        buffer.append("wasserecht").append("='").append(getWasserrecht()).append("' ");			
         buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");			
         buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
         buffer.append("]");
@@ -401,7 +413,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static EEntwaesserungsgrundstueck findById(Long id) {
+    public static EEntwaesserungsgrundstueck findById(Integer id) {
         log.debug("Getting EEntwaesserungsgrundstueck instance with id: " + id);
         return (EEntwaesserungsgrundstueck)
             new DatabaseAccess().get(EEntwaesserungsgrundstueck.class, id);
@@ -423,6 +435,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
      * on which this instance is based on.
      * @return The instances as set
      */
+    @JsonIgnore
     public Set<ZEntwaessgrAbwasbehverf> getZEntwassergrAbwasbehverfs() {
         Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(getNr());
         return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs() : null;
@@ -433,6 +446,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
      * on which this instance is based on.
      * @return The instances as set
      */
+    @JsonIgnore
     public Set<AfsNiederschlagswasser> getAfsNiederschlagwassers () {
         Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(getNr());
         return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getAfsNiederschlagswassers() : null;
