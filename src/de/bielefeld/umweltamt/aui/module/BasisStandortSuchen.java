@@ -1454,7 +1454,7 @@ public class BasisStandortSuchen extends AbstractModul
 			this.objektTabelle
 					.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-			objektTabelle.setAutoCreateRowSorter(false);
+			objektTabelle.setAutoCreateRowSorter(true);
 
 			TableColumn column = null;
 			for (int i = 0; i < this.objektModel.getColumnCount(); i++)
@@ -1496,7 +1496,7 @@ public class BasisStandortSuchen extends AbstractModul
 									&& (e.getButton() == 1))
 							{
 								Point origin = e.getPoint();
-								int row = getObjektTabelle().rowAtPoint(origin);
+								int row = getObjektTabelle().convertRowIndexToModel(getObjektTabelle().rowAtPoint(origin));
 								BasisObjekt obj = BasisStandortSuchen.this.objektModel
 										.getRow(row);
 								if ((row != -1)
