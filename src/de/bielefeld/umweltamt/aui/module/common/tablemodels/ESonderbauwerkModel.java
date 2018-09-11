@@ -159,8 +159,8 @@ public class ESonderbauwerkModel extends ListTableModel {
             case 7: return sb.getStillgelegtAm();
             case 8: return sb.getWiederinbetrDat();
             case 9: return sb.getStandort().getNr();
-            case 10: return sb.getAdresse().getName1();
-            case 11: return sb.getAnsprAdrNr();
+            case 10: return sb.getBetreibAdr() != null ? sb.getBetreibAdr().getName1() : null;
+            case 11: return sb.getAnsprAdr() != null ? sb.getAnsprAdr().getNr() : null;
             case 12: return sb.getBeschreibung();
             case 13: return sb.getE32();
             case 14: return sb.getN32();
@@ -177,7 +177,7 @@ public class ESonderbauwerkModel extends ListTableModel {
             case 25: return sb.getDrosselOpt();
             case 26: return sb.getSoDrossel();
             case 27: return sb.getBeckensteuerungOpt();
-            case 28: return sb.getAReiEinrichTog();
+            case 28: return sb.getAReiEinrichtungTog();
             case 29: return sb.getMessartTog();
             case 30: return sb.getDrosselTog();
             case 31: return sb.getFuellstandTog();
@@ -196,7 +196,7 @@ public class ESonderbauwerkModel extends ListTableModel {
             case 44: return sb.getBemesWeitergTog();
             case 45: return sb.getBemessungText();
             case 46: return sb.getAnordnungOpt();
-            case 47: return sb.getWasserrechtGenehmigungNr();
+            case 47: return sb.getWasserrechtGenehmigung() != null ? sb.getWasserrechtGenehmigung().getNr() : null;
             case 48: return sb.getBeckenartOpt();
             case 49: return sb.getBeckentiefe();
             case 50: return sb.getBehFlaeche1u2();

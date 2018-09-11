@@ -60,7 +60,7 @@ public class Objekt  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forObjekt;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Standort standortid;
@@ -471,7 +471,7 @@ public class Objekt  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -480,42 +480,42 @@ public class Objekt  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("standortid").append("='").append(getStandortid()).append("' ");			
-        buffer.append("betreiberid").append("='").append(getBetreiberid()).append("' ");			
-        buffer.append("objektarten").append("='").append(getObjektarten()).append("' ");			
-        buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");			
-        buffer.append("uschistdid").append("='").append(getUschistdid()).append("' ");			
-        buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");			
-        buffer.append("wiedervorlage").append("='").append(getWiedervorlage()).append("' ");			
-        buffer.append("erfassungsdatum").append("='").append(getErfassungsdatum()).append("' ");			
-        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");			
-        buffer.append("aenderungsdatum").append("='").append(getAenderungsdatum()).append("' ");			
-        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");			
-        buffer.append("inaktiv").append("='").append(isInaktiv()).append("' ");			
-        buffer.append("prioritaet").append("='").append(getPrioritaet()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("abwasserfrei").append("='").append(getAbwasserfrei()).append("' ");			
-        buffer.append("objektverknuepfungsForIstVerknuepftMit").append("='").append(getObjektverknuepfungsForIstVerknuepftMit()).append("' ");			
-        buffer.append("anh53Fachdatens").append("='").append(getAnh53Fachdatens()).append("' ");			
-        buffer.append("anh40Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");			
-        buffer.append("bwkFachdatens").append("='").append(getBwkFachdatens()).append("' ");			
-        buffer.append("wasserrechts").append("='").append(getWasserrechts()).append("' ");			
-        buffer.append("adresses").append("='").append(getAdresses()).append("' ");			
-        buffer.append("anh49Fachdatens").append("='").append(getAnh49Fachdatens()).append("' ");			
-        buffer.append("suevFachdatens").append("='").append(getSuevFachdatens()).append("' ");			
-        buffer.append("anh50Fachdatens").append("='").append(getAnh50Fachdatens()).append("' ");			
-        buffer.append("messstelles").append("='").append(getMessstelles()).append("' ");			
-        buffer.append("sonderbauwerks").append("='").append(getSonderbauwerks()).append("' ");			
-        buffer.append("entwaesserungsgrundstuecks").append("='").append(getEntwaesserungsgrundstuecks()).append("' ");			
-        buffer.append("objektchronos").append("='").append(getObjektchronos()).append("' ");			
-        buffer.append("objektverknuepfungsForObjekt").append("='").append(getObjektverknuepfungsForObjekt()).append("' ");			
-        buffer.append("anh55Fachdatens").append("='").append(getAnh55Fachdatens()).append("' ");			
-        buffer.append("fachdatens").append("='").append(getFachdatens()).append("' ");			
-        buffer.append("anh52Fachdatens").append("='").append(getAnh52Fachdatens()).append("' ");			
-        buffer.append("anh56Fachdatens").append("='").append(getAnh56Fachdatens()).append("' ");			
+        buffer.append("standortid").append("='").append(getStandortid()).append("' ");
+        buffer.append("betreiberid").append("='").append(getBetreiberid()).append("' ");
+        buffer.append("objektarten").append("='").append(getObjektarten()).append("' ");
+        buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");
+        buffer.append("uschistdid").append("='").append(getUschistdid()).append("' ");
+        buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");
+        buffer.append("wiedervorlage").append("='").append(getWiedervorlage()).append("' ");
+        buffer.append("erfassungsdatum").append("='").append(getErfassungsdatum()).append("' ");
+        buffer.append("gueltigVon").append("='").append(getGueltigVon()).append("' ");
+        buffer.append("aenderungsdatum").append("='").append(getAenderungsdatum()).append("' ");
+        buffer.append("gueltigBis").append("='").append(getGueltigBis()).append("' ");
+        buffer.append("inaktiv").append("='").append(isInaktiv()).append("' ");
+        buffer.append("prioritaet").append("='").append(getPrioritaet()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("abwasserfrei").append("='").append(getAbwasserfrei()).append("' ");
+        buffer.append("objektverknuepfungsForIstVerknuepftMit").append("='").append(getObjektverknuepfungsForIstVerknuepftMit()).append("' ");
+        buffer.append("anh53Fachdatens").append("='").append(getAnh53Fachdatens()).append("' ");
+        buffer.append("anh40Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
+        buffer.append("bwkFachdatens").append("='").append(getBwkFachdatens()).append("' ");
+        buffer.append("wasserrechts").append("='").append(getWasserrechts()).append("' ");
+        buffer.append("adresses").append("='").append(getAdresses()).append("' ");
+        buffer.append("anh49Fachdatens").append("='").append(getAnh49Fachdatens()).append("' ");
+        buffer.append("suevFachdatens").append("='").append(getSuevFachdatens()).append("' ");
+        buffer.append("anh50Fachdatens").append("='").append(getAnh50Fachdatens()).append("' ");
+        buffer.append("messstelles").append("='").append(getMessstelles()).append("' ");
+        buffer.append("sonderbauwerks").append("='").append(getSonderbauwerks()).append("' ");
+        buffer.append("entwaesserungsgrundstuecks").append("='").append(getEntwaesserungsgrundstuecks()).append("' ");
+        buffer.append("objektchronos").append("='").append(getObjektchronos()).append("' ");
+        buffer.append("objektverknuepfungsForObjekt").append("='").append(getObjektverknuepfungsForObjekt()).append("' ");
+        buffer.append("anh55Fachdatens").append("='").append(getAnh55Fachdatens()).append("' ");
+        buffer.append("fachdatens").append("='").append(getFachdatens()).append("' ");
+        buffer.append("anh52Fachdatens").append("='").append(getAnh52Fachdatens()).append("' ");
+        buffer.append("anh56Fachdatens").append("='").append(getAnh56Fachdatens()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -547,7 +547,7 @@ public class Objekt  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -581,41 +581,41 @@ public class Objekt  implements java.io.Serializable {
      * @param copy Objekt
      */
     private void copy(Objekt copy) {
-        this.standortid = copy.getStandortid();            
-        this.betreiberid = copy.getBetreiberid();            
-        this.objektarten = copy.getObjektarten();            
-        this.sachbearbeiter = copy.getSachbearbeiter();            
-        this.uschistdid = copy.getUschistdid();            
-        this.beschreibung = copy.getBeschreibung();            
-        this.wiedervorlage = copy.getWiedervorlage();            
-        this.erfassungsdatum = copy.getErfassungsdatum();            
-        this.gueltigVon = copy.getGueltigVon();            
-        this.aenderungsdatum = copy.getAenderungsdatum();            
-        this.gueltigBis = copy.getGueltigBis();            
-        this.inaktiv = copy.isInaktiv();            
-        this.prioritaet = copy.getPrioritaet();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.abwasserfrei = copy.getAbwasserfrei();            
-        this.objektverknuepfungsForIstVerknuepftMit = copy.getObjektverknuepfungsForIstVerknuepftMit();            
-        this.anh53Fachdatens = copy.getAnh53Fachdatens();            
-        this.anh40Fachdatens = copy.getAnh40Fachdatens();            
-        this.bwkFachdatens = copy.getBwkFachdatens();            
-        this.wasserrechts = copy.getWasserrechts();            
-        this.adresses = copy.getAdresses();            
-        this.anh49Fachdatens = copy.getAnh49Fachdatens();            
-        this.suevFachdatens = copy.getSuevFachdatens();            
-        this.anh50Fachdatens = copy.getAnh50Fachdatens();            
-        this.messstelles = copy.getMessstelles();            
-        this.sonderbauwerks = copy.getSonderbauwerks();            
-        this.entwaesserungsgrundstuecks = copy.getEntwaesserungsgrundstuecks();            
-        this.objektchronos = copy.getObjektchronos();            
-        this.objektverknuepfungsForObjekt = copy.getObjektverknuepfungsForObjekt();            
-        this.anh55Fachdatens = copy.getAnh55Fachdatens();            
-        this.fachdatens = copy.getFachdatens();            
-        this.anh52Fachdatens = copy.getAnh52Fachdatens();            
-        this.anh56Fachdatens = copy.getAnh56Fachdatens();            
-    }    
+        this.standortid = copy.getStandortid();
+        this.betreiberid = copy.getBetreiberid();
+        this.objektarten = copy.getObjektarten();
+        this.sachbearbeiter = copy.getSachbearbeiter();
+        this.uschistdid = copy.getUschistdid();
+        this.beschreibung = copy.getBeschreibung();
+        this.wiedervorlage = copy.getWiedervorlage();
+        this.erfassungsdatum = copy.getErfassungsdatum();
+        this.gueltigVon = copy.getGueltigVon();
+        this.aenderungsdatum = copy.getAenderungsdatum();
+        this.gueltigBis = copy.getGueltigBis();
+        this.inaktiv = copy.isInaktiv();
+        this.prioritaet = copy.getPrioritaet();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.abwasserfrei = copy.getAbwasserfrei();
+        this.objektverknuepfungsForIstVerknuepftMit = copy.getObjektverknuepfungsForIstVerknuepftMit();
+        this.anh53Fachdatens = copy.getAnh53Fachdatens();
+        this.anh40Fachdatens = copy.getAnh40Fachdatens();
+        this.bwkFachdatens = copy.getBwkFachdatens();
+        this.wasserrechts = copy.getWasserrechts();
+        this.adresses = copy.getAdresses();
+        this.anh49Fachdatens = copy.getAnh49Fachdatens();
+        this.suevFachdatens = copy.getSuevFachdatens();
+        this.anh50Fachdatens = copy.getAnh50Fachdatens();
+        this.messstelles = copy.getMessstelles();
+        this.sonderbauwerks = copy.getSonderbauwerks();
+        this.entwaesserungsgrundstuecks = copy.getEntwaesserungsgrundstuecks();
+        this.objektchronos = copy.getObjektchronos();
+        this.objektverknuepfungsForObjekt = copy.getObjektverknuepfungsForObjekt();
+        this.anh55Fachdatens = copy.getAnh55Fachdatens();
+        this.fachdatens = copy.getFachdatens();
+        this.anh52Fachdatens = copy.getAnh52Fachdatens();
+        this.anh56Fachdatens = copy.getAnh56Fachdatens();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
