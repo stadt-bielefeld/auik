@@ -14,6 +14,9 @@
         <many-to-one name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" lazy="false" fetch="select">
             <column name="standort_nr" />
         </many-to-one>
+        <many-to-one name="adresseByStoAdrNr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" lazy="false" fetch="select">
+            <column name="sto_adr_nr" />
+        </many-to-one>
         <many-to-one name="adresseByBetreibAdrNr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" lazy="false" fetch="select">
             <column name="betreib_adr_nr" />
         </many-to-one>

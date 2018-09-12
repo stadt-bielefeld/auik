@@ -58,11 +58,11 @@
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
         </property>
-        <set name="objekts" table="objekt" inverse="true" lazy="true" fetch="select">
+        <set name="standorts" table="standort" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="lageid" />
             </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" />
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Standort" />
         </set>
     </class>
 </hibernate-mapping>

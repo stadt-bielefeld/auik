@@ -210,7 +210,7 @@ public class EMessstelle implements java.io.Serializable {
 	 * on which this instance is based on.
 	 * @return The instances as set
 	 */
-	public Set<MsstBerichtspflicht> getZuordnungMsstBereichspflichts() {
+	public Set<MsstBerichtspflicht> getZuordnungMsstBerichtspflichts() {
 		Messstelle mst = Messstelle.findById(getNr());
 		return mst != null ? mst.getMsstBerichtspflichts() : null;
 	}

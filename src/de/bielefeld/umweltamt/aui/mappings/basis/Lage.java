@@ -67,7 +67,7 @@ public class Lage  implements java.io.Serializable {
     private Serializable theGeom;
     private boolean enabled;
     private boolean deleted;
-    private Set<Objekt> objekts = new HashSet<Objekt>(0);
+    private Set<Standort> standorts = new HashSet<Standort>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -87,7 +87,7 @@ public class Lage  implements java.io.Serializable {
 
     /** Full constructor */
     public Lage(
-        Integer id, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Gemarkung gemarkung, String plz, Float e32, Float n32, String flur, String flurstueck, String entgebid, String strasseeigent, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, Serializable theGeom, boolean enabled, boolean deleted, Set<Objekt> objekts) {
+        Integer id, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Gemarkung gemarkung, String plz, Float e32, Float n32, String flur, String flurstueck, String entgebid, String strasseeigent, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, Serializable theGeom, boolean enabled, boolean deleted, Set<Standort> standorts) {
         this.id = id;
         this.standortgghwsg = standortgghwsg;
         this.wassereinzugsgebiet = wassereinzugsgebiet;
@@ -107,7 +107,7 @@ public class Lage  implements java.io.Serializable {
         this.theGeom = theGeom;
         this.enabled = enabled;
         this.deleted = deleted;
-        this.objekts = objekts;
+        this.standorts = standorts;
     }
 
     /* Setter and getter methods */
@@ -263,12 +263,12 @@ public class Lage  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    public Set<Objekt> getObjekts() {
-        return this.objekts;
+    public Set<Standort> getStandorts() {
+        return this.standorts;
     }
 
-    public void setObjekts(Set<Objekt> objekts) {
-        this.objekts = objekts;
+    public void setStandorts(Set<Standort> standorts) {
+        this.standorts = standorts;
     }
 
     /**
@@ -310,7 +310,7 @@ public class Lage  implements java.io.Serializable {
         buffer.append("theGeom").append("='").append(getTheGeom()).append("' ");			
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("objekts").append("='").append(getObjekts()).append("' ");			
+        buffer.append("objekts").append("='").append(getStandorts()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -395,7 +395,7 @@ public class Lage  implements java.io.Serializable {
         this.theGeom = copy.getTheGeom();            
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
-        this.objekts = copy.getObjekts();            
+        this.standorts = copy.getStandorts();            
     }    
 
     /**
