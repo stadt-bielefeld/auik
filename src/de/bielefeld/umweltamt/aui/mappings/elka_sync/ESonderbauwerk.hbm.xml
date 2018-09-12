@@ -34,15 +34,15 @@
 		<property name="wiederinbetrDat" type="java.util.Date">
 			<column name="wiederinbetr_dat" length="13" />
 		</property>
-		<property name="standortid" type="java.lang.Integer">
-			<column name="standortid" />
-		</property>
-		<property name="betreiberid" type="java.lang.Integer">
-			<column name="betreiberid" />
-		</property>
-		<property name="ansprAdrNr" type="java.lang.Long">
-			<column name="anspr_adr_nr" />
-		</property>
+        <many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">
+            <column name="standortid"/>
+        </many-to-one>
+        <many-to-one lazy="false" name="betreibAdr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
+            <column name="betreiberid"/>
+        </many-to-one>
+		<many-to-one lazy="false" name="ansprAdr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
+            <column name="anspr_adr_nr"/>
+        </many-to-one>
 		<property name="beschreibung" type="java.lang.String">
 			<column name="beschreibung" />
 		</property>
@@ -94,7 +94,7 @@
 		<property name="beckensteuerungOpt" type="java.lang.Integer">
 			<column name="beckensteuerung_opt" />
 		</property>
-		<property name="AReiEinrichTog" type="java.lang.Boolean">
+		<property name="AReiEinrichtungTog" type="java.lang.Boolean">
 			<column name="a_rei_einrich_tog" />
 		</property>
 		<property name="messartTog" type="java.lang.Boolean">
@@ -159,10 +159,9 @@
 		<property name="anordnungOpt" type="java.lang.Integer">
 			<column name="anordnung_opt" />
 		</property>
-		<property name="wasserrechtGenehmigungNr"
-			type="java.lang.Long">
-			<column name="wasserrecht_genehmigung_nr" />
-		</property>
+        <many-to-one lazy="false" name="wasserrechtGenehmigung" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" fetch="select">
+            <column name="wasserrecht_genehmigung_nr"/>
+        </many-to-one>
 		<property name="beckenartOpt" type="java.lang.Integer">
 			<column name="beckenart_opt" />
 		</property>
@@ -335,5 +334,4 @@
 			<column name="external_nr" length="50" />
 		</property>
 	</class>
-
 </hibernate-mapping>

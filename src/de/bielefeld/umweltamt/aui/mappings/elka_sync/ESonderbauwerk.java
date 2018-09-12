@@ -27,6 +27,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
@@ -34,6 +35,9 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbRegeln;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbVerfahren;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +58,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /* Primary key, foreign keys (relations) and table columns */
-    private Long nr;
+    private Integer nr;
+    private Integer origNr;
     private String gemeindeId;
     private String bezeichnung;
     private String kurzbeschreibung;
@@ -63,9 +68,9 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private Integer inbetriebnahme;
     private Date stillgelegtAm;
     private Date wiederinbetrDat;
-    private Integer standortid;
-    private Integer betreiberid;
-    private Long ansprAdrNr;
+    private EStandort standort;
+    private EAdresse betreibAdr;
+    private EAdresse ansprAdr;
     private String beschreibung;
     private Integer e32;
     private Integer n32;
@@ -83,7 +88,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private Integer drosselOpt;
     private String soDrossel;
     private Integer beckensteuerungOpt;
-    private Boolean AReiEinrichTog;
+    private Boolean AReiEinrichtungTog;
     private Boolean messartTog;
     private Boolean drosselTog;
     private Boolean fuellstandTog;
@@ -104,7 +109,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private Boolean bemesWeitergTog;
     private String bemessungText;
     private Integer anordnungOpt;
-    private Long wasserrechtGenehmigungNr;
+    private EWasserrecht wasserrechtGenehmigung;
     private Integer beckenartOpt;
     private BigDecimal beckentiefe;
     private BigDecimal behFlaeche1u2;
@@ -173,7 +178,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
 
     /** Full constructor */
     public ESonderbauwerk(
-        Long nr, String gemeindeId, String bezeichnung, String kurzbeschreibung, Integer entwEinzugsgebOpt, Integer typOpt, Integer inbetriebnahme, Date stillgelegtAm, Date wiederinbetrDat, Integer standortid, Integer betreiberid, Long ansprAdrNr, String beschreibung, Integer e32, Integer n32, Boolean inNrwTog, Boolean industrTog, String nameAusserhalbNrw, BigDecimal KEntwGebiet, BigDecimal befFlaecheEgebiet, BigDecimal abflussbeiwert, BigDecimal befGrad, BigDecimal undurchFlaeche, Integer beckentypOpt, Boolean rohrspeicherTog, Integer bauweiseOpt, Integer drosselOpt, String soDrossel, Integer beckensteuerungOpt, Boolean AReiEinrichTog, Boolean messartTog, Boolean drosselTog, Boolean fuellstandTog, Boolean entlastungswasserTog, Boolean entlastungsdauerTog, Boolean entlastungshaeufigTog, Boolean fernMessTog, Boolean niederschlagTog, Boolean fernStoerTog, Boolean hwfreiTog, BigDecimal einstauHaeufig, Boolean hwEinrichtungTog, Boolean hwRueckstauTog, Boolean hwSchieberTog, Boolean hwPumpwerkTog, Boolean hwWeitereTog, String hwSonstText, Boolean bemesWeitergTog, String bemessungText, Integer anordnungOpt, Long wasserrechtGenehmigungNr, Integer beckenartOpt, BigDecimal beckentiefe, BigDecimal behFlaeche1u2, BigDecimal behFlaeche2u3, Integer betriebsartOpt, Integer csb, BigDecimal drosselabfluss, Integer drossAbflussOpt, Boolean drossUeberTog, Integer entlastungsartOpt, BigDecimal entleerungszeit, BigDecimal flaechenbeschickung, Integer fliesszeit, BigDecimal fremdAbfluss, Integer funktionOpt, Integer kanalVol, BigDecimal qrkrit, BigDecimal kritischMisch, BigDecimal maxHSchmutzabfluss, BigDecimal maxHTrocken, BigDecimal minDrAbfluss, Integer mischUeberlauf, Integer NMindestV, Integer NSpezVol, BigDecimal neigung, BigDecimal rdrosseldurchfluss, BigDecimal regenabflDross, BigDecimal regenabflEntl, BigDecimal regenabfluss, BigDecimal regenabflussDr, BigDecimal regenspende, Integer rfilterflaeche, BigDecimal rfiltergeschwin, BigDecimal rfiltersubstratH, Integer rhydWirkungsgrad, BigDecimal rjahrUeh, BigDecimal rkrit, BigDecimal rmFilterbelastung, BigDecimal rspezFiltervol, Integer rstauvolumen, Integer rvolSlamelle, BigDecimal rwKritAbfluss, BigDecimal rwKritMisch, Integer rwMindestMisch, BigDecimal schmutzAbfluss, BigDecimal skuAnstroem, Integer skuMindestSvol, Integer skuSpezVol, Integer spezBeckenvol, Integer spezSpeicher, BigDecimal trockenWAbfluss, Integer speichervolumen, Integer WOberflaeche, Date erstellDat, Date aktualDat, String herkunft, String externalNr) {
+        Integer nr, String gemeindeId, String bezeichnung, String kurzbeschreibung, Integer entwEinzugsgebOpt, Integer typOpt, Integer inbetriebnahme, Date stillgelegtAm, Date wiederinbetrDat, EStandort standort, EAdresse adresse, EAdresse ansprAdr, String beschreibung, Integer e32, Integer n32, Boolean inNrwTog, Boolean industrTog, String nameAusserhalbNrw, BigDecimal KEntwGebiet, BigDecimal befFlaecheEgebiet, BigDecimal abflussbeiwert, BigDecimal befGrad, BigDecimal undurchFlaeche, Integer beckentypOpt, Boolean rohrspeicherTog, Integer bauweiseOpt, Integer drosselOpt, String soDrossel, Integer beckensteuerungOpt, Boolean AReiEinrichTog, Boolean messartTog, Boolean drosselTog, Boolean fuellstandTog, Boolean entlastungswasserTog, Boolean entlastungsdauerTog, Boolean entlastungshaeufigTog, Boolean fernMessTog, Boolean niederschlagTog, Boolean fernStoerTog, Boolean hwfreiTog, BigDecimal einstauHaeufig, Boolean hwEinrichtungTog, Boolean hwRueckstauTog, Boolean hwSchieberTog, Boolean hwPumpwerkTog, Boolean hwWeitereTog, String hwSonstText, Boolean bemesWeitergTog, String bemessungText, Integer anordnungOpt, EWasserrecht wasserrechtGenehmigung, Integer beckenartOpt, BigDecimal beckentiefe, BigDecimal behFlaeche1u2, BigDecimal behFlaeche2u3, Integer betriebsartOpt, Integer csb, BigDecimal drosselabfluss, Integer drossAbflussOpt, Boolean drossUeberTog, Integer entlastungsartOpt, BigDecimal entleerungszeit, BigDecimal flaechenbeschickung, Integer fliesszeit, BigDecimal fremdAbfluss, Integer funktionOpt, Integer kanalVol, BigDecimal qrkrit, BigDecimal kritischMisch, BigDecimal maxHSchmutzabfluss, BigDecimal maxHTrocken, BigDecimal minDrAbfluss, Integer mischUeberlauf, Integer NMindestV, Integer NSpezVol, BigDecimal neigung, BigDecimal rdrosseldurchfluss, BigDecimal regenabflDross, BigDecimal regenabflEntl, BigDecimal regenabfluss, BigDecimal regenabflussDr, BigDecimal regenspende, Integer rfilterflaeche, BigDecimal rfiltergeschwin, BigDecimal rfiltersubstratH, Integer rhydWirkungsgrad, BigDecimal rjahrUeh, BigDecimal rkrit, BigDecimal rmFilterbelastung, BigDecimal rspezFiltervol, Integer rstauvolumen, Integer rvolSlamelle, BigDecimal rwKritAbfluss, BigDecimal rwKritMisch, Integer rwMindestMisch, BigDecimal schmutzAbfluss, BigDecimal skuAnstroem, Integer skuMindestSvol, Integer skuSpezVol, Integer spezBeckenvol, Integer spezSpeicher, BigDecimal trockenWAbfluss, Integer speichervolumen, Integer WOberflaeche, Date erstellDat, Date aktualDat, String herkunft, String externalNr) {
         this.nr = nr;
         this.gemeindeId = gemeindeId;
         this.bezeichnung = bezeichnung;
@@ -183,9 +188,9 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.inbetriebnahme = inbetriebnahme;
         this.stillgelegtAm = stillgelegtAm;
         this.wiederinbetrDat = wiederinbetrDat;
-        this.standortid = standortid;
-        this.betreiberid = betreiberid;
-        this.ansprAdrNr = ansprAdrNr;
+        this.standort = standort;
+        this.betreibAdr = adresse;
+        this.ansprAdr = ansprAdr;
         this.beschreibung = beschreibung;
         this.e32 = e32;
         this.n32 = n32;
@@ -203,7 +208,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.drosselOpt = drosselOpt;
         this.soDrossel = soDrossel;
         this.beckensteuerungOpt = beckensteuerungOpt;
-        this.AReiEinrichTog = AReiEinrichTog;
+        this.AReiEinrichtungTog = AReiEinrichTog;
         this.messartTog = messartTog;
         this.drosselTog = drosselTog;
         this.fuellstandTog = fuellstandTog;
@@ -224,7 +229,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.bemesWeitergTog = bemesWeitergTog;
         this.bemessungText = bemessungText;
         this.anordnungOpt = anordnungOpt;
-        this.wasserrechtGenehmigungNr = wasserrechtGenehmigungNr;
+        this.wasserrechtGenehmigung = wasserrechtGenehmigung;
         this.beckenartOpt = beckenartOpt;
         this.beckentiefe = beckentiefe;
         this.behFlaeche1u2 = behFlaeche1u2;
@@ -284,12 +289,22 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.externalNr = externalNr;
     }
 
+    @JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
+	
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr = origNr;
+	}
+
     /* Setter and getter methods */
-    public Long getNr() {
+    public Integer getNr() {
         return this.nr;
     }
 
-    public void setNr(Long nr) {
+    public void setNr(Integer nr) {
         this.nr = nr;
     }
 
@@ -357,28 +372,28 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.wiederinbetrDat = wiederinbetrDat;
     }
 
-    public Integer getStandortid() {
-        return this.standortid;
+    public EStandort getStandort() {
+        return this.standort;
     }
 
-    public void setStandortid(Integer standortid) {
-        this.standortid = standortid;
+    public void setStandort(EStandort standort) {
+        this.standort = standort;
     }
 
-    public Integer getBetreiberid() {
-        return this.betreiberid;
+    public EAdresse getBetreibAdr() {
+        return this.betreibAdr;
     }
 
-    public void setBetreiberid(Integer betreiberid) {
-        this.betreiberid = betreiberid;
+    public void setBetreibAdr(EAdresse adresse) {
+        this.betreibAdr = adresse;
     }
 
-    public Long getAnsprAdrNr() {
-        return this.ansprAdrNr;
+    public EAdresse getAnsprAdr() {
+        return this.ansprAdr;
     }
 
-    public void setAnsprAdrNr(Long ansprAdrNr) {
-        this.ansprAdrNr = ansprAdrNr;
+    public void setAnsprAdr(EAdresse ansprAdr) {
+        this.ansprAdr = ansprAdr;
     }
 
     public String getBeschreibung() {
@@ -517,12 +532,12 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.beckensteuerungOpt = beckensteuerungOpt;
     }
 
-    public Boolean getAReiEinrichTog() {
-        return this.AReiEinrichTog;
+    public Boolean getAReiEinrichtungTog() {
+        return this.AReiEinrichtungTog;
     }
 
-    public void setAReiEinrichTog(Boolean AReiEinrichTog) {
-        this.AReiEinrichTog = AReiEinrichTog;
+    public void setAReiEinrichtungTog(Boolean AReiEinrichTog) {
+        this.AReiEinrichtungTog = AReiEinrichTog;
     }
 
     public Boolean getMessartTog() {
@@ -685,12 +700,12 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.anordnungOpt = anordnungOpt;
     }
 
-    public Long getWasserrechtGenehmigungNr() {
-        return this.wasserrechtGenehmigungNr;
+    public EWasserrecht getWasserrechtGenehmigung() {
+        return this.wasserrechtGenehmigung;
     }
 
-    public void setWasserrechtGenehmigungNr(Long wasserrechtGenehmigungNr) {
-        this.wasserrechtGenehmigungNr = wasserrechtGenehmigungNr;
+    public void setWasserrechtGenehmigung(EWasserrecht wasserrechtGenehmigung) {
+        this.wasserrechtGenehmigung = wasserrechtGenehmigung;
     }
 
     public Integer getBeckenartOpt() {
@@ -1178,9 +1193,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
         buffer.append("inbetriebnahme").append("='").append(getInbetriebnahme()).append("' ");
         buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");
         buffer.append("wiederinbetrDat").append("='").append(getWiederinbetrDat()).append("' ");
-        buffer.append("standortid").append("='").append(getStandortid()).append("' ");
-        buffer.append("betreiberid").append("='").append(getBetreiberid()).append("' ");
-        buffer.append("ansprAdrNr").append("='").append(getAnsprAdrNr()).append("' ");
+        buffer.append("ansprAdr").append("='").append(getAnsprAdr()).append("' ");
         buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");
         buffer.append("e32").append("='").append(getE32()).append("' ");
         buffer.append("n32").append("='").append(getN32()).append("' ");
@@ -1198,7 +1211,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
         buffer.append("drosselOpt").append("='").append(getDrosselOpt()).append("' ");
         buffer.append("soDrossel").append("='").append(getSoDrossel()).append("' ");
         buffer.append("beckensteuerungOpt").append("='").append(getBeckensteuerungOpt()).append("' ");
-        buffer.append("AReiEinrichTog").append("='").append(getAReiEinrichTog()).append("' ");
+        buffer.append("AReiEinrichTog").append("='").append(getAReiEinrichtungTog()).append("' ");
         buffer.append("messartTog").append("='").append(getMessartTog()).append("' ");
         buffer.append("drosselTog").append("='").append(getDrosselTog()).append("' ");
         buffer.append("fuellstandTog").append("='").append(getFuellstandTog()).append("' ");
@@ -1219,7 +1232,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
         buffer.append("bemesWeitergTog").append("='").append(getBemesWeitergTog()).append("' ");
         buffer.append("bemessungText").append("='").append(getBemessungText()).append("' ");
         buffer.append("anordnungOpt").append("='").append(getAnordnungOpt()).append("' ");
-        buffer.append("wasserrechtGenehmigungNr").append("='").append(getWasserrechtGenehmigungNr()).append("' ");
+        buffer.append("wasserrechtGenehmigung").append("='").append(getWasserrechtGenehmigung()).append("' ");
         buffer.append("beckenartOpt").append("='").append(getBeckenartOpt()).append("' ");
         buffer.append("beckentiefe").append("='").append(getBeckentiefe()).append("' ");
         buffer.append("behFlaeche1u2").append("='").append(getBehFlaeche1u2()).append("' ");
@@ -1390,11 +1403,15 @@ public class ESonderbauwerk  implements java.io.Serializable {
     /* Custom code goes below here! */
 
     /**
+     * Return the oberflgw.sonderbauwerk on which this instance is based.
      * @return the sonderbauwerk
      */
+    @JsonIgnore
     public Sonderbauwerk getSonderbauwerk() {
         if (sonderbauwerk == null) {
-            sonderbauwerk = Sonderbauwerk.findById(getNr());
+            //If id has a prepended identifier, use original id to get the sonderbauwerk
+            Integer sbNr = getOrigNr() != null ? getOrigNr() : getNr();
+            sonderbauwerk = Sonderbauwerk.findById(sbNr);
         }
         return sonderbauwerk;
     }
@@ -1404,6 +1421,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * on which this instance is based on.
      * @return the ZRfbSchutzgut instances as set
      */
+    @JsonIgnore
     public Set<ZRbfSchutzgueter> getZRfbSchutzguts() {
         Sonderbauwerk sonderbauwerk = getSonderbauwerk();
         return sonderbauwerk != null ? sonderbauwerk.getZRbfSchutzgueters() : null;
@@ -1414,6 +1432,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * on which this instance is based on.
      * @return The ZSbVerfahren instances as set
      */
+    @JsonIgnore
     public Set<ZSbVerfahren> getZSbVerfahrens() {
         Sonderbauwerk sonderbauwerk = getSonderbauwerk();
         return sonderbauwerk != null ? sonderbauwerk.getZSbVerfahrens() : null;
@@ -1424,6 +1443,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * on which this instance is based on.
      * @return The ZSBRegeln instances as set
      */
+    @JsonIgnore
     public Set<ZSbRegeln> getZSbRegelns() {
         Sonderbauwerk sonderbauwerk = getSonderbauwerk();
         return sonderbauwerk != null ? sonderbauwerk.getZSbRegelns() : null;
@@ -1434,9 +1454,9 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * on which this instance is based on.
      * @return The SbEntlastung instances as set
      */
-    public Set<SbEntlastung> getSbEntlasungs() {
-        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
-        return sonderbauwerk != null ? sonderbauwerk.getSbEntlastungs() : null;
+    public Set<SbEntlastung> getSbEntlastungs() {
+        Sonderbauwerk sb = getSonderbauwerk();
+        return sb != null ? sb.getSbEntlastungs() : null;
     }
 
 }

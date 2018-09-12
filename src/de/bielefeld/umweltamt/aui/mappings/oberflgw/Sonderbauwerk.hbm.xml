@@ -329,7 +329,7 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbVerfahren" />
         </set>
-        <set name="sbEntlastungs" table="sb_entlastung" inverse="true" lazy="true" fetch="select">
+        <set name="sbEntlastungs" table="sb_entlastung" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="sb_nr" not-null="true" />
             </key>

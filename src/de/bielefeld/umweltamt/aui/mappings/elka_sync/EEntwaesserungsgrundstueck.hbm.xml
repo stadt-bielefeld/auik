@@ -9,6 +9,12 @@
 	    <column name="nr"/>
 	    <generator class="assigned"/>
 	    </id>
+        <many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">
+            <column name="standortid"/>
+        </many-to-one>
+        <many-to-one lazy="false" name="adresse" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
+            <column name="betreiberid"/>
+        </many-to-one>
          <property name="erlFreiElTog" type="java.lang.Boolean">
              <column name="erl_frei_el_tog" />
          </property>
@@ -27,9 +33,6 @@
          <property name="grEntwGebiet" type="java.lang.Integer">
              <column name="gr_entw_gebiet" />
          </property>
-         <property name="standortid" type="java.lang.Integer">
-             <column name="standortid" />
-         </property>
          <property name="dtvWert" type="big_decimal">
              <column name="dtv_wert" precision="10" scale="1" />
          </property>
@@ -45,7 +48,7 @@
          <property name="einlBereichOpt" type="java.lang.Integer">
              <column name="einl_bereich_opt" />
          </property>
-         <property name="abwbeskonNr" type="java.lang.String">
+         <property name="abwbeskonnr" type="java.lang.String">
              <column name="abwbeskon_nr" length="30" />
          </property>
          <property name="einbauartOpt" type="java.lang.Integer">
@@ -54,18 +57,14 @@
          <property name="aktualDat" type="java.util.Date">
              <column name="aktual_dat" length="29" />
          </property>
-         <property name="betreiberid" type="java.lang.Integer">
-             <column name="betreiberid" />
-         </property>
-         <property name="wasserechtNr" type="java.lang.Long">
-             <column name="wasserecht_nr" />
-         </property>
+        <many-to-one lazy="false" name="wasserrecht" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" fetch="select">
+            <column name="wasserecht_nr"/>
+        </many-to-one>
          <property name="herkunft" type="java.lang.String">
              <column name="herkunft" />
          </property>
          <property name="externalNr" type="java.lang.String">
              <column name="external_nr" length="50" />
          </property>
-
     </class>
 </hibernate-mapping>

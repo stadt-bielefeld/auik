@@ -367,12 +367,12 @@ public class ELKASync extends AbstractModul {
                                 for (int i = 0; i< rows.length; i++) {
                                     dbList.add(ELKASync.this.entwgrundModel.getObjectAtRow(rows[i]));
                                 }
-                                url += "entwasserungsgrundstueck";
+                                url += "/entwasserungsgrundstueck";
                             } else if (sel.equals("Sonderbauwerke")) {
                                 for (int i = 0; i< rows.length; i++) {
                                     dbList.add(ELKASync.this.sbModel.getObjectAtRow(rows[i]));
                                 }
-                                url += "sonderbauwerk";
+                                url += "/sonderbauwerk";
                             }
                             else {
                                 return;
@@ -481,13 +481,13 @@ public class ELKASync extends AbstractModul {
                                 for (int i = 0; i< rows.length; i++) {
                                     dbList.add(ELKASync.this.entwgrundModel.getObjectAtRow(rows[i]));
                                 }
-                                url += "entwaesserungsgrundstueck";
+                                url += "/entwaesserungsgrundstueck";
                             }
                             else if (sel.equals("Sonderbauwerke")) {
                                 for (int i = 0; i< rows.length; i++) {
                                     dbList.add(ELKASync.this.sbModel.getObjectAtRow(rows[i]));
                                 }
-                                url += "sonderbauwerk";
+                                url += "/sonderbauwerk";
                             }
                             else if (sel.equals("Adressen")) {
                                 for (int i = 0; i < rows.length; i++) {
@@ -718,6 +718,7 @@ public class ELKASync extends AbstractModul {
                     e.printStackTrace();
                 }
                 catch (ProcessingException pe) {
+                    pe.printStackTrace();
                     JOptionPane.showMessageDialog(
                         this.panel,
                         "Der Server unter der angegeben Url ist nicht erreichbar.",
@@ -781,6 +782,7 @@ public class ELKASync extends AbstractModul {
                     e.printStackTrace();
                 }
                 catch (ProcessingException pe) {
+                    pe.printStackTrace();
                     JOptionPane.showMessageDialog(
                         this.panel,
                         "Der Server unter der angegeben Url ist nicht erreichbar.",
@@ -826,13 +828,42 @@ public class ELKASync extends AbstractModul {
     private List<ESonderbauwerk> prependIdentifierSonderbauwerk (
         List<ESonderbauwerk> objects
     ) {
+        for (ESonderbauwerk sb: objects) {
+            prependIdentifier(sb);
+            if (sb.getBetreibAdr() != null) {
+                prependIdentifier(sb.getBetreibAdr());
+            }
+            if (sb.getAnsprAdr() != null) {
+                prependIdentifier(sb.getAnsprAdr());
+            }
+            if (sb.getStandort() != null) {
+                prependIdentifier(sb.getStandort());
+                prependIdentifier(sb.getStandort().getAdresse());    
+            }
+            EWasserrecht recht = sb.getWasserrechtGenehmigung();
+            if (recht != null) {
+                prependIdentifier(recht);
+                prependIdentifier(recht.getAdresse());
+            }
+
+        }
         return objects;
     }
 
     private List<EEntwaesserungsgrundstueck> prependIdentifierEEntwaesserungsgrundstueck (
         List<EEntwaesserungsgrundstueck> objects
     ) {
-        //TODO: Check if there are identifiers
+        for (EEntwaesserungsgrundstueck ewg: objects) {
+            prependIdentifier(ewg);
+            prependIdentifier(ewg.getAdresse());
+            prependIdentifier(ewg.getStandort());
+            prependIdentifier(ewg.getStandort().getAdresse());
+            EWasserrecht recht = ewg.getWasserrecht();
+            if (recht != null) {
+                prependIdentifier(recht);
+                prependIdentifier(recht.getAdresse());
+            }
+        }
         return objects;
     }
 
