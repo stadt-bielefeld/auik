@@ -31,6 +31,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -74,6 +75,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahmeUeberwachungserg
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAbwasserbehandlungsanlageModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAnfallstelleModel;
@@ -830,22 +832,25 @@ public class ELKASync extends AbstractModul {
     ) {
         for (ESonderbauwerk sb: objects) {
             prependIdentifier(sb);
-            if (sb.getBetreibAdr() != null) {
-                prependIdentifier(sb.getBetreibAdr());
+            if (sb.getAdresseByBetreibAdrNr() != null) {
+                prependIdentifier(sb.getAdresseByBetreibAdrNr());
             }
-            if (sb.getAnsprAdr() != null) {
-                prependIdentifier(sb.getAnsprAdr());
+            if (sb.getAdresseByAnsprAdrNr() != null) {
+                prependIdentifier(sb.getAdresseByAnsprAdrNr());
             }
             if (sb.getStandort() != null) {
                 prependIdentifier(sb.getStandort());
                 prependIdentifier(sb.getStandort().getAdresse());    
             }
-            EWasserrecht recht = sb.getWasserrechtGenehmigung();
+            EWasserrecht recht = sb.getWasserrechtByWasserrechtGenehmigungNr();
             if (recht != null) {
                 prependIdentifier(recht);
                 prependIdentifier(recht.getAdresse());
             }
-
+            Set<SbEntlastung> sbes = sb.getSbEntlastungs();
+            for (SbEntlastung sbe : sbes) {
+                prependIdentifier(sbe);
+            }
         }
         return objects;
     }

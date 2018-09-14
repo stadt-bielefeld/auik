@@ -37,10 +37,10 @@
         <many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">
             <column name="standortid"/>
         </many-to-one>
-        <many-to-one lazy="false" name="betreibAdr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
+        <many-to-one lazy="false" name="adresseByBetreibAdrNr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
             <column name="betreiberid"/>
         </many-to-one>
-		<many-to-one lazy="false" name="ansprAdr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
+		<many-to-one lazy="false" name="adresseByAnsprAdrNr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
             <column name="anspr_adr_nr"/>
         </many-to-one>
 		<property name="beschreibung" type="java.lang.String">
@@ -159,7 +159,7 @@
 		<property name="anordnungOpt" type="java.lang.Integer">
 			<column name="anordnung_opt" />
 		</property>
-        <many-to-one lazy="false" name="wasserrechtGenehmigung" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" fetch="select">
+        <many-to-one lazy="false" name="wasserrechtByWasserrechtGenehmigungNr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" fetch="select">
             <column name="wasserrecht_genehmigung_nr"/>
         </many-to-one>
 		<property name="beckenartOpt" type="java.lang.Integer">

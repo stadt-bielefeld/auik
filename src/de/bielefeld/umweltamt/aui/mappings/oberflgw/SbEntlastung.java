@@ -23,6 +23,9 @@
 
 package de.bielefeld.umweltamt.aui.mappings.oberflgw;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -43,9 +46,9 @@ public class SbEntlastung  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forSbEntlastung;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
-    private Long nr;
+    private Integer nr;
     private Sonderbauwerk sonderbauwerk;
     private Integer lfdNr;
     private Integer typOpt;
@@ -59,6 +62,8 @@ public class SbEntlastung  implements java.io.Serializable {
     private Set<Referenz> referenzsForQEntlNr = new HashSet<Referenz>(0);
     private Set<Referenz> referenzsForZEntlNr = new HashSet<Referenz>(0);
 
+    private Integer origNr;
+
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -69,7 +74,7 @@ public class SbEntlastung  implements java.io.Serializable {
 
     /** Minimal constructor */
     public SbEntlastung(
-        long nr, Sonderbauwerk sonderbauwerk, boolean tauchwandTog, boolean sonstigeBehTog, boolean sbNichtInNrwTog, boolean kaNichtInNrwTog) {
+        Integer nr, Sonderbauwerk sonderbauwerk, boolean tauchwandTog, boolean sonstigeBehTog, boolean sbNichtInNrwTog, boolean kaNichtInNrwTog) {
         this.nr = nr;
         this.sonderbauwerk = sonderbauwerk;
         this.tauchwandTog = tauchwandTog;
@@ -80,7 +85,7 @@ public class SbEntlastung  implements java.io.Serializable {
 
     /** Full constructor */
     public SbEntlastung(
-        long nr, Sonderbauwerk sonderbauwerk, Integer lfdNr, Integer typOpt, boolean tauchwandTog, boolean sonstigeBehTog, Integer ausbUeberlaufOpt, String sonstigeBehandlung, boolean sbNichtInNrwTog, boolean kaNichtInNrwTog, String ausbUeberlaufSonstiges, Set<Referenz> referenzsForQEntlNr, Set<Referenz> referenzsForZEntlNr) {
+        Integer nr, Sonderbauwerk sonderbauwerk, Integer lfdNr, Integer typOpt, boolean tauchwandTog, boolean sonstigeBehTog, Integer ausbUeberlaufOpt, String sonstigeBehandlung, boolean sbNichtInNrwTog, boolean kaNichtInNrwTog, String ausbUeberlaufSonstiges, Set<Referenz> referenzsForQEntlNr, Set<Referenz> referenzsForZEntlNr) {
         this.nr = nr;
         this.sonderbauwerk = sonderbauwerk;
         this.lfdNr = lfdNr;
@@ -97,14 +102,26 @@ public class SbEntlastung  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public Long getNr() {
+    public Integer getNr() {
         return this.nr;
     }
 
-    public void setNr(long nr) {
+    public void setNr(Integer nr) {
         this.nr = nr;
     }
 
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return this.origNr;
+    }
+
+    @JsonIgnore
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
+    }
+
+
+    @JsonBackReference
     public Sonderbauwerk getSonderbauwerk() {
         return this.sonderbauwerk;
     }
@@ -185,6 +202,7 @@ public class SbEntlastung  implements java.io.Serializable {
         this.ausbUeberlaufSonstiges = ausbUeberlaufSonstiges;
     }
 
+    @JsonIgnore
     public Set<Referenz> getReferenzsForQEntlNr() {
         return this.referenzsForQEntlNr;
     }
@@ -192,7 +210,7 @@ public class SbEntlastung  implements java.io.Serializable {
     public void setReferenzsForQEntlNr(Set<Referenz> referenzsForQEntlNr) {
         this.referenzsForQEntlNr = referenzsForQEntlNr;
     }
-
+    @JsonIgnore
     public Set<Referenz> getReferenzsForZEntlNr() {
         return this.referenzsForZEntlNr;
     }
@@ -210,7 +228,7 @@ public class SbEntlastung  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -219,21 +237,21 @@ public class SbEntlastung  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("nr").append("='").append(getNr()).append("' ");			
-        buffer.append("sonderbauwerk").append("='").append(getSonderbauwerk()).append("' ");			
-        buffer.append("lfdNr").append("='").append(getLfdNr()).append("' ");			
-        buffer.append("typOpt").append("='").append(getTypOpt()).append("' ");			
-        buffer.append("tauchwandTog").append("='").append(isTauchwandTog()).append("' ");			
-        buffer.append("sonstigeBehTog").append("='").append(isSonstigeBehTog()).append("' ");			
-        buffer.append("ausbUeberlaufOpt").append("='").append(getAusbUeberlaufOpt()).append("' ");			
-        buffer.append("sonstigeBehandlung").append("='").append(getSonstigeBehandlung()).append("' ");			
-        buffer.append("sbNichtInNrwTog").append("='").append(isSbNichtInNrwTog()).append("' ");			
-        buffer.append("kaNichtInNrwTog").append("='").append(isKaNichtInNrwTog()).append("' ");			
-        buffer.append("ausbUeberlaufSonstiges").append("='").append(getAusbUeberlaufSonstiges()).append("' ");			
-        buffer.append("referenzsForQEntlNr").append("='").append(getReferenzsForQEntlNr()).append("' ");			
-        buffer.append("referenzsForZEntlNr").append("='").append(getReferenzsForZEntlNr()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("sonderbauwerk").append("='").append(getSonderbauwerk()).append("' ");
+        buffer.append("lfdNr").append("='").append(getLfdNr()).append("' ");
+        buffer.append("typOpt").append("='").append(getTypOpt()).append("' ");
+        buffer.append("tauchwandTog").append("='").append(isTauchwandTog()).append("' ");
+        buffer.append("sonstigeBehTog").append("='").append(isSonstigeBehTog()).append("' ");
+        buffer.append("ausbUeberlaufOpt").append("='").append(getAusbUeberlaufOpt()).append("' ");
+        buffer.append("sonstigeBehandlung").append("='").append(getSonstigeBehandlung()).append("' ");
+        buffer.append("sbNichtInNrwTog").append("='").append(isSbNichtInNrwTog()).append("' ");
+        buffer.append("kaNichtInNrwTog").append("='").append(isKaNichtInNrwTog()).append("' ");
+        buffer.append("ausbUeberlaufSonstiges").append("='").append(getAusbUeberlaufSonstiges()).append("' ");
+        buffer.append("referenzsForQEntlNr").append("='").append(getReferenzsForQEntlNr()).append("' ");
+        buffer.append("referenzsForZEntlNr").append("='").append(getReferenzsForZEntlNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -265,7 +283,7 @@ public class SbEntlastung  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -299,20 +317,20 @@ public class SbEntlastung  implements java.io.Serializable {
      * @param copy SbEntlastung
      */
     private void copy(SbEntlastung copy) {
-        this.nr = copy.getNr();            
-        this.sonderbauwerk = copy.getSonderbauwerk();            
-        this.lfdNr = copy.getLfdNr();            
-        this.typOpt = copy.getTypOpt();            
-        this.tauchwandTog = copy.isTauchwandTog();            
-        this.sonstigeBehTog = copy.isSonstigeBehTog();            
-        this.ausbUeberlaufOpt = copy.getAusbUeberlaufOpt();            
-        this.sonstigeBehandlung = copy.getSonstigeBehandlung();            
-        this.sbNichtInNrwTog = copy.isSbNichtInNrwTog();            
-        this.kaNichtInNrwTog = copy.isKaNichtInNrwTog();            
-        this.ausbUeberlaufSonstiges = copy.getAusbUeberlaufSonstiges();            
-        this.referenzsForQEntlNr = copy.getReferenzsForQEntlNr();            
-        this.referenzsForZEntlNr = copy.getReferenzsForZEntlNr();            
-    }    
+        this.nr = copy.getNr();
+        this.sonderbauwerk = copy.getSonderbauwerk();
+        this.lfdNr = copy.getLfdNr();
+        this.typOpt = copy.getTypOpt();
+        this.tauchwandTog = copy.isTauchwandTog();
+        this.sonstigeBehTog = copy.isSonstigeBehTog();
+        this.ausbUeberlaufOpt = copy.getAusbUeberlaufOpt();
+        this.sonstigeBehandlung = copy.getSonstigeBehandlung();
+        this.sbNichtInNrwTog = copy.isSbNichtInNrwTog();
+        this.kaNichtInNrwTog = copy.isKaNichtInNrwTog();
+        this.ausbUeberlaufSonstiges = copy.getAusbUeberlaufSonstiges();
+        this.referenzsForQEntlNr = copy.getReferenzsForQEntlNr();
+        this.referenzsForZEntlNr = copy.getReferenzsForZEntlNr();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

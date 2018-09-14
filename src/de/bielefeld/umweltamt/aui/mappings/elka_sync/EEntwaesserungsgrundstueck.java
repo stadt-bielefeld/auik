@@ -60,7 +60,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     private Boolean erlFreiElTog;
     private BigDecimal regenspende;
     private BigDecimal regenhaeufigkeit;
-    private String beschreibung;
+    private String bemerkung;
     private Integer regendauer;
     private Integer grEntwGebiet;
     private BigDecimal dtvWert;
@@ -85,14 +85,14 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public EEntwaesserungsgrundstueck(
-        Integer nr, EStandort standort, EAdresse adresse, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String beschreibung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
+        Integer nr, EStandort standort, EAdresse adresse, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String bemerkung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
         this.nr = nr;
         this.standort = standort;
         this.adresse = adresse;
         this.erlFreiElTog = erlFreiElTog;
         this.regenspende = regenspende;
         this.regenhaeufigkeit = regenhaeufigkeit;
-        this.beschreibung = beschreibung;
+        this.bemerkung = bemerkung;
         this.regendauer = regendauer;
         this.grEntwGebiet = grEntwGebiet;
         this.dtvWert = dtvWert;
@@ -167,12 +167,12 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         this.regenhaeufigkeit = regenhaeufigkeit;
     }
 
-    public String getBeschreibung() {
-        return this.beschreibung;
+    public String getBemerkung() {
+        return this.bemerkung;
     }
 
-    public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
+    public void setBemerkung(String bemerkung) {
+        this.bemerkung = bemerkung;
     }
 
     public Integer getRegendauer() {
@@ -303,7 +303,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         buffer.append("erlFreiElTog").append("='").append(getErlFreiElTog()).append("' ");			
         buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");			
         buffer.append("regenhaeufigkeit").append("='").append(getRegenhaeufigkeit()).append("' ");			
-        buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");			
+        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");			
         buffer.append("regendauer").append("='").append(getRegendauer()).append("' ");			
         buffer.append("grEntwGebiet").append("='").append(getGrEntwGebiet()).append("' ");			
         buffer.append("dtvWert").append("='").append(getDtvWert()).append("' ");			

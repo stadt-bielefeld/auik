@@ -4,7 +4,7 @@
 <!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung" table="sb_entlastung" schema="oberflgw" optimistic-lock="version">
-        <id name="nr" type="long">
+        <id name="nr" type="integer">
             <column name="nr" />
             <generator class="assigned" />
         </id>

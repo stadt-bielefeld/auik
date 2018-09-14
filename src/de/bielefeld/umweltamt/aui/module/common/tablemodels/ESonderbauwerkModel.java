@@ -159,8 +159,8 @@ public class ESonderbauwerkModel extends ListTableModel {
             case 7: return sb.getStillgelegtAm();
             case 8: return sb.getWiederinbetrDat();
             case 9: return sb.getStandort().getNr();
-            case 10: return sb.getBetreibAdr() != null ? sb.getBetreibAdr().getName1() : null;
-            case 11: return sb.getAnsprAdr() != null ? sb.getAnsprAdr().getNr() : null;
+            case 10: return sb.getAdresseByBetreibAdrNr() != null ? sb.getAdresseByBetreibAdrNr().getName1() : null;
+            case 11: return sb.getAdresseByAnsprAdrNr() != null ? sb.getAdresseByAnsprAdrNr().getNr() : null;
             case 12: return sb.getBeschreibung();
             case 13: return sb.getE32();
             case 14: return sb.getN32();
@@ -196,7 +196,7 @@ public class ESonderbauwerkModel extends ListTableModel {
             case 44: return sb.getBemesWeitergTog();
             case 45: return sb.getBemessungText();
             case 46: return sb.getAnordnungOpt();
-            case 47: return sb.getWasserrechtGenehmigung() != null ? sb.getWasserrechtGenehmigung().getNr() : null;
+            case 47: return sb.getWasserrechtByWasserrechtGenehmigungNr() != null ? sb.getWasserrechtByWasserrechtGenehmigungNr().getNr() : null;
             case 48: return sb.getBeckenartOpt();
             case 49: return sb.getBeckentiefe();
             case 50: return sb.getBehFlaeche1u2();

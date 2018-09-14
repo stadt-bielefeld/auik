@@ -23,6 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -41,6 +42,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -69,8 +71,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private Date stillgelegtAm;
     private Date wiederinbetrDat;
     private EStandort standort;
-    private EAdresse betreibAdr;
-    private EAdresse ansprAdr;
+    private EAdresse AdresseByBetreibAdrNr;
+    private EAdresse AdresseByAnsprAdrNr;
     private String beschreibung;
     private Integer e32;
     private Integer n32;
@@ -109,7 +111,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private Boolean bemesWeitergTog;
     private String bemessungText;
     private Integer anordnungOpt;
-    private EWasserrecht wasserrechtGenehmigung;
+    private EWasserrecht wasserrechtByWasserrechtGenehmigungNr;
     private Integer beckenartOpt;
     private BigDecimal beckentiefe;
     private BigDecimal behFlaeche1u2;
@@ -168,6 +170,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private String herkunft;
     private String externalNr;
 
+    private Set<SbEntlastung> sbEntlastungs;
+
     private Sonderbauwerk sonderbauwerk;
 
     /** Default constructor */
@@ -189,8 +193,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.stillgelegtAm = stillgelegtAm;
         this.wiederinbetrDat = wiederinbetrDat;
         this.standort = standort;
-        this.betreibAdr = adresse;
-        this.ansprAdr = ansprAdr;
+        this.AdresseByBetreibAdrNr = adresse;
+        this.AdresseByAnsprAdrNr = ansprAdr;
         this.beschreibung = beschreibung;
         this.e32 = e32;
         this.n32 = n32;
@@ -229,7 +233,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.bemesWeitergTog = bemesWeitergTog;
         this.bemessungText = bemessungText;
         this.anordnungOpt = anordnungOpt;
-        this.wasserrechtGenehmigung = wasserrechtGenehmigung;
+        this.wasserrechtByWasserrechtGenehmigungNr = wasserrechtGenehmigung;
         this.beckenartOpt = beckenartOpt;
         this.beckentiefe = beckentiefe;
         this.behFlaeche1u2 = behFlaeche1u2;
@@ -380,22 +384,22 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.standort = standort;
     }
 
-    public EAdresse getBetreibAdr() {
-        return this.betreibAdr;
+    public EAdresse getAdresseByBetreibAdrNr() {
+        return this.AdresseByBetreibAdrNr;
     }
 
-    public void setBetreibAdr(EAdresse adresse) {
-        this.betreibAdr = adresse;
+    public void setAdresseByBetreibAdrNr(EAdresse adresse) {
+        this.AdresseByBetreibAdrNr = adresse;
     }
 
-    public EAdresse getAnsprAdr() {
-        return this.ansprAdr;
+    public EAdresse getAdresseByAnsprAdrNr() {
+        return this.AdresseByAnsprAdrNr;
     }
 
-    public void setAnsprAdr(EAdresse ansprAdr) {
-        this.ansprAdr = ansprAdr;
+    public void setAdresseByAnsprAdrNr(EAdresse ansprAdr) {
+        this.AdresseByAnsprAdrNr = ansprAdr;
     }
-
+    @JsonIgnore
     public String getBeschreibung() {
         return this.beschreibung;
     }
@@ -700,12 +704,12 @@ public class ESonderbauwerk  implements java.io.Serializable {
         this.anordnungOpt = anordnungOpt;
     }
 
-    public EWasserrecht getWasserrechtGenehmigung() {
-        return this.wasserrechtGenehmigung;
+    public EWasserrecht getWasserrechtByWasserrechtGenehmigungNr() {
+        return this.wasserrechtByWasserrechtGenehmigungNr;
     }
 
-    public void setWasserrechtGenehmigung(EWasserrecht wasserrechtGenehmigung) {
-        this.wasserrechtGenehmigung = wasserrechtGenehmigung;
+    public void setWasserrechtByWasserrechtGenehmigungNr(EWasserrecht wasserrechtGenehmigung) {
+        this.wasserrechtByWasserrechtGenehmigungNr = wasserrechtGenehmigung;
     }
 
     public Integer getBeckenartOpt() {
@@ -1193,7 +1197,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
         buffer.append("inbetriebnahme").append("='").append(getInbetriebnahme()).append("' ");
         buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");
         buffer.append("wiederinbetrDat").append("='").append(getWiederinbetrDat()).append("' ");
-        buffer.append("ansprAdr").append("='").append(getAnsprAdr()).append("' ");
+        buffer.append("ansprAdr").append("='").append(getAdresseByAnsprAdrNr()).append("' ");
         buffer.append("beschreibung").append("='").append(getBeschreibung()).append("' ");
         buffer.append("e32").append("='").append(getE32()).append("' ");
         buffer.append("n32").append("='").append(getN32()).append("' ");
@@ -1232,7 +1236,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
         buffer.append("bemesWeitergTog").append("='").append(getBemesWeitergTog()).append("' ");
         buffer.append("bemessungText").append("='").append(getBemessungText()).append("' ");
         buffer.append("anordnungOpt").append("='").append(getAnordnungOpt()).append("' ");
-        buffer.append("wasserrechtGenehmigung").append("='").append(getWasserrechtGenehmigung()).append("' ");
+        buffer.append("wasserrechtGenehmigung").append("='").append(getWasserrechtByWasserrechtGenehmigungNr()).append("' ");
         buffer.append("beckenartOpt").append("='").append(getBeckenartOpt()).append("' ");
         buffer.append("beckentiefe").append("='").append(getBeckentiefe()).append("' ");
         buffer.append("behFlaeche1u2").append("='").append(getBehFlaeche1u2()).append("' ");
@@ -1407,6 +1411,15 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * @return the sonderbauwerk
      */
     @JsonIgnore
+    public Integer getSonderbauwerkNr() {
+            return getOrigNr() != null ? getOrigNr() : getNr();
+    }
+
+    /**
+     * Return the oberflgw.sonderbauwerk on which this instance is based.
+     * @return the sonderbauwerk
+     */
+    @JsonIgnore
     public Sonderbauwerk getSonderbauwerk() {
         if (sonderbauwerk == null) {
             //If id has a prepended identifier, use original id to get the sonderbauwerk
@@ -1455,8 +1468,12 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * @return The SbEntlastung instances as set
      */
     public Set<SbEntlastung> getSbEntlastungs() {
-        Sonderbauwerk sb = getSonderbauwerk();
-        return sb != null ? sb.getSbEntlastungs() : null;
+        if (sbEntlastungs == null) {
+            sbEntlastungs = new HashSet<SbEntlastung>(
+                    HibernateSessionFactory.currentSession().createQuery(
+                    "from SbEntlastung where sb_nr= " + getSonderbauwerkNr()).list());
+        }
+        return sbEntlastungs;
     }
 
 }

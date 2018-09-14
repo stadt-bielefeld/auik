@@ -75,7 +75,7 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
             case 3:
                 return ewg.getRegenhaeufigkeit();
             case 4:
-                return ewg.getBeschreibung();
+                return ewg.getBemerkung();
             case 5:
                 return ewg.getRegendauer();
             case 6:
