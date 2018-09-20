@@ -352,7 +352,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Anh50Fachdaten.class)
                 .createAlias("objekt", "objekt")
-                .createAlias("objekt.adresseByBetreiberid", "adresse")
+                .createAlias("objekt.betreiberid", "adresse")
                 .add(Restrictions.eq("erloschen", false))
                 .add(Restrictions.eq("objekt.inaktiv", false))
                 .addOrder(Order.asc("wiedervorlage"))

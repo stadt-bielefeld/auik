@@ -80,6 +80,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahmeUeberwachungserg
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EZElsWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
@@ -847,6 +848,11 @@ public class DatabaseClassToString {
 	}
 
 	public static String toStringForClass(Orte orte) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EZElsWasserrecht ezElsWasserrecht) {
 		// TODO Auto-generated method stub
 		return null;
 	}

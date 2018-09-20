@@ -63,6 +63,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
+import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
+import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
@@ -187,12 +189,12 @@ public class ELKASync extends AbstractModul {
             String[] entities =  new String[]{
                     "Adressen",
                     "Standorte",
+                    "Betriebe",
                     "Abwasserbehandlungsanlagen",
                     "Anfallstellen",
-                    "Betriebe",
                     "Einleitungsstellen",
-                    "Messstellen",
                     "Entwässerungsgrundstücke",
+                    "Messstellen",
                     "Sonderbauwerke"};
             if (entities != null && entities.length > 0) {
                 for (String entity : entities) {
@@ -819,9 +821,13 @@ public class ELKASync extends AbstractModul {
             prependIdentifier(anlage.getAdresseByStoAdrNr());
             prependIdentifier(anlage.getStandort());
             prependIdentifier(anlage.getStandort().getAdresse());
-            for (EWasserrecht recht : anlage.getWasserrechts()) {
+            for (EWasserrecht recht : anlage.getEWasserrechts()) {
                 prependIdentifier(recht);
                 prependIdentifier(recht.getAdresse());
+            }
+            for (ZAbaVerfahren verfahren : anlage.getZAbaVerfahrens()) {
+                prependIdentifier(verfahren);
+                prependIdentifier(verfahren.getAbaverfahren());
             }
         }
         return objects;

@@ -3,8 +3,8 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 28.08.2018 12:49:47 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EZAbaWasserrecht" table="z_aba_wasserrecht" schema="elka" optimistic-lock="version">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EZAbaWasserrechtId">
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.ZAbaWasserrecht" table="e_z_aba_wasserrecht" schema="elka_sync" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.elka.ZAbaWasserrechtId">
             <key-property name="wasserrechtNr" type="long">
                 <column name="wasserrecht_nr" />
             </key-property>

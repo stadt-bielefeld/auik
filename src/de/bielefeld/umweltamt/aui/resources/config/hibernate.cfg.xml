@@ -12,6 +12,8 @@
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5433/fisumwelt_neu</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.username">BI005380</property>
+		<property name="hibernate.connection.password">genial</property>
         
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/Analyseposition.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/Einheiten.hbm.xml" />
@@ -88,6 +90,8 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/ESonderbauwerk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EStandort.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EWasserrecht.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EZAbaWasserrecht.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EZElsWasserrecht.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh40Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Abfuhr.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Abscheiderdetails.hbm.xml" />
