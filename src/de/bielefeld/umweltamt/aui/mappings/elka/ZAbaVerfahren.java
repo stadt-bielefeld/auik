@@ -32,6 +32,9 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +52,7 @@ public class ZAbaVerfahren  implements java.io.Serializable {
 
     /* Primary key, foreign keys (relations) and table columns */
     private Integer nr;
+    private Integer origNr;
     private EAbwasserbehandlungsanlage abwasserbehandlungsanlage;
     private Abaverfahren abaverfahren;
 
@@ -75,6 +79,7 @@ public class ZAbaVerfahren  implements java.io.Serializable {
         this.nr = nr;
     }
 
+    @JsonBackReference
     public EAbwasserbehandlungsanlage getAbwasserbehandlungsanlage() {
         return this.abwasserbehandlungsanlage;
     }
@@ -228,5 +233,14 @@ public class ZAbaVerfahren  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return origNr;
+    }
+
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
+    }
 
 }
