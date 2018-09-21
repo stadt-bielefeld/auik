@@ -46,9 +46,9 @@ public class ZAbaVerfahren  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZAbaVerfahren;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer id;
+    private Integer nr;
     private EAbwasserbehandlungsanlage abwasserbehandlungsanlage;
     private Abaverfahren abaverfahren;
 
@@ -62,17 +62,17 @@ public class ZAbaVerfahren  implements java.io.Serializable {
 
     /** Full constructor */
     public ZAbaVerfahren(
-    	Integer id) {
-        this.id = id;
+        Integer nr) {
+        this.nr = nr;
     }
 
     /* Setter and getter methods */
-    public Integer getId() {
-        return this.id;
+    public Integer getNr() {
+        return this.nr;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setNr(Integer nr) {
+        this.nr = nr;
     }
 
     public EAbwasserbehandlungsanlage getAbwasserbehandlungsanlage() {
@@ -101,7 +101,7 @@ public class ZAbaVerfahren  implements java.io.Serializable {
     @Override
     public String toString() {
         //TODO
-        return ""; 
+        return "";
     }
 
     /**
@@ -110,11 +110,11 @@ public class ZAbaVerfahren  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("aba").append("='").append(getAbwasserbehandlungsanlage()).append("' ");			
-        buffer.append("abaverfahren").append("='").append(getAbaverfahren()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("aba").append("='").append(getAbwasserbehandlungsanlage()).append("' ");
+        buffer.append("abaverfahren").append("='").append(getAbaverfahren()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -130,8 +130,8 @@ public class ZAbaVerfahren  implements java.io.Serializable {
         if (this == other) return true;
         if (other == null) return false;
         if (!(other instanceof ZAbaVerfahren)) return false;
-        return (this.getId().equals(
-            ((ZAbaVerfahren) other).getId()));
+        return (this.getNr().equals(
+            ((ZAbaVerfahren) other).getNr()));
     }
 
     /**
@@ -141,12 +141,12 @@ public class ZAbaVerfahren  implements java.io.Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        int idValue = this.getId() == null ?
-            0 : this.getId().hashCode();
+        int idValue = this.getNr() == null ?
+            0 : this.getNr().hashCode();
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -180,10 +180,10 @@ public class ZAbaVerfahren  implements java.io.Serializable {
      * @param copy ZAbaVerfahren
      */
     private void copy(ZAbaVerfahren copy) {
-        this.id = copy.getId();            
-        this.abwasserbehandlungsanlage = copy.getAbwasserbehandlungsanlage();            
-        this.abaverfahren = copy.getAbaverfahren();            
-    }    
+        this.nr = copy.getNr();
+        this.abwasserbehandlungsanlage = copy.getAbwasserbehandlungsanlage();
+        this.abaverfahren = copy.getAbaverfahren();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

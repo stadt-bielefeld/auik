@@ -828,6 +828,7 @@ public class ELKASync extends AbstractModul {
             for (ZAbaVerfahren verfahren : anlage.getZAbaVerfahrens()) {
                 prependIdentifier(verfahren);
                 prependIdentifier(verfahren.getAbaverfahren());
+                prependIdentifier(verfahren.getAbwasserbehandlungsanlage());
             }
         }
         return objects;
