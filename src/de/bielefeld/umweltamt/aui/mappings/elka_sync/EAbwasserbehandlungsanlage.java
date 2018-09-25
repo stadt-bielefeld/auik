@@ -46,7 +46,7 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
     private EStandort standort;
     private EAdresse adresseByStoAdrNr;
     private EAdresse adresseByBetreibAdrNr;
-    private Set<EWasserrecht> EWasserrechts = new HashSet<EWasserrecht>(0);
+    private Set<EWasserrecht> Wasserrechts = new HashSet<EWasserrecht>(0);
     private Set<ZAbaVerfahren> ZAbaVerfahrens = new HashSet<ZAbaVerfahren>(0);
     private String bezeichnung;
     private Float e32;
@@ -89,7 +89,7 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
         this.aktualDat = aktualDat;
         this.erstellDat = erstellDat;
         this.herkunft = herkunft;
-        this.setEWasserrechts(EWasserrechts);
+        this.setWasserrechts(Wasserrechts);
         this.setZAbaVerfahrens(ZAbaVerfahrens);
     }
 
@@ -258,12 +258,12 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
         return DatabaseQuery.getAll(new EAbwasserbehandlungsanlage());
     }
 
-    public Set<EWasserrecht> getEWasserrechts() {
-        return EWasserrechts;
+    public Set<EWasserrecht> getWasserrechts() {
+        return Wasserrechts;
     }
 
-    public void setEWasserrechts(Set<EWasserrecht> EWasserrechts) {
-        this.EWasserrechts = EWasserrechts;
+    public void setWasserrechts(Set<EWasserrecht> Wasserrechts) {
+        this.Wasserrechts = Wasserrechts;
     }
 
     /* Custom code goes below here! */
@@ -273,12 +273,21 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
      * on which this instance is based on.
      * @return The instances as set
      */
+    @JsonIgnore
     public Set<ZAbaVerfahren> getZAbaVerfahrens() {
         return ZAbaVerfahrens;
     }
     
     public Set<ZAbaVerfahren> getZAbaVerfahrens(Integer nr) {
         return ZAbaVerfahrens;
+    }
+
+    public Set<Abaverfahren> getAbwasserbehandlungsverfahrens() {
+        Set<Abaverfahren> verfahren = new HashSet<Abaverfahren>();
+        for (ZAbaVerfahren zabav : getZAbaVerfahrens()) {
+            verfahren.add(zabav.getAbaverfahren());
+        }
+        return verfahren;
     }
 
 

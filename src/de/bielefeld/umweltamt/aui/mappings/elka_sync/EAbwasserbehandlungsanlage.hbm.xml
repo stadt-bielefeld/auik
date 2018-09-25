@@ -50,7 +50,7 @@
         <property name="herkunft" type="java.lang.String">
             <column name="herkunft" />
         </property>
-        <set name="EWasserrechts" table="e_wasserrecht" lazy="false" fetch="select">
+        <set name="Wasserrechts" table="e_wasserrecht" lazy="false" fetch="select">
   		  <key>
   		    <column name="ref_nr"></column>
   	      </key>

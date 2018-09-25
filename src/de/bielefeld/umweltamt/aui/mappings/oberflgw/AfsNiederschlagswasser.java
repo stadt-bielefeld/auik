@@ -23,6 +23,9 @@
 
 package de.bielefeld.umweltamt.aui.mappings.oberflgw;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -47,7 +50,8 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
         DatabaseSerialVersionUID.forAfsNiederschlagswasser;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private Long nr;
+    private Integer nr;
+    private Integer origNr;
     private Anfallstelle anfallstelle;
     private Entwaesserungsgrundstueck entwaesserungsgrundstueck;
     private Integer lfdNr;
@@ -68,13 +72,13 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
 
     /** Minimal constructor */
     public AfsNiederschlagswasser(
-        long nr) {
+        int nr) {
         this.nr = nr;
     }
 
     /** Full constructor */
     public AfsNiederschlagswasser(
-        long nr, Anfallstelle anfallstelle, Entwaesserungsgrundstueck entwaesserungsgrundstueck, Integer lfdNr, String bezeichnung, Integer befFlaeche, Integer nwHerBereichOpt, BigDecimal abflussmenge, Set<Referenz> referenzsForQNwAfsNr, Set<Referenz> referenzsForZNwAfsNr) {
+        int nr, Anfallstelle anfallstelle, Entwaesserungsgrundstueck entwaesserungsgrundstueck, Integer lfdNr, String bezeichnung, Integer befFlaeche, Integer nwHerBereichOpt, BigDecimal abflussmenge, Set<Referenz> referenzsForQNwAfsNr, Set<Referenz> referenzsForZNwAfsNr) {
         this.nr = nr;
         this.anfallstelle = anfallstelle;
         this.entwaesserungsgrundstueck = entwaesserungsgrundstueck;
@@ -88,11 +92,11 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public Long getNr() {
+    public Integer getNr() {
         return this.nr;
     }
 
-    public void setNr(long nr) {
+    public void setNr(Integer nr) {
         this.nr = nr;
     }
 
@@ -104,6 +108,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
         this.anfallstelle = anfallstelle;
     }
 
+    @JsonBackReference
     public Entwaesserungsgrundstueck getEntwaesserungsgrundstueck() {
         return this.entwaesserungsgrundstueck;
     }
@@ -152,6 +157,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
         this.abflussmenge = abflussmenge;
     }
 
+    @JsonIgnore
     public Set<Referenz> getReferenzsForQNwAfsNr() {
         return this.referenzsForQNwAfsNr;
     }
@@ -160,6 +166,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
         this.referenzsForQNwAfsNr = referenzsForQNwAfsNr;
     }
 
+    @JsonIgnore
     public Set<Referenz> getReferenzsForZNwAfsNr() {
         return this.referenzsForZNwAfsNr;
     }
@@ -318,5 +325,14 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return origNr;
+    }
+
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
+    }
 
 }

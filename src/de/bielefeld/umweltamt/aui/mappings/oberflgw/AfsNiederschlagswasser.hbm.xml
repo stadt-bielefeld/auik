@@ -4,7 +4,7 @@
 <!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" table="afs_niederschlagswasser" schema="oberflgw" optimistic-lock="version">
-        <id name="nr" type="long">
+        <id name="nr" type="java.lang.Integer">
             <column name="nr" />
             <generator class="assigned" />
         </id>
@@ -29,13 +29,13 @@
         <property name="abflussmenge" type="big_decimal">
             <column name="abflussmenge" precision="11" />
         </property>
-        <set name="referenzsForQNwAfsNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="select">
+        <set name="referenzsForQNwAfsNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="q_nw_afs_nr" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
         </set>
-        <set name="referenzsForZNwAfsNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="select">
+        <set name="referenzsForZNwAfsNr" table="referenz" schema="elka" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="z_nw_afs_nr" />
             </key>

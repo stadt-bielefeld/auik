@@ -77,6 +77,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahmeUeberwachungserg
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAbwasserbehandlungsanlageModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAdresseModel;
@@ -816,20 +817,21 @@ public class ELKASync extends AbstractModul {
     ) {
         for (EAbwasserbehandlungsanlage anlage : objects) {
             log.debug("identifier for " + anlage.getNr());
-            prependIdentifier(anlage);
-            prependIdentifier(anlage.getAdresseByBetreibAdrNr());
-            prependIdentifier(anlage.getAdresseByStoAdrNr());
-            prependIdentifier(anlage.getStandort());
-            prependIdentifier(anlage.getStandort().getAdresse());
-            for (EWasserrecht recht : anlage.getEWasserrechts()) {
-                prependIdentifier(recht);
-                prependIdentifier(recht.getAdresse());
+            prependIdentifierToNr(anlage);
+            prependIdentifierToNr(anlage.getAdresseByBetreibAdrNr());
+            prependIdentifierToNr(anlage.getAdresseByStoAdrNr());
+            prependIdentifierToNr(anlage.getStandort());
+            prependIdentifierToNr(anlage.getStandort().getAdresse());
+            for (EWasserrecht recht : anlage.getWasserrechts()) {
+                prependIdentifierToNr(recht);
+                prependIdentifierToNr(recht.getAdresse());
             }
-            for (ZAbaVerfahren verfahren : anlage.getZAbaVerfahrens()) {
-                prependIdentifier(verfahren);
-                prependIdentifier(verfahren.getAbaverfahren());
-                prependIdentifier(verfahren.getAbwasserbehandlungsanlage());
-            }
+            //for (ZAbaVerfahren verfahren : anlage.getZAbaVerfahrens()) {
+            //    prependIdentifier(verfahren);
+            //    prependIdentifier(verfahren.getAbaverfahren());
+            //    prependIdentifier(verfahren.getAbwasserbehandlungsanlage());
+            //}
+            prependIdentifierToNr(anlage.getAbwasserbehandlungsverfahrens());
         }
         return objects;
     }
@@ -838,25 +840,25 @@ public class ELKASync extends AbstractModul {
         List<ESonderbauwerk> objects
     ) {
         for (ESonderbauwerk sb: objects) {
-            prependIdentifier(sb);
+            prependIdentifierToNr(sb);
             if (sb.getAdresseByBetreibAdrNr() != null) {
-                prependIdentifier(sb.getAdresseByBetreibAdrNr());
+                prependIdentifierToNr(sb.getAdresseByBetreibAdrNr());
             }
             if (sb.getAdresseByAnsprAdrNr() != null) {
-                prependIdentifier(sb.getAdresseByAnsprAdrNr());
+                prependIdentifierToNr(sb.getAdresseByAnsprAdrNr());
             }
             if (sb.getStandort() != null) {
-                prependIdentifier(sb.getStandort());
-                prependIdentifier(sb.getStandort().getAdresse());    
+                prependIdentifierToNr(sb.getStandort());
+                prependIdentifierToNr(sb.getStandort().getAdresse());    
             }
             EWasserrecht recht = sb.getWasserrechtByWasserrechtGenehmigungNr();
             if (recht != null) {
-                prependIdentifier(recht);
-                prependIdentifier(recht.getAdresse());
+                prependIdentifierToNr(recht);
+                prependIdentifierToNr(recht.getAdresse());
             }
             Set<SbEntlastung> sbes = sb.getSbEntlastungs();
             for (SbEntlastung sbe : sbes) {
-                prependIdentifier(sbe);
+                prependIdentifierToNr(sbe);
             }
         }
         return objects;
@@ -866,14 +868,20 @@ public class ELKASync extends AbstractModul {
         List<EEntwaesserungsgrundstueck> objects
     ) {
         for (EEntwaesserungsgrundstueck ewg: objects) {
-            prependIdentifier(ewg);
-            prependIdentifier(ewg.getAdresse());
-            prependIdentifier(ewg.getStandort());
-            prependIdentifier(ewg.getStandort().getAdresse());
+            prependIdentifierToNr(ewg);
+            prependIdentifierToNr(ewg.getAdresse());
+            prependIdentifierToNr(ewg.getStandort());
+            prependIdentifierToNr(ewg.getStandort().getAdresse());
             EWasserrecht recht = ewg.getWasserrecht();
             if (recht != null) {
-                prependIdentifier(recht);
-                prependIdentifier(recht.getAdresse());
+                prependIdentifierToNr(recht);
+                prependIdentifierToNr(recht.getAdresse());
+            }
+            for (Abaverfahren verfahren: ewg.getAbwasserbehandlungsverfahrens()) {
+                prependIdentifierToNr(verfahren);
+            }
+            for (AfsNiederschlagswasser afsn: ewg.getAfsNiederschlagswassers()) {
+                prependIdentifierToNr(afsn);
             }
         }
         return objects;
@@ -883,20 +891,20 @@ public class ELKASync extends AbstractModul {
         List<EAnfallstelle> objects
     ) {
         for (EAnfallstelle stelle : objects) {
-            prependIdentifier(stelle);
-            prependIdentifier(stelle.getAdresse());
-            prependIdentifier(stelle.getStandort());
-            prependIdentifier(stelle.getStandort().getAdresse());
+            prependIdentifierToNr(stelle);
+            prependIdentifierToNr(stelle.getAdresse());
+            prependIdentifierToNr(stelle.getStandort());
+            prependIdentifierToNr(stelle.getStandort().getAdresse());
         }
         return objects;
     }
 
     private List<EBetrieb> prependIdentifierBetrieb(List<EBetrieb> objects) {
         for (EBetrieb betrieb : objects) {
-            prependIdentifier(betrieb);
-            prependIdentifier(betrieb.getAdresseByWrAdrNr());
-            prependIdentifier(betrieb.getStandort());
-            prependIdentifier(betrieb.getStandort().getAdresse());
+            prependIdentifierToNr(betrieb);
+            prependIdentifierToNr(betrieb.getAdresseByWrAdrNr());
+            prependIdentifierToNr(betrieb.getStandort());
+            prependIdentifierToNr(betrieb.getStandort().getAdresse());
         }
         return objects;
     }
@@ -905,12 +913,12 @@ public class ELKASync extends AbstractModul {
         List<EEinleitungsstelle> objects
     ) {
         for (EEinleitungsstelle stelle : objects) {
-            prependIdentifier(stelle);
-            prependIdentifier(stelle.getStandort());
-            prependIdentifier(stelle.getStandort().getAdresse());
+            prependIdentifierToNr(stelle);
+            prependIdentifierToNr(stelle.getStandort());
+            prependIdentifierToNr(stelle.getStandort().getAdresse());
             for (EWasserrecht recht : stelle.getWasserrechts()) {
-                prependIdentifier(recht);
-                prependIdentifier(recht.getAdresse());
+                prependIdentifierToNr(recht);
+                prependIdentifierToNr(recht.getAdresse());
             }
         }
         return objects;
@@ -920,14 +928,14 @@ public class ELKASync extends AbstractModul {
         List<EMessstelle> objects
     ) {
         for (EMessstelle stelle : objects) {
-            prependIdentifier(stelle);
-            prependIdentifier(stelle.getStandort());
-            prependIdentifier(stelle.getStandort().getAdresse());
+            prependIdentifierToNr(stelle);
+            prependIdentifierToNr(stelle.getStandort());
+            prependIdentifierToNr(stelle.getStandort().getAdresse());
             for (EProbenahme nahme : stelle.getProbenahmes()) {
-                prependIdentifier(nahme);
+                prependIdentifierToNr(nahme);
                 for (EProbenahmeUeberwachungsergeb ergeb :
                     nahme.getProbenahmeUeberwachungsergebs()) {
-                    prependIdentifier(ergeb);
+                    prependIdentifierToNr(ergeb);
                 }
             }
         }
@@ -938,7 +946,7 @@ public class ELKASync extends AbstractModul {
           List<EAdresse> objects
     ) {
            for (EAdresse adresse : objects) {
-               prependIdentifier(adresse);
+               prependIdentifierToNr(adresse);
            }
            return objects;
     }
@@ -947,13 +955,18 @@ public class ELKASync extends AbstractModul {
               List<EStandort> objects
     ) {
         for (EStandort standort : objects) {
-               prependIdentifier(standort);
-               prependIdentifier(standort.getAdresse());
+               prependIdentifierToNr(standort);
+               prependIdentifierToNr(standort.getAdresse());
            }
            return objects;
     }
 
-    private <T> T prependIdentifier(T object) {
+    /**
+     * Prepends an identifier to the value of the objects nr field
+     * @param object Object to modify
+     * @return The modified object
+     */
+    private <T> T prependIdentifierToNr(T object) {
         try {
             Method mGetter = object.getClass().getMethod("getOrigNr");
             Method mSetter = object.getClass().getMethod("setNr", Integer.class);
@@ -976,4 +989,32 @@ public class ELKASync extends AbstractModul {
         }
         return object;
     }
+
+    /**
+     * Prepends an identifier to the value of Id
+     */
+    private <T> T prependIdentifierToId(T object) {
+        try {
+            Method mGetter = object.getClass().getMethod("getOrigId");
+            Method mSetter = object.getClass().getMethod("setId", Integer.class);
+            Integer nr = (Integer)mGetter.invoke(object);
+            if(nr == null) {
+                mGetter = object.getClass().getMethod("getId");
+                nr = (Integer)mGetter.invoke(object);
+                object.getClass().getMethod("setOrigId", Integer.class).invoke(object, nr);
+            }
+            String newNr = IDENTIFIER + nr.toString();
+            mSetter.invoke(object, Integer.valueOf(newNr));
+        } catch (NoSuchMethodException e){
+        } catch (SecurityException e) {
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
+
 }

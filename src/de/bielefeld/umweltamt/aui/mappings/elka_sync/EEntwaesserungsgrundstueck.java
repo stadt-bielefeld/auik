@@ -27,6 +27,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
@@ -438,7 +439,8 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     @JsonIgnore
     public Set<ZEntwaessgrAbwasbehverf> getZEntwassergrAbwasbehverfs() {
         Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(getNr());
-        return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs() : null;
+        return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs()
+                : new HashSet<ZEntwaessgrAbwasbehverf>();
     }
 
     /**
@@ -446,10 +448,18 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
      * on which this instance is based on.
      * @return The instances as set
      */
-    @JsonIgnore
-    public Set<AfsNiederschlagswasser> getAfsNiederschlagwassers () {
-        Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(getNr());
-        return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getAfsNiederschlagswassers() : null;
+    public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers () {
+        Integer identifier = origNr != null ? origNr : nr;
+        Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(identifier);
+        return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getAfsNiederschlagswassers() :
+            new HashSet<AfsNiederschlagswasser>();
     }
 
+    public Set<Abaverfahren> getAbwasserbehandlungsverfahrens() {
+        Set<Abaverfahren> verfahren = new HashSet<Abaverfahren>();
+        for (ZEntwaessgrAbwasbehverf zea : getZEntwassergrAbwasbehverfs()) {
+            verfahren.add(zea.getAbaverfahren());
+        }
+        return verfahren;
+    }
 }

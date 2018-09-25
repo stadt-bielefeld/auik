@@ -68,7 +68,7 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf" />
         </set>
-        <set name="afsNiederschlagswassers" table="afs_niederschlagswasser" inverse="true" lazy="true" fetch="select">
+        <set name="afsNiederschlagswassers" table="afs_niederschlagswasser" inverse="true" lazy="false" fetch="join">
             <key>
                 <column name="entw_grund_nr" />
             </key>
