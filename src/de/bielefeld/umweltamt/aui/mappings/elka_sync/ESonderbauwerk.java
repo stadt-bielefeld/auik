@@ -170,8 +170,10 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private String herkunft;
     private String externalNr;
 
+    private Set<ZRbfSchutzgueter> zuordnungRfbSchutguts;
+    private Set<ZSbVerfahren> zuordnungSbVerfahrens;
+    private Set <ZSbRegeln> zuordnungSbRegels;
     private Set<SbEntlastung> sbEntlastungs;
-
     private Sonderbauwerk sonderbauwerk;
 
     /** Default constructor */
@@ -1434,10 +1436,14 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * on which this instance is based on.
      * @return the ZRfbSchutzgut instances as set
      */
-    @JsonIgnore
-    public Set<ZRbfSchutzgueter> getZRfbSchutzguts() {
-        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
-        return sonderbauwerk != null ? sonderbauwerk.getZRbfSchutzgueters() : null;
+    public Set<ZRbfSchutzgueter> getZuordnungRbfSchutzguts() {
+        if (zuordnungRfbSchutguts == null) {
+            zuordnungRfbSchutguts = new HashSet<ZRbfSchutzgueter>(
+                HibernateSessionFactory.currentSession().createQuery(
+                    "from ZRbfSchutzgueter where sb_nr=" + getSonderbauwerkNr()).list()
+            );
+        }
+        return zuordnungRfbSchutguts;
     }
 
     /**
@@ -1446,7 +1452,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * @return The ZSbVerfahren instances as set
      */
     @JsonIgnore
-    public Set<ZSbVerfahren> getZSbVerfahrens() {
+    public Set<ZSbVerfahren> getZuordnungSbVerfahrens() {
         Sonderbauwerk sonderbauwerk = getSonderbauwerk();
         return sonderbauwerk != null ? sonderbauwerk.getZSbVerfahrens() : null;
     }
@@ -1456,10 +1462,14 @@ public class ESonderbauwerk  implements java.io.Serializable {
      * on which this instance is based on.
      * @return The ZSBRegeln instances as set
      */
-    @JsonIgnore
-    public Set<ZSbRegeln> getZSbRegelns() {
-        Sonderbauwerk sonderbauwerk = getSonderbauwerk();
-        return sonderbauwerk != null ? sonderbauwerk.getZSbRegelns() : null;
+    public Set<ZSbRegeln> getZuordnungSbRegels() {
+        if (zuordnungSbRegels == null) {
+            zuordnungSbRegels = new HashSet<ZSbRegeln>(
+                HibernateSessionFactory.currentSession().createQuery(
+                    "from ZSbRegeln where sb_nr=" + getSonderbauwerkNr()).list()
+            );
+        }
+        return zuordnungSbRegels;
     }
 
     /**

@@ -80,6 +80,9 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbRegeln;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbVerfahren;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAbwasserbehandlungsanlageModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAnfallstelleModel;
@@ -861,6 +864,17 @@ public class ELKASync extends AbstractModul {
             for (SbEntlastung sbe : sbes) {
                 prependIdentifierToNr(sbe);
             }
+
+            Set<ZRbfSchutzgueter> zrfbs = sb.getZuordnungRbfSchutzguts();
+            for (ZRbfSchutzgueter schutzg : zrfbs) {
+                prependIdentifierToNr(schutzg);
+            }
+
+            Set<ZSbRegeln> zsbrs = sb.getZuordnungSbRegels();
+            for (ZSbRegeln sbr: zsbrs) {
+                prependIdentifierToNr(sbr);
+            }
+            //TODO zuordnungSbVerfahrensVorgabens
         }
         return objects;
     }
