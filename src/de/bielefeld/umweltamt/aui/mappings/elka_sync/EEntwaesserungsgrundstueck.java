@@ -27,11 +27,13 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -75,6 +77,9 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     private EWasserrecht wasserrecht;
     private String herkunft;
     private String externalNr;
+
+    private Set<AfsNiederschlagswasser> afsNiederschlagswassers;
+    private Set<Abaverfahren> abwasserbehandlungsverfahrens;
 
     /** Default constructor */
     public EEntwaesserungsgrundstueck() {
@@ -450,16 +455,24 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
      */
     public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers () {
         Integer identifier = origNr != null ? origNr : nr;
-        Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(identifier);
-        return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getAfsNiederschlagswassers() :
-            new HashSet<AfsNiederschlagswasser>();
+        if (afsNiederschlagswassers != null ) {
+            return afsNiederschlagswassers;
+        } else {
+            Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(identifier);
+            afsNiederschlagswassers = entwaesserungsgrundstueck.getAfsNiederschlagswassers();
+            return afsNiederschlagswassers;
+        }
     }
 
     public Set<Abaverfahren> getAbwasserbehandlungsverfahrens() {
-        Set<Abaverfahren> verfahren = new HashSet<Abaverfahren>();
-        for (ZEntwaessgrAbwasbehverf zea : getZEntwassergrAbwasbehverfs()) {
-            verfahren.add(zea.getAbaverfahren());
+        if (abwasserbehandlungsverfahrens != null) {
+            return abwasserbehandlungsverfahrens;
+        } else {
+            abwasserbehandlungsverfahrens = new HashSet<Abaverfahren>();
+            for (ZEntwaessgrAbwasbehverf zea : getZEntwassergrAbwasbehverfs()) {
+                abwasserbehandlungsverfahrens.add(zea.getAbaverfahren());
+            }
+            return abwasserbehandlungsverfahrens;
         }
-        return verfahren;
     }
 }
