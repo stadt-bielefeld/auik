@@ -30,8 +30,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme;
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
@@ -51,6 +53,8 @@ public class EBetrieb implements java.io.Serializable {
     private Date aktualDat;
     private Date erstellDat;
     private String herkunft;
+
+    private Set<Massnahme> massnahmes;
 
     public EBetrieb() {
     }
@@ -213,15 +217,18 @@ public class EBetrieb implements java.io.Serializable {
      * @return The instances as set
      */
     public Set<Massnahme> getMassnahmes() {
-        Adresse adresse = Adresse.findById(getNr());
-        if (adresse == null) {
-            return null;
+        Integer origId = getOrigNr() != null ? getOrigNr() : getNr();
+
+        if (massnahmes != null) {
+            return massnahmes;
+        } else {
+            massnahmes = new HashSet<Massnahme>(0);
+            List<ZBetriebMassnahme> zBetriebMassnahmes = HibernateSessionFactory.currentSession().createQuery(
+                "from ZBetriebMassnahme where betrieb_nr= " + origId).list();
+            for (ZBetriebMassnahme zbm : zBetriebMassnahmes) {
+                massnahmes.add(zbm.getMassnahme());
+            }
+            return massnahmes;
         }
-        Set<Massnahme> massnahmes = new HashSet<Massnahme>(0);
-        Set<ZBetriebMassnahme> zBetriebMassnahmes = adresse.getZBetriebMassnahmes();
-        for (ZBetriebMassnahme zbm : zBetriebMassnahmes) {
-            massnahmes.add(zbm.getMassnahme());
-        }
-        return massnahmes;
     }
 }

@@ -78,6 +78,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAbwasserbehandlungsanlageModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAdresseModel;
@@ -372,7 +373,7 @@ public class ELKASync extends AbstractModul {
                                 for (int i = 0; i< rows.length; i++) {
                                     dbList.add(ELKASync.this.entwgrundModel.getObjectAtRow(rows[i]));
                                 }
-                                url += "/entwasserungsgrundstueck";
+                                url += "/entwaesserungsgrundstueck";
                             } else if (sel.equals("Sonderbauwerke")) {
                                 for (int i = 0; i< rows.length; i++) {
                                     dbList.add(ELKASync.this.sbModel.getObjectAtRow(rows[i]));
@@ -905,6 +906,9 @@ public class ELKASync extends AbstractModul {
             prependIdentifierToNr(betrieb.getAdresseByWrAdrNr());
             prependIdentifierToNr(betrieb.getStandort());
             prependIdentifierToNr(betrieb.getStandort().getAdresse());
+            for (Massnahme m : betrieb.getMassnahmes()) {
+                prependIdentifierToNr(m);
+            }
         }
         return objects;
     }

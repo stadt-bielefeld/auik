@@ -31,6 +31,8 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * A class that represents a row in the ZBetriebMassnahme database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -73,6 +75,7 @@ public class ZBetriebMassnahme  implements java.io.Serializable {
         this.id = id;
     }
 
+    @JsonBackReference
     public Adresse getAdresse() {
         return this.adresse;
     }
@@ -81,6 +84,7 @@ public class ZBetriebMassnahme  implements java.io.Serializable {
         this.adresse = adresse;
     }
 
+    @JsonBackReference
     public Massnahme getMassnahme() {
         return this.massnahme;
     }

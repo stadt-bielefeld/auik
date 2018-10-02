@@ -15,7 +15,7 @@
         <many-to-one name="adresse" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" update="false" insert="false" fetch="select">
             <column name="betrieb_nr" not-null="true" />
         </many-to-one>
-        <many-to-one name="massnahme" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme" update="false" insert="false" fetch="select">
+        <many-to-one name="massnahme" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme" lazy="false" update="false" insert="false" fetch="select">
             <column name="massnahme_nr" not-null="true" />
         </many-to-one>
     </class>

@@ -104,11 +104,6 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" />
         </set>
-        <set name="ZBetriebMassnahmes" table="z_betrieb_massnahme" schema="oberflgw" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="betrieb_nr" not-null="true" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme" />
-        </set>
+
     </class>
 </hibernate-mapping>

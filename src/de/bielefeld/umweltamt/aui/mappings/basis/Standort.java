@@ -35,6 +35,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -47,7 +48,7 @@ public class Standort  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forObjekt;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Adresse adresse;
@@ -55,6 +56,7 @@ public class Standort  implements java.io.Serializable {
     private boolean enabled;
     private boolean deleted;
     private Set<Objekt> objektsForStandortid = new HashSet<Objekt>(0);
+    private Set<ZBetriebMassnahme> ZBetriebMassnahmes = new HashSet<ZBetriebMassnahme>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -66,12 +68,13 @@ public class Standort  implements java.io.Serializable {
 
     /** Full constructor */
     public Standort(
-    	Adresse adresse, Lage lage, boolean enabled, boolean deleted, Set<Objekt> objektsForStandortid) {
+    	Adresse adresse, Lage lage, boolean enabled, boolean deleted, Set<Objekt> objektsForStandortid, Set<ZBetriebMassnahme> zBetriebMassnahmes) {
     	this.adresse = adresse;
         this.lage = lage;
         this.enabled = enabled;
         this.deleted = deleted;
         this.objektsForStandortid = objektsForStandortid;
+        this.ZBetriebMassnahmes = zBetriebMassnahmes;
     }
 
     /* Setter and getter methods */
@@ -123,6 +126,14 @@ public class Standort  implements java.io.Serializable {
         this.objektsForStandortid = objektsForStandortid;
     }
 
+    public Set<ZBetriebMassnahme> getZBetriebMassnahmes() {
+        return this.ZBetriebMassnahmes;
+    }
+
+    public void setZBetriebMassnahmes(Set<ZBetriebMassnahme> ZBetriebMassnahmes) {
+        this.ZBetriebMassnahmes = ZBetriebMassnahmes;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -132,7 +143,7 @@ public class Standort  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -141,13 +152,13 @@ public class Standort  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("Adresse").append("='").append(getAdresse()).append("' ");			
-        buffer.append("Lage").append("='").append(getLage()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");	
-        buffer.append("objektsForStandortid").append("='").append(getObjektsForStandortid()).append("' ");		
+        buffer.append("Adresse").append("='").append(getAdresse()).append("' ");
+        buffer.append("Lage").append("='").append(getLage()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("objektsForStandortid").append("='").append(getObjektsForStandortid()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -179,7 +190,7 @@ public class Standort  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -213,13 +224,15 @@ public class Standort  implements java.io.Serializable {
      * @param copy BasisObjekt
      */
     private void copy(Standort copy) {
-        this.adresse = copy.getAdresse();            
-        this.lage = copy.getLage();          
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();    
-        this.objektsForStandortid = copy.getObjektsForStandortid();       
-            
-    }    
+        this.adresse = copy.getAdresse();
+        this.lage = copy.getLage();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.objektsForStandortid = copy.getObjektsForStandortid();
+        this.ZBetriebMassnahmes = copy.getZBetriebMassnahmes();
+
+
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -262,7 +275,7 @@ public class Standort  implements java.io.Serializable {
     public static List<Standort> getAll() {
         return DatabaseQuery.getAll(new Standort());
     }
-    
+
     /* Setter and getter for lage and adresse fields*/
     //Getter
 
@@ -342,7 +355,7 @@ public class Standort  implements java.io.Serializable {
 
     public Integer getWassermenge(){
         return lage.getWassermenge();
-    }    
+    }
 
     //Setter
 
@@ -432,11 +445,11 @@ public class Standort  implements java.io.Serializable {
         }
         return null;
     }
-    
+
     public static Standort findByAdresseId(Integer id){
 
          return (Standort) new DatabaseAccess().get(Standort.class, id);
-                    
+
     }
 
 

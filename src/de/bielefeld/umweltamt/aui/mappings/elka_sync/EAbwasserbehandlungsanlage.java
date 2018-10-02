@@ -290,7 +290,6 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
         return verfahren;
     }
 
-
     public void setZAbaVerfahrens(Set<ZAbaVerfahren> ZAbaVerfahrens) {
         this.ZAbaVerfahrens = ZAbaVerfahrens;
     }

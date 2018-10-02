@@ -33,6 +33,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * A class that represents a row in the Massnahme database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -45,7 +47,8 @@ public class Massnahme  implements java.io.Serializable {
         DatabaseSerialVersionUID.forMassnahme;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private Long nr;
+    private Integer nr;
+    private Integer origNr;
     private Long stoffNr;
     private Long gruppeNr;
     private String massnahmeStoff;
@@ -67,7 +70,7 @@ public class Massnahme  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Massnahme(
-        long nr, Date erstellDat, Date aktualDat) {
+        Integer nr, Date erstellDat, Date aktualDat) {
         this.nr = nr;
         this.erstellDat = erstellDat;
         this.aktualDat = aktualDat;
@@ -75,7 +78,7 @@ public class Massnahme  implements java.io.Serializable {
 
     /** Full constructor */
     public Massnahme(
-        long nr, Long stoffNr, Long gruppeNr, String massnahmeStoff, Date stoffEintragsDat, String ergebnisMassnahme, Date ergebnisAm, Date erstellDat, Date aktualDat, String externalNr, Set<ZBetriebMassnahme> ZBetriebMassnahmes) {
+        Integer nr, Long stoffNr, Long gruppeNr, String massnahmeStoff, Date stoffEintragsDat, String ergebnisMassnahme, Date ergebnisAm, Date erstellDat, Date aktualDat, String externalNr, Set<ZBetriebMassnahme> ZBetriebMassnahmes) {
         this.nr = nr;
         this.stoffNr = stoffNr;
         this.gruppeNr = gruppeNr;
@@ -90,11 +93,11 @@ public class Massnahme  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public Long getNr() {
+    public Integer getNr() {
         return this.nr;
     }
 
-    public void setNr(long nr) {
+    public void setNr(Integer nr) {
         this.nr = nr;
     }
 
@@ -162,6 +165,7 @@ public class Massnahme  implements java.io.Serializable {
         this.aktualDat = aktualDat;
     }
 
+    @JsonIgnore
     public String getExternalNr() {
         return this.externalNr;
     }
@@ -170,6 +174,7 @@ public class Massnahme  implements java.io.Serializable {
         this.externalNr = externalNr;
     }
 
+    @JsonIgnore
     public Set<ZBetriebMassnahme> getZBetriebMassnahmes() {
         return this.ZBetriebMassnahmes;
     }
@@ -330,5 +335,14 @@ public class Massnahme  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
+    }
+
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return this.origNr;
+    }
 
 }
