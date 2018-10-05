@@ -203,7 +203,6 @@ public class DatabaseSerialVersionUID {
 	public static final long forViewBwkId = 69L;
 	public static final long forAfsNiederschlagswasser = 70L;
 	public static final long forAfsStoffe = 71L;
-	public static final long forAfsStoffeId = 72L;
 	public static final long forEntwaesserungsgrundstueck = 73L;
 	public static final long forMassnahme = 74L;
 	public static final long forSbEntlastung = 75L;

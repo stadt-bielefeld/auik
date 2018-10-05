@@ -101,7 +101,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwkId;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffeId;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
@@ -802,12 +801,7 @@ public class DatabaseClassToString {
 		return null;
 	}
 
-	public static String toStringForClass(AfsStoffeId afsStoffeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(Entwaesserungsgrundstueck entwaesserungsgrundstueck) {
+    public static String toStringForClass(Entwaesserungsgrundstueck entwaesserungsgrundstueck) {
 		// TODO Auto-generated method stub
 		return null;
 	}

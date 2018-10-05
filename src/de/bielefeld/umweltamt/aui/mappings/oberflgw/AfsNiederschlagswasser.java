@@ -100,6 +100,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
         this.nr = nr;
     }
 
+    @JsonBackReference
     public Anfallstelle getAnfallstelle() {
         return this.anfallstelle;
     }

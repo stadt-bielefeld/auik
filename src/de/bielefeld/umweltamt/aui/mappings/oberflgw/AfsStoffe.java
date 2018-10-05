@@ -31,6 +31,9 @@ import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * A class that represents a row in the AfsStoffe database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -43,9 +46,13 @@ public class AfsStoffe  implements java.io.Serializable {
         DatabaseSerialVersionUID.forAfsStoffe;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private AfsStoffeId id;
+    private Integer anfallstellenNr;
+    private Integer origNr;
     private Anfallstelle anfallstelle;
     private String produkt;
+    private Integer stoffNr;
+
+    private Integer origAnfallstellenNr;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -57,28 +64,30 @@ public class AfsStoffe  implements java.io.Serializable {
 
     /** Minimal constructor */
     public AfsStoffe(
-        AfsStoffeId id, Anfallstelle anfallstelle) {
-        this.id = id;
+        Integer id, Anfallstelle anfallstelle) {
+        this.anfallstellenNr = id;
         this.anfallstelle = anfallstelle;
     }
 
     /** Full constructor */
     public AfsStoffe(
-        AfsStoffeId id, Anfallstelle anfallstelle, String produkt) {
-        this.id = id;
+        Integer id, Anfallstelle anfallstelle, String produkt, Integer stoffNr) {
+        this.anfallstellenNr = id;
         this.anfallstelle = anfallstelle;
         this.produkt = produkt;
+        this.stoffNr = stoffNr;
     }
 
     /* Setter and getter methods */
-    public AfsStoffeId getId() {
-        return this.id;
+    public Integer getAnfallstellenNr() {
+        return this.anfallstellenNr;
     }
 
-    public void setId(AfsStoffeId id) {
-        this.id = id;
+    public void setAnfallstellenNr(Integer id) {
+        this.anfallstellenNr = id;
     }
 
+    @JsonBackReference
     public Anfallstelle getAnfallstelle() {
         return this.anfallstelle;
     }
@@ -93,6 +102,14 @@ public class AfsStoffe  implements java.io.Serializable {
 
     public void setProdukt(String produkt) {
         this.produkt = produkt;
+    }
+
+    public Integer getStoffNr() {
+        return this.stoffNr;
+    }
+
+    public void setStoffNr(Integer stoffNr) {
+        this.stoffNr = stoffNr;
     }
 
     /**
@@ -115,7 +132,7 @@ public class AfsStoffe  implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
+        buffer.append("id").append("='").append(getAnfallstellenNr()).append("' ");			
         buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
         buffer.append("produkt").append("='").append(getProdukt()).append("' ");			
         buffer.append("]");
@@ -133,8 +150,8 @@ public class AfsStoffe  implements java.io.Serializable {
         if (this == other) return true;
         if (other == null) return false;
         if (!(other instanceof AfsStoffe)) return false;
-        return (this.getId().equals(
-            ((AfsStoffe) other).getId()));
+        return (this.getAnfallstellenNr().equals(
+            ((AfsStoffe) other).getAnfallstellenNr()));
     }
 
     /**
@@ -144,8 +161,8 @@ public class AfsStoffe  implements java.io.Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        int idValue = this.getId() == null ?
-            0 : this.getId().hashCode();
+        int idValue = this.getAnfallstellenNr() == null ?
+            0 : this.getAnfallstellenNr().hashCode();
         result = result * 37 + idValue;
         return result;
     }
@@ -183,7 +200,7 @@ public class AfsStoffe  implements java.io.Serializable {
      * @param copy AfsStoffe
      */
     private void copy(AfsStoffe copy) {
-        this.id = copy.getId();            
+        this.anfallstellenNr = copy.getAnfallstellenNr();            
         this.anfallstelle = copy.getAnfallstelle();            
         this.produkt = copy.getProdukt();            
     }    
@@ -215,7 +232,7 @@ public class AfsStoffe  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static AfsStoffe findById(de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffeId id) {
+    public static AfsStoffe findById(Integer id) {
         log.debug("Getting AfsStoffe instance with id: " + id);
         return (AfsStoffe)
             new DatabaseAccess().get(AfsStoffe.class, id);
@@ -231,5 +248,14 @@ public class AfsStoffe  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+
+    public void setOrigAnfallstellenNr(Integer origAnfallstellenNr) {
+        this.origAnfallstellenNr = origAnfallstellenNr;
+    }
+
+    @JsonIgnore
+    public Integer getOrigAnfallstellenNr() {
+        return this.origAnfallstellenNr;
+    }
 
 }

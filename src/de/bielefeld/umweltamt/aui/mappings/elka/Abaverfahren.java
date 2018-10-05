@@ -31,6 +31,7 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -50,6 +51,7 @@ public class Abaverfahren  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer nr;
+    private Integer origNr;
     private Date aktualDat;
     private Date erstellDat;
     private String bezeichnung;
@@ -114,6 +116,7 @@ public class Abaverfahren  implements java.io.Serializable {
         this.bezeichnung = bezeichnung;
     }
 
+    @JsonBackReference
     public Set<ZEntwaessgrAbwasbehverf> getZEntwaessgrAbwasbehverfs() {
         return this.ZEntwaessgrAbwasbehverfs;
     }
@@ -275,5 +278,14 @@ public class Abaverfahren  implements java.io.Serializable {
     /* Custom code goes below here! */
     public String toGuiString() {
         return getBezeichnung();
+    }
+
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
+    }
+
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return this.origNr;
     }
 }

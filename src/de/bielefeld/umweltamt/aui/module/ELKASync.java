@@ -78,6 +78,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
@@ -910,6 +911,12 @@ public class ELKASync extends AbstractModul {
             prependIdentifierToNr(stelle.getAdresse());
             prependIdentifierToNr(stelle.getStandort());
             prependIdentifierToNr(stelle.getStandort().getAdresse());
+            for (AfsStoffe afsStoff: stelle.getAfsStoffes()) {
+                prependIdentifierToProperty(afsStoff, "anfallstellenNr");
+            }
+            for (AfsNiederschlagswasser afsNiederschlagwasser: stelle.getAfsNiederschlagswassers()) {
+                prependIdentifierToNr(afsNiederschlagwasser);
+            }
         }
         return objects;
     }
@@ -1008,18 +1015,21 @@ public class ELKASync extends AbstractModul {
         return object;
     }
 
-    /**
-     * Prepends an identifier to the value of Id
-     */
-    private <T> T prependIdentifierToId(T object) {
+    private <T> T prependIdentifierToProperty(T object, String propertyName) {
         try {
-            Method mGetter = object.getClass().getMethod("getOrigId");
-            Method mSetter = object.getClass().getMethod("setId", Integer.class);
+            String capitalizedPropertyName = propertyName.substring(0, 1).toUpperCase()
+                    + propertyName.substring(1);
+            String getterName = "get" + capitalizedPropertyName;
+            String setterName = "set" + capitalizedPropertyName;
+            String origGetterName = "getOrig" + capitalizedPropertyName;
+            String origSetterName = "setOrig" + capitalizedPropertyName;
+            Method mGetter = object.getClass().getMethod(origGetterName);
+            Method mSetter = object.getClass().getMethod(setterName, Integer.class);
             Integer nr = (Integer)mGetter.invoke(object);
             if(nr == null) {
-                mGetter = object.getClass().getMethod("getId");
+                mGetter = object.getClass().getMethod(getterName);
                 nr = (Integer)mGetter.invoke(object);
-                object.getClass().getMethod("setOrigId", Integer.class).invoke(object, nr);
+                object.getClass().getMethod(origSetterName, Integer.class).invoke(object, nr);
             }
             String newNr = IDENTIFIER + nr.toString();
             mSetter.invoke(object, Integer.valueOf(newNr));
@@ -1034,5 +1044,4 @@ public class ELKASync extends AbstractModul {
         }
         return object;
     }
-
 }

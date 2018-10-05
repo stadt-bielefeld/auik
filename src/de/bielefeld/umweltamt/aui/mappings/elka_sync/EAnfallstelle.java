@@ -31,6 +31,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
@@ -51,6 +52,8 @@ public class EAnfallstelle implements java.io.Serializable {
     private Date aktualDat;
     private Date erstellDat;
     private String herkunft;
+
+    private Anfallstelle anfallstelle;
 
     public EAnfallstelle() {
     }
@@ -219,12 +222,32 @@ public class EAnfallstelle implements java.io.Serializable {
     /* Custom code goes below here! */
 
     /**
+     * Get the Anfallstelle instance on which this view instance is based on
+     * @return The Anfallsstelle instance
+     */
+    @JsonIgnore
+    public Anfallstelle getAnfallstelle() {
+        if (anfallstelle == null) {
+            Integer origId = getOrigNr() != null ? getOrigNr() : getNr();
+            List<Anfallstelle> result = HibernateSessionFactory.currentSession().createQuery(
+                    "from Anfallstelle where objektid=" + origId).list();
+            if (result.size() > 0) {
+                anfallstelle = (Anfallstelle) result.get(0);
+            } else {
+                anfallstelle = null;
+            }
+        }
+        return anfallstelle;
+
+    }
+
+    /**
      * Returns the AfsNiederschlagwasser instances connected to the Anfallstelle table entry
      * on which this instance is based on.
      * @return The instances as set
      */
     public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
-        Anfallstelle afs = Anfallstelle.findById(getNr());
+        Anfallstelle afs = getAnfallstelle();
         return afs != null ? afs.getAfsNiederschlagswassers() : null;
     }
 
@@ -234,7 +257,7 @@ public class EAnfallstelle implements java.io.Serializable {
      * @return The instances as set
      */
     public Set<AfsStoffe> getAfsStoffes() {
-        Anfallstelle afs = Anfallstelle.findById(getNr());
+        Anfallstelle afs = getAnfallstelle();
         return afs != null ? afs.getAfsStoffes() : null;
     }
 }

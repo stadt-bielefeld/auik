@@ -4,19 +4,18 @@
 <!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe" table="afs_stoffe" schema="oberflgw" optimistic-lock="version">
-        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffeId">
-            <key-property name="anfallstellenNr" type="long">
-                <column name="anfallstellen_nr" />
-            </key-property>
-            <key-property name="stoffNr" type="long">
-                <column name="stoff_nr" />
-            </key-property>
-        </composite-id>
+        <id name="anfallstellenNr" type="java.lang.Integer">
+            <column name="anfallstellen_nr" />
+            <generator class="assigned"/>
+        </id>
         <many-to-one name="anfallstelle" class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" update="false" insert="false" fetch="select">
             <column name="anfallstellen_nr" not-null="true" />
         </many-to-one>
         <property name="produkt" type="java.lang.String">
             <column name="produkt" length="15" />
+        </property>
+        <property name="stoffNr" type="java.lang.Integer">
+            <column name="stoff_nr"/>
         </property>
     </class>
 </hibernate-mapping>

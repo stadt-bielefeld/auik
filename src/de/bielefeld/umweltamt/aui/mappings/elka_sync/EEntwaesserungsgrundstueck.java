@@ -35,6 +35,7 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -80,6 +81,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     private Set<AfsNiederschlagswasser> afsNiederschlagswassers;
     private Set<Abaverfahren> abwasserbehandlungsverfahrens;
+    private Set<ZEntwaessgrAbwasbehverf> zEntwaessgrAbwasbehverfs;
 
     /** Default constructor */
     public EEntwaesserungsgrundstueck() {
@@ -443,9 +445,14 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
      */
     @JsonIgnore
     public Set<ZEntwaessgrAbwasbehverf> getZEntwassergrAbwasbehverfs() {
-        Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(getNr());
-        return entwaesserungsgrundstueck != null ? entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs()
-                : new HashSet<ZEntwaessgrAbwasbehverf>();
+        if (zEntwaessgrAbwasbehverfs == null) {
+            Integer origId = getOrigNr() != null ? getOrigNr() : getNr();
+            zEntwaessgrAbwasbehverfs = new HashSet<ZEntwaessgrAbwasbehverf>(
+                    HibernateSessionFactory.currentSession().createQuery(
+                    "from ZEntwaessgrAbwasbehverf where entw_grund_nr=" + origId).list());
+        }
+        return  zEntwaessgrAbwasbehverfs;
+
     }
 
     /**
