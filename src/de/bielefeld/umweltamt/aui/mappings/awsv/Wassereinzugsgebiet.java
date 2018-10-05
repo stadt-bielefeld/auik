@@ -29,6 +29,9 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -110,6 +113,7 @@ public class Wassereinzugsgebiet  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
+    @JsonBackReference
     public Set<Lage> getLages() {
         return this.lages;
     }

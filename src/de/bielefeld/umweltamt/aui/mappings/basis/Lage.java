@@ -36,6 +36,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * A class that represents a row in the Lage database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -119,6 +121,7 @@ public class Lage  implements java.io.Serializable {
         this.id = id;
     }
 
+    @JsonBackReference
     public Standortgghwsg getStandortgghwsg() {
         return this.standortgghwsg;
     }
@@ -263,6 +266,7 @@ public class Lage  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
+    @JsonBackReference
     public Set<Standort> getStandorts() {
         return this.standorts;
     }

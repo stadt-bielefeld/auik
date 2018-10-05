@@ -28,6 +28,9 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -364,6 +367,7 @@ public class Adresse  implements java.io.Serializable {
         this.iglId = iglId;
     }
 
+    @JsonBackReference
     public Set<Objekt> getObjektsForBetreiberid() {
         return this.objektsForBetreiberid;
     }
@@ -372,6 +376,7 @@ public class Adresse  implements java.io.Serializable {
         this.objektsForBetreiberid = objektsForBetreiberid;
     }
 
+    @JsonBackReference
     public Set<Standort> getStandorts() {
 		return standorts;
 	}

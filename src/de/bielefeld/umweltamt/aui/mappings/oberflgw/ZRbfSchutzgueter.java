@@ -30,6 +30,8 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * A class that represents a row in the ZRbfSchutzgueter database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -70,6 +72,7 @@ public class ZRbfSchutzgueter  implements java.io.Serializable {
         this.id = id;
     }
 
+    @JsonBackReference
     public Sonderbauwerk getSonderbauwerk() {
         return this.sonderbauwerk;
     }

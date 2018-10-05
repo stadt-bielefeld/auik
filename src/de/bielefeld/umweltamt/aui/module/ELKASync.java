@@ -853,7 +853,7 @@ public class ELKASync extends AbstractModul {
             }
             if (sb.getStandort() != null) {
                 prependIdentifierToNr(sb.getStandort());
-                prependIdentifierToNr(sb.getStandort().getAdresse());    
+                prependIdentifierToNr(sb.getStandort().getAdresse());
             }
             EWasserrecht recht = sb.getWasserrechtByWasserrechtGenehmigungNr();
             if (recht != null) {

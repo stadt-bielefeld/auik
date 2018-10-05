@@ -30,6 +30,8 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * A class that represents a row in the ZSbRegeln database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -69,7 +71,7 @@ public class ZSbRegeln  implements java.io.Serializable {
     public void setId(ZSbRegelnId id) {
         this.id = id;
     }
-
+    @JsonBackReference
     public Sonderbauwerk getSonderbauwerk() {
         return this.sonderbauwerk;
     }

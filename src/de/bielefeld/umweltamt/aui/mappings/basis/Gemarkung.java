@@ -28,9 +28,14 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * A class that represents a row in the Gemarkung database table.<br>
@@ -109,6 +114,7 @@ public class Gemarkung  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
+    @JsonBackReference
     public Set<Lage> getLages() {
         return this.lages;
     }
