@@ -27,6 +27,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
@@ -39,121 +40,123 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
  */
 public class EMessstelle implements java.io.Serializable {
 
-	private EStandort standort;
-	private Integer nr;
-	private Integer origNr;
-	private String bezeichnung;
-	private Integer typOpt;
-	private Integer artMessungOpt;
-	private String bemerkung;
-	private Date aktualDat;
-	private Date erstellDat;
-	private String herkunft;
-	private Set<EProbenahme> probenahmes = new HashSet<EProbenahme>(0);
+    private EStandort standort;
+    private Integer nr;
+    private Integer origNr;
+    private String bezeichnung;
+    private Integer typOpt;
+    private Integer artMessungOpt;
+    private String bemerkung;
+    private Date aktualDat;
+    private Date erstellDat;
+    private String herkunft;
+    private Set<EProbenahme> probenahmes = new HashSet<EProbenahme>(0);
 
-	public EMessstelle() {
-	}
+    private Set<MsstBerichtspflicht> zuordnBerichtspflichts;
 
-	public EMessstelle(Integer standortNr) {
-		this.nr = nr;
-	}
+    public EMessstelle() {
+    }
 
-	public EMessstelle(Integer nr, EStandort standort, Integer origNr,
-			String bezeichnung, Integer typOpt, Integer artMessungOpt,
-			String bemerkung, Date aktualDat, Date erstellDat, String herkunft) {
-		this.standort = standort;
-		this.nr = nr;
-		this.origNr = origNr;
-		this.bezeichnung = bezeichnung;
-		this.typOpt = typOpt;
-		this.artMessungOpt = artMessungOpt;
-		this.bemerkung = bemerkung;
-		this.aktualDat = aktualDat;
-		this.erstellDat = erstellDat;
-		this.herkunft = herkunft;
-	}
+    public EMessstelle(Integer standortNr) {
+        this.nr = nr;
+    }
 
-	public EStandort getStandort() {
-		return this.standort;
-	}
+    public EMessstelle(Integer nr, EStandort standort, Integer origNr,
+            String bezeichnung, Integer typOpt, Integer artMessungOpt,
+            String bemerkung, Date aktualDat, Date erstellDat, String herkunft) {
+        this.standort = standort;
+        this.nr = nr;
+        this.origNr = origNr;
+        this.bezeichnung = bezeichnung;
+        this.typOpt = typOpt;
+        this.artMessungOpt = artMessungOpt;
+        this.bemerkung = bemerkung;
+        this.aktualDat = aktualDat;
+        this.erstellDat = erstellDat;
+        this.herkunft = herkunft;
+    }
 
-	public void setStandort(EStandort standort) {
-		this.standort = standort;
-	}
+    public EStandort getStandort() {
+        return this.standort;
+    }
 
-	public Integer getNr() {
-		return this.nr;
-	}
+    public void setStandort(EStandort standort) {
+        this.standort = standort;
+    }
 
-	public void setNr(Integer nr) {
-		this.nr = nr;
-	}
-	
-	@JsonIgnore
-	public Integer getOrigNr() {
-		return this.origNr;
-	}
-	
-	@JsonIgnore
-	public void setOrigNr(Integer origNr) {
-		this.origNr = origNr;
-	}
+    public Integer getNr() {
+        return this.nr;
+    }
 
-	public String getBezeichnung() {
-		return this.bezeichnung;
-	}
+    public void setNr(Integer nr) {
+        this.nr = nr;
+    }
+    
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return this.origNr;
+    }
+    
+    @JsonIgnore
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
+    }
 
-	public void setBezeichnung(String bezeichnung) {
-		this.bezeichnung = bezeichnung;
-	}
+    public String getBezeichnung() {
+        return this.bezeichnung;
+    }
 
-	public Integer getTypOpt() {
-		return this.typOpt;
-	}
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
 
-	public void setTypOpt(Integer typOpt) {
-		this.typOpt = typOpt;
-	}
+    public Integer getTypOpt() {
+        return this.typOpt;
+    }
 
-	public Integer getArtMessungOpt() {
-		return this.artMessungOpt;
-	}
+    public void setTypOpt(Integer typOpt) {
+        this.typOpt = typOpt;
+    }
 
-	public void setArtMessungOpt(Integer artMessungOpt) {
-		this.artMessungOpt = artMessungOpt;
-	}
+    public Integer getArtMessungOpt() {
+        return this.artMessungOpt;
+    }
 
-	public String getBemerkung() {
-		return this.bemerkung;
-	}
+    public void setArtMessungOpt(Integer artMessungOpt) {
+        this.artMessungOpt = artMessungOpt;
+    }
 
-	public void setBemerkung(String bemerkung) {
-		this.bemerkung = bemerkung;
-	}
+    public String getBemerkung() {
+        return this.bemerkung;
+    }
 
-	public Date getAktualDat() {
-		return this.aktualDat;
-	}
+    public void setBemerkung(String bemerkung) {
+        this.bemerkung = bemerkung;
+    }
 
-	public void setAktualDat(Date aktualDat) {
-		this.aktualDat = aktualDat;
-	}
+    public Date getAktualDat() {
+        return this.aktualDat;
+    }
 
-	public Date getErstellDat() {
-		return this.erstellDat;
-	}
+    public void setAktualDat(Date aktualDat) {
+        this.aktualDat = aktualDat;
+    }
 
-	public void setErstellDat(Date erstellDat) {
-		this.erstellDat = erstellDat;
-	}
+    public Date getErstellDat() {
+        return this.erstellDat;
+    }
 
-	public String getHerkunft() {
-		return this.herkunft;
-	}
+    public void setErstellDat(Date erstellDat) {
+        this.erstellDat = erstellDat;
+    }
 
-	public void setHerkunft(String herkunft) {
-		this.herkunft = herkunft;
-	}
+    public String getHerkunft() {
+        return this.herkunft;
+    }
+
+    public void setHerkunft(String herkunft) {
+        this.herkunft = herkunft;
+    }
 
     /**
      * Update this EMessstelle with its new values.<br>
@@ -194,25 +197,32 @@ public class EMessstelle implements java.io.Serializable {
         return DatabaseQuery.getAll(new EMessstelle());
     }
 
-	public Set<EProbenahme> getProbenahmes() {
-		return probenahmes;
-	}
+    public Set<EProbenahme> getProbenahmes() {
+        return probenahmes;
+    }
 
-	public void setProbenahmes(Set<EProbenahme> probenahme) {
-		this.probenahmes = probenahme;
-		
-	}
+    public void setProbenahmes(Set<EProbenahme> probenahme) {
+        this.probenahmes = probenahme;
+        
+    }
 
     /* Custom code goes below here! */
 
-	/**
-	 * Returns all MsstBerichtspflich instances of the Messstelle table row
-	 * on which this instance is based on.
-	 * @return The instances as set
-	 */
-	public Set<MsstBerichtspflicht> getZuordnungMsstBerichtspflichts() {
-		Messstelle mst = Messstelle.findById(getNr());
-		return mst != null ? mst.getMsstBerichtspflichts() : null;
-	}
+    /**
+     * Returns all MsstBerichtspflich instances of the Messstelle table row
+     * on which this instance is based on.
+     * @return The instances as set
+     */
+    public Set<MsstBerichtspflicht> getZuordnungMsstBerichtspflichts() {
+        if (zuordnBerichtspflichts == null) {
+            Integer origId = this.getOrigNr() != null ? this.getOrigNr() : this.getNr();
+            zuordnBerichtspflichts = new HashSet<MsstBerichtspflicht>(
+                HibernateSessionFactory.currentSession().createQuery(
+                    "from MsstBerichtspflicht where msst_nr=" + origId
+                ).list()
+            );
+        }
+        return zuordnBerichtspflichts;
+    }
 
 }

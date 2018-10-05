@@ -31,6 +31,9 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * A class that represents a row in the MsstBerichtspflicht database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -43,8 +46,10 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
         DatabaseSerialVersionUID.forMsstBerichtspflicht;
     
     /* Primary key, foreign keys (relations) and table columns */
-    private MsstBerichtspflichtId id;
+    private Integer msstNr;
+    private Integer origMsstNr;
     private Messstelle messstelle;
+    private Integer berichtspflichtOpt;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -57,26 +62,45 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
 
     /** Full constructor */
     public MsstBerichtspflicht(
-        MsstBerichtspflichtId id, Messstelle messstelle) {
-        this.id = id;
+        Integer id, Messstelle messstelle, Integer berichtspflichtOpt) {
+        this.msstNr = id;
         this.messstelle = messstelle;
+        this.berichtspflichtOpt = berichtspflichtOpt;
     }
 
     /* Setter and getter methods */
-    public MsstBerichtspflichtId getId() {
-        return this.id;
+    public Integer getMsstNr() {
+        return this.msstNr;
     }
 
-    public void setId(MsstBerichtspflichtId id) {
-        this.id = id;
+    public void setMsstNr(Integer id) {
+        this.msstNr = id;
     }
 
+    @JsonIgnore
+    public Integer getOrigMsstNr() {
+        return origMsstNr;
+    }
+
+    public void setOrigMsstNr(Integer origMsstNr) {
+        this.origMsstNr = origMsstNr;
+    }
+
+    @JsonBackReference
     public Messstelle getMessstelle() {
         return this.messstelle;
     }
 
     public void setMessstelle(Messstelle messstelle) {
         this.messstelle = messstelle;
+    }
+
+    public Integer getBerichtspflichtOpt() {
+        return this.berichtspflichtOpt;
+    }
+
+    public void setBerichtspflichtOpt(Integer berichtspflichtopt) {
+        this.berichtspflichtOpt = berichtspflichtopt;
     }
 
     /**
@@ -99,7 +123,6 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
         buffer.append("messstelle").append("='").append(getMessstelle()).append("' ");			
         buffer.append("]");
 
@@ -116,8 +139,8 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
         if (this == other) return true;
         if (other == null) return false;
         if (!(other instanceof MsstBerichtspflicht)) return false;
-        return (this.getId().equals(
-            ((MsstBerichtspflicht) other).getId()));
+        return getMsstNr().equals(
+            ((MsstBerichtspflicht)other).getMsstNr());
     }
 
     /**
@@ -127,8 +150,8 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        int idValue = this.getId() == null ?
-            0 : this.getId().hashCode();
+        int idValue = this.getMsstNr() == null ?
+            0 : this.getMsstNr().hashCode();
         result = result * 37 + idValue;
         return result;
     }
@@ -166,7 +189,7 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
      * @param copy MsstBerichtspflicht
      */
     private void copy(MsstBerichtspflicht copy) {
-        this.id = copy.getId();            
+        this.msstNr = copy.getMsstNr();            
         this.messstelle = copy.getMessstelle();            
     }    
 
@@ -197,7 +220,7 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static MsstBerichtspflicht findById(de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflichtId id) {
+    public static MsstBerichtspflicht findById(Integer id) {
         log.debug("Getting MsstBerichtspflicht instance with id: " + id);
         return (MsstBerichtspflicht)
             new DatabaseAccess().get(MsstBerichtspflicht.class, id);

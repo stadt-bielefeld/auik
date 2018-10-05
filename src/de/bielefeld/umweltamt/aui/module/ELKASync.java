@@ -80,6 +80,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbRegeln;
@@ -821,7 +822,6 @@ public class ELKASync extends AbstractModul {
            List<EAbwasserbehandlungsanlage> objects
     ) {
         for (EAbwasserbehandlungsanlage anlage : objects) {
-            log.debug("identifier for " + anlage.getNr());
             prependIdentifierToNr(anlage);
             prependIdentifierToNr(anlage.getAdresseByBetreibAdrNr());
             prependIdentifierToNr(anlage.getAdresseByStoAdrNr());
@@ -831,11 +831,6 @@ public class ELKASync extends AbstractModul {
                 prependIdentifierToNr(recht);
                 prependIdentifierToNr(recht.getAdresse());
             }
-            //for (ZAbaVerfahren verfahren : anlage.getZAbaVerfahrens()) {
-            //    prependIdentifier(verfahren);
-            //    prependIdentifier(verfahren.getAbaverfahren());
-            //    prependIdentifier(verfahren.getAbwasserbehandlungsanlage());
-            //}
             prependIdentifierToNr(anlage.getAbwasserbehandlungsverfahrens());
         }
         return objects;
@@ -953,15 +948,21 @@ public class ELKASync extends AbstractModul {
         List<EMessstelle> objects
     ) {
         for (EMessstelle stelle : objects) {
+            log.debug("Stelle: " + stelle.getNr());
             prependIdentifierToNr(stelle);
             prependIdentifierToNr(stelle.getStandort());
             prependIdentifierToNr(stelle.getStandort().getAdresse());
             for (EProbenahme nahme : stelle.getProbenahmes()) {
+                log.debug("Probenahme: " + nahme.getNr());
                 prependIdentifierToNr(nahme);
                 for (EProbenahmeUeberwachungsergeb ergeb :
                     nahme.getProbenahmeUeberwachungsergebs()) {
+                        log.debug("Ergeb: " + ergeb.getNr());
                     prependIdentifierToNr(ergeb);
                 }
+            }
+            for (MsstBerichtspflicht mstb: stelle.getZuordnungMsstBerichtspflichts()) {
+                prependIdentifierToProperty(mstb, "msstNr");
             }
         }
         return objects;

@@ -36,7 +36,7 @@
   <property generated="never" lazy="false" name="herkunft" type="java.lang.String">
    <column name="herkunft"/>
   </property>
-  <set name="probenahmes" table="e_probenahme" lazy="false" fetch="select">
+  <set name="probenahmes" table="e_probenahme" lazy="false" fetch="join">
   	<key>
   		<column name="msst_nr"></column>
   	</key>

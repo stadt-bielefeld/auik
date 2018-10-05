@@ -33,6 +33,9 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -200,7 +203,7 @@ public class Messstelle  implements java.io.Serializable {
     public void setProbenahmes(Set<Probenahme> probenahmes) {
         this.probenahmes = probenahmes;
     }
-
+    @JsonBackReference
     public Set<MsstBerichtspflicht> getMsstBerichtspflichts() {
         return this.msstBerichtspflichts;
     }
