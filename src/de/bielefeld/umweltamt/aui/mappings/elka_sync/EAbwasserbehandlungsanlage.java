@@ -238,9 +238,9 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
     }
 
     /**
-     * Find an <code>AtlKlaeranlagen</code> instance by its primary key
+     * Find an <code>EAbwasserbehandlungsanlage</code> instance by its primary key
      * @param id the primary key value
-     * @return <code>AtlKlaeranlagen</code> the requested instance,
+     * @return <code>EAbwasserbehandlungsanlage</code> the requested instance,
      *         if one exists,
      *         <code>null</code> otherwise
      */
@@ -250,9 +250,9 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
     }
 
     /**
-     * Get a list of all <code>AtlKlaeranlagen</code>
-     * @return <code>List&lt;AtlKlaeranlagen&gt;</code>
-     *         all <code>AtlKlaeranlagen</code>
+     * Get a list of all <code>EAbwasserbehandlungsanlage</code>
+     * @return <code>List&lt;EAbwasserbehandlungsanlage&gt;</code>
+     *         all <code>EAbwasserbehandlungsanlage</code>
      */
     public static List<EAbwasserbehandlungsanlage> getAll() {
         return DatabaseQuery.getAll(new EAbwasserbehandlungsanlage());

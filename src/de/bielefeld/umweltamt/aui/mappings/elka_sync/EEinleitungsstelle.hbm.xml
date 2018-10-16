@@ -28,6 +28,9 @@
   <property generated="never" lazy="false" name="n32" type="java.lang.Integer">
    <column name="n32"/>
   </property>
+  <property generated="never" lazy="false" name="kanalArtOpt" type="java.lang.Integer">
+   <column name="kanal_art_opt"/>
+  </property>
   <property generated="never" lazy="false" name="kaNichtInNrwTog" type="java.lang.Boolean">
    <column name="ka_nicht_in_nrw_tog"/>
   </property>

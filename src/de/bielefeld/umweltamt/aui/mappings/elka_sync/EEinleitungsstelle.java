@@ -44,6 +44,7 @@ public class EEinleitungsstelle implements java.io.Serializable {
 	private String bezeichnung;
 	private Integer e32;
 	private Integer n32;
+	private Integer kanalArtOpt;
 	private Boolean kaNichtInNrwTog;
 	private Date aktualDat;
 	private Date erstellDat;
@@ -131,6 +132,20 @@ public class EEinleitungsstelle implements java.io.Serializable {
 
 	public void setN32(Integer n32) {
 		this.n32 = n32;
+	}
+
+	/**
+	 * @return the kanalArtOpt
+	 */
+	public Integer getKanalArtOpt() {
+		return kanalArtOpt;
+	}
+
+	/**
+	 * @param kanalArtOpt the kanalArtOpt to set
+	 */
+	public void setKanalArtOpt(Integer kanalArtOpt) {
+		this.kanalArtOpt = kanalArtOpt;
 	}
 
 	public Boolean getKaNichtInNrwTog() {
