@@ -160,7 +160,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
 			if (fachdaten instanceof Objekt) {
 				tmp = (Objekt) fachdaten;
 			} else {
-				Method getBO = fachdaten.getClass().getMethod("getBasisObjekt");
+				Method getBO = fachdaten.getClass().getMethod("getObjekt");
 				tmp = (Objekt) getBO.invoke(fachdaten);
 			}
         } catch (Exception e) {

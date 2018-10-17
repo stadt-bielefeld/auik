@@ -572,7 +572,7 @@ public class DatabaseClassToString {
 
     /** @return "Gebuehrenarten.toGuiString() */
     public static String toStringForClass(Gebuehrenarten clazz) {
-        return clazz.toGuiString();
+        return clazz.getGebuehrenart();
     }
 
     /** @return "Gefaehrdungsstufen.toGuiString() */

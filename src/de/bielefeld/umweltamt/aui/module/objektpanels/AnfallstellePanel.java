@@ -254,7 +254,7 @@ public class AnfallstellePanel extends JPanel {
         success = this.anfallstelle.merge();
         
         if(success) {
-        	log.debug("Zahnarzt "
+        	log.debug("Anfallstelle "
                   + this.anfallstelle.getObjekt().getBetreiberid()
                       .getBetrname() + " gespeichert.");     	
         } else {
@@ -272,7 +272,7 @@ public class AnfallstellePanel extends JPanel {
     		this.anfallstelle.setObjekt(this.hauptModul.getObjekt());
     		// Einleitungsstelle speichern
     		this.anfallstelle.merge();
-    		log.debug("Neue Einleitungsstelle " + this.anfallstelle + " gespeichert.");
+    		log.debug("Neue Anfallstelle " + this.anfallstelle + " gespeichert.");
     	}
     }
     
