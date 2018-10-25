@@ -155,6 +155,7 @@ public class DatabaseClassToString {
      */
     public static String toStringForClass(Adresse clazz) {
         String zusatz = "";
+        String vorname = "";
         
         //If all name fields are empty, the instance must be a Standort
         if(clazz.getBetrname() == null){
@@ -162,11 +163,11 @@ public class DatabaseClassToString {
         }
         //Else return a Betreiber string
         if (clazz.getBetrvorname() != null) {
-            zusatz = ", " + clazz.getBetrvorname();
+        	vorname = clazz.getBetrvorname() + " ";
         } else if (clazz.getBetrnamezus() != null) {
             zusatz = ", " + clazz.getBetrnamezus();
         }        
-        return clazz.getBetrname() + zusatz;
+        return vorname + clazz.getBetrname() + zusatz + ", " + clazz.getStrasse() + " " + clazz.getHausnr();
     }
     
     /**
