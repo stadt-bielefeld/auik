@@ -30,25 +30,12 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
     public EEntwaesserungsgrundstueckModel() {
         super(new String[]{
                 "Nr",
-                "erl_frei_el_tog",
-                "Regenspende",
-                "Regenhäufigkeit",
-                "Beschreibung",
-                "Regendauer",
-                "gr_entw_gebiet",
                 "Standort",
-                "dtv_wert",
-                "wasserabtleitungsstrecke_opt",
-                "Entwässerungsgebiet",
-                "Erstellt-Datum",
-                "einl_bereich_opt",
-                "abwbeskon_nr",
-                "einbauart_opt",
-                "Aktualisierungsdatum",
                 "Betreiber",
                 "Wasserrecht",
-                "Herkunft",
-                "external_nr"
+                "Beschreibung",
+                "Entwässerungsgebiet",
+                "Erstellt-Datum"
                 },
                 false,
                 true);
@@ -69,43 +56,18 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
             case 0: 
                 return ewg.getNr();
             case 1:
-                return ewg.getErlFreiElTog();
+                return ewg.getStandort().getNr();
             case 2:
-                return ewg.getRegenspende();
+                return ewg.getAdresse().getName1();
             case 3:
-                return ewg.getRegenhaeufigkeit();
+                return ewg.getWasserrecht() != null ? ewg.getWasserrecht().getNr(): null;
             case 4:
                 return ewg.getBemerkung();
             case 5:
-                return ewg.getRegendauer();
-            case 6:
-                return ewg.getGrEntwGebiet();
-            case 7:
-                return ewg.getStandort().getNr();
-            case 8:
-                return ewg.getDtvWert();
-            case 9:
-                return ewg.getWasserableitungsstreckeOpt();
-            case 10:
                 return ewg.getNameEtwGebiet();
-            case 11:
+            case 6:
                 return ewg.getErstellDat();
-            case 12:
-                return ewg.getEinlBereichOpt();
-            case 13:
-                return ewg.getAbwbeskonnr();
-            case 14:
-                return ewg.getEinbauartOpt();
-            case 15:
-                return ewg.getAktualDat();
-            case 16:
-                return ewg.getAdresse().getName1();
-            case 17:
-                return ewg.getWasserrecht() != null ? ewg.getWasserrecht().getNr(): null;
-            case 18:
-                return ewg.getHerkunft();
-            case 19:
-                return ewg.getExternalNr();
+
             default:
                 value = null;
         }
