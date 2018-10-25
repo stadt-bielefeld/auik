@@ -35,8 +35,10 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
@@ -576,6 +578,20 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 		return id + 1;
 	}
 
+    
+    /**
+     * Get ZAbaVerfahren for Aba
+     * @return <code>ZAbaVerfahren[]</code>
+     */
+    public static List<ZAbaVerfahren> getZAbaVerfahren(Aba fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+                DetachedCriteria.forClass(ZAbaVerfahren.class)
+                    .add(Restrictions.eq("abwasserbehandlungsanlage", fachdaten)),
+                new ZAbaVerfahren());
+    }
+
+    
+    
     private static Abaverfahren[] verfahren = null;
     /**
      * Get all AbaVerfahren

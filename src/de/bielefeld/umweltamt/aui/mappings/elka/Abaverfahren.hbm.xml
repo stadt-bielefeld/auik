@@ -17,13 +17,13 @@
         <property name="bezeichnung" type="java.lang.String">
             <column name="bezeichnung" />
         </property>
-        <set name="ZEntwaessgrAbwasbehverfs" table="z_entwaessgr_abwasbehverf" schema="oberflgw" inverse="true" lazy="false" fetch="select">
+        <set name="ZEntwaessgrAbwasbehverfs" table="z_entwaessgr_abwasbehverf" schema="oberflgw" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="abwasbehverf_nr" not-null="true" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf" />
         </set>
-        <set name="ZAbaVerfahrens" table="z_aba_verfahren" inverse="true" lazy="false" fetch="select">
+        <set name="ZAbaVerfahrens" table="z_aba_verfahren" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="abwasbehverf_nr" not-null="true" />
             </key>
