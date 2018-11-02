@@ -32,6 +32,8 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * A class that represents a row in the Klaeranlage database table.<br>
@@ -43,9 +45,10 @@ public class Klaeranlage  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forKlaeranlage;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
+    private Integer origId;
     private String anlage;
     private Integer deaKlaeranlageNr;
     private boolean enabled;
@@ -94,6 +97,15 @@ public class Klaeranlage  implements java.io.Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
+    public Integer getOrigId() {
+        return this.origId;
+    }
+
+    public void setOrigId(Integer origId) {
+        this.origId = origId;
+    }
+
     public String getAnlage() {
         return this.anlage;
     }
@@ -126,6 +138,7 @@ public class Klaeranlage  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
+    @JsonBackReference
     public Set<Referenz> getReferenzsForQKaNr() {
         return this.referenzsForQKaNr;
     }
@@ -134,6 +147,7 @@ public class Klaeranlage  implements java.io.Serializable {
         this.referenzsForQKaNr = referenzsForQKaNr;
     }
 
+    @JsonBackReference
     public Set<Referenz> getReferenzsForZKaNr() {
         return this.referenzsForZKaNr;
     }
@@ -142,6 +156,7 @@ public class Klaeranlage  implements java.io.Serializable {
         this.referenzsForZKaNr = referenzsForZKaNr;
     }
 
+    @JsonBackReference
     public Set<Messstelle> getMessstelles() {
         return this.messstelles;
     }
@@ -159,7 +174,7 @@ public class Klaeranlage  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -168,16 +183,16 @@ public class Klaeranlage  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("anlage").append("='").append(getAnlage()).append("' ");			
-        buffer.append("deaKlaeranlageKlaeranlageNr").append("='").append(getDeaKlaeranlageNr()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("referenzsForQKaNr").append("='").append(getReferenzsForQKaNr()).append("' ");			
-        buffer.append("referenzsForZKaNr").append("='").append(getReferenzsForZKaNr()).append("' ");			
-        buffer.append("messstelles").append("='").append(getMessstelles()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("anlage").append("='").append(getAnlage()).append("' ");
+        buffer.append("deaKlaeranlageKlaeranlageNr").append("='").append(getDeaKlaeranlageNr()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("referenzsForQKaNr").append("='").append(getReferenzsForQKaNr()).append("' ");
+        buffer.append("referenzsForZKaNr").append("='").append(getReferenzsForZKaNr()).append("' ");
+        buffer.append("messstelles").append("='").append(getMessstelles()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -209,7 +224,7 @@ public class Klaeranlage  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -243,15 +258,15 @@ public class Klaeranlage  implements java.io.Serializable {
      * @param copy Klaeranlage
      */
     private void copy(Klaeranlage copy) {
-        this.id = copy.getId();            
-        this.anlage = copy.getAnlage();            
-        this.deaKlaeranlageNr = copy.getDeaKlaeranlageNr();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.referenzsForQKaNr = copy.getReferenzsForQKaNr();            
-        this.referenzsForZKaNr = copy.getReferenzsForZKaNr();            
-        this.messstelles = copy.getMessstelles();            
-    }    
+        this.id = copy.getId();
+        this.anlage = copy.getAnlage();
+        this.deaKlaeranlageNr = copy.getDeaKlaeranlageNr();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.referenzsForQKaNr = copy.getReferenzsForQKaNr();
+        this.referenzsForZKaNr = copy.getReferenzsForZKaNr();
+        this.messstelles = copy.getMessstelles();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

@@ -19,10 +19,10 @@
         <many-to-one name="anfallstelleByQAfsNr" class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" fetch="select">
             <column name="q_afs_nr" />
         </many-to-one>
-        <many-to-one name="einleitungsstelleByQElsNr" class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" fetch="select">
+        <many-to-one name="qEl" class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" fetch="select">
             <column name="q_els_nr" />
         </many-to-one>
-        <many-to-one name="einleitungsstelleByZElsNr" class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" fetch="select">
+        <many-to-one name="zEl" class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" fetch="select">
             <column name="z_els_nr" />
         </many-to-one>
         <many-to-one name="klaeranlageByQKaNr" class="de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage" fetch="select">

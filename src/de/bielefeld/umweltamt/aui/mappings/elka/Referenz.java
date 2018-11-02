@@ -29,12 +29,17 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * A class that represents a row in the Referenz database table.<br>
@@ -46,15 +51,17 @@ public class Referenz  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forReferenz;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer nr;
     private Aba abaByZAbaNr;
     private Aba abaByQAbaNr;
     private Anfallstelle anfallstelleByZAfsNr;
     private Anfallstelle anfallstelleByQAfsNr;
-    private Einleitungsstelle einleitungsstelleByQElsNr;
-    private Einleitungsstelle einleitungsstelleByZElsNr;
+    private Einleitungsstelle qEl;
+    private Einleitungsstelle zEl;
+    private EEinleitungsstelle einleitungsstelleByQElsNr;
+    private EEinleitungsstelle einleitungsstelleByZElsNr;
     private Klaeranlage klaeranlageByQKaNr;
     private Klaeranlage klaeranlageByZKaNr;
     private Messstelle messstelleByQMsstNr;
@@ -94,8 +101,8 @@ public class Referenz  implements java.io.Serializable {
         this.abaByQAbaNr = abaByQAbaNr;
         this.anfallstelleByZAfsNr = anfallstelleByZAfsNr;
         this.anfallstelleByQAfsNr = anfallstelleByQAfsNr;
-        this.einleitungsstelleByQElsNr = einleitungsstelleByQElsNr;
-        this.einleitungsstelleByZElsNr = einleitungsstelleByZElsNr;
+        this.qEl = einleitungsstelleByQElsNr;
+        this.zEl = einleitungsstelleByZElsNr;
         this.klaeranlageByQKaNr = klaeranlageByQKaNr;
         this.klaeranlageByZKaNr = klaeranlageByZKaNr;
         this.messstelleByQMsstNr = messstelleByQMsstNr;
@@ -123,6 +130,7 @@ public class Referenz  implements java.io.Serializable {
         this.nr = nr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Aba getAbaByZAbaNr() {
         return this.abaByZAbaNr;
     }
@@ -131,6 +139,7 @@ public class Referenz  implements java.io.Serializable {
         this.abaByZAbaNr = abaByZAbaNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Aba getAbaByQAbaNr() {
         return this.abaByQAbaNr;
     }
@@ -139,6 +148,7 @@ public class Referenz  implements java.io.Serializable {
         this.abaByQAbaNr = abaByQAbaNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Anfallstelle getAnfallstelleByZAfsNr() {
         return this.anfallstelleByZAfsNr;
     }
@@ -147,6 +157,7 @@ public class Referenz  implements java.io.Serializable {
         this.anfallstelleByZAfsNr = anfallstelleByZAfsNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Anfallstelle getAnfallstelleByQAfsNr() {
         return this.anfallstelleByQAfsNr;
     }
@@ -155,22 +166,25 @@ public class Referenz  implements java.io.Serializable {
         this.anfallstelleByQAfsNr = anfallstelleByQAfsNr;
     }
 
-    public Einleitungsstelle getEinleitungsstelleByQElsNr() {
-        return this.einleitungsstelleByQElsNr;
+    @JsonIgnore
+    public Einleitungsstelle getqEl() {
+        return this.qEl;
     }
 
-    public void setEinleitungsstelleByQElsNr(Einleitungsstelle einleitungsstelleByQElsNr) {
-        this.einleitungsstelleByQElsNr = einleitungsstelleByQElsNr;
+    public void setqEl(Einleitungsstelle einleitungsstelleByQElsNr) {
+        this.qEl = einleitungsstelleByQElsNr;
     }
 
-    public Einleitungsstelle getEinleitungsstelleByZElsNr() {
-        return this.einleitungsstelleByZElsNr;
+    @JsonIgnore
+    public Einleitungsstelle getzEl() {
+        return this.zEl;
     }
 
-    public void setEinleitungsstelleByZElsNr(Einleitungsstelle einleitungsstelleByZElsNr) {
-        this.einleitungsstelleByZElsNr = einleitungsstelleByZElsNr;
+    public void setzEl(Einleitungsstelle einleitungsstelleByZElsNr) {
+        this.zEl = einleitungsstelleByZElsNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Klaeranlage getKlaeranlageByQKaNr() {
         return this.klaeranlageByQKaNr;
     }
@@ -179,6 +193,7 @@ public class Referenz  implements java.io.Serializable {
         this.klaeranlageByQKaNr = klaeranlageByQKaNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Klaeranlage getKlaeranlageByZKaNr() {
         return this.klaeranlageByZKaNr;
     }
@@ -187,6 +202,7 @@ public class Referenz  implements java.io.Serializable {
         this.klaeranlageByZKaNr = klaeranlageByZKaNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Messstelle getMessstelleByQMsstNr() {
         return this.messstelleByQMsstNr;
     }
@@ -195,6 +211,7 @@ public class Referenz  implements java.io.Serializable {
         this.messstelleByQMsstNr = messstelleByQMsstNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Messstelle getMessstelleByZMsstNr() {
         return this.messstelleByZMsstNr;
     }
@@ -203,6 +220,7 @@ public class Referenz  implements java.io.Serializable {
         this.messstelleByZMsstNr = messstelleByZMsstNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public AfsNiederschlagswasser getAfsNiederschlagswasserByQNwAfsNr() {
         return this.afsNiederschlagswasserByQNwAfsNr;
     }
@@ -211,6 +229,7 @@ public class Referenz  implements java.io.Serializable {
         this.afsNiederschlagswasserByQNwAfsNr = afsNiederschlagswasserByQNwAfsNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public AfsNiederschlagswasser getAfsNiederschlagswasserByZNwAfsNr() {
         return this.afsNiederschlagswasserByZNwAfsNr;
     }
@@ -219,6 +238,7 @@ public class Referenz  implements java.io.Serializable {
         this.afsNiederschlagswasserByZNwAfsNr = afsNiederschlagswasserByZNwAfsNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public SbEntlastung getSbEntlastungByQEntlNr() {
         return this.sbEntlastungByQEntlNr;
     }
@@ -227,6 +247,7 @@ public class Referenz  implements java.io.Serializable {
         this.sbEntlastungByQEntlNr = sbEntlastungByQEntlNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public SbEntlastung getSbEntlastungByZEntlNr() {
         return this.sbEntlastungByZEntlNr;
     }
@@ -235,6 +256,7 @@ public class Referenz  implements java.io.Serializable {
         this.sbEntlastungByZEntlNr = sbEntlastungByZEntlNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Sonderbauwerk getSonderbauwerkByQSbNr() {
         return this.sonderbauwerkByQSbNr;
     }
@@ -243,6 +265,7 @@ public class Referenz  implements java.io.Serializable {
         this.sonderbauwerkByQSbNr = sonderbauwerkByQSbNr;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Sonderbauwerk getSonderbauwerkByZSbNr() {
         return this.sonderbauwerkByZSbNr;
     }
@@ -267,6 +290,7 @@ public class Referenz  implements java.io.Serializable {
         this.standortNr = standortNr;
     }
 
+    @JsonIgnore
     public Integer getQKkaNr() {
         return this.QKkaNr;
     }
@@ -275,6 +299,7 @@ public class Referenz  implements java.io.Serializable {
         this.QKkaNr = QKkaNr;
     }
 
+    @JsonIgnore
     public Integer getZKkaNr() {
         return this.ZKkaNr;
     }
@@ -283,6 +308,7 @@ public class Referenz  implements java.io.Serializable {
         this.ZKkaNr = ZKkaNr;
     }
 
+    @JsonIgnore
     public Date getAktualDat() {
         return this.aktualDat;
     }
@@ -291,6 +317,7 @@ public class Referenz  implements java.io.Serializable {
         this.aktualDat = aktualDat;
     }
 
+    @JsonIgnore
     public Date getErstellDat() {
         return this.erstellDat;
     }
@@ -308,7 +335,7 @@ public class Referenz  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -317,31 +344,31 @@ public class Referenz  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("nr").append("='").append(getNr()).append("' ");			
-        buffer.append("abaByZAbaNr").append("='").append(getAbaByZAbaNr()).append("' ");			
-        buffer.append("abaByQAbaNr").append("='").append(getAbaByQAbaNr()).append("' ");			
-        buffer.append("anfallstelleByZAfsNr").append("='").append(getAnfallstelleByZAfsNr()).append("' ");			
-        buffer.append("anfallstelleByQAfsNr").append("='").append(getAnfallstelleByQAfsNr()).append("' ");			
-        buffer.append("einleitungsstelleByQElsNr").append("='").append(getEinleitungsstelleByQElsNr()).append("' ");			
-        buffer.append("einleitungsstelleByZElsNr").append("='").append(getEinleitungsstelleByZElsNr()).append("' ");			
-        buffer.append("klaeranlageByQKaNr").append("='").append(getKlaeranlageByQKaNr()).append("' ");			
-        buffer.append("klaeranlageByZKaNr").append("='").append(getKlaeranlageByZKaNr()).append("' ");			
-        buffer.append("messstelleByQMsstNr").append("='").append(getMessstelleByQMsstNr()).append("' ");			
-        buffer.append("messstelleByZMsstNr").append("='").append(getMessstelleByZMsstNr()).append("' ");			
-        buffer.append("afsNiederschlagswasserByQNwAfsNr").append("='").append(getAfsNiederschlagswasserByQNwAfsNr()).append("' ");			
-        buffer.append("afsNiederschlagswasserByZNwAfsNr").append("='").append(getAfsNiederschlagswasserByZNwAfsNr()).append("' ");			
-        buffer.append("sbEntlastungByQEntlNr").append("='").append(getSbEntlastungByQEntlNr()).append("' ");			
-        buffer.append("sbEntlastungByZEntlNr").append("='").append(getSbEntlastungByZEntlNr()).append("' ");			
-        buffer.append("sonderbauwerkByQSbNr").append("='").append(getSonderbauwerkByQSbNr()).append("' ");			
-        buffer.append("sonderbauwerkByZSbNr").append("='").append(getSonderbauwerkByZSbNr()).append("' ");			
-        buffer.append("fsTog").append("='").append(getFsTog()).append("' ");			
-        buffer.append("standortNr").append("='").append(getStandortNr()).append("' ");			
-        buffer.append("QKkaNr").append("='").append(getQKkaNr()).append("' ");			
-        buffer.append("ZKkaNr").append("='").append(getZKkaNr()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("abaByZAbaNr").append("='").append(getAbaByZAbaNr()).append("' ");
+        buffer.append("abaByQAbaNr").append("='").append(getAbaByQAbaNr()).append("' ");
+        buffer.append("anfallstelleByZAfsNr").append("='").append(getAnfallstelleByZAfsNr()).append("' ");
+        buffer.append("anfallstelleByQAfsNr").append("='").append(getAnfallstelleByQAfsNr()).append("' ");
+        buffer.append("einleitungsstelleByQElsNr").append("='").append(getEinleitungsstelleByQElsNr()).append("' ");
+        buffer.append("einleitungsstelleByZElsNr").append("='").append(getEinleitungsstelleByZElsNr()).append("' ");
+        buffer.append("klaeranlageByQKaNr").append("='").append(getKlaeranlageByQKaNr()).append("' ");
+        buffer.append("klaeranlageByZKaNr").append("='").append(getKlaeranlageByZKaNr()).append("' ");
+        buffer.append("messstelleByQMsstNr").append("='").append(getMessstelleByQMsstNr()).append("' ");
+        buffer.append("messstelleByZMsstNr").append("='").append(getMessstelleByZMsstNr()).append("' ");
+        buffer.append("afsNiederschlagswasserByQNwAfsNr").append("='").append(getAfsNiederschlagswasserByQNwAfsNr()).append("' ");
+        buffer.append("afsNiederschlagswasserByZNwAfsNr").append("='").append(getAfsNiederschlagswasserByZNwAfsNr()).append("' ");
+        buffer.append("sbEntlastungByQEntlNr").append("='").append(getSbEntlastungByQEntlNr()).append("' ");
+        buffer.append("sbEntlastungByZEntlNr").append("='").append(getSbEntlastungByZEntlNr()).append("' ");
+        buffer.append("sonderbauwerkByQSbNr").append("='").append(getSonderbauwerkByQSbNr()).append("' ");
+        buffer.append("sonderbauwerkByZSbNr").append("='").append(getSonderbauwerkByZSbNr()).append("' ");
+        buffer.append("fsTog").append("='").append(getFsTog()).append("' ");
+        buffer.append("standortNr").append("='").append(getStandortNr()).append("' ");
+        buffer.append("QKkaNr").append("='").append(getQKkaNr()).append("' ");
+        buffer.append("ZKkaNr").append("='").append(getZKkaNr()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -373,7 +400,7 @@ public class Referenz  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -407,30 +434,30 @@ public class Referenz  implements java.io.Serializable {
      * @param copy Referenz
      */
     private void copy(Referenz copy) {
-        this.nr = copy.getNr();            
-        this.abaByZAbaNr = copy.getAbaByZAbaNr();            
-        this.abaByQAbaNr = copy.getAbaByQAbaNr();            
-        this.anfallstelleByZAfsNr = copy.getAnfallstelleByZAfsNr();            
-        this.anfallstelleByQAfsNr = copy.getAnfallstelleByQAfsNr();            
-        this.einleitungsstelleByQElsNr = copy.getEinleitungsstelleByQElsNr();            
-        this.einleitungsstelleByZElsNr = copy.getEinleitungsstelleByZElsNr();            
-        this.klaeranlageByQKaNr = copy.getKlaeranlageByQKaNr();            
-        this.klaeranlageByZKaNr = copy.getKlaeranlageByZKaNr();            
-        this.messstelleByQMsstNr = copy.getMessstelleByQMsstNr();            
-        this.messstelleByZMsstNr = copy.getMessstelleByZMsstNr();            
-        this.afsNiederschlagswasserByQNwAfsNr = copy.getAfsNiederschlagswasserByQNwAfsNr();            
-        this.afsNiederschlagswasserByZNwAfsNr = copy.getAfsNiederschlagswasserByZNwAfsNr();            
-        this.sbEntlastungByQEntlNr = copy.getSbEntlastungByQEntlNr();            
-        this.sbEntlastungByZEntlNr = copy.getSbEntlastungByZEntlNr();            
-        this.sonderbauwerkByQSbNr = copy.getSonderbauwerkByQSbNr();            
-        this.sonderbauwerkByZSbNr = copy.getSonderbauwerkByZSbNr();            
-        this.fsTog = copy.getFsTog();            
-        this.standortNr = copy.getStandortNr();            
-        this.QKkaNr = copy.getQKkaNr();            
-        this.ZKkaNr = copy.getZKkaNr();            
-        this.aktualDat = copy.getAktualDat();            
-        this.erstellDat = copy.getErstellDat();            
-    }    
+        this.nr = copy.getNr();
+        this.abaByZAbaNr = copy.getAbaByZAbaNr();
+        this.abaByQAbaNr = copy.getAbaByQAbaNr();
+        this.anfallstelleByZAfsNr = copy.getAnfallstelleByZAfsNr();
+        this.anfallstelleByQAfsNr = copy.getAnfallstelleByQAfsNr();
+        this.qEl = copy.getqEl();
+        this.zEl = copy.getzEl();
+        this.klaeranlageByQKaNr = copy.getKlaeranlageByQKaNr();
+        this.klaeranlageByZKaNr = copy.getKlaeranlageByZKaNr();
+        this.messstelleByQMsstNr = copy.getMessstelleByQMsstNr();
+        this.messstelleByZMsstNr = copy.getMessstelleByZMsstNr();
+        this.afsNiederschlagswasserByQNwAfsNr = copy.getAfsNiederschlagswasserByQNwAfsNr();
+        this.afsNiederschlagswasserByZNwAfsNr = copy.getAfsNiederschlagswasserByZNwAfsNr();
+        this.sbEntlastungByQEntlNr = copy.getSbEntlastungByQEntlNr();
+        this.sbEntlastungByZEntlNr = copy.getSbEntlastungByZEntlNr();
+        this.sonderbauwerkByQSbNr = copy.getSonderbauwerkByQSbNr();
+        this.sonderbauwerkByZSbNr = copy.getSonderbauwerkByZSbNr();
+        this.fsTog = copy.getFsTog();
+        this.standortNr = copy.getStandortNr();
+        this.QKkaNr = copy.getQKkaNr();
+        this.ZKkaNr = copy.getZKkaNr();
+        this.aktualDat = copy.getAktualDat();
+        this.erstellDat = copy.getErstellDat();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -475,5 +502,25 @@ public class Referenz  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+
+    @JsonInclude(Include.NON_NULL)
+    public EEinleitungsstelle getEinleitungsstelleByQElsNr() {
+        return einleitungsstelleByQElsNr;
+    }
+
+    @JsonInclude(Include.NON_NULL)
+    public EEinleitungsstelle getEinleitungsstelleByZElsNr() {
+        return einleitungsstelleByZElsNr;
+    }
+
+    public void setEinleitungsstelleByQElsNr(EEinleitungsstelle els) {
+        einleitungsstelleByQElsNr = els;
+    }
+
+    public void setEinleitungsstelleByZElsNr(EEinleitungsstelle els) {
+        einleitungsstelleByZElsNr = els;
+    }
+
+
 
 }

@@ -35,6 +35,7 @@ import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
+import javax.security.auth.Refreshable;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -51,6 +52,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.logging.log4j.core.config.yaml.YamlConfiguration;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.JerseyWebTarget;
@@ -64,6 +66,7 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
+import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
@@ -120,6 +123,7 @@ public class ELKASync extends AbstractModul {
     private EEntwaesserungsgrundstueckModel entwgrundModel;
     private ESonderbauwerkModel sbModel;
 
+    private List<?> currentTableMappings;
 
     private JTable dbTable;
     private JLabel rowCount;
@@ -127,6 +131,7 @@ public class ELKASync extends AbstractModul {
 
     // Logindaten für den entfernten Service.
     private String url;
+    private String referenceUrl;
     private String user;
     private String password;
 
@@ -246,6 +251,7 @@ public class ELKASync extends AbstractModul {
                                 ELKASync.this.einleitungsstelleModel.setList(
                                         prependIdentifierEinleitungsstelle(
                                             EEinleitungsstelle.getAll()));
+                                currentTableMappings = EEinleitungsstelle.getAll();
                                 ELKASync.this.einleitungsstelleModel.fireTableDataChanged();
                             } else if (item.equals("Messstellen")) {
                                 ELKASync.this.dbTable
@@ -331,7 +337,7 @@ public class ELKASync extends AbstractModul {
                                 new ArrayList<Entity<?>>();
                             List<Object> dbList = new ArrayList<Object>();
                             int[] rows = ELKASync.this.dbTable.getSelectedRows();
-
+                            referenceUrl = url + "/referenz";
                             if (sel.equals("Abwasserbehandlungsanlagen")) {
                                 for (int i = 0; i < rows.length; i++) {
                                     dbList.add(ELKASync.this.abwasserbehandlungModel.getObjectAtRow(rows[i]));
@@ -453,7 +459,7 @@ public class ELKASync extends AbstractModul {
                             List<Object> dbList = new ArrayList<Object>();
                             List<Object> idList = new ArrayList<Object>();
                             int[] rows = ELKASync.this.dbTable.getSelectedRows();
-
+                            referenceUrl = url + "/referenz";
                             if (sel.equals("Abwasserbehandlungsanlagen")) {
                                 for (int i = 0; i < rows.length; i++) {
                                     EAbwasserbehandlungsanlage objectAtRow =
@@ -783,6 +789,7 @@ public class ELKASync extends AbstractModul {
                         }
                         else {
                             printStream.append((i + 1) + ":" + " erfolgreich übertragen\n");
+                            sendReferences(entities.get(i), printStream);
                         }
                         log.debug(responseEntity);
                     }
@@ -806,6 +813,54 @@ public class ELKASync extends AbstractModul {
         }
     }
 
+    /**
+     * Checks an entity for connected reference entities and sends them to the given Server
+     * @param Entity
+     */
+    public void sendReferences(Object entity, PrintStream log) {
+        try {
+            //Obtain original mapping instance from entity
+            Method getEntity = entity.getClass().getMethod("getEntity");
+            Object mappingInstance = getEntity.invoke(entity);
+            //Get attached references
+            Method getRefrenzs = mappingInstance.getClass().getMethod("getReferenzs");
+            List<Referenz> referenzs = (List<Referenz>) getRefrenzs.invoke(mappingInstance);
+            if (referenzs.size() > 0) {
+                JerseyClient client = new JerseyClientBuilder().build();
+                Logger l = Logger.getAnonymousLogger();
+                client.register(new LoggingFilter(l, true));
+                JerseyWebTarget target =
+                    client.target(referenceUrl)
+                        .queryParam("username", user)
+                        .queryParam("password", password);
+                prependIdentifierReferenz(referenzs);
+                for (int i = 0; i < referenzs.size(); i++) {
+                    Referenz ref = referenzs.get(i);
+   
+                    Entity<Referenz> refEntity = Entity.entity(ref,
+                    MediaType.APPLICATION_JSON + 
+                        ";charset=UTF-8");
+                    Invocation inv = target.request(
+                        MediaType.APPLICATION_JSON + 
+                        ";charset=UTF-8")
+                        .buildPost(refEntity);
+                    Response response= inv.invoke();
+                    String responseEntity = response.readEntity(String.class);
+                    System.out.println(responseEntity);
+                }
+            }
+
+        } catch (NoSuchMethodException e){
+        } catch (SecurityException e) {
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setServiceUrl(String url) {
         this.url = url;
     }
@@ -816,6 +871,25 @@ public class ELKASync extends AbstractModul {
 
     public void setServicePassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * Converts references in a Referenz entitiy into ELKA compatible references 
+     */
+    private Referenz convertReferenzReferences(Referenz ref) {
+        //Set source EEinleitungsstelle
+        if (ref.getqEl() != null) {
+            ref.setEinleitungsstelleByQElsNr(
+                EEinleitungsstelle.findById(
+                    ref.getqEl().getObjekt().getId()));
+        }
+        //Set target EEInleitungsstelle
+        if (ref.getzEl() != null) {
+            ref.setEinleitungsstelleByZElsNr(
+                EEinleitungsstelle.findById(
+                    ref.getzEl().getObjekt().getId()));
+        }
+        return ref;
     }
 
     private List<EAbwasserbehandlungsanlage> prependIdentifierAbwasserbehandlungsanlage(
@@ -985,6 +1059,33 @@ public class ELKASync extends AbstractModul {
                prependIdentifierToNr(standort.getAdresse());
            }
            return objects;
+    }
+
+    private List<Referenz> prependIdentifierReferenz(List<Referenz> objects) {
+        for (Referenz ref: objects) {
+            convertReferenzReferences(ref);
+            prependIdentifierToNr(ref);
+            prependIdentifierToNr(ref.getStandortNr());
+            if (ref.getEinleitungsstelleByQElsNr() != null) {
+                prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr());
+                prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr().getStandort());
+                prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr().getStandort().getAdresse());
+            }
+            if (ref.getEinleitungsstelleByZElsNr() != null) {
+                prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr());
+                prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort());
+                prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse());
+
+            }
+            if (ref.getKlaeranlageByQKaNr() != null) {
+                prependIdentifierToProperty(ref.getKlaeranlageByQKaNr(), "id");
+            }
+            if (ref.getKlaeranlageByZKaNr() != null) {
+                prependIdentifierToProperty(ref.getKlaeranlageByZKaNr(), "id");
+            }
+
+        }
+        return objects;
     }
 
     /**

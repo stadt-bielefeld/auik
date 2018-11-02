@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
@@ -37,133 +41,133 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
  */
 public class EEinleitungsstelle implements java.io.Serializable {
 
-	private EStandort standort;
-	private Integer nr;
-	private Integer origNr;
-	private Boolean typIndirekteinleitungTog;
-	private String bezeichnung;
-	private Integer e32;
-	private Integer n32;
-	private Boolean kaNichtInNrwTog;
-	private Date aktualDat;
-	private Date erstellDat;
-	private String herkunft;
-	private Set<EWasserrecht> wasserrechts = new HashSet<EWasserrecht>(0);
+    private EStandort standort;
+    private Integer nr;
+    private Integer origNr;
+    private Boolean typIndirekteinleitungTog;
+    private String bezeichnung;
+    private Integer e32;
+    private Integer n32;
+    private Boolean kaNichtInNrwTog;
+    private Date aktualDat;
+    private Date erstellDat;
+    private String herkunft;
+    private Set<EWasserrecht> wasserrechts = new HashSet<EWasserrecht>(0);
 
-	public EEinleitungsstelle() {
-	}
+    public EEinleitungsstelle() {
+    }
 
-	public EEinleitungsstelle(Integer nr) {
-		this.nr = nr;
-	}
+    public EEinleitungsstelle(Integer nr) {
+        this.nr = nr;
+    }
 
-	public EEinleitungsstelle(Integer nr, EStandort standort, Integer origNr,
-			Boolean typIndirekteinleitungTog, String bezeichnung, Integer e32,
-			Integer n32, Boolean kaNichtInNrwTog, Date aktualDat,
-			Date erstellDat, String herkunft, Set<EWasserrecht> wasserrechts) {
-		this.standort = standort;
-		this.nr = nr;
-		this.origNr = origNr;
-		this.typIndirekteinleitungTog = typIndirekteinleitungTog;
-		this.bezeichnung = bezeichnung;
-		this.e32 = e32;
-		this.n32 = n32;
-		this.kaNichtInNrwTog = kaNichtInNrwTog;
-		this.aktualDat = aktualDat;
-		this.erstellDat = erstellDat;
-		this.herkunft = herkunft;
-		this.setWasserrechts(wasserrechts);
-	}
+    public EEinleitungsstelle(Integer nr, EStandort standort, Integer origNr,
+            Boolean typIndirekteinleitungTog, String bezeichnung, Integer e32,
+            Integer n32, Boolean kaNichtInNrwTog, Date aktualDat,
+            Date erstellDat, String herkunft, Set<EWasserrecht> wasserrechts) {
+        this.standort = standort;
+        this.nr = nr;
+        this.origNr = origNr;
+        this.typIndirekteinleitungTog = typIndirekteinleitungTog;
+        this.bezeichnung = bezeichnung;
+        this.e32 = e32;
+        this.n32 = n32;
+        this.kaNichtInNrwTog = kaNichtInNrwTog;
+        this.aktualDat = aktualDat;
+        this.erstellDat = erstellDat;
+        this.herkunft = herkunft;
+        this.setWasserrechts(wasserrechts);
+    }
 
-	public EStandort getStandort() {
-		return this.standort;
-	}
+    public EStandort getStandort() {
+        return this.standort;
+    }
 
-	public void setStandort(EStandort standort) {
-		this.standort = standort;
-	}
+    public void setStandort(EStandort standort) {
+        this.standort = standort;
+    }
 
-	public Integer getNr() {
-		return this.nr;
-	}
+    public Integer getNr() {
+        return this.nr;
+    }
 
-	public void setNr(Integer nr) {
-		this.nr = nr;
-	}
-	
-	@JsonIgnore
-	public Integer getOrigNr() {
-		return this.origNr;
-	}
-	
-	@JsonIgnore
-	public void setOrigNr(Integer origNr) {
-		this.origNr = origNr;
-	}
+    public void setNr(Integer nr) {
+        this.nr = nr;
+    }
+    
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return this.origNr;
+    }
+    
+    @JsonIgnore
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
+    }
 
-	public Boolean getTypIndirekteinleitungTog() {
-		return this.typIndirekteinleitungTog;
-	}
+    public Boolean getTypIndirekteinleitungTog() {
+        return this.typIndirekteinleitungTog;
+    }
 
-	public void setTypIndirekteinleitungTog(Boolean typIndirekteinleitungTog) {
-		this.typIndirekteinleitungTog = typIndirekteinleitungTog;
-	}
+    public void setTypIndirekteinleitungTog(Boolean typIndirekteinleitungTog) {
+        this.typIndirekteinleitungTog = typIndirekteinleitungTog;
+    }
 
-	public String getBezeichnung() {
-		return this.bezeichnung;
-	}
+    public String getBezeichnung() {
+        return this.bezeichnung;
+    }
 
-	public void setBezeichnung(String bezeichnung) {
-		this.bezeichnung = bezeichnung;
-	}
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
 
-	public Integer getE32() {
-		return this.e32;
-	}
+    public Integer getE32() {
+        return this.e32;
+    }
 
-	public void setE32(Integer e32) {
-		this.e32 = e32;
-	}
+    public void setE32(Integer e32) {
+        this.e32 = e32;
+    }
 
-	public Integer getN32() {
-		return this.n32;
-	}
+    public Integer getN32() {
+        return this.n32;
+    }
 
-	public void setN32(Integer n32) {
-		this.n32 = n32;
-	}
+    public void setN32(Integer n32) {
+        this.n32 = n32;
+    }
 
-	public Boolean getKaNichtInNrwTog() {
-		return this.kaNichtInNrwTog;
-	}
+    public Boolean getKaNichtInNrwTog() {
+        return this.kaNichtInNrwTog;
+    }
 
-	public void setKaNichtInNrwTog(Boolean kaNichtInNrwTog) {
-		this.kaNichtInNrwTog = kaNichtInNrwTog;
-	}
+    public void setKaNichtInNrwTog(Boolean kaNichtInNrwTog) {
+        this.kaNichtInNrwTog = kaNichtInNrwTog;
+    }
 
-	public Date getAktualDat() {
-		return this.aktualDat;
-	}
+    public Date getAktualDat() {
+        return this.aktualDat;
+    }
 
-	public void setAktualDat(Date aktualDat) {
-		this.aktualDat = aktualDat;
-	}
+    public void setAktualDat(Date aktualDat) {
+        this.aktualDat = aktualDat;
+    }
 
-	public Date getErstellDat() {
-		return this.erstellDat;
-	}
+    public Date getErstellDat() {
+        return this.erstellDat;
+    }
 
-	public void setErstellDat(Date erstellDat) {
-		this.erstellDat = erstellDat;
-	}
+    public void setErstellDat(Date erstellDat) {
+        this.erstellDat = erstellDat;
+    }
 
-	public String getHerkunft() {
-		return this.herkunft;
-	}
+    public String getHerkunft() {
+        return this.herkunft;
+    }
 
-	public void setHerkunft(String herkunft) {
-		this.herkunft = herkunft;
-	}
+    public void setHerkunft(String herkunft) {
+        this.herkunft = herkunft;
+    }
 
     /**
      * Update this EEinleitungsstelle with its new values.<br>
@@ -171,17 +175,17 @@ public class EEinleitungsstelle implements java.io.Serializable {
      * @param copy AtlKlaeranlagen
      */
     private void copy(EEinleitungsstelle copy) {
-    	this.bezeichnung = copy.getBezeichnung();
-    	this.e32 = copy.getE32();
-    	this.n32 = copy.getN32();
-    	this.nr = copy.getNr();
-    	this.standort = copy.getStandort();
-    	this.typIndirekteinleitungTog = copy.getTypIndirekteinleitungTog();
-    	this.aktualDat = copy.getAktualDat();
-    	this.erstellDat = copy.getErstellDat();
-    	this.kaNichtInNrwTog = copy.getKaNichtInNrwTog();
-    	this.herkunft = copy.getHerkunft();
-    	this.setWasserrechts(copy.getWasserrechts());
+        this.bezeichnung = copy.getBezeichnung();
+        this.e32 = copy.getE32();
+        this.n32 = copy.getN32();
+        this.nr = copy.getNr();
+        this.standort = copy.getStandort();
+        this.typIndirekteinleitungTog = copy.getTypIndirekteinleitungTog();
+        this.aktualDat = copy.getAktualDat();
+        this.erstellDat = copy.getErstellDat();
+        this.kaNichtInNrwTog = copy.getKaNichtInNrwTog();
+        this.herkunft = copy.getHerkunft();
+        this.setWasserrechts(copy.getWasserrechts());
     }
 
     /**
@@ -205,13 +209,24 @@ public class EEinleitungsstelle implements java.io.Serializable {
         return DatabaseQuery.getAll(new EEinleitungsstelle());
     }
 
-	public Set<EWasserrecht> getWasserrechts() {
-		return wasserrechts;
-	}
+    public Set<EWasserrecht> getWasserrechts() {
+        return wasserrechts;
+    }
 
-	public void setWasserrechts(Set<EWasserrecht> wasserrechts) {
-		this.wasserrechts = wasserrechts;
-	}
+    public void setWasserrechts(Set<EWasserrecht> wasserrechts) {
+        this.wasserrechts = wasserrechts;
+    }
 
-
+    /**
+     * Gets the connected Einleitungsstelle instance and returns its Referenz-Entities
+     */
+    @JsonIgnore
+    public List<Referenz> getReferenzs() {
+        Integer identifier = origNr != null ? origNr: nr;
+        Einleitungsstelle els = Einleitungsstelle.findByObjektId(identifier);
+        List<Referenz> referenzs = HibernateSessionFactory.currentSession().createQuery(
+            "from Referenz where q_els_nr = " + els.getId()
+        ).list();
+        return referenzs != null ? referenzs : new ArrayList<Referenz>();
+    }
 }

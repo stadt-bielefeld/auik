@@ -199,7 +199,7 @@ public class EinleitungsstellePanel extends JPanel {
     	this.referenz = null;
     	
     	for (Referenz ref : referenzen) {
-    	    if (ref.getEinleitungsstelleByQElsNr().getId() == this.einleitungsstelle.getId()
+    	    if (ref.getqEl().getId() == this.einleitungsstelle.getId()
     		    && ref.getKlaeranlageByZKaNr() != null) {
     		this.referenz = Referenz.findById(ref.getNr());
     	    	log.debug("Referenz aus DB geholt: " + this.referenz);
@@ -524,7 +524,7 @@ public class EinleitungsstellePanel extends JPanel {
     		this.referenz = new Referenz();
     	    }
     	    this.referenz.setKlaeranlageByZKaNr((Klaeranlage)getKlaeranlageBox().getSelectedItem());
-    	    this.referenz.setEinleitungsstelleByQElsNr(this.einleitungsstelle);
+    	    this.referenz.setqEl(this.einleitungsstelle);
     	    success = this.referenz.merge();
     	}
     	else {

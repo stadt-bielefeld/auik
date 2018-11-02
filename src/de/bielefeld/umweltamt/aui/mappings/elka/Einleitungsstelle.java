@@ -36,6 +36,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * A class that represents a row in the Einleitungsstelle database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -703,6 +705,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.referenzsForQElsNr = referenzsForQElsNr;
     }
 
+    @JsonBackReference
     public Set<Referenz> getReferenzsForZElsNr() {
         return this.referenzsForZElsNr;
     }
