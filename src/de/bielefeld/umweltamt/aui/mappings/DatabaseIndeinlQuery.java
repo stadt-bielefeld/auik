@@ -35,8 +35,10 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
@@ -126,6 +128,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh40Fachdaten.class)
                 .createAlias("objekt", "objekt")
+                .add(Restrictions.eq("objekt.deleted", false))
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("objektid")),
             new Anh40Fachdaten());
@@ -163,9 +166,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
             DetachedCriteria.forClass(Anh49Fachdaten.class)
                 .createAlias("objekt", "objekt")
                 .createAlias("objekt.objektarten", "art")
-                .createAlias("objekt.adresse", "adresse")
+                .createAlias("objekt.betreiberid", "adresse")
                 .add(Restrictions.eq("art.id",
                     DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
+                .add(Restrictions.eq("objekt.deleted", false))
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("adresse.betrname")),
             new Anh49Fachdaten());
@@ -355,6 +359,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .createAlias("objekt.betreiberid", "adresse")
                 .add(Restrictions.eq("erloschen", false))
                 .add(Restrictions.eq("objekt.inaktiv", false))
+                .add(Restrictions.eq("objekt.deleted", false))
                 .addOrder(Order.asc("wiedervorlage"))
                 .addOrder(Order.asc("adresse.betrname"));
         if (nurWiedervorlageAbgelaufen) {
@@ -573,6 +578,20 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 		return id + 1;
 	}
 
+    
+    /**
+     * Get ZAbaVerfahren for Aba
+     * @return <code>ZAbaVerfahren[]</code>
+     */
+    public static List<ZAbaVerfahren> getZAbaVerfahren(Aba fachdaten) {
+        return new DatabaseAccess().executeCriteriaToList(
+                DetachedCriteria.forClass(ZAbaVerfahren.class)
+                    .add(Restrictions.eq("abwasserbehandlungsanlage", fachdaten)),
+                new ZAbaVerfahren());
+    }
+
+    
+    
     private static Abaverfahren[] verfahren = null;
     /**
      * Get all AbaVerfahren
@@ -635,12 +654,14 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Wasserrecht.class)
                 .createAlias("objekt", "objekt")
-                .createAlias("objekt.adresseByBetreiberid", "adresse")
-                .createAlias("objekt.adresseByStandortid", "standort")
+                .createAlias("objekt.betreiberid", "adresse")
+                .createAlias("objekt.standortid", "standort")
+                .createAlias("standort.adresse", "standortadr")
                 .add(Restrictions.eq("objekt.inaktiv", inaktiv))
+                .add(Restrictions.eq("objekt.deleted", false))
                 .addOrder(Order.asc("adresse.betrname"))
-                .addOrder(Order.asc("standort.strasse"))
-                .addOrder(Order.asc("standort.hausnr"));
+                .addOrder(Order.asc("standortadr.strasse"))
+                .addOrder(Order.asc("standortadr.hausnr"));
         if (anhang == null || anhang != -1) {
             detachedCriteria.add(
                 DatabaseAccess.getRestrictionsEqualOrNull("anhang", anhang));

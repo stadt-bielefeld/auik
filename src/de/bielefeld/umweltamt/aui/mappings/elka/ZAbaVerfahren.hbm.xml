@@ -9,7 +9,7 @@
 			<column name="id" />
 			<generator class="assigned" />
 		</id>
-        <many-to-one name="abwasserbehandlungsanlage" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage" lazy="false" fetch="select">
+        <many-to-one name="abwasserbehandlungsanlage" class="de.bielefeld.umweltamt.aui.mappings.elka.Aba" lazy="false" fetch="select">
             <column name="anlage_nr" />
         </many-to-one>
         <many-to-one name="abaverfahren" class="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" lazy="false" fetch="select">

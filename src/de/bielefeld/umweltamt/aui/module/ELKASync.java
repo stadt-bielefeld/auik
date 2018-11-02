@@ -590,7 +590,7 @@ public class ELKASync extends AbstractModul {
                             List<Entity<?>> entityList =
                                 new ArrayList<Entity<?>>();
                             List<?> dbList = null;
-
+                            referenceUrl = url + "/referenz";
                             if (sel.equals("Abwasserbehandlungsanlagen")) {
                                 dbList = ELKASync.this.abwasserbehandlungModel.getList();
                                 url += "/abwasserbehandlungsanlage";

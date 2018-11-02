@@ -277,7 +277,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				+ " WHERE o.standortid = s.id AND s.adresseid = a.id AND o.objektartid = art.id"
 				+ " AND a.strasse = '" + strasse + "'"
 				+ " AND a.hausnr = " + hausnr
-				+ " AND CASE WHEN (" + hausnrzus + " IS NOT NULL) THEN (a.hausnrzus = '" + hausnrzus + "') ELSE (a.hausnrzus IS NULL) END"
+				+ " AND CASE WHEN (hausnrzus IS NOT NULL) THEN (a.hausnrzus = '" + hausnrzus + "') ELSE (a.hausnrzus IS NULL) END"
 				+ " AND o._deleted = false ORDER BY o.inaktiv, o.objektartid";
 
 		String filter = " ";

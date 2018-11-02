@@ -53,7 +53,7 @@ public class ZAbaVerfahren  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Integer nr;
     private Integer origNr;
-    private EAbwasserbehandlungsanlage abwasserbehandlungsanlage;
+    private Aba abwasserbehandlungsanlage;
     private Abaverfahren abaverfahren;
 
     /** Logging */
@@ -80,11 +80,11 @@ public class ZAbaVerfahren  implements java.io.Serializable {
     }
 
     @JsonBackReference
-    public EAbwasserbehandlungsanlage getAbwasserbehandlungsanlage() {
+    public Aba getAbwasserbehandlungsanlage() {
         return this.abwasserbehandlungsanlage;
     }
 
-    public void setAbwasserbehandlungsanlage(EAbwasserbehandlungsanlage abwasserbehandlungsanlage) {
+    public void setAbwasserbehandlungsanlage(Aba abwasserbehandlungsanlage) {
         this.abwasserbehandlungsanlage = abwasserbehandlungsanlage;
     }
 

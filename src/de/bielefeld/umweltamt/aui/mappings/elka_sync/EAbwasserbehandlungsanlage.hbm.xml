@@ -50,11 +50,11 @@
         <property name="herkunft" type="java.lang.String">
             <column name="herkunft" />
         </property>
-        <set name="Wasserrechts" table="e_wasserrecht" lazy="false" fetch="select">
-  		  <key>
-  		    <column name="ref_nr"></column>
-  	      </key>
-  	      <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht"/>
+        <set name="Wasserrechts" table="elka.e_z_aba_wasserrecht" lazy="false" fetch="select">
+  	 		<key>
+  				<column name="anlage_nr" not-null="true" />
+  	 		</key>
+   		  <many-to-many column="wasserrecht_nr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" />
         </set>
 		<set name="ZAbaVerfahrens" table="z_aba_verfahren" inverse="true" lazy="false" fetch="select">
 		  <key>
