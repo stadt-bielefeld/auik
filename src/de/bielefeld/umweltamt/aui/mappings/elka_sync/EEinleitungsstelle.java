@@ -53,6 +53,7 @@ public class EEinleitungsstelle implements java.io.Serializable {
     private Date erstellDat;
     private String herkunft;
     private Set<EWasserrecht> wasserrechts = new HashSet<EWasserrecht>(0);
+    private Integer kanalArtOpt;
 
     public EEinleitungsstelle() {
     }
@@ -64,7 +65,7 @@ public class EEinleitungsstelle implements java.io.Serializable {
     public EEinleitungsstelle(Integer nr, EStandort standort, Integer origNr,
             Boolean typIndirekteinleitungTog, String bezeichnung, Integer e32,
             Integer n32, Boolean kaNichtInNrwTog, Date aktualDat,
-            Date erstellDat, String herkunft, Set<EWasserrecht> wasserrechts) {
+            Date erstellDat, String herkunft, Set<EWasserrecht> wasserrechts, Integer kanalArtOpt) {
         this.standort = standort;
         this.nr = nr;
         this.origNr = origNr;
@@ -77,6 +78,7 @@ public class EEinleitungsstelle implements java.io.Serializable {
         this.erstellDat = erstellDat;
         this.herkunft = herkunft;
         this.setWasserrechts(wasserrechts);
+        this.kanalArtOpt = kanalArtOpt;
     }
 
     public EStandort getStandort() {
@@ -143,6 +145,14 @@ public class EEinleitungsstelle implements java.io.Serializable {
 
     public void setKaNichtInNrwTog(Boolean kaNichtInNrwTog) {
         this.kaNichtInNrwTog = kaNichtInNrwTog;
+    }
+
+    public Integer getKanalArtOpt() {
+        return this.kanalArtOpt;
+    }
+
+    public void setKanalArtOpt(Integer kanalArtOpt) {
+        this.kanalArtOpt = kanalArtOpt;
     }
 
     public Date getAktualDat() {

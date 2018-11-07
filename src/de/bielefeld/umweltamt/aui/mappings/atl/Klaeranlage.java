@@ -47,8 +47,8 @@ public class Klaeranlage  implements java.io.Serializable {
         DatabaseSerialVersionUID.forKlaeranlage;
 
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer id;
-    private Integer origId;
+    private Integer nr;
+    private Integer origNr;
     private String anlage;
     private Integer deaKlaeranlageNr;
     private boolean enabled;
@@ -68,7 +68,7 @@ public class Klaeranlage  implements java.io.Serializable {
     /** Minimal constructor */
     public Klaeranlage(
         Integer id, String anlage, Integer deaKlaeranlageNr, boolean enabled, boolean deleted) {
-        this.id = id;
+        this.nr = id;
         this.anlage = anlage;
         this.deaKlaeranlageNr = deaKlaeranlageNr;
         this.enabled = enabled;
@@ -78,7 +78,7 @@ public class Klaeranlage  implements java.io.Serializable {
     /** Full constructor */
     public Klaeranlage(
         Integer id, String anlage, Integer deaKlaeranlageNr, boolean enabled, boolean deleted, Set<Referenz> referenzsForQKaNr, Set<Referenz> referenzsForZKaNr, Set<Messstelle> messstelles) {
-        this.id = id;
+        this.nr = id;
         this.anlage = anlage;
         this.deaKlaeranlageNr = deaKlaeranlageNr;
         this.enabled = enabled;
@@ -89,21 +89,21 @@ public class Klaeranlage  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public Integer getId() {
-        return this.id;
+    public Integer getNr() {
+        return this.nr;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setNr(Integer id) {
+        this.nr = id;
     }
 
     @JsonIgnore
-    public Integer getOrigId() {
-        return this.origId;
+    public Integer getOrigNr() {
+        return this.origNr;
     }
 
-    public void setOrigId(Integer origId) {
-        this.origId = origId;
+    public void setOrigNr(Integer origId) {
+        this.origNr = origId;
     }
 
     public String getAnlage() {
@@ -185,7 +185,7 @@ public class Klaeranlage  implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("id").append("='").append(getNr()).append("' ");
         buffer.append("anlage").append("='").append(getAnlage()).append("' ");
         buffer.append("deaKlaeranlageKlaeranlageNr").append("='").append(getDeaKlaeranlageNr()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
@@ -208,8 +208,8 @@ public class Klaeranlage  implements java.io.Serializable {
         if (this == other) return true;
         if (other == null) return false;
         if (!(other instanceof Klaeranlage)) return false;
-        return (this.getId().equals(
-            ((Klaeranlage) other).getId()));
+        return (this.getNr().equals(
+            ((Klaeranlage) other).getNr()));
     }
 
     /**
@@ -219,8 +219,8 @@ public class Klaeranlage  implements java.io.Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        int idValue = this.getId() == null ?
-            0 : this.getId().hashCode();
+        int idValue = this.getNr() == null ?
+            0 : this.getNr().hashCode();
         result = result * 37 + idValue;
         return result;
     }
@@ -258,7 +258,7 @@ public class Klaeranlage  implements java.io.Serializable {
      * @param copy Klaeranlage
      */
     private void copy(Klaeranlage copy) {
-        this.id = copy.getId();
+        this.nr = copy.getNr();
         this.anlage = copy.getAnlage();
         this.deaKlaeranlageNr = copy.getDeaKlaeranlageNr();
         this.enabled = copy.isEnabled();

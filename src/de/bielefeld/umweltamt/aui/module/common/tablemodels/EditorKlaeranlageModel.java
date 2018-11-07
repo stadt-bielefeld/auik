@@ -31,12 +31,12 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  */
 public class EditorKlaeranlageModel extends EditableListTableModel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -640754858163697830L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -640754858163697830L;
 
-	public EditorKlaeranlageModel() {
+    public EditorKlaeranlageModel() {
         super(new String[]{
                 "ID",
                 "Kläranlage"
@@ -63,12 +63,12 @@ public class EditorKlaeranlageModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Klaeranlage einheit = (Klaeranlage) objectAtRow;
+        Klaeranlage einheit = (Klaeranlage) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            tmp = einheit.getId();
+            tmp = einheit.getNr();
             break;
         case 1:
             tmp = einheit.getAnlage();
@@ -86,38 +86,38 @@ public class EditorKlaeranlageModel extends EditableListTableModel {
     public void updateList() {
     }
 
-	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		
-		Klaeranlage tmp = (Klaeranlage) objectAtRow;
-		switch (columnIndex) {
+    @Override
+    public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
+
+        Klaeranlage tmp = (Klaeranlage) objectAtRow;
+        switch (columnIndex) {
         case 0:
-        	Integer tmpID = (Integer) newValue;
-        	tmp.setId(tmpID);
-        	break;
-        	
+            Integer tmpID = (Integer) newValue;
+            tmp.setNr(tmpID);
+            break;
+
         case 1:
-        	String tmpAnlage = (String) newValue;
-        	tmp.setAnlage(tmpAnlage);
-        	break;
+            String tmpAnlage = (String) newValue;
+            tmp.setAnlage(tmpAnlage);
+            break;
 
         default:
-            break;        	
-        	
-		}
-		Klaeranlage.merge(tmp);
-	}
+            break;
 
-	@Override
-	public Object newObject() {
-		Klaeranlage tmp = new Klaeranlage();
-		tmp.setId(DatabaseQuery.newKlaeranlageID());
-		return tmp;
-	}
+        }
+        Klaeranlage.merge(tmp);
+    }
+
+    @Override
+    public Object newObject() {
+        Klaeranlage tmp = new Klaeranlage();
+        tmp.setNr(DatabaseQuery.newKlaeranlageID());
+        return tmp;
+    }
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	Klaeranlage removedklaeranlage = (Klaeranlage) objectAtRow;
+        Klaeranlage removedklaeranlage = (Klaeranlage) objectAtRow;
         return Klaeranlage.delete(removedklaeranlage);
     }
 

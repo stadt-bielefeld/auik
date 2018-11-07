@@ -30,6 +30,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
@@ -54,6 +55,7 @@ public class Referenz  implements java.io.Serializable {
 
     /* Primary key, foreign keys (relations) and table columns */
     private Integer nr;
+    private Integer origNr;
     private Aba abaByZAbaNr;
     private Aba abaByQAbaNr;
     private Anfallstelle anfallstelleByZAfsNr;
@@ -73,7 +75,7 @@ public class Referenz  implements java.io.Serializable {
     private Sonderbauwerk sonderbauwerkByQSbNr;
     private Sonderbauwerk sonderbauwerkByZSbNr;
     private Boolean fsTog;
-    private Integer standortNr;
+    private EStandort standort;
     private Integer QKkaNr;
     private Integer ZKkaNr;
     private Date aktualDat;
@@ -95,7 +97,7 @@ public class Referenz  implements java.io.Serializable {
 
     /** Full constructor */
     public Referenz(
-        Integer nr, Aba abaByZAbaNr, Aba abaByQAbaNr, Anfallstelle anfallstelleByZAfsNr, Anfallstelle anfallstelleByQAfsNr, Einleitungsstelle einleitungsstelleByQElsNr, Einleitungsstelle einleitungsstelleByZElsNr, Klaeranlage klaeranlageByQKaNr, Klaeranlage klaeranlageByZKaNr, Messstelle messstelleByQMsstNr, Messstelle messstelleByZMsstNr, AfsNiederschlagswasser afsNiederschlagswasserByQNwAfsNr, AfsNiederschlagswasser afsNiederschlagswasserByZNwAfsNr, SbEntlastung sbEntlastungByQEntlNr, SbEntlastung sbEntlastungByZEntlNr, Sonderbauwerk sonderbauwerkByQSbNr, Sonderbauwerk sonderbauwerkByZSbNr, Boolean fsTog, Integer standortNr, Integer QKkaNr, Integer ZKkaNr, Date aktualDat, Date erstellDat) {
+        Integer nr, Aba abaByZAbaNr, Aba abaByQAbaNr, Anfallstelle anfallstelleByZAfsNr, Anfallstelle anfallstelleByQAfsNr, Einleitungsstelle einleitungsstelleByQElsNr, Einleitungsstelle einleitungsstelleByZElsNr, Klaeranlage klaeranlageByQKaNr, Klaeranlage klaeranlageByZKaNr, Messstelle messstelleByQMsstNr, Messstelle messstelleByZMsstNr, AfsNiederschlagswasser afsNiederschlagswasserByQNwAfsNr, AfsNiederschlagswasser afsNiederschlagswasserByZNwAfsNr, SbEntlastung sbEntlastungByQEntlNr, SbEntlastung sbEntlastungByZEntlNr, Sonderbauwerk sonderbauwerkByQSbNr, Sonderbauwerk sonderbauwerkByZSbNr, Boolean fsTog, EStandort standortNr, Integer QKkaNr, Integer ZKkaNr, Date aktualDat, Date erstellDat) {
         this.nr = nr;
         this.abaByZAbaNr = abaByZAbaNr;
         this.abaByQAbaNr = abaByQAbaNr;
@@ -114,7 +116,7 @@ public class Referenz  implements java.io.Serializable {
         this.sonderbauwerkByQSbNr = sonderbauwerkByQSbNr;
         this.sonderbauwerkByZSbNr = sonderbauwerkByZSbNr;
         this.fsTog = fsTog;
-        this.standortNr = standortNr;
+        this.standort = standortNr;
         this.QKkaNr = QKkaNr;
         this.ZKkaNr = ZKkaNr;
         this.aktualDat = aktualDat;
@@ -128,6 +130,15 @@ public class Referenz  implements java.io.Serializable {
 
     public void setNr(Integer nr) {
         this.nr = nr;
+    }
+
+    @JsonIgnore
+    public Integer getOrigNr() {
+        return this.origNr;
+    }
+
+    public void setOrigNr(Integer origNr) {
+        this.origNr = origNr;
     }
 
     @JsonInclude(Include.NON_NULL)
@@ -282,12 +293,12 @@ public class Referenz  implements java.io.Serializable {
         this.fsTog = fsTog;
     }
 
-    public Integer getStandortNr() {
-        return this.standortNr;
+    public EStandort getStandort() {
+        return this.standort;
     }
 
-    public void setStandortNr(Integer standortNr) {
-        this.standortNr = standortNr;
+    public void setStandort(EStandort standortNr) {
+        this.standort = standortNr;
     }
 
     @JsonIgnore
@@ -308,7 +319,7 @@ public class Referenz  implements java.io.Serializable {
         this.ZKkaNr = ZKkaNr;
     }
 
-    @JsonIgnore
+
     public Date getAktualDat() {
         return this.aktualDat;
     }
@@ -317,7 +328,6 @@ public class Referenz  implements java.io.Serializable {
         this.aktualDat = aktualDat;
     }
 
-    @JsonIgnore
     public Date getErstellDat() {
         return this.erstellDat;
     }
@@ -364,7 +374,7 @@ public class Referenz  implements java.io.Serializable {
         buffer.append("sonderbauwerkByQSbNr").append("='").append(getSonderbauwerkByQSbNr()).append("' ");
         buffer.append("sonderbauwerkByZSbNr").append("='").append(getSonderbauwerkByZSbNr()).append("' ");
         buffer.append("fsTog").append("='").append(getFsTog()).append("' ");
-        buffer.append("standortNr").append("='").append(getStandortNr()).append("' ");
+        buffer.append("standortNr").append("='").append(getStandort()).append("' ");
         buffer.append("QKkaNr").append("='").append(getQKkaNr()).append("' ");
         buffer.append("ZKkaNr").append("='").append(getZKkaNr()).append("' ");
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
@@ -452,7 +462,7 @@ public class Referenz  implements java.io.Serializable {
         this.sonderbauwerkByQSbNr = copy.getSonderbauwerkByQSbNr();
         this.sonderbauwerkByZSbNr = copy.getSonderbauwerkByZSbNr();
         this.fsTog = copy.getFsTog();
-        this.standortNr = copy.getStandortNr();
+        this.standort = copy.getStandort();
         this.QKkaNr = copy.getQKkaNr();
         this.ZKkaNr = copy.getZKkaNr();
         this.aktualDat = copy.getAktualDat();

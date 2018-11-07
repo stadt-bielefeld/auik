@@ -58,9 +58,9 @@
         <property name="fsTog" type="java.lang.Boolean">
             <column name="fs_tog" />
         </property>
-        <property name="standortNr" type="java.lang.Integer">
+        <many-to-one name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">
             <column name="standort_nr" />
-        </property>
+        </many-to-one>
         <property name="QKkaNr" type="java.lang.Integer">
             <column name="q_kka_nr" />
         </property>

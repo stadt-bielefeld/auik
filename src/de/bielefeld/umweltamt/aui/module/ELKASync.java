@@ -58,11 +58,15 @@ import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.JerseyWebTarget;
 import org.glassfish.jersey.filter.LoggingFilter;
 
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
@@ -1065,7 +1069,12 @@ public class ELKASync extends AbstractModul {
         for (Referenz ref: objects) {
             convertReferenzReferences(ref);
             prependIdentifierToNr(ref);
-            prependIdentifierToNr(ref.getStandortNr());
+            //Check if Standort is initialized
+            if (!Hibernate.isInitialized(ref.getStandort())) {
+                ref.setStandort(EStandort.findById(ref.getStandort().getNr()));
+            }
+            prependIdentifierToNr(ref.getStandort());
+            prependIdentifierToNr(ref.getStandort().getAdresse());
             if (ref.getEinleitungsstelleByQElsNr() != null) {
                 prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr());
                 prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr().getStandort());
@@ -1077,13 +1086,6 @@ public class ELKASync extends AbstractModul {
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse());
 
             }
-            if (ref.getKlaeranlageByQKaNr() != null) {
-                prependIdentifierToProperty(ref.getKlaeranlageByQKaNr(), "id");
-            }
-            if (ref.getKlaeranlageByZKaNr() != null) {
-                prependIdentifierToProperty(ref.getKlaeranlageByZKaNr(), "id");
-            }
-
         }
         return objects;
     }
