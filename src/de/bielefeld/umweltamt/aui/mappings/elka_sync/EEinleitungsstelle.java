@@ -54,7 +54,6 @@ public class EEinleitungsstelle implements java.io.Serializable {
     private Date erstellDat;
     private String herkunft;
     private Set<EWasserrecht> wasserrechts = new HashSet<EWasserrecht>(0);
-    private Integer kanalArtOpt;
 
     public EEinleitungsstelle() {
     }
@@ -140,15 +139,7 @@ public class EEinleitungsstelle implements java.io.Serializable {
         this.n32 = n32;
     }
 
-	public Integer getKanalArtOpt() {
-		return kanalArtOpt;
-	}
-
-	public void setKanalArtOpt(Integer kanalArtOpt) {
-		this.kanalArtOpt = kanalArtOpt;
-	}
-
-	public Boolean getKaNichtInNrwTog() {
+    public Boolean getKaNichtInNrwTog() {
         return this.kaNichtInNrwTog;
     }
 
