@@ -1069,10 +1069,8 @@ public class ELKASync extends AbstractModul {
         for (Referenz ref: objects) {
             convertReferenzReferences(ref);
             prependIdentifierToNr(ref);
-            //Check if Standort is initialized
-            if (!Hibernate.isInitialized(ref.getStandort())) {
-                ref.setStandort(EStandort.findById(ref.getStandort().getNr()));
-            }
+            //Fetch Standort
+            ref.setStandort(EStandort.findById(ref.getStandort().getNr()));
             prependIdentifierToNr(ref.getStandort());
             prependIdentifierToNr(ref.getStandort().getAdresse());
             if (ref.getEinleitungsstelleByQElsNr() != null) {
