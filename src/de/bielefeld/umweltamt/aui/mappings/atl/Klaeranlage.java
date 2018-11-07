@@ -67,8 +67,8 @@ public class Klaeranlage  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Klaeranlage(
-        Integer id, String anlage, Integer deaKlaeranlageNr, boolean enabled, boolean deleted) {
-        this.nr = id;
+        Integer nr, String anlage, Integer deaKlaeranlageNr, boolean enabled, boolean deleted) {
+        this.nr = nr;
         this.anlage = anlage;
         this.deaKlaeranlageNr = deaKlaeranlageNr;
         this.enabled = enabled;
@@ -77,8 +77,8 @@ public class Klaeranlage  implements java.io.Serializable {
 
     /** Full constructor */
     public Klaeranlage(
-        Integer id, String anlage, Integer deaKlaeranlageNr, boolean enabled, boolean deleted, Set<Referenz> referenzsForQKaNr, Set<Referenz> referenzsForZKaNr, Set<Messstelle> messstelles) {
-        this.nr = id;
+        Integer nr, String anlage, Integer deaKlaeranlageNr, boolean enabled, boolean deleted, Set<Referenz> referenzsForQKaNr, Set<Referenz> referenzsForZKaNr, Set<Messstelle> messstelles) {
+        this.nr = nr;
         this.anlage = anlage;
         this.deaKlaeranlageNr = deaKlaeranlageNr;
         this.enabled = enabled;
@@ -93,8 +93,8 @@ public class Klaeranlage  implements java.io.Serializable {
         return this.nr;
     }
 
-    public void setNr(Integer id) {
-        this.nr = id;
+    public void setNr(Integer nr) {
+        this.nr = nr;
     }
 
     @JsonIgnore
