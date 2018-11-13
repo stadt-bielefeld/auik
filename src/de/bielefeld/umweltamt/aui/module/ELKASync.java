@@ -1069,8 +1069,9 @@ public class ELKASync extends AbstractModul {
         for (Referenz ref: objects) {
             convertReferenzReferences(ref);
             prependIdentifierToNr(ref);
-            //Fetch Standort
+            //Fetch Standort and Einleitungsstelle
             ref.setStandort(EStandort.findById(ref.getStandort().getNr()));
+            ref.setEinleitungsstelleByQElsNr(EEinleitungsstelle.findById(ref.getqEl().getId()));
             prependIdentifierToNr(ref.getStandort());
             prependIdentifierToNr(ref.getStandort().getAdresse());
             if (ref.getEinleitungsstelleByQElsNr() != null) {
