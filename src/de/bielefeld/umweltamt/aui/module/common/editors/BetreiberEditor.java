@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -87,8 +88,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * 
  * @author David Klotz
  */
-public class BetreiberEditor extends AbstractBaseEditor
-{
+public class BetreiberEditor extends AbstractBaseEditor {
 	private static final long serialVersionUID = -7058333439142990179L;
 
 	/** Logging */
@@ -122,17 +122,17 @@ public class BetreiberEditor extends AbstractBaseEditor
 	private JTextField flurStkFeld;
 	private JFormattedTextField e32Feld;
 	private JFormattedTextField n32Feld;
-    private JButton ausAblageButton;
+	private JButton ausAblageButton;
 	private JComboBox gemarkungBox;
 	private JComboBox entwGebBox;
 	private JComboBox standortGgBox;
 	private JComboBox wEinzugsGebBox;
-    private JCheckBox daten_awsvCheck;
-    private JCheckBox daten_esatzungCheck;
-    private JCheckBox daten_whgCheck;
-	
+	private JCheckBox daten_awsvCheck;
+	private JCheckBox daten_esatzungCheck;
+	private JCheckBox daten_whgCheck;
+
 	private Lage lage = null;
-    private Standort standort = null;
+	private Standort standort = null;
 	private Gemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;
 	private Standortgghwsg[] standortggs = null;
@@ -150,19 +150,16 @@ public class BetreiberEditor extends AbstractBaseEditor
 	private String[] tabstreets = null;
 	private String street = null;
 
-
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Betreibers.
 	 */
-	public BetreiberEditor(Adresse betr, HauptFrame owner)
-	{
+	public BetreiberEditor(Adresse betr, HauptFrame owner) {
 		super("Betreiber (" + betr.toString() + ")", betr, owner);
 	}
 
 	@Override
-	protected JComponent buildContentArea()
-	{
-		
+	protected JComponent buildContentArea() {
+
 		anredeFeld = new LimitedTextField(100);
 		vornamenFeld = new LimitedTextField(100);
 		namenFeld = new LimitedTextField(100);
@@ -191,7 +188,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 		entwGebBox.setEditable(true);
 		standortGgBox = new JComboBox();
 		wEinzugsGebBox = new JComboBox();
-		
+
 		daten_awsvCheck = new JCheckBox("AwSV");
 		daten_esatzungCheck = new JCheckBox("E-Satzung");
 		daten_whgCheck = new JCheckBox("WHG");
@@ -203,7 +200,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 		handzeichenAltFeld = new LimitedTextField(10, "");
 		handzeichenAltFeld.setEditable(false);
 		handzeichenAltFeld.setFocusable(false);
-		
+
 		handzeichenNeuFeld = new LimitedTextField(10, "");
 		handzeichenNeuFeld.setToolTipText("Handzeichen obligatorisch!");
 
@@ -219,23 +216,16 @@ public class BetreiberEditor extends AbstractBaseEditor
 		// Der folgende KeyListener wird benutzt um bei Enter
 		// im Handzeichen-Feld (wenn das Feld nicht leer ist)
 		// zum Speichern-Button zu springen.
-		handzeichenNeuFeld.addKeyListener(new KeyAdapter()
-		{
+		handzeichenNeuFeld.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getSource().equals(handzeichenNeuFeld))
-				{
-					if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					{
-						if (handzeichenNeuFeld.getText().equals(""))
-						{
+			public void keyPressed(KeyEvent e) {
+				if (e.getSource().equals(handzeichenNeuFeld)) {
+					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+						if (handzeichenNeuFeld.getText().equals("")) {
 							handzeichenLabel.setForeground(Color.RED);
 							handzeichenNeuFeld.requestFocus();
-						}
-						else
-						{
-//							speichernButton.requestFocus();
+						} else {
+							// speichernButton.requestFocus();
 						}
 					}
 				}
@@ -246,42 +236,42 @@ public class BetreiberEditor extends AbstractBaseEditor
 		bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
 		bemerkungsScroller.getHorizontalScrollBar().setFocusable(false);
 		// This was not used:
-		//            TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
+		// TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
 
 		FormLayout layout = new FormLayout(
 				"right:pref, 3dlu, 20dlu, 50dlu, 3dlu, right:pref, 3dlu, 27dlu, 3dlu, 30dlu, 10dlu, 60dlu, 3dlu, 60dlu, 3dlu, 20dlu", // Spalten
-						"pref, 3dlu, " + //1 - Stammdaten
-						"pref, 3dlu, " + //3
-						"pref, 3dlu, " + //5
-						"pref, 3dlu, " + //7
-						"pref, 3dlu, " + //9
-						"pref, 3dlu, " + //11
-						"pref, 3dlu, " + //13
-						"pref, 3dlu, " + //15
-						"pref, 3dlu, " + //17
-						"pref, 3dlu, " + //19
-						"pref, 3dlu, " + //21
+				"pref, 3dlu, " + // 1 - Stammdaten
+						"pref, 3dlu, " + // 3
+						"pref, 3dlu, " + // 5
+						"pref, 3dlu, " + // 7
+						"pref, 3dlu, " + // 9
+						"pref, 3dlu, " + // 11
+						"pref, 3dlu, " + // 13
+						"pref, 3dlu, " + // 15
+						"pref, 3dlu, " + // 17
+						"pref, 3dlu, " + // 19
+						"pref, 3dlu, " + // 21
 
-						"pref, 3dlu, " + //23 - Lage
-						"pref, 3dlu, " + //25
-						"pref, 3dlu, " + //27
-						"pref, 3dlu, " + //29
-						"pref, 3dlu, " + //31
-						"pref, 3dlu, " + //33
-						"pref, 3dlu, " + //35
-						
-						"pref, 3dlu, " + //37 - Bemerkungen und Revision
-						"pref, 3dlu, " + //39
-						"pref, 3dlu, " + //41
-						"pref, 3dlu, " + //43
+						"pref, 3dlu, " + // 23 - Lage
+						"pref, 3dlu, " + // 25
+						"pref, 3dlu, " + // 27
+						"pref, 3dlu, " + // 29
+						"pref, 3dlu, " + // 31
+						"pref, 3dlu, " + // 33
+						"pref, 3dlu, " + // 35
 
-						"pref, 3dlu, " + //45
-						"pref, 3dlu, " + //47
-						"pref, 10dlu, " + //49
+						"pref, 3dlu, " + // 37 - Bemerkungen und Revision
+						"pref, 3dlu, " + // 39
+						"pref, 3dlu, " + // 41
+						"pref, 3dlu, " + // 43
 
-						"top:pref:grow");//51 - Buttons
-		layout.setRowGroups(new int[][] { { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35,
-				37, 39, 41, 43, 45 } });
+						"pref, 3dlu, " + // 45
+						"pref, 3dlu, " + // 47
+						"pref, 10dlu, " + // 49
+
+						"top:pref:grow");// 51 - Buttons
+		layout.setRowGroups(new int[][] {
+				{ 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45 } });
 
 		PanelBuilder builder = new PanelBuilder(layout);
 		builder.setDefaultDialogBorder();
@@ -289,112 +279,101 @@ public class BetreiberEditor extends AbstractBaseEditor
 
 		// Stamdaten ------------------------------------
 		builder.addSeparator("Stammdaten", cc.xyw(1, 1, 16));
-		// Anrede
-		builder.addLabel("Anrede:", cc.xy(1, 5));
-		builder.add(anredeFeld, cc.xyw(3, 5, 8));
-		
-		// Datenschutzhinweis ------------------------------------
-		builder.addSeparator("Datenschutzhinweis erhalten:", cc.xyw(12, 33, 5));
-		builder.add(daten_awsvCheck, cc.xy(12, 35));
-		builder.add(daten_esatzungCheck, cc.xy(12, 37));
-		builder.add(daten_whgCheck, cc.xy(12, 39));
-		
-		// Vorname
-		builder.addLabel("Vorname:", cc.xy(1, 7));
-		builder.add(vornamenFeld, cc.xyw(3, 7, 8));
 		// Name
 		namenLabel = builder.addLabel("Name:", cc.xy(1, 3));
-		builder.add(namenFeld, cc.xyw(3, 3, 14));
+		builder.add(namenFeld, cc.xyw(3, 3, 6));
+		// Telefon
+		builder.addLabel("Telefon:", cc.xy(10, 3));
+		builder.add(telefonFeld, cc.xyw(12, 3, 5));
+		// Anrede
+		builder.addLabel("Anrede:", cc.xy(1, 5));
+		builder.add(anredeFeld, cc.xyw(3, 5, 6));
+		// Telefax
+		builder.addLabel("Telefax:", cc.xy(10, 5));
+		builder.add(telefaxFeld, cc.xyw(12, 5, 5));
+		// Vorname
+		builder.addLabel("Vorname:", cc.xy(1, 7));
+		builder.add(vornamenFeld, cc.xyw(3, 7, 6));
+		// eMail
+		builder.addLabel("E-Mail:", cc.xy(10, 7));
+		builder.add(emailFeld, cc.xyw(12, 7, 5));
 		// Zusatz
 		builder.addLabel("Zusatz:", cc.xy(1, 9));
-		builder.add(nameZusFeld, cc.xyw(3, 9, 8));
-		
+		builder.add(nameZusFeld, cc.xyw(3, 9, 6));
+
 		// Ansprechpartner -------------------------
-		builder.addSeparator("Ansprechpartner", cc.xyw(12, 5, 5));
+		builder.addSeparator("Ansprechpartner", cc.xyw(10, 9, 7));
 		// Vorname
-		builder.addLabel("Vorname:", cc.xy(12, 7));
-		builder.add(betrBeaufVornameFeld, cc.xyw(14, 7, 3));
+		builder.addLabel("Vorname:", cc.xy(10, 11));
+		builder.add(betrBeaufVornameFeld, cc.xyw(12, 11, 5));
 		// Nachname
-		builder.addLabel("Name:", cc.xy(12, 9));
-		builder.add(betrBeaufNachnameFeld, cc.xyw(14, 9, 3));
-		
-		
+		builder.addLabel("Name:", cc.xy(10, 13));
+		builder.add(betrBeaufNachnameFeld, cc.xyw(12, 13, 5));
 		// Kassenzeichen
-		builder.addLabel("Kassenzeichen:", cc.xy(1, 15));
-		builder.add(kassenzeichenFeld, cc.xyw(3, 15, 8));
-		// Telefon
-		builder.addLabel("Telefon:", cc.xy(1, 17));
-		builder.add(telefonFeld, cc.xyw(3, 17, 8));
-		// Telefax
-		builder.addLabel("Telefax:", cc.xy(1, 19));
-		builder.add(telefaxFeld, cc.xyw(3, 19, 8));
-		// eMail
-		builder.addLabel("E-Mail:", cc.xy(1, 21));
-		builder.add(emailFeld, cc.xyw(3, 21, 8));
+		builder.addLabel("Kassenzeichen:", cc.xy(1, 11));
+		builder.add(kassenzeichenFeld, cc.xyw(3, 11, 6));
 		// Wirtschaftszweig
-		builder.addLabel("Wirtschaftszweig:", cc.xy(1, 23));
-		builder.add(wirtschaftszweigBox, cc.xyw(3, 23, 8));
+		builder.addLabel("Wirtschaftszweig:", cc.xy(1, 13));
+		builder.add(wirtschaftszweigBox, cc.xyw(3, 13, 6));
 
-		// Ort
-		builder.addLabel("Ort:", cc.xy(1, 11));
-		builder.add(plzZsFeld, cc.xy(3, 11));
-		builder.add(plzFeld, cc.xy(4, 11));
-		builder.add(ortFeld, cc.xyw(6, 11, 5));
-		// Straße
-		builder.addLabel("Straße:", cc.xy(1, 13));
-		builder.add(strasseFeld, cc.xyw(3, 13, 4));
-		builder.add(hausnrFeld, cc.xy(8, 13));
-		builder.add(hausnrZusFeld, cc.xy(10, 13));
-		
-		// Lage --------------------------------------
-		builder.addSeparator("Lage", cc.xyw(1, 25, 10));
+		// Adresse --------------------------------------
+		builder.addSeparator("Adresse", cc.xyw(1, 15, 10));
 		// auswählen --------------------------------------
-		builder.addSeparator("auswählen", cc.xyw(12, 11, 5));
-		
-		builder.add(getStrassenBox(), cc.xyw(12, 13, 5));
+		builder.addSeparator("auswählen", cc.xyw(12, 15, 5));
+		// Ort
+		builder.addLabel("Ort:", cc.xy(1, 17));
+		builder.add(plzZsFeld, cc.xy(3, 17));
+		builder.add(plzFeld, cc.xy(4, 17));
+		builder.add(ortFeld, cc.xyw(6, 17, 5));
+		// Straße
+		builder.addLabel("Straße:", cc.xy(1, 19));
+		builder.add(strasseFeld, cc.xyw(3, 19, 4));
+		builder.add(hausnrFeld, cc.xy(8, 19));
+		builder.add(hausnrZusFeld, cc.xy(10, 19));
+		builder.add(getStrassenBox(), cc.xyw(12, 17, 5));
 
-		builder.add(getStandorteScroller(), cc.xywh(12, 15, 5, 17));
+		builder.add(getStandorteScroller(), cc.xywh(12, 19, 5, 15));
+
+		// Lage --------------------------------------
+		builder.addSeparator("Lage", cc.xyw(1, 21, 10));
 
 		// Koordinaten
-		builder.addLabel("E32:", cc.xy(1, 27));
-		builder.add(e32Feld, cc.xyw(3, 27, 3));
-		builder.addLabel("N32:", cc.xy(1, 29));
-		builder.add(n32Feld, cc.xyw(3, 29, 3));
-        builder.add(getAusAblageButton(), cc.xywh(8, 27, 3, 3));
-		builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 31));
-		builder.add(entwGebBox, cc.xyw(3, 31, 3));
-		
-		//
-		builder.addLabel("Gemarkung:", cc.xy(1, 33));
-		builder.add(gemarkungBox, cc.xyw(3, 33, 8));
-		
-		//VAwS
-		builder.addLabel("Standortgegebenheit:", cc.xy(1, 35));
-		builder.add(standortGgBox, cc.xyw(3, 35, 8));
-		builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 37));
-		builder.add(wEinzugsGebBox, cc.xyw(3, 37, 8));
+		builder.addLabel("E32:", cc.xy(1, 23));
+		builder.add(e32Feld, cc.xyw(3, 23, 3));
+		builder.add(getAusAblageButton(), cc.xywh(8, 23, 3, 3));
+		builder.addLabel("N32:", cc.xy(1, 25));
+		builder.add(n32Feld, cc.xyw(3, 25, 3));
+		builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 27));
+		builder.add(entwGebBox, cc.xyw(3, 27, 3));
 
-		
+		//
+		builder.addLabel("Gemarkung:", cc.xy(1, 29));
+		builder.add(gemarkungBox, cc.xyw(3, 29, 8));
+
+		// VAwS
+		builder.addLabel("Standortgegebenheit:", cc.xy(1, 31));
+		builder.add(standortGgBox, cc.xyw(3, 31, 8));
+		builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 33));
+		builder.add(wEinzugsGebBox, cc.xyw(3, 33, 8));
 
 		// Bemerkungen ----------------------------------
-		builder.addSeparator("Bemerkungen", cc.xyw(1, 41, 10));
-		builder.add(bemerkungsScroller, cc.xywh(1, 43, 10, 9));
+		builder.addSeparator("Bemerkungen", cc.xyw(1, 35, 10));
+		builder.add(bemerkungsScroller, cc.xywh(1, 37, 10, 7));
 
 		// Letzte Revision -------------------------------------
-		builder.addSeparator("Letzte Revision", cc.xyw(12, 41, 5));
+		builder.addSeparator("Letzte Revision", cc.xyw(12, 35, 5));
 		// Datum
-		builder.addLabel("Datum:", cc.xy(12, 43));
-		builder.add(revdatumsFeld, cc.xyw(14, 43, 3));
+		builder.addLabel("Datum:", cc.xy(12, 37));
+		builder.add(revdatumsFeld, cc.xyw(14, 37, 3));
 		// Handzeichen alt
-		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 45));
-		builder.add(handzeichenAltFeld, cc.xyw(14, 45, 3));
+		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 39));
+		builder.add(handzeichenAltFeld, cc.xyw(14, 39, 3));
 
 		// Neue Revision -------------------------------------
-		builder.addSeparator("Neue Revision", cc.xyw(12, 47, 5));
+		builder.addSeparator("Neue Revision", cc.xyw(12, 41, 5));
 		// Handzeichen neu
-		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 49));
-		builder.add(handzeichenNeuFeld, cc.xyw(14, 49, 3));
-
+		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 43));
+		builder.add(handzeichenNeuFeld, cc.xyw(14, 43, 3));
 
 		BetreiberListener dialogListener = new BetreiberListener();
 
@@ -405,82 +384,67 @@ public class BetreiberEditor extends AbstractBaseEditor
 	}
 
 	@Override
-	protected void fillForm()
-	{
-		SwingWorkerVariant worker = new SwingWorkerVariant(this)
-		{
+	protected void fillForm() {
+		SwingWorkerVariant worker = new SwingWorkerVariant(this) {
 
 			@Override
-			protected void doNonUILogic() throws RuntimeException
-			{
-				if (wirtschaftszweige == null)
-				{
+			protected void doNonUILogic() throws RuntimeException {
+				if (wirtschaftszweige == null) {
 					wirtschaftszweige = DatabaseQuery.getWirtschaftszweig();
 				}
-				if (tabstreets == null)
-				{
+				if (tabstreets == null) {
 					tabstreets = DatabaseQuery.getTabStreets();
 				}
-				if (gemarkungen == null)
-				{
+				if (gemarkungen == null) {
 					gemarkungen = DatabaseQuery.getGemarkungen();
 				}
-				if (standortggs == null)
-				{
+				if (standortggs == null) {
 					standortggs = DatabaseQuery.getStandortgghwsg();
 				}
-				if (entwgebiete == null)
-				{
+				if (entwgebiete == null) {
 					entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
 				}
-				if (wEinzugsgebiete == null)
-				{
+				if (wEinzugsgebiete == null) {
 					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiet();
 				}
 			}
 
 			@Override
-			protected void doUIUpdateLogic() throws RuntimeException
-			{
-	
-				if (tabstreets != null)
-				{
+			protected void doUIUpdateLogic() throws RuntimeException {
+
+				if (tabstreets != null) {
 					strassenBox.setModel(new DefaultComboBoxModel(tabstreets));
 				}
 				if (standorteTabelle != null) {
 
-			        standorteModel.setStrasse(null);
-			        standorteModel.updateList();
+					standorteModel.setStrasse(null);
+					standorteModel.updateList();
 					standorteTabelle.setModel(standorteModel);
-					
-					standorteTabelle.getColumnModel().getColumn(0)
-							.setPreferredWidth(10);
-					standorteTabelle.getColumnModel().getColumn(1)
-							.setPreferredWidth(100);
-					standorteTabelle.getColumnModel().getColumn(2)
-							.setPreferredWidth(10);
-					standorteTabelle.getColumnModel().getColumn(3)
-							.setPreferredWidth(7);
+
+					standorteTabelle.getColumnModel().getColumn(0).setPreferredWidth(10);
+					standorteTabelle.getColumnModel().getColumn(1).setPreferredWidth(100);
+					standorteTabelle.getColumnModel().getColumn(2).setPreferredWidth(10);
+					standorteTabelle.getColumnModel().getColumn(3).setPreferredWidth(7);
 
 				}
 
-				if (wirtschaftszweige != null)
-				{
+				if (wirtschaftszweige != null) {
 					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
 					wirtschaftszweigBox.setSelectedItem(getBetreiber().getWirtschaftszweig());
 				}
-				
+
 				anredeFeld.setText(getBetreiber().getBetranrede());
 				vornamenFeld.setText(getBetreiber().getBetrvorname());
 				namenFeld.setText(getBetreiber().getBetrname());
+				namenLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
+				namenFeld.setFont(new Font("SansSerif", Font.BOLD, 12));
 				nameZusFeld.setText(getBetreiber().getBetrnamezus());
 				kassenzeichenFeld.setText(getBetreiber().getKassenzeichen());
 				strasseFeld.setText(getBetreiber().getStrasse());
 				hausnrFeld.setValue(getBetreiber().getHausnr());
 				hausnrZusFeld.setText(getBetreiber().getHausnrzus());
 				String plzZs = getBetreiber().getPlzzs();
-				if (plzZs != null)
-				{
+				if (plzZs != null) {
 					plzZs = plzZs.trim();
 				}
 				plzZsFeld.setText(plzZs);
@@ -491,20 +455,20 @@ public class BetreiberEditor extends AbstractBaseEditor
 				emailFeld.setText(getBetreiber().getEmail());
 				strassenBox.setSelectedItem(getBetreiber().getStrasse());
 
-	            if(getBetreiber().getDatenschutzAwsv() !=null)
-	                daten_awsvCheck.setSelected(getBetreiber().getDatenschutzAwsv());
-	            else
-	            	daten_awsvCheck.setSelected(false);
+				if (getBetreiber().getDatenschutzAwsv() != null)
+					daten_awsvCheck.setSelected(getBetreiber().getDatenschutzAwsv());
+				else
+					daten_awsvCheck.setSelected(false);
 
-	            if(getBetreiber().getDatenschutzEsatzung() !=null)
-	                daten_esatzungCheck.setSelected(getBetreiber().getDatenschutzEsatzung());
-	            else
-	            	daten_esatzungCheck.setSelected(false);
+				if (getBetreiber().getDatenschutzEsatzung() != null)
+					daten_esatzungCheck.setSelected(getBetreiber().getDatenschutzEsatzung());
+				else
+					daten_esatzungCheck.setSelected(false);
 
-	            if(getBetreiber().getDatenschutzWhg()!=null)
-	                daten_whgCheck.setSelected(getBetreiber().getDatenschutzWhg());
-	            else
-	            	daten_whgCheck.setSelected(false);
+				if (getBetreiber().getDatenschutzWhg() != null)
+					daten_whgCheck.setSelected(getBetreiber().getDatenschutzWhg());
+				else
+					daten_whgCheck.setSelected(false);
 
 				betrBeaufVornameFeld.setText(getBetreiber().getVornamebetrbeauf());
 				betrBeaufNachnameFeld.setText(getBetreiber().getNamebetrbeauf());
@@ -514,12 +478,12 @@ public class BetreiberEditor extends AbstractBaseEditor
 
 				Date datum = getBetreiber().getRevidatum();
 				revdatumsFeld.setText(AuikUtils.getStringFromDate(datum));
-				
+
 				if (Standort.findByAdresse(getBetreiber()) != null) {
 					standort = Standort.findByAdresse(getBetreiber());
 				}
-				
-				if(standort != null) {
+
+				if (standort != null) {
 					lage = standort.getLage();
 					e32Feld.setValue(standort.getLage().getE32());
 					n32Feld.setValue(standort.getLage().getN32());
@@ -528,26 +492,21 @@ public class BetreiberEditor extends AbstractBaseEditor
 					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
 					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
 
-					if (standort.getLage().getGemarkung() != null)
-					{
+					if (standort.getLage().getGemarkung() != null) {
 						gemarkungBox.setSelectedItem(lage.getGemarkung());
 					}
-					if (standort.getLage().getStandortgghwsg() != null)
-					{
+					if (standort.getLage().getStandortgghwsg() != null) {
 						standortGgBox.setSelectedItem(lage.getStandortgghwsg());
 					}
 
-					if (standort.getLage().getEntgebid() != null)
-					{
+					if (standort.getLage().getEntgebid() != null) {
 						entwGebBox.setSelectedItem(lage.getEntgebid());
 					}
 
-					if (standort.getLage().getWassereinzugsgebiet() != null)
-					{
+					if (standort.getLage().getWassereinzugsgebiet() != null) {
 						wEinzugsGebBox.setSelectedItem(lage.getWassereinzugsgebiet());
 					}
 				}
-				
 
 				frame.clearStatus();
 			}
@@ -557,11 +516,9 @@ public class BetreiberEditor extends AbstractBaseEditor
 	}
 
 	@Override
-	protected boolean canSave()
-	{
+	protected boolean canSave() {
 		// Eingaben überprüfen:
-		if (namenFeld.getText().equals(""))
-		{
+		if (namenFeld.getText().equals("")) {
 			// Der Name darf nicht leer sein
 			namenLabel.setForeground(HauptFrame.ERROR_COLOR);
 			namenFeld.requestFocus();
@@ -569,9 +526,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 			frame.changeStatus(nameErr, HauptFrame.ERROR_COLOR);
 			log.debug(nameErr);
 			return false;
-		}
-		else if (handzeichenNeuFeld.getText().equals(""))
-		{
+		} else if (handzeichenNeuFeld.getText().equals("")) {
 			// Das Handzeichen darf nicht leer sein
 			handzeichenLabel.setForeground(HauptFrame.ERROR_COLOR);
 			handzeichenNeuFeld.requestFocus();
@@ -579,9 +534,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 			frame.changeStatus(handzErr, HauptFrame.ERROR_COLOR);
 			log.debug(handzErr);
 			return false;
-		}
-		else
-		{
+		} else {
 			// Wenn die Eingaben korrekt sind
 			return true;
 		}
@@ -591,67 +544,48 @@ public class BetreiberEditor extends AbstractBaseEditor
 	 * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
 	 */
 	@Override
-	protected boolean doSave()
-	{
+	protected boolean doSave() {
 		// Anrede
 		String anrede = anredeFeld.getText();
-		if ("".equals(anrede))
-		{
+		if ("".equals(anrede)) {
 			getBetreiber().setBetranrede(null);
-		}
-		else
-		{
+		} else {
 			getBetreiber().setBetranrede(anrede);
 		}
 		// Vorname
 		String vorname = vornamenFeld.getText();
-		if ("".equals(vorname))
-		{
+		if ("".equals(vorname)) {
 			getBetreiber().setBetrvorname(null);
-		}
-		else
-		{
+		} else {
 			getBetreiber().setBetrvorname(vorname);
 		}
 		// Name
 		String name = namenFeld.getText();
-		if ("".equals(name))
-		{
+		if ("".equals(name)) {
 			getBetreiber().setBetrname(null);
-		}
-		else
-		{
+		} else {
 			getBetreiber().setBetrname(name);
 		}
 		// Zusatz
 		String nameZusatz = nameZusFeld.getText();
-		if ("".equals(nameZusatz))
-		{
+		if ("".equals(nameZusatz)) {
 			getBetreiber().setBetrnamezus(null);
-		}
-		else
-		{
+		} else {
 			getBetreiber().setBetrnamezus(nameZusatz);
 		}
 		// kassenzeichen
 		String kasse = kassenzeichenFeld.getText();
-		if ("".equals(kasse))
-		{
+		if ("".equals(kasse)) {
 			getBetreiber().setKassenzeichen(null);
-		}
-		else
-		{
+		} else {
 			getBetreiber().setKassenzeichen(kasse);
 		}
 
 		// Strasse:
 		String strasse = strasseFeld.getText();
-		if ("".equals(strasse))
-		{
+		if ("".equals(strasse)) {
 			getBetreiber().setStrasse(null);
-		}
-		else
-		{
+		} else {
 			getBetreiber().setStrasse(strasse);
 		}
 
@@ -661,125 +595,91 @@ public class BetreiberEditor extends AbstractBaseEditor
 
 		// Hausnummer-Zusatz:
 		String hausnrZus = hausnrZusFeld.getText();
-		if ("".equals(hausnrZus))
-		{
+		if ("".equals(hausnrZus)) {
 			getBetreiber().setHausnrzus(null);
-		}
-		else
-		{
+		} else {
 			getBetreiber().setHausnrzus(hausnrZus);
 		}
 
 		// PLZ-Zusatz
 		String plzZs = plzZsFeld.getText();
-		if ("".equals(plzZs))
-		{
+		if ("".equals(plzZs)) {
 			getBetreiber().setPlzzs(null);
-		}
-		else
-		{
+		} else {
 			getBetreiber().setPlzzs(plzZs.toUpperCase().trim());
 		}
 
 		// PLZ:
 		String plz = plzFeld.getText();
-		if (plz != null)
-		{
+		if (plz != null) {
 			plz = plz.trim();
-			if (plz.equals(""))
-			{
+			if (plz.equals("")) {
 				getBetreiber().setPlz(null);
-			}
-			else
-			{
+			} else {
 				getBetreiber().setPlz(plz);
 			}
 		}
 		// Ort
 		String ort = ortFeld.getText();
-		if (ort != null)
-		{
+		if (ort != null) {
 			ort = ort.trim();
-			if (ort.equals(""))
-			{
+			if (ort.equals("")) {
 				getBetreiber().setOrt(null);
-			}
-			else
-			{
+			} else {
 				getBetreiber().setOrt(ort);
 			}
 		}
 		// Telefon
 		String telefon = telefonFeld.getText();
-		if (telefon != null)
-		{
+		if (telefon != null) {
 			telefon = telefon.trim();
-			if (telefon.equals(""))
-			{
+			if (telefon.equals("")) {
 				getBetreiber().setTelefon(null);
-			}
-			else
-			{
+			} else {
 				getBetreiber().setTelefon(telefon);
 			}
 		}
 		// Telefax
 		String telefax = telefaxFeld.getText();
-		if (telefax != null)
-		{
+		if (telefax != null) {
 			telefax = telefax.trim();
-			if (telefax.equals(""))
-			{
+			if (telefax.equals("")) {
 				getBetreiber().setTelefax(null);
-			}
-			else
-			{
+			} else {
 				getBetreiber().setTelefax(telefax);
 			}
 		}
 		// eMail
 		String email = emailFeld.getText();
-		if (email != null)
-		{
+		if (email != null) {
 			email = email.trim();
-			if (email.equals(""))
-			{
+			if (email.equals("")) {
 				getBetreiber().setEmail(null);
-			}
-			else
-			{
+			} else {
 				getBetreiber().setEmail(email);
 			}
 		}
 		// Betriebsbeauftragter-Vorname
 		String betrBeaufVorname = betrBeaufVornameFeld.getText();
-		if (betrBeaufVorname != null)
-		{
+		if (betrBeaufVorname != null) {
 			betrBeaufVorname = betrBeaufVorname.trim();
-			if (betrBeaufVorname.equals(""))
-			{
+			if (betrBeaufVorname.equals("")) {
 				getBetreiber().setVornamebetrbeauf(null);
-			}
-			else
-			{
+			} else {
 				getBetreiber().setVornamebetrbeauf(betrBeaufVorname);
 			}
 		}
 		// Betriebsbeauftragter-Nachname
 		String betrBeaufNachname = betrBeaufNachnameFeld.getText();
-		if (betrBeaufNachname != null)
-		{
+		if (betrBeaufNachname != null) {
 			betrBeaufNachname = betrBeaufNachname.trim();
-			if (betrBeaufNachname.equals(""))
-			{
+			if (betrBeaufNachname.equals("")) {
 				getBetreiber().setNamebetrbeauf(null);
-			}
-			else
-			{
+			} else {
 				getBetreiber().setNamebetrbeauf(betrBeaufNachname);
 			}
 		}
-		//Datenschutzhinweise
+		// Datenschutzhinweise
 		getBetreiber().setDatenschutzAwsv(daten_awsvCheck.isSelected());
 		getBetreiber().setDatenschutzEsatzung(daten_esatzungCheck.isSelected());
 		getBetreiber().setDatenschutzWhg(daten_whgCheck.isSelected());
@@ -788,15 +688,13 @@ public class BetreiberEditor extends AbstractBaseEditor
 		getBetreiber().setWirtschaftszweig(wizw);
 
 		if (lage != null) {
-						
+
 			// Gemarkung
-			Gemarkung bgem = (Gemarkung) gemarkungBox
-					.getSelectedItem();
+			Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
 			lage.setGemarkung(bgem);
 
 			// Standortgg
-			Standortgghwsg stgg = (Standortgghwsg) standortGgBox
-					.getSelectedItem();
+			Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
 			lage.setStandortgghwsg(stgg);
 
 			// Einzugsgebiet
@@ -816,8 +714,7 @@ public class BetreiberEditor extends AbstractBaseEditor
 			lage.setEntgebid(ezgb);
 
 			// VAWS-Einzugsgebiet
-			Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox
-					.getSelectedItem();
+			Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
 			lage.setWassereinzugsgebiet(wezg);
 
 			// Flur
@@ -847,15 +744,11 @@ public class BetreiberEditor extends AbstractBaseEditor
 
 		// Bemerkungen
 		String bemerkungen = bemerkungsArea.getText();
-		if (bemerkungen != null)
-		{
+		if (bemerkungen != null) {
 			bemerkungen = bemerkungen.trim();
-			if (bemerkungen.equals(""))
-			{
+			if (bemerkungen.equals("")) {
 				getBetreiber().setBemerkungen(null);
-			}
-			else
-			{
+			} else {
 				getBetreiber().setBemerkungen(bemerkungen);
 			}
 		}
@@ -865,7 +758,8 @@ public class BetreiberEditor extends AbstractBaseEditor
 
 		getBetreiber().setRevidatum(Calendar.getInstance().getTime());
 
-		// frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+" vorgenommen.");
+		// frame.changeStatus("Keine Änderungen an Betreiber "+betr.getBetreiberid()+"
+		// vorgenommen.");
 
 		if (standort != null) {
 			Standort persistentAL = null;
@@ -873,14 +767,13 @@ public class BetreiberEditor extends AbstractBaseEditor
 			persistentAL = Standort.merge(standort);
 
 			if (persistentAL != null) {
-//				setEditedObject(persistentAL);
+				// setEditedObject(persistentAL);
 				log.debug("Änderungen gespeichert!");
 				return true;
 			} else {
 				return false;
 			}
-		}
-		else{
+		} else {
 			getBetreiber().merge();
 		}
 		return true;
@@ -891,30 +784,23 @@ public class BetreiberEditor extends AbstractBaseEditor
 	 * 
 	 * @return
 	 */
-	private String getStrasse()
-	{
+	private String getStrasse() {
 		String str = "";
 
-		if (strassenBox.getSelectedItem() != null)
-		{
-			if (strassenBox.getSelectedItem().getClass() == Strassen.class)
-			{
+		if (strassenBox.getSelectedItem() != null) {
+			if (strassenBox.getSelectedItem().getClass() == Strassen.class) {
 				Strassen selstrasse = (Strassen) strassenBox.getSelectedItem();
-				if (selstrasse != null)
-				{
+				if (selstrasse != null) {
 					str = selstrasse.getStrasse();
 				}
-			}
-			else if (strassenBox.getSelectedItem().getClass() == String.class)
-			{
+			} else if (strassenBox.getSelectedItem().getClass() == String.class) {
 				str = (String) strassenBox.getSelectedItem();
 			}
 		}
 		str = str.trim();
 
 		// Weil ich bis jetzt noch keine LimitedComboBox oder so habe...
-		if (str.length() > 50)
-		{
+		if (str.length() > 50) {
 			// ... kürze ich hier den String auf 50 Zeichen
 			str = str.substring(0, 50);
 		}
@@ -922,52 +808,45 @@ public class BetreiberEditor extends AbstractBaseEditor
 		return str;
 	}
 
-	public Adresse getBetreiber()
-	{
+	public Adresse getBetreiber() {
 		return (Adresse) getEditedObject();
 	}
 
 	private JTable getStandorteTabelle() {
-	
+
 		if (this.standorteModel == null) {
 			this.standorteModel = new BasisStandorteModel();
-	
+
 			if (this.standorteTabelle == null) {
 				this.standorteTabelle = new JTable(this.standorteModel);
-	
-				this.standorteTabelle.getColumnModel().getColumn(0)
-						.setPreferredWidth(100);
-				this.standorteTabelle.getColumnModel().getColumn(1)
-						.setPreferredWidth(10);
-				this.standorteTabelle.getColumnModel().getColumn(2)
-						.setPreferredWidth(7);
-	
-				this.standorteTabelle
-						.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+				this.standorteTabelle.getColumnModel().getColumn(0).setPreferredWidth(100);
+				this.standorteTabelle.getColumnModel().getColumn(1).setPreferredWidth(10);
+				this.standorteTabelle.getColumnModel().getColumn(2).setPreferredWidth(7);
+
+				this.standorteTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				this.standorteTabelle.setColumnSelectionAllowed(false);
 				this.standorteTabelle.setRowSelectionAllowed(true);
-	
-				this.standorteTabelle
-						.addMouseListener(new java.awt.event.MouseAdapter() {
-							@Override
-							public void mouseClicked(java.awt.event.MouseEvent e) {
-								if ((e.getClickCount() == 1)
-										&& (e.getButton() == 1)) {
-									updateAdresse();	
-								}
-							}
-	
-							@Override
-							public void mousePressed(MouseEvent e) {
-								
-							}
-	
-							@Override
-							public void mouseReleased(MouseEvent e) {
-								
-							}
-						});
-	
+
+				this.standorteTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+					@Override
+					public void mouseClicked(java.awt.event.MouseEvent e) {
+						if ((e.getClickCount() == 1) && (e.getButton() == 1)) {
+							updateAdresse();
+						}
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+
+					}
+				});
+
 			}
 		}
 		return this.standorteTabelle;
@@ -976,128 +855,115 @@ public class BetreiberEditor extends AbstractBaseEditor
 	private JScrollPane getStandorteScroller() {
 
 		JScrollPane standorteScroller = new JScrollPane(getStandorteTabelle(),
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		return standorteScroller;
 	}
 
 	public void updateAdresse() {
-	    
+
 		log.debug("Start updateAdresse()");
-	    ListSelectionModel lsm = getStandorteTabelle().getSelectionModel();
-	    if (!lsm.isSelectionEmpty()) {
-	    	if (lage == null){
-	    		lage = new Lage();
-	    		standort = new Standort();
-	    		standort.setAdresse(getBetreiber());
-	    		standort.setLage(lage);
-	    	    
+		ListSelectionModel lsm = getStandorteTabelle().getSelectionModel();
+		if (!lsm.isSelectionEmpty()) {
+			if (lage == null) {
+				lage = new Lage();
+				standort = new Standort();
+				standort.setAdresse(getBetreiber());
+				standort.setLage(lage);
+
 				gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
 				standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
 				entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
 				wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
-	    	}				
+			}
 
-	        int selectedRow = lsm.getMinSelectionIndex();
-	        TabStreets bts = this.standorteModel.getRow(selectedRow);
-	        log.debug("Standort " + bts.getName() + " (ID"
-	            + bts.getAbgleich() + ") angewählt.");
-	        strasseFeld.setText(bts.getName());
-	        hausnrFeld.setValue(bts.getHausnr());
-	        hausnrZusFeld.setText(bts.getHausnrZusatz());
-	        e32Feld.setValue(bts.getX());
-	        n32Feld.setValue(bts.getY());
-	        Strassen stra = DatabaseQuery.findStrasse(strassenBox
-					.getSelectedItem().toString());
-	        if (stra.getPlz() != null) {
-	        	plzFeld.setText(stra.getPlz());
-	        }
-	    }
-	    log.debug("End updateAdresse()");
+			int selectedRow = lsm.getMinSelectionIndex();
+			TabStreets bts = this.standorteModel.getRow(selectedRow);
+			log.debug("Standort " + bts.getName() + " (ID" + bts.getAbgleich() + ") angewählt.");
+			strasseFeld.setText(bts.getName());
+			hausnrFeld.setValue(bts.getHausnr());
+			hausnrZusFeld.setText(bts.getHausnrZusatz());
+			e32Feld.setValue(bts.getX());
+			n32Feld.setValue(bts.getY());
+			Strassen stra = DatabaseQuery.findStrasse(strassenBox.getSelectedItem().toString());
+			if (stra.getPlz() != null) {
+				plzFeld.setText(stra.getPlz());
+			}
+		}
+		log.debug("End updateAdresse()");
 	}
 
 	private Component getStrassenBox() {
-	
+
 		strassenBox = new JComboBox();
 		strassenBox.setRenderer(new LongNameComboBoxRenderer());
-		
+
 		return strassenBox;
 	}
-	
+
 	/**
 	 * Ein Listener für die Events des "Betreiber Editor"-Moduls.
 	 * 
 	 * @author Gerhard Genuit
 	 */
-	private final class BetreiberListener implements ActionListener
-	{
+	private final class BetreiberListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e)
-		{
+		public void actionPerformed(ActionEvent e) {
 
-			if (e.getSource() == strassenBox)
-			{
-		        standorteModel.setStrasse(strassenBox.getSelectedItem().toString());
-		        standorteModel.updateList();
-				
-            }
+			if (e.getSource() == strassenBox) {
+				standorteModel.setStrasse(strassenBox.getSelectedItem().toString());
+				standorteModel.updateList();
+
+			}
 		}
 	}
-	
 
-    private void readClipboard() {
+	private void readClipboard() {
 
-        Clipboard systemClipboard;
-        systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Transferable transferData = systemClipboard.getContents(null);
-        for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
-            Object content = null;
-            try {
-                content = transferData.getTransferData(dataFlavor);
-            } catch (UnsupportedFlavorException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            if (content instanceof String) {
+		Clipboard systemClipboard;
+		systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		Transferable transferData = systemClipboard.getContents(null);
+		for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
+			Object content = null;
+			try {
+				content = transferData.getTransferData(dataFlavor);
+			} catch (UnsupportedFlavorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (content instanceof String) {
 
-                String[] tmp = content.toString().split(",");
-                if (tmp.length == 4) {
-                    String e32AusZeile = tmp[2];
-                    String n32AusZeile = tmp[3];
-                    this.e32Feld.setText(e32AusZeile.substring(
-                        0, 7));
-                    this.n32Feld.setText(n32AusZeile
-                        .substring(0, 7));
-                    this.frame.changeStatus("Rechts- und Hochwert eingetragen",
-                        HauptFrame.SUCCESS_COLOR);
-                } else {
-                    this.frame.changeStatus(
-                        "Zwischenablage enthält keine verwertbaren Daten",
-                        HauptFrame.ERROR_COLOR);
-                }
-                break;
-            }
-        }
-    }
+				String[] tmp = content.toString().split(",");
+				if (tmp.length == 4) {
+					String e32AusZeile = tmp[2];
+					String n32AusZeile = tmp[3];
+					this.e32Feld.setText(e32AusZeile.substring(0, 7));
+					this.n32Feld.setText(n32AusZeile.substring(0, 7));
+					this.frame.changeStatus("Rechts- und Hochwert eingetragen", HauptFrame.SUCCESS_COLOR);
+				} else {
+					this.frame.changeStatus("Zwischenablage enthält keine verwertbaren Daten", HauptFrame.ERROR_COLOR);
+				}
+				break;
+			}
+		}
+	}
 
-    public JButton getAusAblageButton() {
-        if (this.ausAblageButton == null) {
+	public JButton getAusAblageButton() {
+		if (this.ausAblageButton == null) {
 
-            this.ausAblageButton = new JButton("aus QGis");
-            this.ausAblageButton
-                .setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
-            this.ausAblageButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    readClipboard();
-                }
-            });
-        }
+			this.ausAblageButton = new JButton("aus QGis");
+			this.ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
+			this.ausAblageButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					readClipboard();
+				}
+			});
+		}
 
-        return this.ausAblageButton;
-    }
+		return this.ausAblageButton;
+	}
 }

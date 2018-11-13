@@ -44,11 +44,18 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
@@ -135,6 +142,7 @@ public class BasisAdresseNeu extends AbstractModul
 	private JTextField flurStkFeld;
 	private JFormattedTextField e32Feld;
 	private JFormattedTextField n32Feld;
+	private JButton ausAblageButton;
 	private JComboBox gemarkungBox;
 	private JComboBox entwGebBox;
 	private JComboBox standortGgBox;
@@ -331,21 +339,21 @@ public class BasisAdresseNeu extends AbstractModul
 
 			// Stamdaten ------------------------------------
 			builder.addSeparator("Stammdaten", cc.xyw(1, 1, 16));
-			// Anrede
-			builder.addLabel("Anrede:", cc.xy(1, 3));
-			builder.add(anredeFeld, cc.xyw(3, 3, 6));
+			// Name
+			namenLabel = builder.addLabel("Name:", cc.xy(1, 3));
+			builder.add(namenFeld, cc.xyw(3, 3, 6));
 			// Telefon
 			builder.addLabel("Telefon:", cc.xy(10, 3));
 			builder.add(telefonFeld, cc.xyw(12, 3, 5));
-			// Vorname
-			builder.addLabel("Vorname:", cc.xy(1, 5));
-			builder.add(vornamenFeld, cc.xyw(3, 5, 6));
+			// Anrede
+			builder.addLabel("Anrede:", cc.xy(1, 5));
+			builder.add(anredeFeld, cc.xyw(3, 5, 6));
 			// Telefax
 			builder.addLabel("Telefax:", cc.xy(10, 5));
 			builder.add(telefaxFeld, cc.xyw(12, 5, 5));
-			// Name
-			namenLabel = builder.addLabel("Name:", cc.xy(1, 7));
-			builder.add(namenFeld, cc.xyw(3, 7, 6));
+			// Vorname
+			builder.addLabel("Vorname:", cc.xy(1, 7));
+			builder.add(vornamenFeld, cc.xyw(3, 7, 6));
 			// eMail
 			builder.addLabel("E-Mail:", cc.xy(10, 7));
 			builder.add(emailFeld, cc.xyw(12, 7, 5));
@@ -368,8 +376,8 @@ public class BasisAdresseNeu extends AbstractModul
 			builder.addLabel("Wirtschaftszweig:", cc.xy(1, 13));
 			builder.add(wirtschaftszweigBox, cc.xyw(3, 13, 6));
 
-			// Lage --------------------------------------
-			builder.addSeparator("Lage", cc.xyw(1, 15, 10));
+			// Adresse --------------------------------------
+			builder.addSeparator("Adresse", cc.xyw(1, 15, 10));
 			// auswählen --------------------------------------
 			builder.addSeparator("auswählen", cc.xyw(12, 15, 5));
 			// Ort
@@ -384,40 +392,44 @@ public class BasisAdresseNeu extends AbstractModul
 			builder.add(hausnrZusFeld, cc.xy(10, 19));
 			builder.add(getStrassenBox(), cc.xyw(12, 17, 5));
 
-			builder.add(getStandorteScroller(), cc.xywh(12, 19, 5, 13));
+			builder.add(getStandorteScroller(), cc.xywh(12, 19, 5, 15));
 
+			// Lage --------------------------------------
+			builder.addSeparator("Lage", cc.xyw(1, 21, 10));
+			
 			// Koordinaten
-			builder.addLabel("E32:", cc.xy(1, 21));
-			builder.add(e32Feld, cc.xyw(3, 21, 3));
-			builder.addLabel("N32:", cc.xy(1, 23));
-			builder.add(n32Feld, cc.xyw(3, 23, 3));
-			builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 25));
-			builder.add(entwGebBox, cc.xyw(3, 25, 3));
+			builder.addLabel("E32:", cc.xy(1, 23));
+			builder.add(e32Feld, cc.xyw(3, 23, 3));
+			builder.add(getAusAblageButton(), cc.xywh(8, 23, 3, 3));
+			builder.addLabel("N32:", cc.xy(1, 25));
+			builder.add(n32Feld, cc.xyw(3, 25, 3));
+			builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 27));
+			builder.add(entwGebBox, cc.xyw(3, 27, 3));
 			
 			//
-			builder.addLabel("Gemarkung:", cc.xy(1, 27));
-			builder.add(gemarkungBox, cc.xyw(3, 27, 8));
+			builder.addLabel("Gemarkung:", cc.xy(1, 29));
+			builder.add(gemarkungBox, cc.xyw(3, 29, 8));
 			
 			//VAwS
-			builder.addLabel("Standortgegebenheit:", cc.xy(1, 29));
-			builder.add(standortGgBox, cc.xyw(3, 29, 8));
-			builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 31));
-			builder.add(wEinzugsGebBox, cc.xyw(3, 31, 8));
+			builder.addLabel("Standortgegebenheit:", cc.xy(1, 31));
+			builder.add(standortGgBox, cc.xyw(3, 31, 8));
+			builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 33));
+			builder.add(wEinzugsGebBox, cc.xyw(3, 33, 8));
 
 			
 
 			// Bemerkungen ----------------------------------
-			builder.addSeparator("Bemerkungen", cc.xyw(1, 33, 10));
-			builder.add(bemerkungsScroller, cc.xywh(1, 35, 10, 3));
+			builder.addSeparator("Bemerkungen", cc.xyw(1, 35, 10));
+			builder.add(bemerkungsScroller, cc.xywh(1, 37, 10, 3));
 
 			// Revision -------------------------------------
-			builder.addSeparator("Revision", cc.xyw(12, 33, 5));
+			builder.addSeparator("Revision", cc.xyw(12, 35, 5));
 			// Datum
-			builder.addLabel("Datum:", cc.xy(12, 35));
-			builder.add(revdatumsFeld, cc.xyw(14, 35, 3));
+			builder.addLabel("Datum:", cc.xy(12, 37));
+			builder.add(revdatumsFeld, cc.xyw(14, 37, 3));
 			// Handzeichen
-			handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 37));
-			builder.add(handzeichenNeuFeld, cc.xyw(14, 37, 3));
+			handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 39));
+			builder.add(handzeichenNeuFeld, cc.xyw(14, 39, 3));
 
 			// Buttons
 			builder.add(buttonBar, cc.xyw(14, 43, 3));
@@ -1026,7 +1038,9 @@ public class BasisAdresseNeu extends AbstractModul
 				anredeFeld.setText("");
 				vornamenFeld.setText("");
 				namenFeld.setText("");
+				namenFeld.setFont(new Font("SansSerif", Font.BOLD, 12));
 				namenLabel.setForeground(panel.getForeground());
+				namenLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
 				nameZusFeld.setText("");
 				kassenzeichenFeld.setText("");
 				telefonFeld.setText("");
@@ -1086,6 +1100,55 @@ public class BasisAdresseNeu extends AbstractModul
 		handzeichenNeuFeld.setEditable(enabled);
 	}
 	
+	public JButton getAusAblageButton() {
+		if (this.ausAblageButton == null) {
+	
+			this.ausAblageButton = new JButton("aus QGis");
+			this.ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
+			this.ausAblageButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					readClipboard();
+				}
+			});
+		}
+	
+		return this.ausAblageButton;
+	}
+
+	private void readClipboard() {
+	
+		Clipboard systemClipboard;
+		systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		Transferable transferData = systemClipboard.getContents(null);
+		for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
+			Object content = null;
+			try {
+				content = transferData.getTransferData(dataFlavor);
+			} catch (UnsupportedFlavorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (content instanceof String) {
+	
+				String[] tmp = content.toString().split(",");
+				if (tmp.length == 4) {
+					String e32AusZeile = tmp[2];
+					String n32AusZeile = tmp[3];
+					this.e32Feld.setText(e32AusZeile.substring(0, 7));
+					this.n32Feld.setText(n32AusZeile.substring(0, 7));
+					this.frame.changeStatus("Rechts- und Hochwert eingetragen", HauptFrame.SUCCESS_COLOR);
+				} else {
+					this.frame.changeStatus("Zwischenablage enthält keine verwertbaren Daten", HauptFrame.ERROR_COLOR);
+				}
+				break;
+			}
+		}
+	}
+
 	/**
 	 * Ein Listener für die Events des "Neuer Betreiber"-Moduls.
 	 * 
@@ -1115,5 +1178,6 @@ public class BasisAdresseNeu extends AbstractModul
 				
             }
 		}
+		
 	}
 }

@@ -999,16 +999,11 @@ public class BasisStandortSuchen extends AbstractModul
 			this.standortTabelle
 					.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 			TableColumn column = null;
-			// DefaultTableCellRenderer centerRenderer = new
-			// DefaultTableCellRenderer();
-			// centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
 			for (int i = 0; i < this.standortModel.getColumnCount(); i++)
 			{
 				column = this.standortTabelle.getColumnModel().getColumn(i);
-				/*
-				 * if (i == 0) { column.setMaxWidth(60);
-				 * column.setPreferredWidth(column.getMaxWidth()-10); } else
-				 */
+
 				if (i == 0)
 				{
 					column.setPreferredWidth(120);
@@ -1070,51 +1065,10 @@ public class BasisStandortSuchen extends AbstractModul
 				}
 			});
 
-//			this.standortTabelle.getInputMap().put(
-//													(KeyStroke) getStandortEditAction()
-//															.getValue(
-//																		Action.ACCELERATOR_KEY),
-//													getStandortEditAction().getValue(Action.NAME));
-//			this.standortTabelle.getActionMap().put(
-//													getStandortEditAction().getValue(Action.NAME),
-//													getStandortEditAction());
 		}
 
 		return this.standortTabelle;
 	}
-
-//	private Action getStandortEditAction()
-//	{
-//		if (this.standortEditAction == null)
-//		{
-//			this.standortEditAction = new AbstractAction("Bearbeiten")
-//			{
-//				private static final long serialVersionUID = 535733777827052581L;
-//
-//				@Override
-//				public void actionPerformed(ActionEvent e)
-//				{
-//					int row = BasisStandortSuchen.this.standortTabelle
-//							.getSelectedRow();
-//
-//					// Natürlich nur editieren, wenn wirklich eine Zeile
-//					// ausgewählt ist
-//					if (row != -1)
-//					{
-//						BasisLageAdresse bsta = BasisStandortSuchen.this.standortModel
-//								.getRow(row);
-//						editStandort(bsta);
-//					}
-//				}
-//			};
-//			this.standortEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
-//					KeyEvent.VK_B));
-//			this.standortEditAction.putValue(Action.ACCELERATOR_KEY,
-//												KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
-//		}
-//
-//		return this.standortEditAction;
-//	}
 
 	private Action getObjektNeuAction()
 	{
@@ -1154,14 +1108,9 @@ public class BasisStandortSuchen extends AbstractModul
 		if (this.standortPopup == null)
 		{
 			this.standortPopup = new JPopupMenu("Standort");
-//			JMenuItem bearbItem = new JMenuItem(getStandortEditAction());
-//			JMenuItem neuItem = new JMenuItem(getObjektNeuAction());
+			
 			JMenuItem gisItem = new JMenuItem(getGisAction());
-			JMenuItem delItem = new JMenuItem(getStandortLoeschAction());
-//			this.standortPopup.add(bearbItem);
-//			this.standortPopup.add(neuItem);
 			this.standortPopup.add(gisItem);
-			this.standortPopup.add(delItem);
 		}
 
 		if (e.isPopupTrigger())
