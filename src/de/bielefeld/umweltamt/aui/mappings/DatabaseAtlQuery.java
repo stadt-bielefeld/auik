@@ -823,10 +823,11 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria.forClass(Messstelle.class)
 																	.createAlias("objekt", "objekt")
-																	.createAlias("objekt.standort", "standort")
+																	.createAlias("objekt.standortid", "standort")
+																	.createAlias("objekt.betreiberid", "adresse")
 																	.add(Restrictions.eq("objekt.inaktiv", true))
-																	.addOrder(Order.asc("standort.strasse"))
-																	.addOrder(Order.asc("standort.hausnr")),
+																	.addOrder(Order.asc("adresse.strasse"))
+																	.addOrder(Order.asc("adresse.hausnr")),
 															new Messstelle());
 	}
 
@@ -894,7 +895,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Get all Messstelle which have Probenahme from Selbstueberwachung
-	 * (kennummer starts with "E").
+	 * (kennummer starts with "7").
 	 * 
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */

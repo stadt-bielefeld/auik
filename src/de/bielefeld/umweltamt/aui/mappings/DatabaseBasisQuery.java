@@ -398,13 +398,17 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 */
 	public static List<?> getObjektsWithPriority() {
 		return new DatabaseAccess().executeCriteriaToList(
-				DetachedCriteria.forClass(Objekt.class).add(Restrictions.eq("inaktiv", false))
-						.add(Restrictions.eq("deleted", false)).add(Restrictions.isNotNull("prioritaet"))
+				DetachedCriteria.forClass(Objekt.class)
+						.add(Restrictions.eq("inaktiv", false))
+						.add(Restrictions.eq("deleted", false))
+						.add(Restrictions.isNotNull("prioritaet"))
 						.add(Restrictions.isNotNull("sachbearbeiter"))
 						.setProjection(Projections.distinct(Projections.projectionList()
-								.add(Projections.property("lage")).add(Projections.property("adresse"))
-								.add(Projections.property("prioritaet")).add(Projections.property("sachbearbeiter"))))
-						.addOrder(Order.asc("prioritaet")).addOrder(Order.asc("lage")).addOrder(Order.asc("adresse")),
+								.add(Projections.property("standortid"))
+								.add(Projections.property("prioritaet"))
+								.add(Projections.property("sachbearbeiter"))))
+						.addOrder(Order.asc("prioritaet"))
+						.addOrder(Order.asc("standortid")),
 				new Objekt());
 	}
 

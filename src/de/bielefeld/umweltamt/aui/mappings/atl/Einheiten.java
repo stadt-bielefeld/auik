@@ -281,8 +281,7 @@ public class Einheiten  implements java.io.Serializable {
     }
 
 	public String toGuiString() {
-		// TODO Auto-generated method stub
-		return null;
+		return getBezeichnung();
 	}
 
     /* Custom code goes below here! */

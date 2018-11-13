@@ -438,9 +438,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
             DetachedCriteria.forClass(Anh56Fachdaten.class)
                 .createAlias("objekt", "objekt")
                 .createAlias("objekt.standortid", "standort")
+                .createAlias("standort.adresse", "adresse")
                 .addOrder(Order.asc("objekt.inaktiv"))
-                .addOrder(Order.asc("standort.strasse"))
-                .addOrder(Order.asc("standort.hausnr"));
+                .addOrder(Order.asc("adresse.strasse"))
+                .addOrder(Order.asc("adresse.hausnr"));
         if (abwasseranfall != null) {
             detachedCriteria.add(
                 Restrictions.eq("abwasseranfall", abwasseranfall));
@@ -465,11 +466,12 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<BwkFachdaten> getBwkByYear(Integer year) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(BwkFachdaten.class)
-            .createAlias("basisObjekt", "obj")
-            .createAlias("basisObjekt.basisStandort", "standort")
+            .createAlias("objekt", "obj")
+            .createAlias("obj.standortid", "standort")
+            .createAlias("standort.adresse", "adresse")
             .add(Restrictions.eq("obj.deleted", false));
-        detachedCriteria.addOrder(Order.asc("standort.strasse"));
-        detachedCriteria.addOrder(Order.asc("standort.hausnr"));
+        detachedCriteria.addOrder(Order.asc("adresse.strasse"));
+        detachedCriteria.addOrder(Order.asc("adresse.hausnr"));
         /* year == -1 => alle Jahre */
         if (year == null || year != -1) {
             detachedCriteria.add(
@@ -486,10 +488,11 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				BwkFachdaten.class)
 	            .createAlias("objekt", "obj")
-				.createAlias("objekt.adresseByStandortid", "standort")
-                .createAlias("objekt.basisObjektarten", "art")
-				.addOrder(Order.asc("standort.strasse"))
-				.addOrder(Order.asc("standort.hausnr"))
+				.createAlias("objekt.standortid", "standort")
+                .createAlias("objekt.objektarten", "art")
+                .createAlias("standort.adresse", "adresse")
+				.addOrder(Order.asc("adresse.strasse"))
+				.addOrder(Order.asc("adresse.hausnr"))
 				.add(Restrictions.eq("art.id", 36))
 	            .add(Restrictions.eq("obj.deleted", false));
 
@@ -504,9 +507,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				BwkFachdaten.class)
 	            .createAlias("objekt", "obj")
-				.createAlias("objekt.adresseByStandortid", "standort")
-				.addOrder(Order.asc("standort.strasse"))
-				.addOrder(Order.asc("standort.hausnr"))
+				.createAlias("objekt.standortid", "standort")
+                .createAlias("standort.adresse", "adresse")
+				.addOrder(Order.asc("adresse.strasse"))
+				.addOrder(Order.asc("adresse.hausnr"))
 				.add(Restrictions.eq("aba", true))
 	            .add(Restrictions.eq("obj.deleted", false));
 
