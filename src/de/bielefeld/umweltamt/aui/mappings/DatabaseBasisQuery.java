@@ -610,55 +610,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	}
 
 	/**
-	 * Returns a List of all Adresse and BasisLage objects that are connected
-	 * through a BasisMapAdresseLage object Output format is
-	 * List<[Adresse][BasisLage]>
-	 * 
-	 * @param strasse
-	 *            String
-	 * @param hausnr
-	 *            Integer (-1: all)
-	 * @param ort
-	 *            String
-	 * @return <code>List&lt;Object[]&gt;</code>
-	 */
-	public static List<Object[]> findStandorteNew(String strasse, Integer hausnr, String ort) {
-		// Check which parameters are set
-		boolean bStrasse = (strasse != null && strasse.length() > 0);
-		boolean bHausnr = (hausnr != null && hausnr != -1);
-		boolean bOrt = (ort != null && ort.length() > 0);
-		String str = strasse.toLowerCase();
-		str = str.replace("'", "''");
-
-		String query = "SELECT * FROM " + " (SELECT DISTINCT ON (a.strasse, a.hausnr, a.hausnrzus) m.*, a.* "
-				+ "FROM basis.standort m JOIN basis.adresse a ON a.id = m.adresseid";
-		if (bStrasse || bHausnr || bOrt) {
-			query += " WHERE ";
-			if (bStrasse) {
-				query += " lower(a.strasse) like '" + str + "%' ";
-			}
-			if (hausnr != null && hausnr != -1) {
-				if (bStrasse) {
-					query += " AND ";
-				}
-				query += " a.hausnr = " + hausnr;
-			}
-			if (bOrt) {
-				if (bStrasse || bHausnr) {
-					query += " AND ";
-				}
-				query += " lower(a.ort) like '" + ort.toLowerCase() + "%' ";
-			}
-			query += " AND a._deleted = false";
-		}
-		query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
-		q.addEntity("a", Adresse.class);
-		q.addEntity("m", Standort.class);
-		return q.list();
-	}
-
-	/**
 	 * Returns a List of Adresse objects for the given parameters Output format is
 	 * List<[Adresse]>
 	 * 
@@ -752,6 +703,55 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
 
+	/**
+	 * Returns a List of all Adresse and BasisLage objects that are connected
+	 * through a BasisMapAdresseLage object Output format is
+	 * List<[Adresse][BasisLage]>
+	 * 
+	 * @param strasse
+	 *            String
+	 * @param hausnr
+	 *            Integer (-1: all)
+	 * @param ort
+	 *            String
+	 * @return <code>List&lt;Object[]&gt;</code>
+	 */
+	public static List<Object[]> findStandorteNew(String strasse, Integer hausnr, String ort) {
+		// Check which parameters are set
+		boolean bStrasse = (strasse != null && strasse.length() > 0);
+		boolean bHausnr = (hausnr != null && hausnr != -1);
+		boolean bOrt = (ort != null && ort.length() > 0);
+		String str = strasse.toLowerCase();
+		str = str.replace("'", "''");
+	
+		String query = "SELECT * FROM " + " (SELECT DISTINCT ON (a.strasse, a.hausnr, a.hausnrzus) m.*, a.* "
+				+ "FROM basis.standort m JOIN basis.adresse a ON a.id = m.adresseid";
+		if (bStrasse || bHausnr || bOrt) {
+			query += " WHERE ";
+			if (bStrasse) {
+				query += " lower(a.strasse) like '" + str + "%' ";
+			}
+			if (hausnr != null && hausnr != -1) {
+				if (bStrasse) {
+					query += " AND ";
+				}
+				query += " a.hausnr = " + hausnr;
+			}
+			if (bOrt) {
+				if (bStrasse || bHausnr) {
+					query += " AND ";
+				}
+				query += " lower(a.ort) like '" + ort.toLowerCase() + "%' ";
+			}
+			query += " AND a._deleted = false";
+		}
+		query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";
+		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+		q.addEntity("a", Adresse.class);
+		q.addEntity("m", Standort.class);
+		return q.list();
+	}
+
 	public static List<Adresse> findStandorte(String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
@@ -760,7 +760,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
 
-		String query = "SELECT DISTINCT adresse " + "FROM MapAdresseLage as map JOIN map.adresse";
+		String query = "SELECT DISTINCT adresse "
+				+ "FROM Standort std JOIN std.adresse adresse";
 		if (bStrasse || bHausnr || bOrt) {
 			query += " WHERE ";
 			if (bStrasse) {
@@ -887,6 +888,44 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			query += "adresse.deleted = false ";
 
 			query += "ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
+		}
+		return HibernateSessionFactory.currentSession().createQuery(query).list();
+	}
+
+	/**
+	 * Returns a List of all Adresse objects matching the given parameters
+	 * 
+	 * Output format is List<[Adresse]>
+	 * 
+	 * @param search
+	 *            String Strasse, Hausnummer, Hausnummerzusatz
+	 * @param property
+	 *            String
+	 * @return <code>List&lt;Adresse[]&gt;</code>
+	 */
+	
+	public static List<Adresse> findAdressen(String strasse, Integer hausnr, String zusatz) {
+	
+		boolean bStrasse = (strasse != null && strasse.length() > 0);
+		boolean bHausnr = (hausnr != null && hausnr != -1);
+		boolean bZusatz = (zusatz != null && zusatz.length() > 0);
+	
+		String query = "SELECT DISTINCT adresse " + "FROM Adresse adresse";
+		if (bStrasse || bHausnr || bZusatz) {
+			query += " WHERE ";
+			if (bStrasse) {
+				query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' AND ";
+			}
+			if (bHausnr) {
+				query += "adresse.hausnr = " + hausnr + " AND ";
+			}
+			if (bZusatz) {
+				query += "adresse.hausnrzus = " + hausnr + " AND ";
+			}
+			
+			query += "adresse.deleted = false ";
+	
+			query += "ORDER BY adresse.betrname ASC";
 		}
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
