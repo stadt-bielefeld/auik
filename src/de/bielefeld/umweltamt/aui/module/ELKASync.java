@@ -71,7 +71,7 @@ import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
-import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
@@ -885,13 +885,13 @@ public class ELKASync extends AbstractModul {
         if (ref.getqEl() != null) {
             ref.setEinleitungsstelleByQElsNr(
                 EEinleitungsstelle.findById(
-                    ref.getqEl().getObjekt().getId()));
+                    ref.getqEl().getId()));
         }
         //Set target EEInleitungsstelle
         if (ref.getzEl() != null) {
             ref.setEinleitungsstelleByZElsNr(
                 EEinleitungsstelle.findById(
-                    ref.getzEl().getObjekt().getId()));
+                    ref.getzEl().getId()));
         }
         return ref;
     }

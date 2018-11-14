@@ -29,10 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
-import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
@@ -47,7 +44,7 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
     private EAdresse adresseByStoAdrNr;
     private EAdresse adresseByBetreibAdrNr;
     private Set<EWasserrecht> Wasserrechts = new HashSet<EWasserrecht>(0);
-    private Set<ZAbaVerfahren> ZAbaVerfahrens = new HashSet<ZAbaVerfahren>(0);
+    private Set<Abaverfahren> Abwasserbehandlungsverfahrens = new HashSet<Abaverfahren>(0);
     private String bezeichnung;
     private Float e32;
     private Float n32;
@@ -73,7 +70,7 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
             Boolean genehmpflichtigTog, Boolean einzelabnahmeTog,
             String bemerkung, Date aktualDat, Date erstellDat,
             String herkunft, Set<EWasserrecht> wasserrechts, 
-            Set<ZAbaVerfahren> ZAbaVerfahrens) {
+            Set<EZAbaVerfahren> eZAbaVerfahrens) {
         this.nr = nr;
         this.origNr = origNr;
         this.standort = standort;
@@ -90,7 +87,7 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
         this.erstellDat = erstellDat;
         this.herkunft = herkunft;
         this.setWasserrechts(Wasserrechts);
-        this.setZAbaVerfahrens(ZAbaVerfahrens);
+        this.setAbwasserbehandlungsverfahrens(Abwasserbehandlungsverfahrens);
     }
 
     public Integer getNr() {
@@ -265,32 +262,15 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
     public void setWasserrechts(Set<EWasserrecht> Wasserrechts) {
         this.Wasserrechts = Wasserrechts;
     }
+    public Set<Abaverfahren> getAbwasserbehandlungsverfahrens() {
+        return Abwasserbehandlungsverfahrens;
+    }
+    
+    public void setAbwasserbehandlungsverfahrens(Set<Abaverfahren> Abwasserbehandlungsverfahrens) {
+	    this.Abwasserbehandlungsverfahrens = Abwasserbehandlungsverfahrens;
+	}
 
     /* Custom code goes below here! */
 
-    /**
-     * Returns the Abaverfahren instances connected to the aba instance
-     * on which this instance is based on.
-     * @return The instances as set
-     */
-    @JsonIgnore
-    public Set<ZAbaVerfahren> getZAbaVerfahrens() {
-        return ZAbaVerfahrens;
-    }
-    
-    public Set<ZAbaVerfahren> getZAbaVerfahrens(Integer nr) {
-        return ZAbaVerfahrens;
-    }
 
-    public Set<Abaverfahren> getAbwasserbehandlungsverfahrens() {
-        Set<Abaverfahren> verfahren = new HashSet<Abaverfahren>();
-        for (ZAbaVerfahren zabav : getZAbaVerfahrens()) {
-            verfahren.add(zabav.getAbaverfahren());
-        }
-        return verfahren;
-    }
-
-    public void setZAbaVerfahrens(Set<ZAbaVerfahren> ZAbaVerfahrens) {
-        this.ZAbaVerfahrens = ZAbaVerfahrens;
-    }
 }

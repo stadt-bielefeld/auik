@@ -233,9 +233,9 @@ public class EEinleitungsstelle implements java.io.Serializable {
     @JsonIgnore
     public List<Referenz> getReferenzs() {
         Integer identifier = origNr != null ? origNr: nr;
-        Einleitungsstelle els = Einleitungsstelle.findById(identifier);
+        Einleitungsstelle els = Einleitungsstelle.findByObjektId(identifier);
         List<Referenz> referenzs = HibernateSessionFactory.currentSession().createQuery(
-            "from Referenz where q_els_nr = " + els.getId()
+            "from Referenz where q_els_nr = " + els.getObjekt().getId()
         ).list();
         return referenzs != null ? referenzs : new ArrayList<Referenz>();
     }

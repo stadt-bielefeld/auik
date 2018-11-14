@@ -90,6 +90,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/ESonderbauwerk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EStandort.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EWasserrecht.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EZAbaVerfahren.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EZAbaWasserrecht.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EZElsWasserrecht.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh40Fachdaten.hbm.xml" />

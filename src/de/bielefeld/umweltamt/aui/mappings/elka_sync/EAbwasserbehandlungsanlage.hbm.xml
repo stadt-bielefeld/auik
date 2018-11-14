@@ -56,11 +56,11 @@
   	 		</key>
    		  <many-to-many column="wasserrecht_nr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" />
         </set>
-		<set name="ZAbaVerfahrens" table="z_aba_verfahren" inverse="true" lazy="false" fetch="select">
+		<set name="Abwasserbehandlungsverfahrens" table="elka.e_z_aba_verfahren" lazy="false" fetch="select">
 		  <key>
 			<column name="anlage_nr" not-null="true" />
 		  </key>
-		<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren" />
+		<many-to-many column="abwasbehverf_nr" class="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" />
 		</set>
     </class>
 </hibernate-mapping>
