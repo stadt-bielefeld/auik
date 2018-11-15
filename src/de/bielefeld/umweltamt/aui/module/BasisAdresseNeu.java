@@ -114,7 +114,7 @@ public class BasisAdresseNeu extends AbstractModul
 	private static final AuikLogger log = AuikLogger.getLogger();
 
 	private JButton speichernButton;
-	private Standort mapLage;
+	private Standort standort;
 	private Lage lage;
 
 	private JLabel handzeichenLabel;
@@ -643,18 +643,9 @@ public class BasisAdresseNeu extends AbstractModul
 
 			// Neues Standortobjekt erzeugen
 			Adresse adrn = new Adresse();
-            
-			/*if (standorteTabelle.getSelectedRowCount() > 0) {
-				mapLage = new BasisMapAdresseLage();
-				lage = new BasisLage();
-				mapLage.setBasisAdresse(adrn);
-				mapLage.setBasisLage(lage);
-			}*/
-            //Vermeidet fehler beim merge, wenn eine eigene Adresse eingeben wurde anstatt eine aus der Liste auszuwählen
-            mapLage = new Standort();
-			lage = new Lage();
-			mapLage.setAdresse(adrn);
-			mapLage.setLage(lage);
+
+			// Vermeidet fehler beim merge, wenn eine eigene Adresse eingeben wurde anstatt
+			// eine aus der Liste auszuwählen
 
 			// Anrede
 			String anrede = anredeFeld.getText();
@@ -776,66 +767,9 @@ public class BasisAdresseNeu extends AbstractModul
 				adrn.setNamebetrbeauf(betrBeaufNachname);
 			}
 			// Wirtschaftszweig
-			Wirtschaftszweig wizw = (Wirtschaftszweig) wirtschaftszweigBox
-					.getSelectedItem();
+			Wirtschaftszweig wizw = (Wirtschaftszweig) wirtschaftszweigBox.getSelectedItem();
 			adrn.setWirtschaftszweig(wizw);
 
-			if (lage != null) {
-				// Gemarkung
-				Gemarkung bgem = (Gemarkung) gemarkungBox
-						.getSelectedItem();
-				mapLage.getLage().setGemarkung(bgem);
-
-				// Standortgg
-				Standortgghwsg stgg = (Standortgghwsg) standortGgBox
-						.getSelectedItem();
-				mapLage.getLage().setStandortgghwsg(stgg);
-
-				// Einzugsgebiet
-				String ezgb = (String) entwGebBox.getSelectedItem();
-				// Nötig, weil getSelectedItem bei editierbarer ComboBox auch
-				// NULL
-				// liefern kann
-				if (ezgb != null) {
-					// Weil ich bis jetzt noch keine LimitedComboBox oder so
-					// habe...
-					if (ezgb.length() > 10) {
-						// ... kürze ich hier den String auf 10 Zeichen
-						ezgb = ezgb.substring(0, 10);
-					}
-					ezgb = ezgb.trim();
-				}
-				mapLage.getLage().setEntgebid(ezgb);
-
-				// VAWS-Einzugsgebiet
-				Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox
-						.getSelectedItem();
-				mapLage.getLage().setWassereinzugsgebiet(wezg);
-
-				// Flur
-				String flur = flurFeld.getText().trim();
-				if (flur.equals("")) {
-					mapLage.getLage().setFlur(null);
-				} else {
-					mapLage.getLage().setFlur(flur);
-				}
-
-				// Flurstueck
-				String flurstk = flurStkFeld.getText().trim();
-				if (flurstk.equals("")) {
-					mapLage.getLage().setFlurstueck(null);
-				} else {
-					mapLage.getLage().setFlurstueck(flurstk);
-				}
-
-				// Rechtswert
-				Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
-				mapLage.getLage().setE32(e32Wert);
-
-				// Hochwert
-				Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
-				mapLage.getLage().setN32(n32Wert);
-			}
 			// Bemerkungen
 			String bemerkungen = bemerkungsArea.getText().trim();
 			if (bemerkungen.equals("")) {
@@ -843,58 +777,139 @@ public class BasisAdresseNeu extends AbstractModul
 			} else {
 				adrn.setBemerkungen(bemerkungen);
 			}
+			if ((Float) e32Feld.getValue() != 0.0 || (Float) n32Feld.getValue() != 0.0) {
+				standort = new Standort();
+				lage = new Lage();
+				standort.setAdresse(adrn);
+				standort.setLage(lage);
+
+				if (lage != null) {
+					// Gemarkung
+					Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
+					standort.getLage().setGemarkung(bgem);
+
+					// Standortgg
+					Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
+					standort.getLage().setStandortgghwsg(stgg);
+
+					// Einzugsgebiet
+					String ezgb = (String) entwGebBox.getSelectedItem();
+					// Nötig, weil getSelectedItem bei editierbarer ComboBox auch
+					// NULL
+					// liefern kann
+					if (ezgb != null) {
+						// Weil ich bis jetzt noch keine LimitedComboBox oder so
+						// habe...
+						if (ezgb.length() > 10) {
+							// ... kürze ich hier den String auf 10 Zeichen
+							ezgb = ezgb.substring(0, 10);
+						}
+						ezgb = ezgb.trim();
+					}
+					standort.getLage().setEntgebid(ezgb);
+
+					// VAWS-Einzugsgebiet
+					Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
+					standort.getLage().setWassereinzugsgebiet(wezg);
+
+					// Flur
+					String flur = flurFeld.getText().trim();
+					if (flur.equals("")) {
+						standort.getLage().setFlur(null);
+					} else {
+						standort.getLage().setFlur(flur);
+					}
+
+					// Flurstueck
+					String flurstk = flurStkFeld.getText().trim();
+					if (flurstk.equals("")) {
+						standort.getLage().setFlurstueck(null);
+					} else {
+						standort.getLage().setFlurstueck(flurstk);
+					}
+
+					// Rechtswert
+					Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
+					standort.getLage().setE32(e32Wert);
+
+					// Hochwert
+					Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
+					standort.getLage().setN32(n32Wert);
+				}
+			}
 
 			adrn.setRevidatum(Calendar.getInstance().getTime());
 			adrn.setRevihandz(handzeichenNeuFeld.getText().trim());
-			
-			/* Wir brauchen hier nur BasisMapAdresseLage mergen, da Hibernate 
-			 * mit cascade=All so konfiguriert ist, dass die Tabellen Basis_Adresse
-			 * und Basis_Lage ebenfalls gespeichert werden.
+
+			/*
+			 * Wir brauchen hier nur BasisMapAdresseLage mergen, da Hibernate mit
+			 * cascade=All so konfiguriert ist, dass die Tabellen Basis_Adresse und
+			 * Basis_Lage ebenfalls gespeichert werden.
 			 */
+			if ((Float) e32Feld.getValue() != 0.0 && (Float) n32Feld.getValue() != 0.0) {
+				Standort persistentAL = null;
+				persistentAL = Standort.merge(standort);
 
-			Standort persistentAL = null;
-			persistentAL = Standort.merge(mapLage);
+				if (persistentAL != null) {
+					frame.changeStatus("Neuer Betreiber " + persistentAL.getId() + " erfolgreich gespeichert.",
+							HauptFrame.SUCCESS_COLOR);
 
-			if (persistentAL != null) {
-				frame.changeStatus("Neuer Betreiber " + persistentAL.getId()
-						+ " erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
-
-				// Wenn wir vom Objekt anlegen kommen,
-				if (manager.getSettingsManager().getBoolSetting(
-						"auik.imc.return_to_objekt_betreiber")) {
-					manager.getSettingsManager().setSetting(
-							"auik.imc.use_betreiber",
-							persistentAL.getAdresse().getId().intValue(),
-							false);
-					manager.getSettingsManager().removeSetting(
-							"auik.imc.return_to_objekt_betreiber");
-					// ... kehren wir direkt dorthin zurück:
-					manager.switchModul("m_objekt_bearbeiten");
-				}
-				else if (manager.getSettingsManager().getBoolSetting(
-							"auik.imc.return_to_objekt_standort")) {
-					manager.getSettingsManager().setSetting(
-							"auik.imc.use_standort",
-							persistentAL.getAdresse().getId().intValue(),
-							false);
-					manager.getSettingsManager().setSetting(
-							"auik.imc.use_lage",
-							persistentAL.getLage().getId().intValue(),
-							false);
-					manager.getSettingsManager().removeSetting(
-							"auik.imc.return_to_objekt_standort");
-					manager.getSettingsManager().removeSetting(
-							"auik.imc.return_to_objekt_lage");
-					// ... kehren wir direkt dorthin zurück:
-					manager.switchModul("m_objekt_bearbeiten");
+					// Wenn wir vom Objekt anlegen kommen,
+					if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_betreiber")) {
+						manager.getSettingsManager().setSetting("auik.imc.use_betreiber",
+								persistentAL.getAdresse().getId().intValue(), false);
+						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_betreiber");
+						// ... kehren wir direkt dorthin zurück:
+						manager.switchModul("m_objekt_bearbeiten");
+					} else if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_standort")) {
+						manager.getSettingsManager().setSetting("auik.imc.use_standort",
+								persistentAL.getAdresse().getId().intValue(), false);
+						manager.getSettingsManager().setSetting("auik.imc.use_lage",
+								persistentAL.getLage().getId().intValue(), false);
+						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_standort");
+						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_lage");
+						// ... kehren wir direkt dorthin zurück:
+						manager.switchModul("m_objekt_bearbeiten");
+					} else {
+						// Sonst einfach das Formular zurücksetzen
+						clearForm();
 					}
-				else {
-					// Sonst einfach das Formular zurücksetzen
-					clearForm();
 				}
-			} else {
-				frame.changeStatus("Konnte Betreiber nicht speichern!",
-						Color.RED);
+			} else if ((Float) e32Feld.getValue() == 0.0 || (Float) n32Feld.getValue() == 0.0) {
+				
+				Adresse persistentAdrn = new Adresse();
+				persistentAdrn = Adresse.merge(adrn);
+
+				if (persistentAdrn != null) {
+					frame.changeStatus("Neuer Betreiber " + persistentAdrn.getId() + " erfolgreich gespeichert.",
+							HauptFrame.SUCCESS_COLOR);
+
+					// Wenn wir vom Objekt anlegen kommen,
+					if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_betreiber")) {
+						manager.getSettingsManager().setSetting("auik.imc.use_betreiber",
+								persistentAdrn.getId().intValue(), false);
+						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_betreiber");
+						// ... kehren wir direkt dorthin zurück:
+						manager.switchModul("m_objekt_bearbeiten");
+					} else if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_standort")) {
+						manager.getSettingsManager().setSetting("auik.imc.use_standort",
+								persistentAdrn.getId().intValue(), false);
+						manager.getSettingsManager().setSetting("auik.imc.use_lage",
+								persistentAdrn.getStandort().getLage().getId().intValue(), false);
+						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_standort");
+						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_lage");
+						// ... kehren wir direkt dorthin zurück:
+						manager.switchModul("m_objekt_bearbeiten");
+					} else {
+						// Sonst einfach das Formular zurücksetzen
+						clearForm();
+					}
+				}
+			}
+			
+			
+			else {
+				frame.changeStatus("Konnte Betreiber nicht speichern!", Color.RED);
 				log.debug("Konnte nicht speichern");
 			}
 

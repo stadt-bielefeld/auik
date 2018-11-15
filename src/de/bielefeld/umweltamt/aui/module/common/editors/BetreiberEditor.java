@@ -475,6 +475,11 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
 				handzeichenAltFeld.setText(getBetreiber().getRevihandz());
 				bemerkungsArea.setText(getBetreiber().getBemerkungen());
+				
+				gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
+				standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
+				entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+				wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
 
 				Date datum = getBetreiber().getRevidatum();
 				revdatumsFeld.setText(AuikUtils.getStringFromDate(datum));
@@ -487,10 +492,6 @@ public class BetreiberEditor extends AbstractBaseEditor {
 					lage = standort.getLage();
 					e32Feld.setValue(standort.getLage().getE32());
 					n32Feld.setValue(standort.getLage().getN32());
-					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
-					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
-					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
-					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
 
 					if (standort.getLage().getGemarkung() != null) {
 						gemarkungBox.setSelectedItem(lage.getGemarkung());
@@ -687,8 +688,14 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		Wirtschaftszweig wizw = (Wirtschaftszweig) wirtschaftszweigBox.getSelectedItem();
 		getBetreiber().setWirtschaftszweig(wizw);
 
-		if (lage != null) {
-
+		if ((Float) e32Feld.getValue() != 0.0 && (Float) n32Feld.getValue() != 0.0) {
+			
+			if (standort == null) {
+			standort = new Standort();
+			lage = new Lage();
+			standort.setAdresse(getBetreiber());
+			standort.setLage(lage);
+			}
 			// Gemarkung
 			Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
 			lage.setGemarkung(bgem);
@@ -940,8 +947,8 @@ public class BetreiberEditor extends AbstractBaseEditor {
 				if (tmp.length == 4) {
 					String e32AusZeile = tmp[2];
 					String n32AusZeile = tmp[3];
-					this.e32Feld.setText(e32AusZeile.substring(0, 7));
-					this.n32Feld.setText(n32AusZeile.substring(0, 7));
+					this.e32Feld.setValue(new Float(e32AusZeile.substring(0, 6)));
+					this.n32Feld.setValue(new Float(n32AusZeile.substring(0, 7)));
 					this.frame.changeStatus("Rechts- und Hochwert eingetragen", HauptFrame.SUCCESS_COLOR);
 				} else {
 					this.frame.changeStatus("Zwischenablage enthält keine verwertbaren Daten", HauptFrame.ERROR_COLOR);
