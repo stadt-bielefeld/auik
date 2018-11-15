@@ -15,6 +15,12 @@
   <many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">
    <column name="standort_nr"/>
   </many-to-one>
+  <property generated="never" lazy="false" name="e32" type="java.lang.Float">
+   <column name="e32" precision="8" scale="8"/>
+  </property>
+  <property generated="never" lazy="false" name="n32" type="java.lang.Float">
+   <column name="n32" precision="8" scale="8"/>
+  </property>
   <property generated="never" lazy="false" name="bezeichnung" type="java.lang.String">
    <column name="bezeichnung"/>
   </property>

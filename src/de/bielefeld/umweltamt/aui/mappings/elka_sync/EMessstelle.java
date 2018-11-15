@@ -43,6 +43,8 @@ public class EMessstelle implements java.io.Serializable {
     private EStandort standort;
     private Integer nr;
     private Integer origNr;
+	private Float e32;
+	private Float n32;
     private String bezeichnung;
     private Integer typOpt;
     private Integer artMessungOpt;
@@ -61,12 +63,14 @@ public class EMessstelle implements java.io.Serializable {
         this.nr = nr;
     }
 
-    public EMessstelle(Integer nr, EStandort standort, Integer origNr,
+    public EMessstelle(Integer nr, EStandort standort, Integer origNr, Float e32, Float n32,
             String bezeichnung, Integer typOpt, Integer artMessungOpt,
             String bemerkung, Date aktualDat, Date erstellDat, String herkunft) {
         this.standort = standort;
         this.nr = nr;
         this.origNr = origNr;
+		this.e32 = e32;
+		this.n32 = n32;
         this.bezeichnung = bezeichnung;
         this.typOpt = typOpt;
         this.artMessungOpt = artMessungOpt;
@@ -101,6 +105,22 @@ public class EMessstelle implements java.io.Serializable {
     public void setOrigNr(Integer origNr) {
         this.origNr = origNr;
     }
+
+	public Integer getE32() {
+		return Math.round(this.e32);
+	}
+
+	public void setE32(Float e32) {
+		this.e32 = e32;
+	}
+
+	public Integer getN32() {
+		return Math.round(this.n32);
+	}
+
+	public void setN32(Float n32) {
+		this.n32 = n32;
+	}
 
     public String getBezeichnung() {
         return this.bezeichnung;
@@ -164,6 +184,8 @@ public class EMessstelle implements java.io.Serializable {
      * @param copy EMessstelle
      */
     private void copy(EMessstelle copy) {
+    	this.e32 = copy.getE32().floatValue();
+    	this.n32 = copy.getN32().floatValue();
         this.artMessungOpt = copy.getArtMessungOpt();
         this.bemerkung = copy.getBemerkung();
         this.bezeichnung = copy.getBezeichnung();
