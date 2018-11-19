@@ -24,8 +24,10 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -39,6 +41,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
@@ -66,11 +69,12 @@ public class AbaVerfahrenPanel extends JPanel {
     private JList rightList;
 	private JButton uebernehmenButton;
 	private JButton entfernenButton;
+    private JButton saveAbaverfButton;
 
     // Daten
     private Aba fachdaten = null;
     private Abaverfahren[] verfahrens = null;
-    private List<ZAbaVerfahren> zabaverflist = DatabaseQuery.getZAbaVerfahren(fachdaten);
+    private List<Abaverfahren> abaverflist = null;
     private DefaultListModel<Abaverfahren> rightListModel = new DefaultListModel<Abaverfahren>();
 
     // Listener 
@@ -80,12 +84,13 @@ public class AbaVerfahrenPanel extends JPanel {
         this.hauptModul = hauptModul;
         this.uebernehmenButton = new JButton("Übernehmen >");
         this.entfernenButton = new JButton("< Entfernen");
+        this.saveAbaverfButton = getSaveAbaverfButton();
         this.rightList = new JList<Abaverfahren>(rightListModel);
 
         
         
 		FormLayout verfahrenLayout = new FormLayout("150dlu, 5dlu, 90dlu, 5dlu, 150dlu", // Spalten
-				"20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 300dlu"); // zeilen
+				"20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 300dlu, 3dlu, 20dlu"); // zeilen
 		
         DefaultFormBuilder builder = new DefaultFormBuilder(verfahrenLayout, this);
         builder.setDefaultDialogBorder();
@@ -96,6 +101,7 @@ public class AbaVerfahrenPanel extends JPanel {
         builder.add(new JScrollPane(rightList), cc.xywh(5, 3, 1, 9));
         builder.add(uebernehmenButton, cc.xy(3, 5));
         builder.add(entfernenButton, cc.xy(3, 7));
+        builder.add(saveAbaverfButton, cc.xy(3, 13));
         builder.nextLine();
         
 
@@ -111,15 +117,15 @@ public class AbaVerfahrenPanel extends JPanel {
                 this.hauptModul.getObjekt().getId());
             log.debug("Abwasserbehandlungsanlage aus DB geholt: " + this.fachdaten);
 
-        this.zabaverflist = new ArrayList<ZAbaVerfahren>(fachdaten.getZAbaVerfahrens());
+        this.abaverflist = new ArrayList<Abaverfahren>(fachdaten.getAbaverfahrens());
                 
     }
 
     public void updateForm() throws RuntimeException {
                
     	rightListModel.clear();
-        for (int i = 0; i < zabaverflist.size(); i++) {
-        	rightListModel.addElement(zabaverflist.get(i).getAbaverfahren());
+        for (int i = 0; i < abaverflist.size(); i++) {
+        	rightListModel.addElement((Abaverfahren) abaverflist.toArray()[i]);
         }
 		
 		this.rightList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -161,6 +167,38 @@ public class AbaVerfahrenPanel extends JPanel {
 		}
 	
 		return this.leftList;
+	}
+
+	private JButton getSaveAbaverfButton() {
+	    if (this.saveAbaverfButton == null) {
+	        this.saveAbaverfButton = new JButton("Speichern");
+	
+	        this.saveAbaverfButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                enableAll(false);
+	                if (saveAbaverf()) {
+	                	AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
+	                        "List der Abwasserbehandklungsverfahren "
+	                            + AbaVerfahrenPanel.this.fachdaten.getId()
+	                            + " erfolgreich gespeichert.",
+	                        HauptFrame.SUCCESS_COLOR);
+	                } else {
+	                	AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
+	                        "Fehler beim Speichern des Zahnarztes!",
+	                        HauptFrame.ERROR_COLOR);
+	                }
+	
+	                AbaVerfahrenPanel.this.hauptModul.fillForm();
+	            }
+
+				private boolean saveAbaverf() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+	        });
+	    }
+	    return this.saveAbaverfButton;
 	}
 
 

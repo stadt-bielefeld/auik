@@ -23,18 +23,19 @@
 
 package de.bielefeld.umweltamt.aui.mappings.elka;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * A class that represents a row in the Aba database table.<br>
@@ -66,10 +67,10 @@ public class Aba  implements java.io.Serializable {
     private Boolean einzelabnahmeToc;
     private Boolean enabled;
     private Boolean deleted;
-    private Set<ZAbaWasserrecht> ZAbaWasserrechts = new HashSet<ZAbaWasserrecht>(0);
     private Set<Referenz> referenzsForZAbaNr = new HashSet<Referenz>(0);
-    private Set<ZAbaVerfahren> ZAbaVerfahrens = new HashSet<ZAbaVerfahren>(0);
     private Set<Referenz> referenzsForQAbaNr = new HashSet<Referenz>(0);
+    private Set<Wasserrecht> Wasserrechts = new HashSet<Wasserrecht>(0);
+    private Set<Abaverfahren> Abaverfahrens = new HashSet<Abaverfahren>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -87,7 +88,7 @@ public class Aba  implements java.io.Serializable {
 
     /** Full constructor */
     public Aba(
-        Integer id, Integer objektid, Integer ansprAdrId, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, Date inbetriebDat, Date stillgelegtDat, Boolean genehmpflichtigToc, Integer e32, Integer n32, Integer sonstZulOpt, Integer verfahrenNr, Boolean wartungsvertragToc, Boolean einzelabnahmeToc, Boolean enabled, Boolean deleted, Set<ZAbaWasserrecht> ZAbaWasserrechts, Set<Referenz> referenzsForZAbaNr, Set<ZAbaVerfahren> ZAbaVerfahrens, Set<Referenz> referenzsForQAbaNr) {
+        Integer id, Integer objektid, Integer ansprAdrId, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, Date inbetriebDat, Date stillgelegtDat, Boolean genehmpflichtigToc, Integer e32, Integer n32, Integer sonstZulOpt, Integer verfahrenNr, Boolean wartungsvertragToc, Boolean einzelabnahmeToc, Boolean enabled, Boolean deleted, Set<Wasserrecht> Wasserrechts, Set<Referenz> referenzsForZAbaNr, Set<Abaverfahren> Abaverfahrens, Set<Referenz> referenzsForQAbaNr) {
         this.id = id;
         this.ansprAdrId = ansprAdrId;
         this.aktualDat = aktualDat;
@@ -105,9 +106,9 @@ public class Aba  implements java.io.Serializable {
         this.einzelabnahmeToc = einzelabnahmeToc;
         this.enabled = enabled;
         this.deleted = deleted;
-        this.ZAbaWasserrechts = ZAbaWasserrechts;
+        this.Wasserrechts = Wasserrechts;
         this.referenzsForZAbaNr = referenzsForZAbaNr;
-        this.ZAbaVerfahrens = ZAbaVerfahrens;
+        this.Abaverfahrens = Abaverfahrens;
         this.referenzsForQAbaNr = referenzsForQAbaNr;
     }
 
@@ -256,12 +257,12 @@ public class Aba  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    public Set<ZAbaWasserrecht> getZAbaWasserrechts() {
-        return this.ZAbaWasserrechts;
+    public Set<Wasserrecht> getWasserrechts() {
+        return this.Wasserrechts;
     }
 
-    public void setZAbaWasserrechts(Set<ZAbaWasserrecht> ZAbaWasserrechts) {
-        this.ZAbaWasserrechts = ZAbaWasserrechts;
+    public void setWasserrechts(Set<Wasserrecht> Wasserrechts) {
+        this.Wasserrechts = Wasserrechts;
     }
 
     public Set<Referenz> getReferenzsForZAbaNr() {
@@ -272,12 +273,12 @@ public class Aba  implements java.io.Serializable {
         this.referenzsForZAbaNr = referenzsForZAbaNr;
     }
 
-    public Set<ZAbaVerfahren> getZAbaVerfahrens() {
-        return this.ZAbaVerfahrens;
+    public Set<Abaverfahren> getAbaverfahrens() {
+        return this.Abaverfahrens;
     }
 
-    public void setZAbaVerfahrens(Set<ZAbaVerfahren> ZAbaVerfahrens) {
-        this.ZAbaVerfahrens = ZAbaVerfahrens;
+    public void setAbaverfahrens(Set<Abaverfahren> Abaverfahrens) {
+        this.Abaverfahrens = Abaverfahrens;
     }
 
     public Set<Referenz> getReferenzsForQAbaNr() {
@@ -326,9 +327,9 @@ public class Aba  implements java.io.Serializable {
         buffer.append("einzelabnahmeToc").append("='").append(getEinzelabnahmeToc()).append("' ");			
         buffer.append("enabled").append("='").append(getEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
-        buffer.append("ZAbaWasserrechts").append("='").append(getZAbaWasserrechts()).append("' ");			
+        buffer.append("Wasserrechts").append("='").append(getWasserrechts()).append("' ");			
         buffer.append("referenzsForZAbaNr").append("='").append(getReferenzsForZAbaNr()).append("' ");			
-        buffer.append("ZAbaVerfahrens").append("='").append(getZAbaVerfahrens()).append("' ");			
+        buffer.append("Abaverfahrens").append("='").append(getAbaverfahrens()).append("' ");			
         buffer.append("referenzsForQAbaNr").append("='").append(getReferenzsForQAbaNr()).append("' ");			
         buffer.append("]");
 
@@ -413,9 +414,9 @@ public class Aba  implements java.io.Serializable {
         this.einzelabnahmeToc = copy.getEinzelabnahmeToc();            
         this.enabled = copy.getEnabled();            
         this.deleted = copy.getDeleted();            
-        this.ZAbaWasserrechts = copy.getZAbaWasserrechts();            
+        this.Wasserrechts = copy.getWasserrechts();            
         this.referenzsForZAbaNr = copy.getReferenzsForZAbaNr();            
-        this.ZAbaVerfahrens = copy.getZAbaVerfahrens();            
+        this.Abaverfahrens = copy.getAbaverfahrens();            
         this.referenzsForQAbaNr = copy.getReferenzsForQAbaNr();            
     }    
 
@@ -467,4 +468,11 @@ public class Aba  implements java.io.Serializable {
         Set<Aba> list = objekt.getAbas();
         return list.iterator().next();
     }
+
+	public List<Object> getSortedVerfahren() {
+		Set<Abaverfahren> items = getAbaverfahrens();
+		List<Object> sortedVerfahren = items.stream().collect(Collectors.toList());
+		return sortedVerfahren;
+
+	}
 }

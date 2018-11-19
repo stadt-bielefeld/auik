@@ -61,14 +61,6 @@
 		<property name="deleted" type="java.lang.Boolean">
 			<column name="_deleted" />
 		</property>
-		<set name="ZAbaWasserrechts" table="z_aba_wasserrecht"
-			inverse="true" lazy="true" fetch="select">
-			<key>
-				<column name="anlage_nr" not-null="true" />
-			</key>
-			<one-to-many
-				class="de.bielefeld.umweltamt.aui.mappings.elka.ZAbaWasserrecht" />
-		</set>
 		<set name="referenzsForZAbaNr" table="referenz" inverse="true"
 			lazy="true" fetch="select">
 			<key>
@@ -77,14 +69,6 @@
 			<one-to-many
 				class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
 		</set>
-		<set name="ZAbaVerfahrens" table="z_aba_verfahren" inverse="true"
-			 lazy="false" fetch="select">
-			<key>
-				<column name="anlage_nr" not-null="true" />
-			</key>
-			<one-to-many
-				class="de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren" />
-		</set>
 		<set name="referenzsForQAbaNr" table="referenz" inverse="true"
 			lazy="true" fetch="select">
 			<key>
@@ -92,6 +76,18 @@
 			</key>
 			<one-to-many
 				class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+		</set>
+        <set name="Wasserrechts" table="elka.e_z_aba_wasserrecht" lazy="false" fetch="select">
+  	 		<key>
+  				<column name="anlage_nr" not-null="true" />
+  	 		</key>
+   		  <many-to-many column="wasserrecht_nr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" />
+        </set>
+		<set name="Abaverfahrens" table="elka.z_aba_verfahren" lazy="false" fetch="select">
+		  <key>
+			<column name="anlage_nr" not-null="true" />
+		  </key>
+		<many-to-many column="abwasbehverf_nr" class="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" />
 		</set>
 	</class>
 

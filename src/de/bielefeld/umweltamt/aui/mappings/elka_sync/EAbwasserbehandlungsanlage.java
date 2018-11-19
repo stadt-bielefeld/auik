@@ -70,7 +70,7 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
             Boolean genehmpflichtigTog, Boolean einzelabnahmeTog,
             String bemerkung, Date aktualDat, Date erstellDat,
             String herkunft, Set<EWasserrecht> wasserrechts, 
-            Set<EZAbaVerfahren> eZAbaVerfahrens) {
+            Set<Abaverfahren> Abwasserbehandlungsverfahrens) {
         this.nr = nr;
         this.origNr = origNr;
         this.standort = standort;
