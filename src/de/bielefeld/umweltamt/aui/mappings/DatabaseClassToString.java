@@ -474,7 +474,7 @@ public class DatabaseClassToString {
 
     /** @return Entsorger.toGuiString() */
     public static String toStringForClass(Entsorger clazz) {
-        return clazz.toGuiString();
+        return clazz.getEntsorger();
     }
 
     /**

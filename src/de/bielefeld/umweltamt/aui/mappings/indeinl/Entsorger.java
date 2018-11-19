@@ -329,8 +329,7 @@ public class Entsorger  implements java.io.Serializable {
     }
 
 	public String toGuiString() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.toString();
 	}
 
     /* Custom code goes below here! */

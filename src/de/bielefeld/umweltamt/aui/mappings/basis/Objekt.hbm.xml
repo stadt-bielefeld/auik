@@ -55,6 +55,9 @@
         <property name="abwasserfrei" type="java.lang.Boolean">
             <column name="abwasserfrei" />
         </property>
+        <property name="elkarelevant" type="java.lang.Boolean">
+            <column name="elkarelevant" />
+        </property>
         <set name="objektverknuepfungsForIstVerknuepftMit" table="objektverknuepfung" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ist_verknuepft_mit" />

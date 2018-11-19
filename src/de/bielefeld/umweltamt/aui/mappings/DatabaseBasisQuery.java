@@ -379,8 +379,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	public static Boolean cascadePriority(String prioritaet, Objekt basisObjekt) {
 		Boolean result = true;
 		List<Objekt> list = new DatabaseAccess().executeCriteriaToList(
-				DetachedCriteria.forClass(Objekt.class).add(Restrictions.eq("adresse", basisObjekt.getAdresses()))
-						.add(Restrictions.eq("lage", basisObjekt.getStandortid().getLage())),
+				DetachedCriteria.forClass(Objekt.class)
+					.add(Restrictions.eq("betreiberid", basisObjekt.getBetreiberid()))
+					.add(Restrictions.eq("standortid", basisObjekt.getStandortid())),
 				new Objekt());
 		for (Objekt objekt : list) {
 			objekt.setPrioritaet(prioritaet);
@@ -521,9 +522,11 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	public static List<Objektchrono> getAllChronos(Objekt objekt) {
 		return new DatabaseAccess().executeCriteriaToList(
-				DetachedCriteria.forClass(Objektchrono.class).createAlias("objekt", "objekt")
-						.add(Restrictions.eq("objekt.adresse", objekt.getAdresses()))
-						.add(Restrictions.eq("objekt.lage", objekt.getStandortid().getLage())).addOrder(Order.asc("datum")),
+				DetachedCriteria.forClass(Objektchrono.class)
+						.createAlias("objekt", "objekt")
+						.add(Restrictions.eq("objekt.betreiberid", objekt.getBetreiberid()))
+						.add(Restrictions.eq("objekt.standortid", objekt.getStandortid()))
+						.addOrder(Order.asc("datum")),
 				new Objektchrono());
 	}
 

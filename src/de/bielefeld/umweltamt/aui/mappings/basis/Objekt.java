@@ -79,6 +79,7 @@ public class Objekt  implements java.io.Serializable {
     private boolean enabled;
     private boolean deleted;
     private Boolean abwasserfrei;
+    private Boolean elkarelevant;
     private Set<Objektverknuepfung> objektverknuepfungsForIstVerknuepftMit = new HashSet<Objektverknuepfung>(0);
     private Set<Anh53Fachdaten> anh53Fachdatens = new HashSet<Anh53Fachdaten>(0);
     private Set<Anh40Fachdaten> anh40Fachdatens = new HashSet<Anh40Fachdaten>(0);
@@ -119,7 +120,7 @@ public class Objekt  implements java.io.Serializable {
 
     /** Full constructor */
     public Objekt(
-        Standort standortid, Adresse betreiberid, Objektarten objektarten, Sachbearbeiter sachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Set<Objektverknuepfung> objektverknuepfungsForIstVerknuepftMit, Set<Anh53Fachdaten> anh53Fachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<BwkFachdaten> bwkFachdatens, Set<Wasserrecht> wasserrechts, Set<Adresse> adresses, Set<Anh49Fachdaten> anh49Fachdatens, Set<SuevFachdaten> suevFachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Messstelle> messstelles, Set<Sonderbauwerk> sonderbauwerks, Set<Entwaesserungsgrundstueck> entwaesserungsgrundstuecks, Set<Objektchrono> objektchronos, Set<Objektverknuepfung> objektverknuepfungsForObjekt, Set<Anh55Fachdaten> anh55Fachdatens, Set<Fachdaten> fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
+        Standort standortid, Adresse betreiberid, Objektarten objektarten, Sachbearbeiter sachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Boolean elkarelevant, Set<Objektverknuepfung> objektverknuepfungsForIstVerknuepftMit, Set<Anh53Fachdaten> anh53Fachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<BwkFachdaten> bwkFachdatens, Set<Wasserrecht> wasserrechts, Set<Adresse> adresses, Set<Anh49Fachdaten> anh49Fachdatens, Set<SuevFachdaten> suevFachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Messstelle> messstelles, Set<Sonderbauwerk> sonderbauwerks, Set<Entwaesserungsgrundstueck> entwaesserungsgrundstuecks, Set<Objektchrono> objektchronos, Set<Objektverknuepfung> objektverknuepfungsForObjekt, Set<Anh55Fachdaten> anh55Fachdatens, Set<Fachdaten> fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
         this.standortid = standortid;
         this.betreiberid = betreiberid;
         this.objektarten = objektarten;
@@ -136,6 +137,7 @@ public class Objekt  implements java.io.Serializable {
         this.enabled = enabled;
         this.deleted = deleted;
         this.abwasserfrei = abwasserfrei;
+        this.elkarelevant = elkarelevant;
         this.objektverknuepfungsForIstVerknuepftMit = objektverknuepfungsForIstVerknuepftMit;
         this.anh53Fachdatens = anh53Fachdatens;
         this.anh40Fachdatens = anh40Fachdatens;
@@ -293,7 +295,15 @@ public class Objekt  implements java.io.Serializable {
         this.abwasserfrei = abwasserfrei;
     }
 
-    public Set<Objektverknuepfung> getObjektverknuepfungsForIstVerknuepftMit() {
+	public Boolean getElkarelevant() {
+		return elkarelevant;
+	}
+
+	public void setElkarelevant(Boolean elkarelevant) {
+		this.elkarelevant = elkarelevant;
+	}
+
+	public Set<Objektverknuepfung> getObjektverknuepfungsForIstVerknuepftMit() {
         return this.objektverknuepfungsForIstVerknuepftMit;
     }
 
@@ -498,6 +508,7 @@ public class Objekt  implements java.io.Serializable {
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("abwasserfrei").append("='").append(getAbwasserfrei()).append("' ");
+        buffer.append("elkarelevant").append("='").append(getElkarelevant()).append("' ");
         buffer.append("objektverknuepfungsForIstVerknuepftMit").append("='").append(getObjektverknuepfungsForIstVerknuepftMit()).append("' ");
         buffer.append("anh53Fachdatens").append("='").append(getAnh53Fachdatens()).append("' ");
         buffer.append("anh40Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
@@ -597,6 +608,7 @@ public class Objekt  implements java.io.Serializable {
         this.enabled = copy.isEnabled();
         this.deleted = copy.isDeleted();
         this.abwasserfrei = copy.getAbwasserfrei();
+        this.elkarelevant = copy.getElkarelevant();
         this.objektverknuepfungsForIstVerknuepftMit = copy.getObjektverknuepfungsForIstVerknuepftMit();
         this.anh53Fachdatens = copy.getAnh53Fachdatens();
         this.anh40Fachdatens = copy.getAnh40Fachdatens();
