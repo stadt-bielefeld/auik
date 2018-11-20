@@ -614,10 +614,10 @@ public class BasisPanel extends JPanel {
     private JComboBox sachbearbeiterBox;
     private TextFieldDateChooser wiedervorlageDatum = null;
     private JCheckBox inaktivBox;
-    private JCheckBox abwasserfreiBox;
+    private JCheckBox elkarelevantBox;
     private JFormattedTextField prioritaetFeld;
     private JLabel prioritaetLabel;
-    private JLabel abwasserfreiLabel;
+    private JLabel elkarelevantLabel;
     private JTextArea beschreibungsArea;
     private JButton saveButton;
 
@@ -681,7 +681,7 @@ public class BasisPanel extends JPanel {
         builder.append("Inaktiv:", getInaktivBox());
         builder.nextLine();
 
-        builder.append(getAbwasserfreiLabel(), getAbwasserfreiBox());	
+        builder.append(getElkarelevantLabel(), getElkarelevantBox());	
 		builder.nextLine();
 
 		builder.append(getPrioritaetLabel(), getPrioritaetFeld());		
@@ -737,8 +737,8 @@ public class BasisPanel extends JPanel {
         if (neu == true) {
             // Create a new object
 			log.debug("Creating new Objekt");
-            //TODO: set new Objekt's abwasserFrei-Field to a default value?
-			hauptModul.getObjekt().setAbwasserfrei(new Boolean(false));
+            //TODO: set new Objekt's elkarelevant-Field to a default value?
+			hauptModul.getObjekt().setElkarelevant(new Boolean(false));
 			// Only load enabled Sachbearbeiter
             getSachbearbeiterBox().setModel(new DefaultComboBoxModel(
                 DatabaseQuery.getEnabledSachbearbeiter()));
@@ -900,13 +900,13 @@ public class BasisPanel extends JPanel {
 				log.debug("hauptModul null");
 			if(this.hauptModul.getObjekt() == null)
 				log.debug("hauptModul.getObjekt() null");
-			if(this.hauptModul.getObjekt().getAbwasserfrei() == null)
-				log.debug("hauptModul.getObjekt().getAbwasserfrei() null");
+			if(this.hauptModul.getObjekt().getElkarelevant() == null)
+				log.debug("hauptModul.getObjekt().getElkarelevant() null");
 				
-			log.debug("Abwasserfrei: " + hauptModul.getObjekt().getAbwasserfrei().booleanValue() );
+			log.debug("ELKA relevant: " + hauptModul.getObjekt().getElkarelevant().booleanValue() );
 			log.debug("Objekt: " + hauptModul.getObjekt().toString());
-			getAbwasserfreiBox().setSelected(
-                    this.hauptModul.getObjekt().getAbwasserfrei());
+			getElkarelevantBox().setSelected(
+                    this.hauptModul.getObjekt().getElkarelevant());
 
             if (!neu) {
                 if (this.hauptModul.getObjekt().getPrioritaet() != null) {
@@ -920,13 +920,13 @@ public class BasisPanel extends JPanel {
 						.getAbteilung().equals("360.33")) {
 					getPrioritaetFeld().setVisible(true);
 					getPrioritaetLabel().setVisible(true);
-					getAbwasserfreiBox().setVisible(true);
-					getAbwasserfreiLabel().setVisible(true);
+					getElkarelevantBox().setVisible(true);
+					getElkarelevantLabel().setVisible(true);
 				} else {
 					getPrioritaetFeld().setVisible(false);
 					getPrioritaetLabel().setVisible(false);
-					getAbwasserfreiBox().setVisible(false);
-					getAbwasserfreiLabel().setVisible(false);
+					getElkarelevantBox().setVisible(false);
+					getElkarelevantLabel().setVisible(false);
 				}
 			}
 
@@ -1008,7 +1008,7 @@ public class BasisPanel extends JPanel {
         Date wiedervorlage = this.wiedervorlageDatum.getDate();
         this.hauptModul.getObjekt().setWiedervorlage(wiedervorlage);
         this.hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
-        this.hauptModul.getObjekt().setAbwasserfrei(getAbwasserfreiBox().isSelected());
+        this.hauptModul.getObjekt().setElkarelevant(getElkarelevantBox().isSelected());
 
 //        Objekt tmp = Objekt.saveObjekt(
 //            this.hauptModul.getObjekt(), prio);
@@ -1382,11 +1382,11 @@ public class BasisPanel extends JPanel {
         return this.inaktivBox;
     }
 
-    private JCheckBox getAbwasserfreiBox() {
-        if (this.abwasserfreiBox == null) {
-            this.abwasserfreiBox = new JCheckBox();
+    private JCheckBox getElkarelevantBox() {
+        if (this.elkarelevantBox == null) {
+            this.elkarelevantBox = new JCheckBox();
         }
-        return this.abwasserfreiBox;
+        return this.elkarelevantBox;
     }
 
     private JFormattedTextField getPrioritaetFeld() {
@@ -1405,12 +1405,12 @@ public class BasisPanel extends JPanel {
         return this.prioritaetLabel;
     }
 
-    private JLabel getAbwasserfreiLabel() {
-        if (this.abwasserfreiLabel == null) {
-            this.abwasserfreiLabel = new JLabel("abwasserfrei:");
-            this.abwasserfreiLabel.setVisible(false);
+    private JLabel getElkarelevantLabel() {
+        if (this.elkarelevantLabel == null) {
+            this.elkarelevantLabel = new JLabel("ELKA relevant:");
+            this.elkarelevantLabel.setVisible(false);
         }
-        return this.abwasserfreiLabel;
+        return this.elkarelevantLabel;
     }
 
     public JTextArea getBeschreibungsArea() {

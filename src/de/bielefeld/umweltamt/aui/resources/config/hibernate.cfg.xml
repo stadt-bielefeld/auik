@@ -61,9 +61,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Sachbearbeiter.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Strassen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/TabStreets.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/View360x33.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/ViewBasisStandort.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/ViewBetriebe.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/ViewTwoWayObjektverknuepfung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Wirtschaftszweig.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Aba.hbm.xml" />
