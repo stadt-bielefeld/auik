@@ -48,12 +48,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
-import de.bielefeld.umweltamt.aui.mappings.basis.View360x33;
-import de.bielefeld.umweltamt.aui.mappings.basis.View360x33Id;
-import de.bielefeld.umweltamt.aui.mappings.basis.ViewBasisStandort;
-import de.bielefeld.umweltamt.aui.mappings.basis.ViewBasisStandortId;
-import de.bielefeld.umweltamt.aui.mappings.basis.ViewBetriebe;
-import de.bielefeld.umweltamt.aui.mappings.basis.ViewBetriebeId;
 import de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfungId;
 import de.bielefeld.umweltamt.aui.mappings.basis.Prioritaet;
@@ -651,42 +645,12 @@ public class DatabaseClassToString {
 		return clazz.getStandortId().toString();
 	}
 
-	public static String toStringForClass(View360x33 view360x33) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(View360x33Id view360x33Id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(Onlinekartendienst onlinekartendienst) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public static String toStringForClass(OnlinekartendienstId onlinekartendienstId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewBasisStandort viewBasisStandort) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewBasisStandortId viewBasisStandortId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewBetriebe viewBetriebe) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewBetriebeId viewBetriebeId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
