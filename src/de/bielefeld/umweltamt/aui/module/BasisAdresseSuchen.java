@@ -241,8 +241,8 @@ public class BasisAdresseSuchen extends AbstractModul {
 			builder.add(getHausnrFeld(), cc.xy(7, 3));
 			builder.addLabel("Ort:", cc.xy(9, 3));
 			builder.add(getOrtFeld(), cc.xy(11, 3));
-            builder.add(getSubmitButtonBetreiber(), cc.xy(13, 3));
-            builder.add(getSubmitButtonStandort(), cc.xy(15, 3));
+//            builder.add(getSubmitButtonBetreiber(), cc.xy(13, 3));
+//            builder.add(getSubmitButtonStandort(), cc.xy(15, 3));
             builder.add(this.tabellenSplit, cc.xyw(1, 5, 15));
 
             this.panel = builder.getPanel();
@@ -612,9 +612,11 @@ public class BasisAdresseSuchen extends AbstractModul {
                     if (row != -1) {
                         Adresse betr = BasisAdresseSuchen.this.betreiberModel
                             .getRow(row);
+                        if(betr.getStandorts().size() > 0) {
                         BasisAdresseSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.use_standort",
-                                betr.getId().intValue(), false);
+                                betr.getStandort().getId().intValue(), false);
+                        }
                         BasisAdresseSuchen.this.manager.getSettingsManager()
                         .setSetting("auik.imc.use_betreiber",
                             betr.getId().intValue(), false);

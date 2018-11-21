@@ -128,7 +128,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	}
 
 	/**
-	 * Get a formatted string for a BasisStandortAdresse
+	 * Get a formatted string for a StandortAdresse
 	 * 
 	 * @param standort
 	 *            Standort
@@ -392,7 +392,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get a list of all priorities. The list contains an array with
-	 * <code>Lage</code>, <code>Adresse</code>, <code>String</code> (priority) and
+	 * <code>Standort</code>, <code>Adresse</code>, <code>String</code> (priority) and
 	 * <code>Sachbearbeiter</code>
 	 * 
 	 * @return <code>List&lt;?&gt;</code>
@@ -711,9 +711,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	}
 
 	/**
-	 * Returns a List of all Adresse and BasisLage objects that are connected
-	 * through a BasisMapAdresseLage object Output format is
-	 * List<[Adresse][BasisLage]>
+	 * Returns a List of all Adresse and Standort objects that are 
+	 * connected Output format is
+	 * List<[Adresse][Standort]>
 	 * 
 	 * @param strasse
 	 *            String
@@ -816,6 +816,10 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		query += " AND ";
 
 		query += "LOWER(adresse.betrname) like '" + search.toLowerCase() + "%' ";
+
+		query += " AND ";
+
+		query += "adresse.deleted = false";
 
 		query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
 		return HibernateSessionFactory.currentSession().createQuery(query).list();

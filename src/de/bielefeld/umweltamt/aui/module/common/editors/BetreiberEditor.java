@@ -120,8 +120,8 @@ public class BetreiberEditor extends AbstractBaseEditor {
 	private JTextField handzeichenNeuFeld;
 	private JTextField flurFeld;
 	private JTextField flurStkFeld;
-	private JFormattedTextField e32Feld;
-	private JFormattedTextField n32Feld;
+	private DoubleField e32Feld;
+	private DoubleField n32Feld;
 	private JButton ausAblageButton;
 	private JComboBox gemarkungBox;
 	private JComboBox entwGebBox;
@@ -688,7 +688,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		Wirtschaftszweig wizw = (Wirtschaftszweig) wirtschaftszweigBox.getSelectedItem();
 		getBetreiber().setWirtschaftszweig(wizw);
 
-		if ((Float) e32Feld.getValue() != 0.0 && (Float) n32Feld.getValue() != 0.0) {
+		if (Double.parseDouble(e32Feld.getValue().toString()) != 0.0 && Double.parseDouble(n32Feld.getValue().toString()) != 0.0) {
 			
 			if (standort == null) {
 			standort = new Standort();

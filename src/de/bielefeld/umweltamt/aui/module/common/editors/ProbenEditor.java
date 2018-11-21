@@ -453,8 +453,9 @@ public class ProbenEditor extends AbstractApplyEditor {
             tmp.setParameter((Parameter) ProbenEditor.this.parameterBox
                 .getSelectedItem());
             tmp.setWert(new Float(0));
-            tmp.setEinheiten(Einheiten.findById(tmp.getParameter()
-                .getWirdgemessenineinheit()));
+			if (tmp.getParameter() != null) {
+				tmp.setEinheiten(Einheiten.findById(tmp.getParameter().getWirdgemessenineinheit()));
+			}
             // tmp.setAnalyseVon("");
             return tmp;
         }
@@ -1447,14 +1448,6 @@ public class ProbenEditor extends AbstractApplyEditor {
             this.isNew = false;
         }
 
-        // Analysepositionen
-//        Set<AtlAnalyseposition> newPositionen = new HashSet<AtlAnalyseposition>(
-//            this.parameterModel.getList());
-//        getProbe().getAtlAnalysepositionen().clear();
-//        getProbe().getAtlAnalysepositionen().addAll(newPositionen);
-//        // getProbe().setAtlAnalysepositionen(newPositionen);
-//        log.debug("Analysepositionen geändert: "
-//            + getProbe().getAtlAnalysepositionen());
         List<?> objects = this.parameterModel.getList();
         Analyseposition position;
         for (Object object : objects) {

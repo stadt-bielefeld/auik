@@ -573,8 +573,8 @@ public class Adresse  implements java.io.Serializable {
     }
 
 	public Standort getStandort() {
-		// TODO Auto-generated method stub
-		return null;
+		Standort std = (Standort) getStandorts().toArray()[0];
+		return std;
 	}
 
     /* Custom code goes below here! */
