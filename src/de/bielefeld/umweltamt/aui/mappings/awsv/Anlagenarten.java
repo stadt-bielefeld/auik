@@ -243,8 +243,7 @@ public class Anlagenarten  implements java.io.Serializable {
     }
 
 	public String toGuiString() {
-		// TODO Auto-generated method stub
-		return null;
+        return getAnlagenart(); 
 	}
 
     /* Custom code goes below here! */

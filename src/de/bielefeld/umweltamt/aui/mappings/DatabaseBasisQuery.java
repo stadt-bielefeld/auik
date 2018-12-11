@@ -277,10 +277,12 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				+ " WHERE o.standortid = s.id AND s.adresseid = a.id AND o.objektartid = art.id"
 				+ " AND a.strasse = '" + strasse + "'"
 				+ " AND a.hausnr = " + hausnr
-				+ " AND CASE WHEN (hausnrzus IS NOT NULL) THEN (a.hausnrzus = '" + hausnrzus + "') ELSE (a.hausnrzus IS NULL) END"
-				+ " AND o._deleted = false ORDER BY o.inaktiv, o.objektartid";
+				+ " AND o._deleted = false";
 
 		String filter = " ";
+		if (hausnrzus != null) {
+			filter += " AND a.hausnrzus = '" + hausnrzus + "' ";
+		}
 		if (abteilung != null) {
 			filter += " AND art.abteilung = '" + abteilung + "' ";
 		}
@@ -292,6 +294,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 			}
 		}
+		filter += " ORDER BY o.inaktiv, o.objektartid";
 		query += filter + ";";
 		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("o", Objekt.class);

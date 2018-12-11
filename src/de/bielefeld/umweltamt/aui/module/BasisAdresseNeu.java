@@ -846,7 +846,7 @@ public class BasisAdresseNeu extends AbstractModul
 			 * cascade=All so konfiguriert ist, dass die Tabellen Basis_Adresse und
 			 * Basis_Lage ebenfalls gespeichert werden.
 			 */
-			if ((Float) e32Feld.getValue() != 0.0 && (Float) n32Feld.getValue() != 0.0) {
+			if (((DoubleField) e32Feld).getFloatValue() != 0.0 && ((DoubleField) n32Feld).getFloatValue() != 0.0) {
 				Standort persistentAL = null;
 				persistentAL = Standort.merge(standort);
 

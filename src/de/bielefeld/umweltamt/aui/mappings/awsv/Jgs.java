@@ -464,7 +464,7 @@ public class Jgs  implements java.io.Serializable {
     /* Custom code goes below here! */
 
     public static Jgs findByBehaelterid(Integer id){
-        Fachdaten fd = (Fachdaten) HibernateSessionFactory.currentSession().createQuery("from VawsFachdaten where behaelterid= " + id).list().get(0);
+        Fachdaten fd = (Fachdaten) HibernateSessionFactory.currentSession().createQuery("from Fachdaten where behaelterid= " + id).list().get(0);
         Set<Jgs> list = fd.getJgses();
 		if (list.size() != 0) {
 			return list.iterator().next();

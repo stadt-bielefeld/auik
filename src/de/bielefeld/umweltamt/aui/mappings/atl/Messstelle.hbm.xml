@@ -40,7 +40,7 @@
         </property>
         <set name="probenahmes" table="probenahme" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="objektid" />
+                <column name="messstid" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.Probenahme" />
         </set>

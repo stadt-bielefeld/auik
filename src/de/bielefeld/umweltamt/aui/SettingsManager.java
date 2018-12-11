@@ -96,6 +96,7 @@ import java.util.Properties;
 import java.util.TreeMap;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SortedProperties;
 
@@ -111,7 +112,7 @@ public class SettingsManager {
 	/** GUI Manager */
 	private static final GUIManager guiManager = GUIManager.getInstance();
 
-	private Lage standort;
+	private Standort standort;
 	private Properties instanceSettings;
 	private SortedProperties appSettings;
 
@@ -309,7 +310,7 @@ public class SettingsManager {
 	 * @param persist
 	 *            Soll die Einstellung beim Programm-Ende gespeichert werden.
 	 */
-	public void setStandort(Lage std) {
+	public void setStandort(Standort std) {
 		this.standort = std;
 	}
 
@@ -399,7 +400,7 @@ public class SettingsManager {
 	 * @return Den Wert der Einstellung oder <code>false</code>, falls diese
 	 *         nicht existiert.
 	 */
-	public Lage getStandort() {
+	public Standort getStandort() {
 
 		return standort;
 

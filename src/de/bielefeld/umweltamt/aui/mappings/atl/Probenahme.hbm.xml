@@ -11,7 +11,7 @@
             <column name="sachbearbeiter" />
         </many-to-one>
         <many-to-one name="messstelle" class="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" fetch="select">
-            <column name="objektid" />
+            <column name="messstid" />
         </many-to-one>
         <many-to-one name="status" class="de.bielefeld.umweltamt.aui.mappings.atl.Status" fetch="select">
             <column name="status" />
