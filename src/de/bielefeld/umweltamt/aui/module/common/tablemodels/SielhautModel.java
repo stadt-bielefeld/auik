@@ -1,7 +1,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
+import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -20,7 +20,7 @@ public class SielhautModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        AtlSielhaut spunkt = (AtlSielhaut) objectAtRow;
+        Sielhaut spunkt = (Sielhaut) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -52,7 +52,7 @@ public class SielhautModel extends ListTableModel {
                 }
                 break;
             case 5:
-                if (spunkt.getAtlProbepkt().getBasisObjekt().isInaktiv() == true) {
+                if (spunkt.getMessstelle().getObjekt().isInaktiv() == true) {
                     tmp = new Boolean(true);
                 } else {
                     tmp = new Boolean(false);

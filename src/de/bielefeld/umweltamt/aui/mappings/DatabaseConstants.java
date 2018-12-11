@@ -21,9 +21,9 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 
 /**
  * This is a service class for all database constants.<br>
@@ -42,10 +42,10 @@ public class DatabaseConstants {
     /* ********************************************************************** */
 
     /* AtlEinheiten */
-    public static final AtlEinheiten ATL_EINHEIT_MG_L =
-        AtlEinheiten.findById(42);
-    public static final AtlEinheiten ATL_EINHEIT_MG_KG =
-        AtlEinheiten.findById(43);
+    public static final Einheiten ATL_EINHEIT_MG_L =
+        Einheiten.findById(42);
+    public static final Einheiten ATL_EINHEIT_MG_KG =
+        Einheiten.findById(43);
 
     /* AtlParameter */
     public static final String ATL_PARAMETER_ID_AMMONIUM_STICKSTOFF = "L12490";
@@ -99,28 +99,28 @@ public class DatabaseConstants {
     public static final Integer ATL_PROBEART_ID_ZULAUF = 9;
 
     /* AtlKlÃ¤ranlage */
-    public static final AtlKlaeranlagen ATL_KLAERANLAGE_HEEPEN =
-        AtlKlaeranlagen.findById(1);
-    public static final AtlKlaeranlagen ATL_KLAERANLAGE_BRAKE =
-        AtlKlaeranlagen.findById(4);
-    public static final AtlKlaeranlagen ATL_KLAERANLAGE_OBERE_LUTTER =
-        AtlKlaeranlagen.findById(5);
-    public static final AtlKlaeranlagen ATL_KLAERANLAGE_SENNESTADT =
-        AtlKlaeranlagen.findById(8);
-    public static final AtlKlaeranlagen ATL_KLAERANLAGE_VERL_SENDE =
-        AtlKlaeranlagen.findById(9);
+    public static final Klaeranlage ATL_KLAERANLAGE_HEEPEN =
+        Klaeranlage.findById(1);
+    public static final Klaeranlage ATL_KLAERANLAGE_BRAKE =
+        Klaeranlage.findById(4);
+    public static final Klaeranlage ATL_KLAERANLAGE_OBERE_LUTTER =
+        Klaeranlage.findById(5);
+    public static final Klaeranlage ATL_KLAERANLAGE_SENNESTADT =
+        Klaeranlage.findById(8);
+    public static final Klaeranlage ATL_KLAERANLAGE_VERL_SENDE =
+        Klaeranlage.findById(9);
 
     /* AtlStatus */
-    public static final AtlStatus ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT =
-        AtlStatus.findById(8);
-    public static final AtlStatus ATL_STATUS_ERGAENZT_UND_FREIGEGEBEN =
-        AtlStatus.findById(9);
-    public static final AtlStatus ATL_STATUS_DATEN_EINGETRAGEN =
-        AtlStatus.findById(10);
-    public static final AtlStatus ATL_STATUS_FREIGEGEBEN_FUER_BESCHEIDDRUCK =
-        AtlStatus.findById(11);
-    public static final AtlStatus ATL_STATUS_BESCHEID_GEDRUCKT =
-        AtlStatus.findById(3);
+    public static final Status ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT =
+        Status.findById(8);
+    public static final Status ATL_STATUS_ERGAENZT_UND_FREIGEGEBEN =
+    	Status.findById(9);
+    public static final Status ATL_STATUS_DATEN_EINGETRAGEN =
+    	Status.findById(10);
+    public static final Status ATL_STATUS_FREIGEGEBEN_FUER_BESCHEIDDRUCK =
+    	Status.findById(11);
+    public static final Status ATL_STATUS_BESCHEID_GEDRUCKT =
+    	Status.findById(3);
 
     /* ********************************************************************** */
     /* Constants for package BASIS                                            */

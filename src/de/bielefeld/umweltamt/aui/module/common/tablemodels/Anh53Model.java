@@ -53,13 +53,13 @@ public class Anh53Model extends ListTableModel {
 
         switch (columnIndex) {
             case 0:
-                tmp = fd.getBasisObjekt().getBasisAdresse();
+                tmp = fd.getObjekt().getBetreiberid();
                 break;
             case 1:
-                tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
+                tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
                 break;
             case 2:
-                if (fd.getBasisObjekt().getBasisObjektarten().getId().equals(
+                if (fd.getObjekt().getObjektarten().getId().equals(
                     DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN)) {
                     tmp = "kleiner 3000";
                 } else {
@@ -67,13 +67,13 @@ public class Anh53Model extends ListTableModel {
                 }
                 break;
             case 3:
-                tmp = fd.getBasisObjekt().getBeschreibung();
+                tmp = fd.getObjekt().getBeschreibung();
                 break;
 
             default:
                 tmp = "ERROR";
         }
-        if (fd.getBasisObjekt().isInaktiv()) {
+        if (fd.getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

@@ -47,7 +47,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -74,20 +74,20 @@ public class BasisModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        BasisObjekt obj = (BasisObjekt) objectAtRow;
+    	Objekt obj = (Objekt) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            tmp = obj.getBasisAdresse();
+            tmp = obj.getBetreiberid();
             break;
         case 1:
-            tmp = DatabaseQuery.getStandortString(obj.getBasisStandort());
+            tmp = DatabaseQuery.getStandortString(obj.getStandortid());
             break;
         case 2:
 			tmp = "";
-			if (obj.getBasisSachbearbeiter() != null) {
-				tmp = obj.getBasisSachbearbeiter().getName();
+			if (obj.getSachbearbeiter() != null) {
+				tmp = obj.getSachbearbeiter().getName();
 			}
 			break;
         case 3:

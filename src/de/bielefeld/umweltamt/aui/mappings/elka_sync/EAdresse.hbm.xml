@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.10.2015 09:42:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse"
+  schema="elka" table="e_adresse">
+  <id name="nr" type="java.lang.Integer">
+   <column name="nr"/>
+   <generator class="assigned"/>
+  </id>
+  <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
+  	<column name="nr" />
+  </property>
+  <property generated="never" lazy="false" name="anrede" type="java.lang.String">
+   <column name="anrede"/>
+  </property>
+  <property generated="never" lazy="false" name="name1" type="java.lang.String">
+   <column name="name1"/>
+  </property>
+  <property generated="never" lazy="false" name="name2" type="java.lang.String">
+   <column name="name2"/>
+  </property>
+  <property generated="never" lazy="false" name="strasse" type="java.lang.String">
+   <column name="strasse"/>
+  </property>
+  <property generated="never" lazy="false" name="hausnr" type="java.lang.String">
+   <column name="hausnr"/>
+  </property>
+  <property generated="never" lazy="false" name="plzZst" type="java.lang.String">
+   <column name="plz"/>
+  </property>
+  <property generated="never" lazy="false" name="ortZst" type="java.lang.String">
+   <column name="ort"/>
+  </property>
+  <property generated="never" lazy="false" name="staatskennungZst" type="java.lang.String">
+   <column name="staatskennung_zst"/>
+  </property>
+  <property generated="never" lazy="false" name="telefon" type="java.lang.String">
+   <column name="telefon"/>
+  </property>
+  <property generated="never" lazy="false" name="fax" type="java.lang.String">
+   <column name="fax"/>
+  </property>
+  <property generated="never" lazy="false" name="email" type="java.lang.String">
+   <column name="email"/>
+  </property>
+  <property generated="never" lazy="false" name="personTog" type="java.lang.Boolean">
+   <column name="person_tog"/>
+  </property>
+  <property generated="never" lazy="false" name="aktualDat" type="java.util.Date">
+   <column length="29" name="aktual_dat"/>
+  </property>
+  <property generated="never" lazy="false" name="erstellDat" type="java.util.Date">
+   <column length="29" name="erstell_dat"/>
+  </property>
+  <property generated="never" lazy="false" name="herkunft" type="java.lang.String">
+   <column name="herkunft"/>
+  </property>
+ </class>
+</hibernate-mapping>

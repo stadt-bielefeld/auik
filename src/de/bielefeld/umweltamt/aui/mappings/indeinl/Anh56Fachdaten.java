@@ -27,7 +27,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +45,7 @@ public class Anh56Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private BasisObjekt basisObjekt;
+    private Objekt objekt;
     private String druckverfahren;
     private String verbrauch;
     private String sachbearbeiterrav;
@@ -74,18 +74,18 @@ public class Anh56Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh56Fachdaten(
-        Integer id, BasisObjekt basisObjekt, boolean enabled, boolean deleted) {
+        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
         this.id = id;
-        this.basisObjekt = basisObjekt;
+        this.objekt = objekt;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh56Fachdaten(
-        Integer id, BasisObjekt basisObjekt, String druckverfahren, String verbrauch, String sachbearbeiterrav, String sachbearbeiterheepen, String entsorgung, Boolean abwasseranfall, Boolean genpflicht, Boolean aba, Date gen58, Date gen59, String bemerkungen, Boolean abfallrechtlentsorg, Boolean spuelwasser, Boolean leimabwasser, Date erfasstam, boolean enabled, boolean deleted) {
+        Integer id, Objekt objekt, String druckverfahren, String verbrauch, String sachbearbeiterrav, String sachbearbeiterheepen, String entsorgung, Boolean abwasseranfall, Boolean genpflicht, Boolean aba, Date gen58, Date gen59, String bemerkungen, Boolean abfallrechtlentsorg, Boolean spuelwasser, Boolean leimabwasser, Date erfasstam, boolean enabled, boolean deleted) {
         this.id = id;
-        this.basisObjekt = basisObjekt;
+        this.objekt = objekt;
         this.druckverfahren = druckverfahren;
         this.verbrauch = verbrauch;
         this.sachbearbeiterrav = sachbearbeiterrav;
@@ -114,12 +114,12 @@ public class Anh56Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public BasisObjekt getBasisObjekt() {
-        return this.basisObjekt;
+    public Objekt getObjekt() {
+        return this.objekt;
     }
 
-    public void setBasisObjekt(BasisObjekt basisObjekt) {
-        this.basisObjekt = basisObjekt;
+    public void setObjekt(Objekt objekt) {
+        this.objekt = objekt;
     }
 
     public String getDruckverfahren() {
@@ -279,7 +279,7 @@ public class Anh56Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");			
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
         buffer.append("druckverfahren").append("='").append(getDruckverfahren()).append("' ");			
         buffer.append("verbrauch").append("='").append(getVerbrauch()).append("' ");			
         buffer.append("sachbearbeiterrav").append("='").append(getSachbearbeiterrav()).append("' ");			
@@ -363,7 +363,7 @@ public class Anh56Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh56Fachdaten copy) {
         this.id = copy.getId();            
-        this.basisObjekt = copy.getBasisObjekt();            
+        this.objekt = copy.getObjekt();            
         this.druckverfahren = copy.getDruckverfahren();            
         this.verbrauch = copy.getVerbrauch();            
         this.sachbearbeiterrav = copy.getSachbearbeiterrav();            
@@ -426,10 +426,11 @@ public class Anh56Fachdaten  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+
     public static Anh56Fachdaten findByObjektId(java.lang.Integer id){
         List<Anh56Fachdaten> list = Anh56Fachdaten.getAll();
         for(Anh56Fachdaten i : list){
-            if(i.getBasisObjekt().getId().equals(id)){
+            if(i.getObjekt().getId().equals(id)){
                 log.debug("Returning Anh56Fachdaten with BasisObjekt id: " + id);
                 return (Anh56Fachdaten) new DatabaseAccess().get(Anh56Fachdaten.class, i.getId());
             }
@@ -437,5 +438,4 @@ public class Anh56Fachdaten  implements java.io.Serializable {
         log.debug("Found no Anh56Fachdaten with BasisObjekt id: " + id);
         return null;
     }
-
 }

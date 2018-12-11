@@ -21,7 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -50,7 +50,7 @@ public class EditorParameterModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        AtlParameter para = (AtlParameter) objectAtRow;
+    	Parameter para = (Parameter) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -80,7 +80,7 @@ public class EditorParameterModel extends EditableListTableModel {
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
 		
-		AtlParameter tmp = (AtlParameter) objectAtRow;
+		Parameter tmp = (Parameter) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	String tmpID = (String) newValue;
@@ -106,19 +106,19 @@ public class EditorParameterModel extends EditableListTableModel {
             break;        	
         	
 		}
-		AtlParameter.merge(tmp);
+		Parameter.merge(tmp);
 	}
 
 	@Override
 	public Object newObject() {
-		AtlParameter tmp = new AtlParameter();
+		Parameter tmp = new Parameter();
 		return tmp;
 	}
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	AtlParameter removedPara = (AtlParameter) objectAtRow;
-        return AtlParameter.delete(removedPara);
+    	Parameter removedPara = (Parameter) objectAtRow;
+        return Parameter.delete(removedPara);
     }
 
     /**
@@ -126,8 +126,8 @@ public class EditorParameterModel extends EditableListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public AtlParameter getRow(int rowIndex) {
-        return (AtlParameter) getObjectAtRow(rowIndex);
+    public Parameter getRow(int rowIndex) {
+        return (Parameter) getObjectAtRow(rowIndex);
     }
 
 	@Override

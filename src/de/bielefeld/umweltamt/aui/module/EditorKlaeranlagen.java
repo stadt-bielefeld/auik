@@ -66,7 +66,7 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorKlaeranlageModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -141,7 +141,7 @@ public class EditorKlaeranlagen extends AbstractModul {
                         @Override
                         protected void doNonUILogic() {
                             ((EditorKlaeranlageModel)getTableModel()).setList(
-                                DatabaseQuery.getKlaeranlagenlist());
+                                DatabaseQuery.getKlaeranlagelist());
                         }
 
                         @Override
@@ -279,7 +279,7 @@ public class EditorKlaeranlagen extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     int row = getResultTable().getSelectedRow();
                     if (row != -1 && getResultTable().getEditingRow() == -1) {
-                    	AtlKlaeranlagen ka = EditorKlaeranlagen.this.tmodel
+                    	Klaeranlage ka = EditorKlaeranlagen.this.tmodel
                             .getRow(row);
 
                         if (GUIManager.getInstance().showQuestion(

@@ -56,7 +56,7 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 
 /**
  * Eine Factory-Klasse um DataSets etc. für JFreeChart-Diagramme aus
@@ -102,15 +102,15 @@ public class ChartDataSets {
         Calendar cal = GregorianCalendar.getInstance();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i) instanceof AtlAnalyseposition) {
-                    AtlAnalyseposition pos = (AtlAnalyseposition) list.get(i);
+                if (list.get(i) instanceof Analyseposition) {
+                    Analyseposition pos = (Analyseposition) list.get(i);
 
                     int hour = 0;
                     int minute = 0;
 
-                    cal.setTime(pos.getAtlProbenahmen().getDatumDerEntnahme());
-                    if (pos.getAtlProbenahmen().getZeitDerEntnahmen() != null) {
-                        String zeit = pos.getAtlProbenahmen().getZeitDerEntnahmen();
+                    cal.setTime(pos.getProbenahme().getDatumDerEntnahme());
+                    if (pos.getProbenahme().getZeitDerEntnahmen() != null) {
+                        String zeit = pos.getProbenahme().getZeitDerEntnahmen();
                         //Zeit ist im Format: "15:30:00"
                         hour = Integer.parseInt(zeit.substring(0,2));
                         minute = Integer.parseInt(zeit.substring(3,5));
@@ -134,14 +134,14 @@ public class ChartDataSets {
      * @param minute Die Position in der Datenreihe (in Minuten)
      * @param pos Die Analyseposition
      */
-    private static void addPosToMinuteSeries(TimeSeries series, Minute minute, AtlAnalyseposition pos) {
+    private static void addPosToMinuteSeries(TimeSeries series, Minute minute, Analyseposition pos) {
         if (series.getDataItem(minute) == null) {
             //AUIKataster.debugOutput("  |- Füge " + pos + " bei " + minute + " hinzu.", "ChartDataSets.createAnalysepositionenSeries");
             series.add(minute, pos.getWert());
         } else {
             //AUIKataster.debugOutput("  |- !Bei " + minute + " existiert schon ein Eintrag -> Rekursion!.", "ChartDataSets.createAnalysepositionenSeries");
             Calendar cal = GregorianCalendar.getInstance();
-            cal.setTime(pos.getAtlProbenahmen().getDatumDerEntnahme());
+            cal.setTime(pos.getProbenahme().getDatumDerEntnahme());
             Minute min2 = new Minute(minute.getMinute()+1, minute.getHour().getHour(), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH)+1, cal.get(Calendar.YEAR));
 
             addPosToMinuteSeries(series, min2, pos);

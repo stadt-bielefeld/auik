@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht" table="wasserrecht" schema="elka" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
+            <column name="objektid" not-null="true" />
+        </many-to-one>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <property name="erstellungsDatum" type="java.util.Date">
+            <column name="erstellungs_datum" length="13" />
+        </property>
+        <property name="aenderungsDatum" type="java.util.Date">
+            <column name="aenderungs_datum" length="13" />
+        </property>
+        <property name="antragDatum" type="java.util.Date">
+            <column name="antrag_datum" length="13" />
+        </property>
+        <property name="befristet" type="java.lang.Boolean">
+            <column name="befristet" />
+        </property>
+        <property name="befristetBis" type="java.util.Date">
+            <column name="befristet_bis" length="13" />
+        </property>
+        <property name="anhang" type="java.lang.Integer">
+            <column name="anhang" />
+        </property>
+        <property name="genMenge" type="java.lang.Integer">
+            <column name="gen_menge" />
+        </property>
+        <property name="gen58" type="java.lang.Boolean">
+            <column name="gen58" />
+        </property>
+        <property name="gen59" type="java.lang.Boolean">
+            <column name="gen59" />
+        </property>
+        <property name="selbstueberw" type="java.lang.Boolean">
+            <column name="selbstueberw" />
+        </property>
+        <property name="ESatzung" type="java.lang.Boolean">
+            <column name="e_satzung" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="uebergabestelleE32" type="java.lang.Integer">
+            <column name="uebergabestelle_e32" />
+        </property>
+        <property name="uebergabestelleN32" type="java.lang.Integer">
+            <column name="uebergabestelle_n32" />
+        </property>
+        <property name="rechtBehoerdenId" type="java.lang.String">
+            <column name="recht_behoerden_id" length="16" />
+        </property>
+        <property name="wrBeschreibung" type="java.lang.String">
+            <column name="wr_beschreibung" length="50" />
+        </property>
+        <property name="rechtArtOpt" type="java.lang.Integer">
+            <column name="recht_art_opt" />
+        </property>
+        <property name="aktenzeichen" type="java.lang.String">
+            <column name="aktenzeichen" length="45" />
+        </property>
+        <property name="bemerkung" type="java.lang.String">
+            <column name="bemerkung" length="1000" />
+        </property>
+        <property name="wasserbuchId" type="java.lang.String">
+            <column name="wasserbuch_id" length="30" />
+        </property>
+        <property name="beerWrNr" type="java.lang.String">
+            <column name="beer_wr_nr" length="10" />
+        </property>
+        <property name="erstellDat" type="java.util.Date">
+            <column name="erstell_dat" length="29" />
+        </property>
+        <property name="aktualDat" type="java.util.Date">
+            <column name="aktual_dat" length="29" />
+        </property>
+        <property name="gen8" type="java.lang.Boolean">
+            <column name="gen8" />
+        </property>
+        <set name="entwaesserungsgrundstuecks" table="entwaesserungsgrundstueck" schema="oberflgw" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="wasserecht_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck" />
+        </set>
+        <set name="sonderbauwerks" table="sonderbauwerk" schema="oberflgw" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="wasserrecht_genehmigung_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk" />
+        </set>
+    </class>
+</hibernate-mapping>

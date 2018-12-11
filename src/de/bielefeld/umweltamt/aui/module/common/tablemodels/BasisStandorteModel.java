@@ -44,7 +44,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
+import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -70,7 +70,7 @@ public class BasisStandorteModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	BasisTabStreets ts = (BasisTabStreets) objectAtRow;
+    	TabStreets ts = (TabStreets) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -113,7 +113,7 @@ public class BasisStandorteModel extends ListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public BasisTabStreets getRow(int rowIndex) {
-        return (BasisTabStreets) super.getObjectAtRow(rowIndex);
+    public TabStreets getRow(int rowIndex) {
+        return (TabStreets) super.getObjectAtRow(rowIndex);
     }
 }

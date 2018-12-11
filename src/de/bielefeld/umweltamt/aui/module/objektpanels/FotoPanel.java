@@ -47,7 +47,7 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
- * Das "Objekt-Chronologie"-Panel des Objekt-Bearbeiten-Moduls.
+ * Das "Foto"-Panel des Objekt-Bearbeiten-Moduls.
  * @author Gerd Genuit
  */
 public class FotoPanel extends JPanel {
@@ -67,8 +67,8 @@ public class FotoPanel extends JPanel {
     private JLabel fotoLabel;
 
     /**
-     * Erzeugt das Foto-Panel für das BasisObjektBearbeiten-Modul.
-     * @param hauptModul Das BasisObjektBearbeiten-Hauptmodul.
+     * Erzeugt das Foto-Panel für das ObjektBearbeiten-Modul.
+     * @param hauptModul Das ObjektBearbeiten-Hauptmodul.
      */
     public FotoPanel(BasisObjektBearbeiten hauptModul) {
     	
@@ -96,7 +96,7 @@ public class FotoPanel extends JPanel {
 
                     if (hauptModul.getObjekt() != null) {
                         String imgPath = "X:/Applikationen/Anlagenkataster/Fotos/" + 
-                        		hauptModul.getObjekt().getObjektid() + ".jpg";
+                        		hauptModul.getObjekt().getId() + ".jpg";
                         File imgFile = new File(imgPath);
                         if (imgFile.canRead()) {
                             ImageIcon imgIcon = new ImageIcon(
@@ -114,7 +114,7 @@ public class FotoPanel extends JPanel {
                             getFotoLabel().setIcon(null);
                             getFotoLabel().setText(
                                 "<html><b>-  Foto " + 
-                        		hauptModul.getObjekt().getObjektid() + ".jpg nicht gefunden!  -</b></html>");
+                        		hauptModul.getObjekt().getId() + ".jpg nicht gefunden!  -</b></html>");
                         }
                     }
 

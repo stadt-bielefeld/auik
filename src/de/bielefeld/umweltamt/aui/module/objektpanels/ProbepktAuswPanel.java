@@ -82,10 +82,10 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -125,10 +125,10 @@ public class ProbepktAuswPanel extends JPanel {
     private TimeSeriesCollection dataSet1;
     private TimeSeriesCollection dataSet2;
     private ActionListener rlButtonListener;
-    private AtlEinheiten[] einheiten;
+    private Einheiten[] einheiten;
 
     // Daten
-    private AtlProbepkt pkt;
+    private Messstelle pkt;
     private JComboBox parameterBox;
     private JComboBox leftEinheitenBox;
     private JComboBox rightEinheitenBox;
@@ -138,7 +138,7 @@ public class ProbepktAuswPanel extends JPanel {
     public ProbepktAuswPanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Auswertung";
 
-        this.einheiten = DatabaseQuery.getAtlEinheiten();
+        this.einheiten = DatabaseQuery.getEinheiten();
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
@@ -209,7 +209,7 @@ public class ProbepktAuswPanel extends JPanel {
         for (String paramID : paramIDs) {
             builder.add(createRLButton(true, paramID), cc.xy(9, y));
             builder.add(new JLabel(
-                AtlParameter.findById(paramID).getBezeichnung(), JLabel.CENTER),
+                Parameter.findById(paramID).getBezeichnung(), JLabel.CENTER),
                 cc.xy(11, y, "f,d"));
             builder.add(createRLButton(false, paramID), cc.xy(13, y));
             y += 2;
@@ -728,8 +728,8 @@ public class ProbepktAuswPanel extends JPanel {
                 if (ProbepktAuswPanel.this.dataSet1.getSeriesCount() > 0) {
 
                     AuswertungsDialog dialog = new AuswertungsDialog(
-                        ProbepktAuswPanel.this.pkt.getBasisObjekt()
-                            .getBasisAdresse().getBetrname(),
+                        ProbepktAuswPanel.this.pkt.getObjekt()
+                            .getBetreiberid().getBetrname(),
                         ProbepktAuswPanel.this.dataSet1, null,
                         ProbepktAuswPanel.this.frame);
 
@@ -764,8 +764,8 @@ public class ProbepktAuswPanel extends JPanel {
                 if (this.seriesCount > 0) {
 
                     AuswertungsDialog dialog = new AuswertungsDialog(
-                        ProbepktAuswPanel.this.pkt.getBasisObjekt()
-                            .getBasisAdresse().getBetrname(),
+                        ProbepktAuswPanel.this.pkt.getObjekt()
+                            .getBetreiberid().getBetrname(),
                         ProbepktAuswPanel.this.dataSet1,
                         ProbepktAuswPanel.this.dataSet2,
                         ProbepktAuswPanel.this.frame);
@@ -785,16 +785,16 @@ public class ProbepktAuswPanel extends JPanel {
         TimeSeriesCollection col = new TimeSeriesCollection();
 
 //        int parameterAnzahl;
-        AtlEinheiten einheit;
+        Einheiten einheit;
         JList paramList;
         if (axis.equals(LEFT)) {
 //            parameterAnzahl = getLeftList().getModel().getSize();
-            einheit = (AtlEinheiten) getLeftEinheitenBox().getSelectedItem();
+            einheit = (Einheiten) getLeftEinheitenBox().getSelectedItem();
             paramList = getLeftList();
 
         } else {
 //            parameterAnzahl = getRightList().getModel().getSize();
-            einheit = (AtlEinheiten) getRightEinheitenBox().getSelectedItem();
+            einheit = (Einheiten) getRightEinheitenBox().getSelectedItem();
             paramList = getRightList();
 
         }
@@ -807,7 +807,7 @@ public class ProbepktAuswPanel extends JPanel {
             analyeVon = this.analyseVonBox.getSelectedItem().toString();
         }
 
-        this.pkt = AtlProbepkt.findByObjektId(
+        this.pkt = Messstelle.findByObjektId(
             this.hauptModul.getObjekt().getId());
 
         createSeries(paramList, this.pkt, einheit, vonDate, bisDate, analyeVon,
@@ -816,17 +816,17 @@ public class ProbepktAuswPanel extends JPanel {
         return col;
     }
 
-    private void createSeries(JList paramList, AtlProbepkt pkt,
-        AtlEinheiten einheit, Date vonDate, Date bisDate,
+    private void createSeries(JList paramList, Messstelle pkt,
+        Einheiten einheit, Date vonDate, Date bisDate,
         String analyseVon, TimeSeriesCollection col) {
 
         if (pkt != null) {
 
             for (int i = 0; i < paramList.getModel().getSize(); i++) {
-                AtlParameter param = (AtlParameter) paramList.getModel()
+            	Parameter param = (Parameter) paramList.getModel()
                     .getElementAt(i);
 
-                List<AtlAnalyseposition> list =
+                List<Analyseposition> list =
                     DatabaseQuery.getAnalysepositionFromView(
                         param, einheit, pkt, vonDate, bisDate, analyseVon);
 
@@ -1007,14 +1007,14 @@ public class ProbepktAuswPanel extends JPanel {
                         "");
                     String paramId = e.getActionCommand().replaceFirst(".*_",
                         "");
-                    AtlParameter param = null;
+                    Parameter param = null;
 
                     if (!paramId.equals("")) {
                         if (paramId.equals("box")) {
-                            param = (AtlParameter) getParameterBox()
+                            param = (Parameter) getParameterBox()
                                 .getSelectedItem();
                         } else {
-                            param = AtlParameter.findById(paramId);
+                            param = Parameter.findById(paramId);
                         }
                     }
 

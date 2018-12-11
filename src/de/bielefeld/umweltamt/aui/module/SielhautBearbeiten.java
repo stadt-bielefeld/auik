@@ -155,16 +155,17 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
+import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautProbeModel;
@@ -237,13 +238,13 @@ public class SielhautBearbeiten extends AbstractModul {
     private JLabel kartenLabel;
     // private ImageIcon kartenBild;
 
-    private AtlSielhaut spunkt;
-    private AtlProbepkt sprobePkt;
-    private BasisObjekt objekt;
-    private BasisLage lage;
-    private BasisAdresse betreiber;
-    private BasisAdresse standort;
-    private BasisObjektarten art;
+    private Sielhaut spunkt;
+    private Messstelle sprobePkt;
+    private Objekt objekt;
+    private Lage lage;
+    private Adresse betreiber;
+    private Standort standort;
+    private Objektarten art;
     private SielhautProbeModel probeModel;
 
     // Auswertung
@@ -265,21 +266,21 @@ public class SielhautBearbeiten extends AbstractModul {
 
         if (this.manager.getSettingsManager()
             .getSetting("auik.imc.edit_object") != null) {
-            this.objekt = BasisObjekt.findById(new Integer(this.manager
+            this.objekt = Objekt.findById(new Integer(this.manager
                 .getSettingsManager().getIntSetting("auik.imc.edit_object")));
             this.manager.getSettingsManager().removeSetting(
                 "auik.imc.edit_object");
-            this.sprobePkt = AtlProbepkt.findByObjektId(this.objekt.getId());
-            this.spunkt = AtlSielhaut.findByObjektId(this.objekt.getId());
+            this.sprobePkt = Messstelle.findByObjektId(this.objekt.getId());
+            this.spunkt = Sielhaut.findByObjektId(this.objekt.getId());
             setSielhautPunkt(this.spunkt);
         }	
         
         else{
-        	List<AtlSielhaut> list1 = AtlSielhaut.getAll();
+        	List<Sielhaut> list1 = Sielhaut.getAll();
         	if(list1.isEmpty() != true){
-        		sprobePkt = list1.get(0).getAtlProbepkt();
+        		sprobePkt = list1.get(0).getMessstelle();
         		spunkt = list1.get(0);
-        		objekt = sprobePkt.getBasisObjekt();
+        		objekt = sprobePkt.getObjekt();
                 setSielhautPunkt(this.spunkt);
         	}
         	
@@ -295,37 +296,36 @@ public class SielhautBearbeiten extends AbstractModul {
 		*/
     }
     
-    private BasisObjekt getB1(){
+    private Objekt getB1(){
     	SielhautModel tmp = new SielhautModel();
-    	AtlSielhaut t1 =(AtlSielhaut) tmp.getObjectAtRow(0);
-    	return t1.getAtlProbepkt().getBasisObjekt();
+    	Sielhaut t1 =(Sielhaut) tmp.getObjectAtRow(0);
+    	return t1.getMessstelle().getObjekt();
     }
 
-    public void setSielhautPunkt(AtlSielhaut sp) {
+    public void setSielhautPunkt(Sielhaut sp) {
         this.spunkt = sp;
         if (this.spunkt.getId() != null) {
-            this.sprobePkt = this.spunkt.getAtlProbepkt();
-            this.objekt = sprobePkt.getBasisObjekt();
+            this.sprobePkt = this.spunkt.getMessstelle();
+            this.objekt = sprobePkt.getObjekt();
             getPrAnlegenButton().setEnabled(true);
             getTabelleExportButton().setEnabled(true);
         } else {
-            this.objekt = new BasisObjekt();
-            this.lage = new BasisLage();
-            this.betreiber = BasisAdresse.findById(
+            this.objekt = new Objekt();
+            this.lage = new Lage();
+            this.betreiber = Adresse.findById(
                 DatabaseConstants.BASIS_BETREIBER_ID_Umweltamt_360x33);
-            this.standort = BasisAdresse.findById(
+            this.standort = Standort.findById(
                 DatabaseConstants.BASIS_STANDORT_KEIN_STANDORT);
-            this.art = BasisObjektarten.findById(
+            this.art = Objektarten.findById(
                 DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE);
-            this.objekt.setBasisLage(this.lage);
-            this.objekt.setBasisAdresse(this.betreiber);
-            this.objekt.setBasisStandort(this.standort);
-            this.objekt.setBasisObjektarten(this.art);
+            this.objekt.setBetreiberid(this.betreiber);
+            this.objekt.setStandortid(this.standort);
+            this.objekt.setObjektarten(this.art);
             this.objekt.setInaktiv(false);
             this.objekt.setAbwasserfrei(true);
-            this.sprobePkt = new AtlProbepkt();
-            this.sprobePkt.setAtlProbeart(
-                AtlProbeart.findById(
+            this.sprobePkt = new Messstelle();
+            this.sprobePkt.setProbeart(
+                Probeart.findById(
                     DatabaseConstants.ATL_PROBEART_ID_SIELHAUT));
             getPrAnlegenButton().setEnabled(false);
             getTabelleExportButton().setEnabled(false);
@@ -371,7 +371,7 @@ public class SielhautBearbeiten extends AbstractModul {
         } else
             getSpFirmenprobeCheck().setSelected(this.spunkt.getPFirmenprobe());
 
-        this.probeModel.setProbepunkt(this.sprobePkt);
+        this.probeModel.setMessstelle(this.sprobePkt);
 
         // Ist eins der einklappbaren Panels offen,
         // wird es (noch einmal) aufgeklappt, um
@@ -397,7 +397,7 @@ public class SielhautBearbeiten extends AbstractModul {
      * Legt einen neuen Sielhaut-Punkt an.
      */
     public void neuerSielhautPunkt() {
-        AtlSielhaut neuerPunkt = new AtlSielhaut();
+        Sielhaut neuerPunkt = new Sielhaut();
         neuerPunkt.setE32(new Double(0.0));
         neuerPunkt.setN32(new Double(0.0));
         neuerPunkt.setBezeichnung("Neuer Sielhaut-Punkt");
@@ -410,7 +410,7 @@ public class SielhautBearbeiten extends AbstractModul {
     public boolean saveObjekt() {
         boolean saved = false;
 
-        this.objekt = BasisObjekt.merge(this.objekt);
+        this.objekt = Objekt.merge(this.objekt);
 
         saved = true;
 
@@ -420,19 +420,19 @@ public class SielhautBearbeiten extends AbstractModul {
     /**
      * Speichert einen neu angelegten Probenahmepunkt.
      */
-    public boolean saveProbepunkt(BasisObjekt objekt) {
+    public boolean saveProbepunkt(Objekt objekt) {
         boolean saved = false;
 
 //        objekt = BasisObjekt.findById(objekt.getObjektid());
-        this.sprobePkt.setBasisObjekt(objekt);
+        this.sprobePkt.setObjekt(objekt);
 //        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
 //        this.sprobePkt.setAtlSielhaut(this.spunkt);
 
-        this.lage = BasisLage.merge(objekt.getBasisLage());
-        this.objekt.setBasisLage(lage);
-        this.objekt = BasisObjekt.merge(this.objekt);
-        this.sprobePkt.setBasisObjekt(this.objekt);
-        this.sprobePkt = AtlProbepkt.merge(this.sprobePkt);
+        this.standort = standort.merge(objekt.getStandortid());
+        this.objekt.setStandortid(standort);
+        this.objekt = Objekt.merge(this.objekt);
+        this.sprobePkt.setObjekt(this.objekt);
+        this.sprobePkt = Messstelle.merge(this.sprobePkt);
 
         saved = true;
 
@@ -500,15 +500,15 @@ public class SielhautBearbeiten extends AbstractModul {
             
                 if (saveProbepunkt(this.objekt)) {
 
-                	this.spunkt.setAtlProbepkt(this.sprobePkt);
-                    this.spunkt.getAtlProbepkt().setBasisObjekt(this.objekt);
-                    this.spunkt.setAtlProbepkt(this.sprobePkt);
+                	this.spunkt.setMessstelle(this.sprobePkt);
+                    this.spunkt.getMessstelle().setObjekt(this.objekt);
+                    this.spunkt.setMessstelle(this.sprobePkt);
                     this.spunkt.setId(objekt.getId());
 
-                    this.spunkt = AtlSielhaut.merge(this.spunkt);
+                    this.spunkt = Sielhaut.merge(this.spunkt);
 
                     if (this.spunkt != null) {
-                        this.spunkt = AtlSielhaut.findById(this.spunkt.getId());
+                        this.spunkt = Sielhaut.findById(this.spunkt.getId());
 
                         this.frame.changeStatus(
                             "Sielhaut-Messpunkt erfolgreich gespeichert.",
@@ -576,12 +576,12 @@ public class SielhautBearbeiten extends AbstractModul {
                 boolean exists = DatabaseQuery.probenahmeExists(kennNummer);
 
                 if (!exists) {
-                    AtlProbenahmen probe = new AtlProbenahmen();
+                    Probenahme probe = new Probenahme();
                     probe.setKennummer(kennNummer);
                     probe.setDatumDerEntnahme((Timestamp) datum);
                     probe
-                        .setAtlAnalysepositions(new HashSet<AtlAnalyseposition>());
-                    probe.setAtlProbepkt(this.sprobePkt);
+                        .setAnalysepositions(new HashSet<Analyseposition>());
+                    probe.setMessstelle(this.sprobePkt);
                     probe.setArt("Sielhaut");
 
                     ProbenEditor editDialog = new ProbenEditor(probe,
@@ -606,7 +606,7 @@ public class SielhautBearbeiten extends AbstractModul {
     /**
      * Bearbeitet eine Probenahme.
      */
-    public void editProbenahme(AtlProbenahmen probe) {
+    public void editProbenahme(Probenahme probe) {
         ProbenEditor editDialog = new ProbenEditor(probe, this.frame, false);
 
         editDialog.setVisible(true);
@@ -694,7 +694,7 @@ public class SielhautBearbeiten extends AbstractModul {
                     // Natürlich nur editieren, wenn wirklich eine Zeile
                     // ausgewählt ist
                     if (row != -1) {
-                        AtlProbenahmen probe = SielhautBearbeiten.this.probeModel
+                        Probenahme probe = SielhautBearbeiten.this.probeModel
                             .getRow(row);
                         editProbenahme(probe);
                     }
@@ -718,7 +718,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     int row = getPrTabelle().getSelectedRow();
                     if (row != -1 && getPrTabelle().getEditingRow() == -1) {
-                        AtlProbenahmen probe = SielhautBearbeiten.this.probeModel
+                        Probenahme probe = SielhautBearbeiten.this.probeModel
                             .getRow(row);
                         if (GUIManager
                             .getInstance()
@@ -871,7 +871,7 @@ public class SielhautBearbeiten extends AbstractModul {
                         SielhautBearbeiten.this.frame);
                     chooser.setVisible(true);
 
-                    AtlSielhaut tmp = chooser.getChosenSielhaut();
+                    Sielhaut tmp = chooser.getChosenSielhaut();
 
                     if (tmp != null) {
                         setSielhautPunkt(tmp);
@@ -894,8 +894,8 @@ public class SielhautBearbeiten extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     SielhautBearbeiten.this.manager.getSettingsManager()
                         .setSetting("auik.imc.edit_object",
-                            SielhautBearbeiten.this.spunkt.getAtlProbepkt()
-                                .getBasisObjekt().getId().intValue()
+                            SielhautBearbeiten.this.spunkt.getMessstelle()
+                                .getObjekt().getId().intValue()
                             , false);
                     SielhautBearbeiten.this.manager
                         .switchModul("m_objekt_bearbeiten");
@@ -1239,7 +1239,7 @@ public class SielhautBearbeiten extends AbstractModul {
                         Point origin = e.getPoint();
                         int row = getPrTabelle().rowAtPoint(origin);
 
-                        AtlProbenahmen probe = SielhautBearbeiten.this.probeModel
+                        Probenahme probe = SielhautBearbeiten.this.probeModel
                             .getRow(row);
                         editProbenahme(probe);
                     }
@@ -1704,34 +1704,34 @@ public class SielhautBearbeiten extends AbstractModul {
         TimeSeriesCollection col = new TimeSeriesCollection();
         Date von = getVonDateChooser().getDate();
         Date bis = getBisDateChooser().getDate();
-        List<AtlParameter> selectedParams = new ArrayList<AtlParameter>();
+        List<Parameter> selectedParams = new ArrayList<Parameter>();
 
         if (getBleiCheck().isSelected()) {
-            selectedParams.add(AtlParameter.findById(
+            selectedParams.add(Parameter.findById(
                 DatabaseConstants.ATL_PARAMETER_ID_BLEI));
         }
         if (getCadmiumCheck().isSelected()) {
-            selectedParams.add(AtlParameter.findById(
+            selectedParams.add(Parameter.findById(
                 DatabaseConstants.ATL_PARAMETER_ID_CADMIUM));
         }
         if (getChromCheck().isSelected()) {
-            selectedParams.add(AtlParameter.findById(
+            selectedParams.add(Parameter.findById(
                 DatabaseConstants.ATL_PARAMETER_ID_CHROM));
         }
         if (getKupferCheck().isSelected()) {
-            selectedParams.add(AtlParameter.findById(
+            selectedParams.add(Parameter.findById(
                 DatabaseConstants.ATL_PARAMETER_ID_KUPFER));
         }
         if (getNickelCheck().isSelected()) {
-            selectedParams.add(AtlParameter.findById(
+            selectedParams.add(Parameter.findById(
                 DatabaseConstants.ATL_PARAMETER_ID_NICKEL));
         }
         if (getQuecksilberCheck().isSelected()) {
-            selectedParams.add(AtlParameter.findById(
+            selectedParams.add(Parameter.findById(
                 DatabaseConstants.ATL_PARAMETER_ID_QUECKSILBER));
         }
         if (getZinkCheck().isSelected()) {
-            selectedParams.add(AtlParameter.findById(
+            selectedParams.add(Parameter.findById(
                 DatabaseConstants.ATL_PARAMETER_ID_ZINK));
         }
 
@@ -1748,7 +1748,7 @@ public class SielhautBearbeiten extends AbstractModul {
                 DatabaseConstants.ATL_PARAMETER_ID_ZINK
             };
             for (String paramID : paramIDs) {
-                selectedParams.add(AtlParameter.findById(paramID));
+                selectedParams.add(Parameter.findById(paramID));
             }
         }
 
@@ -1759,11 +1759,11 @@ public class SielhautBearbeiten extends AbstractModul {
     }
 
     private void createSeries(
-        List<AtlParameter> params, AtlProbepkt pkt, Date von, Date bis,
+        List<Parameter> params, Messstelle pkt, Date von, Date bis,
         TimeSeriesCollection col) {
         if (pkt != null) {
-            for (AtlParameter param : params) {
-                List<AtlAnalyseposition> list =
+            for (Parameter param : params) {
+                List<Analyseposition> list =
                     DatabaseQuery.getAnalysepositionen(param, pkt, von, bis);
 
                 TimeSeries series = ChartDataSets

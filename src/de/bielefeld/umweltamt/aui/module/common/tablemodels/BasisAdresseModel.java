@@ -25,8 +25,8 @@ import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -97,46 +97,46 @@ public class BasisAdresseModel extends ListTableModel {
 	public Object getColumnValue(Object objectAtRow, int columnIndex) {
 		Object value = null;
 
-		BasisAdresse betr = (BasisAdresse) objectAtRow;
+		Adresse betr = (Adresse) objectAtRow;
 		HibernateSessionFactory.currentSession().refresh(betr);
-		if (betr.getBasisMapAdresseLages().size() > 0) {
-			for (int i = 0; i < betr.getBasisMapAdresseLages().size(); i++) {
-				BasisMapAdresseLage map = (BasisMapAdresseLage) betr
-						.getBasisMapAdresseLages().toArray()[i];
+		if (betr.getStandorts().size() > 0) {
+			for (int i = 0; i < betr.getStandorts().size(); i++) {
+				Standort map = (Standort) betr
+						.getStandorts().toArray()[i];
 				switch (columnIndex) {
 				case 0:
-					if (map.getBasisAdresse().getKassenzeichen() != null) {
-						String tmp = map.getBasisAdresse().getBetrname() + " ("
-								+ map.getBasisAdresse().getKassenzeichen()
+					if (map.getAdresse().getKassenzeichen() != null) {
+						String tmp = map.getAdresse().getBetrname() + " ("
+								+ map.getAdresse().getKassenzeichen()
 								+ ")";
 						value = tmp;
 					} else {
-						value = map.getBasisAdresse().getBetrname();
+						value = map.getAdresse().getBetrname();
 					}
 					break;
 				case 1:
-					value = map.getBasisAdresse().getBetrvorname();
+					value = map.getAdresse().getBetrvorname();
 					break;
 				case 2:
-					value = map.getBasisAdresse().getOrt();
+					value = map.getAdresse().getOrt();
 					break;
 				case 3:
-					value = map.getBasisAdresse().getStrasse();
+					value = map.getAdresse().getStrasse();
 					break;
 				case 4:
-					if (map.getBasisAdresse().getHausnrzus() != null) {
-						String tmp = map.getBasisAdresse().getHausnr()
-								+ map.getBasisAdresse().getHausnrzus();
+					if (map.getAdresse().getHausnrzus() != null) {
+						String tmp = map.getAdresse().getHausnr()
+								+ map.getAdresse().getHausnrzus();
 						value = tmp;
 					} else {
-						value = map.getBasisAdresse().getHausnr();
+						value = map.getAdresse().getHausnr();
 					}
 					break;
 				case 5:
-					value = map.getBasisLage().getE32();
+					value = map.getLage().getE32();
 					break;
 				case 6:
-					value = map.getBasisLage().getN32();
+					value = map.getLage().getN32();
 					break;
 				default:
 					value = null;
@@ -193,14 +193,14 @@ public class BasisAdresseModel extends ListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public BasisAdresse getRow(int rowIndex) {
-        return (BasisAdresse) super.getObjectAtRow(rowIndex);
+    public Adresse getRow(int rowIndex) {
+        return (Adresse) super.getObjectAtRow(rowIndex);
     }
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        BasisAdresse removedBetreiber = (BasisAdresse) objectAtRow;
-        return BasisAdresse.delete(removedBetreiber);
+        Adresse removedBetreiber = (Adresse) objectAtRow;
+        return Adresse.delete(removedBetreiber);
     }
 
     /**
@@ -211,7 +211,7 @@ public class BasisAdresseModel extends ListTableModel {
      */
     public void filterList(String suche, String property) {
         log.debug("Start filterList");
-        setList(DatabaseQuery.getBasisAdresse(property, suche));
+        setList(DatabaseQuery.getAdresse(property, suche));
         lastSuchWort = suche;
         lastProperty = property;
         log.debug("End filterList");

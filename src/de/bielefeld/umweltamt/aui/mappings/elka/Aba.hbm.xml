@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+	<class name="de.bielefeld.umweltamt.aui.mappings.elka.Aba"
+		table="aba" schema="elka" optimistic-lock="version">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="assigned" />
+		</id>
+		<many-to-one name="objekt"
+			class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt"
+			fetch="select">
+			<column name="objektid" not-null="true" unique="true" />
+		</many-to-one>
+		<many-to-one name="ansprAdrId"
+			class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse"
+			fetch="select">
+			<column name="anspr_adr_id" />
+		</many-to-one>
+		<property name="aktualDat" type="java.util.Date">
+			<column name="aktual_dat" length="13" />
+		</property>
+		<property name="erstellDat" type="java.util.Date">
+			<column name="erstell_dat" length="13" />
+		</property>
+		<property name="herkunft" type="java.lang.String">
+			<column name="herkunft" />
+		</property>
+		<property name="bezeichnung" type="java.lang.String">
+			<column name="bezeichnung" />
+		</property>
+		<property name="inbetriebDat" type="java.util.Date">
+			<column name="inbetrieb_dat" length="13" />
+		</property>
+		<property name="stillgelegtDat" type="java.util.Date">
+			<column name="stillgelegt_dat" length="13" />
+		</property>
+		<property name="genehmpflichtigToc" type="java.lang.Boolean">
+			<column name="genehmpflichtig_toc" />
+		</property>
+		<property name="e32" type="java.lang.Integer">
+			<column name="e32" />
+		</property>
+		<property name="n32" type="java.lang.Integer">
+			<column name="n32" />
+		</property>
+		<property name="sonstZulOpt" type="java.lang.Integer">
+			<column name="sonst_zul_opt" />
+		</property>
+		<property name="wartungsvertragToc" type="java.lang.Boolean">
+			<column name="wartungsvertrag_toc" />
+		</property>
+		<property name="einzelabnahmeToc" type="java.lang.Boolean">
+			<column name="einzelabnahme_toc" />
+		</property>
+		<property name="enabled" type="java.lang.Boolean">
+			<column name="_enabled" />
+		</property>
+		<property name="deleted" type="java.lang.Boolean">
+			<column name="_deleted" />
+		</property>
+		<set name="referenzsForZAbaNr" table="referenz" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="z_aba_nr" />
+			</key>
+			<one-to-many
+				class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+		</set>
+		<set name="referenzsForQAbaNr" table="referenz" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="q_aba_nr" />
+			</key>
+			<one-to-many
+				class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+		</set>
+        <set name="Wasserrechts" table="elka.e_z_aba_wasserrecht" lazy="false" fetch="select">
+  	 		<key>
+  				<column name="anlage_nr" not-null="true" />
+  	 		</key>
+   		  <many-to-many column="wasserrecht_nr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" />
+        </set>
+		<set name="Abaverfahrens" table="elka.z_aba_verfahren" lazy="false" fetch="select">
+		  <key>
+			<column name="anlage_nr" not-null="true" />
+		  </key>
+		<many-to-many column="abwasbehverf_nr" class="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" />
+		</set>
+	</class>
+
+</hibernate-mapping>

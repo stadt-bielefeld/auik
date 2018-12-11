@@ -27,7 +27,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +45,7 @@ public class Anh40Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private BasisObjekt basisObjekt;
+    private Objekt objekt;
     private String bemerkungen;
     private String ansprechpartner;
     private String sachbearbeiterrav;
@@ -75,18 +75,18 @@ public class Anh40Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh40Fachdaten(
-        Integer id, BasisObjekt basisObjekt, boolean enabled, boolean deleted) {
+        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
         this.id = id;
-        this.basisObjekt = basisObjekt;
+        this.objekt = objekt;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh40Fachdaten(
-        Integer id, BasisObjekt basisObjekt, String bemerkungen, String ansprechpartner, String sachbearbeiterrav, String sachbearbeiterheepen, String klaeranlage, String herkunftsbereich, Boolean wsg, Short prioritaet, Boolean genehmigungspflicht, Boolean nachtrag, Boolean bimsch, Integer abwmengegenehmigt, Integer abwmengeprodspez, Integer abwmengegesamt, Date gen58, Date gen59, boolean enabled, boolean deleted) {
+        Integer id, Objekt objekt, String bemerkungen, String ansprechpartner, String sachbearbeiterrav, String sachbearbeiterheepen, String klaeranlage, String herkunftsbereich, Boolean wsg, Short prioritaet, Boolean genehmigungspflicht, Boolean nachtrag, Boolean bimsch, Integer abwmengegenehmigt, Integer abwmengeprodspez, Integer abwmengegesamt, Date gen58, Date gen59, boolean enabled, boolean deleted) {
         this.id = id;
-        this.basisObjekt = basisObjekt;
+        this.objekt = objekt;
         this.bemerkungen = bemerkungen;
         this.ansprechpartner = ansprechpartner;
         this.sachbearbeiterrav = sachbearbeiterrav;
@@ -116,12 +116,12 @@ public class Anh40Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public BasisObjekt getBasisObjekt() {
-        return this.basisObjekt;
+    public Objekt getObjekt() {
+        return this.objekt;
     }
 
-    public void setBasisObjekt(BasisObjekt basisObjekt) {
-        this.basisObjekt = basisObjekt;
+    public void setObjekt(Objekt objekt) {
+        this.objekt = objekt;
     }
 
     public String getBemerkungen() {
@@ -289,7 +289,7 @@ public class Anh40Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");			
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
         buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
         buffer.append("ansprechpartner").append("='").append(getAnsprechpartner()).append("' ");			
         buffer.append("sachbearbeiterrav").append("='").append(getSachbearbeiterrav()).append("' ");			
@@ -374,7 +374,7 @@ public class Anh40Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh40Fachdaten copy) {
         this.id = copy.getId();            
-        this.basisObjekt = copy.getBasisObjekt();            
+        this.objekt = copy.getObjekt();            
         this.bemerkungen = copy.getBemerkungen();            
         this.ansprechpartner = copy.getAnsprechpartner();            
         this.sachbearbeiterrav = copy.getSachbearbeiterrav();            
@@ -438,11 +438,13 @@ public class Anh40Fachdaten  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+    
+    
     public static Anh40Fachdaten findByObjektId(java.lang.Integer id){
         log.debug("Getting Anh40Fachdaten instance with connected BasisObjekt with id " + id);
         List<Anh40Fachdaten> all = Anh40Fachdaten.getAll();
         for(Anh40Fachdaten i : all){
-            if(i.getBasisObjekt().getId().equals(id)){
+            if(i.getObjekt().getId().equals(id)){
                 return (Anh40Fachdaten) new DatabaseAccess().get(Anh40Fachdaten.class, i.getId());
             }
         }

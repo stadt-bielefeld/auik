@@ -105,8 +105,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -175,7 +175,7 @@ public class ChronoPanel extends JPanel {
 
     public class ChronoModel extends EditableListTableModel {
         private static final long serialVersionUID = 1268693292182383330L;
-        private BasisObjekt obj;
+        private Objekt obj;
 
         /**
          * Erzeugt ein einfaches TableModel für die Chronologie.
@@ -191,7 +191,7 @@ public class ChronoPanel extends JPanel {
          * Setzt das Basis-Objekt und aktualisiert die Tabelle.
          * @param obj Das Basis-Objekt
          */
-        public void setBasisObjekt(BasisObjekt obj) {
+        public void setObjekt(Objekt obj) {
             this.obj = obj;
 
             if (obj != null) {
@@ -207,15 +207,15 @@ public class ChronoPanel extends JPanel {
     	 *            Die Zeile
     	 * @return Das Objekt bei rowIndex
     	 */
-    	public BasisObjektchrono getRow(int rowIndex)
+    	public Objektchrono getRow(int rowIndex)
     	{
-    		return (BasisObjektchrono) getObjectAtRow(rowIndex);
+    		return (Objektchrono) getObjectAtRow(rowIndex);
     	}
 
         @Override
         public void editObject(Object objectAtRow, int columnIndex,
             Object newValue) {
-            BasisObjektchrono chrono = (BasisObjektchrono) objectAtRow;
+            Objektchrono chrono = (Objektchrono) objectAtRow;
             String tmp = "";
             if (newValue instanceof String) {
                 tmp = (String) newValue;
@@ -265,19 +265,19 @@ public class ChronoPanel extends JPanel {
 
         @Override
         public Object newObject() {
-            BasisObjektchrono chr = new BasisObjektchrono();
-            chr.setBasisObjekt(ChronoPanel.this.hauptModul.getObjekt());
+            Objektchrono chr = new Objektchrono();
+            chr.setObjekt(ChronoPanel.this.hauptModul.getObjekt());
             chr.setDatum(new Date());
             return chr;
         }
 
         @Override
         public boolean objectRemoved(Object objectAtRow) {
-            BasisObjektchrono removedchr = (BasisObjektchrono) objectAtRow;
+            Objektchrono removedchr = (Objektchrono) objectAtRow;
             boolean removed;
 
             if (removedchr.getId() != null) {
-                removed = BasisObjektchrono.delete(removedchr);
+                removed = Objektchrono.delete(removedchr);
             } else {
                 removed = true;
             }
@@ -290,7 +290,7 @@ public class ChronoPanel extends JPanel {
          */
         @Override
         public Object getColumnValue(Object objectAtRow, int columnIndex) {
-            BasisObjektchrono oc = (BasisObjektchrono) objectAtRow;
+            Objektchrono oc = (Objektchrono) objectAtRow;
             Object tmp;
 
             switch (columnIndex) {
@@ -324,8 +324,8 @@ public class ChronoPanel extends JPanel {
          * @param row Die Zeile der Tabelle.
          * @return Den Datensatz, der in dieser Zeile angezeigt wird.
          */
-        public BasisObjektchrono getDatenSatz(int row) {
-            return (BasisObjektchrono) getObjectAtRow(row);
+        public Objektchrono getDatenSatz(int row) {
+            return (Objektchrono) getObjectAtRow(row);
         }
 
         /*
@@ -373,7 +373,7 @@ public class ChronoPanel extends JPanel {
     
     public void clearForm() {
         // Hier füllen wir das Abscheider-TableModel mit einer leeren Liste
-    	chronoModel.setList(new ArrayList<BasisObjektchrono>());
+    	chronoModel.setList(new ArrayList<Objektchrono>());
     }
     /**
      * Speichert die Objekt-Chronologie-Einträge und löscht gelöschte Datensätze
@@ -389,7 +389,7 @@ public class ChronoPanel extends JPanel {
         boolean gespeichert = true;
         for (int i = 0; i < chronoListe.size(); i++) {
 
-            BasisObjektchrono chrono = (BasisObjektchrono) chronoListe.get(i);
+            Objektchrono chrono = (Objektchrono) chronoListe.get(i);
 // Wenn ein Eintrag neu ist ( id = null) wird überprüft ob ein Sachbearbeiter angegeben ist.
 // Ein Eintrag wird nur gespeichert, wenn ein Sachbearbeiter eingetragen ist.
             if (chrono.getId() == null) {
@@ -423,12 +423,12 @@ public class ChronoPanel extends JPanel {
     }
 
     public void showReportListe() {
-        this.objektid = this.hauptModul.getObjekt().getObjektid();
-        this.betreiber = this.hauptModul.getObjekt().getBasisAdresse()
+        this.objektid = this.hauptModul.getObjekt().getId();
+        this.betreiber = this.hauptModul.getObjekt().getBetreiberid()
             .toString();
-        this.standort = this.hauptModul.getObjekt().getBasisStandort()
+        this.standort = this.hauptModul.getObjekt().getStandortid()
             .toString();
-        this.art = this.hauptModul.getObjekt().getBasisObjektarten()
+        this.art = this.hauptModul.getObjekt().getObjektarten()
             .getObjektart();
         Map<String, Object> params = new HashMap<String, Object>();
 
@@ -641,7 +641,7 @@ public class ChronoPanel extends JPanel {
 
 					int row = ChronoPanel.this.chronoTable
 							.getSelectedRow();
-					BasisObjektchrono bchro = ChronoPanel.this.chronoModel
+					Objektchrono bchro = ChronoPanel.this.chronoModel
 							.getRow(row);
 
 					ProcessBuilder pb = new ProcessBuilder("cmd", "/C", bchro.getPfad());
@@ -689,7 +689,7 @@ public class ChronoPanel extends JPanel {
 			        System.out.println(f.getSelectedFile());
 			        System.out.println(chronoTable.getSelectedRow());
 			        
-			        BasisObjektchrono oc = chronoModel.getRow(chronoTable.getSelectedRow());
+			        Objektchrono oc = chronoModel.getRow(chronoTable.getSelectedRow());
 			        oc.setPfad(f.getSelectedFile().toString());
 			        chronoModel.fireTableDataChanged();
 				    			        

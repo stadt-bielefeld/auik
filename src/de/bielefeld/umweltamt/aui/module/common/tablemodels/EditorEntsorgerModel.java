@@ -22,7 +22,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -75,7 +75,7 @@ public class EditorEntsorgerModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	AnhEntsorger entsorger = (AnhEntsorger) objectAtRow;
+    	Entsorger entsorger = (Entsorger) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -119,7 +119,7 @@ public class EditorEntsorgerModel extends EditableListTableModel {
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
 		
-		AnhEntsorger tmp = (AnhEntsorger) objectAtRow;
+		Entsorger tmp = (Entsorger) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -162,20 +162,20 @@ public class EditorEntsorgerModel extends EditableListTableModel {
             break;        	
         	
 		}
-		AnhEntsorger.merge(tmp);
+		Entsorger.merge(tmp);
 	}
 
 	@Override
 	public Object newObject() {
-		AnhEntsorger tmp = new AnhEntsorger();
+		Entsorger tmp = new Entsorger();
 		tmp.setId(DatabaseQuery.newEntsorgerID());
 		return tmp;
 	}
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	AnhEntsorger removedEntsorger = (AnhEntsorger) objectAtRow;
-        return AnhEntsorger.delete(removedEntsorger);
+    	Entsorger removedEntsorger = (Entsorger) objectAtRow;
+        return Entsorger.delete(removedEntsorger);
     }
 
     /**
@@ -183,7 +183,7 @@ public class EditorEntsorgerModel extends EditableListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public AnhEntsorger getRow(int rowIndex) {
-        return (AnhEntsorger) getObjectAtRow(rowIndex);
+    public Entsorger getRow(int rowIndex) {
+        return (Entsorger) getObjectAtRow(rowIndex);
     }
 }

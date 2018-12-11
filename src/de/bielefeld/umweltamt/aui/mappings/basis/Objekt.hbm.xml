@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" table="objekt" schema="basis" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="standortid" class="de.bielefeld.umweltamt.aui.mappings.basis.Standort" fetch="select">
+            <column name="standortid" />
+        </many-to-one>
+        <many-to-one name="betreiberid" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select">
+            <column name="betreiberid" />
+        </many-to-one>
+        <many-to-one name="objektarten" class="de.bielefeld.umweltamt.aui.mappings.basis.Objektarten" fetch="select">
+            <column name="objektartid" />
+        </many-to-one>
+        <many-to-one name="sachbearbeiter" class="de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter" fetch="select">
+            <column name="sachbearbeiter" />
+        </many-to-one>
+        <property name="uschistdid" type="java.lang.Integer">
+            <column name="uschistdid" />
+        </property>
+        <property name="beschreibung" type="java.lang.String">
+            <column name="beschreibung" />
+        </property>
+        <property name="wiedervorlage" type="java.util.Date">
+            <column name="wiedervorlage" length="29" />
+        </property>
+        <property name="erfassungsdatum" type="java.util.Date">
+            <column name="erfassungsdatum" length="29" />
+        </property>
+        <property name="gueltigVon" type="java.util.Date">
+            <column name="gueltig_von" length="29" />
+        </property>
+        <property name="aenderungsdatum" type="java.util.Date">
+            <column name="aenderungsdatum" length="29" />
+        </property>
+        <property name="gueltigBis" type="java.util.Date">
+            <column name="gueltig_bis" length="29" />
+        </property>
+        <property name="inaktiv" type="boolean">
+            <column name="inaktiv" not-null="true" />
+        </property>
+        <property name="prioritaet" type="java.lang.String">
+            <column name="prioritaet" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="abwasserfrei" type="java.lang.Boolean">
+            <column name="abwasserfrei" />
+        </property>
+        <property name="elkarelevant" type="java.lang.Boolean">
+            <column name="elkarelevant" />
+        </property>
+        <set name="objektverknuepfungsForIstVerknuepftMit" table="objektverknuepfung" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ist_verknuepft_mit" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung" />
+        </set>
+        <set name="anh53Fachdatens" table="anh_53_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten" />
+        </set>
+        <set name="anh40Fachdatens" table="anh_40_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten" />
+        </set>
+        <set name="bwkFachdatens" table="bwk_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten" />
+        </set>
+        <set name="wasserrechts" table="wasserrecht" schema="elka" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht" />
+        </set>
+        <set name="adresses" table="adresse" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" />
+        </set>
+        <set name="anh49Fachdatens" table="anh_49_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" />
+        </set>
+        <set name="suevFachdatens" table="suev_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.SuevFachdaten" />
+        </set>
+        <set name="anh50Fachdatens" table="anh_50_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten" />
+        </set>
+        <set name="messstelles" table="messstelle" schema="labor" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" unique="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" />
+        </set>
+        <set name="sonderbauwerks" table="sonderbauwerk" schema="oberflgw" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objekt_id" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk" />
+        </set>
+        <set name="entwaesserungsgrundstuecks" table="entwaesserungsgrundstueck" schema="oberflgw" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objekt_id" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck" />
+        </set>
+        <set name="objektchronos" table="objektchrono" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono" />
+        </set>
+        <set name="objektverknuepfungsForObjekt" table="objektverknuepfung" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objekt" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung" />
+        </set>
+        <set name="anh55Fachdatens" table="anh_55_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten" />
+        </set>
+        <set name="fachdatens" table="fachdaten" schema="awsv" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten" />
+        </set>
+        <set name="anh52Fachdatens" table="anh_52_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten" />
+        </set>
+        <set name="anh56Fachdatens" table="anh_56_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten" />
+        </set>
+        <set name="einleitungsstelles" table="einleitungsstelle" inverse="true" lazy="true" fetch="select">
+        	<key>
+        		<column name="objektid" not-null="true"/>
+        	</key>
+        	<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" />
+        </set>
+        <set name="anfallstelles" table="anfallstelle" inverse="true" lazy="true" fetch="select">
+        	<key>
+        		<column name="objektid" not-null="true"/>
+        	</key>
+        	<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" />
+        </set>
+        <set name="abas" table="aba" inverse="true" lazy="true" fetch="select">
+        	<key>
+        		<column name="objektid" not-null="true"/>
+        	</key>
+        	<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Aba" />
+        </set>
+       
+    </class>
+</hibernate-mapping>

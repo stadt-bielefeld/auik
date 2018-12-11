@@ -147,7 +147,7 @@ public class Anh52Panel extends JPanel{
             // Neues Anhang 52 Objekt erzeugen
             fachdaten = new Anh52Fachdaten();
             // Objekt_Id setzen
-            fachdaten.setBasisObjekt(hauptModul.getObjekt());
+            fachdaten.setObjekt(hauptModul.getObjekt());
 
             // Anhang 52 Objekt speichern
             fachdaten.merge();

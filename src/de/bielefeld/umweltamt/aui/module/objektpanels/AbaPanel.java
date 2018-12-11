@@ -59,11 +59,11 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAba;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAbaverfahren;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
+import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.EntsorgerEditor;
@@ -76,7 +76,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
- * Das "Abwasserbehandlungsanlage"-Tab des BasisObjektBearbeiten-Moduls
+ * Das "Abwasserbehandlungsanlage"-Tab des ObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
 public class AbaPanel extends JPanel {
@@ -102,8 +102,8 @@ private static final long serialVersionUID = -4030805403749508467L;
     private JComboBox verfahrenBox = null;
 
     // Daten
-    private ElkaAba fachdaten = null;
-    private ElkaAbaverfahren[] verfahren = null;
+    private Aba fachdaten = null;
+    private Abaverfahren[] verfahren = null;
 
     // Listener
     private ActionListener editButtonListener;
@@ -115,11 +115,6 @@ private static final long serialVersionUID = -4030805403749508467L;
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
     
-//    // Normaler und kursiver Font für die Verfahren ComboBox
-//    // Normal: gespeichert, kursiv: nur angezeigt
-//    private Font normalFont;
-//    private Font italicFont;
-
 
     public AbaPanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Abwasserbehandlungsanlage";
@@ -173,7 +168,7 @@ private static final long serialVersionUID = -4030805403749508467L;
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = ElkaAba.findByObjektId(
+        this.fachdaten = Aba.findByObjektId(
             this.hauptModul.getObjekt().getId());
         log.debug("Abwasserbehandlungsanlage aus DB geholt: " + this.fachdaten);
 
@@ -193,12 +188,6 @@ private static final long serialVersionUID = -4030805403749508467L;
             }
             if (this.fachdaten.getErstellDat() != null) {
             	getErstellDat().setDate(this.fachdaten.getErstellDat());
-            }
-            if (this.fachdaten.getElkaAbaverfahren() != null) {
-                getVerfahrenBox().setSelectedItem(
-                    this.fachdaten.getElkaAbaverfahren());
-            } else {
-//            	getVerfahrenBox().setFont(this.italicFont);
             }
             if (this.fachdaten.getGenehmpflichtigToc() != null) {
                 if (this.fachdaten.getGenehmpflichtigToc() == true) {
@@ -277,18 +266,10 @@ private static final long serialVersionUID = -4030805403749508467L;
             this.fachdaten.setEinzelabnahmeToc(false);
         }
         
-        if (getVerfahrenBox().getSelectedItem() != null) {
-            this.fachdaten.setElkaAbaverfahren((ElkaAbaverfahren) getVerfahrenBox()
-                .getSelectedItem());
-            log.debug("Verfahren " + this.fachdaten.getElkaAbaverfahren()
-                + " zugeordnet.");
-        } else
-        	getVerfahrenBox().setSelectedIndex(-1);
-
         success = this.fachdaten.merge();
         if (success) {
             log.debug("Zahnarzt "
-                + this.fachdaten.getBasisObjekt().getBasisAdresse()
+                + this.fachdaten.getObjekt().getBetreiberid()
                     .getBetrname() + " gespeichert.");
         } else {
             log.debug("Zahnarzt " + this.fachdaten
@@ -300,12 +281,11 @@ private static final long serialVersionUID = -4030805403749508467L;
     public void completeObjekt() {
         if (this.hauptModul.isNew() || this.fachdaten == null) {
             // Neuen Abwasserbehandlungsanlage erzeugen
-            this.fachdaten = new ElkaAba();
+            this.fachdaten = new Aba();
             // Objekt_Id setzen
-            this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
+            this.fachdaten.setObjekt(this.hauptModul.getObjekt());
             // Verfahren auf "unbekannt" setzen
-            ElkaAbaverfahren verfahren = ElkaAbaverfahren.findById(1);
-            this.fachdaten.setElkaAbaverfahren(verfahren);
+            Abaverfahren verfahren = Abaverfahren.findById(1);
 
             // Abwasserbehandlungsanlage speichern
             this.fachdaten.merge();
@@ -422,10 +402,10 @@ private static final long serialVersionUID = -4030805403749508467L;
                                 origin);
 
                             if (row != -1) {
-                                BasisObjektverknuepfung obj =
+                                Objektverknuepfung obj =
                                     AbaPanel.this.objektVerknuepfungModel
                                     .getRow(row);
-                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                if (obj.getObjektByIstVerknuepftMit()
                                     .getId().intValue() != AbaPanel.this.hauptModul
                                     .getObjekt().getId().intValue())
                                     AbaPanel.this.hauptModul
@@ -433,7 +413,7 @@ private static final long serialVersionUID = -4030805403749508467L;
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByIstVerknuepftMit()
+                                            obj.getObjektByIstVerknuepftMit()
                                                 .getId().intValue(),
                                             false);
                                 else
@@ -442,7 +422,7 @@ private static final long serialVersionUID = -4030805403749508467L;
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByObjekt()
+                                            obj.getObjektByObjekt()
                                                 .getId().intValue(),
                                             false);
                                 AbaPanel.this.hauptModul.getManager()
@@ -505,7 +485,7 @@ private static final long serialVersionUID = -4030805403749508467L;
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                         && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung =
+                        Objektverknuepfung verknuepfung =
                             AbaPanel.this.objektVerknuepfungModel.getRow(row);
                         if (GUIManager.getInstance().showQuestion(
                             "Soll die Verknüpfung wirklich gelöscht werden?\n"
@@ -548,7 +528,7 @@ private static final long serialVersionUID = -4030805403749508467L;
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(
                         AbaPanel.this.hauptModul.getFrame(),
-                        AbaPanel.this.fachdaten.getBasisObjekt(),
+                        AbaPanel.this.fachdaten.getObjekt(),
                         AbaPanel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }

@@ -64,7 +64,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -89,7 +89,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
     /**
      * Erzeugt einen neuen Dialog zum Bearbeiten eines Zahnarztentsorgers.
      */
-    public EntsorgerEditor(AnhEntsorger entsorg, HauptFrame owner) {
+    public EntsorgerEditor(Entsorger entsorg, HauptFrame owner) {
         super("Entsorger ("+ entsorg.getEntsorger() +")", entsorg, owner);
     }
 
@@ -233,8 +233,8 @@ public class EntsorgerEditor extends AbstractBaseEditor {
             }
         }
 
-        AnhEntsorger persistentEntsorger = null;
-        persistentEntsorger = AnhEntsorger.merge(getEntsorger());
+        Entsorger persistentEntsorger = null;
+        persistentEntsorger = Entsorger.merge(getEntsorger());
         boolean success = (persistentEntsorger != null);
 
         if (success) {
@@ -245,7 +245,7 @@ public class EntsorgerEditor extends AbstractBaseEditor {
         return success;
     }
 
-    public AnhEntsorger getEntsorger() {
-        return (AnhEntsorger) getEditedObject();
+    public Entsorger getEntsorger() {
+        return (Entsorger) getEditedObject();
     }
 }

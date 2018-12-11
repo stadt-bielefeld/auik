@@ -100,8 +100,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenarten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.VawsModel;
@@ -146,7 +146,7 @@ public class VawsPanel extends JPanel {
 
         JScrollPane vawsScroller = new JScrollPane(getVawsTable());
 
-        anlagenartBox = new JComboBox(DatabaseQuery.getVawsAnlagenarten());
+        anlagenartBox = new JComboBox(DatabaseQuery.getAnlagenarten());
         anlegenButton = new JButton("Anlegen");
         anlegenButton.addActionListener(new ActionListener() {
             @Override
@@ -200,7 +200,7 @@ public class VawsPanel extends JPanel {
      */
     public void fetchFormData() {
         vawsModel.setList(
-            DatabaseQuery.getVawsFachdatenByObjekt(
+            DatabaseQuery.getFachdatenByObjekt(
                 hauptModul.getObjekt())
         );
     }
@@ -218,16 +218,16 @@ public class VawsPanel extends JPanel {
      * Legt einen neuen Vaws-Datensatz zu diesem Objekt an.
      */
     public void neuerDatensatz() {
-        VawsFachdaten neu = new VawsFachdaten();
-        neu.setBasisObjekt(hauptModul.getObjekt());
+        Fachdaten neu = new Fachdaten();
+        neu.setObjekt(hauptModul.getObjekt());
         neu.setAnlagenart(
-            ((VawsAnlagenarten)anlagenartBox.getSelectedItem())
+            ((Anlagenarten)anlagenartBox.getSelectedItem())
                 .getAnlagenart());
 // TODO: This would be even better: (add foreign keys...)
 //        neu.setVawsAnlagenarten(
 //            (VawsAnlagenarten)anlagenartBox.getSelectedItem());
 
-        neu = VawsFachdaten.merge(neu);
+        neu = Fachdaten.merge(neu);
         editDatensatz(neu);
     }
 
@@ -235,7 +235,7 @@ public class VawsPanel extends JPanel {
      * öffnet einen Dialog um einen Vaws-Datensatz zu bearbeiten.
      * @param probe Der Datensatz.
      */
-    public void editDatensatz(VawsFachdaten fd) {
+    public void editDatensatz(Fachdaten fd) {
         //AUIKataster.debugOutput("Bearbeite '" + fd + "' !", "VawsPanel.editDatensatz");
         VawsEditor editor = new VawsEditor(fd, hauptModul.getFrame());
 
@@ -253,7 +253,7 @@ public class VawsPanel extends JPanel {
      * Löscht einen Vaws-Datensatz (mit Nachfrage).
      * @param fachdaten Der Datensatz.
      */
-    public void loescheDatensatz(VawsFachdaten fachdaten) {
+    public void loescheDatensatz(Fachdaten fachdaten) {
         String art = fachdaten.getAnlagenart();
         if (DatabaseQuery.isLageranlage(fachdaten)) {
             art = "Lageranlage";
@@ -262,7 +262,7 @@ public class VawsPanel extends JPanel {
         if (GUIManager.getInstance().showQuestion(
                 "Soll die ausgewählte "+art+" wirklich gelöscht werden?",
                 "Löschen bestätigen")) {
-            if (VawsFachdaten.delete(fachdaten)) {
+            if (Fachdaten.delete(fachdaten)) {
                 hauptModul.getFrame().changeStatus("Fachdatensatz '" + fachdaten + "' erfolgreich gelöscht!", HauptFrame.SUCCESS_COLOR);
 
                 // Tabelle updaten:
@@ -276,10 +276,10 @@ public class VawsPanel extends JPanel {
 
     public void showReportListe() {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("Betreiber", hauptModul.getObjekt().getBasisAdresse().toString());
-        params.put("Standort", DatabaseQuery.getStandortString(hauptModul.getObjekt().getBasisStandort()));
-        params.put("Art", hauptModul.getObjekt().getBasisObjektarten().getObjektart());
-        params.put("ObjektId", hauptModul.getObjekt().getObjektid());
+        params.put("Betreiber", hauptModul.getObjekt().getBetreiberid().toString());
+        params.put("Standort", DatabaseQuery.getStandortString(hauptModul.getObjekt().getStandortid()));
+        params.put("Art", hauptModul.getObjekt().getObjektarten().getObjektart());
+        params.put("ObjektId", hauptModul.getObjekt().getId());
         try {
             File pdfFile = File.createTempFile("vaws_liste", ".pdf");
             pdfFile.deleteOnExit();
@@ -297,10 +297,10 @@ public class VawsPanel extends JPanel {
         int row = getVawsTable().getSelectedRow();
         if (row != -1) {
             Map<String, Object> params = new HashMap<String, Object>();
-            VawsFachdaten anlage = vawsModel.getDatenSatz(row);
-            params.put("Betreiber", hauptModul.getObjekt().getBasisAdresse().toString());
-            params.put("Standort", DatabaseQuery.getStandortString(hauptModul.getObjekt().getBasisStandort()));
-            params.put("Objektart", hauptModul.getObjekt().getBasisObjektarten().getObjektart());
+            Fachdaten anlage = vawsModel.getDatenSatz(row);
+            params.put("Betreiber", hauptModul.getObjekt().getBetreiberid().toString());
+            params.put("Standort", DatabaseQuery.getStandortString(hauptModul.getObjekt().getStandortid()));
+            params.put("Objektart", hauptModul.getObjekt().getObjektarten().getObjektart());
             params.put("BehaelterId", anlage.getBehaelterid());
 
             try {
@@ -333,7 +333,7 @@ public class VawsPanel extends JPanel {
 
                     // Natürlich nur editieren, wenn wirklich eine Zeile ausgewählt ist
                     if (row != -1) {
-                        VawsFachdaten fd = vawsModel.getDatenSatz(row);
+                        Fachdaten fd = vawsModel.getDatenSatz(row);
                         editDatensatz(fd);
                     }
                 }
@@ -359,7 +359,7 @@ public class VawsPanel extends JPanel {
 
                     // Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
                     if (row != -1) {
-                        VawsFachdaten fd = vawsModel.getDatenSatz(row);
+                        Fachdaten fd = vawsModel.getDatenSatz(row);
                         loescheDatensatz(fd);
                     }
                 }
@@ -429,7 +429,7 @@ public class VawsPanel extends JPanel {
                         Point origin = e.getPoint();
                         int row = vawsTable.rowAtPoint(origin);
 
-                        VawsFachdaten fd = vawsModel.getDatenSatz(row);
+                        Fachdaten fd = vawsModel.getDatenSatz(row);
                         editDatensatz(fd);
                     }
                 }

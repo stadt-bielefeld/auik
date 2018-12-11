@@ -22,7 +22,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -47,15 +47,15 @@ public class Anh31Model extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        BasisObjekt ob = (BasisObjekt) objectAtRow;
+        Objekt ob = (Objekt) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            tmp = ob.getBasisAdresse();
+            tmp = ob.getBetreiberid();
             break;
         case 1:
-            tmp = DatabaseQuery.getStandortString(ob.getBasisStandort());
+            tmp = DatabaseQuery.getStandortString(ob.getStandortid());
             break;
         case 2:
             tmp = ob.getBeschreibung();

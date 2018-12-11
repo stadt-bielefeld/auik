@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" table="einleitungsstelle" schema="elka" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
+            <column name="objektid" not-null="true" unique="true" />
+        </many-to-one>
+        <property name="aktualDat" type="java.util.Date">
+            <column name="aktual_dat" length="13" />
+        </property>
+        <property name="erstellDat" type="java.util.Date">
+            <column name="erstell_dat" length="13" />
+        </property>
+        <property name="herkunft" type="java.lang.String">
+            <column name="herkunft" />
+        </property>
+        <property name="bezeichnung" type="java.lang.String">
+            <column name="bezeichnung" />
+        </property>
+        <property name="gewaessernameAlias3" type="java.lang.String">
+            <column name="gewaessername_alias_3" />
+        </property>
+        <property name="gewaessernameNs" type="java.lang.String">
+            <column name="gewaessername_ns" />
+        </property>
+        <property name="nadiaId" type="java.lang.String">
+            <column name="nadia_id" />
+        </property>
+        <property name="stillgelegtAm" type="java.util.Date">
+            <column name="stillgelegt_am" length="13" />
+        </property>
+        <property name="typIndirekt" type="java.lang.Boolean">
+            <column name="typ_indirekt" />
+        </property>
+        <property name="typIndGewDirekt" type="java.lang.Boolean">
+            <column name="typ_ind_gew_direkt" />
+        </property>
+        <property name="typKommTrenn" type="java.lang.Boolean">
+            <column name="typ_komm_trenn" />
+        </property>
+        <property name="typPrivatTrenn" type="java.lang.Boolean">
+            <column name="typ_privat_trenn" />
+        </property>
+        <property name="typSonstige" type="java.lang.Boolean">
+            <column name="typ_sonstige" />
+        </property>
+        <property name="typAusserortStrasseneinl" type="java.lang.Boolean">
+            <column name="typ_ausserort_strasseneinl" />
+        </property>
+        <property name="stationierungNs3" type="java.lang.Double">
+            <column name="stationierung_ns_3" precision="17" scale="17" />
+        </property>
+        <property name="einzugsgebiet" type="java.lang.Double">
+            <column name="einzugsgebiet" precision="17" scale="17" />
+        </property>
+        <property name="stationierungSt3" type="java.lang.Double">
+            <column name="stationierung_st_3" precision="17" scale="17" />
+        </property>
+        <property name="abgaberelEinl" type="java.lang.Integer">
+            <column name="abgaberel_einl" />
+        </property>
+        <property name="e32" type="java.lang.Integer">
+            <column name="e32" />
+        </property>
+        <property name="n32" type="java.lang.Integer">
+            <column name="n32" />
+        </property>
+        <property name="kanalArtOpt" type="java.lang.Integer">
+            <column name="kanal_art_opt" />
+        </property>
+        <property name="stationierung3Opt" type="java.lang.Integer">
+            <column name="stationierung_3_opt" />
+        </property>
+        <property name="schutzzoneOpt" type="java.lang.Integer">
+            <column name="schutzzone_opt" />
+        </property>
+        <property name="deleted" type="java.lang.Boolean">
+            <column name="_deleted" />
+        </property>
+        <property name="enabled" type="java.lang.Boolean">
+            <column name="_enabled" />
+        </property>
+        <property name="typIndirekteinleitungTog" type="boolean">
+            <column name="typ_indirekteinleitung_tog" not-null="true" />
+        </property>
+        <property name="typIndusGewerbDirekteinleitungTog" type="boolean">
+            <column name="typ_indus_gewerb_direkteinleitung_tog" not-null="true" />
+        </property>
+        <property name="typKommNwMischTog" type="boolean">
+            <column name="typ_komm_nw_misch_tog" not-null="true" />
+        </property>
+        <property name="typKommNwTrennTog" type="boolean">
+            <column name="typ_komm_nw_trenn_tog" not-null="true" />
+        </property>
+        <property name="typNwPrivatTrennTog" type="boolean">
+            <column name="typ_nw_privat_trenn_tog" not-null="true" />
+        </property>
+        <property name="typIndusGewerbNwMischTog" type="boolean">
+            <column name="typ_indus_gewerb_nw_misch_tog" not-null="true" />
+        </property>
+        <property name="typIndusGewerbNwTrennTog" type="boolean">
+            <column name="typ_indus_gewerb_nw_trenn_tog" not-null="true" />
+        </property>
+        <property name="typGrubenwasserTog" type="boolean">
+            <column name="typ_grubenwasser_tog" not-null="true" />
+        </property>
+        <property name="typKleinklaeranlageTog" type="boolean">
+            <column name="typ_kleinklaeranlage_tog" not-null="true" />
+        </property>
+        <property name="typKommKaTog" type="boolean">
+            <column name="typ_komm_ka_tog" not-null="true" />
+        </property>
+        <property name="typAusseroertlicheStrasseneinleitungTog" type="boolean">
+            <column name="typ_ausseroertliche_strasseneinleitung_tog" not-null="true" />
+        </property>
+        <property name="typSonstigeTog" type="boolean">
+            <column name="typ_sonstige_tog" not-null="true" />
+        </property>
+        <property name="abgaberelevanteEltOpt" type="java.lang.Integer">
+            <column name="abgaberelevante_elt_opt" />
+        </property>
+        <property name="gewaesser3Id" type="java.lang.String">
+            <column name="gewaesser_3_id" length="20" />
+        </property>
+        <property name="ofwkNrwId" type="java.lang.String">
+            <column name="ofwk_nrw_id" length="24" />
+        </property>
+        <property name="ofwkNrwAuflageId" type="java.lang.String">
+            <column name="ofwk_nrw_auflage_id" length="10" />
+        </property>
+        <property name="ofwkNrwOpt" type="java.lang.Integer">
+            <column name="ofwk_nrw_opt" />
+        </property>
+        <property name="seeNs3Id" type="java.lang.String">
+            <column name="see_ns_3_id" length="20" />
+        </property>
+        <property name="seenameAlias3" type="java.lang.String">
+            <column name="seename_alias_3" length="60" />
+        </property>
+        <property name="seeAuflage3Id" type="java.lang.String">
+            <column name="see_auflage_3_id" length="10" />
+        </property>
+        <property name="see3Id" type="java.lang.String">
+            <column name="see_3_id" length="20" />
+        </property>
+        <property name="einleitungsstellenId" type="java.lang.String">
+            <column name="einleitungsstellen_id" length="9" />
+        </property>
+        <property name="gewaesserAuflage3Id" type="java.lang.String">
+            <column name="gewaesser_auflage_3_id" length="10" />
+        </property>
+        <property name="flussGebiet3Id" type="java.lang.String">
+            <column name="fluss_gebiet_3_id" length="20" />
+        </property>
+        <property name="bemerkung" type="java.lang.String">
+            <column name="bemerkung" length="1000" />
+        </property>
+        <property name="flussAuflage3Id" type="java.lang.String">
+            <column name="fluss_auflage_3_id" length="10" />
+        </property>
+        <property name="gewaessernameNs3" type="java.lang.String">
+            <column name="gewaessername_ns_3" length="64" />
+        </property>
+        <property name="gewaesserNs3Id" type="java.lang.String">
+            <column name="gewaesser_ns_3_id" length="20" />
+        </property>
+        <property name="gwkId" type="java.lang.String">
+            <column name="gwk_id" length="15" />
+        </property>
+        <property name="kaNichtInNrwTog" type="boolean">
+            <column name="ka_nicht_in_nrw_tog" not-null="true" />
+        </property>
+        <property name="kaNameAusserhalbNrw" type="java.lang.String">
+            <column name="ka_name_ausserhalb_nrw" length="30" />
+        </property>
+        <property name="externalNr" type="java.lang.String">
+            <column name="external_nr" length="50" />
+        </property>
+        <set name="versickerungsanlages" table="versickerungsanlage" schema="oberflgw" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="els_nr" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Versickerungsanlage" />
+        </set>
+        <set name="referenzsForQElsNr" table="referenz" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="q_els_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+        </set>
+        <set name="referenzsForZElsNr" table="referenz" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="z_els_nr" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
+        </set>
+    </class>
+</hibernate-mapping>

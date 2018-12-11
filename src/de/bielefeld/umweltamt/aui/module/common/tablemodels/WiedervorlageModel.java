@@ -43,7 +43,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -69,21 +69,21 @@ public class WiedervorlageModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        BasisObjekt obj = (BasisObjekt) objectAtRow;
+        Objekt obj = (Objekt) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            tmp = obj.getBasisAdresse().toString();
+            tmp = obj.getBetreiberid().toString();
             break;
         case 1:
-            tmp = DatabaseQuery.getStandortString(obj.getBasisStandort());
+            tmp = DatabaseQuery.getStandortString(obj.getStandortid());
             break;
         case 2:
             tmp = obj.getWiedervorlage();
             break;
         case 3:
-            tmp = obj.getBasisObjektarten().getObjektart().toString();
+            tmp = obj.getObjektarten().getObjektart().toString();
             break;
         case 4:
             tmp = obj.getBeschreibung();

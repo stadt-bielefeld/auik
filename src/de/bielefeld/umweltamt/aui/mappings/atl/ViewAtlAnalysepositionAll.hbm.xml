@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 30.06.2016 09:12:41 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll" table="view_atl_analyseposition_all" schema="auik" lazy="false" optimistic-lock="version">
+    <class name="de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll" table="view_atl_analyseposition_all" schema="labor" lazy="false" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="assigned" />

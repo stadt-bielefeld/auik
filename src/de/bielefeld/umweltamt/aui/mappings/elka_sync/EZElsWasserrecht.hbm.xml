@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28.08.2018 12:49:47 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EZElsWasserrecht" table="e_z_els_wasserrecht" schema="elka_sync" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EZElsWasserrechtId">
+            <key-property name="wasserrechtNr" type="long">
+                <column name="wasserrecht_nr" />
+            </key-property>
+            <key-property name="elsNr" type="long">
+                <column name="els_nr" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="einleitungsstelle" class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" update="false" insert="false" fetch="select">
+            <column name="els_nr" not-null="true" />
+        </many-to-one>
+        <many-to-one name="wasserrecht" class="de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht" update="false" insert="false" fetch="select">
+            <column name="wasserrecht_nr" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

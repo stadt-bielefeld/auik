@@ -39,7 +39,7 @@ import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAnfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
@@ -47,7 +47,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
- * Das "Anfallstelle"-Tab des BasisObjektBearbeiten-Moduls
+ * Das "Anfallstelle"-Tab des ObjektBearbeiten-Moduls
  * @author Tobias Kaps
  * @date 29.09.2017
  */
@@ -73,7 +73,7 @@ public class AnfallstellePanel extends JPanel {
     private JButton saveAnfallstelleButton = null;
     
     // Daten
-    private ElkaAnfallstelle anfallstelle = null;
+    private Anfallstelle anfallstelle = null;
 
     public AnfallstellePanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Anfallstelle";
@@ -116,7 +116,7 @@ public class AnfallstellePanel extends JPanel {
      * @throws RuntimeException
      */
     public void fetchFormData() throws RuntimeException {
-    	this.anfallstelle = ElkaAnfallstelle.findByObjektId(
+    	this.anfallstelle = Anfallstelle.findByObjektId(
     			this.hauptModul.getObjekt().getId());
     	log.debug("Anfallstelle aus DB geholt: " + this.anfallstelle);
     }
@@ -254,8 +254,8 @@ public class AnfallstellePanel extends JPanel {
         success = this.anfallstelle.merge();
         
         if(success) {
-        	log.debug("Zahnarzt "
-                  + this.anfallstelle.getBasisObjekt().getBasisAdresse()
+        	log.debug("Anfallstelle "
+                  + this.anfallstelle.getObjekt().getBetreiberid()
                       .getBetrname() + " gespeichert.");     	
         } else {
         	log.debug("Anfallstelle " + this.anfallstelle
@@ -267,12 +267,12 @@ public class AnfallstellePanel extends JPanel {
     public void completeObjekt() {
     	if (this.hauptModul.isNew() || this.anfallstelle == null) {
     		// Neue Einleitungsstelle erzeugen
-    		this.anfallstelle = new ElkaAnfallstelle();
+    		this.anfallstelle = new Anfallstelle();
     		// Objekt_Id setzen
-    		this.anfallstelle.setBasisObjekt(this.hauptModul.getObjekt());
+    		this.anfallstelle.setObjekt(this.hauptModul.getObjekt());
     		// Einleitungsstelle speichern
     		this.anfallstelle.merge();
-    		log.debug("Neue Einleitungsstelle " + this.anfallstelle + " gespeichert.");
+    		log.debug("Neue Anfallstelle " + this.anfallstelle + " gespeichert.");
     	}
     }
     

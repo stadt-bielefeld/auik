@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme" table="massnahme" schema="oberflgw" optimistic-lock="version">
+        <id name="nr" type="java.lang.Integer">
+            <column name="nr" />
+            <generator class="assigned" />
+        </id>
+        <property name="stoffNr" type="java.lang.Long">
+            <column name="stoff_nr" />
+        </property>
+        <property name="gruppeNr" type="java.lang.Long">
+            <column name="gruppe_nr" />
+        </property>
+        <property name="massnahmeStoff" type="java.lang.String">
+            <column name="massnahme_stoff" length="1000" />
+        </property>
+        <property name="stoffEintragsDat" type="java.util.Date">
+            <column name="stoff_eintrags_dat" length="13" />
+        </property>
+        <property name="ergebnisMassnahme" type="java.lang.String">
+            <column name="ergebnis_massnahme" length="1000" />
+        </property>
+        <property name="ergebnisAm" type="java.util.Date">
+            <column name="ergebnis_am" length="13" />
+        </property>
+        <property name="erstellDat" type="java.util.Date">
+            <column name="erstell_dat" length="29" not-null="true" />
+        </property>
+        <property name="aktualDat" type="java.util.Date">
+            <column name="aktual_dat" length="29" not-null="true" />
+        </property>
+        <property name="externalNr" type="java.lang.String">
+            <column name="external_nr" length="50" />
+        </property>
+        <set name="ZBetriebMassnahmes" table="z_betrieb_massnahme" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="massnahme_nr" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme" />
+        </set>
+    </class>
+</hibernate-mapping>

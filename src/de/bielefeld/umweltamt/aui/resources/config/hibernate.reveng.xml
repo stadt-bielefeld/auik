@@ -50,159 +50,147 @@
 	<table-filter match-name="e_z_sb_regeln" match-schema="public"></table-filter>
 
 	<!-- Table filters ===================================================== -->
+	<table-filter match-schema="labor" match-name=".*"
+		package="de.bielefeld.umweltamt.aui.mappings.atl" />
+	<table-filter match-schema="auik" match-name="view_atl_analyseposition_all"
+		package="de.bielefeld.umweltamt.aui.mappings.atl" />
+		
+	<table-filter match-schema="basis" match-name=".*"
+		package="de.bielefeld.umweltamt.aui.mappings.basis" />
+		
+	<table-filter match-schema="indeinl" match-name=".*"
+		package="de.bielefeld.umweltamt.aui.mappings.indeinl" />
+		
+	<table-filter match-schema="awsv" match-name=".*"
+		package="de.bielefeld.umweltamt.aui.mappings.awsv" />
+		
+    <table-filter match-schema="elka" match-name="e_.*"
+		package="de.bielefeld.umweltamt.aui.mappings.elka_sync" />
 
+	<table-filter match-schema="elka" match-name=".*"
+		package="de.bielefeld.umweltamt.aui.mappings.elka" />
+
+    <table-filter match-schema="oberflgw" match-name=".*"
+        package="de.bielefeld.umweltamt.aui.mappings.oberflgw" />
+		
 	<!-- Sequences ========================================================= -->
-	<table schema="auik" name="anh_49_abscheiderdetails">
+	<table schema="indeinl" name="anh_49_abscheiderdetails">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.anh_49_abscheiderdetails_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">ineindl.anh_49_abscheiderdetails_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="anh_49_analysen">
+	<table schema="indeinl" name="anh_49_analysen">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.anh_49_analysen_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">indeinl.anh_49_analysen_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="anh_49_kontrollen">
+	<table schema="indeinl" name="anh_49_kontrollen">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.anh_49_kontrollen_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">indeinl.anh_49_kontrollen_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="anh_49_ortstermine">
+	<table schema="indeinl" name="anh_49_ortstermine">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.anh_49_ortstermine_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">indeinl.anh_49_ortstermine_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="anh_49_verwaltungsverf">
+	<table schema="indeinl" name="anh_49_verwaltungsverf">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.anh_49_verwaltungsverf_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">indeinl.anh_49_verwaltungsverf_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="atl_analyseposition">
+	<table schema="labor" name="atl_analyseposition">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.atl_analyseposition_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">labor.atl_analyseposition_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="atl_probenahmen">
+	<table schema="labor" name="atl_probenahmen">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.atl_probenahmen_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">labor.atl_probenahmen_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="basis_betreiber">
+	<table schema="basis" name="betreiber">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.basis_betreiber_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">basis.betreiber_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="basis_objekt">
+	<table schema="basis" name="objekt">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.basis_objekt_objektid_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">basis.objekt_objektid_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="basis_objektchrono">
+	<table schema="basis" name="objektchrono">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.basis_objektchrono_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">basis.objektchrono_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="basis_objektverknuepfung">
+	<table schema="basis" name="objektverknuepfung">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.basis_objektverknuepfung_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">basis.objektverknuepfung_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="basis_standort">
+	<table schema="basis" name="standort">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.basis_standort_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">basis.standort_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="vaws_anlagenchrono">
+	<table schema="awsv" name="anlagenchrono">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.vaws_anlagenchrono_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">awsv.anlagenchrono_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="vaws_fachdaten">
+	<table schema="awsv" name="fachdaten">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.vaws_fachdaten_behaelterid_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">awsv.fachdaten_behaelterid_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="vaws_kontrollen">
+	<table schema="awsv" name="kontrollen">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.vaws_kontrollen_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">awsv.kontrollen_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="vaws_verwaltungsgebuehren">
+	<table schema="awsv" name="verwaltungsgebuehren">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.vaws_verwaltungsgebuehren_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">awsv.verwaltungsgebuehren_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
-	<table schema="auik" name="vaws_verwaltungsverf">
+	<table schema="awsv" name="verwaltungsverf">
 		<primary-key>
-			<generator class="native">
-				<param name="sequence">
-					auik.vaws_verwaltungsverf_id_seq
-				</param>
-			</generator>
+            <generator class="native">
+                <param name="sequence">awsv.verwaltungsverf_id_seq</param>
+        	</generator>
 		</primary-key>
 	</table>
 
@@ -212,8 +200,8 @@
 			<key-column name="id" />
 		</primary-key>
 	</table>
-	<!--
-		<table schema="elka" name="e_abwasserbehandlungsanlage">
+
+	<table schema="elka" name="e_abwasserbehandlungsanlage">
 		<primary-key>
 		<key-column name="nr" />
 		</primary-key>
@@ -262,173 +250,173 @@
 		<primary-key>
 		<key-column name="nr" />
 		</primary-key>
-		</table>-->
-
-	<!-- Exclude Geometry columns ========================================== -->
-	<table schema="auik" name="atl_sielhaut">
-		<column name="the_geom" exclude="true" />
-	</table>
-	<table schema="auik" name="basis_standort">
-		<column name="the_geom" exclude="true" />
 	</table>
 
-	<!-- Columns for gui toString ========================================== -->
-	<table schema="auik" name="atl_einheiten">
-		<column name="bezeichnung">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="atl_klaeranlagen">
-		<column name="anlage">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="atl_parameter">
-		<column name="bezeichnung">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="atl_probeart">
-		<column name="art">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="atl_status">
-		<column name="bezeichnung">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="basis_gemarkung">
-		<column name="gemarkung">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="basis_strassen">
-		<column name="strasse">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="anh_entsorger">
-		<column name="entsorger">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_anlagenarten">
-		<column name="anlagenart">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_behaelterart">
-		<column name="behaelterart">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_fluessigkeit">
-		<column name="fluessigkeit">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_gebuehrenarten">
-		<column name="gebuehrenart">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_gefaehrdungsstufen">
-		<column name="gefaehrdungsstufen">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_material">
-		<column name="material">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_pruefer">
-		<column name="pruefer">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_pruefergebnisse">
-		<column name="pruefergebnis">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_standortgghwsg">
-		<column name="standortgg">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_vbfeinstufung">
-		<column name="vbfeinstufung">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_verwmassnahmen">
-		<column name="massnahmen">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_wassereinzugsgebiete">
-		<column name="ezgbname">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="auik" name="vaws_wirtschaftszweige">
-		<column name="wirtschaftszweig">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<table schema="tipi" name="auik_wz_code">
-		<column name="bezeichnung">
-			<meta attribute="use-in-tostring">true</meta>
-		</column>
-	</table>
-	<!-- Classes which need lazy="false" =================================== -->
-	<!-- I did not find a way to generate this. :( ========================= -->
-	<!-- auik.atl: -->
-	<!--           atl_einheiten -->
-	<!--           atl_klaeranlagen -->
-	<!--           atl_parameter -->
-	<!--           atl_parametergruppen -->
-	<!--           atl_probeart -->
-	<!--           atl_probenahmen -->
-	<!--           atl_probepkt -->
-	<!--           atl_status -->
-	<!-- auik.basis: -->
-	<!--             basis_betreiber -->
-	<!--             basis_gemarkung -->
-	<!--             basis_objekt -->
-	<!--             basis_objektarten -->
-	<!--             basis_sachbearbeiter -->
-	<!--             basis_standort -->
-	<!-- auik.indeinl: -->
-	<!--             anh_entsorger -->
-	<!-- tipi: -->
-	<!--       auik_wz_code -->
-	<!-- auik.vaws: -->
-	<!--            vaws_fachdaten -->
-	<!--            vaws_gebuehrenarten -->
-	<!--            vaws_standortgghwsg -->
-	<!--            vaws_wassereinzugsgebiete -->
-	<!--            vaws_wirtschaftszweige -->
-	<!-- Classes which need cascade="all" for the BasisObjekt relation ===== -->
-	<!-- I did not find a way to generate this. :( ========================= -->
-	<!-- auik.atl: -->
-	<!--           atl_probepkt -->
-	<!-- auik.basis: -->
-	<!-- auik.indeinl: -->
-	<!--             anh_40_fachdaten -->
-	<!--             anh_49_fachdaten -->
-	<!--             anh_50_fachdaten -->
-	<!--             anh_52_fachdaten -->
-	<!--             anh_53_fachdaten -->
-	<!--             anh_55_fachdaten -->
-	<!--             anh_56_fachdaten -->
-	<!--             anh_bwk_fachdaten -->
-	<!--             anh_suev_fachdaten -->
-	<!--             indeinl_genehmigung -->
-	<!-- auik.vaws: -->
-	<!--            vaws_abfuelflaeche (vaws_fachdaten) -->
-	<!--            vaws_abscheider (vaws_fachdaten) -->
-	<!--            vaws_fachdaten -->
+    <!-- Exclude Geometry columns ========================================== -->
+    <table schema="auik" name="atl_sielhaut">
+        <column name="the_geom" exclude="true" />
+    </table>
+    <table schema="auik" name="standort">
+        <column name="the_geom" exclude="true" />
+    </table>
+    
+    <!-- Columns for gui toString ========================================== -->
+    <table schema="auik" name="atl_einheiten">
+        <column name="bezeichnung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="atl_klaeranlagen">
+        <column name="anlage">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="atl_parameter">
+        <column name="bezeichnung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="atl_probeart">
+        <column name="art">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="atl_status">
+        <column name="bezeichnung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="gemarkung">
+        <column name="gemarkung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="strassen">
+        <column name="strasse">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="anh_entsorger">
+        <column name="entsorger">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="anlagenarten">
+        <column name="anlagenart">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="behaelterart">
+        <column name="behaelterart">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="fluessigkeit">
+        <column name="fluessigkeit">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="gebuehrenarten">
+        <column name="gebuehrenart">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="gefaehrdungsstufen">
+        <column name="gefaehrdungsstufen">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="material">
+        <column name="material">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="pruefer">
+        <column name="pruefer">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="pruefergebnisse">
+        <column name="pruefergebnis">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="standortgghwsg">
+        <column name="standortgg">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="vbfeinstufung">
+        <column name="vbfeinstufung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="verwmassnahmen">
+        <column name="massnahmen">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="wassereinzugsgebiete">
+        <column name="ezgbname">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="auik" name="wirtschaftszweige">
+        <column name="wirtschaftszweig">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <table schema="tipi" name="auik_wz_code">
+        <column name="bezeichnung">
+            <meta attribute="use-in-tostring">true</meta>
+        </column>
+    </table>
+    <!-- Classes which need lazy="false" =================================== -->
+    <!-- I did not find a way to generate this. :( ========================= -->
+    <!-- auik.atl: -->
+    <!--           atl_einheiten -->
+    <!--           atl_klaeranlagen -->
+    <!--           atl_parameter -->
+    <!--           atl_parametergruppen -->
+    <!--           atl_probeart -->
+    <!--           atl_probenahmen -->
+    <!--           atl_probepkt -->
+    <!--           atl_status -->
+    <!-- auik.basis: -->
+    <!--             betreiber -->
+    <!--             gemarkung -->
+    <!--             objekt -->
+    <!--             objektarten -->
+    <!--             sachbearbeiter -->
+    <!--             standort -->
+    <!-- auik.indeinl: -->
+    <!--             anh_entsorger -->
+    <!-- tipi: -->
+    <!--       auik_wz_code -->
+    <!-- auik.vaws: -->
+    <!--            fachdaten -->
+    <!--            gebuehrenarten -->
+    <!--            standortgghwsg -->
+    <!--            wassereinzugsgebiete -->
+    <!--            wirtschaftszweige -->
+    <!-- Classes which need cascade="all" for the BasisObjekt relation ===== -->
+    <!-- I did not find a way to generate this. :( ========================= -->
+    <!-- auik.atl: -->
+    <!--           atl_probepkt -->
+    <!-- auik.basis: -->
+    <!-- auik.indeinl: -->
+    <!--             anh_40_fachdaten -->
+    <!--             anh_49_fachdaten -->
+    <!--             anh_50_fachdaten -->
+    <!--             anh_52_fachdaten -->
+    <!--             anh_53_fachdaten -->
+    <!--             anh_55_fachdaten -->
+    <!--             anh_56_fachdaten -->
+    <!--             anh_bwk_fachdaten -->
+    <!--             anh_suev_fachdaten -->
+    <!--             indeinl_genehmigung -->
+    <!-- auik.vaws: -->
+    <!--            abfuelflaeche (fachdaten) -->
+    <!--            abscheider (fachdaten) -->
+    <!--            fachdaten -->
 </hibernate-reverse-engineering>

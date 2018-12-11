@@ -61,9 +61,9 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh40Model;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisModel;
@@ -112,8 +112,8 @@ public class BasisAuswertung extends AbstractQueryModul {
             submitButton = new JButton("Objekte anzeigen");
             artBox = new JComboBox();
             artBox.setModel(new DefaultComboBoxModel(
-                DatabaseQuery.getOrderedAll(new BasisObjektarten(), "objektart")
-                    .toArray(new BasisObjektarten[0])));
+                DatabaseQuery.getOrderedAll(new Objektarten(), "objektart")
+                    .toArray(new Objektarten[0])));
 
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
@@ -124,7 +124,7 @@ public class BasisAuswertung extends AbstractQueryModul {
                         @Override
                         protected void doNonUILogic() {
                             ((BasisModel)getTableModel()).setList(
-                                DatabaseQuery.getBasisObjektByArt((BasisObjektarten)artBox.getSelectedItem()));
+                                DatabaseQuery.getObjektByArt((Objektarten)artBox.getSelectedItem()));
                         }
 
                         @Override

@@ -102,7 +102,7 @@ public class WiedervorlageAuswertung extends AbstractQueryModul {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     ((WiedervorlageModel)getTableModel()).setList(
-                        DatabaseQuery.getBasisObjektByWiedervorlage(
+                        DatabaseQuery.getObjektByWiedervorlage(
                         		wiedervorlageCheck.isSelected()));
                     ((WiedervorlageModel)getTableModel()).fireTableDataChanged();
                     frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");

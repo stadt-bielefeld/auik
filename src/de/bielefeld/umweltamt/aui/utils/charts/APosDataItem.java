@@ -52,7 +52,7 @@ import java.util.GregorianCalendar;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeriesDataItem;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 
 /**
  * Eine Klasse um eine Analysposition als Datenpunkt in einer TimeSeries-Datenreihe
@@ -61,26 +61,26 @@ import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
  */
 public class APosDataItem extends TimeSeriesDataItem {
     private static final long serialVersionUID = -8582014620416975204L;
-    private AtlAnalyseposition pos;
+    private Analyseposition pos;
 
-    public APosDataItem(AtlAnalyseposition pos) {
+    public APosDataItem(Analyseposition pos) {
         // es werden die Messwerte beachtet
-        this(pos, createMinuteFromDate(new Timestamp(pos.getAtlProbenahmen().getDatumDerEntnahme().getTime()), pos.getAtlProbenahmen().getDatumDerEntnahme().toString().substring(11, 16)));
+        this(pos, createMinuteFromDate(new Timestamp(pos.getProbenahme().getDatumDerEntnahme().getTime()), pos.getProbenahme().getDatumDerEntnahme().toString().substring(11, 16)));
     }
 
-    public APosDataItem(String norm,AtlAnalyseposition pos) {
+    public APosDataItem(String norm,Analyseposition pos) {
         // es werden die Normwerte beachtet
-        this("normwert",pos, createMinuteFromDate(new Timestamp(pos.getAtlProbenahmen().getDatumDerEntnahme().getTime()), pos.getAtlProbenahmen().getZeitDerEntnahmen()));
+        this("normwert",pos, createMinuteFromDate(new Timestamp(pos.getProbenahme().getDatumDerEntnahme().getTime()), pos.getProbenahme().getZeitDerEntnahmen()));
     }
 
-    public APosDataItem( AtlAnalyseposition pos, Minute minute) {
+    public APosDataItem( Analyseposition pos, Minute minute) {
         // es werden die Messwerte beachtet
             super(minute, pos.getWert());
 
         this.pos = pos;
     }
 
-    public APosDataItem(String norm ,AtlAnalyseposition pos, Minute minute) {
+    public APosDataItem(String norm ,Analyseposition pos, Minute minute) {
     // es werden die Normwerte beachtet
         super(minute, pos.getNormwert());
 
@@ -91,7 +91,7 @@ public class APosDataItem extends TimeSeriesDataItem {
         return (Minute) getPeriod();
     }
 
-    public AtlAnalyseposition getAnalysePosition() {
+    public Analyseposition getAnalysePosition() {
         return pos;
     }
 

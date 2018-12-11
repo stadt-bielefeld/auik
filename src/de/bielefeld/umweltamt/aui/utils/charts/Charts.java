@@ -72,8 +72,8 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 
 /**
@@ -355,11 +355,11 @@ class APosToolTipGenerator implements XYToolTipGenerator {
         TimeSeriesCollection col = (TimeSeriesCollection) dataset;
         TimeSeries ser = col.getSeries(series);
         APosDataItem it = (APosDataItem) ser.getItems().get(item);
-        AtlAnalyseposition pos = it.getAnalysePosition();
-        AtlProbenahmen probe = pos.getAtlProbenahmen();
+        Analyseposition pos = it.getAnalysePosition();
+        Probenahme probe = pos.getProbenahme();
         //TODO: TimeSeries key == name?
 		return "<html>" +
-                "<b>"+it.getValue()+" "+pos.getAtlEinheiten()+"</b><br>" +
+                "<b>"+it.getValue()+" "+pos.getEinheiten()+"</b><br>" +
                 ser.getKey().toString() + "<br>" +
                 "Probe: <b>"+probe.getKennummer()+"</b>, "+AuikUtils.getStringFromDate(probe.getDatumDerEntnahme())+((probe.getZeitDerEntnahmen() != null) ?  " "+probe.getZeitDerEntnahmen().substring(0,5) : "")+"<br>" +
                 "</html>";

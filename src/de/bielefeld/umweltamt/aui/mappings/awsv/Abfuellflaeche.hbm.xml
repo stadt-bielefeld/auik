@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche" table="abfuellflaeche" schema="awsv" lazy="false" optimistic-lock="version">
+        <id name="behaelterid" type="java.lang.Integer">
+            <column name="behaelterid" />
+            <generator class="foreign">
+                <param name="property">fachdaten</param>
+            </generator>
+        </id>
+        <one-to-one name="fachdaten" class="de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten" constrained="true"></one-to-one>
+        <property name="eoh" type="java.lang.Boolean">
+            <column name="eoh" />
+        </property>
+        <property name="ef" type="java.lang.Boolean">
+            <column name="ef" />
+        </property>
+        <property name="abfsaniert" type="java.lang.Boolean">
+            <column name="abfsaniert" />
+        </property>
+        <property name="abfneuerstellt" type="java.lang.Boolean">
+            <column name="abfneuerstellt" />
+        </property>
+        <property name="bodenflaechenausf" type="java.lang.String">
+            <column name="bodenflaechenausf" />
+        </property>
+        <property name="beschbodenfl" type="java.lang.String">
+            <column name="beschbodenfl" />
+        </property>
+        <property name="dicke" type="java.lang.Float">
+            <column name="dicke" precision="8" scale="8" />
+        </property>
+        <property name="guete" type="java.lang.String">
+            <column name="guete" />
+        </property>
+        <property name="fugenmaterial" type="java.lang.String">
+            <column name="fugenmaterial" />
+        </property>
+        <property name="beschfugenmat" type="java.lang.String">
+            <column name="beschfugenmat" />
+        </property>
+        <property name="niederschlagschutz" type="java.lang.String">
+            <column name="niederschlagschutz" />
+        </property>
+        <property name="abscheidervorh" type="java.lang.Boolean">
+            <column name="abscheidervorh" />
+        </property>
+        <property name="beschableitung" type="java.lang.String">
+            <column name="beschableitung" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <property name="id" type="java.lang.Integer">
+            <column name="id" not-null="true" />
+        </property>
+        <property name="groesse" type="java.lang.Integer">
+            <column name="groesse" />
+        </property>
+    </class>
+</hibernate-mapping>

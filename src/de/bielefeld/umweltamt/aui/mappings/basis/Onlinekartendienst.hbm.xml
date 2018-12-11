@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.Onlinekartendienst" table="onlinekartendienst" schema="basis" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.basis.OnlinekartendienstId">
+            <key-property name="behaelterid" type="java.lang.Integer">
+                <column name="behaelterid" />
+            </key-property>
+            <key-property name="vawsBezirk" type="java.lang.String">
+                <column name="vaws_bezirk" />
+            </key-property>
+            <key-property name="plz" type="java.lang.String">
+                <column name="plz" />
+            </key-property>
+            <key-property name="strasse" type="java.lang.String">
+                <column name="strasse" />
+            </key-property>
+            <key-property name="hausnr" type="java.lang.Integer">
+                <column name="hausnr" />
+            </key-property>
+            <key-property name="hausnrzus" type="java.lang.String">
+                <column name="hausnrzus" />
+            </key-property>
+            <key-property name="betranrede" type="java.lang.String">
+                <column name="betranrede" />
+            </key-property>
+            <key-property name="betrname" type="java.lang.String">
+                <column name="betrname" />
+            </key-property>
+            <key-property name="betrnamezus" type="java.lang.String">
+                <column name="betrnamezus" />
+            </key-property>
+            <key-property name="objektart" type="java.lang.String">
+                <column name="objektart" />
+            </key-property>
+            <key-property name="anlagenart" type="java.lang.String">
+                <column name="anlagenart" />
+            </key-property>
+            <key-property name="behaelterart" type="java.lang.String">
+                <column name="behaelterart" />
+            </key-property>
+            <key-property name="fluessigkeit" type="java.lang.String">
+                <column name="fluessigkeit" />
+            </key-property>
+            <key-property name="herstellnr" type="java.lang.String">
+                <column name="herstellnr" />
+            </key-property>
+            <key-property name="menge" type="java.lang.Double">
+                <column name="menge" precision="17" scale="17" />
+            </key-property>
+            <key-property name="wgk" type="java.lang.Integer">
+                <column name="wgk" />
+            </key-property>
+            <key-property name="stillegungsdatum" type="java.util.Date">
+                <column name="stillegungsdatum" length="29" />
+            </key-property>
+            <key-property name="rechtswert" type="java.lang.Float">
+                <column name="rechtswert" precision="8" scale="8" />
+            </key-property>
+            <key-property name="hochwert" type="java.lang.Float">
+                <column name="hochwert" precision="8" scale="8" />
+            </key-property>
+            <key-property name="theGeom" type="serializable">
+                <column name="the_geom" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

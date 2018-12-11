@@ -66,7 +66,7 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorSachbearbeiterModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -279,7 +279,7 @@ public class EditorSachbearbeiter extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     int row = getResultTable().getSelectedRow();
                     if (row != -1 && getResultTable().getEditingRow() == -1) {
-                    	BasisSachbearbeiter sachbearbeiter = EditorSachbearbeiter.this.tmodel
+                    	Sachbearbeiter sachbearbeiter = EditorSachbearbeiter.this.tmodel
                             .getRow(row);
 
                         if (GUIManager.getInstance().showQuestion(

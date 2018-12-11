@@ -77,10 +77,10 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -291,19 +291,19 @@ public class SielhautImport extends AbstractModul {
                     boolean problem = false;
                     String[] current = (String[]) getObjectAtRow(selectedRows[i]);
                     if (isPositionImportable(current)) {
-                        AtlAnalyseposition pos = new AtlAnalyseposition();
+                        Analyseposition pos = new Analyseposition();
 
                         // Kennnummer
                         String kennumer = kennummerAusZeile(current);
 
                         // Probenahme
-                        AtlProbenahmen probe = DatabaseQuery.findProbenahme(
+                        Probenahme probe = DatabaseQuery.findProbenahme(
                             kennumer);
                         if (probe == null) {
                             // Sollte eigentlich nicht vorkommen, nötig?
                             throw new Exception("Probenahme nicht gefunden!");
                         }
-                        pos.setAtlProbenahmen(probe);
+                        pos.setProbenahme(probe);
 
                         // Wert
                         Float wert;
@@ -332,11 +332,11 @@ public class SielhautImport extends AbstractModul {
                         // Parameter
                         String sParam = paramAusZeile(current);
                         if (sParam != null) {
-                            AtlParameter para = DatabaseQuery
+                            Parameter para = DatabaseQuery
                                 .getParameterByDescription(sParam);
 
                             if (para != null) {
-                                pos.setAtlParameter(para);
+                                pos.setParameter(para);
                             } else {
                                 problem = true;
                                 if (!problemMessage.equals("")) {
@@ -351,12 +351,12 @@ public class SielhautImport extends AbstractModul {
                         }
 
                         // Einheit
-                        AtlEinheiten einheit =
+                        Einheiten einheit =
                             DatabaseQuery.getEinheitByDescription(
                                 einheitAusZeile(current));
 
                         if (einheit != null) {
-                            pos.setAtlEinheiten(einheit);
+                            pos.setEinheiten(einheit);
                         } else {
                             problem = true;
                             if (!problemMessage.equals("")) {

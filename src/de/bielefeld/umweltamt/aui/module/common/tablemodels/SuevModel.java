@@ -40,7 +40,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.SuevFachdaten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -69,20 +69,20 @@ public class SuevModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        AnhSuevFachdaten fd = (AnhSuevFachdaten) objectAtRow;
+        SuevFachdaten fd = (SuevFachdaten) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            if (fd.getBasisObjekt() != null) {
-                tmp = fd.getBasisObjekt().getBasisAdresse();
+            if (fd.getObjekt() != null) {
+                tmp = fd.getObjekt().getBetreiberid();
             } else {
                 tmp = "<html><font color=red>KEIN BASISOBJEKT!</font></html>";
             }
             break;
         case 1:
-            if (fd.getBasisObjekt() != null) {
-                tmp = fd.getBasisObjekt().getBasisLage();
+            if (fd.getObjekt() != null) {
+                tmp = fd.getObjekt().getStandortid().getLage();
             } else {
                 tmp = "<html><font color=red>KEIN BASISOBJEKT!</font></html>";
             }
@@ -95,7 +95,7 @@ public class SuevModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getBasisObjekt().isInaktiv()) {
+        if (fd.getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

@@ -42,7 +42,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.HerstellNrSuchenModel;
@@ -152,7 +152,7 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
     @Override
     protected void editObject(int row) {
         if (row != -1) {
-            VawsFachdaten fachdaten = ((VawsFachdaten)ergebnisModel.getObjectAtRow(row));
+            Fachdaten fachdaten = ((Fachdaten)ergebnisModel.getObjectAtRow(row));
 
             VawsEditor editor = new VawsEditor(fachdaten, frame, "Herstellnummer");
 

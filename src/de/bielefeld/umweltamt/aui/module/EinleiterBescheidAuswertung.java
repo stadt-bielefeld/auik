@@ -60,8 +60,8 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BescheidModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -123,7 +123,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                         @Override
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(
-                                DatabaseQuery.findProbenahmen(
+                                DatabaseQuery.findProbenahme(
                                     DatabaseConstants.ATL_STATUS_FREIGEGEBEN_FUER_BESCHEIDDRUCK));
                         }
 
@@ -144,7 +144,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                         @Override
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(
-                                DatabaseQuery.findProbenahmen(
+                                DatabaseQuery.findProbenahme(
                                     DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN));
                         }
 
@@ -165,7 +165,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                         @Override
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(
-                                DatabaseQuery.findProbenahmen(
+                                DatabaseQuery.findProbenahme(
                                     DatabaseConstants.ATL_STATUS_ERGAENZT_UND_FREIGEGEBEN));
                         }
 
@@ -186,7 +186,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                         @Override
                         protected void doNonUILogic() {
                             ((BescheidModel)getTableModel()).setList(
-                                DatabaseQuery.findProbenahmen(
+                                DatabaseQuery.findProbenahme(
                                     DatabaseConstants.ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT));
                         }
 
@@ -224,7 +224,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
     }
 
     @Override
-    protected BasisObjekt getBasisObjektFromFachdaten(Object probenahme) {
-        return ((AtlProbenahmen) probenahme).getAtlProbepkt().getBasisObjekt();
+    protected Objekt getBasisObjektFromFachdaten(Object probenahme) {
+        return ((Probenahme) probenahme).getMessstelle().getObjekt();
     }
 }

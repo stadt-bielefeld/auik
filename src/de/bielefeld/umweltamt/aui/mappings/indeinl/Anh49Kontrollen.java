@@ -68,8 +68,7 @@ public class Anh49Kontrollen  implements java.io.Serializable {
 
     /** Full constructor */
     public Anh49Kontrollen(
-        Anh49Fachdaten anh49Fachdaten, Date pruefdatum, Date naechstepruefung, String pruefergebnis, boolean enabled, boolean deleted) {
-        this.anh49Fachdaten = anh49Fachdaten;
+    	Anh49Fachdaten anh49Fachdaten, Date pruefdatum, Date naechstepruefung, String pruefergebnis, boolean enabled, boolean deleted) {
         this.pruefdatum = pruefdatum;
         this.naechstepruefung = naechstepruefung;
         this.pruefergebnis = pruefergebnis;
@@ -154,7 +153,6 @@ public class Anh49Kontrollen  implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("anh49Fachdaten").append("='").append(getAnh49Fachdaten()).append("' ");			
         buffer.append("pruefdatum").append("='").append(getPruefdatum()).append("' ");			
         buffer.append("naechstepruefung").append("='").append(getNaechstepruefung()).append("' ");			
         buffer.append("pruefergebnis").append("='").append(getPruefergebnis()).append("' ");			
@@ -225,7 +223,6 @@ public class Anh49Kontrollen  implements java.io.Serializable {
      * @param copy Anh49Kontrollen
      */
     private void copy(Anh49Kontrollen copy) {
-        this.anh49Fachdaten = copy.getAnh49Fachdaten();            
         this.pruefdatum = copy.getPruefdatum();            
         this.naechstepruefung = copy.getNaechstepruefung();            
         this.pruefergebnis = copy.getPruefergebnis();            

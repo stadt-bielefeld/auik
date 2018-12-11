@@ -47,7 +47,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -74,7 +74,7 @@ public class BescheidModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        AtlProbenahmen fd = (AtlProbenahmen) objectAtRow;
+        Probenahme fd = (Probenahme) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -85,10 +85,10 @@ public class BescheidModel extends ListTableModel {
             tmp = fd.getDatumDerEntnahme();
             break;
         case 2:
-            tmp = DatabaseQuery.getStandortString(fd.getAtlProbepkt().getBasisObjekt().getBasisStandort());
+            tmp = DatabaseQuery.getStandortString(fd.getMessstelle().getObjekt().getStandortid());
             break;
         case 3:
-            tmp = fd.getAtlProbepkt().getBasisObjekt().getBasisAdresse();
+            tmp = fd.getMessstelle().getObjekt().getBetreiberid();
             break;
         case 4:
             tmp = fd.getBemerkung();
@@ -98,7 +98,7 @@ public class BescheidModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getAtlProbepkt().getBasisObjekt().isInaktiv()) {
+        if (fd.getMessstelle().getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

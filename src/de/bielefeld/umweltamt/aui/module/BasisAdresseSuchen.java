@@ -91,9 +91,9 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
@@ -141,7 +141,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private BasisAdresseModel betreiberModel;
     private BasisObjektModel objektModel;
-    public BasisAdresse adresse;
+    public Adresse adresse;
 
 	private Timer suchTimer;
 
@@ -149,7 +149,7 @@ public class BasisAdresseSuchen extends AbstractModul {
      * Wird benutzt, um nach dem Bearbeiten etc. wieder den selben Betreiber in
      * der Liste auszuwählen.
      */
-    private BasisAdresse lastAdresse;
+    private Adresse lastAdresse;
 
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
@@ -241,8 +241,8 @@ public class BasisAdresseSuchen extends AbstractModul {
 			builder.add(getHausnrFeld(), cc.xy(7, 3));
 			builder.addLabel("Ort:", cc.xy(9, 3));
 			builder.add(getOrtFeld(), cc.xy(11, 3));
-            builder.add(getSubmitButtonBetreiber(), cc.xy(13, 3));
-            builder.add(getSubmitButtonStandort(), cc.xy(15, 3));
+//            builder.add(getSubmitButtonBetreiber(), cc.xy(13, 3));
+//            builder.add(getSubmitButtonStandort(), cc.xy(15, 3));
             builder.add(this.tabellenSplit, cc.xyw(1, 5, 15));
 
             this.panel = builder.getPanel();
@@ -471,7 +471,7 @@ public class BasisAdresseSuchen extends AbstractModul {
         ListSelectionModel lsm = getBetreiberTabelle().getSelectionModel();
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
-            BasisAdresse betr = this.betreiberModel.getRow(selectedRow);
+            Adresse betr = this.betreiberModel.getRow(selectedRow);
             log.debug("Betreiber " + betr.getBetrname() + " (ID"
                 + betr.getId() + ") angewählt.");
             searchObjekteByBetreiber(betr);
@@ -485,7 +485,7 @@ public class BasisAdresseSuchen extends AbstractModul {
      * öffnet einen Dialog um einen Betreiber-Datensatz zu bearbeiten.
      * @param betr Der Betreiber
      */
-    public void editBetreiber(BasisAdresse betr) {
+    public void editBetreiber(Adresse betr) {
         BetreiberEditor editDialog = new BetreiberEditor(betr, this.frame);
         editDialog.setLocationRelativeTo(this.frame);
 
@@ -503,7 +503,7 @@ public class BasisAdresseSuchen extends AbstractModul {
      * Betreibers.
      * @param betreiberid Die Betreiber-Id
      */
-    public void searchObjekteByBetreiber(final BasisAdresse betreiber) {
+    public void searchObjekteByBetreiber(final Adresse betreiber) {
         // ... siehe show()
         SwingWorkerVariant worker = new SwingWorkerVariant(
             getBetreiberTabelle()) {
@@ -533,7 +533,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                     // Natürlich nur editieren, wenn wirklich eine Zeile
                     // ausgewählt ist
                     if (row != -1) {
-                        BasisAdresse betr = BasisAdresseSuchen.this.betreiberModel
+                        Adresse betr = BasisAdresseSuchen.this.betreiberModel
                             .getRow(row);
                         editBetreiber(betr);
                     }
@@ -564,7 +564,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                                     "Kann Betreiber nicht löschen: Zu erst alle zugehörigen Objekte löschen!",
                                     HauptFrame.ERROR_COLOR);
                         } else {
-                            BasisAdresse betr = BasisAdresseSuchen.this.betreiberModel
+                            Adresse betr = BasisAdresseSuchen.this.betreiberModel
                                 .getRow(row);
 
                             if (GUIManager.getInstance().showQuestion(
@@ -610,11 +610,13 @@ public class BasisAdresseSuchen extends AbstractModul {
                         .getSelectedRow();
 
                     if (row != -1) {
-                        BasisAdresse betr = BasisAdresseSuchen.this.betreiberModel
+                        Adresse betr = BasisAdresseSuchen.this.betreiberModel
                             .getRow(row);
+                        if(betr.getStandorts().size() > 0) {
                         BasisAdresseSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.use_standort",
-                                betr.getId().intValue(), false);
+                                betr.getStandort().getId().intValue(), false);
+                        }
                         BasisAdresseSuchen.this.manager.getSettingsManager()
                         .setSetting("auik.imc.use_betreiber",
                             betr.getId().intValue(), false);
@@ -639,22 +641,22 @@ public class BasisAdresseSuchen extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     int row = BasisAdresseSuchen.this.objektTabelle
                         .getSelectedRow();
-                    BasisObjekt obj = BasisAdresseSuchen.this.objektModel
+                    Objekt obj = BasisAdresseSuchen.this.objektModel
                         .getRow(row);
                     if (row != -1
-                        || (!(obj.getBasisObjektarten().getId().equals(
+                        || (!(obj.getObjektarten().getId().equals(
                             DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)))) {
                         BasisAdresseSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.edit_object",
-                                obj.getObjektid().intValue(), false);
+                                obj.getId().intValue(), false);
                         BasisAdresseSuchen.this.manager
                             .switchModul("m_objekt_bearbeiten");
                     } else if (row != -1
-                        || obj.getBasisObjektarten().getId().equals(
+                        || obj.getObjektarten().getId().equals(
                             DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)) {
                         BasisAdresseSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.edit_object",
-                                obj.getObjektid().intValue(), false);
+                                obj.getId().intValue(), false);
                         BasisAdresseSuchen.this.manager
                             .switchModul("m_sielhaut1");
                     }
@@ -680,9 +682,9 @@ public class BasisAdresseSuchen extends AbstractModul {
                     int row = getObjektTabelle().getSelectedRow();
 
                     if (row != -1) {
-                        BasisObjekt obj = BasisAdresseSuchen.this.objektModel
+                        Objekt obj = BasisAdresseSuchen.this.objektModel
                             .getRow(row);
-                        editBetreiber(obj.getBasisAdresse());
+                        editBetreiber(obj.getBetreiberid());
                     }
                 }
             };
@@ -708,9 +710,9 @@ public class BasisAdresseSuchen extends AbstractModul {
                     // Natürlich nur editieren, wenn wirklich eine Zeile
                     // ausgewählt ist
                     if (row != -1) {
-                        BasisObjekt obj = BasisAdresseSuchen.this.objektModel
+                        Objekt obj = BasisAdresseSuchen.this.objektModel
                             .getRow(row);
-                        editBetreiber(obj.getBasisStandort());
+                        editBetreiber(obj.getBetreiberid());
                     }
                 }
             };
@@ -732,11 +734,11 @@ public class BasisAdresseSuchen extends AbstractModul {
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektTabelle().getSelectedRow();
                     if (row != -1 && getObjektTabelle().getEditingRow() == -1) {
-                        BasisObjekt objekt = BasisAdresseSuchen.this.objektModel
+                        Objekt objekt = BasisAdresseSuchen.this.objektModel
                             .getRow(row);
 
                         if (GUIManager.getInstance().showQuestion(
-                            "Soll das Objekt " + objekt.getObjektid()
+                            "Soll das Objekt " + objekt.getId()
                                 + " und alle seine Fachdaten wirklich "
                                 + "gelöscht werden?\n"
                                 + "Hinweis: Manche Objekte können auch erst"
@@ -748,7 +750,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                                 BasisAdresseSuchen.this.frame.changeStatus(
                                     "Objekt gelöscht.",
                                     HauptFrame.SUCCESS_COLOR);
-                                log.debug("Objekt " + objekt.getObjektid()
+                                log.debug("Objekt " + objekt.getId()
                                     + " wurde gelöscht!");
                             } else {
                                 BasisAdresseSuchen.this.frame.changeStatus(
@@ -863,7 +865,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                             Point origin = e.getPoint();
                             int row = getBetreiberTabelle().rowAtPoint(origin);
 
-                            BasisAdresse betr = BasisAdresseSuchen.this.betreiberModel
+                            Adresse betr = BasisAdresseSuchen.this.betreiberModel
                                 .getRow(row);
                             log.debug("Doppelklick auf Zeile " + row);
                             editBetreiber(betr);
@@ -909,7 +911,7 @@ public class BasisAdresseSuchen extends AbstractModul {
     }
 
     private JTable getObjektTabelle() {
-    	BasisAdresse adr = this.adresse;
+    	Adresse adr = this.adresse;
         if (this.objektTabelle == null) {
         	
             this.objektTabelle = new JTable(this.objektModel){
@@ -917,15 +919,15 @@ public class BasisAdresseSuchen extends AbstractModul {
 				public Component prepareRenderer(TableCellRenderer renderer,
 						int row, int column) {
 					Component c = super.prepareRenderer(renderer, row, column);
-					BasisObjekt obj = BasisAdresseSuchen.this.objektModel
+					Objekt obj = BasisAdresseSuchen.this.objektModel
 							.getRow(row);
 					if (!isRowSelected(row)) {
 
-						if (obj.getBasisAdresse() == obj.getBasisStandort()) {
+						if (obj.getBetreiberid() == obj.getStandortid().getAdresse()) {
 							c.setBackground(new Color(153, 255, 153));
 						}						
 						
-						else if (obj.getBasisAdresse() != obj.getBasisStandort()) {
+						else if (obj.getBetreiberid() != obj.getStandortid().getAdresse()) {
 							c.setBackground(new Color(255, 255, 153));
 						}
 						else {
@@ -953,24 +955,24 @@ public class BasisAdresseSuchen extends AbstractModul {
                         if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
                             Point origin = e.getPoint();
                             int row = getObjektTabelle().rowAtPoint(origin);
-                            BasisObjekt obj =
+                            Objekt obj =
                                 BasisAdresseSuchen.this.objektModel.getRow(row);
                             if (row != -1
-                                && (!(obj.getBasisObjektarten().getId().equals(
+                                && (!(obj.getObjektarten().getId().equals(
                                     DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)))) {
                                 BasisAdresseSuchen.this.manager
                                     .getSettingsManager().setSetting(
                                         "auik.imc.edit_object",
-                                        obj.getObjektid().intValue(), false);
+                                        obj.getId().intValue(), false);
                                 BasisAdresseSuchen.this.manager
                                     .switchModul("m_objekt_bearbeiten");
                             } else if (row != -1
-                                && obj.getBasisObjektarten().getId().equals(
+                                && obj.getObjektarten().getId().equals(
                                     DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)) {
                                 BasisAdresseSuchen.this.manager
                                     .getSettingsManager().setSetting(
                                         "auik.imc.edit_object",
-                                        obj.getObjektid().intValue(), false);
+                                        obj.getId().intValue(), false);
                                 BasisAdresseSuchen.this.manager
                                     .switchModul("m_sielhaut1");
                             }                            	
@@ -1260,7 +1262,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 							{
 								String suchText = AuikUtils
 										.sanitizeQueryInput(this.oldText);
-								BasisStrassen str = DatabaseQuery
+								Strassen str = DatabaseQuery
 										.findStrasse(suchText);
 	
 								if (str != null)

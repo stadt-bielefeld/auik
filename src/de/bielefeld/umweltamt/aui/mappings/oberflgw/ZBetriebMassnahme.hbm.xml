@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28.08.2018 12:49:47 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme" table="z_betrieb_massnahme" schema="oberflgw" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahmeId">
+            <key-property name="betriebNr" type="long">
+                <column name="betrieb_nr" />
+            </key-property>
+            <key-property name="massnahmeNr" type="long">
+                <column name="massnahme_nr" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="adresse" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" update="false" insert="false" fetch="select">
+            <column name="betrieb_nr" not-null="true" />
+        </many-to-one>
+        <many-to-one name="massnahme" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme" lazy="false" update="false" insert="false" fetch="select">
+            <column name="massnahme_nr" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

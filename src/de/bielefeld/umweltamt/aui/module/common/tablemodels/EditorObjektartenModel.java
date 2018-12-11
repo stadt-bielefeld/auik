@@ -22,7 +22,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -65,7 +65,7 @@ public class EditorObjektartenModel extends EditableListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        BasisObjektarten art = (BasisObjektarten) objectAtRow;
+    	Objektarten art = (Objektarten) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -94,7 +94,7 @@ public class EditorObjektartenModel extends EditableListTableModel {
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
 		
-		BasisObjektarten tmp = (BasisObjektarten) objectAtRow;
+		Objektarten tmp = (Objektarten) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -115,20 +115,20 @@ public class EditorObjektartenModel extends EditableListTableModel {
             break;        	
         	
 		}
-		BasisObjektarten.merge(tmp);
+		Objektarten.merge(tmp);
 	}
 
 	@Override
 	public Object newObject() {
-		BasisObjektarten tmp = new BasisObjektarten();
+		Objektarten tmp = new Objektarten();
 		tmp.setId(DatabaseQuery.newObjektartenID());
 		return tmp;
 	}
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	BasisObjektarten removedArt = (BasisObjektarten) objectAtRow;
-        return BasisObjektarten.delete(removedArt);
+    	Objektarten removedArt = (Objektarten) objectAtRow;
+        return Objektarten.delete(removedArt);
     }
 
     /**
@@ -136,7 +136,7 @@ public class EditorObjektartenModel extends EditableListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public BasisObjektarten getRow(int rowIndex) {
-        return (BasisObjektarten) getObjectAtRow(rowIndex);
+    public Objektarten getRow(int rowIndex) {
+        return (Objektarten) getObjectAtRow(rowIndex);
     }
 }

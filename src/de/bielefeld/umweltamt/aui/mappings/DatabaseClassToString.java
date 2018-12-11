@@ -21,37 +21,60 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlMetaParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParametergruppen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlSielhaut;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlStatus;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.atl.MetaParameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parametergruppen;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
+import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
+import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisBezeichnung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisGemarkung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektarten;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektchrono;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisOrte;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisSachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaet;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisPrioritaetId;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisTabStreets;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAba;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAbaverfahren;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaAnfallstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaEinleitungsstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.ElkaWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Bezeichnung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Onlinekartendienst;
+import de.bielefeld.umweltamt.aui.mappings.basis.OnlinekartendienstId;
+import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
+import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
+import de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfungId;
+import de.bielefeld.umweltamt.aui.mappings.basis.Prioritaet;
+import de.bielefeld.umweltamt.aui.mappings.basis.PrioritaetId;
+import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
+import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnhang;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaEinheit;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaStoff;
+import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
+import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka.ZElsWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EBetrieb;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueck;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EMessstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahme;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahmeUeberwachungsergeb;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EZElsWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
@@ -65,30 +88,39 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhSuevFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbfuellflaeche;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAbscheider;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenarten;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsAnlagenchrono;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsBehaelterart;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFluessigkeit;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGebuehrenarten;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsGefaehrdungsstufen;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsJgs;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsKontrollen;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsMaterial;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefer;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsPruefergebnisse;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsStandortgghwsg;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVbfeinstufung;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsgebuehren;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwaltungsverf;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsVerwmassnahmen;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWassereinzugsgebiete;
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsWirtschaftszweige;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.SuevFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwkId;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Versickerungsanlage;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Abscheider;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenarten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Behaelterart;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fluessigkeit;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Gebuehrenarten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Gefaehrdungsstufen;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Jgs;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Kontrollen;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Material;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Pruefer;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Pruefergebniss;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Vbfeinstufung;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsgebuehren;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsverf;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Verwmassnahmen;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
+import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 
 /**
@@ -111,12 +143,13 @@ public class DatabaseClassToString {
     /* ********************************************************************** */
 
     /**
-     * Custom BasisAdresse.toString()
+     * Custom Adresse.toString()
      * Liefert einen String der Form "Name, Zusatz" falls ein Zusatz vorhanden
      * ist, sonst nur den Namen.
      */
-    public static String toStringForClass(BasisAdresse clazz) {
+    public static String toStringForClass(Adresse clazz) {
         String zusatz = "";
+        String vorname = "";
         
         //If all name fields are empty, the instance must be a Standort
         if(clazz.getBetrname() == null){
@@ -124,70 +157,87 @@ public class DatabaseClassToString {
         }
         //Else return a Betreiber string
         if (clazz.getBetrvorname() != null) {
-            zusatz = ", " + clazz.getBetrvorname();
+        	vorname = clazz.getBetrvorname() + " ";
         } else if (clazz.getBetrnamezus() != null) {
             zusatz = ", " + clazz.getBetrnamezus();
         }        
-        return clazz.getBetrname() + zusatz;
+        return vorname + clazz.getBetrname() + zusatz + ", " + clazz.getStrasse() + " " + clazz.getHausnr();
     }
+    
+    /**
+     * Custom Standort.toString()
+     * Liefert einen String der Form "Name, Zusatz" falls ein Zusatz vorhanden
+     * ist, sonst nur den Namen.
+     */
+    public static String toStringForClass(Standort clazz) {
+	    String zusatz = "";
+	    
+	    //If all name fields are empty, the instance must be a Standort
+	    if(clazz.getAdresse().getBetrname() == null){
+	        return clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr();
+	    }
+	    //Else return a Betreiber string
+	    if (clazz.getAdresse().getBetrvorname() != null) {
+	        zusatz = ", " + clazz.getAdresse().getBetrvorname();
+	    } else if (clazz.getAdresse().getBetrnamezus() != null) {
+	        zusatz = ", " + clazz.getAdresse().getBetrnamezus();
+	    }        
+	    return clazz.getAdresse().getBetrname() + zusatz;
+	}
 
-    /** @return BasisGemarkung.toGuiString() */
-    public static String toStringForClass(BasisGemarkung clazz) {
+	/** @return Gemarkung.toGuiString() */
+    public static String toStringForClass(Gemarkung clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return BasisOrte.toGuiString() */
-    public static String toStringForClass(BasisOrte clazz) {
-        return clazz.toGuiString();
-    }
 
     /**
-     * Custom BasisObjekt.toString()
-     * Liefert einen String, der dieses BasisObjekt beschreibt.
+     * Custom Objekt.toString()
+     * Liefert einen String, der dieses Objekt beschreibt.
      * @return Einen String in der Form
-     *         "[ID:Objekt-ID, Betr.:BasisAdresse, Stdort:BasisLage, Art:BasisObjektart]"
+     *         "[ID:Objekt-ID, Betr.:Adresse, Stdort:BasisStandort, Art:Objektart]"
      */
-    public static String toStringForClass(BasisObjekt clazz) {
-        return "[ID:" + clazz.getObjektid() +
-            ", Betr.:" + clazz.getBasisAdresse() +
-            ", Stdort:" + clazz.getBasisLage() +
-            ", Art:" + clazz.getBasisObjektarten() + "]";
+    public static String toStringForClass(Objekt clazz) {
+        return "[ID:" + clazz.getId() +
+            ", Betr.:" + clazz.getBetreiberid() +
+            ", Stdort:" + clazz.getStandortid() +
+            ", Art:" + clazz.getObjektarten() + "]";
     }
 
-    /** Custom BasisObjektarten.toString() */
-    public static String toStringForClass(BasisObjektarten clazz) {
+    /** Custom Objektarten.toString() */
+    public static String toStringForClass(Objektarten clazz) {
         return clazz.getObjektart()
             + (clazz.getAbteilung() != null ?
                 " (" + clazz.getAbteilung() + ")" : "");
     }
 	
-	/** Custom BasisBezeichnung.toString() */
-	public static String toStringForClass(BasisBezeichnung clazz) {
+	/** Custom Bezeichnung.toString() */
+	public static String toStringForClass(Bezeichnung clazz) {
 		return "[ID:" + clazz.getId()
 				+ ", Gruppe:" + clazz.getGruppe()
 				+ ", Bezeichnung:" + clazz.getBezeichnung();
 	}
 
     /**
-     * Custom BasisObjektchrono.toString()
+     * Custom Objektchrono.toString()
      * Liefert einen String der Form "BehaelterID: Anlagenart Herstellnr".
      */
-    public static String toStringForClass(BasisObjektchrono clazz) {
+    public static String toStringForClass(Objektchrono clazz) {
         return clazz.getId() + ": "
             + (clazz.getDatum() != null ? clazz.getDatum() + " " : "")
             + (clazz.getSachverhalt() != null ? clazz.getSachverhalt() : "");
     }
 
     /**
-     * Custom BasisObjektverknuepfung.toString()
+     * Custom Objektverknuepfung.toString()
      * Liefert einen String mit der ID.
      */
-    public static String toStringForClass(BasisObjektverknuepfung clazz) {
+    public static String toStringForClass(Objektverknuepfung clazz) {
         return clazz.getId() + ": ";
     }
 
-    /** @return Custom BasisSachbearbeiter.toString() */
-    public static String toStringForClass(BasisSachbearbeiter clazz) {
+    /** @return Custom Sachbearbeiter.toString() */
+    public static String toStringForClass(Sachbearbeiter clazz) {
         String name = clazz.getName();
         String kennnummer = clazz.getKennummer();
 
@@ -196,124 +246,116 @@ public class DatabaseClassToString {
 
     /**
      * Custom BasisLage.toString()<br>
-     * Liefert die komplette Strasse, wenn vorhanden inklusive der Hausnummer
+     * Liefert die komplette Strassen, wenn vorhanden inklusive der Hausnummer
      * und deren Zusatz.<br>
      * <br>
-     * Formatierung: &quot;&lt;Strasse&gt; &lt;HausNr&gt;&lt;HausNrzus&gt;&quot;<br>
+     * Formatierung: &quot;&lt;Strassen&gt; &lt;HausNr&gt;&lt;HausNrzus&gt;&quot;<br>
      * <br>
      * Beispiele: &quot;Ravensberger Straße 77&quot;, &quot;Apfelstraße
      * 23b&quot;, &quot;Jahnplatz 41-42&quot;
-     * @return Komplette, formatierte Strasse inkl. Hausnr
+     * @return Komplette, formatierte Strassen inkl. Hausnr
      */
-    public static String toStringForClass(BasisLage clazz) {
+    public static String toStringForClass(Lage clazz) {
         return "" 
             + (clazz.getEntgebid() != null ? "" + clazz.getEntgebid() : "")
-            + (clazz.getVawsWassereinzugsgebiete() != null ? ", " + clazz.getVawsWassereinzugsgebiete() : "")
+            + (clazz.getWassereinzugsgebiet() != null ? ", " + clazz.getWassereinzugsgebiet() : "")
             + (clazz.getE32() != null ? ", " + clazz.getE32() : "")
             + (clazz.getN32() != null ? ", " + clazz.getN32() : "");
     }
 
-    /** @return BasisStrassen.toGuiString() */
-    public static String toStringForClass(BasisStrassen clazz) {
+    /** @return Strassen.toGuiString() */
+    public static String toStringForClass(Strassen clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return BasisTabStreets.toGuiString() */
-    public static String toStringForClass(BasisTabStreets clazz) {
-        return clazz.toGuiString();
-    }
+
 
     /* ********************************************************************** */
     /* toStrings for package ATL                                              */
     /* ********************************************************************** */
 
     /**
-     * Custom AtlAnalyseposition.toString()
+     * Custom Analyseposition.toString()
      * @return Einen String der Form
      *         "[Position: Parameter: Wert Einheit, Analyse_Von, [Probenahme], ID:Id]"
      */
-    public static String toStringForClass(AtlAnalyseposition clazz) {
-        return "[Position: " + clazz.getAtlParameter() + ": "
-            + clazz.getWert() + " " + clazz.getAtlEinheiten() + ", "
+    public static String toStringForClass(Analyseposition clazz) {
+        return "[Position: " + clazz.getParameter() + ": "
+            + clazz.getWert() + " " + clazz.getEinheiten() + ", "
             + clazz.getAnalyseVon() + ", "
-            + (clazz.getAtlProbenahmen() != null ?
-                clazz.getAtlProbenahmen() + ", " : "")
+            + (clazz.getProbenahme() != null ?
+                clazz.getProbenahme() + ", " : "")
             + (clazz.getId() != null ?
                 "ID:" + clazz.getId() : "UNSAVED")
             + "]";
     }
 
-    /** @return AtlEinheiten.toGuiString() */
-    public static String toStringForClass(AtlEinheiten clazz) {
+    /** @return Einheiten.toGuiString() */
+    public static String toStringForClass(Einheiten clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return AtlKlaeranlagen.toGuiString() */
-    public static String toStringForClass(AtlKlaeranlagen clazz) {
+    /** @return Klaeranlage.toGuiString() */
+    public static String toStringForClass(Klaeranlage clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return AtlParameter.toGuiString() */
-    public static String toStringForClass(AtlParameter clazz) {
+    /** @return Parameter.toGuiString() */
+    public static String toStringForClass(Parameter clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return AtlMetaParameter.toDebugString() */
-    public static String toStringForClass(AtlMetaParameter clazz) {
+    /** @return MetaParameter.toDebugString() */
+    public static String toStringForClass(MetaParameter clazz) {
         return clazz.toDebugString();
     }
 
     /** Not used so far */
-    public static String toStringForClass(AtlParametergruppen clazz) {
+    public static String toStringForClass(Parametergruppen clazz) {
         return null;
     }
 
-    /** @return AtlProbeart.toGuiString() */
-    public static String toStringForClass(AtlProbeart clazz) {
+    /** @return Probeart.toGuiString() */
+    public static String toStringForClass(Probeart clazz) {
         return clazz.toGuiString();
     }
 
     /**
-     * Custom AtlProbenahmen.toString()
+     * Custom Probenahme.toString()
      * @return Einen String der Form
      *         "[Probe: Kennummer, Probeart, Datum, Anz.Positionen]" bzw.
      *         "[Probe: Kennummer, Probeart, Datum, N/A]" falls die Positionen
      *         noch nicht aus der Datenbank geholt wurden.
      */
-    public static String toStringForClass(AtlProbenahmen clazz) {
+    public static String toStringForClass(Probenahme clazz) {
         return "[Probe: " + clazz.getKennummer() + ", "
-            + clazz.getAtlProbepkt().getAtlProbeart() + ", "
+            + clazz.getMessstelle().getProbeart() + ", "
             + AuikUtils.getStringFromDate(clazz.getDatumDerEntnahme())
             + (clazz.getZeitDerEntnahmen() != null ?
                 " " + clazz.getZeitDerEntnahmen() : "")
             + ", "
             + (DatabaseAccess.isInitialized(
-                clazz.getAtlAnalysepositions()) ?
-                    clazz.getAtlAnalysepositions().size() : "N/A")
+                clazz.getAnalysepositions()) ?
+                    clazz.getAnalysepositions().size() : "N/A")
             + "]";
     }
 
-    /** @return Custom AtlProbepkt.toString() */
-    public static String toStringForClass(AtlProbepkt clazz) {
+    /** @return Custom Messstelle.toString() */
+    public static String toStringForClass(Messstelle clazz) {
         return "[Probepunkt:" + clazz.getId() +
-            ", Art:" + clazz.getAtlProbeart() +
+            ", Art:" + clazz.getProbeart() +
             ", Nr:" + clazz.getNrProbepkt() + "]";
     }
 
-    /** @return Custom AtlSielhaut.toString() */
-    public static String toStringForClass(AtlSielhaut clazz) {
+    /** @return Custom Sielhaut.toString() */
+    public static String toStringForClass(Sielhaut clazz) {
         return "[SielhautBearbeiten:" + clazz.getId() + ", "
             + clazz.getBezeichnung() + "]";
     }
 
-    /** @return AtlStatus.toGuiString() */
-    public static String toStringForClass(AtlStatus clazz) {
+    /** @return Status.toGuiString() */
+    public static String toStringForClass(Status clazz) {
         return clazz.toGuiString();
-    }
-
-    /** Custom ViewAtlAnalysepositionAll.toString() */
-    public static String toStringForClass(ViewAtlAnalysepositionAll clazz) {
-        return DatabaseQuery.getAnalysepositionFromView(clazz).toString();
     }
 
     /* ********************************************************************** */
@@ -325,7 +367,7 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "[Anhang 40:ID]"
      */
     public static String toStringForClass(Anh40Fachdaten clazz) {
-        return "[Anhang 40:" + clazz.getBasisObjekt() + "]";
+        return "[Anhang 40:" + clazz.getObjekt() + "]";
     }
 
     /**
@@ -347,7 +389,7 @@ public class DatabaseClassToString {
 
     /** @return Custom Anh49Fachdaten.toString() */
     public static String toStringForClass(Anh49Fachdaten clazz) {
-        return "[Anh49:" + clazz.getBasisObjekt() + "]";
+        return "[Anh49:" + clazz.getObjekt() + "]";
     }
 
     /**
@@ -416,64 +458,64 @@ public class DatabaseClassToString {
     }
 
     /**
-     * @return Custom AnhBwkFachdaten.toString()
+     * @return Custom BwkFachdaten.toString()
      * Liefert einen String der Form "[BWK:ID, Hersteller Typ]"
      */
-    public static String toStringForClass(AnhBwkFachdaten clazz) {
+    public static String toStringForClass(BwkFachdaten clazz) {
         return "[BWK:" + clazz.getId() + ", "
             + clazz.getKHersteller() + " " + clazz.getKTyp() + "]";
     }
 
-    /** @return AnhEntsorger.toGuiString() */
-    public static String toStringForClass(AnhEntsorger clazz) {
-        return clazz.toGuiString();
+    /** @return Entsorger.toGuiString() */
+    public static String toStringForClass(Entsorger clazz) {
+        return clazz.getEntsorger();
     }
 
     /**
-     * @return Custom AnhSuevFachdaten.toString()
+     * @return Custom SuevFachdaten.toString()
      * Liefert einen String der Form "[SuevKan Verfahren:ID]"
      */
-    public static String toStringForClass(AnhSuevFachdaten clazz) {
+    public static String toStringForClass(SuevFachdaten clazz) {
         return "[SuevKan Verfahren:" + clazz.getId() + "]";
     }
 
     /**
-     * @return Custom ElkaWasserrecht.toString()
+     * @return Custom Wasserrecht.toString()
      * Liefert einen String der Form "[Wasserrecht:ID]"
      */
-    public static String toStringForClass(ElkaWasserrecht clazz) {
+    public static String toStringForClass(Wasserrecht clazz) {
         return "[Wasserrecht:" + clazz.getId() + "]";
     }
 
     /**
-     * @return Custom ElkaAba.toString()
+     * @return Custom Aba.toString()
      * Liefert einen String der Form "[Abwasserbehandlungsanlage:ID]"
      */
-    public static String toStringForClass(ElkaAba clazz) {
+    public static String toStringForClass(Aba clazz) {
         return "[Abwasserbehandlungsanlage:ID:" + clazz.getId() + "]";
     }
 
     /**
-     * @return Custom ElkaAbaverfahren.toString()
+     * @return Custom Abaverfahren.toString()
      * Liefert einen String der Form clazz.toGuiString()
      */
-    public static String toStringForClass(ElkaAbaverfahren clazz) {
+    public static String toStringForClass(Abaverfahren clazz) {
         return clazz.toGuiString();
     }
 
     /**
-     * @return Custom ElkaAnfallstelle.toString()
+     * @return Custom Anfallstelle.toString()
      * Liefert einen String der Form "[Anfallstelle:ID]"
      */
-    public static String toStringForClass(ElkaAnfallstelle clazz) {
+    public static String toStringForClass(Anfallstelle clazz) {
         return "[Anfallstelle:ID:" + clazz.getId() + "]";
     }
 
     /**
-     * @return Custom ElkaEinleitungsstelle.toString()
+     * @return Custom Einleitungsstelle.toString()
      * Liefert einen String der Form "[Einleitungsstelle:ID]"
      */
-    public static String toStringForClass(ElkaEinleitungsstelle clazz) {
+    public static String toStringForClass(Einleitungsstelle clazz) {
         return "[Einleitungsstelle:" + clazz.getId() + "]";
     }
 
@@ -481,126 +523,297 @@ public class DatabaseClassToString {
     /* toStrings for package VAWS                                             */
     /* ********************************************************************** */
 
-    /** @return Custom VawsAbfuellflaeche.toString() */
-    public static String toStringForClass(VawsAbfuellflaeche clazz) {
-        return "[VawsAbfuellflaeche: " + clazz.getId()
-            + ", FD:" + clazz.getVawsFachdaten() + "]";
+    /** @return Custom Abfuellflaeche.toString() */
+    public static String toStringForClass(Abfuellflaeche clazz) {
+        return "[Abfuellflaeche: " + clazz.getId()
+            + ", FD:" + clazz.getFachdaten() + "]";
     }
 
-    /** @return Custom VawsAbscheider.toString() */
-    public static String toStringForClass(VawsAbscheider clazz) {
-        return "[VawsAbscheider: " + clazz.getId()
-            + ", FD:" + clazz.getVawsFachdaten() + "]";
+    /** @return Custom Abscheider.toString() */
+    public static String toStringForClass(Abscheider clazz) {
+        return "[Abscheider: " + clazz.getId()
+            + ", FD:" + clazz.getFachdaten() + "]";
     }
 
-    /** @return "VawsAnlagenarten.toGuiString() */
-    public static String toStringForClass(VawsAnlagenarten clazz) {
+    /** @return "Anlagenarten.toGuiString() */
+    public static String toStringForClass(Anlagenarten clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return "VawsAnlagenchrono.toDebugString() */
-    public static String toStringForClass(VawsAnlagenchrono clazz) {
+    /** @return "Anlagenchrono.toDebugString() */
+    public static String toStringForClass(Anlagenchrono clazz) {
         return clazz.toDebugString();
     }
 
-    /** @return "VawsBehaelterart.toGuiString() */
-    public static String toStringForClass(VawsBehaelterart clazz) {
+    /** @return "Behaelterart.toGuiString() */
+    public static String toStringForClass(Behaelterart clazz) {
         return clazz.toGuiString();
     }
 
     /**
-     * @return Custom VawsFachdaten.toString()
+     * @return Custom Fachdaten.toString()
      * Liefert einen String der Form "BehaelterID: Anlagenart Herstellnr".
      */
-    public static String toStringForClass(VawsFachdaten clazz) {
+    public static String toStringForClass(Fachdaten clazz) {
         return clazz.getBehaelterid() + ": "
             + (clazz.getAnlagenart() != null ? clazz.getAnlagenart() + " " : "")
             + (clazz.getHerstellnr() != null ? clazz.getHerstellnr() : "");
     }
 
-    /** @return "VawsFluessigkeit.toGuiString() */
-    public static String toStringForClass(VawsFluessigkeit clazz) {
+    /** @return "Fluessigkeit.toGuiString() */
+    public static String toStringForClass(Fluessigkeit clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return "VawsGebuehrenarten.toGuiString() */
-    public static String toStringForClass(VawsGebuehrenarten clazz) {
+    /** @return "Gebuehrenarten.toGuiString() */
+    public static String toStringForClass(Gebuehrenarten clazz) {
+        return clazz.getGebuehrenart();
+    }
+
+    /** @return "Gefaehrdungsstufen.toGuiString() */
+    public static String toStringForClass(Gefaehrdungsstufen clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return "VawsGefaehrdungsstufen.toGuiString() */
-    public static String toStringForClass(VawsGefaehrdungsstufen clazz) {
-        return clazz.toGuiString();
+    /** @return Custom Abscheider.toString() */
+    public static String toStringForClass(Jgs clazz) {
+        return "[Jgs: " + clazz.getId()
+            + ", FD:" + clazz.getFachdaten() + "]";
     }
 
-    /** @return Custom VawsAbscheider.toString() */
-    public static String toStringForClass(VawsJgs clazz) {
-        return "[VawsJgs: " + clazz.getId()
-            + ", FD:" + clazz.getVawsFachdaten() + "]";
-    }
-
-    /** @return "VawsKontrollen.toDebugString() */
-    public static String toStringForClass(VawsKontrollen clazz) {
+    /** @return "Kontrollen.toDebugString() */
+    public static String toStringForClass(Kontrollen clazz) {
         return clazz.toDebugString();
     }
 
-    /** @return "VawsMaterial.toGuiString() */
-    public static String toStringForClass(VawsMaterial clazz) {
+    /** @return "Material.toGuiString() */
+    public static String toStringForClass(Material clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return "VawsPruefer.toGuiString() */
-    public static String toStringForClass(VawsPruefer clazz) {
+    /** @return "Pruefer.toGuiString() */
+    public static String toStringForClass(Pruefer clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return "VawsPruefergebnisse.toGuiString() */
-    public static String toStringForClass(VawsPruefergebnisse clazz) {
+    /** @return "Pruefergebniss.toGuiString() */
+    public static String toStringForClass(Pruefergebniss clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return "VawsStandortgghwsg.toGuiString() */
-    public static String toStringForClass(VawsStandortgghwsg clazz) {
+    /** @return "Standortgghwsg.toGuiString() */
+    public static String toStringForClass(Standortgghwsg clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return "VawsVbfeinstufung.toGuiString() */
-    public static String toStringForClass(VawsVbfeinstufung clazz) {
+    /** @return "Vbfeinstufung.toGuiString() */
+    public static String toStringForClass(Vbfeinstufung clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return "VawsVerwaltungsgebuehren.toDebugString() */
-    public static String toStringForClass(VawsVerwaltungsgebuehren clazz) {
+    /** @return "Verwaltungsgebuehren.toDebugString() */
+    public static String toStringForClass(Verwaltungsgebuehren clazz) {
         return clazz.toDebugString();
     }
 
-    /** @return "VawsVerwaltungsverf.toDebugString() */
-    public static String toStringForClass(VawsVerwaltungsverf clazz) {
+    /** @return "Verwaltungsverf.toDebugString() */
+    public static String toStringForClass(Verwaltungsverf clazz) {
         return clazz.toDebugString();
     }
 
-    /** @return "VawsVerwmassnahmen.toGuiString() */
-    public static String toStringForClass(VawsVerwmassnahmen clazz) {
+    /** @return "Verwmassnahmen.toGuiString() */
+    public static String toStringForClass(Verwmassnahmen clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return "VawsWassereinzugsgebiete.toGuiString() */
-    public static String toStringForClass(VawsWassereinzugsgebiete clazz) {
+    /** @return "Wassereinzugsgebiet.toGuiString() */
+    public static String toStringForClass(Wassereinzugsgebiet clazz) {
         return clazz.toGuiString();
     }
 
-    /** @return "VawsWirtschaftszweige.toGuiString() */
-    public static String toStringForClass(VawsWirtschaftszweige clazz) {
+    /** @return "Wirtschaftszweig.toGuiString() */
+    public static String toStringForClass(Wirtschaftszweig clazz) {
         return clazz.toGuiString();
     }
 
 	/** TODO: */
-	public static String toStringForClass(BasisPrioritaet clazz) {
+	public static String toStringForClass(Prioritaet clazz) {
 		return clazz.getPrioritaet().toString();
 	}
 
-	public static String toStringForClass(BasisPrioritaetId clazz) {
+	public static String toStringForClass(PrioritaetId clazz) {
 		return clazz.getStandortId().toString();
+	}
+
+	public static String toStringForClass(Onlinekartendienst onlinekartendienst) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(OnlinekartendienstId onlinekartendienstId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewTwoWayObjektverknuepfung viewTwoWayObjektverknuepfung) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewTwoWayObjektverknuepfungId viewTwoWayObjektverknuepfungId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EAbwasserbehandlungsanlage eAbwasserbehandlungsanlage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EAdresse eAdresse) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EAnfallstelle eAnfallstelle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EBetrieb eBetrieb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EEinleitungsstelle eEinleitungsstelle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EEntwaesserungsgrundstueck eEntwaesserungsgrundstueck) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public static String toStringForClass(EMessstelle eMessstelle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EProbenahme eProbenahme) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EProbenahmeUeberwachungsergeb eProbenahmeUeberwachungsergeb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ESonderbauwerk eSonderbauwerk) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EStandort eStandort) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EWasserrecht eWasserrecht) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(MapElkaAnhang mapElkaAnhang) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(MapElkaEinheit mapElkaEinheit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(MapElkaStoff mapElkaStoff) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Referenz referenz) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewBwk viewBwk) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewBwkId viewBwkId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(AfsNiederschlagswasser afsNiederschlagswasser) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(AfsStoffe afsStoffe) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    public static String toStringForClass(Entwaesserungsgrundstueck entwaesserungsgrundstueck) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Massnahme massnahme) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(SbEntlastung sbEntlastung) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Sonderbauwerk sonderbauwerk) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Versickerungsanlage versickerungsanlage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(ViewAtlAnalysepositionAll viewAtlAnalysepositionAll) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    public static String toStringForClass(ZElsWasserrecht zew) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(TabStreets tabStreets) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(Orte orte) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String toStringForClass(EZElsWasserrecht ezElsWasserrecht) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

@@ -57,9 +57,9 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhEntsorger;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.EntsorgerEditor;
@@ -97,7 +97,7 @@ public class Anh50Panel extends JPanel {
 
     // Daten
     private Anh50Fachdaten fachdaten = null;
-    private AnhEntsorger[] entsorg = null;
+    private Entsorger[] entsorg = null;
 
     // Listener
     private ActionListener editButtonListener;
@@ -196,9 +196,9 @@ public class Anh50Panel extends JPanel {
                 getGefaehrdungsklasseFeld().setText(
                     this.fachdaten.getGefaehrdungsklasse().toString());
             }
-            if (this.fachdaten.getAnhEntsorger() != null) {
+            if (this.fachdaten.getEntsorger() != null) {
                 getEntsorgerBox().setSelectedItem(
-                    this.fachdaten.getAnhEntsorger());
+                    this.fachdaten.getEntsorger());
             }
             if (this.fachdaten.getErloschen() != null) {
                 if (this.fachdaten.getErloschen() == true) {
@@ -263,19 +263,19 @@ public class Anh50Panel extends JPanel {
         this.fachdaten.setWiedervorlage(wiedervorlage);
 
         if (getEntsorgerBox().getSelectedItem() != null) {
-            this.fachdaten.setAnhEntsorger((AnhEntsorger) getEntsorgerBox()
+            this.fachdaten.setEntsorger((Entsorger) getEntsorgerBox()
                 .getSelectedItem());
-            log.debug("Entsorger " + this.fachdaten.getAnhEntsorger()
+            log.debug("Entsorger " + this.fachdaten.getEntsorger()
                 + " zugeordnet.");
         } else
             getEntsorgerBox().setSelectedIndex(1);
-        this.fachdaten.setAnhEntsorger((AnhEntsorger) getEntsorgerBox()
+        this.fachdaten.setEntsorger((Entsorger) getEntsorgerBox()
             .getSelectedItem());
 
         success = this.fachdaten.merge();
         if (success) {
             log.debug("Zahnarzt "
-                + this.fachdaten.getBasisObjekt().getBasisAdresse()
+                + this.fachdaten.getObjekt().getBetreiberid()
                     .getBetrname() + " gespeichert.");
         } else {
             log.debug("Zahnarzt " + this.fachdaten
@@ -289,11 +289,11 @@ public class Anh50Panel extends JPanel {
             // Neuen Zahnarzt erzeugen
             this.fachdaten = new Anh50Fachdaten();
             // Objekt_Id setzen
-            this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
+            this.fachdaten.setObjekt(this.hauptModul.getObjekt());
             // Entsorger auf "unbekannt" setzen
-            AnhEntsorger entsorg = AnhEntsorger.findById(
+            Entsorger entsorg = Entsorger.findById(
                 DatabaseConstants.ANH_ENTSORGER_ID_UNBEKANNT);
-            this.fachdaten.setAnhEntsorger(entsorg);
+            this.fachdaten.setEntsorger(entsorg);
 
             // Zahnarzt speichern
             this.fachdaten.merge();
@@ -412,7 +412,7 @@ public class Anh50Panel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     String action = e.getActionCommand();
 
-                    AnhEntsorger entsorg = (AnhEntsorger) getEntsorgerBox()
+                    Entsorger entsorg = (Entsorger) getEntsorgerBox()
                         .getSelectedItem();
 
                     if ("entsorger_edit".equals(action) && entsorg != null) {
@@ -464,10 +464,10 @@ public class Anh50Panel extends JPanel {
                                 origin);
 
                             if (row != -1) {
-                                BasisObjektverknuepfung obj =
+                                Objektverknuepfung obj =
                                     Anh50Panel.this.objektVerknuepfungModel
                                     .getRow(row);
-                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                if (obj.getObjektByIstVerknuepftMit()
                                     .getId().intValue() != Anh50Panel.this.hauptModul
                                     .getObjekt().getId().intValue())
                                     Anh50Panel.this.hauptModul
@@ -475,7 +475,7 @@ public class Anh50Panel extends JPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByIstVerknuepftMit()
+                                            obj.getObjektByIstVerknuepftMit()
                                                 .getId().intValue(),
                                             false);
                                 else
@@ -484,7 +484,7 @@ public class Anh50Panel extends JPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByObjekt()
+                                            obj.getObjektByObjekt()
                                                 .getId().intValue(),
                                             false);
                                 Anh50Panel.this.hauptModul.getManager()
@@ -547,7 +547,7 @@ public class Anh50Panel extends JPanel {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                         && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung =
+                        Objektverknuepfung verknuepfung =
                             Anh50Panel.this.objektVerknuepfungModel.getRow(row);
                         if (GUIManager.getInstance().showQuestion(
                             "Soll die Verknüpfung wirklich gelöscht werden?\n"
@@ -590,7 +590,7 @@ public class Anh50Panel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(
                         Anh50Panel.this.hauptModul.getFrame(),
-                        Anh50Panel.this.fachdaten.getBasisObjekt(),
+                        Anh50Panel.this.fachdaten.getObjekt(),
                         Anh50Panel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }

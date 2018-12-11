@@ -75,10 +75,10 @@ public class Anh56Model extends ListTableModel {
 
         switch (columnIndex) {
             case 0:
-                tmp = fd.getBasisObjekt().getBasisAdresse();
+                tmp = fd.getObjekt().getBetreiberid();
                 break;
             case 1:
-                tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
+                tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
                 break;
             case 2:
                 tmp = fd.getDruckverfahren();
@@ -89,7 +89,7 @@ public class Anh56Model extends ListTableModel {
             default:
                 tmp = "ERROR";
         }
-        if (tmp != null && fd.getBasisObjekt().isInaktiv()) {
+        if (tmp != null && fd.getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

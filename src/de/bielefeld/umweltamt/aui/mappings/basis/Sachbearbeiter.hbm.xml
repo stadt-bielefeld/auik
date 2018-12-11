@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter" table="sachbearbeiter" schema="basis" lazy="false" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="kennummer" type="java.lang.String">
+            <column name="kennummer" not-null="true" unique="true" />
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="name" not-null="true" />
+        </property>
+        <property name="zeichen" type="java.lang.String">
+            <column name="zeichen" />
+        </property>
+        <property name="zimmer" type="java.lang.String">
+            <column name="zimmer" />
+        </property>
+        <property name="telefon" type="java.lang.String">
+            <column name="telefon" />
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="email" />
+        </property>
+        <property name="gehoertzuarbeitsgr" type="java.lang.String">
+            <column name="gehoertzuarbeitsgr" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+        <set name="objekts" table="objekt" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sachbearbeiter" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" />
+        </set>
+        <set name="probenahmes" table="probenahme" schema="labor" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sachbearbeiter" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.Probenahme" />
+        </set>
+        <set name="messstelles" table="messstelle" schema="labor" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sachbearbeiter" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" />
+        </set>
+    </class>
+</hibernate-mapping>

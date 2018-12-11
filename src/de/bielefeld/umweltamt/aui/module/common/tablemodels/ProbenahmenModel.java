@@ -22,10 +22,10 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlKlaeranlagen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbeart;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbepkt;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -35,7 +35,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class ProbenahmenModel extends ListTableModel {
     private static final long serialVersionUID = 5732041657532396538L;
-    private AtlProbepkt probepkt = null;
+    private Messstelle probepkt = null;
     private String secondColumn = null;
 
     public ProbenahmenModel(String secondColumn) {
@@ -60,31 +60,31 @@ public class ProbenahmenModel extends ListTableModel {
                 "Bemerkung"}, false, true);
     }
 
-    public void setProbepunkt(AtlProbepkt probepkt) {
+    public void setProbepunkt(Messstelle probepkt) {
         this.probepkt = probepkt;
     }
 
     @Override
     public void updateList() {
         if (probepkt != null) {
-            setList(DatabaseQuery.findProbenahmen(probepkt));
+            setList(DatabaseQuery.findProbenahme(probepkt));
 
             fireTableDataChanged();
         }
     }
 
     public void findByProperty(String property, String suche) {
-        setList(DatabaseQuery.findProbenahmen(property, suche));
+        setList(DatabaseQuery.findProbenahme(property, suche));
     }
 
-    public void findByKA(AtlProbeart art, AtlKlaeranlagen ka) {
-        setList(DatabaseQuery.findProbenahmen(art, ka));
+    public void findByKA(Probeart art, Klaeranlage ka) {
+        setList(DatabaseQuery.findProbenahme(art, ka));
     }
 
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
-        AtlProbenahmen probe = (AtlProbenahmen) objectAtRow;
+        Probenahme probe = (Probenahme) objectAtRow;
         if (secondColumn == null) {
             switch(columnIndex) {
                 case 0:
@@ -100,8 +100,8 @@ public class ProbenahmenModel extends ListTableModel {
                     value = probe.getUhrzeitbeginn() + " - " + probe.getUhrzeitende();
                     break;
                 case 4:
-                	if (probe.getAtlStatus() != null)
-                		value = probe.getAtlStatus().getBezeichnung();
+                	if (probe.getStatus() != null)
+                		value = probe.getStatus().getBezeichnung();
                 	else
                 		value = "";
                     break;
@@ -118,9 +118,9 @@ public class ProbenahmenModel extends ListTableModel {
                     break;
                 case 1:
                     if (secondColumn.equals("Art")) {
-                        value = probe.getAtlProbepkt().getAtlProbeart();
+                        value = probe.getMessstelle().getProbeart();
                     } else if (secondColumn.equals("Pkt-ID")) {
-                        value = probe.getAtlProbepkt().getId();
+                        value = probe.getMessstelle().getId();
                     } else {
                         value = "";
                     }
@@ -132,14 +132,14 @@ public class ProbenahmenModel extends ListTableModel {
                     value = probe.getUhrzeitbeginn() + " - " + probe.getUhrzeitende();
                     break;
                 case 4:
-                	if (probe.getAtlStatus() != null)
-                		value = probe.getAtlStatus().getBezeichnung();
+                	if (probe.getStatus() != null)
+                		value = probe.getStatus().getBezeichnung();
                 	else
                 		value = "";
                     break;
                 case 5:
-                    value = probe.getAtlProbepkt().getBasisObjekt()
-                        .getBasisAdresse();
+                    value = probe.getMessstelle().getObjekt()
+                        .getBetreiberid();
                     break;
                 case 6:
                     value = probe.getBemerkung();
@@ -153,7 +153,7 @@ public class ProbenahmenModel extends ListTableModel {
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-        AtlProbenahmen removedProbe = (AtlProbenahmen) objectAtRow;
+        Probenahme removedProbe = (Probenahme) objectAtRow;
         boolean removed;
 
         if (removedProbe.getKennummer() != null) {
@@ -170,7 +170,7 @@ public class ProbenahmenModel extends ListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex oder <code>null</code>, falls die Zeile nicht existiert
      */
-    public AtlProbenahmen getRow(int rowIndex) {
-        return (AtlProbenahmen) getObjectAtRow(rowIndex);
+    public Probenahme getRow(int rowIndex) {
+        return (Probenahme) getObjectAtRow(rowIndex);
     }
 }

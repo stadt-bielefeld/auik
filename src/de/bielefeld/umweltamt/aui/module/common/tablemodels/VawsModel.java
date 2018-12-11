@@ -49,7 +49,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.vaws.VawsFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -80,7 +80,7 @@ public class VawsModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        VawsFachdaten fd = (VawsFachdaten) objectAtRow;
+        Fachdaten fd = (Fachdaten) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -127,8 +127,8 @@ public class VawsModel extends ListTableModel {
      * @param row Die Zeile der Tabelle.
      * @return Den Datensatz, der in dieser Zeile angezeigt wird.
      */
-    public VawsFachdaten getDatenSatz(int row) {
-        return (VawsFachdaten) getObjectAtRow(row);
+    public Fachdaten getDatenSatz(int row) {
+        return (Fachdaten) getObjectAtRow(row);
     }
 
     /*

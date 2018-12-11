@@ -20,7 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.elka.EAnfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class EAnfallstelleModel extends ListTableModel {

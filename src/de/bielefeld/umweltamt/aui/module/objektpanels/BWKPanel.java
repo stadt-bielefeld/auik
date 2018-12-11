@@ -53,8 +53,8 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.AnhBwkFachdaten;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
@@ -96,7 +96,7 @@ public class BWKPanel extends JPanel {
     private JButton saveBwkButton = null;
 
     // Daten
-    private AnhBwkFachdaten bwk = null;
+    private BwkFachdaten bwk = null;
 
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
@@ -196,7 +196,7 @@ public class BWKPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.bwk = AnhBwkFachdaten.findByObjektId(
+        this.bwk = BwkFachdaten.findByObjektId(
             this.hauptModul.getObjekt().getId());
         log.debug("Brennwertkessel aus DB geholt: " + this.bwk);
     }
@@ -418,9 +418,9 @@ public class BWKPanel extends JPanel {
     public void completeObjekt() {
         if (this.hauptModul.isNew() || this.bwk == null) {
             // Neuen Brennwertkessel erzeugen
-            this.bwk = new AnhBwkFachdaten();
+            this.bwk = new BwkFachdaten();
             // Objekt_Id setzen
-            this.bwk.setBasisObjekt(this.hauptModul.getObjekt());
+            this.bwk.setObjekt(this.hauptModul.getObjekt());
 
             // Brennwertkessel speichern
             if (this.bwk.merge()) {
@@ -593,9 +593,9 @@ public class BWKPanel extends JPanel {
                                 origin);
 
                             if (row != -1) {
-                                BasisObjektverknuepfung obj = BWKPanel.this.objektVerknuepfungModel
+                                Objektverknuepfung obj = BWKPanel.this.objektVerknuepfungModel
                                     .getRow(row);
-                                if (obj.getBasisObjektByIstVerknuepftMit()
+                                if (obj.getObjektByIstVerknuepftMit()
                                     .getId().intValue() != BWKPanel.this.hauptModul
                                     .getObjekt().getId().intValue())
                                     BWKPanel.this.hauptModul
@@ -603,7 +603,7 @@ public class BWKPanel extends JPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByIstVerknuepftMit()
+                                            obj.getObjektByIstVerknuepftMit()
                                                 .getId().intValue(),
                                             false);
                                 else
@@ -612,7 +612,7 @@ public class BWKPanel extends JPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByObjekt()
+                                            obj.getObjektByObjekt()
                                                 .getId().intValue(),
                                             false);
                                 BWKPanel.this.hauptModul.getManager()
@@ -675,7 +675,7 @@ public class BWKPanel extends JPanel {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                         && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = BWKPanel.this.objektVerknuepfungModel
+                        Objektverknuepfung verknuepfung = BWKPanel.this.objektVerknuepfungModel
                             .getRow(row);
                         if (GUIManager.getInstance().showQuestion(
                             "Soll die Verknüpfung wirklich gelöscht werden?\n"
@@ -718,7 +718,7 @@ public class BWKPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(
                         BWKPanel.this.hauptModul.getFrame(), BWKPanel.this.bwk
-                            .getBasisObjekt(),
+                            .getObjekt(),
                         BWKPanel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }

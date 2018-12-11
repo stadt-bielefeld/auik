@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 19.09.2018 08:35:47 by Hibernate Tools 5.0.6.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="de.bielefeld.umweltamt.aui.mappings.elka.QZ" optimistic-lock="version" polymorphism="implicit" schema="elka" select-before-update="false" table="_q_z">
+        <composite-id class="de.bielefeld.umweltamt.aui.mappings.elka.QZId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="quelle" type="java.lang.Integer">
+                <column name="quelle"/>
+            </key-property>
+            <key-property name="ziel" type="java.lang.Integer">
+                <column name="ziel"/>
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

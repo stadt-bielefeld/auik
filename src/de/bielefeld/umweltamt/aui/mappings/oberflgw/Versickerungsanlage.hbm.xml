@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.Versickerungsanlage" table="versickerungsanlage" schema="oberflgw" optimistic-lock="version">
+        <id name="nr" type="long">
+            <column name="nr" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="einleitungsstelle" class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" fetch="select">
+            <column name="els_nr" not-null="true" />
+        </many-to-one>
+        <property name="flurabstand" type="big_decimal">
+            <column name="flurabstand" precision="11" />
+        </property>
+        <property name="gelaendeVerAnlage" type="big_decimal">
+            <column name="gelaende_ver_anlage" precision="11" />
+        </property>
+        <property name="abstGrGrenze" type="big_decimal">
+            <column name="abst_gr_grenze" precision="11" />
+        </property>
+        <property name="abstUnterkGebaeude" type="big_decimal">
+            <column name="abst_unterk_gebaeude" precision="11" />
+        </property>
+        <property name="abstVerAnlage" type="big_decimal">
+            <column name="abst_ver_anlage" precision="11" />
+        </property>
+        <property name="landesfoerderungTog" type="boolean">
+            <column name="landesfoerderung_tog" not-null="true" />
+        </property>
+        <property name="notueberlaufTog" type="boolean">
+            <column name="notueberlauf_tog" not-null="true" />
+        </property>
+        <property name="notueberlaufZiel" type="java.lang.String">
+            <column name="notueberlauf_ziel" length="80" />
+        </property>
+        <property name="erstellDat" type="java.util.Date">
+            <column name="erstell_dat" length="29" not-null="true" />
+        </property>
+        <property name="durchlaessigkeit" type="big_decimal">
+            <column name="durchlaessigkeit" precision="22" scale="11" />
+        </property>
+        <property name="untergrundart" type="java.lang.String">
+            <column name="untergrundart" length="30" />
+        </property>
+        <property name="verAnlageOpt" type="java.lang.Integer">
+            <column name="ver_anlage_opt" />
+        </property>
+        <property name="sonstigesVers" type="java.lang.String">
+            <column name="sonstiges_vers" length="50" />
+        </property>
+        <property name="bauartzulId" type="java.lang.String">
+            <column name="bauartzul_id" length="30" />
+        </property>
+        <property name="aktualDat" type="java.util.Date">
+            <column name="aktual_dat" length="29" not-null="true" />
+        </property>
+        <property name="herkunft" type="java.lang.String">
+            <column name="herkunft" length="20" not-null="true" />
+        </property>
+        <property name="externalNr" type="java.lang.String">
+            <column name="external_nr" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

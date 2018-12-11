@@ -30,10 +30,10 @@ package de.bielefeld.umweltamt.aui.module;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlEinheiten;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlParameter;
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlProbenahmen;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 
@@ -74,7 +74,7 @@ public class AnalyseProcessor {
             "Verarbeite Analyseposition für Parameter: " +
             parameterBezeichnung);
 
-        AtlProbenahmen probe = DatabaseQuery.findProbenahme(kennnummer);
+        Probenahme probe = DatabaseQuery.findProbenahme(kennnummer);
 
         if (probe == null) {
             log.error(
@@ -84,21 +84,21 @@ public class AnalyseProcessor {
             return false;
         }
 
-        AtlParameter parameter = AtlParameter.findById(ordnungsbegriff);
-        AtlEinheiten einheit   = AtlEinheiten.findById(id);
+        Parameter parameter = Parameter.findById(ordnungsbegriff);
+        Einheiten einheit   = Einheiten.findById(id);
 
-        AtlAnalyseposition position = DatabaseQuery.findAnalyseposition(
+        Analyseposition position = DatabaseQuery.findAnalyseposition(
             probe, parameter, einheit, true);
 
         if (position != null) {
 
             position.setWert(Float.parseFloat(wert));
             position.setGrkl(grkl);
-            position.setAtlEinheiten(einheit);
+            position.setEinheiten(einheit);
             position.setAnalyseVon("E-Satzung");
             position.merge();
 
-            probe.setAtlStatus(DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN);
+            probe.setStatus(DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN);
             probe.merge();
         }
 
@@ -133,7 +133,7 @@ public class AnalyseProcessor {
      * {@link AtlParameter} besitzt.
      */
     public static int importStatus(String kenn, String param, String einh) {
-        AtlProbenahmen probe = DatabaseQuery.findProbenahme(kenn);
+        Probenahme probe = DatabaseQuery.findProbenahme(kenn);
 
         if (probe == null) {
             return -1;
@@ -143,14 +143,14 @@ public class AnalyseProcessor {
             return 2;
         }
 
-        AtlParameter parameter = AtlParameter.findById(param);
-        AtlEinheiten   einheit = AtlEinheiten.findById(Integer.parseInt(einh));
+        Parameter parameter = Parameter.findById(param);
+        Einheiten   einheit = Einheiten.findById(Integer.parseInt(einh));
 
         if (parameter == null || einheit == null) {
             return -1;
         }
 
-        AtlAnalyseposition position = DatabaseQuery.findAnalyseposition(
+        Analyseposition position = DatabaseQuery.findAnalyseposition(
             probe, parameter, einheit, false);
 
         return position != null ? 1 : 2;

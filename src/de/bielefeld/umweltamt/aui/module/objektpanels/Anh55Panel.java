@@ -102,7 +102,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
@@ -261,7 +261,7 @@ public class Anh55Panel extends JPanel {
             // Neues Anhang 55 Objekt erzeugen
             this.fachdaten = new Anh55Fachdaten();
             // Objekt_Id setzen
-            this.fachdaten.setBasisObjekt(this.hauptModul.getObjekt());
+            this.fachdaten.setObjekt(this.hauptModul.getObjekt());
 
             // Anhang 55 Objekt speichern
             Anh55Fachdaten.merge(this.fachdaten);
@@ -700,7 +700,7 @@ public class Anh55Panel extends JPanel {
 
     public void fetchFormData() throws RuntimeException {
         this.fachdaten = Anh55Fachdaten.findByObjektId(
-            this.hauptModul.getObjekt().getObjektid());
+            this.hauptModul.getObjekt().getId());
         log.debug("Anhang 55 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
@@ -935,18 +935,18 @@ public class Anh55Panel extends JPanel {
                                 origin);
 
                             if (row != -1) {
-                                BasisObjektverknuepfung obj = Anh55Panel.this.objektVerknuepfungModel
+                                Objektverknuepfung obj = Anh55Panel.this.objektVerknuepfungModel
                                     .getRow(row);
-                                if (obj.getBasisObjektByIstVerknuepftMit()
-                                    .getObjektid().intValue() != Anh55Panel.this.hauptModul
-                                    .getObjekt().getObjektid().intValue())
+                                if (obj.getObjektByIstVerknuepftMit()
+                                    .getId().intValue() != Anh55Panel.this.hauptModul
+                                    .getObjekt().getId().intValue())
                                     Anh55Panel.this.hauptModul
                                         .getManager()
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByIstVerknuepftMit()
-                                                .getObjektid().intValue(),
+                                            obj.getObjektByIstVerknuepftMit()
+                                                .getId().intValue(),
                                             false);
                                 else
                                     Anh55Panel.this.hauptModul
@@ -954,8 +954,8 @@ public class Anh55Panel extends JPanel {
                                         .getSettingsManager()
                                         .setSetting(
                                             "auik.imc.edit_object",
-                                            obj.getBasisObjektByObjekt()
-                                                .getObjektid().intValue(),
+                                            obj.getObjektByObjekt()
+                                                .getId().intValue(),
                                             false);
                                 Anh55Panel.this.hauptModul.getManager()
                                     .switchModul("m_objekt_bearbeiten");
@@ -1017,7 +1017,7 @@ public class Anh55Panel extends JPanel {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
                     if (row != -1
                         && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        BasisObjektverknuepfung verknuepfung = Anh55Panel.this.objektVerknuepfungModel
+                        Objektverknuepfung verknuepfung = Anh55Panel.this.objektVerknuepfungModel
                             .getRow(row);
                         if (GUIManager.getInstance().showQuestion(
                             "Soll die Verknüpfung wirklich gelöscht werden?\n"
@@ -1060,7 +1060,7 @@ public class Anh55Panel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(
                         Anh55Panel.this.hauptModul.getFrame(),
-                        Anh55Panel.this.fachdaten.getBasisObjekt(),
+                        Anh55Panel.this.fachdaten.getObjekt(),
                         Anh55Panel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }

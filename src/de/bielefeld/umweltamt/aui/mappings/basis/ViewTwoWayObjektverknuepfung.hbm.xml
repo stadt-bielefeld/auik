@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfung" table="view_two_way_objektverknuepfung" schema="basis" optimistic-lock="version">
+        <composite-id name="id" class="de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfungId">
+            <key-property name="id" type="java.lang.Integer">
+                <column name="id" />
+            </key-property>
+            <key-property name="istVerknuepftMit" type="java.lang.Integer">
+                <column name="ist_verknuepft_mit" />
+            </key-property>
+            <key-property name="objekt" type="java.lang.Integer">
+                <column name="objekt" />
+            </key-property>
+            <key-property name="enabled" type="java.lang.Boolean">
+                <column name="_enabled" />
+            </key-property>
+            <key-property name="deleted" type="java.lang.Boolean">
+                <column name="_deleted" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

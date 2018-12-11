@@ -21,7 +21,7 @@
 
 /*
  * Datei:
- * $Id: BasisObjektBearbeiten.java,v 1.1.2.1 2010-11-23 10:25:53 u633d Exp $
+ * $Id: ObjektBearbeiten.java,v 1.1.2.1 2010-11-23 10:25:53 u633d Exp $
  *
  * Erstellt am 15.02.2005 von David Klotz (u633z)
  *
@@ -109,10 +109,12 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
+import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.AbaVerfahrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AnfallstellePanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
@@ -161,6 +163,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private Anh50Panel zahnarztTab;
     private SuevPanel suevTab;
     private AbaPanel abaTab;
+    private AbaVerfahrenPanel abaVerfahrenTab;
     private Anh40Panel anhang40Tab;
     private Anh49Panel anhang49Tab;
     private Anh49AbfuhrenPanel anh49abfuhrTab;
@@ -179,7 +182,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private AnfallstellePanel anfallstelleTab;
 
     // Daten
-    private BasisObjekt objekt;
+    private Objekt objekt;
     private boolean isNew = true;
 
     /* (non-Javadoc)
@@ -237,11 +240,11 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return manager;
     }
 
-    public BasisObjekt getObjekt() {
+    public Objekt getObjekt() {
         return objekt;
     }
 
-    public void setObjekt(BasisObjekt objekt) {
+    public void setObjekt(Objekt objekt) {
         this.objekt = objekt;
     }
 
@@ -362,6 +365,13 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return abaTab;
     }
 
+    public AbaVerfahrenPanel getAbaVerfahrenTab() {
+        if (abaVerfahrenTab == null) {
+        	abaVerfahrenTab = new AbaVerfahrenPanel(this);
+        }
+        return abaVerfahrenTab;
+    }
+
     public Anh40Panel getAnh40Tab() {
         if (anhang40Tab == null) {
             anhang40Tab = new Anh40Panel(this);
@@ -459,25 +469,25 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
         if (manager.getSettingsManager().getSetting("auik.imc.edit_object") != null) {
             isNew = false;
-            objekt = BasisObjekt.findById(new Integer(
+            objekt = Objekt.findById(new Integer(
                 manager.getSettingsManager().getIntSetting("auik.imc.edit_object")));
             manager.getSettingsManager().removeSetting("auik.imc.edit_object");
         } else {
             isNew = true;
-            objekt = new BasisObjekt();
+            objekt = new Objekt();
             if (manager.getSettingsManager().getSetting("auik.imc.use_standort") != null) {
-                BasisAdresse sta = BasisAdresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
-                log.debug("Standort: " + sta.getStrasse() + " " + sta.getHausnr() + ", " +sta.getObjektid());
-                BasisLage lage = BasisLage.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_lage")));
-                log.debug("Creating new BasisObjekt " + lage + sta);
-                objekt.setBasisStandort(sta);
-                objekt.setBasisLage(lage);
+                Standort sta = Standort.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
+                log.debug("Standort: " + sta.getAdresse().getStrasse() + " " + sta.getAdresse().getHausnr() + ", " +sta.getId());
+                Lage lage = Lage.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_lage")));
+                log.debug("Creating new Objekt " + lage + sta);
+                objekt.setStandortid(sta);
+//                objekt.setLage(lage);
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
                 manager.getSettingsManager().removeSetting("auik.imc.use_lage");
             }
             if (manager.getSettingsManager().getSetting("auik.imc.use_betreiber") != null) {
-                BasisAdresse betr = BasisAdresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
-                objekt.setBasisAdresse(betr);
+                Adresse betr = Adresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
+                objekt.setBetreiberid(betr);
                 manager.getSettingsManager().removeSetting("auik.imc.use_betreiber");
             }
         }
@@ -496,8 +506,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 getBasisTab().fetchFormData();
 
                 // Daten für verschiedene Objektarten holen
-                if (objekt.getBasisObjektarten() != null) {
-                    switch (objekt.getBasisObjektarten().getId()) {
+                if (objekt.getObjektarten() != null) {
+                    switch (objekt.getObjektarten().getId()) {
                         case DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE:
                         case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                             getChronoTab().fetchFormData();
@@ -515,6 +525,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                             getChronoTab().fetchFormData();
                             getAbaTab().fetchFormData();
+                            getAbaVerfahrenTab().fetchFormData();
                             break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
@@ -577,14 +588,14 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             getGenehmigungTab().fetchFormData();
                             break;
                         default:
-                            log.debug("Unknown BasisObjektart: "
-                                + objekt.getBasisObjektarten());
-                            if (objekt.getBasisObjektarten().getAbteilung().equals(
+                            log.debug("Unknown Objektart: "
+                                + objekt.getObjektarten());
+                            if (objekt.getObjektarten().getAbteilung().equals(
                                 DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34)) {
                                 getChronoTab().fetchFormData();
                                 getVawsTab().fetchFormData();
                                 getFotoTab();
-                            } else if (objekt.getBasisObjektarten().getAbteilung().equals(
+                            } else if (objekt.getObjektarten().getAbteilung().equals(
                                 DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_33)) {
                                 getChronoTab().fetchFormData();
                             }
@@ -600,11 +611,18 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     log.debug("Neues Objekt");
                     getHeaderLabel().setForeground(Color.RED);
                     getHeaderLabel().setText("Neues Objekt");
-                } else {
+                }
+                else if (objekt.getStandortid().getId()== 3) {
                     log.debug("Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
-                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getBasisStandort()) +
-                    		"; " + objekt.getBasisAdresse()+"; "+objekt.getBasisObjektarten().getObjektart());
+                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getStandortid()) +
+                    		"; " + objekt.getBetreiberid()+"; "+objekt.getObjektarten().getObjektart());
+                }
+                else {
+                    log.debug("Bearbeite Objekt: " + objekt);
+                    getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
+                    getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getStandortid()) +
+                    		"; " + objekt.getBetreiberid()+"; "+objekt.getObjektarten().getObjektart());
                 }
 
                 if (objekt != null) {
@@ -614,8 +632,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getTabbedPane().addTab(getBasisTab().getName(), getBasisTab());
 
                     // Einzelne Objektarten behandeln
-                    if (objekt.getBasisObjektarten() != null) {
-                        switch (objekt.getBasisObjektarten().getId()) {
+                    if (objekt.getObjektarten() != null) {
+                        switch (objekt.getObjektarten().getId()) {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE:
                             case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                                 getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
@@ -644,8 +662,10 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                                 getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                 getTabbedPane().addTab(getAbaTab().getName(), getAbaTab());
+                                getTabbedPane().addTab(getAbaVerfahrenTab().getName(), getAbaVerfahrenTab());
                                 getChronoTab().updateForm();
                                 getAbaTab().updateForm();
+                                getAbaVerfahrenTab().updateForm();
                                 getTabbedPane().setSelectedComponent(getAbaTab());
                                 break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
@@ -741,9 +761,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             	getTabbedPane().setSelectedComponent(getAnfallstelleTab());
                             	break;
                             default:
-                                log.debug("Unknown BasisObjektart: "
-                                    + objekt.getBasisObjektarten());
-                                if (objekt.getBasisObjektarten().getAbteilung().equals(
+                                log.debug("Unknown Objektart: "
+                                    + objekt.getObjektarten());
+                                if (objekt.getObjektarten().getAbteilung().equals(
                                     DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34)) {
                                     getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                     getTabbedPane().addTab(getVawsTab().getName(), getVawsTab());
@@ -751,7 +771,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                     getChronoTab().updateForm();
                                     getVawsTab().updateForm();
                                     getTabbedPane().setSelectedComponent(getVawsTab());
-                                } else if (objekt.getBasisObjektarten().getAbteilung().equals(
+                                } else if (objekt.getObjektarten().getAbteilung().equals(
                                     DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_33)) {
                                     getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                     getChronoTab().updateForm();
@@ -772,8 +792,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
         getBasisTab().clearForm();
 
-        if (objekt.getBasisObjektarten() != null) {
-            switch (objekt.getBasisObjektarten().getId()) {
+        if (objekt.getObjektarten() != null) {
+            switch (objekt.getObjektarten().getId()) {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                     getProbepunktTab().clearForm();
@@ -788,6 +808,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                     getAbaTab().clearForm();
+                    getAbaVerfahrenTab().clearForm();
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
@@ -827,8 +848,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getAnh53Tab().clearForm();
                     break;
                 default:
-                    log.debug("Unknown BasisObjektart: "
-                        + objekt.getBasisObjektarten());
+                    log.debug("Unknown Objektart: "
+                        + objekt.getObjektarten());
             }
         }
     }
@@ -836,9 +857,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private void enableAll(boolean enabled) {
 
         getBasisTab().enableAll(enabled);
-        if (objekt.getBasisObjektarten() != null) {
+        if (objekt.getObjektarten() != null) {
 
-            switch (objekt.getBasisObjektarten().getId()) {
+            switch (objekt.getObjektarten().getId()) {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                     getProbepunktTab().enableAll(enabled);
@@ -852,6 +873,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                     getAbaTab().enableAll(enabled);
+                    getAbaVerfahrenTab().enableAll(enabled);
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
@@ -891,8 +913,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getGenehmigungTab().enableAll(enabled);
                     break;
                 default:
-                    log.debug("Unknown BasisObjektart: "
-                        + objekt.getBasisObjektarten());
+                    log.debug("Unknown Objektart: "
+                        + objekt.getObjektarten());
             }
         }
     }
@@ -905,9 +927,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
      */
     public void completeObjekt() {
         // TODO: Fachdaten beim Objektart-Wechsel löschen?
-        if (objekt.getBasisObjektarten() != null) {
+        if (objekt.getObjektarten() != null) {
             // Verschiedene Fachdaten bei neuem Objekt neu anlegen
-            switch (objekt.getBasisObjektarten().getId()) {
+            switch (objekt.getObjektarten().getId()) {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                     getProbepunktTab().completeObjekt();
@@ -921,6 +943,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                     getAbaTab().completeObjekt();
+                    getAbaVerfahrenTab().completeObjekt();
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
@@ -957,8 +980,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getAnh53Tab().completeObjekt();
                     break;
                 default:
-                    log.debug("Unknown BasisObjektart: "
-                        + objekt.getBasisObjektarten());
+                    log.debug("Unknown Objektart: "
+                        + objekt.getObjektarten());
             }
         }
     }

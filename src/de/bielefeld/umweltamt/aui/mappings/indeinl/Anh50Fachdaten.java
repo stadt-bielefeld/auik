@@ -28,9 +28,8 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -48,8 +47,8 @@ public class Anh50Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private AnhEntsorger anhEntsorger;
-    private BasisObjekt basisObjekt;
+    private Objekt objekt;
+    private Entsorger entsorger;
     private String telefon;
     private Boolean erloschen;
     private Date datumantrag;
@@ -70,19 +69,19 @@ public class Anh50Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh50Fachdaten(
-        Integer id, BasisObjekt basisObjekt, boolean enabled, boolean deleted) {
+        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
         this.id = id;
-        this.basisObjekt = basisObjekt;
+        this.objekt = objekt;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh50Fachdaten(
-        Integer id, AnhEntsorger anhEntsorger, BasisObjekt basisObjekt, String telefon, Boolean erloschen, Date datumantrag, String bemerkungen, Date genehmigung, Date wiedervorlage, String gefaehrdungsklasse, boolean enabled, boolean deleted) {
+        Integer id, Objekt objekt, Entsorger entsorger, String telefon, Boolean erloschen, Date datumantrag, String bemerkungen, Date genehmigung, Date wiedervorlage, String gefaehrdungsklasse, boolean enabled, boolean deleted) {
         this.id = id;
-        this.anhEntsorger = anhEntsorger;
-        this.basisObjekt = basisObjekt;
+        this.objekt = objekt;
+        this.entsorger = entsorger;
         this.telefon = telefon;
         this.erloschen = erloschen;
         this.datumantrag = datumantrag;
@@ -103,20 +102,20 @@ public class Anh50Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public AnhEntsorger getAnhEntsorger() {
-        return this.anhEntsorger;
+    public Objekt getObjekt() {
+        return this.objekt;
     }
 
-    public void setAnhEntsorger(AnhEntsorger anhEntsorger) {
-        this.anhEntsorger = anhEntsorger;
+    public void setObjekt(Objekt objekt) {
+        this.objekt = objekt;
     }
 
-    public BasisObjekt getBasisObjekt() {
-        return this.basisObjekt;
+    public Entsorger getEntsorger() {
+        return this.entsorger;
     }
 
-    public void setBasisObjekt(BasisObjekt basisObjekt) {
-        this.basisObjekt = basisObjekt;
+    public void setEntsorger(Entsorger entsorger) {
+        this.entsorger = entsorger;
     }
 
     public String getTelefon() {
@@ -212,8 +211,8 @@ public class Anh50Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("anhEntsorger").append("='").append(getAnhEntsorger()).append("' ");			
-        buffer.append("basisObjekt").append("='").append(getBasisObjekt()).append("' ");			
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("entsorger").append("='").append(getEntsorger()).append("' ");			
         buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
         buffer.append("erloschen").append("='").append(getErloschen()).append("' ");			
         buffer.append("datumantrag").append("='").append(getDatumantrag()).append("' ");			
@@ -289,8 +288,8 @@ public class Anh50Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh50Fachdaten copy) {
         this.id = copy.getId();            
-        this.anhEntsorger = copy.getAnhEntsorger();            
-        this.basisObjekt = copy.getBasisObjekt();            
+        this.objekt = copy.getObjekt();            
+        this.entsorger = copy.getEntsorger();            
         this.telefon = copy.getTelefon();            
         this.erloschen = copy.getErloschen();            
         this.datumantrag = copy.getDatumantrag();            
@@ -354,7 +353,7 @@ public class Anh50Fachdaten  implements java.io.Serializable {
             }
         }
         return null;*/
-        BasisObjekt objekt = (BasisObjekt) HibernateSessionFactory.currentSession().createQuery("from BasisObjekt where id= " + id).list().get(0);
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         //BasisObjekt.findById(id);
         Set<Anh50Fachdaten> list = objekt.getAnh50Fachdatens();
         return list.iterator().next();

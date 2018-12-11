@@ -127,14 +127,14 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisAdresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisStrassen;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageModel;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisMapAdresseLage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.BasicEntryField;
@@ -183,7 +183,7 @@ public class BasisStandortSuchen extends AbstractModul
 	 * Wird benutzt, um nach dem Bearbeiten etc. wieder den selben Standort in
 	 * der Liste auszuwählen.
 	 */
-	private BasisMapAdresseLage lastStandort;
+	private Standort lastStandort;
 
 	private Timer suchTimer;
 
@@ -440,7 +440,7 @@ public class BasisStandortSuchen extends AbstractModul
 		if (!lsm.isSelectionEmpty())
 		{
 			int selectedRow = lsm.getMinSelectionIndex();
-			BasisMapAdresseLage standort = this.standortModel.getRow(selectedRow);
+			Standort standort = this.standortModel.getRow(selectedRow);
 			log.debug("Standort " + standort + " angewählt.");
 			searchObjekteByStandort(standort);
 		}
@@ -453,7 +453,7 @@ public class BasisStandortSuchen extends AbstractModul
 	 * @param standort
 	 *            Der Standort
 	 */
-	public void editStandort(BasisMapAdresseLage standort)
+	public void editStandort(Standort standort)
 	{
 		StandortEditor editDialog = null;
 
@@ -476,7 +476,7 @@ public class BasisStandortSuchen extends AbstractModul
      * öffnet einen Dialog um einen Betreiber-Datensatz zu bearbeiten.
      * @param betr Der Betreiber
      */
-    public void editBetreiber(BasisAdresse betr) {
+    public void editBetreiber(Adresse betr) {
         BetreiberEditor editDialog = new BetreiberEditor(betr, this.frame);
         editDialog.setLocationRelativeTo(this.frame);
 
@@ -493,7 +493,7 @@ public class BasisStandortSuchen extends AbstractModul
 	 * @param abteilung
 	 *            33 oder 34
 	 */
-	public void searchObjekteByStandort(final BasisMapAdresseLage standort,
+	public void searchObjekteByStandort(final Standort standort,
 		final String abteilung, final Integer nichtartid)
 	{
 
@@ -503,7 +503,7 @@ public class BasisStandortSuchen extends AbstractModul
 			@Override
 			protected void doNonUILogic()
 			{
-				BasisStandortSuchen.this.objektModel.searchByStandort(standort.getBasisAdresse(),
+				BasisStandortSuchen.this.objektModel.searchByStandort(standort.getAdresse(),
 																		abteilung, nichtartid);
 			}
 
@@ -523,7 +523,7 @@ public class BasisStandortSuchen extends AbstractModul
 	 * @param standortid
 	 *            Die Standort-Id
 	 */
-	public void searchObjekteByStandort(final BasisMapAdresseLage standort)
+	public void searchObjekteByStandort(final Standort standort)
 	{
 
 		// ... siehe show()
@@ -551,7 +551,7 @@ public class BasisStandortSuchen extends AbstractModul
 	 * @param standortid
 	 *            Die Standort-Id
 	 */
-	public void searchObjekteByStandort(final BasisMapAdresseLage standort,
+	public void searchObjekteByStandort(final Standort standort,
 		final Integer istartid)
 	{
 
@@ -561,7 +561,7 @@ public class BasisStandortSuchen extends AbstractModul
 			@Override
 			protected void doNonUILogic()
 			{
-				BasisStandortSuchen.this.objektModel.searchByStandort(standort.getBasisAdresse(),
+				BasisStandortSuchen.this.objektModel.searchByStandort(standort,
 																		istartid);
 			}
 
@@ -611,7 +611,7 @@ public class BasisStandortSuchen extends AbstractModul
 				else
 				{
 					BasisStandortSuchen.this.standortModel
-							.filterList(BasisMapAdresseLage.findByLageId(SettingsManager.getInstance()
+							.filterList(Standort.findByLageId(SettingsManager.getInstance()
 									.getStandort().getId()));
 					SettingsManager.getInstance().setStandort(null);
 					getStrassenFeld().setText("");
@@ -648,9 +648,9 @@ public class BasisStandortSuchen extends AbstractModul
 		ListSelectionModel lsm = getStandortTabelle().getSelectionModel();
 		int selectedRow = lsm.getMinSelectionIndex();
 
-		BasisMapAdresseLage standort = this.standortModel.getRow(selectedRow);
+		Standort standort = this.standortModel.getRow(selectedRow);
 
-		String adresse = "" + standort.getBasisAdresse();
+		String adresse = "" + standort.getAdresse();
 
 		if (standort == null)
 		{
@@ -716,7 +716,7 @@ public class BasisStandortSuchen extends AbstractModul
 							{
 								String suchText = AuikUtils
 										.sanitizeQueryInput(this.oldText);
-								BasisStrassen str = DatabaseQuery
+								Strassen str = DatabaseQuery
 										.findStrasse(suchText);
 
 								if (str != null)
@@ -876,7 +876,7 @@ public class BasisStandortSuchen extends AbstractModul
 					if (!lsm.isSelectionEmpty())
 					{
 						int selectedRow = lsm.getMinSelectionIndex();
-						BasisMapAdresseLage standort = BasisStandortSuchen.this.standortModel
+						Standort standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
 						log.debug("Standort " + standort + " angewählt.");
 						searchObjekteByStandort(standort,
@@ -906,7 +906,7 @@ public class BasisStandortSuchen extends AbstractModul
 					if (!lsm.isSelectionEmpty())
 					{
 						int selectedRow = lsm.getMinSelectionIndex();
-						BasisMapAdresseLage standort = BasisStandortSuchen.this.standortModel
+						Standort standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
 						log.debug("Standort " + standort + " angewählt.");
 						searchObjekteByStandort(standort,
@@ -937,7 +937,7 @@ public class BasisStandortSuchen extends AbstractModul
 					if (!lsm.isSelectionEmpty())
 					{
 						int selectedRow = lsm.getMinSelectionIndex();
-						BasisMapAdresseLage standort = BasisStandortSuchen.this.standortModel
+						Standort standort = BasisStandortSuchen.this.standortModel
 								.getRow(selectedRow);
 						log.debug("Standort " + standort + " angewählt.");
 						searchObjekteByStandort(standort,
@@ -999,16 +999,11 @@ public class BasisStandortSuchen extends AbstractModul
 			this.standortTabelle
 					.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 			TableColumn column = null;
-			// DefaultTableCellRenderer centerRenderer = new
-			// DefaultTableCellRenderer();
-			// centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
 			for (int i = 0; i < this.standortModel.getColumnCount(); i++)
 			{
 				column = this.standortTabelle.getColumnModel().getColumn(i);
-				/*
-				 * if (i == 0) { column.setMaxWidth(60);
-				 * column.setPreferredWidth(column.getMaxWidth()-10); } else
-				 */
+
 				if (i == 0)
 				{
 					column.setPreferredWidth(120);
@@ -1050,7 +1045,7 @@ public class BasisStandortSuchen extends AbstractModul
 						if ((e.getButton() == MouseEvent.BUTTON1)
 								&& (e.getClickCount() == 2))
 						{
-							BasisMapAdresseLage bsta = BasisStandortSuchen.this.standortModel
+							Standort bsta = BasisStandortSuchen.this.standortModel
 									.getRow(row);
 //							editStandort(bsta);
 						}
@@ -1070,51 +1065,10 @@ public class BasisStandortSuchen extends AbstractModul
 				}
 			});
 
-//			this.standortTabelle.getInputMap().put(
-//													(KeyStroke) getStandortEditAction()
-//															.getValue(
-//																		Action.ACCELERATOR_KEY),
-//													getStandortEditAction().getValue(Action.NAME));
-//			this.standortTabelle.getActionMap().put(
-//													getStandortEditAction().getValue(Action.NAME),
-//													getStandortEditAction());
 		}
 
 		return this.standortTabelle;
 	}
-
-//	private Action getStandortEditAction()
-//	{
-//		if (this.standortEditAction == null)
-//		{
-//			this.standortEditAction = new AbstractAction("Bearbeiten")
-//			{
-//				private static final long serialVersionUID = 535733777827052581L;
-//
-//				@Override
-//				public void actionPerformed(ActionEvent e)
-//				{
-//					int row = BasisStandortSuchen.this.standortTabelle
-//							.getSelectedRow();
-//
-//					// Natürlich nur editieren, wenn wirklich eine Zeile
-//					// ausgewählt ist
-//					if (row != -1)
-//					{
-//						BasisLageAdresse bsta = BasisStandortSuchen.this.standortModel
-//								.getRow(row);
-//						editStandort(bsta);
-//					}
-//				}
-//			};
-//			this.standortEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
-//					KeyEvent.VK_B));
-//			this.standortEditAction.putValue(Action.ACCELERATOR_KEY,
-//												KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
-//		}
-//
-//		return this.standortEditAction;
-//	}
 
 	private Action getObjektNeuAction()
 	{
@@ -1132,7 +1086,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 					if (row != -1)
 					{
-						BasisMapAdresseLage bsta = BasisStandortSuchen.this.standortModel
+						Standort bsta = BasisStandortSuchen.this.standortModel
 								.getRow(row);
 						BasisStandortSuchen.this.manager.getSettingsManager()
 								.setSetting("auik.imc.use_standort",
@@ -1154,14 +1108,9 @@ public class BasisStandortSuchen extends AbstractModul
 		if (this.standortPopup == null)
 		{
 			this.standortPopup = new JPopupMenu("Standort");
-//			JMenuItem bearbItem = new JMenuItem(getStandortEditAction());
-//			JMenuItem neuItem = new JMenuItem(getObjektNeuAction());
+			
 			JMenuItem gisItem = new JMenuItem(getGisAction());
-			JMenuItem delItem = new JMenuItem(getStandortLoeschAction());
-//			this.standortPopup.add(bearbItem);
-//			this.standortPopup.add(neuItem);
 			this.standortPopup.add(gisItem);
-			this.standortPopup.add(delItem);
 		}
 
 		if (e.isPopupTrigger())
@@ -1190,27 +1139,27 @@ public class BasisStandortSuchen extends AbstractModul
 				{
 					int row = BasisStandortSuchen.this.objektTabelle
 							.getSelectedRow();
-					BasisObjekt obj = BasisStandortSuchen.this.objektModel
+					Objekt obj = BasisStandortSuchen.this.objektModel
 							.getRow(row);
 					if ((row != -1)
-							|| (!(obj.getBasisObjektarten().getId()
+							|| (!(obj.getObjektarten().getId()
 									.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))))
 					{
 						BasisStandortSuchen.this.manager.getSettingsManager()
 								.setSetting("auik.imc.edit_object",
-											obj.getObjektid().intValue(), false);
+											obj.getId().intValue(), false);
 
 						BasisStandortSuchen.this.manager
 								.switchModul("m_objekt_bearbeiten");
 					}
 					else if (row != -1
-							|| obj.getBasisObjektarten()
+							|| obj.getObjektarten()
 									.getId()
 									.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))
 					{
 						BasisStandortSuchen.this.manager.getSettingsManager()
 								.setSetting("auik.imc.edit_object",
-											obj.getObjektid().intValue(), false);
+											obj.getId().intValue(), false);
 						BasisStandortSuchen.this.manager
 								.switchModul("m_sielhaut1");
 					}
@@ -1236,9 +1185,9 @@ public class BasisStandortSuchen extends AbstractModul
 	                int row = getObjektTabelle().getSelectedRow();
 	
 	                if (row != -1) {
-	                    BasisObjekt obj = BasisStandortSuchen.this.objektModel
+	                    Objekt obj = BasisStandortSuchen.this.objektModel
 	                        .getRow(row);
-	                    editBetreiber(obj.getBasisAdresse());
+	                    editBetreiber(obj.getBetreiberid());
 	                }
 	            }
 	        };
@@ -1264,9 +1213,9 @@ public class BasisStandortSuchen extends AbstractModul
 	                // Natürlich nur editieren, wenn wirklich eine Zeile
 	                // ausgewählt ist
 	                if (row != -1) {
-	                    BasisObjekt obj = BasisStandortSuchen.this.objektModel
+	                    Objekt obj = BasisStandortSuchen.this.objektModel
 	                        .getRow(row);
-	                    editBetreiber(obj.getBasisStandort());
+	                    editBetreiber(obj.getStandortid().getAdresse());
 	                }
 	            }
 	        };
@@ -1293,13 +1242,13 @@ public class BasisStandortSuchen extends AbstractModul
 					int row = getObjektTabelle().getSelectedRow();
 					if (row != -1 && getObjektTabelle().getEditingRow() == -1)
 					{
-						BasisObjekt objekt = BasisStandortSuchen.this.objektModel
+						Objekt objekt = BasisStandortSuchen.this.objektModel
 								.getRow(row);
 						if (GUIManager
 								.getInstance()
 								.showQuestion(
 												"Soll das Objekt "
-														+ objekt.getObjektid()
+														+ objekt.getId()
 														+ " und alle seine Fachdaten wirklich "
 														+ "gelöscht werden?\n"
 														+ "Hinweis: Manche Objekte können auch erst"
@@ -1313,7 +1262,7 @@ public class BasisStandortSuchen extends AbstractModul
 								BasisStandortSuchen.this.frame.changeStatus(
 																			"Objekt gelöscht.",
 																			HauptFrame.SUCCESS_COLOR);
-								log.debug("Objekt " + objekt.getObjektid()
+								log.debug("Objekt " + objekt.getId()
 										+ " wurde gelöscht!");
 							}
 							else
@@ -1387,15 +1336,15 @@ public class BasisStandortSuchen extends AbstractModul
 
 					int row = BasisStandortSuchen.this.standortTabelle
 							.getSelectedRow();
-					BasisMapAdresseLage bsta = BasisStandortSuchen.this.standortModel
+					Standort bsta = BasisStandortSuchen.this.standortModel
 							.getRow(row);
 
 					ProcessBuilder pb = new ProcessBuilder("cmd", "/C", prog,
 							proj);
 
 					Map<String, String> env = pb.environment();
-					env.put("RECHTS", bsta.getE32().toString());
-					env.put("HOCH", bsta.getN32().toString());
+					env.put("RECHTS", bsta.getLage().getE32().toString());
+					env.put("HOCH", bsta.getLage().getN32().toString());
 
 					try
 					{
@@ -1496,29 +1445,29 @@ public class BasisStandortSuchen extends AbstractModul
 									&& (e.getButton() == 1))
 							{
 								Point origin = e.getPoint();
-								int row = getObjektTabelle().convertRowIndexToModel(getObjektTabelle().rowAtPoint(origin));
-								BasisObjekt obj = BasisStandortSuchen.this.objektModel
+								int row = getObjektTabelle().rowAtPoint(origin);
+								Objekt obj = BasisStandortSuchen.this.objektModel
 										.getRow(row);
 								if ((row != -1)
-										&& (!(obj.getBasisObjektarten().getId()
+										&& (!(obj.getObjektarten().getId()
 												.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))))
 								{
 									BasisStandortSuchen.this.manager
 											.getSettingsManager().setSetting(
 																				"auik.imc.edit_object",
-																				obj.getObjektid()
+																				obj.getId()
 																						.intValue(), false);
 									BasisStandortSuchen.this.manager
 											.switchModul("m_objekt_bearbeiten");
 								}
 								else if ((row != -1)
-										&& (obj.getBasisObjektarten().getId()
+										&& (obj.getObjektarten().getId()
 												.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE)))
 								{
 									BasisStandortSuchen.this.manager
 											.getSettingsManager().setSetting(
 																				"auik.imc.edit_object",
-																				obj.getObjektid()
+																				obj.getId()
 																						.intValue(), false);
 									BasisStandortSuchen.this.manager
 											.switchModul("m_sielhaut1");
@@ -1597,7 +1546,7 @@ public class BasisStandortSuchen extends AbstractModul
 						}
 						else
 						{
-							BasisMapAdresseLage str = BasisStandortSuchen.this.standortModel
+							Standort str = BasisStandortSuchen.this.standortModel
 									.getRow(row);
 
 							if (GUIManager.getInstance().showQuestion(

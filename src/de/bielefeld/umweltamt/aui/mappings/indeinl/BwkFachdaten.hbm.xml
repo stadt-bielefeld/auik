@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten" table="bwk_fachdaten" schema="indeinl" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
+            <column name="objektid" not-null="true" />
+        </many-to-one>
+        <property name="branche" type="java.lang.String">
+            <column name="branche" />
+        </property>
+        <property name="KHersteller" type="java.lang.String">
+            <column name="k_hersteller" />
+        </property>
+        <property name="KTyp" type="java.lang.String">
+            <column name="k_typ" />
+        </property>
+        <property name="KBrennmittel" type="java.lang.String">
+            <column name="k_brennmittel" />
+        </property>
+        <property name="KLeistung" type="java.lang.Integer">
+            <column name="k_leistung" />
+        </property>
+        <property name="datumG" type="java.util.Date">
+            <column name="datum_g" length="29" />
+        </property>
+        <property name="aba" type="java.lang.Boolean">
+            <column name="aba" />
+        </property>
+        <property name="WBrenner" type="java.lang.String">
+            <column name="w_brenner" />
+        </property>
+        <property name="WWaermetauscher" type="java.lang.String">
+            <column name="w_waermetauscher" />
+        </property>
+        <property name="WAbgasleitung" type="java.lang.String">
+            <column name="w_abgasleitung" />
+        </property>
+        <property name="WKondensableitung" type="java.lang.String">
+            <column name="w_kondensableitung" />
+        </property>
+        <property name="abnahme" type="java.lang.String">
+            <column name="abnahme" />
+        </property>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <property name="anschreiben" type="java.util.Date">
+            <column name="anschreiben" length="29" />
+        </property>
+        <property name="erfassung" type="java.lang.Integer">
+            <column name="erfassung" />
+        </property>
+        <property name="genehmigung" type="java.lang.Boolean">
+            <column name="genehmigung" />
+        </property>
+        <property name="genehmigungspflicht" type="java.lang.Boolean">
+            <column name="genehmigungspflicht" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

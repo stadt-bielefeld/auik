@@ -55,10 +55,10 @@ public class FettabschModel extends ListTableModel {
 		Object tmp = null;
 		switch (columnIndex) {
     		case 0:
-    			tmp = fd.getBasisObjekt().getBasisAdresse();
+    			tmp = fd.getObjekt().getBetreiberid();
     			break;
     		case 1:
-    			tmp = DatabaseQuery.getStandortString(fd.getBasisObjekt().getBasisStandort());
+    			tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
     			break;
     		case 2:
     			tmp = fd.getBemerkungen();
@@ -76,14 +76,14 @@ public class FettabschModel extends ListTableModel {
     			break;
     		case 6:
     		    tmp = DatabaseQuery.getLastChronoDateForObjekt(
-    		    		fd.getBasisObjekt());
+    		    		fd.getObjekt());
     		    break;
     		default:
     			tmp = "ERROR";
 		}
 
 		if (tmp != null &&
-			fd.getBasisObjekt().isInaktiv()) {
+			fd.getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
 		}
 		return tmp;

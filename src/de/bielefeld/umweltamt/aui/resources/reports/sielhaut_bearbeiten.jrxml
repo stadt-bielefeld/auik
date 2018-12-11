@@ -35,7 +35,7 @@
 	<parameter name="karte" class="java.lang.String"/>
 	<parameter name="foto" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select * from auik.atl_sielhaut where id = $P{id};]]>
+		<![CDATA[select * from labor.sielhaut where id = $P{id};]]>
 	</queryString>
 	<field name="bezeichnung" class="java.lang.String"/>
 	<field name="haltungsnr" class="java.lang.String"/>

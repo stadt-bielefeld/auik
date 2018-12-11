@@ -77,7 +77,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
-import de.bielefeld.umweltamt.aui.mappings.basis.BasisObjekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -148,8 +148,8 @@ public abstract class AbstractQueryModul extends AbstractModul {
      * @param objectAtRow Das Fachdaten-Objekt.
      * @return Das zugehörige BasisObjekt (oder <code>null</code>, falls keins existiert).
      */
-    protected BasisObjekt getBasisObjektFromFachdaten(Object fachdaten) {
-        BasisObjekt tmp = null;
+    protected Objekt getBasisObjektFromFachdaten(Object fachdaten) {
+        Objekt tmp = null;
 
         // Die "getBasisObjekt" Methode des jeweiligen
         // Fachdaten-Objekts wird jetzt, unabhängig von
@@ -157,11 +157,11 @@ public abstract class AbstractQueryModul extends AbstractModul {
         // nach ihrem Namen gesucht. Sollte keine Methode
         // diesen Namens existieren, wird null zurück geliefert.
 		try {
-			if (fachdaten instanceof BasisObjekt) {
-				tmp = (BasisObjekt) fachdaten;
+			if (fachdaten instanceof Objekt) {
+				tmp = (Objekt) fachdaten;
 			} else {
-				Method getBO = fachdaten.getClass().getMethod("getBasisObjekt");
-				tmp = (BasisObjekt) getBO.invoke(fachdaten);
+				Method getBO = fachdaten.getClass().getMethod("getObjekt");
+				tmp = (Objekt) getBO.invoke(fachdaten);
 			}
         } catch (Exception e) {
             //e.printStackTrace();
@@ -324,7 +324,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
     protected void editObject(int row) {
 
         if (row != -1) {
-            BasisObjekt obj = getBasisObjektFromFachdaten(getTableModel().getObjectAtRow(row));
+            Objekt obj = getBasisObjektFromFachdaten(getTableModel().getObjectAtRow(row));
 
             if (obj != null) {
 //                AUIKataster.debugOutput("Bearbeite BO: " + obj, "AQM");

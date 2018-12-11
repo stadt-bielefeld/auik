@@ -92,35 +92,37 @@
 
 </#if>
 </#if>
+<#if cfg??>
 <#foreach queryName in cfg.namedQueries.keySet()>
-<#if queryName.startsWith(clazz.entityName + ".")>
-<#assign methname = c2j.unqualify(queryName)>
-<#assign params = cfg.namedQueries.get(queryName).parameterTypes><#assign argList = c2j.asFinderArgumentList(params, pojo)>
-<#if jdk5 && methname.startsWith("find")>
-    public ${pojo.importType("java.util.List")}<${declarationName}> ${methname}(${argList}) {
-<#elseif methname.startsWith("count")>
-    public int ${methname}(${argList}) {
-<#else>
-    public ${pojo.importType("java.util.List")} ${methname}(${argList}) {
-</#if>
-        ${pojo.importType("org.hibernate.Query")} query = sessionFactory.getCurrentSession()
-                .getNamedQuery("${queryName}");
-<#foreach param in params.keySet()>
-<#if param.equals("maxResults")>
-        query.setMaxResults(maxResults);
-<#elseif param.equals("firstResult")>
-        query.setFirstResult(firstResult);
-<#else>
-        query.setParameter("${param}", ${param});
-</#if>
+    <#if queryName.startsWith(clazz.entityName + ".")>
+        <#assign methname = c2j.unqualify(queryName)>
+        <#assign params = cfg.namedQueries.get(queryName).parameterTypes><#assign argList = c2j.asFinderArgumentList(params, pojo)>
+        <#if jdk5 && methname.startsWith("find")>
+            public ${pojo.importType("java.util.List")}<${declarationName}> ${methname}(${argList}) {
+        <#elseif methname.startsWith("count")>
+            public int ${methname}(${argList}) {
+        <#else>
+            public ${pojo.importType("java.util.List")} ${methname}(${argList}) {
+        </#if>
+            ${pojo.importType("org.hibernate.Query")} query = sessionFactory.getCurrentSession()
+                    .getNamedQuery("${queryName}");
+        <#foreach param in params.keySet()>
+            <#if param.equals("maxResults")>
+                    query.setMaxResults(maxResults);
+            <#elseif param.equals("firstResult")>
+                    query.setFirstResult(firstResult);
+            <#else>
+                    query.setParameter("${param}", ${param});
+            </#if>
+        </#foreach>
+            <#if jdk5 && methname.startsWith("find")>
+                    return (List<${declarationName}>) query.list();
+            <#elseif methname.startsWith("count")>
+                    return ( (Integer) query.uniqueResult() ).intValue();
+            <#else>
+                    return query.list();
+            </#if>
+            }
+    </#if>
 </#foreach>
-<#if jdk5 && methname.startsWith("find")>
-        return (List<${declarationName}>) query.list();
-<#elseif methname.startsWith("count")>
-        return ( (Integer) query.uniqueResult() ).intValue();
-<#else>
-        return query.list();
 </#if>
-    }
-</#if>
-</#foreach>

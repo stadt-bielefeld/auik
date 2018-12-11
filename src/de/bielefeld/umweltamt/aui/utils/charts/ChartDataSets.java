@@ -71,7 +71,7 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import de.bielefeld.umweltamt.aui.mappings.atl.AtlAnalyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -120,7 +120,7 @@ public class ChartDataSets {
 //
 //                    addPosToMinuteSeries(result, item);
 //                }
-                addPosToMinuteSeries(result, new APosDataItem((AtlAnalyseposition) list.get(i)));
+                addPosToMinuteSeries(result, new APosDataItem((Analyseposition) list.get(i)));
             }
         }
 
@@ -128,7 +128,7 @@ public class ChartDataSets {
     }
 
     public static TimeSeries createAnalysePositionenSielhautSeries(
-        List<AtlAnalyseposition> list, String name, String einheit) {
+        List<Analyseposition> list, String name, String einheit) {
         TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
         log.debug("Erzeuge TimeSeries: " + name);
 
@@ -158,7 +158,7 @@ public class ChartDataSets {
         } else {
             //AUIKataster.debugOutput("  |- !Bei " + minute + " existiert schon ein Eintrag -> Rekursion!.", "ChartDataSets.createAnalysepositionenSeries");
             Calendar cal = GregorianCalendar.getInstance();
-            cal.setTime(item.getAnalysePosition().getAtlProbenahmen().getDatumDerEntnahme());
+            cal.setTime(item.getAnalysePosition().getProbenahme().getDatumDerEntnahme());
             Minute minute = item.getMinute();
             APosDataItem item2 = new APosDataItem(item.getAnalysePosition(), new Minute(minute.getMinute()+1, minute.getHour().getHour(), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH)+1, cal.get(Calendar.YEAR)));
 
@@ -173,7 +173,7 @@ public class ChartDataSets {
             series.add(item);
         } else {
             Calendar cal = GregorianCalendar.getInstance();
-            cal.setTime(item.getAnalysePosition().getAtlProbenahmen()
+            cal.setTime(item.getAnalysePosition().getProbenahme()
                 .getDatumDerEntnahme());
             Minute minute = item.getMinute();
             APosDataItem item2 = new APosDataItem(
