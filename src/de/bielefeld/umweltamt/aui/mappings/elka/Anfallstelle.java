@@ -51,7 +51,6 @@ public class Anfallstelle  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Integer objektid;
     private Objekt objekt;
     private Integer seqId;
     private Date aktualDat;
@@ -90,9 +89,9 @@ public class Anfallstelle  implements java.io.Serializable {
 
     /** Full constructor */
     public Anfallstelle(
-        Integer id, Integer objektid, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, BigDecimal maxVolTag, BigDecimal maxVolStunde, Integer volJahr, String externalNr, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr) {
+        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, BigDecimal maxVolTag, BigDecimal maxVolStunde, Integer volJahr, String externalNr, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr) {
         this.id = id;
-        this.objektid = objektid;
+        this.objekt = objekt;
         this.seqId = seqId;
         this.aktualDat = aktualDat;
         this.erstellDat = erstellDat;
@@ -131,14 +130,6 @@ public class Anfallstelle  implements java.io.Serializable {
 	public void setObjekt(Objekt objekt) {
 		this.objekt = objekt;
 	}
-
-	public Integer getObjektid() {
-        return this.objektid;
-    }
-
-    public void setObjektid(Integer objektid) {
-        this.objektid = objektid;
-    }
 
     public Integer getSeqId() {
         return this.seqId;
@@ -321,7 +312,7 @@ public class Anfallstelle  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objektid").append("='").append(getObjektid()).append("' ");			
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
         buffer.append("seqId").append("='").append(getSeqId()).append("' ");			
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
@@ -408,7 +399,7 @@ public class Anfallstelle  implements java.io.Serializable {
      */
     private void copy(Anfallstelle copy) {
         this.id = copy.getId();            
-        this.objektid = copy.getObjektid();            
+        this.objekt = copy.getObjekt();              
         this.seqId = copy.getSeqId();            
         this.aktualDat = copy.getAktualDat();            
         this.erstellDat = copy.getErstellDat();            

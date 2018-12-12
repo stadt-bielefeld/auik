@@ -671,6 +671,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+                            case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER_ES:
                                 getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                 getTabbedPane().addTab(getAnhang49Tab().getName(), getAnhang49Tab());
                                 getTabbedPane().addTab(getAnh49DetailTab().getName(), getAnh49DetailTab());
@@ -949,6 +950,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER_ES:
                     getAnhang49Tab().completeObjekt();
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:

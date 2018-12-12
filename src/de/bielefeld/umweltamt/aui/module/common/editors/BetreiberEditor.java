@@ -332,7 +332,12 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		builder.add(hausnrZusFeld, cc.xy(10, 19));
 		builder.add(getStrassenBox(), cc.xyw(12, 17, 5));
 
-		builder.add(getStandorteScroller(), cc.xywh(12, 19, 5, 15));
+		builder.add(getStandorteScroller(), cc.xywh(12, 19, 5, 7));
+		
+		builder.addSeparator("Datenschutzhinweis erhalten:", cc.xyw(12, 27, 5));
+		builder.add(daten_awsvCheck, cc.xy(12, 29));
+		builder.add(daten_esatzungCheck, cc.xy(12, 31));
+		builder.add(daten_whgCheck, cc.xy(12, 33));
 
 		// Lage --------------------------------------
 		builder.addSeparator("Lage", cc.xyw(1, 21, 10));

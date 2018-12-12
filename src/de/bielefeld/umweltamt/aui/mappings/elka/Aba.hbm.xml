@@ -5,10 +5,10 @@
 <hibernate-mapping>
 	<class name="de.bielefeld.umweltamt.aui.mappings.elka.Aba"
 		table="aba" schema="elka" optimistic-lock="version">
-		<id name="id" type="java.lang.Integer">
-			<column name="id" />
-			<generator class="assigned" />
-		</id>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
 		<many-to-one name="objekt"
 			class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt"
 			fetch="select">
