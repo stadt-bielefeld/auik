@@ -7,53 +7,41 @@
 	<parameter name="StandortId" class="java.lang.Integer"/>
 	<parameter name="BetreiberId" class="java.lang.Integer"/>
 	<queryString>
-        <![CDATA[select vaws_fachdaten.anlagenart, vaws_fachdaten.herstellnr, vaws_fachdaten.fluessigkeit,
-vaws_fachdaten.menge, vaws_fachdaten.stillegungsdatum, basis_objektarten.objektart,
-basis_adresse.betrname, vaws_fachdaten.objektid, (select count(*)
-    from auik.basis_lage
-    inner join auik.basis_objekt on basis_objekt.lageid = basis_lage.id
-    inner join auik.basis_adresse on basis_adresse.id = basis_objekt.betreiberid
-    inner join auik.vaws_fachdaten on vaws_fachdaten.objektid = basis_objekt.id
-    inner join auik.basis_objektarten on basis_objektarten.id = basis_objekt.objektartid
-    where basis_lage.id = $P{StandortId}
-          and basis_objekt.betreiberid = $P{BetreiberId}
-          and basis_objektarten.abteilung = '360.34') as anzahl
-from auik.basis_lage
-inner join auik.basis_objekt on basis_objekt.lageid = basis_lage.id
-inner join auik.basis_adresse on basis_adresse.id = basis_objekt.betreiberid
-inner join auik.vaws_fachdaten on vaws_fachdaten.objektid = basis_objekt.id
-inner join auik.basis_objektarten on basis_objektarten.id = basis_objekt.objektartid
-where basis_lage.id = $P{StandortId}
-      and basis_objekt.betreiberid = $P{BetreiberId}
-      and basis_objektarten.abteilung = '360.34']]>
+		<![CDATA[select fachdaten.anlagenart, fachdaten.herstellnr, fachdaten.fluessigkeit,
+fachdaten.menge, fachdaten.stillegungsdatum, objektarten.objektart,
+adresse.betrname, fachdaten.objektid, (select count(*)
+    from basis.standort
+    inner join basis.objekt on objekt.standortid = standort.id
+    inner join basis.adresse on adresse.id = objekt.betreiberid
+    inner join awsv.fachdaten on fachdaten.objektid = objekt.id
+    inner join basis.objektarten on objektarten.id = objekt.objektartid
+    where standort.id = $P{StandortId}
+          and objekt.betreiberid = $P{BetreiberId}
+          and objektarten.abteilung = '360.34') as anzahl
+from basis.standort
+inner join basis.objekt on objekt.standortid = standort.id
+inner join basis.adresse on adresse.id = objekt.betreiberid
+inner join awsv.fachdaten on fachdaten.objektid = objekt.id
+inner join basis.objektarten on objektarten.id = objekt.objektartid
+where standort.id = $P{StandortId}
+      and objekt.betreiberid = $P{BetreiberId}
+      and objektarten.abteilung = '360.34']]>
 	</queryString>
-      <!-- TODO: Use query below on postgresql >= 8.4
-        select vaws_fachdaten.anlagenart, vaws_fachdaten.herstellnr, vaws_fachdaten.fluessigkeit,
-vaws_fachdaten.menge, vaws_fachdaten.stillegungsdatum, basis_objektarten.objektart,
-basis_betreiber.betrname, count (*) over() AS anzahl
-from auik.basis_standort
-inner join auik.basis_objekt on basis_objekt.standortid = basis_standort.id
-inner join auik.basis_betreiber on basis_betreiber.id = basis_objekt.betreiberid
-inner join auik.vaws_fachdaten on vaws_fachdaten.objektid = basis_objekt.objektid
-inner join auik.basis_objektarten on basis_objektarten.id = basis_objekt.objektartid
-where basis_standort.id = $P{StandortId}
-      and basis_objekt.betreiberid = $P{BetreiberId}
-      and basis_objektarten.abteilung = '360.34'
-      -->
 	<field name="anlagenart" class="java.lang.String"/>
 	<field name="herstellnr" class="java.lang.String"/>
 	<field name="fluessigkeit" class="java.lang.String"/>
-	<field name="menge" class="java.lang.Float"/>
+	<field name="menge" class="java.lang.Double"/>
 	<field name="stillegungsdatum" class="java.sql.Timestamp"/>
 	<field name="objektart" class="java.lang.String"/>
 	<field name="betrname" class="java.lang.String"/>
-	<field name="anzahl" class="java.lang.Integer"/>
+	<field name="objektid" class="java.lang.Integer"/>
+	<field name="anzahl" class="java.lang.Long"/>
 	<group name="objektart" keepTogether="true">
 		<groupExpression><![CDATA[$F{objektart}]]></groupExpression>
 		<groupHeader>
 			<band height="27">
 				<textField>
-					<reportElement uuid="75bf1cf8-9593-4a7e-9649-d1dd81dbb680" x="0" y="0" width="483" height="27"/>
+					<reportElement x="0" y="0" width="483" height="27" uuid="75bf1cf8-9593-4a7e-9649-d1dd81dbb680"/>
 					<box>
 						<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
 						<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -73,7 +61,7 @@ where basis_standort.id = $P{StandortId}
 	<pageHeader>
 		<band height="58" splitType="Stretch">
 			<textField>
-				<reportElement uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64" mode="Opaque" x="72" y="0" width="411" height="20" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="72" y="0" width="411" height="20" backcolor="#D8D8D8" uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<leftPen lineWidth="0.0" lineColor="#B9B9B9"/>
@@ -87,7 +75,7 @@ where basis_standort.id = $P{StandortId}
 				<textFieldExpression><![CDATA[$F{betrname}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d" mode="Opaque" x="0" y="0" width="73" height="20" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="0" y="0" width="73" height="20" backcolor="#D8D8D8" uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -100,7 +88,7 @@ where basis_standort.id = $P{StandortId}
 				<text><![CDATA[Betreiber]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="be457047-686f-44bb-859c-5c9f6a899507" mode="Opaque" x="232" y="38" width="96" height="20" forecolor="#000000" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="232" y="38" width="96" height="20" forecolor="#000000" backcolor="#D8D8D8" uuid="be457047-686f-44bb-859c-5c9f6a899507"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="0.5"/>
@@ -111,7 +99,7 @@ where basis_standort.id = $P{StandortId}
 				<text><![CDATA[Flüssigkeit]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="951401c3-c231-4ebd-aa74-0cf2d7e2b025" mode="Opaque" x="328" y="38" width="96" height="20" forecolor="#000000" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="328" y="38" width="96" height="20" forecolor="#000000" backcolor="#D8D8D8" uuid="951401c3-c231-4ebd-aa74-0cf2d7e2b025"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="0.5"/>
@@ -122,7 +110,7 @@ where basis_standort.id = $P{StandortId}
 				<text><![CDATA[Menge]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="56796b65-e1a8-43d7-88ae-a4c3c1289036" mode="Opaque" x="0" y="38" width="120" height="20" forecolor="#000000" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="0" y="38" width="120" height="20" forecolor="#000000" backcolor="#D8D8D8" uuid="56796b65-e1a8-43d7-88ae-a4c3c1289036"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -134,7 +122,7 @@ where basis_standort.id = $P{StandortId}
 				<text><![CDATA[Anlagenart]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1ec155da-f7e2-45d8-ac77-41112f96e154" mode="Opaque" x="120" y="38" width="112" height="20" forecolor="#000000" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="120" y="38" width="112" height="20" forecolor="#000000" backcolor="#D8D8D8" uuid="1ec155da-f7e2-45d8-ac77-41112f96e154"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="0.5"/>
@@ -145,7 +133,7 @@ where basis_standort.id = $P{StandortId}
 				<text><![CDATA[Herst. Nr.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0745d82b-d6ff-4468-b418-17978d79e81b" mode="Opaque" x="423" y="38" width="60" height="20" forecolor="#000000" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="423" y="38" width="60" height="20" forecolor="#000000" backcolor="#D8D8D8" uuid="0745d82b-d6ff-4468-b418-17978d79e81b"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="0.5"/>
@@ -161,7 +149,7 @@ where basis_standort.id = $P{StandortId}
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e0fadc1b-e216-443b-aa4a-5297100d71e3" stretchType="RelativeToTallestObject" x="0" y="0" width="120" height="20"/>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="120" height="20" uuid="e0fadc1b-e216-443b-aa4a-5297100d71e3"/>
 				<box>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
 				</box>
@@ -169,22 +157,22 @@ where basis_standort.id = $P{StandortId}
 				<textFieldExpression><![CDATA[$F{anlagenart}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="20572ca4-d384-41a6-8d99-a24ecb287910" stretchType="RelativeToTallestObject" x="120" y="0" width="112" height="20"/>
+				<reportElement stretchType="RelativeToTallestObject" x="120" y="0" width="112" height="20" uuid="20572ca4-d384-41a6-8d99-a24ecb287910"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{herstellnr}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8b776727-94c0-4b4c-b297-054679eba9da" stretchType="RelativeToTallestObject" x="232" y="0" width="96" height="20"/>
+				<reportElement stretchType="RelativeToTallestObject" x="232" y="0" width="96" height="20" uuid="8b776727-94c0-4b4c-b297-054679eba9da"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{fluessigkeit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="93ef3161-b6a6-4223-b4f6-90ecf9d32af7" stretchType="RelativeToTallestObject" x="328" y="0" width="96" height="20"/>
+				<reportElement stretchType="RelativeToTallestObject" x="328" y="0" width="96" height="20" uuid="93ef3161-b6a6-4223-b4f6-90ecf9d32af7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{menge}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd.MM.yy" isBlankWhenNull="true">
-				<reportElement uuid="75be3bb9-62f1-4a06-becb-f95acff891e3" stretchType="RelativeToTallestObject" x="424" y="0" width="59" height="20"/>
+				<reportElement stretchType="RelativeToTallestObject" x="424" y="0" width="59" height="20" uuid="75be3bb9-62f1-4a06-becb-f95acff891e3"/>
 				<box>
 					<rightPen lineWidth="2.5" lineColor="#B9B9B9"/>
 				</box>
@@ -192,7 +180,7 @@ where basis_standort.id = $P{StandortId}
 				<textFieldExpression><![CDATA[$F{stillegungsdatum}]]></textFieldExpression>
 			</textField>
 			<line direction="BottomUp">
-				<reportElement uuid="81b69be3-a601-4515-9611-095941187fb2" x="0" y="19" width="483" height="1">
+				<reportElement x="0" y="19" width="483" height="1" uuid="81b69be3-a601-4515-9611-095941187fb2">
 					<printWhenExpression><![CDATA[$F{anzahl}==$V{COLUMN_COUNT}]]></printWhenExpression>
 				</reportElement>
 				<graphicElement>
