@@ -282,6 +282,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String filter = " ";
 		if (hausnrzus != null) {
 			filter += " AND a.hausnrzus = '" + hausnrzus + "' ";
+		}else {
+			filter += " AND a.hausnrzus is null";
 		}
 		if (abteilung != null) {
 			filter += " AND art.abteilung = '" + abteilung + "' ";
@@ -315,13 +317,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return Eine Liste von Objekten an diesem Standort.
 	 */
 
-	public static List<Objekt> getObjekteByStrasse(Adresse adr, String abteilung, Integer artid, Boolean matchArtId) {
+	public static List<Objekt> getObjekteByStrasse(Standort std, String abteilung, Integer artid, Boolean matchArtId) {
 
-		String strasse = adr.getStrasse().replaceAll("'", "''");
-		Integer nr = adr.getHausnr();
-		String zus = adr.getHausnrzus();
+		String strasse = std.getStrasse().replaceAll("'", "''");
+		Integer nr = std.getHausnr();
+		String zus = std.getHausnrzus();
 
-		log.debug("Fetching objects at " + adr);
+		log.debug("Fetching objects at " + std);
 		// Find objects witch matching fields
 		String query = "SELECT o.*, a.* from basis.objekt o, basis.adresse a, basis.objektarten art "
 				+ " WHERE o.standortid = a.id AND o.objektartid = art.id " + "AND a.strasse = '" + strasse
@@ -681,7 +683,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */
 
-	public static List<Adresse> findStandorte(String name, String strasse, Integer hausnr, String ort) {
+	public static List<Adresse> findAdressen(String name, String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bName = (name != null && name.length() > 0);
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
@@ -726,7 +728,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            String
 	 * @return <code>List&lt;Object[]&gt;</code>
 	 */
-	public static List<Object[]> findStandorteNew(String strasse, Integer hausnr, String ort) {
+	public static List<Object[]> findStandorteAll(String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
 		boolean bHausnr = (hausnr != null && hausnr != -1);
@@ -755,7 +757,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			}
 			query += " AND a._deleted = false";
 		}
-		query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC;";
+		query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC NULLS FIRST;";
 		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("a", Adresse.class);
 		q.addEntity("m", Standort.class);

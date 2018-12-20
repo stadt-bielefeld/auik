@@ -244,7 +244,7 @@ public class BasisAdresseModel extends ListTableModel {
     
     public void filterStandort(String name, String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
-        setList(DatabaseQuery.findStandorte(name, strasse, hausnr, ort));
+        setList(DatabaseQuery.findAdressen(name, strasse, hausnr, ort));
         lastStrasse = strasse;
         lastHausnr = hausnr;
         LastOrt = ort;

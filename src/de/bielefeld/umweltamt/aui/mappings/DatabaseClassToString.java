@@ -153,7 +153,7 @@ public class DatabaseClassToString {
         
         //If all name fields are empty, the instance must be a Standort
         if(clazz.getBetrname() == null){
-            return clazz.getStrasse() + " " + clazz.getHausnr();
+            return clazz.getStrasse() + " " + clazz.getHausnr() + " " + clazz.getHausnrzus();
         }
         //Else return a Betreiber string
         if (clazz.getBetrvorname() != null) {
@@ -161,7 +161,8 @@ public class DatabaseClassToString {
         } else if (clazz.getBetrnamezus() != null) {
             zusatz = ", " + clazz.getBetrnamezus();
         }        
-        return vorname + clazz.getBetrname() + zusatz + ", " + clazz.getStrasse() + " " + clazz.getHausnr();
+        return vorname + clazz.getBetrname() + zusatz + ", " + clazz.getStrasse()
+        	+ " " + clazz.getHausnr() + clazz.getHausnrzus();
     }
     
     /**

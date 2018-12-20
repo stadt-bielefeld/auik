@@ -634,7 +634,7 @@ public class Abscheider  implements java.io.Serializable {
     /* Custom code goes below here! */
 
     public static Abscheider findByBehaelterid(java.lang.Integer id){
-        Fachdaten fd = (Fachdaten) HibernateSessionFactory.currentSession().createQuery("from VawsFachdaten where behaelterid= " + id).list().get(0);
+        Fachdaten fd = (Fachdaten) HibernateSessionFactory.currentSession().createQuery("from Fachdaten where behaelterid= " + id).list().get(0);
         Set<Abscheider> list = fd.getAbscheiders();
 		if (list.size() != 0) {
 			return list.iterator().next();

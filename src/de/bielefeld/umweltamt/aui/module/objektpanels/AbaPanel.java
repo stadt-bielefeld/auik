@@ -245,6 +245,9 @@ private static final long serialVersionUID = -4030805403749508467L;
             this.fachdaten.setBezeichnung(bezeichnungn);
         }
 
+        Date erstell = this.erstellDatum.getDate();
+        this.fachdaten.setErstellDat(erstell);
+
         Date aktual = this.aktualDatum.getDate();
         this.fachdaten.setAktualDat(aktual);
 
