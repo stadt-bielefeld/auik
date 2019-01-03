@@ -4,12 +4,9 @@
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten" table="fachdaten" schema="awsv" lazy="false" optimistic-lock="version">
-        <id name="behaelterid" type="java.lang.Integer">
-            <column name="behaelterid" />
-            <generator class="native">
-                <param name="sequence">awsv.fachdaten_behaelterid_seq</param>
-            </generator>
-        </id>
+	  <id name="behaelterid" type="java.lang.Integer" column="behaelterid" unsaved-value="0">
+	   <generator class="identity"/>
+	  </id>
         <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
             <column name="objektid" not-null="true" />
         </many-to-one>

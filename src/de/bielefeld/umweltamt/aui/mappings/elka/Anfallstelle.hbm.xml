@@ -8,9 +8,9 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        <property name="objektid" type="java.lang.Integer">
-            <column name="objektid" />
-        </property>
+        <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
+            <column name="objektid" not-null="true" />
+        </many-to-one>
         <property name="seqId" type="java.lang.Integer">
             <column name="seq_id" />
         </property>

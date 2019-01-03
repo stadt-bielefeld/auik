@@ -4,13 +4,12 @@
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche" table="abfuellflaeche" schema="awsv" lazy="false" optimistic-lock="version">
-        <id name="behaelterid" type="java.lang.Integer">
-            <column name="behaelterid" />
-            <generator class="foreign">
-                <param name="property">fachdaten</param>
-            </generator>
-        </id>
-        <one-to-one name="fachdaten" class="de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten" constrained="true"></one-to-one>
+	  <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+	   <generator class="identity"/>
+	  </id>
+        <many-to-one name="fachdaten" class="de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten" fetch="select">
+            <column name="behaelterid" not-null="true" />
+        </many-to-one>
         <property name="eoh" type="java.lang.Boolean">
             <column name="eoh" />
         </property>
@@ -55,9 +54,6 @@
         </property>
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
-        </property>
-        <property name="id" type="java.lang.Integer">
-            <column name="id" not-null="true" />
         </property>
         <property name="groesse" type="java.lang.Integer">
             <column name="groesse" />

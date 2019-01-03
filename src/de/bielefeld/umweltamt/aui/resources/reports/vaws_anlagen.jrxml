@@ -26,7 +26,7 @@
 		</parameter>
 		<queryString>
 			<![CDATA[select *
-from auik.vaws_kontrollen
+from awsv.kontrollen
 where behaelterid = $P{BehaelterId}
 and _deleted = false
 order by pruefdatum ASC]]>
@@ -53,7 +53,7 @@ order by pruefdatum ASC]]>
 	<parameter name="Standort" class="java.lang.String"/>
 	<parameter name="Objektart" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select * from auik.vaws_fachdaten
+		<![CDATA[select * from awsv.fachdaten
 where behaelterid=$P{BehaelterId}]]>
 	</queryString>
 	<field name="behaelterid" class="java.lang.Integer"/>
@@ -70,7 +70,7 @@ where behaelterid=$P{BehaelterId}]]>
 	<field name="fluessigkeit" class="java.lang.String"/>
 	<field name="vbfeinstufung" class="java.lang.String"/>
 	<field name="menge" class="java.lang.Double"/>
-	<field name="wgk" class="java.lang.Integer"/>
+	<field name="wgk" class="java.lang.String"/>
 	<field name="gefaehrdungsstufe" class="java.lang.String"/>
 	<field name="baujahr" class="java.lang.Integer"/>
 	<field name="doppelwandig" class="java.lang.Boolean"/>
@@ -106,6 +106,7 @@ where behaelterid=$P{BehaelterId}]]>
 	<field name="schutz_sensor" class="java.lang.Boolean"/>
 	<field name="schutz_folie" class="java.lang.Boolean"/>
 	<field name="schutz_antiheber" class="java.lang.Boolean"/>
+	<field name="aktenzeichen" class="java.lang.String"/>
 	<variable name="DATE" class="java.util.Date">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
 	</variable>

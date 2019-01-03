@@ -102,7 +102,7 @@ public class BasisLageModel extends ListTableModel
 	{
         log.debug("Fetching Adresse and Lage Objects");
         //Fetch all BasisAdresse and BasisLage Objects
-        List<Object[]> list = DatabaseQuery.findStandorteNew(strasse, hausnr, ort);
+        List<Object[]> list = DatabaseQuery.findStandorteAll(strasse, hausnr, ort);
         log.debug("Fetched " + list.size() + " Objects");
         List<Standort> standorte = new ArrayList<Standort>();
         //Add fetched objects to a list of Standort

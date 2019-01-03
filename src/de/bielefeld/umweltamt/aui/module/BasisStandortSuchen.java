@@ -404,7 +404,7 @@ public class BasisStandortSuchen extends AbstractModul
 					{
 						getStandortTabelle().setRowSelectionInterval(row, row);
 						getStandortTabelle().scrollRectToVisible(
-																	getStandortTabelle().getCellRect(row, 0, true));
+						getStandortTabelle().getCellRect(row, 0, true));
 						getStandortTabelle().requestFocus();
 					}
 				}
@@ -503,7 +503,7 @@ public class BasisStandortSuchen extends AbstractModul
 			@Override
 			protected void doNonUILogic()
 			{
-				BasisStandortSuchen.this.objektModel.searchByStandort(standort.getAdresse(),
+				BasisStandortSuchen.this.objektModel.searchByStandort(standort,
 																		abteilung, nichtartid);
 			}
 

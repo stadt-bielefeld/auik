@@ -28,7 +28,7 @@
 		<parameter name="ObjektId" class="java.lang.Integer"/>
 		<queryString>
 			<![CDATA[select *
-from auik.vaws_fachdaten
+from awsv.fachdaten
 where objektid = $P{ObjektId}
 and _deleted = false
 order by stillegungsdatum ASC]]>
@@ -136,7 +136,7 @@ order by stillegungsdatum ASC]]>
 				<text><![CDATA[Details]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="51" width="56" height="20" backcolor="#D8D8D8" uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d"/>
+				<reportElement mode="Opaque" x="1" y="51" width="58" height="20" backcolor="#D8D8D8" uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>

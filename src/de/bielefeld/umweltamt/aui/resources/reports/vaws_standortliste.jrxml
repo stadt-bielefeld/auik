@@ -31,11 +31,11 @@
 		<defaultValueExpression><![CDATA["/home/andre/kde_trunk/src/auik/src/de/bielefeld/umweltamt/aui/resources/reports/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select distinct basis_objekt.betreiberid, basis_adresse.betrname from auik.basis_lage
-inner join auik.basis_objekt on basis_objekt.lageid = basis_lage.id
-inner join auik.basis_adresse on basis_adresse.id = basis_objekt.betreiberid
-inner join auik.vaws_fachdaten on vaws_fachdaten.objektid = basis_objekt.id
-where basis_lage.id = $P{StandortId} and vaws_fachdaten.objektid > 0;  ]]>
+		<![CDATA[select distinct objekt.betreiberid, adresse.betrname from basis.standort
+inner join basis.objekt on objekt.standortid = standort.id
+inner join basis.adresse on adresse.id = objekt.betreiberid
+inner join awsv.fachdaten on fachdaten.objektid = objekt.id
+where standort.id = $P{StandortId} and fachdaten.objektid > 0;]]>
 	</queryString>
 	<field name="betreiberid" class="java.lang.Integer"/>
 	<field name="betrname" class="java.lang.String"/>
@@ -49,7 +49,7 @@ where basis_lage.id = $P{StandortId} and vaws_fachdaten.objektid > 0;  ]]>
 	<title>
 		<band height="111" splitType="Stretch">
 			<textField>
-				<reportElement uuid="f889b2ec-d898-4a33-9d40-c6dacb0844bc" mode="Opaque" x="0" y="30" width="483" height="30" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="0" y="30" width="483" height="30" backcolor="#D8D8D8" uuid="f889b2ec-d898-4a33-9d40-c6dacb0844bc"/>
 				<textElement verticalAlignment="Middle">
 					<font size="16"/>
 					<paragraph leftIndent="10"/>
@@ -57,7 +57,7 @@ where basis_lage.id = $P{StandortId} and vaws_fachdaten.objektid > 0;  ]]>
 				<textFieldExpression><![CDATA[$P{Standort}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="30ba4762-9f22-4e40-a90d-6f4c8bc7cde0" mode="Opaque" x="0" y="0" width="483" height="30" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="0" y="0" width="483" height="30" backcolor="#D8D8D8" uuid="30ba4762-9f22-4e40-a90d-6f4c8bc7cde0"/>
 				<textElement verticalAlignment="Middle">
 					<font size="15" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -65,7 +65,7 @@ where basis_lage.id = $P{StandortId} and vaws_fachdaten.objektid > 0;  ]]>
 				<text><![CDATA[VAwS-Liste von Standort]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="1" y="77" width="483" height="20"/>
+				<reportElement x="1" y="77" width="483" height="20" uuid="baec4638-ebab-4849-a431-c6786712d126"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
@@ -81,7 +81,7 @@ where basis_lage.id = $P{StandortId} and vaws_fachdaten.objektid > 0;  ]]>
 	<detail>
 		<band height="66">
 			<subreport>
-				<reportElement uuid="b539fa78-2ae1-4c6e-a635-805b1f3841db" x="0" y="0" width="483" height="47"/>
+				<reportElement x="0" y="0" width="483" height="47" uuid="b539fa78-2ae1-4c6e-a635-805b1f3841db"/>
 				<subreportParameter name="BetreiberId">
 					<subreportParameterExpression><![CDATA[$F{betreiberid}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -96,14 +96,14 @@ where basis_lage.id = $P{StandortId} and vaws_fachdaten.objektid > 0;  ]]>
 	<pageFooter>
 		<band height="11" splitType="Stretch">
 			<textField pattern="dd.MM.yyyy HH:mm">
-				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" mode="Transparent" x="313" y="0" width="97" height="11"/>
+				<reportElement mode="Transparent" x="313" y="0" width="97" height="11" uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{DATE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="7b5e7c42-773b-4194-85ab-398cde121227" x="0" y="0" width="334" height="11"/>
+				<reportElement x="0" y="0" width="334" height="11" uuid="7b5e7c42-773b-4194-85ab-398cde121227"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>

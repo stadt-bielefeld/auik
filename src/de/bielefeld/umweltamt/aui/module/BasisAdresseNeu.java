@@ -863,7 +863,7 @@ public class BasisAdresseNeu extends AbstractModul
 						manager.switchModul("m_objekt_bearbeiten");
 					} else if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_standort")) {
 						manager.getSettingsManager().setSetting("auik.imc.use_standort",
-								persistentAL.getAdresse().getId().intValue(), false);
+								persistentAL.getId().intValue(), false);
 						manager.getSettingsManager().setSetting("auik.imc.use_lage",
 								persistentAL.getLage().getId().intValue(), false);
 						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_standort");
