@@ -199,7 +199,7 @@ public class HibernateSessionFactory {
         try {
             Session session = currentSession();
             List<?> test = session.createSQLQuery(
-                    "select count(*) from auik.basis_adresse"
+                    "select count(*) from basis.adresse"
             ).list();
             tmp = true;
         } catch (Exception e) {
