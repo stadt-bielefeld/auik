@@ -144,12 +144,13 @@ public class DatabaseClassToString {
 
     /**
      * Custom Adresse.toString()
-     * Liefert einen String der Form "Name, Zusatz" falls ein Zusatz vorhanden
-     * ist, sonst nur den Namen.
+     * Liefert einen String der Form "Name, Zusatz, Straße, Hausnummer und Hausnrzusatz"
+     * falls ein Zusatz vorhanden ist.
      */
     public static String toStringForClass(Adresse clazz) {
         String zusatz = "";
         String vorname = "";
+        String hausnrzus = "";
         
         //If all name fields are empty, the instance must be a Standort
         if(clazz.getBetrname() == null){
@@ -160,9 +161,11 @@ public class DatabaseClassToString {
         	vorname = clazz.getBetrvorname() + " ";
         } else if (clazz.getBetrnamezus() != null) {
             zusatz = ", " + clazz.getBetrnamezus();
-        }        
+        } else if (clazz.getHausnrzus() != null) {
+        	hausnrzus = clazz.getHausnrzus();
+        }       
         return vorname + clazz.getBetrname() + zusatz + ", " + clazz.getStrasse()
-        	+ " " + clazz.getHausnr() + clazz.getHausnrzus();
+        	+ " " + clazz.getHausnr() + hausnrzus;
     }
     
     /**
