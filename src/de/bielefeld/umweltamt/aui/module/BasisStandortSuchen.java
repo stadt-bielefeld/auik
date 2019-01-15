@@ -1447,7 +1447,7 @@ public class BasisStandortSuchen extends AbstractModul
 								Point origin = e.getPoint();
 								int row = getObjektTabelle().rowAtPoint(origin);
 								Objekt obj = BasisStandortSuchen.this.objektModel
-										.getRow(row);
+										.getRow(objektTabelle.convertRowIndexToModel(row));
 								if ((row != -1)
 										&& (!(obj.getObjektarten().getId()
 												.equals(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE))))
