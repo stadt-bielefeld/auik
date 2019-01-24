@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="objekt_chronologie" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="51" bottomMargin="70" uuid="49b09d7f-e6cd-4615-a388-937a25d41651">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="6"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table" mode="Opaque" fill="Solid">
 		<pen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -44,27 +44,27 @@ and basis_objektchrono._deleted=false order by datum asc;]]>
 	<parameter name="Art" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-     basis_objektchrono."id" AS basis_objektchrono_id,
-     basis_objektchrono."datum" AS basis_objektchrono_datum,
-     basis_objektchrono."sachverhalt" AS basis_objektchrono_sachverhalt,
-     basis_objektchrono."wv" AS basis_objektchrono_wv,
-     basis_objektchrono."sachbearbeiter" AS basis_objektchrono_sachbearbeiter,
-     basis_objektchrono."objektid" AS basis_objektchrono_objektid,
-     basis_objektchrono."_enabled" AS basis_objektchrono__enabled,
-     basis_objektchrono."_deleted" AS basis_objektchrono__deleted
+     objektchrono."id" AS objektchrono_id,
+     objektchrono."datum" AS objektchrono_datum,
+     objektchrono."sachverhalt" AS objektchrono_sachverhalt,
+     objektchrono."wv" AS objektchrono_wv,
+     objektchrono."sachbearbeiter" AS objektchrono_sachbearbeiter,
+     objektchrono."objektid" AS objektchrono_objektid,
+     objektchrono."_enabled" AS objektchrono__enabled,
+     objektchrono."_deleted" AS objektchrono__deleted
 FROM
-     "auik"."basis_objektchrono" basis_objektchrono
-     where basis_objektchrono.objektid=$P{ObjektId}
-     and basis_objektchrono._deleted=false order by datum asc;]]>
+     "basis"."objektchrono" objektchrono
+     where objektchrono.objektid=$P{ObjektId}
+     and objektchrono._deleted=false order by datum asc;]]>
 	</queryString>
-	<field name="basis_objektchrono_id" class="java.lang.Integer"/>
-	<field name="basis_objektchrono_datum" class="java.sql.Timestamp"/>
-	<field name="basis_objektchrono_sachverhalt" class="java.lang.String"/>
-	<field name="basis_objektchrono_wv" class="java.sql.Timestamp"/>
-	<field name="basis_objektchrono_sachbearbeiter" class="java.lang.String"/>
-	<field name="basis_objektchrono_objektid" class="java.lang.Integer"/>
-	<field name="basis_objektchrono__enabled" class="java.lang.Boolean"/>
-	<field name="basis_objektchrono__deleted" class="java.lang.Boolean"/>
+	<field name="objektchrono_id" class="java.lang.Integer"/>
+	<field name="objektchrono_datum" class="java.sql.Timestamp"/>
+	<field name="objektchrono_sachverhalt" class="java.lang.String"/>
+	<field name="objektchrono_wv" class="java.sql.Timestamp"/>
+	<field name="objektchrono_sachbearbeiter" class="java.lang.String"/>
+	<field name="objektchrono_objektid" class="java.lang.Integer"/>
+	<field name="objektchrono__enabled" class="java.lang.Boolean"/>
+	<field name="objektchrono__deleted" class="java.lang.Boolean"/>
 	<variable name="DATE" class="java.util.Date">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
 		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
@@ -75,7 +75,7 @@ FROM
 	<title>
 		<band height="59">
 			<staticText>
-				<reportElement uuid="30ba4762-9f22-4e40-a90d-6f4c8bc7cde0" mode="Opaque" x="0" y="0" width="482" height="30" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="0" y="0" width="482" height="30" backcolor="#D8D8D8" uuid="30ba4762-9f22-4e40-a90d-6f4c8bc7cde0"/>
 				<textElement verticalAlignment="Middle">
 					<font size="15" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -83,7 +83,7 @@ FROM
 				<text><![CDATA[Objekt-Chronologie von Betreiber]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="f889b2ec-d898-4a33-9d40-c6dacb0844bc" mode="Opaque" x="0" y="29" width="482" height="30" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="0" y="29" width="482" height="30" backcolor="#D8D8D8" uuid="f889b2ec-d898-4a33-9d40-c6dacb0844bc"/>
 				<textElement verticalAlignment="Middle">
 					<font size="16"/>
 					<paragraph leftIndent="10"/>
@@ -95,13 +95,13 @@ FROM
 	<pageHeader>
 		<band height="127">
 			<rectangle>
-				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" x="0" y="57" width="482" height="13"/>
+				<reportElement x="0" y="57" width="482" height="13" uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4"/>
 				<graphicElement>
 					<pen lineColor="#FFFFFF"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d" mode="Opaque" x="0" y="42" width="94" height="20" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="0" y="42" width="94" height="20" backcolor="#D8D8D8" uuid="89e9d622-a7ba-4403-a12d-a44ba1d0164d"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -114,7 +114,7 @@ FROM
 				<text><![CDATA[Standort]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="0" y="61" width="94" height="20"/>
+				<reportElement x="0" y="61" width="94" height="20" uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c"/>
 				<box>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -125,7 +125,7 @@ FROM
 				<text><![CDATA[Art]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64" mode="Opaque" x="94" y="42" width="388" height="20" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="94" y="42" width="388" height="20" backcolor="#D8D8D8" uuid="3bf49be5-85c9-4bdf-90f3-8ca44ee2ed64"/>
 				<box>
 					<topPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -139,7 +139,7 @@ FROM
 				<textFieldExpression><![CDATA[$P{Standort}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="60b1a670-0991-429e-88c5-f38019ac7ab9" x="94" y="61" width="388" height="20"/>
+				<reportElement x="94" y="61" width="388" height="20" uuid="60b1a670-0991-429e-88c5-f38019ac7ab9"/>
 				<box>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -152,7 +152,7 @@ FROM
 				<textFieldExpression><![CDATA[$P{Art}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="baec4638-ebab-4849-a431-c6786712d126" x="0" y="12" width="483" height="20"/>
+				<reportElement x="0" y="12" width="483" height="20" uuid="baec4638-ebab-4849-a431-c6786712d126"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
@@ -164,7 +164,7 @@ FROM
 				<text><![CDATA[Details]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="0" y="81" width="94" height="20"/>
+				<reportElement x="0" y="81" width="94" height="20" uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c"/>
 				<box>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -175,7 +175,7 @@ FROM
 				<text><![CDATA[Ansprechpartner]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c" x="0" y="101" width="94" height="20"/>
+				<reportElement x="0" y="101" width="94" height="20" uuid="d9ab0244-698a-449d-a446-7f19f81aeb0c"/>
 				<box>
 					<leftPen lineWidth="2.5" lineColor="#B9B9B9"/>
 					<bottomPen lineWidth="2.5" lineColor="#B9B9B9"/>
@@ -186,13 +186,13 @@ FROM
 				<text><![CDATA[Telefon]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" mode="Transparent" x="94" y="81" width="388" height="20"/>
+				<reportElement mode="Transparent" x="94" y="81" width="388" height="20" uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4"/>
 				<graphicElement>
 					<pen lineWidth="2.5" lineColor="#B9B9B9"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4" mode="Transparent" x="94" y="101" width="388" height="20"/>
+				<reportElement mode="Transparent" x="94" y="101" width="388" height="20" uuid="8990455a-89a1-4df1-9cbc-6fb20648fdf4"/>
 				<graphicElement>
 					<pen lineWidth="2.5" lineColor="#B9B9B9"/>
 				</graphicElement>
@@ -202,7 +202,7 @@ FROM
 	<columnHeader>
 		<band height="22">
 			<staticText>
-				<reportElement uuid="151144d4-8ea7-42e4-99f0-ce1a57018373" mode="Opaque" x="0" y="0" width="56" height="22" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="0" y="0" width="56" height="22" backcolor="#D8D8D8" uuid="151144d4-8ea7-42e4-99f0-ce1a57018373"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -210,7 +210,7 @@ FROM
 				<text><![CDATA[Datum]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="49ff9a42-2e0a-4737-9087-d0405b0f3af1" mode="Opaque" x="56" y="0" width="100" height="22" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="56" y="0" width="100" height="22" backcolor="#D8D8D8" uuid="49ff9a42-2e0a-4737-9087-d0405b0f3af1"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -218,7 +218,7 @@ FROM
 				<text><![CDATA[Sachbearbeiter]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="97e66faf-74ad-47cf-8ad0-a3ad3b6b027a" mode="Opaque" x="156" y="0" width="326" height="22" backcolor="#D8D8D8"/>
+				<reportElement mode="Opaque" x="156" y="0" width="326" height="22" backcolor="#D8D8D8" uuid="97e66faf-74ad-47cf-8ad0-a3ad3b6b027a"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -226,49 +226,49 @@ FROM
 				<text><![CDATA[Sachverhalt]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="9daffab1-1ed4-4d50-b4f3-549d0ea24200" x="0" y="21" width="482" height="1"/>
+				<reportElement x="0" y="21" width="482" height="1" uuid="9daffab1-1ed4-4d50-b4f3-549d0ea24200"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="18" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="7980267d-0be2-4845-a2fb-f23da14cf39d" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="482" height="18" forecolor="#D8D8D8" backcolor="#D8D8D8"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="482" height="18" forecolor="#D8D8D8" backcolor="#D8D8D8" uuid="7980267d-0be2-4845-a2fb-f23da14cf39d"/>
 			</rectangle>
 			<textField pattern="dd.MM.yyyy" isBlankWhenNull="true">
-				<reportElement uuid="a565480c-975a-41a7-82d1-2305d950f3e9" x="0" y="1" width="56" height="15"/>
+				<reportElement x="0" y="1" width="56" height="15" uuid="a565480c-975a-41a7-82d1-2305d950f3e9"/>
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{basis_objektchrono_datum}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{objektchrono_datum}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="fdaea220-9984-44ec-b882-9567cd8de8f9" x="56" y="1" width="100" height="15"/>
+				<reportElement x="56" y="1" width="100" height="15" uuid="fdaea220-9984-44ec-b882-9567cd8de8f9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<paragraph leftIndent="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{basis_objektchrono_sachbearbeiter}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{objektchrono_sachbearbeiter}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="d716eaa0-1d73-4ccd-b4c1-329f26e3ef38" x="156" y="1" width="326" height="15"/>
+				<reportElement x="156" y="1" width="326" height="15" uuid="d716eaa0-1d73-4ccd-b4c1-329f26e3ef38"/>
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{basis_objektchrono_sachverhalt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{objektchrono_sachverhalt}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="24">
 			<staticText>
-				<reportElement uuid="7b5e7c42-773b-4194-85ab-398cde121227" x="0" y="13" width="334" height="11"/>
+				<reportElement x="0" y="13" width="334" height="11" uuid="7b5e7c42-773b-4194-85ab-398cde121227"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[© Copyright 2012 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am:]]></text>
 			</staticText>
 			<textField pattern="dd.MM.yyyy HH:mm">
-				<reportElement uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574" x="296" y="13" width="169" height="11"/>
+				<reportElement x="296" y="13" width="169" height="11" uuid="bb342ec4-0ee9-4ce4-abef-bd5c90b5a574"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>

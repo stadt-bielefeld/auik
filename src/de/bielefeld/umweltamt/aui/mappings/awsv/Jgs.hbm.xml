@@ -3,73 +3,76 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.awsv.Jgs" table="jgs" schema="awsv" lazy="false" optimistic-lock="version">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
-            <generator class="assigned" />
-        </id>
-        <many-to-one name="fachdaten" class="de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten" fetch="select">
-            <column name="behaelterid" />
-        </many-to-one>
-        <property name="lagerflaeche" type="java.lang.Integer">
-            <column name="lagerflaeche" />
-        </property>
-        <property name="gewaesserAbstand" type="java.lang.Integer">
-            <column name="gewaesser_abstand" />
-        </property>
-        <property name="gewaesserName" type="java.lang.String">
-            <column name="gewaesser_name" />
-        </property>
-        <property name="brunnenAbstand" type="java.lang.Integer">
-            <column name="brunnen_abstand" />
-        </property>
-        <property name="tierhaltung" type="java.lang.String">
-            <column name="tierhaltung" />
-        </property>
-        <property name="seitenwaende" type="java.lang.Boolean">
-            <column name="seitenwaende" />
-        </property>
-        <property name="wandhoehe" type="java.lang.Integer">
-            <column name="wandhoehe" />
-        </property>
-        <property name="bodenplatte" type="java.lang.String">
-            <column name="bodenplatte" />
-        </property>
-        <property name="ueberdachung" type="java.lang.Boolean">
-            <column name="ueberdachung" />
-        </property>
-        <property name="auffangbeh" type="java.lang.String">
-            <column name="auffangbeh" />
-        </property>
-        <property name="volumenAuffangbeh" type="java.lang.Double">
-            <column name="volumen_auffangbeh" precision="17" scale="17" />
-        </property>
-        <property name="rohrleitung" type="java.lang.String">
-            <column name="rohrleitung" />
-        </property>
-        <property name="dichtheitspruefung" type="java.util.Date">
-            <column name="dichtheitspruefung" length="29" />
-        </property>
-        <property name="drainage" type="java.lang.Boolean">
-            <column name="drainage" />
-        </property>
-        <property name="fuellanzeiger" type="java.lang.Boolean">
-            <column name="fuellanzeiger" />
-        </property>
-        <property name="schieber" type="java.lang.Boolean">
-            <column name="schieber" />
-        </property>
-        <property name="abdeckung" type="java.lang.Boolean">
-            <column name="abdeckung" />
-        </property>
-        <property name="leitungGeprueft" type="java.lang.Boolean">
-            <column name="leitung_geprueft" />
-        </property>
-        <property name="enabled" type="java.lang.Boolean">
-            <column name="_enabled" />
-        </property>
-        <property name="deleted" type="java.lang.Boolean">
-            <column name="_deleted" />
-        </property>
-    </class>
+	<class name="de.bielefeld.umweltamt.aui.mappings.awsv.Jgs"
+		table="jgs" schema="awsv" lazy="false" optimistic-lock="version">
+		<id name="id" type="java.lang.Integer" column="id"
+			unsaved-value="0">
+			<generator class="identity" />
+		</id>
+		<many-to-one name="fachdaten"
+			class="de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten"
+			fetch="select">
+			<column name="behaelterid" />
+		</many-to-one>
+		<property name="lagerflaeche" type="java.lang.Integer">
+			<column name="lagerflaeche" />
+		</property>
+		<property name="gewaesserAbstand" type="java.lang.Integer">
+			<column name="gewaesser_abstand" />
+		</property>
+		<property name="gewaesserName" type="java.lang.String">
+			<column name="gewaesser_name" />
+		</property>
+		<property name="brunnenAbstand" type="java.lang.Integer">
+			<column name="brunnen_abstand" />
+		</property>
+		<property name="tierhaltung" type="java.lang.String">
+			<column name="tierhaltung" />
+		</property>
+		<property name="seitenwaende" type="java.lang.Boolean">
+			<column name="seitenwaende" />
+		</property>
+		<property name="wandhoehe" type="java.lang.Integer">
+			<column name="wandhoehe" />
+		</property>
+		<property name="bodenplatte" type="java.lang.String">
+			<column name="bodenplatte" />
+		</property>
+		<property name="ueberdachung" type="java.lang.Boolean">
+			<column name="ueberdachung" />
+		</property>
+		<property name="auffangbeh" type="java.lang.String">
+			<column name="auffangbeh" />
+		</property>
+		<property name="volumenAuffangbeh" type="java.lang.Double">
+			<column name="volumen_auffangbeh" precision="17" scale="17" />
+		</property>
+		<property name="rohrleitung" type="java.lang.String">
+			<column name="rohrleitung" />
+		</property>
+		<property name="dichtheitspruefung" type="java.util.Date">
+			<column name="dichtheitspruefung" length="29" />
+		</property>
+		<property name="drainage" type="java.lang.Boolean">
+			<column name="drainage" />
+		</property>
+		<property name="fuellanzeiger" type="java.lang.Boolean">
+			<column name="fuellanzeiger" />
+		</property>
+		<property name="schieber" type="java.lang.Boolean">
+			<column name="schieber" />
+		</property>
+		<property name="abdeckung" type="java.lang.Boolean">
+			<column name="abdeckung" />
+		</property>
+		<property name="leitungGeprueft" type="java.lang.Boolean">
+			<column name="leitung_geprueft" />
+		</property>
+		<property name="enabled" type="java.lang.Boolean">
+			<column name="_enabled" />
+		</property>
+		<property name="deleted" type="java.lang.Boolean">
+			<column name="_deleted" />
+		</property>
+	</class>
 </hibernate-mapping>
