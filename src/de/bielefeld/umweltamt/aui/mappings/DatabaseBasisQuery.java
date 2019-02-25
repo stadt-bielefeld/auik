@@ -269,6 +269,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	public static List<Objekt> getObjekteByStandort(Standort standort, String abteilung, Integer artid,
 			Boolean matchArtId) {
 		String strasse = standort.getAdresse().getStrasse();
+		strasse = strasse.replace("'", "''");
 		Integer hausnr = standort.getAdresse().getHausnr();
 		String hausnrzus = standort.getAdresse().getHausnrzus();
 		log.debug("Fetching objects at " + standort);
