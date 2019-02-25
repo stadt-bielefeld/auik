@@ -875,7 +875,7 @@ public class BasisAdresseNeu extends AbstractModul
 						clearForm();
 					}
 				}
-			} else if ((Float) e32Feld.getValue() == 0.0 || (Float) n32Feld.getValue() == 0.0) {
+			} else if (((DoubleField) e32Feld).getFloatValue() == 0.0 && ((DoubleField) n32Feld).getFloatValue() == 0.0) {
 				
 				Adresse persistentAdrn = new Adresse();
 				persistentAdrn = Adresse.merge(adrn);
